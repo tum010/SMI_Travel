@@ -1,0 +1,282 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.smi.travel.datalayer.dao.impl;
+
+import com.smi.travel.datalayer.dao.TransferJobDao;
+import com.smi.travel.datalayer.entity.Daytour;
+import com.smi.travel.datalayer.entity.DaytourBooking;
+import com.smi.travel.datalayer.entity.Place;
+import com.smi.travel.datalayer.entity.TransferJob;
+import com.smi.travel.util.UtilityFunction;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
+/**
+ *
+ * @author Surachai
+ */
+public class TransferJobImpl implements TransferJobDao {
+
+    private SessionFactory sessionFactory;
+    private Transaction transaction;
+    private static final int MAX_JOB = 100;
+    private static final String FILTERTOUR_FROM_DATE_QUERY = "from DaytourBooking DB where DB.tourDate = :date GROUP BY DB.daytour.id ";
+    private static final String GET_JOB_QUERY = "from TransferJob tr where tr.transferDate >= :startdate and tr.transferDate <= :enddate";
+    private static final String GET_LASTDOCNO_QUERY = "from TransferJob tr where tr.documentNo Like :docno Order by tr.id desc ";
+    private static final String GET_DOCNOFROMID_QUERY = "from TransferJob tr where tr.documentNo = :docno";
+    @Override
+    public List<DaytourBooking> filterTourFromDate(String TourDate) {
+        UtilityFunction util = new UtilityFunction();
+        List<Daytour> tourList = new LinkedList<Daytour>();
+        List<DaytourBooking> tourbookList = new LinkedList<DaytourBooking>();
+        Session session = this.sessionFactory.openSession();
+        List<DaytourBooking> list = session.createQuery(FILTERTOUR_FROM_DATE_QUERY)
+                .setParameter("date", util.convertStringToDate(TourDate))
+                .list();
+
+        if (list.isEmpty()) {
+            return null;
+        } else {
+            for (DaytourBooking L : list) {
+//                Daytour tour = L.getDaytour();
+//                tourList.add(tour);
+                tourbookList.add(L);
+            }
+            return tourbookList;
+        }
+    }
+
+    @Override
+    public List<Place> filterPlaceFromDateAndTour(String TourDate, String TourID) {
+        String filterPlaceQuery = "from DaytourBooking DB where DB.tourDate = '" + TourDate + "'"
+                + " and DB.daytour.id in (" + TourID + ") GROUP BY DB.place.id ";
+        Session session = this.sessionFactory.openSession();
+        List<Place> placeList = new LinkedList<Place>();
+        List<DaytourBooking> list = session.createQuery(filterPlaceQuery)
+                .list();
+        if (list.isEmpty()) {
+
+            return null;
+        } else {
+
+            for (DaytourBooking P : list) {
+                Place place = P.getPlace();
+                placeList.add(place);
+            }
+
+            return placeList;
+        }
+    }
+
+    @Override
+    public List<String> filterPlaceOtherFromDateAndTour(String TourDate, String TourID) {
+        String filterPlaceOtherQuery = "from DaytourBooking DB where DB.tourDate = '" + TourDate + "'"
+                + " and DB.place.place = 'OTHERS' and DB.daytour.id in (" + TourID + ") ";
+        System.out.println("filterPlaceOtherQuery : " + filterPlaceOtherQuery);
+        Session session = this.sessionFactory.openSession();
+        List<String> otherList = new LinkedList<String>();
+        List<DaytourBooking> list = session.createQuery(filterPlaceOtherQuery)
+                .list();
+        if (list.isEmpty()) {
+
+            return null;
+        } else {
+            for (DaytourBooking P : list) {
+                String other = P.getPickupDetail();
+                otherList.add(other);
+            }
+
+            return otherList;
+        }
+
+    }
+
+    @Override
+    public List<TransferJob> searchTransferJob(String StartDate, String EndDate,String Hotel) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        String query = "from TransferJob tr where tr.transferDate >= '"+StartDate+"' and tr.transferDate <= '"+EndDate+"'";
+        
+        if(!"".equalsIgnoreCase(Hotel)&&(Hotel != null)){
+            query += " and tr.place like '%"+Hotel+"%'";
+        }
+        System.out.println("query : "+query);
+        List<TransferJob> list = session.createQuery(query).list();
+        if (list.isEmpty()) {
+            return null;
+        }
+        //this.sessionFactory.close();
+        //session.close();
+        return list;
+    }
+
+    @Override
+    public String saveTransferjob(TransferJob Job) {
+        String result = "";
+        int issave =0;
+        try {
+            Session session = this.sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            Job.setTransferTime(new Date());
+            if((Job.getDocumentNo() == null)||("".equalsIgnoreCase(Job.getDocumentNo()))){
+                Job.setDocumentNo(generateDocumentNo());
+                issave = 1;
+                session.save(Job);
+            }else{
+                System.out.println("update transfer job");
+                Job.setId(getDocNoFromID(Job.getDocumentNo()));
+                session.update(Job);
+            }
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+            result = "success";
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            if(issave == 1){
+                Job.setDocumentNo("");
+            }
+            result = "save unsuccessful.";
+            if(Job.getTransferDate() == null){
+                result = "save unsuccessful. Please fill in transfer date";
+            }
+            
+            
+        }
+        return result;
+    }
+    
+    public String getDocNoFromID(String Docno){
+        String ID ="";
+        Session session = this.sessionFactory.openSession();
+        Query query = session.createQuery(GET_DOCNOFROMID_QUERY);
+        query.setParameter("docno", Docno);
+        query.setMaxResults(1);
+        List<TransferJob> list = query.list();
+        if(list.isEmpty()){
+            
+        }else{
+            System.out.println("ID : "+ID);
+           ID = list.get(0).getId();
+        }
+        
+        this.sessionFactory.close();
+        session.close();
+        return ID;
+    }
+
+    public String generateDocumentNo() {
+        String Docno = "";
+        Session session = this.sessionFactory.openSession();
+        List<TransferJob> list = new LinkedList<TransferJob>();
+        Date thisdate = new Date();
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("yyyyMM");
+        Query query = session.createQuery(GET_LASTDOCNO_QUERY);
+        query.setParameter("docno", df.format(thisdate) + "%");
+        query.setMaxResults(1);
+        list = query.list();
+        if (list.isEmpty()) {
+            Docno = df.format(thisdate) + "-" + "001";
+        } else {
+            Docno = list.get(0).getDocumentNo();
+            if (!Docno.equalsIgnoreCase("")) {
+                int running = Integer.parseInt(Docno.split("-")[1]) + 1;
+                String temp = String.valueOf(running);
+                for (int i = temp.length(); i < 3; i++) {
+                    temp = "0" + temp;
+                }
+                Docno = df.format(thisdate) + "-" + temp;
+            }
+        }
+        this.sessionFactory.close();
+        session.close();
+        return Docno;
+    }
+
+    @Override
+    public List<DaytourBooking> getTransferjobData(String TourId, String TourDate, String Place, String Other) {
+        String getJobDetailQuery = "from DaytourBooking DB where DB.tourDate = '" + TourDate + "'"
+                + " and DB.daytour.code in ('" + TourId.replaceAll(" ", "").replaceAll("\\|\\|", "','").trim() + "') ";
+        String open = "";
+        String close = "";
+        if (Place != null) {
+            if (Other != null) {
+                open = "(";
+                close = ")";
+            }
+            getJobDetailQuery += " and " + open + " DB.place.place in ('" + Place.replaceAll("\\|\\|", "','").replaceAll(" '", "'").replaceAll("' ", "'") + "')";
+        }
+        if (Other != null) {
+            getJobDetailQuery += " or DB.pickupDetail in ('" + Other.replaceAll("\\|\\|", "','") + "') " + close;
+        }
+        getJobDetailQuery += "  ORDER BY DB.pickupTime";
+
+        System.out.println("getJobDetailQuery : " + getJobDetailQuery);
+
+        Session session = this.sessionFactory.openSession();
+        List<DaytourBooking> list = session.createQuery(getJobDetailQuery)
+                .list();
+        if (list.isEmpty()) {
+            return null;
+        }
+
+        return list;
+    }
+
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    @Override
+    public List<DaytourBooking> sortTransferjobDataFromTime(List<DaytourBooking> daytourList) {
+        List<DaytourBooking> sortDaytour = new ArrayList<DaytourBooking>();
+       
+        if(daytourList == null){
+            return daytourList;
+        }else if(daytourList.size() == 0){
+            return daytourList;
+        }
+        
+        
+        List Dataindex = new ArrayList();
+        for (int i = 0; i < daytourList.size(); i++) {
+            System.out.println("data id : " + daytourList.get(i).getId());
+            if (daytourList.get(i).getId() == null) {
+                System.out.println("data id : null ");
+                return daytourList;
+            }
+        }
+        for (int i = 0; i < daytourList.size(); i++) {
+            Dataindex.add(daytourList.get(i).getPickupTime());
+        }
+
+        Collections.sort(Dataindex);
+        for (int i = 0; i < Dataindex.size(); i++) {
+            for (int j = 0; j < daytourList.size(); j++) {
+                if (Dataindex.get(i).equals(daytourList.get(j).getId())) {
+                    System.out.println("order no : " + daytourList.get(j).getId());
+                    sortDaytour.add(daytourList.get(j));
+                }
+            }
+        }
+
+        return sortDaytour;
+    }
+
+}
