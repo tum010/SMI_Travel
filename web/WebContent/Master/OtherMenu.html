@@ -1,0 +1,40 @@
+<ul id="OtherMenu" class="nav nav-list" style="top: 0px;  background-color: #FAFEFA;border: solid 1px #0063DC">
+    <li class="" >
+        <a href="MCity.smi">
+            <i class="menu-icon fa fa-building"></i>
+            <span class="menu-text"> City </span>
+        </a>
+
+        <b class="arrow"></b>
+    </li>
+    <li class="">
+        <a href="MCountry.smi">
+            <i class="menu-icon fa fa-flag"></i>
+            <span class="menu-text"> Country </span>
+        </a>
+
+        <b class="arrow"></b>
+    </li>
+    <li class="">
+        <a href="MCurrency.smi">
+            <i class="menu-icon fa fa-dollar"></i>
+            <span class="menu-text"> Currency </span>
+        </a>
+        <b class="arrow"></b>
+    </li>
+</ul>
+
+<script>
+    $(document).ready(function () {
+        var path = location.pathname;
+        var name = path.split("/");
+        console.log(name[2]);
+        str = name[2].split(".");
+        console.log(str[0]);
+        sub = str[0].substr(0,5);
+        console.log(sub);
+        var $select = $('a[href*="' + sub + '"]');
+        $("#OtherMenu").find($select).css('background-color', '#ccc');
+    });
+
+</script>

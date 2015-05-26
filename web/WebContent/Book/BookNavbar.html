@@ -1,0 +1,79 @@
+<div class="alert alert-info" style="margin-bottom: 10px">
+    <div class="row">
+        <div class="col-sm-3">
+            <label for="RefNo" class="col-sm-5 control-label text-right">Ref. No</label>
+            <div class="col-sm-7"> 
+                <input type="text" class="form-control" id="nav-RefNo" name="RefNo" readonly="">
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <label  class="col-sm-5 control-label text-right">Status</label>
+            <div class="col-sm-7">
+                <select  class="form-control" id="nav-Status" disabled=""></select>
+            </div>
+        </div>
+        
+        <div class="col-sm-3" >
+            <label id="leaderFamilyTxt" style="display:none;" class="col-sm-14 control-label text-right"></label>
+        </div>
+
+
+        <div class="col-sm-3 text-right">
+            <label class="control-label">Create Date : <strong id="createDate"></strong>
+                By : <strong id="createBy"></strong>
+            </label>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        var initialname_tmp = $("#initialname_tmp");
+        var firstname_tmp = $("#firstname_tmp");
+        var lastname_tmp = $("#lastname_tmp");
+        if( initialname_tmp.length > 0 && firstname_tmp.length > 0 && lastname_tmp.length > 0 ){
+          $('#leaderFamilyTxt').show();
+          $('#leaderFamilyTxt').html("FL : "+initialname_tmp.val()+" "+lastname_tmp.val()+" "+firstname_tmp.val());
+        }else{
+           $('#leaderFamilyTxt').hide(); 
+        }
+        // RefNo
+        $("#nav-RefNo").val($("#getUrl").val());
+
+        // status
+        if ($("#enable-status").val() === "1") {
+            $("#nav-Status").prop('disabled', false);
+        }
+        if (!$("#now-status").val()) {
+            var fields = $("input[name=status_list]").serializeArray();
+            window.tmp = $("input[name=status_list]");
+            $.each(fields, function (i, field) {
+                //console.log("mItemstatuseList : " + field.value);
+                $("#nav-Status").append($('<option></option>').val(field.value).html(field.value));
+            });
+            $("#nav-Status").val($("#get-status").val());
+            if ($("#action").val() === "init") {
+                $("#nav-Status").val("Normal");
+                $("#currency").val("THB");
+            }
+        } else {
+            $("#nav-Status").append($('<option></option>').val($("#now-status").val()).html($("#now-status").val()));
+        }
+        $("#nav-Status").change(function () {
+
+            $("#status").val($("#nav-Status").val());
+        });
+
+        //  Create Date , By
+        $("#createDate").text($("#master-createDate").val());
+        $("#createBy").text($("#master-createBy").val());
+    });
+
+
+
+</script>
+
+

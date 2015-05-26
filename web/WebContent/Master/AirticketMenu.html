@@ -1,0 +1,56 @@
+<ul id="AirticketMenu" class="nav nav-list" style="top: 0px;  background-color: #FAFEFA;border: solid 1px #0063DC">
+     <li class="" >
+                <a href="Mairticket.smi">
+                        <i class="menu-icon fa fa-plane"></i>
+                        <span class="menu-text"> Airline </span>
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+                 <li class="">
+                    <a href="MAirport.smi">
+                        <i class="menu-icon fa fa-paper-plane"></i>
+                        <span class="menu-text">  Airport </span>
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                <li class="">
+                    <a href="MTicketType.smi">
+                        <i class="menu-icon fa fa-credit-card"></i>
+                        <span class="menu-text"> Ticket type </span>
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+                <li class="">
+                    <a href="MFlight.smi">
+                        <i class="menu-icon fa fa-windows"></i>
+                        <span class="menu-text"> Flight class </span>
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                <li class="">
+                    <a href="MPricecategory.smi">
+                        <i class="menu-icon fa fa-group"></i>
+                        <span class="menu-text"> Passenger type </span>
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+               
+</ul>
+
+
+<script>
+    $(document).ready(function () {
+        var path = location.pathname;
+        var name = path.split("/");
+        console.log(name[2]);
+        str = name[2].split(".");
+        console.log(str[0]);
+        sub = str[0].substr(0,5);
+        console.log(sub);
+        var $select = $('a[href*="' + sub + '"]');
+        $("#AirticketMenu").find($select).css('background-color', '#ccc');
+    });
+
+</script>

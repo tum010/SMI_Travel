@@ -1,0 +1,112 @@
+<ul id="BookMenu" class="nav nav-list" style="top: 0px;  background-color: #FAFEFA;border: solid 1px #0063DC">
+    <li>
+        <a href="BookDetail.smi" id="menu-bookdetail">
+            <i class="menu-icon fa fa-book"></i>
+            <span class="menu-text" id="menu-bookdetail-span"> Book Detail </span>
+        </a>
+
+        <b class="arrow"></b>
+    </li>
+    <li>
+        <a href="AirTicket.smi" id="menu-airticket">
+            <i class="menu-icon fa fa-plane"></i>
+            <span class="menu-text"> Air Ticket <strong></strong> </span>
+
+        </a>
+
+    </li>
+
+    <li>
+        <a href="HotelBooking.smi" id="menu-hotel">
+            <i class="menu-icon fa fa-home"></i>
+            <span class="menu-text"> Hotel <strong></strong> </span>
+        </a>
+        <b class="arrow"></b>
+    </li>
+    <li>
+        <a href="Daytour.smi" id="menu-daytour">
+            <i class="menu-icon fa fa-calendar"></i>
+            <span class="menu-text"> Day tour <strong></strong> </span>
+        </a>
+        <b class="arrow"></b>
+    </li>
+    <li>
+        <a href="Other.smi" id="menu-other">
+            <i class="menu-icon fa fa-bars"></i>
+            <span class="menu-text"> Other <strong></strong></span>
+        </a>
+
+        <b class="arrow"></b>
+    </li>
+    <li>
+        <a href="Land.smi" id="menu-land">
+            <i class="menu-icon fa fa-building"></i>
+            <span class="menu-text"> Land <strong></strong></span>
+        </a>
+
+        <b class="arrow"></b>
+    </li>
+    <li>
+        <a href="Passenger.smi" id="menu-passenger">
+            <i class="menu-icon fa fa-users"></i>
+            <span class="menu-text"> Passenger <strong></strong></span>
+        </a>
+
+        <b class="arrow"></b>
+    </li>
+    <li>
+        <a href="Billable.smi" id="menu-billable">
+            <i class="menu-icon fa fa-file-text"></i>
+            <span class="menu-text"> Billable <strong></strong></span>
+        </a>
+        <b class="arrow"></b>
+    </li>
+    <li class="">
+        <a href="History.smi" id="menu-history">
+            <i class="menu-icon fa fa-history"></i>
+            <span class="menu-text"> History </span>
+        </a>
+        <b class="arrow"></b>
+    </li>
+</ul>
+
+
+
+<script>
+    $(document).ready(function () {
+        var path = location.pathname;
+        var name = path.split("/");
+        console.log(name[2]);
+        str = name[2].split(".");
+        console.log(str[0]);
+        sub = str[0].substr(0, 5);
+        console.log(sub);
+        var $select = $('a[href*="' + sub + '"]');
+        $("#BookMenu").find($select).css('background-color', '#ccc');
+
+        $("#menu-airticket strong").html('<span  class="badge" style="background-color:#0ACDCD; float:right">' + $("#input-airticket_size").val() + '</span>');
+        $("#menu-hotel strong").html('<span  class="badge" style="background-color:#0ACDCD; float:right">' + $("#input-hotel_size").val() + '</span>');
+        $("#menu-other strong").html('<span  class="badge" style="background-color:#0ACDCD; float:right">' + $("#input-other_size").val() + '</span>');
+        $("#menu-land strong").html('<span  class="badge" style="background-color:#0ACDCD; float:right">' + $("#input-land_size").val() + '</span>');
+        $("#menu-passenger strong").html('<span  class="badge" style="background-color:#0ACDCD; float:right">' + $("#input-passenger_size").val() + '</span>');
+        $("#menu-billable strong").html('<span  class="badge" style="background-color:#0ACDCD; float:right">' + $("#input-billable_size").val() + '</span>');
+        $("#menu-history strong").html('<span  class="badge" style="background-color:#0ACDCD; float:right">' + $("#input-history_size").val() + '</span>');
+        $("#menu-daytour strong").html('<span  class="badge" style="background-color:#0ACDCD; float:right">' + $("#input-daytour_size").val() + '</span>');
+
+
+        $("#BookMenu a").one('mouseover', function () {
+
+            var action = '&action=edit';
+            if ($("#actionIDown").val() == 'new') {
+                action = "&action=new";
+                $('#BookMenu a').click(function (e) {
+                    e.preventDefault();
+                });
+            }
+            console.log("href");
+            $(this).attr('href', $(this).attr('href') + '?referenceNo='+$("#getRealformatUrl").val() + action);
+        });
+    });
+
+
+</script>
