@@ -1,0 +1,131 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.smi.travel.datalayer.view.dao.impl;
+
+import com.smi.travel.datalayer.report.model.AgentCommission;
+import com.smi.travel.datalayer.report.model.AgentCommissionReport;
+import com.smi.travel.datalayer.report.model.AgentCommissionSummaryReport;
+import com.smi.travel.datalayer.view.dao.AgentCommissionReportDao;
+import com.smi.travel.util.UtilityFunction;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.Hibernate;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
+/**
+ *
+ * @author Surachai
+ */
+public class AgentCommissionReportImpl implements AgentCommissionReportDao {
+
+    private SessionFactory sessionFactory;
+    private static final String AGENTCOM_SUMMARY_QUERY = "select agt.`code` as `code`,"
+            + "agt.`name` as `name`,"
+            + "count(DISTINCT(mt.id)) as count_booking,"
+            + "sum(db.agent_comission) as comission "
+            + "from daytour_booking db "
+            + "inner JOIN agent agt on db.agent_id = agt.id "
+            + "INNER JOIN `master` mt on mt.id = db.master_id ";
+
+    
+    @Override
+    public AgentCommission getAgentCommissionReport(String datefrom, String dateto, String user,String agentid) {
+        AgentCommission agentCommission = new AgentCommission();
+        agentCommission.setAgentCommissionInfoDataSource(new JRBeanCollectionDataSource(getAgentReportInfo(datefrom, dateto, user,agentid)));
+        agentCommission.setAgentCommissionSummaryDataSource(new JRBeanCollectionDataSource(getAgentReportSummary(datefrom, dateto, user,agentid)));
+        return agentCommission;
+    }
+    
+    @Override
+    public List getAgentReportSummary(String datefrom, String dateto, String user,String agentid) {
+        Session session = this.sessionFactory.openSession();
+        List data = new ArrayList();
+        Date thisdate = new Date();
+        UtilityFunction util = new UtilityFunction();
+        String sql = AGENTCOM_SUMMARY_QUERY+" where db.tour_date >= '"+datefrom+"' and db.tour_date <= '"+dateto+"'" ;
+        
+        if((agentid != null)&&(!"".equalsIgnoreCase(agentid))){
+            sql += " and agt.id ="+agentid;
+        }
+        sql += " GROUP BY agt.`code`,agt.`name` HAVING  sum(`db`.`agent_comission`) <> 0";
+        System.out.println("sql :" +sql);
+        List<Object[]> QueryAgentComSummaryList = session.createSQLQuery(sql)
+                .addScalar("code", Hibernate.STRING)
+                .addScalar("name", Hibernate.STRING)
+                .addScalar("count_booking", Hibernate.STRING)
+                .addScalar("comission", Hibernate.INTEGER)
+                .list();
+  
+        for (Object[] B : QueryAgentComSummaryList) {
+             AgentCommissionSummaryReport   report = new  AgentCommissionSummaryReport(); 
+             report.setCode(util.ConvertString(B[0]));
+             report.setName(util.ConvertString(B[1]));
+             report.setCountbook(StringUtils.isEmpty(util.ConvertString(B[2])) ? 0 : Integer.parseInt(util.ConvertString(B[2])));
+             report.setCommission(B[3]== null ? 0:(Integer)B[3]);
+             report.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(thisdate));
+             report.setDatefrom(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)));
+             report.setDateto(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)));
+             report.setUser(user);
+             data.add(report);
+        }      
+        return data;  
+    }
+
+    @Override
+    public List getAgentReportInfo(String datefrom, String dateto, String user,String agentid) {
+        Session session = this.sessionFactory.openSession();
+        List data = new ArrayList();
+        Date thisdate = new Date();
+        UtilityFunction util = new UtilityFunction();
+        String query ="SELECT * FROM `agent_commission_info` where tourdate >= '"+datefrom+"' and tourdate <= '"+dateto+"'";
+        if((agentid != null)&&(!"".equalsIgnoreCase(agentid))){
+            query += " and agentid = "+agentid;
+        }
+        List<Object[]> QueryAgentComList = session.createSQLQuery(query)
+                .addScalar("tourdate", Hibernate.DATE)
+                .addScalar("tourcode", Hibernate.STRING)
+                .addScalar("customer", Hibernate.STRING)
+                .addScalar("pax", Hibernate.STRING)
+                .addScalar("comission", Hibernate.INTEGER)
+                .addScalar("sell", Hibernate.INTEGER)
+                .addScalar("name", Hibernate.STRING)
+                .list();
+                
+        for (Object[] B : QueryAgentComList) {
+             AgentCommissionReport   report = new  AgentCommissionReport(); 
+             report.setTourdate(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(B[0]));
+             report.setTourcode(util.ConvertString(B[1]));
+             report.setClient(util.ConvertString(B[2]));
+             report.setPax(StringUtils.isEmpty(util.ConvertString(B[3])) ? 0 : Integer.parseInt(util.ConvertString(B[3])));
+             report.setCommission(B[4]== null ? 0:(Integer)B[4]);
+             report.setSell(B[5]== null ? 0:(Integer)B[5]);
+             report.setAgent(util.ConvertString(B[6]));
+             report.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(thisdate));
+             report.setDatefrom(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)));
+             report.setDateto(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)));
+             report.setUser(user);
+             data.add(report);
+        }              
+                
+        return data;
+    }
+
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+
+}
