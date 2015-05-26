@@ -1,0 +1,49 @@
+2014-11-14 17:09:23 INFO  ClassPathXmlApplicationContext:510 - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@b1fba0: startup date [Fri Nov 14 17:09:23 ICT 2014]; root of context hierarchy
+2014-11-14 17:09:23 INFO  XmlBeanDefinitionReader:315 - Loading XML bean definitions from class path resource [Spring-Mail.xml]
+2014-11-14 17:09:23 INFO  DefaultListableBeanFactory:598 - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@4afb60: defining beans [mailSender,mailManager]; root of factory hierarchy
+2014-11-14 17:09:23 INFO  DefaultListableBeanFactory:444 - Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@4afb60: defining beans [mailSender,mailManager]; root of factory hierarchy
+2014-11-14 17:10:28 INFO  ClassPathXmlApplicationContext:510 - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@d965ea: startup date [Fri Nov 14 17:10:28 ICT 2014]; root of context hierarchy
+2014-11-14 17:10:28 INFO  XmlBeanDefinitionReader:315 - Loading XML bean definitions from class path resource [Spring-Mail.xml]
+2014-11-14 17:10:28 INFO  DefaultListableBeanFactory:598 - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@4afb60: defining beans [mailSender,mailManager]; root of factory hierarchy
+2014-11-14 17:15:35 INFO  ClassPathXmlApplicationContext:510 - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@b1fba0: startup date [Fri Nov 14 17:15:35 ICT 2014]; root of context hierarchy
+2014-11-14 17:15:35 INFO  XmlBeanDefinitionReader:315 - Loading XML bean definitions from class path resource [Spring-Mail.xml]
+2014-11-14 17:15:35 INFO  DefaultListableBeanFactory:598 - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@bd9b60: defining beans [mailSender,mailManager]; root of factory hierarchy
+2014-11-16 20:07:25 INFO  ClassPathXmlApplicationContext:510 - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@1ab6087: startup date [Sun Nov 16 20:07:25 ICT 2014]; root of context hierarchy
+2014-11-16 20:07:25 INFO  XmlBeanDefinitionReader:315 - Loading XML bean definitions from class path resource [Spring-Mail.xml]
+2014-11-16 20:07:25 INFO  DefaultListableBeanFactory:598 - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@1d6b129: defining beans [mailSender,mailManager]; root of factory hierarchy
+2014-11-17 09:29:59 INFO  ClassPathXmlApplicationContext:510 - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@1ab6087: startup date [Mon Nov 17 09:29:59 ICT 2014]; root of context hierarchy
+2014-11-17 09:29:59 INFO  XmlBeanDefinitionReader:315 - Loading XML bean definitions from class path resource [Spring-Mail.xml]
+2014-11-17 09:30:00 INFO  DefaultListableBeanFactory:598 - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@df43b7: defining beans [mailSender,mailManager]; root of factory hierarchy
+2014-11-17 09:30:41 INFO  ClassPathXmlApplicationContext:510 - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@1ab6087: startup date [Mon Nov 17 09:30:41 ICT 2014]; root of context hierarchy
+2014-11-17 09:30:41 INFO  XmlBeanDefinitionReader:315 - Loading XML bean definitions from class path resource [Spring-Mail.xml]
+2014-11-17 09:30:41 INFO  DefaultListableBeanFactory:598 - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@df43b7: defining beans [mailSender,mailManager]; root of factory hierarchy
+2014-11-17 09:31:47 INFO  ClassPathXmlApplicationContext:510 - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@223c66: startup date [Mon Nov 17 09:31:47 ICT 2014]; root of context hierarchy
+2014-11-17 09:31:47 INFO  XmlBeanDefinitionReader:315 - Loading XML bean definitions from class path resource [Spring-Mail.xml]
+2014-11-17 09:31:47 INFO  DefaultListableBeanFactory:598 - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@2815d3: defining beans [mailSender,mailManager]; root of factory hierarchy
+2014-11-17 09:40:47 INFO  ClassPathXmlApplicationContext:510 - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@223c66: startup date [Mon Nov 17 09:40:47 ICT 2014]; root of context hierarchy
+2014-11-17 09:40:47 INFO  XmlBeanDefinitionReader:315 - Loading XML bean definitions from class path resource [Spring-Mail.xml]
+2014-11-17 09:40:47 INFO  DefaultListableBeanFactory:598 - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@1b0e64a: defining beans [mailSender,mailManager]; root of factory hierarchy
+2014-11-17 09:41:26 INFO  ClassPathXmlApplicationContext:510 - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@223c66: startup date [Mon Nov 17 09:41:26 ICT 2014]; root of context hierarchy
+2014-11-17 09:41:26 INFO  XmlBeanDefinitionReader:315 - Loading XML bean definitions from class path resource [Spring-Mail.xml]
+2014-11-17 09:41:26 INFO  DefaultListableBeanFactory:598 - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@1b0e64a: defining beans [mailSender,mailManager]; root of factory hierarchy
+2014-11-18 15:03:02 INFO  ClassPathXmlApplicationContext:510 - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@1ee33f3: startup date [Tue Nov 18 15:03:02 ICT 2014]; root of context hierarchy
+2014-11-18 15:03:02 INFO  XmlBeanDefinitionReader:315 - Loading XML bean definitions from class path resource [Spring-Mail.xml]
+2014-11-18 15:03:03 INFO  DefaultListableBeanFactory:598 - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@1b9c1f3: defining beans [mailSender]; root of factory hierarchy
+2014-11-18 15:03:20 INFO  ClassPathXmlApplicationContext:510 - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@194a7ec: startup date [Tue Nov 18 15:03:20 ICT 2014]; root of context hierarchy
+2014-11-18 15:03:20 INFO  XmlBeanDefinitionReader:315 - Loading XML bean definitions from class path resource [Spring-Mail.xml]
+2014-11-18 15:03:20 INFO  DefaultListableBeanFactory:598 - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@6c4ad7: defining beans [mailSender]; root of factory hierarchy
+2014-11-18 15:03:53 INFO  ClassPathXmlApplicationContext:510 - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@9c8620: startup date [Tue Nov 18 15:03:53 ICT 2014]; root of context hierarchy
+2014-11-18 15:03:54 INFO  XmlBeanDefinitionReader:315 - Loading XML bean definitions from class path resource [Spring-Mail.xml]
+2014-11-18 15:03:54 INFO  DefaultListableBeanFactory:598 - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@1a5a705: defining beans [mailSender]; root of factory hierarchy
+2014-11-18 15:04:26 INFO  ClassPathXmlApplicationContext:510 - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@194a7ec: startup date [Tue Nov 18 15:04:26 ICT 2014]; root of context hierarchy
+2014-11-18 15:04:26 INFO  XmlBeanDefinitionReader:315 - Loading XML bean definitions from class path resource [Spring-Mail.xml]
+2014-11-18 15:04:26 INFO  DefaultListableBeanFactory:598 - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@6c4ad7: defining beans [mailSender]; root of factory hierarchy
+2014-11-18 15:08:28 INFO  ClassPathXmlApplicationContext:510 - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@194a7ec: startup date [Tue Nov 18 15:08:28 ICT 2014]; root of context hierarchy
+2014-11-18 15:08:28 INFO  XmlBeanDefinitionReader:315 - Loading XML bean definitions from class path resource [Spring-Mail.xml]
+2014-11-18 15:08:28 INFO  DefaultListableBeanFactory:598 - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@6c4ad7: defining beans [mailSender]; root of factory hierarchy
+2014-11-18 15:08:55 INFO  ClassPathXmlApplicationContext:510 - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@194a7ec: startup date [Tue Nov 18 15:08:55 ICT 2014]; root of context hierarchy
+2014-11-18 15:08:55 INFO  XmlBeanDefinitionReader:315 - Loading XML bean definitions from class path resource [Spring-Mail.xml]
+2014-11-18 15:08:55 INFO  DefaultListableBeanFactory:598 - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@1a5a705: defining beans [mailSender]; root of factory hierarchy
+2014-11-18 15:09:30 INFO  ClassPathXmlApplicationContext:510 - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@1ee33f3: startup date [Tue Nov 18 15:09:30 ICT 2014]; root of context hierarchy
+2014-11-18 15:09:30 INFO  XmlBeanDefinitionReader:315 - Loading XML bean definitions from class path resource [Spring-Mail.xml]
+2014-11-18 15:09:30 INFO  DefaultListableBeanFactory:598 - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@1a5a705: defining beans [mailSender]; root of factory hierarchy
