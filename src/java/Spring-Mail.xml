@@ -1,0 +1,14 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+ 
+    <bean id="mailSender" class="com.smi.travel.common.MailConfig">
+        <property name="hostname" value="smtp.gmail.com" />
+        <property name="port" value="465" />
+        <property name="username" value="surachaisvn@gmail.com" />
+        <property name="password" value="saint02799" />
+    </bean>
+
+ 
+</beans>
