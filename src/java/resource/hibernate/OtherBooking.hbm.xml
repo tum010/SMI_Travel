@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 4, 2014 5:36:02 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.OtherBooking" table="other_booking" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="product" class="com.smi.travel.datalayer.entity.Product" fetch="select">
+            <column name="product_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="master" class="com.smi.travel.datalayer.entity.Master" fetch="select">
+            <column name="master_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="agent" class="com.smi.travel.datalayer.entity.Agent" fetch="select">
+            <column name="agent_id"  />
+        </many-to-one> 
+        <many-to-one name="status" class="com.smi.travel.datalayer.entity.MItemstatus" fetch="select">
+            <column name="status"  />
+        </many-to-one> 
+        <property name="adCost" type="java.lang.Long">
+            <column name="ad_cost" precision="10" scale="0" />
+        </property>
+        <property name="adPrice" type="java.lang.Long">
+            <column name="ad_price" precision="10" scale="0" />
+        </property>
+        <property name="adQty" type="java.lang.Integer">
+            <column name="ad_qty" />
+        </property>
+        <property name="chCost" type="java.lang.Long">
+            <column name="ch_cost" precision="10" scale="0" />
+        </property>
+        <property name="chPrice" type="java.lang.Long">
+            <column name="ch_price" precision="10" scale="0" />
+        </property>
+        <property name="chQty" type="java.lang.Integer">
+            <column name="ch_qty" />
+        </property>
+        <property name="inCost" type="java.lang.Long">
+            <column name="in_cost" precision="10" scale="0" />
+        </property>
+        <property name="inPrice" type="java.lang.Long">
+            <column name="in_price" precision="10" scale="0" />
+        </property>
+        <property name="inQty" type="java.lang.Integer">
+            <column name="in_qty" />
+        </property>
+
+        <property name="otherDate" type="date">
+            <column name="other_date" length="10" />
+        </property>
+        <property name="otherTime" type="time">
+            <column name="other_time" length="8" />
+        </property>
+        <property name="createDate" type="date">
+            <column name="create_date" length="10" />
+        </property>
+        <property name="updateBy" type="string">
+            <column name="update_by" length="20" />
+        </property>
+        <property name="updateDate" type="date">
+            <column name="update_date" length="10" />
+        </property>
+        <property name="cancelDate" type="date">
+            <column name="cancel_date" length="10" />
+        </property>
+        <property name="createBy" type="string">
+            <column name="create_by" length="20" />
+        </property>
+        <property name="remark" type="string">
+            <column name="remark" length="100" />
+        </property>
+        <property name="isBill" type="java.lang.Integer">
+            <column name="is_bill" />
+        </property>
+        <property name="currency" type="string">
+            <column name="currency" length="3" />
+        </property>
+         <set name="coupons" table="coupon" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="other_booking_id" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.Coupon" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.TourOperationExpense" table="tour_operation_expense" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="tourOperationDesc" class="com.smi.travel.datalayer.entity.TourOperationDesc" fetch="select">
+            <column name="tour_desc_id" />
+        </many-to-one>
+        <property name="description" type="string">
+            <column name="description" />
+        </property>
+        <property name="qty" type="java.lang.Integer">
+            <column name="qty" />
+        </property>
+        <property name="amount" type="java.lang.Integer">
+            <column name="amount" />
+        </property>
+        <property name="currency" type="string">
+            <column name="currency" length="10" />
+        </property>
+        <property name="priceType" type="string">
+            <column name="price_type" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

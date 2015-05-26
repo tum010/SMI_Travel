@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 4, 2014 5:36:02 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping auto-import="true" default-lazy="false">
+
+    <class name="com.smi.travel.datalayer.view.entity.BookSummary"  table="booking_summary_view" mutable="false" >
+
+
+        <id name="refNo" type="string">
+            <column name="ref_no"/>
+        </id>
+        <property name="type" type="string">
+            <column name="type" /> 
+        </property>
+       <property name="description" type="string">
+            <column name="description" />
+        </property>
+        <property name="dateTour" type="date">
+            <column name="date_tour" />
+        </property>
+        <property name="price" type="string">
+            <column name="price" />
+        </property>
+     
+    </class>
+        
+</hibernate-mapping>
+
+

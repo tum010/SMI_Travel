@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 4, 2014 5:36:02 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.Billable" table="billable" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+       <many-to-one name="MAccpay" class="com.smi.travel.datalayer.entity.MAccpay" fetch="select">
+            <column name="pay_by" />
+        </many-to-one>
+        <many-to-one name="master" class="com.smi.travel.datalayer.entity.Master" fetch="select">
+            <column name="master_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="MAccterm" class="com.smi.travel.datalayer.entity.MAccterm" fetch="select">
+            <column name="term_pay" />
+        </many-to-one>
+        <many-to-one name="passenger" class="com.smi.travel.datalayer.entity.Passenger" fetch="select">
+            <column name="passenger_id" />
+        </many-to-one>
+        <property name="billTo" type="string">
+            <column name="bill_to" length="20" />
+        </property>
+        <property name="billName" type="string">
+            <column name="bill_name" length="50" />
+        </property>
+        <property name="billAddress" type="string">
+            <column name="bill_address" length="200" />
+        </property>
+        <property name="billDate" type="date">
+            <column name="bill_date" length="10" />
+        </property>
+        <property name="isPayYourself" type="java.lang.Integer">
+            <column name="is_pay_yourself" />
+        </property>
+        <property name="remark" type="string">
+            <column name="remark" length="100" />
+        </property>
+        <set name="billableDescs" table="billable_desc" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="billable_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.BillableDesc" />
+        </set>
+    </class>
+</hibernate-mapping>

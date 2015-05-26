@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 4, 2014 5:36:02 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping auto-import="true" default-lazy="false">
+
+    <class name="com.smi.travel.datalayer.view.entity.ProductPriceDetail"  table="product_price_detail" mutable="false" >
+        <id name="id" type="string">
+            <column name="product_id" /> 
+        </id>
+        <property name="code" type="string">
+            <column name="code"/>
+        </property>
+        <property name="name" type="string">
+            <column name="name" />
+        </property>
+        <property name="effectiveFrom" type="date">
+            <column name="effective_from" />
+        </property>
+        <property name="effectiveTo" type="date">
+            <column name="effective_to" />
+        </property>
+        <property name="adCost" type="java.lang.Integer">
+            <column name="ad_cost" />
+        </property>
+        <property name="chCost" type="java.lang.Integer">
+            <column name="ch_cost" />
+        </property>
+        <property name="inCost" type="java.lang.Integer">
+            <column name="in_cost" />
+        </property>
+        <property name="adPrice" type="java.lang.Integer">
+            <column name="ad_price" />
+        </property>
+        <property name="chPrice" type="java.lang.Integer">
+            <column name="ch_price" />
+        </property>
+        <property name="inPrice" type="java.lang.Integer">
+            <column name="in_price" />
+        </property>
+        <property name="description" type="string">
+            <column name="detail"/>
+        </property>
+        <property name="updateBy" type="string">
+            <column name="update_by" />
+        </property>
+        <property name="ProductTypeId" type="string">
+            <column name="product_type_id"/>
+        </property>
+        <property name="ProductTypeName" type="string">
+            <column name="product_type_name" />
+        </property>
+    </class>
+        
+</hibernate-mapping>
+
+

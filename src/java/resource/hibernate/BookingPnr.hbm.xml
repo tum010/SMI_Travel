@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 4, 2014 5:36:02 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.BookingPnr" table="booking_pnr" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="gds" type="string">
+            <column name="gds" length="20" not-null="true" />
+        </property>
+        <property name="pnr" type="string">
+            <column name="pnr" length="6" not-null="true" />
+        </property>
+        <property name="filename" type="string">
+            <column name="filename" length="255" not-null="true" />
+        </property>
+        <property name="currency" type="string">
+            <column name="currency" length="3" />
+        </property>
+        <set name="bookingAirlines" table="booking_airline" inverse="false" lazy="true" cascade="all" fetch="select">
+            <key>
+                <column name="booking_pnr_id"  />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.BookingAirline" />
+        </set>
+        
+        
+    </class>
+</hibernate-mapping>

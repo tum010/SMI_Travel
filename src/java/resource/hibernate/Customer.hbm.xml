@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 4, 2014 5:36:02 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated Dec 22, 2014 5:59:06 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.Customer" table="customer" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="MInitialname" class="com.smi.travel.datalayer.entity.MInitialname" fetch="select" lazy="false">
+            <column name="initial_name"  />
+        </many-to-one>
+        <property name="code" type="string">
+            <column name="code" length="8" not-null="true" />
+        </property>
+        <property name="firstName" type="string">
+            <column name="first_name" length="255" not-null="true" />
+        </property>
+        <property name="lastName" type="string">
+            <column name="last_name" length="50" not-null="true" />
+        </property>
+        <property name="birthDate" type="date">
+            <column name="birth_date" length="10" />
+        </property>
+        <property name="sex" type="string">
+            <column name="sex" length="1" />
+        </property>
+        <property name="address" type="string">
+            <column name="address" length="255" />
+        </property>
+        <property name="tel" type="string">
+            <column name="tel" length="100" />
+        </property>
+        <property name="phone" type="string">
+            <column name="phone" length="255" />
+        </property>
+        <property name="postalCode" type="string">
+            <column name="postal_code" length="50" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="50" />
+        </property>
+        <property name="firstNameJapan" type="string">
+            <column name="first_name_japan" length="255" />
+        </property>
+        <property name="lastNameJapan" type="string">
+            <column name="last_name_japan" length="255" />
+        </property>
+        <property name="remark" type="string">
+            <column name="remark" length="100" />
+        </property>
+        <property name="passportNo" type="string">
+            <column name="passport_no" length="30" />
+        </property>
+        <property name="nationality" type="string">
+            <column name="nationality" length="30" />
+        </property>
+        <property name="personalId" type="string">
+            <column name="personal_id" length="13" />
+        </property>
+        <set name="masters" table="master" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="FalimyLeader_id" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.Master" />
+        </set>
+        <set name="passengers" table="passenger" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="customer_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.Passenger" />
+        </set>
+    </class>
+</hibernate-mapping>

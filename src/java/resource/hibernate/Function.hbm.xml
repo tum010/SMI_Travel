@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 4, 2014 5:36:02 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.Function" table="function" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="mainMenu" class="com.smi.travel.datalayer.entity.MainMenu" fetch="select">
+            <column name="mainmenu_id" />
+        </many-to-one>
+        <property name="name" type="string">
+            <column name="name" length="50" not-null="true" />
+        </property>
+        <set name="roleMappings" table="role_mapping" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="function_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.RoleMapping" />
+        </set>
+    </class>
+</hibernate-mapping>

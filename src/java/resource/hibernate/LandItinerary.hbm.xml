@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.LandItinerary" table="land_itinerary" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="landBooking" class="com.smi.travel.datalayer.entity.LandBooking" fetch="select">
+            <column name="land_booking_id" not-null="true" />
+        </many-to-one>
+        <property name="orderNo" type="int">
+            <column name="order_no" not-null="true" />
+        </property>
+        <property name="dayTime" type="time">
+            <column name="day_time" length="8"  />
+        </property>
+        <property name="dayDate" type="date">
+            <column name="day_date" length="10" />
+        </property>
+        <property name="description" type="string">
+            <column name="description" not-null="true" />
+        </property>
+        <property name="packagecode" type="string">
+            <column name="packagecode" length="50"  />
+        </property>
+        
+        
+    </class>
+</hibernate-mapping>

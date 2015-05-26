@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 4, 2014 5:36:02 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping auto-import="true" default-lazy="false">
+
+    <class name="com.smi.travel.datalayer.view.entity.BookingView"  table="booking_view" mutable="false" >
+
+
+        <id name="refno" type="string">
+            <column name="ref_no"/>
+        </id>
+        
+        <property name="agentCode" type="string">
+            <column name="agent_code" /> 
+        </property>
+       <property name="leaderName" type="string">
+            <column name="leader_name" />
+        </property>
+
+        <property name="statusName" type="string">
+            <column name="status_name" />
+        </property>
+        <property name="pnr" type="string">
+            <column name="pnr" />
+        </property>
+        <property name="hotelName" type="string">
+            <column name="hotel_name" />
+        </property>
+        <property name="firstDepartDate" type="date">
+            <column name="first_depart_date" />
+        </property>
+        <property name="firstCheckinDate" type="date">
+            <column name="first_checkin_date" />
+        </property>
+        <property name="createDate" type="date">
+            <column name="create_date" />
+        </property>
+        <property name="createBy" type="string">
+            <column name="create_by"/>
+        </property>
+        <property name="departmentName" type="string">
+            <column name="department_name" />
+        </property>
+        <property name="departmentId" type="string">
+            <column name="department_id" />
+        </property>
+        <property name="statusId" type="string">
+            <column name="status_id" />
+        </property>
+    </class>
+        
+</hibernate-mapping>
+
+

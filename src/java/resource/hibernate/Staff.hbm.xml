@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 4, 2014 5:36:02 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.SystemUser" table="staff" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="MDepartment" class="com.smi.travel.datalayer.entity.MDepartment" fetch="select">
+            <column name="department_id" />
+        </many-to-one>
+        <many-to-one name="role" class="com.smi.travel.datalayer.entity.Role" fetch="select">
+            <column name="role_id" />
+        </many-to-one>
+        <property name="name" type="string">
+            <column name="name" length="100" not-null="true" />
+        </property>
+        <property name="username" type="string">
+            <column name="username" length="50" not-null="true" />
+        </property>
+        <property name="password" type="string">
+            <column name="password" length="50" not-null="true" />
+        </property>
+        <property name="position" type="string">
+            <column name="position" length="50" />
+        </property>
+        <property name="tel" type="string">
+            <column name="tel" length="30" />
+        </property>
+        <property name="car" type="string">
+            <column name="car" length="50" />
+        </property>
+        <property name="status" type="string">
+            <column name="status" length="10" />
+        </property>
+        <property name="createBy" type="string">
+            <column name="create_by" length="50" />
+        </property>
+        <property name="createDate" type="date">
+            <column name="create_date" length="10" />
+        </property>
+
+        <set name="tourOperationDrivers" table="tour_operation_driver" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="driver_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.TourOperationDriver" />
+        </set>
+        <set name="masters" table="master" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="Staff_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.Master" />
+        </set>
+        <set name="tourOperationDescsForGuide2" table="tour_operation_desc" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="guide_2" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.TourOperationDesc" />
+        </set>
+        <set name="transferJobsForDriverId" table="transfer_job" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="driver_id" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.TransferJob" />
+        </set>
+        <set name="transferJobsForGuildeId" table="transfer_job" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="guilde_id" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.TransferJob" />
+        </set>
+        <set name="tourOperationDescsForGuide1" table="tour_operation_desc" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="guide_1" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.TourOperationDesc" />
+        </set>
+        <set name="daytourBookings" table="daytour_booking" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="guide_id" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.DaytourBooking" />
+        </set>
+        <set name="airticketBookingsForIssueBy" table="airticket_booking" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="issue_by" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.AirticketBooking" />
+        </set>
+        <set name="airticketBookingsForOwnerBy" table="airticket_booking" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="owner_by" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.AirticketBooking" />
+        </set>
+
+    </class>
+</hibernate-mapping>

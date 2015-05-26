@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.Daytour" table="daytour" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="code" type="string">
+            <column name="code" length="50" not-null="true" />
+        </property>
+        <property name="name" type="string">
+            <column name="name" not-null="true" />
+        </property>
+        <property name="min" type="java.lang.Integer">
+            <column name="min" />
+        </property>
+        <property name="max" type="java.lang.Integer">
+            <column name="max" />
+        </property>
+        <property name="remark" type="string">
+            <column name="remark" />
+        </property>
+        <property name="condition" type="string">
+            <column name="tour_condition" />
+        </property>
+        <property name="createBy" type="string">
+            <column name="create_by" length="10" />
+        </property>
+        <property name="updateBy" type="string">
+            <column name="update_by" length="10" />
+        </property>
+        <property name="status" type="string">
+            <column name="status" length="10" />
+        </property>
+        <property name="guideComission" type="java.lang.Double">
+            <column name="guide_comission" precision="22" scale="0" />
+        </property>
+        <set name="agentTourComissions" table="agent_tour_comission" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="tour_id" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.AgentTourComission" />
+        </set>
+        <set name="daytourBookings" table="daytour_booking" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="tour_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.DaytourBooking" />
+        </set>
+        <set name="daytourPrices" table="daytour_price" inverse="true" lazy="true" fetch="select" order-by="id asc">
+            <key>
+                <column name="daytour_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.DaytourPrice" />
+        </set>
+        <set name="daytourExpenses" table="daytour_expense" inverse="true" lazy="true" fetch="select" order-by="id asc">
+            <key>
+                <column name="daytour_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.DaytourExpense" />
+        </set>
+        <set name="tourOperationDescs" table="tour_operation_desc" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="tour_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.TourOperationDesc" />
+        </set>
+    </class>
+</hibernate-mapping>

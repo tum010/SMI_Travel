@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.AgentTourComission" table="agent_tour_comission" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="agentComission" class="com.smi.travel.datalayer.entity.AgentComission" fetch="select">
+            <column name="agent_com_id" />
+        </many-to-one>
+        <many-to-one name="daytour" class="com.smi.travel.datalayer.entity.Daytour" fetch="select">
+            <column name="tour_id" />
+        </many-to-one>
+        <property name="from" type="date">
+            <column name="effective_from" length="10" />
+        </property>
+        <property name="to" type="date">
+            <column name="effective_to" length="10" />
+        </property>
+        <property name="comission" type="java.lang.Double">
+            <column name="comission" precision="22" scale="2" />
+        </property>
+        <property name="createBy" type="string">
+            <column name="create_by" length="10" />
+        </property>
+        <property name="updateBy" type="string">
+            <column name="update_by" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

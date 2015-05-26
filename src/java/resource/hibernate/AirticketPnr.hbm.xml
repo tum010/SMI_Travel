@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 4, 2014 5:36:02 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated Dec 22, 2014 5:59:06 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.AirticketPnr" table="airticket_pnr" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="MItemstatus" class="com.smi.travel.datalayer.entity.MItemstatus" fetch="select">
+            <column name="status" />
+        </many-to-one>
+        <many-to-one name="airticketBooking" class="com.smi.travel.datalayer.entity.AirticketBooking" fetch="select">
+            <column name="booking_id" not-null="true" />
+        </many-to-one>
+        <property name="pnr" type="string">
+            <column name="pnr" length="6" not-null="true" />
+        </property>
+        <set name="airticketAirlines" table="airticket_airline" inverse="true" cascade="save-update" lazy="true" fetch="select">
+            <key>
+                <column name="pnr_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.AirticketAirline" />
+        </set>
+    </class>
+</hibernate-mapping>

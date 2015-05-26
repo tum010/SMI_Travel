@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.LandBooking" table="land_booking" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="agent" class="com.smi.travel.datalayer.entity.Agent" fetch="select">
+            <column name="land_agent_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="MItemstatus" class="com.smi.travel.datalayer.entity.MItemstatus" fetch="select">
+            <column name="status" />
+        </many-to-one>
+        <many-to-one name="packageTour" class="com.smi.travel.datalayer.entity.PackageTour" fetch="select">
+            <column name="outbound_package_id" />
+        </many-to-one>
+        <many-to-one name="master" class="com.smi.travel.datalayer.entity.Master" fetch="select">
+            <column name="master_id" not-null="true" />
+        </many-to-one>
+        <property name="okBy" type="string">
+            <column name="ok_by" length="100" />
+        </property>
+        <property name="category" type="string">
+            <column name="category" length="100" />
+        </property>
+        <property name="description" type="string">
+            <column name="description" length="255" />
+        </property>
+        <property name="inboundQty" type="int">
+            <column name="inbound_qty"  />
+        </property>
+        <property name="inboundCost" type="java.lang.Long">
+            <column name="inbound_cost" precision="10" scale="0" />
+        </property>
+        <property name="inboundPrice" type="java.lang.Long">
+            <column name="inbound_price" precision="10" scale="0" />
+        </property>
+        <property name="isBill" type="java.lang.Integer">
+            <column name="is_bill" />
+        </property>
+        <property name="remark" type="string">
+            <column name="remark" />
+        </property>
+        <property name="createDate" type="date">
+            <column name="create_date" length="10" />
+        </property>
+        <property name="outboundAdQty" type="java.lang.Integer">
+            <column name="outbound_ad_qty" />
+        </property>
+        <property name="outboundAdCost" type="java.lang.Long">
+            <column name="outbound_ad_cost" precision="10" scale="0" />
+        </property>
+        <property name="outboundAdPrice" type="java.lang.Long">
+            <column name="outbound_ad_price" precision="10" scale="0" />
+        </property>
+        <property name="outboundChQty" type="java.lang.Integer">
+            <column name="outbound_ch_qty" />
+        </property>
+        <property name="outboundChCost" type="java.lang.Long">
+            <column name="outbound_ch_cost" precision="10" scale="0" />
+        </property>
+        <property name="outboundChPrice" type="java.lang.Long">
+            <column name="outbound_ch_price" precision="10" scale="0" />
+        </property>
+        <property name="outboundInQty" type="java.lang.Integer">
+            <column name="outbound_in_qty" />
+        </property>
+        <property name="outboundInCost" type="java.lang.Long">
+            <column name="outbound_in_cost" precision="10" scale="0" />
+        </property>
+        <property name="outboundInPrice" type="java.lang.Long">
+            <column name="outbound_in_price" precision="10" scale="0" />
+        </property>
+        <property name="inboundChQty" type="java.lang.Integer">
+            <column name="inbound_ch_qty" />
+        </property>
+        <property name="inboundChCost" type="java.lang.Long">
+            <column name="inbound_ch_cost" precision="10" scale="0" />
+        </property>
+        <property name="inboundChPrice" type="java.lang.Long">
+            <column name="inbound_ch_price" precision="10" scale="0" />
+        </property>
+        <property name="inboundInQty" type="java.lang.Integer">
+            <column name="inbound_in_qty" />
+        </property>
+        <property name="inboundInCost" type="java.lang.Long">
+            <column name="inbound_in_cost" precision="10" scale="0" />
+        </property>
+        <property name="inboundInPrice" type="java.lang.Long">
+            <column name="inbound_in_price" precision="10" scale="0" />
+        </property>
+        <property name="currency" type="string">
+            <column name="currency" length="3" />
+        </property>
+         <set name="landItineraries" table="land_itinerary" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="land_booking_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.LandItinerary" />
+        </set>
+    </class>
+</hibernate-mapping>

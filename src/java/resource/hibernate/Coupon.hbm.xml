@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.Coupon" table="coupon" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="daytourBooking" class="com.smi.travel.datalayer.entity.DaytourBooking" fetch="select">
+            <column name="daytour_booking_id" />
+        </many-to-one>
+        <many-to-one name="otherBooking" class="com.smi.travel.datalayer.entity.OtherBooking" fetch="select">
+            <column name="other_booking_id" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

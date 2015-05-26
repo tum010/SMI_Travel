@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 4, 2014 5:36:02 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.RoleMapping" table="role_mapping" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="function" class="com.smi.travel.datalayer.entity.Function" fetch="select">
+            <column name="function_id" not-null="true"  />
+        </many-to-one>
+        <many-to-one name="role" class="com.smi.travel.datalayer.entity.Role" fetch="select">
+            <column name="role_id" not-null="true"  />
+        </many-to-one>
+        <property name="createBy" type="string">
+            <column name="create_by" />
+        </property>
+        <property name="createDate" type="date">
+            <column name="create_date" length="10" />
+        </property>
+        <property name="updateBy" type="string">
+            <column name="update_by" />
+        </property>
+        <property name="updateDate" type="date">
+            <column name="update_date" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 4, 2014 5:36:02 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.HotelBooking" table="hotel_booking" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="MItemstatus" class="com.smi.travel.datalayer.entity.MItemstatus" fetch="select">
+            <column name="status" not-null="true" />
+        </many-to-one>
+        <many-to-one name="master" class="com.smi.travel.datalayer.entity.Master" fetch="select">
+            <column name="master_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="MMeal" class="com.smi.travel.datalayer.entity.MMeal" fetch="select">
+            <column name="meal_id" />
+        </many-to-one>
+        <many-to-one name="hotel" class="com.smi.travel.datalayer.entity.Hotel" fetch="select">
+            <column name="hotel_id" not-null="true" />
+        </many-to-one>
+        <property name="orderNo" type="int">
+            <column name="order_no" not-null="true" />
+        </property>
+        <property name="reconfirm" type="string">
+            <column name="reconfirm" length="50" />
+        </property>
+        <property name="hotelRef" type="string">
+            <column name="hotel_ref" length="50" />
+        </property>
+        <property name="isBill" type="java.lang.Integer">
+            <column name="is_bill" />
+        </property>
+        <property name="remark" type="string">
+            <column name="remark" length="100" />
+        </property>
+        <property name="checkin" type="date">
+            <column name="checkin" length="10" not-null="true" />
+        </property>
+        <property name="checkout" type="date">
+            <column name="checkout" length="10" not-null="true" />
+        </property>
+        <property name="adult" type="java.lang.Integer">
+            <column name="adult" />
+        </property>
+        <property name="child" type="java.lang.Integer">
+            <column name="child" />
+        </property>
+        <property name="infant" type="java.lang.Integer">
+            <column name="infant" />
+        </property>
+         <property name="flight" type="string">
+            <column name="flight" length="20" />
+        </property>
+         <property name="deadline" type="date">
+            <column name="deadline" length="10"  />
+        </property>
+        
+
+        <set name="hotelPassengers" table="hotel_passenger" cascade="save-update" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="booking_hotel_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.HotelPassenger" />
+        </set>
+        <set name="hotelRooms" table="hotel_room" inverse="true" cascade="save-update" lazy="true" fetch="select">
+            <key>
+                <column name="booking_hotel_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.HotelRoom" />
+        </set>
+        <set name="hotelRequests" table="hotel_request" inverse="true" cascade="save-update" lazy="true" fetch="select">
+            <key>
+                <column name="booking_hotel_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.HotelRequest" />
+        </set>
+    </class>
+</hibernate-mapping>

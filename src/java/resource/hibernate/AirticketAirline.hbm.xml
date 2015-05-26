@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.AirticketAirline" table="airticket_airline" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+         <many-to-one name="MAirline" class="com.smi.travel.datalayer.entity.MAirline" fetch="select">
+            <column name="airline_code" />
+        </many-to-one>
+        <many-to-one name="airticketPnr" class="com.smi.travel.datalayer.entity.AirticketPnr" fetch="select">
+            <column name="pnr_id" not-null="true" />
+        </many-to-one>
+        <property name="ticketDate" type="date">
+            <column name="ticket_date" length="10" not-null="true" />
+        </property>
+        <set name="airticketFlights" table="airticket_flight" cascade="save-update" inverse="true" order-by="id" lazy="true" fetch="select">
+            <key>
+                <column name="airline_id" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.AirticketFlight" />
+        </set>
+        <set name="airticketPassengers" table="airticket_passenger" cascade="save-update" inverse="true" order-by="id" lazy="true" fetch="select">
+            <key>
+                <column name="airline_id" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.AirticketPassenger" />
+        </set>
+    </class>
+</hibernate-mapping>

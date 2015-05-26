@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.DaytourBooking" table="daytour_booking" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="place" class="com.smi.travel.datalayer.entity.Place" fetch="select">
+            <column name="pickup" />
+        </many-to-one>
+        <many-to-one name="MItemstatus" class="com.smi.travel.datalayer.entity.MItemstatus" fetch="select">
+            <column name="status" />
+        </many-to-one>
+        <many-to-one name="guide" class="com.smi.travel.datalayer.entity.SystemUser" fetch="select">
+            <column name="guide_id" />
+        </many-to-one>
+        <many-to-one name="daytour" class="com.smi.travel.datalayer.entity.Daytour" fetch="select">
+            <column name="tour_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="master" class="com.smi.travel.datalayer.entity.Master" fetch="select">
+            <column name="master_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="agent" class="com.smi.travel.datalayer.entity.Agent" fetch="select">
+            <column name="agent_id" />
+        </many-to-one>
+        <property name="tourDate" type="date">
+            <column name="tour_date" length="10" />
+        </property>
+        <property name="pickupDetail" type="string">
+            <column name="pickup_detail" />
+        </property>
+        <property name="pickupRoom" type="string">
+            <column name="pickup_room" length="100" />
+        </property>
+        <property name="pickupTime" type="time">
+            <column name="pickup_time" length="8" />
+        </property>
+        <property name="requirement" type="string">
+            <column name="requirement" />
+        </property>
+        <property name="remark" type="string">
+            <column name="remark" />
+        </property>
+        <property name="memo" type="string">
+            <column name="memo" />
+        </property>
+        <property name="isPay" type="java.lang.Integer">
+            <column name="is_pay" />
+        </property>
+        <property name="adult" type="java.lang.Integer">
+            <column name="adult" />
+        </property>
+        <property name="child" type="java.lang.Integer">
+            <column name="child" />
+        </property>
+        <property name="infant" type="java.lang.Integer">
+            <column name="infant" />
+        </property>
+        <property name="isBill" type="java.lang.Integer">
+            <column name="is_bill" />
+        </property>
+        <property name="agentComission" type="java.lang.Integer">
+            <column name="agent_comission" />
+        </property>
+        <property name="guideCommission" type="java.lang.Integer">
+            <column name="guide_commission" />
+        </property>
+        <property name="remarkGuideCom" type="string">
+            <column name="remark_guide_com" />
+        </property>
+        <property name="remarkAgentCom" type="string">
+            <column name="remark_agent_com" />
+        </property>
+        <property name="pickupOrder" type="java.lang.Integer">
+            <column name="pickup_order" />
+        </property>
+        <set name="coupons" table="coupon" inverse="true" lazy="true" fetch="select"
+                 order-by="id asc">
+            <key>
+                <column name="daytour_booking_id" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.Coupon" />
+        </set>
+        <set name="daytourBookingPrices" table="daytour_booking_price" inverse="true" lazy="true" fetch="select"
+                order-by="id asc">
+            <key>
+                <column name="daytour_booking_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.DaytourBookingPrice" />
+        </set>
+    </class>
+</hibernate-mapping>

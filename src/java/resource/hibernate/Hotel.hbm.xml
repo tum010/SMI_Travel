@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 4, 2014 5:36:02 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.Hotel" table="hotel" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="MCountry" class="com.smi.travel.datalayer.entity.MCountry" fetch="select">
+            <column name="country" />
+        </many-to-one>
+        <many-to-one name="MCity" class="com.smi.travel.datalayer.entity.MCity" fetch="select">
+            <column name="city" />
+        </many-to-one>
+        <property name="code" type="string">
+            <column name="code" length="10" not-null="true" />
+        </property>
+        <property name="name" type="string">
+            <column name="name" length="50" not-null="true" />
+        </property>
+        <property name="telNo" type="string">
+            <column name="tel_no" length="100" />
+        </property>
+        <property name="fax" type="string">
+            <column name="fax" length="100" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="50" />
+        </property>
+        <property name="web" type="string">
+            <column name="web" length="50" />
+        </property>
+        <property name="address" type="string">
+            <column name="address" length="255" />
+        </property>
+        <property name="remark" type="string">
+            <column name="remark" length="255" />
+        </property>
+       
+    </class>
+</hibernate-mapping>

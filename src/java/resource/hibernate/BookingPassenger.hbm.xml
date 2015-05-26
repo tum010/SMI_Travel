@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 4, 2014 5:36:02 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.BookingPassenger" table="booking_passenger" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="bookingAirline" class="com.smi.travel.datalayer.entity.BookingAirline" cascade="save-update" fetch="select">
+            <column name="airline_id" />
+        </many-to-one>
+        <property name="ticketnoS1" type="string">
+            <column name="ticketno_s1" length="3" not-null="true" />
+        </property>
+        <property name="ticketnoS2" type="string">
+            <column name="ticketno_s2" length="10" />
+        </property>
+        <property name="ticketnoS3" type="string">
+            <column name="ticketno_s3" length="3" />
+        </property>
+        <property name="initialName" type="string">
+            <column name="initial_name" length="5" not-null="true" />
+        </property>
+        <property name="firstName" type="string">
+            <column name="first_name" length="20" not-null="true" />
+        </property>
+        <property name="lastName" type="string">
+            <column name="last_name" length="20" not-null="true" />
+        </property>
+        <property name="passengerType" type="string">
+            <column name="passenger_type" length="10" not-null="true" />
+        </property>
+        <property name="ticketTax" type="java.lang.Integer">
+            <column name="ticket_tax" />
+        </property>
+        <property name="ticketFare" type="java.lang.Integer">
+            <column name="ticket_fare" />
+        </property>
+        <property name="ticketType" type="string">
+            <column name="ticket_type" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.AirticketBooking" table="airticket_booking" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="staffByIssueBy" class="com.smi.travel.datalayer.entity.SystemUser" fetch="select">
+            <column name="issue_by" />
+        </many-to-one>
+        <many-to-one name="master" class="com.smi.travel.datalayer.entity.Master" fetch="select">
+            <column name="master_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="staffByOwnerBy" class="com.smi.travel.datalayer.entity.SystemUser" fetch="select">
+            <column name="owner_by" />
+        </many-to-one>
+        <property name="deadline" type="date">
+            <column name="deadline" length="10" />
+        </property>
+        <property name="reConfirm" type="string">
+            <column name="re_confirm" />
+        </property>
+        <property name="remark" type="string">
+            <column name="remark" />
+        </property>
+        <set name="airticketDescs" table="airticket_desc" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="booking_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.AirticketDesc" />
+        </set>
+        <set name="airticketPnrs" table="airticket_pnr" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="booking_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.AirticketPnr" />
+        </set>
+    </class>
+</hibernate-mapping>

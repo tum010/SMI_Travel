@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 4, 2014 5:36:02 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.BookingFlight" table="booking_flight" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="bookingAirline" class="com.smi.travel.datalayer.entity.BookingAirline" cascade="save-update" fetch="select">
+            <column name="airline_code" />
+        </many-to-one>
+        <property name="flightNo" type="string">
+            <column name="flightNo" length="10" not-null="true" />
+        </property>
+        <property name="sourceCode" type="string">
+            <column name="source_code" length="3"  />
+        </property>
+        <property name="desCode" type="string">
+            <column name="des_code" length="3"  />
+        </property>
+        <property name="departureDate" type="date">
+            <column name="departure_date" length="10"  />
+        </property>
+        <property name="arrivalDate" type="date">
+            <column name="arrival_date" length="10"  />
+        </property>
+        <property name="flightClass" type="string">
+            <column name="flight_class" length="10"  />
+        </property>
+
+        
+        <property name="departTime" type="string">
+            <column name="depart_time" length="4" />
+        </property>
+        <property name="arriveTime" type="string">
+            <column name="arrive_time" length="4" />
+        </property>
+        <property name="adCost" type="java.lang.Integer">
+            <column name="ad_cost" />
+        </property>
+        <property name="adPrice" type="java.lang.Integer">
+            <column name="ad_price" />
+        </property>
+        <property name="adTax" type="java.lang.Integer">
+            <column name="ad_tax" />
+        </property>
+        <property name="chCost" type="java.lang.Integer">
+            <column name="ch_cost" />
+        </property>
+        <property name="chPrice" type="java.lang.Integer">
+            <column name="ch_price" />
+        </property>
+        <property name="chTax" type="java.lang.Integer">
+            <column name="ch_tax" />
+        </property>
+        <property name="inCost" type="java.lang.Integer">
+            <column name="in_cost" />
+        </property>
+        <property name="inPrice" type="java.lang.Integer">
+            <column name="in_price" />
+        </property>
+        <property name="inTax" type="java.lang.Integer">
+            <column name="in_tax" />
+        </property>
+        <property name="otCost" type="java.lang.Integer">
+            <column name="ot_cost" />
+        </property>
+        <property name="otPrice" type="java.lang.Integer">
+            <column name="ot_price" />
+        </property>
+        <property name="otTax" type="java.lang.Integer">
+            <column name="ot_tax" />
+        </property>
+    </class>
+</hibernate-mapping>

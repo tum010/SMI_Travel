@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.Master" table="master" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="packageTour" class="com.smi.travel.datalayer.entity.PackageTour" fetch="select">
+            <column name="package_id" />
+        </many-to-one>
+        <many-to-one name="MBookingstatus" class="com.smi.travel.datalayer.entity.MBookingstatus" fetch="select">
+            <column name="Status" />
+        </many-to-one>
+        <many-to-one name="customer" class="com.smi.travel.datalayer.entity.Customer" fetch="select">
+            <column name="FalimyLeader_id" />
+        </many-to-one>
+        <many-to-one name="staff" class="com.smi.travel.datalayer.entity.SystemUser" fetch="select">
+            <column name="Staff_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="agent" class="com.smi.travel.datalayer.entity.Agent" fetch="select">
+            <column name="Agent_id" not-null="true" />
+        </many-to-one>
+        <property name="referenceNo" type="string">
+            <column name="`Reference No`"  not-null="true" />
+        </property>
+        <property name="adult" type="java.lang.Integer">
+            <column name="Adult" />
+        </property>
+        <property name="child" type="java.lang.Integer">
+            <column name="Child" />
+        </property>
+        <property name="infant" type="java.lang.Integer">
+            <column name="Infant" />
+        </property>
+        <property name="isPackage" type="java.lang.Integer">
+            <column name="Is_package" />
+        </property>
+        <property name="currency" type="string">
+            <column name="Currency" length="3" />
+        </property>
+        <property name="agentRef" type="string">
+            <column name="Agent_ref" length="100"/>
+        </property>
+        <property name="flagAir" type="java.lang.Integer">
+            <column name="Flag_Air" />
+        </property>
+        <property name="flagHotel" type="java.lang.Integer">
+            <column name="Flag_Hotel" />
+        </property>
+        <property name="flagDaytour" type="java.lang.Integer">
+            <column name="Flag_Daytour" />
+        </property>
+        <property name="flagOther" type="java.lang.Integer">
+            <column name="Flag_Other" />
+        </property>
+        <property name="flagLand" type="java.lang.Integer">
+            <column name="Flag_Land" />
+        </property>
+        <property name="revisedBy" type="string">
+            <column name="Revised_by" length="10" />
+        </property>
+        <property name="revisedDate" type="date">
+            <column name="Revised_date" length="10" />
+        </property>
+        <property name="bookingType" type="string">
+            <column name="booking_type" length="1" />
+        </property>
+        <property name="createBy" type="string">
+            <column name="Create_by" length="10" />
+        </property>
+        <property name="createDate" type="date">
+            <column name="Create_date" length="10" />
+        </property>
+        <set name="hotelBookings" table="hotel_booking" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="master_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.HotelBooking" />
+        </set>
+        <set name="otherBookings" table="other_booking" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="master_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.OtherBooking" />
+        </set>
+        <set name="billables" table="billable" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="master_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.Billable" />
+        </set>
+        <set name="airticketBookings" table="airticket_booking" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="master_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.AirticketBooking" />
+        </set>
+        <set name="passengers" table="passenger" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="master_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.Passenger" />
+        </set>
+        <set name="landBookings" table="land_booking" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="master_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.LandBooking" />
+        </set>
+        <set name="daytourBookings" table="daytour_booking" inverse="true" lazy="true" fetch="select" order-by="id asc">
+            <key>
+                <column name="master_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.DaytourBooking" />
+        </set>
+
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 4, 2014 5:36:02 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.MAmadeus" table="m_amadeus" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="string">
+            <column name="name" length="50" not-null="true" />
+        </property>
+        <property name="section" type="string">
+            <column name="section" length="10" />
+        </property>
+        <property name="nodlm" type="string">
+            <column name="nodlm" />
+        </property>
+        <property name="startlength" type="java.lang.Integer">
+            <column name="startlength" />
+        </property>
+        <property name="length" type="java.lang.Integer">
+            <column name="length" />
+        </property>
+    </class>
+</hibernate-mapping>

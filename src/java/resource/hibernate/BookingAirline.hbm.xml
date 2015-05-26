@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 4, 2014 5:36:02 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated Dec 22, 2014 4:11:20 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.BookingAirline" table="booking_airline" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="bookingPnr" class="com.smi.travel.datalayer.entity.BookingPnr" cascade="all" fetch="select" >
+            <column name="booking_pnr_id"  />
+        </many-to-one>
+        <property name="airlineCode" type="string">
+            <column name="airline_code" length="5" not-null="true" />
+        </property>
+        <property name="alrlineName" type="string">
+            <column name="alrline_name" length="50" not-null="true" />
+        </property>
+        <property name="ticketDate" type="date">
+            <column name="ticket_date" length="10" not-null="true" />
+        </property>
+        <set name="bookingPassengers" table="booking_passenger" cascade="save-update" order-by="id" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="airline_id" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.BookingPassenger" />
+        </set>
+        <set name="bookingFlights" table="booking_flight" inverse="false" lazy="true" order-by="id" cascade="save-update" fetch="select">
+            <key>
+                <column name="airline_code" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.BookingFlight" />
+        </set>
+        
+        
+    </class>
+</hibernate-mapping>
