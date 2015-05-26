@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+ 
+<!-- Hibernate session factory -->
+<bean id="sessionFactory" 
+     class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+ 
+    <property name="dataSource">
+      <ref bean="dataSource"/>
+    </property>
+ 
+    <property name="hibernateProperties">
+       <props>
+         <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+         <prop key="hibernate.show_sql">true</prop>
+         <prop key="hibernate.order_updates">true</prop>
+         
+         <prop key= "hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</prop>      
+         <prop key="hibernate.c3p0.acquire_increment">5</prop>
+         <prop key="hibernate.c3p0.idle_test_period">1800</prop>
+         <prop key="hibernate.c3p0.max_size">2000</prop>
+         <prop key="hibernate.c3p0.max_statements">50</prop>
+         <prop key="hibernate.c3p0.min_size">5</prop>
+         <prop key="hibernate.c3p0.timeout">3600</prop>
+       </props>
+     </property>
+     
+
+ 
+     <property name="mappingResources">
+	<list>
+           <value>resource/hibernate/Staff.hbm.xml</value>
+           <value>resource/hibernate/Role.hbm.xml</value>
+           <value>resource/hibernate/MAirline.hbm.xml</value>
+           <value>resource/hibernate/MCity.hbm.xml</value>
+           <value>resource/hibernate/MCountry.hbm.xml</value>
+           <value>resource/hibernate/MCurrency.hbm.xml</value>
+           <value>resource/hibernate/MFlight.hbm.xml</value>
+           <value>resource/hibernate/MTicketType.hbm.xml</value>
+           <value>resource/hibernate/Place.hbm.xml</value>
+           <value>resource/hibernate/MPlacestatus.hbm.xml</value>
+           <value>resource/hibernate/RoleMapping.hbm.xml</value>
+           <value>resource/hibernate/Function.hbm.xml</value>
+           <value>resource/hibernate/BookingFlight.hbm.xml</value>
+           <value>resource/hibernate/BookingPassenger.hbm.xml</value>
+           <value>resource/hibernate/BookingPnr.hbm.xml</value>
+           <value>resource/hibernate/BookingAirline.hbm.xml</value>
+           <value>resource/hibernate/AirticketAirline.hbm.xml</value>
+           <value>resource/hibernate/AirticketDesc.hbm.xml</value>
+           <value>resource/hibernate/AirticketFlight.hbm.xml</value>
+           <value>resource/hibernate/AirticketPassenger.hbm.xml</value>
+           <value>resource/hibernate/AirticketPnr.hbm.xml</value>
+           <value>resource/hibernate/Agent.hbm.xml</value>
+           <value>resource/hibernate/Customer.hbm.xml</value>
+           <value>resource/hibernate/MAccterm.hbm.xml</value>
+           <value>resource/hibernate/MBranch.hbm.xml</value>
+           <value>resource/hibernate/MInitialname.hbm.xml</value>
+           <value>resource/hibernate/Master.hbm.xml</value>
+           <value>resource/hibernate/MItemstatus.hbm.xml</value>
+           <value>resource/hibernate/MPricecategory.hbm.xml</value>
+           <value>resource/hibernate/MGalileo.hbm.xml</value>
+           <value>resource/hibernate/MAirport.hbm.xml</value>
+           <value>resource/hibernate/Billable.hbm.xml</value>
+           <value>resource/hibernate/BillableDesc.hbm.xml</value>
+           <value>resource/hibernate/MAccpay.hbm.xml</value>
+           <value>resource/hibernate/Passenger.hbm.xml</value>
+           <value>resource/hibernate/MBilltype.hbm.xml</value>
+           <value>resource/hibernate/MBookingstatus.hbm.xml</value>   
+           <value>resource/hibernate/MAmadeus.hbm.xml</value>   
+           <value>resource/hibernate/Hotel.hbm.xml</value>   
+           <value>resource/hibernate/MProductType.hbm.xml</value>   
+           <value>resource/hibernate/Product.hbm.xml</value>   
+           <value>resource/hibernate/ProductDetail.hbm.xml</value>   
+           <value>resource/hibernate/MDepartment.hbm.xml</value>   
+           <value>resource/hibernate/MainMenu.hbm.xml</value>   
+           <value>resource/hibernate/AirticketBooking.hbm.xml</value>   
+           <value>resource/hibernate/HotelBooking.hbm.xml</value>   
+           <value>resource/hibernate/HotelPassenger.hbm.xml</value>   
+           <value>resource/hibernate/HotelRequest.hbm.xml</value>   
+           <value>resource/hibernate/HotelRoom.hbm.xml</value>   
+           <value>resource/hibernate/MMeal.hbm.xml</value>  
+           <value>resource/hibernate/ProductPriceDetail.hbm.xml</value>  
+           <value>resource/hibernate/BookingView.hbm.xml</value>
+           <value>resource/hibernate/OtherBooking.hbm.xml</value>
+           <value>resource/hibernate/BookSummary.hbm.xml</value>  
+           <value>resource/hibernate/LandBooking.hbm.xml</value>
+           <value>resource/hibernate/LandItinerary.hbm.xml</value>
+           <value>resource/hibernate/Daytour.hbm.xml</value>  
+           <value>resource/hibernate/DaytourExpense.hbm.xml</value>
+           <value>resource/hibernate/DaytourPrice.hbm.xml</value>
+           <value>resource/hibernate/AgentComission.hbm.xml</value>
+           <value>resource/hibernate/AgentTourComission.hbm.xml</value>
+           <value>resource/hibernate/DaytourBooking.hbm.xml</value>
+           <value>resource/hibernate/DaytourBookingPrice.hbm.xml</value>
+           <value>resource/hibernate/Coupon.hbm.xml</value>
+           <value>resource/hibernate/ProductComission.hbm.xml</value>
+           <value>resource/hibernate/TourOperationDesc.hbm.xml</value>
+           <value>resource/hibernate/TourOperationDriver.hbm.xml</value>
+           <value>resource/hibernate/TourOperationExpense.hbm.xml</value>
+           <value>resource/hibernate/TransferJob.hbm.xml</value>
+           <value>resource/hibernate/PackageTour.hbm.xml</value>
+           <value>resource/hibernate/PackagePrice.hbm.xml</value>
+           <value>resource/hibernate/PackageItinerary.hbm.xml</value>
+           <value>resource/hibernate/MDefaultData.hbm.xml</value>
+	</list>
+      </property>	
+ 
+    </bean>
+</beans>

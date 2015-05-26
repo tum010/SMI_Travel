@@ -1,0 +1,303 @@
+<!-- was: <?xml version="1.0" encoding="UTF-8"?> -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:flow="http://www.springframework.org/schema/webflow-config"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xmlns:lang="http://www.springframework.org/schema/lang"
+       xmlns:osgi="http://www.springframework.org/schema/osgi"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+          http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+          http://www.springframework.org/schema/webflow-config http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.0.xsd
+          http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+          http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.2.xsd
+          http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.2.xsd
+          http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi-1.2.xsd
+          http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+          http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+">
+    <!--
+    <bean id="SystemUserQuery"
+          class="com.smi.travel.datalayer.dao.query.SystemUserQuery">
+          <constructor-arg value="SystemUserQuery"/>
+          <constructor-arg ref="dataSource" />
+    </bean>
+    -->
+    <bean id="SystemUserDao" class="com.smi.travel.datalayer.dao.impl.SystemUserImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="MAirlineDao" class="com.smi.travel.datalayer.dao.impl.MAirlineImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="MCityDao" class="com.smi.travel.datalayer.dao.impl.MCityImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+   
+    <bean id="MCountryDao" class="com.smi.travel.datalayer.dao.impl.MCountryImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="MCurrencyDao" class="com.smi.travel.datalayer.dao.impl.MCurrencyImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="MFlightDao" class="com.smi.travel.datalayer.dao.impl.MFlightDaoImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="MTicketTypeDao" class="com.smi.travel.datalayer.dao.impl.MTicketTypeImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="MRoleDao" class="com.smi.travel.datalayer.dao.impl.RoleImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="MDepartmentDao" class="com.smi.travel.datalayer.dao.impl.DepartmentImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    <bean id="PlaceDao" class="com.smi.travel.datalayer.dao.impl.PlaceImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+
+    <bean id="MplaceStatus" class="com.smi.travel.datalayer.dao.impl.MplaceStatusImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="BookingPnr" class="com.smi.travel.datalayer.dao.impl.BookingPnrImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="BookingFlight" class="com.smi.travel.datalayer.dao.impl.BookingFlightImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="BookingPassenger" class="com.smi.travel.datalayer.dao.impl.BookingPassengerImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="HotelBookingDao" class="com.smi.travel.datalayer.dao.impl.HotelBookingImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="AirticketPnrDao" class="com.smi.travel.datalayer.dao.impl.AirticketPnrImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="RoleMappingDao" class="com.smi.travel.datalayer.dao.impl.RoleMappingImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="MGalileoDao" class="com.smi.travel.datalayer.dao.impl.MGalileoDaoImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>  
+     
+    <bean id="MPriceCategoryDao" class="com.smi.travel.datalayer.dao.impl.MPriceCategoryImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="MAirportDao" class="com.smi.travel.datalayer.dao.impl.MAirportImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>   
+    
+    <bean id="BillableDao" class="com.smi.travel.datalayer.dao.impl.BillableImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>   
+    <bean id="MasterDao" class="com.smi.travel.datalayer.dao.impl.MasterImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>   
+    <bean id="MAmadeusDao" class="com.smi.travel.datalayer.dao.impl.MAmadeusImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>  
+    <bean id="HotelDao" class="com.smi.travel.datalayer.dao.impl.HotelImpl">
+         <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>    
+    <bean id="AgentDao" class="com.smi.travel.datalayer.dao.impl.AgentImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    <bean id="ProductDao" class="com.smi.travel.datalayer.dao.impl.ProductImpl">
+         <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>   
+    <bean id="ProductDetailDao" class="com.smi.travel.datalayer.dao.impl.ProductDetailImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>   
+    <bean id="MListItemDao" class="com.smi.travel.datalayer.dao.impl.MListItemImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>   
+    <bean id="AirticketBookingDao" class="com.smi.travel.datalayer.dao.impl.AirticketBookingImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>   
+    
+    <bean id="CustomerDao" class="com.smi.travel.datalayer.dao.impl.CustomerImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>  
+    
+    <bean id="ProductPriceDetailDao" class="com.smi.travel.datalayer.view.dao.impl.ProductPriceDetailImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>  
+    
+    <bean id="BookingViewImplDao" class="com.smi.travel.datalayer.view.dao.impl.BookingViewImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean> 
+    
+     <bean id="OtherBookingDao" class="com.smi.travel.datalayer.dao.impl.OtherBookingImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>  
+    
+    <bean id="HibernateSession" class="com.smi.travel.common.HibernateSession">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>  
+    
+    <bean id="BookingSummaryDao" class="com.smi.travel.datalayer.view.dao.impl.BookingSummaryImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="AirticketDescDao" class="com.smi.travel.datalayer.dao.impl.AirticketDescImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="PassengerDao" class="com.smi.travel.datalayer.dao.impl.PassengerImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="CustomerAgentInfoDao" class="com.smi.travel.datalayer.view.dao.impl.CustomerAgentInfoImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="LandBookingDao" class="com.smi.travel.datalayer.dao.impl.LandBookingImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="LandItineraryDao" class="com.smi.travel.datalayer.dao.impl.LandItineraryImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="BillableViewDao" class="com.smi.travel.datalayer.view.dao.impl.BillableViewImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="MProductTypeDao" class="com.smi.travel.datalayer.dao.impl.MProductTypeImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="HotelVoucherDao" class="com.smi.travel.datalayer.view.dao.impl.HotelVoucherImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="LandVoucherDao" class="com.smi.travel.datalayer.view.dao.impl.LandVoucherImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="TicketOrderDao" class="com.smi.travel.datalayer.view.dao.impl.TicketOrderImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="HotelInboundDao" class="com.smi.travel.datalayer.view.dao.impl.HotelInboundImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="TicketSummaryDao" class="com.smi.travel.datalayer.view.dao.impl.TicketSummaryImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="StaffSummaryDao" class="com.smi.travel.datalayer.view.dao.impl.StaffSummaryImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="AirlineSummaryDao" class="com.smi.travel.datalayer.view.dao.impl.AirlineSummaryImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="TicketSaleProfitVolumnDao" class="com.smi.travel.datalayer.view.dao.impl.TicketSaleProfitVolumnImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="DaytourDao" class="com.smi.travel.datalayer.dao.impl.DaytourImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="DaytourBookingDao" class="com.smi.travel.datalayer.dao.impl.DaytourBookingImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="TourOperationDao" class="com.smi.travel.datalayer.dao.impl.TourOperationImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="TransferJobDao" class="com.smi.travel.datalayer.dao.impl.TransferJobImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="DaytourComissionDao" class="com.smi.travel.datalayer.dao.impl.DaytourComissionImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="TransferJobReportDao" class="com.smi.travel.datalayer.view.dao.impl.TransferJobReportImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="GuideCommissionReportDao" class="com.smi.travel.datalayer.view.dao.impl.GuideCommissionReportImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="AgentCommissionReportDao" class="com.smi.travel.datalayer.view.dao.impl.AgentCommissionReportImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    
+    <bean id="GuideJobDao" class="com.smi.travel.datalayer.view.dao.impl.GuideJobImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="MTourCommissionDao" class="com.smi.travel.datalayer.dao.impl.MTourCommissionImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="PackageTourDao" class="com.smi.travel.datalayer.dao.impl.PackageTourImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    
+    
+    
+
+    <!-- Component Bean -->
+    <bean id="AJAXBean" class="com.smi.travel.datalayer.bean.master.AJAXBean">
+        <constructor-arg>
+            <list>
+                <ref local="CustomerDao" />
+                <ref local="ProductDetailDao" />
+                <ref local="BookingSummaryDao" />
+                <ref local="CustomerAgentInfoDao" />
+                <ref local="DaytourBookingDao" />
+                <ref local="DaytourDao" />
+                <ref local="TransferJobDao" />
+                <ref local="PackageTourDao" />
+                 <ref local="DaytourComissionDao" />
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <!--  AJAX bean -->
+    
+    <bean id="BookDetailServlet" class="com.smi.travel.servlet.BookDetailServlet" />
+    <bean id="BookOtherServlet" class="com.smi.travel.servlet.BookOtherServlet" />
+    <bean id="BookServlet" class="com.smi.travel.servlet.BookServlet" />
+    <bean id="BillableServlet" class="com.smi.travel.servlet.BillableServlet" />
+    <bean id="BookDaytourServlet" class="com.smi.travel.servlet.BookDaytourServlet" />
+    <bean id="TransferJobServlet" class="com.smi.travel.servlet.TransferJobServlet" />
+    <bean id="BookLandServlet" class="com.smi.travel.servlet.BookLandServlet" />
+    <bean id="DaytourCommissionServlet" class="com.smi.travel.servlet.DaytourCommissionServlet" />
+    <bean id="DaytourServlet" class="com.smi.travel.servlet.DaytourServlet" />
+	<!--<add data>-->
+	
+</beans>

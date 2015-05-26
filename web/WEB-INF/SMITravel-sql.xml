@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<SMITravelsql>
+	
+	<query id ='SystemUserQuery'>
+	<SELECT>
+			SELECT username,password,enabled from Users  WHERE (username=?) AND (password=?)
+	</SELECT>
+			<!--<add data value='SystemUserQuery'/>-->
+	</query>	
+	<!--<add data>-->
+	
+</SMITravelsql>

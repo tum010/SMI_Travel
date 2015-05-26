@@ -1,0 +1,228 @@
+<!-- was: <?xml version="1.0" encoding="UTF-8"?> -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:flow="http://www.springframework.org/schema/webflow-config"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xmlns:lang="http://www.springframework.org/schema/lang"
+       xmlns:osgi="http://www.springframework.org/schema/osgi"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+          http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+          http://www.springframework.org/schema/webflow-config http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.0.xsd
+          http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+          http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.2.xsd
+          http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.2.xsd
+          http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi-1.2.xsd
+          http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+          http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+">
+    <!-- Service -->
+    <bean id="LoginService" class="com.smi.travel.datalayer.service.LoginService">
+        <property name="systemUserDao" ref="SystemUserDao" />
+    </bean>
+    
+    <bean id="MAirticketService" class="com.smi.travel.datalayer.service.MAirticketService">
+        <property name="mAirlineDao" ref="MAirlineDao" />
+    </bean>
+    
+    <bean id="MCityService" class="com.smi.travel.datalayer.service.MCityService">
+        <property name="mCityDao" ref="MCityDao" />
+    </bean>
+    
+    <bean id="MCountryService" class="com.smi.travel.datalayer.service.MCountryService">
+        <property name="mCountryDao" ref="MCountryDao" />
+    </bean>
+    
+    <bean id="MCurrencyService" class="com.smi.travel.datalayer.service.MCurrencyService">
+        <property name="mCurrencyDao" ref="MCurrencyDao" />
+    </bean>
+    
+    <bean id="MFlightService" class="com.smi.travel.datalayer.service.MFlightService">
+        <property name="mFlightDao" ref="MFlightDao" />
+    </bean>
+    
+    <bean id="MTicketTypeService" class="com.smi.travel.datalayer.service.MTicketTypeService">
+        <property name="mTicketTypeDao" ref="MTicketTypeDao" />
+    </bean>
+    
+    <bean id="MStaffService" class="com.smi.travel.datalayer.service.MStaffService">
+        <property name="systemUserDao" ref="SystemUserDao" />
+        <property name="ListItemDao" ref="MListItemDao" />
+    </bean>
+    
+    <bean id="MRoleService" class="com.smi.travel.datalayer.service.MRoleService">
+        <property name="roleDao" ref="MRoleDao" />
+        <property name="rolemappingDao" ref="RoleMappingDao" />
+        <property name="ListItemDao" ref="MListItemDao" />        
+    </bean>
+    
+    <bean id="MDepartmentService" class="com.smi.travel.datalayer.service.MDepartmentService">
+        <property name="departmentDao" ref="MDepartmentDao" />
+    </bean>    
+    
+    <bean id="PlaceService" class="com.smi.travel.datalayer.service.PlaceService">
+        <property name="placeDao" ref="PlaceDao" />
+        <property name="placeStatusDao" ref="MplaceStatus" />
+    </bean>
+    
+    <bean id="BookingAirticket" class="com.smi.travel.datalayer.service.BookingAirticketService">
+        <property name="mAirlineDao" ref="MAirlineDao" />
+        <property name="bookingPnrDao" ref="BookingPnr" />
+        <property name="bookingFlightDao" ref="BookingFlight" />
+        <property name="bookingPassengerDao" ref="BookingPassenger" />
+        <property name="airticketPnrDao" ref="AirticketPnrDao" />  
+        <property name="airticketBooking" ref="AirticketBookingDao" />
+        <property name="airticketdescDao" ref="AirticketDescDao" />
+        <property name="listItemdao" ref="MListItemDao" />  
+        <property name="mAirportDao" ref="MAirportDao" />  
+    </bean>
+    
+    <bean id="BookingHotelService" class="com.smi.travel.datalayer.service.BookingHotelService">
+        <property name="hotelBookingDao" ref="HotelBookingDao" />
+    </bean>
+    
+    <bean id="MGalileoService" class="com.smi.travel.datalayer.service.MGalileoService">
+        <property name="mgalilroDao" ref="MGalileoDao" />
+    </bean>
+    
+    <bean id="MAirportService" class="com.smi.travel.datalayer.service.MAirportService">
+        <property name="mAirportDao" ref="MAirportDao" />
+    </bean>
+    
+    <bean id="MPriceCategoryService" class="com.smi.travel.datalayer.service.MPriceCategoryService">
+        <property name="mPriCategoryDao" ref="MPriceCategoryDao" />
+    </bean>
+    
+    <bean id="BookingLandService" class="com.smi.travel.datalayer.service.BookingLandService">
+        <property name="landbookingdao" ref="LandBookingDao" />
+        <property name="landItinerarydao" ref="LandItineraryDao" />
+        <property name="listItemdao" ref="MListItemDao" />        
+
+    </bean>
+    
+    <bean id="BillableService" class="com.smi.travel.datalayer.service.BillableService">
+        <property name="billableDao" ref="BillableDao" />
+        <property name="customerAgentInfodao" ref="CustomerAgentInfoDao" />
+        <property name="billableviewdao" ref="BillableViewDao" />
+    </bean>
+    
+    <bean id="WorkSpaceService" class="com.smi.travel.datalayer.service.WorkSpaceService">
+        <property name="masterDao" ref="MasterDao" />
+        <property name="bookingviewdao" ref="BookingViewImplDao" />
+        <property name="listitemdao" ref="MListItemDao" />  
+    </bean>
+    
+    <bean id="MAmadeusService" class="com.smi.travel.datalayer.service.MAmadeusService">
+        <property name="amadeusDao" ref="MAmadeusDao" />
+    </bean>
+    <bean id="HotelService" class="com.smi.travel.datalayer.service.HotelService">
+        <property name="hotelDao" ref="HotelDao" />
+    </bean>    
+    
+    <bean id="AgentService" class="com.smi.travel.datalayer.service.AgentService">
+        <property name="agentDao" ref="AgentDao" />
+        <property name="listItemDao" ref="MListItemDao" />
+    </bean>  
+    
+    <bean id="ReportService" class="com.smi.travel.datalayer.service.ReportService">
+        <property name="hotelVoucherdao" ref="HotelVoucherDao" />
+        <property name="landVoucherdao" ref="LandVoucherDao" />
+        <property name="ticketOrderdao" ref="TicketOrderDao" />
+        <property name="hotelInboundDao" ref="HotelInboundDao" />   
+        <property name="ticketsummaryDao" ref="TicketSummaryDao" />
+        <property name="airlinesummaryDao" ref="AirlineSummaryDao" />   
+        <property name="staffsummaryDao" ref="StaffSummaryDao" />
+        <property name="ticketsaleprofitVolumnDao" ref="TicketSaleProfitVolumnDao" />
+        <property name="transferJobReportdao" ref="TransferJobReportDao" />
+        <property name="guideComissiondao" ref="GuideCommissionReportDao" />
+        <property name="guideJobdao" ref="GuideJobDao" />
+        <property name="agentCommissiondao" ref="AgentCommissionReportDao" />
+    </bean> 
+    
+    
+    <bean id="ProductService" class="com.smi.travel.datalayer.service.ProductService">
+        <property name="productDao" ref="ProductDao" />
+        <property name="productdetailDao" ref="ProductDetailDao" />
+        <property name="listItemDao" ref="MListItemDao" />
+        <property name="productPriceDetailDao" ref="ProductPriceDetailDao" />
+    </bean>  
+    
+    <bean id="BookingDetailService" class="com.smi.travel.datalayer.service.BookingDetailService">
+        <property name="agentdao" ref="AgentDao" />
+        <property name="customerdao" ref="CustomerDao" />
+        <property name="masterdao" ref="MasterDao" />
+        <property name="bookingsummarydao" ref="BookingSummaryDao" />
+        <property name="systemUserDao" ref="SystemUserDao" />
+        <property name="passengerdao" ref="PassengerDao" />  
+        <property name="landbookingdao" ref="LandBookingDao"/>
+    </bean> 
+    
+    <bean id="BookingOtherService" class="com.smi.travel.datalayer.service.BookingOtherService">
+        <property name="otherBookDao" ref="OtherBookingDao" />
+        <property name="productDao" ref="ProductDao" />
+    </bean> 
+    
+    <bean id="PassengerService" class="com.smi.travel.datalayer.service.PassengerService">
+        <property name="passengerdao" ref="PassengerDao" />
+        <property name="customerdao" ref="CustomerDao" />
+    </bean> 
+    
+    
+    <bean id="DaytourCommissionService" class="com.smi.travel.datalayer.service.DaytourCommissionService">
+        <property name="daytourComissiondao" ref="DaytourComissionDao" />
+    </bean> 
+    
+    
+    
+    <bean id="UtilityService" class="com.smi.travel.datalayer.service.UtilityService">
+        <property name="masterdao" ref="MasterDao" />
+        <property name="listitemdao" ref="MListItemDao" />
+        <property name="airticketdao" ref="AirticketBookingDao" />
+        <property name="customerdao" ref="CustomerDao" />
+        <property name="agentdao" ref="AgentDao" />
+        <property name="systemUserdao" ref="SystemUserDao" />
+        <property name="placedao" ref="PlaceDao" />
+    </bean> 
+    
+    <bean id="MProductTypeService" class="com.smi.travel.datalayer.service.MProductTypeService">
+        <property name="mProductTypeDao" ref="MProductTypeDao" />
+    </bean>
+    <bean id="AirTicketReportService" class="com.smi.travel.datalayer.service.AirTicketReportService">
+        <property name="customerAgentInfodao" ref="CustomerAgentInfoDao" />
+    </bean>
+    
+    <bean id="MDaytourService" class="com.smi.travel.datalayer.service.MDaytourService">
+        <property name="daytourdao" ref="DaytourDao" />
+    </bean>
+    
+    <bean id="BookingDaytourService" class="com.smi.travel.datalayer.service.BookingDaytourService">
+        <property name="daytourdao" ref="DaytourDao" />
+        <property name="daytourBookingdao" ref="DaytourBookingDao" />
+        <property name="otherBookingdao" ref="OtherBookingDao" />
+    </bean> 
+    
+    <bean id="DaytourOperationService" class="com.smi.travel.datalayer.service.DaytourOperationService">
+        <property name="tourOperationdao" ref="TourOperationDao" />
+    </bean>
+    
+    <bean id="DaytourTransferJobService" class="com.smi.travel.datalayer.service.DaytourTransferJobService">
+        <property name="transferJobdao" ref="TransferJobDao" />
+    </bean>
+    
+    <bean id="MTourCommissionService" class="com.smi.travel.datalayer.service.MTourCommissionService">
+        <property name="mTourCommissiondao" ref="MTourCommissionDao" />
+    </bean>
+     
+     <bean id="PackageTourService" class="com.smi.travel.datalayer.service.PackageTourService">
+        <property name="packagedao" ref="PackageTourDao" />
+    </bean>
+    
+    <!--<add data>-->
+</beans>

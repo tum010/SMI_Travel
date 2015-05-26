@@ -1,0 +1,440 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd 
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+    <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
+    <!--
+    Most controllers will use the ControllerClassNameHandlerMapping above, but
+    for the index controller we are using ParameterizableViewController, so we must
+    define an explicit mapping for it.
+    -->
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="main.smi">indexController</prop>
+                <prop key="login.smi">loginController</prop>
+                <prop key="logout.smi">logoutController</prop>
+                <prop key="report.smi">reportController</prop>       
+                <prop key="mail.smi">SendEmailController</prop>      
+                <prop key="MHotel.smi">HotelController</prop>
+                <prop key="Product.smi">ProductController</prop>
+                <prop key="Place.smi">PlaceController</prop>
+                <prop key="Customer.smi">CustomerController</prop>
+                <prop key="Agent.smi">AgentController</prop>
+                <prop key="Book.smi">BookController</prop>
+                <prop key="BookDetail.smi">BookDetailController</prop>
+                <prop key="AirTicket.smi">AirTicketController</prop>
+                <prop key="Refund.smi">RefundController</prop>
+                <prop key="HotelBooking.smi">HotelBookingController</prop>
+                <prop key="HotelDetail.smi">HotelDetailController</prop>
+                <prop key="Daytour.smi">DaytourController</prop>
+                <prop key="DaytourDetail.smi">DaytourDetailController</prop>
+                <prop key="DaytourOperation.smi">DaytourOperationController</prop>
+                <prop key="DaytourOperationDetail.smi">DaytourOperationDetailController</prop>
+                <prop key="DaytourTransfer.smi">DaytourTransferController</prop>
+                <prop key="DaytourHistoryTransfer.smi">DaytourHistoryTransferController</prop>
+                <prop key="DaytourCommission.smi">DaytourComissionController</prop>
+                <prop key="Passenger.smi">PassengerController</prop>
+                <prop key="PassengerDetail.smi">PassengerDetailController</prop>
+                <prop key="Billable.smi">BillableController</prop>
+                <prop key="History.smi">HistoryController</prop>
+                <prop key="HistoryDetail.smi">HistoryDetailController</prop>
+                <prop key="Mairticket.smi">MAirticketController</prop>
+                <prop key="MCity.smi">MCityController</prop>
+                <prop key="MCountry.smi">MCountryController</prop>
+                <prop key="MCurrency.smi">MCurrencyController</prop>
+                <prop key="MFlight.smi">MFlightController</prop>
+                <prop key="MTicketType.smi">MTicketTypeController</prop>
+                <prop key="MStaff.smi">MStaffController</prop>
+                <prop key="MRole.smi">MRoleController</prop>
+                <prop key="HotelSumReport.smi">HotelSumReportController</prop>
+                <prop key="AirTicketMonthReport.smi">AirTicketMonthReportController</prop>
+                <prop key="Land.smi">LandController</prop>
+                <prop key="LandDetail.smi">LandDetailController</prop>
+                <prop key="Other.smi">OtherController</prop>
+                <prop key="MGalileo.smi">MGalileoController</prop>
+                <prop key="MHotelDetail.smi">MHotelDetailController</prop>
+                <prop key="MAgentDetail.smi">MAgentDetailController</prop>
+                <prop key="MProductDetail.smi">MProductDetailController</prop>
+                <prop key="OtherDetail.smi">OtherDetailController</prop>
+                <prop key="MAirport.smi">MAirportController</prop>
+                <prop key="MPricecategory.smi">MPriceCategoryController</prop>
+                <prop key="AirTicketDetail.smi">AirTicketDetailController</prop>
+                <prop key="MAmadeus.smi">MAmadeusController</prop>
+                <prop key="MProductType.smi">MProductTypeController</prop>
+                <prop key="AirTicketAirlineStaffSummary.smi">AirTicketAirlineStaffSummaryController</prop>
+                <prop key="AirTicketSaleProfitSummary.smi">AirTicketSaleProfitSummaryController</prop>
+                <prop key="MDaytour.smi">MDaytour</prop>
+                <prop key="MDaytourDetail.smi">MDaytourDetail</prop>
+                <prop key="MCommission.smi">MCommissionController</prop>
+                <prop key="MCommissionDetail.smi">MCommissionDetailController</prop>
+                <prop key="MPackage.smi">MPackageController</prop>
+                <prop key="MPackageDetail.smi">MPackageDetailController</prop>
+                <!-- add mapping url -->
+            </props>
+        </property>
+    </bean>
+    
+    <!-- Tiles configuration -->
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.UrlBasedViewResolver" >
+        <!-- p:prefix="/WEB-INF/jsp/"> -->
+        <property name="viewClass"
+                  value="org.springframework.web.servlet.view.tiles3.TilesView" /> 
+    </bean>
+    <bean id="tilesConfigurer"
+          class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+        <property name="definitions">
+            <list>
+                <value>/WEB-INF/tiles/tiles-definitions.xml</value>
+            </list>
+        </property>
+    </bean>
+    
+    <bean class="org.springframework.web.servlet.view.XmlViewResolver">
+        <property name="location" value="WEB-INF/jasper-views.xml"/>
+    </bean>
+    
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.gmail.com" />
+        <property name="port" value="587" />
+        <property name="username" value="surachai.ns@gnail.com" />
+        <property name="password" value="RyuJinMaru" />
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.transport.protocol">smtp</prop>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+            </props>
+        </property>
+    </bean>
+  
+
+  
+    <!-- index controller -->
+    <bean id="indexController" class="com.smi.travel.controller.IndexController">
+        
+    </bean>
+    <!-- login controller -->
+    <bean id="loginController" class="com.smi.travel.controller.LoginController">
+        <property name="loginService" ref="LoginService" /> 
+    </bean>
+    <!-- logout controller -->
+    <bean id="logoutController" class="com.smi.travel.controller.LogOutController">
+        
+    </bean>
+    
+    <bean id="reportController" class="com.smi.travel.controller.report.ReportController">
+        <property name="reportservice" ref="ReportService" />
+        <property name="datasource" ref="dataSource" />
+    </bean>
+    
+    <bean id="SendEmailController" class="com.smi.travel.controller.mail.SendEmailController">
+        <property name="mailSender" ref="mailSender" />
+    </bean>
+    
+	
+    <bean id="HotelController" class="com.smi.travel.masterdata.controller.HotelController">
+        <property name="hotelservice" ref="HotelService" />
+    </bean>
+    <bean id="ProductController" class="com.smi.travel.masterdata.controller.ProductController">
+        <property name="productService" ref="ProductService" />
+    </bean>
+    <bean id="PlaceController" class="com.smi.travel.masterdata.controller.PlaceController">
+        <property name="placeService" ref="PlaceService" />
+    </bean>
+    <bean id="CustomerController" class="com.smi.travel.controller.CustomerController">
+        
+    </bean>
+    <bean id="AgentController" class="com.smi.travel.masterdata.controller.AgentController">
+        <property name="agentservice" ref="AgentService" />
+        
+    </bean>
+    <bean id="BookController" class="com.smi.travel.controller.BookController">
+        <property name="workspaceService" ref="WorkSpaceService" />
+    </bean>
+    
+    <bean id="BookDetailController" class="com.smi.travel.controller.BookDetailController">
+        <property name="bookingAirticketService" ref="BookingAirticket" />
+        <property name="bookingDetailService" ref="BookingDetailService" />
+        <property name="utilservice" ref="UtilityService" /> 
+    </bean>
+    
+    <bean id="AirTicketController" class="com.smi.travel.controller.AirTicketController">
+        <property name="bookingAirticketService" ref="BookingAirticket" />
+        <property name="mStaffService" ref="MStaffService" />
+        <property name="mAirticketService" ref="MAirticketService" />
+        <property name="bookingHotelService" ref="BookingHotelService" />
+        <property name="utilservice" ref="UtilityService" /> 
+    </bean>
+    
+    <bean id="RefundController" class="com.smi.travel.controller.RefundController">
+        <property name="utilservice" ref="UtilityService" /> 
+        <property name="mStaffService" ref="MStaffService" />
+    </bean>
+    
+    <bean id="HotelBookingController" class="com.smi.travel.controller.HotelBookingController">
+        <property name="bookingAirticketService" ref="BookingAirticket" />
+        <property name="bookingHotelService" ref="BookingHotelService" />
+        <property name="utilservice" ref="UtilityService" /> 
+    </bean>
+    <bean id="HotelDetailController" class="com.smi.travel.controller.HotelDetailController">
+        <property name="bookingAirticketService" ref="BookingAirticket" /> 
+        <property name="bookingHotelService" ref="BookingHotelService" />
+        <property name="utilservice" ref="UtilityService" /> 
+        <property name="hotelService" ref="HotelService" />
+        <property name="passengerService" ref="PassengerService" /> 
+
+    </bean>
+    <bean id="DaytourController" class="com.smi.travel.controller.DaytourController">
+        <property name="utilservice" ref="UtilityService" /> 
+        <property name="bookingDaytourService" ref="BookingDaytourService" />  
+        <property name="OtherService" ref="BookingOtherService" />  
+    </bean>
+    <bean id="DaytourDetailController" class="com.smi.travel.controller.DaytourDetailController">
+        <property name="utilservice" ref="UtilityService" /> 
+        <property name="bookingDaytourService" ref="BookingDaytourService" />  
+    </bean>
+    <bean id="DaytourOperationController" class="com.smi.travel.controller.DaytourOperationController">
+        <property name="utilservice" ref="UtilityService" /> 
+    </bean>
+    <bean id="DaytourOperationDetailController" class="com.smi.travel.controller.DaytourOperationDetailController">
+        <property name="utilservice" ref="UtilityService" /> 
+        <property name="daytourOperationService" ref="DaytourOperationService" /> 
+        <property name="bookingDaytourService" ref="BookingDaytourService" />  
+
+    </bean>
+    
+    <bean id="DaytourTransferController" class="com.smi.travel.controller.DaytourTransferController">
+        <property name="utilservice" ref="UtilityService" /> 
+        <property name="daytourTransferJobService" ref="DaytourTransferJobService" /> 
+    </bean>
+    
+    <bean id="DaytourHistoryTransferController" class="com.smi.travel.controller.DaytourHistoryTransferController">
+        <property name="utilservice" ref="UtilityService" /> 
+        <property name="daytourTransferJobService" ref="DaytourTransferJobService" /> 
+    </bean>
+    
+    <bean id="DaytourComissionController" class="com.smi.travel.controller.DaytourComissionController">
+        <property name="daytourCommissionService" ref="DaytourCommissionService" /> 
+        <property name="utilservice" ref="UtilityService" /> 
+    </bean>
+    
+    <bean id="PassengerController" class="com.smi.travel.controller.PassengerController">
+        <property name="bookingAirticketService" ref="BookingAirticket" /> 
+        <property name="utilservice" ref="UtilityService" /> 
+        <property name="passengerService" ref="PassengerService" /> 
+    </bean>
+    <bean id="PassengerDetailController" class="com.smi.travel.controller.PassengerDetailController">
+        <property name="bookingAirticketService" ref="BookingAirticket" /> 
+        <property name="utilservice" ref="UtilityService" /> 
+        <property name="passengerService" ref="PassengerService" /> 
+    </bean>
+    <bean id="BillableController" class="com.smi.travel.controller.BillableController">
+        <property name="bookingAirticketService" ref="BookingAirticket" /> 
+        <property name="BillableService" ref="BillableService" /> 
+        <property name="utilservice" ref="UtilityService" /> 
+        <property name="agentService" ref="AgentService" /> 
+    </bean>
+    <bean id="HistoryController" class="com.smi.travel.controller.HistoryController">
+        <property name="bookingAirticketService" ref="BookingAirticket" /> 
+        <property name="utilservice" ref="UtilityService" /> 
+    </bean>
+    <bean id="HistoryDetailController" class="com.smi.travel.controller.HistoryDetailController">
+        <property name="bookingAirticketService" ref="BookingAirticket" /> 
+        <property name="utilservice" ref="UtilityService" /> 
+        <property name="mStaffService" ref="MStaffService" />
+    </bean>
+    
+    <bean id="MAirticketController" class="com.smi.travel.masterdata.controller.MAirticketController">
+        <property name="AirticketService" ref="MAirticketService" />
+    </bean>
+    <bean id="MCityController" class="com.smi.travel.masterdata.controller.MCityController">
+        <property name="CityService" ref="MCityService" />
+    </bean>
+    <bean id="MCountryController" class="com.smi.travel.masterdata.controller.MCountryController">
+        <property name="CountryService" ref="MCountryService" />
+    </bean>
+    <bean id="MCurrencyController" class="com.smi.travel.masterdata.controller.MCurrencyController">
+        <property name="CurrencyService" ref="MCurrencyService" />
+    </bean>
+    <bean id="MFlightController" class="com.smi.travel.masterdata.controller.MFlightController">
+        <property name="FlightService" ref="MFlightService" />
+    </bean>
+    <bean id="MTicketTypeController" class="com.smi.travel.masterdata.controller.MTicketTypeController">
+        <property name="TicketTypeService" ref="MTicketTypeService" />
+    </bean>
+    
+    <bean id="MStaffController" class="com.smi.travel.masterdata.controller.MStaffController">
+        <property name="mStaffService" ref="MStaffService" />
+        <property name="mRoleService" ref="MRoleService" />
+        <property name="mDepartmentService" ref="MDepartmentService" />
+    </bean>
+    <bean id="MRoleController" class="com.smi.travel.masterdata.controller.MRoleController">
+        <property name="mRoleService" ref="MRoleService" />
+    </bean>
+    <bean id="HotelSumReportController" class="com.smi.travel.controller.HotelSumReportController">
+    </bean>
+    <bean id="AirTicketMonthReportController" class="com.smi.travel.controller.AirTicketMonthReportController">
+        <property name="AirreportService" ref="AirTicketReportService" />
+    </bean>   
+    <bean id="LandController" class="com.smi.travel.controller.LandController">
+        <property name="bookingAirticketService" ref="BookingAirticket" /> 
+        <property name="utilservice" ref="UtilityService" /> 
+        <property name="landservice" ref="BookingLandService" /> 
+    </bean>
+    
+    <bean id="OtherController" class="com.smi.travel.controller.OtherController"> 
+        <property name="OtherService" ref="BookingOtherService" /> 
+        <property name="utilservice" ref="UtilityService" /> 
+    </bean>    
+    
+    
+    <bean id="MGalileoController" class="com.smi.travel.masterdata.controller.MGalileoController"> 
+        <property name="mGalileoService" ref="MGalileoService" />
+    </bean> 
+    <bean id="MHotelDetailController" class="com.smi.travel.masterdata.controller.MHotelDetailController">
+        <property name="hotelservice" ref="HotelService" />
+        <property name="cityservice" ref="MCityService" />
+        <property name="countryservice" ref="MCountryService" />
+    </bean>
+    
+    <bean id="MAgentDetailController" class="com.smi.travel.masterdata.controller.MAgentDetailController">
+        <property name="agentservice" ref="AgentService" />
+    </bean>
+    <bean id="MProductDetailController" class="com.smi.travel.masterdata.controller.MProductDetailController">
+        <property name="productService" ref="ProductService" />
+    </bean>
+    
+    <bean id="OtherDetailController" class="com.smi.travel.controller.OtherDetailController">
+        <property name="utilservice" ref="UtilityService" /> 
+        <property name="OtherService" ref="BookingOtherService" /> 
+
+    </bean>
+    
+    
+    
+    <bean id="LandDetailController" class="com.smi.travel.controller.LandDetailController">
+        <property name="bookingAirticketService" ref="BookingAirticket" /> 
+        <property name="utilservice" ref="UtilityService" /> 
+        <property name="agentservice" ref="AgentService" /> 
+        <property name="productservice" ref="ProductService" />
+        <property name="landservice" ref="BookingLandService" />  
+    </bean>
+    
+    <bean id="MAirportController" class="com.smi.travel.masterdata.controller.MAirportController">
+        <property name="airportService" ref="MAirportService" />
+    </bean>
+    <bean id="MPriceCategoryController" class="com.smi.travel.masterdata.controller.MPriceCategoryController">
+        <property name="priceCategoryService" ref="MPriceCategoryService" />
+    </bean>
+    <bean id="AirTicketDetailController" class="com.smi.travel.controller.AirTicketDetailController"> 
+        <property name="bookingAirticketService" ref="BookingAirticket" />
+        <property name="mStaffService" ref="MStaffService" />
+        <property name="mAirticketService" ref="MAirticketService" />
+        <property name="mAirportService" ref="MAirportService" />
+        <property name="utilservice" ref="UtilityService" /> 
+    </bean>
+    
+    <bean id="MAmadeusController" class="com.smi.travel.masterdata.controller.MAmadeusController"> 
+        <property name="mAmadeusService" ref="MAmadeusService" />
+    </bean> 
+    
+    <bean id="AirTicketAirlineStaffSummaryController" class="com.smi.travel.controller.AirTicketAirlineStaffSummaryController">
+    </bean>
+    <bean id="AirTicketSaleProfitSummaryController" class="com.smi.travel.controller.AirTicketSaleProfitSummaryController">
+    </bean>
+    
+    
+    <bean id="MCommissionController" class="com.smi.travel.masterdata.controller.MCommissionController">
+        <property name="mtourCommissionService" ref="MTourCommissionService" />        
+    </bean>
+    
+    <bean id="MCommissionDetailController" class="com.smi.travel.masterdata.controller.MCommissionDetailController">
+        <property name="mtourCommissionService" ref="MTourCommissionService" /> 
+        <property name="utilservice" ref="UtilityService" />
+        <property name="daytourservice" ref="MDaytourService" />
+    </bean>
+    
+    <bean id="MPackageController" class="com.smi.travel.masterdata.controller.MPackageController">
+        <property name="packageTourservice" ref="PackageTourService" /> 
+    </bean>
+    <bean id="MPackageDetailController" class="com.smi.travel.masterdata.controller.MPackageDetailController">
+       <property name="packageTourservice" ref="PackageTourService" /> 
+    </bean>
+    
+ 
+    
+    <!-- add bean id controller -->
+    
+    <bean id="monitorGalileo" class="com.smi.travel.monitor.MonitorGalileo" init-method="init">
+        <constructor-arg index="0" type="java.lang.String">  
+                 <value>C:/Users/Administrator/Desktop/PNR/galileo/</value> 
+         <!--   <value>D:/PNR/gali/</value>    -->
+         <!--    <value>S:/BackupPNR/</value>  -->
+        </constructor-arg> 
+        <constructor-arg index="1" type="java.lang.String">  
+             <value>C:/Users/Administrator/Desktop/PNR/galileo/archived/</value>  
+          <!--     <value>D:/PNR/archived/</value> -->
+           <!--       <value>S:/BackupPNR/archived/</value>   -->
+        </constructor-arg> 
+        <constructor-arg index="2" type="java.lang.String">  
+             <value>C:/Users/Administrator/Desktop/PNR/galileo/error/</value>
+          <!--   <value>D:/PNR/error/</value>  --> 
+         <!--          <value>S:/BackupPNR/error/</value>    -->
+        </constructor-arg>         
+        <property name="mGalileoService" ref="MGalileoService" />
+        <property name="mAirticketService" ref="MAirticketService" />
+        <property name="bookingAirticketService" ref="BookingAirticket" />        
+    </bean>
+    
+    <bean id="monitorAmadeus" class="com.smi.travel.monitor.MonitorAmadeus" init-method="init">
+        <constructor-arg index="0" type="java.lang.String">  
+                  <value>C:/Users/Administrator/Desktop/PNR/amadeus/</value>  
+           <!--  <value>D:/PNR/ama/</value> -->
+         <!--      <value>T:/BackupPNR/</value>   -->
+        </constructor-arg> 
+        <constructor-arg index="1" type="java.lang.String">  
+                  <value>C:/Users/Administrator/Desktop/PNR/amadeus/archived/</value>
+        <!--   <value>D:/PNR/archived/</value>   -->
+         <!--    <value>T:/BackupPNR/archived/</value>   -->
+        </constructor-arg> 
+        <constructor-arg index="2" type="java.lang.String">  
+               <value>C:/Users/Administrator/Desktop/PNR/amadeus/error/</value> 
+          <!--     <value>D:/PNR/error/</value> --> 
+         <!--    <value>T:/BackupPNR/error/</value>   -->
+        </constructor-arg>         
+        <property name="mAmadeusService" ref="MAmadeusService" />
+        <property name="mAirticketService" ref="MAirticketService" />
+        <property name="bookingAirticketService" ref="BookingAirticket" />
+    </bean>
+
+    <task:scheduled-tasks>
+        <task:scheduled ref="monitorAmadeus" method="run" fixed-delay="5000" /> 
+        <task:scheduled ref="monitorGalileo" method="run" fixed-delay="5000" />         
+    </task:scheduled-tasks>   
+
+    <bean id="MProductTypeController" class="com.smi.travel.masterdata.controller.MProductTypeController">
+        <property name="productTypeService" ref="MProductTypeService" />
+    </bean>
+    
+    <bean id="MDaytour" class="com.smi.travel.masterdata.controller.MDaytourController">
+        <property name="daytourService" ref="MDaytourService" />
+    </bean>
+    
+    <bean id="MDaytourDetail" class="com.smi.travel.masterdata.controller.MDaytourDetailController">
+        <property name="daytourService" ref="MDaytourService" />
+        <property name="utilservice" ref="UtilityService" />
+    </bean>
+    
+</beans>

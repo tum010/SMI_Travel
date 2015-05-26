@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!--<add data>-->
+	<bean id="TestingReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/TestingReport.jrxml"/>
+	</bean>
+        <bean id="TicketOrder"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/TicketOrder.jrxml"/>
+	</bean>
+ 
+       
+        
+        <bean id="HotelInoundVoucher"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/HotelInbound.jrxml"/>
+	</bean>
+        
+        <bean id="HotelVoucherEmail"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/HotelVoucherEmail.jrxml"/>
+	</bean>
+        
+        <bean id="HotelVoucherEmailAgent"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/HotelVoucherEmailAgent.jrxml"/>
+	</bean>
+        
+         <bean id="HotelVoucher"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/HotelVoucher.jrxml"/>
+	</bean>
+        
+        
+        <bean id="LandVoucher"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/LandVoucher.jrxml"/>
+	</bean>
+        
+        <bean id="LandVoucherEmail"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/LandVoucherEmail.jrxml"/>
+	</bean>
+        
+        <bean id="LandVoucherEmailAgent"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/LandVoucherEmailAgent.jrxml"/>
+	</bean>
+        
+        <bean id="TicketSummary"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/TicketSummary.jrxml"/>
+	</bean>
+        
+         <bean id="StaffSummary"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/StaffSummary.jrxml"/>
+	</bean>
+        
+         <bean id="AirlineSummary"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/AirlineSummary.jrxml"/>
+	</bean>
+        
+         <bean id="TicketSaleVolumn"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/TicketSaleVolumn.jrxml"/>
+         </bean>
+        
+         <bean id="TicketProfitVolumn"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/TicketProfitVolumn.jrxml"/>
+         </bean>
+
+         <bean id="TransferJob"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/TransferJob.jrxml"/>
+         </bean>
+        
+        <bean id="GuideJob"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/GuideJob.jrxml"/>
+         </bean>
+         
+         <bean id="GuideCommission"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/GuideCommission.jrxml"/>
+         </bean>
+         
+         <bean id="AgentCommission"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/AgentCommission.jrxml"/>
+         </bean>
+         
+</beans>
