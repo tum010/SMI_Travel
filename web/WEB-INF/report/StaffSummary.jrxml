@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AirlineVolumn" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="36591689-e817-40b9-bb01-c68bf69d6b71">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[select booking_airline.airline_code as code, booking_airline.alrline_name as name, pc.p_count, sum(booking_flight.ad_cost) as cost, sum(booking_flight.ad_price) as price, (sum(booking_flight.ad_price) - sum(booking_flight.ad_cost)) as balance
+from booking_airline inner join booking_flight on booking_airline.id = booking_flight.airline_code
+inner join
+
+(select count(bp.id) as p_count, ba.airline_code as airline_code
+from booking_passenger bp inner join booking_airline ba on bp.airline_id = ba.id
+group by ba.airline_code) as pc on pc.airline_code = booking_airline.airline_code
+
+group by booking_airline.airline_code]]>
+	</queryString>
+	<field name="systemdate" class="java.lang.String"/>
+	<field name="username" class="java.lang.String"/>
+	<field name="startdate" class="java.lang.String"/>
+	<field name="enddate" class="java.lang.String"/>
+	<field name="from" class="java.lang.String"/>
+	<field name="type" class="java.lang.String"/>
+	<field name="staff" class="java.lang.String"/>
+	<field name="ticketnum" class="java.lang.Integer"/>
+	<field name="sale" class="java.lang.Integer"/>
+	<field name="fare" class="java.lang.Integer"/>
+	<field name="tax" class="java.lang.Integer"/>
+	<field name="profit" class="java.lang.Integer"/>
+	<variable name="totalnum" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{ticketnum}]]></variableExpression>
+	</variable>
+	<variable name="totalsale" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{sale}]]></variableExpression>
+	</variable>
+	<variable name="totalfare" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{fare}]]></variableExpression>
+	</variable>
+	<variable name="totaltax" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{tax}]]></variableExpression>
+	</variable>
+	<variable name="totalprofit" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{profit}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="100" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="65" height="48" uuid="240b0ec2-c6f3-48c2-9334-452ce61385bf"/>
+				<imageExpression><![CDATA["resource/images/smi-logo.gif"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="69" y="0" width="149" height="16" uuid="cf11e9df-f5be-45c9-8db7-2c51e21bf3cc"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[S.M.I TRAVEL CO., LTD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="68" y="15" width="272" height="15" uuid="2633b5ad-75f1-40bd-a192-f5e72e1bbc4b"/>
+				<text><![CDATA[9th Floor, Siam at Siam Hotel Building, 865 Rama 1 Rd.,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="69" y="30" width="271" height="15" uuid="985d65ea-7e13-4c3d-be71-fe5a913abd3b"/>
+				<text><![CDATA[Wangmai, Phatumwan, Bangkok 10330]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="69" y="51" width="271" height="15" uuid="6257b692-6b6a-48f2-a10c-733def8c0fee"/>
+				<text><![CDATA[Tel: +66(0)-2162201 Fax: +66(0)-216-2202]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="69" y="66" width="158" height="15" uuid="2bb72731-db8d-43aa-b2bf-3181e72a42ed"/>
+				<text><![CDATA[http://www.wendytour.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="69" y="81" width="158" height="15" uuid="5fa04161-7bc6-40ba-82a5-ca06eea3e170"/>
+				<text><![CDATA[e-mail: yoyaku@wendytour.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="384" y="0" width="161" height="30" uuid="f5166cf2-3ee8-441b-a467-266353099c98"/>
+				<textElement textAlignment="Right">
+					<font size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Staff Volumn]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="381" y="36" width="35" height="15" uuid="45845433-558e-44d0-a57c-a6e105faa226"/>
+				<text><![CDATA[Print : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="381" y="51" width="21" height="15" uuid="cd9dd1c5-b1ae-4fe4-a9a7-f8f556f17ee0"/>
+				<text><![CDATA[By : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="381" y="66" width="44" height="15" uuid="056c1a7e-0a28-4761-b79b-f10feb61d8b9"/>
+				<text><![CDATA[Print on : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="365" y="81" width="163" height="15" uuid="898c8598-7f99-46b4-a720-c90deace44dc"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="528" y="81" width="17" height="15" uuid="4589b701-ec7d-45ba-b39d-a826dffd959a"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="425" y="66" width="120" height="15" uuid="d38bfb16-6a57-463b-8cb9-781d6bf6a4c0"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{systemdate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="425" y="51" width="120" height="15" uuid="26994b1e-fcd4-4ff4-a5f2-1770d14adb31"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{username}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="416" y="36" width="57" height="15" uuid="51d1ccf1-c352-4534-b1b6-86842e4fc440"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{startdate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="473" y="36" width="15" height="15" uuid="1d6bba47-d7cf-4787-9b6d-a3e402fe930a"/>
+				<text><![CDATA[To]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement x="488" y="36" width="57" height="15" uuid="8bc69ba6-1ed4-47e9-a1d9-751f1b9038b8"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{enddate}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="554" y="0" width="1" height="96" uuid="128c7780-0e9e-4817-8f09-e909940b3c53"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="15" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="2" width="169" height="13" backcolor="#CCCCCC" uuid="d86cb62e-5caf-4515-936b-0bcea516a535"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="9" y="5" width="5" height="6" backcolor="#000000" uuid="38ff1587-51c2-40ad-aa09-0e0c484043fd"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="152" y="5" width="5" height="6" backcolor="#000000" uuid="b627d338-23d1-4bbd-a370-5aa42ff46e81"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="98" y="5" width="5" height="6" backcolor="#000000" uuid="83671ded-1a65-4392-9374-48db46c2f469"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="134" y="5" width="5" height="6" backcolor="#000000" uuid="69622a1e-275a-49f1-9c2c-3b44ee83f68a"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="116" y="5" width="5" height="6" backcolor="#000000" uuid="147a9f18-2eff-4d00-a0b9-2aa035556a42"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="81" y="5" width="5" height="6" backcolor="#000000" uuid="ec1137a3-5411-4b7b-b0f8-3b8ed9f9f2ec"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="63" y="5" width="5" height="6" backcolor="#000000" uuid="f71af3a4-fa19-4deb-b7e1-f5589c272fcc"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="47" y="5" width="5" height="6" backcolor="#000000" uuid="e0263a10-a0d4-4c2b-afd0-fa34f1ddcfa5"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="27" y="5" width="5" height="6" backcolor="#000000" uuid="37629e53-a15d-478c-96ea-e636adda1776"/>
+			</rectangle>
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="56c4cad2-16e3-4d8f-96e0-464b7c0d1633"/>
+				<graphicElement>
+					<pen lineWidth="3.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="5" width="555" height="18" backcolor="#E6E6E6" uuid="ad6573ea-8127-4be8-940a-3a4d819f0ee2"/>
+				<graphicElement>
+					<pen lineWidth="0.25" lineColor="#CCCCCC"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="5" width="150" height="18" backcolor="#FFFFFF" uuid="80e62658-6145-4ebb-b49e-4600a847a307"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.5" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Staff]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="5" width="70" height="18" uuid="8d1446dc-26ab-4bc8-8577-83e239890a57"/>
+				<box>
+					<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.25" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ticket Num]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="220" y="5" width="92" height="18" uuid="e483f3ca-4b44-422a-bc8d-de10314058ce"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.5" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sale]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="312" y="5" width="69" height="18" uuid="a8ea0ac2-ad92-4341-bd71-e24620414795"/>
+				<box>
+					<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.25" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Net]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="464" y="5" width="91" height="18" backcolor="#FFFFFF" uuid="83edb736-492d-4623-8ee4-433b052f46a6"/>
+				<box>
+					<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.25" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Profit]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="381" y="5" width="83" height="18" uuid="2c511a20-3573-420b-8c32-d6395dc30413"/>
+				<box>
+					<pen lineColor="#CCCCFF"/>
+					<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.25" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tax]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="150" height="20" uuid="dcfcbddd-e381-4563-9443-bdfb6579ef07"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.5" lineColor="#CCCCFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{staff}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="0" width="70" height="20" uuid="03013766-1935-4e43-8e18-bb9ad4438ed3"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.5" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ticketnum}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0">
+				<reportElement x="220" y="0" width="92" height="20" uuid="5ed3dfcf-39c5-4e5b-81ac-f1b74790e0b4"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.5" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{sale}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0">
+				<reportElement x="381" y="0" width="83" height="20" uuid="44baff15-cc51-4b61-be40-4b6fd36f575f"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.5" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{tax}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0">
+				<reportElement x="464" y="0" width="91" height="20" uuid="ea0faa38-b2d2-48da-ae0c-793f566708ae"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.5" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{profit}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0">
+				<reportElement x="312" y="0" width="69" height="20" uuid="5f6a4348-0810-4541-a629-9c5d7382919a"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.5" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{fare}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="14" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="1" width="554" height="13" backcolor="#E6E6E6" uuid="5be008c0-30f3-466c-9248-f7aaa0ddcea5"/>
+				<graphicElement>
+					<pen lineWidth="0.25" lineColor="#CCCCCC"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="1" width="54" height="13" uuid="7ab870d5-432b-439c-9e7e-6381d70a46a6"/>
+				<text><![CDATA[Grand total]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0">
+				<reportElement x="150" y="0" width="70" height="14" uuid="72f3c0a2-e6c5-44a0-88e6-3c9069921cb6"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{totalnum}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0">
+				<reportElement x="220" y="0" width="92" height="14" uuid="8b00fc62-b1d5-4784-8486-9e0f42d173a7"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{totalsale}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0">
+				<reportElement x="312" y="0" width="69" height="14" uuid="69fe0405-d6df-4638-bfc4-25fce00d975d"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{totalfare}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0">
+				<reportElement x="381" y="0" width="83" height="14" uuid="9ce84fca-3a93-4702-b6ac-e6e97ca8bfe8"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{totaltax}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0">
+				<reportElement x="464" y="0" width="91" height="14" uuid="2ed19015-2de7-4eed-8d42-6706e832998d"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{totalprofit}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="311" splitType="Stretch">
+			<pieChart>
+				<chart isShowLegend="true">
+					<reportElement x="7" y="14" width="180" height="140" uuid="2668d373-5c44-493a-bbe4-d5be9785895e"/>
+					<chartTitle>
+						<font size="14" isBold="true"/>
+						<titleExpression><![CDATA["Ticket"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend position="Right">
+						<font size="5"/>
+					</chartLegend>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{staff}]]></keyExpression>
+					<valueExpression><![CDATA[new java.lang.Integer($F{ticketnum})]]></valueExpression>
+				</pieDataset>
+				<piePlot isShowLabels="false">
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+			<pieChart>
+				<chart isShowLegend="true">
+					<reportElement x="187" y="14" width="180" height="140" uuid="9711ccfe-cd1f-4e14-8be2-a95ae663efac"/>
+					<chartTitle>
+						<font size="14" isBold="true"/>
+						<titleExpression><![CDATA["Sale"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend position="Right">
+						<font size="5"/>
+					</chartLegend>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{staff}]]></keyExpression>
+					<valueExpression><![CDATA[$F{sale}]]></valueExpression>
+				</pieDataset>
+				<piePlot isShowLabels="false">
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+			<pieChart>
+				<chart isShowLegend="true">
+					<reportElement x="367" y="14" width="180" height="140" uuid="bc87b5f4-e214-4b68-a0f1-8a09da68029c"/>
+					<chartTitle>
+						<font size="14" isBold="true"/>
+						<titleExpression><![CDATA["Net"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend position="Right">
+						<font size="5"/>
+					</chartLegend>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{staff}]]></keyExpression>
+					<valueExpression><![CDATA[$F{fare}]]></valueExpression>
+				</pieDataset>
+				<piePlot isShowLabels="false">
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+			<pieChart>
+				<chart isShowLegend="true">
+					<reportElement x="98" y="171" width="180" height="140" uuid="ea784753-609a-4a67-baaa-4e49cf71455c"/>
+					<chartTitle>
+						<font size="14" isBold="true"/>
+						<titleExpression><![CDATA["Tax"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend position="Right">
+						<font size="5"/>
+					</chartLegend>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{staff}]]></keyExpression>
+					<valueExpression><![CDATA[$F{tax}]]></valueExpression>
+				</pieDataset>
+				<piePlot isShowLabels="false">
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+			<pieChart>
+				<chart isShowLegend="true">
+					<reportElement x="278" y="171" width="180" height="140" uuid="bd4b3564-45a9-44ae-a064-7c683364430b"/>
+					<chartTitle>
+						<font size="14" isBold="true"/>
+						<titleExpression><![CDATA["Profit"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend position="Right">
+						<font size="5"/>
+					</chartLegend>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{staff}]]></keyExpression>
+					<valueExpression><![CDATA[$F{profit}]]></valueExpression>
+				</pieDataset>
+				<piePlot isShowLabels="false">
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

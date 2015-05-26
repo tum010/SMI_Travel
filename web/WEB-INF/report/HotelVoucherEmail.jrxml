@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportTest" language="groovy" pageWidth="595" pageHeight="432" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="053f4d0e-4534-4ae9-bd3a-d9c39367ad2d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     *,
+     d.`name` AS d_name,
+     customer.`initial_name` AS customer_initial_name,
+     customer.`first_name` AS customer_first_name,
+     customer.`last_name` AS customer_last_name,
+     m_initialname.`name` AS m_initialname_name,
+     hotel_room.`qty` AS hotel_room_qty,
+     hotel_room.`category` AS hotel_room_category,
+     hotel_room.`room` AS hotel_room_room
+FROM
+     `hotel_booking` a INNER JOIN `hotel` b ON a.`hotel_id` = b.`id`
+     INNER JOIN `master` c ON a.`master_id` = c.`id`
+     INNER JOIN `m_meal` d ON a.`meal_id` = d.`id`
+     INNER JOIN `hotel_room` hotel_room ON a.`id` = hotel_room.`booking_hotel_id`
+     INNER JOIN `customer` customer ON c.`FalimyLeader_id` = customer.`id`
+     INNER JOIN `m_initialname` m_initialname ON customer.`initial_name` = m_initialname.`id`]]>
+	</queryString>
+	<field name="refno" class="java.lang.String"/>
+	<field name="code" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="address" class="java.lang.String"/>
+	<field name="tel" class="java.lang.String"/>
+	<field name="fax" class="java.lang.String"/>
+	<field name="leadername" class="java.lang.String"/>
+	<field name="adult" class="java.lang.String"/>
+	<field name="child" class="java.lang.String"/>
+	<field name="infant" class="java.lang.String"/>
+	<field name="total" class="java.lang.String"/>
+	<field name="checkin" class="java.lang.String"/>
+	<field name="checkout" class="java.lang.String"/>
+	<field name="meal" class="java.lang.String"/>
+	<field name="night" class="java.lang.String"/>
+	<field name="passenger1" class="java.lang.String"/>
+	<field name="passenger2" class="java.lang.String"/>
+	<field name="passenger3" class="java.lang.String"/>
+	<field name="passenger4" class="java.lang.String"/>
+	<field name="passenger5" class="java.lang.String"/>
+	<field name="remark" class="java.lang.String"/>
+	<field name="passenger6" class="java.lang.String"/>
+	<field name="systemdate" class="java.lang.String"/>
+	<field name="passenger7" class="java.lang.String"/>
+	<field name="passenger8" class="java.lang.String"/>
+	<field name="hotelref" class="java.lang.String"/>
+	<field name="room1" class="java.lang.String"/>
+	<field name="room2" class="java.lang.String"/>
+	<field name="room3" class="java.lang.String"/>
+	<field name="room4" class="java.lang.String"/>
+	<field name="user" class="java.lang.String"/>
+	<field name="okby" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="392" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="-2" y="114" width="555" height="272" uuid="e3bb41a0-3513-460e-a0e1-e3f7c9f2129f"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement x="0" y="341" width="354" height="29" backcolor="#CCCCCC" uuid="b51efb70-3dac-4668-8e69-4ff1f6bdb28a"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement x="0" y="74" width="555" height="36" uuid="b5a97baa-ecbf-430a-91a2-dec96bc48a92"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="369" y="76" width="53" height="21" uuid="046ea5b4-12e9-4f64-8372-06840e8b1bd7"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[REF NO.  :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="95" width="52" height="20" uuid="47836cd4-9f95-4862-ba18-24492a066fa2"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CODE     :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="115" width="46" height="20" uuid="47812be1-17cf-4258-84a9-5b4e91bc6ae3"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HOTEL]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="114" width="49" height="13" uuid="a6bfb01d-60f5-43bf-ba53-2892f01e5449"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="370" y="115" width="52" height="15" uuid="9d438cea-4602-445b-ac37-9ee5925ce365"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATE     :]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="168" width="555" height="2" uuid="7f2749a2-0feb-4677-80bb-a9242000c98f"/>
+			</line>
+			<staticText>
+				<reportElement x="4" y="169" width="100" height="13" uuid="0b738f93-d7cf-43ef-be86-a0edf870fb39"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PLEASE PROVIDE]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="168" width="100" height="13" uuid="0317e1c7-9014-4fa3-b4be-e7b15304c5d7"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="420" y="132" width="32" height="20" uuid="ea3f028f-2caa-46c0-a556-f6c4639c8970"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Tel :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="421" y="151" width="32" height="20" uuid="e6a15159-ceb0-4ebb-92d4-17cf11c0b7dc"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Fax :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="211" width="49" height="13" uuid="d6176e79-5b20-4f1f-a4fe-aaf982591531"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Checkin]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="104" y="210" width="65" height="13" uuid="57309fba-ced0-4ba0-8cb4-1248f30d073e"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Checkout]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="197" width="100" height="13" uuid="092bb1a3-5b55-4eb3-94ce-d49c204d9089"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="5" y="198" width="63" height="18" uuid="e22755a2-4f7b-4308-b534-e58537448fe6"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SERVICE(S)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="411" y="211" width="29" height="13" uuid="d5e287d1-3ca1-4e5a-8509-ca3d64d9129f"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Meal]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="197" width="555" height="2" uuid="471796a4-0fa6-4635-94d7-4ccc47754b0f"/>
+			</line>
+			<staticText>
+				<reportElement x="495" y="210" width="51" height="13" uuid="67d04561-c98a-4371-8869-02df0c7a8134"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Night(s)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="278" y="180" width="30" height="20" uuid="cc2cd42d-2801-4d9a-a54b-8f342f88e53e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ADLT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="349" y="180" width="29" height="13" uuid="4a2e988a-e8ae-4a31-84e4-4556b29807aa"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CHD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="412" y="180" width="17" height="13" uuid="2c68b485-bd8c-4456-ac42-0e201107bc7e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[INF]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="473" y="180" width="54" height="13" uuid="ac9c4400-4fba-43dc-abd3-4e0e6ef020e8"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Persons]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="268" width="555" height="2" uuid="a428cff0-2587-44db-b40f-9dfc02ed6352"/>
+			</line>
+			<rectangle>
+				<reportElement mode="Transparent" x="341" y="269" width="100" height="13" uuid="9e71e5a3-6e27-4111-b7ac-71f4965f14bd"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="344" y="270" width="95" height="13" uuid="5ee2a8fa-db0e-41fc-b718-ac6d9edc4436"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[REMARKS]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="268" width="100" height="13" uuid="fd9bedf7-121e-4ab3-8bae-6baf98e51344"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="3" y="269" width="95" height="13" uuid="523b0b8e-8c2b-46c2-ada4-b087be685e59"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PASSENGER NAME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="342" width="45" height="20" uuid="2b6ef879-8877-4bb0-9211-f51fa3b74cb8"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[OK BY :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="356" width="77" height="20" uuid="819279f9-a841-4b68-a1e8-87fb212ff1be"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PAYMENT BY:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="85" y="357" width="188" height="20" uuid="a648dfa2-7e2c-447b-92e2-e964de3e7f10"/>
+				<text><![CDATA[Wendy Tour / S.M.I. Travel Co., Ltd.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="201" y="67" width="138" height="46" uuid="522fe8ab-f75b-45c6-bed7-24dd3b41cc36"/>
+				<textElement>
+					<font fontName="Serif" size="36" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Voucher]]></text>
+			</staticText>
+			<line>
+				<reportElement x="370" y="370" width="171" height="1" uuid="c0e25659-987b-45e3-a98c-d4d876241e88"/>
+			</line>
+			<staticText>
+				<reportElement x="35" y="373" width="222" height="13" uuid="6d86a6ee-5734-4193-b98a-7b0f5a871dbb"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Thank you for choosing S.M.I. Travel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="403" y="372" width="112" height="13" uuid="2b6cdbf9-79f4-4e8e-ac62-e183edc71788"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Authorized Signature]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="421" y="76" width="100" height="20" uuid="a8342fea-6e1e-4492-9936-f9e0457672bf"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{refno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="421" y="96" width="100" height="20" uuid="7692ad40-059c-4229-81a8-e74b98110917"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="127" width="331" height="16" uuid="14349c77-0337-4038-92d5-8b3421691a89"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="143" width="331" height="25" uuid="c0624a92-0450-4f32-8a82-590931181a11"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="452" y="132" width="94" height="20" uuid="1a994195-033d-43dc-be2d-ee8ca41a627a"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="452" y="151" width="94" height="20" uuid="413986a5-36f1-44f5-87a0-4b9d0dd0578a"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fax}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="182" width="220" height="13" uuid="a6c487da-33cf-4947-840e-d509024f4464"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{leadername}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="257" y="180" width="21" height="13" uuid="0eb8e1bd-dcd8-40d4-8b3c-ecc1c00c0d73"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{adult}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="325" y="180" width="23" height="20" uuid="01c2fe45-6e2a-4aba-ae05-f341b12c2640"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{child}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="392" y="180" width="19" height="13" uuid="99b9bcaa-c1ec-47ac-b315-0e261506c2f3"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{infant}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="452" y="180" width="20" height="13" uuid="3cd2f3f2-de50-4a47-9363-247f51b497be"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="4" y="223" width="80" height="15" uuid="c1b64ca7-6c87-4a6b-9848-b02b12e6e3ad"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{checkin}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="103" y="224" width="82" height="15" uuid="827734b7-ee8d-45dc-a0cb-f5191086f138"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{checkout}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="411" y="223" width="50" height="13" uuid="76d2eae1-7cbf-4be5-b89e-329748a2f1b7"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{meal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="490" y="224" width="51" height="13" uuid="8f4309c0-2d74-475c-9a79-253d10b472ba"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{night}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="282" width="148" height="20" uuid="2d0df252-f691-41a7-b24d-6a0810fc210a"/>
+				<textFieldExpression><![CDATA[$F{passenger1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="188" y="284" width="148" height="20" uuid="1c6a5d7e-91bb-4651-bd2b-908fce6c29c8"/>
+				<textFieldExpression><![CDATA[$F{passenger2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="296" width="148" height="20" uuid="2c3f491e-a2c3-48aa-9b85-54274edffc2b"/>
+				<textFieldExpression><![CDATA[$F{passenger3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="189" y="298" width="147" height="18" uuid="00f3109a-7ded-4078-89fc-3954a09939fb"/>
+				<textFieldExpression><![CDATA[$F{passenger4}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="311" width="148" height="20" uuid="0d18a970-8ea8-4a03-aa9e-ebfa6efa3116"/>
+				<textFieldExpression><![CDATA[$F{passenger5}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="341" y="283" width="200" height="58" uuid="41d7f2e3-64a3-45bf-92ff-51c49f0a2487"/>
+				<textFieldExpression><![CDATA[$F{remark}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="189" y="312" width="147" height="20" uuid="2fe29c5e-36a3-467d-b204-fdf145debd53"/>
+				<textFieldExpression><![CDATA[$F{passenger6}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="420" y="115" width="119" height="17" uuid="f3e9d588-e762-49d0-abbc-15f03c047cc3"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{systemdate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="325" width="148" height="20" uuid="000bec1a-98e9-4193-b0af-f1053c4565d5"/>
+				<textFieldExpression><![CDATA[$F{passenger7}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="189" y="326" width="147" height="20" uuid="136c1f19-2c2e-4ddc-b248-b4d7d8a7892d"/>
+				<textFieldExpression><![CDATA[$F{passenger8}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="69" y="33" width="267" height="13" uuid="46666058-ab27-43d3-abad-5d0d70574557"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[865 Rama 1 Road, Wangmai, Phatumwan, Bangkok 10330]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="69" y="46" width="271" height="13" uuid="6e12af9e-5f93-40c8-8081-68dc3b641114"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Tel : (66-2) 216-2201 Fax : (66-2) 216-2202]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="4" width="65" height="66" uuid="8b7f7963-81fb-49a6-a1d1-f2eb0b103760"/>
+				<imageExpression><![CDATA["resource/images/wendy-logo.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="69" y="5" width="149" height="17" uuid="361be010-fb75-4396-91ca-1a4d62074897"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[S.M.I Travel Co., Ltd.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="69" y="59" width="177" height="13" uuid="df941c07-ee18-4d78-9663-ad67dedf3f06"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[E-Mail : yoyaku@wendytour.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="69" y="20" width="204" height="13" uuid="2b9c3b8f-7c2f-487d-82ff-140cc82beae6"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[9th Floor, Siam At Siam Hotel Building,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="354" y="20" width="201" height="14" uuid="b631dff8-b2be-4337-aa6a-ddcc8fbc6b42"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[865 อาคารโรงแรมสยาม แอ็ท สยาม ชั้น 9]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="353" y="3" width="201" height="22" uuid="fac0edc4-cfb4-4859-80b3-109ba5e28350"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="18" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[บริษัทเอส. เอ็ม. ไอ. แทรเวล จำกัด]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="354" y="33" width="201" height="14" uuid="f6444a1f-ca96-4959-bf87-0d3ea23a0602"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="12" isBold="true" isItalic="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[ถนนพระรามที่ 1 แขวงวังใหม่ เขตปทุมวัน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="355" y="46" width="200" height="14" uuid="35c96233-169c-4bf8-adad-5f13df334b4c"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[กรุงเทพฯ 10330]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="348" y="5" width="207" height="54" uuid="451bf054-e8a0-4838-b8c4-2621f7953509"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="218" y="223" width="174" height="20" uuid="d253cc1a-618c-4288-9973-d24d7c7dcdfb"/>
+				<textFieldExpression><![CDATA[$F{room1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="218" y="234" width="174" height="20" uuid="8674a4f0-82ed-4511-9e92-7069fffa7798"/>
+				<textFieldExpression><![CDATA[$F{room2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="218" y="246" width="174" height="20" uuid="45da06c9-266e-4e0b-91e2-c94ce196e4ae"/>
+				<textFieldExpression><![CDATA[$F{room3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="85" y="342" width="100" height="20" uuid="ad505563-1a13-4396-b125-5e699887c7e0"/>
+				<textFieldExpression><![CDATA[$F{okby}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="378" y="353" width="161" height="20" uuid="6581f780-c0eb-41b2-885c-1eacdbfcf2c7"/>
+				<textFieldExpression><![CDATA[$F{user}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="218" y="257" width="100" height="20" uuid="46fb1a43-6ad3-4b08-8b15-417a57cd0f6a"/>
+				<textFieldExpression><![CDATA[$F{room4}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

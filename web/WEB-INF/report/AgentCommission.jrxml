@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AirlineVolumn" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="36591689-e817-40b9-bb01-c68bf69d6b71">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/Users/taninsammanee/Projects/ICONEXT/icoweb/trunk/SMITravel/web/WEB-INF/report/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="subReportDir" class="java.lang.String"/>
+	<field name="agentCommissionSummaryDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="agentCommissionInfoDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="163" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="76" uuid="f5a2d743-df7f-4603-a199-5d6afe6a43c8"/>
+				<dataSourceExpression><![CDATA[$F{agentCommissionSummaryDataSource}]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$F{subReportDir} + "/AgentCommissionSummary.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="87" width="555" height="76" uuid="5854e35a-b88b-4e00-8c03-31c8d4ebf8a2"/>
+				<dataSourceExpression><![CDATA[$F{agentCommissionInfoDataSource}]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$F{subReportDir} + "/AgentCommissionInfo.jasper"]]></subreportExpression>
+			</subreport>
+			<break>
+				<reportElement x="0" y="83" width="100" height="1" uuid="98519bd6-0060-4f62-a3fd-5bfdc7c3743e"/>
+			</break>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
