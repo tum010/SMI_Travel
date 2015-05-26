@@ -1,3 +1,2 @@
-# SMI_Travel
+SMI_Travel
 
-สุ ไอ้ลาว มึงใช้ git เป็นปะเนี่ย
