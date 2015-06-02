@@ -77,10 +77,10 @@
         <property name="remarkAgentCommission" type="string">
             <column name="remark_agent_commission" length="255" />
         </property>
-        <property name="agentCommission" type="string">
+        <property name="agentCommission" type="java.lang.Long">
             <column name="agent_commission" length="10" />
         </property>
-        <property name="guideCommission" type="string">
+        <property name="guideCommission" type="java.lang.Long">
             <column name="guide_commission" length="10" />
         </property>
         <property name="isBill" type="java.lang.Integer">

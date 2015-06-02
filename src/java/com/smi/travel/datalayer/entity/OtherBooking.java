@@ -46,7 +46,6 @@ public class OtherBooking  {
         
     }
 
-	
     public OtherBooking(Product product, Master master, MItemstatus status) {
         this.product = product;
         this.master = master;
@@ -306,6 +305,14 @@ public class OtherBooking  {
 
     public void setRemarkAgentCommission(String remarkAgentCommission) {
         this.remarkAgentCommission = remarkAgentCommission;
+    }
+
+    public void setGuideCommission(Integer guideCommission) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void setAgentCommission(Integer agentCommission) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
    
