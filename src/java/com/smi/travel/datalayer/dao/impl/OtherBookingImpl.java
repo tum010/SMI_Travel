@@ -7,6 +7,7 @@
 package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.OtherBookingDao;
+import com.smi.travel.datalayer.entity.DaytourBooking;
 import com.smi.travel.datalayer.entity.OtherBooking;
 import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.util.UtilityFunction;
@@ -241,7 +242,7 @@ public class OtherBookingImpl implements OtherBookingDao{
                 }
 
                 if (checkQuery == 1) {
-                    queryupdate += " Where DB.id = " + book.getId();
+                    queryupdate += " Where ot.id = " + book.getId();
                     System.out.println("queryupdate : "+queryupdate);
                     Query query = session.createQuery(queryupdate);
                     int UpdateResult = query.executeUpdate();
@@ -267,8 +268,4 @@ public class OtherBookingImpl implements OtherBookingDao{
         this.sessionFactory.close();
         return result;
     }
-
-    
-    
-    
 }
