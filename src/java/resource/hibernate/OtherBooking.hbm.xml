@@ -71,6 +71,18 @@
         <property name="remark" type="string">
             <column name="remark" length="100" />
         </property>
+        <property name="remarkGuideCommission" type="string">
+            <column name="remark_guide_commission" length="255" />
+        </property>
+        <property name="remarkAgentCommission" type="string">
+            <column name="remark_agent_commission" length="255" />
+        </property>
+        <property name="agentCommission" type="string">
+            <column name="agent_commission" length="10" />
+        </property>
+        <property name="guideCommission" type="string">
+            <column name="guide_commission" length="10" />
+        </property>
         <property name="isBill" type="java.lang.Integer">
             <column name="is_bill" />
         </property>

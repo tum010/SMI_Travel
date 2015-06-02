@@ -6,7 +6,6 @@
 package com.smi.travel.controller;
 
 import com.smi.travel.datalayer.entity.Agent;
-import com.smi.travel.datalayer.entity.DaytourBooking;
 import com.smi.travel.datalayer.entity.OtherBooking;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.BookingOtherService;
@@ -59,11 +58,11 @@ public class DaytourOtherComissionController extends SMITravelController {
         log.info("Filter by AgentId(" + selectAgentId + ") guideId(" + selectGuideId + ").");
         
         if ("save".equalsIgnoreCase(action)) {
-            List<DaytourBooking> saveDaytourBookingList = buildeListBookingDaytourCommission(request);
-            String result = daytourCommissionService.SaveDaytourComission(saveDaytourBookingList);
+            List<OtherBooking> saveDaytourBookingList = buildeListBookingDaytourCommission(request);
+            String result = bookingOtherService.saveOtherBookCommission(saveDaytourBookingList);
             request.setAttribute(TransactionResult, result);
 
-            List<DaytourBooking> dBookingList = daytourCommissionService.getListBookingDaytourComission(dateFromS, dateToS, selectAgentId, selectGuideId);
+            List<OtherBooking> dBookingList = bookingOtherService.getListBookingDaytourComission(dateFromS, dateToS, selectAgentId, selectGuideId);
             request.setAttribute(BookingList, dBookingList);
         } else if ("search".equalsIgnoreCase(action)) {
            
@@ -126,7 +125,7 @@ public class DaytourOtherComissionController extends SMITravelController {
         return bookingOtherService;
     }
     
-    private List<DaytourBooking> buildeListBookingDaytourCommission(HttpServletRequest request) {
+    private List<OtherBooking> buildeListBookingDaytourCommission(HttpServletRequest request) {
         String rows = request.getParameter("dayCommRows");
         log.info("rows = " + rows);
 
@@ -137,7 +136,7 @@ public class DaytourOtherComissionController extends SMITravelController {
         UtilityFunction utilFunc = new UtilityFunction();
 
         int row = Integer.parseInt(rows);
-        ArrayList<DaytourBooking> updateBooking = new ArrayList<DaytourBooking>();
+        ArrayList<OtherBooking> updateBooking = new ArrayList<OtherBooking>();
         for (int i = 1; i <= row; i++) {
             String daytourBookingId = request.getParameter("daytourBookingId-" + i);
             String guideId = request.getParameter("selectGuide-" + i);
@@ -146,7 +145,7 @@ public class DaytourOtherComissionController extends SMITravelController {
             String agentId = request.getParameter("AgentName-" + i);
             String agentComm = request.getParameter("agentComm-" + i);
             String agentRemark = request.getParameter("agentRemark-" + i);
-            DaytourBooking booking = new DaytourBooking();
+            OtherBooking booking = new OtherBooking();
             booking.setId(daytourBookingId);
 
             log.info("daytourBookingId(" + i + ")-" + daytourBookingId);
@@ -168,7 +167,7 @@ public class DaytourOtherComissionController extends SMITravelController {
                 guideCommission = utilFunc.convertStringToInteger(guideComm);
                 booking.setGuideCommission(guideCommission);
             }
-            booking.setRemarkGuideCom(guideRemark);
+            booking.setRemarkGuideCommission(guideRemark);
 
             if (StringUtils.isNotEmpty(agentId)) {
                 Agent agent = new Agent();
@@ -179,9 +178,9 @@ public class DaytourOtherComissionController extends SMITravelController {
             if (StringUtils.isNotEmpty(agentComm)) {
                 Integer agentCommission = null;
                 agentCommission = utilFunc.convertStringToInteger(agentComm);
-                booking.setAgentComission(agentCommission);
+                booking.setAgentCommission(agentCommission);
             }
-            booking.setRemarkAgentCom(agentRemark);
+            booking.setRemarkAgentCommission(agentRemark);
 
             updateBooking.add(booking);
             log.info("DaytourBookingId = " + daytourBookingId);
