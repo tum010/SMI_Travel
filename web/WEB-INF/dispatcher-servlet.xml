@@ -41,9 +41,11 @@
                 <prop key="DaytourDetail.smi">DaytourDetailController</prop>
                 <prop key="DaytourOperation.smi">DaytourOperationController</prop>
                 <prop key="DaytourOperationDetail.smi">DaytourOperationDetailController</prop>
+                <prop key="DaytourOperationOther.smi">DaytourOperationOtherController</prop>
                 <prop key="DaytourTransfer.smi">DaytourTransferController</prop>
                 <prop key="DaytourHistoryTransfer.smi">DaytourHistoryTransferController</prop>
                 <prop key="DaytourCommission.smi">DaytourComissionController</prop>
+                <prop key="DayTourOtherComission.smi">DaytourOtherComissionController</prop>
                 <prop key="Passenger.smi">PassengerController</prop>
                 <prop key="PassengerDetail.smi">PassengerDetailController</prop>
                 <prop key="Billable.smi">BillableController</prop>
@@ -80,6 +82,7 @@
                 <prop key="MCommissionDetail.smi">MCommissionDetailController</prop>
                 <prop key="MPackage.smi">MPackageController</prop>
                 <prop key="MPackageDetail.smi">MPackageDetailController</prop>
+                <!--<prop key="test_page.smi">TestPageController</prop>-->
                 <!-- add mapping url -->
             </props>
         </property>
@@ -125,9 +128,28 @@
     <bean id="indexController" class="com.smi.travel.controller.IndexController">
         
     </bean>
+    
+<!--    <bean id="TestPageController" class="com.smi.travel.controller.TestPageController">    
+         <property name="testpageservice" ref="TestPageService" /> 
+         <property name="cityservice" ref="MCityService" /> 
+         
+    </bean>-->
+    
+    <bean id="DaytourOperationOtherController" class="com.smi.travel.controller.DaytourOperationOtherController">    
+        <property name="otherBookingService" ref="BookingOtherService" /> 
+        <property name="passsengerService" ref="PassengerService" /> 
+    </bean>
+    
+    <bean id="DaytourOtherComissionController" class="com.smi.travel.controller.DaytourOtherComissionController">    
+        <property name="daytourCommissionService" ref="DaytourCommissionService" /> 
+        <property name="bookingOtherService" ref="BookingOtherService" /> 
+        <property name="utilservice" ref="UtilityService" />  
+    </bean>
+    
     <!-- login controller -->
     <bean id="loginController" class="com.smi.travel.controller.LoginController">
-        <property name="loginService" ref="LoginService" /> 
+        <property name="loginService" ref="LoginService" />
+       
     </bean>
     <!-- logout controller -->
     <bean id="logoutController" class="com.smi.travel.controller.LogOutController">
@@ -379,18 +401,18 @@
     
     <bean id="monitorGalileo" class="com.smi.travel.monitor.MonitorGalileo" init-method="init">
         <constructor-arg index="0" type="java.lang.String">  
-                 <value>C:/Users/Administrator/Desktop/PNR/galileo/</value> 
-         <!--   <value>D:/PNR/gali/</value>    -->
+                 <value>C:/Users/Administrator/Desktop/PNR/galileo/</value>  
+         <!--   <value>D:/PNR/gali/</value>   -->
          <!--    <value>S:/BackupPNR/</value>  -->
         </constructor-arg> 
         <constructor-arg index="1" type="java.lang.String">  
-             <value>C:/Users/Administrator/Desktop/PNR/galileo/archived/</value>  
-          <!--     <value>D:/PNR/archived/</value> -->
+            <value>C:/Users/Administrator/Desktop/PNR/galileo/archived/</value>  
+         <!--       <value>D:/PNR/archived/</value> -->
            <!--       <value>S:/BackupPNR/archived/</value>   -->
         </constructor-arg> 
         <constructor-arg index="2" type="java.lang.String">  
-             <value>C:/Users/Administrator/Desktop/PNR/galileo/error/</value>
-          <!--   <value>D:/PNR/error/</value>  --> 
+            <value>C:/Users/Administrator/Desktop/PNR/galileo/error/</value>
+          <!--    <value>D:/PNR/error/</value>  --> 
          <!--          <value>S:/BackupPNR/error/</value>    -->
         </constructor-arg>         
         <property name="mGalileoService" ref="MGalileoService" />
@@ -400,18 +422,18 @@
     
     <bean id="monitorAmadeus" class="com.smi.travel.monitor.MonitorAmadeus" init-method="init">
         <constructor-arg index="0" type="java.lang.String">  
-                  <value>C:/Users/Administrator/Desktop/PNR/amadeus/</value>  
-           <!--  <value>D:/PNR/ama/</value> -->
+                <value>C:/Users/Administrator/Desktop/PNR/amadeus/</value>  
+        <!--       <value>D:/PNR/ama/</value> -->
          <!--      <value>T:/BackupPNR/</value>   -->
         </constructor-arg> 
         <constructor-arg index="1" type="java.lang.String">  
-                  <value>C:/Users/Administrator/Desktop/PNR/amadeus/archived/</value>
-        <!--   <value>D:/PNR/archived/</value>   -->
+                 <value>C:/Users/Administrator/Desktop/PNR/amadeus/archived/</value>
+         <!--   <value>D:/PNR/archived/</value>   -->
          <!--    <value>T:/BackupPNR/archived/</value>   -->
         </constructor-arg> 
         <constructor-arg index="2" type="java.lang.String">  
-               <value>C:/Users/Administrator/Desktop/PNR/amadeus/error/</value> 
-          <!--     <value>D:/PNR/error/</value> --> 
+                 <value>C:/Users/Administrator/Desktop/PNR/amadeus/error/</value> 
+       <!--      <value>D:/PNR/error/</value> --> 
          <!--    <value>T:/BackupPNR/error/</value>   -->
         </constructor-arg>         
         <property name="mAmadeusService" ref="MAmadeusService" />

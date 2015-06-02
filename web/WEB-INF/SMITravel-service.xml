@@ -143,6 +143,7 @@
         <property name="transferJobReportdao" ref="TransferJobReportDao" />
         <property name="guideComissiondao" ref="GuideCommissionReportDao" />
         <property name="guideJobdao" ref="GuideJobDao" />
+        <property name="daytourOtherdao" ref="DaytourOtherDao" />
         <property name="agentCommissiondao" ref="AgentCommissionReportDao" />
     </bean> 
     

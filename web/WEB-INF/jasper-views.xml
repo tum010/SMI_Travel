@@ -14,9 +14,6 @@
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/TicketOrder.jrxml"/>
 	</bean>
- 
-       
-        
         <bean id="HotelInoundVoucher"
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/HotelInbound.jrxml"/>
@@ -86,6 +83,16 @@
         <bean id="GuideJob"
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/GuideJob.jrxml"/>
+         </bean>
+         
+         <bean id="DaytourOther"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/OtherVoucher.jrxml"/>
+         </bean>
+         
+         <bean id="OtherVouncherEmail"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/OtherVoucherEmail.jrxml"/>
          </bean>
          
          <bean id="GuideCommission"

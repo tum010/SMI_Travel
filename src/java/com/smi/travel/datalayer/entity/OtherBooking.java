@@ -15,6 +15,7 @@ public class OtherBooking  {
      private Product product;
      private Master master;
      private Agent agent;
+     private SystemUser guide;
      private Long adCost;
      private Long adPrice;
      private Integer adQty;
@@ -35,6 +36,10 @@ public class OtherBooking  {
      private String createBy;
      private String remark;
      private String currency;
+     private Long agentCommission;
+     private Long guideCommission;
+     private String remarkGuideCommission;
+     private String remarkAgentCommission;
      private Set coupons = new HashSet(0);
 
     public OtherBooking() {
@@ -47,10 +52,11 @@ public class OtherBooking  {
         this.master = master;
         this.status = status;
     }
-    public OtherBooking(Product product, Master master,Agent agent, Long adCost, Long adPrice, Integer adQty, Long chCost, Long chPrice, Integer chQty, Long inCost, Long inPrice, Integer inQty,Integer isBill, MItemstatus status, Date otherDate, Date otherTime, Date createDate, String updateBy, Date updateDate, String createBy, String remark,String currency,Date cancelDate,Set coupons) {
+    public OtherBooking(Product product,SystemUser guide, Master master,Agent agent, Long adCost, Long adPrice, Integer adQty, Long chCost, Long chPrice, Integer chQty, Long inCost, Long inPrice, Integer inQty,Integer isBill, MItemstatus status, Date otherDate, Date otherTime, Date createDate, String updateBy, Date updateDate, String createBy, String remark,String currency,Date cancelDate, Long agentCommission,Long guideCommission,String remarkGuideCommission,String remarkAgentCommission,Set coupons) {
        this.product = product;
        this.master = master;
        this.agent = agent;
+       this.guide = guide;
        this.adCost = adCost;
        this.adPrice = adPrice;
        this.adQty = adQty;
@@ -71,6 +77,9 @@ public class OtherBooking  {
        this.remark = remark;
        this.currency = currency;
        this.cancelDate = cancelDate;
+       this.agentCommission = agentCommission;
+       this.guideCommission = guideCommission;
+       this.remarkGuideCommission = remarkGuideCommission;
        this.coupons = coupons;
     }
    
@@ -257,6 +266,46 @@ public class OtherBooking  {
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    public SystemUser getGuide() {
+        return guide;
+    }
+
+    public void setGuide(SystemUser guide) {
+        this.guide = guide;
+    }
+
+    public Long getAgentCommission() {
+        return agentCommission;
+    }
+
+    public void setAgentCommission(Long agentCommission) {
+        this.agentCommission = agentCommission;
+    }
+
+    public Long getGuideCommission() {
+        return guideCommission;
+    }
+
+    public void setGuideCommission(Long guideCommission) {
+        this.guideCommission = guideCommission;
+    }
+
+    public String getRemarkGuideCommission() {
+        return remarkGuideCommission;
+    }
+
+    public void setRemarkGuideCommission(String remarkGuideCommission) {
+        this.remarkGuideCommission = remarkGuideCommission;
+    }
+
+    public String getRemarkAgentCommission() {
+        return remarkAgentCommission;
+    }
+
+    public void setRemarkAgentCommission(String remarkAgentCommission) {
+        this.remarkAgentCommission = remarkAgentCommission;
     }
 
    

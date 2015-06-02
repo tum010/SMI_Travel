@@ -100,6 +100,11 @@
         <put-attribute name="body" value="/WEB-INF/jsp/DaytourOperationDetail.jsp" />
     </definition>
     
+    <definition name="DaytourOperationOther" extends="baseLayout">
+        <put-attribute name="title" value="SMI Travel :DayTour Operation Other" />
+        <put-attribute name="body" value="/WEB-INF/jsp/DaytourOperationOther.jsp" />
+    </definition>
+    
     <definition name="DaytourTransfer" extends="baseLayout">
         <put-attribute name="title" value="SMI Travel :DayTour Transfer" />
         <put-attribute name="body" value="/WEB-INF/jsp/DaytourTransfer.jsp" />
@@ -113,6 +118,11 @@
     <definition name="DaytourCommission" extends="baseLayout">
         <put-attribute name="title" value="SMI Travel :DayTour Commission" />
         <put-attribute name="body" value="/WEB-INF/jsp/DaytourComission.jsp" />
+    </definition>
+    
+    <definition name="DaytourOtherCommission" extends="baseLayout">
+        <put-attribute name="title" value="SMI Travel :DayTour Other Commission" />
+        <put-attribute name="body" value="/WEB-INF/jsp/DayTourOtherComission.jsp" />
     </definition>
     
     <definition name="Passenger" extends="baseLayout">

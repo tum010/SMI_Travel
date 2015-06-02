@@ -225,6 +225,10 @@
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
     
+    <bean id="DaytourOtherDao" class="com.smi.travel.datalayer.dao.impl.DaytourOtherImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
     <bean id="DaytourBookingDao" class="com.smi.travel.datalayer.dao.impl.DaytourBookingImpl">
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
@@ -282,7 +286,8 @@
                 <ref local="DaytourDao" />
                 <ref local="TransferJobDao" />
                 <ref local="PackageTourDao" />
-                 <ref local="DaytourComissionDao" />
+                <ref local="DaytourComissionDao" />
+                <ref local="OtherBookingDao" />  
             </list>
         </constructor-arg>
     </bean>

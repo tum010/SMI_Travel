@@ -27,6 +27,18 @@ public class BookingOtherService {
         return otherBookDao.getListBookingOtherFromRefno(refno);
     } 
     
+    public List<OtherBooking> getListBookingAll(){
+        return otherBookDao.getListBookingAll();
+    }
+    
+    public List<OtherBooking> getListBookingDaytourComission(String StartDate, String EndDate,String agentID,String guideID) {
+        return otherBookDao.getListBookingOtherComission(StartDate, EndDate, agentID, guideID);
+    }
+    
+    public String saveOtherBookCommission(List<OtherBooking> BookList){
+        return otherBookDao.saveOtherBookCommission(BookList);
+    }
+    
     public OtherBooking getBookDetailOtherFromID(String OtherBookingID) {
         return otherBookDao.getBookDetailOtherFromID(OtherBookingID);
     }

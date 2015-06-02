@@ -10,6 +10,7 @@ import com.smi.travel.datalayer.report.model.HotelVoucher;
 import com.smi.travel.datalayer.report.model.LandVoucher;
 import com.smi.travel.datalayer.view.dao.AgentCommissionReportDao;
 import com.smi.travel.datalayer.view.dao.AirlineSummaryDao;
+import com.smi.travel.datalayer.view.dao.DaytourOtherDao;
 import com.smi.travel.datalayer.view.dao.GuideCommissionReportDao;
 import com.smi.travel.datalayer.view.dao.GuideJobDao;
 import com.smi.travel.datalayer.view.dao.HotelInboundDao;
@@ -40,6 +41,7 @@ public class ReportService {
     private TransferJobReportDao transferJobReportdao;
     private GuideCommissionReportDao guideComissiondao;
     private GuideJobDao guideJobdao;
+    private DaytourOtherDao daytourOtherdao;
     private AgentCommissionReportDao agentCommissiondao;
     
     public List getHotelVoucher(String hotelID,String name) {
@@ -91,10 +93,14 @@ public class ReportService {
         return guideComissiondao.getGuideComissionReport(datefrom, dateto, username,guideid);
     }
     
+    public List getDaytourOtherReport(String refno){
+        return daytourOtherdao.getDaytourOtherReport(refno);
+    }
+    
     public List getGuildJobReport(String tourdate,String tourID, String username){
         return guideJobdao.getGuildJobReport(tourdate, tourID, username);
     }
-    
+   
     public List getAgentCommissionReport(String datefrom,String dateto,String user,String agentid){
         List data  = new ArrayList();
         data.add(agentCommissiondao.getAgentCommissionReport(datefrom, dateto, user,agentid));
@@ -204,9 +210,12 @@ public class ReportService {
     public void setAgentCommissiondao(AgentCommissionReportDao agentCommissiondao) {
         this.agentCommissiondao = agentCommissiondao;
     }
-    
-    
 
-    
-    
+    public void setDaytourOtherdao(DaytourOtherDao daytourOtherdao) {
+        this.daytourOtherdao = daytourOtherdao;
+    }
+
+    public DaytourOtherDao getDaytourOtherdao() {
+        return daytourOtherdao;
+    }
 }

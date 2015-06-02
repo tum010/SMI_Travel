@@ -9,6 +9,7 @@ package com.smi.travel.datalayer.dao.impl;
 import com.smi.travel.datalayer.dao.OtherBookingDao;
 import com.smi.travel.datalayer.entity.OtherBooking;
 import com.smi.travel.datalayer.entity.Product;
+import com.smi.travel.util.UtilityFunction;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.Query;
@@ -24,6 +25,7 @@ public class OtherBookingImpl implements OtherBookingDao{
     
     private SessionFactory sessionFactory;
     private Transaction transaction;
+    private static final String GET_BOOKOTHER_QUERY = "from OtherBooking ot where ot.otherDate >= :startdate and ot.otherDate <= :enddate ";
     
     @Override
     public List<OtherBooking> getListBookingOtherFromRefno(String refno) {
@@ -133,8 +135,138 @@ public class OtherBookingImpl implements OtherBookingDao{
         this.sessionFactory = sessionFactory;
     }
 
-    
+    @Override
+    public List<OtherBooking> getListBookingAll() {
+        String query = "from OtherBooking other";
+        Session session = this.sessionFactory.openSession();
 
+        Query OtherList = session.createQuery(query);  
+        List list = OtherList.list();
+        if (list.isEmpty()) {
+            return null;
+        }
+        return list;
+    }
+
+    @Override
+    public List<OtherBooking> getListBookingOtherComission(String StartDate, String EndDate, String agentID, String guideID) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        String query = GET_BOOKOTHER_QUERY;
+        System.out.println("agentID + "+agentID);
+        System.out.println("guideID + "+guideID);
+        if((agentID != null) &&(!"".equalsIgnoreCase(agentID))){
+            query += " and ot.agent.id = "+agentID;
+        }
+        if((guideID != null) &&(!"".equalsIgnoreCase(guideID))){
+            query += " and ot.guide.id = "+guideID;
+        }
+        query += " order by ot.otherDate,ot.product.code,ot.master.referenceNo";
+        System.out.println("query : "+query);
+        List<OtherBooking> list = session.createQuery(query)
+                .setParameter("startdate", util.convertStringToDate(StartDate))
+                .setParameter("enddate", util.convertStringToDate(EndDate))
+                .list();
+        if (list.isEmpty()) {
+            return null;
+        }
+
+        return list;
+    }
+
+    @Override
+    public String saveOtherBookCommission(List<OtherBooking> BookList) {
+        String result = "";
+        String queryupdate = "";
+        
+        int checkQuery = 0;
+        String prefix = "";
+
+           
+        Session session = this.sessionFactory.openSession();
+        try {
+            transaction = session.beginTransaction();
+            for (int i = 0; i < BookList.size(); i++) {
+                queryupdate = "UPDATE OtherBooking ot Set";
+                prefix = "";
+                checkQuery = 0;
+                
+                OtherBooking book = BookList.get(i);
+                if ((book.getGuide() != null) && (book.getGuide().getId() != null) ) {
+                    queryupdate += " ot.guide.id = " + book.getGuide().getId();
+                    if (checkQuery == 0) {
+                        checkQuery = 1;
+                        prefix = ",";
+                    }
+                }
+                if ((book.getAgent() != null) && (book.getAgent().getId() != null) ) {
+
+                    queryupdate += prefix + " ot.agent.id = " + book.getAgent().getId();
+                    if (checkQuery == 0) {
+                        checkQuery = 1;
+                        prefix = ",";
+                    }
+                }
+
+                if ((book.getAgentCommission() != null)) {
+                    queryupdate += prefix + " ot.agentCommission = " + book.getAgentCommission();
+                    if (checkQuery == 0) {
+                        checkQuery = 1;
+                        prefix = ",";
+                    }
+                }
+
+                if ((book.getGuideCommission() != null)) {
+                    queryupdate += prefix + " ot.guideCommission = " + book.getGuideCommission();
+                    if (checkQuery == 0) {
+                        checkQuery = 1;
+                        prefix = ",";
+                    }
+                }
+
+                if ((book.getRemarkGuideCommission() != null)) {
+                    queryupdate += prefix + " ot.remarkGuideCommission = '" + book.getRemarkGuideCommission() + "' ";
+                    if (checkQuery == 0) {
+                        checkQuery = 1;
+                        prefix = ",";
+                    }
+                }
+
+                if ((book.getRemarkAgentCommission() != null)) {
+                    queryupdate += prefix + " ot.remarkAgentCommission = '" + book.getRemarkAgentCommission() + "' ";
+                    if (checkQuery == 0) {
+                        checkQuery = 1;
+                        prefix = ",";
+                    }
+                }
+
+                if (checkQuery == 1) {
+                    queryupdate += " Where DB.id = " + book.getId();
+                    System.out.println("queryupdate : "+queryupdate);
+                    Query query = session.createQuery(queryupdate);
+                    int UpdateResult = query.executeUpdate();
+                    if (UpdateResult == 0) {
+                        result = "fail : not found book record";
+                        transaction.rollback();
+                        session.close();
+                        this.sessionFactory.close();
+                        return result;
+                    }
+                }
+
+            }
+            transaction.commit();
+            result = "success";
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            transaction.rollback();
+
+            result = "fail";
+        }
+        session.close();
+        this.sessionFactory.close();
+        return result;
+    }
 
     
     

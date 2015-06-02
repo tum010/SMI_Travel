@@ -16,9 +16,12 @@ import java.util.List;
  */
 public interface OtherBookingDao {
     public List<OtherBooking> getListBookingOtherFromRefno(String refno);
+    public List<OtherBooking> getListBookingAll();
     public OtherBooking getBookDetailOtherFromID(String OtherBookingID);
+    public List<OtherBooking> getListBookingOtherComission(String StartDate, String EndDate,String agentID,String guideID);
     public int insertBookDetailOther(OtherBooking otherbook);
     public int updateBookDetailOther(OtherBooking otherbook);
     public int cancelBookDetailOther(String otherID);
     public int enableBookDetailOther(String otherID);
+    public String saveOtherBookCommission(List<OtherBooking> BookList);
 }
