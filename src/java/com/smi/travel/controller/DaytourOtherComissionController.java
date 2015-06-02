@@ -162,9 +162,10 @@ public class DaytourOtherComissionController extends SMITravelController {
                 booking.setGuide(guide);
             }
 
-            Integer guideCommission = null;
+            Long guideCommission = null;
+             
             if (StringUtils.isNotEmpty(guideComm)) {
-                guideCommission = utilFunc.convertStringToInteger(guideComm);
+                guideCommission = utilFunc.convertStringTolong(guideComm);
                 booking.setGuideCommission(guideCommission);
             }
             booking.setRemarkGuideCommission(guideRemark);
@@ -176,8 +177,8 @@ public class DaytourOtherComissionController extends SMITravelController {
             }
 
             if (StringUtils.isNotEmpty(agentComm)) {
-                Integer agentCommission = null;
-                agentCommission = utilFunc.convertStringToInteger(agentComm);
+                Long agentCommission = null;
+                agentCommission = utilFunc.convertStringTolong(agentComm);
                 booking.setAgentCommission(agentCommission);
             }
             booking.setRemarkAgentCommission(agentRemark);
