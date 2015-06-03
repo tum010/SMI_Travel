@@ -8,11 +8,15 @@ package com.smi.travel.datalayer.dao.impl;
 import com.smi.travel.datalayer.report.model.DaytourOther;
 import com.smi.travel.datalayer.view.dao.DaytourOtherDao;
 import com.smi.travel.util.UtilityFunction;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -31,7 +35,7 @@ public class DaytourOtherImpl implements DaytourOtherDao{
          System.out.println("Get Report");
         List<Object[]> QueryDaytourOtherList = session.createSQLQuery("SELECT * FROM `DaytourOther` where refno = '"+refno+"'")
                 .addScalar("refno", Hibernate.STRING)
-                .addScalar("createdate", Hibernate.STRING)
+                .addScalar("createdate", Hibernate.DATE)
                 .addScalar("leadername", Hibernate.STRING)
                 .addScalar("code", Hibernate.STRING)
                 .addScalar("description", Hibernate.STRING)
@@ -47,7 +51,16 @@ public class DaytourOtherImpl implements DaytourOtherDao{
              DaytourOther daytourother = new DaytourOther();
              
              daytourother.setRefno(util.ConvertString(B[0]));
-             daytourother.setCreatedate(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format((Date)B[1]));
+             
+             SimpleDateFormat format =null;
+                format = new SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH);
+                Date curDate = (Date) B[1];
+                String DateToStr = format.format(curDate);
+                System.out.println(DateToStr);
+             String parseDate = util.parseDate(util.ConvertString(B[1]));
+             daytourother.setCreatedate(DateToStr);
+             System.out.println("Date : "+ parseDate);
+             
              daytourother.setLeadername(util.ConvertString(B[2]));
              daytourother.setCode(util.ConvertString(B[3]));
              daytourother.setDescription(util.ConvertString(B[4]));

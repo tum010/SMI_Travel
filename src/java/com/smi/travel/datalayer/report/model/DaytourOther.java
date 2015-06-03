@@ -5,9 +5,6 @@
  */
 package com.smi.travel.datalayer.report.model;
 
-import java.sql.Time;
-import java.util.Date;
-
 /**
  *
  * @author Kanokporn
