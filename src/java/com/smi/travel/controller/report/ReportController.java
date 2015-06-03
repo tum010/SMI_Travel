@@ -7,7 +7,6 @@ package com.smi.travel.controller.report;
 
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.report.model.AgentCommission;
-import com.smi.travel.datalayer.report.model.GuideJob;
 import com.smi.travel.datalayer.report.model.TicketOrder;
 import com.smi.travel.datalayer.service.ReportService;
 import com.smi.travel.master.controller.SMITravelController;
@@ -53,6 +52,8 @@ public class ReportController extends SMITravelController {
     private static final String AgentCommissionInfo = "AgentCommissionInfo";
     private static final String AgentCommissionSummary = "AgentCommissionSummary";
     private static final String AgentCommission = "AgentCommission";
+    private static final String DaytourOther = "DaytourOther";
+    private static final String OtherVouncherEmail = "otherVouncherEmail";
     
     private DataSource datasource;
     private static final Logger LOG = Logger.getLogger(ReportController.class.getName());
@@ -143,6 +144,12 @@ public class ReportController extends SMITravelController {
         }else if (AgentCommissionInfo.equalsIgnoreCase(name)) {
             PrintMethod = 0;
             data = reportservice.getAgentCommissionReportInfo(startdate, enddate, user.getName(),agentid);
+        }else if (DaytourOther.equalsIgnoreCase(name)){
+            PrintMethod = 0;
+            data = reportservice.getDaytourOtherReport(refno);
+        }else if (OtherVouncherEmail.equalsIgnoreCase(name)){
+            PrintMethod = 0;
+            data = reportservice.getDaytourOtherReport(refno);
         }
         
         
@@ -176,9 +183,4 @@ public class ReportController extends SMITravelController {
     public void setDatasource(DataSource datasource) {
         this.datasource = datasource;
     }
-    
-   
-    
-    
-
 }
