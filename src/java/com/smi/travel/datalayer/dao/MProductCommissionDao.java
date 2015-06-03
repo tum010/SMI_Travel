@@ -16,8 +16,9 @@ import java.util.List;
  */
 public interface MProductCommissionDao {
     public List<ProductComission> SearchProductComission(String code,String name, int option);
-    public Product getListProductCommissionFromID();
-    public String insertProductCommission(ProductComission ProCom);
-    public String updateProductCommission(ProductComission ProCom);
-    public String DeleteProductComission(ProductComission AgentCom);
+    public List<ProductComission> getListProductCommissionFromID(String ProductID);
+    public String insertProductCommission(Product ProCom);
+    public String updateProductCommission(Product ProCom);
+    public String DeleteProductComission(ProductComission ProCom);
+    public String DeleteAllProductComission(Product ProCom);
 }

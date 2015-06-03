@@ -26,6 +26,27 @@ public class MProductCommissionService {
     public List<ProductComission> SearchProductComission(String code, String name, int option) {
         return  mProductCommissiondao.SearchProductComission(code, name, option);
     }
+    
+    public List<ProductComission> getListProductCommissionFromID(String ProductID){
+        return mProductCommissiondao.getListProductCommissionFromID(ProductID);
+    }
+    
+    public String insertProductCommission(Product ProCom){
+        return mProductCommissiondao.insertProductCommission(ProCom);
+    }
+    
+    public String updateProductCommission(Product ProCom){
+        return mProductCommissiondao.updateProductCommission(ProCom);   
+    }
+    
+    public String DeleteProductComission(ProductComission ProCom){
+        return mProductCommissiondao.DeleteProductComission(ProCom);
+    }
+    
+    public String DeleteAllProductComission(Product ProCom){
+        return mProductCommissiondao.DeleteAllProductComission(ProCom);
+    }
+    
 
     public ProductDao getProductDao() {
         return productDao;
