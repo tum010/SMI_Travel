@@ -19,4 +19,14 @@ public class MProductCommissionService {
     public List<Product> getListMasterProduct(){
         return productDao.getListProduct();
     }
+
+    public ProductDao getProductDao() {
+        return productDao;
+    }
+
+    public void setProductDao(ProductDao productDao) {
+        this.productDao = productDao;
+    }
+    
+    
 }
