@@ -270,6 +270,11 @@
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
     
+    <bean id="MProductCommissionDao" class="com.smi.travel.datalayer.dao.impl.MProductCommissionImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    
     
     
     

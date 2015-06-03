@@ -227,6 +227,7 @@
     
      <bean id="MProductCommissionService" class="com.smi.travel.datalayer.service.MProductCommissionService">
         <property name="productDao" ref="ProductDao" />
+        <property name="mProductCommissiondao" ref="MProductCommissionDao" />
     </bean>
     
     

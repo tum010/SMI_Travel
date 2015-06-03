@@ -27,7 +27,7 @@ public class MProductCommissionImpl implements MProductCommissionDao{
     @Override
     public List<ProductComission> SearchProductComission(String code, String name, int option) {
         Session session = this.sessionFactory.openSession();
-        String query = "SELECT   max(pc.id)  FROM `product_comission` pc    GROUP BY pc.product_id ;" ;
+        String query = "FROM ProductComission  pc where" ;
         String queryOperation = "";
         String Prefix_Subfix = "";
         int check = 0;
@@ -40,14 +40,14 @@ public class MProductCommissionImpl implements MProductCommissionDao{
         }
 
         if ((code != null) && (!"".equalsIgnoreCase(code))) {
-            query += " agt.`code` " + queryOperation + " '" + Prefix_Subfix + code + Prefix_Subfix + "'";
+            query += " pc.productId.code " + queryOperation + " '" + Prefix_Subfix + code + Prefix_Subfix + "'";
             check = 1;
         }
         if ((name != null) && (!"".equalsIgnoreCase(name))) {
             if (check == 1) {
                 query += " and ";
             }
-            query += " agt.`name` " + queryOperation + " '" + Prefix_Subfix + name + Prefix_Subfix + "'";
+            query += " pc.productId.name " + queryOperation + " '" + Prefix_Subfix + name + Prefix_Subfix + "'";
             check = 1;
         }
 
@@ -57,7 +57,7 @@ public class MProductCommissionImpl implements MProductCommissionDao{
        
         query += "  group by ac.agent_id , atc.tour_id  ";
         System.out.println("query : " + query);
-        
+     /*   
         List<String> QueryComList = session.createSQLQuery(query)
                 .addScalar("lastTourCom", Hibernate.STRING)
                 .list();
@@ -70,10 +70,10 @@ public class MProductCommissionImpl implements MProductCommissionDao{
         }
         if(QueryComList.size() == 0){
             return null;
-        }
-        String QueryLastComm = SEARCH_Last_PRODUCTCOM_QUERY + IDList +"order by ac.agentComission.agent.name asc ,ac.daytour.name asc";
-        System.out.println("QueryLastComm : "+QueryLastComm);
-        List<ProductComission> list = session.createQuery(QueryLastComm).list();
+        } */
+     //   String QueryLastComm = SEARCH_Last_PRODUCTCOM_QUERY + IDList +"order by ac.agentComission.agent.name asc ,ac.daytour.name asc";
+       // System.out.println("QueryLastComm : "+QueryLastComm);
+        List<ProductComission> list = session.createQuery(query).list();
 
         if (list.isEmpty()) {
             return null;

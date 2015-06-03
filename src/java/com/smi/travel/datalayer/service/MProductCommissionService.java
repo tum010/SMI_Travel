@@ -6,8 +6,10 @@
 
 package com.smi.travel.datalayer.service;
 
+import com.smi.travel.datalayer.dao.MProductCommissionDao;
 import com.smi.travel.datalayer.dao.ProductDao;
 import com.smi.travel.datalayer.entity.Product;
+import com.smi.travel.datalayer.entity.ProductComission;
 import java.util.List;
 
 /**
@@ -16,8 +18,13 @@ import java.util.List;
  */
 public class MProductCommissionService {
     private ProductDao productDao;
+    private MProductCommissionDao mProductCommissiondao;
     public List<Product> getListMasterProduct(){
         return productDao.getListProduct();
+    }
+    
+    public List<ProductComission> SearchProductComission(String code, String name, int option) {
+        return  mProductCommissiondao.SearchProductComission(code, name, option);
     }
 
     public ProductDao getProductDao() {
@@ -27,6 +34,16 @@ public class MProductCommissionService {
     public void setProductDao(ProductDao productDao) {
         this.productDao = productDao;
     }
+
+    public MProductCommissionDao getmProductCommissiondao() {
+        return mProductCommissiondao;
+    }
+
+    public void setmProductCommissiondao(MProductCommissionDao mProductCommissiondao) {
+        this.mProductCommissiondao = mProductCommissiondao;
+    }
+    
+    
     
     
 }
