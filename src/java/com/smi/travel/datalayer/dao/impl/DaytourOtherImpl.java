@@ -7,15 +7,12 @@ package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.report.model.DaytourOther;
 import com.smi.travel.datalayer.view.dao.DaytourOtherDao;
-import com.smi.travel.datalayer.view.dao.impl.GuideJobImpl;
 import com.smi.travel.util.UtilityFunction;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Locale;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -50,9 +47,7 @@ public class DaytourOtherImpl implements DaytourOtherDao{
              DaytourOther daytourother = new DaytourOther();
              
              daytourother.setRefno(util.ConvertString(B[0]));
-             String parseDate = parseDate(util.ConvertString(B[1]));
-             daytourother.setCreatedate(parseDate);
-             System.out.println("Date : "+ parseDate);
+             daytourother.setCreatedate(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format((Date)B[1]));
              daytourother.setLeadername(util.ConvertString(B[2]));
              daytourother.setCode(util.ConvertString(B[3]));
              daytourother.setDescription(util.ConvertString(B[4]));
@@ -68,37 +63,6 @@ public class DaytourOtherImpl implements DaytourOtherDao{
         this.sessionFactory.close();
         session.close();
         return data;
-    }
-    
-    public String parseDate(String date){
-        String text="";
-        String[] parseDate = date.split("-");
-        String day = parseDate[2];
-        String month = parseDate[1];
-        month = checkMonth(month);
-        String year = parseDate[0];
-        text = day + " " + month + " " + year;
-        return text;
-    }
-    
-    public String checkMonth(String month){
-        String mon = "";
-        switch (month){
-            case "01" : mon = "Jan"; break;
-            case "02" : mon = "Feb"; break;
-            case "03" : mon = "Mar"; break;
-            case "04" : mon = "Apr"; break;
-            case "05" : mon = "May"; break;
-            case "06" : mon = "Jun"; break;
-            case "07" : mon = "Jul"; break;
-            case "08" : mon = "Aug"; break;
-            case "09" : mon = "Sep"; break;
-            case "10" : mon = "Oct"; break;
-            case "11" : mon = "Dec"; break;
-            case "12" : mon = "Nov"; break;
-            default: mon = "null"; 
-        }
-        return mon;
     }
     
     public SessionFactory getSessionFactory() {
