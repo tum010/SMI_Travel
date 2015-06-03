@@ -57,9 +57,9 @@ public class DaytourOtherImpl implements DaytourOtherDao{
                 Date curDate = (Date) B[1];
                 String DateToStr = format.format(curDate);
                 System.out.println(DateToStr);
-             String parseDate = util.parseDate(util.ConvertString(B[1]));
+            // String parseDate = util.parseDate(util.ConvertString(B[1]));
              daytourother.setCreatedate(DateToStr);
-             System.out.println("Date : "+ parseDate);
+             //System.out.println("Date : "+ parseDate);
              
              daytourother.setLeadername(util.ConvertString(B[2]));
              daytourother.setCode(util.ConvertString(B[3]));
