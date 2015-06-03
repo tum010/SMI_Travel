@@ -3,6 +3,7 @@ package com.smi.travel.datalayer.entity;
 
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -18,7 +19,8 @@ public class Product {
      private String description;
      private String remark;
      private Set productDetails = new HashSet(0);
-
+     private List productComissions;
+     
     public Product() {
     }
 
@@ -27,13 +29,14 @@ public class Product {
         this.code = code;
         this.name = name;
     }
-    public Product(MProductType MProductType, String code, String name, String description, String remark, Set productDetails) {
+    public Product(MProductType MProductType, String code, String name, String description, String remark, Set productDetails,List productComissions) {
        this.MProductType = MProductType;
        this.code = code;
        this.name = name;
        this.description = description;
        this.remark = remark;
        this.productDetails = productDetails;
+       this.productComissions = productComissions;
     }
    
     public String getId() {
@@ -84,6 +87,14 @@ public class Product {
     
     public void setProductDetails(Set productDetails) {
         this.productDetails = productDetails;
+    }
+
+    public List getProductComissions() {
+        return productComissions;
+    }
+
+    public void setProductComissions(List productComissions) {
+        this.productComissions = productComissions;
     }
 
 

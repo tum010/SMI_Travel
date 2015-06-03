@@ -14,6 +14,7 @@ public class ProductComission   {
      private Date effectiveFrom;
      private Date effectiveTo;
      private Double comission;
+     private Double comissionPercent;
      private String createBy;
      private Date createDate;
      private String updateBy;
@@ -26,7 +27,7 @@ public class ProductComission   {
     public ProductComission(Product productId) {
         this.productId = productId;
     }
-    public ProductComission(Product productId, Date effectiveFrom, Date effectiveTo, Double comission, String createBy, Date createDate, String updateBy, Date updateDate) {
+    public ProductComission(Product productId, Date effectiveFrom, Date effectiveTo, Double comission, String createBy, Date createDate, String updateBy, Date updateDate,Double comissionPercent) {
        this.productId = productId;
        this.effectiveFrom = effectiveFrom;
        this.effectiveTo = effectiveTo;
@@ -35,6 +36,7 @@ public class ProductComission   {
        this.createDate = createDate;
        this.updateBy = updateBy;
        this.updateDate = updateDate;
+       this.comissionPercent = comissionPercent;
     }
    
     public String getId() {
@@ -99,6 +101,14 @@ public class ProductComission   {
     
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public Double getComissionPercent() {
+        return comissionPercent;
+    }
+
+    public void setComissionPercent(Double comissionPercent) {
+        this.comissionPercent = comissionPercent;
     }
 
 

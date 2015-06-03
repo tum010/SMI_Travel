@@ -27,5 +27,11 @@
             </key>
             <one-to-many class="com.smi.travel.datalayer.entity.ProductDetail" />
         </set>
+        <bag  name="productComissions"  cascade="all" >
+            <key>
+                <column name="product_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.ProductComission" />
+        </bag >
     </class>
 </hibernate-mapping>
