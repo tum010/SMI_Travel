@@ -95,10 +95,16 @@
                             </div>      
                     </div>
 
-                    <!--table add-->
+
+                    <style>
+                     .input-group-addon {
+                         padding: 2px 10px; 
+                     }
+                    </style>
+                    
                     <div class="col-xs-12 form-group">
                         <div class="col-xs-2"><label class="control-label">Tour Commission</label></div>
-                        <table class="display" id="commissionTable" name="commissionTable">
+                        <table class="display" id="commissionTable" name="commissionTable" STYLE="table-layout:fixed;">
                             <thead>
                                 <tr class="datatable-header">
                                     <th style="width: 2%">No.</th>
@@ -111,18 +117,29 @@
                             <tbody> 
 
                                 <!--Simulate Row begin-->
-                                <tr  class="hide"> 
+                                <tr  class="hide " > 
                                     <td class="text-center"></td>
                                     <td class="hidden"><input type="text" class="form-control text-center" name="InputId-" id="InputId-" value=""></td>
                                     <td>
-                                        <input type="text" class="form-control text-center datemask datetime" 
+                                        <div class="input-group  datetime" id="dateFrom-" name="dateFrom-">
+                                            <input type="text"  class="form-control text-center datemask  " 
                                                data-date-format="DD-MM-YYYY" name="InputFrom-" id="InputFrom-"
-                                               placeholder="DD-MM-YYYY" value="">
+                                               placeholder="DD-MM-YYYY" value="" />
+                                            <a class="input-group-addon">
+                                                <i class="glyphicon-calendar glyphicon "></i>
+                                            </a>
+                                        </div>          
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control text-center datemask datetime" 
+                                        <div class="input-group  datetime" id="dateTo-" name="dateTo-">
+                                            <input type="text"  class="form-control text-center datemask" 
                                                data-date-format="DD-MM-YYYY" name="InputTo-" id="InputTo-" 
-                                               placeholder="DD-MM-YYYY" value="">
+                                               placeholder="DD-MM-YYYY" value="" />
+                                            <a class="input-group-addon">
+                                                <i class="glyphicon-calendar glyphicon "></i>
+                                            </a>
+                                        </div>
+                                        
                                     </td>
                                     <td><input type="text" class="form-control text-right decimal"  name="InputCommission-" id="InputCommission-"  
                                                 placeholder="0.00" maxlength="10"  value=""></td>
@@ -145,17 +162,28 @@
                                         <input type="text" class="form-control text-center" 
                                                name="InputId-${loop.count}" id="InputId-${loop.count}" value="${item.id}">
                                     </td>
+                                    
                                     <td>
-                                        <input type="text" class="form-control text-center datemask datetime" 
-                                               name="InputFrom-${loop.count}" autocomplete="off" 
-                                               id="InputFrom-${loop.count}"  placeholder="DD-MM-YYYY" 
-                                               value="${item.from}">
+                                        <div class="input-group  datetime" id="dateFrom-${loop.count}" name="dateFrom-${loop.count}">
+                                            <input type="text"  class="form-control text-center datemask  " 
+                                               data-date-format="DD-MM-YYYY" name="InputFrom-${loop.count}" id="InputFrom-${loop.count}"
+                                               placeholder="DD-MM-YYYY" value="${item.from}" />
+                                            <a class="input-group-addon">
+                                                <i class="glyphicon-calendar glyphicon "></i>
+                                            </a>
+                                        </div>
+                                        
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control text-center datemask datetime " 
-                                               name="InputTo-${loop.count}" autocomplete="off" 
-                                               id="InputTo-${loop.count}"  placeholder="DD-MM-YYYY" 
-                                               value=${item.to}>
+                                        <div class="input-group  datetime" id="dateTo-${loop.count}" name="dateTo-${loop.count}">
+                                            <input type="text"  class="form-control text-center datemask  " 
+                                               data-date-format="DD-MM-YYYY" name="InputTo-${loop.count}" id="InputTo-${loop.count}"
+                                               placeholder="DD-MM-YYYY" value="${item.to}" />
+                                            <a class="input-group-addon">
+                                                <i class="glyphicon-calendar glyphicon "></i>
+                                            </a>
+                                        </div>
+                                       
                                     </td>
                                     <td class=""><input type="text" class="form-control text-right decimal"  name="InputCommission-${loop.count}" id="InputCommissionRow-${loop.count}" 
                                                         placeholder="0.00" maxlength="10"  value="${item.comission}"></td>
@@ -452,10 +480,11 @@
 
 <script type="text/javascript" charset="utf-8" >
     $(document).ready(function () {
-        
+         
         $(".datetime").datetimepicker({
-                pickTime: false
+                pickTime: false   
         });
+        
         $(".datemask").mask('00-00-0000', {reverse: true});
         $(".decimal").inputmask({
             alias:"decimal",
@@ -467,13 +496,31 @@
             digitsOptional: false,
             placeholder: "0"
         }); 
-//        
+        
+        $('.datetimefrom').on("dp.change", function(e){
+            $('.datetimeto').minDate(e.date);
+        });
+
+        $('.datetimeto').on("dp.change", function(e){
+            $('.datetimefrom').data("DateTimePicker").maxDate(e.date);
+        });
         //Add Blank row for user input.
         addRowCommissionTable();
         /*Auto Add lastrow */
-        $(document).on('click', '#commissionTable tbody tr:last td  input', function (e) {
+       
+        $(document).on('click', '#commissionTable tbody tr:last td  input ,#commissionTable tbody tr:last td .input-group-addon', function (e) { // .input-group-addon, .datemask
+            
+//            $("#dateFrom-"+index).on("dp.change", function(e){
+//                $("#dateTo-"+index).data("DateTimePicker").minDate(e.date);
+//            });
+//            
+//            $("#dateTo-"+index).on("dp.change", function(e){
+//                $("#dateFrom-"+index).data("DateTimePicker").maxDate(e.date);
+//            }); 
+            /*OnEvent Add lastrow */
             addRowCommissionTable();
         });
+        
     });
     
     function sendDataToDelete(param){ //wii
@@ -521,7 +568,6 @@
         } else {
             if (id !== null) {
                 $('#delContent').html(" Are you sure to delete : Row at Number "+ ($(objspan).parent().parent().index()-1) +" ? " );
-            
                     console.log('else len2');
                     $('#btnDelete').click(function () {
                         sendDataToDelete(id);
@@ -533,79 +579,80 @@
         }
     }
     
-//    function validateSubmit() {
-//        var validDate = true;
-//        var trList = $('#commissionTable tbody tr');
-//        trList.each(function (i,tr) {
-//           if(i==0 || i==(trList.length-1)){
-//               return;
-//           }
-//           var d1Str = $(tr).find("input[name^='InputFrom']").val();
-//           var d2Str = $(tr).find("input[name^='InputTo']").val();
-//           if( !(isDate(d1Str) && isDate(d2Str)) ){
-//               validDate = false;
-//           }else{
-//               var d1Arr = d1Str.split("-");
-//               var d2Arr = d2Str.split("-");
-//               var d1 = Date.parse(d1Arr[2]+"-"+d1Arr[1]+"-"+d1Arr[0]);
-//               var d2 = Date.parse(d2Arr[2]+"-"+d2Arr[1]+"-"+d2Arr[0]);
-//               if (d1 > d2) {
-//                  validDate = false;
-//               }
-//           }
-//           
-//        });
-//        if(!validDate){
-//          alert("Invalid Date Please ckeck before Save/Update !!");
-//        }
-//        return validDate;
-//    }
-//    
-//    function isDate(txtDate)
-//    {
-//        var currVal = txtDate;
-//        if (currVal == '')
-//            return false;
-//
-//        var rxDatePattern = /^(\d{1,2})(\-|-)(\d{1,2})(\-|-)(\d{4})$/; //Declare Regex
-//        var dtArray = currVal.match(rxDatePattern); // is format OK?
-//
-//        if (dtArray == null)
-//            return false;
-//
-//        //Checks for DD-MM-YYYY
-//        dtMonth = dtArray[3];
-//        dtDay = dtArray[1];
-//        dtYear = dtArray[5];
-//
-//        if (dtMonth < 1 || dtMonth > 12)
-//            return false;
-//        else if (dtDay < 1 || dtDay > 31)
-//            return false;
-//        else if ((dtMonth == 4 || dtMonth == 6 || dtMonth == 9 || dtMonth == 11) && dtDay == 31)
-//            return false;
-//        else if (dtMonth == 2)
-//        {
-//            var isleap = (dtYear % 4 == 0 && (dtYear % 100 != 0 || dtYear % 400 == 0));
-//            if (dtDay > 29 || (dtDay == 29 && !isleap))
-//                return false;
-//        }
-//        return true;
-//    }
+    function validateSubmit() {
+        var validDate = true;
+        var trList = $('#commissionTable tbody tr');
+        trList.each(function (i,tr) {
+           if(i==0 || i==(trList.length-1)){
+               return;
+           }
+           var d1Str = $(tr).find("input[name^='InputFrom']").val();
+           var d2Str = $(tr).find("input[name^='InputTo']").val();
+           if( !(isDate(d1Str) && isDate(d2Str)) ){
+               validDate = false;
+           }else{
+               var d1Arr = d1Str.split("-");
+               var d2Arr = d2Str.split("-");
+               var d1 = Date.parse(d1Arr[2]+"-"+d1Arr[1]+"-"+d1Arr[0]);
+               var d2 = Date.parse(d2Arr[2]+"-"+d2Arr[1]+"-"+d2Arr[0]);
+               if (d1 > d2) {
+                  validDate = false;
+               }
+           }
+           
+        });
+        if(!validDate){
+          alert("Invalid Date Please ckeck before Save/Update !!");
+        }
+        return validDate;
+    }
+    
+    function isDate(txtDate)
+    {
+        var currVal = txtDate;
+        if (currVal == '')
+            return false;
+
+        var rxDatePattern = /^(\d{1,2})(\-|-)(\d{1,2})(\-|-)(\d{4})$/; //Declare Regex
+        var dtArray = currVal.match(rxDatePattern); // is format OK?
+
+        if (dtArray == null)
+            return false;
+
+        //Checks for DD-MM-YYYY
+        dtMonth = dtArray[3];
+        dtDay = dtArray[1];
+        dtYear = dtArray[5];
+
+        if (dtMonth < 1 || dtMonth > 12)
+            return false;
+        else if (dtDay < 1 || dtDay > 31)
+            return false;
+        else if ((dtMonth == 4 || dtMonth == 6 || dtMonth == 9 || dtMonth == 11) && dtDay == 31)
+            return false;
+        else if (dtMonth == 2)
+        {
+            var isleap = (dtYear % 4 == 0 && (dtYear % 100 != 0 || dtYear % 400 == 0));
+            if (dtDay > 29 || (dtDay == 29 && !isleap))
+                return false;
+        }
+        return true;
+    }
     
     function addRowCommissionTable() {
         var counter = $('#commissionTable tbody tr').length;
         var clone = $('#commissionTable tbody tr:first').clone();
         clone.removeClass("hide");
-        clone.find('input,span').each(function () {
+        clone.find('div,input,span').each(function () {
+            console.log('count :'+counter);
             $(this).attr({
                 id: $(this).attr('id') + counter,
                 name: $(this).attr('name') + counter
             });
             $(".datetime").datetimepicker({
-                pickTime: false
+                pickTime: false   
             });
-            
+
             $('.decimal').inputmask({
                 alias:"decimal",
                 integerDigits:6,
