@@ -1,4 +1,4 @@
-<%@page  contentType="text/html" pageEncoding="UTF-8"%>
+<%@page    contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript" src="js/Agent.js"></script> 
 <script type="text/javascript" src="js/jquery.maskMoney.js"></script>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
