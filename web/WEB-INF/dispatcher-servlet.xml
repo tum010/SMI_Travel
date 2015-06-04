@@ -82,6 +82,8 @@
                 <prop key="MCommissionDetail.smi">MCommissionDetailController</prop>
                 <prop key="MPackage.smi">MPackageController</prop>
                 <prop key="MPackageDetail.smi">MPackageDetailController</prop>
+                <prop key="MProductCommission.smi">MProductCommissionController</prop>
+                <prop key="MProductCommissionDetail.smi">MProductCommissionDetailController</prop>
                 <!--<prop key="test_page.smi">TestPageController</prop>-->
                 <!-- add mapping url -->
             </props>
@@ -344,7 +346,13 @@
 
     </bean>
     
+    <bean id="MProductCommissionController" class="com.smi.travel.controller.MProductCommissionController">
+         <property name="mProductCommissionService" ref="MProductCommissionService" /> 
+    </bean>
     
+    <bean id="MProductCommissionDetailController" class="com.smi.travel.controller.MProductCommissionDetailController">
+        <property name="mProductCommissionService" ref="MProductCommissionService" /> 
+    </bean>
     
     <bean id="LandDetailController" class="com.smi.travel.controller.LandDetailController">
         <property name="bookingAirticketService" ref="BookingAirticket" /> 

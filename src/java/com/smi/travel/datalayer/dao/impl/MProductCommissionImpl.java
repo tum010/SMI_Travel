@@ -11,7 +11,6 @@ import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.datalayer.entity.ProductComission;
 import java.util.LinkedList;
 import java.util.List;
-import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -60,24 +59,8 @@ public class MProductCommissionImpl implements MProductCommissionDao{
             query = query.replaceAll("where", " ");
         }
        
-        query += "  group by ac.agent_id , atc.tour_id  ";
+        query += "   ";
         System.out.println("query : " + query);
-     /*   
-        List<String> QueryComList = session.createSQLQuery(query)
-                .addScalar("lastTourCom", Hibernate.STRING)
-                .list();
-        String IDList = "(";
-        for(int i=0;i<QueryComList.size();i++){
-            IDList += QueryComList.get(i) +",";
-            if(i == QueryComList.size()-1){
-                IDList = IDList.substring(0, IDList.length()-1)+" )";
-            }
-        }
-        if(QueryComList.size() == 0){
-            return null;
-        } */
-     //   String QueryLastComm = SEARCH_Last_PRODUCTCOM_QUERY + IDList +"order by ac.agentComission.agent.name asc ,ac.daytour.name asc";
-       // System.out.println("QueryLastComm : "+QueryLastComm);
         List<ProductComission> list = session.createQuery(query).list();
 
         if (list.isEmpty()) {
@@ -136,7 +119,7 @@ public class MProductCommissionImpl implements MProductCommissionDao{
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
             
-            List<ProductComission> commissions =ProCom.getProductComissions();
+            List<ProductComission> commissions = ProCom.getProductComissions();
             for (int i = 0; i < commissions.size(); i++) {
                 if (commissions.get(i).getId() == null) {
                     session.save(commissions.get(i));
@@ -164,16 +147,18 @@ public class MProductCommissionImpl implements MProductCommissionDao{
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
             Query query = session.createQuery(DELETE_PRODUCTCOMMISSION_QUERY);
-            query.setParameter("comID", ProCom.getId());
-            System.out.println("row delete : "+query.executeUpdate());
+            String id = ProCom.getId();
+            query.setParameter("proID", ProCom.getId());
+            int update = query.executeUpdate(); 
+            System.out.println("row delete : " + update);
             transaction.commit();
             session.close();
             this.sessionFactory.close();
-            result = "success";
+            result += "success";
         } catch (Exception ex) {
             transaction.rollback();
             ex.printStackTrace();
-            result = "fail";
+            result += "fail";
         }
         return result;
     }

@@ -280,7 +280,7 @@
     </definition>
     
     <definition name="MCommission" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :Master Commission" />
+        <put-attribute name="title" value="SMI Travel : Master Commission" />
         <put-attribute name="body" value="/WEB-INF/jsp/MCommission.jsp" />
     </definition>
     <definition name="MCommissionDetail" extends="baseLayout">
@@ -296,6 +296,16 @@
     <definition name="MPackageDetail" extends="baseLayout">
         <put-attribute name="title" value="Master : Package Detail" />
         <put-attribute name="body" value="/WEB-INF/jsp/MPackageDetail.jsp" />
+    </definition>
+    
+    <definition name="MProductCommission" extends="baseLayout">
+        <put-attribute name="title" value="Master : Product Commission" />
+        <put-attribute name="body" value="/WEB-INF/jsp/MProductCommission.jsp" />
+    </definition>
+    
+    <definition name="MProductCommissionDetail" extends="baseLayout">
+        <put-attribute name="title" value="Master : Product Commission Detail" />
+        <put-attribute name="body" value="/WEB-INF/jsp/MProductCommissionDetail.jsp" />
     </definition>
     <!--<add data>-->
 	
