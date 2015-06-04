@@ -14,7 +14,6 @@ import com.smi.travel.datalayer.service.MTourCommissionService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -55,6 +54,7 @@ public class MCommissionDetailController extends SMITravelController {
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 
         String action = request.getParameter("action");
+        String actionDelete = request.getParameter("actionDelete");
         String counter = request.getParameter("counterCommission");
         String currentAgentCommissionId = StringUtils.isNoneEmpty(request.getParameter("agentCommissionId")) ? request.getParameter("agentCommissionId") : null;
         String agentId = request.getParameter("InputAgentId");
@@ -89,8 +89,6 @@ public class MCommissionDetailController extends SMITravelController {
         daytour.setName(tourName);
 
         AgentComission agentcommission = new AgentComission();
-        AgentTourComission aagentcommission = new AgentTourComission();
-        Date d = new Date();
         List<AgentTourComission> agentTourCommissions = new <AgentTourComission>ArrayList();
             if(StringUtils.isEmpty(currentAgentCommissionId)) {
                 System.out.println("No id");
@@ -122,6 +120,7 @@ public class MCommissionDetailController extends SMITravelController {
             request.setAttribute(AgentTours, daytour);
             return MCommissionDetail;
         }else if("edit".equalsIgnoreCase(action)) {
+            
         }else if("save".equalsIgnoreCase(action)){
             System.out.println("1111");
             AgentTourComission agenttourcommission = new AgentTourComission();
@@ -155,24 +154,27 @@ public class MCommissionDetailController extends SMITravelController {
                         request.setAttribute(ResultSave,"update unsuccessful");
                     }
                     
-                    //return new ModelAndView("redirect:MCommissionDetail.smi?agentCommissionId="+currentAgentCommissionId+"&AgentComID="+AgentCommissionID+"&InputTourId="+tourId+"&action=edit&result="+transactionUpdate+"");
+                    List<AgentTourComission> list = mtourCommissionService.SearchAgentTourComission(agenttourcommission, 1);
+                    request.setAttribute(AgentTourCommissions, list);
+                    return MCommission; 
+//                    return new ModelAndView("redirect:MCommissionDetail.smi?agentCommissionId="+currentAgentCommissionId+"&AgentComID="+AgentCommissionID+"&InputTourId="+tourId+"&action=edit&result="+transactionUpdate+"");
                     //return new ModelAndView("redirect:MCommissionDetail.smi?agentCommissionId="+currentAgentCommissionId+"&AgentComID="+AgentCommissionID+"&InputTourId="+tourId+"&action=edit&result="+transactionUpdate+"");
                 }
             }
             
-        }else if("delete".equalsIgnoreCase(action)){
-            //delete row
+        }
+        
+        if("delete".equalsIgnoreCase(actionDelete)){
             log.info("agentTourComId = "+agentTourComId);
             AgentTourComission agenttourcom = new AgentTourComission();
             agenttourcom.setId(agentTourComId);
-            
-            String transactionDetalet = mtourCommissionService.DeleteComissionPrice(agenttourcom);
-            request.setAttribute(COMMISSIONDELETE,"delete: " +transactionDetalet);
+            String transactionDelete = mtourCommissionService.DeleteComissionPrice(agenttourcom);           
+            request.setAttribute(COMMISSIONDELETE,"delete "+transactionDelete);
+
         }
         
         Daytour daytours = new Daytour();
         List<Agent> listAgent = utilservice.getListAgent();
-//        List<Daytour> listTourS = utilservice.getListDaytour();
         List<Daytour> listTour = daytourservice.searchTourList(daytours, 2);
         
         request.setAttribute(AgentList, listAgent);
@@ -204,7 +206,7 @@ public class MCommissionDetailController extends SMITravelController {
             System.out.println("to"+i+" : "+to);
             
             
-            Double commissionDouble = 0.0;
+            Double commissionDouble = null;
             if(StringUtils.isNotEmpty(commission)){
                 commissionDouble = Double.parseDouble(commission);
                 System.out.println("commissionDouble = "+commissionDouble);

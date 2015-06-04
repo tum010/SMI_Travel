@@ -1,4 +1,4 @@
-<%-- 
+ก<%-- 
     Document   : MCommissionDetail
     Created on : Mar 27, 2015, 5:09:31 PM
     Author     : Winit
@@ -13,7 +13,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script type="text/javascript" src="js/MCommissionDetail.js"></script> 
+<script type="text/javascript" src="js/jquery-ui.js"></script>
 <link href="css/jquery-ui.css" rel="stylesheet">
+
 <c:set var="agentList" value="${requestScope['AgentList']}" />
 <c:set var="tourList" value="${requestScope['TourList']}" />
 <c:set var="AgentTourCommissions" value="${requestScope['AgentTourCommissions']}" />
@@ -34,7 +36,7 @@
 <div class ="container"  style="padding-top: 15px;">
     <!--Table add-->
     <div class="col-md-10  col-md-offset-1">
-        <form action="MCommissionDetail.smi" method="post" role="form" onsubmit="return validateSubmit();" >
+        <form action="MCommissionDetail.smi" id="MCommissionDetailForm" method="post" role="form" onsubmit="return validateSubmit();" >
             <div class="panel panel-default">
                 <div class="panel-heading">Detail</div>
                 <div class="panel-body">
@@ -112,9 +114,17 @@
                                 <tr  class="hide"> 
                                     <td class="text-center"></td>
                                     <td class="hidden"><input type="text" class="form-control text-center" name="InputId-" id="InputId-" value=""></td>
-                                    <td><input type="text" class="form-control text-center datemask" name="InputFrom-" id="InputFrom-" placeholder="DD-MM-YYYY" value=""></td>
-                                    <td><input type="text" class="form-control text-center datemask" name="InputTo-" id="InputTo-" placeholder="DD-MM-YYYY" value=""></td>
-                                    <td><input type="text" class="form-control text-right decimal "  name="InputCommission-" id="InputCommission-"  
+                                    <td>
+                                        <input type="text" class="form-control text-center datemask datetime" 
+                                               data-date-format="DD-MM-YYYY" name="InputFrom-" id="InputFrom-"
+                                               placeholder="DD-MM-YYYY" value="">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control text-center datemask datetime" 
+                                               data-date-format="DD-MM-YYYY" name="InputTo-" id="InputTo-" 
+                                               placeholder="DD-MM-YYYY" value="">
+                                    </td>
+                                    <td><input type="text" class="form-control text-right decimal"  name="InputCommission-" id="InputCommission-"  
                                                 placeholder="0.00" maxlength="10"  value=""></td>
                                     <td class="text-center">
                                         <span id="deleteTourCommissionRow-" name="deleteTourCommissionRow-" 
@@ -127,48 +137,28 @@
                                 <!--Simulate Row end-->
                             <input type="hidden" id="counterCommission" name="counterCommission" value="1">
                             <c:forEach var="item" items="${AgentTourCommissions}" varStatus="loop">
-                                <tr> 
-                                    <c:if test="${item.from.date  < 10}">
-                                        <c:set var="datefrom" value="0${item.from.date}" />
-                                    </c:if>
-                                    <c:if test="${item.from.date >= 10}">
-                                        <c:set var="datefrom" value="${item.from.date}" />
-                                    </c:if>
-                                    <c:if test="${item.to.date  < 10}">
-                                        <c:set var="dateto" value="0${item.to.date}" />
-                                    </c:if>
-                                    <c:if test="${item.to.date >= 10}">
-                                        <c:set var="dateto" value="${item.to.date}" />
-                                    </c:if>
-
-                                    <c:if test="${item.from.month  < 10}">
-                                        <c:set var="monthfrom" value="0${item.from.month+1}" />
-                                    </c:if>
-                                    <c:if test="${item.from.month  >= 10}">
-                                        <c:set var="monthfrom" value="${item.from.month+1}" />
-                                    </c:if>
-                                    <c:if test="${item.to.month  < 10}">
-                                        <c:set var="monthto" value="0${item.to.month+1}" />
-                                    </c:if>
-                                    <c:if test="${item.to.month  >= 10}">
-                                        <c:set var="monthto" value="${item.to.month+1}" />
-                                    </c:if>
+                                <tr id="commissionId-${item.id}"> 
+                                    
+                                    
                                     <td class="text-center">${loop.count}</td>
-                                    <td class="hidden"><input type="text" class="form-control text-center" name="InputId-${loop.count}" id="InputId-${loop.count}" value="${item.id}"></td>
-                                    <td>
-                                        <input type="text" class="form-control text-center datemask" 
-                                               name="InputFrom-${loop.count}" autocomplete="off" 
-                                               id="InputFrom-${loop.count}"  placeholder="YYYY-MM-MM" 
-                                               value="${datefrom}-${monthfrom}-${(item.from.year+1900)}">
+                                    <td class="hidden">
+                                        <input type="text" class="form-control text-center" 
+                                               name="InputId-${loop.count}" id="InputId-${loop.count}" value="${item.id}">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control text-center datemask" 
+                                        <input type="text" class="form-control text-center datemask datetime" 
+                                               name="InputFrom-${loop.count}" autocomplete="off" 
+                                               id="InputFrom-${loop.count}"  placeholder="DD-MM-YYYY" 
+                                               value="${item.from}">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control text-center datemask datetime " 
                                                name="InputTo-${loop.count}" autocomplete="off" 
-                                               id="InputTo-${loop.count}"  placeholder="YYYY-MM-MM" 
-                                               value="${dateto}-${monthto}-${(item.to.year+1900)}">
+                                               id="InputTo-${loop.count}"  placeholder="DD-MM-YYYY" 
+                                               value=${item.to}>
                                     </td>
                                     <td class=""><input type="text" class="form-control text-right decimal"  name="InputCommission-${loop.count}" id="InputCommissionRow-${loop.count}" 
-                                                        placeholder="0.00" maxlength="10"  value="${item.comission * 10}"></td>
+                                                        placeholder="0.00" maxlength="10"  value="${item.comission}"></td>
                                     <td class="text-center">
                                         <span id="deleteTourCommissionRow-${loop.count}" name="deleteTourCommissionRow-${loop.count}" 
                                               class="glyphicon glyphicon-remove deleteicon"  
@@ -273,9 +263,6 @@
                         $("#InputAgentCode").autocomplete({
                             source: availableTags,
                             close:function( event, ui ) {
-                               //window.uiTmp = event;
-                               //window.uiTmp = ui;
-                               //alert('Test');    
                                $("#InputAgentCode").trigger('keyup');
                             }
                         });
@@ -286,8 +273,6 @@
                             var code = this.value.toUpperCase();
                             $("#InputAgentName").val(null);
                             $.each(agentArray, function (key, value) {
-                                //console.log('each : ' + value.code);
-                                //console.log('val : ' + $("#agent_user").val());
                                 if (value.code.toUpperCase() === code) {
 //                                console.log('ok');
                                     $("#InputAgentId").val(value.id);
@@ -298,8 +283,6 @@
 
                         }); // end InputAgentCode keyup
                     }); // end AutoComplete AgentCode AgentName
-
-//                    $('.date').mask('0000-00-00');    
                 });
             </script>
             <div class="modal-footer">
@@ -432,8 +415,6 @@
                     <h4 class="modal-title"> Delete AgentTourCommission </h4>
                 </div>
                 <div class="modal-body" id="delContent"></div>
-                <!--                <input type="hidden" id="deleteId" name="agentTourComId"/>
-                                <input type="hidden" id="deleteAction" name="action" value="delete"/>-->
                 <div class="modal-footer">
                     <button id="btnDelete" type="button" class="btn btn-danger">Delete</button>
                     <button id="btnClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -471,86 +452,146 @@
 
 <script type="text/javascript" charset="utf-8" >
     $(document).ready(function () {
-
-
-        $(".datemask").mask('00-00-0000', {reverse: true});
-        $(".decimal").mask('000,000,000.00', {reverse: true});
         
-//        $(".decimal").inputmask("decimal",{
-//            radixPoint:".", 
-//            groupSeparator: ",", 
-//            digits: 2,
-//            autoGroup: true
-//        });
-
+        $(".datetime").datetimepicker({
+                pickTime: false
+        });
+        $(".datemask").mask('00-00-0000', {reverse: true});
+        $(".decimal").inputmask({
+            alias:"decimal",
+            integerDigits:6,
+            groupSeparator: ',', 
+            autoGroup: true,
+            digits:2,
+            allowMinus:false,        
+            digitsOptional: false,
+            placeholder: "0"
+        }); 
+//        
         //Add Blank row for user input.
         addRowCommissionTable();
         /*Auto Add lastrow */
-        $(document).on('keydown', '#commissionTable tbody tr:last td  input', function (e) {
+        $(document).on('click', '#commissionTable tbody tr:last td  input', function (e) {
             addRowCommissionTable();
         });
-
-
     });
-    function validateSubmit() {
-        var validDate = true;
-        var trList = $('#commissionTable tbody tr');
-        trList.each(function (i,tr) {
-           if(i==0 || i==(trList.length-1)){
-               return;
-           }
-           var d1Str = $(tr).find("input[name^='InputFrom']").val();
-           var d2Str = $(tr).find("input[name^='InputTo']").val();
-           if( !(isDate(d1Str) && isDate(d2Str)) ){
-               validDate = false;
-           }else{
-               var d1Arr = d1Str.split("-");
-               var d2Arr = d2Str.split("-");
-               var d1 = Date.parse(d1Arr[2]+"-"+d1Arr[1]+"-"+d1Arr[0]);
-               var d2 = Date.parse(d2Arr[2]+"-"+d2Arr[1]+"-"+d2Arr[0]);
-               if (d1 > d2) {
-                  validDate = false;
-               }
-           }
-           
-        });
-        if(!validDate){
-          alert("Invalid Date Please ckeck before Save/Update !!");
-        }
-        return validDate;
+    
+    function sendDataToDelete(param){ //wii
+        $.ajax({
+                dataType: 'html',
+                type: "POST",
+                url: "MCommissionDetail.smi",
+                data: "agentTourComId="+ param +"&actionDelete=delete",
+                "beforeSend": function () {
+                    console.log("sending...");
+                },
+                "success": function () {
+                    if (${! empty requestScope['COMMISSIONDELETE']}) {
+                        alert('${requestScope['COMMISSIONDELETE']}');  
+                    }
+                    $("#commissionId-"+param).remove();
+                    $("#DelCommission").modal('hide');
+                    console.log("success!");
+                },
+                "error": function () {
+                    console.log("error!");
+                }
+        }).done(function () {
+            console.log("done!");
+        });   
     }
     
-    function isDate(txtDate)
-    {
-        var currVal = txtDate;
-        if (currVal == '')
-            return false;
 
-        var rxDatePattern = /^(\d{1,2})(\-|-)(\d{1,2})(\-|-)(\d{4})$/; //Declare Regex
-        var dtArray = currVal.match(rxDatePattern); // is format OK?
+    function DeleteCommissionRow(id, objspan) {
+    var countCommission = $("#commissionTable tbody").find("tr").length;
+        if ($("#commissionTable tbody").find("tr").length !== 2) {
+            if (id !== null) {
+                $('#delContent').html(" Are you sure to delete : Row at Number "+ ($(objspan).parent().parent().index()-1) +" ? " );  
 
-        if (dtArray == null)
-            return false;
+                    console.log('else len1');
+                    $('#btnDelete').click(function () {
+                        sendDataToDelete(id);
+                    });
+                
+            } else {
+                $(objspan).closest('tr').remove();
+                console.log("counterCommission=" + countCommission);
+                $('#counterCommission').val(countCommission - 1);
+            }
+        } else {
+            if (id !== null) {
+                $('#delContent').html(" Are you sure to delete : Row at Number "+ ($(objspan).parent().parent().index()-1) +" ? " );
+            
+                    console.log('else len2');
+                    $('#btnDelete').click(function () {
+                        sendDataToDelete(id);
+                    });
 
-        //Checks for DD-MM-YYYY
-        dtMonth = dtArray[3];
-        dtDay = dtArray[1];
-        dtYear = dtArray[5];
-
-        if (dtMonth < 1 || dtMonth > 12)
-            return false;
-        else if (dtDay < 1 || dtDay > 31)
-            return false;
-        else if ((dtMonth == 4 || dtMonth == 6 || dtMonth == 9 || dtMonth == 11) && dtDay == 31)
-            return false;
-        else if (dtMonth == 2)
-        {
-            var isleap = (dtYear % 4 == 0 && (dtYear % 100 != 0 || dtYear % 400 == 0));
-            if (dtDay > 29 || (dtDay == 29 && !isleap))
-                return false;
+            } else {
+                alert('this row for fill data');
+            }
         }
-        return true;
     }
+    
+//    function validateSubmit() {
+//        var validDate = true;
+//        var trList = $('#commissionTable tbody tr');
+//        trList.each(function (i,tr) {
+//           if(i==0 || i==(trList.length-1)){
+//               return;
+//           }
+//           var d1Str = $(tr).find("input[name^='InputFrom']").val();
+//           var d2Str = $(tr).find("input[name^='InputTo']").val();
+//           if( !(isDate(d1Str) && isDate(d2Str)) ){
+//               validDate = false;
+//           }else{
+//               var d1Arr = d1Str.split("-");
+//               var d2Arr = d2Str.split("-");
+//               var d1 = Date.parse(d1Arr[2]+"-"+d1Arr[1]+"-"+d1Arr[0]);
+//               var d2 = Date.parse(d2Arr[2]+"-"+d2Arr[1]+"-"+d2Arr[0]);
+//               if (d1 > d2) {
+//                  validDate = false;
+//               }
+//           }
+//           
+//        });
+//        if(!validDate){
+//          alert("Invalid Date Please ckeck before Save/Update !!");
+//        }
+//        return validDate;
+//    }
+//    
+//    function isDate(txtDate)
+//    {
+//        var currVal = txtDate;
+//        if (currVal == '')
+//            return false;
+//
+//        var rxDatePattern = /^(\d{1,2})(\-|-)(\d{1,2})(\-|-)(\d{4})$/; //Declare Regex
+//        var dtArray = currVal.match(rxDatePattern); // is format OK?
+//
+//        if (dtArray == null)
+//            return false;
+//
+//        //Checks for DD-MM-YYYY
+//        dtMonth = dtArray[3];
+//        dtDay = dtArray[1];
+//        dtYear = dtArray[5];
+//
+//        if (dtMonth < 1 || dtMonth > 12)
+//            return false;
+//        else if (dtDay < 1 || dtDay > 31)
+//            return false;
+//        else if ((dtMonth == 4 || dtMonth == 6 || dtMonth == 9 || dtMonth == 11) && dtDay == 31)
+//            return false;
+//        else if (dtMonth == 2)
+//        {
+//            var isleap = (dtYear % 4 == 0 && (dtYear % 100 != 0 || dtYear % 400 == 0));
+//            if (dtDay > 29 || (dtDay == 29 && !isleap))
+//                return false;
+//        }
+//        return true;
+//    }
     
     function addRowCommissionTable() {
         var counter = $('#commissionTable tbody tr').length;
@@ -561,69 +602,26 @@
                 id: $(this).attr('id') + counter,
                 name: $(this).attr('name') + counter
             });
+            $(".datetime").datetimepicker({
+                pickTime: false
+            });
+            
+            $('.decimal').inputmask({
+                alias:"decimal",
+                integerDigits:6,
+                groupSeparator: ',', 
+                autoGroup: true,
+                digits:2,
+                allowMinus:false,        
+                digitsOptional: false,
+                placeholder: "0"
+            }); 
             $("#counterCommission").val(counter + 1);
         });
         $('#commissionTable tbody').append(clone);
     }
-
-    function DeleteCommissionRow(id, objspan) {
-        alert('id:'+id);
-        var countCommission = $("#commissionTable tbody").find("tr").length;
-        if ($("#commissionTable tbody").find("tr").length !== 2) {
-            if (id !== null) {
-                $('#deleteAction').val('delete');
-                $('#deleteId').val(id);
-                $('#delContent').html(" Are you sure to delete : Row at Number "+ ($(objspan).parent().parent().index()-1) +" ? " );  //" + id + " commission ? ");
-                $('#btnDelete').click(function (e) {
-                    $.ajax({
-                        url: 'MCommissionDetail.smi?agentTourComId='+id+'&action=delete',
-                        type: 'POST',
-                        data: {},
-                        success: function () {
-                            if (${! empty requestScope['COMMISSIONDELETE']}) {
-                                alert('${requestScope['COMMISSIONDELETE']}');  
-                            }
-                            location.reload();
-//                            $("#DelCommission").modal('hide');
-                        },
-                        error: function () {
-                            console.log("error commission");
-                        }
-                    });
-                });
-            } else {
-                $(objspan).closest('tr').remove();
-                console.log("counterCommission=" + countCommission);
-                $('#counterCommission').val(countCommission - 1);
-            }
-        } else {
-
-            if (id !== null) {
-
-                $('#deleteAction').val('delete');
-                $('#deleteId').val(id);
-                $('#delContent').html(" Are you sure to delete commission ? ");
-                $('#btnDelete').click(function (e) {
-                    $.ajax({
-                        url: 'MCommissionDetail.smi?agentTourComId=' + id + '&action=delete',
-                        type: 'POST',
-                        data: {},
-                        success: function () {
-                            if (${! empty requestScope['COMMISSIONDELETE']}) {
-                                alert('${requestScope['COMMISSIONDELETE']}');
-                            }
-                            location.reload();
-                        },
-                        error: function () {
-                            console.log("error commission");
-                        }
-                    });
-                });
-            } else {
-                alert('this row for add data');
-            }
-        }
-    }
+    
+    
 </script>
 
 
