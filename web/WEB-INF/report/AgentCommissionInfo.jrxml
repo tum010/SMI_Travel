@@ -169,7 +169,10 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="58" splitType="Stretch">
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="61" splitType="Stretch">
 			<textField>
 				<reportElement x="373" y="40" width="163" height="15" uuid="898c8598-7f99-46b4-a720-c90deace44dc"/>
 				<textElement textAlignment="Right"/>
@@ -229,9 +232,6 @@
 				<text><![CDATA[to]]></text>
 			</staticText>
 		</band>
-	</title>
-	<pageHeader>
-		<band height="3" splitType="Stretch"/>
 	</pageHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
