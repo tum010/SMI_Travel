@@ -11,7 +11,6 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="AgentTourCommissions" value="${requestScope['AgentTourCommissions']}" />
 <script type="text/javascript" src="js/jquery.mask.min.js"></script>
 <script type="text/javascript" src="js/jquery.inputmask.js"></script>
 <script type="text/javascript" src="js/jquery.inputmask.numeric.extensions.js"></script>
@@ -24,10 +23,10 @@
 </style>
 
 <section class="content-header" >
-    <h1> Master - Tour Commission</h1>
+    <h1> Master -  Commission</h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Master</a></li>          
-        <li class="active"><a href="#">Tour Commission</a></li>
+        <li class="active"><a href="#"> Commission</a></li>
     </ol>
 </section>
 <div class ="container"  style="padding-top: 15px;">
@@ -38,12 +37,12 @@
                 <li class="">
                     <a href="MCommission.smi" id="agentLink" name="agentLink">
                         <i class="menu-icon fa fa-user"></i>
-                        <span class="menu-text">Agent</span>
+                        <span class="menu-text">Tour</span>
                     </a>
                     <b class="arrow"></b>
                 </li>
                 <li class="">
-                    <a href="" id="couponLink" name="couponLink">
+                    <a href="MProductCommission.smi" id="couponLink" name="couponLink">
                         <i class="menu-icon fa fa-user"></i>
                         <span class="menu-text">Coupon</span>
                     </a>

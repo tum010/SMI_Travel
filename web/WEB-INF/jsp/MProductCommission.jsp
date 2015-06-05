@@ -95,6 +95,7 @@
                         <tbody>
                             <c:forEach var="item" items="${ListProductCommission}" varStatus="loop">
                                 <tr>
+                  
                                     <td><c:out value="${item.productId.code}" /></td>
                                     <td><c:out value="${item.productId.name}" /></td>
                                     <td class="text-center"><c:out value="${item.effectiveFrom}" /></td>
@@ -103,7 +104,8 @@
                                     <td class="text-right" id="compoint-${loop.count}"><c:out value="${item.comissionPercent}" /></td>
                                     <td class="text-center">
                                         <!--Edit -->
-                                        <a id="ButtonEdit-${loop.count}" name="ButtonEdit-${loop.count}" href="MProductCommissionDetail.smi?action=edit">
+                                        <a id="ButtonEdit-${loop.count}" name="ButtonEdit-${loop.count}" 
+                                        href="MProductCommissionDetail.smi?action=edit&ProductCommissionId=${item.id}&ProductId=${item.productId.id}&ProductNameSearch=${item.productId.code}&ProductCodeSearch=${item.productId.name}">
                                             <span  id="RowSpanEdit-${loop.count}" name="RowSpanEdit-${loop.count}"  class="glyphicon glyphicon-edit editicon"  ></span>
                                         </a>
                                         <!--Delete -->
