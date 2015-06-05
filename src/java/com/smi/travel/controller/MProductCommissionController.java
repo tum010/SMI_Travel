@@ -27,7 +27,7 @@ public class MProductCommissionController extends SMITravelController{
         String productName = request.getParameter("ProductNameSearch");
         String productCode = request.getParameter("ProductCodeSearch");
    
-        if("search".equalsIgnoreCase(action)){
+        if("search".equalsIgnoreCase(action) || "back".equalsIgnoreCase(action)){
           List<ProductComission> listProductCommission = mProductCommissionService.SearchProductComission(productCode, productName, 2);
           if(listProductCommission != null){
               request.setAttribute("ListProductCommission", listProductCommission);
