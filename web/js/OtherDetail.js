@@ -34,30 +34,38 @@ function setupagentvalue(id, code, name) {
 $(document).ready(function() {
 
 
-    codeProduct = [];
+    var codeProduct = [];
     $.each(product, function (key, value) {
         codeProduct.push(value.code);
-       
+        if ( !(value.name in codeProduct) ){
+           codeProduct.push(value.name);
+        }
     });
 
     $("#product_code").autocomplete({
-        source: codeProduct
+        source: codeProduct,
+        close:function( event, ui ) {
+           $("#product_code").trigger('keyup');
+        }
     });
     $("#product_code").on('keyup', function () {
         var position = $(this).offset();
         $(".ui-widget").css("top", position.top + 30);
         $(".ui-widget").css("left", position.left);
-       // $("#product_id,#product_code,#product_name").val(null);
-       /*
+        $("#product_id,#product_name").val(null);
+        var code = this.value.toUpperCase();
+        var name = this.value;
         $.each(product, function (key, value) {
-
-            if (value.code === code) {
+            if (value.code.toUpperCase() === code) {
                 $("#product_id").val(value.id);
-                $("#product_code").val(value.code);
                 $("#product_name").val(value.name);
             }
+            if(name === value.name){
+                $("#product_code").val(value.code);
+                code = $("#product_code").val().toUpperCase();
+            }
         });
-        */
+       
     });
     
     $('#otherForm').bootstrapValidator({

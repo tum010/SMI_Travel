@@ -10,6 +10,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script type="text/javascript" src="js/jquery.mask.min.js"></script>
 <script type="text/javascript" src="js/Billable.js"></script> 
+<link href="css/jquery-ui.css" rel="stylesheet">
 
 <c:set var="billable" value="${requestScope['BillableList']}" />
 <c:set var="booking_size" value="${requestScope['BookingSize']}" />
@@ -347,9 +348,32 @@
                 <!--Script Passenger List Table-->
                 <script>
                     $(document).ready(function () {
-                        console.log(customer);
+                 
+                         var codeOrder = [];
+                        $.each(customer, function (key, value) {
+                            codeOrder.push(value.order);
+                            if ( !(value.lastname in codeOrder) ){
+                               codeOrder.push(value.lastname);
+                            }
+                            if ( !(value.firstname in codeOrder) ){
+                               codeOrder.push(value.firstname);
+
+                            }
+                        });
+                        $("#orderNo").autocomplete({
+                            source: codeOrder,
+                            close:function( event, ui ) {
+                               $("#orderNo").trigger('keyup');
+                            }
+                        });
                         $("#orderNo").on('keyup', function () {
+                            var position = $(this).offset();
+                            $(".ui-widget").css("top", position.top+30);
+                            $(".ui-widget").css("left", position.left);
+                            
                             var order = this.value.toUpperCase();
+                            var firstname = this.value;
+                            var lastname = this.value;
                             $("#InitialDname,#passengerName,#LastName").val(null);
                             $.each(customer, function (key, value) {
                                 if (value.order.toUpperCase() === order) {
@@ -357,23 +381,29 @@
                                     $("#InitialDname").val(value.initial);
                                     $("#passengerName").val(value.firstname);
                                     $("#LastName").val(value.lastname);
-
+                                }
+                                if(firstname === value.firstname){
+                                    $("#orderNo").val(value.order);
+                                    code = $("#orderNo").val().toUpperCase();
+                                }
+                                if(lastname === value.lastname){
+                                    $("#orderNo").val(value.order);
+                                    code = $("#orderNo").val().toUpperCase();
                                 }
                             });
                         });
+                        
                         $("#PassengerTable tr").on('click', function () {
                             var passenger_id = $(this).find(".passenger-id").text();
                             var passenger_orderno = $(this).find(".passenger-orderno").text();
                             var passenger_firstname = $(this).find(".passenger-firstname").text();
                             var passenger_initial = $(this).find(".passenger-initial").text();
-
                             var passenger_lastname = $(this).find(".passenger-lastname").text();
 
                             $("#passengerId").val(passenger_id);
                             $("#orderNo").val(passenger_orderno);
                             $("#passengerName").val(passenger_firstname);
                             $("#LastName").val(passenger_lastname);
-
                             $("#InitialDname").val(passenger_initial);
                             $("#PassengerModal").modal('hide');
                         });
@@ -461,16 +491,37 @@
                 <!--Script Bill To List Table-->
                 <script>
                     $(document).ready(function () {
-                        console.log(bill);
+                         var billTo = [];
+                        $.each(bill, function (key, value) {
+                            billTo.push(value.billto);
+                            if ( !(value.name in billTo) ){
+                               billTo.push(value.name);
+                            }
+                           
+                        });
+                        $("#billto").autocomplete({
+                            source: billTo,
+                            close:function( event, ui ) {
+                               $("#billto").trigger('keyup');
+                            }
+                        });
+                        
                         $("#billto").on('keyup', function () {
+                            var position = $(this).offset();
+                            $(".ui-widget").css("top", position.top + 30);
+                            $(".ui-widget").css("left", position.left);
                             var code = this.value.toUpperCase();
+                            var name = this.value;
                             $("#billname,#address").val(null);
                             $.each(bill, function (key, value) {
                                 if (value.billto.toUpperCase() === code) {
                                     console.log('ok');
                                     $("#billname").val(value.name);
                                     $("#address").val(value.address);
-
+                                }
+                                if(name === value.name) {
+                                    $("#billto").val(value.billto);
+                                    code = $("#billto").val().toUpperCase();
                                 }
                             });
                         });

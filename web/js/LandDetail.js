@@ -144,23 +144,33 @@ $(document).ready(function () {
     var codeAgent = [];
     $.each(agent, function (key, value) {
         codeAgent.push(value.code);
+        if ( !(value.name in codeAgent) ){
+           codeAgent.push(value.name);
+          
+        }
     });
     $("#agent_code").autocomplete({
-        source: codeAgent
+        source: codeAgent,
+        close:function( event, ui ) {
+           $("#agent_code").trigger('keyup');
+        }
     });
     $("#agent_code").on('keyup', function () {
         var position = $(this).offset();
         $(".ui-widget").css("top", position.top + 30);
         $(".ui-widget").css("left", position.left);
         var code = this.value.toUpperCase();
+        var name = this.value;
         $("#agent_id,#agent_name").val(null);
                  
        $.each(agent, function (key, value) {
-           
-            if (value.code.toUpperCase() === code) {
-                
+            if (value.code.toUpperCase() === code) {           
                 $("#agent_id").val(value.id);
                 $("#agent_name").val(value.name);
+            }
+            if(name === value.name){
+                $("#agent_code").val(value.code);
+                code = $("#agent_code").val().toUpperCase();
             }
         });  
         
@@ -172,7 +182,7 @@ $(document).ready(function () {
         setTimeout(function(){
           $.each(agent, function (key, value) {
              //alert(value.code);
-            if($("#agent_code").val() == value.code){
+            if($("#agent_code").val() === value.code){
                  $("#agent_id").val(value.id);
                 $("#agent_name").val(value.name);
             }     

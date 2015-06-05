@@ -65,30 +65,37 @@ $(document).ready(function () {
 
 // OWNER
 $(document).ready(function () {
-    console.log(staff);
    
     codeStaff = [];
     $.each(staff, function (key, value) {
         codeStaff.push(value.username);
+        if ( !(value.name in codeStaff) ){
+           codeStaff.push(value.name);
+        }
     });
     console.log(codeStaff);
     $("#staff_username").autocomplete({
-        source: codeStaff
+        source: codeStaff,
+        close:function( event, ui ) {
+           $("#staff_username").trigger('keyup');
+        }
     });
     $("#staff_username").on('keyup', function () {
         var position = $(this).offset();
         console.log("positon :" + position.top);
         $(".ui-widget").css("top", position.top + 30);
         $(".ui-widget").css("left", position.left);
-        var code = this.value.toUpperCase();
+        var username = this.value.toUpperCase();
+        var name = this.value;
         $("#staff_id,#staff_name").val(null);
         $.each(staff, function (key, value) {
-            //console.log('each : ' + value.code);
-            //console.log('val : ' + $("#agent_user").val());
-            if (value.username.toUpperCase() === code) {
-                console.log('ok');
+            if (value.username.toUpperCase() === username) {
                 $("#staff_id").val(value.id);
                 $("#staff_name").val(value.name);
+            }
+            if(name === value.name){
+                $("#staff_username").val(value.username);
+                username = $("#staff_username").val().toUpperCase();
             }
         });
     });
@@ -118,24 +125,33 @@ $(document).ready(function () {
 
 // ISSUE BY
 $(document).ready(function () {
+    
+    
     $("#issue_username").autocomplete({
-        source: codeStaff
+        source: codeStaff,
+        close:function( event, ui ) {
+           $("#issue_username").trigger('keyup');
+        }
     });
     $("#issue_username").on('keyup', function () {
         var position = $(this).offset();
         console.log("positon :" + position.top);
         $(".ui-widget").css("top", position.top + 30);
         $(".ui-widget").css("left", position.left);
-        var code = this.value.toUpperCase();
+        var username = this.value.toUpperCase();
+        var name = this.value;
         $("#issue_id,#issue_name").val(null);
         $.each(staff, function (key, value) {
-            //console.log('each : ' + value.code);
-            //console.log('val : ' + $("#agent_user").val());
-            if (value.username.toUpperCase() === code) {
+            if (value.username.toUpperCase() === username) {
                 console.log('ok');
                 $("#issue_id").val(value.id);
                 $("#issue_name").val(value.name);
             }
+            if(name === value.name){
+                $("#issue_username").val(value.username);
+                username = $("#issue_username").val().toUpperCase();
+            }
+            
         });
     });
     $("#IssueTable tr").on('click', function () {

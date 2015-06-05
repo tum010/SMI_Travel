@@ -141,23 +141,34 @@ $(document).ready(function () {
     var codeHotel = [];
     $.each(hotel, function (key, value) {
         codeHotel.push(value.code);
+        if ( !(value.name in codeHotel) ){
+           codeHotel.push(value.name);
+          
+        }
     });
     $("#hotel-code").autocomplete({
-        source: codeHotel
+        source: codeHotel,
+        close:function( event, ui ) {
+           $("#hotel-code").trigger('keyup');
+        }
     });
     $("#hotel-code").on('keyup', function () {
         var position = $(this).offset();
         console.log("positon :" + position.top);
         $(".ui-widget").css("top", position.top + 30);
-        $(".ui-widget").css("left", position.left)
+        $(".ui-widget").css("left", position.left);
         var code = this.value.toUpperCase();
+        var name = this.value;
         $("#hotel-id,#hotel-name").val(null);
         $.each(hotel, function (key, value) {
-
             if (value.code.toUpperCase() === code) {
                 console.log('ok');
                 $("#hotel-id").val(value.id);
                 $("#hotel-name").val(value.name);
+            }
+            if(name === value.name){
+                $("#hotel-code").val(value.code);
+                code = $("#hotel-code").val().toUpperCase();
             }
         });
     });

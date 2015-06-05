@@ -83,9 +83,18 @@ $(document).ready(function () {
     var codeCustomer = [];
     $.each(customer, function (key, value) {
         codeCustomer.push(value.code);
+        if ( !(value.firstname in codeCustomer) ){
+           codeCustomer.push(value.firstname);
+        }
+        if ( !(value.lastname in codeCustomer) ){
+           codeCustomer.push(value.lastname);
+        }
     });
     $("#passengerId").autocomplete({
-        source: codeCustomer
+        source: codeCustomer,
+        close:function( event, ui ) {
+           $("#passengerId").trigger('keyup');
+        }
     });
     $("#passengerId").on('keyup', function () {
         var position = $(this).offset();
@@ -93,13 +102,12 @@ $(document).ready(function () {
         $(".ui-widget").css("top", position.top + 30);
         $(".ui-widget").css("left", position.left);
         var code = this.value.toUpperCase();
+        var firstname = this.value;
+        var lastname = this.value;
         $("#id,#MInitialname,#firstName,#lastName,#sex,#address,#tel,#phone,#email,#remark,#Passport,#firstNameJapan,#lastNameJapan").val(null);
         $.each(customer, function (key, value) {
-            //console.log('each : ' + value.code);
-            //console.log('val : ' + $("#agent_user").val());
             if (value.code.toUpperCase() === code) {
                 console.log('ok');
-                //$("#id").val(value.id);
                 $("#MInitialname").val(value.initialId);
                 $("#firstName").val(value.firstname);
                 $("#lastName").val(value.lastname);
@@ -112,6 +120,14 @@ $(document).ready(function () {
                 $("#Passport").val(value.passportNo);
                 $("#firstNameJapan").val(value.firstNameJapan);
                 $("#lastNameJapan").val(value.lastNameJapan);
+            }
+            if(firstname === value.firstname){
+                $("#passengerId").val(value.code);
+                code = $("#passengerId").val().toUpperCase();
+            }
+            if(lastname === value.lastname){
+                $("#passengerId").val(value.code);
+                code = $("#passengerId").val().toUpperCase();
             }
         });
     });

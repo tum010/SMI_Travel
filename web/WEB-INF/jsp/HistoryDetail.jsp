@@ -90,7 +90,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6">  
-                                    <input type="text" class="form-control">
+                                    <input type="text" id="passengerName"  name="passengerName" class="form-control">
                                 </div>
                             </div>
                             <div class="col-sm-3">
@@ -215,6 +215,9 @@
                         </tr>
                     </thead>
                     <tbody>
+                    <script>
+                       var staff = [];
+                    </script>
                         <c:forEach var="staff" items="${staffList}">
                             <tr>
                                 <td class="staff-id hidden">${staff.id}</td>
@@ -222,6 +225,9 @@
                                 <td class="staff-name">${staff.name}</td>
                                 <td class="staff-position">${staff.position}</td>
                             </tr>
+                        <script>
+                            staff.push({id: "${staff.id}", username: "${staff.username}", name: "${staff.name}", position: "${staff.position}"});
+                        </script>
                         </c:forEach>
 
                     </tbody>
@@ -230,6 +236,41 @@
                 <!--Script Owner List Table-->
                 <script>
                     $(document).ready(function () {
+                        var staffArray = [];
+                        $.each(staff, function (key, value) {
+                            staffArray.push(value.username);
+                            if ( !(value.name in staffArray) ){
+                               staffArray.push(value.name);
+                            } 
+                        });
+
+                        $("#passengerId").autocomplete({
+                            source: staffArray,
+                            close:function( event, ui ) {
+                               $("#passengerId").trigger('keyup');
+                            }
+                        });
+                        $("#passengerId").keyup(function () {
+                            var position = $(this).offset();
+                            $(".ui-widget").css("top", position.top + 30);
+                            $(".ui-widget").css("left", position.left);
+                            var username = this.value.toUpperCase();
+                            var name = this.value;
+                            $("#passengerName").val(null);
+                            $.each(staff, function (key, value) {
+                                if (value.username.toUpperCase() === username) {
+                                    $("#passengerName").val(value.name);
+                                }
+                                if(name === value.name){
+                                    $("#passengerId").val(value.username);
+                                    username = $("#passengerId").val().toUpperCase();
+                                }
+                               
+                            });
+                        });
+                        
+                        
+                        
                         $("#OwnerTable tr").on('click', function () {
                             staff_id = $(this).find(".staff-id").text();
                             staff_username = $(this).find(".staff-username").text();
@@ -284,7 +325,10 @@
         $('span').click(function () {
             var position = $(this).offset();
             console.log("positon :" + position.top);
-            $(".bootstrap-datetimepicker-widget").css("top", position.top + 32);
+            $(".bootstrap-datetimepicker-widget").css({
+                top: position.top + 32,
+                left: position.left - 100
+            });
 
         });
 
@@ -293,9 +337,9 @@
             container: 'tooltip',
             excluded: [':disabled'],
             feedbackIcons: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
+                valid: 'uk-icon-check',
+                invalid: 'uk-icon-times',
+                validating: 'uk-icon-refresh'
             },
             fields: {
                 HistoryDate: {

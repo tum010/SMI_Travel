@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript" src="js/TicketSummary.js"></script> 
+<link href="css/jquery-ui.css" rel="stylesheet">
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -202,6 +203,9 @@
                             <th>Tel</th>
                         </tr>
                     </thead>
+                    <script>
+                        bill = [];
+                    </script>
                     <tbody>
                         <c:forEach var="item" items="${customerAgentList}">
                             <tr>                                
@@ -210,14 +214,50 @@
                                 <td class="item-address ">${item.address}</td>
                                 <td class="item-tel ">${item.tel}</td>
                             </tr>
+                        <script>
+                            bill.push({code: "${item.billTo}", name: "${item.billName}", address: "${item.address}" , tel: "${item.tel}"})
+                        </script>
                         </c:forEach>
-
+                            
                     </tbody>
 
                 </table>
                 <!--Script Bill To List Table-->
                 <script>
                     $(document).ready(function () {
+                        var billTo = [];
+                        $.each(bill, function (key, value) {
+                            billTo.push(value.code);
+                            if ( !(value.name in billTo) ){
+                               billTo.push(value.name);
+                            }
+                        });
+
+                        $("#billto").autocomplete({
+                            source: billTo,
+                            close:function( event, ui ) {
+                               $("#billto").trigger('keyup');
+                            }
+                        });
+                        $("#billto").keyup(function () {
+                            var position = $(this).offset();
+                            $(".ui-widget").css("top", position.top + 30);
+                            $(".ui-widget").css("left", position.left);
+                            var code = this.value.toUpperCase();
+                            var name = this.value;
+                            $("#billname").val(null);
+                            $.each(bill, function (key, value) {
+                                if (value.code.toUpperCase() === code) {
+                                    $("#billname").val(value.name);                                   
+                                }
+                                if(name === value.name){
+                                    $("#billto").val(value.code);
+                                    code = $("#billto").val().toUpperCase();
+                                }
+                                
+                            });
+                        });
+                        
                         $("#BillToTable tr").on('click', function () {
                             var billto = $(this).find(".item-billto").text();
                             var billname = $(this).find(".item-name").text();
@@ -226,7 +266,6 @@
                             $("#billto").val(billto);
                             $("#billname").val(billname);
                             $("#address").val(address);
-//                            $("#billto").val(tel);
                             $("#BillToModal").modal('hide');
                         });
 
