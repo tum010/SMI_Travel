@@ -110,9 +110,13 @@
     
     <div class="row">
         <div class="col-sm-2"></div>
-        <div class="col-sm-10">
-                <label class="control-label"><h4>Other</h4></label>
-        </div>
+        
+        <div class="row-fluid">
+            <label class="control-label"><h4>Other</h4></label>
+            <div class="form-actions pull-right" style="padding-right: 20px">
+                <a href="OtherDetail.smi?referenceNo=${param.referenceNo}&action=newFromDayTour"><button type="button" id="acs" onclick=""  class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>Add</button>  </a>  
+            </div>
+        </div> 
     </div>
     
     <div class="row">
@@ -128,6 +132,7 @@
                         <th style="width:15%" colspan="3">Infant</th>
                         <th style="width:10%" rowspan="2">Cur</th>
                         <th style="width:10%" rowspan="2">Amount</th>
+                        <th style="width:8%" rowspan="2">Action</th>
                     </tr>
                     <tr>
                         <th style="width:5%">Cost</th>
@@ -160,6 +165,17 @@
                             <td class="tdright moneyformat"> ${(table.adPrice * table.adQty) + 
                                                                (table.chPrice * table.chQty) + 
                                                                (table.inPrice * table.inQty)}
+                            </td>
+                            <td>
+                                <center> 
+                                    <a href="OtherDetail.smi?referenceNo=${param.referenceNo}&itemid=${table.id}&action=edit"><span class="glyphicon glyphicon-edit editicon"      onclick="" ></span></a>
+                                    <c:if test="${table.status.id == 2}">
+                                        <span class="glyphicon glyphicon-plus addicon"   onclick="EnableOther('${table.id}',' ${table.product.code}');" data-toggle="modal" data-target="#EnableOther" ></span>
+                                    </c:if>
+                                    <c:if test="${table.status.id == 1}">
+                                        <span class="glyphicon glyphicon-remove deleteicon"   onclick="DeleteOther('${table.id}',' ${table.product.code}');" data-toggle="modal" data-target="#DelOther" ></span>
+                                    </c:if>                                   
+                                </center>
                             </td>
                         </tr>
                     </c:forEach>

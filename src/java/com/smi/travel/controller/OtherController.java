@@ -21,7 +21,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 public class OtherController extends SMITravelController {
 
-    private static final ModelAndView Other = new ModelAndView("Other");
+    private static final ModelAndView Other = new ModelAndView("Other" );
     private BookingAirticketService bookingAirticketService;
     private static final String Booking_Size = "BookingSize";
     private static final String DATALIST = "OtherList";

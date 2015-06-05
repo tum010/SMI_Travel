@@ -31,6 +31,7 @@ public class OtherDetailController extends SMITravelController {
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String action = request.getParameter("action");
+        String callPageFrom = request.getParameter("action");
         String itemid = request.getParameter("itemid");
         String productName = request.getParameter("product_name");
         String productCode = request.getParameter("product_code");
@@ -63,11 +64,27 @@ public class OtherDetailController extends SMITravelController {
         }
         
         Master master = utilservice.getbookingFromRefno(refno);
-        if(action.equalsIgnoreCase("new")){
+        
+        if(callPageFrom.equalsIgnoreCase("newFromDayTour")){
             adQty = String.valueOf(master.getAdult());
             chQty = String.valueOf(master.getChild());
             inQty = String.valueOf(master.getInfant());
+            request.setAttribute("callpage", callPageFrom);
+        }               
+                
+        if(callPageFrom.equalsIgnoreCase("newFromOther")){
+            adQty = String.valueOf(master.getAdult());
+            chQty = String.valueOf(master.getChild());
+            inQty = String.valueOf(master.getInfant());
+            request.setAttribute("callpage", callPageFrom);
         }
+        
+        /*if(action.equalsIgnoreCase("new")){
+            adQty = String.valueOf(master.getAdult());
+            chQty = String.valueOf(master.getChild());
+            inQty = String.valueOf(master.getInfant());
+        }*/
+        
         request.setAttribute("Master", master);
         System.out.println("agentId : "+agentId);
         String BookType = master.getBookingType();

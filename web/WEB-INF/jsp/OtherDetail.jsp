@@ -9,10 +9,12 @@
 
 <c:set var="refno1" value="${fn:substring(param.referenceNo, 0, 2)}" />
 <c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
+<c:set var="callpage" value="${requestScope['callpage']}" />
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
+<input type="hidden" value="${requestScope['callpage']}" id="callpage" name="callpage">
 <c:set var="booking_size" value="${requestScope['BookingSize']}" />
 <c:set var="product_list" value="${requestScope['product_list']}" />
 <c:set var="agent_list" value="${requestScope['agent_list']}" />
@@ -49,13 +51,23 @@
         <div class="col-sm-10">
             <div ng-include="'WebContent/Book/BookNavbar.html'"></div>
             <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
+            
+            <input type="hidden" id="callpage" name="callpage" value="${param.callpage}">
+            
             <div class="row">
                 <div class="col-sm-3">
                     <h4>Booking Other Detail</h4>
                 </div>
 
-                <div class="col-sm-9 text-right">
-                    <a class="btn btn-primary" href="Other.smi?referenceNo=${param.referenceNo}"><i class="glyphicon glyphicon-chevron-left"></i> Back</a>
+                <div class="col-sm-9 text-right">                  
+                    <c:choose>
+                        <c:when test="${fn:containsIgnoreCase(callpage , 'newFromOther')}">
+                            <a class="btn btn-primary" href="Other.smi?referenceNo=${param.referenceNo}"><i class="glyphicon glyphicon-chevron-left"></i> Back</a>
+                        </c:when>
+                        <c:when test="${fn:containsIgnoreCase(callpage , 'newFromDayTour')}">
+                            <a class="btn btn-primary" href="Daytour.smi?referenceNo=${param.referenceNo}"><i class="glyphicon glyphicon-chevron-left"></i> Back</a>
+                        </c:when>
+                    </c:choose>                                                                       
                 </div>
             </div>
             <hr/>
@@ -261,7 +273,7 @@
                         <input type="hidden" class="form-control" id="itemid" name="itemid" value="${requestScope['itemid']}">
                         <input type="hidden" value="${param.referenceNo}" id="refno" name="referenceNo">
                         <input type="hidden" class="form-control" id="status" name="status" value="${requestScope['status']}">
-                        <input type="hidden" class="form-control" id="isbill" name="isbill" value="${requestScope['isbill']}">
+                        <input type="hidden" class="form-control" id="isbill" name="isbill" value="${requestScope['isbill']}">                
                         
                         <div class="text-center" >    
                             <c:choose>

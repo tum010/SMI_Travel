@@ -96,7 +96,7 @@
 
                 <div class="row-fluid">
                     <div class="form-actions pull-right" style="padding-right: 20px">
-                        <a href="OtherDetail.smi?referenceNo=${param.referenceNo}&action=new"><button type="button" id="acs" onclick=""  class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>Add</button>  </a>  
+                        <a href="OtherDetail.smi?referenceNo=${param.referenceNo}&action=newFromOther"><button type="button" id="acs" onclick=""  class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>Add</button>  </a>  
                     </div>
                 </div> 
 
