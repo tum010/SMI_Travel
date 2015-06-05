@@ -186,13 +186,6 @@ $(document).ready(function () {
       // $('#landForm').bootstrapValidator('revalidateField', 'agent_code');
     });
     
-
- 
-    
-    
-    
-    
-
 });
 
 

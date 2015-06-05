@@ -91,12 +91,12 @@ $(document).ready(function () {
     
     $("#searchDaytourCommissionForm")
             .bootstrapValidator({
-//                framework: 'bootstrap',
-                container: 'tooltip',
-                feedbackIcons: {required: 'glyphicon glyphicon-asterisk',
-                    valid: 'glyphicon glyphicon-ok',
-                    invalid: 'glyphicon glyphicon-remove',
-                    validating: 'glyphicon glyphicon-refresh'
+                framework: 'bootstrap',
+//                container: 'tooltip',
+                feedbackIcons: {
+                    valid: 'uk-icon-check',
+                    invalid: 'uk-icon-times',
+                    validating: 'uk-icon-refresh'
                 },
                 fields: {
                     InputDateFrom: {
@@ -217,141 +217,142 @@ $(document).ready(function () {
 });
 
 function verifyValueToGuide(){
-    guideCheck();
-
+//    guideCheck();
+$("#GuideModal").modal('show');
 }
 function verifyValueToAgent(){
-    agentCheck();
+//    agentCheck();
+$("#AgentModal").modal('show');
 }
-function guideCheck(){
-    var isguidename = true;
-    var isguidecom = true;
-    var isagentname = true;
-    var isagentcom = true;
-    $('#CommissionTable tbody tr td').each(function(){
-        $(this).find('select.guidename').each(function(){
-            console.log('guidename :'+$(this).val());
-            if ($(this).val() === '') {
-                 $(this).focus();
-                 isguidename = false;        
-                return false; 
-            }
-        });
-        $(this).find('.guidecom').each(function(){
-            if ($(this).val() === '' ||  $(this).val() === '0') {
-                 $(this).focus();
-                isguidecom = false;        
-                return false; 
-            }
-        });
-        $(this).find('.agentname').each(function(){
-            if ($(this).val() === '' ) {
-                 $(this).focus();
-                isagentname = false;        
-                return false; 
-            }
-        });
-        $(this).find('.agentcom').each(function(){
-            if ($(this).val() === '' ||  $(this).val() === '0' ) {
-                 $(this).focus();
-                isagentcom = false;        
-                return false; 
-            }
-        });
-    });
-    var alerttext = "";
-    if(isguidename === false){
-         alerttext += "- Some Guide name are still empty...! \n";
-        $("#GuideModal").modal('hide');
-    }
-    if(isguidecom === false){
-         alerttext += "- Some Guide commission are still empty...! \n";
-        $("#GuideModal").modal('hide');
-    }
-    if(isagentname === false){
-        alerttext += "- Some Agent name are still empty...! \n";
-        $("#GuideModal").modal('hide');
-    }
-    if(isagentcom === false){
-        alerttext += "- Some Agent commission are still empty...! \n";
-        $("#GuideModal").modal('hide');
-    }
-    if(isguidename === true && isguidecom === true && isagentname === true && isagentcom === true){ 
-            $("#GuideModal").modal('show');
-    }
-    
-    if(alerttext !== ''){
-        alert(alerttext);
-    }else{
-        return ;
-    }
-     
-}
+//function guideCheck(){
+//    var isguidename = true;
+//    var isguidecom = true;
+//    var isagentname = true;
+//    var isagentcom = true;
+//    $('#CommissionTable tbody tr td').each(function(){
+//        $(this).find('select.guidename').each(function(){
+//            console.log('guidename :'+$(this).val());
+//            if ($(this).val() === '') {
+//                 $(this).focus();
+//                 isguidename = false;        
+//                return false; 
+//            }
+//        });
+//        $(this).find('.guidecom').each(function(){
+//            if ($(this).val() === '' ||  $(this).val() === '0') {
+//                 $(this).focus();
+//                isguidecom = false;        
+//                return false; 
+//            }
+//        });
+//        $(this).find('.agentname').each(function(){
+//            if ($(this).val() === '' ) {
+//                 $(this).focus();
+//                isagentname = false;        
+//                return false; 
+//            }
+//        });
+//        $(this).find('.agentcom').each(function(){
+//            if ($(this).val() === '' ||  $(this).val() === '0' ) {
+//                 $(this).focus();
+//                isagentcom = false;        
+//                return false; 
+//            }
+//        });
+//    });
+//    var alerttext = "";
+//    if(isguidename === false){
+//         alerttext += "- Some Guide name are still empty...! \n";
+//        $("#GuideModal").modal('hide');
+//    }
+//    if(isguidecom === false){
+//         alerttext += "- Some Guide commission are still empty...! \n";
+//        $("#GuideModal").modal('hide');
+//    }
+//    if(isagentname === false){
+//        alerttext += "- Some Agent name are still empty...! \n";
+//        $("#GuideModal").modal('hide');
+//    }
+//    if(isagentcom === false){
+//        alerttext += "- Some Agent commission are still empty...! \n";
+//        $("#GuideModal").modal('hide');
+//    }
+//    if(isguidename === true && isguidecom === true && isagentname === true && isagentcom === true){ 
+//            $("#GuideModal").modal('show');
+//    }
+//    
+//    if(alerttext !== ''){
+//        alert(alerttext);
+//    }else{
+//        return ;
+//    }
+//     
+//}
 
-function agentCheck(){
-    var isguidename = true;
-    var isguidecom = true;
-    var isagentname = true;
-    var isagentcom = true;
-    $('#CommissionTable tbody tr td').each(function(){
-        $(this).find('select.guidename').each(function(){
-            console.log('guidename :'+$(this).val());
-            if ($(this).val() === '') {
-                 $(this).focus();
-                 isguidename = false;        
-                return false; 
-            }
-        });
-        $(this).find('.guidecom').each(function(){
-            if ($(this).val() === '' ||  $(this).val() === '0') {
-                 $(this).focus();
-                isguidecom = false;        
-                return false; 
-            }
-        });
-        $(this).find('.agentname').each(function(){
-            if ($(this).val() === '' ) {
-                 $(this).focus();
-                isagentname = false;        
-                return false; 
-            }
-        });
-        $(this).find('.agentcom').each(function(){
-            if ($(this).val() === '' ||  $(this).val() === '0' ) {
-                 $(this).focus();
-                isagentcom = false;        
-                return false; 
-            }
-        });
-    });
-    var alerttext = "";
-    if(isguidename === false){
-         alerttext += "- Some Guide name are still empty...! \n";
-        $("#AgentModal").modal('hide');
-    }
-    if(isguidecom === false){
-         alerttext += "- Some Guide commission are still empty...! \n";
-        $("#AgentModal").modal('hide');
-    }
-    if(isagentname === false){
-        alerttext += "- Some Agent name are still empty...! \n";
-        $("#AgentModal").modal('hide');
-    }
-    if(isagentcom === false){
-        alerttext += "- Some Agent commission are still empty...! \n";
-        $("#AgentModal").modal('hide');
-    }
-    if(isguidename === true && isguidecom === true && isagentname === true && isagentcom === true){ 
-            $("#AgentModal").modal('show');
-    }
-    
-    if(alerttext !== ''){
-        alert(alerttext);
-    }else{
-        return ;
-    }
-     
-}
+//function agentCheck(){
+//    var isguidename = true;
+//    var isguidecom = true;
+//    var isagentname = true;
+//    var isagentcom = true;
+//    $('#CommissionTable tbody tr td').each(function(){
+//        $(this).find('select.guidename').each(function(){
+//            console.log('guidename :'+$(this).val());
+//            if ($(this).val() === '') {
+//                 $(this).focus();
+//                 isguidename = false;        
+//                return false; 
+//            }
+//        });
+//        $(this).find('.guidecom').each(function(){
+//            if ($(this).val() === '' ||  $(this).val() === '0') {
+//                 $(this).focus();
+//                isguidecom = false;        
+//                return false; 
+//            }
+//        });
+//        $(this).find('.agentname').each(function(){
+//            if ($(this).val() === '' ) {
+//                 $(this).focus();
+//                isagentname = false;        
+//                return false; 
+//            }
+//        });
+//        $(this).find('.agentcom').each(function(){
+//            if ($(this).val() === '' ||  $(this).val() === '0' ) {
+//                 $(this).focus();
+//                isagentcom = false;        
+//                return false; 
+//            }
+//        });
+//    });
+//    var alerttext = "";
+//    if(isguidename === false){
+//         alerttext += "- Some Guide name are still empty...! \n";
+//        $("#AgentModal").modal('hide');
+//    }
+//    if(isguidecom === false){
+//         alerttext += "- Some Guide commission are still empty...! \n";
+//        $("#AgentModal").modal('hide');
+//    }
+//    if(isagentname === false){
+//        alerttext += "- Some Agent name are still empty...! \n";
+//        $("#AgentModal").modal('hide');
+//    }
+//    if(isagentcom === false){
+//        alerttext += "- Some Agent commission are still empty...! \n";
+//        $("#AgentModal").modal('hide');
+//    }
+//    if(isguidename === true && isguidecom === true && isagentname === true && isagentcom === true){ 
+//            $("#AgentModal").modal('show');
+//    }
+//    
+//    if(alerttext !== ''){
+//        alert(alerttext);
+//    }else{
+//        return ;
+//    }
+//     
+//}
 
 
 function searchDaytourCommission() {

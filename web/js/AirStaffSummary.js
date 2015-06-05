@@ -44,9 +44,9 @@ $(document).ready(function() {
         container: 'tooltip',
         excluded: [':disabled'],
         feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
+            valid: 'uk-icon-check',
+            invalid: 'uk-icon-times',
+            validating: 'uk-icon-refresh'
         },
         fields: {
             startdate: {

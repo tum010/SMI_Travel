@@ -13,10 +13,10 @@ $(document).ready(function() {
     Billable.bootstrapValidator({
         container: 'tooltip',
         excluded: [':disabled'],
-        feedbackIcons: {required: 'glyphicon glyphicon-asterisk',
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
+        feedbackIcons: {
+            valid: 'uk-icon-check',
+            invalid: 'uk-icon-times',
+            validating: 'uk-icon-refresh'
         },
         fields: {
             billdate: {
@@ -31,15 +31,12 @@ $(document).ready(function() {
                 }
             }
         }
+    }).on('success.field.bv', function(e, data) {
+        if (data.bv.isValid()) {
+            data.bv.disableSubmitButtons(false);
 
-    }
-    )
-            .on('success.field.bv', function(e, data) {
-                if (data.bv.isValid()) {
-                    data.bv.disableSubmitButtons(false);
-
-                }
-            });
+        }
+    });
             
     Billable.on('mouseover', function () {
         var billto = $(this).find('[name="billto"]');

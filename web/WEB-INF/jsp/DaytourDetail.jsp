@@ -480,20 +480,17 @@
                     // ON KEY INPUT AUTO SELECT TOURCODE-TOURNAME
                     $(function () {
                         var availableTags = [];
-                        //[{label: "Test 1",value: 1},{label: "Test 2",value: 2}];
+
                         $.each(tourCode, function (key, value) {
                             availableTags.push(value.code);
                             if ( !(value.name in availableTags) ){
                                availableTags.push(value.name);
                             }
                         });
-//                                console.log(availableTags);
+
                         $("#InputTourCode").autocomplete({
                             source: availableTags,
-                            close:function( event, ui ) {
-                               //window.uiTmp = event;
-                               //window.uiTmp = ui;
-                               //alert('Test');    
+                            close:function( event, ui ) {    
                                $("#InputTourCode").trigger('keyup');
                             }                        
                         });
@@ -505,7 +502,6 @@
                             $(".ui-widget").css("left", position.left);
                             var name = this.value;
                             var code = this.value.toUpperCase();
-//                            console.log("Check TourCode = " + code);
                             $("#InputTourName").val(null);
                             $.each(tourCode, function (key, value) {
                                 if(name === value.name){
@@ -514,7 +510,6 @@
                                 }
                                 if (value.code.toUpperCase() === code) {
                                     $("#InputTourId").val(value.id);
-//                                    $("#inputTourCode").value(value.code);
                                     $("#InputTourName").val(value.name);
                                 }
                             }); //end each tourCode

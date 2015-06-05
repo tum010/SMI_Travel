@@ -2,58 +2,100 @@
 
 $(document).ready(function () {
 
+//    $('#Min').on('change', function(e) {
+//            $('#MDaytourDetailForm').bootstrapValidator('revalidateField', 'InputMin');
+//    });
+//
+//    $('#Max').on('change', function(e) {
+//            $('#MDaytourDetailForm').bootstrapValidator('revalidateField', 'InputMax');
+//    });
+
+
   $("#MDaytourDetailForm")
           .bootstrapValidator({
-//              framework: 'bootstrap',
                 container: 'tooltip',
-                excluded: [':disabled'],
-                feedbackIcons: {required: 'glyphicon glyphicon-asterisk',
-                    valid: 'glyphicon glyphicon-ok',
-                    invalid: 'glyphicon glyphicon-remove',
-                    validating: 'glyphicon glyphicon-refresh'
+//                excluded: [':disabled', ':hidden', ':not(:visible)'],
+                feedbackIcons: {
+                    valid: 'uk-icon-check',
+                    invalid: 'uk-icon-times',
+                    validating: 'uk-icon-refresh'
                 },
                 fields: {
                     InputCode: {
                         validators: {
                             notEmpty: {
-                                message: 'The Code is required'
+                                message: 'Code is required'
                             }
                         }
                     },
                     InputName: {
                         validators: {
                             notEmpty: {
-                                message: 'The Name is required'
+                                message: 'Name is required'
                             }
                         }
                     },
                     InputMin: {
-                        trigger: 'keyup change',
+//                        excluded: false,
+                        trigger: 'focus change keyup',
                         validators: {
-                            integer: {
+                            integer: {                              
                                 message: 'valid a Number'
                             }
+                            ,lessThan: {
+                                value: 'InputMax',
+                                message: 'Please enter a value less than or equal to %s'
+                            }
+
                         }
                     },
                     InputMax: {
-                        trigger: 'keyup change',
+//                        excluded: false,
+                        trigger: 'focus change keyup',
                         validators: {
-                            integer: {
+                            integer: {  
                                 message: 'valid a Number'
+                            }
+                            ,greaterThan: {        
+                                value: 'InputMin',
+                                message: 'Please enter a value greater than or equal to %s'
                             }
                         }
                     }
                 }
             })
-            .on('success.field.bv', function (e, data) {
-                if (data.bv.isValid()) {
-                    data.bv.disableSubmitButtons(false);
-
-                }
-            });
-    
+            .on('err.field.fv', function(e, data) {
+                if (data.fv.getSubmitButton()) {
+                    data.fv.disableSubmitButtons(false);
+                }      
+            })
+            .on('success.field.fv', function(e, data) {
+                if (data.fv.getSubmitButton()) {
+                    data.fv.disableSubmitButtons(false);
+                }          
+        });
+        
+        var delay = (function(){
+            var timer = 0;
+            return function(callback, ms){
+              clearTimeout (timer);
+              timer = setTimeout(callback, ms);
+            };
+        })();   
+        
+        $("#InputMax").on('blur',function(){
+            $("#InputMin").focus();
+            $("#InputGuideCommission").focus();
+        });
+        $("#InputMin").on('keyup',function(){
+            delay(function(){
+                $("#InputMax").focus();
+             }, 1500 ); 
+        });
+           
     //Number
     $(".money").mask('000,000,000', {reverse: true});
+    
 
     $("#InputGuideCommission").inputmask("decimal",{
          radixPoint:".", 
@@ -61,17 +103,7 @@ $(document).ready(function () {
          digits: 2,
          autoGroup: true
      });
-    
-    $(".decimalformat").keypress(function(e){
-        var a = [];
-        var k = e.which;
 
-        for (i = 48; i < 58; i++)
-            a.push(i);
-
-        if (!(a.indexOf(k)>=0))
-            e.preventDefault();
-    });
 
 });
 
@@ -121,43 +153,7 @@ $(document).ready(function () {
         $('#ExpenseTable tbody').append(clone);
     }
 
-
-
-
-
-
-
-
-
-
-
-    /*Delete row priceTable*/
-//    $("#PriceTable").on('click', 'span', function (e) {
-//        if ($('#PriceTable tbody tr').length < 2) {
-//            alert("Can not delete first row");
-//            location.reload();
-//            return false;
-//        } else {
-//
-//            $(this).closest('tr').remove();
-//                location.reload();
-//        }
-
-//    });4
-
-    /*Delete row expenseTable*/
-//    $("#ExpenseTable").on('click', 'span', function (e) {
-//        if ($('#ExpenseTable tbody tr').length < 2) {
-//            alert("Can not delete first row");
-//            location.reload();
-//            return false;
-//        } else {
-//            $(this).closest('tr').remove();
-//                location.reload();
-//        }
-
-//    });
-
+    
 
 });
 

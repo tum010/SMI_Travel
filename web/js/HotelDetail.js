@@ -44,10 +44,10 @@ $(document).ready(function () {
     vForm.bootstrapValidator({
         container: 'tooltip',
         excluded: [':disabled'],
-        feedbackIcons: {required: 'glyphicon glyphicon-asterisk',
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
+        feedbackIcons: {
+            valid: 'uk-icon-check',
+            invalid: 'uk-icon-times',
+            validating: 'uk-icon-refresh'
         },
         fields: {
             checkin: {

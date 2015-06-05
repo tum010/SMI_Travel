@@ -11,10 +11,10 @@ $(document).ready(function () {
 //                framework: 'bootstrap',
                 container: 'tooltip',
                 excluded: [':disabled', ':hidden', ':not(:visible)'],
-                feedbackIcons: {required: 'glyphicon glyphicon-asterisk',
-                    valid: 'glyphicon glyphicon-ok',
-                    invalid: 'glyphicon glyphicon-remove',
-                    validating: 'glyphicon glyphicon-refresh'
+                feedbackIcons: {
+                    valid: 'uk-icon-check',
+                    invalid: 'uk-icon-times',
+                    validating: 'uk-icon-refresh'
                 },
                 fields: {
                     SelectPickUp: {

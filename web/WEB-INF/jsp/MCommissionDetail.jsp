@@ -211,9 +211,6 @@
                                     </td>
                                     
                                     <td>
-<!--                                     <input type="text" value="${datefrom}" />
-                                         <input type="text" value="${monthfrom}" />
-                                         <input type="text" value="${yearfrom}" />-->
                                         <div class="input-group  datetime" id="dateFrom-${loop.count}" name="dateFrom-${loop.count}">
                                             <input type="text"  class="form-control text-center datemask  " 
                                                data-date-format="DD-MM-YYYY" name="InputFrom-${loop.count}" id="InputFrom-${loop.count}"
@@ -306,7 +303,6 @@
                         $("#InputAgentId").val(agent_id);
                         $("#InputAgentCode").val(agent_code);
                         $("#InputAgentName").val(agent_name);
-//                        alert("Tour id[" + $("#InputTourId").val() + "] name[" + $("#InputTourName").val() + "] code[" + $("#InputTourCode").val() + "]");
                         $("#AgentModal").modal('hide');
                     });
                     // agentTable
@@ -333,11 +329,13 @@
                     // ON KEY INPUT AUTO SELECT TOURCODE-TOURNAME
                     $(function () {
                         var availableTags = [];
-//                                console.log(tourCode);
                         $.each(agentArray, function (key, value) {
                             availableTags.push(value.code);
+                            if ( !(value.name in availableTags) ){
+                               availableTags.push(value.name);
+                            }
                         });
-//                                console.log(availableTags);
+
                         $("#InputAgentCode").autocomplete({
                             source: availableTags,
                             close:function( event, ui ) {
@@ -349,16 +347,18 @@
                             $(".ui-widget").css("top", position.top + 30);
                             $(".ui-widget").css("left", position.left);
                             var code = this.value.toUpperCase();
+                            var name = this.value;
                             $("#InputAgentName").val(null);
                             $.each(agentArray, function (key, value) {
                                 if (value.code.toUpperCase() === code) {
-//                                console.log('ok');
                                     $("#InputAgentId").val(value.id);
                                     $("#InputAgentName").val(value.name);
                                 }
+                               if(name === value.name){
+                                    $("#InputAgentCode").val(value.code);
+                                    code = $("#InputAgentCode").val().toUpperCase();
+                                }
                             }); //end each agentTable
-
-
                         }); // end InputAgentCode keyup
                     }); // end AutoComplete AgentCode AgentName
                 });
@@ -446,13 +446,13 @@
                         var availableTags = [];
                         $.each(tourArray, function (key, value) {
                             availableTags.push(value.code);
+                            if ( !(value.name in availableTags) ){
+                               availableTags.push(value.name);
+                            }
                         });
                         $("#InputTourCode").autocomplete({
                             source: availableTags,
                             close:function( event, ui ) {
-                               //window.uiTmp = event;
-                               //window.uiTmp = ui;
-                               //alert('Test');    
                                $("#InputTourCode").trigger('keyup');
                             }
                         });
@@ -461,11 +461,16 @@
                             $(".ui-widget").css("top", position.top + 30);
                             $(".ui-widget").css("left", position.left);
                             var code = this.value.toUpperCase().trim();
+                            var name = this.value;
                             $("#InputTourName").val(null);
                             $.each(tourArray, function (key, value) {
                                 if (value.code.toUpperCase().trim() === code) {
                                     $("#InputTourId").val(value.id);
                                     $("#InputTourName").val(value.name);
+                                }
+                                if(name === value.name){
+                                    $("#InputTourCode").val(value.code);
+                                    code = $("#InputTourCode").val().toUpperCase();
                                 }
                             }); //end each tourTable
 

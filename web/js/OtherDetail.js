@@ -62,15 +62,16 @@ $(document).ready(function() {
     
     $('#otherForm').bootstrapValidator({
         container: 'tooltip',
-        excluded: [':disabled'],
+        excluded: [':disabled', ':hidden', ':not(:visible)'],
         feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
+            valid: 'uk-icon-check',
+            invalid: 'uk-icon-times',
+            validating: 'uk-icon-refresh'
         },
         fields: {
             product_code: {
-                trigger: 'focus',
+                excluded: false,
+                trigger: 'focus keyup',
                 validators: {
                     notEmpty: {
                         message: 'The product code is required'

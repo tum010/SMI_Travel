@@ -13,30 +13,25 @@ $(document).ready(function () {
     });
     
     $('#DateFrom').datetimepicker({
-
         }).on('change', function(e) {
             // Revalidate the start date field
             $('#SearchHistoryTransfer').bootstrapValidator('revalidateField', 'InputDateFrom');
-        });
+    });
 
     $('#DateTo').datetimepicker({
-    
         }).on('change', function(e) {
             $('#SearchHistoryTransfer').bootstrapValidator('revalidateField', 'InputDateTo');
     });
-
-
 //InputDateFrom
 //InputDateTo
-
 $("#SearchHistoryTransfer")
     .bootstrapValidator({
             framework: 'bootstrap',
 //            container: 'tooltip',
-            feedbackIcons: {required: 'glyphicon glyphicon-asterisk',
-                    valid: 'glyphicon glyphicon-ok',
-                    invalid: 'glyphicon glyphicon-remove',
-                    validating: 'glyphicon glyphicon-refresh'
+            feedbackIcons: {
+                    valid: 'uk-icon-check',
+                    invalid: 'uk-icon-times',
+                    validating: 'uk-icon-refresh'
                 },
             fields: {
                 InputDateFrom: {
