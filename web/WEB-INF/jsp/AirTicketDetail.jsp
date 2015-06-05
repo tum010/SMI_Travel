@@ -30,8 +30,10 @@
 <c:set var="action" value="${requestScope['Action']}" />
 <c:set var="mInitialname" value="${requestScope['MInitialname']}" />
 <c:set var="result" value="${requestScope['Result']}" />
-
-<input type="hidden" value="${param.referenceNo}" id="getUrl">
+<c:set var="refno1" value="${fn:substring(param.referenceNo, 0, 2)}" />
+<c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
+<input type="hidden" value="${refno1}-${refno2}" id="getUrl">
+<input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
 
