@@ -212,11 +212,12 @@ public class MCommissionDetailController extends SMITravelController {
                 System.out.println("commissionDouble = "+commissionDouble);
             }
             
-            Date dateTo = util.convertStringToDateS(to);
             Date dateFrom = util.convertStringToDateS(from);
+            Date dateTo = util.convertStringToDateS(to);
             
+            System.out.println("dateFrom"+i+" : "+dateFrom);
             System.out.println("dateTo"+i+" : "+dateTo);
-            System.out.println("dateTo"+i+" : "+dateTo);
+            
             
             AgentTourComission agenttourcommission = getAgentTourCommission(id, agentcommission);
            
@@ -234,9 +235,8 @@ public class MCommissionDetailController extends SMITravelController {
             agenttourcommission.setComission(commissionDouble);
 //            agenttourcommission.setCreateBy();
 //            agenttourcommission.setUpdateBy();
-            System.out.println("getFrom1 ="+agenttourcommission.getFrom());
             if(agenttourcommission.getFrom() != null){ 
-                System.out.println("getFrom2 ="+agenttourcommission.getFrom());
+                System.out.println("getFrom1 ="+agenttourcommission.getFrom());
                 if(agenttourcommission.getId() == null){
                     agentcommission.getAgentTourComissions().add(agenttourcommission);
                     agenttourcommission.setAgentComission(agentcommission);

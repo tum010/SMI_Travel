@@ -36,16 +36,17 @@ public class UtilityFunction {
         Date resultDate = new Date();
         try {
             if ((day != null) && (!"".equalsIgnoreCase(day))) {
-                resultDate.setYear(Integer.parseInt(day.split("-")[2]) - 1900);
-                resultDate.setMonth(Integer.parseInt(day.split("-")[1]) - 1);
                 resultDate.setDate(Integer.parseInt(day.split("-")[0]));
+                resultDate.setMonth(Integer.parseInt(day.split("-")[1]) - 1);
+                resultDate.setYear(Integer.parseInt(day.split("-")[2]) - 1900);
+                
             } else {
                 return null;
             }
         } catch (Exception ex) {
             return null;
         }
-
+        
         return resultDate;
     }
 

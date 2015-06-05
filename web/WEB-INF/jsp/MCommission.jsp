@@ -200,7 +200,7 @@
 </c:if>
     <script type="text/javascript" charset="utf-8">
         function DelCommissionAgent(id,agentcode,agentname,tourcode,tourname) {
-            alert('id:'+id);
+//            alert('id:'+id);
             $("#deleteId").val(id);
             $('#delContent').html("Are you sure to delete Commission of agent : "+agentcode+" and tour : "+tourcode+" ?");      
         }
