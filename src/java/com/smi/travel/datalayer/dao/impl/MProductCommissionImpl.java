@@ -59,7 +59,7 @@ public class MProductCommissionImpl implements MProductCommissionDao{
             query = query.replaceAll("where", " ");
         }
        
-        query += "   ";
+        query += " group by pc.productId.id  ";
         System.out.println("query : " + query);
         List<ProductComission> list = session.createQuery(query).list();
 
