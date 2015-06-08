@@ -4,6 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="dataList" value="${requestScope['package_list']}" />
+
 <section class="content-header" >
     <h1>
         Master - Package
@@ -24,17 +25,39 @@
     <div class="col-md-9 ">
         <div class="row">
             <form action="MPackage.smi" method="post" id="SearchPackage" role="form">
-                <div class="col-md-3  col-xs-offset-4">
+                <div class="col-md-3  col-xs-offset-1">
                     <div class="form-group">
                         <label for="PackageCodeS">Code</label>
                         <input type="text"   class="form-control" maxlength="50" id="PackageCodeS" name="PackageCodeS" value="${requestScope['packageCode']}">
 
                     </div>
                 </div>
+                        
                 <div class="col-md-3 ">
                     <div class="form-group">
                         <label for="CityNameS">Name</label>
                         <input type="text"  class="form-control" maxlength="100" id="PackageNameS" name="PackageNameS" value="${requestScope['packageName']}">
+                    </div>
+                </div>
+                    
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Status</label>
+                            <select class="form-control" id="StatusSearch" name="Status">
+                                <option value="">Select Status</option>
+                                    <c:choose>
+                                        <c:when test="${requestScope['status'] == 'active'}">
+                                            <c:set var="activeSelected" value="selected" />
+                                        </c:when>
+                                    </c:choose>
+                                <option value="active" ${activeSelected}>active</option>
+                                    <c:choose>
+                                        <c:when test="${requestScope['status'] == 'inactive'}">
+                                            <c:set var="inactiveSelected" value="selected" />
+                                        </c:when>
+                                    </c:choose>
+                                <option value="inactive" ${inactiveSelected}>inactive</option>
+                            </select>    
                     </div>
                 </div>
 
@@ -68,7 +91,7 @@
                         <tr class="datatable-header">
                             <th style="width: 30px" >Code</th>
                             <th>Name</th>
-
+                            <th style="width: 40px">Status</th>
                             <th style="width: 70px">Action</th>
                         </tr>
                     </thead>
@@ -77,19 +100,17 @@
                             <tr>
                                 <td> <c:out value="${table.code}" /></td>
                                 <td> <c:out value="${table.name}" /></td>
-                                <td>
-                        <center> 
-                            <a  href="MPackageDetail.smi?packageid=${table.id}&action=edit">
-                                <span class="glyphicon glyphicon-edit editicon"  ></span>
-                            </a>
-                            <span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeletePackage('${table.id}', '${table.name}')" data-toggle="modal" data-target="#DelPackage" >  </span>
-                        </center>
-                        </td>
-                        </tr>
-                    </c:forEach>
-
-
-
+                                <td> <c:out value="${table.status}" /></td>
+                                <td> 
+                                    <center> 
+                                    <a  href="MPackageDetail.smi?packageid=${table.id}&action=edit">
+                                    <span class="glyphicon glyphicon-edit editicon"  ></span>
+                                    </a>
+                                    <span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeletePackage('${table.id}', '${table.name}')" data-toggle="modal" data-target="#DelPackage" >  </span>
+                                    </center>
+                                </td>
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>    
             </div>

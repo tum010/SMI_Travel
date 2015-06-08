@@ -22,12 +22,15 @@ public class MPackageController extends SMITravelController {
         String code = request.getParameter("PackageCodeS");
         String name = request.getParameter("PackageNameS");
         String packageID = request.getParameter("PackageID");
+        String status = request.getParameter("Status");
         String result = "";
         
         PackageTour pack = new PackageTour();
         pack.setCode(code);
         pack.setName(name);
         pack.setId(packageID);
+        pack.setStatus(status);
+        
         if ("search".equalsIgnoreCase(action)) {
             List<PackageTour> list = packageTourservice.SearchPackage(pack, 2);
             request.setAttribute(DATALIST, list);
@@ -43,6 +46,7 @@ public class MPackageController extends SMITravelController {
         
         request.setAttribute("packageCode", code);
         request.setAttribute("packageName", name);
+        request.setAttribute("status", status);
         System.out.println("action  :" + action);
         return MPackage;
     }

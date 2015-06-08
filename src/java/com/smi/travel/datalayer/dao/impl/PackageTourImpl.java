@@ -61,6 +61,13 @@ public class PackageTourImpl implements PackageTourDao {
             query += " pt.name " + queryOperation + " '" + Prefix_Subfix + util.StringUtilReplaceChar(mpackage.getName()) + Prefix_Subfix + "'";
             check = 1;
         }
+        if ((mpackage.getStatus() != null) && (!"".equalsIgnoreCase(mpackage.getStatus()))) {
+            if (check == 1) {
+                query += " and ";
+            }
+            query += " pt.status " + queryOperation + " '" + Prefix_Subfix + util.StringUtilReplaceChar(mpackage.getStatus()) + Prefix_Subfix + "'";
+            check = 1;
+        }
 
         if (check == 0) {
             query = query.replaceAll("where", " ");
