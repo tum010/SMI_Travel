@@ -152,6 +152,53 @@
                             <input type="hidden" id="counterCommission" name="counterCommission" value="1">
                             <c:forEach var="item" items="${listProductCommission}" varStatus="loop">
                                 <tr id="commissionId-${item.id}"> 
+                                    <c:choose>  
+                                        <c:when test="${item.effectiveFrom.date < 10}">
+                                            <c:set var="datefrom" value="0${item.effectiveFrom.date}"></c:set>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:set var="datefrom" value="${item.effectiveFrom.date}"></c:set>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <c:choose>  
+                                        <c:when test="${item.effectiveFrom.month < 10}">
+                                            <c:set var="monthfrom" value="0${item.effectiveFrom.month+1}"></c:set>
+                                        </c:when>
+                                        <c:otherwise >
+                                            <c:set var="monthfrom" value="${item.effectiveFrom.month+1}"></c:set>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <c:choose>
+                                        <c:when test="${(monthfrom eq '010') || (monthfrom eq '10')}">
+                                            <c:set var="monthfrom" value="${item.effectiveFrom.month+1}"></c:set>
+                                        </c:when>
+                                    </c:choose>
+                                    <c:set var="yearfrom" value="${item.effectiveFrom.year+1900}"></c:set>
+                                    
+                                    <!--date to-->
+                                    <c:choose>  
+                                        <c:when test="${item.effectiveTo.date < 10}">
+                                            <c:set var="dateto" value="0${item.effectiveTo.date}"></c:set>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:set var="dateto" value="${item.effectiveTo.date}"></c:set>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <c:choose>  
+                                        <c:when test="${item.effectiveTo.month < 10}">
+                                            <c:set var="monthto" value="0${item.effectiveTo.month+1}"></c:set>
+                                        </c:when>
+                                        <c:otherwise >
+                                            <c:set var="monthto" value="${item.effectiveTo.month+1}"></c:set>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <c:choose>
+                                        <c:when test="${(monthto eq '010') || (monthto eq '10')}">
+                                            <c:set var="monthto" value="${item.effectiveTo.month+1}"></c:set>
+                                        </c:when>
+                                    </c:choose>
+                                    <c:set var="yearto" value="${item.effectiveTo.year+1900}"></c:set>
+                                    
                                     <td class="hidden">${loop.count}</td>
                                     <td class="hidden">
                                         <input type="text" class="form-control text-center" 
@@ -159,9 +206,9 @@
                                     </td>
                                     <td>
                                         <div class="input-group  datetime" id="dateFrom-${loop.count}" name="dateFrom-${loop.count}">
-                                            <input type="text"  class="form-control text-center datemask  " 
+                                            <input type="text"  class="form-control text-center datemask" 
                                                data-date-format="DD-MM-YYYY" name="InputFrom-${loop.count}" id="InputFrom-${loop.count}"
-                                               placeholder="DD-MM-YYYY" value="${item.effectiveFrom}" />
+                                               placeholder="DD-MM-YYYY" value="${datefrom}-${monthfrom}-${yearfrom}" />
                                             <a class="input-group-addon">
                                                 <i class="glyphicon-calendar glyphicon "></i>
                                             </a>
@@ -170,9 +217,9 @@
                                     </td>
                                     <td>
                                         <div class="input-group  datetime" id="dateTo-${loop.count}" name="dateTo-${loop.count}">
-                                            <input type="text"  class="form-control text-center datemask  " 
+                                            <input type="text"  class="form-control text-center datemask" 
                                                data-date-format="DD-MM-YYYY" name="InputTo-${loop.count}" id="InputTo-${loop.count}"
-                                               placeholder="DD-MM-YYYY" value="${item.effectiveTo}" />
+                                               placeholder="DD-MM-YYYY" value="${dateto}-${monthto}-${yearto}" />
                                             <a class="input-group-addon">
                                                 <i class="glyphicon-calendar glyphicon "></i>
                                             </a>

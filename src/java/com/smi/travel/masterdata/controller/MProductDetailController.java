@@ -124,7 +124,7 @@ public class MProductDetailController extends SMITravelController {
                     request.setAttribute(TransectionResult, "save unsuccessful");
                 }
             }
-
+            // End Save
         } else if ("addlistprice".equalsIgnoreCase(action)) {
             Priceitem.setCreateDate(new Date());
             Priceitem.setCreateBy(user.getUsername());

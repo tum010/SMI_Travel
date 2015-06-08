@@ -5,18 +5,19 @@
  */
 package com.smi.travel.controller;
 
-import com.smi.travel.datalayer.entity.AgentComission;
-import com.smi.travel.datalayer.entity.AgentTourComission;
-import com.smi.travel.datalayer.entity.Daytour;
 import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.datalayer.entity.ProductComission;
 import com.smi.travel.datalayer.service.MProductCommissionService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -60,20 +61,21 @@ public class MProductCommissionDetailController extends SMITravelController{
            String isSave = mProductCommissionService.updateProductCommission(product);
            
            if(isSave.equalsIgnoreCase("success")){
+               List<ProductComission> listProductCommission = mProductCommissionService.getListProductCommissionFromID(inputProductId);
                System.out.println("Save Success !!!");
+               request.setAttribute("listProductCommission", listProductCommission);
                request.setAttribute("InputProductId", inputProductId);
                request.setAttribute("InputProductCode", inputProductCode);
                request.setAttribute("InputProductName", inputProductName);
            }else{
                System.out.println("Save Not Success !!!");
+               request.setAttribute("listProductCommission", null);
                request.setAttribute("InputProductId", null);
                request.setAttribute("InputProductCode", null);
                request.setAttribute("InputProductName", null);
            }
         }else if("edit".equalsIgnoreCase(action)){
-                //int rows = Integer.parseInt(request.getParameter("intRows"));
-                List<ProductComission> listProductCommission = mProductCommissionService.getListProductCommissionFromID(productComId);
-               
+                List<ProductComission> listProductCommission = mProductCommissionService.getListProductCommissionFromID(productId);
                 if(listProductCommission != null){
                     request.setAttribute("listProductCommission", listProductCommission);
                     request.setAttribute("InputProdductCommissionId", productComId);
@@ -134,6 +136,7 @@ public class MProductCommissionDetailController extends SMITravelController{
             
             if(dateTo != null && dateFrom != null){
                 ProductComission productComm = new ProductComission();
+                //productComm.setId(productComId);
                 productComm.setEffectiveTo(dateTo);
                 productComm.setEffectiveFrom(dateFrom);
                 productComm.setComission(commissionDouble);

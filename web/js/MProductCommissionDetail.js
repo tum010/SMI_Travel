@@ -11,9 +11,10 @@ function back() {
 }
 
 $(document).ready(function () {
+ 
         $(".datemask").mask('00-00-0000', {reverse: true});
         $(".decimal").mask('000,000,000.00', {reverse: true});
-        
+
         //Add Blank row for user input.
         addRowCommissionTable();
         /*Auto Add lastrow */
@@ -129,10 +130,8 @@ $(document).ready(function () {
         $('.datetimeto').on("dp.change", function(e){
             $('.datetimefrom').data("DateTimePicker").maxDate(e.date);
         });
-       
         $(document).on('click', '#commissionTable tbody tr:last td  input ,#commissionTable tbody tr:last td .input-group-addon', function (e) { // .input-group-addon, .datemask
         });
-        
     });
     
   
