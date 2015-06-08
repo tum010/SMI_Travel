@@ -245,7 +245,7 @@
                             <td><input type="hidden" id="billtype-${Counter.count}" name="billtype-${Counter.count}" value="${b.MBilltype.getName()}" />${b.MBilltype.getName()}</td>
                             <td><input type="hidden" id="detail-${Counter.count}" name="detail-${Counter.count}" value="${b.detail}" />${b.detail}</td>
                             <td class="text-right"><input type="hidden" id="cost-${Counter.count}" name="cost-${Counter.count}" value="${b.cost}" />
-                                    <div class="moneyformat">${b.cost eq 0 && b.MBilltype.getName() eq 'Day tour' ? '-': b.cost}</div>
+                                    <div class="moneyformat">${b.cost eq 0 && b.MBilltype.id eq 6 ? '-': b.cost}</div>
                             </td>
                             <td class="text-right"><input type="hidden" id="price-${Counter.count}" name="price-${Counter.count}" value="${b.price}" /><div class="moneyformat">${b.price }</div></td>
                             <td><c:if test="${b.isBill == 1}">
