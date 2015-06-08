@@ -4,6 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script type="text/javascript" src="js/jquery.mask.min.js"></script>
+
 <link href="css/jquery-ui.css" rel="stylesheet">
 <c:set var="master" value="${requestScope['Master']}" />
 
@@ -404,14 +405,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="table" items="${agent_list}">
+                        <c:forEach var="table" items="${product_list}">
                             <tr onclick ="setupagentvalue('${table.id}', '${table.code}', '${table.name}')" >
                                 <td class="hidden">${table.id}</td>
                                 <td>${table.code} </td>
                                 <td>${table.name} </td>
                             </tr>      
                         <script>
-                            product.push({id: "${table.id}"},{code: "${table.code}"},{name: "${table.name}"});
+                            product.push({id: "${table.id}",code: "${table.code}",name: "${table.name}"});
                           </script>
                         </c:forEach>
 

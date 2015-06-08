@@ -8,6 +8,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+
 <c:set var="dataList" value="${requestScope['Staff_List']}" />
 <c:set var="roleList" value="${requestScope['Role_List']}" />
 <c:set var="deptList" value="${requestScope['Dept_List']}" />

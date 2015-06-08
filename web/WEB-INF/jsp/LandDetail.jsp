@@ -8,6 +8,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script type="text/javascript" src="js/jquery.mask.min.js"></script>
 <link href="css/jquery-ui.css" rel="stylesheet">
+
 <c:set var="currencyList" value="${requestScope['CurrencyList']}" />
 <c:set var="booktype" value="${requestScope['BOOKING_TYPE']}" />
 <c:set var="booking_size" value="${requestScope['BookingSize']}" />

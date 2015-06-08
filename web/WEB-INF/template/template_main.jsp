@@ -23,6 +23,7 @@
         <script src="js/angular.min.js"></script>
         <!--<script src="js/select2.js"></script> -->
         <script src="js/es.js"></script>
+        <script type="text/javascript" src="js/Utility.js"></script>
 
 
     </head>

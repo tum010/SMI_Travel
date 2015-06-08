@@ -323,7 +323,7 @@
                                                     <td class="sumConfirm">${dayTourDetai.infant}</td>
                                                     <td>${dayTourDetai.remark}</td>
                                                     <td>${dayTourDetai.pickupRoom}</td>
-                                                    <td class="text-center">${dayTourDetai.isPay}</td>
+                                                    <td class="text-center">${dayTourDetai.isPay eq 1  ? 'Y' : 'N'}</td>
                                                     <td class="text-center">
                                                         <span id="RefBookTableButtonEdit" name="RefBookTableButtonEdit" class="glyphicon glyphicon-edit editicon" onclick="window.open('/SMITravel/DaytourDetail.smi?referenceNo=${dayTourDetai.master.referenceNo}&action=edit&daytourBooking=${dayTourDetai.id}');"></span>
                                                         <a data-toggle="collapse" href="#collapseExample${status.count}" aria-expanded="false" aria-controls="collapseExample${status.count}">

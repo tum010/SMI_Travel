@@ -52,13 +52,13 @@ $(document).ready(function() {
         var position = $(this).offset();
         $(".ui-widget").css("top", position.top + 30);
         $(".ui-widget").css("left", position.left);
-        $("#product_id,#product_name").val(null);
+        $("#product_id").val(null);
         var code = this.value.toUpperCase();
         var name = this.value;
         $.each(product, function (key, value) {
-            if (value.code.toUpperCase() === code) {
-                $("#product_id").val(value.id);
-                $("#product_name").val(value.name);
+            if (value.code.toUpperCase() === code  ) {   
+                    $("#product_id").val(value.id);
+                    $("#product_name").val(value.name); 
             }
             if(name === value.name){
                 $("#product_code").val(value.code);

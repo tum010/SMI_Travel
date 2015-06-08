@@ -2,15 +2,6 @@
 
 $(document).ready(function () {
 
-//    $('#Min').on('change', function(e) {
-//            $('#MDaytourDetailForm').bootstrapValidator('revalidateField', 'InputMin');
-//    });
-//
-//    $('#Max').on('change', function(e) {
-//            $('#MDaytourDetailForm').bootstrapValidator('revalidateField', 'InputMax');
-//    });
-
-
   $("#MDaytourDetailForm")
           .bootstrapValidator({
                 container: 'tooltip',

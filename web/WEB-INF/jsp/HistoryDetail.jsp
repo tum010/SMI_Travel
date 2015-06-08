@@ -11,7 +11,6 @@
 <c:set var="HistoryList" value="${requestScope['HistoryList']}" />
 <c:set var="booking_size" value="${requestScope['BookingSize']}" />
 <c:set var="staffList" value="${requestScope['StaffList']}" />
-
 <c:set var="master" value="${requestScope['Master']}" />
 
 <input type="hidden" value="${param.referenceNo}" id="getUrl">
