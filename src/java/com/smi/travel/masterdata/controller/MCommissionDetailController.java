@@ -107,7 +107,6 @@ public class MCommissionDetailController extends SMITravelController {
                     System.out.println("agentcommission = "+agentcommission.getId());
                   }  
                 }
-                
             }
 
         if ("new".equalsIgnoreCase(action)) {

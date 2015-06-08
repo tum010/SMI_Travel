@@ -13,7 +13,7 @@ function back() {
 $(document).ready(function () {
  
         $(".datemask").mask('00-00-0000', {reverse: true});
-        $(".decimal").mask('000,000,000.00', {reverse: true});
+//        $(".decimal").mask('000,000,000.0', {reverse: true});
 
         //Add Blank row for user input.
         addRowCommissionTable();
@@ -23,8 +23,8 @@ $(document).ready(function () {
         });
     });
     
-    function validateSubmit() {
-        var validDate = true;
+    function validateCheckInput() {
+        var isValid = true;
         var trList = $('#commissionTable tbody tr');
         trList.each(function (i,tr) {
            if(i==0 || i==(trList.length-1)){
@@ -32,31 +32,31 @@ $(document).ready(function () {
            }
            var d1Str = $(tr).find("input[name^='InputFrom']").val();
            var d2Str = $(tr).find("input[name^='InputTo']").val();
-           var commissionPercent = $(tr).find("input[name^='InputCommissionPercent']").val();
+           var commissionPercent = $(tr).find("input[name^='InputCommission']").val();
            
-           if(validateCommissionPercent(commissionPercent) != true){
-               jQuery("#AlertCheckCommissionPercent").css("display","block");
-               //$("#AlertCheckCommissionPercent").show();
+           if(validateCommissionPercent(commissionPercent)){
+               jQuery("#AlertCheckCommissionPercent").css("display","none");
+            }else{
+                jQuery("#AlertCheckCommissionPercent").css("display","block");
+                isValid = false;
             }
            if( !(isDate(d1Str) && isDate(d2Str)) ){
-               validDate = false;
+               isValid = false;
+               jQuery("#AlertCheckDate").css("display","block");
+
            }else{
                var d1Arr = d1Str.split("-");
                var d2Arr = d2Str.split("-");
                var d1 = Date.parse(d1Arr[2]+"-"+d1Arr[1]+"-"+d1Arr[0]);
                var d2 = Date.parse(d2Arr[2]+"-"+d2Arr[1]+"-"+d2Arr[0]);
                if (d1 > d2) {
-                  validDate = false;
+                  isValid = false;
+                  jQuery("#AlertCheckDate").css("display","block");
                }
            }
-           
         });
-        if(!validDate){
-            //$("#AlertCheckDate").show();
-            jQuery("#AlertCheckDate").css("display","block");
-            //document.getElementById("AlertCheckDate").style.display = "block";
-        }
-        return validDate;
+        alert(isValid);
+        return isValid;
     }
     
     function validateCommissionPercent(s) {
@@ -116,7 +116,7 @@ $(document).ready(function () {
             alias:"decimal",
             integerDigits:6,
             groupSeparator: ',', 
-            autoGroup: true,
+            autoGroup: false,
             digits:2,
             allowMinus:false,        
             digitsOptional: false,

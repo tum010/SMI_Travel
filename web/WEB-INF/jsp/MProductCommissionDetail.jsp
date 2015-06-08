@@ -14,13 +14,14 @@
 <link href="css/jquery-ui.css" rel="stylesheet">
 <script type="text/javascript" src="js/jquery-ui.js"></script>
 <script type="text/javascript" src="js/MProductCommissionDetail.js"></script>
-
 <c:set var="ListProduct" value="${requestScope['ListProduct']}" />
 <c:set var="listProductCommission" value="${requestScope['listProductCommission']}" />
 <c:set var="InputProdductCommissionId" value="${requestScope['InputProdductCommissionId']}" />
 <c:set var="InputProductId" value="${requestScope['InputProductId']}" />
 <c:set var="InputProductCode" value="${requestScope['InputProductCode']}" />
 <c:set var="InputProductName" value="${requestScope['InputProductName']}" />
+<c:set var="actionAdd" value="${requestScope['actionAdd']}" />
+<c:set var="status" value="${requestScope['Status']}" />
 
 <section class="content-header"  >
     <h1>
@@ -33,6 +34,24 @@
     </ol>
 </section>
 <div class ="container"  style="padding-top: 15px;">
+    <!--Alert delete-->
+    <div class="row" style="display:none;" id="AlertDelete">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="alert  alert-dismissable fade  in" role="alert">
+                <button type="button"  data-dismiss="alert" ><span aria-hidden="true" onclick="closePopupDate()">X</span></button>
+                <strong>${status} !!!</strong>
+            </div>
+        </div>
+    </div>
+    <!--Alert Save and Update -->
+    <div class="row" style="display:none;" id="AlertSaveSuccess">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="alert  alert-dismissable fade  in" role="alert">
+                <button type="button"  data-dismiss="alert" ><span aria-hidden="true" onclick="closePopupDate()">X</span></button>
+                <strong>${status} !!!</strong>
+            </div>
+        </div>
+    </div>
     <!--Alert Check Date-->
     <div class="row" style="display:none;" id="AlertCheckDate">
         <div class="col-md-10 col-md-offset-1">
@@ -53,7 +72,7 @@
     </div>
     <!--Content -->
     <div class="col-md-10  col-md-offset-1">
-        <form action="MProductCommissionDetail.smi" method="post" role="form" id="MProductCommissionDetail" onsubmit="return validateSubmit();" >
+        <form action="MProductCommissionDetail.smi" method="post" role="form" id="MProductCommissionDetail" onsubmit="return validateCheckInput();" >
             <div class="panel panel-default">
                 <div class="panel-heading">Detail</div>
                 <div class="panel-body">
@@ -103,6 +122,7 @@
                             <tbody> 
 
                                 <!--Simulate Row begin-->
+                                <!--<input type="text" id="actionAdd" name="actionAdd" value="${actionAdd}">-->
                                 <tr  class="hide " > 
                                     <td class="hidden"></td>
                                     <td class="hidden">
@@ -198,7 +218,7 @@
                                         </c:when>
                                     </c:choose>
                                     <c:set var="yearto" value="${item.effectiveTo.year+1900}"></c:set>
-                                    
+                                
                                     <td class="hidden">${loop.count}</td>
                                     <td class="hidden">
                                         <input type="text" class="form-control text-center" 
@@ -234,7 +254,7 @@
                                     <td class="">
                                         <input type="text" class="form-control text-right decimal"  
                                         name="InputCommissionPercent-${loop.count}" id="InputCommissionPercentRow-${loop.count}" 
-                                        placeholder="0.00" maxlength="10"  value="${item.comissionPercent}">
+                                        placeholder="0.00" maxlength="10"  value="${item.comissionPercent}" >
                                     </td>
                                     <td class="text-center">
                                         <span id="deleteTourCommissionRow-${loop.count}" name="deleteTourCommissionRow-${loop.count}" 
@@ -385,8 +405,7 @@
                     <h4 class="modal-title"> Delete Agent Tour Commission </h4>
                 </div>
                 <div class="modal-body" id="delContent"></div>
-                <!--                <input type="hidden" id="deleteId" name="agentTourComId"/>
-                                <input type="hidden" id="deleteAction" name="action" value="delete"/>-->
+               
                 <div class="modal-footer">
                     <button id="btnDelete" type="button" class="btn btn-danger">Delete</button>
                     <button id="btnClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -394,30 +413,60 @@
             </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+</div><!-- /.modal -->   
+<script type="text/javascript" charset="utf-8" >
+function sendDataToDelete(param){ //wii
+        $.ajax({
+                dataType: 'html',
+                type: "POST",
+                url: "MProductCommissionDetail.smi",
+                data: "productComId="+ param +"&action=delete",
+                "beforeSend": function () {
+                    console.log("sending...");
+                },
+                "success": function () {
+                    if (${! empty requestScope['COMMISSIONDELETE']}) {
+                        alert('${requestScope['COMMISSIONDELETE']}');  
+                    }
+                    $("#commissionId-"+param).remove();
+                    $("#DelCommission").modal('hide');
+                    console.log("success!");
+                },
+                "error": function () {
+                    console.log("error!");
+                }
+        }).done(function () {
+            console.log("done!");
+        });   
+    }
+    
+    function DeleteCommissionRow(id, objspan) {
+    var countCommission = $("#commissionTable tbody").find("tr").length;
+        if ($("#commissionTable tbody").find("tr").length !== 2) {
+            if (id !== null) {
+                $('#delContent').html(" Are you sure to delete : Row at Number "+ ($(objspan).parent().parent().index()-1) +" ? " );  
 
-<c:if test="${! empty param.result}">
-    <c:if test="${param.result =='success'}">        
-        <script language="javascript">
-            alert("update successful");
-        </script>
-        <META HTTP-EQUIV="Refresh" CONTENT="0;URL=MCommissionDetail.smi?commissionId=${param.commissionId}&action=edit">
-    </c:if>
-    <c:if test="${param.result =='fail'}">        
-        <script language="javascript">
-            alert("update unsuccessful");
-        </script>
-        <META HTTP-EQUIV="Refresh" CONTENT="0;URL=MCommissionDetail.smi?commissionId=${param.commissionId}&action=edit">
-    </c:if>
-</c:if>
-<c:if test="${! empty requestScope['VALIDATE']}">
-    <script language="javascript">
-        alert('<c:out value="${requestScope['VALIDATE']}" />');
-    </script>
-</c:if>   
+                    console.log('else len1');
+                    $('#btnDelete').click(function () {
+                        sendDataToDelete(id);
+                    });
+                
+            } else {
+                $(objspan).closest('tr').remove();
+                console.log("counterCommission=" + countCommission);
+                $('#counterCommission').val(countCommission - 1);
+            }
+        } else {
+            if (id !== null) {
+                $('#delContent').html(" Are you sure to delete : Row at Number "+ ($(objspan).parent().parent().index()-1) +" ? " );
+                    console.log('else len2');
+                    $('#btnDelete').click(function () {
+                        sendDataToDelete(id);
+                    });
 
-<c:if test="${! empty requestScope['ResultSave']}">
-    <script language="javascript">
-        alert('<c:out value="${requestScope['ResultSave']}" />');
-    </script>
-</c:if>         
+            } else {
+                alert('this row for fill data');
+            }
+        }
+    }
+</script>

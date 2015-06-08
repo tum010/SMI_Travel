@@ -64,7 +64,7 @@
                     </div>
                     <div class="col-md-2" >
                         <div style="padding-top: 20px">  
-                            <a id="Add" name="Add" href="MProductCommissionDetail.smi?action=new">
+                            <a id="Add" name="Add" href="MProductCommissionDetail.smi?actionAdd=new">
                                 <button id="ButtonAdd" name="ButtonAdd" type="button" class="btn btn-success" onclick="">
                                     <span id="SpanAdd" name="SpanAdd" class="glyphicon glyphicon-plus"></span>Add
                                 </button>
@@ -105,7 +105,7 @@
                                     <td class="text-center">
                                         <!--Edit -->
                                         <a id="ButtonEdit-${loop.count}" name="ButtonEdit-${loop.count}" 
-                                        href="MProductCommissionDetail.smi?action=edit&ProductCommissionId=${item.id}&ProductId=${item.productId.id}&ProductNameSearch=${item.productId.code}&ProductCodeSearch=${item.productId.name}">
+                                        href="MProductCommissionDetail.smi?action=edit&ProductCommissionId=${item.id}&ProductId=${item.productId.id}&ProductNameSearch=${item.productId.name}&ProductCodeSearch=${item.productId.code}">
                                             <span  id="RowSpanEdit-${loop.count}" name="RowSpanEdit-${loop.count}"  class="glyphicon glyphicon-edit editicon"  ></span>
                                         </a>
                                         <!--Delete -->

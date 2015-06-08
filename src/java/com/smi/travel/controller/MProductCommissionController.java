@@ -24,6 +24,7 @@ public class MProductCommissionController extends SMITravelController{
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String action = request.getParameter("action");
+        String actionAdd = request.getParameter("actionAdd");
         String productName = request.getParameter("ProductNameSearch");
         String productCode = request.getParameter("ProductCodeSearch");
    
@@ -57,10 +58,13 @@ public class MProductCommissionController extends SMITravelController{
                 request.setAttribute("ProductName", null);
                 System.out.println("Delete Not Success");
             }
+        }else if("new".equalsIgnoreCase(action)){
+            request.setAttribute("actionAdd", actionAdd);
         }else{
             request.setAttribute("ListProductCommission", null);
             request.setAttribute("ProductCode", null);
             request.setAttribute("ProductName", null);
+             request.setAttribute("actionAdd", null);
         }
         return MProductCommission;
     }

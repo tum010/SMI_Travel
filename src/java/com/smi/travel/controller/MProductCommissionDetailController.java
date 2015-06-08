@@ -10,14 +10,9 @@ import com.smi.travel.datalayer.entity.ProductComission;
 import com.smi.travel.datalayer.service.MProductCommissionService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -32,6 +27,7 @@ public class MProductCommissionDetailController extends SMITravelController{
     private static final ModelAndView MProductCommissionDetail = new ModelAndView("MProductCommissionDetail");
     private MProductCommissionService  mProductCommissionService;
     private UtilityFunction util;
+    private static final String COMMISSIONDELETE= "COMMISSIONDELETE";
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         List<Product> listProduct = mProductCommissionService.getListMasterProduct();
@@ -45,8 +41,9 @@ public class MProductCommissionDetailController extends SMITravelController{
         String productId = request.getParameter("ProductId");
         String productNameSearch = request.getParameter("ProductNameSearch");
         String productCodeSearch = request.getParameter("ProductCodeSearch");
-  
-         
+        // Attribute Delete
+        String proComId = request.getParameter("productComId");
+    
         if("save".equalsIgnoreCase(action)){
             //ProductComission productCommission = new ProductComission();
             Product product = new Product();
@@ -63,6 +60,7 @@ public class MProductCommissionDetailController extends SMITravelController{
            if(isSave.equalsIgnoreCase("success")){
                List<ProductComission> listProductCommission = mProductCommissionService.getListProductCommissionFromID(inputProductId);
                System.out.println("Save Success !!!");
+               request.setAttribute("Status", "Status Success");
                request.setAttribute("listProductCommission", listProductCommission);
                request.setAttribute("InputProductId", inputProductId);
                request.setAttribute("InputProductCode", inputProductCode);
@@ -88,10 +86,19 @@ public class MProductCommissionDetailController extends SMITravelController{
                     request.setAttribute("InputProductId", null);
                     request.setAttribute("InputProductCode", null);
                     request.setAttribute("InputProductName", null);
-                }
-                
+                }      
+        }else if("delete".equalsIgnoreCase(action)){
+            ProductComission proCom = new ProductComission();
+            proCom.setId(proComId);
+            String isDelete = mProductCommissionService.DeleteProductComission(proCom);
+            if(isDelete.equalsIgnoreCase("success")){
+                request.setAttribute(COMMISSIONDELETE,"delete "+isDelete);
+                request.setAttribute("Status", "Delete Success");
+            }else{
+                System.out.println("Error Delete");
+            }
         }
-        
+    
         request.setAttribute("ListProduct", listProduct);
         return MProductCommissionDetail;
     }
@@ -104,7 +111,6 @@ public class MProductCommissionDetailController extends SMITravelController{
              productCommissionRows =  Integer.parseInt(productCommissionCounter);
         }
       
-        
         for(int i = 1 ; i < productCommissionRows; i++){
             String id = request.getParameter("InputId-"+i);
             String from = request.getParameter("InputFrom-"+i);
@@ -136,7 +142,9 @@ public class MProductCommissionDetailController extends SMITravelController{
             
             if(dateTo != null && dateFrom != null){
                 ProductComission productComm = new ProductComission();
-                //productComm.setId(productComId);
+                if(!id.equalsIgnoreCase("")){
+                    productComm.setId(id);
+                }
                 productComm.setEffectiveTo(dateTo);
                 productComm.setEffectiveFrom(dateFrom);
                 productComm.setComission(commissionDouble);
