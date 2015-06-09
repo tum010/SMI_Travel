@@ -190,6 +190,7 @@
         <property name="agentdao" ref="AgentDao" />
         <property name="systemUserdao" ref="SystemUserDao" />
         <property name="placedao" ref="PlaceDao" />
+        <property name="citydao" ref="MCityDao" />
     </bean> 
     
     <bean id="MProductTypeService" class="com.smi.travel.datalayer.service.MProductTypeService">

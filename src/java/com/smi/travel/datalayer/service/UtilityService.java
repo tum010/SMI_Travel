@@ -9,6 +9,7 @@ import com.smi.travel.datalayer.dao.AgentDao;
 import com.smi.travel.datalayer.dao.AirticketBookingDao;
 import com.smi.travel.datalayer.dao.CustomerDao;
 import com.smi.travel.datalayer.dao.DaytourDao;
+import com.smi.travel.datalayer.dao.MCityDao;
 import com.smi.travel.datalayer.dao.MListItemDao;
 import com.smi.travel.datalayer.dao.MasterDao;
 import com.smi.travel.datalayer.dao.PlaceDao;
@@ -23,6 +24,7 @@ import com.smi.travel.datalayer.entity.MAccpay;
 import com.smi.travel.datalayer.entity.MAccterm;
 import com.smi.travel.datalayer.entity.MBilltype;
 import com.smi.travel.datalayer.entity.MBookingstatus;
+import com.smi.travel.datalayer.entity.MCity;
 import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MFlight;
 import com.smi.travel.datalayer.entity.MInitialname;
@@ -51,6 +53,7 @@ public class UtilityService {
     private SystemUserDao systemUserdao;
     private PlaceDao placedao;
     private DaytourDao daytourdao;
+    private MCityDao citydao;
     
     public int[] getCountItemFromBooking(String refno) {
         int[] Booking_size = new int[7];
@@ -100,6 +103,10 @@ public class UtilityService {
 
     public MInitialname getMInitialnameFromId(String id) {
         return listitemdao.getMInitialnameFromId(id);
+    }
+    
+    public List<MCity> getListMCity(){
+        return citydao.getListCity();
     }
 
     public MInitialname getMInitialnameFromName(String name) {
@@ -231,6 +238,14 @@ public class UtilityService {
 
     public void setDaytourdao(DaytourDao daytourdao) {
         this.daytourdao = daytourdao;
+    }
+
+    public MCityDao getCitydao() {
+        return citydao;
+    }
+
+    public void setCitydao(MCityDao citydao) {
+        this.citydao = citydao;
     }
     
     
