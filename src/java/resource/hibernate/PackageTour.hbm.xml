@@ -34,5 +34,11 @@
             </key>
             <one-to-many class="com.smi.travel.datalayer.entity.PackagePrice" />
         </set>
+        <bag  name="packageCities"  cascade="all" >
+            <key>
+                <column name="city_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.MCity" />
+        </bag >
     </class>
 </hibernate-mapping>

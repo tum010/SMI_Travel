@@ -47,6 +47,7 @@ public class MListItemImpl implements MListItemDao {
             return null;
         }
         session.close();
+        this.sessionFactory.close();
         return AccpaylList;
     }
 
@@ -61,6 +62,7 @@ public class MListItemImpl implements MListItemDao {
             return null;
         }
         session.close();
+        this.sessionFactory.close();
         return AcctermList;
     }
 
@@ -73,6 +75,7 @@ public class MListItemImpl implements MListItemDao {
             return null;
         }
         session.close();
+        this.sessionFactory.close();
         return ProductTypeList;
     }
 
@@ -94,13 +97,14 @@ public class MListItemImpl implements MListItemDao {
 
     @Override
     public List<Function> getListFunction() {
-        String query = "from Function";
+        String query = "from Function F order by F.mainMenu.id ,  F.name";
         Session session = this.sessionFactory.openSession();
         List<Function> FunctionList = session.createQuery(query).list();
         if (FunctionList.isEmpty()) {
             return null;
         }
         session.close();
+        this.sessionFactory.close();
         return FunctionList;
     }
 
@@ -115,6 +119,7 @@ public class MListItemImpl implements MListItemDao {
             return null;
         }
         session.close();
+        this.sessionFactory.close();
         return DepartmentList;
     }
 
@@ -126,6 +131,7 @@ public class MListItemImpl implements MListItemDao {
             return null;
         }
         session.close();
+        this.sessionFactory.close();
         return BranchList;
     }
 
@@ -137,6 +143,7 @@ public class MListItemImpl implements MListItemDao {
             return null;
         }
         session.close();
+        this.sessionFactory.close();
         return BookStatusList;
     }
 
@@ -149,6 +156,7 @@ public class MListItemImpl implements MListItemDao {
             return null;
         }
         session.close();
+        this.sessionFactory.close();
         return BookStatusList.get(0);
     }
 
@@ -161,6 +169,7 @@ public class MListItemImpl implements MListItemDao {
             return null;
         }
         session.close();
+        this.sessionFactory.close();
         return ItemStatusList;
     }
 
@@ -173,6 +182,7 @@ public class MListItemImpl implements MListItemDao {
             return null;
         }
         session.close();
+        this.sessionFactory.close();
         return List.get(0);
     }
 
@@ -187,6 +197,7 @@ public class MListItemImpl implements MListItemDao {
             return null;
         }
         session.close();
+        this.sessionFactory.close();
         return CurrencyList;
     }
 
@@ -227,6 +238,7 @@ public class MListItemImpl implements MListItemDao {
             return null;
         }
         session.close();
+        this.sessionFactory.close();
         return MFlightList;
     }
 
@@ -241,6 +253,7 @@ public class MListItemImpl implements MListItemDao {
             return null;
         }
         session.close();
+        this.sessionFactory.close();
         return MTicketTypeList;
     }
 
@@ -255,6 +268,7 @@ public class MListItemImpl implements MListItemDao {
             return null;
         }
         session.close();
+        this.sessionFactory.close();
         return MMealList;
     }
 
@@ -267,6 +281,7 @@ public class MListItemImpl implements MListItemDao {
             return null;
         }
         session.close();
+        this.sessionFactory.close();
         return list.get(0);
     }
 
@@ -281,6 +296,7 @@ public class MListItemImpl implements MListItemDao {
             return null;
         }
         session.close();
+        this.sessionFactory.close();
         return MInitialnameList;
 
     }
@@ -296,6 +312,7 @@ public class MListItemImpl implements MListItemDao {
             return null;
         }
         session.close();
+        this.sessionFactory.close();
         return MPackageList;
     }
 
@@ -308,6 +325,7 @@ public class MListItemImpl implements MListItemDao {
             return null;
         }
         session.close();
+        this.sessionFactory.close();
         return List.get(0);
     }
 
@@ -320,6 +338,7 @@ public class MListItemImpl implements MListItemDao {
             return null;
         }
         session.close();
+        this.sessionFactory.close();
         return List.get(0);
 
     }
@@ -333,6 +352,7 @@ public class MListItemImpl implements MListItemDao {
             return null;
         }
         session.close();
+        this.sessionFactory.close();
         return List.get(0);
     }
 }

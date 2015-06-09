@@ -7,6 +7,7 @@ package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.PackageTourDao;
 import com.smi.travel.datalayer.entity.DaytourPrice;
+import com.smi.travel.datalayer.entity.PackageCity;
 import com.smi.travel.datalayer.entity.PackageItinerary;
 import com.smi.travel.datalayer.entity.PackagePrice;
 import com.smi.travel.datalayer.entity.PackageTour;
@@ -33,7 +34,10 @@ public class PackageTourImpl implements PackageTourDao {
     private static final String SEARCH_PACKPRICE_QUERY = "from PackagePrice p WHERE p.packageTour.id = :packageid";
     private static final String SEARCH_PACKITINERARY_QUERY = "from PackageItinerary p WHERE p.packageTour.id = :packageid";
     private static final String SEARCH_PACKAGE_QUERY = "from PackageTour p WHERE p.id = :packageid";
-
+    private static final String SEARCH_PACKCITY_QUERY = "from PackageCity p WHERE p.packageTour.id = :packageid";
+    private static final String DELETE_PACKCITY_QUERY = "DELETE FROM PackageCity c WHERE c.id = :cityid";
+    
+    
     @Override
     public List<PackageTour> SearchPackage(PackageTour mpackage, int option) {
         Session session = this.sessionFactory.openSession();
@@ -101,7 +105,11 @@ public class PackageTourImpl implements PackageTourDao {
             for (int i = 0; i < PriceList.size(); i++) {
                 session.save(PriceList.get(i));
             }
-
+            
+            List<PackageCity> CityList = mpackage.getPackageCities();
+            for (int i = 0; i < CityList.size(); i++) {
+                session.save(CityList.get(i));
+            }
             transaction.commit();
             session.close();
             this.sessionFactory.close();
@@ -145,6 +153,15 @@ public class PackageTourImpl implements PackageTourDao {
                     session.update(PriceList.get(i));
                 }
             }
+            
+            List<PackageCity> CityList = mpackage.getPackageCities();
+            for (int i = 0; i < CityList.size(); i++) {
+                if (CityList.get(i).getId() == null) {
+                    session.save(CityList.get(i));
+                } else {
+                    session.update(CityList.get(i));
+                }
+            }
 
             transaction.commit();
             session.close();
@@ -163,15 +180,19 @@ public class PackageTourImpl implements PackageTourDao {
         String result = "";
         System.out.println("mpackage.getId() :" + mpackage.getId());
         if (IsExistPackageItinerary(mpackage.getId())) {
-
             result = "delete unsuccessful.Please delete all itinerary in this package";
             return result;
         }
         if (IsExistPackagePrice(mpackage.getId())) {
-
             result = "delete unsuccessful.Please delete all price in this package";
             return result;
         }
+        
+        if(IsExistPackageCity(mpackage.getId())){
+            result = "delete unsuccessful.Please delete all city in this package";
+            return result;
+        }
+        
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
@@ -228,6 +249,21 @@ public class PackageTourImpl implements PackageTourDao {
         boolean result;
         Session session = this.sessionFactory.openSession();
         List<DaytourPrice> list = session.createQuery(SEARCH_PACKITINERARY_QUERY).setParameter("packageid", ItineraryID).list();
+        if (list.isEmpty()) {
+            result = false;
+        } else {
+            result = true;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return result;
+
+    }
+    
+    private boolean IsExistPackageCity(String PriceID) {
+        boolean result;
+        Session session = this.sessionFactory.openSession();
+        List<DaytourPrice> list = session.createQuery(SEARCH_PACKCITY_QUERY).setParameter("packageid", PriceID).list();
         if (list.isEmpty()) {
             result = false;
         } else {
@@ -361,6 +397,26 @@ public class PackageTourImpl implements PackageTourDao {
         }
 
         return sortPrice;
+    }
+
+    @Override
+    public String DeletePackageCity(String CityID) {
+        String result = "";
+        try {
+            Session session = this.sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery(DELETE_PACKCITY_QUERY)
+                    .setParameter("cityid", CityID);
+            System.out.println("row result : " + query.executeUpdate());
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+            result = "success";
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            result = "fail";
+        }
+        return result;
     }
 
 }

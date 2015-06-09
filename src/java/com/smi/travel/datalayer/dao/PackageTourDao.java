@@ -23,6 +23,7 @@ public interface PackageTourDao {
     public String DeletePackage(PackageTour mpackage);
     public String DeletePackageItinerary(String ItineraryID);
     public String DeletePackagePrice(String PriceID);
+    public String DeletePackageCity(String CityID);
     public PackageTour getPackageFromID(String packageID);
     public List<PackageItinerary> SortItineraryList(List<PackageItinerary> data);
     public List<PackagePrice> SortPriceList(List<PackagePrice> data);
