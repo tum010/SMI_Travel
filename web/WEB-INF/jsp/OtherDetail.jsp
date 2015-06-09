@@ -443,13 +443,18 @@
                             }
                         });
 
-                        $('.date').datetimepicker();
-                        $('span').click(function() {
-                            var position = $(this).offset();
-                            console.log("positon :" + position.top);
-                            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
-
-                        });
+                        $("div").find('.date').datetimepicker();
+    $("div").find('.times').datetimepicker({
+        pickDate: false,
+        pickTime: true,
+        pick12HourFormat: false,
+        format: 'HH:mm'
+    });
+    $("div").find('.input-group-addon').click(function () {
+        var position = $(this).offset();
+        $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+    });
+                       
 
                     });
                 </script>
