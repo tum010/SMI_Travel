@@ -77,6 +77,7 @@
                                             ];
                                             var daytourMenu = [
                                                 "<li><a href='DaytourOperationDetail.smi'> Day Tour</a></li>"
+                                                 "<li><a href='DaytourOperationOther.smi'> Other</a></li>"
                                             ];
                                             var reportMenu = [
                                                 "<li><a href='AirTicketMonthReport.smi'> AirTicket</a></li>",
