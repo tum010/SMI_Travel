@@ -34,21 +34,22 @@
     </ol>
 </section>
 <div class ="container"  style="padding-top: 15px;">
-    <!--Alert delete-->
-    <div class="row" style="display:none;" id="AlertDelete">
+    <!--Alert delete -->
+    <div class="row" style="display:none;" id="textAlertDivDelete">
         <div class="col-md-10 col-md-offset-1">
-            <div class="alert  alert-dismissable fade  in" role="alert">
-                <button type="button"  data-dismiss="alert" ><span aria-hidden="true" onclick="closePopupDate()">X</span></button>
-                <strong>${status} !!!</strong>
+            <div class="alert alert-warning alert-dismissable fade  in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" ><span aria-hidden="true" onclick="">X</span></button>
+                <strong>Delete Success !!!</strong>
             </div>
         </div>
     </div>
-    <!--Alert Save and Update -->
-    <div class="row" style="display:none;" id="AlertSaveSuccess">
+    <!--Alert Save and Update-->
+     <input type="hidden" id="saveText" name="saveText" value="${status}">
+    <div class="row" style="display:none;" id="textAlertDivSave">
         <div class="col-md-10 col-md-offset-1">
-            <div class="alert  alert-dismissable fade  in" role="alert">
-                <button type="button"  data-dismiss="alert" ><span aria-hidden="true" onclick="closePopupDate()">X</span></button>
-                <strong>${status} !!!</strong>
+            <div class="alert alert-warning alert-dismissable fade  in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" ><span aria-hidden="true" onclick="">X</span></button>
+                <strong >Save Success !!!</strong>
             </div>
         </div>
     </div>
@@ -431,6 +432,11 @@ function sendDataToDelete(param){ //wii
                     $("#commissionId-"+param).remove();
                     $("#DelCommission").modal('hide');
                     console.log("success!");
+//                    alert("Delete Success!!");
+//                        var status = $(tr).find("input[name^='textAlert']").val();
+//                        if(status != null){
+                    jQuery("#textAlertDivDelete").css("display","block");
+//                        }
                 },
                 "error": function () {
                     console.log("error!");
@@ -449,6 +455,7 @@ function sendDataToDelete(param){ //wii
                     console.log('else len1');
                     $('#btnDelete').click(function () {
                         sendDataToDelete(id);
+//                        jQuery("#textAlertDivDelete").css("display","block");
                     });
                 
             } else {
@@ -462,6 +469,7 @@ function sendDataToDelete(param){ //wii
                     console.log('else len2');
                     $('#btnDelete').click(function () {
                         sendDataToDelete(id);
+//                        jQuery("#textAlertDivDelete").css("display","block");
                     });
 
             } else {

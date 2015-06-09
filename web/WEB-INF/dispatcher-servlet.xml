@@ -401,6 +401,7 @@
     </bean>
     <bean id="MPackageDetailController" class="com.smi.travel.masterdata.controller.MPackageDetailController">
        <property name="packageTourservice" ref="PackageTourService" /> 
+       <property name="utilityService" ref="UtilityService" /> 
     </bean>
     
  

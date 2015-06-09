@@ -60,7 +60,7 @@ public class MProductCommissionDetailController extends SMITravelController{
            if(isSave.equalsIgnoreCase("success")){
                List<ProductComission> listProductCommission = mProductCommissionService.getListProductCommissionFromID(inputProductId);
                System.out.println("Save Success !!!");
-               request.setAttribute("Status", "Status Success");
+               request.setAttribute("Status", "Save");
                request.setAttribute("listProductCommission", listProductCommission);
                request.setAttribute("InputProductId", inputProductId);
                request.setAttribute("InputProductCode", inputProductCode);
@@ -71,6 +71,7 @@ public class MProductCommissionDetailController extends SMITravelController{
                request.setAttribute("InputProductId", null);
                request.setAttribute("InputProductCode", null);
                request.setAttribute("InputProductName", null);
+               request.setAttribute("Status", null);
            }
         }else if("edit".equalsIgnoreCase(action)){
                 List<ProductComission> listProductCommission = mProductCommissionService.getListProductCommissionFromID(productId);
@@ -93,7 +94,6 @@ public class MProductCommissionDetailController extends SMITravelController{
             String isDelete = mProductCommissionService.DeleteProductComission(proCom);
             if(isDelete.equalsIgnoreCase("success")){
                 request.setAttribute(COMMISSIONDELETE,"delete "+isDelete);
-                request.setAttribute("Status", "Delete Success");
             }else{
                 System.out.println("Error Delete");
             }

@@ -288,6 +288,65 @@ function IsStartDateOver(date1S, date2S){
 
 }
 
+// City 
 
+$(document).ready(function () {
+    PassengerAddRow((parseInt($("#table-passenger-size").val()) + 1));
+    $("#City").on('click', '.newRemCF', function () {
+        $(this).parent().parent().remove();
+        var rowAll = $("#City tr").length;
+//        console.log("rowAll : " + rowAll);
+        if (rowAll < 2) {
+            console.log("show button");
+            $("#tr_PassengerAddRow").removeClass("hide");
+            $("#tr_PassengerAddRow").addClass("show");
+        }
+    });
+    $("#tr_PassengerAddRow a").click(function () {
+        $(this).parent().removeClass("show");
+        $(this).parent().addClass("hide");
+    });
+    $("#City").on("change", "select:last", function () {
+        console.log('on change');
+        var rowAll = $("#City tr").length;
+        PassengerAddRow(rowAll);
+    });
+});
 
+function PassengerAddRow(row) {
+
+    if (!row) {
+        row = 1;
+    }
+
+    $("#City tbody").append(
+            '<tr>' +
+            '<td  hidden=""><input  id="row-passenger-' + row + '-id" name="row-passenger-' + row + '-id"  type="text" class="form-control"></td>' +
+            '<td>' + row + '</td>' +
+            '<td><select id="row-passenger-' + row + '-name" name="row-passenger-' + row + '-name" class="form-control"><option></option></select></td>' +
+            '<td class="text-center">' +
+            '<a class="newRemCF" id="ButtonPassengerRemove'+row+'"><span id="SpanPassengerRemove'+row+'" class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
+            '</tr>'
+            );
+    $("#select-list-passenger option").clone().appendTo("#row-passenger-" + row + "-name");
+    var tempCount = parseInt($("#passengerCounter").val()) + 1;
+    $("#passengerCounter").val(tempCount);
+}
+
+function deletePassenger(hotelId, passengerId) {
+    console.log(hotelId + ":" + passengerId);
+    $.ajax({
+        url: 'HotelDetail.smi?action=deletePassenger',
+        type: 'get',
+        data: {hId: hotelId, pId: passengerId},
+        success: function () {
+            console.log('success');
+        },
+        error: function () {
+            console.log("error");
+        }
+    });
+}
+
+        
 

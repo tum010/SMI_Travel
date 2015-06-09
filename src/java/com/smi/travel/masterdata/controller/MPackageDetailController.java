@@ -1,9 +1,12 @@
 package com.smi.travel.masterdata.controller;
 
+import com.smi.travel.datalayer.entity.MCity;
+import com.smi.travel.datalayer.entity.PackageCity;
 import com.smi.travel.datalayer.entity.PackageItinerary;
 import com.smi.travel.datalayer.entity.PackagePrice;
 import com.smi.travel.datalayer.entity.PackageTour;
 import com.smi.travel.datalayer.service.PackageTourService;
+import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.util.ArrayList;
@@ -22,6 +25,7 @@ public class MPackageDetailController extends SMITravelController {
     private static final ModelAndView MPackage = new ModelAndView("MPackage");
     private static final ModelAndView MPackageDetail_REFRESH = new ModelAndView(new RedirectView("MPackageDetail.smi", true));
     private PackageTourService packageTourservice;
+    private UtilityService utilityService;
     private static final String ITINERARYLIST = "itinerary_List";
     private static final String PRICELIST = "price_list";
     private static final String DATALIST = "package_list";
@@ -56,7 +60,8 @@ public class MPackageDetailController extends SMITravelController {
         if (StringUtils.isNotEmpty(packageID)) {
             pack.setId(packageID);
         }
-
+        List<MCity> mCity = utilityService.getListMCity();
+        List<PackageCity> packageCity = pack.getPackageCities();
         if ("save".equalsIgnoreCase(action)) {
             if ((packageID == null) || ("".equalsIgnoreCase(packageID))) {
                 operation = "add";
@@ -154,7 +159,8 @@ public class MPackageDetailController extends SMITravelController {
         request.setAttribute("detail", detail);
         request.setAttribute("status", status);
         request.setAttribute("packageid", packageID);
-        
+        request.setAttribute("ListCity", mCity);
+        request.setAttribute("ListPackageCity", packageCity);
         return MPackageDetail;
     }
     
@@ -328,4 +334,11 @@ public class MPackageDetailController extends SMITravelController {
         return sortPrice;
     }
 
+    public void setUtilityService(UtilityService utilityService) {
+        this.utilityService = utilityService;
+    }
+
+    public UtilityService getUtilityService() {
+        return utilityService;
+    }
 }

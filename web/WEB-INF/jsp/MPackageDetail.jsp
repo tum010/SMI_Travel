@@ -6,6 +6,9 @@
 <script type="text/javascript" src="js/jquery.mask.min.js"></script>
 <c:set var="itinerarylist" value="${requestScope['itinerary_List']}" />
 <c:set var="pricelist" value="${requestScope['price_list']}" />
+<c:set var="ListCity" value="${requestScope['ListCity']}" />
+<c:set var="ListPackageCity" value="${requestScope['ListPackageCity']}" />
+
 <section class="content-header"  >
     <h4>
         <b>Master : Package</b>
@@ -214,25 +217,103 @@
                         <input type="hidden"  id="cCount" name="cCount" />
                         <input type="hidden"  id="packageid" name="packageid" value="${requestScope['packageid']}" />
                         
-                   
-                         
+                        <!--City -->
+                        <div class="row"> 
+                            <div class="col-md-6 " style="padding-left: 24px">
+                                <h5><b>City</b> </h5>
+                            </div>
+                        </div>
+                       <div class="panel panel-default">
                         
+                        <select   class="hidden"  id="select-list-passenger">
+                            <c:forEach var="pass" items="${ListCity}" varStatus="status">
+                                <option  value="${pass.id}">${pass.name}</option>
+                           </c:forEach>
+                        </select>
+                        <table class="display" id="City">
+                            <thead class="datatable-header">
+                                <tr>
+                                    <th style="width: 10%">No</th>
+                                    <th>Name</th>
+                                    <th style="width: 5%">Action</th>
+                                </tr>
+                            </thead>
+                            <script>
+                                    var cityName = [];
+                            </script>
+                            <c:forEach var="cityList" items="${ListCity}" >
+                                <script>
+                                    cityName.push({value: "${cityList.id}", label: "${cityList.name}"});
+                                   
+                                </script>
+                            </c:forEach>
+                            <tbody>
+                            <input type="text" class="hidden" id="passengerCounter" name="passengerCounter" value="0" />
+
+                            <c:forEach var="pa" items="${ListPackageCity}" varStatus="city">
+                                <tr>
+                                    <td hidden="">
+                                        <input id="row-passenger-${city.count}-id" name="row-passenger-${city.count}-id" type="text" class="form-control" value="${pa.id}">
+                                    </td>
+                                    <td>
+                                        ${city.count}
+                                    </td>
+                                    <td>
+                                        <div id="div-passenger">
+                                            <input id="input-get-passenger-${city.count}" value="${pa.id}" hidden="">
+                                            <!--<input type="text" class="form-control cityName" id="select-passneger-${city.count}" name="row-passenger-${city.count}-name"  valHidden="${cityList.id}" value="${cityList.name}"  />-->
+                                            <select  class="form-control"  name="row-passenger-${city.count}-name" id="select-passneger-${city.count}">
+                                                <c:forEach var="passen" items="${ListCity}" varStatus="status">
+                                                    <option class="passenger-option" value="${passen.id}">${passen.name}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                        <script>
+                                            $(document).ready(function () {
+                                                $("#select-passneger-${city.count}").val($("#input-get-passenger-${city.count}").val());
+                                            });
+                                        </script>
+                                    </td>          
+                                    <td class="text-center">
+                                        <a id="PassengerButtonRemove${city.count}" class="remCF" onclick="ConfirmDelete('${hotelBooking.id}', '3', '${pa.id}', '${city.count}')">
+                                            <span id="PassengerSpanRemove${city.count}" class="glyphicon glyphicon-remove deleteicon"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <script>
+                                    $(document).ready(function () {
+                                        $("#passengerCounter").val(parseInt("${city.count}") + 1);
+                                    });
+                                </script>
+<!--                                <script type="text/javascript" charset="utf-8">
+                                     
+                                </script>-->
+                            </c:forEach>
+                                
+                            </tbody>
+                        </table>
+                        <input value="${hotelPassengerList.size()}" id="table-passenger-size" type="hidden">
+
+                        <div id="tr_PassengerAddRow" class="text-center hide" style="padding-top: 10px">
+                            <a class="btn btn-success" onclick="PassengerAddRow()">
+                                <i class="glyphicon glyphicon-plus"></i> Add
+                            </a>
+                        </div>
+               
+                        </div> <!--End-->
+                        
+                        <!--Button Save -->
                         <div class="row" style="padding-top: 10px">
                             <div class="col-xs-12 text-center">
                                 <button id="savePackage" name="savePackage"  type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
                             </div>
                         </div>     
-
-
-
                     </div>
                 </div>
 
             </div>
         </div>
     </form>
-
-
 </div>
                         
 <!--DELETE MODAL-->
@@ -256,12 +337,9 @@
                         
 
 <script type="text/javascript" charset="utf-8">
-
+    
     $(document).ready(function() {
-  
-
         // ******************* start Itinerary script *******************
-
         $("#Itinerary").on("keyup", function() {
             var rowAll = $("#Itinerary tr").length;
 
@@ -291,15 +369,11 @@
       
         AddRowItinerary(parseInt($("#counterItinerary").val()));
         
-
         // ******************* end Itinerary script *******************
         $(".money").mask('000,000,000,000,000,000', {reverse: true});
         $('.date').mask('0000-00-00');
         $('.time').mask('00:00');
         $('.number').mask('00');
-
-
-
 
          // ******************* start PackagePrice script *******************
         $("#PackagePrice").on('click', '.remCF', function() {
@@ -340,7 +414,44 @@
         });
         
          AddRowPackagePrice(parseInt($("#counterPrice").val()));
-        // ******************* start PackagePrice script *******************
+        // ******************* start PackagePrice script ******************
+
+//City key up!!!!!!!!!!!!
+                                        var dataCity = [];
+                                        dataCity = cityName;
+//                                        alert(""+dataCity);
+                                    var citycount= 0;
+                                    $("#City tbody").find("tr").each(function(){ 
+//                                        alert('1');
+                                        citycount++;
+                                        $("#select-passneger-"+citycount).autocomplete({
+                                            source: dataCity,
+                                            focus: function( event, ui ) {
+                                                event.preventDefault();
+                                                $(this).val(ui.item.label);
+                                            },
+                                            select: function( event, ui ) {
+                                                event.preventDefault();
+                                                $(this).val(ui.item.label);
+                                                $(this).attr("valHidden",ui.item.value);
+                                            },
+                                            close:function( event, ui ) {
+                                               var editCheckBox = $(this).closest('tr').find('td.edited').children();
+                                               $(editCheckBox).attr("checked", true);
+                                               $("#select-passneger-"+citycount).trigger('keyup');
+                                            } 
+                                        });
+
+                                        $("#select-passneger-"+citycount).keyup(function () {
+                                            Alert("SSS");
+                                            var position = $(this).offset();
+                                            $(".ui-widget").css("top", position.top + 30);
+                                            $(".ui-widget").css("left", position.left);
+                                            $(".ui-widget").css("font-size", 10);
+                                        }); 
+                                    });
+
+
 
     });
 
@@ -405,10 +516,6 @@
         $("#counterItinerary").val(tempCount);
         
     }
-
-
-
-
 </script>
 
 <c:set var="result" value="${requestScope['result']}" />
