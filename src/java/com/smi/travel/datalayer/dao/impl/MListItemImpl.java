@@ -103,8 +103,8 @@ public class MListItemImpl implements MListItemDao {
         if (FunctionList.isEmpty()) {
             return null;
         }
-        session.close();
-        this.sessionFactory.close();
+       // session.close();
+       // this.sessionFactory.close();
         return FunctionList;
     }
 
