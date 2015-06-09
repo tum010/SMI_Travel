@@ -22,10 +22,10 @@
 <div class ="container"  style="padding-top: 15px;" > 
 
 
-    <div class="col-md-9 ">
-        <div class="row">
+    <div class="col-md-12">
+        <div class="row" style="padding-left: 150px">
             <form action="MPackage.smi" method="post" id="SearchPackage" role="form">
-                <div class="col-md-3  col-xs-offset-1">
+                <div class="col-md-2  col-xs-offset-1">
                     <div class="form-group">
                         <label for="PackageCodeS">Code</label>
                         <input type="text"   class="form-control" maxlength="50" id="PackageCodeS" name="PackageCodeS" value="${requestScope['packageCode']}">
@@ -40,7 +40,7 @@
                     </div>
                 </div>
                     
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="form-group">
                         <label>Status</label>
                             <select class="form-control" id="StatusSearch" name="Status">
@@ -61,8 +61,8 @@
                     </div>
                 </div>
 
-                <div class="col-md-2">
-                    <div  style="padding: 20px 0px 0px 31px">   
+                <div class="col-md-1">
+                    <div  style="padding: 20px 0px 0px 20px">   
                         <button type="button" id="acs" onclick="searchAction()"  class="btn btn-primary">Search</button>           
                         <input type="hidden" name="action" id="Action"/>
                         <input type="hidden" id="PackageID" name="PackageID" >
@@ -72,11 +72,11 @@
 
         </div>
         <hr>
-        <div class="row" style="padding-left: 15px">  
-            <div class="col-md-5  col-xs-offset-3">
+        <div class="row" style="padding-left: 40px">  
+            <div class="col-md-5  col-xs-offset-2">
                 <h4><b>Package</b></h4>
             </div>
-            <div class="col-md-4 " style="padding-left:  200px">
+            <div class="col-md-4 " style="padding: 5px 0px 0px 175px">
                 <a id="btnAdd" href="MPackageDetail.smi" class="btn btn-success">
                     <span id="spanAdd" class="glyphicon glyphicon-plus"></span>Add
                 </a>
@@ -84,8 +84,8 @@
 
         </div>
 
-        <div class="row" style="padding-left: 15px">    
-            <div class="col-md-9  col-xs-offset-3">
+        <div class="row" style="padding-left: 0px">    
+            <div class="col-md-8  col-xs-offset-2">
                 <table id="MasterPackage" class="display" cellspacing="0" >
                     <thead>
                         <tr class="datatable-header">

@@ -185,13 +185,23 @@
                             <input type="text" class="form-control" id="RoleName" maxlength="50" name="RoleName" >
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="FunctionName" class="col-sm-3 control-label" >Function</label>
+                    <div class="form-group pre-scrollable">
+                        <label for="FunctionName" class="col-sm-5 control-label" >Function</label>
+                        <label for="MenuName" class="col-sm-4 control-label" >Menu</label>
+                        </br>
+                        <hr>
                         <c:forEach var="function" items="${funcList}">
-                            <div class="checkbox col-sm-offset-3 col-sm-8">
-                                <label>
-                                    <input type="checkbox" id="<c:out value="${function.id}" />" name="checkedFunction" value="<c:out value="${function.id}" />"><c:out value="${function.name}" />
-                                </label>
+                            <div class="checkbox col-sm-offset-2 col-sm-9">
+                                <div class = "col-md-6">
+                                    <label>
+                                        <input type="checkbox" id="<c:out value="${function.id}" />" name="checkedFunction" value="<c:out value="${function.id}" />"><c:out value="${function.name}" />
+                                    </label>
+                                </div>
+                                <div class = "col-md-6">
+                                    <label>
+                                        <c:out value="${function.mainMenu.name}" />
+                                    </label>
+                                </div>
                             </div>
                         </c:forEach>
                     </div>

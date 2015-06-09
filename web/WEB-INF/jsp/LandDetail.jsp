@@ -1,11 +1,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 <script type="text/javascript" src="js/LandDetail.js"></script> 
-
-
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <script type="text/javascript" src="js/jquery.mask.min.js"></script>
 <link href="css/jquery-ui.css" rel="stylesheet">
 
@@ -458,7 +456,16 @@
                                             <input type="text" class="form-control" id="Product_name" readonly name="Product_name" value="${requestScope['Product_name']}">
                                         </div>
                                     </div>
-
+                                    
+                                    <div class="col-md-6 " > 
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label" for="remark">Remark</label>
+                                            <div class="col-sm-4" >
+                                                <input type="text" class="form-control " maxlength="255" id="remark" name="remark" value='${requestScope['remark']}'>  
+                                            </div>
+                                        </div>
+                                    </div>
+                                            
                                     <div class="col-md-3 " >
                                         <div class="form-group">
                                             <label class="col-sm-3 col-md-offset-7 control-label" for="nameProduct">Cost</label>
@@ -477,36 +484,7 @@
 
                                         </div>
                                     </div>
-
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 " > 
-                                        <div class="form-group">
-                                            <label  style="margin-left: 10px" class="col-sm-3 control-label" for="remark">Remark</label>
-                                            <div class="col-sm-8" style="width: 375px;margin-left: -13px" >
-                                                <input type="text" class="form-control " maxlength="255" id="remark" name="remark" value='${requestScope['remark']}'>  
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 " >
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label" for="nameProduct">Adult</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" maxlength="10" onkeyup="validateMaxCost('AD_Cost');"  class="form-control money" id="AD_Cost" name="AD_Cost" value="${requestScope['AD_Cost']}" >  
-                                            </div>
-                                            <div class="col-sm-2">
-                                                <input type="text" maxlength="3" onkeyup="validateMaxCost('AD_Qty');" class="form-control money" id="AD_Qty" name="AD_Qty" value="${requestScope['AD_Qty']}">  
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <input type="text" maxlength="10" onkeyup="validateMaxCost('AD_Price');"  class="form-control money" id="AD_Price" name="AD_Price" value="${requestScope['AD_Price']}">  
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                                <div class="row">
+                                    
                                     <div class="col-md-6">
                                         <div class="form-group">
                                         <label class="col-sm-3 control-label" >Currency</label>
@@ -523,6 +501,34 @@
                                         </div>
                                         </div>
                                     </div>
+                                </div>
+                                        
+                                <div class="row">
+                                    <div class="col-md-6 " >
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label" for="nameProduct">Adult</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" maxlength="10" onkeyup="validateMaxCost('AD_Cost');"  class="form-control money" id="AD_Cost" name="AD_Cost" value="${requestScope['AD_Cost']}" >  
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <input type="text" maxlength="3" onkeyup="validateMaxCost('AD_Qty');" class="form-control money" id="AD_Qty" name="AD_Qty" value="${requestScope['AD_Qty']}">  
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <input type="text" maxlength="10" onkeyup="validateMaxCost('AD_Price');"  class="form-control money" id="AD_Price" name="AD_Price" value="${requestScope['AD_Price']}">  
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 " >
+                                        <div class="form-group">
+                                            <label  class="col-sm-3 control-label" >Supplier</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" maxlength="255" class="form-control"  id="supplier" name="supplier" value='${requestScope['supplier']}' >  
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                            
+                                <div class="row">
                                     <div class="col-md-6 " >
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label" for="nameProduct">Child</label>
@@ -537,9 +543,20 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-6 ">
+                                        <div class="form-group">                                           
+                                            <label for="effectivefrom" class="col-sm-3 control-label"> Depart Date </label>
+                                            <div class=' col-sm-4 input-group datepicker' id='effectivefromClass' style="padding-left: 15px">
+                                                <input type='text' class="form-control"  id="departdate" name="departdate" data-date-format="YYYY-MM-DD" value="${requestScope['departdate']}" />
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>       
                                 </div>
+                                            
                                 <div class="row">
-                                    <div class="col-md-6 " > </div>
                                     <div class="col-md-6 " >
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label" for="nameProduct">Infant</label>
@@ -551,6 +568,18 @@
                                             </div>
                                             <div class="col-sm-3">
                                                 <input type="text" maxlength="10" class="form-control money" onkeyup="validateMaxCost('IN_Price');" id="IN_Price" name="IN_Price"  value="${requestScope['IN_Price']}" >  
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 " >
+                                        <div class="form-group">
+                                            
+                                            <label for="effectivefrom" class="col-sm-3 control-label" > Arrive Date </label>
+                                            <div class=' col-sm-4 input-group datepicker' id='effectivefromClass' style="padding-left: 15px">
+                                                <input type='text' class="form-control"  id="arrivedate" name="arrivedate" data-date-format="YYYY-MM-DD" value="${requestScope['arrivedate']}" />
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -840,30 +869,34 @@ $('#savereal').on("keyup keypress", function(e) {
             });
 
 
-$(document).ready(function() {
+    $(document).ready(function() {
+        $('.datepicker').datetimepicker();
+        $('span').click(function() {
+                            var position = $(this).offset();
+                            console.log("positon :" + position.top);
+                            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
 
-    $('#landForm').bootstrapValidator({
-        container: 'tooltip',
-        feedbackIcons: {
-            valid: 'uk-icon-check',
-            invalid: 'uk-icon-times',
-            validating: 'uk-icon-refresh'
-        },
-        fields: {
-            agent_code: {
-                validators: {
-                    notEmpty: {
-                        message: 'The agent code is required'  
+        });
+                        
+        $('#landForm').bootstrapValidator({
+            container: 'tooltip',
+            feedbackIcons: {
+                valid: 'uk-icon-check',
+                invalid: 'uk-icon-times',
+                validating: 'uk-icon-refresh'
+            },
+            fields: {
+                agent_code: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The agent code is required'  
+                        }
+
                     }
-                   
                 }
             }
-        }
+        });  
     });
-
-  
-    
-});
 
 var maxint = 2147483647;
 var maxvalue = 100000000;
