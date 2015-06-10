@@ -51,6 +51,9 @@
         <property name="remark" type="string">
             <column name="remark" />
         </property>
+        <property name="ticketno" type="string">
+            <column name="ticket_no" />
+        </property>
     </class>
         
 </hibernate-mapping>
