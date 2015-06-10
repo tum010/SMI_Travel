@@ -27,6 +27,8 @@ public class BookingView {
     private String departmentName;
     private String departmentId;
     private String statusId;
+    private String tel;
+    private String remark;
     
     public BookingView(){
         
@@ -139,6 +141,23 @@ public class BookingView {
     public void setStatusId(String statusId) {
         this.statusId = statusId;
     }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+    
     
     
 }
