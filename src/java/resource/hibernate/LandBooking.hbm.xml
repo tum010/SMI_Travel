@@ -103,6 +103,10 @@
         <property name="outboundSupplier" type="string">
             <column name="outbound_supplier" length="255" />
         </property>
+         <property name="inboundHotel" type="string">
+            <column name="inbound_hotel" length="255" />
+        </property>
+        
          <set name="landItineraries" table="land_itinerary" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="land_booking_id" not-null="true" />
