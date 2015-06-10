@@ -12,9 +12,10 @@ function back() {
 
 $(document).ready(function () {
     var bla = $('#saveText').val();
-    if(bla != ""){
-        Alert("Go to Here!!!");
-         jQuery("#textAlertDivSave").css("display","block");
+
+    if(bla == "Save"){
+        
+        $('#textAlertDivSave').show();
     }
 });
 

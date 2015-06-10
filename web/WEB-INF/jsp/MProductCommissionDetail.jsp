@@ -44,15 +44,12 @@
         </div>
     </div>
     <!--Alert Save and Update-->
-     <input type="hidden" id="saveText" name="saveText" value="${status}">
-    <div class="row" style="display:none;" id="textAlertDivSave">
-        <div class="col-md-10 col-md-offset-1">
-            <div class="alert alert-warning alert-dismissable fade  in" role="alert">
-                <button type="button" class="close" data-dismiss="alert" ><span aria-hidden="true" onclick="">X</span></button>
-                <strong >Save Success !!!</strong>
-            </div>
+     <input type="text" id="saveText" name="saveText" value="${status}">
+ 
+    <div id="textAlertDivSave"  style="display:none;" class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Warning!</strong> Better check yourself, you're not looking too good.
         </div>
-    </div>
     <!--Alert Check Date-->
     <div class="row" style="display:none;" id="AlertCheckDate">
         <div class="col-md-10 col-md-offset-1">
@@ -308,7 +305,7 @@
                                 <td class="object-name">${product.name}</td>
                             </tr>
                             <script>
-                                agentArray.push({id: "${product.id}", code: "${product.code}", name: "${product.name}"});
+                               // agentArray.push({id: "${product.id}", code: "${product.code}", name: "${product.name}"});
                             </script>
                         </c:forEach>
                     </tbody>
