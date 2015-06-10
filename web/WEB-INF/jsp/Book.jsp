@@ -100,7 +100,34 @@
                             </c:forEach>
                         </select>
                     </div>
-                </div>  
+                </div>
+                            
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}">
+                        <span id="SpanEdit${advanced.search}">Advanced Search</span>
+                        <!--<span id="SpanEdit${advanced.search}" class="glyphicon glyphicon-list-alt"></span>-->
+                        </a>
+                    </div>
+                </div>
+
+                <div class="collapsing" id="collapseExample${advanced.search}" aria-expanded="false">
+                    <div class="col-md-11">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="Country">PNR</label>
+                                <input type="text"  class="form-control" id="pnr" name="pnr"  value="${requestScope['pnr']}" >
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="Country">Ticket No.</label>
+                                <input type="text"  class="form-control" id="ticketNo" name="ticketNo"  value="${requestScope['ticketNo']}" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 
                 <div class="row-fluid">
                     <div class="form-actions pull-right" style="padding-top: 20px;" >
                         <button type="button" id="acs" onclick="searchAction()" class="btn btn-primary"><span class="fa fa-search"></span> Search</button>           
@@ -203,6 +230,8 @@
                             <thead>
                                 <tr class="datatable-header">
                                     <th>Date</th>
+                                    <th>Tel</th>
+                                    <th>Remark</th>
                                     <th>type</th>
                                     <th>Description</th>
                                     <th>Date tour</th>
@@ -569,7 +598,7 @@
             $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
 
         });
-       
+        
     });
 
     $('#myTab a').click(function(e) {

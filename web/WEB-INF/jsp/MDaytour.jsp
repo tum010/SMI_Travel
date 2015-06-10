@@ -21,14 +21,14 @@
             <div class="col-md-4  col-md-offset-2">
                 <div class="form-group">
                     <label for="tourCode">Tour code</label>
-                    <input type="text" class="form-control" maxlength="50" id="tourCode" name="tourCode" value="${requestScope['tourCode']}">
+                    <input type="text" class="form-control" maxlength="50" id="tourCode" name="tourCode" style="text-transform:uppercase" value="${requestScope['tourCode']}">
 
                 </div>
             </div>
             <div class="col-md-4 ">
                 <div class="form-group">
                     <label for="tourName">Tour name</label>
-                    <input type="text" class="form-control" maxlength="255" id="tourName" name="tourName" value="${requestScope['tourName']}">
+                    <input type="text" class="form-control" maxlength="255" id="tourName" name="tourName" style="text-transform:uppercase" value="${requestScope['tourName']}">
                 </div>
             </div>
 
@@ -69,18 +69,18 @@
                 <tbody>
                     <c:forEach var="table" items="${dataList}" varStatus="loopCounter">
                         <tr>
-                            <td> <c:out value="${table.code}" /></td>
-                            <td> <c:out value="${table.name}" /></td>
+                            <td><c:out value="${fn:toUpperCase(table.code)}" /></td>
+                            <td><c:out value="${fn:toUpperCase(table.name)}" /></td>
                             <td>
-                    <center> 
-                        <a id="ButtonEdit-${loopCounter.count}" name="ButtonEdit-${loopCounter.count}" href="MDaytourDetail.smi?daytourid=${table.id}&action=edit">
-                            <span  id="RowSpanEdit-${loopCounter.count}" name="RowSpanEdit-${loopCounter.count}"  class="glyphicon glyphicon-edit editicon"  ></span>
-                        </a>
-                        <span id="ButtonDelete-${loopCounter.count}" name="ButtonDelete-${loopCounter.count}" class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDaytour('${table.id}', '${table.code}','${table.name}')" data-toggle="modal" data-target="#DeleteModal" >  </span>
-                    </center>
-                    </td>
-                    </tr>
-                </c:forEach>
+                            <center> 
+                                <a id="ButtonEdit-${loopCounter.count}" name="ButtonEdit-${loopCounter.count}" href="MDaytourDetail.smi?daytourid=${table.id}&action=edit">
+                                    <span  id="RowSpanEdit-${loopCounter.count}" name="RowSpanEdit-${loopCounter.count}"  class="glyphicon glyphicon-edit editicon"  ></span>
+                                </a>
+                                <span id="ButtonDelete-${loopCounter.count}" name="ButtonDelete-${loopCounter.count}" class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDaytour('${table.id}', '${table.code}','${table.name}')" data-toggle="modal" data-target="#DeleteModal" >  </span>
+                            </center>
+                            </td>
+                        </tr>
+                    </c:forEach>
                 </tbody>
             </table>   
         </div>

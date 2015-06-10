@@ -46,7 +46,7 @@
             <div class="col-md-3  col-xs-offset-3">
                 <div class="form-group">
                     <label for="AgentCodeS">Code</label>
-                    <input  type="text" class="form-control" maxlength="15" id="CodeS" name="code" value="${requestScope['agentCode']}">
+                    <input  type="text" class="form-control" maxlength="15" id="CodeS" name="code" style="text-transform:uppercase" value="${requestScope['agentCode']}">
 		
 
                 </div>
@@ -54,7 +54,7 @@
             <div class="col-md-3 ">
                 <div class="form-group">
                     <label for="AgentNameS">Name</label>
-                    <input type="text" class="form-control" maxlength="255" id="NameS" name="name" value="${requestScope['agentName']}" >
+                    <input type="text" class="form-control" maxlength="255" id="NameS" name="name" style="text-transform:uppercase" value="${requestScope['agentName']}" >
 
                 </div>
             </div>
@@ -93,8 +93,8 @@
                     <tbody>
                         <c:forEach var="table" items="${dataList}" varStatus="varDataList">
                             <tr>
-                                <td><c:out value="${table.code}" /> </td>
-                                <td><c:out value="${table.name}" /></td>
+                                <td><c:out value="${fn:toUpperCase(table.code)}" /></td>
+                                <td><c:out value="${fn:toUpperCase(table.name)}" /></td>
                                 <td><c:out value="${table.MAccterm.name}" /></td>
                                 <td><center> <c:out value="${table.MAccpay.name}" /> </center> </td>
                                 <td>
@@ -104,11 +104,9 @@
                                     </a>
                                     <span id="spanRemove${varDataList.count}" class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteAgent('${table.id}','${table.name}')" data-toggle="modal" data-target="#DelAgent" >  </span>
                                 </center>
-                        </td>    
-                        </tr>
-
-                    </c:forEach>
-
+                                </td>    
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>   
             </div>

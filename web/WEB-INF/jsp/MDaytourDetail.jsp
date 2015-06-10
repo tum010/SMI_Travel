@@ -42,11 +42,12 @@
                         <div class="col-md-12 form-group">
                             <div class="col-md-5">
                                 <div class="col-md-3 text-right"><label class="form-label" for="InputCode">Code<font style="color: red">*</font></label></div>
-                                <div class="col-md-9"><input id="InputCode" name="InputCode" class="form-control" maxlenght="50"  
+                                <div class="col-md-9"><input id="InputCode" name="InputCode" class="form-control" maxlenght="50" style="text-transform:uppercase"  
                                                              value="${daytour.code}" ${disableMDaytourCode} ></div>
                             </div>
                             <div class="col-md-2 text-right"><label  class="form-label text-left" for="InputName">Name<font style="color: red">*</font></label></div>
-                            <div class="col-md-5"><input id="InputName" name="InputName" class="form-control" maxlength="255" value="${daytour.name}" required="true"></div>
+                            <div class="col-md-5"><input id="InputName" name="InputName" class="form-control" maxlength="255" style="text-transform:uppercase" 
+                                                         value="${daytour.name}" required="true"></div>
                         </div>
                     </div>
                     <div class="row">

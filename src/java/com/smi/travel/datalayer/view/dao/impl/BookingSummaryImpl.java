@@ -25,23 +25,27 @@ public class BookingSummaryImpl implements BookingSummaryDao{
     @Override
     public List<BookSummary> getListBookSummary(String refno) {
         Session session = this.sessionFactory.openSession();
-        List<Object[]> QueryList =  session.createSQLQuery("SELECT * FROM `booking_summary_view` where booking_summary_view.ref_no = "+refno)
+        List<Object[]> QueryList =  session.createSQLQuery("SELECT * FROM `booking_summary_view` bs join `booking_view` bv on bv.ref_no = bs.ref_no where bs.ref_no = "+refno)
                 .addScalar("type",Hibernate.STRING)
                 .addScalar("description",Hibernate.STRING)
                 .addScalar("date_tour",Hibernate.DATE)
                 .addScalar("price",Hibernate.INTEGER)
                 .addScalar("book_date",Hibernate.DATE)
+                .addScalar("tel",Hibernate.STRING)
+                .addScalar("remark",Hibernate.STRING)
                 .list();
                 
         List<BookSummary> BookSummaryList =  new LinkedList<BookSummary>();
         for(Object[] B : QueryList){
             BookSummary book = new BookSummary();
             book.setRefNo(refno);
-            book.setType(B[0].toString());
-            book.setDescription(B[1].toString());
+            book.setType(String.valueOf(B[0]));
+            book.setDescription(String.valueOf(B[1]));
             book.setDateTour((Date) B[2]);
-            book.setPrice(B[3].toString());
+            book.setPrice(String.valueOf(B[3]));
             book.setBookdate((Date) B[4]);
+            book.setTel(String.valueOf(B[5]));
+            book.setRemark(String.valueOf(B[6]));
             BookSummaryList.add(book);
             
         }

@@ -37,6 +37,8 @@ public class BookController extends SMITravelController {
         String section = request.getParameter("section");
         String Bookdate = request.getParameter("Bookdate");
         String status = request.getParameter("status");
+        String pnr = request.getParameter("pnr");
+        String ticketNo = request.getParameter("ticketNo");
         SystemUser user = (SystemUser) session.getAttribute("USER");
         List<BookingView> bookinglist = new LinkedList<BookingView>();
         UtilityFunction util = new UtilityFunction();
@@ -52,10 +54,10 @@ public class BookController extends SMITravelController {
         }
         
         if("search".equalsIgnoreCase(action)){
-            bookinglist = workspaceService.getListBooking(refno,PassFirst,PassLast,username,departmentid,Bookdate,status);
+            bookinglist = workspaceService.getListBooking(refno,PassFirst,PassLast,username,departmentid,Bookdate,status,pnr,ticketNo);
             request.setAttribute("Bookdate", Bookdate);
         }else{
-            bookinglist = workspaceService.getListBooking(refno,PassFirst,PassLast,user.getUsername(),departmentid,Bookdate,status);
+            bookinglist = workspaceService.getListBooking(refno,PassFirst,PassLast,user.getUsername(),departmentid,Bookdate,status,pnr,ticketNo);
             //request.setAttribute("Bookdate", util.convertDateToString(thisDate));
             
         }
@@ -71,7 +73,8 @@ public class BookController extends SMITravelController {
         request.setAttribute("PassLast", PassLast);
         request.setAttribute("section", section);
         request.setAttribute("status", status);
-
+        request.setAttribute("pnr", pnr);
+        request.setAttribute("ticketNo", ticketNo);
         return Book;
     }
 

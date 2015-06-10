@@ -24,7 +24,7 @@ public class BookingViewImpl implements BookingViewDao{
     private SessionFactory sessionFactory;
     private static final int MAX_ROW = 200;
     @Override
-    public List<BookingView> getBookingList(String refno,String passFirst,String passLast,String username,String departmentID,String Bookdate,String status) {
+    public List<BookingView> getBookingList(String refno,String passFirst,String passLast,String username,String departmentID,String Bookdate,String status,String pnr,String ticketNo) {
         String query = "from BookingView book where ";
         String subquery = " book.refno in (select master.referenceNo from Passenger p ";
         Session session = this.sessionFactory.openSession();
@@ -60,12 +60,25 @@ public class BookingViewImpl implements BookingViewDao{
             check = 1;
         }
         
+        if ((pnr != null) && (!"".equalsIgnoreCase(pnr))) {
+            if (check == 1) {query += " and ";}
+            query += " book.pnr = '" +pnr +"'";
+            check = 1;
+        }
+        
+        if ((ticketNo != null) && (!"".equalsIgnoreCase(ticketNo))) {
+            if (check == 1) {query += " and ";}
+            query += " book.ticketNo like '%" +ticketNo +"%'";
+            check = 1;
+        }
+        
         if ((passFirst != null) && (!"".equalsIgnoreCase(passFirst))) {
             if (check == 1) {query += " and ";}
             subquery += " where p.customer.firstName like '%"+passFirst+"%'";
             checksub = 1;
             check = 1;
         }
+
         if ((passLast != null) && (!"".equalsIgnoreCase(passLast))) {
             if ((check == 1)&&(checksub != 1)) {query += " and ";}
             check = 1;

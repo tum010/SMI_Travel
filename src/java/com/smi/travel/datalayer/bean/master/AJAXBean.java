@@ -217,6 +217,8 @@ public class AJAXBean extends AbstractBean implements
                             
                             result += "<tr>"
                                     + "<td class='tdcenter'>" + bookDetail.getBookdate() + "</td>"
+                                    + "<td>" + bookDetail.getTel()+ "</td>"
+                                    + "<td>" + bookDetail.getRemark() + "</td>"
                                     + "<td class='tdcenter'>" + bookDetail.getType() + "</td>"
                                     + "<td>" + bookDetail.getDescription() + "</td>"
                                     + "<td class='tdcenter'>" + tourdate + "</td>"

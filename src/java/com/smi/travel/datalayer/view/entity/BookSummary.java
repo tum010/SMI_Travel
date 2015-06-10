@@ -19,6 +19,8 @@ public class BookSummary {
     private Date dateTour;
     private String price;
     private Date bookdate;
+    private String tel;
+    private String remark;
     
     public BookSummary(){
         
@@ -81,6 +83,20 @@ public class BookSummary {
         this.bookdate = bookdate;
     }
     
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
     
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
 }

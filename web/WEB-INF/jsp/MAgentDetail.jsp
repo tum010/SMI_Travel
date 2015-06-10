@@ -36,7 +36,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3   control-label" for="codeAgent">Code <font style="color: red">*</font></label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" maxlength="15" ${disableAgentCode} id="agentcode" name="agentcode"value='${requestScope['agentcode']}' > 
+                                    <input type="text" class="form-control" maxlength="15" ${disableAgentCode} id="agentcode" name="agentcode" style="text-transform:uppercase" value='${requestScope['agentcode']}' > 
                                     <input type="text" class="hidden" id="tempagentcode"  maxlength="10" name="tempagentcode"  value="${requestScope['agentcode']}" >
                                 </div>
                             </div>
@@ -45,7 +45,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label" for="nameAgent">Name <font style="color: red">*</font></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" maxlength="255" id="agentname" name="agentname" value='${requestScope['agentname']}'>  
+                                    <input type="text" class="form-control" maxlength="255" id="agentname" name="agentname" style="text-transform:uppercase" value='${requestScope['agentname']}'>  
                                 </div>
                             </div>
                         </div>
@@ -63,7 +63,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label" for="fromAdd">Address</label>
                                 <div class="col-sm-9">  
-                                    <textarea name="Address" id="address" maxlength="255" class="form-control" rows="3">${requestScope['Address']}</textarea>
+                                    <textarea name="Address" id="address" maxlength="255" class="form-control" style="text-transform:uppercase" rows="3">${requestScope['Address']}</textarea>
                                 </div>   
                             </div>
                         </div>
