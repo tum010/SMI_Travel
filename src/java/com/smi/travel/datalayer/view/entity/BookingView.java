@@ -29,7 +29,7 @@ public class BookingView {
     private String statusId;
     private String tel;
     private String remark;
-    private String ticketno;
+    private String ticketNo;
     
     public BookingView(){
         
@@ -159,13 +159,15 @@ public class BookingView {
         this.remark = remark;
     }
 
-    public String getTicketno() {
-        return ticketno;
+    public String getTicketNo() {
+        return ticketNo;
     }
 
-    public void setTicketno(String ticketno) {
-        this.ticketno = ticketno;
+    public void setTicketNo(String ticketNo) {
+        this.ticketNo = ticketNo;
     }
+
+    
     
     
     
