@@ -15,7 +15,6 @@
        <property name="leaderName" type="string">
             <column name="leader_name" />
         </property>
-
         <property name="statusName" type="string">
             <column name="status_name" />
         </property>
