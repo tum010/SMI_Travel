@@ -96,7 +96,7 @@
 
                 <div class="row-fluid">
                     <div class="form-actions pull-right" style="padding-right: 20px">
-                        <a href="OtherDetail.smi?referenceNo=${param.referenceNo}&action=newFromOther"><button type="button" id="acs" onclick=""  class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>Add</button>  </a>  
+                        <a href="OtherDetail.smi?referenceNo=${param.referenceNo}&action=new&callPageFrom=FromOther"><button type="button" id="acs" onclick=""  class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>Add</button>  </a>  
                     </div>
                 </div> 
 
@@ -159,7 +159,7 @@
                                 <td class="tdright moneyformat"> ${(table.adPrice * table.adQty) + (table.chPrice * table.chQty) + (table.inPrice * table.inQty)}</td>
                                 <td> 
                                     <center> 
-                                        <a href="OtherDetail.smi?referenceNo=${param.referenceNo}&itemid=${table.id}&action=edit"><span class="glyphicon glyphicon-edit editicon"      onclick="" ></span></a>
+                                        <a href="OtherDetail.smi?referenceNo=${param.referenceNo}&itemid=${table.id}&action=edit&callPageFrom=FromOther"><span class="glyphicon glyphicon-edit editicon"      onclick="" ></span></a>
                                         <c:if test="${table.status.id == 2}">
                                             <span class="glyphicon glyphicon-plus addicon"   onclick="EnableOther('${table.id}',' ${table.product.code}');" data-toggle="modal" data-target="#EnableOther" ></span>
                                         </c:if>
@@ -225,7 +225,8 @@
                             </div>
                         </div>    
                         <input type="hidden" class="form-control" id="OtherID"   name="OtherID"  >     
-                        <input type="hidden" class="form-control" id="action"   name="action"  >     
+                        <input type="hidden" class="form-control" id="action"   name="action"  > 
+                        <input type="hidden" class="form-control" id="callPageFrom"   name="callPageFrom"  >  
                         <input type="hidden" class="form-control" id="referenceNo"   name="referenceNo"  value="${param.referenceNo}" >     
                     </form>
 

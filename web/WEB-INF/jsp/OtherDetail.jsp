@@ -15,10 +15,10 @@
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
-<input type="hidden" value="${requestScope['callpage']}" id="callpage" name="callpage">
 <c:set var="booking_size" value="${requestScope['BookingSize']}" />
 <c:set var="product_list" value="${requestScope['product_list']}" />
 <c:set var="agent_list" value="${requestScope['agent_list']}" />
+<c:set var="currency_list" value="${requestScope['currency_list']}" />
 <c:set var="booktype" value="${requestScope['BOOKING_TYPE']}" />
 <c:set var="enableVat" value="" />
 <c:set var="checkVat" value="checked" />
@@ -62,10 +62,10 @@
 
                 <div class="col-sm-9 text-right">                  
                     <c:choose>
-                        <c:when test="${fn:containsIgnoreCase(callpage , 'newFromOther')}">
+                        <c:when test="${fn:containsIgnoreCase(callpage , 'FromOther')}">
                             <a class="btn btn-primary" href="Other.smi?referenceNo=${param.referenceNo}"><i class="glyphicon glyphicon-chevron-left"></i> Back</a>
                         </c:when>
-                        <c:when test="${fn:containsIgnoreCase(callpage , 'newFromDayTour')}">
+                        <c:when test="${fn:containsIgnoreCase(callpage , 'FromDayTour')}">
                             <a class="btn btn-primary" href="Daytour.smi?referenceNo=${param.referenceNo}"><i class="glyphicon glyphicon-chevron-left"></i> Back</a>
                         </c:when>
                     </c:choose>                                                                       
@@ -81,9 +81,9 @@
                                 <label  class="col-sm-2 control-label" >Product<font style="color: red">*</font></label>
                                 <div class="col-sm-3">  
                                     <div class="form-group">
-                                        <div class="input-group " style="padding-left: 2px">
+                                        <div class="input-group " style="padding-left: 5px">
                                             <input type="hidden"  class="form-control" name="product_id" id="product_id" value="${requestScope['product_id']}" >
-                                            <input type="text"  class="form-control"   name="product_code" id="product_code" 
+                                            <input type="text"  class="form-control" name="product_code" id="product_code" 
                                                    data-bv-notempty="true" data-bv-notempty-message="The product code is required" value="${requestScope['product_code']}">
                                             <span class="input-group-addon" id="product_modal"  data-toggle="modal" data-target="#ProductModal">
                                                 <span class="glyphicon-search glyphicon"></span>
@@ -91,25 +91,39 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">  
+                                <div class="col-sm-6" style="padding-left: 20px">  
                                     <input type="text" class="form-control" style="width: 250px" id="product_name" name="product_name" value="${requestScope['product_name']}" readonly="">
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-md-3 ">
+                                <div class="form-group">
+
+                                    <label for="effectivefrom" class="col-sm-3 control-label" > Date </label>
+                                    <div class=' col-sm-6 input-group date' id='effectivefromClass'>
+                                        <input type='text' class="form-control"  id="otherdate" name="otherdate" data-date-format="YYYY-MM-DD" value="${requestScope['otherdate']}" />
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                
+                        <div class="row">
+                             <div class="col-sm-6" style="padding-left: 70px">
                                 <label  class="col-sm-2 control-label" >Agent</label>
                                 <div class="col-sm-3">  
                                     <div class="form-group">
-                                        <div class="input-group ">
+                                        <div class="input-group " style="padding-left: 5px">
                                             <input type="hidden" class="form-control" name="agent_id" id="agent_id" value="${requestScope['agent_id']}">
-                                            <input type="text" class="form-control" readonly="" id="agent_code" name="agent_code" value="${requestScope['agent_code']}">
-                                            <span class="input-group-addon" id="agent_modal"  data-toggle="modal" data-target="#AgentModal">
+                                            <input type="text" class="form-control" id="agent_code" name="agent_code" value="${requestScope['agent_code']}">
+                                            <span class="input-group-addon" id="agent_modal" data-toggle="modal" data-target="#AgentModal">
                                                 <span class="glyphicon-search glyphicon"></span>
                                             </span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-5">  
-                                    <input type="text" class="form-control" id="agent_name" name="agent_name" value="${requestScope['agent_name']}" readonly="">
+                                <div class="col-sm-6" style="padding-left: 20px">  
+                                    <input type="text" class="form-control" style="width: 250px" id="agent_name" name="agent_name" value="${requestScope['agent_name']}" readonly="">
                                 </div>
                             </div>
                         </div>
@@ -149,19 +163,29 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-1">
-
-                                <label class="control-label"><input onclick='calculateVatvalue();' type="checkbox" id="Vat" name="Vat" ${enableVat} ${checkVat}>  Vat</label>
-                            </div>
+                            
                             <div class="col-md-3" >
                                 <div class="form-group">
                                     <label class="col-sm-3   control-label" for="cost">Currency</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control" id="Currency" disabled name="Currency" value="${requestScope['currency']}" > 
+                                    <input type="hidden" class="form-control" id="selectedCurrency" name="selectedCurrency" value="${requestScope['currency']}" >                                   
+                                    <div class="col-sm-5" style="padding-left: 20px">                                        
+                                        <select class="form-control" id="currency" name="currency">    
+                                            <c:forEach var="currency" items="${currency_list}">
+                                                <c:set var="select" value="" />
+                                                <c:if test="${currency.code == requestScope['currency']}">
+                                                    <c:set var="select" value="selected" />
+                                                </c:if>
+                                                <option value="<c:out value="${currency.code}" />" ${select}><c:out value="${currency.code}" /></option>                                         
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label class="control-label"><input onclick='calculateVatvalue();' type="checkbox" id="Vat" name="Vat" ${enableVat} ${checkVat}>  Vat</label>
                                     </div>
                                 </div>
                             </div>
-
+                            
+                            
                             <!--
                             
                             -->
@@ -189,20 +213,18 @@
                                         <input type="text" class="form-control money" id="ch_price" name="ch_price" value="${requestScope['ch_price']}" >  
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-3 ">
+                            </div>                           
+                            <div class="col-md-3" >
                                 <div class="form-group">
-
-                                    <label for="effectivefrom" class="col-sm-3 control-label" > Date </label>
-                                    <div class=' col-sm-6 input-group date' id='effectivefromClass'>
-                                        <input type='text' class="form-control"  id="otherdate" name="otherdate" data-date-format="YYYY-MM-DD" value="${requestScope['otherdate']}" />
-                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                    <label class="col-sm-3   control-label" for="cost">Time</label>
+                                    <div class='col-sm-6 input-group times' style="padding-left: 20px" id="arrive-time">
+                                        <input type='text' class="form-control" id="othertime" name="othertime" value="${requestScope['othertime']}"  />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-time"></span>
                                         </span>
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
 
                         <div class="row">
@@ -228,23 +250,18 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3" >
+                            <div class="col-md-3">
                                 <div class="form-group">
-                                    <label class="col-sm-3   control-label" for="cost">Time</label>
-                                    <div class='col-sm-6 input-group times' id="arrive-time">
-                                        <input type='text' class="form-control" id="othertime" name="othertime" value="${requestScope['othertime']}"  />
-                                        <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span>
+                                    <label class="col-sm-3   control-label" for="cost">Cancel</label>
+                                    <div class='col-sm-6 input-group date' style="padding-left: 20px"id="arrive-time">
+                                        <input type='text' disabled class="form-control" id="cancelDate" name="cancelDate" value="${requestScope['cancelDate']}"  />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>
                                 </div>
-
-                            </div>
-
+                            </div>        
                         </div> 
-
-
-
-
 
                         <div class="row">
 
@@ -257,18 +274,7 @@
                                     </div>   
                                 </div>
                             </div>   
-                            <div class="col-md-2 "></div>      
-                            <div class="col-md-3" style="padding-left: 15px">
-                                <div class="form-group">
-                                    <label class="col-sm-3   control-label" for="cost">Cancel</label>
-                                    <div class='col-sm-6 input-group date' id="arrive-time">
-                                        <input type='text' disabled class="form-control" id="cancelDate" name="cancelDate" value="${requestScope['cancelDate']}"  />
-                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
-                                </div>
-
-                            </div>        
+                            <div class="col-md-2 "></div>                                
                         </div>
                         <input type="hidden" class="form-control" id="action" name="action" value="save">
                         <input type="hidden" class="form-control" id="itemid" name="itemid" value="${requestScope['itemid']}">
@@ -307,7 +313,10 @@
             <div class="modal-body">
                 <!--Airline List Table-->
                 <table class="display" id="ProductTable">
-                    <thead>                        
+                    <thead>
+                        <script>
+                            product = [];                      
+                        </script>
                         <tr class="datatable-header">
                             <th class="hidden">ID</th>
                             <th class="">Code</th>
@@ -322,7 +331,10 @@
                                 <td>${table.code} </td>
                                 <td>${table.name} </td>
                                 <td>${table.description} </td>
-                            </tr>                           
+                            </tr>
+                            <script>
+                            product.push({id: "${table.id}",code: "${table.code}",name: "${table.name}"});
+                            </script>
                         </c:forEach>
 
                     </tbody>
@@ -395,7 +407,7 @@
                 <table class="display" id="AgentTable">
                     <thead>    
                      <script>
-                        product = [];
+                        agent = [];
                        
                      </script>
                         <tr class="datatable-header">
@@ -405,14 +417,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="table" items="${product_list}">
-                            <tr onclick ="setupagentvalue('${table.id}', '${table.code}', '${table.name}')" >
-                                <td class="hidden">${table.id}</td>
-                                <td>${table.code} </td>
-                                <td>${table.name} </td>
+                        <c:forEach var="a" items="${agent_list}">
+                            <tr onclick ="setupagentvalue('${a.id}', '${a.code}', '${a.name}')" >
+                                <td class="hidden">${a.id}</td>
+                                <td>${a.code} </td>
+                                <td>${a.name} </td>
                             </tr>      
                         <script>
-                            product.push({id: "${table.id}",code: "${table.code}",name: "${table.name}"});
+                            agent.push({id: "${a.id}",code: "${a.code}",name: "${a.name}"});
                           </script>
                         </c:forEach>
 
@@ -437,25 +449,23 @@
                                 $('#hdGridSelected').val('');
                             }
                             else {
-                                table.$('tr.row_selected').removeClass('row_selected');
+                                a.$('tr.row_selected').removeClass('row_selected');
                                 $(this).addClass('row_selected');
                                 $('#hdGridSelected').val($('#MasterProduct tbody tr.row_selected').attr("id"));
                             }
                         });
 
                         $("div").find('.date').datetimepicker();
-    $("div").find('.times').datetimepicker({
-        pickDate: false,
-        pickTime: true,
-        pick12HourFormat: false,
-        format: 'HH:mm'
-    });
-    $("div").find('.input-group-addon').click(function () {
-        var position = $(this).offset();
-        $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
-    });
-                       
-
+                        $("div").find('.times').datetimepicker({
+                            pickDate: false,
+                            pickTime: true,
+                            pick12HourFormat: false,
+                            format: 'HH:mm'
+                        });
+                        $("div").find('.input-group-addon').click(function () {
+                            var position = $(this).offset();
+                            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+                        });                      
                     });
                 </script>
 

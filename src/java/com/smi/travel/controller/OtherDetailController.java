@@ -7,9 +7,11 @@ import com.smi.travel.datalayer.entity.OtherBooking;
 import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.BookingOtherService;
+import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -24,6 +26,7 @@ public class OtherDetailController extends SMITravelController {
     private static final String AGENTLIST ="agent_list";
     private static final String TransectionResult = "result";
     private static final String BOOKINGTYPE = "BOOKING_TYPE";
+    private static final String CurrencyList = "currency_list";
     private UtilityService utilservice;
     private BookingOtherService OtherService;
     private UtilityFunction util;
@@ -31,7 +34,7 @@ public class OtherDetailController extends SMITravelController {
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String action = request.getParameter("action");
-        String callPageFrom = request.getParameter("action");
+        String callPageFrom = request.getParameter("callPageFrom");
         String itemid = request.getParameter("itemid");
         String productName = request.getParameter("product_name");
         String productCode = request.getParameter("product_code");
@@ -55,6 +58,8 @@ public class OtherDetailController extends SMITravelController {
         String refno = request.getParameter("referenceNo");
         String status = request.getParameter("status");
         String isbill = request.getParameter("isbill");
+        
+                
         SystemUser user = (SystemUser) session.getAttribute("USER");
 
         util = new UtilityFunction();
@@ -65,25 +70,19 @@ public class OtherDetailController extends SMITravelController {
         
         Master master = utilservice.getbookingFromRefno(refno);
         
-        if(callPageFrom.equalsIgnoreCase("newFromDayTour")){
-            adQty = String.valueOf(master.getAdult());
-            chQty = String.valueOf(master.getChild());
-            inQty = String.valueOf(master.getInfant());
+        if((callPageFrom!=null) && (callPageFrom.equalsIgnoreCase("FromDayTour"))){
             request.setAttribute("callpage", callPageFrom);
         }               
                 
-        if(callPageFrom.equalsIgnoreCase("newFromOther")){
-            adQty = String.valueOf(master.getAdult());
-            chQty = String.valueOf(master.getChild());
-            inQty = String.valueOf(master.getInfant());
+        if((callPageFrom!=null) && (callPageFrom.equalsIgnoreCase("FromOther"))){
             request.setAttribute("callpage", callPageFrom);
         }
         
-        /*if(action.equalsIgnoreCase("new")){
+        if(action.equalsIgnoreCase("new")){
             adQty = String.valueOf(master.getAdult());
             chQty = String.valueOf(master.getChild());
             inQty = String.valueOf(master.getInfant());
-        }*/
+        }
         
         request.setAttribute("Master", master);
         System.out.println("agentId : "+agentId);
@@ -226,6 +225,8 @@ public class OtherDetailController extends SMITravelController {
         request.setAttribute("remark", remark);
         request.setAttribute(PRODUCTLIST, OtherService.getListMasterProduct());
         request.setAttribute(AGENTLIST, utilservice.getListAgent());
+        List<MCurrency> mCurrency = utilservice.getListMCurrency();
+        request.setAttribute(CurrencyList, mCurrency);
         System.out.println("OtherController");
         return OtherDetail;
     }

@@ -116,7 +116,7 @@
         <div class="col-sm-2 col-sm-offset-4 text-right" style="padding-left: 26px">
            
             <div class="form-actions pull-right" style="padding-right: 0px">
-                <a href="OtherDetail.smi?referenceNo=${param.referenceNo}&action=newFromDayTour"><button type="button" id="acs" onclick=""  class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>Add</button>  </a>  
+                <a href="OtherDetail.smi?referenceNo=${param.referenceNo}&action=new&callPageFrom=FromDayTour"><button type="button" id="acs" onclick=""  class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>Add</button>  </a>  
             </div>
         </div> 
     </div>
@@ -171,7 +171,7 @@
                             </td>
                             <td>
                                 <center> 
-                                    <a href="OtherDetail.smi?referenceNo=${param.referenceNo}&itemid=${table.id}&action=edit"><span class="glyphicon glyphicon-edit editicon"      onclick="" ></span></a>
+                                    <a href="OtherDetail.smi?referenceNo=${param.referenceNo}&itemid=${table.id}&action=edit&callPageFrom=FromDayTour"><span class="glyphicon glyphicon-edit editicon"      onclick="" ></span></a>
                                     <c:if test="${table.status.id == 2}">
                                         <span class="glyphicon glyphicon-plus addicon"   onclick="EnableOther('${table.id}',' ${table.product.code}');" data-toggle="modal" data-target="#EnableOther" ></span>
                                     </c:if>
@@ -201,6 +201,7 @@
                 <input type="hidden" id="daytourCode" name="tourCode"/>
                 <input type="hidden" id="referenceNo" name="referenceNo"/>
                 <input type="hidden" id="action" name="action" />
+                <input type="hidden" id="callPageFrom" name="callPageFrom" />
                 <div class="modal-footer">
                     <button type="button" id="disableModal" name="disableModal" class="btn btn-danger">Disable</button>
                     <button type="button" id="enableModal" name="enableModal" class="btn btn-success">Enable</button>
