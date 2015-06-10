@@ -108,17 +108,20 @@
         </div>
     </div><!--row1-->
     
-    <div class="row">
-        <div class="col-sm-2"></div>
-        
-        <div class="row-fluid">
-            <label class="control-label"><h4>Other</h4></label>
-            <div class="form-actions pull-right" style="padding-right: 20px">
+    
+    <div class="row" style="padding-left: 15px">
+        <div class="col-sm-6" style="padding-left: 230px">
+            <h4><b>Other</b></h4>
+        </div>
+        <div class="col-sm-2 col-sm-offset-4 text-right" style="padding-left: 26px">
+           
+            <div class="form-actions pull-right" style="padding-right: 0px">
                 <a href="OtherDetail.smi?referenceNo=${param.referenceNo}&action=newFromDayTour"><button type="button" id="acs" onclick=""  class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>Add</button>  </a>  
             </div>
         </div> 
     </div>
     
+            
     <div class="row">
         <div class="col-sm-2"></div>
         <div class="col-sm-10">
