@@ -58,14 +58,14 @@
                     <div class="col-md-3 ">
                         <div class="form-group">
                             <label for="CurrencyCodeS">Code</label>
-                            <input type="text"   class="form-control" maxlength="3" id="CurrencyCodeS" name="CurrencyCode" value="${requestScope['currencyCode']}">
+                            <input type="text"   class="form-control" maxlength="3" id="CurrencyCodeS" name="CurrencyCode" style="text-transform:uppercase" value="${requestScope['currencyCode']}">
 
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="CurrencyNameS">Description</label>
-                            <input type="text"  class="form-control" maxlength="50" id="CurrencyNameS" name="CurrencyName" value="${requestScope['currencyName']}">
+                            <input type="text"  class="form-control" maxlength="50" id="CurrencyNameS" name="CurrencyName" style="text-transform:uppercase" value="${requestScope['currencyName']}">
                         </div>
                     </div>
 
@@ -105,8 +105,8 @@
                         <tbody>
                             <c:forEach var="table" items="${dataList}" varStatus="dataStatus">
                                 <tr>
-                                    <td><c:out value="${table.code}" /></td>
-                                    <td><c:out value="${table.description}" /></td>
+                                    <td><c:out value="${fn:toUpperCase(table.code)}" /></td>
+                                    <td><c:out value="${fn:toUpperCase(table.description)}" /></td>
                                     <td>
                                         <center> 
                                             <span id="spanEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon"      onclick="EditCurrency('${table.id}', '${table.code}', '${table.description}')" data-toggle="modal" data-target="#CurrencyModal" ></span>
@@ -139,13 +139,13 @@
                     <div class="form-group">
                         <label for="CurrencyCode" class="col-sm-3 control-label" >Code <font style="color: red">*</font></label>
                         <div class="col-sm-8"> 
-                            <input type="text" class="form-control" maxlength="3" id="CurrencyCode" name="CurrencyCode" >
+                            <input type="text" class="form-control" maxlength="3" id="CurrencyCode" style="text-transform:uppercase" name="CurrencyCode" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="CurrencyName" class="col-sm-3 control-label" >Description <font style="color: red">*</font></label>
                         <div class="col-sm-8">  
-                            <input type="text" class="form-control" maxlength="50" id="CurrencyName" name="CurrencyName" >
+                            <input type="text" class="form-control" maxlength="50" id="CurrencyName" style="text-transform:uppercase" name="CurrencyName" >
                         </div>
                     </div> 
                     <input type="hidden" id="CurrencyID" name="CurrencyID" >

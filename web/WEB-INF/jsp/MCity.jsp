@@ -59,14 +59,14 @@
                     <div class="col-md-3 ">
                         <div class="form-group">
                             <label for="CityCodeS">Code</label>
-                            <input type="text"   class="form-control" maxlength="3" id="CityCodeS" name="CityCode" value="${requestScope['cityCode']}">
+                            <input type="text"   class="form-control" maxlength="3" id="CityCodeS" name="CityCode" style="text-transform:uppercase" value="${requestScope['cityCode']}">
 
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="CityNameS">Name</label>
-                            <input type="text"  class="form-control" maxlength="50" id="CityNameS" name="CityName" value="${requestScope['cityName']}">
+                            <input type="text"  class="form-control" maxlength="50" id="CityNameS" name="CityName" style="text-transform:uppercase" value="${requestScope['cityName']}">
                         </div>
                     </div>
 
@@ -106,8 +106,8 @@
                         <tbody>
                             <c:forEach var="table" items="${dataList}" varStatus="dataStatus">
                                 <tr>
-                                    <td><c:out value="${table.code}" /></td>
-                                    <td><c:out value="${table.name}" /></td>
+                                    <td><c:out value="${fn:toUpperCase(table.code)}" /></td>
+                                    <td><c:out value="${fn:toUpperCase(table.name)}" /></td>
                                     <td>
                                         <center> 
                                             <span id="spanEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon"      onclick="EditCity('${table.id}', '${table.code}', '${table.name}')" data-toggle="modal" data-target="#CityModal" ></span>
@@ -140,13 +140,13 @@
                     <div class="form-group">
                         <label for="CityCode" class="col-sm-3 control-label" >Code <font style="color: red">*</font></label>
                         <div class="col-sm-8"> 
-                            <input type="text" class="form-control" maxlength="3" id="CityCode" name="CityCode" >
+                            <input type="text" class="form-control" maxlength="3" id="CityCode" style="text-transform:uppercase" name="CityCode" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="CityName" class="col-sm-3 control-label" >Name <font style="color: red">*</font></label>
                         <div class="col-sm-8">  
-                            <input type="text" class="form-control" maxlength="50" id="CityName" name="CityName" >
+                            <input type="text" class="form-control" maxlength="50" id="CityName" style="text-transform:uppercase" name="CityName" >
                         </div>
                     </div> 
                     <input type="hidden" id="CityID" name="CityID" >

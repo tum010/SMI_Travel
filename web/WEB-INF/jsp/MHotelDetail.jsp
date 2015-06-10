@@ -53,8 +53,8 @@
                             <div class="form-group">
                                 <label class="col-sm-2   control-label" for="Country">Code<font style="color: red">*</font></label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="hotelcode" ${disableHotelCode} maxlength="10" name="hotelcode"  value="${requestScope['hotelcode']}" >  
-                                    <input type="text" class="hidden" id="temphotelcode"  maxlength="10" name="temphotelcode"  value="${requestScope['hotelcode']}" >
+                                    <input type="text" class="form-control" id="hotelcode" ${disableHotelCode} maxlength="10" name="hotelcode"  style="text-transform:uppercase" value="${requestScope['hotelcode']}" >  
+                                    <input type="text" class="hidden" id="temphotelcode"  maxlength="10" name="temphotelcode" style="text-transform:uppercase" value="${requestScope['hotelcode']}" >
                                 </div>
                             </div>
                         </div>
@@ -62,7 +62,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="fromcity">Name<font style="color: red">*</font></label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="hotelname" maxlength="50" name="hotelname" value="${requestScope['hotelname']}" >  
+                                    <input type="text" class="form-control" id="hotelname" maxlength="50" name="hotelname" style="text-transform:uppercase" value="${requestScope['hotelname']}" >  
                                 </div>
                             </div>
                         </div>
@@ -166,7 +166,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="fromAdd">Address</label>
                                 <div class="col-sm-10">  
-                                    <textarea name="address" id="address" class="form-control" maxlength="255" rows="3">${requestScope['address']}</textarea>
+                                    <textarea name="address" id="address" class="form-control" maxlength="255" style="text-transform:uppercase" rows="3">${requestScope['address'] }</textarea>
                                 </div>   
                             </div>
                         </div>

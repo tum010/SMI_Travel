@@ -54,14 +54,14 @@
                     <div class="col-md-3 ">
                         <div class="form-group">
                             <label for="CountryCodeS">Code</label>
-                            <input type="text"   class="form-control" maxlength="3" id="CountryCodeS" name="CountryCode" value="${requestScope['countryCode']}">
+                            <input type="text"   class="form-control" maxlength="3" id="CountryCodeS" name="CountryCode" style="text-transform:uppercase" value="${requestScope['countryCode']}">
 
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="CountryNameS">Name</label>
-                            <input type="text"  class="form-control"  id="CountryNameS" name="CountryName" value="${requestScope['countryName']}">
+                            <input type="text"  class="form-control"  id="CountryNameS" name="CountryName" style="text-transform:uppercase" value="${requestScope['countryName']}">
                         </div>
                     </div>
 
@@ -101,8 +101,8 @@
                         <tbody>
                             <c:forEach var="table" items="${dataList}" varStatus="dataStatus">
                                 <tr>
-                                    <td><c:out value="${table.code}" /></td>
-                                    <td><c:out value="${table.name}" /></td>
+                                    <td><c:out value="${fn:toUpperCase(table.code)}" /></td>
+                                    <td><c:out value="${fn:toUpperCase(table.name)}" /></td>
                                     <td>
                                         <center> 
                                             <span id="spanEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon"      onclick="EditCountry('${table.id}', '${table.code}', '${table.name}')" data-toggle="modal" data-target="#CountryModal" ></span>
@@ -135,13 +135,13 @@
                     <div class="form-group">
                         <label for="CountryCode" class="col-sm-3 control-label" >Code <font style="color: red">*</font></label>
                         <div class="col-sm-8"> 
-                            <input type="text" class="form-control" maxlength="3" id="CountryCode" name="CountryCode" >
+                            <input type="text" class="form-control" maxlength="3" id="CountryCode" style="text-transform:uppercase" name="CountryCode" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="CountryName" class="col-sm-3 control-label" >Name <font style="color: red">*</font></label>
                         <div class="col-sm-8">  
-                            <input type="text" class="form-control" id="CountryName" maxlength="50" name="CountryName" >
+                            <input type="text" class="form-control" id="CountryName" maxlength="50" style="text-transform:uppercase" name="CountryName" >
                         </div>
                     </div> 
                     <input type="hidden" id="CountryID" name="CountryID" >

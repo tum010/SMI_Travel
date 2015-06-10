@@ -58,20 +58,20 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="AirCodeS">Code</label>
-                            <input type="text"   class="form-control" maxlength="3" id="AirCodeS" name="AirCodeS" value="${requestScope['airCode']}">
+                            <input type="text"   class="form-control" maxlength="3" id="AirCodeS" name="AirCodeS" style="text-transform:uppercase" value="${requestScope['airCode']}">
 
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="AirNameS">Name</label>
-                            <input type="text"  class="form-control" id="AirNameS" name="AirNameS" value="${requestScope['airName']}">
+                            <input type="text"  class="form-control" id="AirNameS" name="AirNameS" style="text-transform:uppercase" value="${requestScope['airName']}">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="Code3S">Code 3 letter</label>
-                            <input type="text"  class="form-control" maxlength="3" id="Code3S" name="Code3S" value="${requestScope['code3']}">
+                            <input type="text"  class="form-control" maxlength="3" id="Code3S" name="Code3S" style="text-transform:uppercase" value="${requestScope['code3']}">
                         </div>
                     </div>
 
@@ -112,9 +112,9 @@
                             <c:forEach var="table" items="${dataList}" varStatus="dataStatus">
                                 <tr>
                                     <td class="hidden" ><c:out value="${table.name}" /></td>
-                                    <td><c:out value="${table.code}" /></td>
-                                    <td><c:out value="${table.name}" /></td>
-                                    <td><c:out value="${table.code3Letter}" /></td>
+                                    <td><c:out value="${fn:toUpperCase(table.code)}"  /></td>
+                                    <td><c:out value="${fn:toUpperCase(table.name)}"/></td>
+                                    <td><c:out value="${fn:toUpperCase(table.code3Letter)}" /></td>
                                     <td>
                             <center> 
                                 <span id="editSpan${dataStatus.count}" class="glyphicon glyphicon-edit editicon"      onclick="EditAir('${table.id}', '${table.code}', '${table.name}', '${table.code3Letter}')" data-toggle="modal" data-target="#AirModal" ></span>
@@ -148,19 +148,19 @@
                     <div class="form-group">
                         <label for="AirCode" class="col-sm-3 control-label" >Code <font style="color: red">*</font></label>
                         <div class="col-sm-8"> 
-                            <input type="text" class="form-control" maxlength="3" id="AirCode" name="AirCode" required >
+                            <input type="text" class="form-control" maxlength="3" id="AirCode" name="AirCode" style="text-transform:uppercase" required >
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="AirName" class="col-sm-3 control-label" >Name <font style="color: red">*</font></label>
                         <div class="col-sm-8">  
-                            <input type="text" class="form-control" maxlength="50" id="AirName" name="AirName" required >
+                            <input type="text" class="form-control" maxlength="50" id="AirName" name="AirName" style="text-transform:uppercase" required >
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="Code3" class="col-sm-3 control-label" >Code 3 Letter</label>
                         <div class="col-sm-8">   
-                            <input type="text" class="form-control" maxlength="3" id="Code3" name="Code3" > 
+                            <input type="text" class="form-control" maxlength="3" id="Code3" name="Code3" style="text-transform:uppercase" > 
                         </div>
                     </div>
                     <input type="hidden" id="AirID" name="AirID" >

@@ -41,9 +41,9 @@ public class MAirticketController extends SMITravelController {
             name = request.getParameter("AirNameS");
             code3L = request.getParameter("Code3S");
 
-            air.setCode(code);
-            air.setName(name);
-            air.setCode3Letter(code3L);
+            air.setCode(code.toUpperCase());
+            air.setName(name.toUpperCase());
+            air.setCode3Letter(code3L.toUpperCase());
             List<MAirline> list = AirticketService.searchAirline(air,2);
            
             request.setAttribute(DataList, list);

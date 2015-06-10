@@ -62,14 +62,14 @@
                     <div class="col-md-3 ">
                         <div class="form-group">
                             <label for="AirportCodeS">Code</label>
-                            <input type="text"   class="form-control" maxlength="3" id="AirportCodeS" name="AirportCode" value="${requestScope['airportCode']}">
+                            <input type="text"   class="form-control" maxlength="3" id="AirportCodeS" name="AirportCode" style="text-transform:uppercase" value="${requestScope['airportCode']}">
 
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="AirportNameS">Name</label>
-                            <input type="text"  class="form-control" maxlength="50" id="AirportNameS" name="AirportName" value="${requestScope['airportName']}">
+                            <input type="text"  class="form-control" maxlength="50" id="AirportNameS" name="AirportName" style="text-transform:uppercase" value="${requestScope['airportName']}">
                         </div>
                     </div>
 
@@ -111,8 +111,8 @@
                             <c:forEach var="table" items="${dataList}" varStatus="dataStatus">
                                 <tr>
                                     <td class="hidden"><c:out value="${table.name}" /></td>
-                                    <td><c:out value="${table.code}" /></td>
-                                    <td><c:out value="${table.name}" /></td>
+                                    <td><c:out value="${fn:toUpperCase(table.code)}" /></td>
+                                    <td><c:out value="${fn:toUpperCase(table.name)}" /></td>
                                     <td>
                             <center> 
                                 <span id="spanEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon"      onclick="EditAirport('${table.id}', '${table.code}', '${table.name}')" data-toggle="modal" data-target="#AirportModal" ></span>
@@ -145,13 +145,13 @@
                     <div class="form-group">
                         <label for="AirportCode" class="col-sm-3 control-label" >Code <font style="color: red">*</font></label>
                         <div class="col-sm-8"> 
-                            <input type="text" class="form-control" maxlength="3" id="AirportCode" name="AirportCode" >
+                            <input type="text" class="form-control" maxlength="3" id="AirportCode" style="text-transform:uppercase" name="AirportCode" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="AirportName" class="col-sm-3 control-label" >Name <font style="color: red">*</font></label>
                         <div class="col-sm-8">  
-                            <input type="text" class="form-control" maxlength="50" id="AirportName" name="AirportName" >
+                            <input type="text" class="form-control" maxlength="50" id="AirportName" style="text-transform:uppercase" name="AirportName" >
                         </div>
                     </div> 
                     <input type="hidden" id="AirportID" name="AirportID" >

@@ -53,7 +53,7 @@
                     <div class="col-md-3 ">
                         <div class="form-group">
                             <label for="PlaceName">name</label>
-                            <input type="text"   class="form-control"  id="PlaceNameS" name="Placename" value="${requestScope['placeName']}">
+                            <input type="text"   class="form-control"  id="PlaceNameS" name="Placename" style="text-transform:uppercase" value="${requestScope['placeName']}">
 
                         </div>
                     </div>
@@ -111,8 +111,8 @@
                         <tbody>
                             <c:forEach var="table" items="${dataList}" varStatus="dataStatus">
                                 <tr>
-                                    <td><c:out value="${table.place}" /></td>
-                                    <td><center><c:out value="${table.MPlacestatus.name}" /></center></td>
+                                    <td><c:out value="${fn:toUpperCase(table.place)}" /></td>
+                                    <td><center><c:out value="${fn:toUpperCase(table.MPlacestatus.name)}" /></center></td>
                                     <td>
                                         <center> 
                                             <span id="spanEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon"      onclick="EditPlace('${table.id}', '${table.place}','${table.MPlacestatus.id}')" data-toggle="modal" data-target="#PlaceModal" ></span>
@@ -144,7 +144,7 @@
                     <div class="form-group">
                         <label for="CityCode" class="col-sm-3 control-label" >Name <font style="color: red">*</font></label>
                         <div class="col-sm-8"> 
-                            <input type="text" class="form-control" maxlength="50" id="Placename" name="Placename" >
+                            <input type="text" class="form-control" maxlength="50" id="Placename" style="text-transform:uppercase" name="Placename" >
                         </div>
                     </div>
                     <div class="form-group">

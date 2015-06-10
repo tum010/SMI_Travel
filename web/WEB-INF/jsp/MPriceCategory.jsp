@@ -60,14 +60,14 @@
                     <div class="col-md-3 ">
                         <div class="form-group">
                             <label for="PricecategoryCodeS">Code</label>
-                            <input type="text"   class="form-control" maxlength="3" id="PricecategoryCodeS" name="PricecategoryCode" value="${requestScope['pricecategoryCode']}">
+                            <input type="text"   class="form-control" maxlength="3" id="PricecategoryCodeS" name="PricecategoryCode" style="text-transform:uppercase" value="${requestScope['pricecategoryCode']}">
 
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="PricecategoryNameS">Name</label>
-                            <input type="text"  class="form-control" maxlength="50" id="PricecategoryNameS" name="PricecategoryName" value="${requestScope['pricecategoryName']}">
+                            <input type="text"  class="form-control" maxlength="50" id="PricecategoryNameS" name="PricecategoryName" style="text-transform:uppercase" value="${requestScope['pricecategoryName']}">
                         </div>
                     </div>
 
@@ -107,8 +107,8 @@
                         <tbody>
                             <c:forEach var="table" items="${dataList}" varStatus="dataStatus">
                                 <tr>
-                                    <td><c:out value="${table.code}" /></td>
-                                    <td><c:out value="${table.name}" /></td>
+                                    <td><c:out value="${fn:toUpperCase(table.code)}" /></td>
+                                    <td><c:out value="${fn:toUpperCase(table.name)}" /></td>
                                     <td>
                                         <center> 
                                             <span id="btnEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon"      onclick="EditPricecategory('${table.id}', '${table.code}', '${table.name}')" data-toggle="modal" data-target="#PricecategoryModal" ></span>
@@ -141,13 +141,13 @@
                     <div class="form-group">
                         <label for="PricecategoryCode" class="col-sm-3 control-label" >Code <font style="color: red">*</font></label>
                         <div class="col-sm-8"> 
-                            <input type="text" class="form-control" maxlength="3" id="PricecategoryCode" name="PricecategoryCode" >
+                            <input type="text" class="form-control" maxlength="3" id="PricecategoryCode" style="text-transform:uppercase" name="PricecategoryCode" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="PricecategoryName" class="col-sm-3 control-label" >Name <font style="color: red">*</font></label>
                         <div class="col-sm-8">  
-                            <input type="text" class="form-control" maxlength="50" id="PricecategoryName" name="PricecategoryName" >
+                            <input type="text" class="form-control" maxlength="50" id="PricecategoryName" style="text-transform:uppercase" name="PricecategoryName" >
                         </div>
                     </div> 
                     <input type="hidden" id="PricecategoryID" name="PricecategoryID" >

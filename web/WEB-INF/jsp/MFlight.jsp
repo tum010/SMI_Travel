@@ -61,14 +61,14 @@
                     <div class="col-md-3 ">
                         <div class="form-group">
                             <label for="FlightCodeS">Code</label>
-                            <input type="text"   class="form-control" maxlength="3" id="FlightCodeS" name="FlightCode" value="${requestScope['flightCode']}">
+                            <input type="text"   class="form-control" maxlength="3" id="FlightCodeS" name="FlightCode" style="text-transform:uppercase" value="${requestScope['flightCode']}">
 
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="FlightNameS">Name</label>
-                            <input type="text"  class="form-control"  id="FlightNameS" name="FlightName" value="${requestScope['flightName']}">
+                            <input type="text"  class="form-control"  id="FlightNameS" name="FlightName" style="text-transform:uppercase" value="${requestScope['flightName']}">
                         </div>
                     </div>
 
@@ -108,8 +108,8 @@
                         <tbody>
                             <c:forEach var="table" items="${dataList}" varStatus="dataStatus">
                                 <tr>
-                                    <td><c:out value="${table.code}" /></td>
-                                    <td><c:out value="${table.name}" /></td>
+                                    <td><c:out value="${fn:toUpperCase(table.code)}" /></td>
+                                    <td><c:out value="${fn:toUpperCase(table.name)}" /></td>
                                     <td>
                                         <center> 
                                             <span id="spanEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon"      onclick="EditFlight('${table.id}', '${table.code}', '${table.name}')" data-toggle="modal" data-target="#FlightModal" ></span>
@@ -142,13 +142,13 @@
                     <div class="form-group">
                         <label for="FlightCode" class="col-sm-3 control-label" >Code <font style="color: red">*</font></label>
                         <div class="col-sm-8"> 
-                            <input type="text" class="form-control" maxlength="3" id="FlightCode" name="FlightCode" >
+                            <input type="text" class="form-control" maxlength="3" id="FlightCode" style="text-transform:uppercase" name="FlightCode" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="FlightName" class="col-sm-3 control-label" >Name <font style="color: red">*</font></label>
                         <div class="col-sm-8">  
-                            <input type="text" class="form-control" maxlength="50" id="FlightName" name="FlightName" >
+                            <input type="text" class="form-control" maxlength="50" id="FlightName" style="text-transform:uppercase" name="FlightName" >
                         </div>
                     </div> 
                     <input type="hidden" id="FlightID" name="FlightID" >

@@ -65,14 +65,14 @@
                     <div class="col-md-3 ">
                         <div class="form-group">
                             <label for="ProductCodeS">Code</label>
-                            <input type="text" class="form-control" maxlength="10" id="CodeS" name="code"  value="${requestScope['master']}">
+                            <input type="text" class="form-control" maxlength="10" id="CodeS" name="code"  style="text-transform:uppercase" value="${requestScope['master']}">
 
                         </div>
                     </div>
                     <div class="col-md-3 ">
                         <div class="form-group">
                             <label for="ProductNameS">Name</label>
-                            <input type="text" class="form-control" maxlength="50" id="NameS" name="name"  value="${requestScope['name']}">
+                            <input type="text" class="form-control" maxlength="50" id="NameS" name="name"  style="text-transform:uppercase" value="${requestScope['name']}">
 
                         </div>
                     </div>
@@ -147,8 +147,8 @@
                         <tbody>   
                             <c:forEach var="table" items="${dataList}" varStatus="dataStatus">
                                 <tr>
-                                    <td><c:out value="${table.code}" /> </td>
-                                    <td><c:out value="${table.name}" /> </td>
+                                    <td><c:out value="${fn:toUpperCase(table.code)}" /></td>
+                                    <td><c:out value="${fn:toUpperCase(table.name)}" /></td>
                                     <td><c:out value="${table.effectiveFrom}" /> </td>
                                     <td><c:out value="${table.effectiveTo}" /> </td>
                                     <td class='tdcenter moneyformat' ><c:out value="${table.adCost}" /> </td>

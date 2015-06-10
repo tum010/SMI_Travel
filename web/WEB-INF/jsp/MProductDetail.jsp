@@ -86,7 +86,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2   control-label" for="codeProduct">Code<font style="color: red">*</font></label>
                                 <div class="col-sm-10">
-                                    <input type="text" maxlength="20" class="form-control" ${disableProductCode} id="code" name="code" value="${requestScope['code']}" >  
+                                    <input type="text" maxlength="20" class="form-control" ${disableProductCode} id="code" name="code" style="text-transform:uppercase" value="${requestScope['code']}" >  
                                     <input type="text" maxlength="20" class="hidden"  id="tempcode" name="tempcode" value="${requestScope['code']}" >  
                                 </div>
                             </div>
@@ -95,7 +95,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="nameProduct">Name<font style="color: red">*</font></label>
                                 <div class="col-sm-10">
-                                    <input type="text" maxlength="100" class="form-control" id="name" name="name" value="${requestScope['name']}">  
+                                    <input type="text" maxlength="100" class="form-control" id="name" name="name" style="text-transform:uppercase" value="${requestScope['name']}">  
                                 </div>
                             </div>
                         </div>

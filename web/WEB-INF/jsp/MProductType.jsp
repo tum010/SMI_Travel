@@ -63,7 +63,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="ProductTypeNameS">Name</label>
-                            <input type="text"  class="form-control" maxlength="50" id="ProductTypeNameS" name="ProductTypeName"  value="${requestScope['productTypeName']}">
+                            <input type="text"  class="form-control" maxlength="50" id="ProductTypeNameS" name="ProductTypeName"  style="text-transform:uppercase" value="${requestScope['productTypeName']}">
                         </div>
                     </div>
 
@@ -101,8 +101,8 @@
                         <tbody>
                             <c:forEach var="table" items="${dataList}">
                                 <tr>
-                                    <td><c:out value="${table.id}" /></td>
-                                    <td><c:out value="${table.name}" /></td>
+                                    <td><c:out value="${fn:toUpperCase(table.id)}" /></td>
+                                    <td><c:out value="${fn:toUpperCase(table.name)}" /></td>
                                     <td>
                                         <center> 
                                             <span class="glyphicon glyphicon-edit editicon"      onclick="EditProductType('${table.id}', '${table.name}')" data-toggle="modal" data-target="#ProductTypeModal" ></span>
@@ -136,7 +136,7 @@
                     <div class="form-group">
                         <label for="ProductTypeName" class="col-sm-3 control-label" >Name <font style="color: red">*</font></label>
                         <div class="col-sm-8">  
-                            <input type="text" class="form-control" maxlength="50" id="ProductTypeName" name="ProductTypeName" >
+                            <input type="text" class="form-control" maxlength="50" id="ProductTypeName" style="text-transform:uppercase" name="ProductTypeName" >
                         </div>
                     </div> 
                     <input type="hidden" id="ProductTypeID" name="ProductTypeID" >

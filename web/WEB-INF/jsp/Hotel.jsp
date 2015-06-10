@@ -21,14 +21,14 @@
             <div class="col-md-3  col-xs-offset-3">
                 <div class="form-group">
                     <label for="HotelCodeS">Code</label>
-                    <input type="text" class="form-control" maxlength="10" id="CodeS" name="code" value="${requestScope['hotelCode']}">
+                    <input type="text" class="form-control" maxlength="10" id="CodeS" name="code" style="text-transform:uppercase" value="${requestScope['hotelCode']}">
 
                 </div>
             </div>
             <div class="col-md-3 ">
                 <div class="form-group">
                     <label for="HotelNameS">Name</label>
-                    <input type="text" class="form-control" maxlength="50" id="NameS" name="name" value="${requestScope['hotelName']}">
+                    <input type="text" class="form-control" maxlength="50" id="NameS" name="name" style="text-transform:uppercase" value="${requestScope['hotelName']}">
                 </div>
             </div>
 
@@ -71,12 +71,12 @@
                 <tbody>
                     <c:forEach var="table" items="${dataList}" varStatus="dataStatus">
                         <tr>
-                            <td> <c:out value="${table.code}" /></td>
-                            <td> <c:out value="${table.name}" /></td>
-                            <td> <c:out value="${table.MCity.name}" /></td>
-                            <td> <c:out value="${table.MCountry.name}" /></td>
-                            <td> <c:out value="${table.telNo}" /></td>
-                            <td>
+                            <td><c:out value="${fn:toUpperCase(table.code)}" /></td>
+                            <td><c:out value="${fn:toUpperCase(table.name)}" /></td>
+                            <td><c:out value="${fn:toUpperCase(table.MCity.name)}" /></td>
+                            <td><c:out value="${fn:toUpperCase(table.MCountry.name)}" /></td>
+                            <td><c:out value="${table.telNo}" /></td>
+                    <td>
                     <center> 
                         <a id="btnEdit${dataStatus.count}" href="MHotelDetail.smi?hotelid=${table.id}&action=edit">
                             <span id="spanEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon"  ></span>
