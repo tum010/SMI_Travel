@@ -11,6 +11,7 @@ import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,6 +46,7 @@ public class MPackageDetailController extends SMITravelController {
         String detail = util.StringUtilReplaceChar(request.getParameter("detail"));
         String status = util.StringUtilReplaceChar(request.getParameter("status"));
         String countItinerary = request.getParameter("counterItinerary");
+        String conutCity = request.getParameter("passengerCounter");
         String countPrice = request.getParameter("counterPrice");
         System.out.println("action  :" + action);
         String result = "";
@@ -81,10 +83,15 @@ public class MPackageDetailController extends SMITravelController {
                 if (util.convertStringToInteger(countPrice) != 0) {
                     setPackagePrice(request, countPrice, pack);
                 }
+                // Package City
+                if(util.convertStringToInteger(conutCity) != 0){
+                    setPckageCity(request, conutCity, pack);
+                }
                 List<PackagePrice> paList = new ArrayList<PackagePrice>(pack.getPackagePrices());
                 for (int i = 0; i < paList.size(); i++) {
                     System.out.println("cost : price " + paList.get(i).getAdCost() + " , " + paList.get(i).getAdPrice());
                 }
+                
                 result = packageTourservice.SavePackage(pack);
 
                 if (result.equalsIgnoreCase("success")) {
@@ -125,8 +132,13 @@ public class MPackageDetailController extends SMITravelController {
             packageID = Packagedetail.getId();
             request.setAttribute(DisabledCode, "readonly");
             request.setAttribute(ITINERARYLIST, SortItineraryList(new ArrayList<PackageItinerary>(Packagedetail.getPackageItineraries())));
+            // Package Price
             List<PackagePrice> paList = new ArrayList<PackagePrice>(Packagedetail.getPackagePrices());
             request.setAttribute(PRICELIST, SortPriceList(paList));
+            // Package City 
+            List<PackageCity> listPackageCity = Packagedetail.getPackageCities();
+            request.setAttribute("ListPackageCity", listPackageCity);
+            
             if (status.equalsIgnoreCase("inactive")) {
                 request.setAttribute("IsInactive", "selected");
             }
@@ -150,6 +162,12 @@ public class MPackageDetailController extends SMITravelController {
             String priceId = request.getParameter("priceId");
             System.out.println("priceId : " + priceId);
             result = packageTourservice.DeletePackagePrice(priceId);
+            System.out.println(result);
+        }else if("deleteCity".equalsIgnoreCase(action)){
+            System.out.println("Delete City");
+            String cityId = request.getParameter("CityID");
+            System.out.println("city id : " + cityId);
+            result = packageTourservice.DeletePackageCity(cityId);
             System.out.println(result);
         }
 
@@ -254,6 +272,34 @@ public class MPackageDetailController extends SMITravelController {
         }
     }
 
+    public void setPckageCity(HttpServletRequest request, String CityRows, PackageTour packagetour){
+        util = new UtilityFunction();
+        int cityRows = Integer.parseInt(CityRows);
+        if(packagetour.getPackageCities() == null){
+            packagetour.setPackageCities(new LinkedList<PackageCity>());
+        }
+        if (cityRows == 1) {
+            return;
+        }
+        
+        for (int i = 1; i < cityRows  ; i++) {
+            PackageCity city = new PackageCity();
+            MCity mCity = new MCity();
+            String nameCity = request.getParameter("row-passenger-" + i + "-name");
+            String idCity = request.getParameter("row-passenger-" + i + "-id");
+            
+            if(nameCity != null){
+                mCity.setName(nameCity);
+            }
+            if(idCity != null){
+                mCity.setId(idCity);
+            }
+            city.setMCity(mCity);
+            city.setPackageTour(packagetour);
+            packagetour.getPackageCities().add(city);
+        }
+    }
+    
     public PackageTourService getPackageTourservice() {
         return packageTourservice;
     }

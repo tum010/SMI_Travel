@@ -210,8 +210,9 @@
 
                         <input type="hidden" class="form-control" name="action" id="action" value="save" >             
                         <input type="hidden"  id="counterItinerary" name="counterItinerary" value="0" />
+                        <input type="hidden"  id="passengerCounter" name="passengerCounter" value="0" />
                         <input type="hidden"  id="counterPrice" name="counterPrice" value="0" />
-                        <input type="hidden"  id="rowType" name="rowType" />
+                        <input type="hidden"  id="ConfirmDelete" name="rowType" />
                         <input type="hidden"  id="Itiid" name="Itiid" />
                         <input type="hidden"  id="checkValidate" name="checkValidate" />
                         <input type="hidden"  id="cCount" name="cCount" />
@@ -224,10 +225,17 @@
                             </div>
                         </div>
                        <div class="panel panel-default">
-                        
+                           
+                        <!--Div Set Id City -->
+                        <div class="hidden">
+                            <c:forEach var="pass" items="${ListCity}" varStatus="status">
+                                 <input type="text"  id="row-passenger-${status.count}-id" name="row-passenger-${status.count}-id" value="${pass.id}" />
+                           </c:forEach>
+                        </div>
                         <select   class="hidden"  id="select-list-passenger">
                             <c:forEach var="pass" items="${ListCity}" varStatus="status">
-                                <option  value="${pass.id}">${pass.name}</option>
+                                 <!--<input type="text" class="hidden" id="row-passenger-${status.count}-id" name="row-passenger-${status.count}-id" value="${pass.id}" />-->
+                                <option  value="${pass.name}">${pass.name}</option>
                            </c:forEach>
                         </select>
                         <table class="display" id="City">
@@ -262,20 +270,21 @@
                                         <div id="div-passenger">
                                             <input id="input-get-passenger-${city.count}" value="${pa.id}" hidden="">
                                             <!--<input type="text" class="form-control cityName" id="select-passneger-${city.count}" name="row-passenger-${city.count}-name"  valHidden="${cityList.id}" value="${cityList.name}"  />-->
-                                            <select  class="form-control"  name="row-passenger-${city.count}-name" id="select-passneger-${city.count}">
+                                            <select  class="form-control"  name="row-passenger-${city.count}-name" id="row-passenger-${city.count}">
                                                 <c:forEach var="passen" items="${ListCity}" varStatus="status">
-                                                    <option class="passenger-option" value="${passen.id}">${passen.name}</option>
+                                                    <input type="text" class="hidden" id="row-passenger-${city.count}-id" name="row-passenger-${city.count}-id" value="${passen.id}" />
+                                                    <option class="passenger-option" value="${passen.name}">${passen.name}</option>
                                                 </c:forEach>
                                             </select>
                                         </div>
                                         <script>
                                             $(document).ready(function () {
-                                                $("#select-passneger-${city.count}").val($("#input-get-passenger-${city.count}").val());
+                                                $("#row-passenger-${city.count}").val($("#input-get-passenger-${city.count}").val());
                                             });
                                         </script>
                                     </td>          
                                     <td class="text-center">
-                                        <a id="PassengerButtonRemove${city.count}" class="remCF" onclick="ConfirmDelete('${hotelBooking.id}', '3', '${pa.id}', '${city.count}')">
+                                        <a id="PassengerButtonRemove${city.count}" class="remCF" onclick="ConfirmDelete('3', '${pa.id}', '${city.count-1}')">
                                             <span id="PassengerSpanRemove${city.count}" class="glyphicon glyphicon-remove deleteicon"></span>
                                         </a>
                                     </td>
@@ -424,7 +433,7 @@
                                     $("#City tbody").find("tr").each(function(){ 
 //                                        alert('1');
                                         citycount++;
-                                        $("#select-passneger-"+citycount).autocomplete({
+                                        $("#row-passenger-"+citycount).autocomplete({
                                             source: dataCity,
                                             focus: function( event, ui ) {
                                                 event.preventDefault();
@@ -438,11 +447,11 @@
                                             close:function( event, ui ) {
                                                var editCheckBox = $(this).closest('tr').find('td.edited').children();
                                                $(editCheckBox).attr("checked", true);
-                                               $("#select-passneger-"+citycount).trigger('keyup');
+                                               $("#row-passenger-"+citycount).trigger('keyup');
                                             } 
                                         });
 
-                                        $("#select-passneger-"+citycount).keyup(function () {
+                                        $("#row-passenger-"+citycount).keyup(function () {
                                             Alert("SSS");
                                             var position = $(this).offset();
                                             $(".ui-widget").css("top", position.top + 30);

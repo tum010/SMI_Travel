@@ -73,6 +73,10 @@ public class PackageTourService {
         return packagedao.DeletePackagePrice(PriceID);
     }
     
+    public String DeletePackageCity(String CityID){
+        return packagedao.DeletePackageCity(CityID);
+    }
+    
     public PackageTour getPackageFromID(String packageID){
         return packagedao.getPackageFromID(packageID);
     }

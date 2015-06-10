@@ -11,6 +11,14 @@ function back() {
 }
 
 $(document).ready(function () {
+    var bla = $('#saveText').val();
+    if(bla != ""){
+        Alert("Go to Here!!!");
+         jQuery("#textAlertDivSave").css("display","block");
+    }
+});
+
+$(document).ready(function () {
  
         $(".datemask").mask('00-00-0000', {reverse: true});
 //        $(".decimal").mask('000,000,000.0', {reverse: true});
@@ -55,7 +63,8 @@ $(document).ready(function () {
                }
            }
         });
-        alert(isValid);
+//        alert(isValid + "Save");
+          jQuery("#textAlertDivSave").css("display","block");
         return isValid;
     }
     
