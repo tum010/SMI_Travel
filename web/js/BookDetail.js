@@ -277,7 +277,6 @@ $(document).ready(function () {
                 $(this).removeClass('row_selected');
             }
             else {
-                //$('#FamilyLeaderAjaxTable').$('tr.row_selected').removeClass('row_selected');
                 $(this).addClass('row_selected');
             }
             var customerId = $(this).find(".customerId").text();

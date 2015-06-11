@@ -113,7 +113,7 @@ public class MAirportImpl extends HibernateDaoSupport implements MAirportDao {
     public List<MAirport> searchAirport(String Airportname) {
         String query = "from MAirport a  ";
         if ((Airportname != null) && (!"".equalsIgnoreCase(Airportname))) {
-            query += "where a.code Like '%"+Airportname+"%' and a.name Like '%"+Airportname+"%'"; 
+            query += "where a.code Like '%"+Airportname+"%' OR a.name Like '%"+Airportname+"%' "; 
         }    
         System.out.println("query : " + query);
         query = query +" order by a.name";

@@ -962,6 +962,9 @@
                 <h4 class="modal-title">Departure</h4>
             </div>
             <div class="modal-body">
+         <div style="text-align: right"><i id="ajaxloaddep"  class="fa fa-spinner fa-spin hidden"></i>
+                    Search : <input placeholder ="CODE/NAME " type="text" style="width: 175px" id="filterdep" name="filterdep"/>
+         </div>
                 <!--Airport List -->
                 <table class="display" id="DepartureTable">
                     <thead>                        
@@ -996,7 +999,57 @@
                         console.log("id : " + id);
                         flight_id = id;
                     }
+                    
+                    function getDeparture(name) {
+                        var servletName = 'AirTicketServlet';
+                        var servicesName = 'AJAXBean';
+                        var param = 'action=' + 'text' +
+                                '&servletName=' + servletName +
+                                '&servicesName=' + servicesName +
+                                '&name=' + name +
+                                '&type=' + 'searchairport';
+                        console.log("Ajax param [" + param + "]");
+                        CallAjaxDeparture(param);
+                    }
+                    function CallAjaxDeparture(param) {
+                        var url = 'AJAXServlet';
+                        $("#ajaxloaddep").removeClass("hidden"); 
+                        try {
+                            $.ajax({
+                                type: "POST",
+                                url: url,
+                                cache: false,
+                                data: param,
+                                success: function (msg) {    
+                                    $('#DepartureTable').dataTable().fnClearTable();
+                                    $('#DepartureTable').dataTable().fnDestroy();
+                                    $("#DepartureTable tbody").empty().append(msg);
+                                    $('#DepartureTable').dataTable({bJQueryUI: true,
+                                        "sPaginationType": "full_numbers",
+                                        "bAutoWidth": false,
+                                        "bFilter": false,
+                                        "bPaginate": true,
+                                        "bInfo": false,
+                                        "bLengthChange": false,
+                                        "iDisplayLength": 10
+                                    });
+                                     $("#ajaxloaddep").addClass("hidden");                              
+                                }, error: function (msg) {    
+                                     $("#ajaxloaddep").addClass("hidden");  
+                                }
+                            });
+                        } catch (e) {
+                            alert(e);
+                        }
+                    }
+                    
                     $(document).ready(function () {
+                        $("#filterdep").keyup(function (event) {
+                            if (event.keyCode === 13) {
+                                getDeparture($("#filterdep").val());
+                            }
+                        });
+                        
                         $.each(a, function (index, value) {
                             $.each(flight, function (index_flight, value_flight) {
                                 var flightCode = $("#departure-" + value_flight.id + "-code").val();
@@ -1007,7 +1060,7 @@
                             });
                         });
 
-                        $("#DepartureTable tr").on('click', function () {
+                        $("#DepartureTable tbody").on('click','tr', function () {
                             departure_id = $(this).find(".departure-id").text();
                             departure_code = $(this).find(".departure-code").text();
                             departure_name = $(this).find(".departure-name").text();
@@ -1022,7 +1075,7 @@
                         var DepartureTable = $('#DepartureTable').dataTable({bJQueryUI: true,
                             "sPaginationType": "full_numbers",
                             "bAutoWidth": false,
-                            "bFilter": true,
+                            "bFilter": false,
                             "bPaginate": true,
                             "bInfo": false,
                             "bLengthChange": false,
@@ -1061,6 +1114,9 @@
                 <h4 class="modal-title">Arrival</h4>
             </div>
             <div class="modal-body">
+                <div style="text-align: right"><i id="ajaxloadarrive"  class="fa fa-spinner fa-spin hidden"></i>
+                    Search : <input placeholder ="CODE/NAME " type="text" style="width: 175px" id="filterarrive" name="filterarrive"/>
+                </div>
                 <!--Arrival List Table-->
                 <table class="display" id="ArrivalTable">
                     <thead>                        
@@ -1082,7 +1138,56 @@
                 </table>
                 <!--Script-->
                 <script>
+                    function getArrive(name) {
+                        var servletName = 'AirTicketServlet';
+                        var servicesName = 'AJAXBean';
+                        var param = 'action=' + 'text' +
+                                '&servletName=' + servletName +
+                                '&servicesName=' + servicesName +
+                                '&name=' + name +
+                                '&type=' + 'searchairport';
+                        console.log("Ajax param [" + param + "]");
+                        CallAjaxArrive(param);
+                    }
+                    function CallAjaxArrive(param) {
+                        var url = 'AJAXServlet';
+                        $("#ajaxloadarrive").removeClass("hidden"); 
+                        try {
+                            $.ajax({
+                                type: "POST",
+                                url: url,
+                                cache: false,
+                                data: param,
+                                success: function (msg) {    
+                                    $('#ArrivalTable').dataTable().fnClearTable();
+                                    $('#ArrivalTable').dataTable().fnDestroy();
+                                    $("#ArrivalTable tbody").empty().append(msg);
+                                    $('#ArrivalTable').dataTable({bJQueryUI: true,
+                                        "sPaginationType": "full_numbers",
+                                        "bAutoWidth": false,
+                                        "bFilter": false,
+                                        "bPaginate": true,
+                                        "bInfo": false,
+                                        "bLengthChange": false,
+                                        "iDisplayLength": 10
+                                    });
+                                     $("#ajaxloadarrive").addClass("hidden");                              
+                                }, error: function (msg) {    
+                                     $("#ajaxloadarrive").addClass("hidden");  
+                                }
+                            });
+                        } catch (e) {
+                            alert(e);
+                        }
+                    }
+                    
                     $(document).ready(function () {
+                        $("#filterarrive").keyup(function (event) {
+                            if (event.keyCode === 13) {
+                                getArrive($("#filterarrive").val());
+                            }
+                        });
+                        
                         $.each(a, function (index, value) {
                             $.each(flight, function (index_flight, value_flight) {
                                 if ($("#arrival-" + value_flight.id + "-code").val() === value.code) {
@@ -1090,7 +1195,7 @@
                                 }
                             });
                         });
-                        $("#ArrivalTable tr").on('click', function () {
+                        $("#ArrivalTable tbody").on('click','tr', function () {
                             arrival_id = $(this).find(".arrival-id").text();
                             arrival_code = $(this).find(".arrival-code").text();
                             arrival_name = $(this).find(".arrival-name").text();
@@ -1105,7 +1210,7 @@
                         var ArrivalTable = $('#ArrivalTable').dataTable({bJQueryUI: true,
                             "sPaginationType": "full_numbers",
                             "bAutoWidth": false,
-                            "bFilter": true,
+                            "bFilter": false,
                             "bPaginate": true,
                             "bInfo": false,
                             "bLengthChange": false,
