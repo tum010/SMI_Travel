@@ -115,7 +115,7 @@
                                     <div class="form-group">
                                         <div class="input-group " style="padding-left: 5px">
                                             <input type="hidden" class="form-control" name="agent_id" id="agent_id" value="${requestScope['agent_id']}">
-                                            <input type="text" class="form-control" id="agent_code" name="agent_code" value="${requestScope['agent_code']}">
+                                            <input type="text" class="form-control"  name="agent_code" id="agent_code"value="${requestScope['agent_code']}">
                                             <span class="input-group-addon" id="agent_modal" data-toggle="modal" data-target="#AgentModal">
                                                 <span class="glyphicon-search glyphicon"></span>
                                             </span>

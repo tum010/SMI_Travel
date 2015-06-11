@@ -63,9 +63,45 @@ $(document).ready(function() {
             if(name === value.name){
                 $("#product_code").val(value.code);
                 code = $("#product_code").val().toUpperCase();
+                $("#product_name").val(value.name); 
             }
         });
        
+    });
+    
+    var codeAgent = [];
+    $.each(agent, function (key, value) {
+        codeAgent.push(value.code);
+        if ( !(value.name in codeAgent) ){
+           codeAgent.push(value.name);
+        }
+    });
+
+    $("#agent_code").autocomplete({
+        source: codeAgent,
+        close:function( event, ui ) {
+           $("#agent_code").trigger('keyup');
+        }
+    });
+    
+    $("#agent_code").on('keyup', function () {
+        var position = $(this).offset();
+        $(".ui-widget").css("top", position.top + 30);
+        $(".ui-widget").css("left", position.left);
+        $("#agent_id").val(null);
+        var code = this.value.toUpperCase();
+        var name = this.value;
+        $.each(agent, function (key, value) {
+            if (value.code.toUpperCase() === code  ) {   
+                    $("#agent_id").val(value.id);
+                    $("#agent_name").val(value.name); 
+            }
+            if(name === value.name){
+                $("#agent_code").val(value.code);
+                code = $("#agent_code").val().toUpperCase();
+                $("#agent_name").val(value.name); 
+            }
+        });
     });
     
     $('#otherForm').bootstrapValidator({
