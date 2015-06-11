@@ -45,8 +45,8 @@ public class MAirportImpl extends HibernateDaoSupport implements MAirportDao {
         }
         System.out.println("query : " + query);
         query = query +" order by a.name";
+        getHibernateTemplate().setMaxResults(1000);
         List<MAirport> list = getHibernateTemplate().find(query);
-        
         if (list.isEmpty()) {
             return null;
         }
@@ -107,6 +107,21 @@ public class MAirportImpl extends HibernateDaoSupport implements MAirportDao {
             result = "";
         }
         return result;
+    }
+
+    @Override
+    public List<MAirport> searchAirport(String Airportname) {
+        String query = "from MAirport a  ";
+        if ((Airportname != null) && (!"".equalsIgnoreCase(Airportname))) {
+            query += "where a.code Like '%"+Airportname+"%' and a.name Like '%"+Airportname+"%'"; 
+        }    
+        System.out.println("query : " + query);
+        query = query +" order by a.name";
+        List<MAirport> list = getHibernateTemplate().find(query); 
+        if (list.isEmpty()) {
+            return null;
+        }
+        return list;
     }
 
 }

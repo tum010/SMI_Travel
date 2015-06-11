@@ -11,6 +11,7 @@ import com.smi.travel.datalayer.dao.CustomerDao;
 import com.smi.travel.datalayer.dao.DaytourBookingDao;
 import com.smi.travel.datalayer.dao.DaytourComissionDao;
 import com.smi.travel.datalayer.dao.DaytourDao;
+import com.smi.travel.datalayer.dao.MAirportDao;
 import com.smi.travel.datalayer.dao.PackageTourDao;
 import com.smi.travel.datalayer.dao.ProductDetailDao;
 import com.smi.travel.datalayer.dao.TransferJobDao;
@@ -19,6 +20,7 @@ import com.smi.travel.datalayer.entity.Daytour;
 import com.smi.travel.datalayer.entity.DaytourBooking;
 import com.smi.travel.datalayer.entity.DaytourBookingPrice;
 import com.smi.travel.datalayer.entity.DaytourPrice;
+import com.smi.travel.datalayer.entity.MAirport;
 import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.entity.PackageItinerary;
 import com.smi.travel.datalayer.entity.PackagePrice;
@@ -53,6 +55,7 @@ public class AJAXBean extends AbstractBean implements
     private static final String TRANSFERJOB = "TransferJobServlet";
     private static final String DAYTOURCOMM = "DaytourCommissionServlet";
     private static final String DAYTOUR = "DaytourServlet";
+    private static final String AIRTICKET = "AirTicketServlet";
     private CustomerDao customerdao;
     private ProductDetailDao productDetailDao;
     private BookingSummaryDao bookingsummarydao;
@@ -62,6 +65,7 @@ public class AJAXBean extends AbstractBean implements
     private TransferJobDao transferJobdao;
     private PackageTourDao packagedao;
     private DaytourComissionDao daytourComdao;
+    private MAirportDao airportdao;
 
     public AJAXBean(List queryList) {
         super(queryList);
@@ -87,6 +91,8 @@ public class AJAXBean extends AbstractBean implements
                     packagedao = (PackageTourDao) obj;
                 } else if (obj instanceof DaytourComissionDao) {
                     daytourComdao = (DaytourComissionDao) obj;
+                } else if(obj instanceof MAirportDao){
+                    airportdao = (MAirportDao)obj;
                 }
             }
         }
@@ -214,17 +220,15 @@ public class AJAXBean extends AbstractBean implements
                             if(bookDetail.getDateTour() != null){
                                 tourdate =  bookDetail.getDateTour().toString();
                             }
-                            
+                      
                             result += "<tr>"
                                     + "<td class='tdcenter'>" + bookDetail.getBookdate() + "</td>"
-                                    + "<td>" + bookDetail.getTel()+ "</td>"
-                                    + "<td>" + bookDetail.getRemark() + "</td>"
                                     + "<td class='tdcenter'>" + bookDetail.getType() + "</td>"
                                     + "<td>" + bookDetail.getDescription() + "</td>"
                                     + "<td class='tdcenter'>" + tourdate + "</td>"
                                     + "<td class='moneyformat tdright'>" + bookDetail.getPrice() + "</td>"
                                     + "</tr>";
-                        }
+                     }
                     }
 
                     System.out.println("result : " + result);
@@ -326,6 +330,25 @@ public class AJAXBean extends AbstractBean implements
             if("savestaff".equalsIgnoreCase(type)){
                 result = daytourdao.saveStafftour(name);
             }
+        }else if(AIRTICKET.equalsIgnoreCase(servletName)){
+            String name = map.get("name").toString();
+            if("searchairport".equalsIgnoreCase(type)){
+                result = buildAirportListHTML(airportdao.searchAirport(name));
+            }
+        }
+        return result;
+    }
+    
+    public String buildAirportListHTML(List<MAirport> listAirport ){
+        String result ="";
+        for(int i = 0;i<listAirport.size();i++){
+            MAirport airport = listAirport.get(i);
+            result +=" <tr class='departure-tr'>"+
+            " <td class='departure-id hidden'>"+airport.getId()+"</td>"+
+                    " <td class='departure-code'>"+airport.getCode()+"</td>"+
+                    " <td class='departure-name'>"+airport.getName()+"</td>"+
+            "</tr>";
+
         }
         return result;
     }

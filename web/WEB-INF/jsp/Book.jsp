@@ -185,7 +185,7 @@
                     <td><center><c:out value="${table.agentCode}" /></center></td>
                     <td><c:out value="${table.leaderName}" /> </td>
                     <c:choose>
-                        <c:when test="${userdepartment  == 1}">
+                        <c:when test="${userdepartment == 1}">
                             <td><center><c:out value="${table.pnr}" /></center></td>
                             <td><center><c:out value="${table.firstDepartDate}" /></center></td>  
                             </c:when>
@@ -207,11 +207,9 @@
                     <td>
                         <center>
                             <a href="BookDetail.smi?referenceNo=${table.refno}&action=edit"><span class="glyphicon glyphicon-th-list"></span></a>
-                            <span onclick="getSummaryBook('${table.refno}');" class="glyphicon glyphicon glyphicon-list-alt"></span>
+                            <span onclick="getSummaryBook('${table.refno}'); getSummaryTel('${table.tel}','${table.remark}');" class="glyphicon glyphicon glyphicon-list-alt"></span>
                         </center>
-                        
                     </td>           
-                    
             </tr>  
                 </c:forEach>
                 </tbody>
@@ -227,12 +225,26 @@
                         <h3 class="panel-title">Summary</h3>
                     </div>
                     <div class="panel-body">
+                        
+                        <div class="col-md-12">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="telNo">Tel</label>
+                                    <input type="text" class="form-control" maxlength="20" id="telNo" name="telNo" >
+                                </div>
+                            </div>
+                            <div class="col-md-2 ">
+                                <div class="form-group">
+                                    <label for="remark">Remark</label>
+                                    <input type="text" class="form-control" maxlength="50" id="remark" name="remark" >
+                                </div>
+                            </div>
+                        </div>
+
                         <table  class="display" id="TableBookSummary">
                             <thead>
                                 <tr class="datatable-header">
                                     <th>Date</th>
-                                    <th>Tel</th>
-                                    <th>Remark</th>
                                     <th>type</th>
                                     <th>Description</th>
                                     <th>Date tour</th>
@@ -240,7 +252,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                               
                             </tbody>
                         </table> 
                     </div>
@@ -576,7 +587,7 @@
             "bFilter": false,
             "aaSorting": [[ 0, "desc" ]]
         });
-
+ 
 //        $("#btnNew").appendTo("#example_filter label").show();
 
         $('#BookList tbody').on('click', 'tr', function() {
@@ -610,11 +621,16 @@
     function setformat() {
                 $('#TableBookSummary tr td.moneyformat').each(function() {
                     var innerHTML = $(this).html();
-                   
+
                     $(this).html(numberWithCommas($(this).html()));
                 });
             }
-
+            
+    function getSummaryTel(tel,remark){
+        document.getElementById('telNo').value=tel;
+        document.getElementById('remark').value=remark;
+    }
+    
     $("#AirTicket").load("WebContent/Book/AirTicket.jsp");
     $("#Hotel").load("WebContent/Book/Hotel.jsp");
     $("#Passenger").load("WebContent/Book/Passenger.jsp");

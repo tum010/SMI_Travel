@@ -38,7 +38,7 @@
             <key>
                 <column name="city_id" not-null="true" />
             </key>
-            <one-to-many class="com.smi.travel.datalayer.entity.MCity" />
+            <one-to-many class="com.smi.travel.datalayer.entity.PackageCity" />
         </bag >
     </class>
 </hibernate-mapping>

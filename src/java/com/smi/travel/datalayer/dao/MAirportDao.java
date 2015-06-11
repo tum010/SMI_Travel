@@ -19,4 +19,5 @@ public interface MAirportDao {
     public int updateAirport(MAirport Airport);
     public int DeleteAirport(MAirport Airport);
     public String getAirportName(String AirportCode);
+    public List<MAirport> searchAirport(String Airportname);
 }

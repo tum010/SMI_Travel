@@ -9,6 +9,7 @@ import com.mysql.jdbc.StringUtils;
 import com.smi.travel.datalayer.dao.CustomerDao;
 import com.smi.travel.datalayer.entity.Customer;
 import com.smi.travel.datalayer.entity.MInitialname;
+import com.smi.travel.datalayer.entity.Master;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -278,5 +279,7 @@ public class CustomerImpl implements CustomerDao {
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
     }
+
+  
 
 }
