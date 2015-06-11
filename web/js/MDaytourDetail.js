@@ -5,7 +5,7 @@ $(document).ready(function () {
   $("#MDaytourDetailForm")
           .bootstrapValidator({
                 container: 'tooltip',
-//                excluded: [':disabled', ':hidden', ':not(:visible)'],
+                excluded: [':disabled'],
                 feedbackIcons: {
                     valid: 'uk-icon-check',
                     invalid: 'uk-icon-times',
@@ -55,16 +55,11 @@ $(document).ready(function () {
                     }
                 }
             })
-            .on('err.field.fv', function(e, data) {
-                if (data.fv.getSubmitButton()) {
-                    data.fv.disableSubmitButtons(false);
-                }      
-            })
             .on('success.field.fv', function(e, data) {
                 if (data.fv.getSubmitButton()) {
                     data.fv.disableSubmitButtons(false);
                 }          
-        });
+            });
         
         var delay = (function(){
             var timer = 0;

@@ -78,7 +78,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12 form-group">
+                        <div class="col-md-12 ">
                             <div class="col-md-5">
                                 <div class="col-md-3 text-right"><label class="control-label" for="TextareaRemark">Remark</label></div>
                                 <div class="col-md-9"><textarea id="TextareaRemark" name="TextareaRemark" class="form-control" style="resize: none" maxlength="255">${daytour.remark}</textarea></div>
@@ -88,7 +88,7 @@
                         </div>
                     </div>
 
-                    <div class="col-xs-12 form-group">
+                    <div class="col-xs-12 ">
                         <div class="col-xs-1"><label class="control-label">Price</label></div>
                         <table class="display table-striped table-responsive" id="PriceTable" name="PriceTable">
                             <thead>
@@ -186,7 +186,10 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-xs-12 form-group">
+                    
+                        <div class="col-xs-1 form-group"></div>
+                        
+                    <div class="col-xs-12 ">
                         <div class="col-xs-1"><label class="form-label">Expense</label></div>
                         <table class="display" id="ExpenseTable">
                             <thead>
@@ -262,11 +265,11 @@
                             </tbody>
                         </table>
                     </div>
-
+                      <div class="col-xs-1 form-group"></div>    
                     <input name="daytourid" value="${daytour.id}"type="hidden">
                     <input type="hidden" id="action" name="action" value="save">
                     <div class="col-xs-12 text-center">
-                        <button id="ButtonSave" name="ButtonSave" type="submit" onclick="" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+                        <button id="ButtonSave" name="ButtonSave" type="submit"  class="btn btn-success"><i class="fa fa-save"></i> Save</button>
                     </div>
 
                 </div>
