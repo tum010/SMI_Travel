@@ -537,7 +537,7 @@
     $(document).ready(function () {
          
         $(".datetime").datetimepicker({
-                pickTime: false   
+                  
         });
         
         $(".datemask").mask('00-00-0000', {reverse: true});
@@ -552,26 +552,14 @@
             placeholder: "0"
         }); 
         
-        $('.datetimefrom').on("dp.change", function(e){
-            $('.datetimeto').minDate(e.date);
-        });
-
-        $('.datetimeto').on("dp.change", function(e){
-            $('.datetimefrom').data("DateTimePicker").maxDate(e.date);
-        });
+       
         //Add Blank row for user input.
         addRowCommissionTable();
         /*Auto Add lastrow */
        
         $(document).on('click', '#commissionTable tbody tr:last td  input ,#commissionTable tbody tr:last td .input-group-addon', function (e) { // .input-group-addon, .datemask
             
-//            $("#dateFrom-"+index).on("dp.change", function(e){
-//                $("#dateTo-"+index).data("DateTimePicker").minDate(e.date);
-//            });
-//            
-//            $("#dateTo-"+index).on("dp.change", function(e){
-//                $("#dateFrom-"+index).data("DateTimePicker").maxDate(e.date);
-//            }); 
+
             /*OnEvent Add lastrow */
             addRowCommissionTable();
         });
@@ -705,7 +693,7 @@
                 name: $(this).attr('name') + counter
             });
             $(".datetime").datetimepicker({
-                pickTime: false   
+       
             });
 
             $('.decimal').inputmask({

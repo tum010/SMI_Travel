@@ -5,6 +5,7 @@
 <script type="text/javascript" src="js/jquery.mask.min.js"></script>
 <script type="text/javascript" src="js/selectize.js"></script>
 <script type="text/javascript" src="js/DaytourTransfer.js"></script>
+<script type="text/javascript" src="js/jquery-ui.js"></script>
 <link href="css/selectize.bootstrap3.css" rel="stylesheet">
 <link href="css/jquery-ui.css" rel="stylesheet">
 
@@ -60,15 +61,15 @@
                         <label class="">Date<font style="color: red">*</font></label>
                     </div>
                     <div class="col-xs-3 form-group" >
-                        <div class="input-group date" id="datetimepicker">
-                            <input id="InputDate" name="InputDate" type="text" data-date-format="YYYY-MM-DD" class="form-control datemask" 
+                        <div class="input-group datetime" >
+                            <input id="InputDate" name="InputDate" type="text" 
+                                   data-date-format="YYYY-MM-DD" class="form-control datemask" 
                                    placeholder="YYYY-MM-DD" value="${tourdate}">
-<!--                            <a id="datebutton"  data-toggle="modal" data-target="#DateModal">-->
-                            <span class="input-group-addon" >
-                                <span class="glyphicon-calendar glyphicon"></span>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
                             </span>
-                            <!--</a>-->
                         </div>
+                        
                     </div>
                 </div>
                 <div class="col-xs-12 form-group">
@@ -453,7 +454,7 @@
             getTourFromDate(inputTourDate);
         }
           //datetime
-        $('#datetimepicker').datetimepicker({ 
+        $('.datetime').datetimepicker({ 
             pickTime: false
         }).change(function () {
             var newDate = $("#InputDate").val();

@@ -345,7 +345,8 @@ THE SOFTWARE.
                     left: offset.left,
                     right: offset.right
                 });
-            } else {
+            } 
+            else {
                 picker.widget.css({
                     position: position,
                     top: offset.top,
@@ -1379,7 +1380,7 @@ THE SOFTWARE.
         direction: 'auto',
         sideBySide: false,
         daysOfWeekDisabled: [],
-        widgetParent: false,
+        widgetParent: false
         
     };
 }));

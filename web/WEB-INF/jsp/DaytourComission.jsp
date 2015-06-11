@@ -52,11 +52,17 @@
                     <div class="col-xs-1 text-right">
                         <label class="control-label text-right">From <font style="color: red">*</font></label>
                     </div>
-                    <div class="col-xs-2 form-group">
-                        <div class="input-group  date " id="DateFrom">
-                            <input  id="InputDateFrom" name="InputDateFrom" type="text" data-date-format="YYYY-MM-DD" class="form-control datemask" placeholder="YYYY-MM-DD" value="${dateFrom}">
-                            <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>
-                            </span>
+                    
+                    <div class="col-xs-2">
+                       <div class=" form-group">     
+                            <div class="input-group" id="DateFrom">
+                                <input  id="InputDateFrom" name="InputDateFrom" type="text" 
+                                        data-date-format="YYYY-MM-DD" class="form-control datemask" 
+                                        placeholder="YYYY-MM-DD" value="${dateFrom}">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon-calendar glyphicon"></span>
+                                </span>
+                            </div> 
                         </div>
                     </div>
                     <div class="col-xs-1">
@@ -67,8 +73,11 @@
                     </div>
                     <div class="col-xs-2 form-group">
                         <div class="input-group  date" id="DateTo">
-                            <input id="InputDateTo" name="InputDateTo" type="text" data-date-format="YYYY-MM-DD" class="form-control datemask" placeholder="YYYY-MM-DD" value="${dateTo}">
-                            <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>
+                            <input id="InputDateTo" name="InputDateTo" type="text"
+                                   data-date-format="YYYY-MM-DD" class="form-control datemask"
+                                   placeholder="YYYY-MM-DD" value="${dateTo}">
+                            <span class="input-group-addon">
+                                <span class="glyphicon-calendar glyphicon"></span>
                             </span>
                         </div>
                     </div>
@@ -186,29 +195,7 @@
                                 </td>
                                 <td class="form-group">
                                     <input type="text" class="form-control agentname" id="AgentName-${status.count}" name="AgentName-"  valHidden="${item.agent.id}" value="${item.agent.name}"  /> 
-                                    <!--sssssss-->
-    <!--                                <select name="selectAgent-" id="selectAgent-${status.count}" onchange="getAgentCommission('${item.daytour.code}','${item.tourDate}',$(this).val(),'${item.adult}','agentComm-${status.count}');"  class="selectize" >
-                                        <option value="">- - SELECT - -</option>-->
-                                    <%--<c:forEach var="agent" items="${agentList}" >
-                                            <c:set var="select" value="" />
-                                            <c:set var="selectedId" value="" />
-                                            <c:choose>
-                                                <c:when test="${empty item.agent}">
-                                                    <c:if test="${item.master.agent.code != 'WLK'}">
-                                                        <c:set var="selectedId" value="${item.master.agent.id}" />
-                                                    </c:if>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <c:set var="selectedId" value="${item.agent.id}" />
-                                                </c:otherwise>
-                                            </c:choose>   
-                                            <c:if test="${agent.id == selectedId}">
-                                                <c:set var="select" value="selected" />
-                                            </c:if>
-                                            <option value="<c:out value="${agent.id}" />" ${select}><c:out value="${agent.name}" /></option>   
-                                        </c:forEach>--%>
-                                    <!--</select>-->
-                                    <!--sssssss-->
+                                   
                                 </td>
                                 <td class="form-group">
                                     <input type="text" class="form-control money agentcom" id="agentComm-${status.count}" name="agentComm-" 
@@ -325,7 +312,9 @@
                         <div class="col-xs-2">From</div>
                         <div class="col-xs-5 ">
                             <div class="input-group date form_datetime" >
-                                <input  name="agentPrintFrom" id="agentPrintFrom" type="text" data-date-format="YYYY-MM-DD" class="form-control" placeholder="YYYY-MM-DD">
+                                <input  name="agentPrintFrom" id="agentPrintFrom" type="text" 
+                                        data-date-format="YYYY-MM-DD" class="form-control"
+                                        placeholder="YYYY-MM-DD">
                                 <span class="input-group-addon" ><span class="glyphicon-calendar glyphicon"></span>
                                 </span>
                             </div>
@@ -334,11 +323,17 @@
                     <div class="col-xs-12 form-group ">
                         <div class="col-xs-2">To</div>
                         <div class="col-xs-5 ">
-                            <div class="input-group date form_datetime" >
-                                <input  name="agentPrintTo" id="agentPrintTo" type="text" data-date-format="YYYY-MM-DD" class="form-control" placeholder="YYYY-MM-DD">
-                                <span class="input-group-addon" ><span class="glyphicon-calendar glyphicon"></span>
-                                </span>
+                            <div class="form-group">
+                                 <div class="input-group date form_datetime" >
+                                    <input  name="agentPrintTo" id="agentPrintTo" type="text"
+                                            data-date-format="YYYY-MM-DD" class="form-control" 
+                                            placeholder="YYYY-MM-DD">
+                                    <span class="input-group-addon" >
+                                        <span class="glyphicon-calendar glyphicon"></span>
+                                    </span>
+                                </div>
                             </div>
+                           
                         </div>
                     </div>
                 </div>
@@ -366,13 +361,11 @@
         });
         
 
-        $('.form_datetime').datetimepicker({ 
-            pickTime: false   
-        });
-        $(".input-group-addon").click(function(){
-            var  position = $(this).offset();
-            $(".bootstrap-datetimepicker-widget").css({position: position});            
-        });
+        $('.form_datetime').datetimepicker();
+//        $(".input-group-addon").click(function(){
+//            var  position = $(this).offset();
+//            $(".bootstrap-datetimepicker-widget").css({top: 100});            
+//        });
  
         var dataAgent = [];
         dataAgent = agentName;

@@ -81,11 +81,11 @@ $(document).ready(function () {
     
     //validate date
     $('#DateFrom').datetimepicker({
-        }).on('change', function (e) {
+       
+    }).on('dp.change', function (e) {
             $('#searchDaytourCommissionForm').bootstrapValidator('revalidateField', 'InputDateFrom');
     });
-    $('#DateTo').datetimepicker({
-        }).on('change', function (e) {
+    $('#DateTo').datetimepicker({}).on('dp.change', function (e) {
             $('#searchDaytourCommissionForm').bootstrapValidator('revalidateField', 'InputDateTo');
     });
     

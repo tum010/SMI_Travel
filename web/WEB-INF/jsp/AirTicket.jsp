@@ -36,13 +36,13 @@
         <c:set var="refno1" value="${fn:substring(param.referenceNo, 0, 2)}" />
         <c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
         <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
-        <input type="text" value="${param.referenceNo}" id="getRealformatUrl">
+        <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
     </c:when>
     <c:otherwise>
         <c:set var="refno1" value="${fn:substring(master.referenceNo, 0, 2)} " />
         <c:set var="refno2" value="${fn:substring(master.referenceNo, 2,7)} " />
         <input type="hidden" value="${refno1}- ${refno2}" id="getUrl" >
-        <input type="text" value="${master.referenceNo}" id="getRealformatUrl">
+        <input type="hidden" value="${master.referenceNo}" id="getRealformatUrl">
     </c:otherwise>
 </c:choose>
 

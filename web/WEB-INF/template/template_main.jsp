@@ -13,7 +13,9 @@
         <link rel="stylesheet" href="css/bootstrap/font-awesome.min.css" />
         <link rel="stylesheet" href="css/bootstrap/bootstrap-datetimepicker.min.css" />
         <link rel="stylesheet" href="css/dataTables.jqueryui.css">
-        <link href="css/select2.min.css" rel="stylesheet"> 
+        <link rel="stylesheet" href="css/jquery-ui.css">
+<!--        <link href="css/select2.min.css" rel="stylesheet"> -->
+        <link href="css/selectize.bootstrap3.css" rel="stylesheet">
         <link href="css/SMITravel.css" rel="stylesheet">
         <link href="css/bootstrapValidator.css" rel="stylesheet">
 
@@ -23,7 +25,9 @@
         <script src="js/angular.min.js"></script>
         <!--<script src="js/select2.js"></script> -->
         <script src="js/es.js"></script>
+        <script type="text/javascript" src="js/jquery.mask.min.js"></script>
         <script type="text/javascript" src="js/Utility.js"></script>
+        
 
 
     </head>
@@ -41,7 +45,7 @@
         <div id="page-section-footer">
             <tiles:insertAttribute name="footer" />
         </div>
-
+        <script src="js/selectize.js"></script>
         <script src="js/common.js"></script>
         <script src="js/common.js"></script>
         <script src="js/moment.js"></script>

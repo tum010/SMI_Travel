@@ -110,17 +110,19 @@
                         <thead>
                             <tr class="datatable-header">
                                 <th>No</th>
-                                <th>Airline</th>
+                                <th>Code</th>
                                 <th>Flight</th>
                                 <th>From</th>
                                 <th>To</th>
                                 <th colspan="2">Departure Date</th>
+                                <th>Ticket</th>
+                                <th>Class</th>
                                 <th>Cost</th>
                                 <th>Price</th>
                                 <th>Status</th>
-                                    <c:if test="${currentPnr.MItemstatus.id != 2}">
-                                    <th>Action</th>
-                                    </c:if>
+                                <c:if test="${currentPnr.MItemstatus.id != 2}">
+                                <th>Action</th>
+                                </c:if>
                             </tr>
                         </thead>
                         <tbody>
@@ -131,7 +133,7 @@
                                     <c:set var="colourStatus" value="style='background-color: #FFD3D3'" />
                                     <c:set var="colourStatusFirstrow" value="background-color: #FFD3D3" />
                                 </c:if>
-                                <tr ${colourStatus}>
+                                <tr ${colourStatus}><!--winit-->
                                     <td>${i.count}</td>
                                     <td>${flight.airticketAirline.MAirline.getName()}</td>
                                     <td>${flight.flightNo}</td>
@@ -139,6 +141,28 @@
                                     <td>${flight.desCode}</td>
                                     <td>${flight.departDate}</td>
                                     <td>${flight.departTime}</td>
+                                    <td>
+                                        <select id="flight-${i.count}-ticketTypeCom" name="flight-${i.count}-ticketTypeCom" class="form-control">          
+                                            <c:forEach var="mticket" items="${mTicketTypeList}" >
+                                                <c:set var="select" value=""  />
+                                                <c:if test="${mticket.id == flight.MTicketType.id}">
+                                                    <c:set var="select" value="selected" />
+                                                </c:if>
+                                                <option value="${mticket.id}" ${select}>${mticket.name}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select id="flight-${i.count}-classCom" name="flight-${i.count}-classCom" class="form-control">          
+                                            <c:forEach var="mflight" items="${mFlightList}" >
+                                                <c:set var="select" value=""  />
+                                                <c:if test="${mflight.id == flight.MFlight.id}">
+                                                    <c:set var="select" value="selected" />
+                                                </c:if>
+                                                <option value="${mflight.id}" ${select}>${mflight.name}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </td>
                                     <td class="text-right moneyformat">${flight.totalCost}</td>
                                     <td class="text-right moneyformat">${flight.totalPrice}</td>
                                     <td>${flight.MItemstatus.getName()}</td>
@@ -584,20 +608,59 @@
                             <c:forEach var="passenger" items="${passengers}" varStatus="pStatus">
                                 <tr>
                                     <td style="width: 10%">${passenger.airticketAirline.MAirline.name}</td>
-                                    <td style="width: 10%">${passenger.MPricecategory.name}</td>
+                                   
+                                    <td style="width: 10%"><!--winit-->
+                                        <select id="passengerCategoryCom${pStatus.count}" name="passengerCategoryCom${pStatus.count}" class="form-control">          
+                                            <c:forEach var="category" items="${mPricecategorysList}" >
+                                                <c:set var="select" value=""  />
+                                                <c:if test="${category.code == passenger.MPricecategory.code}">
+                                                    <c:set var="select" value="selected" />
+                                                </c:if>
+                                                <option value="${category.code}" ${select}>${category.name}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </td>
                                     <td style="width: 5%">${passenger.series1}</td>
                                     <td style="width: 10%">${passenger.series2}</td>
                                     <td style="width: 5%">${passenger.series3}</td>
                                     <td class="text-right moneyformat" style="width: 10%">${passenger.ticketFare}</td>
                                     <td class="text-right moneyformat" style="width: 8%">${passenger.ticketTax}</td>
                                     <td class="text-center" style="width: 6%">
-                                        <c:if test="${passenger.ticketType == 'I'}">Inter</c:if>
-                                        <c:if test="${passenger.ticketType == 'D'}">Domestic</c:if>
-                                        </td>
-                                        <td class="text-center" style="width: 6%">
-                                        <c:if test="${passenger.ticketFrom == 'C'}">In</c:if>
-                                        <c:if test="${passenger.ticketFrom == 'O'}">Out</c:if>
-                                        </td>
+                                        <select id="passengerTicketTypeCom${pStatus.count}" name="passengerTicketTypeCom${pStatus.count}" class="form-control">          
+                                                <c:if test="${passenger.ticketType eq 'I'}">
+                                                    <c:set var="select" value="selected" />
+                                                    <c:set var="nameChecked" value="Inter" />
+                                                    <c:set var="nameOther" value="Domestic" />
+                                                    <c:set var="code" value="D" />
+                                                </c:if>
+                                                <c:if test="${passenger.ticketType eq 'D'}">
+                                                    <c:set var="select" value="selected" />
+                                                    <c:set var="nameChecked" value="Domestic" />
+                                                    <c:set var="nameOther" value="Inter" />
+                                                    <c:set var="code" value="I" />
+                                                </c:if>
+                                                <option value="${passenger.ticketType}" ${select}>${nameChecked}</option>
+                                                <option value="${code}" >${nameOther}</option>
+                                        </select>
+                                    </td>
+                                    <td class="text-center" style="width: 6%">
+                                        <select id="passengerFromCom${pStatus.count}" name="passengerFromCom${pStatus.count}" class="form-control">          
+                                                <c:if test="${passenger.ticketFrom eq 'C'}">
+                                                    <c:set var="select" value="selected" />
+                                                    <c:set var="nameChecked" value="In" />
+                                                    <c:set var="nameOther" value="Out" />
+                                                    <c:set var="code" value="O" />
+                                                </c:if>
+                                                <c:if test="${passenger.ticketFrom  eq 'O'}">
+                                                    <c:set var="select" value="selected" />
+                                                    <c:set var="nameChecked" value="Out" />
+                                                    <c:set var="nameOther" value="In" />
+                                                    <c:set var="code" value="C" />
+                                                </c:if>
+                                                <option value="${passenger.ticketFrom}" ${select}>${nameChecked}</option>
+                                                <option value="${code}" >${nameOther}</option>
+                                        </select>
+                                    </td>
                                         <td class="text-center" style="width: 3%">
                                             <a id="passenger_tableButtonEdit${pStatus.count}" class="carousel" data-toggle="collapse" data-parent="#accordion" data-target="#passenger${pStatus.count}" aria-expanded="true" aria-controls="collapseExample">
                                             <span id="passenger_tableSpanEdit${pStatus.count}" class="glyphicon glyphicon-edit editicon"></span>
@@ -644,7 +707,7 @@
                                                data-bv-notempty data-bv-notempty-message="The Last Name is required"/>
                                     </div>
                                     <div class="col-sm-1 text-right"><strong>PAX&nbsp;TYPE</strong><strong style="color: red">*</strong></div>
-                                    <div class="col-sm-2 form-group">
+                                    <div class="col-sm-2 form-group"><!--winit-->
                                         <input type="hidden" value="${passenger.MPricecategory.code}" class="form-control" name="passengerCategoryHide${pStatus.count}" id="passengerCategoryHide${pStatus.count}">
                                         <select name="passengerCategory${pStatus.count}" id="passengerCategory${pStatus.count}" class="form-control"
                                                 data-bv-notempty data-bv-notempty-message="The Category is required"

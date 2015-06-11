@@ -301,7 +301,9 @@
                                                 <th>CH</th>
                                                 <th>IN</th>
                                                 <th>Remark</th>
-                                                <th>Pick up</th>
+                                                <th>Pick up</th> 
+                                                <th>Room</th>
+                                                <th>Time</th>    
                                                 <th>Pay</th>
                                                 <th>Action</th>
                                             </tr>
@@ -322,7 +324,9 @@
                                                     <td class="sumConfirm">${dayTourDetai.child}</td>
                                                     <td class="sumConfirm">${dayTourDetai.infant}</td>
                                                     <td>${dayTourDetai.remark}</td>
+                                                    <td>${dayTourDetai.place.place eq 'OTHERS' ? dayTourDetai.pickupDetail : dayTourDetai.place.place}</td>
                                                     <td>${dayTourDetai.pickupRoom}</td>
+                                                    <td>${dayTourDetai.pickupTime}</td>
                                                     <td class="text-center">${dayTourDetai.isPay eq 1  ? 'Y' : 'N'}</td>
                                                     <td class="text-center">
                                                         <span id="RefBookTableButtonEdit" name="RefBookTableButtonEdit" class="glyphicon glyphicon-edit editicon" onclick="window.open('/SMITravel/DaytourDetail.smi?referenceNo=${dayTourDetai.master.referenceNo}&action=edit&daytourBooking=${dayTourDetai.id}');"></span>

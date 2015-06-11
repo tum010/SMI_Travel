@@ -73,9 +73,10 @@
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
-                        <label for="fromcity">Booking Date</label>
+                        <label for="Bookdate">Booking Date</label>
                         <div class=' col-sm-12 input-group date' id='effectivefromClass'>
-                            <input type='text' class="form-control"  id="Bookdate" name="Bookdate" data-date-format="YYYY-MM-DD" value="${Bookdate}" />
+                            <input type='text' class="form-control"  id="Bookdate" name="Bookdate" 
+                                   data-date-format="YYYY-MM-DD" value="${Bookdate}" />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>

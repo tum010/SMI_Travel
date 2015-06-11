@@ -67,22 +67,46 @@ $(function () {
 
 // ######################### FLIGHT ######################### //
 $(document).ready(function () {
+ 
+    $("#TableAir tbody tr").each(function(i){
+        i++;
+        $("#flight-"+i+"-ticketTypeCom").change(function(){          
+             $("#flight-"+i+"-ticketType  > option[value="+this.value+"]").prop('selected',true);
+        });
+        
+        $("#flight-"+i+"-classCom").change(function(){          
+             $("#flight-"+i+"-class  > option[value="+this.value+"]").prop('selected',true);
+        });
+    });
+    
+    $("#passenger_table tbody tr").each(function(i){
+        i++;
+        $("#passengerCategoryCom"+i).change(function(){   
+             $("#passengerCategory"+i+" > option[value="+this.value+"]").prop('selected',true);
+        });
+        
+        $("#passengerFromCom"+i).change(function(){   
+             $("#passengerFrom"+i+" > option[value="+this.value+"]").prop('selected',true);
+        });
+        
+        $("#passengerTicketTypeCom"+i).change(function(){   
+             $("#passengerTicketType"+i+" > option[value="+this.value+"]").prop('selected',true);
+        });
+    });
+    
     $(".money").mask('000,000,000,000,000,000', {reverse: true});
     setformat();
     $('.collapse').collapse('hide');
     // datetimepicker
     $("div").find('.date').datetimepicker();
     $("div").find('.times').datetimepicker({
-        pickDate: false,
-        pickTime: true,
-        pick12HourFormat: false,
         format: 'HH:mm'
     });
-    $("div").find('.input-group-addon').click(function () {
-        var position = $(this).offset();
-//        console.log("positon :" + position.top);
-        $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
-    });
+//    $("div").find('.input-group-addon').click(function () {
+//        var position = $(this).offset();
+////        console.log("positon :" + position.top);
+//        $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+//    });
 
     $('#passenger_table,#TableAir').on('click', 'a', function () {
         console.log('hide collapse');
