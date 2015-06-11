@@ -220,17 +220,15 @@ public class AJAXBean extends AbstractBean implements
                             if(bookDetail.getDateTour() != null){
                                 tourdate =  bookDetail.getDateTour().toString();
                             }
-                            
+                      
                             result += "<tr>"
                                     + "<td class='tdcenter'>" + bookDetail.getBookdate() + "</td>"
-                                    + "<td>" + bookDetail.getTel()+ "</td>"
-                                    + "<td>" + bookDetail.getRemark() + "</td>"
                                     + "<td class='tdcenter'>" + bookDetail.getType() + "</td>"
                                     + "<td>" + bookDetail.getDescription() + "</td>"
                                     + "<td class='tdcenter'>" + tourdate + "</td>"
                                     + "<td class='moneyformat tdright'>" + bookDetail.getPrice() + "</td>"
                                     + "</tr>";
-                        }
+                     }
                     }
 
                     System.out.println("result : " + result);
