@@ -143,7 +143,7 @@
 
                                 <div class="col-sm-4" style="width: 194px">
                                     <div class='input-group date' id='billingD'>
-                                        <input type='text' class="form-control"   data-date-format="YYYY-MM-DD" name="billdate" id="billdate" value="${billable.billDate}" />
+                                        <input type='text' class="form-control"   data-date-format="YYYY-MM-DD" name="billdate" id="billdate" value="" />
                                         <span id="SpanGlyphiconCalendar" name="SpanGlyphiconCalendar" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>
