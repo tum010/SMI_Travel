@@ -758,13 +758,13 @@
 
         var controlPickup = $selectPickup[0].selectize;
         controlPickup.on('change', function () {
-            var pickupValue = controlPickup.getValue();
-            if (pickupValue !== '1') {
+            var pickupValue = controlPickup.getItem(controlPickup.getValue()).text();
+//            alert(pickupValue);
+            if (pickupValue !== 'OTHERS') {
                 $('#InputPickUp').prop('readonly', true);
-            } else {
+            }else{
                 $('#InputPickUp').prop('readonly', false);
             }
-//            console.log('pickupValue - ' + pickupValue);
         });
         if ($("#daytourBooking").val().length > 0) {
             controlPickup.setValue([${daytourBooking.place.id}]);

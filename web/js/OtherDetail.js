@@ -61,9 +61,11 @@ $(document).ready(function() {
                     $("#product_name").val(value.name); 
             }
             if(name === value.name){
+                $("#product_id").val(value.id);
                 $("#product_code").val(value.code);
+                $("#product_name").val(value.name);
                 code = $("#product_code").val().toUpperCase();
-                $("#product_name").val(value.name); 
+                
             }
         });
        
@@ -97,9 +99,11 @@ $(document).ready(function() {
                     $("#agent_name").val(value.name); 
             }
             if(name === value.name){
+                $("#agent_id").val(value.id);
+                $("#agent_name").val(value.name);
                 $("#agent_code").val(value.code);
                 code = $("#agent_code").val().toUpperCase();
-                $("#agent_name").val(value.name); 
+                 
             }
         });
     });
@@ -156,7 +160,6 @@ function calculateVatvalue() {
     var inprice = document.getElementById('in_price');
 
     if (document.getElementById('Vat').checked) {
-
         calculateVat();
     } else {
 
@@ -196,6 +199,9 @@ function CallAjax(param, booktype) {
                     document.getElementById('ad_price').value = numberWithCommas(path[3]);
                     document.getElementById('ch_price').value = numberWithCommas(path[4]);
                     document.getElementById('in_price').value = numberWithCommas(path[5]);
+                    console.log('path[0]:'+numberWithCommas(path[0]));
+                    console.log('path[0]:'+numberWithCommas(path[1]));
+                    console.log('path[0]:'+numberWithCommas(path[2]));
                 }
 
                 if (booktype === 'o') {
@@ -238,7 +244,6 @@ function calculateVat() {
     adprice.value = numberWithCommas(parseInt((tempadprice * 7 / 100)) + parseInt(tempadprice));
     chprice.value = numberWithCommas(parseInt((tempchprice * 7 / 100)) + parseInt(tempchprice));
     inprice.value = numberWithCommas(parseInt((tempinprice * 7 / 100)) + parseInt(replaceComma(tempinprice)));
-
 
 
 }

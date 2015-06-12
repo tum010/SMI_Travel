@@ -86,7 +86,8 @@
                         <tr>
                             <td>${passenger.orderNo}</td>
                             <td>${passenger.getCustomer().getCode()}</td>
-                            <td>${passenger.getCustomer().getFirstName()}</td>
+                            <td>${passenger.getCustomer().getLastName()}    
+                                ${passenger.getCustomer().getFirstName()}</td>
                     <script>
                         $(document).ready(function () {
                             //getDate();
