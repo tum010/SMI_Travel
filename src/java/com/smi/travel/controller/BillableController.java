@@ -102,7 +102,7 @@ public class BillableController extends SMITravelController {
         billForm.setBillAddress(address);
         billForm.setMAccpay(accpay);
         billForm.setMAccterm(accterm);
-        billForm.setBillDate(billDate);
+        //billForm.setBillDate(billDate);
         billForm.setIsPayYourself(checkedPayable);
         billForm.setRemark(Description);
 
