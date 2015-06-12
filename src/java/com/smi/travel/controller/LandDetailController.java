@@ -69,6 +69,7 @@ public class LandDetailController extends SMITravelController {
         String supplier = request.getParameter("supplier");
         String departDate = request.getParameter("departdate");
         String arriveDate = request.getParameter("arrivedate");
+        String hotel = request.getParameter("hotel");
         
         String packageId = request.getParameter("Product_id");
         String productCode = request.getParameter("Product_code");
@@ -88,6 +89,8 @@ public class LandDetailController extends SMITravelController {
         String Itenarary = request.getParameter("Itenarary");
         String DelItenarary = request.getParameter("DelItenarary");
         String itinerarycount = request.getParameter("itinerarycount");
+       
+        
         util = new UtilityFunction();
         int[] booksize = utilservice.getCountItemFromBooking(refno);
         Master master = utilservice.getbookingFromRefno(refno);
@@ -154,11 +157,13 @@ public class LandDetailController extends SMITravelController {
                 land.setInboundInCost(util.convertStringTolong(inbINCost));
                 land.setInboundInPrice(util.convertStringTolong(inbINPrice));
                 land.setInboundInQty(util.convertStringToInteger(inbINQty));
+                land.setInboundHotel(hotel);
             } else {
                 if (!"".equalsIgnoreCase(packageId)) {
                     PackageTour packagetour = new PackageTour();
                     packagetour.setId(packageId);
                     land.setPackageTour(packagetour);
+                  
                 }
                     land.setOutboundAdCost(util.convertStringTolong(ADCost));
                     land.setOutboundAdPrice(util.convertStringTolong(ADPrice));
@@ -173,6 +178,7 @@ public class LandDetailController extends SMITravelController {
                     land.setOutboundArrive(util.convertStringToDate(arriveDate));
                     land.setOutboundDepart(util.convertStringToDate(departDate));
                     land.setRemark(remark);
+                    
  
             }
 

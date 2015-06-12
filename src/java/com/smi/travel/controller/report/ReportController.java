@@ -78,8 +78,9 @@ public class ReportController extends SMITravelController {
         String tourCode = request.getParameter("tourcode");
         String guideID = request.getParameter("GuideID");
         String agentid = request.getParameter("agentID");
+        String landId = request.getParameter("landId");
         SystemUser user = (SystemUser) session.getAttribute("USER");
-        
+              
         Map model = new HashMap();
         List data = new ArrayList();
         int PrintMethod = 0; // 0 = bean 1 = pass parameter
@@ -97,13 +98,13 @@ public class ReportController extends SMITravelController {
             data = reportservice.getHotelVoucher(hotelID,user.getName());
         }else if (LandVoucher.equalsIgnoreCase(name)) {
             PrintMethod = 0;
-            data = reportservice.getLandVoucher(refno,user.getName());
+            data = reportservice.getLandVoucher(refno,user.getName(),landId);
         } else if (LandVoucherEmailAgent.equalsIgnoreCase(name)) {
             PrintMethod = 0;
-            data = reportservice.getLandVoucher(refno,user.getName());
+            data = reportservice.getLandVoucher(refno,user.getName(),landId);
         } else if (LandVoucherEmail.equalsIgnoreCase(name)) {
             PrintMethod = 0;
-            data = reportservice.getLandVoucher(refno,user.getName());
+            data = reportservice.getLandVoucher(refno,user.getName(),landId);
         } else if (TicketOrder.equalsIgnoreCase(name)) {
             PrintMethod = 0;
             data = reportservice.getTicketOrde(refno,pnrID);

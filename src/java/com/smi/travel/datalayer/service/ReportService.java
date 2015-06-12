@@ -73,9 +73,9 @@ public class ReportService {
         return hotelInboundDao.getHotelInboundVoucher(hotelID);
     }
     
-    public List getLandVoucher(String refno,String name){
+    public List getLandVoucher(String refno,String name,String landId){
         List data  = new ArrayList();
-        data.add(landVoucherdao.getLandVoucher(refno,name));
+        data.add(landVoucherdao.getLandVoucher(refno,name,landId));
         return data;
     }
     

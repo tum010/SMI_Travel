@@ -42,6 +42,8 @@ public class LandVoucher {
     private String passenger6;
     private String systemdate;
     private String user;
+    private String hotel_name;
+    private String package_code;
     
     public LandVoucher(){
         this.passenger1 = "";
@@ -59,6 +61,7 @@ public class LandVoucher {
         this.description = "";
         this.description1 = "";
         this.description2 = "";
+        this.package_code ="";
     }
 
     public String getPassenger6() {
@@ -312,5 +315,22 @@ public class LandVoucher {
     public void setUser(String user) {
         this.user = user;
     }
+    
+    public void setPackage_code(String package_code) {
+        this.package_code = package_code;
+    }
+
+    public String getPackage_code() {
+        return package_code;
+    }
+
+    public void setHotel_name(String hotel_name) {
+        this.hotel_name = hotel_name;
+    }
+
+    public String getHotel_name() {
+        return hotel_name;
+    }
+
     
 }

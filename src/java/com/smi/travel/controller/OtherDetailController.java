@@ -58,8 +58,8 @@ public class OtherDetailController extends SMITravelController {
         String refno = request.getParameter("referenceNo");
         String status = request.getParameter("status");
         String isbill = request.getParameter("isbill");
-        
-                
+        String currency = request.getParameter("currency");
+                        
         SystemUser user = (SystemUser) session.getAttribute("USER");
 
         util = new UtilityFunction();
@@ -104,6 +104,7 @@ public class OtherDetailController extends SMITravelController {
             System.out.println("productId :"+productId);
             System.out.println("agentId :"+agentId);
             Other.setProduct(product);
+            Other.setCurrency(currency);
             
             Agent agent = new Agent();
             if((agentId != null)&&(!"".equalsIgnoreCase(agentId))){
@@ -196,7 +197,8 @@ public class OtherDetailController extends SMITravelController {
                 status = Other.getStatus().getId();
             }
             remark = Other.getRemark();
-            
+            currency = Other.getCurrency();
+            request.setAttribute("currency", currency);
         }
 
         request.setAttribute("isbill", isbill);

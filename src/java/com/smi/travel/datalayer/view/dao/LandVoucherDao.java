@@ -13,5 +13,5 @@ import com.smi.travel.datalayer.report.model.LandVoucher;
  * @author Surachai
  */
 public interface LandVoucherDao {
-    public LandVoucher getLandVoucher(String refno,String name);
+    public LandVoucher getLandVoucher(String refno,String name,String landId);
 }

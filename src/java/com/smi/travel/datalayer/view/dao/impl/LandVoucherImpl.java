@@ -33,7 +33,7 @@ public class LandVoucherImpl implements  LandVoucherDao{
     }
     
     @Override
-    public LandVoucher getLandVoucher(String refno,String name) {
+    public LandVoucher getLandVoucher(String refno,String name,String landId) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         LandVoucher voucher = new LandVoucher();
@@ -57,7 +57,7 @@ public class LandVoucherImpl implements  LandVoucherDao{
              voucher.setTotal(util.ConvertString(B[4]));
              voucher.setLeadername(util.ConvertString(B[5]));
          }
-         List<Object[]> QueryLandCategoryList = session.createSQLQuery(" SELECT * FROM `land_voucher_category` where  `land_voucher_category`.ref_no =  " + refno)   
+         List<Object[]> QueryLandCategoryList = session.createSQLQuery(" SELECT * FROM `land_voucher_category` where  `land_voucher_category`.land_id =  " + landId)   
                 .addScalar("category", Hibernate.STRING)
                 .addScalar("description", Hibernate.STRING)
                 .addScalar("inbound_qty", Hibernate.STRING)
@@ -66,30 +66,26 @@ public class LandVoucherImpl implements  LandVoucherDao{
                 .addScalar("tel", Hibernate.STRING)
                 .addScalar("fax", Hibernate.STRING)
                 .addScalar("okby", Hibernate.STRING)
+                .addScalar("package_code", Hibernate.STRING)
+                .addScalar("hotel_name", Hibernate.STRING)
                 .list();
          
        
          
-         for(int i=0;i<QueryLandCategoryList.size();i++){
-             Object[] Category = QueryLandCategoryList.get(i);
+         for(Object[] Category : QueryLandCategoryList){
+             String description = util.ConvertString(Category[1]);
+             String[] descriptionSplit = description.split("\\|\\|", 4);
+             voucher.setDescription(descriptionSplit[0]);
+             voucher.setDescription1(descriptionSplit[1]);
+             voucher.setDescription2(descriptionSplit[2]);
              voucher.setName(util.ConvertString(Category[3]));
              voucher.setAddress(util.ConvertString(Category[4]));
              voucher.setTel(util.ConvertString(Category[5]));
              voucher.setFax(util.ConvertString(Category[6])); 
              voucher.setOkby(util.ConvertString(Category[7]));
-             if(i == 0){
-                 voucher.setCategory(util.ConvertString(Category[0]));
-                 voucher.setDescription(util.ConvertString(Category[1]));
-                 voucher.setQty(util.ConvertString(Category[2]));
-             }else if(i == 1){
-                 voucher.setCategory1(util.ConvertString(Category[0]));
-                 voucher.setDescription1(util.ConvertString(Category[1]));
-                 voucher.setQty1(util.ConvertString(Category[2]));
-             }else if(i == 2){
-                 voucher.setCategory2(util.ConvertString(Category[0]));
-                 voucher.setDescription2(util.ConvertString(Category[1]));
-                 voucher.setQty2(util.ConvertString(Category[2]));
-             }
+             voucher.setPackage_code(util.ConvertString(Category[8]));
+             voucher.setHotel_name(util.ConvertString(Category[9]));
+                        
          }
          
          List<String> QueryLandPassengerList = session.createSQLQuery(" SELECT * FROM `land_voucher_passenger` where  `land_voucher_passenger`.ref_no =  " + refno)   

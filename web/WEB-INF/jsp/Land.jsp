@@ -41,41 +41,7 @@
             <input hidden="" value="${booking_size[6]}" id="input-daytour_size">  
         </div>
 
-        <script type="text/javascript" charset="utf-8">
-            $(document).ready(function() {
-
-                var table = $('#MasterLand').dataTable({bJQueryUI: true,
-                    "sPaginationType": "full_numbers",
-                    "bAutoWidth": false,
-                    "bFilter": false,
-                    "bInfo": false
-                });
-
-                $('#MasterLand tbody').on('click', 'tr', function() {
-                    if ($(this).hasClass('row_selected')) {
-                        $(this).removeClass('row_selected');
-                    }
-                    else {
-                        table.$('tr.row_selected').removeClass('row_selected');
-                        $(this).addClass('row_selected');
-                    }
-                });
-
-                setformat();
-
-            });
-
-            function setformat() {
-                $('#MasterLand tr td.moneyformat').each(function() {
-                    var innerHTML = $(this).html();
-                    $(this).html(numberWithCommas($(this).html()));
-                });
-            }
-
-
-
-        </script>
-
+      
         <div class="col-sm-10">
 
             <div ng-include="'WebContent/Book/BookNavbar.html'"></div>
@@ -96,7 +62,9 @@
                             <div class="form-actions pull-right" style="padding-right: 20px">
                                 <div class="form-group">
                                     <div class="col-sm-9">
-                                        <button type="button" onclick="printVoucher('${param.referenceNo}');" class="btn btn-default"><span class="glyphicon glyphicon-print"></span> Print</button> 
+                                        <button type="button" onclick="printVoucher('${param.referenceNo}');" class="btn btn-default">
+                                            <span id="SpanPrint" class="glyphicon glyphicon-print"></span> Print
+                                        </button> 
                                     </div>
                                 </div>
                             </div>  
@@ -136,6 +104,7 @@
                                     <th>Cost</th>
                                     <th>Price</th>
                                     <th>Qty</th> -->
+                                    <th>Hotel</th>
                                     <th>Total Cost</th>
                                     <th>Total Price</th>
                                     <th>Cur</th> 
@@ -165,7 +134,7 @@
                                 <c:set var="colourStatusFirstrow" value="background-color: #FFD3D3" />
                                 <c:set var="statusicon" value="glyphicon-remove deleteicon" />
                             </c:if>
-                            <tr ${colourStatus}>
+                            <tr ${colourStatus} id="${table.id}">
                                 <td class="tdcenter" ${colourStatus}>${table.agent.code} </td>
                                 <td>${table.agent.name} </td>
                                 <c:choose>
@@ -173,6 +142,7 @@
                                         <td>${table.okBy} </td>
                                         <td>${table.category} </td>
                                         <td>${table.description} </td>
+                                        <td>${table.inboundHotel} </td>
                                         <td class='moneyformat tdright'>${(table.inboundCost * table.inboundQty) + (table.inboundChCost * table.inboundChQty)+ (table.inboundInCost * table.inboundInQty)} </td>
                                         <td class='moneyformat tdright'>${(table.inboundPrice * table.inboundQty) + (table.inboundChPrice * table.inboundChQty)+ (table.inboundInPrice * table.inboundInQty)} </td>
                                         <td class="center" >${table.currency} </td>

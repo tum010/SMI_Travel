@@ -155,7 +155,7 @@
                                 <td class="tdright moneyformat"> ${table.inCost}</td>
                                 <td class="tdcenter moneyformat"> ${table.inQty}</td>
                                 <td class="tdright moneyformat"> ${table.inPrice}</td>
-                                <td class="tdcenter"> ${currency}</td>
+                                <td class="tdcenter"> ${table.currency}</td>
                                 <td class="tdright moneyformat"> ${(table.adPrice * table.adQty) + (table.chPrice * table.chQty) + (table.inPrice * table.inQty)}</td>
                                 <td> 
                                     <center> 
