@@ -19,6 +19,9 @@
         <many-to-one name="passenger" class="com.smi.travel.datalayer.entity.Passenger" fetch="select">
             <column name="passenger_id" />
         </many-to-one>
+        <many-to-one name="bankAccount" class="com.smi.travel.datalayer.entity.MBank" fetch="select">
+            <column name="acc_id" />
+        </many-to-one>
         <property name="billTo" type="string">
             <column name="bill_to" length="20" />
         </property>
