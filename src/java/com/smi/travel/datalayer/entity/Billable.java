@@ -23,6 +23,7 @@ public class Billable {
      private Date transferDate;
      private Integer isPayYourself;
      private String remark;
+     private MBank bankAccount;
      private Set billableDescs = new HashSet(0);
 
     public Billable() {
@@ -32,7 +33,7 @@ public class Billable {
     public Billable(Master master) {
         this.master = master;
     }
-    public Billable(MAccpay MAccpay, Master master, MAccterm MAccterm, Passenger passenger, String billTo, String billName, String billAddress, Date transferDate, Integer isPayYourself, Set billableDescs,String remark) {
+    public Billable(MAccpay MAccpay, Master master, MAccterm MAccterm, Passenger passenger, String billTo, String billName, String billAddress, Date transferDate, Integer isPayYourself, Set billableDescs,String remark,MBank bankAccount) {
        this.MAccpay = MAccpay;
        this.master = master;
        this.MAccterm = MAccterm;
@@ -43,6 +44,7 @@ public class Billable {
        this.transferDate = transferDate;
        this.isPayYourself = isPayYourself;
        this.billableDescs = billableDescs;
+       this.bankAccount = bankAccount;
        this.remark = remark;
     }
    
@@ -120,6 +122,7 @@ public class Billable {
     public void setIsPayYourself(Integer isPayYourself) {
         this.isPayYourself = isPayYourself;
     }
+    
     public Set getBillableDescs() {
         return this.billableDescs;
     }
@@ -134,6 +137,14 @@ public class Billable {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public MBank getBankAccount() {
+        return bankAccount;
+    }
+
+    public void setBankAccount(MBank bankAccount) {
+        this.bankAccount = bankAccount;
     }
     
     
