@@ -39,7 +39,6 @@
                                 <label class="col-sm-2   control-label" for="Country">Code<font style="color: red">*</font></label>
                                 <div class="col-sm-9">
                                     <input type="text" ${requestScope['disabledcode']} class="form-control" id="packagecode"  maxlength="50" name="packagecode"  value="${requestScope['packagecode']}" >  
-
                                 </div>
                             </div>
                         </div>
@@ -51,7 +50,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -69,9 +67,7 @@
                                     </div>   
                                 </div>
                             </div>       
-
-                        </div> 
-                                    
+                        </div>                                  
                          <div class="row">
                             <div class="col-md-6" style="padding-left: 30px">
                                 <div class="form-group">
@@ -81,21 +77,16 @@
                                             <option value="active"  selected="selected"> active</option>
                                             <option value="inactive" ${requestScope['IsInactive']} >inactive</option>
                                         </select>
-
                                     </div>
                                 </div>
                             </div>
-
-
-                        </div>                
-
+                        </div> 
+  <!--============================================Itinerary=============================================== --> 
                         <div class="row"> 
                             <div class="col-md-6 " style="padding-left: 24px">
                                 <h5><b>Itinerary</b> </h5>
                             </div>
-
                         </div>
-
                         <div class="row" style="margin-left: 10px;margin-right: 10px;"> 
                             <table id="Itinerary" class="display" cellspacing="0"  >
                                 <thead>
@@ -112,43 +103,38 @@
                                 </thead>
                                 <tbody>
                                     <c:forEach var="table" items="${itinerarylist}" varStatus="dataStatus">
-                                    <tr style="higth:100px">
-                                        <td class="hidden"> <input id="row-${dataStatus.count -1}-itineraryid" name="row-${dataStatus.count -1}-itineraryid"  type="hidden"  value="${table.id}">  </td>
-                                        <td class="hidden orderrow">${dataStatus.count -1}</td>
-                                        <td><input style="width: 20px" id="row-${dataStatus.count -1}-no" name="row-${dataStatus.count -1}-no"   type="text" class="form-control number" value="${table.orderNo}"></td>
-                                        <td><input style="width: 70px" type="text" id="row-${dataStatus.count -1}-hour" name="row-${dataStatus.count -1}-hour" class="form-control time" placeholder="HH:MM" value="${table.time}"></td>
-                                        <td><input   class="form-control" maxlength="255" style="width:570px" id="row-${dataStatus.count -1}-des" name="row-${dataStatus.count -1}-des" rows="2" value="${table.detail.replace("\"","&quot;")}"></td>
-                                        <td class="text-center">
-                                            <a class="remCF" onclick="ConfirmDelete('1', '${table.id}', '${dataStatus.count-1}')">  
-                                                <span  id="SpanRemove${dataStatus.count-1}"  class="glyphicon glyphicon-remove deleteicon"></span>
-                                            </a>
-                                        </td>
-                                    </tr>
-                 
-                                    <script>
-                                    $(document).ready(function () {
-                                        $("#counterItinerary").val(parseInt("${dataStatus.count}") );    
-                                     
-                                    });
-                                    </script>
+                                        <tr style="higth:100px">
+                                            <td class="hidden"> <input id="row-${dataStatus.count -1}-itineraryid" name="row-${dataStatus.count -1}-itineraryid"  type="hidden"  value="${table.id}">  </td>
+                                            <td class="hidden orderrow">${dataStatus.count -1}</td>
+                                            <td><input style="width: 20px" id="row-${dataStatus.count -1}-no" name="row-${dataStatus.count -1}-no"   type="text" class="form-control number" value="${table.orderNo}"></td>
+                                            <td><input style="width: 70px" type="text" id="row-${dataStatus.count -1}-hour" name="row-${dataStatus.count -1}-hour" class="form-control time" placeholder="HH:MM" value="${table.time}"></td>
+                                            <td><input   class="form-control" maxlength="255" style="width:570px" id="row-${dataStatus.count -1}-des" name="row-${dataStatus.count -1}-des" rows="2" value="${table.detail.replace("\"","&quot;")}"></td>
+                                            <td class="text-center">
+                                                <a class="remCF" onclick="ConfirmDelete('1', '${table.id}', '${dataStatus.count-1}')">  
+                                                    <span  id="SpanRemove${dataStatus.count-1}"  class="glyphicon glyphicon-remove deleteicon"></span>
+                                                </a>
+                                            </td>
+                                        </tr>              
+                                        <script>
+                                        $(document).ready(function () {
+                                            $("#counterItinerary").val(parseInt("${dataStatus.count}") );    
+                                        });
+                                        </script>
                                     </c:forEach>
-
                                 </tbody>
                             </table>    
-
                         </div>
                         <div id="tr_ItineraryAddRow" class="text-center hide" style="padding-top: 10px">
                             <a class="btn btn-success" onclick="AddRowItinerary()">
                                 <i class="glyphicon glyphicon-plus"></i> Add
                             </a>
                         </div>  
-
+<!--=====================================================Price=============================================-->
                         <div class="row"> 
                             <div class="col-md-6 " style="padding-left: 24px">
                                 <h5><b>Price</b> </h5>
                             </div>
                         </div>
-
                         <div class="row" style="margin-left: 10px;margin-right: 10px;">            
                             <table id="PackagePrice" class="display" cellspacing="0"  >
                                 <thead>
@@ -173,35 +159,32 @@
                                 </thead>
                                 <tbody>
                                     <c:forEach var="table1" items="${pricelist}" varStatus="priceStatus">
-                                    <tr>
-                                        <td class="hidden"><input class="form-control" type="hidden"  style="width:50px" id="row-${priceStatus.count-1}-priceid" name="row-${priceStatus.count-1}-priceid" value="${table1.id}"></td>
-                                        <td class="hidden orderrow">${priceStatus.count -1}</td>
-                                        <td><input style="width: 100px" onchange="setValidate();" type="text" id="row-${priceStatus.count-1}-datefrom" name="row-${priceStatus.count-1}-datefrom" class="form-control date" placeholder="YYYY-MM-DD" autocomplete="off" value="${table1.effectiveFrom}"></td>
-                                        <td><input style="width: 100px" onchange="setValidate();" type="text" id="row-${priceStatus.count-1}-dateto" name="row-${priceStatus.count-1}-dateto" class="form-control date" placeholder="YYYY-MM-DD" autocomplete="off" value="${table1.effectiveTo}"></td>
-                                        <td><input class="form-control money"  style="width:50px" id="row-${priceStatus.count-1}-adcost" name="row-${priceStatus.count-1}-adcost" value="${table1.adCost}"></td>
-                                        <td><input class="form-control money"  style="width:50px" id="row-${priceStatus.count-1}-chcost" name="row-${priceStatus.count-1}-chcost" value="${table1.chCost}"></td>
-                                        <td><input class="form-control money"  style="width:50px" id="row-${priceStatus.count-1}-incost" name="row-${priceStatus.count-1}-incost" value="${table1.inCost}"></td>
-                                        <td><input class="form-control money"  style="width:50px" id="row-${priceStatus.count-1}-adprice" name="row-${priceStatus.count-1}-adprice" value="${table1.adPrice}"></td>
-                                        <td><input class="form-control money"  style="width:50px" id="row-${priceStatus.count-1}-chprice" name="row-${priceStatus.count-1}-chprice" value="${table1.chPrice}"></td>
-                                        <td><input class="form-control money"  style="width:50px" id="row-${priceStatus.count-1}-inprice" name="row-${priceStatus.count-1}-inprice" value="${table1.inPrice}"></td>
-                                        <td class="text-center">
-                                            <a class="remCF" onclick="ConfirmDelete('2', '${table1.id}', '${priceStatus.count-1}')">  
-                                                <span  id="SpanRemove${priceStatus.count-1}"  class="glyphicon glyphicon-remove deleteicon"></span>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <script>
-                                    $(document).ready(function () {
-                                        $("#counterPrice").val(parseInt("${priceStatus.count}"));
-                                        
-                                    });
-                                    </script>
+                                        <tr>
+                                            <td class="hidden"><input class="form-control" type="hidden"  style="width:50px" id="row-${priceStatus.count-1}-priceid" name="row-${priceStatus.count-1}-priceid" value="${table1.id}"></td>
+                                            <td class="hidden orderrow">${priceStatus.count -1}</td>
+                                            <td><input style="width: 100px" onchange="setValidate();" type="text" id="row-${priceStatus.count-1}-datefrom" name="row-${priceStatus.count-1}-datefrom" class="form-control date" placeholder="YYYY-MM-DD" autocomplete="off" value="${table1.effectiveFrom}"></td>
+                                            <td><input style="width: 100px" onchange="setValidate();" type="text" id="row-${priceStatus.count-1}-dateto" name="row-${priceStatus.count-1}-dateto" class="form-control date" placeholder="YYYY-MM-DD" autocomplete="off" value="${table1.effectiveTo}"></td>
+                                            <td><input class="form-control money"  style="width:50px" id="row-${priceStatus.count-1}-adcost" name="row-${priceStatus.count-1}-adcost" value="${table1.adCost}"></td>
+                                            <td><input class="form-control money"  style="width:50px" id="row-${priceStatus.count-1}-chcost" name="row-${priceStatus.count-1}-chcost" value="${table1.chCost}"></td>
+                                            <td><input class="form-control money"  style="width:50px" id="row-${priceStatus.count-1}-incost" name="row-${priceStatus.count-1}-incost" value="${table1.inCost}"></td>
+                                            <td><input class="form-control money"  style="width:50px" id="row-${priceStatus.count-1}-adprice" name="row-${priceStatus.count-1}-adprice" value="${table1.adPrice}"></td>
+                                            <td><input class="form-control money"  style="width:50px" id="row-${priceStatus.count-1}-chprice" name="row-${priceStatus.count-1}-chprice" value="${table1.chPrice}"></td>
+                                            <td><input class="form-control money"  style="width:50px" id="row-${priceStatus.count-1}-inprice" name="row-${priceStatus.count-1}-inprice" value="${table1.inPrice}"></td>
+                                            <td class="text-center">
+                                                <a class="remCF" onclick="ConfirmDelete('2', '${table1.id}', '${priceStatus.count-1}')">  
+                                                    <span  id="SpanRemove${priceStatus.count-1}"  class="glyphicon glyphicon-remove deleteicon"></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <script>
+                                            $(document).ready(function () {
+                                                $("#counterPrice").val(parseInt("${priceStatus.count}"));
+                                            });
+                                        </script>
                                     </c:forEach>
                                 </tbody>
                             </table>    
-
                         </div>            
-
                         <div id="tr_PackagePriceAddRow" class="text-center hide" style="padding-top: 10px">
                             <a class="btn btn-success" onclick="AddRowPackagePrice()">
                                 <i class="glyphicon glyphicon-plus"></i> Add
@@ -210,31 +193,35 @@
 
                         <input type="hidden" class="form-control" name="action" id="action" value="save" >             
                         <input type="hidden"  id="counterItinerary" name="counterItinerary" value="0" />
-                        <input type="hidden"  id="passengerCounter" name="passengerCounter" value="0" />
+                        <input type="hidden"  id="cityCounter" name="cityCounter" value="0" />
                         <input type="hidden"  id="counterPrice" name="counterPrice" value="0" />
-                        <input type="hidden"  id="ConfirmDelete" name="rowType" />
+                        <input type="hidden"  id="rowType" name="rowType" />
                         <input type="hidden"  id="Itiid" name="Itiid" />
                         <input type="hidden"  id="checkValidate" name="checkValidate" />
                         <input type="hidden"  id="cCount" name="cCount" />
                         <input type="hidden"  id="packageid" name="packageid" value="${requestScope['packageid']}" />
                         
-                        <!--City -->
+<!--============================================City=============================================== -->
                         <div class="row"> 
                             <div class="col-md-6 " style="padding-left: 24px">
                                 <h5><b>City</b> </h5>
                             </div>
                         </div>
-                       <div class="panel panel-default">
-                           
-                        <!--Div Set Id City -->
-                        <div class="hidden">
+                       <div class="panel panel-default">  
+                        <div class="hidden" id="input-list-city">
                             <c:forEach var="pass" items="${ListCity}" varStatus="status">
-                                 <input type="text"  id="row-passenger-${status.count}-id" name="row-passenger-${status.count}-id" value="${pass.id}" />
+                                 <input type="text"  id="row-city-${status.count}-id" name="row-city-${status.count}-id" value="${pass.id}" />
                            </c:forEach>
                         </div>
-                        <select   class="hidden"  id="select-list-passenger">
+                        <!--Div Set Id City -->
+                        <div class="hidden" >
                             <c:forEach var="pass" items="${ListCity}" varStatus="status">
-                                 <!--<input type="text" class="hidden" id="row-passenger-${status.count}-id" name="row-passenger-${status.count}-id" value="${pass.id}" />-->
+                                 <input type="text"  id="row-city-${status.count}-id" name="row-city-${status.count}-id" value="${pass.id}" />
+                           </c:forEach>
+                        </div>
+                        <select   class="hidden"  id="select-list-city">
+                            <c:forEach var="pass" items="${ListCity}" varStatus="status">
+                                 <!--<input type="text" class="hidden" id="row-city-${status.count}-id" name="row-city-${status.count}-id" value="${pass.id}" />-->
                                 <option  value="${pass.name}">${pass.name}</option>
                            </c:forEach>
                         </select>
@@ -256,71 +243,62 @@
                                 </script>
                             </c:forEach>
                             <tbody>
-                            <input type="text" class="hidden" id="passengerCounter" name="passengerCounter" value="0" />
-
-                            <c:forEach var="pa" items="${ListPackageCity}" varStatus="city">
-                                <tr>
-                                    <td hidden="">
-                                        <input id="row-passenger-${city.count}-id" name="row-passenger-${city.count}-id" type="text" class="form-control" value="${pa.id}">
-                                    </td>
-                                    <td>
-                                        ${city.count}
-                                    </td>
-                                    <td>
-                                        <div id="div-passenger">
-                                            <input id="input-get-passenger-${city.count}" value="${pa.id}" hidden="">
-                                            <!--<input type="text" class="form-control cityName" id="select-passneger-${city.count}" name="row-passenger-${city.count}-name"  valHidden="${cityList.id}" value="${cityList.name}"  />-->
-                                            <select  class="form-control"  name="row-passenger-${city.count}-name" id="row-passenger-${city.count}">
-                                                <c:forEach var="passen" items="${ListCity}" varStatus="status">
-                                                    <input type="text" class="hidden" id="row-passenger-${city.count}-id" name="row-passenger-${city.count}-id" value="${passen.id}" />
-                                                    <option class="passenger-option" value="${passen.name}">${passen.name}</option>
-                                                </c:forEach>
-                                            </select>
-                                        </div>
-                                        <script>
-                                            $(document).ready(function () {
-                                                $("#row-passenger-${city.count}").val($("#input-get-passenger-${city.count}").val());
-                                            });
-                                        </script>
-                                    </td>          
-                                    <td class="text-center">
-                                        <a id="PassengerButtonRemove${city.count}" class="remCF" onclick="ConfirmDelete('3', '${pa.id}', '${city.count-1}')">
-                                            <span id="PassengerSpanRemove${city.count}" class="glyphicon glyphicon-remove deleteicon"></span>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <script>
-                                    $(document).ready(function () {
-                                        $("#passengerCounter").val(parseInt("${city.count}") + 1);
-                                    });
-                                </script>
-<!--                                <script type="text/javascript" charset="utf-8">
-                                     
-                                </script>-->
-                            </c:forEach>
-                                
+                                <input type="text" class="hidden" id="cityCounter" name="cityCounter" value="0" />
+                                <c:forEach var="pa" items="${ListPackageCity}" varStatus="city">
+                                    <tr>
+                                        <td hidden="">
+                                            <input id="row-city-${city.count}-id" name="row-city-${city.count}-id" type="text" class="form-control" value="${pa.id}">
+                                        </td>
+                                        <td>
+                                            ${city.count}
+                                        </td>
+                                        <td>
+                                            <div id="div-city">
+                                                <input id="input-get-city-${city.count}" value="${pa.id}" hidden="">
+                                                <!--<input type="text" class="form-control cityName" id="select-passneger-${city.count}" name="row-city-${city.count}-name"  valHidden="${cityList.id}" value="${cityList.name}"  />-->
+                                                <select  class="form-control"  name="row-city-${city.count}-name" id="row-city-${city.count}">
+                                                    <c:forEach var="passen" items="${ListCity}" varStatus="status">
+                                                        <input type="text" class="hidden" id="row-city-${city.count}-id" name="row-city-${city.count}-id" value="${passen.id}" />
+                                                        <option class="passenger-option" value="${passen.name}">${passen.name}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                            <script>
+                                                $(document).ready(function () {
+                                                    $("#row-city-${city.count}").val($("#input-get-city-${city.count}").val());
+                                                });
+                                            </script>
+                                        </td>          
+                                        <td class="text-center">
+                                            <a id="PassengerButtonRemove${city.count}" class="remCF" onclick="ConfirmDelete('3', '${pa.id}', '${city.count-1}')">
+                                                <span id="PassengerSpanRemove${city.count}" class="glyphicon glyphicon-remove deleteicon"></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <script>
+                                        $(document).ready(function () {
+                                            $("#cityCounter").val(parseInt("${city.count}") + 1);
+                                        });
+                                    </script>
+                                </c:forEach>                              
                             </tbody>
                         </table>
-                        <input value="${hotelPassengerList.size()}" id="table-passenger-size" type="hidden">
-
-                        <div id="tr_PassengerAddRow" class="text-center hide" style="padding-top: 10px">
-                            <a class="btn btn-success" onclick="PassengerAddRow()">
+                        <input value="${hotelPassengerList.size()}" id="table-city-size" type="hidden">
+                        <div id="tr_CityAddRow" class="text-center hide" style="padding-top: 10px">
+                            <a class="btn btn-success" onclick="CityAddRow()">
                                 <i class="glyphicon glyphicon-plus"></i> Add
                             </a>
                         </div>
-               
-                        </div> <!--End-->
-                        
-                        <!--Button Save -->
-                        <div class="row" style="padding-top: 10px">
-                            <div class="col-xs-12 text-center">
-                                <button id="savePackage" name="savePackage"  type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
-                            </div>
-                        </div>     
-                    </div>
+                    </div> <!--End-->                       
+                    <!--Button Save -->
+                    <div class="row" style="padding-top: 10px">
+                        <div class="col-xs-12 text-center">
+                            <button id="savePackage" name="savePackage"  type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+                        </div>
+                    </div>     
                 </div>
-
             </div>
+        </div>
         </div>
     </form>
 </div>
@@ -337,38 +315,31 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" onclick="DeleteRow()" class="btn btn-danger">Delete</button>
+                <button type="submit" onclick="DeleteRowPackage()" class="btn btn-danger">Delete</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
-                        
-
+                       
 <script type="text/javascript" charset="utf-8">
-    
     $(document).ready(function() {
         // ******************* start Itinerary script *******************
         $("#Itinerary").on("keyup", function() {
             var rowAll = $("#Itinerary tr").length;
-
-            $("#Itinerary td").keyup(function() {
-                
+            $("#Itinerary td").keyup(function() {               
                 if ($(this).find("input").val() != '') {
                     var colIndex = $(this).parent().children().index($(this));
                     var rowIndex = $(this).parent().find(".orderrow").html();//$(this).parent().parent().children().index($(this).parent());    
                     rowAll = $("#Itinerary tr").length-2;
-                //    alert(rowIndex+','+rowAll);
                     if (rowIndex == rowAll) {
                         AddRowItinerary(parseInt($("#counterItinerary").val()));
                     }
                     if ( $("#Itinerary tr").length < 2) {
-
                         $("#tr_ItineraryAddRow").removeClass("hide");
                         $("#tr_ItineraryAddRow").addClass("show");
                     }
                 }
-
             });
         });
         $("#tr_ItineraryAddRow a").click(function() {
@@ -386,35 +357,23 @@
 
          // ******************* start PackagePrice script *******************
         $("#PackagePrice").on('click', '.remCF', function() {
-         //   $(this).parent().parent().remove();
-         //   var rowAll = $("#PackagePrice tr").length;
-         //   if (rowAll < 3) {
-         //       $("#tr_PackagePriceAddRow").removeClass("hide");
-         //       $("#tr_PackagePriceAddRow").addClass("show");
-          //  }
+        
         });
         $("#PackagePrice").on("keyup", function() {
-            var rowAll = $("#PackagePrice tr").length;
-         
-            $("#PackagePrice td").keyup(function() {
-                
-                if ($(this).find("input").val() != '') {
-                  
+            var rowAll = $("#PackagePrice tr").length;       
+            $("#PackagePrice td").keyup(function() {              
+                if ($(this).find("input").val() != '') {                 
                     var colIndex = $(this).parent().children().index($(this));
-                     var rowIndex = $(this).parent().find(".orderrow").html();
-                    //var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 3;
+                     var rowIndex = $(this).parent().find(".orderrow").html();                  
                     rowAll = $("#PackagePrice tr").length-3;
-                    if (rowIndex == rowAll) {
-                         
+                    if (rowIndex == rowAll) {                        
                         AddRowPackagePrice(parseInt($("#counterPrice").val()));
                     }
                     if ($("#PackagePrice tr") < 2) {
-
                         $("#tr_PackagePriceAddRow").removeClass("hide");
                         $("#tr_PackagePriceAddRow").addClass("show");
                     }
                 }
-
             });
         });
         $("#tr_PackagePriceAddRow a").click(function() {
@@ -423,53 +382,13 @@
         });
         
          AddRowPackagePrice(parseInt($("#counterPrice").val()));
-        // ******************* start PackagePrice script ******************
-
-//City key up!!!!!!!!!!!!
-                                        var dataCity = [];
-                                        dataCity = cityName;
-//                                        alert(""+dataCity);
-                                    var citycount= 0;
-                                    $("#City tbody").find("tr").each(function(){ 
-//                                        alert('1');
-                                        citycount++;
-                                        $("#row-passenger-"+citycount).autocomplete({
-                                            source: dataCity,
-                                            focus: function( event, ui ) {
-                                                event.preventDefault();
-                                                $(this).val(ui.item.label);
-                                            },
-                                            select: function( event, ui ) {
-                                                event.preventDefault();
-                                                $(this).val(ui.item.label);
-                                                $(this).attr("valHidden",ui.item.value);
-                                            },
-                                            close:function( event, ui ) {
-                                               var editCheckBox = $(this).closest('tr').find('td.edited').children();
-                                               $(editCheckBox).attr("checked", true);
-                                               $("#row-passenger-"+citycount).trigger('keyup');
-                                            } 
-                                        });
-
-                                        $("#row-passenger-"+citycount).keyup(function () {
-                                            Alert("SSS");
-                                            var position = $(this).offset();
-                                            $(".ui-widget").css("top", position.top + 30);
-                                            $(".ui-widget").css("left", position.left);
-                                            $(".ui-widget").css("font-size", 10);
-                                        }); 
-                                    });
-
-
-
+        // ******************* start PackagePrice script *****************
     });
 
     function deletelist(id) {
         document.getElementById('DelItenarary').value += id + ',';
     }
-
-
-
+    
     function AddRowPackagePrice(row) {
         row = parseInt($("#counterPrice").val());
         $("#PackagePrice tbody").append(
@@ -489,7 +408,6 @@
                     '<span  id="SpanRemove'+row+'"  class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+                   
                     '</tr>'
                     );
-
         var tempCount = parseInt($("#counterPrice").val()) + 1;
         $("#counterPrice").val(tempCount);
     }
@@ -499,8 +417,7 @@
         var tempCount = parseInt($("#counterItinerary").val()) - 1;
         $("#counterItinerary").val(tempCount);
     }
-    
-    
+     
     function AddRowItinerary(row) {
          row = parseInt($("#counterItinerary").val());
         try {
@@ -518,12 +435,10 @@
                     '</tr>'
                     );
         } catch (e) {
-            alert(e);
-        }
-        
+//            alert(e);
+        }       
         var tempCount = parseInt($("#counterItinerary").val()) + 1;
-        $("#counterItinerary").val(tempCount);
-        
+        $("#counterItinerary").val(tempCount);       
     }
 </script>
 
@@ -539,7 +454,4 @@
     <script language="javascript">
         alert('<c:out value="${requestScope['packageLap']}" />');
     </script>
-</c:if>
-
-    
-    
+</c:if>    
