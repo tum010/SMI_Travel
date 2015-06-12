@@ -10,6 +10,7 @@ $(document).ready(function() {
     // validate
 
     var Billable = $("#Billable");
+    /*
     Billable.bootstrapValidator({
         container: 'tooltip',
         excluded: [':disabled'],
@@ -37,7 +38,7 @@ $(document).ready(function() {
 
         }
     });
-            
+         */   
     Billable.on('mouseover', function () {
         var billto = $(this).find('[name="billto"]');
         var isEmpty = billto.val() === '';
