@@ -27,6 +27,12 @@
 
 <input type="hidden" value="1" id="enable-status">
 <input type="hidden" value="${param.action}" id="actionIDown">
+<input type="hidden" id="saveText" name="saveText" value="${status}">
+ 
+    <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Save Success!</strong> 
+    </div>
 
 <c:choose>
     <c:when test="${not empty param.referenceNo}">
@@ -469,7 +475,7 @@
 
 <c:if test="${! empty requestScope['result']}">
     <script language="javascript">
-        alert('<c:out value="${requestScope['result']}" />');
+        $('#textAlertDivSave').show();
     </script>
 </c:if>
 

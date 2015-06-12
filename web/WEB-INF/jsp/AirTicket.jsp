@@ -23,9 +23,6 @@
 <c:set var="action" value="${requestScope['action']}" />
 <c:set var="add_button" value="${requestScope['AddButton']}" />
 <c:set var="result" value="${requestScope['Result']}" />
-
-
-
 <c:set var="booking_size" value="${requestScope['BookingSize']}" />
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
@@ -45,6 +42,16 @@
         <input type="hidden" value="${master.referenceNo}" id="getRealformatUrl">
     </c:otherwise>
 </c:choose>
+        
+<!--Alert Save and Update-->
+    <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Save Success!</strong> 
+    </div>
+    <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Save Unsuccess!</strong> 
+    </div>
 
 <!--Header-->
 <section class="content-header" >
@@ -443,18 +450,16 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->    
 
-
-
 <c:if test="${! empty result}">
     <c:if test="${result =='1'}">        
         <script language="javascript">
-            alert("save successful");
+            $('#textAlertDivSave').show();
         </script>
         <META HTTP-EQUIV="Refresh" CONTENT="0;URL=AirTicket.smi?referenceNo=${param.referenceNo}&action=edit">
     </c:if>
     <c:if test="${result =='0'}">        
         <script language="javascript">
-            alert("save unsuccessful");
+            $('#textAlertDivNotSave').show();
         </script>
         <META HTTP-EQUIV="Refresh" CONTENT="0;URL=AirTicket.smi?referenceNo=${param.referenceNo}&action=edit">
     </c:if>

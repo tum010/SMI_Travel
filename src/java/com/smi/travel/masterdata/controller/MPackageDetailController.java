@@ -121,9 +121,9 @@ public class MPackageDetailController extends SMITravelController {
                     request.setAttribute(TransectionResult, "save unsuccessful");
                 }
             }
-
         } else if ("edit".equalsIgnoreCase(action)) {
-            PackageTour Packagedetail = packageTourservice.getPackageFromID(request.getParameter("packageid").toString());
+            String packagetourid = request.getParameter("packageid");
+            PackageTour Packagedetail = packageTourservice.getPackageFromID(packagetourid);
             code = Packagedetail.getCode();
             name = Packagedetail.getName();
             remark = Packagedetail.getRemark();
@@ -140,8 +140,8 @@ public class MPackageDetailController extends SMITravelController {
             request.setAttribute("ListPackageCity", listPackageCity);
             
             if (status.equalsIgnoreCase("inactive")) {
-                request.setAttribute("IsInactive", "selected");
-            }
+            }                request.setAttribute("IsInactive", "selected");
+
             if(request.getParameter(TransectionResult) != null){
                 if("1".equalsIgnoreCase(request.getParameter(TransectionResult).toString())){
                     request.setAttribute(TransectionResult, "save successful");

@@ -12,7 +12,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<script type="text/javascript" src="js/MCommissionDetail.js"></script> 
+<script type="text/javascript" src="js/MCommissionDetail.js"></script>
 <script type="text/javascript" src="js/jquery-ui.js"></script>
 <link href="css/jquery-ui.css" rel="stylesheet">
 
@@ -22,7 +22,19 @@
 <c:set var="AgentCommissions" value="${requestScope['AgentCommissions']}" />
 <c:set var="AgentTours" value="${requestScope['AgentTours']}" />
 
-
+<!--Alert Save -->
+<div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>${requestScope['ResultSave']}</strong> 
+</div>
+<div id="textAlertDivUpdateSuccess"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Update Success!</strong> 
+</div>
+<div id="textAlertDivUpdateFail"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Update Fail!</strong> 
+</div>
 <section class="content-header"  >
     <h1>
         <b>Master : Tour Commission</b>
@@ -514,26 +526,27 @@
 <c:if test="${! empty param.result}">
     <c:if test="${param.result =='success'}">        
         <script language="javascript">
-            alert("update successful");
+            $('#textAlertDivUpdateSuccess').show();
         </script>
         <META HTTP-EQUIV="Refresh" CONTENT="0;URL=MCommissionDetail.smi?commissionId=${param.commissionId}&action=edit">
     </c:if>
     <c:if test="${param.result =='fail'}">        
         <script language="javascript">
-            alert("update unsuccessful");
+            $('#textAlertDivUpdateFail').show();
         </script>
         <META HTTP-EQUIV="Refresh" CONTENT="0;URL=MCommissionDetail.smi?commissionId=${param.commissionId}&action=edit">
     </c:if>
 </c:if>
 <c:if test="${! empty requestScope['VALIDATE']}">
     <script language="javascript">
+//        $('#textAlertDivSave').show();
         alert('<c:out value="${requestScope['VALIDATE']}" />');
     </script>
 </c:if>   
 
 <c:if test="${! empty requestScope['ResultSave']}">
     <script language="javascript">
-        alert('<c:out value="${requestScope['ResultSave']}" />');
+        $('#textAlertDivSave').show();
     </script>
 </c:if>         
 
@@ -713,10 +726,5 @@
             $("#counterCommission").val(counter + 1);
         });
         $('#commissionTable tbody').append(clone);
-    }
-    
-    
+    } 
 </script>
-
-
-

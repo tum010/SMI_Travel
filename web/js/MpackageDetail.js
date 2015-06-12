@@ -5,6 +5,7 @@
  */
 
 function ConfirmDelete(rowType, itineraryid, Ccount) {
+//    alert("Delete");
     $("#rowType").val(rowType);
     $("#Itiid").val(itineraryid);
     $("#cCount").val(Ccount);
@@ -14,30 +15,33 @@ function ConfirmDelete(rowType, itineraryid, Ccount) {
     }else if (rowType === '2') {
         deleteType = 'price ?';
     }else if (rowType === '3'){
-        deleteType = "city ?"
+//        alert("Delete : " + rowType);
+        deleteType = 'city ?';
     }
     $("#delCode").text('are you sure delete ' + deleteType);
     $('#DeletePackage').modal('show');
-
 }
 
-function DeleteRow() {
+function DeleteRowPackage() {
+    
     var rowType = $("#rowType").val();
     var ItiId = $("#Itiid").val();
     var cCount = $("#cCount").val();
-
+//    alert("Delete Modal : " + rowType);
     if (rowType === '1') {
         deleteItinerary(ItiId,cCount);
     }else if (rowType === '2') {
         deletePrice(ItiId,cCount);
     }else if(rowType === '3'){
+//        alert("Delete Modal : " + rowType);
         deleteCity(ItiId,cCount);
     }
     $('#DeletePackage').modal('hide');
 }
 
 function deleteItinerary(ItiId,count){
-    if(ItiId == ''){
+//    alert("Delete Itinerary");
+    if(ItiId === ''){
                  var countrow=0;
             $("#row-" + count + "-no").parent().parent().remove();
             var rowAll = $("#Itinerary tr").length;
@@ -82,14 +86,16 @@ function deleteItinerary(ItiId,count){
 }
 
 function deleteCity(CityId,count){
-    if(CityId == ''){
-                 var countrow=0;
-            $("#row-" + count + "-no").parent().parent().remove();
+//    alert("Delete City");
+    if(CityId === ''){
+            var countrow=0;
+//            alert($("#row-passenger-2-name").parent().parent().html());
+            $("#row-city-" + count + "-name").parent().parent().remove();
             var rowAll = $("#City tr").length;
             if (rowAll < 2) {
-                console.log("show button tr_FormulaAddRow");
-                $("#tr_PassengerAddRow").removeClass("hide");
-                $("#tr_PassengerAddRow").addClass("show");
+//                console.log("show button tr_FormulaAddRow");
+                $("#tr_CityAddRow").removeClass("hide");
+                $("#tr_CityAddRow").addClass("show");
             }            
      //       $("#counterItinerary").val(parseInt($("#counterItinerary").val()) -1);
             $('#City tr:gt(0) ').each(function() {
@@ -108,15 +114,14 @@ function deleteCity(CityId,count){
             var rowAll = $("#City tr").length;
             if (rowAll < 2) {
                 console.log("show button tr_FormulaAddRow");
-                $("#tr_PassengerAddRow").removeClass("hide");
-                $("#tr_PassengerAddRow").addClass("show");
+                $("#tr_CityAddRow").removeClass("hide");
+                $("#tr_CityAddRow").addClass("show");
             }            
      //       $("#counterItinerary").val(parseInt($("#counterItinerary").val()) -1);
             $('#City tr:gt(0) ').each(function() {
                 $(this).find('td:eq(1)').html(countrow) ; 
                 countrow = countrow+1;
-            });   
-          
+            });           
         },
         error: function () {
             console.log("error");
@@ -144,7 +149,8 @@ function getrowcountPrice(){
 
 
 function deletePrice(priceId,count){
-    if(priceId == ''){
+//    alert("Delete Price");
+    if(priceId === ''){
         var countrow =0;
             $("#row-" + count + "-datefrom").parent().parent().remove();
             var rowAll = $("#PackagePrice tr").length;
@@ -182,8 +188,6 @@ function deletePrice(priceId,count){
         }
     });
     }
-    
-    
 }
 
 function DeleteRowPrice(count){
@@ -199,13 +203,11 @@ function DeleteRowPrice(count){
      $('#PackagePrice tr:gt(1) ').each(function() {
          $(this).find('td:eq(1)').html(countrow) ; 
          countrow = countrow+1;
-     });    
-            
+     });               
 }
 
 
 $(document).ready(function () {
-
     try{
  $('#PackageForm').bootstrapValidator({
         container: 'tooltip',
@@ -253,9 +255,7 @@ $(document).ready(function () {
     
     
     $('#PackageForm').on('submit', function(e) {
-
-        if (validateDate()){
-            
+        if (validateDate()){        
         }else{
             e.preventDefault();
             $("#savePackage").prop('disabled', false);
@@ -338,29 +338,29 @@ function IsStartDateOver(date1S, date2S){
 // City 
 
 $(document).ready(function () {
-    PassengerAddRow((parseInt($("#table-passenger-size").val()) + 1));
+    CityAddRow((parseInt($("#table-city-size").val()) + 1));
     $("#City").on('click', '.newRemCF', function () {
         $(this).parent().parent().remove();
         var rowAll = $("#City tr").length;
 //        console.log("rowAll : " + rowAll);
         if (rowAll < 2) {
-            console.log("show button");
-            $("#tr_PassengerAddRow").removeClass("hide");
-            $("#tr_PassengerAddRow").addClass("show");
+//            console.log("show button");
+            $("#tr_CityAddRow").removeClass("hide");
+            $("#tr_CityAddRow").addClass("show");
         }
     });
-    $("#tr_PassengerAddRow a").click(function () {
+    $("#tr_CityAddRow a").click(function () {
         $(this).parent().removeClass("show");
         $(this).parent().addClass("hide");
     });
     $("#City").on("change", "select:last", function () {
-        console.log('on change');
+//        console.log('on change');
         var rowAll = $("#City tr").length;
-        PassengerAddRow(rowAll);
+        CityAddRow(rowAll);
     });
 });
 
-function PassengerAddRow(row) {
+function CityAddRow(row) {
 
     if (!row) {
         row = 1;
@@ -368,16 +368,17 @@ function PassengerAddRow(row) {
 
     $("#City tbody").append(
             '<tr>' +
-            '<td  hidden=""><input  id="row-passenger-' + row + '-id" name="row-passenger-' + row + '-id"  type="text" class="form-control"></td>' +
-            '<td>' + row + '</td>' +
-            '<td><select id="row-passenger-' + row + '-name" name="row-passenger-' + row + '-name" class="form-control"></select></td>' +
+            '<td  ><input  id="row-city-' + row + '-id" name="row-city-' + row + '-id"  type="text" class="form-control" value='+row+'></td>' +
+            '<td hidden="">' + row + '</td>' +
+            '<td><select id="row-city-' + row + '-name" name="row-city-' + row + '-name" class="form-control"><option></option></select></td>' +
             '<td class="text-center">' +
-            '<a class="newRemCF" id="ButtonPassengerRemove'+row+'"><span id="SpanPassengerRemove'+row+'" class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
+            '<a class="remCF" onclick="ConfirmDelete(\'3\', \'\', \''+row+'\')">  '+
+            '<span  id="SpanRemove'+row+'"  class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+                   
             '</tr>'
             );
-    $("#select-list-passenger option").clone().appendTo("#row-passenger-" + row + "-name");
-    var tempCount = parseInt($("#passengerCounter").val()) + 1;
-    $("#passengerCounter").val(tempCount);
+    $("#select-list-city option").clone().appendTo("#row-city-" + row + "-name");
+    var tempCount = parseInt($("#cityCounter").val()) + 1;
+    $("#cityCounter").val(tempCount);
 }
 
 function deletePassenger(hotelId, passengerId) {

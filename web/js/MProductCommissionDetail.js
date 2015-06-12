@@ -65,7 +65,7 @@ $(document).ready(function () {
            }
         });
 //        alert(isValid + "Save");
-          jQuery("#textAlertDivSave").css("display","block");
+//          jQuery("#textAlertDivSave").css("display","block");
         return isValid;
     }
     

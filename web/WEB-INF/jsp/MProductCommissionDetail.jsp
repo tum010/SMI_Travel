@@ -44,11 +44,11 @@
         </div>
     </div>
     <!--Alert Save and Update-->
-     <input type="text" id="saveText" name="saveText" value="${status}">
+    <input type="hidden" id="saveText" name="saveText" value="${status}">
  
-    <div id="textAlertDivSave"  style="display:none;" class="alert alert-warning alert-dismissible" role="alert">
+    <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Warning!</strong> Better check yourself, you're not looking too good.
+        <strong>Save Success!</strong> 
         </div>
     <!--Alert Check Date-->
     <div class="row" style="display:none;" id="AlertCheckDate">

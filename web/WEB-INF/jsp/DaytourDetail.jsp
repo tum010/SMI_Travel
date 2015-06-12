@@ -28,7 +28,15 @@
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
-
+<!--Alert Save -->
+<div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Save Success!</strong> 
+</div>
+<div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Save Success!</strong> 
+</div>
 <section class="content-header" >
     <h1>
         Booking - Day Tours Detail
@@ -224,23 +232,6 @@
                         <div class="col-md-4">
                             <textarea id="TextareaMemo" name="TextareaMemo" style="resize: none" class="form-control" maxlength="255">${daytourBooking.memo}</textarea>
                         </div>
-                        
-<!--                        <div class="col-md-1 text-right">
-                            <label class="control-label">Guide</label>
-                        </div>-->
-                        <!--<div class="col-md-3">-->
-<!--                            <select id="InputGuide" name="InputGuide" class="form-control selectize">
-                                <option value="">---All Guides---</option>-->
-                                <%--<c:set var="select" value="" />--%>
-                                <%--<c:set var="selectedId" value="${daytourBooking.guide.id}" />--%>
-                                <%--<c:forEach var="guide" items="${guideList}">--%>
-                                    <%--<c:if test="${guide.id == selectedId}">--%>
-                                    <%--<c:set var="select" value="selected" />--%>
-                                    <%--</c:if>--%>
-                                    <!--<option value="${guide.id}" >${guide.name}</option>-->
-                                <%--</c:forEach>--%>
-<!--                            </select>
-                        </div>-->
                     </div>
                 </div>            
                 <div class="row form-group"  >            
@@ -676,13 +667,13 @@
 <c:if test="${! empty param.result}">
     <c:if test="${param.result =='success'}">        
         <script language="javascript">
-            alert("save successful");
+            $('#textAlertDivSave').show();
         </script>
         <META HTTP-EQUIV="Refresh" CONTENT="0;URL=DaytourDetail.smi?referenceNo=${param.referenceNo}&daytourBooking=${param.daytourBooking}&action=edit">
     </c:if>
     <c:if test="${param.result =='fail'}">        
         <script language="javascript">
-            alert("save unsuccessful");
+            $('#textAlertDivNotSave').show();
         </script>
         <META HTTP-EQUIV="Refresh" CONTENT="0;URL=DaytourDetail.smi?referenceNo=${param.referenceNo}&daytourBooking=${param.daytourBooking}&action=edit">
     </c:if>
@@ -1122,6 +1113,7 @@
             success: function () {
 //                alert('${requestScope['TransactionResult']}');
                 if (${! empty requestScope['TransactionResult']}) {
+                    $('#textAlertDivSave').show();
                     alert('${requestScope['TransactionResult']}');
                 }
 //                console.log("success calling DaytourDetail Delete");

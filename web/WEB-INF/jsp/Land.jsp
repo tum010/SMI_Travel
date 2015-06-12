@@ -14,7 +14,15 @@
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
-
+<!--Alert Save -->
+<div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Save Success!</strong> 
+</div>
+<div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Save Success!</strong> 
+</div>
 <section class="content-header" >
     <h1>
         Booking - Land
@@ -266,6 +274,11 @@
 
 <c:if test="${! empty requestScope['result']}">
     <script language="javascript">
-        alert('<c:out value="${requestScope['result']}" />');
+        $('#textAlertDivSave').show();
+    </script>
+</c:if>
+<c:if test="${ empty requestScope['result']}">
+    <script language="javascript">
+        $('#textAlertDivNotSave').show();
     </script>
 </c:if>

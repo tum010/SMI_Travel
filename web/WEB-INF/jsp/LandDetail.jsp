@@ -29,6 +29,15 @@
 <c:if test="${booktype == 'o'}">
     <c:set var="DescriptionSize" value="670px" />
 </c:if>
+<!--Alert Save -->
+<div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Save Success!</strong> 
+</div>
+<div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Save Success!</strong> 
+</div>
 <section class="content-header" >
     <h1>
         Booking - Land Detail
@@ -1011,11 +1020,13 @@ function replaceAll(find, replace, str) {
 }
 
 </script>
-
-
-
 <c:if test="${! empty requestScope['result']}">
     <script language="javascript">
-        alert('<c:out value="${requestScope['result']}" />');
+        $('#textAlertDivSave').show();
+    </script>
+</c:if>
+<c:if test="${ empty requestScope['result']}">
+    <script language="javascript">
+        $('#textAlertDivNotSave').show();
     </script>
 </c:if>
