@@ -24,12 +24,14 @@ public class BookOtherServlet implements AbstractAJAXServlet {
     public Map process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String servletName = request.getParameter("servletName");
         String productid = request.getParameter("productid");
-        String Type = request.getParameter("type");
+        String date = request.getParameter("date");
+        String type = request.getParameter("type");
         System.out.print("set parameter mapping");
         Map result = new HashMap();
         result.put("productid", productid);
+        result.put("date", date);
         result.put("servletName", servletName);
-        result.put("type", Type);
+        result.put("type", type);
         return result;
     }
     
