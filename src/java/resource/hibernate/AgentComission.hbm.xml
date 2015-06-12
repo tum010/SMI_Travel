@@ -13,11 +13,11 @@
         <property name="isPay" type="java.lang.Integer">
             <column name="is_pay" />
         </property>
-        <set name="agentTourComissions" table="agent_tour_comission" inverse="true" lazy="true" fetch="select">
+        <bag  name="agentTourComissions"  cascade="all" >
             <key>
-                <column name="agent_com_id" />
+                <column name="agent_com_id"  />
             </key>
             <one-to-many class="com.smi.travel.datalayer.entity.AgentTourComission" />
-        </set>
+        </bag >
     </class>
 </hibernate-mapping>

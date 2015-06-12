@@ -194,7 +194,9 @@ public class MCommissionDetailController extends SMITravelController {
              agentTourComRows =  Integer.parseInt(agentTourComCounter);
         }
         if(agentTourComRows == 1){return;}
-        
+        if( agentcommission.getAgentTourComissions() == null){
+            agentcommission.setAgentTourComissions(new ArrayList<AgentTourComission>());
+        }
         for(int i = 0 ; i < agentTourComRows; i++){
             String id = request.getParameter("InputId-"+i);
             String from = request.getParameter("InputFrom-"+i);
@@ -251,7 +253,7 @@ public class MCommissionDetailController extends SMITravelController {
     private AgentTourComission getAgentTourCommission(String agentTourComissionId, AgentComission agentcommission ){
         System.out.println("get AgentTourComission Begin");
         if(agentTourComissionId == null){return null;}
-        if(agentcommission.getAgentTourComissions().isEmpty()){return null;}
+        if(agentcommission.getAgentTourComissions() == null){return null;}
         
         Iterator<AgentTourComission> iterator = agentcommission.getAgentTourComissions().iterator();
         while(iterator.hasNext()){
