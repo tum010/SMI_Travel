@@ -9,6 +9,7 @@ import com.smi.travel.datalayer.dao.AgentDao;
 import com.smi.travel.datalayer.dao.AirticketBookingDao;
 import com.smi.travel.datalayer.dao.CustomerDao;
 import com.smi.travel.datalayer.dao.DaytourDao;
+import com.smi.travel.datalayer.dao.MBankDao;
 import com.smi.travel.datalayer.dao.MCityDao;
 import com.smi.travel.datalayer.dao.MListItemDao;
 import com.smi.travel.datalayer.dao.MasterDao;
@@ -19,6 +20,7 @@ import com.smi.travel.datalayer.entity.Customer;
 import com.smi.travel.datalayer.entity.Daytour;
 import com.smi.travel.datalayer.entity.MAccpay;
 import com.smi.travel.datalayer.entity.MAccterm;
+import com.smi.travel.datalayer.entity.MBank;
 import com.smi.travel.datalayer.entity.MBilltype;
 import com.smi.travel.datalayer.entity.MBookingstatus;
 import com.smi.travel.datalayer.entity.MCity;
@@ -50,6 +52,7 @@ public class UtilityService {
     private PlaceDao placedao;
     private DaytourDao daytourdao;
     private MCityDao citydao;
+    private MBankDao mBankdao;
     
     public int[] getCountItemFromBooking(String refno) {
         int[] Booking_size = new int[7];
@@ -103,6 +106,10 @@ public class UtilityService {
     
     public List<MCity> getListMCity(){
         return citydao.getListCity();
+    }
+    
+    public List<MBank> getListBank(MBank bank){
+        return mBankdao.getListBank(bank, 1);
     }
 
     public MInitialname getMInitialnameFromName(String name) {

@@ -1,6 +1,9 @@
 package com.smi.travel.datalayer.entity;
 // Generated Dec 24, 2014 10:24:56 AM by Hibernate Tools 3.6.0
 
+import java.util.Date;
+
+
 
 
 /**
@@ -19,6 +22,7 @@ public class BillableDesc  {
      private String remark;
      private String detail;
      private String currency;
+     private Date billDate;
 
      
     public BillableDesc() {
@@ -31,7 +35,7 @@ public class BillableDesc  {
         this.price = price;
         this.isBill = isBill;
     }
-    public BillableDesc(Billable billable, MBilltype MBilltype, AirticketAirline airticketAirline, int cost, int price, int isBill, String remark,String detail,String currency) {
+    public BillableDesc(Billable billable, MBilltype MBilltype, AirticketAirline airticketAirline, int cost, int price, int isBill, String remark,String detail,String currency,Date billDate) {
        this.billable = billable;
        this.MBilltype = MBilltype;
        this.airticketAirline = airticketAirline;
@@ -41,6 +45,7 @@ public class BillableDesc  {
        this.remark = remark;
        this.detail = detail;
        this.currency = currency;
+       this.billDate = billDate;
     }
    
     public String getId() {
@@ -114,6 +119,14 @@ public class BillableDesc  {
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    public Date getBillDate() {
+        return billDate;
+    }
+
+    public void setBillDate(Date billDate) {
+        this.billDate = billDate;
     }
 
 

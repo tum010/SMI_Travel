@@ -10,7 +10,7 @@ package com.smi.travel.datalayer.report.model;
  *
  * @author Surachai
  */
-public class GuideCommission {
+public class GuideCommissionSummary {
     private String systemdate;
     private String user;
     private String tourdate;

@@ -14,4 +14,5 @@ import java.util.List;
  */
 public interface GuideCommissionReportDao {
     public List getGuideComissionReport(String datefrom,String dateto,String username,String guideid);
+    
 }

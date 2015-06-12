@@ -20,7 +20,7 @@ public class Billable {
      private String billTo;
      private String billName;
      private String billAddress;
-     private Date billDate;
+     private Date transferDate;
      private Integer isPayYourself;
      private String remark;
      private Set billableDescs = new HashSet(0);
@@ -32,7 +32,7 @@ public class Billable {
     public Billable(Master master) {
         this.master = master;
     }
-    public Billable(MAccpay MAccpay, Master master, MAccterm MAccterm, Passenger passenger, String billTo, String billName, String billAddress, Date billDate, Integer isPayYourself, Set billableDescs,String remark) {
+    public Billable(MAccpay MAccpay, Master master, MAccterm MAccterm, Passenger passenger, String billTo, String billName, String billAddress, Date transferDate, Integer isPayYourself, Set billableDescs,String remark) {
        this.MAccpay = MAccpay;
        this.master = master;
        this.MAccterm = MAccterm;
@@ -40,7 +40,7 @@ public class Billable {
        this.billTo = billTo;
        this.billName = billName;
        this.billAddress = billAddress;
-       this.billDate = billDate;
+       this.transferDate = transferDate;
        this.isPayYourself = isPayYourself;
        this.billableDescs = billableDescs;
        this.remark = remark;
@@ -102,13 +102,17 @@ public class Billable {
     public void setBillAddress(String billAddress) {
         this.billAddress = billAddress;
     }
-    public Date getBillDate() {
-        return this.billDate;
+
+    public Date getTransferDate() {
+        return transferDate;
     }
+
+    public void setTransferDate(Date transferDate) {
+        this.transferDate = transferDate;
+    }
+  
     
-    public void setBillDate(Date billDate) {
-        this.billDate = billDate;
-    }
+    
     public Integer getIsPayYourself() {
         return this.isPayYourself;
     }

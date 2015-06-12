@@ -6,7 +6,7 @@
 
 package com.smi.travel.datalayer.view.dao.impl;
 
-import com.smi.travel.datalayer.report.model.GuideCommission;
+import com.smi.travel.datalayer.report.model.GuideCommissionSummary;
 import com.smi.travel.datalayer.view.dao.GuideCommissionReportDao;
 import com.smi.travel.util.UtilityFunction;
 import java.text.SimpleDateFormat;
@@ -49,7 +49,7 @@ public class GuideCommissionReportImpl implements GuideCommissionReportDao{
                 .list();
         
         for (Object[] B : QueryGuideComList) {
-             GuideCommission guidecom = new GuideCommission();
+             GuideCommissionSummary guidecom = new GuideCommissionSummary();
              guidecom.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(thisdate));
              guidecom.setUser(username);
              guidecom.setDatefrom(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)));
