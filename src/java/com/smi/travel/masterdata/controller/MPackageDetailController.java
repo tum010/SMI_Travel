@@ -276,8 +276,9 @@ public class MPackageDetailController extends SMITravelController {
         util = new UtilityFunction();
         int cityRows = Integer.parseInt(CityRows);
         if(packagetour.getPackageCities() == null){
-            packagetour.setPackageCities(new LinkedList<PackageCity>());
+            packagetour.setPackageCities(new ArrayList<PackageCity>());
         }
+        
         if (cityRows == 1) {
             return;
         }
