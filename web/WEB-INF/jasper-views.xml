@@ -5,6 +5,7 @@
 		http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
+       
 	<!--<add data>-->
 	<bean id="TestingReport"
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
@@ -104,5 +105,8 @@
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/AgentCommission.jrxml"/>
          </bean>
+         
+        <bean id="ExportDataToExcelView" class="com.smi.travel.controller.excel.ExportDataToExcelView">
+        </bean> 
          
 </beans>

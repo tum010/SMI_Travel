@@ -84,12 +84,13 @@
                 <prop key="MPackageDetail.smi">MPackageDetailController</prop>
                 <prop key="MProductCommission.smi">MProductCommissionController</prop>
                 <prop key="MProductCommissionDetail.smi">MProductCommissionDetailController</prop>
+                <prop key="Excel.smi">ExportDataToExcelController</prop>
                 <!--<prop key="test_page.smi">TestPageController</prop>-->
                 <!-- add mapping url -->
             </props>
         </property>
     </bean>
-    
+      
     <!-- Tiles configuration -->
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.UrlBasedViewResolver" >
@@ -468,4 +469,6 @@
         <property name="utilservice" ref="UtilityService" />
     </bean>
     
+    <bean id="ExportDataToExcelController" class="com.smi.travel.controller.excel.ExportDataToExcelController">
+    </bean>
 </beans>
