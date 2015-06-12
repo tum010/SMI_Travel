@@ -107,7 +107,7 @@ http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
            <value>resource/hibernate/PackageItinerary.hbm.xml</value>
            <value>resource/hibernate/MDefaultData.hbm.xml</value>
            <value>resource/hibernate/PackageCity.hbm.xml</value>
-           
+           <value>resource/hibernate/MBank.hbm.xml</value>
 	</list>
       </property>	
  
