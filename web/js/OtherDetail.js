@@ -61,16 +61,15 @@ $(document).ready(function() {
                     $("#product_name").val(value.name); 
             }
             if(name === value.name){
-                $("#product_id").val(value.id);
                 $("#product_code").val(value.code);
-                $("#product_name").val(value.name);
                 code = $("#product_code").val().toUpperCase();
-                
+                $("#product_name").val(value.name); 
             }
         });
        
     });
     
+
     var codeAgent = [];
     $.each(agent, function (key, value) {
         codeAgent.push(value.code);
@@ -99,15 +98,14 @@ $(document).ready(function() {
                     $("#agent_name").val(value.name); 
             }
             if(name === value.name){
-                $("#agent_id").val(value.id);
-                $("#agent_name").val(value.name);
                 $("#agent_code").val(value.code);
                 code = $("#agent_code").val().toUpperCase();
-                 
+                $("#agent_name").val(value.name); 
             }
         });
     });
     
+
     $('#otherForm').bootstrapValidator({
         container: 'tooltip',
         excluded: [':disabled', ':hidden', ':not(:visible)'],
@@ -142,13 +140,16 @@ function getvalueProduct(booktype) {
     var servletName = 'BookOtherServlet';
     var servicesName = 'AJAXBean';
     var productid = document.getElementById('product_id').value;
+    var otherdate = document.getElementById('otherdate').value;
     var param = 'action=' + 'text' +
             '&servletName=' + servletName +
             '&servicesName=' + servicesName +
             '&productid=' + productid +
+            '&productid=' + otherdate +
             '&type=' + 'getvalueProduct';
+    
     CallAjax(param, booktype);
-
+    
 }
 
 function calculateVatvalue() {
@@ -160,6 +161,7 @@ function calculateVatvalue() {
     var inprice = document.getElementById('in_price');
 
     if (document.getElementById('Vat').checked) {
+
         calculateVat();
     } else {
 
@@ -176,12 +178,15 @@ function calculateVatvalue() {
 
 function returnvat(input) {
     input = replaceComma(input);
-    return numberWithCommas(Math.round(input * (100 / 107)));
+    if(input != 0){
+        return numberWithCommas(Math.round(input * (100 / 107)));
+    } else {
+        return null;
+    }
 }
 
 function CallAjax(param, booktype) {
     var url = 'AJAXServlet';
-
     try {
         $.ajax({
             type: "POST",
@@ -192,19 +197,16 @@ function CallAjax(param, booktype) {
 
                 var path = msg.split(',');
 
-                if (booktype === 'i') {
+                if (booktype == 'i') {
                     document.getElementById('ad_cost').value = numberWithCommas(path[0]);
                     document.getElementById('ch_cost').value = numberWithCommas(path[1]);
                     document.getElementById('in_cost').value = numberWithCommas(path[2]);
                     document.getElementById('ad_price').value = numberWithCommas(path[3]);
                     document.getElementById('ch_price').value = numberWithCommas(path[4]);
                     document.getElementById('in_price').value = numberWithCommas(path[5]);
-                    console.log('path[0]:'+numberWithCommas(path[0]));
-                    console.log('path[0]:'+numberWithCommas(path[1]));
-                    console.log('path[0]:'+numberWithCommas(path[2]));
                 }
 
-                if (booktype === 'o') {
+                if (booktype == 'o') {
                     document.getElementById('ad_cost').value = path[0];
                     document.getElementById('ch_cost').value = path[1];
                     document.getElementById('in_cost').value = path[2];
@@ -237,13 +239,22 @@ function calculateVat() {
     tempadprice = replaceComma(adprice.value);
     tempchprice = replaceComma(chprice.value);
     tempinprice = replaceComma(inprice.value);
-
-    adcost.value = numberWithCommas(parseInt((tempadcost * 7 / 100)) + parseInt(tempadcost));
-    chcost.value = numberWithCommas(parseInt((tempchcost * 7 / 100)) + parseInt(tempchcost));
-    incost.value = numberWithCommas(parseInt((tempincost * 7 / 100)) + parseInt(tempincost));
-    adprice.value = numberWithCommas(parseInt((tempadprice * 7 / 100)) + parseInt(tempadprice));
-    chprice.value = numberWithCommas(parseInt((tempchprice * 7 / 100)) + parseInt(tempchprice));
-    inprice.value = numberWithCommas(parseInt((tempinprice * 7 / 100)) + parseInt(replaceComma(tempinprice)));
+    
+    if(tempadcost == 0){
+        adcost.value = '';
+        chcost.value = '';
+        incost.value = '';
+        adprice.value = '';
+        chprice.value = '';
+        inprice.value = '';
+    } else { 
+        adcost.value = numberWithCommas(parseInt((tempadcost * 7 / 100)) + parseInt(tempadcost));
+        chcost.value = numberWithCommas(parseInt((tempchcost * 7 / 100)) + parseInt(tempchcost));
+        incost.value = numberWithCommas(parseInt((tempincost * 7 / 100)) + parseInt(tempincost));
+        adprice.value = numberWithCommas(parseInt((tempadprice * 7 / 100)) + parseInt(tempadprice));
+        chprice.value = numberWithCommas(parseInt((tempchprice * 7 / 100)) + parseInt(tempchprice));
+        inprice.value = numberWithCommas(parseInt((tempinprice * 7 / 100)) + parseInt(replaceComma(tempinprice)));
+    }
 
 
 }
