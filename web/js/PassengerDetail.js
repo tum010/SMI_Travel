@@ -123,10 +123,34 @@ $(document).ready(function () {
             }
             if(firstname === value.firstname){
                 $("#passengerId").val(value.code);
+                $("#MInitialname").val(value.initialId);
+                $("#firstName").val(value.firstname);
+                $("#lastName").val(value.lastname);
+                $("#sex").val(value.sex);
+                $("#address").val(value.address);
+                $("#tel").val(value.tel);
+                $("#phone").val(value.phone);
+                $("#email").val(value.email);
+                $("#remark").val(value.remark);
+                $("#Passport").val(value.passportNo);
+                $("#firstNameJapan").val(value.firstNameJapan);
+                $("#lastNameJapan").val(value.lastNameJapan);
                 code = $("#passengerId").val().toUpperCase();
             }
             if(lastname === value.lastname){
                 $("#passengerId").val(value.code);
+                $("#MInitialname").val(value.initialId);
+                $("#firstName").val(value.firstname);
+                $("#lastName").val(value.lastname);
+                $("#sex").val(value.sex);
+                $("#address").val(value.address);
+                $("#tel").val(value.tel);
+                $("#phone").val(value.phone);
+                $("#email").val(value.email);
+                $("#remark").val(value.remark);
+                $("#Passport").val(value.passportNo);
+                $("#firstNameJapan").val(value.firstNameJapan);
+                $("#lastNameJapan").val(value.lastNameJapan);
                 code = $("#passengerId").val().toUpperCase();
             }
         });

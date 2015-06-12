@@ -384,10 +384,18 @@
                                 }
                                 if(firstname === value.firstname){
                                     $("#orderNo").val(value.order);
+                                    $("#passengerId").val(value.id);
+                                    $("#InitialDname").val(value.initial);
+                                    $("#passengerName").val(value.firstname);
+                                    $("#LastName").val(value.lastname);
                                     code = $("#orderNo").val().toUpperCase();
                                 }
                                 if(lastname === value.lastname){
                                     $("#orderNo").val(value.order);
+                                    $("#passengerId").val(value.id);
+                                    $("#InitialDname").val(value.initial);
+                                    $("#passengerName").val(value.firstname);
+                                    $("#LastName").val(value.lastname);
                                     code = $("#orderNo").val().toUpperCase();
                                 }
                             });
@@ -521,6 +529,8 @@
                                 }
                                 if(name === value.name) {
                                     $("#billto").val(value.billto);
+                                    $("#billname").val(value.name);
+                                    $("#address").val(value.address);
                                     code = $("#billto").val().toUpperCase();
                                 }
                             });

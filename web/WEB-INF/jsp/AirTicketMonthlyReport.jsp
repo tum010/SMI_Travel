@@ -252,6 +252,7 @@
                                 }
                                 if(name === value.name){
                                     $("#billto").val(value.code);
+                                    $("#billname").val(value.name);    
                                     code = $("#billto").val().toUpperCase();
                                 }
                                 

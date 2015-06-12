@@ -94,7 +94,9 @@ $(document).ready(function () {
                 $("#staff_name").val(value.name);
             }
             if(name === value.name){
+                $("#staff_id").val(value.id);
                 $("#staff_username").val(value.username);
+                $("#staff_name").val(value.name);
                 username = $("#staff_username").val().toUpperCase();
             }
         });
@@ -149,6 +151,8 @@ $(document).ready(function () {
             }
             if(name === value.name){
                 $("#issue_username").val(value.username);
+                $("#issue_id").val(value.id);
+                $("#issue_name").val(value.name);
                 username = $("#issue_username").val().toUpperCase();
             }
             

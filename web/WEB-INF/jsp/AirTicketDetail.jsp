@@ -490,6 +490,7 @@
                                         $("#airlineName${fStatus.count}").val(value.airline_name);
                                     }
                                     if(name === value.airline_name){
+                                         $("#airlineId${fStatus.count}").val(value.airline_id);
                                         $("#airlineCode${fStatus.count}").val(value.airline_code);
                                         $("#airlineName${fStatus.count}").val(value.airline_name);
                                         code = $("#airlineCode${fStatus.count}").val().toUpperCase();
@@ -526,6 +527,7 @@
                                         $("#departure-${fStatus.count}-name").val(value.name);
                                     }
                                     if(name === value.name){
+                                         $("#departure-${fStatus.count}-id").val(value.id);
                                         $("#departure-${fStatus.count}-code").val(value.code);
                                         $("#departure-${fStatus.count}-name").val(value.name);
                                         code = $("#departure-${fStatus.count}-code").val().toUpperCase();
@@ -562,6 +564,7 @@
                                         $("#arrival-${fStatus.count}-name").val(value.name);
                                     }
                                     if(name === value.name){
+                                        $("#arrival-${fStatus.count}-id").val(value.id);
                                         $("#arrival-${fStatus.count}-code").val(value.code);
                                         $("#arrival-${fStatus.count}-name").val(value.name);
                                         code = $("#arrival-${fStatus.count}-code").val().toUpperCase();

@@ -115,17 +115,17 @@ $(document).ready(function () {
                     notEmpty: {
                         message: 'The Leader is required',
                         //enabled: false
-                    },
+                    }
                 }
-            },
+            }
         }
     })
-            .on('success.field.bv', function (e, data) {
+    .on('success.field.bv', function (e, data) {
 
-                if (data.bv.isValid()) {
-                    data.bv.disableSubmitButtons(false);
-                }
-            });
+        if (data.bv.isValid()) {
+            data.bv.disableSubmitButtons(false);
+        }
+    });
     vForm.on('mouseover', function () {
         var leadercode = $(this).find('[name="hotelName"]');
         var isEmpty = leadercode.val() === '';
@@ -168,6 +168,8 @@ $(document).ready(function () {
             }
             if(name === value.name){
                 $("#hotel-code").val(value.code);
+                $("#hotel-id").val(value.id);
+                $("#hotel-name").val(value.name);
                 code = $("#hotel-code").val().toUpperCase();
             }
         });

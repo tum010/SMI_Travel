@@ -356,6 +356,8 @@
                                 }
                                if(name === value.name){
                                     $("#InputAgentCode").val(value.code);
+                                    $("#InputAgentId").val(value.id);
+                                    $("#InputAgentName").val(value.name);
                                     code = $("#InputAgentCode").val().toUpperCase();
                                 }
                             }); //end each agentTable
@@ -470,6 +472,8 @@
                                 }
                                 if(name === value.name){
                                     $("#InputTourCode").val(value.code);
+                                    $("#InputTourId").val(value.id);
+                                    $("#InputTourName").val(value.name);
                                     code = $("#InputTourCode").val().toUpperCase();
                                 }
                             }); //end each tourTable

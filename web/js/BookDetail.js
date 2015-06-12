@@ -139,10 +139,22 @@ $(function () {
             }
             if(firstname === value.firstName){
                 $("#FamilyLeaderCode").val(value.code);
+                $("#leaderId").val(value.id);
+                $("#initialname").val(value.initial);
+                $("#lastname").val(value.lastName);
+                $("#firstname").val(value.firstName);
+                $("#address").val(value.address);
+                $("#tel").val(value.tel);
                 code = $("#FamilyLeaderCode").val().toUpperCase();
             }
             if(lastname === value.lastName){
                 $("#FamilyLeaderCode").val(value.code);
+                $("#leaderId").val(value.id);
+                $("#initialname").val(value.initial);
+                $("#lastname").val(value.lastName);
+                $("#firstname").val(value.firstName);
+                $("#address").val(value.address);
+                $("#tel").val(value.tel);
                 code = $("#FamilyLeaderCode").val().toUpperCase();
             }
         });
@@ -183,6 +195,10 @@ $(document).ready(function () {
                     }
                    if(name === value.name){
                         $("#agent_user").val(value.code);
+                        $("#agent_id").val(value.id);
+                        $("#agent_name").val(value.name);
+                        $("#agent_addr").val(value.address);
+                        $("#agent_tel").val(value.tel);
                         code = $("#agent_user").val().toUpperCase();
                     }
                 }); 
