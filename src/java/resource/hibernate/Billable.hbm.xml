@@ -28,8 +28,8 @@
         <property name="billAddress" type="string">
             <column name="bill_address" length="200" />
         </property>
-        <property name="billDate" type="date">
-            <column name="bill_date" length="10" />
+        <property name="transferDate" type="date">
+            <column name="transfer_date" length="10" />
         </property>
         <property name="isPayYourself" type="java.lang.Integer">
             <column name="is_pay_yourself" />
