@@ -133,7 +133,7 @@
                                     <c:set var="colourStatus" value="style='background-color: #FFD3D3'" />
                                     <c:set var="colourStatusFirstrow" value="background-color: #FFD3D3" />
                                 </c:if>
-                                <tr ${colourStatus}><!--winit-->
+                                <tr ${colourStatus}>
                                     <td>${i.count}</td>
                                     <td>${flight.airticketAirline.MAirline.getName()}</td>
                                     <td>${flight.flightNo}</td>
@@ -463,11 +463,17 @@
                             $("#flight-${fStatus.count}-class").val(flightClass);
                             $("#flight-${fStatus.count}-status").val(status);
                             var codeAirline = [];
-                            $.each(airline, function (key, value) {
+                            $.each(airline, function (key, value) {//winit
                                 codeAirline.push(value.airline_code);
+                                 if ( !(value.airline_name in codeAirline) ){
+                                    codeAirline.push(value.airline_name);
+                                 }
                             });
                             $("#airlineCode${fStatus.count}").autocomplete({
-                                source: codeAirline
+                                source: codeAirline,
+                                close:function( event, ui ) {
+                                    $("#airlineCode${fStatus.count}").trigger('keyup');
+                                 }
                             });
                             $("#airlineCode${fStatus.count}").on('keyup', function () {
                                 var position = $(this).offset();
@@ -475,6 +481,7 @@
                                 $(".ui-widget").css("top", position.top + 30);
                                 $(".ui-widget").css("left", position.left);
                                 var code = this.value.toUpperCase();
+                                var name = this.value;
                                 $("#airlineId${fStatus.count},#airlineName${fStatus.count}").val(null);
                                 $.each(airline, function (key, value) {
                                     if (value.airline_code.toUpperCase() === code) {
@@ -482,14 +489,27 @@
                                         $("#airlineId${fStatus.count}").val(value.airline_id);
                                         $("#airlineName${fStatus.count}").val(value.airline_name);
                                     }
+                                    if(name === value.airline_name){
+                                        $("#airlineCode${fStatus.count}").val(value.airline_code);
+                                        $("#airlineName${fStatus.count}").val(value.airline_name);
+                                        code = $("#airlineCode${fStatus.count}").val().toUpperCase();
+                                         
+                                    }
                                 });
                             });
+                            
                             var codeDeparture = [];
-                            $.each(a, function (key, value) {
+                            $.each(a, function (key, value) {//winit
                                 codeDeparture.push(value.code);
+                                 if ( !(value.name in codeDeparture) ){
+                                    codeDeparture.push(value.name);
+                                 }
                             });
                             $("#departure-${fStatus.count}-code").autocomplete({
-                                source: codeDeparture
+                                source: codeDeparture,
+                                close:function( event, ui ) {
+                                    $("#departure-${fStatus.count}-code").trigger('keyup');
+                                 }
                             });
                             $("#departure-${fStatus.count}-code").on('keyup', function () {
                                 var position = $(this).offset();
@@ -497,6 +517,7 @@
                                 $(".ui-widget").css("top", position.top + 30);
                                 $(".ui-widget").css("left", position.left);
                                 var code = this.value.toUpperCase();
+                                var name = this.value;
                                 $("#departure-${fStatus.count}-id,#departure-${fStatus.count}-name").val(null);
                                 $.each(a, function (key, value) {
                                     if (value.code.toUpperCase() === code) {
@@ -504,14 +525,27 @@
                                         $("#departure-${fStatus.count}-id").val(value.id);
                                         $("#departure-${fStatus.count}-name").val(value.name);
                                     }
+                                    if(name === value.name){
+                                        $("#departure-${fStatus.count}-code").val(value.code);
+                                        $("#departure-${fStatus.count}-name").val(value.name);
+                                        code = $("#departure-${fStatus.count}-code").val().toUpperCase();
+                                        
+                                    }
                                 });
                             });
+                            
                             var codeArrival = [];
-                            $.each(a, function (key, value) {
+                            $.each(a, function (key, value) {//winit
                                 codeArrival.push(value.code);
+                                if ( !(value.name in codeArrival) ){
+                                    codeArrival.push(value.name);
+                                 }
                             });
                             $("#arrival-${fStatus.count}-code").autocomplete({
-                                source: codeArrival
+                                source: codeArrival,
+                                close:function( event, ui ) {
+                                    $("#arrival-${fStatus.count}-code").trigger('keyup');
+                                 }
                             });
                             $("#arrival-${fStatus.count}-code").on('keyup', function () {
                                 var position = $(this).offset();
@@ -519,12 +553,19 @@
                                 $(".ui-widget").css("top", position.top + 30);
                                 $(".ui-widget").css("left", position.left);
                                 var code = this.value.toUpperCase();
+                                var name = this.value
                                 $("#arrival-${fStatus.count}-id,#arrival-${fStatus.count}-name").val(null);
                                 $.each(a, function (key, value) {
                                     if (value.code.toUpperCase() === code) {
                                         console.log('ok');
                                         $("#arrival-${fStatus.count}-id").val(value.id);
                                         $("#arrival-${fStatus.count}-name").val(value.name);
+                                    }
+                                    if(name === value.name){
+                                        $("#arrival-${fStatus.count}-code").val(value.code);
+                                        $("#arrival-${fStatus.count}-name").val(value.name);
+                                        code = $("#arrival-${fStatus.count}-code").val().toUpperCase();
+                                        
                                     }
                                 });
                             });
