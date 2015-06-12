@@ -36,7 +36,7 @@
         </set>
         <bag  name="packageCities"  cascade="all" >
             <key>
-                <column name="city_id" not-null="true" />
+                <column name="package_id" not-null="true" />
             </key>
             <one-to-many class="com.smi.travel.datalayer.entity.PackageCity" />
         </bag >
