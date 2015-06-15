@@ -46,7 +46,7 @@ public class MPackageDetailController extends SMITravelController {
         String detail = util.StringUtilReplaceChar(request.getParameter("detail"));
         String status = util.StringUtilReplaceChar(request.getParameter("status"));
         String countItinerary = request.getParameter("counterItinerary");
-        String conutCity = request.getParameter("passengerCounter");
+        String conutCity = request.getParameter("cityCounter");
         String countPrice = request.getParameter("counterPrice");
         System.out.println("action  :" + action);
         String result = "";
@@ -286,8 +286,8 @@ public class MPackageDetailController extends SMITravelController {
         for (int i = 1; i < cityRows  ; i++) {
             PackageCity city = new PackageCity();
             MCity mCity = new MCity();
-            String nameCity = request.getParameter("row-passenger-" + i + "-name");
-            String idCity = request.getParameter("row-passenger-" + i + "-id");
+            String nameCity = request.getParameter("row-city-" + i + "-name");
+            String idCity = request.getParameter("row-city-" + i + "-id");
             
             if(nameCity != null){
                 mCity.setName(nameCity);

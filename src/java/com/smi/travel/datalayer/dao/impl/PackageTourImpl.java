@@ -154,7 +154,7 @@ public class PackageTourImpl implements PackageTourDao {
                 }
             }
             
-            List<PackageCity> CityList = mpackage.getPackageCities();
+            List<PackageCity> CityList = new ArrayList<PackageCity>(mpackage.getPackageCities());
             for (int i = 0; i < CityList.size(); i++) {
                 if (CityList.get(i).getId() == null) {
                     session.save(CityList.get(i));
