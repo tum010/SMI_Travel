@@ -163,7 +163,8 @@ public class AJAXBean extends AbstractBean implements
             System.out.println("ajax : " + BOOKOTHER);
             if ("getvalueProduct".equalsIgnoreCase(type)) {
                 String productID = map.get("productid").toString();
-                ProductDetail product = productDetailDao.getValueFromProduct(productID);
+                String otherdate = map.get("otherdate").toString();
+                ProductDetail product = productDetailDao.getValueFromProduct(productID, otherdate);
                 if (product == null) {
                     result = "0,0,0,0,0,0";
                 } else {

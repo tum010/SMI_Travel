@@ -19,5 +19,5 @@ public interface ProductDetailDao {
     public int insertProductDetail(ProductDetail productDetail);
     public int updateProductDetail(ProductDetail productDetail);
     public int DeleteProductDetail(ProductDetail productDetail);
-    public ProductDetail getValueFromProduct(String productID);
+    public ProductDetail getValueFromProduct(String productID, String otherdate);
 }

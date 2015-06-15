@@ -97,12 +97,12 @@ public class ProductDetailImpl   implements ProductDetailDao{
     }
     
     @Override
-    public ProductDetail getValueFromProduct(String productID) {
+    public ProductDetail getValueFromProduct(String productID, String otherdate) {
         Date thisDate = new Date();
         System.out.println("productID : "+productID);
        
         util = new UtilityFunction();
-        String query = "from ProductDetail p where p.product.id = "+productID+" and  ('"+util.convertDateToString(thisDate)+"' >= p.effectiveFrom) and  ('"+util.convertDateToString(thisDate)+"' <= p.effectiveTo)";
+        String query = "from ProductDetail p where p.product.id = "+productID+" and  ('"+otherdate+"' >= p.effectiveFrom) and  ('"+otherdate+"' <= p.effectiveTo)";
         System.out.println("query : "+query);
         ProductDetail product = new ProductDetail();
         Session session = this.sessionFactory.openSession();
