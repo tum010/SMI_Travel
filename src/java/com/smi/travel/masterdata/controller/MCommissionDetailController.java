@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -195,7 +196,7 @@ public class MCommissionDetailController extends SMITravelController {
         }
         if(agentTourComRows == 1){return;}
         if( agentcommission.getAgentTourComissions() == null){
-            agentcommission.setAgentTourComissions(new ArrayList<AgentTourComission>());
+            agentcommission.setAgentTourComissions((Set) new ArrayList<AgentTourComission>());
         }
         for(int i = 0 ; i < agentTourComRows; i++){
             String id = request.getParameter("InputId-"+i);
