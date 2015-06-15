@@ -70,7 +70,7 @@
                                         <div class="col-md-5">
                                             <div class="input-group">
                                                 <input id="InputAgentId" name="InputAgentId" type="hidden" class="form-control" value="${AgentCommissions.agent.id}">
-                                                <input id="InputAgentCode" name="InputAgentCode" class="form-control" maxlenght="50" value="${AgentCommissions.agent.code}" >
+                                                <input style="text-transform:uppercase" id="InputAgentCode" name="InputAgentCode" class="form-control" maxlenght="50" value="${AgentCommissions.agent.code}" >
                                                 <span id="agentSearchButton" name="agentSearchButton" class="input-group-addon" data-toggle="modal" data-target="#AgentModal">
                                                     <span id="agentSearchButtonIcon" name="agentSearchButtonIcon" class="glyphicon-search glyphicon"></span>
                                                 </span>
@@ -85,7 +85,7 @@
                                         <div class="col-md-5">
                                             <div class="input-group">
                                                 <input type="hidden" id="InputTourId" name="InputTourId" class="form-control"  value="${AgentTours.id}">
-                                                <input type="text" id="InputTourCode" name="InputTourCode" class="form-control" maxlenght="50" value="${AgentTours.code}" >                  
+                                                <input style="text-transform:uppercase" type="text" id="InputTourCode" name="InputTourCode" class="form-control" maxlenght="50" value="${AgentTours.code}" >                  
                                                 <span id="tourSearchButton" name="tourSearchButton" class="input-group-addon" data-toggle="modal" data-target="#TourModal">
                                                     <span id="tourSearchButtonIcon" name="tourSearchButtonIcon" class="glyphicon-search glyphicon"></span>
                                                 </span>

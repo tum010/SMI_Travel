@@ -29,6 +29,7 @@ public class BookingView {
     private String statusId;
     private String tel;
     private String remark;
+    private String email;
     private String ticketNo;
     
     public BookingView(){
@@ -167,6 +168,15 @@ public class BookingView {
         this.ticketNo = ticketNo;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    
     
     
     

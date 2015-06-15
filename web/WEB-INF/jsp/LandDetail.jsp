@@ -457,7 +457,7 @@
                             <c:when test="${booktype == 'o'}">
                                 <div class="row">
                                     <div class="col-sm-6" style="padding-left: 18px">
-                                        <label   class="col-sm-3 control-label" >Product</label>
+                                        <label   class="col-sm-3 control-label" >Package</label>
                                         <div class="col-sm-3">  
                                             <div class="form-group">
                                                 <div class="input-group " style="padding-left: 2px">
@@ -550,13 +550,13 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label" for="nameProduct">Child</label>
                                             <div class="col-sm-3">
-                                                <input type="text" maxlength="10" class="form-control money" onkeyup="validateMaxCost('CH_Cost');"  id="CH_Cost" name="CH_Cost" value="${requestScope['CH_Cost']}" >  
+                                                <input type="text" maxlength="10" class="form-control money" onkeyup="validateMaxCost('CH_Cost');"  id="CH_Cost" name="CH_Cost" value="${requestScope['CH_Cost'] }" >  
                                             </div>
                                             <div class="col-sm-2">
-                                                <input type="text" maxlength="3" class="form-control money" onkeyup="validateMaxCost('CH_Qty');"  id="CH_Qty" name="CH_Qty" value="${requestScope['CH_Qty']}" >  
+                                                <input type="text" maxlength="3" class="form-control money" onkeyup="validateMaxCost('CH_Qty');"  id="CH_Qty" name="CH_Qty" value="${requestScope['CH_Qty'] }" >  
                                             </div>
                                             <div class="col-sm-3">
-                                                <input type="text" maxlength="10" class="form-control money" onkeyup="validateMaxCost('CH_Price');"  id="CH_Price" name="CH_Price" value="${requestScope['CH_Price']}" >  
+                                                <input type="text" maxlength="10" class="form-control money" onkeyup="validateMaxCost('CH_Price');"  id="CH_Price" name="CH_Price" value="${requestScope['CH_Price'] }" >  
                                             </div>
                                         </div>
                                     </div>

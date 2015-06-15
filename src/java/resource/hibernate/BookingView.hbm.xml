@@ -51,6 +51,9 @@
         <property name="remark" type="string">
             <column name="remark" />
         </property>
+        <property name="email" type="string">
+            <column name="email" />
+        </property>
         <property name="ticketNo" type="string">
             <column name="ticket_no" />
         </property>

@@ -52,8 +52,9 @@
         <div class="col-sm-10">
             <div ng-include="'WebContent/Book/BookNavbar.html'"></div>
             <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
-            
+            <input type="hidden" id="bookingtype" name="bookingtype" value="${booktype}">
             <input type="hidden" id="callpage" name="callpage" value="${param.callpage}">
+            
             
             <div class="row">
                 <div class="col-sm-3">

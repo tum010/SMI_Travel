@@ -36,10 +36,12 @@ function getvalueProduct() {
     var servletName = 'BookLandServlet';
     var servicesName = 'AJAXBean';
     var productid = document.getElementById('Product_id').value;
+    var departdate = document.getElementById('departdate').value;
     var param = 'action=' + 'text' +
             '&servletName=' + servletName +
             '&servicesName=' + servicesName +
             '&packageid=' + productid +
+            '&departdate='+departdate +
             '&type=' + 'getvaluePackage';
     CallAjax(param);
 
@@ -56,12 +58,12 @@ function CallAjax(param) {
             data: param,
             success: function(msg) {
                 var path = msg.split(',');
-                document.getElementById('AD_Cost').value = numberWithCommas(path[0]);
-                document.getElementById('CH_Cost').value = numberWithCommas(path[1]);
-                document.getElementById('IN_Cost').value = numberWithCommas(path[2]);
-                document.getElementById('AD_Price').value = numberWithCommas(path[3]);
-                document.getElementById('CH_Price').value = numberWithCommas(path[4]);
-                document.getElementById('IN_Price').value = numberWithCommas(path[5]);
+                setformatNumber('AD_Cost',path[0]);
+                setformatNumber('CH_Cost',path[1]);
+                setformatNumber('IN_Cost',path[2]);
+                setformatNumber('AD_Price',path[3]);
+                setformatNumber('CH_Price',path[4]);
+                setformatNumber('IN_Price',path[5]);
                 getItineraryDetail(document.getElementById('Product_id').value);
             }, error: function(msg) {
                 
@@ -69,6 +71,14 @@ function CallAjax(param) {
         });
     } catch (e) {
        // alert(e);
+    }
+}
+
+function setformatNumber(id,data){
+    if(data == 0){
+        document.getElementById(id).value = '';
+    }else{
+        document.getElementById(id).value = numberWithCommas(data);
     }
 }
 
@@ -104,13 +114,9 @@ function CallAjaxIti(param) {
                 var AllDelId =  $('#DelItenarary').val();
 
                 $('#LandItinerary tr:gt(0) ').each(function() {
-                    
-                    //alert($(this).find('td').html());
-                    //alert($(this).find('td').find('input').val());
                     AllDelId += $(this).find('td').find('input').val()+',';
                     $(this).remove();
                 });   
-                //alert(AllDelId);
                 $('#DelItenarary').val(AllDelId);
                 
                 
@@ -214,10 +220,17 @@ $(document).ready(function () {
     codeProduct = [];
     $.each(product, function (key, value) {
         codeProduct.push(value.code);
+         if ( !(value.name in codeProduct) ){
+           codeProduct.push(value.name);
+          
+        }
     });
 
     $("#Product_code").autocomplete({
-        source: codeProduct
+        source: codeProduct,
+        close:function( event, ui ) {
+           $("#Product_code").trigger('keyup');
+        }
     });
   
     $("#Product_code").on('keyup', function (event) {
@@ -226,13 +239,20 @@ $(document).ready(function () {
         $(".ui-widget").css("top", position.top + 30);
         $(".ui-widget").css("left", position.left);
         var code = this.value.toUpperCase();
+        var name = this.value;
         $("#Product_id,#Product_name").val(null);
+        
         $.each(product, function (key, value) {    
             if (value.code.toUpperCase() === code) {
                 $("#Product_id").val(value.id);
                 $("#Product_name").val(value.name);
             }
+            if(name === value.name){
+                $("#Product_code").val(value.code);
+                code = $("#Product_code").val().toUpperCase();
+            }
         });
+        
         var code = event.keyCode || event.which; 
 
         if (code  == 13) { 

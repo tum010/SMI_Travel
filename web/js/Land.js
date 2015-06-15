@@ -66,7 +66,7 @@ function printVoucher(refno){
         landId = $(this).attr('id');
     });
     if(landId == ""){
-        alert("please select hotel to print voucher");
+        alert("please select land to print voucher");
     }else if(printtype == 0){
         alert('please select voucher to print');
     }else if(printtype == 1){

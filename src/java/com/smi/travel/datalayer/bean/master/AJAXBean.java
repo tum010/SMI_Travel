@@ -91,8 +91,8 @@ public class AJAXBean extends AbstractBean implements
                     packagedao = (PackageTourDao) obj;
                 } else if (obj instanceof DaytourComissionDao) {
                     daytourComdao = (DaytourComissionDao) obj;
-                } else if(obj instanceof MAirportDao){
-                    airportdao = (MAirportDao)obj;
+                } else if (obj instanceof MAirportDao) {
+                    airportdao = (MAirportDao) obj;
                 }
             }
         }
@@ -164,13 +164,18 @@ public class AJAXBean extends AbstractBean implements
             if ("getvalueProduct".equalsIgnoreCase(type)) {
                 String productID = map.get("productid").toString();
                 String otherdate = map.get("otherdate").toString();
-                ProductDetail product = productDetailDao.getValueFromProduct(productID, otherdate);
-                if (product == null) {
-                    result = "0,0,0,0,0,0";
+                if ("".equalsIgnoreCase(productID)) {
+                    result = ",,,,,";
                 } else {
-                    result = product.getAdCost() + "," + product.getChCost() + "," + product.getInCost() + ","
-                            + product.getAdPrice() + "," + product.getChPrice() + "," + product.getInPrice();
+                    ProductDetail product = productDetailDao.getValueFromProduct(productID, otherdate);
+                    if (product == null) {
+                        result = ",,,,,";
+                    } else {
+                        result = product.getAdCost() + "," + product.getChCost() + "," + product.getInCost() + ","
+                                + product.getAdPrice() + "," + product.getChPrice() + "," + product.getInPrice();
+                    }
                 }
+
                 System.out.println("result :" + result);
 
             }
@@ -178,11 +183,13 @@ public class AJAXBean extends AbstractBean implements
             //result = customerdao.isExistCustomer(initialID, first, last);
             System.out.println("ajax : " + BOOKLAND);
             if ("getvaluePackage".equalsIgnoreCase(type)) {
+                System.out.println("getvaluePackage : " + BOOKLAND);
                 String packageID = map.get("packageid").toString();
+                String departDate = map.get("departdate").toString();
                 PackagePrice price = new PackagePrice();
-                price = packagedao.getValueFromPackage(packageID);
+                price = packagedao.getValueFromPackage(packageID, departDate);
                 if (price == null) {
-                    result = "0,0,0,0,0,0";
+                    result = ",,,,,";
                 } else {
                     result = price.getAdCost() + "," + price.getChCost() + "," + price.getInCost() + ","
                             + price.getAdPrice() + "," + price.getChPrice() + "," + price.getInPrice();
@@ -216,12 +223,12 @@ public class AJAXBean extends AbstractBean implements
                     if (summaryList != null) {
                         for (int i = 0; i < summaryList.size(); i++) {
                             String tourdate = "";
-                            
+
                             BookSummary bookDetail = summaryList.get(i);
-                            if(bookDetail.getDateTour() != null){
-                                tourdate =  bookDetail.getDateTour().toString();
+                            if (bookDetail.getDateTour() != null) {
+                                tourdate = bookDetail.getDateTour().toString();
                             }
-                      
+
                             result += "<tr>"
                                     + "<td class='tdcenter'>" + bookDetail.getBookdate() + "</td>"
                                     + "<td class='tdcenter'>" + bookDetail.getType() + "</td>"
@@ -229,7 +236,7 @@ public class AJAXBean extends AbstractBean implements
                                     + "<td class='tdcenter'>" + tourdate + "</td>"
                                     + "<td class='moneyformat tdright'>" + bookDetail.getPrice() + "</td>"
                                     + "</tr>";
-                     }
+                        }
                     }
 
                     System.out.println("result : " + result);
@@ -299,56 +306,56 @@ public class AJAXBean extends AbstractBean implements
                 List<DaytourBooking> Booklist = transferJobdao.getTransferjobData(TourCode, TourDate, Place, Other);
                 result = buildJobDetailHTML(Booklist);
             }
-        }else if (DAYTOURCOMM.equalsIgnoreCase(servletName)) {
+        } else if (DAYTOURCOMM.equalsIgnoreCase(servletName)) {
             String TourCode = null;
             String TourDate = null;
             String Price = null;
             String AgentId = null;
-            if("getguidecom".equalsIgnoreCase(type)){
+            if ("getguidecom".equalsIgnoreCase(type)) {
                 TourCode = map.get("tourcode").toString();
                 result = String.valueOf(daytourComdao.GetGuideComissionFromTour(TourCode));
-                System.out.println("result guide commission  : "+result);
-            }else if("getagentcom".equalsIgnoreCase(type)){
+                System.out.println("result guide commission  : " + result);
+            } else if ("getagentcom".equalsIgnoreCase(type)) {
                 TourCode = map.get("tourcode").toString();
                 TourDate = map.get("tourdate").toString();
-                Price   = map.get("price").toString();
+                Price = map.get("price").toString();
                 AgentId = map.get("agentid").toString();
                 System.out.println("test ajax");
                 System.out.println(TourCode);
                 System.out.println(TourDate);
                 System.out.println(Price);
                 System.out.println(AgentId);
-                if(daytourdao == null){
+                if (daytourdao == null) {
                     System.out.println(" id null");
                 }
                 double commission = daytourComdao.GetAgentComissionFromTour(AgentId, TourCode, TourDate);
                 double output = (Double.parseDouble(Price) * commission / 100);
-                System.out.println("commission : "+commission +" price : "+output);
+                System.out.println("commission : " + commission + " price : " + output);
                 result = String.valueOf(output);
             }
-        }else if (DAYTOUR.equalsIgnoreCase(servletName)) {
+        } else if (DAYTOUR.equalsIgnoreCase(servletName)) {
             String name = map.get("name").toString();
-            if("savestaff".equalsIgnoreCase(type)){
+            if ("savestaff".equalsIgnoreCase(type)) {
                 result = daytourdao.saveStafftour(name);
             }
-        }else if(AIRTICKET.equalsIgnoreCase(servletName)){
+        } else if (AIRTICKET.equalsIgnoreCase(servletName)) {
             String name = map.get("name").toString();
-            if("searchairport".equalsIgnoreCase(type)){
+            if ("searchairport".equalsIgnoreCase(type)) {
                 result = buildAirportListHTML(airportdao.searchAirport(name));
             }
         }
         return result;
     }
-    
-    public String buildAirportListHTML(List<MAirport> listAirport ){
-        String result ="";
-        for(int i = 0;i<listAirport.size();i++){
+
+    public String buildAirportListHTML(List<MAirport> listAirport) {
+        String result = "";
+        for (int i = 0; i < listAirport.size(); i++) {
             MAirport airport = listAirport.get(i);
-            result +=" <tr class='departure-tr'>"+
-            " <td class='departure-id hidden'>"+airport.getId()+"</td>"+
-                    " <td class='departure-code'>"+airport.getCode()+"</td>"+
-                    " <td class='departure-name'>"+airport.getName()+"</td>"+
-            "</tr>";
+            result += " <tr class='departure-tr'>"
+                    + " <td class='departure-id hidden'>" + airport.getId() + "</td>"
+                    + " <td class='departure-code'>" + airport.getCode() + "</td>"
+                    + " <td class='departure-name'>" + airport.getName() + "</td>"
+                    + "</tr>";
 
         }
         return result;
@@ -366,11 +373,11 @@ public class AJAXBean extends AbstractBean implements
             Customer cus = book.getMaster().getCustomer();
             List<DaytourBookingPrice> prices = new ArrayList<DaytourBookingPrice>(book.getDaytourBookingPrices());
             String[] AllQty = calculatePassengerDaytour(prices);
-            
+
             Integer sumPrice = 0;
             if (prices != null) {
                 for (DaytourBookingPrice price : prices) {
-                    Integer p = (price.getPrice()==null? 0:price.getPrice()) * (price.getQty()==null ? 0 :price.getQty());
+                    Integer p = (price.getPrice() == null ? 0 : price.getPrice()) * (price.getQty() == null ? 0 : price.getQty());
                     sumPrice += p;
                 }
             }
@@ -404,10 +411,10 @@ public class AJAXBean extends AbstractBean implements
         }
         for (int i = 0; i < ListBook.size(); i++) {
             DaytourBooking daytourbooking = ListBook.get(i);
-            result += "<tr id='trTourId" + daytourbooking.getDaytour().getId()+ "'>"
+            result += "<tr id='trTourId" + daytourbooking.getDaytour().getId() + "'>"
                     + "<td class='tourid hide'>" + daytourbooking.getDaytour().getId() + "</td>"
                     + "<td class='tourplaceid hide '>" + daytourbooking.getPlace().getId() + "</td>"
-                    + "<td class='tourplacename hide '>" + daytourbooking.getPlace().getPlace()+ "</td>"
+                    + "<td class='tourplacename hide '>" + daytourbooking.getPlace().getPlace() + "</td>"
                     + "<td class='tourcode'>" + daytourbooking.getDaytour().getCode() + "</td>"
                     + "<td class='tourname'>" + daytourbooking.getDaytour().getName() + "</td>"
                     + "<td class='text-center'><input type='checkbox' class='action' id='row-" + daytourbooking.getDaytour().getId() + "-tour' ></td>"
@@ -423,7 +430,7 @@ public class AJAXBean extends AbstractBean implements
             result = "<input type='hidden' id='placeSize' name='placeSize' value='0'>";
             return result;
         }
-        
+
         for (int i = 0; i < ListPlace.size(); i++) {
             Place place = ListPlace.get(i);
             result += "<tr id='trPlaceId" + place.getId() + "'>"
@@ -443,10 +450,10 @@ public class AJAXBean extends AbstractBean implements
             return result;
         }
         result = "<tbody>";
-        int row =1;
+        int row = 1;
         for (DaytourBooking daytour : bookingList) {
             try {
-                
+
                 String pickupPlace = "";
                 Customer cus = daytour.getMaster().getCustomer();
                 String Initialname = (cus.getMInitialname() == null ? "" : cus.getMInitialname().getName());
@@ -457,7 +464,7 @@ public class AJAXBean extends AbstractBean implements
                         pickupPlace = daytour.getPlace().getPlace();
                     }
                 }
-               
+
                 List<DaytourBookingPrice> PriceList = new ArrayList<DaytourBookingPrice>(daytour.getDaytourBookingPrices());
                 String[] passenger = calculatePassengerDaytour(PriceList);
                 result += "<tr>"
@@ -472,7 +479,7 @@ public class AJAXBean extends AbstractBean implements
                         + "<td style='text-align: right' >" + calculatePriceDaytour(PriceList) + "</td>"
                         + "<td>" + (daytour.getGuide() == null ? "" : daytour.getGuide().getName()) + "</td>"
                         + "</tr>";
-                row+= 1;
+                row += 1;
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -519,7 +526,7 @@ public class AJAXBean extends AbstractBean implements
             DaytourBookingPrice price = DriverList.get(i);
             Pricesum += util.ConvertInt(price.getQty()) * util.ConvertInt(price.getPrice());
         }
-        
+
         return String.valueOf(NumberFormat.getNumberInstance(Locale.US).format(Pricesum));
     }
 
@@ -587,7 +594,7 @@ public class AJAXBean extends AbstractBean implements
             String last = c.getLastName();
             String address = c.getAddress();
             String tel = "";
-            if(c.getTel() != null){
+            if (c.getTel() != null) {
                 tel = c.getTel();
             }
             String newrow

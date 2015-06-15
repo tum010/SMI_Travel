@@ -28,7 +28,7 @@
                 <div class="col-md-2  col-xs-offset-1">
                     <div class="form-group">
                         <label for="PackageCodeS">Code</label>
-                        <input type="text"   class="form-control" maxlength="50" id="PackageCodeS" name="PackageCodeS" value="${requestScope['packageCode']}">
+                        <input type="text" style="text-transform:uppercase"   class="form-control" maxlength="50" id="PackageCodeS" name="PackageCodeS" value="${requestScope['packageCode']}">
 
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                 <div class="col-md-3 ">
                     <div class="form-group">
                         <label for="CityNameS">Name</label>
-                        <input type="text"  class="form-control" maxlength="100" id="PackageNameS" name="PackageNameS" value="${requestScope['packageName']}">
+                        <input type="text" style="text-transform:uppercase" class="form-control" maxlength="100" id="PackageNameS" name="PackageNameS" value="${requestScope['packageName']}">
                     </div>
                 </div>
                     

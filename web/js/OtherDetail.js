@@ -62,12 +62,48 @@ $(document).ready(function() {
             }
             if(name === value.name){
                 $("#product_code").val(value.code);
-                code = $("#product_code").val().toUpperCase();
                 $("#product_name").val(value.name); 
+                $("#product_id").val(value.id);
+                code = $("#product_code").val().toUpperCase();
+
             }
         });
+        
+        var code = event.keyCode || event.which; 
+
+        if (code  == 13) { 
+           getvalueProduct($('#bookingtype').val());
+        }
        
     });
+    
+        $("#product_code").on('blur', function () {
+       var delay=500;//1 seconds
+        setTimeout(function(){
+          $.each(product, function (key, value) {
+            if($("#product_code").val() == value.code){
+                $("#product_id").val(value.id);
+                $("#product_name").val(value.name);
+                getvalueProduct($('#bookingtype').val());
+            }     
+         });   
+       
+        },delay); 
+       
+    });
+    
+    $("#product_code").on('keyup',  function(e) { 
+        var keyCode  = e.keyCode || e.which; 
+        
+        if (keyCode == 9) { 
+            if($('#product_code').val() != ''){
+                getvalueProduct($('#bookingtype').val());
+            }
+            
+        }      
+    });
+    
+   
     
 
     var codeAgent = [];
@@ -99,8 +135,10 @@ $(document).ready(function() {
             }
             if(name === value.name){
                 $("#agent_code").val(value.code);
-                code = $("#agent_code").val().toUpperCase();
                 $("#agent_name").val(value.name); 
+                $("#agent_id").val(value.id);
+                code = $("#agent_code").val().toUpperCase();
+               
             }
         });
     });
@@ -145,7 +183,7 @@ function getvalueProduct(booktype) {
             '&servletName=' + servletName +
             '&servicesName=' + servicesName +
             '&productid=' + productid +
-            '&productid=' + otherdate +
+            '&otherdate=' + otherdate +
             '&type=' + 'getvalueProduct';
     
     CallAjax(param, booktype);

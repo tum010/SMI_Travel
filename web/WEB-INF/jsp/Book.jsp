@@ -207,7 +207,7 @@
                     <td>
                         <center>
                             <a href="BookDetail.smi?referenceNo=${table.refno}&action=edit"><span class="glyphicon glyphicon-th-list"></span></a>
-                            <span onclick="getSummaryBook('${table.refno}'); getSummaryTel('${table.tel}','${table.remark}');" class="glyphicon glyphicon glyphicon-list-alt"></span>
+                            <span onclick="getSummaryBook('${table.refno}'); getSummaryTel('${table.tel}','${table.remark}','${table.email}');" class="glyphicon glyphicon glyphicon-list-alt"></span>
                         </center>
                     </td>           
             </tr>  
@@ -230,15 +230,22 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="telNo">Tel</label>
-                                    <input type="text" class="form-control" maxlength="20" id="telNo" name="telNo" >
+                                    <input type="text" readonly="" class="form-control" maxlength="20" id="telNo" name="telNo" >
+                                </div>
+                            </div>
+                             <div class="col-md-2 ">
+                                <div class="form-group">
+                                    <label for="remark">Email</label>
+                                    <input type="text" readonly="" class="form-control" maxlength="50" id="email" name="email" >
                                 </div>
                             </div>
                             <div class="col-md-2 ">
                                 <div class="form-group">
                                     <label for="remark">Remark</label>
-                                    <input type="text" class="form-control" maxlength="50" id="remark" name="remark" >
+                                    <input type="text" readonly="" class="form-control" maxlength="50" id="remark" name="remark" >
                                 </div>
                             </div>
+                            
                         </div>
 
                         <table  class="display" id="TableBookSummary">
@@ -626,9 +633,10 @@
                 });
             }
             
-    function getSummaryTel(tel,remark){
+    function getSummaryTel(tel,remark,email){
         document.getElementById('telNo').value=tel;
         document.getElementById('remark').value=remark;
+        document.getElementById('email').value=email;
     }
     
     $("#AirTicket").load("WebContent/Book/AirTicket.jsp");

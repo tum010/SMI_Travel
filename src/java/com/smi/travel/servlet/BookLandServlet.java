@@ -24,10 +24,13 @@ public class BookLandServlet implements AbstractAJAXServlet {
         String PackageID = request.getParameter("packageid");
         String servletName = request.getParameter("servletName");
         String Type = request.getParameter("type");
+        String departdate = request.getParameter("departdate");
         System.out.print("set parameter mapping");
+        
         Map result = new HashMap();
         result.put("packageid", PackageID);
         result.put("servletName", servletName);
+        result.put("departdate", departdate);
         result.put("type", Type); 
         return result;
     }

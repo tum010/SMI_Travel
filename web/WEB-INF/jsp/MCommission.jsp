@@ -59,25 +59,25 @@
                     <div class="col-md-2 ">
                         <div class="form-group">
                             <label>Agent Code</label>
-                            <input type="text" class="form-control" maxlength="15" id="AgentCodeSearch" name="AgentCodeSearch" value="${requestScope['agentcode']}"></input>
+                            <input type="text" style="text-transform:uppercase" class="form-control" maxlength="15" id="AgentCodeSearch" name="AgentCodeSearch" value="${requestScope['agentcode']}"></input>
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
                             <label>Agent Name</label>
-                            <input type="text" class="form-control" maxlength="255" id="AgentNameSearch" name="AgentNameSearch" value="${requestScope['agentname']}">
+                            <input type="text" style="text-transform:uppercase" class="form-control" maxlength="255" id="AgentNameSearch" name="AgentNameSearch" value="${requestScope['agentname']}">
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
                             <label>Tour Code</label>
-                            <input type="text" class="form-control" maxlength="50" id="TourCodeSearch" name="TourCodeSearch" value="${requestScope['tourcode']}">
+                            <input type="text" style="text-transform:uppercase" class="form-control" maxlength="50" id="TourCodeSearch" name="TourCodeSearch" value="${requestScope['tourcode']}">
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
                             <label>Tour Name</label>
-                            <input type="text" class="form-control" maxlength="255" id="TourNameSearch" name="TourNameSearch" value="${requestScope['tourname']}">
+                            <input type="text" style="text-transform:uppercase" class="form-control" maxlength="255" id="TourNameSearch" name="TourNameSearch" value="${requestScope['tourname']}">
                         </div>
                     </div>        
                     <div class="col-md-2">

@@ -450,12 +450,12 @@
         <property name="mAirticketService" ref="MAirticketService" />
         <property name="bookingAirticketService" ref="BookingAirticket" />
     </bean>
-
+<!--
     <task:scheduled-tasks>
         <task:scheduled ref="monitorAmadeus" method="run" fixed-delay="5000" /> 
         <task:scheduled ref="monitorGalileo" method="run" fixed-delay="5000" />         
     </task:scheduled-tasks>   
-
+-->
     <bean id="MProductTypeController" class="com.smi.travel.masterdata.controller.MProductTypeController">
         <property name="productTypeService" ref="MProductTypeService" />
     </bean>
