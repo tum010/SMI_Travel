@@ -57,9 +57,19 @@ public class MBankImpl  implements MBankDao{
        return list;  
     }
 
+    
     @Override
     public List<MBank> getListBank() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String query = "from MBank bank";
+        Session session = this.sessionFactory.openSession();
+        List<MBank> bankList = session.createQuery(query).list();
+        System.out.println("query : "+query );
+        if (bankList.isEmpty()) {
+            return null;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return bankList;
     }
 
     @Override
@@ -77,4 +87,11 @@ public class MBankImpl  implements MBankDao{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 }

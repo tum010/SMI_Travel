@@ -25,7 +25,7 @@ public class Billable {
      private String remark;
      private MBank bankAccount;
      private Set billableDescs = new HashSet(0);
-
+             
     public Billable() {
     }
 
@@ -146,8 +146,6 @@ public class Billable {
     public void setBankAccount(MBank bankAccount) {
         this.bankAccount = bankAccount;
     }
-    
+
     
 }
-
-

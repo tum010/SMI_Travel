@@ -13,6 +13,7 @@ import com.smi.travel.datalayer.entity.Billable;
 import com.smi.travel.datalayer.entity.BillableDesc;
 import com.smi.travel.datalayer.entity.MAccpay;
 import com.smi.travel.datalayer.entity.MAccterm;
+import com.smi.travel.datalayer.entity.MBank;
 import com.smi.travel.datalayer.entity.MBilltype;
 import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.entity.Master;
@@ -49,6 +50,7 @@ public class BillableController extends SMITravelController {
 
     private static final ModelAndView Billable = new ModelAndView("Billable");
     private static final ModelAndView Billable_REFRESH = new ModelAndView(new RedirectView("Billable.smi", true));
+
     private BookingAirticketService bookingAirticketService;
     private BillableService billableService;
     private UtilityService utilservice;
@@ -65,7 +67,7 @@ public class BillableController extends SMITravelController {
     private static final String initialList = "initialList";
     private static final String CustomerAgent = "customerAgent";
     private static final String TransectionResult = "result";
-
+    private static final String MBankList = "MBankList";
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         int result = 0;
@@ -76,7 +78,7 @@ public class BillableController extends SMITravelController {
         String passengerId = request.getParameter("passengerId");
         String payable = request.getParameter("payable");
         String billto = request.getParameter("billto");
-        String billdate = request.getParameter("billdate");
+//        String billdate = request.getParameter("billdate");
         String billname = request.getParameter("billname");
         String address = request.getParameter("address");
         String acctermS = request.getParameter("accterm");
@@ -84,7 +86,12 @@ public class BillableController extends SMITravelController {
         String Description = request.getParameter("description");
         MAccpay accpay = this.getAccpayById(accpayS);
         MAccterm accterm = this.getAcctermById(acctermS);
-        Date billDate = convertStringToDate(billdate);
+//        Date billDate = convertStringToDate(billdate);
+        String transferD = request.getParameter("transferD");
+        Date transferDate = convertStringToDate(transferD);
+        String accIdS = request.getParameter("accId");
+        MBank accId = this.getBankAccountById(accIdS);
+        
         request.setAttribute("thisdate", Util.convertDateToString(new Date()));
         Integer checkedPayable = null;
         if ("on".equalsIgnoreCase(payable)) {
@@ -92,7 +99,7 @@ public class BillableController extends SMITravelController {
         } else {
             checkedPayable = new Integer(1);
         }
-
+        
         Master master = utilservice.getbookingFromRefno(refNo);
         Billable billForm = new Billable();
         billForm.setMaster(master);
@@ -102,10 +109,11 @@ public class BillableController extends SMITravelController {
         billForm.setBillAddress(address);
         billForm.setMAccpay(accpay);
         billForm.setMAccterm(accterm);
-        //billForm.setBillDate(billDate);
+//        billForm.setBillDate(billDate);
         billForm.setIsPayYourself(checkedPayable);
         billForm.setRemark(Description);
-
+        billForm.setTransferDate(transferDate);
+        billForm.setBankAccount(accId);
         System.out.println("Billable Controller payable[" + payable + "]");
         if ("add".equalsIgnoreCase(action)) {
             System.out.println("action add");
@@ -125,8 +133,11 @@ public class BillableController extends SMITravelController {
                 String billDescId = request.getParameter("billDescId-" + i);
                 if (StringUtils.isNotEmpty(billDescId)) {
                     String remark = request.getParameter("remark-" + i);
+                    String billdate = request.getParameter("billDate-"+i);
+                    Date billDate = convertStringToDate(billdate);
                     System.out.println("remark insert: " + remark);
-                    updateRemarkByBillDescId(billForm, billDescId, remark);
+                    System.out.println("billDate insert: " + billDate);
+                    updateRemarkByBillDescId(billForm, billDescId, remark, billDate);
 
                 } else {
                     getBillDescListForm(request, billForm, i);
@@ -214,8 +225,12 @@ public class BillableController extends SMITravelController {
                 String billDescId = request.getParameter("billDescId-" + i);
                 if (StringUtils.isNotEmpty(billDescId)) {
                     String remark = request.getParameter("remark-" + i);
+                    String billdate = request.getParameter("billDate-"+ i);
+                    Date billDate = convertStringToDate(billdate);
+                    
                     System.out.println("remark insert: " + remark);
-                    updateRemarkByBillDescId(billable, billDescId, remark);
+                    System.out.println("billDate insert: " + billdate);
+                    updateRemarkByBillDescId(billable, billDescId, remark, billDate);
 
                 } else {
                     billForm.setId(billable.getId());
@@ -261,7 +276,7 @@ public class BillableController extends SMITravelController {
                 billable.setBillTo(master.getAgent().getCode());
                 billable.setBillName(master.getAgent().getName());
                 billable.setMAccpay(master.getAgent().getMAccpay());
-                billable.setMAccterm(master.getAgent().getMAccterm());
+                billable.setMAccterm(master.getAgent().getMAccterm());               
             }
         }
     }
@@ -274,16 +289,18 @@ public class BillableController extends SMITravelController {
         request.setAttribute(Bookiing_Size, booksize);
         List<MAccterm> mAcctermList = utilservice.getListMAccterm();
         request.setAttribute(MAcctermList, mAcctermList);
-
+               
         List<MAccpay> mAccpayList = utilservice.getListMAccpay();
         request.setAttribute(MAccpayList, mAccpayList);
-
+              
         List<MInitialname> mInitial = utilservice.getListMInitialname();
         request.setAttribute(initialList, mInitial);
 
         Master master = utilservice.getMasterdao().getBookingFromRefno(refNo);
         request.setAttribute(Master, master);
-
+        
+        List<MBank> mBankList = utilservice.getListBank();
+        request.setAttribute(MBankList, mBankList);
     }
 
     private Integer convertStringToInteger(String input) {
@@ -368,6 +385,8 @@ public class BillableController extends SMITravelController {
         String priceS = request.getParameter("price-" + index).trim();
         String remark = request.getParameter("remark-" + index);
         String detail = request.getParameter("detail-"+index);
+        String billdate = request.getParameter("billDate-"+index);
+        Date billDate =    convertStringToDate(billdate);
         System.out.println("remark[" + index + "] : " + remark);
         int price = Integer.parseInt(priceS);
         BillableDesc bd = new BillableDesc();
@@ -377,6 +396,7 @@ public class BillableController extends SMITravelController {
         bd.setPrice(price);
         bd.setRemark(remark);
         bd.setDetail(detail);
+        bd.setBillDate(billDate);
         billable.getBillableDescs().add(bd);
     }
 
@@ -412,13 +432,15 @@ public class BillableController extends SMITravelController {
         this.agentService = agentService;
     }
 
-    private void updateRemarkByBillDescId(Billable billable, String billDescId, String remark) {
+    private void updateRemarkByBillDescId(Billable billable, String billDescId, String remark,Date billDate) {
         Iterator<BillableDesc> iterator = billable.getBillableDescs().iterator();
         while (iterator.hasNext()) {
             BillableDesc bd = iterator.next();
             if (billDescId.equalsIgnoreCase(bd.getId())) {
                 System.out.println("updateRemarkByBillDescId remark : " + remark);
+                System.out.println("updateRemarkByBillDescId billDate : " + billDate);
                 bd.setRemark(remark);
+                bd.setBillDate(billDate);
                 return;
             }
         }
@@ -449,5 +471,20 @@ public class BillableController extends SMITravelController {
 
         return sortBill;
     }
+    
+    private MBank getBankAccountById(String accIdS) {
+        Integer accid = convertStringToInteger(accIdS);
+        if (accid == null) {
+            return null;
+        }
 
+        Iterator<MBank> iterator = utilservice.getListBank().iterator();
+        while (iterator.hasNext()) {
+            MBank a = iterator.next();
+            if (accIdS.equalsIgnoreCase(a.getId())) {
+                return a;
+            }
+        }
+        return null;
+    }
 }

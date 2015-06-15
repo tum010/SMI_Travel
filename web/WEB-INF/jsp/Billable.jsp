@@ -21,7 +21,7 @@
 <c:set var="mAcctermList" value="${requestScope['MAcctermList']}" />
 <c:set var="initialList" value="${requestScope['initialList']}" />
 <c:set var="customerAgentList" value="${requestScope['customerAgent']}" />
-
+<c:set var="mBankList" value="${requestScope['MBankList']}" />
 <c:set var="refno1" value="${fn:substring(param.referenceNo, 0, 2)}" />
 <c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
@@ -145,32 +145,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-5" style="margin-bottom: 10px">
-                            <div class="form-group">
-                                <label  class="col-sm-3 control-label text-right">Bill Date <strong style="color: red">*</strong></label>
-
-                                <div class="col-sm-4" style="width: 194px">
-                                    <div class='input-group date' id='billingD'>
-                                        <input type='text' class="form-control"   data-date-format="YYYY-MM-DD" name="billdate" id="billdate" value="" />
-                                        <span id="SpanGlyphiconCalendar" name="SpanGlyphiconCalendar" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-7">
-                                <div class="form-group">
-                                    <label for="billname" class="col-sm-2 control-label text-right">Name</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" id="billname" name="billname" readonly="" class="form-control" value="${billable.billName}">
-                                    </div>
-
-                                </div>
-
-                            </div>
-                            <div class="col-sm-5"  style="margin-bottom: 10px">
+                        <div class="col-sm-5"  style="margin-bottom: 10px">
                                 <div class="form-group">
                                     <label  class="col-sm-3 control-label text-right">Term Pay</label>
 
@@ -189,9 +164,60 @@
                                         </script>
                                     </div>
                                 </div>
-
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-7">
+                                <div class="form-group">
+                                    <label for="billname" class="col-sm-2 control-label text-right">Name</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" id="billname" name="billname" readonly="" class="form-control" value="${billable.billName}">
+                                    </div>
+                                </div>
                             </div>
-
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <label  class="col-sm-3 control-label text-right">Pay By</label>
+                                    <div class="col-sm-4" style="width: 194px">
+                                        <select class="form-control" name="accpay" id="accpay" >
+                                            <option value=""></option>
+                                            <c:forEach var="pay" items="${mAccpayList}">
+                                                <option value="${pay.id}">${pay.name}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4" style="width: 194px">
+                                        <select class="form-control" name="accId" id="accId" >
+                                            <option value=""></option>
+                                            <c:forEach var="bank" items="${mBankList}">
+                                                <option value="${bank.id}">${bank.name}</option>
+                                            </c:forEach>
+                                        </select>
+<!--                                            <input type="text" id="accId"  name="accId" class="form-control" value="${billable.bankAccount}" 
+                                           data-bv-notempty="true" data-bv-notempty-message="account no is required"  >-->
+                                    </div>
+                                </div>
+                                <script>
+                                    $(document).ready(function () {
+                                        $("#accpay").val("${billable.MAccpay.id}");
+                                        $("#accId").val("${billable.bankAccount.id}");
+                                        
+                                        if($("#accpay option:selected").text() == "Bank Transfer" || $("#accpay").val() == "4" ){
+                                            $("#accId").show(); 
+                                        }else{
+                                            $("#accId").hide(); 
+                                        }
+                                            
+                                        $("#accpay").change(function(){
+//                                                       alert($("#accpay option:selected").text());
+                                            if($("#accpay option:selected").text() == "Bank Transfer" || $("#accpay").val() == "4" ){
+                                                $("#accId").show(); 
+                                            }else{
+                                                $("#accId").hide(); 
+                                            }
+                                        });
+                                    });
+                                </script>
+                            </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-7">
@@ -200,50 +226,54 @@
                                     <div class="col-sm-10">
                                         <textarea class="form-control"  rows="3" id="address" name="address" maxlength="200">${billable.billAddress}</textarea>
                                     </div>
-
                                 </div>
-
                             </div>
                             <div class="col-sm-5">
                                 <div class="form-group">
-                                    <label  class="col-sm-3 control-label text-right">Pay By</label>
+                                    <label  class="col-sm-3 control-label text-right">Transfer Date</label>
                                     <div class="col-sm-4" style="width: 194px">
-                                        <select class="form-control" name="accpay" id="accpay">
-                                            <option value=""></option>
-                                            <c:forEach var="pay" items="${mAccpayList}">
-                                                <option value="${pay.id}">${pay.name}</option>
-                                            </c:forEach>
-                                        </select>
-                                        <script>
-                                            $(document).ready(function () {
-                                                $("#accpay").val("${billable.MAccpay.id}");
-                                            });
-                                        </script>
+                                        <div class='input-group date' id='transferD'>
+                                            <input type='text' class="form-control"   data-date-format="YYYY-MM-DD" name="transferD" id="transferD" value="${billable.transferDate}"  />
+                                            <span id="SpanGlyphiconCalendar" name="SpanGlyphiconCalendar" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
-
                             </div>
-
                         </div>
-
                     </div>
                 </div>
 
                 <table class="display" id="billableTable">
                     <thead class="datatable-header">
                         <tr>
-                            <th>No</th>
+                            <th style="width:40px">No</th>
                             <th class="hidden">Id</th>
-                            <th>Type</th>
-                            <th style="width:400px">Detail</th>
+                            <th style="width:100px">Type</th>
+                            <th style="width:250px">Detail</th>
                             <th style="width:125px">Cost</th>
-                            <th style="width:120px">Price</th>
-                            <th>Status</th>
-                            <th>Remark</th>
+                            <th style="width:125px">Price</th>
+                            <th style="width:70px">Status</th>
+                            <th style="width:100px">Bill Date</th>
+                            <th style="width:250px">Remark</th>
                         </tr>
                     </thead>
                     <tbody>
+                    <tr  class="hide" > 
+                        <td class="hidden"></td>
+                        <!--<td>-->
+<!--                            <div class="input-group  datetime" id="dateFrom-" name="dateFrom-">
+                                <input type="text"  class="form-control text-center datemask  " 
+                                   data-date-format="YYYY-MM-DD" name="InputFrom-" id="InputFrom-"
+                                   placeholder="YYYY-MM-DD" value="" />
+                                <a class="input-group-addon">
+                                    <i class="glyphicon-calendar glyphicon "></i>
+                                </a>
+                            </div>          -->
+                        <!--</td>-->
+                    </tr>
                     <input type="hidden" id="billDescCount" name="billDescCount" value="" />
+                                      
                     <c:set var="totalCost"  value="0"/>
                     <c:set var="totalPrice"  value="0"/>
                     <c:forEach var="b" items="${BillableDescList}" varStatus="Counter">
@@ -262,6 +292,18 @@
                                 <c:if test="${b.isBill == 0}">
                                     Open
                                 </c:if></td>
+                            <td>                                           
+
+                                <div class="input-group  datetime" id="billDescId-${Counter.count}" name="billDescId-${Counter.count}">
+                                    <input type="text"  class="form-control" 
+                                       data-date-format="YYYY-MM-DD" name="billDate-${Counter.count}" id="billDate-${Counter.count}"
+                                       placeholder="YYYY-MM-DD" value="${b.billDate}" />
+                                    <span id="SpanGlyphiconCalendar" name="SpanGlyphiconCalendar" class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </td>
+                            
                             <td><input type="text" id="remark-${Counter.count}" name="remark-${Counter.count}" value="${b.remark}" class="form-control" maxlength="255"/></td>
                                 <c:if test="${Counter.last}">
                             <script>
@@ -583,6 +625,10 @@
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
         $('.date').datetimepicker();
+        $(".datetime").datetimepicker({
+                pickTime: false   
+        });
+        
         $('span').click(function () {
             var position = $(this).offset();
             console.log("positon :" + position.top);

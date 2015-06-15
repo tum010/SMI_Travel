@@ -52,7 +52,7 @@ public class UtilityService {
     private PlaceDao placedao;
     private DaytourDao daytourdao;
     private MCityDao citydao;
-    private MBankDao mBankdao;
+    private MBankDao mbankdao;
     
     public int[] getCountItemFromBooking(String refno) {
         int[] Booking_size = new int[7];
@@ -109,9 +109,13 @@ public class UtilityService {
     }
     
     public List<MBank> getListBank(MBank bank){
-        return mBankdao.getListBank(bank, 1);
+        return mbankdao.getListBank(bank, 1);
     }
 
+    public List<MBank> getListBank(){
+        return mbankdao.getListBank();
+    }
+    
     public MInitialname getMInitialnameFromName(String name) {
         return listitemdao.getMInitialnameFromName(name);
     }
@@ -250,7 +254,13 @@ public class UtilityService {
     public void setCitydao(MCityDao citydao) {
         this.citydao = citydao;
     }
-    
-    
 
+    public MBankDao getMbankdao() {
+        return mbankdao;
+    }
+
+    public void setMbankdao(MBankDao mbankdao) {
+        this.mbankdao = mbankdao;
+    }
+    
 }
