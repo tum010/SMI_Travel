@@ -243,7 +243,7 @@
                                 <c:forEach var="pa" items="${ListPackageCity}" varStatus="city">
                                     <tr>
                                         <td hidden="">
-                                            <input id="row-packcity-${city.count-1}-id" name="row-packcity-${city.count-1}-id" type="text" class="form-control" value="${pa.id}">
+                                            <input id="row-packcity-${city.count}-id" name="row-packcity-${city.count}-id" type="text" class="form-control" value="${pa.id}">
                                         </td>
                                         <td>
                                             ${city.count}
@@ -267,8 +267,8 @@
 <!--                                            <a id="PassengerButtonRemove${city.count}" class="remCF" onclick="ConfirmDelete('3', '${pa.id}', '${city.count-1}')">
                                                 <span id="PassengerSpanRemove${city.count-1}" class="glyphicon glyphicon-remove deleteicon"></span>
                                             </a>-->
-                                            <a class="remCF" onclick="ConfirmDelete('3', '${pa.id}', '${city.count-1}')">  
-                                                <span  id="SpanRemove${city.count-1}"  class="glyphicon glyphicon-remove deleteicon"></span>
+                                            <a class="remCF" onclick="ConfirmDelete('3', '${pa.id}', '${city.count}')">  
+                                                <span  id="SpanRemove${city.count}"  class="glyphicon glyphicon-remove deleteicon"></span>
                                             </a>
                                         </td>
                                         
