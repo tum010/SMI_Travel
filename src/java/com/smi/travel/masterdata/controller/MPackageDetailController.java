@@ -301,7 +301,13 @@ public class MPackageDetailController extends SMITravelController {
             System.out.println("idCity : "+idCity);
             System.out.println("packageCityID : "+packageCityID);
             System.out.println("packagetour id : "+packagetour.getId());
-            packagetour.getPackageCities().add(city);
+            if((idCity != null)&&(!"".equalsIgnoreCase(idCity)) ){
+                System.out.println("set data : ");
+                packagetour.getPackageCities().add(city);
+            }else{
+                System.out.println("not set data : ");
+            }
+            
         }
     }
     

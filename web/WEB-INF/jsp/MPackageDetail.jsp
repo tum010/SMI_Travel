@@ -207,7 +207,7 @@
                                 <h5><b>City</b> </h5>
                             </div>
                         </div>
-                       <div class="panel panel-default">  
+                        <!--<div class="panel panel-default">-->  
                         <div class="hidden" id="input-list-city">
                           
                         </div>
@@ -221,14 +221,15 @@
                                 <option  value="${pass.id}">${pass.name}</option>
                            </c:forEach>
                         </select>
-                        <table class="display" id="City">
-                            <thead class="datatable-header">
-                                <tr>
-                                    <th style="width: 10%">No</th>
-                                    <th>Name</th>
-                                    <th style="width: 5%">Action</th>
-                                </tr>
-                            </thead>
+                            <div class="row" style="margin-left: 10px;margin-right: 10px;">            
+                            <table id="City" class="display" cellspacing="0"  >
+                                <thead>
+                                    <tr class="datatable-header">   
+                                        <th style="width: 10%">No</th>
+                                        <th>Name</th>
+                                        <th style="width: 10%">Action</th>
+                                    </tr>
+                                </thead>
                             <script>
                                     var cityName = [];
                             </script>
@@ -242,7 +243,7 @@
                                 <c:forEach var="pa" items="${ListPackageCity}" varStatus="city">
                                     <tr>
                                         <td hidden="">
-                                            <input id="row-packcity-${city.count}-id" name="row-packcity-${city.count}-id" type="text" class="form-control" value="${pa.id}">
+                                            <input id="row-packcity-${city.count-1}-id" name="row-packcity-${city.count-1}-id" type="text" class="form-control" value="${pa.id}">
                                         </td>
                                         <td>
                                             ${city.count}
@@ -263,8 +264,11 @@
                                             </script>
                                         </td>          
                                         <td class="text-center">
-                                            <a id="PassengerButtonRemove${city.count}" class="remCF" onclick="ConfirmDelete('3', '${pa.id}', '${city.count-1}')">
-                                                <span id="PassengerSpanRemove${city.count}" class="glyphicon glyphicon-remove deleteicon"></span>
+<!--                                            <a id="PassengerButtonRemove${city.count}" class="remCF" onclick="ConfirmDelete('3', '${pa.id}', '${city.count-1}')">
+                                                <span id="PassengerSpanRemove${city.count-1}" class="glyphicon glyphicon-remove deleteicon"></span>
+                                            </a>-->
+                                            <a class="remCF" onclick="ConfirmDelete('3', '${pa.id}', '${city.count-1}')">  
+                                                <span  id="SpanRemove${city.count-1}"  class="glyphicon glyphicon-remove deleteicon"></span>
                                             </a>
                                         </td>
                                         
@@ -284,7 +288,7 @@
                                 <i class="glyphicon glyphicon-plus"></i> Add
                             </a>
                         </div>
-                    </div> <!--End-->                       
+                    <!--</div> End-->                       
                     <!--Button Save -->
                     <div class="row" style="padding-top: 10px">
                         <div class="col-xs-12 text-center">

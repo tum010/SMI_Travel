@@ -108,9 +108,8 @@ function deleteCity(CityId,count){
         type: 'get',
         data: {CityID: CityId},
         success: function () {
-            
             var countrow=0;
-            $("#row-" + count + "-no").parent().parent().remove();
+            $("#row-packcity-" + count + "-id").parent().parent().remove();
             var rowAll = $("#City tr").length;
             if (rowAll < 2) {
                 console.log("show button tr_FormulaAddRow");
