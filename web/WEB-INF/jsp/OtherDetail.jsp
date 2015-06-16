@@ -102,7 +102,8 @@
                                     <label for="effectivefrom" class="col-sm-3 control-label" > Date </label>
                                     <div class=' col-sm-6 input-group date' id='effectivefromClass'>
                                         <input type='text' class="form-control"  id="otherdate" name="otherdate" data-date-format="YYYY-MM-DD" value="${requestScope['otherdate']}" />
-                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>
                                 </div>
@@ -365,8 +366,11 @@
                                 $('#hdGridSelected').val($('#MasterProduct tbody tr.row_selected').attr("id"));
                             }
                         });
-
-                        $('.date').datetimepicker();
+                           
+                        $('.date').datetimepicker().change(function(){                          
+                            setupotherdatevalue('${booktype}');
+                        });
+                        
                         $('span').click(function() {
                             var position = $(this).offset();
                             console.log("positon :" + position.top);

@@ -66,7 +66,6 @@ public class LandDetailController extends SMITravelController {
         String inbINQty = request.getParameter("inb_IN_Qty");
         String inbINPrice = request.getParameter("inb_IN_Price");
         String currency = request.getParameter("currency");
-        String supplier = request.getParameter("supplier");
         String departDate = request.getParameter("departdate");
         String arriveDate = request.getParameter("arrivedate");
         String hotel = request.getParameter("hotel");
@@ -174,7 +173,6 @@ public class LandDetailController extends SMITravelController {
                     land.setOutboundInCost(util.convertStringTolong(INCost));
                     land.setOutboundInPrice(util.convertStringTolong(INPrice));
                     land.setOutboundInQty(util.convertStringToInteger(INQty));
-                    land.setOutboundSupplier(supplier);
                     land.setOutboundArrive(util.convertStringToDate(arriveDate));
                     land.setOutboundDepart(util.convertStringToDate(departDate));
                     land.setRemark(remark);
@@ -254,7 +252,6 @@ public class LandDetailController extends SMITravelController {
                 INQty = String.valueOf(land.getOutboundInQty());
                 INPrice = String.valueOf(land.getOutboundInPrice());
     
-                supplier = land.getOutboundSupplier();
                 arriveDate = util.convertDateToString(land.getOutboundArrive());
                 departDate = util.convertDateToString(land.getOutboundDepart());
                 System.out.println("arriveDate : "+arriveDate);
@@ -300,7 +297,6 @@ public class LandDetailController extends SMITravelController {
             request.setAttribute("IN_Cost", INCost);
             request.setAttribute("IN_Qty", INQty);
             request.setAttribute("IN_Price", INPrice);
-            request.setAttribute("supplier", supplier);
             request.setAttribute("arrivedate", arriveDate);
             request.setAttribute("departdate", departDate); 
             request.setAttribute("remark", remark);

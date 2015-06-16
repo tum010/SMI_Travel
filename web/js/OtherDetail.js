@@ -35,7 +35,6 @@ function setupagentvalue(id, code, name) {
 }
 
 function setupotherdatevalue(booktype) {
-    //alert(booktype);
     var productid = document.getElementById('product_id').value;
     var otherdate = document.getElementById('otherdate').value;
     if((productid != '') && (otherdate != '')){
@@ -266,7 +265,7 @@ function CallAjax(param, booktype) {
                     calculateVat();
                 }
             }, error: function(msg) {
-                alert('error');
+                //alert('error');
             }
         });
     } catch (e) {

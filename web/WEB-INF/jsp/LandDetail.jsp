@@ -358,7 +358,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                         <label class="col-sm-3 control-label" >Hotel</label>
-                                        <div class="col-sm-4">                             
+                                        <div class="col-sm-7">                             
                                             <input type="text" maxlength="255" class="form-control"  id="hotel" name="hotel" value='${requestScope['hotel']}' >  
                                         </div>
                                         </div>
@@ -473,16 +473,18 @@
                                             <input type="text" class="form-control" id="Product_name" readonly name="Product_name" value="${requestScope['Product_name']}">
                                         </div>
                                     </div>
-                                    
-                                    <div class="col-md-6 " > 
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label" for="remark">Remark</label>
-                                            <div class="col-sm-4" >
-                                                <input type="text" class="form-control " maxlength="255" id="remark" name="remark" value='${requestScope['remark']}'>  
+                                    <div class="col-md-6 ">
+                                        <div class="form-group">                                           
+                                            <label for="effectivefrom" class="col-sm-3 control-label"> Depart Date </label>
+                                            <div class=' col-sm-4 input-group datepicker' id='effectivefromClass' style="padding-left: 15px">
+                                                <input type='text' class="form-control"  id="departdate" name="departdate" data-date-format="YYYY-MM-DD" value="${requestScope['departdate']}" />
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
                                             </div>
                                         </div>
-                                    </div>
-                                            
+                                    </div>    
+                                    
                                     <div class="col-md-3 " >
                                         <div class="form-group">
                                             <label class="col-sm-3 col-md-offset-7 control-label" for="nameProduct">Cost</label>
@@ -501,23 +503,18 @@
 
                                         </div>
                                     </div>
-                                    
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 " >
                                         <div class="form-group">
-                                        <label class="col-sm-3 control-label" >Currency</label>
-                                        <div class="col-sm-4">                             
-                                            <select class="form-control" id="currency" name="currency">
-                                                <c:forEach var="currency" items="${currencyList}">
-                                                    <c:set var="select" value="" />
-                                                    <c:if test="${currency.code == requestScope['currency']}">
-                                                        <c:set var="select" value="selected" />
-                                                    </c:if>
-                                                    <option value="${currency.code}" ${select}>${currency.code}</option>
-                                                </c:forEach>
-                                            </select>
+                                            
+                                            <label for="effectivefrom" class="col-sm-3 control-label" > Arrive Date </label>
+                                            <div class=' col-sm-4 input-group datepicker' id='effectivefromClass' style="padding-left: 15px">
+                                                <input type='text' class="form-control"  id="arrivedate" name="arrivedate" data-date-format="YYYY-MM-DD" value="${requestScope['arrivedate']}" />
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
                                         </div>
-                                        </div>
-                                    </div>
+                                    </div>                                  
                                 </div>
                                         
                                 <div class="row">
@@ -535,14 +532,22 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 " >
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <label  class="col-sm-3 control-label" >Supplier</label>
-                                            <div class="col-sm-7">
-                                                <input type="text" maxlength="255" class="form-control"  id="supplier" name="supplier" value='${requestScope['supplier']}' >  
-                                            </div>
+                                        <label class="col-sm-3 control-label" >Currency</label>
+                                        <div class="col-sm-4">                             
+                                            <select class="form-control" id="currency" name="currency">
+                                                <c:forEach var="currency" items="${currencyList}">
+                                                    <c:set var="select" value="" />
+                                                    <c:if test="${currency.code == requestScope['currency']}">
+                                                        <c:set var="select" value="selected" />
+                                                    </c:if>
+                                                    <option value="${currency.code}" ${select}>${currency.code}</option>
+                                                </c:forEach>
+                                            </select>
                                         </div>
-                                    </div>
+                                        </div>
+                                    </div>                           
                                 </div>
                                             
                                 <div class="row">
@@ -560,17 +565,15 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 ">
-                                        <div class="form-group">                                           
-                                            <label for="effectivefrom" class="col-sm-3 control-label"> Depart Date </label>
-                                            <div class=' col-sm-4 input-group datepicker' id='effectivefromClass' style="padding-left: 15px">
-                                                <input type='text' class="form-control"  id="departdate" name="departdate" data-date-format="YYYY-MM-DD" value="${requestScope['departdate']}" />
-                                                <span class="input-group-addon">
-                                                    <span class="glyphicon glyphicon-calendar"></span>
-                                                </span>
+                                    <div class="col-md-6 " > 
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label" for="remark">Remark</label>
+                                            <div class="col-sm-7" >
+                                                <textarea rows="2" cols="50" class="form-control" maxlength="255" id="remark" name="remark" >${requestScope['remark']}</textarea>                                              
                                             </div>
                                         </div>
                                     </div>       
+                                    
                                 </div>
                                             
                                 <div class="row">
@@ -588,18 +591,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 " >
-                                        <div class="form-group">
-                                            
-                                            <label for="effectivefrom" class="col-sm-3 control-label" > Arrive Date </label>
-                                            <div class=' col-sm-4 input-group datepicker' id='effectivefromClass' style="padding-left: 15px">
-                                                <input type='text' class="form-control"  id="arrivedate" name="arrivedate" data-date-format="YYYY-MM-DD" value="${requestScope['arrivedate']}" />
-                                                <span class="input-group-addon">
-                                                    <span class="glyphicon glyphicon-calendar"></span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                                                   
                                 </div>
                             </c:when>
                         </c:choose>
@@ -633,11 +625,18 @@
 
                         </thead>
                         <tbody>
-                            <c:forEach var="table" items="${itinerary_list}">
+                            <c:forEach var="table" items="${itinerary_list}" varStatus="Counter">
                                 <tr>
                                     <td class="hidden"> <input  type="hidden"  value="${table.id}">  </td>
                                     <td> <input style="width: 20px"  type="text"  class="form-control number" value="${table.orderNo}">  </td>
-                                    <td> <input style="width: 100px"  type="text" class="form-control date" value="${table.dayDate}" placeholder="YYYY-MM-DD">  </td>
+                                    <td> 
+                                        <div class='input-group daydatepicker' id='effectivefromClass-${Counter.count}' style="padding-left: 15px">
+                                            <input style="width: 100px" type='text' class="form-control"  id="dayDate-${Counter.count}" name="dayDate-${Counter.count}" data-date-format="YYYY-MM-DD" value="${requestScope['dayDate']}" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </td>
                                     <td> <input style="width: 80px" type="text" class="form-control time" value="${table.dayTime}" placeholder="HH:MM">  </td>
                                     <td> <input style="width: ${DescriptionSize}" maxlength ="255"  type="text" class="form-control" value="${table.description}">  </td>
                                     <td class="text-center">
@@ -887,7 +886,12 @@ $('#savereal').on("keyup keypress", function(e) {
 
 
     $(document).ready(function() {
-        $('.datepicker').datetimepicker();
+        $('.datepicker').datetimepicker().change(function(){                          
+            getvalueProduct();
+        });
+        $(".daydatepicker").datetimepicker({
+            pickTime: false   
+        });
         $('span').click(function() {
                             var position = $(this).offset();
                             console.log("positon :" + position.top);

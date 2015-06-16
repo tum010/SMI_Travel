@@ -335,6 +335,9 @@ public class PackageTourImpl implements PackageTourDao {
         System.out.println("PackageID : " + PackageID);
 
        // UtilityFunction util = new UtilityFunction();
+        if((PackageID == "") || (DepartDate == "")){
+            return null;
+        } else {
         String query = "from PackagePrice pp where pp.packageTour.id = " + PackageID + " and  ('" + DepartDate + "' >= pp.effectiveFrom) and  ('" + DepartDate + "' <= pp.effectiveTo)";
         System.out.println("query : " + query);
         PackagePrice product = new PackagePrice();
@@ -346,6 +349,8 @@ public class PackageTourImpl implements PackageTourDao {
             product = PriceList.get(0);
         }
         return product;
+        }
+
     }
 
     @Override
