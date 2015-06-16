@@ -179,7 +179,7 @@
                                 <c:set var="refno1" value="${fn:substring(item.master.referenceNo,0,2)}" />
                                 <c:set var="refno2" value="${fn:substring(item.master.referenceNo,2,7)}" />        
                                 <td>${refno1}-${refno2}</td>
-                                <td>${item.master.customer.firstName}</td>
+                                <td>${item.master.customer.MInitialname.name} ${item.master.customer.lastName} ${item.master.customer.firstName}</td>
                                 <td class="selectGuide form-group">  
                                     <select class="guidename"  id="selectGuide-${status.count}" name="selectGuide-" onchange="getGuideCommission('${item.daytour.code}','guideComm-${status.count}');" class="selectize"   >
                                         <option value="" >--- select ---</option>
