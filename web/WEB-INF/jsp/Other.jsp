@@ -154,15 +154,15 @@
                                 <td class="tdcenter ${colourStatus}" style="width:75px;${colourStatusFirstrow}"> ${table.otherDate} </td>
                                 <td> ${table.product.name}</td>
                                 
-                                <td class="tdright moneyformat"> ${table.adCost}</td>
-                                <td class="tdcenter moneyformat"> ${table.adQty}</td>
-                                <td class="tdright moneyformat"> ${table.adPrice}</td>
-                                <td class="tdright moneyformat"> ${table.chCost}</td>
-                                <td class="tdcenter moneyformat"> ${table.chQty}</td>
-                                <td class="tdright moneyformat"> ${table.chPrice}</td>
-                                <td class="tdright moneyformat"> ${table.inCost}</td>
-                                <td class="tdcenter moneyformat"> ${table.inQty}</td>
-                                <td class="tdright moneyformat"> ${table.inPrice}</td>
+                                <td class="tdright moneyformat"> ${table.adCost eq 0 ? '' : table.adCost}</td>
+                                <td class="tdcenter moneyformat"> ${table.adQty eq 0 ? '': table.adQty }</td>
+                                <td class="tdright moneyformat"> ${table.adPrice eq 0 ? '': table.adPrice}</td>
+                                <td class="tdright moneyformat"> ${table.chCost eq 0 ? '': table.chCost}</td>
+                                <td class="tdcenter moneyformat"> ${table.chQty eq 0 ? '' : table.chQty}</td>
+                                <td class="tdright moneyformat"> ${table.chPrice eq 0 ? '' : table.chPrice}</td>
+                                <td class="tdright moneyformat"> ${table.inCost eq 0 ? '' : table.inCost}</td>
+                                <td class="tdcenter moneyformat"> ${table.inQty eq 0 ? '' : table.inQty}</td>
+                                <td class="tdright moneyformat"> ${table.inPrice eq 0 ? '' : table.inPrice}</td>
                                 <td class="tdcenter"> ${table.currency}</td>
                                 <td class="tdright moneyformat"> ${(table.adPrice * table.adQty) + (table.chPrice * table.chQty) + (table.inPrice * table.inQty)}</td>
                                 <td> 

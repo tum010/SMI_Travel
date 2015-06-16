@@ -83,6 +83,7 @@
                                 <div class="col-sm-3">  
                                     <div class="form-group">
                                         <div class="input-group " style="padding-left: 5px">
+                                            <input type="hidden" id="callpageSubmit" name="callpageSubmit" value="${requestScope['callpage']}">
                                             <input type="hidden"  class="form-control" name="product_id" id="product_id" value="${requestScope['product_id']}" >
                                             <input type="text"  class="form-control" name="product_code" id="product_code" 
                                                    data-bv-notempty="true" data-bv-notempty-message="The product code is required" value="${requestScope['product_code']}">
@@ -293,7 +294,7 @@
                                      <button type="submit"  class="btn btn-success"><span class="fa fa-save"></span> Save</button>
                                 </c:otherwise>
                             </c:choose>
-                           
+                                 
                         </div>
 
 

@@ -35,6 +35,7 @@ public class OtherDetailController extends SMITravelController {
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String action = request.getParameter("action");
         String callPageFrom = request.getParameter("callPageFrom");
+        String callpageSubmit  = request.getParameter("callpageSubmit");
         String itemid = request.getParameter("itemid");
         String productName = request.getParameter("product_name");
         String productCode = request.getParameter("product_code");
@@ -67,11 +68,10 @@ public class OtherDetailController extends SMITravelController {
             int[] booksize = utilservice.getCountItemFromBooking(refno);
             request.setAttribute(Booking_Size, booksize);
         }
-        
+    
         Master master = utilservice.getbookingFromRefno(refno);
-        
         if((callPageFrom!=null) && (callPageFrom.equalsIgnoreCase("FromDayTour"))){
-            request.setAttribute("callpage", callPageFrom);
+            request.setAttribute("callpage", callPageFrom);       
         }               
                 
         if((callPageFrom!=null) && (callPageFrom.equalsIgnoreCase("FromOther"))){
@@ -145,13 +145,18 @@ public class OtherDetailController extends SMITravelController {
             }
 
             int result = OtherService.saveBookingOther(Other,user);
-            if(result==1){
+            if((result==1) && (callpageSubmit==null || !callpageSubmit.equalsIgnoreCase("FromDayTour"))){
                 ModelAndView OTHER = new ModelAndView(new RedirectView("Other.smi?referenceNo="+refno+"&result=1", true));
                 return OTHER;
+            }else if((result==1) && (callpageSubmit!=null) && (callpageSubmit.equalsIgnoreCase("FromDayTour"))){
+                ModelAndView DAYTOUR = new ModelAndView(new RedirectView("Daytour.smi?referenceNo="+refno, true));
+                return DAYTOUR;
             }else{
                 request.setAttribute(TransectionResult, "save unsuccessful");
             }
-        }if ("edit".equalsIgnoreCase(action)) {
+            
+        }
+        if ("edit".equalsIgnoreCase(action)) {
             OtherBooking Other = OtherService.getBookDetailOtherFromID(request.getParameter("itemid"));
             itemid = request.getParameter("itemid");
             Product pro = Other.getProduct();

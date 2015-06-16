@@ -116,7 +116,10 @@
         <div class="col-sm-2 col-sm-offset-4 text-right" style="padding-left: 26px">
            
             <div class="form-actions pull-right" style="padding-right: 0px">
-                <a href="OtherDetail.smi?referenceNo=${param.referenceNo}&action=new&callPageFrom=FromDayTour"><button type="button" id="acs" onclick=""  class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>Add</button>  </a>  
+                <a href="OtherDetail.smi?referenceNo=${param.referenceNo}&action=new&callPageFrom=FromDayTour">
+                    <button type="button" id="acs" onclick=""  class="btn btn-success">
+                        <span class="glyphicon glyphicon-plus"></span>Add</button>
+                </a>  
             </div>
         </div> 
     </div>

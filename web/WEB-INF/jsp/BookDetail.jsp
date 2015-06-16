@@ -9,6 +9,7 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script type="text/javascript" src="js/BookDetail.js"></script> 
+<script type="text/javascript" src="js/jquery-ui.js"></script> 
 <link href="css/jquery-ui.css" rel="stylesheet">
 
 <c:set var="booking_size" value="${requestScope['BookingSize']}" />
@@ -321,7 +322,8 @@
                             <td class="agent-fax hidden">${a.fax}</td>
                         </tr>
                         <script>
-                            agent.push({id: "${a.id}", code: "${a.code}", name: "${a.name}", address: "${a.address}", tel: "${a.tel}", fax: "${a.fax}"});
+                            agent.push({id: "${a.id}", code: "${a.code}", name: "${a.name}", 
+                                        address: "${a.address}", tel: "${a.tel}", fax: "${a.fax}"});
                         </script>
                     </c:forEach>
                     </tbody>
@@ -375,7 +377,9 @@
                             <td >${customer.tel}</td>
                         </tr>
                         <script>
-                            customer.push({id: "${customer.id}", code: "${customer.code}", initial: "${customer.MInitialname.name}", firstName: "${customer.firstName}", lastName: "${customer.lastName}", address: "${customer.address}", tel: "${customer.tel}"});
+                            customer.push({id: "${customer.id}", code: "${customer.code}", 
+                                            initial: "${customer.MInitialname.name}", firstName: "${customer.firstName}", 
+                                            lastName: "${customer.lastName}", address: "${customer.address}", tel: "${customer.tel}"});   
                         </script>
                     </c:forEach>
                     </tbody>

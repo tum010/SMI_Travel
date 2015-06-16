@@ -163,47 +163,46 @@ $(function () {
 
 // AGENT 
 $(document).ready(function () {
-    //console.log(agent);
-    $(function () {
-            var agentCode = [];
-            $.each(agent, function (key, value) {
-                agentCode.push(value.code);
-                if ( !(value.name in agentCode) ){
-                   agentCode.push(value.name);
-                }
-            });
+        var agentCode = [];
+        $.each(agent, function (key, value) {
+            agentCode.push(value.code);
+            if ( !(value.name in agentCode) ){
+               agentCode.push(value.name);
+            }
+        });
 
-            $("#agent_user").autocomplete({
-                source: agentCode,
-                close:function( event, ui ) {
-                   $("#agent_user").trigger('keyup');
+        $("#agent_user").autocomplete({
+            source: agentCode,
+            close:function( event, ui ) {
+               $("#agent_user").trigger('keyup');
+            }
+        });
+        $("#agent_user").on('keyup',function(){
+            var position = $(this).offset();
+            $(".ui-widget").css("top", position.top + 30);
+            $(".ui-widget").css("left", position.left);
+            var code = this.value.toUpperCase();
+            var name = this.value;
+            $("#agent_id,#agent_name,#agent_addr,#agent_tel").val(null);
+            $.each(agent, function (key, value) {
+                if (value.code.toUpperCase() === code) {
+//                        $("#agent_user").val(value.code);       
+                    $("#agent_id").val(value.id);
+                    $("#agent_name").val(value.name);
+                    $("#agent_addr").val(value.address);
+                    $("#agent_tel").val(value.tel);
                 }
-            });
-            $("#agent_user").keyup(function () {
-                var position = $(this).offset();
-                $(".ui-widget").css("top", position.top + 30);
-                $(".ui-widget").css("left", position.left);
-                var code = this.value.toUpperCase();
-                var name = this.value;
-                $("#agent_name,#agent_addr,#agent_tel").val(null);
-                $.each(agent, function (key, value) {
-                    if (value.code.toUpperCase() === code) {
-                        $("#agent_id").val(value.id);
-                        $("#agent_name").val(value.name);
-                        $("#agent_addr").val(value.address);
-                        $("#agent_tel").val(value.tel);
-                    }
-                   if(name === value.name){
-                        $("#agent_user").val(value.code);
-                        $("#agent_id").val(value.id);
-                        $("#agent_name").val(value.name);
-                        $("#agent_addr").val(value.address);
-                        $("#agent_tel").val(value.tel);
-                        code = $("#agent_user").val().toUpperCase();
-                    }
-                }); 
+                if(name === value.name){
+                    $("#agent_user").val(this.value);
+                    $("#agent_user").val(key.code);
+                    $("#agent_id").val(value.id);
+                    $("#agent_name").val(value.name);
+                    $("#agent_addr").val(value.address);
+                    $("#agent_tel").val(value.tel);
+                }
             }); 
         }); 
+       
         
     $("#AgentTable tr").on('click', function () {
         var agent_id = $(this).find(".agent-id").text();
