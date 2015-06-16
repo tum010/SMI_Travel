@@ -196,7 +196,7 @@ public class MCommissionDetailController extends SMITravelController {
         }
         if(agentTourComRows == 1){return;}
         if( agentcommission.getAgentTourComissions() == null){
-            agentcommission.setAgentTourComissions((Set) new ArrayList<AgentTourComission>());
+            agentcommission.setAgentTourComissions(new ArrayList<AgentTourComission>());
         }
         for(int i = 0 ; i < agentTourComRows; i++){
             String id = request.getParameter("InputId-"+i);
