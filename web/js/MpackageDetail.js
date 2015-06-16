@@ -107,8 +107,8 @@ function deleteCity(CityId,count){
         url: 'MPackageDetail.smi?action=deleteCity',
         type: 'get',
         data: {CityID: CityId},
-        success: function () {
-            var countrow=0;
+        success: function () { 
+            var countrow=1;
             $("#row-packcity-" + count + "-id").parent().parent().remove();
             var rowAll = $("#City tr").length;
             if (rowAll < 2) {
@@ -120,14 +120,14 @@ function deleteCity(CityId,count){
             $('#City tr:gt(0) ').each(function() {
                 $(this).find('td:eq(1)').html(countrow) ; 
                 countrow = countrow+1;
-            });           
+            });
         },
         error: function () {
             console.log("error");
             result =0;
         }
     });       
-    } 
+    }
 }
 
 function getrowcountItinerary(){
@@ -367,8 +367,8 @@ function CityAddRow(row) {
 
     $("#City tbody").append(
             '<tr>' +
-            '<td  >'+row+'</td>' +
             '<td hidden="">' + row + '</td>' +
+            '<td  >'+row+'</td>' +
             '<td><select id="row-city-' + row + '-name" name="row-city-' + row + '-name" class="form-control"><option></option></select></td>' +
             '<td class="text-center">' +
             '<a class="remCF" onclick="ConfirmDelete(\'3\', \'\', \''+row+'\')">  '+
@@ -394,6 +394,3 @@ function deletePassenger(hotelId, passengerId) {
         }
     });
 }
-
-        
-
