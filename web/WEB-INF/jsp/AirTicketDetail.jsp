@@ -740,15 +740,15 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-3 form-group">
+                                        <input type="text" name="passengerlastname${pStatus.count}" id="passengerlastname${pStatus.count}" 
+                                               value="${passenger.lastName}" class="form-control" maxlength="50" 
+                                               data-bv-notempty data-bv-notempty-message="The Last Name is required"/>
+                                    </div>
+                                    <div class="col-sm-3 form-group">
                                         <input type="hidden" name="passengerId${pStatus.count}" id="passengerId${pStatus.count}" value="${passenger.id}" class="form-control">
                                         <input type="text" name="passengerfirstname${pStatus.count}" id="passengerfirstname${pStatus.count}" 
                                                value="${passenger.firstName}" class="form-control" maxlength="50" 
                                                data-bv-notempty data-bv-notempty-message="The First Name is required"/>
-                                    </div>
-                                    <div class="col-sm-3 form-group">
-                                        <input type="text" name="passengerlastname${pStatus.count}" id="passengerlastname${pStatus.count}" 
-                                               value="${passenger.lastName}" class="form-control" maxlength="50" 
-                                               data-bv-notempty data-bv-notempty-message="The Last Name is required"/>
                                     </div>
                                     <div class="col-sm-1 text-right"><strong>PAX&nbsp;TYPE</strong><strong style="color: red">*</strong></div>
                                     <div class="col-sm-2 form-group"><!--winit-->

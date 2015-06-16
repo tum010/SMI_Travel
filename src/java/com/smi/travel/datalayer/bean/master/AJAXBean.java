@@ -472,7 +472,7 @@ public class AJAXBean extends AbstractBean implements
                         + "<td>" + pickupPlace + "</td>"
                         + "<td class='text-center'>" + (daytour.getPickupRoom() == null ? "" : daytour.getPickupRoom()) + "</td>"
                         + "<td class='text-center'>" + (daytour.getPickupTime() == null ? "" : daytour.getPickupTime()) + "</td>"
-                        + "<td>" + Initialname + " " + cus.getFirstName() + " " + cus.getLastName() + "</td>"
+                        + "<td>" + Initialname + " " + cus.getLastName() + " " + cus.getFirstName() + "</td>"
                         + "<td class='text-center'>" + passenger[0] + "</td>"
                         + "<td class='text-center'>" + passenger[1] + "</td>"
                         + "<td class='text-center'>" + passenger[2] + "</td>"
