@@ -137,6 +137,12 @@ public class MPackageDetailController extends SMITravelController {
             request.setAttribute(PRICELIST, SortPriceList(paList));
             // Package City 
             List<PackageCity> listPackageCity = Packagedetail.getPackageCities();
+            
+            for(int i=0;i<listPackageCity.size();i++){
+                MCity city = listPackageCity.get(i).getMCity();
+                System.out.println("Name : "+city.getName());
+                System.out.println("listPackageCity id : "+listPackageCity.get(i).getId());
+            }
             request.setAttribute("ListPackageCity", listPackageCity);
             
             if (status.equalsIgnoreCase("inactive")) {
@@ -150,7 +156,6 @@ public class MPackageDetailController extends SMITravelController {
                 }                
             }
 
-            
         } else if ("deleterItinerary".equalsIgnoreCase(action)) {
             System.out.println("Delete Itinerary");
             String ItiId = request.getParameter("ItiID");
@@ -178,7 +183,7 @@ public class MPackageDetailController extends SMITravelController {
         request.setAttribute("status", status);
         request.setAttribute("packageid", packageID);
         request.setAttribute("ListCity", mCity);
-        request.setAttribute("ListPackageCity", packageCity);
+       // request.setAttribute("ListPackageCity", packageCity);
         return MPackageDetail;
     }
     
@@ -286,17 +291,21 @@ public class MPackageDetailController extends SMITravelController {
         for (int i = 1; i < cityRows  ; i++) {
             PackageCity city = new PackageCity();
             MCity mCity = new MCity();
-            String nameCity = request.getParameter("row-city-" + i + "-name");
-            String idCity = request.getParameter("row-city-" + i + "-id");
-            
-            if(nameCity != null){
-                mCity.setName(nameCity);
-            }
+            String idCity = request.getParameter("row-city-" + i + "-name");
+            String packageCityID = request.getParameter("row-packcity-"+i+"-id");
+
+            System.out.println("row-packcity-"+i+"-id");
             if(idCity != null){
                 mCity.setId(idCity);
             }
+            if(packageCityID != null){
+                city.setId(packageCityID);
+            }
             city.setMCity(mCity);
             city.setPackageTour(packagetour);
+            System.out.println("idCity : "+idCity);
+            System.out.println("packageCityID : "+packageCityID);
+            System.out.println("packagetour id : "+packagetour.getId());
             packagetour.getPackageCities().add(city);
         }
     }

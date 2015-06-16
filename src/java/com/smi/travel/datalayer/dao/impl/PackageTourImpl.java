@@ -128,11 +128,20 @@ public class PackageTourImpl implements PackageTourDao {
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
-            session.update(mpackage);
+            if(mpackage.getId() == null){
+                 session.save(mpackage);
+            }else{
+                 session.update(mpackage);
+            }
+           
             
             System.out.println("PackageTour : "+mpackage.getId());
+            List<PackageCity> itylist = mpackage.getPackageCities();
+            for(int i=0;i<itylist.size();i++){
+                System.out.println("ID :"+itylist.get(i).getId());
+                System.out.println("PAckage ID :"+itylist.get(i).getPackageTour().getId());
+            }
             
-
             List<PackageItinerary> ItineraryList = new ArrayList<PackageItinerary>(mpackage.getPackageItineraries());
             if (ItineraryList.isEmpty()) {
                 System.out.println("empty list");
@@ -156,7 +165,7 @@ public class PackageTourImpl implements PackageTourDao {
                     session.update(PriceList.get(i));
                 }
             }
-            /*
+            
             List<PackageCity> CityList = mpackage.getPackageCities();
             for (int i = 0; i < CityList.size(); i++) {
                 System.out.println(CityList.get(i).getPackageTour().getId());
@@ -166,7 +175,7 @@ public class PackageTourImpl implements PackageTourDao {
                     session.update(CityList.get(i));
                 }
             }
-*/
+
             transaction.commit();
             session.close();
             this.sessionFactory.close();

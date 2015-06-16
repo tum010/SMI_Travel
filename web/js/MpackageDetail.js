@@ -368,7 +368,7 @@ function CityAddRow(row) {
 
     $("#City tbody").append(
             '<tr>' +
-            '<td  ><input  id="row-city-' + row + '-id" name="row-city-' + row + '-id"  type="text" class="form-control" value='+row+'></td>' +
+            '<td  >'+row+'</td>' +
             '<td hidden="">' + row + '</td>' +
             '<td><select id="row-city-' + row + '-name" name="row-city-' + row + '-name" class="form-control"><option></option></select></td>' +
             '<td class="text-center">' +

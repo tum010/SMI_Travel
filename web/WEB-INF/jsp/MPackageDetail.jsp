@@ -38,7 +38,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2   control-label" for="Country">Code<font style="color: red">*</font></label>
                                 <div class="col-sm-9">
-                                    <input type="text" ${requestScope['disabledcode']} class="form-control" id="packagecode"  maxlength="50" name="packagecode"  value="${requestScope['packagecode']}" >  
+                                    <input type="text" style="text-transform:uppercase" ${requestScope['disabledcode']} class="form-control" id="packagecode"  maxlength="50" name="packagecode"  value="${requestScope['packagecode']}" >  
                                 </div>
                             </div>
                         </div>
@@ -46,7 +46,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="fromcity">Name<font style="color: red">*</font></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="packagename" maxlength="255" name="packagename" value="${requestScope['packagename']}" >  
+                                    <input type="text" style="text-transform:uppercase" class="form-control" id="packagename" maxlength="255" name="packagename" value="${requestScope['packagename']}" >  
                                 </div>
                             </div>
                         </div>
@@ -209,20 +209,16 @@
                         </div>
                        <div class="panel panel-default">  
                         <div class="hidden" id="input-list-city">
-                            <c:forEach var="pass" items="${ListCity}" varStatus="status">
-                                 <input type="text"  id="row-city-${status.count}-id" name="row-city-${status.count}-id" value="${pass.id}" />
-                           </c:forEach>
+                          
                         </div>
                         <!--Div Set Id City -->
                         <div class="hidden" >
-                            <c:forEach var="pass" items="${ListCity}" varStatus="status">
-                                 <input type="text"  id="row-city-${status.count}-id" name="row-city-${status.count}-id" value="${pass.id}" />
-                           </c:forEach>
+                          
                         </div>
                         <select   class="hidden"  id="select-list-city">
                             <c:forEach var="pass" items="${ListCity}" varStatus="status">
                                  <!--<input type="text" class="hidden" id="row-city-${status.count}-id" name="row-city-${status.count}-id" value="${pass.id}" />-->
-                                <option  value="${pass.name}">${pass.name}</option>
+                                <option  value="${pass.id}">${pass.name}</option>
                            </c:forEach>
                         </select>
                         <table class="display" id="City">
@@ -238,8 +234,7 @@
                             </script>
                             <c:forEach var="cityList" items="${ListCity}" >
                                 <script>
-                                    cityName.push({value: "${cityList.id}", label: "${cityList.name}"});
-                                   
+                                    cityName.push({value: "${cityList.id}", label: "${cityList.name}"});        
                                 </script>
                             </c:forEach>
                             <tbody>
@@ -247,7 +242,7 @@
                                 <c:forEach var="pa" items="${ListPackageCity}" varStatus="city">
                                     <tr>
                                         <td hidden="">
-                                            <input id="row-city-${city.count}-id" name="row-city-${city.count}-id" type="text" class="form-control" value="${pa.id}">
+                                            <input id="row-packcity-${city.count}-id" name="row-packcity-${city.count}-id" type="text" class="form-control" value="${pa.id}">
                                         </td>
                                         <td>
                                             ${city.count}
@@ -257,9 +252,14 @@
                                                 <input id="input-get-city-${city.count}" value="${pa.id}" hidden="">
                                                 <!--<input type="text" class="form-control cityName" id="select-passneger-${city.count}" name="row-city-${city.count}-name"  valHidden="${cityList.id}" value="${cityList.name}"  />-->
                                                 <select  class="form-control"  name="row-city-${city.count}-name" id="row-city-${city.count}">
+                                                    
                                                     <c:forEach var="passen" items="${ListCity}" varStatus="status">
-                                                        <input type="text" class="hidden" id="row-city-${city.count}-id" name="row-city-${city.count}-id" value="${passen.id}" />
-                                                        <option class="passenger-option" value="${passen.name}">${passen.name}</option>
+                                                        <c:set var="select" value="" />
+                                                        <c:if test="${passen.id == pa.MCity.id}">
+                                                            <c:set var="select" value="selected" />
+                                                        </c:if>
+
+                                                        <option class="passenger-option" ${select} value="${passen.id}">${passen.name}</option>
                                                     </c:forEach>
                                                 </select>
                                             </div>
@@ -283,7 +283,7 @@
                                 </c:forEach>                              
                             </tbody>
                         </table>
-                        <input value="${hotelPassengerList.size()}" id="table-city-size" type="hidden">
+                        <input value="${ListPackageCity.size()}" id="table-city-size" type="hidden">
                         <div id="tr_CityAddRow" class="text-center hide" style="padding-top: 10px">
                             <a class="btn btn-success" onclick="CityAddRow()">
                                 <i class="glyphicon glyphicon-plus"></i> Add
