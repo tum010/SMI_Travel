@@ -185,16 +185,6 @@
                                             </c:forEach>
                                         </select>
                                     </div>
-                                    <div class="col-sm-4" style="width: 194px">
-                                        <select class="form-control" name="accId" id="accId" >
-                                            <option value=""></option>
-                                            <c:forEach var="bank" items="${mBankList}">
-                                                <option value="${bank.id}">${bank.name}</option>
-                                            </c:forEach>
-                                        </select>
-<!--                                            <input type="text" id="accId"  name="accId" class="form-control" value="${billable.bankAccount}" 
-                                           data-bv-notempty="true" data-bv-notempty-message="account no is required"  >-->
-                                    </div>
                                 </div>
                                 <script>
                                     $(document).ready(function () {
@@ -202,21 +192,43 @@
                                         $("#accId").val("${billable.bankAccount.id}");
                                         
                                         if($("#accpay option:selected").text() == "Bank Transfer" || $("#accpay").val() == "4" ){
-                                            $("#accId").show(); 
+                                            $("#bankAcc").show();       //lable text Bank Transfer
+                                            $("#accId").show();         //select list Bank Transfer
+                                            $("#tranDateText").show();  //lable text Transfer Date
+                                            $("#tranDateDiv").show();   //div class Transfer Date
                                         }else{
+                                            $("#bankAcc").hide(); 
                                             $("#accId").hide(); 
+                                            $("#tranDateText").hide();
+                                            $("#tranDateDiv").hide();
+                                            $("#accId").val("");        //Bank Transfer
+                                            $("#transferD").val("");    //Transfer Date
                                         }
                                             
                                         $("#accpay").change(function(){
 //                                                       alert($("#accpay option:selected").text());
                                             if($("#accpay option:selected").text() == "Bank Transfer" || $("#accpay").val() == "4" ){
-                                                $("#accId").show(); 
+                                                $("#bankAcc").show();       //lable text Bank Transfer
+                                                $("#accId").show();         //select list Bank Transfer
+                                                $("#tranDateText").show();  //lable text Transfer Date
+                                                $("#tranDateDiv").show();   //div class Transfer Date
                                             }else{
+                                                $("#bankAcc").hide(); 
                                                 $("#accId").hide(); 
+                                                $("#tranDateText").hide();
+                                                $("#tranDateDiv").hide();
+                                                $("#accId").val("");        //Bank Transfer
+                                                $("#transferD").val("");    //Transfer Date
                                             }
                                         });
                                     });
                                 </script>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-7">
+                                <div class="form-group">
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -230,9 +242,22 @@
                             </div>
                             <div class="col-sm-5">
                                 <div class="form-group">
-                                    <label  class="col-sm-3 control-label text-right">Transfer Date</label>
+                                    <label  class="col-sm-3 control-label text-right" id="bankAcc">Bank Transfer</label>
+                                    <div class="col-sm-3" style="width: 194px">
+                                        <select class="form-control" name="accId" id="accId" >
+                                            <option value=""></option>
+                                            <c:forEach var="bank" items="${mBankList}">
+                                                <option value="${bank.id}">${bank.accNo}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <label  class="col-sm-3 control-label text-right"  id="tranDateText" >Transfer Date</label>
                                     <div class="col-sm-4" style="width: 194px">
-                                        <div class='input-group date' id='transferD'>
+                                        <div class='input-group date' name="tranDateDiv" id="tranDateDiv">
                                             <input type='text' class="form-control"   data-date-format="YYYY-MM-DD" name="transferD" id="transferD" value="${billable.transferDate}"  />
                                             <span id="SpanGlyphiconCalendar" name="SpanGlyphiconCalendar" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -246,16 +271,16 @@
 
                 <table class="display" id="billableTable">
                     <thead class="datatable-header">
-                        <tr>
-                            <th style="width:40px">No</th>
+                        <tr style="width:100%">
+                            <th style="width:4%">No</th>
                             <th class="hidden">Id</th>
-                            <th style="width:100px">Type</th>
-                            <th style="width:250px">Detail</th>
-                            <th style="width:125px">Cost</th>
-                            <th style="width:125px">Price</th>
-                            <th style="width:70px">Status</th>
-                            <th style="width:100px">Bill Date</th>
-                            <th style="width:250px">Remark</th>
+                            <th style="width:10%">Type</th>
+                            <th style="width:20%">Detail</th>
+                            <th style="width:7%">Cost</th>
+                            <th style="width:7%">Price</th>
+                            <th style="width:7%">Status</th>
+                            <th style="width:20%">Bill Date</th>
+                            <th style="width:25%">Remark</th>
                         </tr>
                     </thead>
                     <tbody>
