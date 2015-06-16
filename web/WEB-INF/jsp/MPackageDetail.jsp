@@ -247,22 +247,15 @@
                                         <td>
                                             ${city.count}
                                         </td>
-                                        <td>
-                                            <div id="div-city">
-                                                <input id="input-get-city-${city.count}" value="${pa.id}" hidden="">
+                                        <td>                 
+                                                <input id="input-get-city-${city.count}" value="${pa.MCity.id}" hidden="">
                                                 <!--<input type="text" class="form-control cityName" id="select-passneger-${city.count}" name="row-city-${city.count}-name"  valHidden="${cityList.id}" value="${cityList.name}"  />-->
                                                 <select  class="form-control"  name="row-city-${city.count}-name" id="row-city-${city.count}">
-                                                    
                                                     <c:forEach var="passen" items="${ListCity}" varStatus="status">
-                                                        <c:set var="select" value="" />
-                                                        <c:if test="${passen.id == pa.MCity.id}">
-                                                            <c:set var="select" value="selected" />
-                                                        </c:if>
-
-                                                        <option class="passenger-option" ${select} value="${passen.id}">${passen.name}</option>
+                                                        <option  value="${passen.id}">${passen.name}</option>
                                                     </c:forEach>
                                                 </select>
-                                            </div>
+                                         
                                             <script>
                                                 $(document).ready(function () {
                                                     $("#row-city-${city.count}").val($("#input-get-city-${city.count}").val());
@@ -274,7 +267,9 @@
                                                 <span id="PassengerSpanRemove${city.count}" class="glyphicon glyphicon-remove deleteicon"></span>
                                             </a>
                                         </td>
+                                        
                                     </tr>
+                             
                                     <script>
                                         $(document).ready(function () {
                                             $("#cityCounter").val(parseInt("${city.count}") + 1);
