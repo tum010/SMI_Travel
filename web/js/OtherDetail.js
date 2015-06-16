@@ -17,9 +17,13 @@ function setupproductvalue(id, code, name, booktype) {
     document.getElementById('product_code').value = code;
     document.getElementById('product_name').value = name;
     document.getElementById('product_code').focus();
-    getvalueProduct(booktype);
-
-
+    
+    var productid = document.getElementById('product_id').value;
+    var otherdate = document.getElementById('otherdate').value;
+    
+    if((productid != '') && (otherdate != '')){
+        getvalueProduct(booktype);
+    }
 }
 
 function setupagentvalue(id, code, name) {
@@ -28,6 +32,15 @@ function setupagentvalue(id, code, name) {
     document.getElementById('agent_code').value = code;
     document.getElementById('agent_name').value = name;
     document.getElementById('agent_code').focus();
+}
+
+function setupotherdatevalue(booktype) {
+    //alert(booktype);
+    var productid = document.getElementById('product_id').value;
+    var otherdate = document.getElementById('otherdate').value;
+    if((productid != '') && (otherdate != '')){
+        getvalueProduct(booktype);
+    }
 }
 
 
@@ -185,7 +198,6 @@ function getvalueProduct(booktype) {
             '&productid=' + productid +
             '&otherdate=' + otherdate +
             '&type=' + 'getvalueProduct';
-    
     CallAjax(param, booktype);
     
 }
@@ -279,22 +291,35 @@ function calculateVat() {
     tempinprice = replaceComma(inprice.value);
     
     if(tempadcost == 0){
-        adcost.value = '';
-        chcost.value = '';
-        incost.value = '';
-        adprice.value = '';
-        chprice.value = '';
-        inprice.value = '';
+        adcost.value = '';   
     } else { 
-        adcost.value = numberWithCommas(parseInt((tempadcost * 7 / 100)) + parseInt(tempadcost));
+        adcost.value = numberWithCommas(parseInt((tempadcost * 7 / 100)) + parseInt(tempadcost));      
+    }
+    if(tempchcost == 0){
+        chcost.value = '';
+    } else {
         chcost.value = numberWithCommas(parseInt((tempchcost * 7 / 100)) + parseInt(tempchcost));
+    }   
+    if(tempincost == 0){
+        incost.value = '';
+    } else {
         incost.value = numberWithCommas(parseInt((tempincost * 7 / 100)) + parseInt(tempincost));
+    }   
+    if(tempadprice == 0){
+        adprice.value = '';
+    } else {
         adprice.value = numberWithCommas(parseInt((tempadprice * 7 / 100)) + parseInt(tempadprice));
+    }    
+    if(tempchprice == 0){
+        chprice.value = '';
+    } else {
         chprice.value = numberWithCommas(parseInt((tempchprice * 7 / 100)) + parseInt(tempchprice));
+    }   
+    if(tempinprice == 0){
+        inprice.value = '';
+    } else {
         inprice.value = numberWithCommas(parseInt((tempinprice * 7 / 100)) + parseInt(replaceComma(tempinprice)));
     }
-
-
 }
 
 function replaceComma(input) {
