@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface PackageTourDao {
     public List<PackageTour> SearchPackage(PackageTour mpackage, int option);
-    public PackagePrice getValueFromPackage(String PackageID);
+    public PackagePrice getValueFromPackage(String PackageID,String DepartDate);
     public String insertPackage(PackageTour mpackage);
     public String updatePackage(PackageTour mpackage);
     public String DeletePackage(PackageTour mpackage);

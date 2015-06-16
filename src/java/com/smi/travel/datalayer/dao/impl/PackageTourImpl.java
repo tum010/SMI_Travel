@@ -129,6 +129,9 @@ public class PackageTourImpl implements PackageTourDao {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.update(mpackage);
+            
+            System.out.println("PackageTour : "+mpackage.getId());
+            
 
             List<PackageItinerary> ItineraryList = new ArrayList<PackageItinerary>(mpackage.getPackageItineraries());
             if (ItineraryList.isEmpty()) {
@@ -153,16 +156,17 @@ public class PackageTourImpl implements PackageTourDao {
                     session.update(PriceList.get(i));
                 }
             }
-            
-            List<PackageCity> CityList = new ArrayList<PackageCity>(mpackage.getPackageCities());
+            /*
+            List<PackageCity> CityList = mpackage.getPackageCities();
             for (int i = 0; i < CityList.size(); i++) {
+                System.out.println(CityList.get(i).getPackageTour().getId());
                 if (CityList.get(i).getId() == null) {
                     session.save(CityList.get(i));
                 } else {
                     session.update(CityList.get(i));
                 }
             }
-
+*/
             transaction.commit();
             session.close();
             this.sessionFactory.close();
@@ -315,12 +319,12 @@ public class PackageTourImpl implements PackageTourDao {
     }
 
     @Override
-    public PackagePrice getValueFromPackage(String PackageID) {
-        Date thisDate = new Date();
+    public PackagePrice getValueFromPackage(String PackageID,String DepartDate) {
+       // Date thisDate = new Date();
         System.out.println("PackageID : " + PackageID);
 
-        UtilityFunction util = new UtilityFunction();
-        String query = "from PackagePrice pp where pp.packageTour.id = " + PackageID + " and  ('" + util.convertDateToString(thisDate) + "' >= pp.effectiveFrom) and  ('" + util.convertDateToString(thisDate) + "' <= pp.effectiveTo)";
+       // UtilityFunction util = new UtilityFunction();
+        String query = "from PackagePrice pp where pp.packageTour.id = " + PackageID + " and  ('" + DepartDate + "' >= pp.effectiveFrom) and  ('" + DepartDate + "' <= pp.effectiveTo)";
         System.out.println("query : " + query);
         PackagePrice product = new PackagePrice();
         Session session = this.sessionFactory.openSession();
