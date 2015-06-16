@@ -94,17 +94,19 @@ public class PackageTourImpl implements PackageTourDao {
             transaction = session.beginTransaction();
             session.save(mpackage);
 
-            List<PackageItinerary> ItineraryList = new ArrayList<PackageItinerary>(mpackage.getPackageItineraries());
+            List<PackageItinerary> ItineraryList = mpackage.getPackageItineraries();
 
             for (int i = 0; i < ItineraryList.size(); i++) {
                 session.save(ItineraryList.get(i));
             }
 
-            List<PackagePrice> PriceList = new ArrayList<PackagePrice>(mpackage.getPackagePrices());
-
-            for (int i = 0; i < PriceList.size(); i++) {
-                session.save(PriceList.get(i));
+            List<PackagePrice> PriceList = mpackage.getPackagePrices();
+            if(PriceList != null){
+                for (int i = 0; i < PriceList.size(); i++) {
+                    session.save(PriceList.get(i));
+                }
             }
+           
             
             List<PackageCity> CityList = mpackage.getPackageCities();
             for (int i = 0; i < CityList.size(); i++) {
@@ -142,7 +144,7 @@ public class PackageTourImpl implements PackageTourDao {
                 System.out.println("PAckage ID :"+itylist.get(i).getPackageTour().getId());
             }
             
-            List<PackageItinerary> ItineraryList = new ArrayList<PackageItinerary>(mpackage.getPackageItineraries());
+            List<PackageItinerary> ItineraryList = mpackage.getPackageItineraries();
             if (ItineraryList.isEmpty()) {
                 System.out.println("empty list");
             }
@@ -156,8 +158,8 @@ public class PackageTourImpl implements PackageTourDao {
                 }
             }
 
-            List<PackagePrice> PriceList = new ArrayList<PackagePrice>(mpackage.getPackagePrices());
-
+            List<PackagePrice> PriceList = mpackage.getPackagePrices();
+            if(PriceList != null){
             for (int i = 0; i < PriceList.size(); i++) {
                 if (PriceList.get(i).getId() == null) {
                     session.save(PriceList.get(i));
@@ -165,7 +167,7 @@ public class PackageTourImpl implements PackageTourDao {
                     session.update(PriceList.get(i));
                 }
             }
-            
+            }
             List<PackageCity> CityList = mpackage.getPackageCities();
             for (int i = 0; i < CityList.size(); i++) {
                 System.out.println(CityList.get(i).getPackageTour().getId());

@@ -199,7 +199,7 @@ public class LandDetailController extends SMITravelController {
             landID = request.getParameter("landid");
             LandBooking land = landservice.getBookDetailLandFromID(landID);
 
-            List<LandItinerary> ItineraryList = SortLandItineraryList(landservice.getListItinerary(landID));
+            List<LandItinerary> ItineraryList = landservice.getListItinerary(landID);
             request.setAttribute(ITINERARYLIST, ItineraryList);
             if (ItineraryList == null) {
                 request.setAttribute("itinerarycount", "0");

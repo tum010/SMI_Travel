@@ -6,9 +6,8 @@
 
 package com.smi.travel.datalayer.entity;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 
 /**
  *
@@ -21,8 +20,8 @@ public class PackageTour {
     private String detail;
     private String remark;
     private String status;
-    private Set packageItineraries = new HashSet(0);
-    private Set packagePrices = new HashSet(0);
+    private List packageItineraries;
+    private List packagePrices;
     private List packageCities;
     
     public PackageTour(){
@@ -33,7 +32,7 @@ public class PackageTour {
         this.code = code;
     }
     
-    public PackageTour(String code, String name, String detail, String remark, String status, Set packageItineraries, Set packagePrices,List packageCities) {
+    public PackageTour(String code, String name, String detail, String remark, String status, List packageItineraries, List packagePrices,List packageCities) {
        this.code = code;
        this.name = name;
        this.detail = detail;
@@ -92,19 +91,19 @@ public class PackageTour {
         this.status = status;
     }
 
-    public Set getPackageItineraries() {
+    public List getPackageItineraries() {
         return packageItineraries;
     }
 
-    public void setPackageItineraries(Set packageItineraries) {
+    public void setPackageItineraries(List packageItineraries) {
         this.packageItineraries = packageItineraries;
     }
 
-    public Set getPackagePrices() {
+    public List getPackagePrices() {
         return packagePrices;
     }
 
-    public void setPackagePrices(Set packagePrices) {
+    public void setPackagePrices(List packagePrices) {
         this.packagePrices = packagePrices;
     }
 

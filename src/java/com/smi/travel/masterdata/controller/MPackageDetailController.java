@@ -63,7 +63,7 @@ public class MPackageDetailController extends SMITravelController {
             pack.setId(packageID);
         }
         List<MCity> mCity = utilityService.getListMCity();
-        List<PackageCity> packageCity = pack.getPackageCities();
+    //    List<PackageCity> packageCity = pack.getPackageCities();
         if ("save".equalsIgnoreCase(action)) {
             if ((packageID == null) || ("".equalsIgnoreCase(packageID))) {
                 operation = "add";
@@ -87,10 +87,7 @@ public class MPackageDetailController extends SMITravelController {
                 if(util.convertStringToInteger(conutCity) != 0){
                     setPckageCity(request, conutCity, pack);
                 }
-                List<PackagePrice> paList = new ArrayList<PackagePrice>(pack.getPackagePrices());
-                for (int i = 0; i < paList.size(); i++) {
-                    System.out.println("cost : price " + paList.get(i).getAdCost() + " , " + paList.get(i).getAdPrice());
-                }
+             //   List<PackagePrice> paList = pack.getPackagePrices();
                 
                 result = packageTourservice.SavePackage(pack);
 
@@ -131,18 +128,11 @@ public class MPackageDetailController extends SMITravelController {
             status = Packagedetail.getStatus();
             packageID = Packagedetail.getId();
             request.setAttribute(DisabledCode, "readonly");
-            request.setAttribute(ITINERARYLIST, SortItineraryList(new ArrayList<PackageItinerary>(Packagedetail.getPackageItineraries())));
+            request.setAttribute(ITINERARYLIST, Packagedetail.getPackageItineraries());
             // Package Price
-            List<PackagePrice> paList = new ArrayList<PackagePrice>(Packagedetail.getPackagePrices());
-            request.setAttribute(PRICELIST, SortPriceList(paList));
+            request.setAttribute(PRICELIST, Packagedetail.getPackagePrices());
             // Package City 
             List<PackageCity> listPackageCity = Packagedetail.getPackageCities();
-            
-            for(int i=0;i<listPackageCity.size();i++){
-                MCity city = listPackageCity.get(i).getMCity();
-                System.out.println("Name : "+city.getName());
-                System.out.println("listPackageCity id : "+listPackageCity.get(i).getId());
-            }
             request.setAttribute("ListPackageCity", listPackageCity);
             
             if (status.equalsIgnoreCase("inactive")) {
@@ -194,7 +184,9 @@ public class MPackageDetailController extends SMITravelController {
         if (itineraryRows == 1) {
             return;
         }
-
+        if(packagetour.getPackageItineraries() == null){
+            packagetour.setPackageItineraries(new ArrayList<PackageItinerary>());
+        }
         for (int i = 0; i < itineraryRows - 1; i++) {
             PackageItinerary Itinerary = new PackageItinerary();
             String id = request.getParameter("row-" + i + "-itineraryid");
@@ -229,6 +221,9 @@ public class MPackageDetailController extends SMITravelController {
         int priceRows = Integer.parseInt(PriceRows);
         if (priceRows == 1) {
             return;
+        }
+        if(packagetour.getPackagePrices() == null){
+            packagetour.setPackagePrices(new ArrayList<PackagePrice>());
         }
         for (int i = 0; i < priceRows - 1; i++) {
             PackagePrice price = new PackagePrice();
@@ -295,7 +290,7 @@ public class MPackageDetailController extends SMITravelController {
             String packageCityID = request.getParameter("row-packcity-"+i+"-id");
 
             System.out.println("row-packcity-"+i+"-id");
-            if(idCity != null){
+            if((idCity != null)&&(!"".equalsIgnoreCase(idCity))){
                 mCity.setId(idCity);
             }
             if(packageCityID != null){

@@ -22,18 +22,18 @@
         <property name="status" type="string">
             <column name="status" length="10" />
         </property>
-        <set name="packageItineraries" table="package_itinerary" inverse="true" lazy="true" fetch="select">
+        <bag name="packageItineraries" table="package_itinerary" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="package_id" not-null="true" />
             </key>
             <one-to-many class="com.smi.travel.datalayer.entity.PackageItinerary" />
-        </set>
-        <set name="packagePrices" table="package_price" inverse="true" lazy="true" fetch="select">
+        </bag>
+        <bag name="packagePrices" table="package_price" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="package_id" not-null="true" />
             </key>
             <one-to-many class="com.smi.travel.datalayer.entity.PackagePrice" />
-        </set>
+        </bag>
         <bag  name="packageCities" table="package_city" inverse="true" lazy="true" fetch="select"  >
             <key>
                 <column name="package_id" not-null="true" />
