@@ -38,6 +38,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -342,12 +344,27 @@ public class AJAXBean extends AbstractBean implements
             String name = map.get("name").toString();
             if ("searchairportDeparture".equalsIgnoreCase(type)) {
                 result = buildAirportListHTMLDeparture(airportdao.searchAirport(name));
-            }
-            if ("searchairportArrive".equalsIgnoreCase(type)) {
+            }else if ("searchairportArrive".equalsIgnoreCase(type)) {
                 result = buildAirportListHTMLArrive(airportdao.searchAirport(name));
+            }else if("autoairport".equalsIgnoreCase(type)){
+                result = buildAirportListJSON(airportdao.searchAirport(name));
+                System.out.println(result);
             }
         }
         return result;
+    }
+    
+    public String buildAirportListJSON(List<MAirport> listAirport) {
+        JSONArray record = new JSONArray();
+        for (int i = 0; i < listAirport.size(); i++) {
+            MAirport airport = listAirport.get(i);
+            JSONObject field = new JSONObject();
+            field.put("id", airport.getId());
+            field.put("code", airport.getCode());
+            field.put("name", airport.getName());
+            record.add(field);
+        }
+        return record.toJSONString();
     }
 
     public String buildAirportListHTMLDeparture(List<MAirport> listAirport) {
