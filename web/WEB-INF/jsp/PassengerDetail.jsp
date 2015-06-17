@@ -101,16 +101,16 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="col-sm-3">
-                                        <input  value="${passenger.getCustomer().getFirstName()}" type="text" maxlength="50" class="form-control" id="firstName" placeholder="Last name" name="firstName">
+                                    <div class="col-sm-4">
+                                        <input  value="${passenger.getCustomer().getLastName()}" type="text" maxlength="50" class="form-control" id="lastName" name="lastName" placeholder="Last Name">
                                     </div>
                                 </div>
                                 <div class="col-sm-2"></div>
                                 <div class="form-group">
-                                    <div class="col-sm-4">
-                                        <input  value="${passenger.getCustomer().getLastName()}" type="text" maxlength="50" class="form-control" id="lastName" name="lastName" placeholder="First Name">
+                                    <div class="col-sm-3">
+                                        <input  value="${passenger.getCustomer().getFirstName()}" type="text" maxlength="50" class="form-control" id="firstName" placeholder="First name" name="firstName">
                                     </div>
-                                </div>
+                                </div>    
                             </div>
                             <div class="padding5">
                                 <div class="form-group">

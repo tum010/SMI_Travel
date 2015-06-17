@@ -399,15 +399,15 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-xs-3 control-label">First Name</label>
-                        <div class="col-xs-7">
-                            <input type="text" class="form-control" name="input-first-name" id="input-first-name" />
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-xs-3 control-label">Last Name</label>
                         <div class="col-xs-7">
                             <input type="text" class="form-control" name="input-last-name" id="input-last-name" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">First Name</label>
+                        <div class="col-xs-7">
+                            <input type="text" class="form-control" name="input-first-name" id="input-first-name" />
                         </div>
                     </div>
                     <div class="form-group">

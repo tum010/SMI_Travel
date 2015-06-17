@@ -40,14 +40,14 @@
                 </div>
                 <div class="col-md-2 ">
                     <div class="form-group">
-                        <label for="fromcity">Passenger Firstname</label>
-                        <input type="text"  class="form-control" id="PassFirst" name="PassFirst" value="${requestScope['PassFirst']}" >
-                    </div>
-                </div>
-                <div class="col-md-2 ">
-                    <div class="form-group">
                         <label for="fromcity">Passenger Lastname</label>
                         <input type="text"  class="form-control" id="PassLast" name="PassLast" value="${requestScope['PassLast']}">
+                    </div>
+                </div>  
+                <div class="col-md-2 ">
+                    <div class="form-group">
+                        <label for="fromcity">Passenger Firstname</label>
+                        <input type="text"  class="form-control" id="PassFirst" name="PassFirst" value="${requestScope['PassFirst']}" >
                     </div>
                 </div>    
                 <div class="col-md-2">

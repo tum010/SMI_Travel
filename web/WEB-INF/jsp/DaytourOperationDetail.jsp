@@ -357,7 +357,13 @@
                                                     <tr>
                                                         <td>${status.count}</td>
                                                         <td>${passenger.customer.code}</td>
-                                                        <td>${passenger.customer.firstName} ${passenger.customer.lastName}</td>
+                                                        <c:if test="${passenger.customer.MInitialname != null}">
+                                                            <td>${passenger.customer.MInitialname.name}  ${passenger.customer.lastName} ${passenger.customer.firstName} </td>
+                                                        </c:if>
+                                                        <c:if test="${passenger.customer.MInitialname == null}">
+                                                            <td>${passenger.customer.lastName} ${passenger.customer.firstName} </td>
+                                                        </c:if>    
+                                                        
                                                         <td>${passenger.customer.tel}</td>
                                                         <td>${passenger.customer.nationality}</td>
                                                     </tr>
