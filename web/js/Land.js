@@ -75,6 +75,18 @@ function printVoucher(refno){
         window.open("report.smi?name=LandVoucherEmail&refno="+refno+"&landId="+landId);
     }else if(printtype == 3){
         window.open("report.smi?name=LandVoucherEmailAgent&refno="+refno+"&landId="+landId);
-    }
-    
+    }   
 }
+
+$(document).ready(function () {
+    var bla = $('#resultText').val();
+
+    if(bla == "save successful"){
+        
+        $('#textAlertDivSave').show();
+    }else if ( bla === ""){
+        $('#textAlertDivSave').hide();
+    }else {
+        $('#textAlertDivNotSave').show();
+    }
+});

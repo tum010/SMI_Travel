@@ -28,3 +28,17 @@ function Delete() {
     action.value = 'delete';
     document.getElementById('OtherForm').submit();
 }
+
+$(document).ready(function () {
+    var bla = $('#resultText').val();
+
+    if(bla == "save successful"){
+        
+        $('#textAlertDivSave').show();
+    }else if ( bla === ""){
+        $('#textAlertDivSave').hide();
+    }else {
+        $('#textAlertDivNotSave').show();
+    }
+});
+

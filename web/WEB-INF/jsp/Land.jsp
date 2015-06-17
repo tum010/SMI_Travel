@@ -23,6 +23,7 @@
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <strong>Save Success!</strong> 
 </div>
+<input type="hidden" value="${requestScope['result']}" id="resultText">
 <section class="content-header" >
     <h1>
         Booking - Land
@@ -270,15 +271,3 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->      
-
-
-<c:if test="${! empty requestScope['result']}">
-    <script language="javascript">
-        $('#textAlertDivSave').show();
-    </script>
-</c:if>
-<c:if test="${ empty requestScope['result']}">
-    <script language="javascript">
-        $('#textAlertDivNotSave').show();
-    </script>
-</c:if>
