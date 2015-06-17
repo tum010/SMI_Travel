@@ -68,7 +68,7 @@
                                 </div>
                             </div>       
                         </div>                                  
-                         <div class="row">
+                        <div class="row">
                             <div class="col-md-6" style="padding-left: 30px">
                                 <div class="form-group">
                                     <label class="col-sm-2   control-label" for="Country">Status<font style="color: red">*</font></label>
@@ -80,8 +80,16 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> 
-  <!--============================================Itinerary=============================================== --> 
+                            <div class="col-md-6" style="padding-left: 14px">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Supplier</label>
+                                    <div class="col-sm-9" style="padding:0px 28px 0px 12px">
+                                        <input type="text" class="form-control" id="supplier" maxlength="200" name="supplier" value="${requestScope['supplier']}" >  
+                                    </div>
+                                </div>
+                            </div>                          
+                        </div>
+<!--============================================Itinerary=============================================== --> 
                         <div class="row"> 
                             <div class="col-md-6 " style="padding-left: 24px">
                                 <h5><b>Itinerary</b> </h5>
