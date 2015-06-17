@@ -47,7 +47,6 @@ public class LandBooking {
      private String currency;
      private Date outboundDepart;
      private Date outboundArrive;
-     private String outboundSupplier;
      private String inboundHotel;
      private Set landItineraries = new HashSet(0);
 
@@ -61,7 +60,7 @@ public class LandBooking {
         this.okBy = okBy;
         this.inboundQty = inboundQty;
     }
-    public LandBooking(Agent agent, MItemstatus MItemstatus, PackageTour packageTour, Master master, String okBy, String category, String description, int inboundQty, Long inboundCost, Long inboundPrice, Integer isBill, Date createDate, Integer outboundAdQty, Long outboundAdCost, Long outboundAdPrice, Integer outboundChQty, Long outboundChCost, Long outboundChPrice, Integer outboundInQty, Long outboundInCost, Long outboundInPrice,String remark,Integer inboundChQty, Long inboundChCost, Long inboundChPrice, Integer inboundInQty, Long inboundInCost, Long inboundInPrice, String currency,Set landItineraries,Date outboundDepart,Date outboundArrive,String outboundSupplier,String inboundHotel) {
+    public LandBooking(Agent agent, MItemstatus MItemstatus, PackageTour packageTour, Master master, String okBy, String category, String description, int inboundQty, Long inboundCost, Long inboundPrice, Integer isBill, Date createDate, Integer outboundAdQty, Long outboundAdCost, Long outboundAdPrice, Integer outboundChQty, Long outboundChCost, Long outboundChPrice, Integer outboundInQty, Long outboundInCost, Long outboundInPrice,String remark,Integer inboundChQty, Long inboundChCost, Long inboundChPrice, Integer inboundInQty, Long inboundInCost, Long inboundInPrice, String currency,Set landItineraries,Date outboundDepart,Date outboundArrive,String inboundHotel) {
        this.agent = agent;
        this.MItemstatus = MItemstatus;
        this.packageTour = packageTour;
@@ -93,7 +92,6 @@ public class LandBooking {
        this.landItineraries = landItineraries;
        this.outboundDepart = outboundDepart;
        this.outboundArrive = outboundArrive;
-       this.outboundSupplier = outboundSupplier;
        this.remark = remark;
        this.inboundHotel = inboundHotel;
     }
@@ -342,14 +340,6 @@ public class LandBooking {
 
     public void setOutboundArrive(Date outboundArrive) {
         this.outboundArrive = outboundArrive;
-    }
-
-    public String getOutboundSupplier() {
-        return outboundSupplier;
-    }
-
-    public void setOutboundSupplier(String outboundSupplier) {
-        this.outboundSupplier = outboundSupplier;
     }
 
     public String getInboundHotel() {
