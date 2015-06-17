@@ -100,9 +100,6 @@
         <property name="outboundDepart" type="date">
             <column name="outbound_arrive" length="10" />
         </property>
-        <property name="outboundSupplier" type="string">
-            <column name="outbound_supplier" length="255" />
-        </property>
          <property name="inboundHotel" type="string">
             <column name="inbound_hotel" length="255" />
         </property>
