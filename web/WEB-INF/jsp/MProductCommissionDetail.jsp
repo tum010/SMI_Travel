@@ -103,7 +103,11 @@
                                 </div>
                             </div>
                     </div>
-
+                    <style>
+                     .input-group-addon {
+                         padding: 2px 10px; 
+                     }
+                    </style>                    
                     <!--table add-->
                     <div class="col-xs-12 form-group">
                         <label class="control-label">Product Commission</label>
