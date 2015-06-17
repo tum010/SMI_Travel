@@ -224,7 +224,7 @@
                                                        name="airlineId${fStatus.count}" value="${flight.airticketAirline.MAirline.getId()}">
                                                 <input name="airlineCode${fStatus.count}" id="airlineCode${fStatus.count}"  
                                                        class="form-control airline" data-id="${fStatus.count}" 
-                                                       value="${flight.airticketAirline.MAirline.getCode()}" maxlength="5" 
+                                                       value="${flight.airticketAirline.MAirline.getCode()}" 
                                                        data-bv-notempty data-bv-notempty-message="The airline is required"/>
                                                 <span class="input-group-addon" data-toggle="modal" data-target="#AirlineModal" 
                                                       onclick="get_PId('airline',${fStatus.count})">
@@ -461,6 +461,7 @@
                             $("#flight-${fStatus.count}-ticketType").val(tickettype);
                             $("#flight-${fStatus.count}-class").val(flightClass);
                             $("#flight-${fStatus.count}-status").val(status);
+                            
                             var codeAirline = [];
                             $.each(airline, function (key, value) {//winit
                                 codeAirline.push(value.airline_code);
@@ -484,7 +485,6 @@
                                 $("#airlineId${fStatus.count},#airlineName${fStatus.count}").val(null);
                                 $.each(airline, function (key, value) {
                                     if (value.airline_code.toUpperCase() === code) {
-                                        console.log('ok');
                                         $("#airlineId${fStatus.count}").val(value.airline_id);
                                         $("#airlineName${fStatus.count}").val(value.airline_name);
                                     }
@@ -938,8 +938,6 @@
 
                                 alert("select pnr id[" + $("#pnrid").val() + "] name[" + $("#pnrname").val() + "] refNo[" + $("#referenceNo").val() + "]");
                                 $("#ImportModal").modal('hide');
-
-
                             });
 
                             $("#pnr_name").keyup(function (e) {

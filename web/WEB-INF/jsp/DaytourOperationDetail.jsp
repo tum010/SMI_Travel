@@ -418,8 +418,8 @@
                                         <th>Description</th>
                                         <th>Qty</th>
                                         <th>Amount</th>
-                                        <th>Type</th>
                                         <th>Cur</th>
+                                        <th>Type</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -435,18 +435,6 @@
                                             <td><input id="expenDescription${status.count}" name="expenDescription${status.count}" class="form-control" value="${expen.description}"></td>
                                             <td style="width: 80px"><input id="expenQty${status.count}" name="expenQty${status.count}" class="form-control money" value="${expen.qty}"></td>
                                             <td style="width: 100px"><input id="expenAmount${status.count}" name="expenAmount${status.count}" class="form-control money" value="${expen.amount}"></td>
-                                            <td>
-                                                <input type="hidden" value="${expen.priceType}" id="expenPriceTypeHiden${status.count}">
-                                                <input id="expenTypeS${status.count}" type="radio" value="S" name="expenPriceType${status.count}">&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;
-                                                <input id="expenTypeG${status.count}" type="radio" value="G" name="expenPriceType${status.count}">&nbsp;&nbsp;G
-                                                <script>
-                                                    $(document).ready(function () {
-                                                        var status = $("#expenPriceTypeHiden${status.count}").val();
-                                                        $("input[name=expenPriceType${status.count}][value=" + status + "]").attr('checked', 'checked');
-                                                    });
-                                                </script>
-
-                                            </td>
                                             <td>                            
                                                 <select name="expenSelectCur${status.count}" id="expenSelectCur${status.count}" class="form-control">
                                                     <option value="${expen.currency}">${expen.currency}</option>
@@ -458,6 +446,19 @@
                                                 </select>
 
                                             </td>
+                                            <td class="text-center">
+                                                <input type="hidden" value="${expen.priceType}" id="expenPriceTypeHiden${status.count}">
+                                                <input id="expenTypeS${status.count}" type="radio" value="S" name="expenPriceType${status.count}">&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;
+                                                <input id="expenTypeG${status.count}" type="radio" value="G" name="expenPriceType${status.count}">&nbsp;&nbsp;G
+                                                <script>
+                                                    $(document).ready(function () {
+                                                        var status = $("#expenPriceTypeHiden${status.count}").val();
+                                                        $("input[name=expenPriceType${status.count}][value=" + status + "]").attr('checked', 'checked');
+                                                    });
+                                                </script>
+
+                                            </td>
+                                            
                                             <td class="text-center">
                                                 <a id="expenButtonRemove${status.count}" name="expenButtonRemove${status.count}" onclick="setExpenId(${expen.id})"  data-toggle="modal" data-target="#DeleteExpenModal">
                                                     <span id="expenSpanRemove${status.count}" name="expenSpanRemove${status.count}"  class="glyphicon glyphicon-remove deleteicon"></span>
