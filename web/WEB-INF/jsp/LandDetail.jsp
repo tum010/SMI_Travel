@@ -611,7 +611,13 @@
 
                         
                 </div>
-
+                
+                <style>
+                     .input-group-addon {
+                         padding: 2px 10px; 
+                     }
+                </style>                         
+                                    
                 <div class="row" style="margin-left: 10px;margin-right: 10px;"> 
                     <table id="LandItinerary" class="display" cellspacing="0"  >
                         <thead>
@@ -630,7 +636,7 @@
                                     <td class="hidden"> <input  type="hidden"  value="${table.id}">  </td>
                                     <td> <input style="width: 20px"  type="text"  class="form-control number" value="${table.orderNo}">  </td>
                                     <td> 
-                                        <div class='input-group daydatepicker' id='effectivefromClass-${Counter.count}' style="padding-left: 15px">
+                                        <div class='input-group daydatepicker' id='daydatepicker-${Counter.count}' style="padding-left: 15px">
                                             <input style="width: 100px" type='text' class="form-control"  id="dayDate-${Counter.count}" name="dayDate-${Counter.count}" data-date-format="YYYY-MM-DD" value="${requestScope['dayDate']}" />
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -887,7 +893,7 @@ $('#savereal').on("keyup keypress", function(e) {
 
     $(document).ready(function() {
         $('.datepicker').datetimepicker().change(function(){                          
-            getvalueProduct();
+            getvalueDepartDate();
         });
         $(".daydatepicker").datetimepicker({
             pickTime: false   
