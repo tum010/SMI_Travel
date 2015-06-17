@@ -368,13 +368,17 @@ public class MonitorAmadeus extends MonitorScheduler {
             String[] splitName = passengerName.split("/");
             String lastName = splitName[0];
             String[] splitName2 = splitName[1].split(" ");
-            String firstName = splitName2[0];
+            // Using nameSeparatorIndex to handle case of blank space in first name.
+            int nameSeparatorIndex = splitName[1].lastIndexOf(" ");
+            String firstName = splitName[1].substring(0, nameSeparatorIndex);
+            
 //            String firstName = splitName[1].substring(0, splitName[1].length() - 2);
 //            String initial = splitName[1].substring(splitName[1].length() - 2);
             String initial;
             String passengerType;
             if (!splitName2[1].contains("(")) {
-                initial = splitName2[1];
+                // plus 1 to exclude blankspace index.
+                initial = splitName[1].substring(nameSeparatorIndex+1);
                 passengerType = "ADT";
             } else {
                 int indexLess = splitName2[1].indexOf("(");
@@ -514,10 +518,10 @@ public class MonitorAmadeus extends MonitorScheduler {
 
             BookingPnr dbBookingPnr = bookingAirticketService.getBookingPnr(bPnr.getPnr());
             if (dbBookingPnr == null) {
-                bookingAirticketService.insertBookingPnr(bPnr);
+                flag = bookingAirticketService.insertBookingPnr(bPnr);
             } else {
                 System.out.println("BookPnr[" + bPnr.getPnr() + "] is existed.");
-                bookingAirticketService.updateBookingPnr(bPnr);
+                flag = bookingAirticketService.updateBookingPnr(bPnr);
             }
 
         } catch (Exception e) {
