@@ -22,6 +22,10 @@
         <property name="status" type="string">
             <column name="status" length="10" />
         </property>
+        <property name="supplier" type="string">
+            <column name="supplier" />
+        </property>
+        
         <bag name="packageItineraries" table="package_itinerary" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="package_id" not-null="true" />
