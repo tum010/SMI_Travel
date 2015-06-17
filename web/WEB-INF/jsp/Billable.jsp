@@ -110,10 +110,10 @@
                                     <input id="InitialDname" readonly="" style="width: 50px" class="form-control" name="InitialDname" type="text"  value="${billable.passenger.getCustomer().getMInitialname().name}"/>
                                 </div>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control" id="passengerName" name="passengerName" readonly value="${billable.passenger.getCustomer().getFirstName()}">
+                                    <input type="text" class="form-control" id="LastName" name="LastName" readonly value="${billable.passenger.getCustomer().getLastName()}">
                                 </div>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control" id="LastName" name="LastName" readonly value="${billable.passenger.getCustomer().getLastName()}">
+                                    <input type="text" class="form-control" id="passengerName" name="passengerName" readonly value="${billable.passenger.getCustomer().getFirstName()}">
                                 </div>
                                 <div class="col-sm-3 form-group">
                                     <label class="control-label">
@@ -285,21 +285,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <tr  class="hide" > 
-                        <td class="hidden"></td>
-                        <!--<td>-->
-<!--                            <div class="input-group  datetime" id="dateFrom-" name="dateFrom-">
-                                <input type="text"  class="form-control text-center datemask  " 
-                                   data-date-format="YYYY-MM-DD" name="InputFrom-" id="InputFrom-"
-                                   placeholder="YYYY-MM-DD" value="" />
-                                <a class="input-group-addon">
-                                    <i class="glyphicon-calendar glyphicon "></i>
-                                </a>
-                            </div>          -->
-                        <!--</td>-->
-                    </tr>
+                        
                     <input type="hidden" id="billDescCount" name="billDescCount" value="" />
-                                      
+
                     <c:set var="totalCost"  value="0"/>
                     <c:set var="totalPrice"  value="0"/>
                     <c:forEach var="b" items="${BillableDescList}" varStatus="Counter">
@@ -318,14 +306,14 @@
                                 <c:if test="${b.isBill == 0}">
                                     Open
                                 </c:if></td>
-                            <td>                                           
-
+                            <td>      
+                                
                                 <div class="input-group  datetime" id="billDescId-${Counter.count}" name="billDescId-${Counter.count}">
-                                    <input type="text"  class="form-control" 
+                                    <input type="text" class="form-control text-center datemask"  
                                        data-date-format="YYYY-MM-DD" name="billDate-${Counter.count}" id="billDate-${Counter.count}"
                                        placeholder="YYYY-MM-DD" value="${b.billDate}" />
-                                    <span id="SpanGlyphiconCalendar" name="SpanGlyphiconCalendar" class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    <span id="SpanGroupAddon" class="input-group-addon">
+                                            <span id="SpanGlyphiconCalendar" class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                 </div>
                             </td>
@@ -344,15 +332,15 @@
                     <tr>
                         <td></td>
                         <td></td>
-                        <td></td>
-                        <td class="text-right"><strong  class="moneyformat">Total Cost ${totalCost}</strong></td>
-                        <td class="text-right"><strong class="moneyformat">Total Price ${totalPrice}</strong></td>                    
+                        <td class="text-center"><strong>Total</strong></td>
+                        <td class="text-right"><strong class="moneyformat">${totalCost}</strong></td>
+                        <td class="text-right"><strong class="moneyformat">${totalPrice}</strong></td>                    
                         <td></td>
                         <td></td>
                     </tr>
                     </tbody>
                 </table>
-
+                
 
 
                 <div class="row" style="margin-top: 10px">
@@ -360,7 +348,7 @@
                         <label class="control-label">Description</label>
                     </div>
                     <div class="col-sm-11">
-                        <textarea id="description" maxlength="100" name="description" class="form-control">${billable.remark}</textarea>
+                        <textarea id="description" maxlength="100" name="description" class="form-control" >${billable.remark}</textarea>
                     </div>
                 </div>
 
@@ -390,9 +378,9 @@
                         <tr class="datatable-header">
                             <th class="hidden">ID</th>
                             <th>Order No</th>
-                            <th >Initial</th>
-                            <th>First Name</th>
+                            <th>Initial</th>
                             <th>Last Name</th>
+                            <th>First Name</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -403,17 +391,17 @@
                         <tr>
                             <td class="passenger-id hidden">${p.id}</td>
                             <td class="passenger-orderno">${p.orderNo}</td>
-                            <td class="passenger-initial ">${p.customer.MInitialname.name}</td>
-                            <td class="passenger-firstname">${p.customer.firstName}</td>
+                            <td class="passenger-initial">${p.customer.MInitialname.name}</td>
                             <td class="passenger-lastname">${p.customer.lastName}</td>
+                            <td class="passenger-firstname">${p.customer.firstName}</td>
                         </tr>
                         <script>
                             customer.push({
                                 id: "${p.id}",
                                 order: "${p.orderNo}",
                                 initial: "${p.customer.MInitialname.name}",
-                                firstname: "${p.customer.firstName}",
-                                lastname: "${p.customer.lastName}"
+                                lastname: "${p.customer.lastName}",
+                                firstname: "${p.customer.firstName}"
                             });
                         </script>
                     </c:forEach>
@@ -654,7 +642,8 @@
         $(".datetime").datetimepicker({
                 pickTime: false   
         });
-        
+
+        $('.datemask').mask('0000-00-00');
         $('span').click(function () {
             var position = $(this).offset();
             console.log("positon :" + position.top);
