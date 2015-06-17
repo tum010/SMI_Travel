@@ -167,11 +167,11 @@ public class AJAXBean extends AbstractBean implements
                 String productID = map.get("productid").toString();
                 String otherdate = map.get("otherdate").toString();
                 if ("".equalsIgnoreCase(productID)) {
-                    result = ",,,,,";
+                    result = "0,0,0,0,0,0";
                 } else {
                     ProductDetail product = productDetailDao.getValueFromProduct(productID, otherdate);
                     if (product == null) {
-                        result = ",,,,,";
+                        result = "0,0,0,0,0,0";
                     } else {
                         result = product.getAdCost() + "," + product.getChCost() + "," + product.getInCost() + ","
                                 + product.getAdPrice() + "," + product.getChPrice() + "," + product.getInPrice();
@@ -191,7 +191,7 @@ public class AJAXBean extends AbstractBean implements
                 PackagePrice price = new PackagePrice();
                 price = packagedao.getValueFromPackage(packageID, departDate);
                 if (price == null) {
-                    result = ",,,,,";
+                    result = "0,0,0,0,0,0";
                 } else {
                     result = price.getAdCost() + "," + price.getChCost() + "," + price.getInCost() + ","
                             + price.getAdPrice() + "," + price.getChPrice() + "," + price.getInPrice();
