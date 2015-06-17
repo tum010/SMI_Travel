@@ -185,16 +185,14 @@ $(document).ready(function () {
             var name = this.value;
             $("#agent_id,#agent_name,#agent_addr,#agent_tel").val(null);
             $.each(agent, function (key, value) {
-                if (value.code.toUpperCase() === code) {
-//                        $("#agent_user").val(value.code);       
+                if (value.code.toUpperCase() === code) {     
                     $("#agent_id").val(value.id);
                     $("#agent_name").val(value.name);
                     $("#agent_addr").val(value.address);
                     $("#agent_tel").val(value.tel);
                 }
                 if(name === value.name){
-                    $("#agent_user").val(this.value);
-                    $("#agent_user").val(key.code);
+                    $("#agent_user").val(value.code);
                     $("#agent_id").val(value.id);
                     $("#agent_name").val(value.name);
                     $("#agent_addr").val(value.address);

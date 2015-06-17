@@ -67,7 +67,7 @@ $(function () {
 
 // ######################### FLIGHT ######################### //
 $(document).ready(function () {
- 
+    
     $("#TableAir tbody tr").each(function(i){
         i++;
         $("#flight-"+i+"-ticketTypeCom").change(function(){          

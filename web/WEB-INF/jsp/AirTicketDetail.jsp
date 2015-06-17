@@ -110,7 +110,7 @@
                         <thead>
                             <tr class="datatable-header">
                                 <th>No</th>
-                                <th>Code</th>
+                                <th>Airline</th>
                                 <th>Flight</th>
                                 <th>From</th>
                                 <th>To</th>
@@ -135,7 +135,7 @@
                                 </c:if>
                                 <tr ${colourStatus}>
                                     <td>${i.count}</td>
-                                    <td>${flight.airticketAirline.MAirline.getName()}</td>
+                                    <td>${flight.airticketAirline.MAirline.getCode()}</td>
                                     <td>${flight.flightNo}</td>
                                     <td>${flight.sourceCode}</td>
                                     <td>${flight.desCode}</td>
@@ -257,7 +257,7 @@
                                     </div>
                                     <div class="col-sm-3">  
                                         <input type="text" class="form-control" name="departure-${fStatus.count}-name" 
-                                               id="departure-${fStatus.count}-name" readonly="">
+                                               id="departure-${fStatus.count}-name" value="" readonly="true">
                                     </div>
 
                                     <label class="col-sm-1 control-label text-right">Date<strong style="color: red">*</strong></label>
@@ -332,8 +332,7 @@
                                     <label class="col-sm-1 control-label text-right">Ticket</label>
                                     <div class="col-sm-5">  
                                         <select class="form-control" id="flight-${fStatus.count}-ticketType" 
-                                                name="flight-${fStatus.count}-ticketType" value="${flight.MTicketType.id}"
-                                                >
+                                                name="flight-${fStatus.count}-ticketType" value="${flight.MTicketType.id}">
                                             <c:forEach var="mticket" items="${mTicketTypeList}">
                                                 <option value="${mticket.id}">${mticket.name}</option>
                                             </c:forEach>
@@ -490,7 +489,7 @@
                                         $("#airlineName${fStatus.count}").val(value.airline_name);
                                     }
                                     if(name === value.airline_name){
-                                         $("#airlineId${fStatus.count}").val(value.airline_id);
+                                        $("#airlineId${fStatus.count}").val(value.airline_id);
                                         $("#airlineCode${fStatus.count}").val(value.airline_code);
                                         $("#airlineName${fStatus.count}").val(value.airline_name);
                                         code = $("#airlineCode${fStatus.count}").val().toUpperCase();
@@ -637,7 +636,7 @@
                         <table  class="display table-striped table-responsive" id="passenger_table">
                             <thead>
                                 <tr class="datatable-header">
-                                    <th>Airline</th>
+                                    <th>Airline Code</th>
                                     <th>Passenger Type</th>
                                     <th colspan="3">Ticket</th>
                                     <th>Fare</th>
@@ -651,7 +650,7 @@
                             <input type="text" hidden="" name="countRowPassenger" id="countRowPassenger" value="${passengers.size()+1}">
                             <c:forEach var="passenger" items="${passengers}" varStatus="pStatus">
                                 <tr>
-                                    <td style="width: 10%">${passenger.airticketAirline.MAirline.name}</td>
+                                    <td style="width: 10%">${passenger.airticketAirline.MAirline.code}</td>
                                    
                                     <td style="width: 10%"><!--winit-->
                                         <select id="passengerCategoryCom${pStatus.count}" name="passengerCategoryCom${pStatus.count}" class="form-control">          
@@ -943,17 +942,17 @@
 
                             });
 
-                            $("#pnr_name").keypress(function (e) {
-                                if (e.which == 13) {
-                                    e.preventDefault();
+                            $("#pnr_name").keyup(function (e) {
+                                if (e.keyCode === 13) {
+                                    /*e.preventDefault();*/
                                     var name = $("#pnr_name").val();
                                     $("#pnrname").val($("#pnr_name").val());
                                     $("#actionIUP").val('import');
                                     var result = $.grep(pnr, function (e) {
-                                        return e.pnr == name;
+                                        return e.pnr === name;
                                     });
                                     if (result.length > 0) {
-                                        $("#Pnrform").submit()
+                                        $("#Pnrform").submit();
                                         alert('import pnr ' + $("#pnr_name").val() + ' !');
                                     } else {
                                         alert('pnr name "' + name + '" doesn\'t exist! ');
@@ -1051,7 +1050,7 @@
                                 '&servletName=' + servletName +
                                 '&servicesName=' + servicesName +
                                 '&name=' + name +
-                                '&type=' + 'searchairport';
+                                '&type=' + 'searchairportDeparture';
                         console.log("Ajax param [" + param + "]");
                         CallAjaxDeparture(param);
                     }
@@ -1097,7 +1096,7 @@
                         $.each(a, function (index, value) {
                             $.each(flight, function (index_flight, value_flight) {
                                 var flightCode = $("#departure-" + value_flight.id + "-code").val();
-                                if (flightCode == value.code) {
+                                if (flightCode === value.code) {
                                     console.log("flightCode : " + flightCode);
                                     $("#departure-" + value_flight.id + "-name").val(value.name);
                                 }
@@ -1129,8 +1128,7 @@
 
                             if ($(this).hasClass('row_selected')) {
                                 $(this).removeClass('row_selected');
-                            }
-                            else {
+                            }else {
                                 DepartureTable.$('tr.row_selected').removeClass('row_selected');
                                 $(this).addClass('row_selected');
                             }
@@ -1189,7 +1187,7 @@
                                 '&servletName=' + servletName +
                                 '&servicesName=' + servicesName +
                                 '&name=' + name +
-                                '&type=' + 'searchairport';
+                                '&type=' + 'searchairportArrive';
                         console.log("Ajax param [" + param + "]");
                         CallAjaxArrive(param);
                     }
@@ -1215,7 +1213,7 @@
                                         "bLengthChange": false,
                                         "iDisplayLength": 10
                                     });
-                                     $("#ajaxloadarrive").addClass("hidden");                              
+                                     $("#ajaxloadarrive").addClass("hidden");
                                 }, error: function (msg) {    
                                      $("#ajaxloadarrive").addClass("hidden");  
                                 }
@@ -1234,7 +1232,9 @@
                         
                         $.each(a, function (index, value) {
                             $.each(flight, function (index_flight, value_flight) {
-                                if ($("#arrival-" + value_flight.id + "-code").val() === value.code) {
+                                var flightCode= $("#arrival-" + value_flight.id + "-code").val();
+                                if (flightCode === value.code) {
+                                    console.log("flightCode : " + flightCode);
                                     $("#arrival-" + value_flight.id + "-name").val(value.name);
                                 }
                             });
@@ -1243,6 +1243,7 @@
                             arrival_id = $(this).find(".arrival-id").text();
                             arrival_code = $(this).find(".arrival-code").text();
                             arrival_name = $(this).find(".arrival-name").text();
+                           /*alert("arrival_id :"+arrival_id+"|arrival_code :"+arrival_code+"|arrival_name :"+arrival_name);*/
                             $("#arrival-" + flight_id.toString() + "-id").val(arrival_id);
                             $("#arrival-" + flight_id.toString() + "-code").val(arrival_code);
                             $("#arrival-" + flight_id.toString() + "-name").val(arrival_name);
@@ -1260,11 +1261,11 @@
                             "bLengthChange": false,
                             "iDisplayLength": 10
                         });
+                        
                         $('#ArrivalTable tbody').on('click', 'tr', function () {
                             if ($(this).hasClass('row_selected')) {
                                 $(this).removeClass('row_selected');
-                            }
-                            else {
+                            }else {
                                 ArrivalTable.$('tr.row_selected').removeClass('row_selected');
                                 $(this).addClass('row_selected');
                             }

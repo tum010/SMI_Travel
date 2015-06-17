@@ -340,14 +340,17 @@ public class AJAXBean extends AbstractBean implements
             }
         } else if (AIRTICKET.equalsIgnoreCase(servletName)) {
             String name = map.get("name").toString();
-            if ("searchairport".equalsIgnoreCase(type)) {
-                result = buildAirportListHTML(airportdao.searchAirport(name));
+            if ("searchairportDeparture".equalsIgnoreCase(type)) {
+                result = buildAirportListHTMLDeparture(airportdao.searchAirport(name));
+            }
+            if ("searchairportArrive".equalsIgnoreCase(type)) {
+                result = buildAirportListHTMLArrive(airportdao.searchAirport(name));
             }
         }
         return result;
     }
 
-    public String buildAirportListHTML(List<MAirport> listAirport) {
+    public String buildAirportListHTMLDeparture(List<MAirport> listAirport) {
         String result = "";
         for (int i = 0; i < listAirport.size(); i++) {
             MAirport airport = listAirport.get(i);
@@ -355,6 +358,19 @@ public class AJAXBean extends AbstractBean implements
                     + " <td class='departure-id hidden'>" + airport.getId() + "</td>"
                     + " <td class='departure-code'>" + airport.getCode() + "</td>"
                     + " <td class='departure-name'>" + airport.getName() + "</td>"
+                    + "</tr>";
+
+        }
+        return result;
+    }
+    public String buildAirportListHTMLArrive(List<MAirport> listAirport) {
+        String result = "";
+        for (int i = 0; i < listAirport.size(); i++) {
+            MAirport airport = listAirport.get(i);
+            result += " <tr class='arrival-tr'>"
+                    + " <td class='arrival-id hidden'>" + airport.getId() + "</td>"
+                    + " <td class='arrival-code'>" + airport.getCode() + "</td>"
+                    + " <td class='arrival-name'>" + airport.getName() + "</td>"
                     + "</tr>";
 
         }

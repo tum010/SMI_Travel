@@ -9,6 +9,7 @@ package com.smi.travel.datalayer.dao.impl;
 import com.smi.travel.datalayer.dao.AgentDao;
 import com.smi.travel.datalayer.entity.Agent;
 import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -138,7 +139,8 @@ public class AgentImpl implements AgentDao{
     public List<Agent> getListAgent(){
         Session session = this.sessionFactory.openSession();
         String query = "from Agent a ";
-        List<Agent> agentList = session.createQuery(query).list();
+        Query q = session.createQuery(query);
+        List<Agent> agentList = q.list();
         session.close();
         if (agentList.isEmpty()) {
             return null;
