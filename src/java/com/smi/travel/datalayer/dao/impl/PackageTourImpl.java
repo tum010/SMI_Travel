@@ -95,10 +95,12 @@ public class PackageTourImpl implements PackageTourDao {
             session.save(mpackage);
 
             List<PackageItinerary> ItineraryList = mpackage.getPackageItineraries();
-
-            for (int i = 0; i < ItineraryList.size(); i++) {
-                session.save(ItineraryList.get(i));
+            if(ItineraryList != null){
+                for (int i = 0; i < ItineraryList.size(); i++) {
+                    session.save(ItineraryList.get(i));
+                }
             }
+            
 
             List<PackagePrice> PriceList = mpackage.getPackagePrices();
             if(PriceList != null){
@@ -145,9 +147,7 @@ public class PackageTourImpl implements PackageTourDao {
             }
             
             List<PackageItinerary> ItineraryList = mpackage.getPackageItineraries();
-            if (ItineraryList.isEmpty()) {
-                System.out.println("empty list");
-            }
+            if (ItineraryList != null) {   
             for (int i = 0; i < ItineraryList.size(); i++) {
                 if (ItineraryList.get(i).getId() == null) {
                     System.out.println("save itinerary");
@@ -156,6 +156,7 @@ public class PackageTourImpl implements PackageTourDao {
                     System.out.println("update itinerary");
                     session.update(ItineraryList.get(i));
                 }
+            }
             }
 
             List<PackagePrice> PriceList = mpackage.getPackagePrices();
@@ -170,10 +171,14 @@ public class PackageTourImpl implements PackageTourDao {
             }
             List<PackageCity> CityList = mpackage.getPackageCities();
             for (int i = 0; i < CityList.size(); i++) {
-                System.out.println(CityList.get(i).getPackageTour().getId());
-                if (CityList.get(i).getId() == null) {
+                System.out.println("t ID :"+CityList.get(i).getPackageTour().getId());
+                System.out.println("C id :"+CityList.get(i).getId());
+                String CityID = CityList.get(i).getId();
+                if (CityID == null) {
+                    System.out.println("save"+i);
                     session.save(CityList.get(i));
-                } else {
+                } else if(CityID != null) {
+                    System.out.println("update"+i);
                     session.update(CityList.get(i));
                 }
             }
