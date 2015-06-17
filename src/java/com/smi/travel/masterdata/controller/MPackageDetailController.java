@@ -48,6 +48,7 @@ public class MPackageDetailController extends SMITravelController {
         String countItinerary = request.getParameter("counterItinerary");
         String conutCity = request.getParameter("cityCounter");
         String countPrice = request.getParameter("counterPrice");
+        String supplier = request.getParameter("supplier");
         System.out.println("action  :" + action);
         String result = "";
         String resultValidate = "";
@@ -59,6 +60,7 @@ public class MPackageDetailController extends SMITravelController {
         pack.setRemark(remark);
         pack.setDetail(detail);
         pack.setStatus(status);
+        pack.setSupplier(supplier);
         if (StringUtils.isNotEmpty(packageID)) {
             pack.setId(packageID);
         }
@@ -99,6 +101,7 @@ public class MPackageDetailController extends SMITravelController {
                     remark = Packageresult.getRemark();
                     detail = Packageresult.getDetail();
                     status = Packageresult.getStatus();
+                    supplier = Packageresult.getSupplier();
                     packageID = Packageresult.getId();
                     action = "edit";
                     request.setAttribute(DisabledCode, "readonly");
@@ -113,6 +116,7 @@ public class MPackageDetailController extends SMITravelController {
                     request.setAttribute("detail", detail);
                     request.setAttribute("status", status);
                     request.setAttribute("packageid", packageID);
+                    request.setAttribute("supplier", supplier);
                     return new ModelAndView("redirect:MPackageDetail.smi?packageid="+packageID+"&action=edit&result=1");
                 } else {
                     request.setAttribute(TransectionResult, "save unsuccessful");
@@ -127,6 +131,7 @@ public class MPackageDetailController extends SMITravelController {
             detail = Packagedetail.getDetail();
             status = Packagedetail.getStatus();
             packageID = Packagedetail.getId();
+            supplier = Packagedetail.getSupplier();
             request.setAttribute(DisabledCode, "readonly");
             request.setAttribute(ITINERARYLIST, Packagedetail.getPackageItineraries());
             // Package Price
@@ -173,6 +178,7 @@ public class MPackageDetailController extends SMITravelController {
         request.setAttribute("status", status);
         request.setAttribute("packageid", packageID);
         request.setAttribute("ListCity", mCity);
+        request.setAttribute("supplier", supplier);
        // request.setAttribute("ListPackageCity", packageCity);
         return MPackageDetail;
     }
