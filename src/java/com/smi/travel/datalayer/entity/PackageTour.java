@@ -20,6 +20,7 @@ public class PackageTour {
     private String detail;
     private String remark;
     private String status;
+    private String supplier;
     private List packageItineraries;
     private List packagePrices;
     private List packageCities;
@@ -32,7 +33,7 @@ public class PackageTour {
         this.code = code;
     }
     
-    public PackageTour(String code, String name, String detail, String remark, String status, List packageItineraries, List packagePrices,List packageCities) {
+    public PackageTour(String code, String name, String detail, String remark, String status, List packageItineraries, List packagePrices,List packageCities,String supplier) {
        this.code = code;
        this.name = name;
        this.detail = detail;
@@ -41,6 +42,7 @@ public class PackageTour {
        this.packageItineraries = packageItineraries;
        this.packagePrices = packagePrices;
        this.packageCities = packageCities;
+       this.supplier = supplier;
     }
 
     public String getId() {
@@ -113,6 +115,14 @@ public class PackageTour {
 
     public void setPackageCities(List packageCities) {
         this.packageCities = packageCities;
+    }
+
+    public String getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(String supplier) {
+        this.supplier = supplier;
     }
     
     
