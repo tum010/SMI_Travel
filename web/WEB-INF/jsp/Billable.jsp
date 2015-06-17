@@ -269,7 +269,13 @@
                         </div>
                     </div>
                 </div>
-
+                                            
+                <style>
+                 .input-group-addon {
+                     padding: 2px 10px; 
+                 }
+                </style>
+                
                 <table class="display" id="billableTable">
                     <thead class="datatable-header">
                         <tr style="width:100%">
@@ -307,9 +313,9 @@
                                     Open
                                 </c:if></td>
                             <td>      
-                                
+
                                 <div class="input-group  datetime" id="billDescId-${Counter.count}" name="billDescId-${Counter.count}">
-                                    <input type="text" style="height: 28px" class="text-center datemask"  
+                                    <input type="text" class="form-control text-center datemask"  
                                        data-date-format="YYYY-MM-DD" name="billDate-${Counter.count}" id="billDate-${Counter.count}"
                                        placeholder="YYYY-MM-DD" value="${b.billDate}" />
                                     <span id="SpanGroupAddon" class="input-group-addon">
