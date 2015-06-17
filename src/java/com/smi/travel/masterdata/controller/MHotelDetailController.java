@@ -57,8 +57,8 @@ public class MHotelDetailController extends SMITravelController {
         MCountry country = new MCountry();
         country.setId(countryid);
         Hotel hotel = new Hotel();
-        hotel.setCode(code);
-        hotel.setName(name);
+        hotel.setCode((String.valueOf(code)).toUpperCase());
+        hotel.setName((String.valueOf(name)).toUpperCase());
         if(!"0".equalsIgnoreCase(cityid)){
             hotel.setMCity(city);
         }
@@ -71,7 +71,7 @@ public class MHotelDetailController extends SMITravelController {
         hotel.setEmail(Email);
         hotel.setWeb(Web);
         hotel.setRemark(description);
-        hotel.setAddress(address);
+        hotel.setAddress((String.valueOf(address)).toUpperCase());
         hotel.setId(HotelID);
         System.out.println("HotelID  :" + HotelID);
         if ("save".equalsIgnoreCase(action)) {
@@ -103,8 +103,8 @@ public class MHotelDetailController extends SMITravelController {
 
         }else if("edit".equalsIgnoreCase(action)){
             Hotel hoteldetail = hotelservice.getHotelFromID(request.getParameter("hotelid").toString());     
-            code = hoteldetail.getCode();
-            name = hoteldetail.getName();
+            code = (String.valueOf(hoteldetail.getCode())).toUpperCase();
+            name = (String.valueOf(hoteldetail.getName())).toUpperCase(); 
             if(hoteldetail.getMCity() != null){
                 cityid = hoteldetail.getMCity().getId();
             }
@@ -119,7 +119,7 @@ public class MHotelDetailController extends SMITravelController {
             Email = hoteldetail.getEmail();
             Web = hoteldetail.getWeb();
             description = hoteldetail.getRemark();
-            address = hoteldetail.getAddress();
+            address = (String.valueOf(hoteldetail.getAddress())).toUpperCase();
             HotelID = hoteldetail.getId();
             
         }

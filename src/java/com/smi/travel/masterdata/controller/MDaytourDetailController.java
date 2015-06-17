@@ -87,8 +87,8 @@ public class MDaytourDetailController extends SMITravelController {
               
         } else if ("save".equalsIgnoreCase(action)) {     
             daytour.setId(currentDaytourId);
-            daytour.setCode(daytourCode);
-            daytour.setName(daytourName);
+            daytour.setCode((String.valueOf(daytourCode)).toUpperCase());
+            daytour.setName((String.valueOf(daytourName)).toUpperCase());
             daytour.setMin(min);
             daytour.setMax(max);
             daytour.setGuideComission(guideCommission);

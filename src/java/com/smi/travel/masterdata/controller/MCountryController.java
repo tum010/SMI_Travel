@@ -28,8 +28,8 @@ public class MCountryController extends SMITravelController {
         System.out.println("action  :" + action);
         String resultValidate = "";
         MCountry country = new MCountry();
-        country.setCode(code);
-        country.setName(name);
+        country.setCode((String.valueOf(code)).toUpperCase());
+        country.setName((String.valueOf(name)).toUpperCase());
         country.setId(CountryID);
 
         if ("search".equalsIgnoreCase(action)) {

@@ -25,8 +25,8 @@ public class MPriceCategoryController extends SMITravelController {
         int result = 0;
         String resultValidate = "";
         MPricecategory price = new MPricecategory();
-        price.setCode(code);
-        price.setName(name);
+        price.setCode((String.valueOf(code)).toUpperCase());
+        price.setName((String.valueOf(name)).toUpperCase());
         price.setId(PriceID);
 
         if ("search".equalsIgnoreCase(action)) {

@@ -55,8 +55,8 @@ public class MPackageDetailController extends SMITravelController {
         String operation = "";
         PackageTour pack = new PackageTour();
         System.out.println("code : "+code);
-        pack.setCode(code);
-        pack.setName(name);
+        pack.setCode((String.valueOf(code)).toUpperCase());
+        pack.setName((String.valueOf(name)).toUpperCase());
         pack.setRemark(remark);
         pack.setDetail(detail);
         pack.setStatus(status);
@@ -96,8 +96,8 @@ public class MPackageDetailController extends SMITravelController {
                 if (result.equalsIgnoreCase("success")) {
                     request.setAttribute(TransectionResult, "1");
                     PackageTour Packageresult = packageTourservice.SearchPackage(pack, 1).get(0);
-                    code = Packageresult.getCode();
-                    name = Packageresult.getName();
+                    code = (String.valueOf(Packageresult.getCode())).toUpperCase();
+                    name = (String.valueOf(Packageresult.getName())).toUpperCase();
                     remark = Packageresult.getRemark();
                     detail = Packageresult.getDetail();
                     status = Packageresult.getStatus();
@@ -125,8 +125,8 @@ public class MPackageDetailController extends SMITravelController {
         } else if ("edit".equalsIgnoreCase(action)) {
             String packagetourid = request.getParameter("packageid");
             PackageTour Packagedetail = packageTourservice.getPackageFromID(packagetourid);
-            code = Packagedetail.getCode();
-            name = Packagedetail.getName();
+            code = (String.valueOf(Packagedetail.getCode())).toUpperCase();
+            name = (String.valueOf(Packagedetail.getName())).toUpperCase();
             remark = Packagedetail.getRemark();
             detail = Packagedetail.getDetail();
             status = Packagedetail.getStatus();

@@ -54,8 +54,8 @@ public class MProductDetailController extends SMITravelController {
         ProductDetail Priceitem = new ProductDetail();
         Product productID = new Product();
         Product product = new Product();
-        product.setCode(code);
-        product.setName(name);
+        product.setCode((String.valueOf(code)).toUpperCase());
+        product.setName((String.valueOf(name)).toUpperCase());
         if (!"".equalsIgnoreCase(ProductTypeID)) {
             MProductType producttype = new MProductType();
             producttype.setId(ProductTypeID);
@@ -155,8 +155,8 @@ public class MProductDetailController extends SMITravelController {
             }
         }  else if ("edit".equalsIgnoreCase(action)) {
             Product productDetail = productService.getProductFromID(request.getParameter("productid").toString());
-            code = productDetail.getCode();
-            name = productDetail.getName();
+            code = (String.valueOf(productDetail.getCode())).toUpperCase();
+            name = (String.valueOf(productDetail.getName())).toUpperCase();
             if(description != null){
                 description = description.trim();
             }
@@ -188,8 +188,8 @@ public class MProductDetailController extends SMITravelController {
         if (("addlistprice".equalsIgnoreCase(action)||("updatePriceItem".equalsIgnoreCase(action))||("deletePriceItem".equalsIgnoreCase(action)))){
             
             Product productDetail = productService.getProductFromID(request.getParameter("ProductID").toString());
-            code = productDetail.getCode();
-            name = productDetail.getName();
+            code =  (String.valueOf(productDetail.getCode())).toUpperCase();
+            name = (String.valueOf(productDetail.getCode())).toUpperCase();
             description = productDetail.getDescription();
             remark = productDetail.getRemark();
             ProductID = request.getParameter("ProductID").toString();

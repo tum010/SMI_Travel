@@ -30,7 +30,7 @@ public class PlaceController extends SMITravelController {
         System.out.println("action  :" + action);
         String resultValidate = "";
         Place place = new Place();
-        place.setPlace(name);
+        place.setPlace((String.valueOf(name)).toUpperCase());
         
         if ((status != null) && !("0".equalsIgnoreCase(status))) {
             MPlacestatus Placestatus = new MPlacestatus();
@@ -59,7 +59,7 @@ public class PlaceController extends SMITravelController {
             }
         } else if ("update".equalsIgnoreCase(action)) {
             Place Vplace = new Place();
-            Vplace.setPlace(name);
+            Vplace.setPlace((String.valueOf(name)).toUpperCase());
             Vplace.setId(PlaceID);
             
             resultValidate = placeService.validatePlace(Vplace, action);

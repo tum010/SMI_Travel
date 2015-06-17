@@ -28,8 +28,8 @@ public class MCurrencyController extends SMITravelController {
         System.out.println("action  :" + action);
         String resultValidate = "";
         MCurrency currency = new MCurrency();
-        currency.setCode(code);
-        currency.setDescription(name);
+        currency.setCode((String.valueOf(code)).toUpperCase());
+        currency.setDescription((String.valueOf(name)).toUpperCase());
         currency.setId(CurrencyID);
 
         if ("search".equalsIgnoreCase(action)) {

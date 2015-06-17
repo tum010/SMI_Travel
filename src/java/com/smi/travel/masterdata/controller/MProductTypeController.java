@@ -39,7 +39,7 @@ public class MProductTypeController extends SMITravelController {
         int result = 0;
         String resultValidate = "";
         MProductType productType = new MProductType();
-        productType.setName(productTypeName);
+        productType.setName((String.valueOf(productTypeName)).toUpperCase());
         productType.setId(productTypeID);
 
         if ("search".equalsIgnoreCase(action)) {

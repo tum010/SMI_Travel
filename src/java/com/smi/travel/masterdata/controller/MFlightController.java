@@ -28,8 +28,8 @@ public class MFlightController extends SMITravelController {
         System.out.println("action  :" + action);
         String resultValidate = "";
         MFlight flight = new MFlight();
-        flight.setCode(code);
-        flight.setName(name);
+        flight.setCode((String.valueOf(code)).toUpperCase());
+        flight.setName((String.valueOf(name)).toUpperCase());
         flight.setId(FlightID);
 
         if ("search".equalsIgnoreCase(action)) {

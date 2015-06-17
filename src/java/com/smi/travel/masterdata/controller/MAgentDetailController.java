@@ -52,9 +52,9 @@ public class MAgentDetailController extends SMITravelController {
         }
         
         Agent agent = new Agent();
-        agent.setCode(code);
-        agent.setName(name);
-        agent.setAddress(Address);
+        agent.setCode((String.valueOf(code)).toUpperCase());
+        agent.setName((String.valueOf(name)).toUpperCase());
+        agent.setAddress((String.valueOf(Address)).toUpperCase());
         agent.setTaxNo(Tax);
         agent.setFax(Fax);
         agent.setEmail(Email);
@@ -113,9 +113,9 @@ public class MAgentDetailController extends SMITravelController {
         }else if("edit".equalsIgnoreCase(action)){
             Agent agentdetail = agentservice.getAgentFromID(request.getParameter("agentid").toString());  
             request.setAttribute("disableAgentCode", "readonly");
-            code = agentdetail.getCode();
-            name = agentdetail.getName();
-            Address = agentdetail.getAddress();
+            code = (String.valueOf(agentdetail.getCode())).toUpperCase();
+            name = (String.valueOf(agentdetail.getName())).toUpperCase(); 
+            Address = (String.valueOf(agentdetail.getAddress())).toUpperCase(); 
             Tax = agentdetail.getTaxNo();
             Fax = agentdetail.getFax();
             Email = agentdetail.getEmail();

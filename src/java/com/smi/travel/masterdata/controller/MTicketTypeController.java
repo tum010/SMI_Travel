@@ -28,8 +28,8 @@ public class MTicketTypeController extends SMITravelController {
         System.out.println("action  :" + action);
         String resultValidate = "";
         MTicketType tickettype = new MTicketType();
-        tickettype.setCode(code);
-        tickettype.setName(name);
+        tickettype.setCode((String.valueOf(code)).toUpperCase());
+        tickettype.setName((String.valueOf(name)).toUpperCase());
         tickettype.setId(TicketTypeID);
 
         if ("search".equalsIgnoreCase(action)) {

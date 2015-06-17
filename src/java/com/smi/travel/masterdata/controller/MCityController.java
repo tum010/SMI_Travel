@@ -29,8 +29,8 @@ public class MCityController extends SMITravelController {
         int result = 0;
         String resultValidate = "";
         MCity city = new MCity();
-        city.setCode(code);
-        city.setName(name);
+        city.setCode((String.valueOf(code)).toUpperCase());
+        city.setName((String.valueOf(name)).toUpperCase());
         city.setId(CityID);
 
         if ("search".equalsIgnoreCase(action)) {

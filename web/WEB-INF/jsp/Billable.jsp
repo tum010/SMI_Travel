@@ -248,7 +248,7 @@
                                         <select class="form-control" name="accId" id="accId" >
                                             <option value=""></option>
                                             <c:forEach var="bank" items="${mBankList}">
-                                                <option value="${bank.id}">${bank.accNo}</option>
+                                                <option value="${bank.id}">${bank.code} (${bank.accNo})</option>
                                             </c:forEach>
                                         </select>
                                     </div>

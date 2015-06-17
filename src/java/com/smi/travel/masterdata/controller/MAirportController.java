@@ -28,8 +28,8 @@ public class MAirportController extends SMITravelController {
         int result = 0;
         String resultValidate = "";
         MAirport airport = new MAirport();
-        airport.setCode(code);
-        airport.setName(name);
+        airport.setCode((String.valueOf(code)).toUpperCase());
+        airport.setName((String.valueOf(name)).toUpperCase());
         airport.setId(AirportID);
 
         if ("search".equalsIgnoreCase(action)) {
