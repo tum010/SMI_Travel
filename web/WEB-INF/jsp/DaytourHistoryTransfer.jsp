@@ -47,7 +47,7 @@
                     <div class="col-xs-2 form-group">
                         <div class="input-group date" id="DateFrom">
                             <input id="InputDateFrom" name="InputDateFrom" type="text" data-date-format="YYYY-MM-DD" class="form-control datemask" placeholder="YYYY-MM-DD" value="${dateFrom}">
-                            <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>
+                            <span class="input-group-addon spandate"><span class="glyphicon-calendar glyphicon"></span>
                             </span>
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                         <div class="input-group date" id="DateTo">
                             <input id="InputDateTo" name="InputDateTo" type="text" data-date-format="YYYY-MM-DD" 
                                    class="form-control datemask" placeholder="YYYY-MM-DD">
-                            <span class="input-group-addon">
+                            <span class="input-group-addon spandate">
                                 <span class="glyphicon-calendar glyphicon"></span>
                             </span>
                         </div>

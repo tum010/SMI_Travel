@@ -162,7 +162,7 @@
                                 <div class="col-sm-6">
                                     <div class="input-group date">
                                         <input name="deadline" id="deadline" type="text"  data-date-format="YYYY-MM-DD" maxlength="10" class="form-control" value="${hotelBooking.deadline}" placeholder="YYYY-MM-DD"/>
-                                        <span id="SpanDeadline" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                        <span id="SpanDeadline" class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>
                                 </div>

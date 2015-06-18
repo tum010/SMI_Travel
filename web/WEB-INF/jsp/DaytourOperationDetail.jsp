@@ -95,7 +95,7 @@
                         <div class="input-group date" id="InputTourDate" >
                             <input id="InputTourDetailTourDate" name="InputTourDetailTourDate"  type="text" 
                                class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${dayTourOperation.tourDate}">
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                     </div>
                     <div class="col-md-2 text-right ">
