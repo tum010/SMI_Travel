@@ -180,7 +180,7 @@ public class DaytourDetailController extends SMITravelController {
             if (StringUtils.isNotEmpty(dBookingId)) {
                 return new ModelAndView("redirect:DaytourDetail.smi?referenceNo=" + refNo + "&action=edit&daytourBooking=" + dBookingId + "&result=" + result);
             } else {
-                return new ModelAndView("redirect:Daytour.smi?referenceNo=" + refNo + "&action=edit");
+                return new ModelAndView("redirect:Daytour.smi?referenceNo=" + refNo + "&action=edit&result="+result);
             }
 
         } else if ("deletePrice".equalsIgnoreCase(action)){

@@ -669,13 +669,13 @@
         <script language="javascript">
             $('#textAlertDivSave').show();
         </script>
-        <META HTTP-EQUIV="Refresh" CONTENT="0;URL=DaytourDetail.smi?referenceNo=${param.referenceNo}&daytourBooking=${param.daytourBooking}&action=edit">
+        <!--<META HTTP-EQUIV="Refresh" CONTENT="0;URL=DaytourDetail.smi?referenceNo=${param.referenceNo}&daytourBooking=${param.daytourBooking}&action=edit">-->
     </c:if>
     <c:if test="${param.result =='fail'}">        
         <script language="javascript">
             $('#textAlertDivNotSave').show();
         </script>
-        <META HTTP-EQUIV="Refresh" CONTENT="0;URL=DaytourDetail.smi?referenceNo=${param.referenceNo}&daytourBooking=${param.daytourBooking}&action=edit">
+        <!--<META HTTP-EQUIV="Refresh" CONTENT="0;URL=DaytourDetail.smi?referenceNo=${param.referenceNo}&daytourBooking=${param.daytourBooking}&action=edit">-->
     </c:if>
 </c:if> 
 
