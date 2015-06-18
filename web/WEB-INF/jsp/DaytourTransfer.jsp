@@ -807,9 +807,10 @@
                         activeTourList += "," + $(this).val();
                     }
                 console.log("activeList Other= " + activeTourList);
+                });
             });
+        }
     }
-
     function getOtherFromDateAndTour(inputDate, tourId) {
         var servletName = 'TransferJobServlet';
         var servicesName = 'AJAXBean';
@@ -897,9 +898,8 @@
                 success: function (msg) {
 //                    console.log("Call AJax Hotel Msg [" + msg + "]");
 //            alert("activeTourList stil:"+activeTourList);
-            var tourDate = $("#InputDate").val();
-            getOtherFromDateAndTour(tourDate, activeTourList);
-        }
+                    var tourDate = $("#InputDate").val();
+                    getOtherFromDateAndTour(tourDate, activeTourList);
                     if (msg) {
                         var html = $.parseHTML(msg);
                         if (html.length > 1) {
@@ -915,8 +915,6 @@
                     } else {
                         $("#ButtonImportHotel").attr("disabled", "disabled");
                     }
-
-
 
                     //setformat();
                 }, error: function (msg) {
