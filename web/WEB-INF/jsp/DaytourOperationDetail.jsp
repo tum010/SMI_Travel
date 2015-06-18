@@ -43,6 +43,15 @@
 </section>
 <div class ="container"  style="padding-top: 15px;" ng-app=""> 
     <div class="row">
+        <!--Alert Save and Update-->
+        <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Save Success!</strong> 
+        </div>
+        <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Save Unsuccess!</strong> 
+        </div>
         <!-- side bar -->
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
             <div ng-include="'WebContent/Book/DaytourMenu.html'"></div>
@@ -94,7 +103,7 @@
                     <div class="col-md-2 form-group"> 
                         <div class="input-group date" id="InputTourDate" >
                             <input id="InputTourDetailTourDate" name="InputTourDetailTourDate"  type="text" 
-                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${dayTourOperation.tourDate}">
+                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${dayTourOperation.tourDate}">
                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                     </div>
@@ -104,8 +113,8 @@
                         <input type="hidden" name="action" id="action" value="edit">
                         <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="searchAction();" class="btn btn-primary btn-sm">Search</button>
 
-<!--                        <button id="BtnTourSearch" class="btn btn-success" type="submit"><span class="fa fa-search"></span> Search</button>
-                        <input type="hidden" name="action" id="action" value="edit">-->
+                        <!--                        <button id="BtnTourSearch" class="btn btn-success" type="submit"><span class="fa fa-search"></span> Search</button>
+                                                <input type="hidden" name="action" id="action" value="edit">-->
                     </div>
                 </div>
 
@@ -115,7 +124,7 @@
                     </div>
                     <div class="col-md-2 form-group">
                         <div class="col-sm-12">
-                        <input id="InputTourDetailConfirm" name="InputTourDetailConfirm" type="text" style="width: 370px" class="form-control" readonly="" value="${daytour.updateBy}">
+                            <input id="InputTourDetailConfirm" name="InputTourDetailConfirm" type="text" style="width: 370px" class="form-control" readonly="" value="${daytour.updateBy}">
                         </div>
                     </div>
                     <div class="col-xs-1">
@@ -241,27 +250,27 @@
                                         <tbody>
                                             <c:forEach var="driver" items="${dayTourOperationDriver}" varStatus="status">
                                                 <c:choose>
-                                                <c:when test="${status.count < 6}">                                               
-                                                <tr>
-                                                    <td class="hidden">
-                                                        <input id="InfoTableId${status.count}" name="InfoTableId${status.count}" value="${driver.id}">
-                                                        <input id="countInfoTable${status.count}" name="countInfoTable" value="${status.count+1}">
-                                                    </td>
-                                                    <td class="text-center">${status.count}</td>
-                                                    <td>
-                                                        <select id="SelectTableDrive${status.count}" name="SelectTableDrive${status.count}" class="">
-                                                            <option></option>
-                                                            <c:forEach var="dr" items="${driverList}" >
-                                                                <c:set var="select1" value="" />
-                                                                <c:set var="selectedPlaceId1" value="${driver.staff.id}" />
-                                                                <c:if test="${dr.id == selectedPlaceId1}">
-                                                                    <c:set var="select1" value="selected" />
-                                                                </c:if>
-                                                                <option value="<c:out value="${dr.id}" />" ${select1}><c:out value="${dr.name}" /></option>   
-                                                            </c:forEach>
+                                                    <c:when test="${status.count < 6}">                                               
+                                                        <tr>
+                                                            <td class="hidden">
+                                                                <input id="InfoTableId${status.count}" name="InfoTableId${status.count}" value="${driver.id}">
+                                                                <input id="countInfoTable${status.count}" name="countInfoTable" value="${status.count+1}">
+                                                            </td>
+                                                            <td class="text-center">${status.count}</td>
+                                                            <td>
+                                                                <select id="SelectTableDrive${status.count}" name="SelectTableDrive${status.count}" class="">
+                                                                    <option></option>
+                                                                    <c:forEach var="dr" items="${driverList}" >
+                                                                        <c:set var="select1" value="" />
+                                                                        <c:set var="selectedPlaceId1" value="${driver.staff.id}" />
+                                                                        <c:if test="${dr.id == selectedPlaceId1}">
+                                                                            <c:set var="select1" value="selected" />
+                                                                        </c:if>
+                                                                        <option value="<c:out value="${dr.id}" />" ${select1}><c:out value="${dr.name}" /></option>   
+                                                                    </c:forEach>
 
-                                                        </select>
-                                                        <script>
+                                                                </select>
+                                                                <script>
                                                             $('#SelectTableDrive${status.count}').selectize({
                                                                 sortField: 'text'
                                                             });
@@ -281,33 +290,33 @@
                                                                     }
                                                                 });
                                                             });
-                                                        </script>
-                                                    </td>
-                                                    <td id="driverName${status.count}">${driver.staff.name}</td>
-                                                    <td><div id="driverCarNo${status.count}">${driver.carNo}</div><input name="carNo${status.count}" id="carNo${status.count}" value="${driver.carNo}" type="hidden"></td>
-                                                    <td>
-                                                        <div class="col-xs-7">
-                                                            <input id="InfoTableGasFee${status.count}" name="InfoTableGasFee${status.count}" class="form-control" value="${driver.gasFee}">
-                                                        </div>
-                                                        <div class="col-xs-5">
-                                                            <input id="InfoTableValue"${status.count} name="InfoTableGasValue${status.count}" class="form-control money" value="${driver.gasValue}">
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="col-xs-7">
-                                                            <input id="InfoTableTipFee${status.count}" name="InfoTableTipFee${status.count}" class="form-control" value="${driver.tipFee}">
-                                                        </div>
-                                                        <div class="col-xs-5">
-                                                            <input id="InfoTableTipValue${status.count}" name="InfoTableTipValue${status.count}" class="form-control money" value="${driver.tipValue}">
-                                                        </div>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <a href="#" onclick="setDriverId(${driver.id},'${driver.staff.name}')"  data-toggle="modal" data-target="#DeleteDriverModal">
-                                                            <span id="spanRemove${status.count}" class="glyphicon glyphicon-remove deleteicon"></span>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                </c:when>
+                                                                </script>
+                                                            </td>
+                                                            <td id="driverName${status.count}">${driver.staff.name}</td>
+                                                            <td><div id="driverCarNo${status.count}">${driver.carNo}</div><input name="carNo${status.count}" id="carNo${status.count}" value="${driver.carNo}" type="hidden"></td>
+                                                            <td>
+                                                                <div class="col-xs-7">
+                                                                    <input id="InfoTableGasFee${status.count}" name="InfoTableGasFee${status.count}" class="form-control" value="${driver.gasFee}">
+                                                                </div>
+                                                                <div class="col-xs-5">
+                                                                    <input id="InfoTableValue"${status.count} name="InfoTableGasValue${status.count}" class="form-control money" value="${driver.gasValue}">
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="col-xs-7">
+                                                                    <input id="InfoTableTipFee${status.count}" name="InfoTableTipFee${status.count}" class="form-control" value="${driver.tipFee}">
+                                                                </div>
+                                                                <div class="col-xs-5">
+                                                                    <input id="InfoTableTipValue${status.count}" name="InfoTableTipValue${status.count}" class="form-control money" value="${driver.tipValue}">
+                                                                </div>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <a href="#" onclick="setDriverId(${driver.id}, '${driver.staff.name}')"  data-toggle="modal" data-target="#DeleteDriverModal">
+                                                                    <span id="spanRemove${status.count}" class="glyphicon glyphicon-remove deleteicon"></span>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    </c:when>
                                                 </c:choose>
                                             </c:forEach>
                                         </tbody>
@@ -320,7 +329,7 @@
                                 </div>                    
                                 <div class="panel-body">
 
-                                    
+
                                     <table class="display" id="RefBookTable">
                                         <thead class="datatable-header">
                                             <tr>
@@ -393,7 +402,7 @@
                                                         <c:if test="${passenger.customer.MInitialname == null}">
                                                             <td>${passenger.customer.lastName} ${passenger.customer.firstName} </td>
                                                         </c:if>    
-                                                        
+
                                                         <td>${passenger.customer.tel}</td>
                                                         <td>${passenger.customer.nationality}</td>
                                                     </tr>
@@ -488,7 +497,7 @@
                                                 </script>
 
                                             </td>
-                                            
+
                                             <td class="text-center">
                                                 <a id="expenButtonRemove${status.count}" name="expenButtonRemove${status.count}" onclick="setExpenId(${expen.id})"  data-toggle="modal" data-target="#DeleteExpenModal">
                                                     <span id="expenSpanRemove${status.count}" name="expenSpanRemove${status.count}"  class="glyphicon glyphicon-remove deleteicon"></span>
@@ -707,7 +716,7 @@
                             <th>Code</th>
                             <th>Action</th>
                             <th class="hidden">guide</th>
-                             <th class="hidden">id</th>
+                            <th class="hidden">id</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -746,7 +755,7 @@
                 <h4 class="modal-title"  id="Titlemodel">Tour Driver</h4>
             </div>
             <div class="modal-body">
-               <div id="driverNameDelete"></div>
+                <div id="driverNameDelete"></div>
             </div>
             <div class="modal-footer">
                 <a id="btnExpenDeleteOK"  type="button" onclick="deleteBookDriver()" data-dismiss="modal" class="btn btn-danger">Delete</a>
@@ -813,7 +822,7 @@
             <script>
                 $(document).ready(function () {
                     $("#ButtonSearch").attr("disabled", "disabled");
-                    
+
                     if (($("#InputDetailTourName,#InputTourDetailTourDate").val().trim().length !== 0)) {
                         $("#ButtonSearch").removeAttr("disabled");
                     }
@@ -821,7 +830,7 @@
                     $('.date').datetimepicker();
                     $('.datemask').mask('0000-00-00');
                     $("#tourTable tr").on('click', function () {//winit
-                    $("#TourModal").modal('hide');
+                        $("#TourModal").modal('hide');
                         var tour_id = $(this).find(".tour-id").html();
                         var tour_code = $(this).find(".tour-code").html();
                         var tour_name = $(this).find(".tour-name").html();
@@ -841,7 +850,7 @@
                         "bLengthChange": false,
                         "iDisplayLength": 10
                     });
-                    
+
                     $('#tourTable tbody').on('click', 'tr', function () {
                         if ($(this).hasClass('row_selected')) {
                             $(this).removeClass('row_selected');
@@ -858,19 +867,19 @@
 
                         $.each(tourCode, function (key, value) {
                             availableTags.push(value.code);
-                            if ( !(value.name in availableTags) ){
-                               availableTags.push(value.name);
+                            if (!(value.name in availableTags)) {
+                                availableTags.push(value.name);
                             }
                         });
 
                         $("#InputDetailTourCode").autocomplete({
                             source: availableTags,
-                            close:function( event, ui ) {    
-                               $("#InputDetailTourCode").trigger('keyup');
-                            }                        
+                            close: function (event, ui) {
+                                $("#InputDetailTourCode").trigger('keyup');
+                            }
                         });
-                        
-                        
+
+
                         $("#InputDetailTourCode").keyup(function () {
                             var position = $(this).offset();
                             $(".ui-widget").css("top", position.top + 30);
@@ -879,7 +888,7 @@
                             var code = this.value.toUpperCase();
                             $("#InputDetailTourName").val(null);
                             $.each(tourCode, function (key, value) {
-                                if(name === value.name){
+                                if (name === value.name) {
                                     $("#InputDetailTourCode").val(value.code);
                                     code = $("#InputDetailTourCode").val().toUpperCase();
                                 }
@@ -890,20 +899,20 @@
                             }); //end each tourCode
                         }); // end InputTourCode keyup
                     }); // end AutoComplete TourCode TourName
-                    
+
                 });
 
-            function searchAction() {
-                var action = document.getElementById('action');
-                action.value = 'edit';
-                var InputTourId = document.getElementById('InputTourId');
-                InputTourId.value = $("#InputDetailTourId").val();
-                var tourDate = document.getElementById('tourDate');
-                tourDate.value = $("#InputTourDetailTourDate").val();
+                function searchAction() {
+                    var action = document.getElementById('action');
+                    action.value = 'edit';
+                    var InputTourId = document.getElementById('InputTourId');
+                    InputTourId.value = $("#InputDetailTourId").val();
+                    var tourDate = document.getElementById('tourDate');
+                    tourDate.value = $("#InputTourDetailTourDate").val();
 
-                document.getElementById('DaytourOperationForm').submit();
-            }
-            
+                    document.getElementById('DaytourOperationForm').submit();
+                }
+
             </script>
             <div class="modal-footer">
                 <button id="" type="button" onclick="" class="btn btn-success">OK</button>
@@ -925,11 +934,17 @@
     </script>
 </c:forEach>
 
-<c:if test="${! empty requestScope['resultStatus']}">
-    <script language="javascript">
-        alert('<c:out value="${requestScope['resultStatus']}" />');
-    </script>
-    <META HTTP-EQUIV="Refresh" CONTENT="0;URL=${requestScope['redirectUrl']}">
+<c:if test="${! empty param.result}">
+    <c:if test="${param.result =='success'}">        
+        <script language="javascript">
+            $('#textAlertDivSave').show();
+        </script>
+    </c:if>
+    <c:if test="${param.result =='fail'}">        
+        <script language="javascript">
+            $('#textAlertDivNotSave').show();
+        </script>
+    </c:if>
 </c:if>
 
 <style>
