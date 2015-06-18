@@ -252,9 +252,9 @@ function addImportExpen(arrExpen) {
                 '<td><input id="expenDescription' + row + '" name="expenDescription' + row + '"  type="text" class="form-control text-left" maxlength="50" value="' + item.desciption + '"></td>' +
                 '<td><input id="expenQty' + row + '" name="expenQty' + row + '" type="text" class="form-control money" maxlength="50"></td>' +
                 '<td><input id="expenAmount' + row + '" name="expenAmount' + row + '" type="text" class="form-control money" maxlength="50" value="' + item.amount + '"></td>' +
-                '<td><input id="expenTypeS' + row + '" name="expenPriceType' + row + '" type="radio" value="S" '+(item.priceType==="S"?"checked":"")+ ' >&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;&nbsp;' +
-                '<input id="expenTypeG' + row + '" name="expenPriceType' + row + '" type="radio" value="G" '+(item.priceType==="G"?"checked":"")+ ' >&nbsp;&nbsp;G</td>' +
                 '<td><select name="expenSelectCur' + row + '" id="expenSelectCur' + row + '" class="form-control"><option value="' + item.cur + '">' + item.cur + '</option></select></td>' +
+                '<td class="text-center"><input id="expenTypeS' + row + '" name="expenPriceType' + row + '" type="radio" value="S" '+(item.priceType==="S"?"checked":"")+ ' >&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;&nbsp;' +
+                '<input id="expenTypeG' + row + '" name="expenPriceType' + row + '" type="radio" value="G" '+(item.priceType==="G"?"checked":"")+ ' >&nbsp;&nbsp;G</td>' +
                 '<td class="text-center">' +
                 '<a id="expenButtonRemove' + row + '" idExpen="'+item.id+'" name="expenButtonRemove' + row + '" class="RemoveRow">' +
                 '<span  id="expenSpanEdit' + row + '" name="expenSpanEdit' + row + '" class="glyphicon glyphicon-remove deleteicon"></span>' +
