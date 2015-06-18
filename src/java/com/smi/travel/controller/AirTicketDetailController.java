@@ -177,7 +177,7 @@ public class AirTicketDetailController extends SMITravelController {
     }
 
     private void setResponseAttribute(HttpServletRequest request, AirticketPnr airticketPnr, String referenceNo) {
-
+        String codeAirline = request.getParameter("");
         Master master = utilservice.getMasterdao().getBookingFromRefno(referenceNo);
         request.setAttribute(Master, master);
 
