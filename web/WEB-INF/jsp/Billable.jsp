@@ -29,15 +29,7 @@
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
 
-<!--Alert Save -->
-<div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Save Success!</strong> 
-</div>
-<div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Save Not  Success!</strong> 
-</div>
+
 <input type="hidden" value="${requestScope['result']}" id="resultText">
 <section class="content-header" >
     <h1>
@@ -73,7 +65,15 @@
                 <div ng-include="'WebContent/Book/BookNavbar.html'"></div>
 
                 <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
-
+<!--Alert Save -->
+<div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Save Success!</strong> 
+</div>
+<div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Save Not  Success!</strong> 
+</div>
                 <div class="row" style="padding-left: 15px">  
                     <div class="col-md-6">
                         <h4><b>Billable</b></h4>
@@ -313,7 +313,7 @@
                                     Open
                                 </c:if></td>
                             <td>      
-
+                               
                                 <div class="input-group  datetime" id="billDescId-${Counter.count}" name="billDescId-${Counter.count}">
                                     <input type="text" class="form-control text-center datemask"  
                                        data-date-format="YYYY-MM-DD" name="billDate-${Counter.count}" id="billDate-${Counter.count}"

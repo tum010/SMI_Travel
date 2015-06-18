@@ -14,15 +14,7 @@
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
-<!--Alert Save -->
-<div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Save Success!</strong> 
-</div>
-<div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Save Success!</strong> 
-</div>
+
 <input type="hidden" value="${requestScope['result']}" id="resultText">
 <section class="content-header" >
     <h1>
@@ -55,6 +47,15 @@
 
             <div ng-include="'WebContent/Book/BookNavbar.html'"></div>
             <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
+            <!--Alert Save -->
+<div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Save Success!</strong> 
+</div>
+<div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Save Success!</strong> 
+</div>
             <div class="row"> 
                 <div class="col-md-6 " style="padding-right: 15px">
                     <h4><b>Land</b> </h4>

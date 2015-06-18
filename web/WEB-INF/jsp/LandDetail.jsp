@@ -29,15 +29,7 @@
 <c:if test="${booktype == 'o'}">
     <c:set var="DescriptionSize" value="670px" />
 </c:if>
-<!--Alert Save -->
-<div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Save Success!</strong> 
-</div>
-<div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Save Success!</strong> 
-</div>
+
 <section class="content-header" >
     <h1>
         Booking - Land Detail
@@ -189,7 +181,11 @@
                       }
                    }   
                 }
-
+                
+                 $('#LandItinerary tbody tr:last td .input-group-addon').click(function() {  
+                    AddRow(parseInt($("#counter").val()));
+                });
+   
             });
 
             function deletelist(id) {
@@ -611,7 +607,13 @@
 
                         
                 </div>
-
+                
+                <style>
+                     .input-group-addon {
+                         padding: 2px 10px; 
+                     }
+                </style>                         
+                                    
                 <div class="row" style="margin-left: 10px;margin-right: 10px;"> 
                     <table id="LandItinerary" class="display" cellspacing="0"  >
                         <thead>
@@ -630,8 +632,8 @@
                                     <td class="hidden"> <input  type="hidden"  value="${table.id}">  </td>
                                     <td> <input style="width: 20px"  type="text"  class="form-control number" value="${table.orderNo}">  </td>
                                     <td> 
-                                        <div class='input-group daydatepicker' id='effectivefromClass-${Counter.count}' style="padding-left: 15px">
-                                            <input style="width: 100px" type='text' class="form-control"  id="dayDate-${Counter.count}" name="dayDate-${Counter.count}" data-date-format="YYYY-MM-DD" value="${requestScope['dayDate']}" />
+                                        <div class='input-group daydatepicker' id='daydatepicker-${Counter.count}' style="padding-left: 15px">
+                                            <input style="width: 100px" type='text' class="form-control"  id="dayDate-${Counter.count}" name="dayDate-${Counter.count}" data-date-format="YYYY-MM-DD" value="${table.dayDate}" />
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -795,14 +797,17 @@
 <script type="text/javascript" charset="utf-8">
 
     AddRow(parseInt($("#counter").val()));
-
+                      
     function AddRow(row) {
 
         $("#LandItinerary tbody").append(
                 '<tr style="higth 100px">' +
                 '<td class="hidden"> <input id="row-' + row + '-id" name="row-' + row + '-id"  type="hidden" >  </td>' +
                 '<td><input style="width: 20px" id="row-' + row + '-no" name="row-' + row + '-no"   type="text" class="form-control number" ></td>' +
-        '<td><input style="width: 100px"  type="text" id="row-' + row + '-date" name="row-' + row + '-date" class="form-control date" placeholder="YYYY-MM-DD"  ></td>' +
+                '<td><div class="input-group daydatepicker" id="daydatepicker-' + row + '" style="padding-left: 15px">'+
+                '<input style="width: 100px" type="text" class="form-control"  id="dayDate-' + row + '" name="dayDate-' + row + '" data-date-format="YYYY-MM-DD" />'+
+                '<span class="input-group-addon">' +                                               
+                '<i class="glyphicon glyphicon-calendar"></i></span></div></td>' +
                 '<td><input style="width: 80px" type="text" id="row-' + row + '-hour" name="row-' + row + '-hour" class="form-control time" placeholder="HH:MM" ></td>' +
                 '<td><input   class="form-control" maxlength="255" style="width: ${DescriptionSize}" id="row-' + row + '-des" name="row-' + row + '-des" rows="2" ></td>' +
                 '<td class="text-center">' +
@@ -811,6 +816,8 @@
                 );
                 var tempCount = parseInt($("#counter").val()) + 1;
         $("#counter").val(tempCount);
+        reloadDatePicker();
+        
     }
     
         function AddRowFromValue(no,hour,description) {
@@ -819,7 +826,10 @@
                 '<tr style="higth 100px">' +
                 '<td class="hidden"> <input id="row-' + row + '-id" name="row-' + row + '-id"  type="hidden" value="" >  </td>' +
                 '<td><input style="width: 20px" id="row-' + row + '-no" name="row-' + row + '-no"   type="text" class="form-control number" value="'+no+'" ></td>' +
-        '<td><input style="width: 100px"  type="text" id="row-' + row + '-date" name="row-' + row + '-date" class="form-control date" placeholder="YYYY-MM-DD"  ></td>' +
+                '<td><div class="input-group daydatepicker" id="daydatepicker-' + row + '" style="padding-left: 15px">'+
+                '<input style="width: 100px" type="text" class="form-control"  id="row-' + row + '-date" name="row-' + row + '-date" data-date-format="YYYY-MM-DD" />'+
+                '<span class="input-group-addon">' +                                               
+                '<i class="glyphicon glyphicon-calendar"></i></span></div></td>' +
                 '<td><input style="width: 80px" type="text" id="row-' + row + '-hour" name="row-' + row + '-hour" class="form-control time" placeholder="HH:MM" value="'+hour+'" ></td>' +
                 '<td><input   class="form-control" maxlength="255" style="width: ${DescriptionSize}" id="row-' + row + '-des" name="row-' + row + '-des" rows="2" value="'+description+'" ></td>' +
                 '<td class="text-center">' +
@@ -828,9 +838,29 @@
                 );
                 var tempCount = parseInt($("#counter").val()) + 1;
         $("#counter").val(tempCount);
+        reloadDatePicker();
     }
 
-
+    function reloadDatePicker(){
+        try{
+           $(".daydatepicker").datetimepicker({
+                pickTime: false   
+           });  
+           $('span').click(function() {
+             
+                var position = $(this).offset();
+                $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+           });
+            $('#LandItinerary tbody tr:last td .input-group-addon').click(function() {  
+                    AddRow(parseInt($("#counter").val()));
+           });
+           
+        }catch(e){
+            
+        }  
+        
+        
+    }
 
     function DeleteRow() {
         $(this).remove();
@@ -887,7 +917,7 @@ $('#savereal').on("keyup keypress", function(e) {
 
     $(document).ready(function() {
         $('.datepicker').datetimepicker().change(function(){                          
-            getvalueProduct();
+            getvalueDepartDate();
         });
         $(".daydatepicker").datetimepicker({
             pickTime: false   

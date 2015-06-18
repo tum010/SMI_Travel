@@ -23,13 +23,39 @@ function setupagentvalue(id,code,name){
     $('#landForm').bootstrapValidator('revalidateField', 'agent_code');
 }
 
+function getvalueDepartDate(){
+    var productid = document.getElementById('Product_id').value;
+    var departdate = document.getElementById('departdate').value;
+    if((productid == '') || (departdate == '')){
+        
+    } else {
+        var result = confirm("Are you sure to update Cost and Price ?");
+        if (result == true) {
+            getvalueProduct();
+        } else {
+            
+        }
+    }
+}
 
 function setupproductvalue(id,code,name){
     $('#ProductModal').modal('hide');
     document.getElementById('Product_id').value = id;
     document.getElementById('Product_code').value = code;
     document.getElementById('Product_name').value = name;
-    getvalueProduct();
+    
+    var productid = document.getElementById('Product_id').value;
+    var departdate = document.getElementById('departdate').value;
+    if((productid == '') || (departdate == '')){
+        getvalueProduct();
+    } else {
+        var result = confirm("Are you sure to update Cost and Price ?");
+        if (result == true) {
+            getvalueProduct();
+        } else {
+            
+        }     
+    }
 }
 
 function getvalueProduct() {
@@ -38,13 +64,12 @@ function getvalueProduct() {
     var productid = document.getElementById('Product_id').value;
     var departdate = document.getElementById('departdate').value;
     var param = 'action=' + 'text' +
-            '&servletName=' + servletName +
-            '&servicesName=' + servicesName +
-            '&packageid=' + productid +
-            '&departdate='+departdate +
-            '&type=' + 'getvaluePackage';
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&packageid=' + productid +
+                '&departdate='+departdate +
+                '&type=' + 'getvaluePackage';
     CallAjax(param);
-
 }
 
 
@@ -215,6 +240,36 @@ function getAgent(){
             }     
          });  
 }
+
+ function addRowCommissionTable() {
+        var counter = $('#commissionTable tbody tr').length;
+        var clone = $('#commissionTable tbody tr:first').clone();
+        clone.removeClass("hide");
+        clone.find('div,input,span').each(function () {
+            console.log('count :'+counter);
+            $(this).attr({
+                id: $(this).attr('id') + counter,
+                name: $(this).attr('name') + counter
+            });
+            $(".datetime").datetimepicker({
+       
+            });
+
+            $('.decimal').inputmask({
+                alias:"decimal",
+                integerDigits:6,
+                groupSeparator: ',', 
+                autoGroup: true,
+                digits:2,
+                allowMinus:false,        
+                digitsOptional: false,
+                placeholder: "0"
+            }); 
+            $("#counterCommission").val(counter + 1);
+        });
+        $('#commissionTable tbody').append(clone);
+    } 
+    
 $(document).ready(function () {
 
     codeProduct = [];

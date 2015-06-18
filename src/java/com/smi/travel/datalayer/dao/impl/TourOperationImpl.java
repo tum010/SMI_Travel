@@ -317,7 +317,12 @@ public class TourOperationImpl implements TourOperationDao {
         List Dataindex = new ArrayList();
         
         for (int i = 0; i < data.size(); i++) {
-            Dataindex.add(data.get(i).getDescription());
+            if(data.get(i).getDescription() == null){
+                Dataindex.add("");
+            }else{
+                Dataindex.add(data.get(i).getDescription());
+            }
+            
         }
         
        
