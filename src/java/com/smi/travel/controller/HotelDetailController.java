@@ -118,7 +118,7 @@ public class HotelDetailController extends SMITravelController {
             }
             hotelBooking.setReconfirm(reconfirm);
             hotelBooking.setHotelRef(hotelRef);
-            
+
             hotelBooking.setRemark(remark);
             if (StringUtils.isNotEmpty(adult)) {
                 hotelBooking.setAdult(Integer.parseInt(adult));
@@ -161,13 +161,13 @@ public class HotelDetailController extends SMITravelController {
                 result = bookingHotelService.updateHotel(hotelBooking);
             }
             request.setAttribute(Result, result);
-
+            return new ModelAndView("redirect:HotelDetail.smi?referenceNo=" + refNo + "&action=edit&id="+ id + "&result=" + result);
         } else if ("edit".equalsIgnoreCase(action)) {
             HotelBooking hotel = bookingHotelService.getHotelFromID(request.getParameter("id"));
-            System.out.println("ID : "+request.getParameter("id"));
+            System.out.println("ID : " + request.getParameter("id"));
             request.setAttribute(HotelBooking, hotel);
             List<HotelRequest> hotelRequests = new ArrayList<HotelRequest>(hotel.getHotelRequests());
-            for(HotelRequest re : hotelRequests){
+            for (HotelRequest re : hotelRequests) {
                 System.out.println("Description : " + re.getDescription());
             }
             request.setAttribute(HotelRequestsList, hotelRequests);
@@ -384,17 +384,17 @@ public class HotelDetailController extends SMITravelController {
 
             hotelPassenger.setPassenger(passengerService.getPassengerFromID(name));
             if (!"".equalsIgnoreCase(name)) {
-            if (name != null) {
-                if (StringUtils.isNotEmpty(hotelPassenger.getPassenger().getId())) {
-                    if (hotelPassenger.getId() == null) {
-                        System.out.println("getPassgner = " + hotelPassenger.getId());
-                        hotelBooking.getHotelPassengers().add(hotelPassenger);
-                        hotelPassenger.setHotelBooking(hotelBooking);
+                if (name != null) {
+                    if (StringUtils.isNotEmpty(hotelPassenger.getPassenger().getId())) {
+                        if (hotelPassenger.getId() == null) {
+                            System.out.println("getPassgner = " + hotelPassenger.getId());
+                            hotelBooking.getHotelPassengers().add(hotelPassenger);
+                            hotelPassenger.setHotelBooking(hotelBooking);
+                        }
+                    } else {
+                        System.out.println("Passenger is null, Not update DB this object " + i);
                     }
-                } else {
-                    System.out.println("Passenger is null, Not update DB this object " + i);
                 }
-            }
             }
 
         }
