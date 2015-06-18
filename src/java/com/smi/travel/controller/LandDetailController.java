@@ -97,10 +97,11 @@ public class LandDetailController extends SMITravelController {
             ADQty = String.valueOf(master.getAdult());
             CHQty = String.valueOf(master.getChild());
             INQty = String.valueOf(master.getInfant());
-            
+            currency = master.getCurrency();
             inb_QTY = String.valueOf(master.getAdult());
             inbCHQty = String.valueOf(master.getChild());
             inbINQty = String.valueOf(master.getInfant());
+            
         }
         
 
