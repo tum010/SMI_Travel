@@ -38,13 +38,22 @@
             <input hidden="" value="${booking_size[5]}" id="input-billable_size">
             <input hidden="" value="${booking_size[6]}" id="input-daytour_size">
         </div>
-        
-       
+
+
         <div class="col-sm-10">
             <input type="hidden" value="${master.customer.MInitialname.name}" id="initialname_tmp">
             <input type="hidden" value="${master.customer.firstName}" id="firstname_tmp">
             <input type="hidden" value="${master.customer.lastName}" id="lastname_tmp">  
             <div ng-include="'WebContent/Book/BookNavbar.html'"></div>
+            <!--Alert Save and Update-->
+            <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Save Success!</strong> 
+            </div>
+            <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Save Unsuccess!</strong> 
+            </div>                
             <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
             <div class="row" style="padding-left: 15px">  
                 <div class="col-sm-6 " style="padding-right: 15px">
@@ -72,7 +81,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+
                     <c:forEach var="item" items="${daytourBookingList}">
                         <c:set var="sumPrice" value="0" />
                         <c:set var="sumQty" value="0" />
@@ -87,11 +96,11 @@
                             <c:forEach var="price" items="${item.daytourBookingPrices}">
                                 <c:set var="sumPrice" value="${sumPrice + (price.price * price.qty)}" />
                                 <c:set var="sumQty" value="${sumQty + price.qty}" />
-                                
+
                             </c:forEach>
                             <td class="text-center money"><c:out value="${sumQty}"/></td>
                             <td class="text-right money"><c:out value="${sumPrice}" /></td>
-                            
+
                             <td class="text-center">
                                 <a href="DaytourDetail.smi?referenceNo=${param.referenceNo}&action=edit&daytourBooking=${item.id}"><span class="glyphicon glyphicon-edit editicon"></span></a>
                                     <c:if test="${item.MItemstatus.id == 2}">
@@ -107,14 +116,14 @@
             </table>
         </div>
     </div><!--row1-->
-    
-    
+
+
     <div class="row" style="padding-left: 15px">
         <div class="col-sm-6" style="padding-left: 230px">
             <h4><b>Other</b></h4>
         </div>
         <div class="col-sm-2 col-sm-offset-4 text-right" style="padding-left: 26px">
-           
+
             <div class="form-actions pull-right" style="padding-right: 0px">
                 <a href="OtherDetail.smi?referenceNo=${param.referenceNo}&action=new&callPageFrom=FromDayTour">
                     <button type="button" id="acs" onclick=""  class="btn btn-success">
@@ -123,8 +132,8 @@
             </div>
         </div> 
     </div>
-    
-            
+
+
     <div class="row">
         <div class="col-sm-2"></div>
         <div class="col-sm-10">
@@ -150,7 +159,7 @@
                         <th style="width:5%">Cost</th>
                         <th style="width:5%">Qty</th>
                         <th style="width:5%">Price</th>
-               
+
                     </tr>
                 </thead>
                 <tbody>
@@ -173,18 +182,18 @@
                                                                (table.inPrice * table.inQty)}
                             </td>
                             <td>
-                                <center> 
-                                    <a href="OtherDetail.smi?referenceNo=${param.referenceNo}&itemid=${table.id}&action=edit&callPageFrom=FromDayTour"><span class="glyphicon glyphicon-edit editicon"      onclick="" ></span></a>
-                                    <c:if test="${table.status.id == 2}">
-                                        <span class="glyphicon glyphicon-plus addicon"   onclick="EnableOther('${table.id}',' ${table.product.code}');" data-toggle="modal" data-target="#EnableOther" ></span>
-                                    </c:if>
-                                    <c:if test="${table.status.id == 1}">
-                                        <span class="glyphicon glyphicon-remove deleteicon"   onclick="DeleteOther('${table.id}',' ${table.product.code}');" data-toggle="modal" data-target="#DelOther" ></span>
-                                    </c:if>                                   
-                                </center>
-                            </td>
-                        </tr>
-                    </c:forEach>
+                    <center> 
+                        <a href="OtherDetail.smi?referenceNo=${param.referenceNo}&itemid=${table.id}&action=edit&callPageFrom=FromDayTour"><span class="glyphicon glyphicon-edit editicon"      onclick="" ></span></a>
+                            <c:if test="${table.status.id == 2}">
+                            <span class="glyphicon glyphicon-plus addicon"   onclick="EnableOther('${table.id}', ' ${table.product.code}');" data-toggle="modal" data-target="#EnableOther" ></span>
+                        </c:if>
+                        <c:if test="${table.status.id == 1}">
+                            <span class="glyphicon glyphicon-remove deleteicon"   onclick="DeleteOther('${table.id}', ' ${table.product.code}');" data-toggle="modal" data-target="#DelOther" ></span>
+                        </c:if>                                   
+                    </center>
+                    </td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
@@ -214,13 +223,29 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<c:if test="${! empty param.result}">
+    <c:if test="${param.result =='success'}">        
+        <script language="javascript">
+            $('#textAlertDivSave').show();
+        </script>
+        <!--<META HTTP-EQUIV="Refresh" CONTENT="0;URL=AirTicket.smi?referenceNo=${param.referenceNo}&action=edit">-->
+    </c:if>
+    <c:if test="${param.result =='fail'}">        
+        <script language="javascript">
+            $('#textAlertDivNotSave').show();
+        </script>
+        <!--<META HTTP-EQUIV="Refresh" CONTENT="0;URL=AirTicket.smi?referenceNo=${param.referenceNo}&action=edit">-->
+    </c:if>
+</c:if>
+        
 <script language="javascript">
-    function setformatmoney(){
-        $('#OtherTable tr td.moneyformat').each(function() {
+    function setformatmoney() {
+        $('#OtherTable tr td.moneyformat').each(function () {
             var innerHTML = $(this).html();
-            $(this).html(numberWithCommas(innerHTML));       
+            $(this).html(numberWithCommas(innerHTML));
         });
-      }
+    }
     function setEnableDaytour(id, code) {
         $("#titleDaytourModal").html("Enable Booking Daytour");
 //        $("#referenceNo").val("${param.referenceNo}");
@@ -265,27 +290,27 @@
     }
 
     $(document).ready(function () {
-        
+
         var table = $('#OtherTable').DataTable({
-        "bJQueryUI": true,
-        "sPaginationType": "full_numbers",
-        "bAutoWidth": false,
-        "bFilter": false,
-        "bInfo": true,
-        "bSort": false
-        
-    });
-    $('#OtherTable tbody').on('click', 'tr', function () {
-        if ($(this).hasClass('row_selected')) {
-            $(this).removeClass('row_selected');
-            $('#hdGridSelected').val('');
-        }
-        else {
-            table.$('tr.row_selected').removeClass('row_selected');
-            $(this).addClass('row_selected');
-            $('#hdGridSelected').val($('#OtherTable tbody tr.row_selected').attr("id"));
-        }
-    });
+            "bJQueryUI": true,
+            "sPaginationType": "full_numbers",
+            "bAutoWidth": false,
+            "bFilter": false,
+            "bInfo": true,
+            "bSort": false
+
+        });
+        $('#OtherTable tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('row_selected')) {
+                $(this).removeClass('row_selected');
+                $('#hdGridSelected').val('');
+            }
+            else {
+                table.$('tr.row_selected').removeClass('row_selected');
+                $(this).addClass('row_selected');
+                $('#hdGridSelected').val($('#OtherTable tbody tr.row_selected').attr("id"));
+            }
+        });
         $('.time').mask('00:00');
         //Number
         $(".money").mask('000,000,000', {reverse: true});

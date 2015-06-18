@@ -51,7 +51,15 @@
 <!--content-->
 <div class ="container"  style="padding-top: 15px;" ng-app=""> 
     <div class="row">
-
+        <!--Alert Save and Update-->
+        <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Save Success!</strong> 
+        </div>
+        <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Save Unsuccess!</strong> 
+        </div> 
 
         <!-- side bar -->
         <div class="col-md-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
@@ -121,9 +129,9 @@
                                 <th>Cost</th>
                                 <th>Price</th>
                                 <th>Status</th>
-                                <c:if test="${currentPnr.MItemstatus.id != 2}">
-                                <th>Action</th>
-                                </c:if>
+                                    <c:if test="${currentPnr.MItemstatus.id != 2}">
+                                    <th>Action</th>
+                                    </c:if>
                             </tr>
                         </thead>
                         <tbody>
@@ -459,7 +467,7 @@
                         </div>
                     </div>
                     <script>
-                        
+
 //                            function getAutoAirport(name){
 //                                var servletName = 'AirTicketServlet';
 //                                var servicesName = 'AJAXBean';
@@ -513,12 +521,12 @@
 //                                    alert(e);
 //                                }
 //                            }
-                        
-                            flight.push({id: "${fStatus.count}",
-                                air_id: "${flight.airticketAirline.MAirline.id}",
-                                air_code: "${flight.airticketAirline.MAirline.code}",
-                                air_name: "${flight.airticketAirline.MAirline.name}"
-                            });
+
+                        flight.push({id: "${fStatus.count}",
+                            air_id: "${flight.airticketAirline.MAirline.id}",
+                            air_code: "${flight.airticketAirline.MAirline.code}",
+                            air_name: "${flight.airticketAirline.MAirline.name}"
+                        });
                         $(document).ready(function () {
 //                            ;
 //                           $("#departure-${fStatus.count}-code").on('keyup',function(){
@@ -528,26 +536,26 @@
 ////                                $(".ui-widget").css("left", position.left);
 //                                
 //                           }); 
-                            
+
                             var status = "${flight.MItemstatus.name}";
                             var tickettype = "${flight.MTicketType.id}";
                             var flightClass = "${flight.MFlight.id}";
                             $("#flight-${fStatus.count}-ticketType").val(tickettype);
                             $("#flight-${fStatus.count}-class").val(flightClass);
                             $("#flight-${fStatus.count}-status").val(status);
-                            
+
                             var codeAirline = [];
                             $.each(airline, function (key, value) {//winit
                                 codeAirline.push(value.airline_code);
-                                 if ( !(value.airline_name in codeAirline) ){
+                                if (!(value.airline_name in codeAirline)) {
                                     codeAirline.push(value.airline_name);
-                                 }
+                                }
                             });
                             $("#airlineCode${fStatus.count}").autocomplete({
                                 source: codeAirline,
-                                close:function( event, ui ) {
+                                close: function (event, ui) {
                                     $("#airlineCode${fStatus.count}").trigger('keyup');
-                                 }
+                                }
                             });
                             $("#airlineCode${fStatus.count}").on('keyup', function () {
                                 var position = $(this).offset();
@@ -562,32 +570,32 @@
                                         $("#airlineId${fStatus.count}").val(value.airline_id);
                                         $("#airlineName${fStatus.count}").val(value.airline_name);
                                     }
-                                    if(name === value.airline_name){
+                                    if (name === value.airline_name) {
                                         $("#airlineId${fStatus.count}").val(value.airline_id);
                                         $("#airlineCode${fStatus.count}").val(value.airline_code);
                                         $("#airlineName${fStatus.count}").val(value.airline_name);
                                         code = $("#airlineCode${fStatus.count}").val().toUpperCase();
-                                         
+
                                     }
                                 });
                             });
-                            $("#airlineCode${fStatus.count}").on('click focus',function(){
+                            $("#airlineCode${fStatus.count}").on('click focus', function () {
                                 $(this).select();
                             });
-                            
-                            
+
+
                             var codeDeparture = [];
                             $.each(a, function (key, value) {//winit
                                 codeDeparture.push(value.code);
-                                 if ( !(value.name in codeDeparture) ){
+                                if (!(value.name in codeDeparture)) {
                                     codeDeparture.push(value.name);
-                                 }
+                                }
                             });
                             $("#departure-${fStatus.count}-code").autocomplete({
                                 source: codeDeparture,
-                                close:function( event, ui ) {
+                                close: function (event, ui) {
                                     $("#departure-${fStatus.count}-code").trigger('keyup');
-                                 }
+                                }
                             });
                             $("#departure-${fStatus.count}-code").on('keyup', function () {
                                 var position = $(this).offset();
@@ -603,28 +611,28 @@
                                         $("#departure-${fStatus.count}-id").val(value.id);
                                         $("#departure-${fStatus.count}-name").val(value.name);
                                     }
-                                    if(name === value.name){
-                                         $("#departure-${fStatus.count}-id").val(value.id);
+                                    if (name === value.name) {
+                                        $("#departure-${fStatus.count}-id").val(value.id);
                                         $("#departure-${fStatus.count}-code").val(value.code);
                                         $("#departure-${fStatus.count}-name").val(value.name);
                                         code = $("#departure-${fStatus.count}-code").val().toUpperCase();
-                                        
+
                                     }
                                 });
                             });
-                            
+
                             var codeArrival = [];
                             $.each(a, function (key, value) {//winit
                                 codeArrival.push(value.code);
-                                if ( !(value.name in codeArrival) ){
+                                if (!(value.name in codeArrival)) {
                                     codeArrival.push(value.name);
-                                 }
+                                }
                             });
                             $("#arrival-${fStatus.count}-code").autocomplete({
                                 source: codeArrival,
-                                close:function( event, ui ) {
+                                close: function (event, ui) {
                                     $("#arrival-${fStatus.count}-code").trigger('keyup');
-                                 }
+                                }
                             });
                             $("#arrival-${fStatus.count}-code").on('keyup', function () {
                                 var position = $(this).offset();
@@ -640,12 +648,12 @@
                                         $("#arrival-${fStatus.count}-id").val(value.id);
                                         $("#arrival-${fStatus.count}-name").val(value.name);
                                     }
-                                    if(name === value.name){
+                                    if (name === value.name) {
                                         $("#arrival-${fStatus.count}-id").val(value.id);
                                         $("#arrival-${fStatus.count}-code").val(value.code);
                                         $("#arrival-${fStatus.count}-name").val(value.name);
                                         code = $("#arrival-${fStatus.count}-code").val().toUpperCase();
-                                        
+
                                     }
                                 });
                             });
@@ -729,7 +737,7 @@
                             <c:forEach var="passenger" items="${passengers}" varStatus="pStatus">
                                 <tr>
                                     <td style="width: 10%">${passenger.airticketAirline.MAirline.code}</td>
-                                   
+
                                     <td style="width: 10%"><!--winit-->
                                         <select id="passengerCategoryCom${pStatus.count}" name="passengerCategoryCom${pStatus.count}" class="form-control">          
                                             <c:forEach var="category" items="${mPricecategorysList}" >
@@ -748,42 +756,42 @@
                                     <td class="text-right moneyformat" style="width: 8%">${passenger.ticketTax}</td>
                                     <td class="text-center" style="width: 6%">
                                         <select id="passengerTicketTypeCom${pStatus.count}" name="passengerTicketTypeCom${pStatus.count}" class="form-control">          
-                                                <c:if test="${passenger.ticketType eq 'I'}">
-                                                    <c:set var="select" value="selected" />
-                                                    <c:set var="nameChecked" value="Inter" />
-                                                    <c:set var="nameOther" value="Domestic" />
-                                                    <c:set var="code" value="D" />
-                                                </c:if>
-                                                <c:if test="${passenger.ticketType eq 'D'}">
-                                                    <c:set var="select" value="selected" />
-                                                    <c:set var="nameChecked" value="Domestic" />
-                                                    <c:set var="nameOther" value="Inter" />
-                                                    <c:set var="code" value="I" />
-                                                </c:if>
-                                                <option value="${passenger.ticketType}" ${select}>${nameChecked}</option>
-                                                <option value="${code}" >${nameOther}</option>
+                                            <c:if test="${passenger.ticketType eq 'I'}">
+                                                <c:set var="select" value="selected" />
+                                                <c:set var="nameChecked" value="Inter" />
+                                                <c:set var="nameOther" value="Domestic" />
+                                                <c:set var="code" value="D" />
+                                            </c:if>
+                                            <c:if test="${passenger.ticketType eq 'D'}">
+                                                <c:set var="select" value="selected" />
+                                                <c:set var="nameChecked" value="Domestic" />
+                                                <c:set var="nameOther" value="Inter" />
+                                                <c:set var="code" value="I" />
+                                            </c:if>
+                                            <option value="${passenger.ticketType}" ${select}>${nameChecked}</option>
+                                            <option value="${code}" >${nameOther}</option>
                                         </select>
                                     </td>
                                     <td class="text-center" style="width: 6%">
                                         <select id="passengerFromCom${pStatus.count}" name="passengerFromCom${pStatus.count}" class="form-control">          
-                                                <c:if test="${passenger.ticketFrom eq 'C'}">
-                                                    <c:set var="select" value="selected" />
-                                                    <c:set var="nameChecked" value="In" />
-                                                    <c:set var="nameOther" value="Out" />
-                                                    <c:set var="code" value="O" />
-                                                </c:if>
-                                                <c:if test="${passenger.ticketFrom  eq 'O'}">
-                                                    <c:set var="select" value="selected" />
-                                                    <c:set var="nameChecked" value="Out" />
-                                                    <c:set var="nameOther" value="In" />
-                                                    <c:set var="code" value="C" />
-                                                </c:if>
-                                                <option value="${passenger.ticketFrom}" ${select}>${nameChecked}</option>
-                                                <option value="${code}" >${nameOther}</option>
+                                            <c:if test="${passenger.ticketFrom eq 'C'}">
+                                                <c:set var="select" value="selected" />
+                                                <c:set var="nameChecked" value="In" />
+                                                <c:set var="nameOther" value="Out" />
+                                                <c:set var="code" value="O" />
+                                            </c:if>
+                                            <c:if test="${passenger.ticketFrom  eq 'O'}">
+                                                <c:set var="select" value="selected" />
+                                                <c:set var="nameChecked" value="Out" />
+                                                <c:set var="nameOther" value="In" />
+                                                <c:set var="code" value="C" />
+                                            </c:if>
+                                            <option value="${passenger.ticketFrom}" ${select}>${nameChecked}</option>
+                                            <option value="${code}" >${nameOther}</option>
                                         </select>
                                     </td>
-                                        <td class="text-center" style="width: 3%">
-                                            <a id="passenger_tableButtonEdit${pStatus.count}" class="carousel" data-toggle="collapse" data-parent="#accordion" data-target="#passenger${pStatus.count}" aria-expanded="true" aria-controls="collapseExample">
+                                    <td class="text-center" style="width: 3%">
+                                        <a id="passenger_tableButtonEdit${pStatus.count}" class="carousel" data-toggle="collapse" data-parent="#accordion" data-target="#passenger${pStatus.count}" aria-expanded="true" aria-controls="collapseExample">
                                             <span id="passenger_tableSpanEdit${pStatus.count}" class="glyphicon glyphicon-edit editicon"></span>
                                         </a>
                                         <a id="passenger_tableButtonRemove${pStatus.count}" href="#" class="confirm-delete" data-id="${passenger.id}">
@@ -1081,9 +1089,9 @@
                 <h4 class="modal-title">Departure</h4>
             </div>
             <div class="modal-body">
-         <div style="text-align: right"><i id="ajaxloaddep"  class="fa fa-spinner fa-spin hidden"></i>
+                <div style="text-align: right"><i id="ajaxloaddep"  class="fa fa-spinner fa-spin hidden"></i>
                     Search : <input placeholder ="CODE/NAME " type="text" style="width: 175px" id="filterdep" name="filterdep"/>
-         </div>
+                </div>
                 <!--Airport List -->
                 <table class="display" id="DepartureTable">
                     <thead>                        
@@ -1118,7 +1126,7 @@
                         console.log("id : " + id);
                         flight_id = id;
                     }
-                    
+
                     function getDeparture(name) {
                         var servletName = 'AirTicketServlet';
                         var servicesName = 'AJAXBean';
@@ -1132,14 +1140,14 @@
                     }
                     function CallAjaxDeparture(param) {
                         var url = 'AJAXServlet';
-                        $("#ajaxloaddep").removeClass("hidden"); 
+                        $("#ajaxloaddep").removeClass("hidden");
                         try {
                             $.ajax({
                                 type: "POST",
                                 url: url,
                                 cache: false,
                                 data: param,
-                                success: function (msg) {    
+                                success: function (msg) {
                                     $('#DepartureTable').dataTable().fnClearTable();
                                     $('#DepartureTable').dataTable().fnDestroy();
                                     $("#DepartureTable tbody").empty().append(msg);
@@ -1152,23 +1160,23 @@
                                         "bLengthChange": false,
                                         "iDisplayLength": 10
                                     });
-                                     $("#ajaxloaddep").addClass("hidden");                              
-                                }, error: function (msg) {    
-                                     $("#ajaxloaddep").addClass("hidden");  
+                                    $("#ajaxloaddep").addClass("hidden");
+                                }, error: function (msg) {
+                                    $("#ajaxloaddep").addClass("hidden");
                                 }
                             });
                         } catch (e) {
                             alert(e);
                         }
                     }
-                    
+
                     $(document).ready(function () {
                         $("#filterdep").keyup(function (event) {
                             if (event.keyCode === 13) {
                                 getDeparture($("#filterdep").val());
                             }
                         });
-                        
+
                         $.each(a, function (index, value) {
                             $.each(flight, function (index_flight, value_flight) {
                                 var flightCode = $("#departure-" + value_flight.id + "-code").val();
@@ -1179,7 +1187,7 @@
                             });
                         });
 
-                        $("#DepartureTable tbody").on('click','tr', function () {
+                        $("#DepartureTable tbody").on('click', 'tr', function () {
                             departure_id = $(this).find(".departure-id").text();
                             departure_code = $(this).find(".departure-code").text();
                             departure_name = $(this).find(".departure-name").text();
@@ -1204,7 +1212,7 @@
 
                             if ($(this).hasClass('row_selected')) {
                                 $(this).removeClass('row_selected');
-                            }else {
+                            } else {
                                 DepartureTable.$('tr.row_selected').removeClass('row_selected');
                                 $(this).addClass('row_selected');
                             }
@@ -1269,14 +1277,14 @@
                     }
                     function CallAjaxArrive(param) {
                         var url = 'AJAXServlet';
-                        $("#ajaxloadarrive").removeClass("hidden"); 
+                        $("#ajaxloadarrive").removeClass("hidden");
                         try {
                             $.ajax({
                                 type: "POST",
                                 url: url,
                                 cache: false,
                                 data: param,
-                                success: function (msg) {    
+                                success: function (msg) {
                                     $('#ArrivalTable').dataTable().fnClearTable();
                                     $('#ArrivalTable').dataTable().fnDestroy();
                                     $("#ArrivalTable tbody").empty().append(msg);
@@ -1289,37 +1297,37 @@
                                         "bLengthChange": false,
                                         "iDisplayLength": 10
                                     });
-                                     $("#ajaxloadarrive").addClass("hidden");
-                                }, error: function (msg) {    
-                                     $("#ajaxloadarrive").addClass("hidden");  
+                                    $("#ajaxloadarrive").addClass("hidden");
+                                }, error: function (msg) {
+                                    $("#ajaxloadarrive").addClass("hidden");
                                 }
                             });
                         } catch (e) {
                             alert(e);
                         }
                     }
-                    
+
                     $(document).ready(function () {
                         $("#filterarrive").keyup(function (event) {
                             if (event.keyCode === 13) {
                                 getArrive($("#filterarrive").val());
                             }
                         });
-                        
+
                         $.each(a, function (index, value) {
                             $.each(flight, function (index_flight, value_flight) {
-                                var flightCode= $("#arrival-" + value_flight.id + "-code").val();
+                                var flightCode = $("#arrival-" + value_flight.id + "-code").val();
                                 if (flightCode === value.code) {
                                     console.log("flightCode : " + flightCode);
                                     $("#arrival-" + value_flight.id + "-name").val(value.name);
                                 }
                             });
                         });
-                        $("#ArrivalTable tbody").on('click','tr', function () {
+                        $("#ArrivalTable tbody").on('click', 'tr', function () {
                             arrival_id = $(this).find(".arrival-id").text();
                             arrival_code = $(this).find(".arrival-code").text();
                             arrival_name = $(this).find(".arrival-name").text();
-                           /*alert("arrival_id :"+arrival_id+"|arrival_code :"+arrival_code+"|arrival_name :"+arrival_name);*/
+                            /*alert("arrival_id :"+arrival_id+"|arrival_code :"+arrival_code+"|arrival_name :"+arrival_name);*/
                             $("#arrival-" + flight_id.toString() + "-id").val(arrival_id);
                             $("#arrival-" + flight_id.toString() + "-code").val(arrival_code);
                             $("#arrival-" + flight_id.toString() + "-name").val(arrival_name);
@@ -1337,11 +1345,11 @@
                             "bLengthChange": false,
                             "iDisplayLength": 10
                         });
-                        
+
                         $('#ArrivalTable tbody').on('click', 'tr', function () {
                             if ($(this).hasClass('row_selected')) {
                                 $(this).removeClass('row_selected');
-                            }else {
+                            } else {
                                 ArrivalTable.$('tr.row_selected').removeClass('row_selected');
                                 $(this).addClass('row_selected');
                             }
@@ -1592,18 +1600,20 @@
 </div><!-- /.modal -->  
 <!--style-->
 
-<c:if test="${! empty result}">
-    <c:if test="${result =='1'}">        
+<c:if test="${! empty param.result}">
+    <c:if test="${param.result =='1'}">        
         <script language="javascript">
-            alert("save successful");
+//            alert("save successful");
+            $('#textAlertDivSave').show();
         </script>
-        <META HTTP-EQUIV="Refresh" CONTENT="0;URL=AirTicketDetail.smi?referenceNo=${param.referenceNo}&pnr=${param.pnr}&action=edit">
+        <!--<META HTTP-EQUIV="Refresh" CONTENT="0;URL=AirTicketDetail.smi?referenceNo=${param.referenceNo}&pnr=${param.pnr}&action=edit">-->
     </c:if>
-    <c:if test="${result =='0'}">        
+    <c:if test="${param.result =='0'}">        
         <script language="javascript">
-            alert("save unsuccessful");
+//            alert("save unsuccessful");
+            $('#textAlertDivNotSave').show();
         </script>
-        <META HTTP-EQUIV="Refresh" CONTENT="0;URL=AirTicketDetail.smi?referenceNo=${param.referenceNo}&pnr=${param.pnr}&action=edit">
+        <!--<META HTTP-EQUIV="Refresh" CONTENT="0;URL=AirTicketDetail.smi?referenceNo=${param.referenceNo}&pnr=${param.pnr}&action=edit">-->
     </c:if>
 </c:if>
 

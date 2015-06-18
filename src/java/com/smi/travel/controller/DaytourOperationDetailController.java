@@ -108,9 +108,9 @@ public class DaytourOperationDetailController extends SMITravelController {
             setGeneralResponseAttribute(request, refNo);
         } else if ("update".equalsIgnoreCase(action)) {
             result = updatetourOperationDesc(request, tourID, tourDate);
-            request.setAttribute(TransactionResult, "Save successful");
-            request.setAttribute("redirectUrl" , "DaytourOperationDetail.smi?action=edit&tourID=" + tourID + "&tourDate=" + tourDate);
-            //return new ModelAndView("redirect:DaytourOperationDetail.smi?action=edit&tourID=" + tourID + "&tourDate=" + tourDate);
+//            request.setAttribute(TransactionResult, "Save successful");
+//            request.setAttribute("redirectUrl" , "DaytourOperationDetail.smi?action=edit&tourID=" + tourID + "&tourDate=" + tourDate);
+            return new ModelAndView("redirect:DaytourOperationDetail.smi?action=edit&tourID=" + tourID + "&tourDate=" + tourDate + "&result=" + result);
 
         } else if ("deleteBookingDriver".equalsIgnoreCase(action)) {
             String driverId = request.getParameter("driverId");

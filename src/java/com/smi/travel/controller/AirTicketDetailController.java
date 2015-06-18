@@ -120,6 +120,7 @@ public class AirTicketDetailController extends SMITravelController {
                 //return new ModelAndView("redirect:AirTicketDetail.smi?referenceNo=" + referenceNo + "&pnr=" + pnr + "&action=edit&result=" + result);
             }
             request.setAttribute(Result, result);
+            return new ModelAndView("redirect:AirTicketDetail.smi?referenceNo=" + referenceNo + "&pnr=" + pnr + "&action=edit&result=" + result);
         } else if ("newpnr".equalsIgnoreCase(action)) {
             System.out.println(action);
             AirticketPnr airPnr = new AirticketPnr();

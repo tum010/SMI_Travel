@@ -61,6 +61,15 @@
 
         <div class="col-sm-10">
             <div ng-include="'WebContent/Book/BookNavbar.html'"></div>
+            <!--Alert Save and Update-->
+            <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Save Success!</strong> 
+            </div>
+            <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Save Unsuccess!</strong> 
+            </div> 
             <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
             <div class="row">
                 <div class="col-sm-6">
@@ -434,19 +443,21 @@
     </div>
 </div>
 
-<c:if test="${! empty result}">
-    <c:if test="${result =='1'}">        
+<c:if test="${! empty param.result}">
+    <c:if test="${param.result =='1'}">        
         <script language="javascript">
-            alert("save successful");
-        </script>
-        <META HTTP-EQUIV="Refresh" CONTENT="0;URL=HotelDetail.smi?referenceNo=${param.referenceNo}&id=${param.id}&action=edit">
-    </c:if>
-    <c:if test="${result =='0'}">        
-        <script language="javascript">
-            alert("save unsuccessful");
-        </script>
-        <META HTTP-EQUIV="Refresh" CONTENT="0;URL=HotelDetail.smi?referenceNo=${param.referenceNo}&id=${param.id}&action=edit">
-    </c:if>
+//            alert("save successful");
+            $('#textAlertDivSave').show();
+    </script>
+    <!--<META HTTP-EQUIV="Refresh" CONTENT="0;URL=HotelDetail.smi?referenceNo=${param.referenceNo}&id=${param.id}&action=edit">-->
+</c:if>
+<c:if test="${param.result =='0'}">        
+    <script language="javascript">
+//        alert("save unsuccessful");
+            $('#textAlertDivNotSave').show();
+    </script>
+    <!--<META HTTP-EQUIV="Refresh" CONTENT="0;URL=HotelDetail.smi?referenceNo=${param.referenceNo}&id=${param.id}&action=edit">-->
+</c:if>
 </c:if>
 
 <!--HOTEL MODAL-->
@@ -479,7 +490,7 @@
                             <td class="hotel-name">${hotel.name}</td>
                             <td class="hotel-country">${hotel.MCountry.name}</td>
                         </tr>
-                         <script>
+                        <script>
                             hotel.push({id: "${hotel.id}", code: "${hotel.code}", name: "${hotel.name}", country: "${hotel.MCountry.name}"});
                         </script>
                     </c:forEach>
