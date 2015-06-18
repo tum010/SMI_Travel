@@ -705,7 +705,7 @@
                         <table  class="display table-striped table-responsive" id="passenger_table">
                             <thead>
                                 <tr class="datatable-header">
-                                    <th>Airline Code</th>
+                                    <th>Airline</th>
                                     <th>Passenger Type</th>
                                     <th colspan="3">Ticket</th>
                                     <th>Fare</th>
