@@ -487,8 +487,8 @@ function addRowTable() {
         $("#flight-" + counter + "-departTime").val(),
         ' ',
         ' ',
-//        $("#adCost-" + counter).val(),
-//        $("#adPrice-" + counter).val(),
+        $("#adCost-" + counter).val(),
+        $("#adPrice-" + counter).val(),
         $("#flight-" + counter + "-status").val(),
         '<div class="text-center"><a class="carousel" data-toggle="collapse" data-parent="#accordion"data-target="#flight' + counter + '" aria-expanded="true" aria-controls="collapseExample"><span class="glyphicon glyphicon-edit editicon"></span></a>'
                 + ' <span class="glyphicon glyphicon-remove deleteicon" onclick="setDisableFlight(' + counter + ',2);" data-toggle="modal" data-target="#DisableFlight"></span></div>'
