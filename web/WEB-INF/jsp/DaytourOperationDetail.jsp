@@ -812,7 +812,12 @@
             <!-- Script Daytour List table-->
             <script>
                 $(document).ready(function () {
+                    $("#ButtonSearch").attr("disabled", "disabled");
                     
+                    if (($("#InputDetailTourName,#InputTourDetailTourDate").val().trim().length !== 0)) {
+                        $("#ButtonSearch").removeAttr("disabled");
+                    }
+
                     $('.date').datetimepicker();
                     $('.datemask').mask('0000-00-00');
                     $("#tourTable tr").on('click', function () {//winit
