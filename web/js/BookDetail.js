@@ -158,6 +158,7 @@ $(function () {
                 code = $("#FamilyLeaderCode").val().toUpperCase();
             }
         });
+        
     });
 });
 
@@ -165,10 +166,11 @@ $(function () {
 $(document).ready(function () {
         var agentCode = [];
         $.each(agent, function (key, value) {
+            console.log("agentCount=="+agent.length);
             agentCode.push(value.code);
-            if ( !(value.name in agentCode) ){
+//            if ( !(value.name in agentCode) ){
                agentCode.push(value.name);
-            }
+//            }
         });
 
         $("#agent_user").autocomplete({
@@ -177,6 +179,8 @@ $(document).ready(function () {
                $("#agent_user").trigger('keyup');
             }
         });
+       
+        
         $("#agent_user").on('keyup',function(){
             var position = $(this).offset();
             $(".ui-widget").css("top", position.top + 30);
@@ -185,20 +189,22 @@ $(document).ready(function () {
             var name = this.value;
             $("#agent_id,#agent_name,#agent_addr,#agent_tel").val(null);
             $.each(agent, function (key, value) {
-                if (value.code.toUpperCase() === code) {     
+                if (value.code.toUpperCase() === code ) {     
                     $("#agent_id").val(value.id);
                     $("#agent_name").val(value.name);
                     $("#agent_addr").val(value.address);
                     $("#agent_tel").val(value.tel);
+//                    $("#agent_user").val(value.code);
                 }
-                if(name === value.name){
-                    $("#agent_user").val(value.code);
-                    $("#agent_id").val(value.id);
-                    $("#agent_name").val(value.name);
-                    $("#agent_addr").val(value.address);
-                    $("#agent_tel").val(value.tel);
-                }
+//                if(name === value.name){
+//                    $("#agent_user").val(value.code);
+//                    $("#agent_id").val(value.id);
+//                    $("#agent_name").val(value.name);
+//                    $("#agent_addr").val(value.address);
+//                    $("#agent_tel").val(value.tel);
+//                }
             }); 
+            
         }); 
        
         

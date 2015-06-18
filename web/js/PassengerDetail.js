@@ -82,6 +82,7 @@ $(document).ready(function () {
     console.log(customer);
     var codeCustomer = [];
     $.each(customer, function (key, value) {
+        console.log('customer=='+customer.length);
         codeCustomer.push(value.code);
         if ( !(value.firstname in codeCustomer) ){
            codeCustomer.push(value.firstname);

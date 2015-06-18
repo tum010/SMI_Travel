@@ -218,7 +218,7 @@ function addFight(rowId) {
             + '<div class = "form-group">'
             + '<div class = "input-group">'
             + '<input type = "hidden" class = "form-control" id = "airlineId' + rowId + '" name = "airlineId' + rowId + '" >'
-            + '<input name = "airlineCode' + rowId + '" id = "airlineCode' + rowId + '"  class = "form-control airline" data-id="' + rowId + '" maxlength="5" data-bv-notempty data-bv-notempty-message="The airline is required">'
+            + '<input name = "airlineCode' + rowId + '" id = "airlineCode' + rowId + '"  class = "form-control airline" data-id="' + rowId + '"  data-bv-notempty data-bv-notempty-message="The airline is required">'
             + '<span class = "input-group-addon" data-toggle = "modal" data-target = "#AirlineModal" onclick = "get_PId(1,' + rowId + ')" >'
             + '<span class = "glyphicon-search glyphicon" > </span>'
             + '</span>'
@@ -589,7 +589,7 @@ $(document).ready(function () {
         "bInfo": true,
         "oLanguage": {
             "sInfo": 'Total : _TOTAL_',
-            "sInfoEmpty": 'Total : 0',
+            "sInfoEmpty": 'Total : 0'
         }
     });
     // TABLE PASSENGER SHOW TOTAL

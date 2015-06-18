@@ -9,6 +9,7 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script type="text/javascript" src="js/jquery.mask.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui.js"></script>
 <script type="text/javascript" src="js/AirticketDetail.js"></script> 
 <link href="css/jquery-ui.css" rel="stylesheet">
 
@@ -449,12 +450,76 @@
                         </div>
                     </div>
                     <script>
-                        flight.push({id: "${fStatus.count}",
-                            air_id: "${flight.airticketAirline.MAirline.id}",
-                            air_code: "${flight.airticketAirline.MAirline.code}",
-                            air_name: "${flight.airticketAirline.MAirline.name}"
-                        });
+                        
+//                            function getAutoAirport(name){
+//                                var servletName = 'AirTicketServlet';
+//                                var servicesName = 'AJAXBean';
+//                                var param = 'action=' + 'text' +
+//                                        '&servletName=' + servletName +
+//                                        '&servicesName=' + servicesName +
+//                                        '&name=' + name +
+//                                        '&type=' + 'autoairport';
+//                                console.log("Ajax param [" + param + "]");
+//                                CallAjaxAutoAirport(param);
+//                            }
+
+//                            function CallAjaxAutoAirport(param){
+//                                var url = 'AJAXServlet';
+//                                try {
+//                                    $.ajax({
+//                                        type: "POST",
+//                                        url: url,
+//                                        cache: false,
+//                                        data: param,
+//                                        success: function (msg) {
+//                                            console.log(msg);
+//                                            $("#departure-${fStatus.count}-code").autocomplete({
+//                                                minLength: 2,
+//                                                source: msg,
+//                                                focus: function(event, ui) {
+//                                                    $('#departure-${fStatus.count}-name').val(ui.item.code);
+//                                                    return false;
+//                                                },
+//                                                select: function(event, ui) {
+//                                                    $('#departure-${fStatus.count}-name').val(ui.item.code);
+//                                                    return false;
+//                                                },
+//                                                create: function() {
+//                                                    $(this).data('ui-autocomplete')._renderItem = 
+//                                                    function( ul, item ) {
+//                                                    return $("<li></li>")
+//                                                    .data("item.autocomplete", item)
+//                                                    .append("<a>" + item.name + "</a>")
+//                                                    .appendTo( ul );
+//                                                    };        
+//                                                }        
+//                                            });
+//                                            
+//                                        }
+//                                        , error: function (msg) {
+//                                            alert("msg error : "+msg);
+//                                        }
+//                                    });
+//                                } catch (e) {
+//                                    alert(e);
+//                                }
+//                            }
+                        
+                            flight.push({id: "${fStatus.count}",
+                                air_id: "${flight.airticketAirline.MAirline.id}",
+                                air_code: "${flight.airticketAirline.MAirline.code}",
+                                air_name: "${flight.airticketAirline.MAirline.name}"
+                            });
                         $(document).ready(function () {
+//                            ;
+//                           $("#departure-${fStatus.count}-code").on('keyup',function(){
+//                                getAutoAirport(this.value);
+////                                var position = $(this).offset();
+////                                $(".ui-widget").css("top", position.top + 30);
+////                                $(".ui-widget").css("left", position.left);
+//                                
+//                           }); 
+                            
                             var status = "${flight.MItemstatus.name}";
                             var tickettype = "${flight.MTicketType.id}";
                             var flightClass = "${flight.MFlight.id}";
@@ -497,6 +562,10 @@
                                     }
                                 });
                             });
+                            $("#airlineCode${fStatus.count}").on('click focus',function(){
+                                $(this).select();
+                            });
+                            
                             
                             var codeDeparture = [];
                             $.each(a, function (key, value) {//winit

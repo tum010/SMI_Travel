@@ -9,6 +9,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script type="text/javascript" src="js/workspace.js"></script> 
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+<link href="css/jquery-ui.css" rel="stylesheet">
 <c:set var="dataList" value="${requestScope['booking_list']}" />
 <c:set var="userdepartment" value="${requestScope['userdepartment']}" />
 <c:set var="booking_date" value="${requestScope['booking_date']}" />

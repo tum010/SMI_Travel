@@ -111,7 +111,7 @@
                                     <label class="col-sm-3 control-label text-right">Agent</label>
                                     <div class="col-sm-4"> 
                                         <div class="input-group" id="gr">
-                                            <input type="text" class="form-control" id="agent_user" name="agent_user" value="${SelectedAgent.code}"  style="background-color: #ffffff"/>
+                                            <input type="text" class="form-control" id="agent_user" name="agent_user" value="${SelectedAgent.code}" />
                                             <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#AgentModal">
                                                 <span class="glyphicon-search glyphicon"></span>
                                             </span>
