@@ -109,7 +109,7 @@
                             <div class='input-group date' id='InputDatePicker'>
                                 <input id="InputTourDate" name="InputTourDate" type="text" data-date-format="YYYY-MM-DD" 
                                        class="form-control datemask" placeholder="YYYY-MM-DD" value="${daytourBooking.tourDate}">
-                                <span class="input-group-addon">
+                                <span class="input-group-addon spandate">
                                     <span class="glyphicon-calendar glyphicon"></span>
                                 </span>
                             </div>
@@ -689,7 +689,7 @@
         var maskMoney = "000,000,000";
         $(".money").mask('000,000,000', {reverse: true});
         $('.date').datetimepicker();
-        $('span').click(function () {
+        $('.spandate').click(function () {
             var position = $(this).offset();
             console.log("span calendar positon :" + position.top);
             $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);

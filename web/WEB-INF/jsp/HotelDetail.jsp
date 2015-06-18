@@ -123,7 +123,7 @@
                                 <div class="col-sm-6">
                                     <div class='input-group date'>
                                         <input id="checkin" name="checkin" type='text' class="form-control"  data-date-format="YYYY-MM-DD" value="${hotelBooking.checkin}" placeholder="YYYY-MM-DD"/>
-                                        <span id="SpanCheckin" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                        <span id="SpanCheckin" class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>
                                 </div>
@@ -133,7 +133,7 @@
                                 <div class="col-sm-6">
                                     <div class='input-group date'>
                                         <input id="checkout" name="checkout" type='text'  data-date-format="YYYY-MM-DD" class="form-control" value="${hotelBooking.checkout}" placeholder="YYYY-MM-DD"/>
-                                        <span id="SpanCheckout" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                        <span id="SpanCheckout" class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>
                                 </div>

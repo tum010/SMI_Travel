@@ -45,12 +45,6 @@ function CallAjax(param) {
 }
 
 $(document).ready(function () {
-    $('.date').datetimepicker();
-    $("div").find('.input-group-addon').click(function () {
-        var position = $(this).offset();
-        console.log("positon :" + position.top);
-        $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
-    });
     // validate
    $("#refno").focus();
     $("#refno,#PassFirst,#PassLast,#Bookdate ").keyup(function (event) {

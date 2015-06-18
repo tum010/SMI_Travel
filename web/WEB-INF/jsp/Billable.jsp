@@ -318,7 +318,7 @@
                                     <input type="text" class="form-control text-center datemask"  
                                        data-date-format="YYYY-MM-DD" name="billDate-${Counter.count}" id="billDate-${Counter.count}"
                                        placeholder="YYYY-MM-DD" value="${b.billDate}" />
-                                    <span id="SpanGroupAddon" class="input-group-addon">
+                                    <span id="SpanGroupAddon" class="input-group-addon spandate">
                                             <span id="SpanGlyphiconCalendar" class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                 </div>
@@ -650,7 +650,7 @@
         });
 
         $('.datemask').mask('0000-00-00');
-        $('span').click(function () {
+        $('.spandate').click(function () {
             var position = $(this).offset();
             console.log("positon :" + position.top);
             $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);

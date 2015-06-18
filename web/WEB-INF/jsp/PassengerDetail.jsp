@@ -137,7 +137,7 @@
                                         <div class="">
                                             <div class='input-group date'>
                                                 <input id="birthDate" name="birthDate"  value="${passenger.getCustomer().getBirthDate()}" type='text' class="form-control" data-date-format="YYYY-MM-DD"  placeholder="YYYY-MM-DD"/>
-                                                <span id="SpanGroupCalendar" class="input-group-addon">
+                                                <span id="SpanGroupCalendar" class="input-group-addon spandate">
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
                                             </div>

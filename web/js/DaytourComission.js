@@ -80,12 +80,10 @@ $(document).ready(function () {
     }
     
     //validate date
-    $('#DateFrom').datetimepicker({
-       
-    }).on('dp.change', function (e) {
+    $('#DateFrom').datetimepicker().on('dp.change', function (e) {
             $('#searchDaytourCommissionForm').bootstrapValidator('revalidateField', 'InputDateFrom');
     });
-    $('#DateTo').datetimepicker({}).on('dp.change', function (e) {
+    $('#DateTo').datetimepicker().on('dp.change', function (e) {
             $('#searchDaytourCommissionForm').bootstrapValidator('revalidateField', 'InputDateTo');
     });
     
@@ -135,85 +133,7 @@ $(document).ready(function () {
                     data.fv.revalidateField('InputDateFrom');
                 }
             });
-            
-      //validate table fields
-/*        $('#saveDaytourCommissionForm')
-            .bootstrapValidator({
-                container: 'tooltip',
-                excluded: [':disabled', ':hidden', ':not(:visible)'],
-                feedbackIcons: {required: 'glyphicon glyphicon-asterisk',
-                    valid: 'glyphicon glyphicon-ok',
-                    invalid: 'glyphicon glyphicon-remove',
-                    validating: 'glyphicon glyphicon-refresh'
-                },
-//                submitHandler: function(form) {
-//                            form.submit();
-//                },
-                fields: {
-                    'selectGuide-': {
-                        excluded: 'false',
-                        validators: {
-                            notEmpty: {
-                                trigger: 'change',
-                                message: 'The guide name is required'
-                            }
-                        }
-                    },
-                    'guideComm-': {
-                        excluded: 'false',
-//                        trigger: 'focus keyup',
-                        validators: {
-                            notEmpty: {
-                                message: 'The guide comm is required'
-                            }
-                        }
-                    },
-                    'guideRemark-': {
-                        excluded: 'false',
-//                        trigger: 'focus keyup',
-                        validators: {
-                            notEmpty: {
-                                message: 'The remark guide is required'
-                            }
-                        }
-                    },
-                    'AgentName-': {
-                        excluded: 'false',
-//                        trigger: 'focus keyup ',
-                        validators: {
-                            notEmpty: {
-                                message: 'The agent name is required'
-                            }
-                        }
-                    },
-                    'agentComm-': {
-                        excluded: 'false',
-//                        trigger: 'focus keyup ',
-                        validators: {
-                            notEmpty: {
-                                message: 'The agent comm is required'
-                            }
-                        }
-                    },
-                    'agentRemark-': {
-                        excluded: 'false',
-//                        trigger: 'focus keyup ',
-                        validators: {
-                            notEmpty: {
-                                message: 'The remark agent is required'
-                            }
-                        }
-                    }
-                }
-         }).on('success.field.fv', function (e, data) {
-                if (data.bv.isValid()) {
-                    data.bv.disableSubmitButtons(false);
-                }
-          });
-          */
-         
-         
-         
+    
 });
 
 function verifyValueToGuide(){

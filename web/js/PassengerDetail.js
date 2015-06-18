@@ -1,7 +1,7 @@
 $(document).ready(function () {
     // DATATIMEPICKER
     $('.date').datetimepicker();
-    $('span').click(function () {
+    $('.spandate').click(function () {
         var position = $(this).offset();
         $(".bootstrap-datetimepicker-widget").css("top", position.top + 32);
     });

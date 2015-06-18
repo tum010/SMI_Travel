@@ -61,11 +61,11 @@
                         <label class="">Date<font style="color: red">*</font></label>
                     </div>
                     <div class="col-xs-3 form-group" >
-                        <div class="input-group datetime" >
+                        <div class="input-group date" >
                             <input id="InputDate" name="InputDate" type="text" 
                                    data-date-format="YYYY-MM-DD" class="form-control datemask" 
-                                   placeholder="YYYY-MM-DD" value="${tourdate}">
-                            <span class="input-group-addon">
+                                   placeholder="YYYY-MM-DD" value="${tourdate}" />
+                            <span class="input-group-addon spandate">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
@@ -453,10 +453,9 @@
             var inputTourDate = $("#InputDate").val();
             getTourFromDate(inputTourDate);
         }
-          //datetime
-        $('.datetime').datetimepicker({ 
-            pickTime: false
-        }).change(function () {
+        //datetime
+        
+        $('.date').datetimepicker().change(function () {
             var newDate = $("#InputDate").val();
             $("#ButtonImportHotel").attr("disabled", "disabled");
             $("#transferTourTable tbody").empty();
@@ -471,11 +470,16 @@
                 $("#ButtonImportTour").attr("disabled", "disabled");
                 $("#ButtonImportHotel").attr("disabled", "disabled");
             }
-            
         });
 
         checkChangeDate();
-       
+        
+        $('.spandate').click(function() {
+            var position = $(this).offset();
+            console.log("positon :" + position.top);
+            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+
+        }); 
     });
     
     function checkChangeDate(){

@@ -8,7 +8,6 @@
 <link href="css/selectize.bootstrap3.css" rel="stylesheet">
 <link href="css/jquery-ui.css" rel="stylesheet">
 
-
 <c:set var="dateTo" value="${requestScope['DateTo']}" />
 <c:set var="dateFrom" value="${requestScope['DateFrom']}" />
 <c:set var="selectGuide" value="${requestScope['SelectGuide']}" />
@@ -63,12 +62,12 @@
                     
                     <div class="col-xs-2">
                        <div class=" form-group">     
-                            <div class="input-group" id="DateFrom">
+                            <div class="input-group date" id="DateFrom">
                                 <input  id="InputDateFrom" name="InputDateFrom" type="text" 
                                         data-date-format="YYYY-MM-DD" class="form-control datemask" 
                                         placeholder="YYYY-MM-DD" value="${dateFrom}">
-                                <span class="input-group-addon">
-                                    <span class="glyphicon-calendar glyphicon"></span>
+                                <span class="input-group-addon spandate">
+                                    <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
                             </div> 
                         </div>
@@ -84,8 +83,8 @@
                             <input id="InputDateTo" name="InputDateTo" type="text"
                                    data-date-format="YYYY-MM-DD" class="form-control datemask"
                                    placeholder="YYYY-MM-DD" value="${dateTo}">
-                            <span class="input-group-addon">
-                                <span class="glyphicon-calendar glyphicon"></span>
+                            <span class="input-group-addon spandate">
+                                    <span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
                     </div>
@@ -268,9 +267,12 @@
                     <div class="col-xs-12 form-group">
                         <div class="col-xs-2">From</div>
                         <div class="col-xs-5">
-                            <div class="input-group date form_datetime">
-                                <input  name="guidePrintFrom" id="guidePrintFrom" type="text" data-date-format="YYYY-MM-DD" class="form-control" placeholder="YYYY-MM-DD">
-                                <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>
+                            <div class="input-group date">
+                                <input  name="guidePrintFrom" id="guidePrintFrom" type="text"
+                                        data-date-format="YYYY-MM-DD" class="form-control" 
+                                        placeholder="YYYY-MM-DD" />
+                                <span class="input-group-addon spandate">
+                                    <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
                             </div>
                         </div>
@@ -278,9 +280,12 @@
                     <div class="col-xs-12 form-group">
                         <div class="col-xs-2">To</div>
                         <div class="col-xs-5">
-                            <div class="input-group date form_datetime">
-                                <input  name="guidetPrintTo" id="guidePrintTo" type="text" data-date-format="YYYY-MM-DD" class="form-control" placeholder="YYYY-MM-DD">
-                                <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>
+                            <div class="input-group date ">
+                                <input  name="guidetPrintTo" id="guidePrintTo" type="text" 
+                                        data-date-format="YYYY-MM-DD" class="form-control" 
+                                        placeholder="YYYY-MM-DD" />
+                               <span class="input-group-addon spandate">
+                                    <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
                             </div>
                         </div>
@@ -319,12 +324,13 @@
                     <div class="col-xs-12 form-group">
                         <div class="col-xs-2">From</div>
                         <div class="col-xs-5 ">
-                            <div class="input-group date form_datetime" >
+                            <div class="input-group date" >
                                 <input  name="agentPrintFrom" id="agentPrintFrom" type="text" 
                                         data-date-format="YYYY-MM-DD" class="form-control"
-                                        placeholder="YYYY-MM-DD">
-                                <span class="input-group-addon" ><span class="glyphicon-calendar glyphicon"></span>
-                                </span>
+                                        placeholder="YYYY-MM-DD" />
+                                    <span class="input-group-addon spandate">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
                             </div>
                         </div>
                     </div>
@@ -332,12 +338,12 @@
                         <div class="col-xs-2">To</div>
                         <div class="col-xs-5 ">
                             <div class="form-group">
-                                 <div class="input-group date form_datetime" >
+                                 <div class="input-group date " >
                                     <input  name="agentPrintTo" id="agentPrintTo" type="text"
                                             data-date-format="YYYY-MM-DD" class="form-control" 
-                                            placeholder="YYYY-MM-DD">
-                                    <span class="input-group-addon" >
-                                        <span class="glyphicon-calendar glyphicon"></span>
+                                            placeholder="YYYY-MM-DD" />
+                                    <span class="input-group-addon spandate">
+                                        <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                 </div>
                             </div>
@@ -368,13 +374,12 @@
             "iDisplayLength":10
         });
         
-
-        $('.form_datetime').datetimepicker();
-        $(".input-group-addon").click(function(){
-            var  position = $(this).offset();
-            $(".bootstrap-datetimepicker-widget").css({
-                position: position
-            });            
+        //datetime
+        $('.date').datetimepicker();
+        $('.spandate').click(function() {
+            var position = $(this).offset();
+            console.log("positon :" + position.top);
+            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
         });
  
         var dataAgent = [];

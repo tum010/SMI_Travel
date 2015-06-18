@@ -5,7 +5,7 @@ $(document).ready(function () {
     $('#datetimepicker3').datetimepicker({
         pickTime: false
     });
-    $('span').click(function () {
+    $('.spandate').click(function () {
         var position = $(this).offset();
         $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
     });
