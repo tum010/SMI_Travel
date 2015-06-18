@@ -69,7 +69,6 @@
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
-                        
                     </div>
                 </div>
                 <div class="col-xs-12 form-group">
@@ -179,7 +178,7 @@
                         <label class="control-label">Other</label>
                     </div>
                     <div class="col-sm-2 col-sm-offset-5 text-right">
-                        <a id="ButtonImportOther" name="ButtonImportOther" class="btn btn-sm btn-info" data-toggle="modal" data-target="#OtherModal">
+                        <a id="ButtonImportOther" name="ButtonImportOther" onclick="removeDupOtherRow();" class="btn btn-sm btn-info" data-toggle="modal" data-target="#OtherModal">
                             <i class="glyphicon glyphicon-plus"></i>&nbsp;Import
                         </a>
                     </div>
@@ -305,7 +304,7 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button id="tourModalOkBtn" name="tourModalOkBtn" type="button" onclick="clickTourModalOk()" class="btn btn-success">OK</button>
+                <button id="tourModalOkBtn" name="tourModalOkBtn" type="button" onclick="clickTourModalOk();" class="btn btn-success">OK</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
@@ -474,12 +473,7 @@
 
         checkChangeDate();
         
-        $('.spandate').click(function() {
-            var position = $(this).offset();
-            console.log("positon :" + position.top);
-            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
-
-        }); 
+        
     });
     
     function checkChangeDate(){
@@ -576,6 +570,8 @@
         });
         
         getActiveHotel();
+        getActiveOther();
+//        $("#hotelModalOkBtn").trigger("click");
         $("#TourModal").modal('hide');
     }
     
@@ -586,15 +582,30 @@
         $("#hotelTable tbody").find("tr").each(function(){
             $(this).find("td").each(function(){
                 if($(this).hasClass("placeid")){ hotelIdChk = $(this).html();}
-                if($(this).hasClass("placename")){ hotelNameChk = $(this).html();}
-                
+                if($(this).hasClass("placename")){ hotelNameChk = $(this).html();} 
             });
-        }); 
-        if(hotelNameChk === $("#transferHotelTable tbody tr > td:contains('"+hotelNameChk+"')").html()){
+            if($("#transferHotelTable tbody tr > td:contains('"+hotelIdChk+"')").length > 0){
+//                    alert("NameHOTEL2 , hotelNameChk:"+hotelNameChk);
               console.log('hotelIdChk : '+hotelIdChk);
               console.log('hotelNameChk : '+hotelNameChk);
-              $('#' + 'trPlaceId' + hotelIdChk).addClass('hidden');
-        }
+              $('#trPlaceId' + hotelIdChk).addClass('hidden');
+            }
+        });
+        
+    }
+    
+    function removeDupOtherRow(){
+        var otherIdChk;
+        var otherNameChk;
+        $("#otherTable tbody").find("tr").each(function(){
+            $(this).find("td").each(function(){
+                if($(this).hasClass("otherid")){ otherIdChk = $(this).html();}
+                if($(this).hasClass("othername")){otherNameChk = $(this).html();}
+                if($("#transferOtherTable tbody tr > td:contains('"+otherNameChk+"')").length > 0){
+                    $('#otherTable tbody tr > td:contains("'+otherNameChk+'")').parent().addClass('hidden');
+                } 
+            });
+        });
     }
     
     function deleteTour(id,placeid,placename,name){ 
@@ -619,18 +630,10 @@
             var tourId =  idx;
             console.log("tourId = "+tourId);
             $('#' + 'trTourId' + tourId).removeClass('hidden');
-            $('#' + 'row-' + tourId + '-tour').removeAttr('disabled');
-           
-                getActiveHotel(); 
-        
-              
-//            clearHotelTable();
-//            clearOtherTable();
-          
-            
+            $('#' + 'row-' + tourId + '-tour').removeAttr('disabled');          
+              getActiveHotel(); 
             $("#DeleteTourModal").modal('hide');
         }
-       
        $("#DeleteTourModal").modal('hide');   
     }
     
@@ -653,6 +656,7 @@
                 }
             });
         });
+        alert("activeTourList Hotel:"+activeTourList);
         var tourDate = $("#InputDate").val();
         getPlaceFromDateAndTour(tourDate, activeTourList); //step 1
     }
@@ -684,20 +688,18 @@
                     matchedFlag = true;
                     if( objId ===  $("#transferHotelTable tbody tr > td:contains('"+objId+"')").html()){
                         $("#row-" + objId + "-place").prop("checked", false); 
-                        $("#row-" + objId + "-place").closest("tr").addClass("hidden");///test bug 
+                        $("#row-" + objId + "-place").closest("tr").addClass("hidden"); 
                     }else{
-                        $("#row-" + objId + "-place").prop("checked", true);    ///test bug 
+                        $("#row-" + objId + "-place").prop("checked", true); 
                     }
-                    
-                    
-                    //must check row that imported.??  
+ 
                 }
             } 
         }); 
 
         if (matchedFlag) {
             console.log("clickOkay");
-            clickHotelModalOk();  //important bug
+            clickHotelModalOk();  
         }
         
     }
@@ -735,7 +737,7 @@
                 $('#hotelTable').find('input:checkbox:disabled').closest('tr').addClass('hidden');
             });
         });
-        getActiveOther();
+//        getActiveOther();
         $("#HotelModal").modal('hide');
 
     }
@@ -767,18 +769,17 @@
     }
     
     function getActiveOther() {
-        var foundOther = false;
-        $('#transferHotelTable tbody').find('tr').each(function () {
-            $(this).find('td.name').each(function () {
-//                console.log('active other - ' + $(this).html());
-                var name = $(this).html();
-                if ("OTHERS" === name) {
-                    foundOther = true;
-                }
-            });
-        });
+//        var foundOther = false;
+//        $('#transferHotelTable tbody').find('tr').each(function () {
+//            $(this).find('td.name').each(function () {
+//                var name = $(this).html();
+//                if ("OTHERS" === name) {
+//                    foundOther = true;
+//                }
+//            });
+//        });
 
-        if (foundOther) {
+//        if (foundOther) {
             var activeTourList = "";
             $('#transferTourTable tbody').find('tr').each(function () {
                 $(this).find('td .tourId').each(function () {
@@ -787,12 +788,13 @@
                     } else {
                         activeTourList += "," + $(this).val();
                     }
-//                console.log("activeList = " + activeTourList);
+                console.log("activeList Other= " + activeTourList);
                 });
             });
+            alert("activeTourList stil:"+activeTourList);
             var tourDate = $("#InputDate").val();
             getOtherFromDateAndTour(tourDate, activeTourList);
-        }
+//        }
     }
 
     function getOtherFromDateAndTour(inputDate, tourId) {
@@ -849,21 +851,16 @@
                         var html = $.parseHTML(msg);
                         if (html.length > 0) {
                             $("#ButtonImportOther").removeAttr("disabled");
+                            $("#otherTable tbody").empty().append(msg);
+                           if ($("#InputDocument").val() !== "" ) {
+                                pullSelectedOther();
+                            }
                         } else {
                             $("#ButtonImportOther").attr("disabled", "disabled");
-                        }
+                        } 
                     } else {
                         $("#ButtonImportOther").attr("disabled", "disabled");
                     }
-                    if ($("#InputDocument").val().length > 0) {
-                        console.log("pullSelectedOther need to be implemented.");
-
-                    }
-                    $("#otherTable tbody").empty().append(msg);
-                    if ($("#InputDocument").val().length > 0) {
-                        pullSelectedOther();
-                    }
-
                     //setformat();
                 }, error: function (msg) {
                     $("#otherTable tbody").empty();
@@ -876,8 +873,6 @@
         }
     }
 
-
-
     function CallAjaxHotel(param) {
         var url = 'AJAXServlet';
         try {
@@ -888,6 +883,7 @@
                 data: param,
                 success: function (msg) {
 //                    console.log("Call AJax Hotel Msg [" + msg + "]");
+                    alert("Call AJax Hotel Msg = :"+ msg);
                     if (msg) {
                         var html = $.parseHTML(msg);
                         if (html.length > 1) {
@@ -933,22 +929,21 @@
                         if (html.length > 1) {
                             console.log("html.len = "+html);
                             $("#ButtonImportTour").removeAttr("disabled");
-                           
+                            $("#tourTable tbody").empty().append(msg);
+                            var newDoc = $("#newAction").val();
+                            if (($("#InputDocument").val().length > 0) || (newDoc === "1")) {
+                                console.log("doc len ="+$("#InputDocument").val().length);
+                                pullSelectedTour();   
+                                $("#newAction").val("0");
+                            }
                         } else {
                             $("#ButtonImportTour").attr("disabled", "disabled");
-                        }
-                        $("#tourTable tbody").empty().append(msg);
+                        } 
                     } else {
                         $("#ButtonImportTour").attr("disabled", "disabled");
                     }
                     // retrieve save Document.
-                    var newDoc = $("#newAction").val();
-                    console.log("newDoc == " + newDoc);
-                    if (($("#InputDocument").val().length > 0) || (newDoc === "1")) {
-                        console.log("doc len ="+$("#InputDocument").val().length);
-                        pullSelectedTour();   
-                        $("#newAction").val("0");
-                    }
+                    
                 }, error: function (msg) {
                     $("#tourTable tbody").empty();
                     console.log('error tour ' + msg);
@@ -1042,24 +1037,26 @@
         $("#hotelTableList").val(activeHotelList);
         $("#otherTableList").val(activeOtherList);
     }
-    function pullSelectedOther() {
+    function pullSelectedOther() { //bugme
         var matchedFlag = false;
         var selectedList = $("#otherTableList").val();
         var nameArray = selectedList.split("||");
         console.log("other nameArray length = " + nameArray.length);
         $("#otherTable tbody").find("tr").each(function () {
-            console.log("elem -" + $(this).html());
             var objId = $(this).find('td.otherid').html();
             var objElem = $(this).find('td.othername');
             for (i = 0; i < nameArray.length; i++) {
-                console.log("otherName - " + objElem.html());
                 if (nameArray[i].trim() === objElem.html()) {
                     matchedFlag = true;
-                    $("#row-" + objId + "-other").prop("checked", true);
-                }
-            } // end for loop td
-        }); // end tr loop;
-
+                    if(objId === $("#transferOtherTable tbody tr > td:contains('"+objId+"')").html()){
+                        $("#row-" + objId + "-other").prop("checked", false); 
+                    }else{
+                        $("#row-" + objId + "-other").prop("checked", true);                 
+                    }
+                } 
+            } 
+        }); 
+          
         if (matchedFlag) {
             console.log("clickOkay OtherModal");
             clickOtherModalOk();
@@ -1083,7 +1080,7 @@
                 var eachCheckbox = $(this).children();
                 if ($(eachCheckbox).is(':checked')) { //element checked
                     $("#transferOtherTable tbody").append(
-                            '<tr class="Tr-'+id+'">' +
+                            '<tr class="TrOther-'+id+'">' +
                             '<td class="id hidden">' + id + '</td>'+
                             '<td class="name">' + name + '</td>' +
                             '<td class="text-center">' +
