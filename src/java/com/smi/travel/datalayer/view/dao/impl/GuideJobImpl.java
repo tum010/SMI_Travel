@@ -116,25 +116,31 @@ public class GuideJobImpl implements GuideJobDao{
         Session session = this.sessionFactory.openSession();
         String remark = "";
         UtilityFunction util = new UtilityFunction();
-        String query = "SELECT remark,guide2 FROM `guide_job_remark` gr where  gr.tour_date ='"+tourdate+"' and gr.tour_id = '"+tourid+"'";
+        String query = "SELECT remark,guide2,operation_remark FROM `guide_job_remark` gr where  gr.tour_date ='"+tourdate+"' and gr.tour_id = '"+tourid+"'";
         System.out.println("query : "+query);
         List<Object[]> QueryRemarkList = session.createSQLQuery(query)
                 .addScalar("remark", Hibernate.STRING)
                 .addScalar("guide2", Hibernate.STRING)
+                .addScalar("operation_remark", Hibernate.STRING)
                 .list();
         if(QueryRemarkList.isEmpty()){
             remark = "";
         }else{
             String GuideRemark = "";
             String Guide2Detail = "";
+            String OperationRemark = "";
             for (Object[] B : QueryRemarkList) {
                 GuideRemark = util.ConvertString(B[0]);
-                Guide2Detail = util.ConvertString(B[1]);      
+                Guide2Detail = util.ConvertString(B[1]);  
+                OperationRemark  = util.ConvertString(B[2]);  
             }
             if(GuideRemark.indexOf("<br>") != -1){
                 GuideRemark = GuideRemark.substring(GuideRemark.indexOf("<br>")+4);
             }
-            remark = Guide2Detail +GuideRemark;
+            if((OperationRemark != null)&&(!"".equalsIgnoreCase(OperationRemark))){
+                OperationRemark +=  "<br>";
+            }
+            remark = OperationRemark + Guide2Detail +GuideRemark;
         }
         return remark;
     }
