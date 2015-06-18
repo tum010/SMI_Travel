@@ -26,7 +26,7 @@
 <c:set var="masterExpen" value="${requestScope['MasterExpen']}" />
 <c:set var="mCurrency" value="${requestScope['MCurrency']}" />
 <c:set var="daytour" value="${requestScope['DaytourList']}" />
-
+<c:set var="tourList" value="${requestScope['TourList']}" />
 <input type="hidden" value="${param.referenceNo}" id="getUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
@@ -65,45 +65,75 @@
             <hr/>
 
             <div class="col-xs-12 form-group"><h4>Tour Detail</h4></div>
-            <div class="col-xs-12 form-group">
-                <div class="col-xs-1 text-right">
-                    <label class="control-label text-right">Tour&nbsp;Code</lable>
+            <form action="DaytourOperationDetail.smi" method="post" id="DaytourOperationForm" name="DaytourOperationForm" role="form">
+                <div class="col-xs-12 ">
+                    <div class="col-xs-1 text-right">
+                        <label class="control-label" for="InputDetailTourCode">Tour&nbsp;Code<font style="color: red">*</font></lable>
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <div class="col-sm-12">
+                            <div class="input-group" id="CodeValidate">
+                                <input name="InputDetailTourCode" id="InputDetailTourCode" type="text" 
+                                       class="form-control" value="${daytour.code}" />
+                                <input name="InputDetailTourId" id="InputDetailTourId" type="hidden" 
+                                       class="form-control" value="${daytour.id}" />
+                                <span class="input-group-addon" data-toggle="modal" data-target="#TourModal">
+                                    <span class="glyphicon-search glyphicon"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="col-sm-12">
+                            <input name="InputDetailTourName" id="InputDetailTourName"  type="text" style="width: 200px" class="form-control" readonly="" value="${daytour.name}">
+                        </div>
+                    </div>              
+                    <div class="col-md-2 text-right">
+                        <label class="control-label text-right" for="InputTourDetailTourDate">Tour&nbsp;Date<font style="color: red">*</font></lable>
+                    </div>
+                    <div class="col-md-2 form-group"> 
+                        <div class="input-group date" id="InputTourDate" >
+                            <input id="InputTourDetailTourDate" name="InputTourDetailTourDate"  type="text" 
+                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${dayTourOperation.tourDate}">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                        </div>
+                    </div>
+                    <div class="col-md-2 text-right ">
+                        <input type="hidden" id="InputTourId" name="tourID" >
+                        <input type="hidden" id="tourDate" name="tourDate" >
+                        <input type="hidden" name="action" id="action" value="edit">
+                        <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="searchAction();" class="btn btn-primary btn-sm">Search</button>
+
+<!--                        <button id="BtnTourSearch" class="btn btn-success" type="submit"><span class="fa fa-search"></span> Search</button>
+                        <input type="hidden" name="action" id="action" value="edit">-->
+                    </div>
                 </div>
 
-                <div class="col-xs-3">
-                    <input id="InputDetailTourCode" name="InputDetailTourCode"  type="text" 
-                           class="form-control" readonly="" value="${daytour.code}">
-                </div>
-                <div class="col-xs-3 text-right">
-                    <label class="control-label text-right">Tour&nbsp;Date</lable>
-                </div>
-                <div class="col-xs-3">
-                    <input id="InputTourDetailTourDate" name="InputTourDetailTourDate"  type="text" 
-                           class="form-control" readonly="" value="${dayTourOperation.tourDate}">
-                </div>
+                <div class="col-xs-12 form-group">
+                    <div class="col-xs-1 text-right">
+                        <label class="control-label" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Confirm</lable>
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <div class="col-sm-12">
+                        <input id="InputTourDetailConfirm" name="InputTourDetailConfirm" type="text" style="width: 370px" class="form-control" readonly="" value="${daytour.updateBy}">
+                        </div>
+                    </div>
+                    <div class="col-xs-1">
+                    </div>
+                    <div class="col-xs-3 text-right">
+                        <label class="control-label text-right">Min/Max</lable>
+                    </div>
+                    <div class="col-xs-1">
+                        <input id="InputTourDetailMin" name="InputTourDetailMin" type="text" class="form-control" 
+                               readonly="" value="${daytour.min}">
+                    </div>
 
-            </div>
-            <div class="col-xs-12 form-group">
-                <div class="col-xs-1 text-right">
-                    <label class="control-label text-right">&nbsp;&nbsp;&nbsp;&nbsp;Confirm</lable>
+                    <div class="col-xs-1">
+                        <input id="InputTourDetailMax" name="InputTourDetailMax" type="text" class="form-control" 
+                               readonly="" value="${daytour.max}">
+                    </div>
                 </div>
-                <div class="col-xs-2">
-                    <input id="InputTourDetailConfirm" name="InputTourDetailConfirm" type="text" style="width: 220px" class="form-control" readonly="" value="${daytour.updateBy}">
-                </div>
-                <div class="col-xs-1">
-                </div>
-                <div class="col-xs-3 text-right">
-                    <label class="control-label text-right">Min/Max</lable>
-                </div>
-                <div class="col-xs-1">
-                    <input id="InputTourDetailMin" name="InputTourDetailMin" type="text" class="form-control" 
-                           readonly="" value="${daytour.min}">
-                </div>
-                <div class="col-xs-1">
-                    <input id="InputTourDetailMax" name="InputTourDetailMax" type="text" class="form-control" 
-                           readonly="" value="${daytour.max}">
-                </div>
-            </div>
+            </form>
             <div class="col-xs-12 form-group"><hr/></div>
             <form action="DaytourOperationDetail.smi" method="post" id="AirticketForm">
                 <div role="tabpanel">
@@ -745,7 +775,138 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal-dialog -->
 
+<!--Tour Modal-->
+<div class="modal fade" id="TourModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Tour</h4>
+            </div>
+            <div class="modal-body">
+                <table class="display" id="tourTable">
+                    <thead class="datatable-header">
+                        <tr>
+                            <th class="hidden">ID</th>
+                            <th style="width:20%">Code</th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <script>
+                        tourCode = [];
+                    </script>
+                    <tbody>
+                        <c:forEach var="tour" items="${tourList}">
+                            <tr>
+                                <td class="tour-id hidden">${tour.id}</td>
+                                <td class="tour-code">${tour.code}</td>
+                                <td class="tour-name">${tour.name}</td>
+                            </tr>
+                        <script>
+                            tourCode.push({id: "${tour.id}", code: "${tour.code}", name: "${tour.name}"});
+                        </script>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Script Daytour List table-->
+            <script>
+                $(document).ready(function () {
+                    
+                    $('.date').datetimepicker();
+                    $('.datemask').mask('0000-00-00');
+                    $("#tourTable tr").on('click', function () {//winit
+                    $("#TourModal").modal('hide');
+                        var tour_id = $(this).find(".tour-id").html();
+                        var tour_code = $(this).find(".tour-code").html();
+                        var tour_name = $(this).find(".tour-name").html();
+                        $("#InputDetailTourId").val(tour_id);
+                        $("#InputDetailTourCode").val(tour_code);
+                        $("#InputDetailTourName").val(tour_name);
+                        $("#InputDetailTourCode").focus();
+                    });
 
+                    // tourTable
+                    var tourTable = $('#tourTable').dataTable({bJQueryUI: true,
+                        "sPaginationType": "full_numbers",
+                        "bAutoWidth": false,
+                        "bFilter": true,
+                        "bPaginate": true,
+                        "bInfo": false,
+                        "bLengthChange": false,
+                        "iDisplayLength": 10
+                    });
+                    
+                    $('#tourTable tbody').on('click', 'tr', function () {
+                        if ($(this).hasClass('row_selected')) {
+                            $(this).removeClass('row_selected');
+                        }
+                        else {
+                            tourTable.$('tr.row_selected').removeClass('row_selected');
+                            $(this).addClass('row_selected');
+                        }
+
+                    });
+                    // ON KEY INPUT AUTO SELECT TOURCODE-TOURNAME
+                    $(function () {
+                        var availableTags = [];
+
+                        $.each(tourCode, function (key, value) {
+                            availableTags.push(value.code);
+                            if ( !(value.name in availableTags) ){
+                               availableTags.push(value.name);
+                            }
+                        });
+
+                        $("#InputDetailTourCode").autocomplete({
+                            source: availableTags,
+                            close:function( event, ui ) {    
+                               $("#InputDetailTourCode").trigger('keyup');
+                            }                        
+                        });
+                        
+                        
+                        $("#InputDetailTourCode").keyup(function () {
+                            var position = $(this).offset();
+                            $(".ui-widget").css("top", position.top + 30);
+                            $(".ui-widget").css("left", position.left);
+                            var name = this.value;
+                            var code = this.value.toUpperCase();
+                            $("#InputDetailTourName").val(null);
+                            $.each(tourCode, function (key, value) {
+                                if(name === value.name){
+                                    $("#InputDetailTourCode").val(value.code);
+                                    code = $("#InputDetailTourCode").val().toUpperCase();
+                                }
+                                if (value.code.toUpperCase() === code) {
+                                    $("#InputDetailTourId").val(value.id);
+                                    $("#InputDetailTourName").val(value.name);
+                                }
+                            }); //end each tourCode
+                        }); // end InputTourCode keyup
+                    }); // end AutoComplete TourCode TourName
+                    
+                });
+
+            function searchAction() {
+                var action = document.getElementById('action');
+                action.value = 'edit';
+                var InputTourId = document.getElementById('InputTourId');
+                InputTourId.value = $("#InputDetailTourId").val();
+                var tourDate = document.getElementById('tourDate');
+                tourDate.value = $("#InputTourDetailTourDate").val();
+
+                document.getElementById('DaytourOperationForm').submit();
+            }
+            
+            </script>
+            <div class="modal-footer">
+                <button id="" type="button" onclick="" class="btn btn-success">OK</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 
 <script> driver = []</script>
 <c:forEach var="dr" items="${driverList}">
