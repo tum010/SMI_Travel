@@ -79,7 +79,7 @@
                         <div class=' col-sm-12 input-group date' id='effectivefromClass'>
                             <input type='text' class="form-control"  id="Bookdate" name="Bookdate" 
                                    data-date-format="YYYY-MM-DD" value="${Bookdate}" />
-                            <span class="input-group-addon">
+                            <span class="input-group-addon spandate">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
@@ -613,7 +613,7 @@
         $('.dataTables_length label').remove();
 
         $('.date').datetimepicker();
-        $('span').click(function() {
+        $('.spandate').click(function() {
             var position = $(this).offset();
             console.log("positon :" + position.top);
             $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
