@@ -101,6 +101,7 @@ public class MPackageDetailController extends SMITravelController {
                     remark = Packageresult.getRemark();
                     detail = Packageresult.getDetail();
                     status = Packageresult.getStatus();
+                    System.out.println("status : "+status);
                     supplier = Packageresult.getSupplier();
                     packageID = Packageresult.getId();
                     action = "edit";
@@ -141,7 +142,8 @@ public class MPackageDetailController extends SMITravelController {
             request.setAttribute("ListPackageCity", listPackageCity);
             
             if (status.equalsIgnoreCase("inactive")) {
-            }                request.setAttribute("IsInactive", "selected");
+                request.setAttribute("IsInactive", "selected");
+            }                
 
             if(request.getParameter(TransectionResult) != null){
                 if("1".equalsIgnoreCase(request.getParameter(TransectionResult).toString())){
