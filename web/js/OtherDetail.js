@@ -16,14 +16,8 @@ function setupproductvalue(id, code, name, booktype) {
     document.getElementById('product_id').value = id;
     document.getElementById('product_code').value = code;
     document.getElementById('product_name').value = name;
-    document.getElementById('product_code').focus();
-    
-    var productid = document.getElementById('product_id').value;
-    var otherdate = document.getElementById('otherdate').value;
-    
-    if((productid != '') && (otherdate != '')){
-        getvalueProduct(booktype);
-    }
+    document.getElementById('product_code').focus();   
+    getvalueProduct(booktype);   
 }
 
 function setupagentvalue(id, code, name) {
@@ -35,13 +29,8 @@ function setupagentvalue(id, code, name) {
 }
 
 function setupotherdatevalue(booktype) {
-    var productid = document.getElementById('product_id').value;
-    var otherdate = document.getElementById('otherdate').value;
-    if((productid != '') && (otherdate != '')){
-        getvalueProduct(booktype);
-    }
+    getvalueProduct(booktype);
 }
-
 
 $(document).ready(function() {
 
@@ -245,14 +234,37 @@ function CallAjax(param, booktype) {
             success: function(msg) {
 
                 var path = msg.split(',');
-
+                var AD_Cost = document.getElementById('ad_cost').value; 
+                var CH_Cost = document.getElementById('ch_cost').value;
+                var IN_Cost = document.getElementById('in_cost').value;
+                var AD_Cost1 = AD_Cost.replace(',','');
+                var CH_Cost1 = CH_Cost.replace(',','');
+                var IN_Cost1 = IN_Cost.replace(',','');
                 if (booktype == 'i') {
-                    document.getElementById('ad_cost').value = numberWithCommas(path[0]);
-                    document.getElementById('ch_cost').value = numberWithCommas(path[1]);
-                    document.getElementById('in_cost').value = numberWithCommas(path[2]);
-                    document.getElementById('ad_price').value = numberWithCommas(path[3]);
-                    document.getElementById('ch_price').value = numberWithCommas(path[4]);
-                    document.getElementById('in_price').value = numberWithCommas(path[5]);
+                    if((AD_Cost == '') && (CH_Cost == '') && (IN_Cost == '')){
+                        document.getElementById('ad_cost').value = numberWithCommas(path[0]);
+                        document.getElementById('ch_cost').value = numberWithCommas(path[1]);
+                        document.getElementById('in_cost').value = numberWithCommas(path[2]);
+                        document.getElementById('ad_price').value = numberWithCommas(path[3]);
+                        document.getElementById('ch_price').value = numberWithCommas(path[4]);
+                        document.getElementById('in_price').value = numberWithCommas(path[5]);
+                    } else {
+                        if((AD_Cost1 == path[0]) && (CH_Cost1 == path[1]) && (IN_Cost1 == path[2])){
+                            
+                        } else {
+                            var result = confirm("Are you sure to update Cost and Price ?");
+                            if (result == true) {
+                                document.getElementById('ad_cost').value = numberWithCommas(path[0]);
+                                document.getElementById('ch_cost').value = numberWithCommas(path[1]);
+                                document.getElementById('in_cost').value = numberWithCommas(path[2]);
+                                document.getElementById('ad_price').value = numberWithCommas(path[3]);
+                                document.getElementById('ch_price').value = numberWithCommas(path[4]);
+                                document.getElementById('in_price').value = numberWithCommas(path[5]);                                      
+                            } else {
+
+                            } 
+                        }                 
+                    }
                 }
 
                 if (booktype == 'o') {
@@ -261,7 +273,7 @@ function CallAjax(param, booktype) {
                     document.getElementById('in_cost').value = path[2];
                     document.getElementById('ad_price').value = path[3];
                     document.getElementById('ch_price').value = path[4];
-                    document.getElementById('in_price').value = path[5];
+                    document.getElementById('in_price').value = path[5];                  
                     calculateVat();
                 }
             }, error: function(msg) {
@@ -289,6 +301,13 @@ function calculateVat() {
     tempchprice = replaceComma(chprice.value);
     tempinprice = replaceComma(inprice.value);
     
+    var AD_Cost = document.getElementById('ad_cost').value; 
+    var CH_Cost = document.getElementById('ch_cost').value;
+    var IN_Cost = document.getElementById('in_cost').value;
+    var AD_Cost1 = AD_Cost.replace(',','');
+    var CH_Cost1 = CH_Cost.replace(',','');
+    var IN_Cost1 = IN_Cost.replace(',','');
+                
     if(tempadcost == 0){
         adcost.value = '';   
     } else { 
