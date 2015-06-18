@@ -370,10 +370,12 @@
         
 
         $('.form_datetime').datetimepicker();
-//        $(".input-group-addon").click(function(){
-//            var  position = $(this).offset();
-//            $(".bootstrap-datetimepicker-widget").css({top: 100});            
-//        });
+        $(".input-group-addon").click(function(){
+            var  position = $(this).offset();
+            $(".bootstrap-datetimepicker-widget").css({
+                position: position
+            });            
+        });
  
         var dataAgent = [];
         dataAgent = agentName;
