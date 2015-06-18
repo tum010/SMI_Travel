@@ -570,8 +570,8 @@
         });
         
         getActiveHotel();
-        getActiveOther();
-//        $("#hotelModalOkBtn").trigger("click");
+//        getActiveOther();
+        $("#hotelModalOkBtn").trigger("click");
         $("#TourModal").modal('hide');
     }
     
@@ -656,7 +656,7 @@
                 }
             });
         });
-        alert("activeTourList Hotel:"+activeTourList);
+//        alert("activeTourList Hotel:"+activeTourList);
         var tourDate = $("#InputDate").val();
         getPlaceFromDateAndTour(tourDate, activeTourList); //step 1
     }
@@ -737,7 +737,7 @@
                 $('#hotelTable').find('input:checkbox:disabled').closest('tr').addClass('hidden');
             });
         });
-//        getActiveOther();
+        getActiveOther();
         $("#HotelModal").modal('hide');
 
     }
@@ -769,17 +769,17 @@
     }
     
     function getActiveOther() {
-//        var foundOther = false;
-//        $('#transferHotelTable tbody').find('tr').each(function () {
-//            $(this).find('td.name').each(function () {
-//                var name = $(this).html();
-//                if ("OTHERS" === name) {
-//                    foundOther = true;
-//                }
-//            });
-//        });
+        var foundOther = false;
+        $('#transferHotelTable tbody').find('tr').each(function () {
+            $(this).find('td.name').each(function () {
+                var name = $(this).html();
+                if ("OTHERS" === name) {
+                    foundOther = true;
+                }
+            });
+        });
 
-//        if (foundOther) {
+        if (foundOther) {
             var activeTourList = "";
             $('#transferTourTable tbody').find('tr').each(function () {
                 $(this).find('td .tourId').each(function () {
@@ -791,10 +791,10 @@
                 console.log("activeList Other= " + activeTourList);
                 });
             });
-            alert("activeTourList stil:"+activeTourList);
+//            alert("activeTourList stil:"+activeTourList);
             var tourDate = $("#InputDate").val();
             getOtherFromDateAndTour(tourDate, activeTourList);
-//        }
+        }
     }
 
     function getOtherFromDateAndTour(inputDate, tourId) {
@@ -883,7 +883,7 @@
                 data: param,
                 success: function (msg) {
 //                    console.log("Call AJax Hotel Msg [" + msg + "]");
-                    alert("Call AJax Hotel Msg = :"+ msg);
+//                    alert("Call AJax Hotel Msg = :"+ msg);
                     if (msg) {
                         var html = $.parseHTML(msg);
                         if (html.length > 1) {

@@ -143,6 +143,9 @@
                                     <td>${flight.departDate}</td>
                                     <td>${flight.departTime}</td>
                                     <td>
+                                        <script>
+                                           var tickettype = [];
+                                        </script>
                                         <select id="flight-${i.count}-ticketTypeCom" name="flight-${i.count}-ticketTypeCom" class="form-control">          
                                             <c:forEach var="mticket" items="${mTicketTypeList}" >
                                                 <c:set var="select" value=""  />
@@ -150,6 +153,12 @@
                                                     <c:set var="select" value="selected" />
                                                 </c:if>
                                                 <option value="${mticket.id}" ${select}>${mticket.name}</option>
+                                                <script>
+                                                    tickettype.push({
+                                                        ticket_id: "${mticket.id}",
+                                                        ticket_name: "${mticket.name}"
+                                                    });
+                                                </script>
                                             </c:forEach>
                                         </select>
                                     </td>

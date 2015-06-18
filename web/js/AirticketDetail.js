@@ -419,7 +419,12 @@ function addFight(rowId) {
     $("#flight-0-ticketType option").clone().appendTo("#flight-" + rowId + "-ticketType");
     $("#flight-0-class option").clone().appendTo("#flight-" + rowId + "-class");
 
-
+//     $.each(tickettype, function(key, value) { 
+//     $("#flight-"+rowId+"-ticketTypeCom")
+//         .append($("<option></option>")
+//         .attr("value",key)
+//         .text(value)); 
+//    });
 
 }
 
@@ -472,21 +477,26 @@ $(document).on('keyup', '.arrival', function () {
 function setId(rowId) {
     nId = rowId;
 }
-
 // ADD FLIGHT TO TABLE
-function addRowTable() {
+function addRowTable() {//winit
     var counter = nId;
+   
     console.log('addRowTable');
     TableAir.fnAddData([
-        counter,
-        $("#airlineName" + counter).val(),
+        counter, //order 1
+        $("#airlineName" + counter).val(), //name 1
         $("#flight-" + counter + "-flightNo").val(),
         $("#departure-" + counter + "-code").val(),
         $("#arrival-" + counter + "-code").val(),
         $("#flight-" + counter + "-departDate").val(),
         $("#flight-" + counter + "-departTime").val(),
-        ' ',
-        ' ',
+//        '<select id="flight-'+counter+'-ticketTypeCom" name="flight-'+counter+'-ticketTypeCom" class="form-control">'+ 
+//        '</select>',
+//        '<select id="flight-'+counter+'-classCom" name="flight-'+counter+'-classCom" class="form-control">'+
+//            '<option value=""></option>'+
+//        '</select>',
+        $("#flight-"+counter+"-ticketType option:selected").text(),
+        $("#flight-"+counter+"-class option:selected").text(),
         $("#adCost-" + counter).val(),
         $("#adPrice-" + counter).val(),
         $("#flight-" + counter + "-status").val(),
