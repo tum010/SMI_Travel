@@ -100,9 +100,46 @@ $(document).ready(function () {
     if (tourId != '') {
         $("#info,#master").removeClass('hidden');
     }
-
-
-
+    
+    $('#InputTourDate').datetimepicker({
+        }).on('change', function(e) {
+            $('#DaytourDetailForm').bootstrapValidator('revalidateField', 'InputTourDetailTourDate');
+    });  
+    $("#DaytourOperationForm")
+            .bootstrapValidator({
+//                framework: 'bootstrap',
+                container: 'tooltip',
+                excluded: [':disabled', ':hidden', ':not(:visible)'],
+                feedbackIcons: {
+                    valid: 'uk-icon-check',
+                    invalid: 'uk-icon-times',
+                    validating: 'uk-icon-refresh'
+                },
+                fields: {
+                    InputDetailTourCode: {
+                        trigger: 'focus keyup',
+                        validators: {
+                            notEmpty: {trigger: 'change',
+                                message: ' Tour Code is required'
+                            }
+                        }
+                    },
+                    InputTourDetailTourDate: {
+                        validators: {
+                            notEmpty: {
+                                message: ' Date From is required'
+                            }
+                        }
+                    }
+          
+                }
+            })
+            .on('success.field.bv', function (e, data) {
+                    if (data.bv.isValid()) {
+                        data.bv.disableSubmitButtons(false);
+                    }
+            });
+            
 });
 
 function selectTour(element) {

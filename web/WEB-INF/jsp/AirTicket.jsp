@@ -42,16 +42,7 @@
         <input type="hidden" value="${master.referenceNo}" id="getRealformatUrl">
     </c:otherwise>
 </c:choose>
-        
-<!--Alert Save and Update-->
-    <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Save Success!</strong> 
-    </div>
-    <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Save Unsuccess!</strong> 
-    </div>
+
 
 <!--Header-->
 <section class="content-header" >
@@ -82,6 +73,15 @@
         </div>
         <div class="col-sm-10">
             <div ng-include="'WebContent/Book/BookNavbar.html'"></div>
+            <!--Alert Save and Update-->
+            <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Save Success!</strong> 
+            </div>
+            <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Save Unsuccess!</strong> 
+            </div>            
             <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
 
             <form action="AirTicket.smi" method="post" id="AirTicket" role="form">
@@ -451,18 +451,18 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->    
 
-<c:if test="${! empty result}">
-    <c:if test="${result =='1'}">        
+<c:if test="${! empty param.result}">
+    <c:if test="${param.result =='1'}">        
         <script language="javascript">
             $('#textAlertDivSave').show();
         </script>
-        <META HTTP-EQUIV="Refresh" CONTENT="0;URL=AirTicket.smi?referenceNo=${param.referenceNo}&action=edit">
+        <!--<META HTTP-EQUIV="Refresh" CONTENT="0;URL=AirTicket.smi?referenceNo=${param.referenceNo}&action=edit">-->
     </c:if>
-    <c:if test="${result =='0'}">        
+    <c:if test="${param.result =='0'}">        
         <script language="javascript">
             $('#textAlertDivNotSave').show();
         </script>
-        <META HTTP-EQUIV="Refresh" CONTENT="0;URL=AirTicket.smi?referenceNo=${param.referenceNo}&action=edit">
+        <!--<META HTTP-EQUIV="Refresh" CONTENT="0;URL=AirTicket.smi?referenceNo=${param.referenceNo}&action=edit">-->
     </c:if>
 </c:if>
 

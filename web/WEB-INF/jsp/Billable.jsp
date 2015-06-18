@@ -260,7 +260,7 @@
                                     <div class="col-sm-4" style="width: 194px">
                                         <div class='input-group date' name="tranDateDiv" id="tranDateDiv">
                                             <input type='text' class="form-control"   data-date-format="YYYY-MM-DD" name="transferD" id="transferD" value="${billable.transferDate}"  />
-                                            <span id="SpanGlyphiconCalendar" name="SpanGlyphiconCalendar" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                            <span id="SpanGlyphiconCalendar" name="SpanGlyphiconCalendar" class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
                                     </div>

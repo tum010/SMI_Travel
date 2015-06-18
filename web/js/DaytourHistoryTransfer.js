@@ -6,11 +6,7 @@
 $(document).ready(function () {
 //    $('.date').datetimepicker();
       $(".datemask").mask('0000-00-00', {reverse: true});
-    $('span').click(function () {
-        var position = $(this).offset();
-        console.log("positon :" + position.top);
-        $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
-    });
+ 
     
     $('#DateFrom').datetimepicker({
         }).on('change', function(e) {

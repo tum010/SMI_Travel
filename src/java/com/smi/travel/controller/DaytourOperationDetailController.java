@@ -56,6 +56,7 @@ public class DaytourOperationDetailController extends SMITravelController {
     private static final String MasterExpen = "MasterExpen";
     private static final String MCurrency = "MCurrency";
     private static final String DaytourList = "DaytourList";
+    private static final String TourList = "TourList";
 
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -69,34 +70,38 @@ public class DaytourOperationDetailController extends SMITravelController {
         if ("new".equalsIgnoreCase(action)) {
 
         } else if ("edit".equalsIgnoreCase(action)) {
+            System.out.print("tourID : "+ tourID);
+            System.out.print("tourDate : "+ tourDate);
             if (tourID != null) {
                 List<DaytourBooking> daytourBookingDetail = daytourOperationService.getTourDetail(tourID, tourDate);
-                Daytour daytour = daytourBookingDetail.get(0).getDaytour();
-                List<DaytourBooking> daytourBookings = new ArrayList<DaytourBooking>(daytour.getDaytourBookings());
-                List<DaytourBookingPrice> daytourBookingPrice = new ArrayList<DaytourBookingPrice>(daytourBookings.get(0).getDaytourBookingPrices());
-                CalculatePassengertype(daytourBookings);
-                Set daytourExpenses = daytour.getDaytourExpenses();
-                Set daytourPrice = daytour.getDaytourPrices();
-                Master master = daytourBookingDetail.get(0).getMaster();
-                Set passenger = master.getPassengers();
-                TourOperationDesc daytourOperation = daytourOperationService.getTouroperation(tourID, tourDate);
-                request.setAttribute(DaytourPrice, daytourBookingPrice);
-                request.setAttribute(DaytourPassengers, passenger);
-                request.setAttribute(DayTourDetailList,daytourOperationService.SortBookOrder(daytourBookingDetail));
-                System.out.println("start Tour Driver");
-                if(daytourOperation != null){
+                if(daytourBookingDetail != null){
+                    Daytour daytour = daytourBookingDetail.get(0).getDaytour();
+                    List<DaytourBooking> daytourBookings = new ArrayList<DaytourBooking>(daytour.getDaytourBookings());
+                    List<DaytourBookingPrice> daytourBookingPrice = new ArrayList<DaytourBookingPrice>(daytourBookings.get(0).getDaytourBookingPrices());
+                    CalculatePassengertype(daytourBookings);
+                    Set daytourExpenses = daytour.getDaytourExpenses();
+                    Set daytourPrice = daytour.getDaytourPrices();
+                    Master master = daytourBookingDetail.get(0).getMaster();
+                    Set passenger = master.getPassengers();
+                    TourOperationDesc daytourOperation = daytourOperationService.getTouroperation(tourID, tourDate);
+                    request.setAttribute(DaytourPrice, daytourBookingPrice);
+                    request.setAttribute(DaytourPassengers, passenger);
+                    request.setAttribute(DayTourDetailList,daytourOperationService.SortBookOrder(daytourBookingDetail));
+                    System.out.println("start Tour Driver");
+                    if(daytourOperation != null){
 
-                    System.out.println("Tour Driver is not null");
-                    List<TourOperationDriver> DriverList = daytourOperationService.SortDriver(new ArrayList<TourOperationDriver>(daytourOperation.getTourOperationDrivers()));
-                    request.setAttribute(TourDescDriverList, daytourOperationService.SortDriver(DriverList));
- 
-                    List<TourOperationExpense> ExpenseList = new ArrayList<TourOperationExpense>(daytourOperation.getTourOperationExpenses());
-                    request.setAttribute(TourDescExpenseList, daytourOperationService.SortExpense(ExpenseList));
+                        System.out.println("Tour Driver is not null");
+                        List<TourOperationDriver> DriverList = daytourOperationService.SortDriver(new ArrayList<TourOperationDriver>(daytourOperation.getTourOperationDrivers()));
+                        request.setAttribute(TourDescDriverList, daytourOperationService.SortDriver(DriverList));
+
+                        List<TourOperationExpense> ExpenseList = new ArrayList<TourOperationExpense>(daytourOperation.getTourOperationExpenses());
+                        request.setAttribute(TourDescExpenseList, daytourOperationService.SortExpense(ExpenseList));
+                    }
+                    request.setAttribute(DayTourOperation, daytourOperation);
+                    request.setAttribute(MasterPrice, daytourPrice);
+                    request.setAttribute(MasterExpen, daytourExpenses);
+                    request.setAttribute(DaytourList, daytour);
                 }
-                request.setAttribute(DayTourOperation, daytourOperation);
-                request.setAttribute(MasterPrice, daytourPrice);
-                request.setAttribute(MasterExpen, daytourExpenses);
-                request.setAttribute(DaytourList, daytour);
             }
             List<DaytourBooking> daytourBooking = daytourOperationService.getTourJob();
             request.setAttribute(DayTourList, daytourBooking);
@@ -131,6 +136,10 @@ public class DaytourOperationDetailController extends SMITravelController {
         request.setAttribute(PickupList, pickupList);
         Master master = utilservice.getMasterdao().getBookingFromRefno(refNo);
         request.setAttribute(Master, master);
+        
+        List<Daytour> tourList = bookingDaytourService.getTourList();
+        request.setAttribute(TourList, tourList);
+
     }
 
     private String updatetourOperationDesc(HttpServletRequest request, String tourID, String tourDate) {

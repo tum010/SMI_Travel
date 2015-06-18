@@ -24,18 +24,21 @@ function setupagentvalue(id,code,name){
 }
 
 function getvalueDepartDate(){
-    var productid = document.getElementById('Product_id').value;
-    var departdate = document.getElementById('departdate').value;
-    if((productid == '') || (departdate == '')){
-        
-    } else {
-        var result = confirm("Are you sure to update Cost and Price ?");
-        if (result == true) {
+    //var productid = document.getElementById('Product_id').value;
+    //var departdate = document.getElementById('departdate').value;
+    //var AD_Cost = document.getElementById('AD_Cost').value; 
+    //var CH_Cost = document.getElementById('CH_Cost').value;
+    //var IN_Cost = document.getElementById('IN_Cost').value;
+    //if((AD_Cost != '') || (CH_Cost != '') || (IN_Cost != '')){
+        //var result = confirm("Are you sure to update Cost and Price ?");
+       // if (result == true) {
             getvalueProduct();
-        } else {
-            
-        }
-    }
+        //} else {
+        //    return null;
+       // }
+    //} else {
+    //    return null;
+    //}
 }
 
 function setupproductvalue(id,code,name){
@@ -44,18 +47,18 @@ function setupproductvalue(id,code,name){
     document.getElementById('Product_code').value = code;
     document.getElementById('Product_name').value = name;
     
-    var productid = document.getElementById('Product_id').value;
-    var departdate = document.getElementById('departdate').value;
-    if((productid == '') || (departdate == '')){
+    //var productid = document.getElementById('Product_id').value;
+    //var departdate = document.getElementById('departdate').value;
+   // if((productid == '') || (departdate == '')){
         getvalueProduct();
-    } else {
-        var result = confirm("Are you sure to update Cost and Price ?");
-        if (result == true) {
-            getvalueProduct();
-        } else {
+   // } else {
+    //    var result = confirm("Are you sure to update Cost and Price ?");
+     //   if (result == true) {
+    //        getvalueProduct();
+     //   } else {
             
-        }     
-    }
+     //   }     
+   // }
 }
 
 function getvalueProduct() {
@@ -83,12 +86,36 @@ function CallAjax(param) {
             data: param,
             success: function(msg) {
                 var path = msg.split(',');
-                setformatNumber('AD_Cost',path[0]);
-                setformatNumber('CH_Cost',path[1]);
-                setformatNumber('IN_Cost',path[2]);
-                setformatNumber('AD_Price',path[3]);
-                setformatNumber('CH_Price',path[4]);
-                setformatNumber('IN_Price',path[5]);
+                var AD_Cost = document.getElementById('AD_Cost').value; 
+                var CH_Cost = document.getElementById('CH_Cost').value;
+                var IN_Cost = document.getElementById('IN_Cost').value;
+                var AD_Cost1 = AD_Cost.replace(',','');
+                var CH_Cost1 = CH_Cost.replace(',','');
+                var IN_Cost1 = IN_Cost.replace(',','');
+                if((AD_Cost == 0) && (CH_Cost == 0) && (IN_Cost == 0)){
+                    setformatNumber('AD_Cost',path[0]);
+                    setformatNumber('CH_Cost',path[1]);
+                    setformatNumber('IN_Cost',path[2]);
+                    setformatNumber('AD_Price',path[3]);
+                    setformatNumber('CH_Price',path[4]);
+                    setformatNumber('IN_Price',path[5]);
+                } else {
+                    if((AD_Cost1 == path[0]) && (CH_Cost1 == path[1]) && (IN_Cost1 == path[2])){
+                        
+                    } else {
+                        var result = confirm("Are you sure to update Cost and Price ?");
+                        if (result == true) {
+                            setformatNumber('AD_Cost',path[0]);
+                            setformatNumber('CH_Cost',path[1]);
+                            setformatNumber('IN_Cost',path[2]);
+                            setformatNumber('AD_Price',path[3]);
+                            setformatNumber('CH_Price',path[4]);
+                            setformatNumber('IN_Price',path[5]);                   
+                        } else {
+                        
+                        } 
+                    }                 
+                }
                 getItineraryDetail(document.getElementById('Product_id').value);
             }, error: function(msg) {
                 

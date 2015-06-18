@@ -176,7 +176,7 @@ public class AirTicketController extends SMITravelController {
                 result = bookingAirticketService.updateBookingAirTicket(airBook);
             }
             request.setAttribute(Result, result);
-            //return new ModelAndView("redirect:AirTicket.smi?referenceNo=" + refNo + "&action=edit&result=" + result);
+            return new ModelAndView("redirect:AirTicket.smi?referenceNo=" + refNo + "&action=edit&result=" + result);
         } else if ("disablePnr".equalsIgnoreCase(action)) {
             String pnrId = request.getParameter("disablePnrId");
             result = bookingAirticketService.cancelBookAirticketPNR(pnrId);
