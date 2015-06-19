@@ -1215,16 +1215,21 @@
                                 getDeparture($("#filterdep").val());
                             }
                         });
-
-                        $.each(a, function (index, value) {
-                            $.each(flight, function (index_flight, value_flight) {
-                                var flightCode = $("#departure-" + value_flight.id + "-code").val();
-                                if (flightCode === value.code) {
-                                    console.log("flightCode : " + flightCode);
-                                    $("#departure-" + value_flight.id + "-name").val(value.name);
-                                }
-                            });
+                        
+                        $.each(flight, function (index_flight, value_flight) {
+                            var flightCode = $("#departure-" + value_flight.id + "-code").val();
+                            getDepartureAirport(flightCode, value_flight.id);
                         });
+//                        $.each(a, function (index, value) {
+//                            $.each(flight, function (index_flight, value_flight) {
+//                                var flightCode = $("#departure-" + value_flight.id + "-code").val();
+//
+//                                if (flightCode === value.code) {
+//                                    console.log("flightCode : " + flightCode);
+//                                    $("#departure-" + value_flight.id + "-name").val(value.name);
+//                                }
+//                            });
+//                        });
 
                         $("#DepartureTable tbody").on('click', 'tr', function () {
                             departure_id = $(this).find(".departure-id").text();
@@ -1352,16 +1357,20 @@
                                 getArrive($("#filterarrive").val());
                             }
                         });
-
-                        $.each(a, function (index, value) {
-                            $.each(flight, function (index_flight, value_flight) {
-                                var flightCode = $("#arrival-" + value_flight.id + "-code").val();
-                                if (flightCode === value.code) {
-                                    console.log("flightCode : " + flightCode);
-                                    $("#arrival-" + value_flight.id + "-name").val(value.name);
-                                }
-                            });
+                        
+                        $.each(flight, function (index_flight, value_flight) {
+                            var flightCode = $("#arrival-" + value_flight.id + "-code").val();
+                            getArrivalAirport(flightCode, value_flight.id);
                         });
+//                        $.each(a, function (index, value) {
+//                            $.each(flight, function (index_flight, value_flight) {
+//                                var flightCode = $("#arrival-" + value_flight.id + "-code").val();
+//                                if (flightCode === value.code) {
+//                                    console.log("flightCode : " + flightCode);
+//                                    $("#arrival-" + value_flight.id + "-name").val(value.name);
+//                                }
+//                            });
+//                        });
                         $("#ArrivalTable tbody").on('click', 'tr', function () {
                             arrival_id = $(this).find(".arrival-id").text();
                             arrival_code = $(this).find(".arrival-code").text();
