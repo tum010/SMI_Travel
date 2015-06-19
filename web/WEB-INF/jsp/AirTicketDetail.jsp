@@ -51,16 +51,6 @@
 <!--content-->
 <div class ="container"  style="padding-top: 15px;" ng-app=""> 
     <div class="row">
-        <!--Alert Save and Update-->
-        <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <strong>Save Success!</strong> 
-        </div>
-        <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <strong>Save Unsuccess!</strong> 
-        </div> 
-
         <!-- side bar -->
         <div class="col-md-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
             <div ng-include="'WebContent/Book/BookMenu.html'"></div>
@@ -77,6 +67,15 @@
             <form action="AirTicketDetail.smi" method="post" id="AirticketForm">
                 <input type="hidden" class="form-control" id="referenceNo"   name="referenceNo"  value="${param.referenceNo}" > 
                 <div ng-include="'WebContent/Book/BookNavbar.html'"></div>
+                <!--Alert Save and Update-->
+                <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Success!</strong> 
+                </div>
+                <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Unsuccess!</strong> 
+                </div>                 
                 <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
 
                 <div class="row-fluid">  
@@ -152,7 +151,7 @@
                                     <td>${flight.departTime}</td>
                                     <td>
                                         <script>
-                                           var tickettype = [];
+                                            var tickettype = [];
                                         </script>
                                         <select id="flight-${i.count}-ticketTypeCom" name="flight-${i.count}-ticketTypeCom" class="form-control">          
                                             <c:forEach var="mticket" items="${mTicketTypeList}" >
