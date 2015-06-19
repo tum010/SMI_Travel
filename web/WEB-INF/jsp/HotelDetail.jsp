@@ -365,7 +365,7 @@
                     <div class="panel-body">
                         <select   class="hidden"  id="select-list-passenger">
                             <c:forEach var="pass" items="${passengerList}" varStatus="status">
-                                <option  value="${pass.id}">${pass.customer.firstName}</option>
+                                <option  value="${pass.id}">${pass.customer.MInitialname.name} ${pass.customer.lastName} ${pass.customer.firstName}</option>
                             </c:forEach>
                         </select>
                         <table class="display" id="passenger-table">
@@ -391,8 +391,8 @@
                                         <div id="div-passenger">
                                             <input id="input-get-passenger-${passenger.count}" value="${pa.passenger.id}" hidden="">
                                             <select  class="form-control"  name="row-passenger-${passenger.count}-name" id="select-passneger-${passenger.count}">
-                                                <c:forEach var="passen" items="${passengerList}" varStatus="status">
-                                                    <option class="passenger-option" value="${passen.id}">${passen.customer.firstName}</option>
+                                                <c:forEach var="passen" items="${passengerList}" varStatus="status">  
+                                                    <option class="passenger-option" value="${passen.id}">  ${passen.customer.MInitialname.name} ${passen.customer.lastName} ${passen.customer.firstName}</option>
                                                 </c:forEach>
                                             </select>
                                         </div>
