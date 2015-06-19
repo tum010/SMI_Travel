@@ -474,12 +474,7 @@ public class AirTicketDetailController extends SMITravelController {
         String chTax = request.getParameter("chTax-" + i);
         String inTax = request.getParameter("inTax-" + i);
         String airlineCode = request.getParameter("airlineCode" + i);
-        if (ticketType == null) {
-            ticketType = "1";
-        }
-        if (flightClass == null) {
-            flightClass = "1";
-        }
+
 
         AirticketFlight airFlight = getAirFlight(Id, airPnr);
 
@@ -512,10 +507,21 @@ public class AirTicketDetailController extends SMITravelController {
 
         MFlight mFlight = new MFlight();
         mFlight.setId(flightClass);
-        airFlight.setMFlight(mFlight);
+        if(flightClass != null){
+            airFlight.setMFlight(mFlight);
+        }
+        if("".equalsIgnoreCase(flightClass)){
+            airFlight.setMFlight(null);
+        }
+        
         MTicketType mTicketType = new MTicketType();
         mTicketType.setId(ticketType);
-        airFlight.setMTicketType(mTicketType);
+        if (ticketType != null) {
+            airFlight.setMTicketType(mTicketType);
+        }
+        if("".equalsIgnoreCase(ticketType)){
+            airFlight.setMTicketType(null);
+        }
 
         if (StringUtils.isNotEmpty(adCost)) {
             //airFlight.setAdCost(Integer.valueOf(adCost));
