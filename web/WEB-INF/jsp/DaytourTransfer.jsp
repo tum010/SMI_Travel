@@ -1120,7 +1120,7 @@
     function removeOtherRow() {
         var idx = $("#deleteOtherId").val();
 
-        $("#transferOtherTable tbody").find("tr.Tr-" + idx).remove();
+        $("#transferOtherTable tbody").find("tr.TrOther-" + idx).remove();
         var otherId = idx;
         console.log("otherId = " + otherId);
         $('#' + 'trOtherId' + otherId).removeClass('hidden');
