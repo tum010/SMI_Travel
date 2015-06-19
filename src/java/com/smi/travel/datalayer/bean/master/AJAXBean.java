@@ -265,6 +265,9 @@ public class AJAXBean extends AbstractBean implements
                 }
                 System.out.println("tabledata : " + tabledata);
                 result = tabledata;
+            }else  if ("AutoListBillto".equalsIgnoreCase(type)) {
+                String name = map.get("name").toString();
+                List<CustomerAgentInfo> data = customerAgentInfoDao.SearchListCustomerAgentInfo(name);
             }
         } else if (BOOKDAYTOUR.equalsIgnoreCase(servletName)) {
             String TourID = null;
@@ -347,7 +350,15 @@ public class AJAXBean extends AbstractBean implements
             }else if ("searchairportArrive".equalsIgnoreCase(type)) {
                 result = buildAirportListHTMLArrive(airportdao.searchAirport(name));
             }else if("autoairport".equalsIgnoreCase(type)){
-                result = buildAirportListJSON(airportdao.searchAirport(name));
+                result = airportdao.searchAirport(name);
+                System.out.println(result);
+            }else if("getairportname".equalsIgnoreCase(type)){
+                List<MAirport> data = airportdao.searchAirport(name);
+                if(data == null){
+                    result = "";
+                }else{
+                    result = data.get(0);
+                }
                 System.out.println(result);
             }
         }
