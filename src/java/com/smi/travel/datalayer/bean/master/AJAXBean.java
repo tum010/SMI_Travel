@@ -25,6 +25,7 @@ import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.entity.PackageItinerary;
 import com.smi.travel.datalayer.entity.PackagePrice;
 import com.smi.travel.datalayer.entity.PackageTour;
+import com.smi.travel.datalayer.entity.Passenger;
 import com.smi.travel.datalayer.entity.Place;
 import com.smi.travel.datalayer.entity.ProductDetail;
 import com.smi.travel.datalayer.view.dao.BookingSummaryDao;
@@ -58,6 +59,7 @@ public class AJAXBean extends AbstractBean implements
     private static final String DAYTOURCOMM = "DaytourCommissionServlet";
     private static final String DAYTOUR = "DaytourServlet";
     private static final String AIRTICKET = "AirTicketServlet";
+    private static final String PASSENGER = "PassengerServlet";
     private CustomerDao customerdao;
     private ProductDetailDao productDetailDao;
     private BookingSummaryDao bookingsummarydao;
@@ -361,8 +363,66 @@ public class AJAXBean extends AbstractBean implements
                 }
                 System.out.println(result);
             }
+        }else if(PASSENGER.equalsIgnoreCase(servletName)){
+            String name = map.get("name").toString();
+            if ("searchPassenger".equalsIgnoreCase(type)) {
+                Customer customer = new Customer();
+                String[] pathname = name.trim().split("/");
+                int filter = 0;
+                if (pathname.length == 1) {
+                    customer.setFirstName(pathname[0]);
+                    customer.setLastName(pathname[0]);
+                    customer.setCode(pathname[0]);
+                    filter = 1;
+                } else {
+                    filter = 0;
+                    customer.setFirstName(pathname[0]);
+                    customer.setLastName(pathname[1]);
+                    customer.setCode(pathname[0] + pathname[1]);
+                }
+
+                List<Customer> customerList = customerdao.FiterCustomer(customer, filter);
+                result = buildPassengerListHTML(customerList);
+                System.out.println("result passenger: "+result);
+            }
         }
         return result;
+    }
+    
+    
+    public String buildPassengerListHTML(List<Customer> passList){
+        String passenger = "";
+        String MInitialname = "";
+        String MInitialID = "";
+        for(int i=0;i<passList.size();i++){
+            Customer cus = passList.get(i);
+            if(cus.getMInitialname() != null){
+                MInitialname = cus.getMInitialname().getName();
+                MInitialID = cus.getMInitialname().getId();
+            }
+           
+            passenger += "<tr>"+
+                    "<td class='customer-id hidden'>"+cus.getId()+"</td>"+
+                    "<td class='customer-code hidden'>"+cus.getCode()+"</td>"+
+                    "<td class='customer-initial hidden'>"+MInitialname+"</td>"+
+                    "<td class='customer-initialId hidden'>"+MInitialID+"</td>"+
+                     "<td class='customer-lastname hidden'>"+cus.getLastName()+"</td>"+
+                    "<td class='customer-firstname hidden'>"+cus.getFirstName()+"</td>"+
+                    "<td class='customer-sex hidden'>"+cus.getSex()+"</td>"+
+                    "<td class='customer-address hidden'>"+cus.getAddress()+"</td>"+
+                    "<td class='customer-tel hidden'>"+cus.getTel()+"</td>"+
+                    "<td class='customer-phone hidden'>"+cus.getPhone()+"</td>"+
+                    "<td class='customer-postal hidden'>"+cus.getPostalCode()+"</td>"+
+                    "<td class='customer-email hidden'>"+cus.getEmail()+"</td>"+
+                    "<td class='customer-japanfirstname hidden'>"+cus.getFirstNameJapan()+"</td>"+
+                    "<td class='customer-japanlastname hidden'>"+cus.getLastNameJapan()+"</td>"+
+                    "<td class='customer-remark hidden'>"+cus.getRemark()+"</td>"+
+                    "<td class='customer-passportno hidden'>"+cus.getPassportNo()+"</td>"+
+                    "</tr>";
+                        
+        }
+       
+        return passenger;
     }
     
     public String buildAirportListJSON(List<MAirport> listAirport) {
