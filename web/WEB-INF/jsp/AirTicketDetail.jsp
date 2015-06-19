@@ -153,7 +153,7 @@
                                         <script>
                                             var tickettype = [];
                                         </script>
-                                     
+
                                         <select id="flight-${i.count}-ticketTypeCom" name="flight-${i.count}-ticketTypeCom" class="form-control">          
                                             <option value=""></option>
                                             <c:forEach var="mticket" items="${mTicketTypeList}" >
@@ -362,7 +362,7 @@
                                     <div class="col-sm-4">  
                                         <select class="form-control" id="flight-${fStatus.count}-class" 
                                                 name="flight-${fStatus.count}-class" value="${flight.MFlight.id}" >
-                                             <option value=""></option>
+                                            <option value=""></option>
                                             <c:forEach var="m" items="${mFlightList}">
                                                 <option value="${m.id}" ${select}>${m.name}</option>
                                             </c:forEach>
@@ -469,110 +469,116 @@
                         </div>
                     </div>
                     <script>
-                        $(document).ready(function(){
-                           
-                                $("#departure-${fStatus.count}-code").on('keyup',function(e){
-                                    if(e.keyCode === 13){
-                                        getDepartureAirport(this.value,${fStatus.count});
+                        $(document).ready(function () {
+
+                            $("#departure-${fStatus.count}-code").on('keyup', function (e) {
+                                if (e.keyCode === 13) {
+                                    getDepartureAirport(this.value,${fStatus.count});
+                                }
+                            });
+                            $("#departure-${fStatus.count}-code").on('blur', function (e) {
+                                getDepartureAirport(this.value,${fStatus.count});
+                            });
+                            $("#arrival-${fStatus.count}-code").on('keyup', function (e) {
+                                if (e.keyCode === 13) {
+                                    getArrivalAirport(this.value,${fStatus.count});
+                                }
+                            });
+                            $("#arrival-${fStatus.count}-code").on('blur', function (e) {
+                                getArrivalAirport(this.value,${fStatus.count});
+                            });
+                        });
+                        function getDepartureAirport(name, count) {
+                            var servletName = 'AirTicketServlet';
+                            var servicesName = 'AJAXBean';
+                            var param = 'action=' + 'text' +
+                                    '&servletName=' + servletName +
+                                    '&servicesName=' + servicesName +
+                                    '&name=' + name +
+                                    '&type=' + 'getairportname';
+                            console.log("Ajax param [" + param + "]");
+                            CallAjaxDepartureAirport(param, count);
+                        }
+
+                        function getArrivalAirport(name, count) {
+                            var servletName = 'AirTicketServlet';
+                            var servicesName = 'AJAXBean';
+                            var param = 'action=' + 'text' +
+                                    '&servletName=' + servletName +
+                                    '&servicesName=' + servicesName +
+                                    '&name=' + name +
+                                    '&type=' + 'getairportname';
+                            console.log("Ajax param [" + param + "]");
+                            CallAjaxArrivalAirport(param, count);
+                        }
+
+                        function CallAjaxDepartureAirport(param, count) {
+                            var url = 'AJAXServlet';
+                            try {
+                                $.ajax({
+                                    type: "POST",
+                                    url: url,
+                                    cache: false,
+                                    data: param,
+                                    success: function (msg) {
+                                        var splitMsg = msg.split(",");
+                                        console.log("ajax departure call=" + msg);
+                                        console.log("departure_count=" + count);
+                                        if ($("#departure-" + count + "-code").val() !== "") {
+                                            $("#departure-" + count + "-id").val(splitMsg[0]);
+                                            $("#departure-" + count + "-name").val(splitMsg[1]);
+                                        } else {
+                                            $("#departure-" + count + "-id").val("");
+                                            $("#departure-" + count + "-name").val("");
+                                        }
+
                                     }
-                                }); 
-                                $("#arrival-${fStatus.count}-code").on('keyup',function(e){
-                                    if(e.keyCode === 13){
-                                         getArrivalAirport(this.value,${fStatus.count});
+                                    , error: function (msg) {
+                                        alert("msg error : " + msg);
                                     }
                                 });
-                        });
-                            function getDepartureAirport(name,count){
-                                var servletName = 'AirTicketServlet';
-                                var servicesName = 'AJAXBean';
-                                var param = 'action=' + 'text' +
-                                        '&servletName=' + servletName +
-                                        '&servicesName=' + servicesName +
-                                        '&name=' + name +
-                                        '&type=' + 'getairportname';
-                                console.log("Ajax param [" + param + "]");
-                                CallAjaxDepartureAirport(param,count);
+                            } catch (e) {
+                                alert(e);
                             }
-                            
-                            function getArrivalAirport(name,count){
-                                var servletName = 'AirTicketServlet';
-                                var servicesName = 'AJAXBean';
-                                var param = 'action=' + 'text' +
-                                        '&servletName=' + servletName +
-                                        '&servicesName=' + servicesName +
-                                        '&name=' + name +
-                                        '&type=' + 'getairportname';
-                                console.log("Ajax param [" + param + "]");
-                                CallAjaxArrivalAirport(param,count);
+                        }
+
+                        function CallAjaxArrivalAirport(param, count) {
+                            var url = 'AJAXServlet';
+                            try {
+                                $.ajax({
+                                    type: "POST",
+                                    url: url,
+                                    cache: false,
+                                    data: param,
+                                    success: function (msg) {
+                                        var splitMsg = msg.split(",");
+                                        console.log("ajax arrival call=" + msg);
+                                        console.log("arrival_count=" + count);
+                                        if ($("#arrival-" + count + "-code").val() !== "") {
+                                            $("#arrival-" + count + "-id").val(splitMsg[0]);
+                                            $("#arrival-" + count + "-name").val(splitMsg[1]);
+                                        } else {
+                                            $("#arrival-" + count + "-id").val("");
+                                            $("#arrival-" + count + "-name").val("");
+                                        }
+
+                                    }
+                                    , error: function (msg) {
+                                        alert("msg error : " + msg);
+                                    }
+                                });
+                            } catch (e) {
+                                alert(e);
                             }
-                            
-                            function CallAjaxDepartureAirport(param,count){
-                                var url = 'AJAXServlet';
-                                try {
-                                    $.ajax({
-                                        type: "POST",
-                                        url: url,
-                                        cache: false,
-                                        data: param,
-                                        success: function (msg) {
-                                            var splitMsg = msg.split(",");
-                                            console.log("ajax departure call="+msg);
-                                            console.log("departure_count="+count);
-                                            if($("#departure-"+count+"-code").val() !== ""){
-                                                $("#departure-"+count+"-id").val(splitMsg[0]);
-                                                 $("#departure-"+count+"-name").val(splitMsg[1]);
-                                            }else{
-                                                $("#departure-"+count+"-id").val("");
-                                                $("#departure-"+count+"-name").val("");
-                                            }
-                                           
-                                        }
-                                        , error: function (msg) {
-                                            alert("msg error : "+msg);
-                                        }
-                                    });
-                                } catch (e) {
-                                    alert(e);
-                                }
-                            }
-                            
-                            function CallAjaxArrivalAirport(param,count){
-                                var url = 'AJAXServlet';
-                                try {
-                                    $.ajax({
-                                        type: "POST",
-                                        url: url,
-                                        cache: false,
-                                        data: param,
-                                        success: function (msg) {
-                                            var splitMsg = msg.split(",");
-                                            console.log("ajax arrival call="+msg);
-                                            console.log("arrival_count="+count);
-                                            if($("#arrival-"+count+"-code").val() !== ""){
-                                                $("#arrival-"+count+"-id").val(splitMsg[0]);
-                                                $("#arrival-"+count+"-name").val(splitMsg[1]);
-                                            }else{
-                                                $("#arrival-"+count+"-id").val("");
-                                                $("#arrival-"+count+"-name").val("");
-                                            }
-                                            
-                                        }
-                                        , error: function (msg) {
-                                            alert("msg error : "+msg);
-                                        }
-                                    });
-                                } catch (e) {
-                                    alert(e);
-                                }
-                            }
+                        }
 
                         flight.push({id: "${fStatus.count}",
                             air_id: "${flight.airticketAirline.MAirline.id}",
                             air_code: "${flight.airticketAirline.MAirline.code}",
                             air_name: "${flight.airticketAirline.MAirline.name}"
                         });
-                        
-                        
+
+
                         $(document).ready(function () {
 
                             var status = "${flight.MItemstatus.name}";
@@ -691,11 +697,11 @@
 //                                    }
 //                                });
 //                            });
-                            
-                            
-                            
-                            
-                            
+
+
+
+
+
                             // SET FIX DATE START AND STOP
                             $('#flight-${fStatus.count}-departDate,#flight-${fStatus.count}-arriveDate').on('focusout', function () {
                                 console.log('on input');
@@ -1215,7 +1221,7 @@
                                 getDeparture($("#filterdep").val());
                             }
                         });
-                        
+
                         $.each(flight, function (index_flight, value_flight) {
                             var flightCode = $("#departure-" + value_flight.id + "-code").val();
                             getDepartureAirport(flightCode, value_flight.id);
@@ -1357,7 +1363,7 @@
                                 getArrive($("#filterarrive").val());
                             }
                         });
-                        
+
                         $.each(flight, function (index_flight, value_flight) {
                             var flightCode = $("#arrival-" + value_flight.id + "-code").val();
                             getArrivalAirport(flightCode, value_flight.id);
