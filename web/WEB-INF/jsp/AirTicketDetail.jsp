@@ -153,7 +153,12 @@
                                         <script>
                                             var tickettype = [];
                                         </script>
+                                         <script>
+                                                var checkId = "${flight.MTicketType.id}";
+                                                console.log("checkId =" + checkId);
+                                         </script>
                                         <select id="flight-${i.count}-ticketTypeCom" name="flight-${i.count}-ticketTypeCom" class="form-control">          
+                                            <option value=""></option>
                                             <c:forEach var="mticket" items="${mTicketTypeList}" >
                                                 <c:set var="select" value=""  />
                                                 <c:if test="${mticket.id == flight.MTicketType.id}">
@@ -171,6 +176,7 @@
                                     </td>
                                     <td>
                                         <select id="flight-${i.count}-classCom" name="flight-${i.count}-classCom" class="form-control">          
+                                            <option value=""></option>
                                             <c:forEach var="mflight" items="${mFlightList}" >
                                                 <c:set var="select" value=""  />
                                                 <c:if test="${mflight.id == flight.MFlight.id}">
