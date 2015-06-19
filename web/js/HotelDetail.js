@@ -13,7 +13,7 @@ $(document).ready(function () {
 $(document).ready(function () {
     // COUNT DAY
     getDate();
-    $("button").on('mouseover', function () {
+    $("#hotelSave").on('mouseover', function () {
        var days =  getDate();
        if(days<=0){
            alert("Night ="+days +" !");
