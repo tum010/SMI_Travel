@@ -1,5 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript" src="js/MpackageDetail.js"></script> 
+<script type="text/javascript" src="js/MpackageDetail.js"></script>
+<script type="text/javascript" src="js/selectize.js"></script>
+<link href="css/selectize.bootstrap3.css" rel="stylesheet">
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -229,6 +231,7 @@
                                 <option  value="${pass.id}">${pass.name}</option>
                            </c:forEach>
                         </select>
+                          
                             <div class="row" style="margin-left: 10px;margin-right: 10px;">            
                             <table id="City" class="display" cellspacing="0"  >
                                 <thead>
@@ -256,21 +259,28 @@
                                         <td>
                                             ${city.count}
                                         </td>
-                                        <td>                 
-                                                <input id="input-get-city-${city.count}" value="${pa.MCity.id}" hidden="">
-                                                <!--<input type="text" class="form-control cityName" id="select-passneger-${city.count}" name="row-city-${city.count}-name"  valHidden="${cityList.id}" value="${cityList.name}"  />-->
-                                                <select  class="form-control"  name="row-city-${city.count}-name" id="row-city-${city.count}">
-                                                    <c:forEach var="passen" items="${ListCity}" varStatus="status">
-                                                        <option  value="${passen.id}">${passen.name}</option>
-                                                    </c:forEach>
-                                                </select>
-                                         
+                                        <td class="form-group">                 
+                                            <input id="input-get-city-${city.count}" value="${pa.MCity.id}" hidden="">
+                                                        <!--<input type="text" class="form-control cityName" id="select-passneger-${city.count}" name="row-city-${city.count}-name"  valHidden="${cityList.id}" value="${cityList.name}"  />-->
+                                            
+                                            <select name="row-city-${city.count}-name" id="row-city-${city.count}-name" class="form-control selectize">
+                                                <option value="">- - City - -</option>
+                                                <c:forEach var="passen" items="${ListCity}">
+                                                    <c:set var="select" value="" />
+                                                    <c:set var="selectedId" value="${pa.MCity.id}" />
+                                                    <c:if test="${passen.id == selectedId}">
+                                                        <c:set var="select" value="selected" />
+                                                    </c:if>
+                                                    <option value="${passen.id}" ${select}>${passen.name}</option>   
+                                                </c:forEach>
+                                            </select>                 
+                                                
                                             <script>
                                                 $(document).ready(function () {
                                                     $("#row-city-${city.count}").val($("#input-get-city-${city.count}").val());
                                                 });
                                             </script>
-                                        </td>          
+                                        </td>           
                                         <td class="text-center">
 <!--                                            <a id="PassengerButtonRemove${city.count}" class="remCF" onclick="ConfirmDelete('3', '${pa.id}', '${city.count-1}')">
                                                 <span id="PassengerSpanRemove${city.count-1}" class="glyphicon glyphicon-remove deleteicon"></span>
@@ -290,6 +300,7 @@
                                 </c:forEach>                              
                             </tbody>
                         </table>
+                        <input type="hidden" id="filterCity" name="SelectCity" >
                         <input value="${ListPackageCity.size()}" id="table-city-size" type="hidden">
                         <div id="tr_CityAddRow" class="text-center hide" style="padding-top: 10px">
                             <a class="btn btn-success" onclick="CityAddRow()">
@@ -330,6 +341,8 @@
 </div>
                        
 <script type="text/javascript" charset="utf-8">
+
+    
     $(document).ready(function() {
         // ******************* start Itinerary script *******************
         $("#Itinerary").on("keyup", function() {
@@ -390,6 +403,8 @@
         
          AddRowPackagePrice(parseInt($("#counterPrice").val()));
         // ******************* start PackagePrice script *****************
+           
+  
     });
 
     function deletelist(id) {

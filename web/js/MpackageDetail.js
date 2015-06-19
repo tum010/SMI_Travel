@@ -261,7 +261,48 @@ $(document).ready(function () {
             return false;
         }
     });
+            Selectize.define( 'clear_selection', function ( options ) {
+                var self = this;
+                self.plugins.settings.dropdown_header = {
+                    title: 'Clear Selection'
+                };
+                this.require( 'dropdown_header' );
+                self.setup = (function () {
+                    var original = self.setup;
+                    return function () {
+                        original.apply( this, arguments );
+                        this.$dropdown.on( 'mousedown', '.selectize-dropdown-header', function ( e ) {
+                            self.setValue( '' );
+                            self.close();
+                            self.blur();
+                            return false;
+                        });
+                    };
+                })();
+            });
+            
+            var tableLength = $("#City tbody").find("tr").length;
+            console.log("table length " + tableLength);
+            var dataCity = [];
+            dataCity = cityName ;
+            
+            for (var i = 1; i <= tableLength; i++) {
+                
+                var name = "#row-city-"+i+"-name";
+                console.log("name = " + name);
 
+                $(name).selectize({
+                    removeItem: '',
+                    sortField: 'text' ,
+                    create: false ,
+                    dropdownParent: 'body',
+                    plugins: {
+                        'clear_selection': {}
+                    }
+
+                });
+
+            }
 
 });
 
@@ -369,7 +410,7 @@ function CityAddRow(row) {
             '<tr>' +
             '<td hidden="">' + row + '</td>' +
             '<td  >'+row+'</td>' +
-            '<td><select id="row-city-' + row + '-name" name="row-city-' + row + '-name" class="form-control"><option></option></select></td>' +
+            '<td><select id="row-city-' + row + '-name" name="row-city-' + row + '-name" class="form-control selectize"><option value="">- - City - -</option></select></td>' +
             '<td class="text-center">' +
             '<a class="remCF" onclick="ConfirmDelete(\'3\', \'\', \''+row+'\')">  '+
             '<span  id="SpanRemove'+row+'"  class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+                   
@@ -378,6 +419,20 @@ function CityAddRow(row) {
     $("#select-list-city option").clone().appendTo("#row-city-" + row + "-name");
     var tempCount = parseInt($("#cityCounter").val()) + 1;
     $("#cityCounter").val(tempCount);
+    
+    var name = "#row-city-"+row+"-name";
+    console.log("name = " + name);
+
+    $(name).selectize({
+        removeItem: '',
+        sortField: 'text' ,
+        create: false ,
+        dropdownParent: 'body',
+        plugins: {
+            'clear_selection': {}
+        }
+
+    });
 }
 
 function deletePassenger(hotelId, passengerId) {
