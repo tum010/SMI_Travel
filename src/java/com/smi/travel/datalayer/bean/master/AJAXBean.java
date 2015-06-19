@@ -421,7 +421,7 @@ public class AJAXBean extends AbstractBean implements
             }
             result += "<tr>"
                     + "<td>" + book.getMaster().getReferenceNo() + "</td>"
-                    + "<td>" + cus.getMInitialname().getName() + " " + cus.getFirstName() + " " + cus.getLastName() + "</td>"
+                    + "<td>" + cus.getMInitialname().getName() + " " + cus.getLastName() + " " + cus.getFirstName() + "</td>"
                     + "<td>" + AllQty[0] + "</td>"
                     + "<td>" + AllQty[1] + "</td>"
                     + "<td>" + AllQty[2] + "</td>"
