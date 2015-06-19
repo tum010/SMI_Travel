@@ -101,10 +101,10 @@ $(document).ready(function () {
         $("#info,#master").removeClass('hidden');
     }
     
-    $('#InputTourDate').datetimepicker({
+    $('#InputDatePicker').datetimepicker({
         }).on('change', function(e) {
-            $('#DaytourDetailForm').bootstrapValidator('revalidateField', 'InputTourDetailTourDate');
-    });  
+            $('#DaytourOperationForm').bootstrapValidator('revalidateField', 'InputTourDetailTourDate');
+    });
     $("#DaytourOperationForm")
             .bootstrapValidator({
 //                framework: 'bootstrap',
@@ -127,17 +127,20 @@ $(document).ready(function () {
                     InputTourDetailTourDate: {
                         validators: {
                             notEmpty: {
-                                message: ' Date From is required'
+                                message: ' Tour Date is required'
                             }
                         }
                     }
           
                 }
             })
-            .on('success.field.bv', function (e, data) {
-                    if (data.bv.isValid()) {
-                        data.bv.disableSubmitButtons(false);
-                    }
+            .on('success.field.fv', function (e, data) {
+                if (data.field === 'InputTourDetailTourDate' && data.fv.isValidField('InputTourDetailTourDate') === false) {
+                    data.fv.revalidateField('InputTourDetailTourDate');
+                }
+                if (data.field === 'InputDetailTourCode' && data.fv.isValidField('InputDetailTourCode') === false) {
+                    data.fv.revalidateField('InputDetailTourCode');
+                }
             });
             
 });
