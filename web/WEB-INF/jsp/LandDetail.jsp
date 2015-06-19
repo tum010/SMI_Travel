@@ -792,7 +792,36 @@
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div>            
+</div>  
+
+<div class="modal fade" id="Confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title"  id="Titlemodel">Booking - Land Detail </h4>
+            </div>
+            <div class="modal-body" id="confirmMessage">
+                Are you sure to update cost and price ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="Confirm()" class="btn btn-danger">Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+            </div>
+            <div class="hidden">
+                <input type="text" class="form-control" id="path0" name="path0" value="">
+                <input type="text" class="form-control" id="path1" name="path1" value="">
+                <input type="text" class="form-control" id="path2" name="path2" value="">
+                <input type="text" class="form-control" id="path3" name="path3" value="">
+                <input type="text" class="form-control" id="path4" name="path4" value="">
+                <input type="text" class="form-control" id="path5" name="path5" value="">
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->      
 
 <script type="text/javascript" charset="utf-8">
 
