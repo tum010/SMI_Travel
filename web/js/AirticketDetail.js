@@ -301,11 +301,13 @@ function addFight(rowId) {
             + '<label class="col-sm-1 control-label text-right">Ticket</label>'
             + '<div class="col-sm-5">  '
             + '<select class="form-control" id="flight-' + rowId + '-ticketType" name="flight-' + rowId + '-ticketType">'
+            + '<option value=""></option>'
             + '</select> '
             + '</div>'
             + '<label class="col-sm-1 control-label text-right">Class</label>'
             + '<div class="col-sm-4">  '
             + '<select class="form-control" id="flight-' + rowId + '-class" name="flight-' + rowId + '-class">'
+            + '<option value=""></option>'
             + '</select> '
             + '</div>'
             + '</div>'
@@ -424,14 +426,15 @@ function addFight(rowId) {
 
 }
 
-// ON KEY INPUT AUTO SELECT AIRLIN FOR AIRLINE
-$(document).on('keyup', '.airline', function () {
-    var id = $(this).data("id");
+//// ON KEY INPUT AUTO SELECT AIRLIN FOR AIRLINE
+$(document).on('keyup', '.airline', function () {   
+    var id = $(this).data("id"); 
     console.log("id :" + id);
     $("#airlineId" + id + ",#airlineName" + id).val(null);
     var code = $(this).val().toUpperCase();
     console.log(code);
     $.each(airline, function (key, value) {
+        alert("key:"+value.airline_id);
         if (value.airline_code.toUpperCase() === code) {
             console.log('add new');
             $("#airlineId" + id).val(value.airline_id);

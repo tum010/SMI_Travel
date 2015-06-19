@@ -469,75 +469,106 @@
                         </div>
                     </div>
                     <script>
-
-//                            function getAutoAirport(name){
-//                                var servletName = 'AirTicketServlet';
-//                                var servicesName = 'AJAXBean';
-//                                var param = 'action=' + 'text' +
-//                                        '&servletName=' + servletName +
-//                                        '&servicesName=' + servicesName +
-//                                        '&name=' + name +
-//                                        '&type=' + 'autoairport';
-//                                console.log("Ajax param [" + param + "]");
-//                                CallAjaxAutoAirport(param);
-//                            }
-
-//                            function CallAjaxAutoAirport(param){
-//                                var url = 'AJAXServlet';
-//                                try {
-//                                    $.ajax({
-//                                        type: "POST",
-//                                        url: url,
-//                                        cache: false,
-//                                        data: param,
-//                                        success: function (msg) {
-//                                            console.log(msg);
-//                                            $("#departure-${fStatus.count}-code").autocomplete({
-//                                                minLength: 2,
-//                                                source: msg,
-//                                                focus: function(event, ui) {
-//                                                    $('#departure-${fStatus.count}-name').val(ui.item.code);
-//                                                    return false;
-//                                                },
-//                                                select: function(event, ui) {
-//                                                    $('#departure-${fStatus.count}-name').val(ui.item.code);
-//                                                    return false;
-//                                                },
-//                                                create: function() {
-//                                                    $(this).data('ui-autocomplete')._renderItem = 
-//                                                    function( ul, item ) {
-//                                                    return $("<li></li>")
-//                                                    .data("item.autocomplete", item)
-//                                                    .append("<a>" + item.name + "</a>")
-//                                                    .appendTo( ul );
-//                                                    };        
-//                                                }        
-//                                            });
-//                                            
-//                                        }
-//                                        , error: function (msg) {
-//                                            alert("msg error : "+msg);
-//                                        }
-//                                    });
-//                                } catch (e) {
-//                                    alert(e);
-//                                }
-//                            }
+                        $(document).ready(function(){
+                                $("#departure-${fStatus.count}-code").on('keyup',function(){
+                                     getDepartureAirport(this.value,${fStatus.count});
+                                }); 
+                                $("#arrival-${fStatus.count}-code").on('keyup',function(){
+                                     getArrivalAirport(this.value,${fStatus.count});
+                                });
+                        });
+                            function getDepartureAirport(name,count){
+                                var servletName = 'AirTicketServlet';
+                                var servicesName = 'AJAXBean';
+                                var param = 'action=' + 'text' +
+                                        '&servletName=' + servletName +
+                                        '&servicesName=' + servicesName +
+                                        '&name=' + name +
+                                        '&type=' + 'getairportname';
+                                console.log("Ajax param [" + param + "]");
+                                CallAjaxDepartureAirport(param,count);
+                            }
+                            
+                            function getArrivalAirport(name,count){
+                                var servletName = 'AirTicketServlet';
+                                var servicesName = 'AJAXBean';
+                                var param = 'action=' + 'text' +
+                                        '&servletName=' + servletName +
+                                        '&servicesName=' + servicesName +
+                                        '&name=' + name +
+                                        '&type=' + 'getairportname';
+                                console.log("Ajax param [" + param + "]");
+                                CallAjaxArrivalAirport(param,count);
+                            }
+                            
+                            function CallAjaxDepartureAirport(param,count){
+                                var url = 'AJAXServlet';
+                                try {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: url,
+                                        cache: false,
+                                        data: param,
+                                        success: function (msg) {
+                                            var splitMsg = msg.split(",");
+                                            console.log("ajax departure call="+msg);
+                                            console.log("departure_count="+count);
+                                            if($("#departure-"+count+"-code").val() !== ""){
+                                                $("#departure-"+count+"-id").val(splitMsg[0]);
+                                                 $("#departure-"+count+"-name").val(splitMsg[1]);
+                                            }else{
+                                                $("#departure-"+count+"-id").val("");
+                                                $("#departure-"+count+"-name").val("");
+                                            }
+                                           
+                                        }
+                                        , error: function (msg) {
+                                            alert("msg error : "+msg);
+                                        }
+                                    });
+                                } catch (e) {
+                                    alert(e);
+                                }
+                            }
+                            
+                            function CallAjaxArrivalAirport(param,count){
+                                var url = 'AJAXServlet';
+                                try {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: url,
+                                        cache: false,
+                                        data: param,
+                                        success: function (msg) {
+                                            var splitMsg = msg.split(",");
+                                            console.log("ajax arrival call="+msg);
+                                            console.log("arrival_count="+count);
+                                            if($("#arrival-"+count+"-code").val() !== ""){
+                                                $("#arrival-"+count+"-id").val(splitMsg[0]);
+                                                $("#arrival-"+count+"-name").val(splitMsg[1]);
+                                            }else{
+                                                $("#arrival-"+count+"-id").val("");
+                                                $("#arrival-"+count+"-name").val("");
+                                            }
+                                            
+                                        }
+                                        , error: function (msg) {
+                                            alert("msg error : "+msg);
+                                        }
+                                    });
+                                } catch (e) {
+                                    alert(e);
+                                }
+                            }
 
                         flight.push({id: "${fStatus.count}",
                             air_id: "${flight.airticketAirline.MAirline.id}",
                             air_code: "${flight.airticketAirline.MAirline.code}",
                             air_name: "${flight.airticketAirline.MAirline.name}"
                         });
+                        
+                        
                         $(document).ready(function () {
-//                            ;
-//                           $("#departure-${fStatus.count}-code").on('keyup',function(){
-//                                getAutoAirport(this.value);
-////                                var position = $(this).offset();
-////                                $(".ui-widget").css("top", position.top + 30);
-////                                $(".ui-widget").css("left", position.left);
-//                                
-//                           }); 
 
                             var status = "${flight.MItemstatus.name}";
                             var tickettype = "${flight.MTicketType.id}";
@@ -581,84 +612,85 @@
                                     }
                                 });
                             });
-                            $("#airlineCode${fStatus.count}").on('click focus', function () {
-                                $(this).select();
-                            });
-
-
-                            var codeDeparture = [];
-                            $.each(a, function (key, value) {//winit
-                                codeDeparture.push(value.code);
-                                if (!(value.name in codeDeparture)) {
-                                    codeDeparture.push(value.name);
-                                }
-                            });
-                            $("#departure-${fStatus.count}-code").autocomplete({
-                                source: codeDeparture,
-                                close: function (event, ui) {
-                                    $("#departure-${fStatus.count}-code").trigger('keyup');
-                                }
-                            });
-                            $("#departure-${fStatus.count}-code").on('keyup', function () {
-                                var position = $(this).offset();
-                                console.log("positon :" + position.top);
-                                $(".ui-widget").css("top", position.top + 30);
-                                $(".ui-widget").css("left", position.left);
-                                var code = this.value.toUpperCase();
-                                var name = this.value;
-                                $("#departure-${fStatus.count}-id,#departure-${fStatus.count}-name").val(null);
-                                $.each(a, function (key, value) {
-                                    if (value.code.toUpperCase() === code) {
-                                        console.log('ok');
-                                        $("#departure-${fStatus.count}-id").val(value.id);
-                                        $("#departure-${fStatus.count}-name").val(value.name);
-                                    }
-                                    if (name === value.name) {
-                                        $("#departure-${fStatus.count}-id").val(value.id);
-                                        $("#departure-${fStatus.count}-code").val(value.code);
-                                        $("#departure-${fStatus.count}-name").val(value.name);
-                                        code = $("#departure-${fStatus.count}-code").val().toUpperCase();
-
-                                    }
-                                });
-                            });
-
-                            var codeArrival = [];
-                            $.each(a, function (key, value) {//winit
-                                codeArrival.push(value.code);
-                                if (!(value.name in codeArrival)) {
-                                    codeArrival.push(value.name);
-                                }
-                            });
-                            $("#arrival-${fStatus.count}-code").autocomplete({
-                                source: codeArrival,
-                                close: function (event, ui) {
-                                    $("#arrival-${fStatus.count}-code").trigger('keyup');
-                                }
-                            });
-                            $("#arrival-${fStatus.count}-code").on('keyup', function () {
-                                var position = $(this).offset();
-                                console.log("positon :" + position.top);
-                                $(".ui-widget").css("top", position.top + 30);
-                                $(".ui-widget").css("left", position.left);
-                                var code = this.value.toUpperCase();
-                                var name = this.value
-                                $("#arrival-${fStatus.count}-id,#arrival-${fStatus.count}-name").val(null);
-                                $.each(a, function (key, value) {
-                                    if (value.code.toUpperCase() === code) {
-                                        console.log('ok');
-                                        $("#arrival-${fStatus.count}-id").val(value.id);
-                                        $("#arrival-${fStatus.count}-name").val(value.name);
-                                    }
-                                    if (name === value.name) {
-                                        $("#arrival-${fStatus.count}-id").val(value.id);
-                                        $("#arrival-${fStatus.count}-code").val(value.code);
-                                        $("#arrival-${fStatus.count}-name").val(value.name);
-                                        code = $("#arrival-${fStatus.count}-code").val().toUpperCase();
-
-                                    }
-                                });
-                            });
+//Departure--------------------------------------------------------------------------------------                            
+//                            var codeDeparture = [];
+//                            $.each(a, function (key, value) {//winit
+//                                codeDeparture.push(value.code);
+//                                if (!(value.name in codeDeparture)) {
+//                                    codeDeparture.push(value.name);
+//                                }
+//                            });
+//                            $("#departure-${fStatus.count}-code").autocomplete({
+//                                source: codeDeparture,
+//                                close: function (event, ui) {
+//                                    $("#departure-${fStatus.count}-code").trigger('keyup');
+//                                }
+//                            });
+//                            $("#departure-${fStatus.count}-code").on('keyup', function () {
+//                                var position = $(this).offset();
+//                                console.log("positon :" + position.top);
+//                                $(".ui-widget").css("top", position.top + 30);
+//                                $(".ui-widget").css("left", position.left);
+//                                var code = this.value.toUpperCase();
+//                                var name = this.value;
+//                                $("#departure-${fStatus.count}-id,#departure-${fStatus.count}-name").val(null);
+//                                $.each(a, function (key, value) {
+//                                    if (value.code.toUpperCase() === code) {
+//                                        console.log('ok');
+//                                        $("#departure-${fStatus.count}-id").val(value.id);
+//                                        $("#departure-${fStatus.count}-name").val(value.name);
+//                                    }
+//                                    if (name === value.name) {
+//                                        $("#departure-${fStatus.count}-id").val(value.id);
+//                                        $("#departure-${fStatus.count}-code").val(value.code);
+//                                        $("#departure-${fStatus.count}-name").val(value.name);
+//                                        code = $("#departure-${fStatus.count}-code").val().toUpperCase();
+//
+//                                    }
+//                                });
+//                            });
+//Arrival--------------------------------------------------------------------------------------
+//                            var codeArrival = [];
+//                            $.each(a, function (key, value) {
+//                                codeArrival.push(value.code);
+//                                if (!(value.name in codeArrival)) {
+//                                    codeArrival.push(value.name);
+//                                }
+//                            });
+//                            $("#arrival-${fStatus.count}-code").autocomplete({
+//                                source: codeArrival,
+//                                close: function (event, ui) {
+//                                    $("#arrival-${fStatus.count}-code").trigger('keyup');
+//                                }
+//                            });
+//                            $("#arrival-${fStatus.count}-code").on('keyup', function () {
+//                                var position = $(this).offset();
+//                                console.log("positon :" + position.top);
+//                                $(".ui-widget").css("top", position.top + 30);
+//                                $(".ui-widget").css("left", position.left);
+//                                var code = this.value.toUpperCase();
+//                                var name = this.value;
+//                                $("#arrival-${fStatus.count}-id,#arrival-${fStatus.count}-name").val(null);
+//                                $.each(a, function (key, value) {
+//                                    if (value.code.toUpperCase() === code) {
+//                                        console.log('ok');
+//                                        $("#arrival-${fStatus.count}-id").val(value.id);
+//                                        $("#arrival-${fStatus.count}-name").val(value.name);
+//                                    }
+//                                    if (name === value.name) {
+//                                        $("#arrival-${fStatus.count}-id").val(value.id);
+//                                        $("#arrival-${fStatus.count}-code").val(value.code);
+//                                        $("#arrival-${fStatus.count}-name").val(value.name);
+//                                        code = $("#arrival-${fStatus.count}-code").val().toUpperCase();
+//
+//                                    }
+//                                });
+//                            });
+                            
+                            
+                            
+                            
+                            
                             // SET FIX DATE START AND STOP
                             $('#flight-${fStatus.count}-departDate,#flight-${fStatus.count}-arriveDate').on('focusout', function () {
                                 console.log('on input');
@@ -683,7 +715,7 @@
                     </script>
 
                 </c:forEach>
-                <!--list dropdown-->
+                <!--list dropdown  dummy--> 
                 <div class="hidden">  
                     <select class="form-control" name="flight-0-status" id="flight-0-status">
                         <c:forEach var="status" items="${mItemstatusList}">

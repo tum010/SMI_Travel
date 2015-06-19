@@ -359,7 +359,7 @@ public class AJAXBean extends AbstractBean implements
                 if(data == null){
                     result = "";
                 }else{
-                    result = data.get(0).getName();
+                    result = data.get(0).getId()+","+data.get(0).getName();
                 }
                 System.out.println(result);
             }
