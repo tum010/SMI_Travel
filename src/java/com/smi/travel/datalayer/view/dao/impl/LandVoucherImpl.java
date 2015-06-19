@@ -75,9 +75,16 @@ public class LandVoucherImpl implements  LandVoucherDao{
          for(Object[] Category : QueryLandCategoryList){
              String description = util.ConvertString(Category[1]);
              String[] descriptionSplit = description.split("\\|\\|", 4);
-             voucher.setDescription(descriptionSplit[0]);
-             voucher.setDescription1(descriptionSplit[1]);
-             voucher.setDescription2(descriptionSplit[2]);
+             for(int i=0;i<descriptionSplit.length;i++){
+                 if(i == 0){
+                     voucher.setDescription(descriptionSplit[0]);
+                 }else if(i == 1){
+                     voucher.setDescription1(descriptionSplit[1]);
+                 }else if(i == 2){
+                      voucher.setDescription2(descriptionSplit[2]);
+                 }
+             }
+
              voucher.setName(util.ConvertString(Category[3]));
              voucher.setAddress(util.ConvertString(Category[4]));
              voucher.setTel(util.ConvertString(Category[5]));
