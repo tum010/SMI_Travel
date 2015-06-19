@@ -149,7 +149,7 @@ public class OtherDetailController extends SMITravelController {
                 ModelAndView OTHER = new ModelAndView(new RedirectView("Other.smi?referenceNo="+refno+"&result=1", true));
                 return OTHER;
             }else if((result==1) && (callpageSubmit!=null) && (callpageSubmit.equalsIgnoreCase("FromDayTour"))){
-                ModelAndView DAYTOUR = new ModelAndView(new RedirectView("Daytour.smi?referenceNo="+refno, true));
+                ModelAndView DAYTOUR = new ModelAndView(new RedirectView("Daytour.smi?referenceNo="+refno+"&result=success", true));
                 return DAYTOUR;
             }else{
                 request.setAttribute(TransectionResult, "save unsuccessful");
