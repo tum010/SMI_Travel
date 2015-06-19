@@ -296,6 +296,7 @@
                 <ref local="DaytourComissionDao" />
                 <ref local="OtherBookingDao" />  
                 <ref local="MAirportDao" />  
+                <ref local="PassengerDao" />  
             </list>
         </constructor-arg>
     </bean>
@@ -312,6 +313,7 @@
     <bean id="DaytourCommissionServlet" class="com.smi.travel.servlet.DaytourCommissionServlet" />
     <bean id="DaytourServlet" class="com.smi.travel.servlet.DaytourServlet" />
     <bean id="AirTicketServlet" class="com.smi.travel.servlet.AirTicketServlet" />
+    <bean id="PassengerServlet" class="com.smi.travel.servlet.PassengerServlet" />
     
 	<!--<add data>-->
 	
