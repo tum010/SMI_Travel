@@ -434,7 +434,7 @@ $(document).on('keyup', '.airline', function () {
     var code = $(this).val().toUpperCase();
     console.log(code);
     $.each(airline, function (key, value) {
-        alert("key:"+value.airline_id);
+        //alert("key:"+value.airline_id);
         if (value.airline_code.toUpperCase() === code) {
             console.log('add new');
             $("#airlineId" + id).val(value.airline_id);
