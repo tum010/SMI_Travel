@@ -68,16 +68,16 @@ $(function () {
 // ######################### FLIGHT ######################### //
 $(document).ready(function () {
     
-    $("#TableAir tbody tr").each(function(i){
-        i++;
-        $("#flight-"+i+"-ticketTypeCom").change(function(){          
-             $("#flight-"+i+"-ticketType  > option[value="+this.value+"]").prop('selected',true);
-        });
-        
-        $("#flight-"+i+"-classCom").change(function(){          
-             $("#flight-"+i+"-class  > option[value="+this.value+"]").prop('selected',true);
-        });
-    });
+//    $("#TableAir tbody tr").each(function(i){
+//        i++;
+//        $("#flight-"+i+"-ticketTypeCom").change(function(){          
+//             $("#flight-"+i+"-ticketType  > option[value="+this.value+"]").prop('selected',true);
+//        });
+//        
+//        $("#flight-"+i+"-classCom").change(function(){          
+//             $("#flight-"+i+"-class  > option[value="+this.value+"]").prop('selected',true);
+//        });
+//    });
     
     $("#passenger_table tbody tr").each(function(i){
         i++;
@@ -102,11 +102,7 @@ $(document).ready(function () {
     $("div").find('.times').datetimepicker({
         format: 'HH:mm'
     });
-//    $("div").find('.input-group-addon').click(function () {
-//        var position = $(this).offset();
-////        console.log("positon :" + position.top);
-//        $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
-//    });
+
 
     $('#passenger_table,#TableAir').on('click', 'a', function () {
         console.log('hide collapse');

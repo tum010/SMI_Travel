@@ -902,7 +902,6 @@
                 data: param,
                 success: function (msg) {
 //                    console.log("Call AJax Hotel Msg [" + msg + "]");
-
                     if (msg) {
                         var html = $.parseHTML(msg);
                         if (html.length > 1) {
@@ -912,14 +911,11 @@
                                 pullSelectedHotel();
                             }
                         } else {
-
                             $("#ButtonImportHotel").attr("disabled", "disabled");
                         }
                     } else {
                         $("#ButtonImportHotel").attr("disabled", "disabled");
                     }
-
-                    //setformat();
                 }, error: function (msg) {
                     $("#hotelTable tbody").empty();
                     console.log('error hotel ' + msg);
@@ -959,8 +955,6 @@
                     } else {
                         $("#ButtonImportTour").attr("disabled", "disabled");
                     }
-                    // retrieve save Document.
-
                 }, error: function (msg) {
                     $("#tourTable tbody").empty();
                     console.log('error tour ' + msg);
@@ -1013,8 +1007,6 @@
             }
 
         }
-
-
     }
 
 
@@ -1069,6 +1061,7 @@
                         $("#row-" + objId + "-other").prop("checked", false);
                     } else {
                         $("#row-" + objId + "-other").prop("checked", true);
+                        
                     }
                 }
             }

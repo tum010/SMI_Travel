@@ -7,8 +7,7 @@ $(document).ready(function () {
             var position = $(this).offset();
             console.log("positon :" + position.top);
             $(".bootstrap-datetimepicker-widget").css({
-                top: position.top + 30,
-                left: position.left+100
+                top: position.top + 30
             });
     });
    

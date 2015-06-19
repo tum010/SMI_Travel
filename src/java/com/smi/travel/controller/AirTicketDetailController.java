@@ -103,7 +103,7 @@ public class AirTicketDetailController extends SMITravelController {
             BookingPnr importPnr = bookingAirticketService.getBookingPnr(bookingPnrNo);
             AirticketPnr newAirPnr = this.importBookingPnr(importPnr, request.getParameter("referenceNo"));
             request.setAttribute(Action, "update");
-
+            
             setResponseAttribute(request, newAirPnr, referenceNo);
             return new ModelAndView("redirect:AirTicketDetail.smi?referenceNo=" + referenceNo + "&pnr=" + newAirPnr.getId() + "&action=edit&result=1");
         } else if ("update".equalsIgnoreCase(action)) {
