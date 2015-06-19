@@ -153,10 +153,7 @@
                                         <script>
                                             var tickettype = [];
                                         </script>
-                                         <script>
-                                                var checkId = "${flight.MTicketType.id}";
-                                                console.log("checkId =" + checkId);
-                                         </script>
+                                     
                                         <select id="flight-${i.count}-ticketTypeCom" name="flight-${i.count}-ticketTypeCom" class="form-control">          
                                             <option value=""></option>
                                             <c:forEach var="mticket" items="${mTicketTypeList}" >
