@@ -23,22 +23,8 @@ function setupagentvalue(id,code,name){
     $('#landForm').bootstrapValidator('revalidateField', 'agent_code');
 }
 
-function getvalueDepartDate(){
-    //var productid = document.getElementById('Product_id').value;
-    //var departdate = document.getElementById('departdate').value;
-    //var AD_Cost = document.getElementById('AD_Cost').value; 
-    //var CH_Cost = document.getElementById('CH_Cost').value;
-    //var IN_Cost = document.getElementById('IN_Cost').value;
-    //if((AD_Cost != '') || (CH_Cost != '') || (IN_Cost != '')){
-        //var result = confirm("Are you sure to update Cost and Price ?");
-       // if (result == true) {
-            getvalueProduct();
-        //} else {
-        //    return null;
-       // }
-    //} else {
-    //    return null;
-    //}
+function getvalueDepartDate(){   
+    getvalueProduct();
 }
 
 function setupproductvalue(id,code,name){
@@ -46,19 +32,7 @@ function setupproductvalue(id,code,name){
     document.getElementById('Product_id').value = id;
     document.getElementById('Product_code').value = code;
     document.getElementById('Product_name').value = name;
-    
-    //var productid = document.getElementById('Product_id').value;
-    //var departdate = document.getElementById('departdate').value;
-   // if((productid == '') || (departdate == '')){
-        getvalueProduct();
-   // } else {
-    //    var result = confirm("Are you sure to update Cost and Price ?");
-     //   if (result == true) {
-    //        getvalueProduct();
-     //   } else {
-            
-     //   }     
-   // }
+    getvalueProduct();
 }
 
 function getvalueProduct() {
@@ -89,9 +63,9 @@ function CallAjax(param) {
                 var AD_Cost = document.getElementById('AD_Cost').value; 
                 var CH_Cost = document.getElementById('CH_Cost').value;
                 var IN_Cost = document.getElementById('IN_Cost').value;
-                var AD_Cost1 = AD_Cost.replace(',','');
-                var CH_Cost1 = CH_Cost.replace(',','');
-                var IN_Cost1 = IN_Cost.replace(',','');
+                var AD_CostRP = AD_Cost.replace(',','');
+                var CH_CostRP = CH_Cost.replace(',','');
+                var IN_CostRP = IN_Cost.replace(',','');
                 if((AD_Cost == 0) && (CH_Cost == 0) && (IN_Cost == 0)){
                     setformatNumber('AD_Cost',path[0]);
                     setformatNumber('CH_Cost',path[1]);
@@ -100,20 +74,16 @@ function CallAjax(param) {
                     setformatNumber('CH_Price',path[4]);
                     setformatNumber('IN_Price',path[5]);
                 } else {
-                    if((AD_Cost1 == path[0]) && (CH_Cost1 == path[1]) && (IN_Cost1 == path[2])){
+                    if((AD_CostRP == path[0]) && (CH_CostRP == path[1]) && (IN_CostRP == path[2])){
                         
                     } else {
-                        var result = confirm("Are you sure to update Cost and Price ?");
-                        if (result == true) {
-                            setformatNumber('AD_Cost',path[0]);
-                            setformatNumber('CH_Cost',path[1]);
-                            setformatNumber('IN_Cost',path[2]);
-                            setformatNumber('AD_Price',path[3]);
-                            setformatNumber('CH_Price',path[4]);
-                            setformatNumber('IN_Price',path[5]);                   
-                        } else {
-                        
-                        } 
+                        document.getElementById('path0').value = path[0];
+                        document.getElementById('path1').value = path[1];
+                        document.getElementById('path2').value = path[2];
+                        document.getElementById('path3').value = path[3];
+                        document.getElementById('path4').value = path[4];
+                        document.getElementById('path5').value = path[5];
+                        $('#Confirm').modal('show');
                     }                 
                 }
                 getItineraryDetail(document.getElementById('Product_id').value);
@@ -126,9 +96,25 @@ function CallAjax(param) {
     }
 }
 
+function Confirm(){
+    var path0 = document.getElementById('path0').value;
+    var path1 = document.getElementById('path1').value; 
+    var path2 = document.getElementById('path2').value; 
+    var path3 = document.getElementById('path3').value; 
+    var path4 = document.getElementById('path4').value; 
+    var path5 = document.getElementById('path5').value; 
+    setformatNumber('AD_Cost',path0);
+    setformatNumber('CH_Cost',path1);
+    setformatNumber('IN_Cost',path2);
+    setformatNumber('AD_Price',path3);
+    setformatNumber('CH_Price',path4);
+    setformatNumber('IN_Price',path5);           
+    $('#Confirm').modal('hide');
+}
+
 function setformatNumber(id,data){
     if(data == 0){
-        document.getElementById(id).value = '';
+        document.getElementById(id).value = '0';
     }else{
         document.getElementById(id).value = numberWithCommas(data);
     }
