@@ -470,11 +470,16 @@
                     </div>
                     <script>
                         $(document).ready(function(){
-                                $("#departure-${fStatus.count}-code").on('keyup',function(){
-                                     getDepartureAirport(this.value,${fStatus.count});
+                           
+                                $("#departure-${fStatus.count}-code").on('keyup',function(e){
+                                    if(e.keyCode === 13){
+                                        getDepartureAirport(this.value,${fStatus.count});
+                                    }
                                 }); 
-                                $("#arrival-${fStatus.count}-code").on('keyup',function(){
-                                     getArrivalAirport(this.value,${fStatus.count});
+                                $("#arrival-${fStatus.count}-code").on('keyup',function(e){
+                                    if(e.keyCode === 13){
+                                         getArrivalAirport(this.value,${fStatus.count});
+                                    }
                                 });
                         });
                             function getDepartureAirport(name,count){
