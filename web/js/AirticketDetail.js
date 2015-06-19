@@ -68,16 +68,16 @@ $(function () {
 // ######################### FLIGHT ######################### //
 $(document).ready(function () {
     
-//    $("#TableAir tbody tr").each(function(i){
-//        i++;
-//        $("#flight-"+i+"-ticketTypeCom").change(function(){          
-//             $("#flight-"+i+"-ticketType  > option[value="+this.value+"]").prop('selected',true);
-//        });
-//        
-//        $("#flight-"+i+"-classCom").change(function(){          
-//             $("#flight-"+i+"-class  > option[value="+this.value+"]").prop('selected',true);
-//        });
-//    });
+    $("#TableAir tbody tr").each(function(i){
+        i++;
+        $("#flight-"+i+"-ticketTypeCom").change(function(){          
+             $("#flight-"+i+"-ticketType  > option[value="+this.value+"]").prop('selected',true);
+        });
+        
+        $("#flight-"+i+"-classCom").change(function(){          
+             $("#flight-"+i+"-class  > option[value="+this.value+"]").prop('selected',true);
+        });
+    });
     
     $("#passenger_table tbody tr").each(function(i){
         i++;
