@@ -66,7 +66,9 @@ public class TicketOrderImpl implements TicketOrderDao{
          for (Object[] B : QueryTicketInfo) {
             ticket.setRefno(util.ConvertString(B[0]));
             ticket.setLeadername(util.ConvertString(B[1]));
-            ticket.setIssuedate(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(((Date)B[2])));
+            if(B[2] != null){
+                ticket.setIssuedate(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(((Date)B[2])));
+            }
             ticket.setCompanyname(util.ConvertString(B[3]));
             ticket.setTel(util.ConvertString(B[4]));
             ticket.setPnr(util.ConvertString(B[5]));
