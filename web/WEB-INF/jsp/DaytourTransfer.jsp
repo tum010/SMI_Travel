@@ -751,6 +751,8 @@
                             );
                     $(eachCheckbox).removeAttr('checked');
                     $(eachCheckbox).attr('disabled', 'disabled');
+                }else {
+                    $("#HotelModal").modal('hide');
                 }
                 $('#hotelTable').find('input:checkbox:disabled').closest('tr').addClass('hidden');
             });
@@ -809,6 +811,9 @@
                 console.log("activeList Other= " + activeTourList);
                 });
             });
+            //alert("activeTourList stil:"+activeTourList);
+           var tourDate = $("#InputDate").val();
+           getOtherFromDateAndTour(tourDate, activeTourList);
         }
     }
     function getOtherFromDateAndTour(inputDate, tourId) {
@@ -897,9 +902,7 @@
                 data: param,
                 success: function (msg) {
 //                    console.log("Call AJax Hotel Msg [" + msg + "]");
-//            alert("activeTourList stil:"+activeTourList);
-                    var tourDate = $("#InputDate").val();
-                    getOtherFromDateAndTour(tourDate, activeTourList);
+
                     if (msg) {
                         var html = $.parseHTML(msg);
                         if (html.length > 1) {
