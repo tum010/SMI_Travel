@@ -352,11 +352,8 @@
                                     <label class="col-sm-1 control-label text-right">Ticket</label>
                                     <div class="col-sm-5">  
                                         <select class="form-control" id="flight-${fStatus.count}-ticketType" name="flight-${fStatus.count}-ticketType" value="${flight.MTicketType.id}">
+                                            <option value=""></option>
                                             <c:forEach var="mticket" items="${mTicketTypeList}" >
-                                                <c:set var="select" value=""  />
-                                                <c:if test="${mticket.id == flight.MTicketType.id}">
-                                                    <c:set var="select" value="selected" />
-                                                </c:if>
                                                 <option value="${mticket.id}" ${select}>${mticket.name}</option>
                                             </c:forEach>
                                         </select> 
@@ -365,11 +362,8 @@
                                     <div class="col-sm-4">  
                                         <select class="form-control" id="flight-${fStatus.count}-class" 
                                                 name="flight-${fStatus.count}-class" value="${flight.MFlight.id}" >
+                                             <option value=""></option>
                                             <c:forEach var="m" items="${mFlightList}">
-                                                <c:set var="select" value=""  />
-                                                <c:if test="${m.id == flight.MFlight.id}">
-                                                    <c:set var="select" value="selected" />
-                                                </c:if>
                                                 <option value="${m.id}" ${select}>${m.name}</option>
                                             </c:forEach>
                                         </select> 
