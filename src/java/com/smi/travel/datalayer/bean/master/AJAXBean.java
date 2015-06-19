@@ -356,11 +356,14 @@ public class AJAXBean extends AbstractBean implements
                 System.out.println(result);
             }else if("getairportname".equalsIgnoreCase(type)){
                 List<MAirport> data = airportdao.searchAirport(name);
+                String result2 = "";
                 if(data == null){
                     result = "";
                 }else{
-                    result = data.get(0).getId()+","+data.get(0).getName();
+                    result2 = data.get(0).getId() + "," + data.get(0).getName();
+                    result = result2;
                 }
+                System.out.println("result2 =" + result2);
                 System.out.println(result);
             }
         }else if(PASSENGER.equalsIgnoreCase(servletName)){
