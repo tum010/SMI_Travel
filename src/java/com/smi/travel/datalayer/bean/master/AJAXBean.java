@@ -153,8 +153,8 @@ public class AJAXBean extends AbstractBean implements
                     filter = 1;
                 } else {
                     filter = 0;
-                    customer.setFirstName(pathname[0]);
-                    customer.setLastName(pathname[1]);
+                    customer.setFirstName(pathname[1]);
+                    customer.setLastName(pathname[0]);
                     customer.setCode(pathname[0] + pathname[1]);
                 }
 
@@ -359,7 +359,7 @@ public class AJAXBean extends AbstractBean implements
                 if(data == null){
                     result = "";
                 }else{
-                    result = data.get(0);
+                    result = data.get(0).getName();
                 }
                 System.out.println(result);
             }
@@ -370,14 +370,17 @@ public class AJAXBean extends AbstractBean implements
                 String[] pathname = name.trim().split("/");
                 int filter = 0;
                 if (pathname.length == 1) {
+                    
                     customer.setFirstName(pathname[0]);
                     customer.setLastName(pathname[0]);
                     customer.setCode(pathname[0]);
                     filter = 1;
                 } else {
+                    System.out.println("First : "+pathname[1]);
+                    System.out.println("Last : "+pathname[0]);
                     filter = 0;
-                    customer.setFirstName(pathname[0]);
-                    customer.setLastName(pathname[1]);
+                    customer.setFirstName(pathname[1]);
+                    customer.setLastName(pathname[0]);
                     customer.setCode(pathname[0] + pathname[1]);
                 }
 
