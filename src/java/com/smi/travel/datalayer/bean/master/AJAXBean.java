@@ -403,21 +403,21 @@ public class AJAXBean extends AbstractBean implements
            
             passenger += "<tr>"+
                     "<td class='customer-id hidden'>"+cus.getId()+"</td>"+
-                    "<td class='customer-code hidden'>"+cus.getCode()+"</td>"+
-                    "<td class='customer-initial hidden'>"+MInitialname+"</td>"+
+                    "<td class='customer-code '>"+cus.getCode()+"</td>"+
+                    "<td class='customer-initial '>"+MInitialname+"</td>"+
                     "<td class='customer-initialId hidden'>"+MInitialID+"</td>"+
-                     "<td class='customer-lastname hidden'>"+cus.getLastName()+"</td>"+
-                    "<td class='customer-firstname hidden'>"+cus.getFirstName()+"</td>"+
-                    "<td class='customer-sex hidden'>"+cus.getSex()+"</td>"+
-                    "<td class='customer-address hidden'>"+cus.getAddress()+"</td>"+
-                    "<td class='customer-tel hidden'>"+cus.getTel()+"</td>"+
-                    "<td class='customer-phone hidden'>"+cus.getPhone()+"</td>"+
-                    "<td class='customer-postal hidden'>"+cus.getPostalCode()+"</td>"+
-                    "<td class='customer-email hidden'>"+cus.getEmail()+"</td>"+
+                    "<td class='customer-lastname '>"+cus.getLastName()+"</td>"+
+                    "<td class='customer-firstname '>"+cus.getFirstName()+"</td>"+
+                    "<td class='customer-sex hidden'>"+(cus.getSex()==null? "":cus.getSex())+"</td>"+
+                    "<td class='customer-address hidden'>"+(cus.getAddress()==null? "":cus.getAddress())+"</td>"+
+                    "<td class='customer-tel hidden'>"+(cus.getTel()==null? "":cus.getTel())+"</td>"+
+                    "<td class='customer-phone hidden'>"+(cus.getPhone()==null? "":cus.getPhone())+"</td>"+
+                    "<td class='customer-postal hidden'>"+(cus.getPostalCode()==null? "":cus.getPostalCode())+"</td>"+
+                    "<td class='customer-email hidden'>"+(cus.getEmail()==null? "":cus.getEmail())+"</td>"+
                     "<td class='customer-japanfirstname hidden'>"+cus.getFirstNameJapan()+"</td>"+
                     "<td class='customer-japanlastname hidden'>"+cus.getLastNameJapan()+"</td>"+
-                    "<td class='customer-remark hidden'>"+cus.getRemark()+"</td>"+
-                    "<td class='customer-passportno hidden'>"+cus.getPassportNo()+"</td>"+
+                    "<td class='customer-remark hidden'>"+(cus.getRemark()==null? "":cus.getRemark())+"</td>"+
+                    "<td class='customer-passportno hidden'>"+(cus.getPassportNo()==null? "":cus.getPassportNo())+"</td>"+
                     "</tr>";
                         
         }
