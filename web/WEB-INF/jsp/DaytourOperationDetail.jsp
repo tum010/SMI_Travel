@@ -101,17 +101,27 @@
                         <label class="control-label text-right" for="InputTourDetailTourDate">Tour&nbsp;Date<font style="color: red">*</font></lable>
                     </div>
                     <div class="col-md-2 form-group"> 
-                        <div class="input-group date" id="InputTourDate" >
-                            <input id="InputTourDetailTourDate" name="InputTourDetailTourDate"  type="text" 
+                        <div class='input-group date' id='InputDatePicker'>
+                            <c:if test='${dayTourOperation.tourDate != null}'>
+                                <input id="InputTourDetailTourDate" name="InputTourDetailTourDate"  type="text" 
                                    class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${dayTourOperation.tourDate}">
-                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                                <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                                
+                            </c:if>
+                            <c:if test='${dayTourOperation.tourDate == null}'>
+                                <input id="InputTourDetailTourDate" name="InputTourDetailTourDate"  type="text" 
+                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['tourDate']}">
+                                <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                                
+                            </c:if>   
+                            
                         </div>
                     </div>
                     <div class="col-md-2 text-right ">
                         <input type="hidden" id="InputTourId" name="tourID" >
                         <input type="hidden" id="tourDate" name="tourDate" >
                         <input type="hidden" name="action" id="action" value="edit">
-                        <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="searchAction();" class="btn btn-primary btn-sm">Search</button>
+                        <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="checkUpdTour();" class="btn btn-primary btn-sm">Search</button>
 
                         <!--                        <button id="BtnTourSearch" class="btn btn-success" type="submit"><span class="fa fa-search"></span> Search</button>
                                                 <input type="hidden" name="action" id="action" value="edit">-->
@@ -823,8 +833,10 @@
                 $(document).ready(function () {
                     $("#ButtonSearch").attr("disabled", "disabled");
 
-                    if (($("#InputDetailTourName,#InputTourDetailTourDate").val().trim().length !== 0)) {
+                    if (($("#InputDetailTourCode,#InputTourDetailTourDate").val().trim().length !== 0)) {
                         $("#ButtonSearch").removeAttr("disabled");
+                    }else{
+                        $("#ButtonSearch").attr("disabled", "disabled");
                     }
 
                     $('.date').datetimepicker();
@@ -901,7 +913,12 @@
                     }); // end AutoComplete TourCode TourName
 
                 });
-
+                function checkUpdTour() {
+                    if (($("#InputDetailTourCode").val().trim().length !== 0) && ($("#InputTourDetailTourDate").val().trim().length !== 0)) {
+                        searchAction();
+                    }
+                }
+                
                 function searchAction() {
                     var action = document.getElementById('action');
                     action.value = 'edit';
