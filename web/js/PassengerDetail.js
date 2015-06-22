@@ -9,8 +9,12 @@ $(document).ready(function () {
         //getDate();
         var birthDate = new Date($('#birthDate').val());
         var age = _calculateAge(birthDate);
-        var agereturn = 0;
-        $("#age").val(age);
+        if($("#birthDate").val() === ""){
+            $("#age").val(0);
+        }else{
+            $("#age").val(age);
+        }
+        
     });
     // VALIDATE
     $('#PassengerForm')
@@ -212,13 +216,7 @@ $(document).ready(function () {
 function _calculateAge(birthday) {
     var ageDifMs = Date.now() - birthday.getTime();
     var ageDate = new Date(ageDifMs);
-    var ageCal = Math.abs(ageDate.getUTCFullYear() - 1970);
-    if(ageCal === 'NaN'){
-        return  0;
-    }else{
-        return ageCal;
-    }
-     
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
 }
 
 function FilterCustomerList(name) {
