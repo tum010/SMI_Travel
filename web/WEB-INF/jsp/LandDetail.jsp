@@ -333,8 +333,8 @@
                         <c:choose>
                             <c:when test="${booktype == 'i'}">
                                 <div class="row">
-                                    <div class="col-md-3 " >
-                                        <div class="form-group">
+                                    <div class="col-md-3">
+                                        <div class="form-group" style="padding-left: 30px">
                                             <label class="col-sm-3 col-md-offset-7 control-label" for="nameProduct">Cost</label>
 
                                         </div>
