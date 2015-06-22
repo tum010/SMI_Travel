@@ -122,7 +122,7 @@
                                     <th style="width: 2%">No.</th>
                                     <th style="width: 10%">From</th>
                                     <th style="width: 10%">To</th>
-                                    <th style="width: 5%">Commission</th>
+                                    <th style="width: 5%">Commission(%)</th>
                                     <th style="width: 2%">Action</th>
                                 </tr>
                             </thead>

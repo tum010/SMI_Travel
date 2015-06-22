@@ -172,8 +172,22 @@
                                         <tr>
                                             <td class="hidden"><input class="form-control" type="hidden"  style="width:50px" id="row-${priceStatus.count-1}-priceid" name="row-${priceStatus.count-1}-priceid" value="${table1.id}"></td>
                                             <td class="hidden orderrow">${priceStatus.count -1}</td>
-                                            <td><input style="width: 100px" onchange="setValidate();" type="text" id="row-${priceStatus.count-1}-datefrom" name="row-${priceStatus.count-1}-datefrom" class="form-control date" placeholder="YYYY-MM-DD" autocomplete="off" value="${table1.effectiveFrom}"></td>
-                                            <td><input style="width: 100px" onchange="setValidate();" type="text" id="row-${priceStatus.count-1}-dateto" name="row-${priceStatus.count-1}-dateto" class="form-control date" placeholder="YYYY-MM-DD" autocomplete="off" value="${table1.effectiveTo}"></td>
+                                            <td>
+                                                <div class='input-group daydatepicker' id='daydatepicker-${Counter.count}' style="padding-left: 0px">
+                                                    <input style="width: 100%" type='text' class="form-control"  id="row-${priceStatus.count-1}-datefrom" name="row-${priceStatus.count-1}-datefrom" data-date-format="YYYY-MM-DD"  value="${table1.effectiveFrom}" />
+                                                    <span class="input-group-addon" style="padding : 1px 10px;">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div> 
+                                            </td>
+                                            <td>
+                                                <div class='input-group daydatepicker' id='daydatepicker-${Counter.count}' style="padding-left: 0px">
+                                                    <input style="width: 100%" type='text' class="form-control"  id="row-${priceStatus.count-1}-dateto" name="row-${priceStatus.count-1}-dateto" data-date-format="YYYY-MM-DD"  value="${table1.effectiveTo}" />
+                                                    <span class="input-group-addon" style="padding : 1px 10px;">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div>
+                                            </td>
                                             <td><input class="form-control money"  style="width:50px" id="row-${priceStatus.count-1}-adcost" name="row-${priceStatus.count-1}-adcost" value="${table1.adCost}"></td>
                                             <td><input class="form-control money"  style="width:50px" id="row-${priceStatus.count-1}-chcost" name="row-${priceStatus.count-1}-chcost" value="${table1.chCost}"></td>
                                             <td><input class="form-control money"  style="width:50px" id="row-${priceStatus.count-1}-incost" name="row-${priceStatus.count-1}-incost" value="${table1.inCost}"></td>
@@ -341,10 +355,11 @@
 </div>
                        
 <script type="text/javascript" charset="utf-8">
-
-    
     $(document).ready(function() {
         // ******************* start Itinerary script *******************
+        
+         $("#dateFrom-").datepicker({ dateFormat: "yy-mm-dd" }).val()
+        
         $("#Itinerary").on("keyup", function() {
             var rowAll = $("#Itinerary tr").length;
             $("#Itinerary td").keyup(function() {               
@@ -410,15 +425,34 @@
     function deletelist(id) {
         document.getElementById('DelItenarary').value += id + ',';
     }
-    
+    function reloadDatePicker(){
+        try{
+           $(".daydatepicker").datetimepicker({
+                pickTime: false   
+           });  
+           $('span').click(function() {
+             
+                var position = $(this).offset();
+                $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+           });
+           $('#LandItinerary tbody tr:last td .input-group-addon').click(function() {  
+                AddRow(parseInt($("#counter").val()));
+           });
+           
+        }catch(e){
+            
+        }  
+        
+        
+    }
     function AddRowPackagePrice(row) {
         row = parseInt($("#counterPrice").val());
         $("#PackagePrice tbody").append(
                     '<tr>' +
                     '<td class="hidden"><input class="form-control" type="hidden"  style="width:50px" id="row-'+row+'-priceid" name="row-'+row+'-priceid" ></td>'+
                     '<td class="hidden orderrow">'+getrowcountPrice()+'</td>'+
-                    '<td><input style="width: 100px" onchange="setValidate();"  type="text" id="row-'+row+'-datefrom" name="row-'+row+'-datefrom" class="form-control date" placeholder="YYYY-MM-DD" autocomplete="off"></td>' +
-                    '<td><input style="width: 100px" onchange="setValidate();"  type="text" id="row-'+row+'-dateto" name="row-'+row+'-dateto" class="form-control date" placeholder="YYYY-MM-DD" autocomplete="off"></td>' +
+                    '<td><div class="input-group daydatepicker" id="daydatepicker-'+row+'" style="padding-left: 0px"><input style="width: 100%" type="text" class="form-control"  id="row-'+row+'-datefrom" name="row-'+row+'-datefrom" data-date-format="YYYY-MM-DD"/><span class="input-group-addon" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span></div></td>' +
+                    '<td><div class="input-group daydatepicker" id="daydatepicker-'+row+'" style="padding-left: 0px"><input style="width: 100%" type="text" class="form-control"  id="row-'+row+'-dateto" name="row-'+row+'-dateto" data-date-format="YYYY-MM-DD" /><span class="input-group-addon" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span></div></td>' +
                     '<td><input class="form-control money" maxlength=10  style="width:50px" id="row-'+row+'-adcost" name="row-'+row+'-adcost" ></td>' +
                     '<td><input class="form-control money" maxlength=10 style="width:50px" id="row-'+row+'-chcost" name="row-'+row+'-chcost" ></td>' +
                     '<td><input class="form-control money" maxlength=10 style="width:50px" id="row-'+row+'-incost" name="row-'+row+'-incost" ></td>' +
@@ -432,6 +466,7 @@
                     );
         var tempCount = parseInt($("#counterPrice").val()) + 1;
         $("#counterPrice").val(tempCount);
+        reloadDatePicker();
     }
 
     function DeleteRowItinerary() {

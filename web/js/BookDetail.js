@@ -167,6 +167,7 @@ $(document).ready(function () {
         var agentCode = [];
         $.each(agent, function (key, value) {
             console.log("agentCount=="+agent.length);
+            alert("Code Gooo");
             agentCode.push(value.code);
 //            if ( !(value.name in agentCode) ){
                agentCode.push(value.name);
@@ -176,7 +177,9 @@ $(document).ready(function () {
         $("#agent_user").autocomplete({
             source: agentCode,
             close:function( event, ui ) {
+//                alert("Code Gooo");
                $("#agent_user").trigger('keyup');
+                
             }
         });
        
@@ -186,23 +189,28 @@ $(document).ready(function () {
             $(".ui-widget").css("top", position.top + 30);
             $(".ui-widget").css("left", position.left);
             var code = this.value.toUpperCase();
-            var name = this.value;
+//            console.log("Code :"+ code);
+            var name = this.value.toUpperCase();
+            console.log("Name :"+ name);
             $("#agent_id,#agent_name,#agent_addr,#agent_tel").val(null);
             $.each(agent, function (key, value) {
-                if (value.code.toUpperCase() === code ) {     
+                
+                if (value.code.toUpperCase() === code ) {  
+//                   console.log("Code2 :"+ name);
                     $("#agent_id").val(value.id);
                     $("#agent_name").val(value.name);
                     $("#agent_addr").val(value.address);
                     $("#agent_tel").val(value.tel);
-//                    $("#agent_user").val(value.code);
+                    $("#agent_user").val(value.code);
                 }
-//                if(name === value.name){
-//                    $("#agent_user").val(value.code);
-//                    $("#agent_id").val(value.id);
-//                    $("#agent_name").val(value.name);
-//                    $("#agent_addr").val(value.address);
-//                    $("#agent_tel").val(value.tel);
-//                }
+                else if(value.name.toUpperCase() === name){
+//                    console.log("Name2 :"+ name);
+                    $("#agent_user").val(value.code);
+                    $("#agent_id").val(value.id);
+                    $("#agent_name").val(value.name);
+                    $("#agent_addr").val(value.address);
+                    $("#agent_tel").val(value.tel);
+                }
             }); 
             
         }); 

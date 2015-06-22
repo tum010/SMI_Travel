@@ -159,20 +159,20 @@
                             <c:choose>
                                 <c:when test="${userdepartment  == 1}">
                                 <th>PNR</th>
-                                <th>Depart date</th>
+                                <th>Depart Date</th>
                                 </c:when>
                                 <c:when test="${userdepartment  == 4}">
                                 <th>Hotel</th>
-                                <th>Check in date</th>
+                                <th>Check in Date</th>
                                 </c:when> 
                                 <c:otherwise>
                                 <th>PNR</th>
-                                <th>Depart date</th>
+                                <th>Depart Date</th>
                                 <th>Hotel</th>
-                                <th>Check in date</th>
+                                <th>Check in Date</th>
                                 </c:otherwise>
                             </c:choose>
-                        <th>Create date</th>
+                        <th>Create Date</th>
                         <th>By</th>
                        
                         <th>Action</th>
