@@ -946,7 +946,7 @@ $('#savereal').on("keyup keypress", function(e) {
 
     $(document).ready(function() {
         $('.datepicker').datetimepicker().change(function(){                          
-            getvalueDepartDate();
+            setupdepartdatevalue();
         });
         $(".daydatepicker").datetimepicker({
             pickTime: false   
