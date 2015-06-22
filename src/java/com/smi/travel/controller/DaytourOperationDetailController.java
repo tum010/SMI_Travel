@@ -72,6 +72,7 @@ public class DaytourOperationDetailController extends SMITravelController {
         } else if ("edit".equalsIgnoreCase(action)) {
             System.out.print("tourID : "+ tourID);
             System.out.print("tourDate : "+ tourDate);
+            
             if (tourID != null) {
                 List<DaytourBooking> daytourBookingDetail = daytourOperationService.getTourDetail(tourID, tourDate);
                 if(daytourBookingDetail != null){
@@ -121,6 +122,8 @@ public class DaytourOperationDetailController extends SMITravelController {
         } else {
 
         }
+        
+        request.setAttribute("tourDate", tourDate);
 
         return DaytourOperationDetail;
     }
