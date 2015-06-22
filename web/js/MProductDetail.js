@@ -3,8 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 $(document).ready(function() {
 
     $('#ProductDetailForm').bootstrapValidator({
@@ -123,5 +121,3 @@ function Delete() {
     document.getElementById("actionprice").value = 'deletePriceItem';
     document.getElementById("ProductPriceform").submit();
 }
-
-
