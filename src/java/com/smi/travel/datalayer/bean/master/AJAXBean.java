@@ -168,7 +168,7 @@ public class AJAXBean extends AbstractBean implements
             if ("getvalueProduct".equalsIgnoreCase(type)) {
                 String productID = map.get("productid").toString();
                 String otherdate = map.get("otherdate").toString();
-                if ("".equalsIgnoreCase(productID)) {
+                if ("".equalsIgnoreCase(productID) || "".equalsIgnoreCase(otherdate)) {
                     result = "0,0,0,0,0,0";
                 } else {
                     ProductDetail product = productDetailDao.getValueFromProduct(productID, otherdate);
