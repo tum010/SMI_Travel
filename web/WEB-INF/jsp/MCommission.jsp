@@ -115,7 +115,7 @@
                                 <th style="width: 30%" colspan="2">Tour</th>
                                 <th style="width: 10%" rowspan="2">From</th>
                                 <th style="width: 10%" rowspan="2">To</th>
-                                <th style="width: 10%" rowspan="2">Commission</th>
+                                <th style="width: 10%" rowspan="2">Commission(%)</th>
                                 <th style="width: 10%"  rowspan="2" >Action</th>
                             </tr>
                             <tr class="datatable-header">
