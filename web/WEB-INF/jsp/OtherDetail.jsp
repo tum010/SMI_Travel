@@ -26,6 +26,10 @@
     <c:set var="enableVat" value="disabled" />
     <c:set var="checkVat" value="" />
 </c:if>
+<c:if test="${booktype == 'o'}">
+    <c:set var="enableVat" value="disabled" />
+    <c:set var="checkVat" value="" />
+</c:if>
 <section class="content-header" >
     <h1>
         Booking - Other Detail
@@ -182,7 +186,7 @@
                                             </c:forEach>
                                         </select>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-4 hidden">
                                         <label class="control-label"><input onclick='calculateVatvalue();' type="checkbox" id="Vat" name="Vat" ${enableVat} ${checkVat}>  Vat</label>
                                     </div>
                                 </div>
@@ -304,7 +308,36 @@
         </div>
     </div>    
 
-</div> 
+</div>
+
+<div class="modal fade" id="Confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title"  id="Titlemodel">Booking - Other </h4>
+            </div>
+            <div class="modal-body" id="confirmMessage">
+                Are you sure to update cost and price ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="Confirm()" class="btn btn-danger">Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+            </div>
+            <div class="hidden">
+                <input type="text" class="form-control" id="path0" name="path0" value="">
+                <input type="text" class="form-control" id="path1" name="path1" value="">
+                <input type="text" class="form-control" id="path2" name="path2" value="">
+                <input type="text" class="form-control" id="path3" name="path3" value="">
+                <input type="text" class="form-control" id="path4" name="path4" value="">
+                <input type="text" class="form-control" id="path5" name="path5" value="">
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->      
 
 <div class="modal fade" id="ProductModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
