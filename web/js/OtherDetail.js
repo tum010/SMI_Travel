@@ -16,8 +16,22 @@ function setupproductvalue(id, code, name, booktype) {
     document.getElementById('product_id').value = id;
     document.getElementById('product_code').value = code;
     document.getElementById('product_name').value = name;
-    document.getElementById('product_code').focus();   
-    getvalueProduct(booktype);   
+    document.getElementById('product_code').focus();
+    
+    var product_code = document.getElementById('product_code').value; 
+    var otherdate = document.getElementById('otherdate').value; 
+    
+    if((product_code != '') && (otherdate != '')){
+        getvalueProduct(booktype);   
+    } else {
+        document.getElementById('ad_cost').value = '0';
+        document.getElementById('ad_price').value = '0';
+        document.getElementById('ch_cost').value = '0';
+        document.getElementById('ch_price').value = '0';
+        document.getElementById('in_cost').value = '0';
+        document.getElementById('in_price').value = '0';
+    }
+    
 }
 
 function setupagentvalue(id, code, name) {
@@ -29,7 +43,18 @@ function setupagentvalue(id, code, name) {
 }
 
 function setupotherdatevalue(booktype) {
-    getvalueProduct(booktype);
+    var product_code = document.getElementById('product_code').value; 
+    var otherdate = document.getElementById('otherdate').value;   
+    if((product_code != '') && (otherdate != '')){
+        getvalueProduct(booktype);   
+    } else {
+        document.getElementById('ad_cost').value = '0';
+        document.getElementById('ad_price').value = '0';
+        document.getElementById('ch_cost').value = '0';
+        document.getElementById('ch_price').value = '0';
+        document.getElementById('in_cost').value = '0';
+        document.getElementById('in_price').value = '0';
+    }
 }
 
 $(document).ready(function() {
@@ -232,49 +257,40 @@ function CallAjax(param, booktype) {
             cache: false,
             data: param,
             success: function(msg) {
-
                 var path = msg.split(',');
                 var AD_Cost = document.getElementById('ad_cost').value; 
                 var CH_Cost = document.getElementById('ch_cost').value;
                 var IN_Cost = document.getElementById('in_cost').value;
-                var AD_Cost1 = AD_Cost.replace(',','');
-                var CH_Cost1 = CH_Cost.replace(',','');
-                var IN_Cost1 = IN_Cost.replace(',','');
-                if (booktype == 'i') {
-                    if((AD_Cost == '') && (CH_Cost == '') && (IN_Cost == '')){
-                        document.getElementById('ad_cost').value = numberWithCommas(path[0]);
-                        document.getElementById('ch_cost').value = numberWithCommas(path[1]);
-                        document.getElementById('in_cost').value = numberWithCommas(path[2]);
-                        document.getElementById('ad_price').value = numberWithCommas(path[3]);
-                        document.getElementById('ch_price').value = numberWithCommas(path[4]);
-                        document.getElementById('in_price').value = numberWithCommas(path[5]);
-                    } else {
-                        if((AD_Cost1 == path[0]) && (CH_Cost1 == path[1]) && (IN_Cost1 == path[2])){
+                var AD_CostRP = AD_Cost.replace(',','');
+                var CH_CostRP = CH_Cost.replace(',','');
+                var IN_CostRP = IN_Cost.replace(',','');
+                if (booktype == 'i') {                
+                    if((AD_CostRP == path[0]) && (CH_CostRP == path[1]) && (IN_CostRP == path[2])){
                             
-                        } else {
-                            var result = confirm("Are you sure to update Cost and Price ?");
-                            if (result == true) {
-                                document.getElementById('ad_cost').value = numberWithCommas(path[0]);
-                                document.getElementById('ch_cost').value = numberWithCommas(path[1]);
-                                document.getElementById('in_cost').value = numberWithCommas(path[2]);
-                                document.getElementById('ad_price').value = numberWithCommas(path[3]);
-                                document.getElementById('ch_price').value = numberWithCommas(path[4]);
-                                document.getElementById('in_price').value = numberWithCommas(path[5]);                                      
-                            } else {
-
-                            } 
-                        }                 
-                    }
+                    } else {
+                        document.getElementById('path0').value = path[0];
+                        document.getElementById('path1').value = path[1];
+                        document.getElementById('path2').value = path[2];
+                        document.getElementById('path3').value = path[3];
+                        document.getElementById('path4').value = path[4];
+                        document.getElementById('path5').value = path[5];
+                        $('#Confirm').modal('show');
+                     }                                     
                 }
 
                 if (booktype == 'o') {
-                    document.getElementById('ad_cost').value = path[0];
-                    document.getElementById('ch_cost').value = path[1];
-                    document.getElementById('in_cost').value = path[2];
-                    document.getElementById('ad_price').value = path[3];
-                    document.getElementById('ch_price').value = path[4];
-                    document.getElementById('in_price').value = path[5];                  
-                    calculateVat();
+                    if((AD_CostRP == path[0]) && (CH_CostRP == path[1]) && (IN_CostRP == path[2])){
+                            
+                        } else {
+                            document.getElementById('path0').value = path[0];
+                            document.getElementById('path1').value = path[1];
+                            document.getElementById('path2').value = path[2];
+                            document.getElementById('path3').value = path[3];
+                            document.getElementById('path4').value = path[4];
+                            document.getElementById('path5').value = path[5];
+                            $('#Confirm').modal('show');
+                        }                                   
+                    //calculateVat();
                 }
             }, error: function(msg) {
                 //alert('error');
@@ -282,6 +298,30 @@ function CallAjax(param, booktype) {
         });
     } catch (e) {
         alert(e);
+    }
+}
+
+function Confirm(){
+    var path0 = document.getElementById('path0').value;
+    var path1 = document.getElementById('path1').value; 
+    var path2 = document.getElementById('path2').value; 
+    var path3 = document.getElementById('path3').value; 
+    var path4 = document.getElementById('path4').value; 
+    var path5 = document.getElementById('path5').value;
+    setformatNumber('ad_cost',path0);
+    setformatNumber('ch_cost',path1);
+    setformatNumber('in_cost',path2);
+    setformatNumber('ad_price',path3);
+    setformatNumber('ch_price',path4);
+    setformatNumber('in_price',path5);
+    $('#Confirm').modal('hide');
+}
+
+function setformatNumber(id,data){
+    if(data == 0){
+        document.getElementById(id).value = '0';
+    }else{
+        document.getElementById(id).value = numberWithCommas(data);
     }
 }
 
@@ -300,44 +340,19 @@ function calculateVat() {
     tempadprice = replaceComma(adprice.value);
     tempchprice = replaceComma(chprice.value);
     tempinprice = replaceComma(inprice.value);
-    
+          
+    adcost.value = numberWithCommas(parseInt((tempadcost * 7 / 100)) + parseInt(tempadcost));      
+    chcost.value = numberWithCommas(parseInt((tempchcost * 7 / 100)) + parseInt(tempchcost));       
+    incost.value = numberWithCommas(parseInt((tempincost * 7 / 100)) + parseInt(tempincost));
+    adprice.value = numberWithCommas(parseInt((tempadprice * 7 / 100)) + parseInt(tempadprice));
+    chprice.value = numberWithCommas(parseInt((tempchprice * 7 / 100)) + parseInt(tempchprice));
+    inprice.value = numberWithCommas(parseInt((tempinprice * 7 / 100)) + parseInt(replaceComma(tempinprice)));
+
     var AD_Cost = document.getElementById('ad_cost').value; 
     var CH_Cost = document.getElementById('ch_cost').value;
     var IN_Cost = document.getElementById('in_cost').value;
-    var AD_Cost1 = AD_Cost.replace(',','');
-    var CH_Cost1 = CH_Cost.replace(',','');
-    var IN_Cost1 = IN_Cost.replace(',','');
-                
-    if(tempadcost == 0){
-        adcost.value = '';   
-    } else { 
-        adcost.value = numberWithCommas(parseInt((tempadcost * 7 / 100)) + parseInt(tempadcost));      
-    }
-    if(tempchcost == 0){
-        chcost.value = '';
-    } else {
-        chcost.value = numberWithCommas(parseInt((tempchcost * 7 / 100)) + parseInt(tempchcost));
-    }   
-    if(tempincost == 0){
-        incost.value = '';
-    } else {
-        incost.value = numberWithCommas(parseInt((tempincost * 7 / 100)) + parseInt(tempincost));
-    }   
-    if(tempadprice == 0){
-        adprice.value = '';
-    } else {
-        adprice.value = numberWithCommas(parseInt((tempadprice * 7 / 100)) + parseInt(tempadprice));
-    }    
-    if(tempchprice == 0){
-        chprice.value = '';
-    } else {
-        chprice.value = numberWithCommas(parseInt((tempchprice * 7 / 100)) + parseInt(tempchprice));
-    }   
-    if(tempinprice == 0){
-        inprice.value = '';
-    } else {
-        inprice.value = numberWithCommas(parseInt((tempinprice * 7 / 100)) + parseInt(replaceComma(tempinprice)));
-    }
+
+   
 }
 
 function replaceComma(input) {
