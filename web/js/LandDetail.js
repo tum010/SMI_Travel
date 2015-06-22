@@ -23,8 +23,19 @@ function setupagentvalue(id,code,name){
     $('#landForm').bootstrapValidator('revalidateField', 'agent_code');
 }
 
-function getvalueDepartDate(){   
-    getvalueProduct();
+function setupdepartdatevalue(){
+    var Product_code = document.getElementById('Product_code').value; 
+    var departdate = document.getElementById('departdate').value; 
+    if((Product_code != '') && (departdate != '')){
+        getvalueProduct(); 
+    } else {
+        document.getElementById('AD_Cost').value = '0';
+        document.getElementById('AD_Price').value = '0';
+        document.getElementById('CH_Cost').value = '0';
+        document.getElementById('CH_Price').value = '0';
+        document.getElementById('IN_Cost').value = '0';
+        document.getElementById('IN_Price').value = '0';
+    }
 }
 
 function setupproductvalue(id,code,name){
@@ -32,7 +43,18 @@ function setupproductvalue(id,code,name){
     document.getElementById('Product_id').value = id;
     document.getElementById('Product_code').value = code;
     document.getElementById('Product_name').value = name;
-    getvalueProduct();
+    var Product_code = document.getElementById('Product_code').value; 
+    var departdate = document.getElementById('departdate').value;
+    if((Product_code != '') && (departdate != '')){
+        getvalueProduct(); 
+    } else {
+        document.getElementById('AD_Cost').value = '0';
+        document.getElementById('AD_Price').value = '0';
+        document.getElementById('CH_Cost').value = '0';
+        document.getElementById('CH_Price').value = '0';
+        document.getElementById('IN_Cost').value = '0';
+        document.getElementById('IN_Price').value = '0';
+    }
 }
 
 function getvalueProduct() {
@@ -65,15 +87,7 @@ function CallAjax(param) {
                 var IN_Cost = document.getElementById('IN_Cost').value;
                 var AD_CostRP = AD_Cost.replace(',','');
                 var CH_CostRP = CH_Cost.replace(',','');
-                var IN_CostRP = IN_Cost.replace(',','');
-                if((AD_Cost == 0) && (CH_Cost == 0) && (IN_Cost == 0)){
-                    setformatNumber('AD_Cost',path[0]);
-                    setformatNumber('CH_Cost',path[1]);
-                    setformatNumber('IN_Cost',path[2]);
-                    setformatNumber('AD_Price',path[3]);
-                    setformatNumber('CH_Price',path[4]);
-                    setformatNumber('IN_Price',path[5]);
-                } else {
+                var IN_CostRP = IN_Cost.replace(',','');              
                     if((AD_CostRP == path[0]) && (CH_CostRP == path[1]) && (IN_CostRP == path[2])){
                         
                     } else {
@@ -85,7 +99,7 @@ function CallAjax(param) {
                         document.getElementById('path5').value = path[5];
                         $('#Confirm').modal('show');
                     }                 
-                }
+                
                 getItineraryDetail(document.getElementById('Product_id').value);
             }, error: function(msg) {
                 
