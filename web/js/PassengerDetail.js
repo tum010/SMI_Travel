@@ -9,6 +9,7 @@ $(document).ready(function () {
         //getDate();
         var birthDate = new Date($('#birthDate').val());
         var age = _calculateAge(birthDate);
+        var agereturn = 0;
         $("#age").val(age);
     });
     // VALIDATE
@@ -211,7 +212,13 @@ $(document).ready(function () {
 function _calculateAge(birthday) {
     var ageDifMs = Date.now() - birthday.getTime();
     var ageDate = new Date(ageDifMs);
-    return Math.abs(ageDate.getUTCFullYear() - 1970);
+    var ageCal = Math.abs(ageDate.getUTCFullYear() - 1970);
+    if(ageCal === 'NaN'){
+        return  0;
+    }else{
+        return ageCal;
+    }
+     
 }
 
 function FilterCustomerList(name) {

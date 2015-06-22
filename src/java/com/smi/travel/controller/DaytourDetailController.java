@@ -138,9 +138,9 @@ public class DaytourDetailController extends SMITravelController {
 
             Place p = new Place();
             p.setId(pickupId);
-            if ("1".equalsIgnoreCase(pickupId)) {///==1
+//            if ("1".equalsIgnoreCase(pickupId)) {///==1
                 bDaytour.setPickupDetail(pickupOther);
-            }
+//            }
 
 //            if (StringUtils.isNotEmpty(guide.trim())) {
 //                SystemUser guideB = new SystemUser();
