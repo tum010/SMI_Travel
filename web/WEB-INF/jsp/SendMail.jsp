@@ -26,69 +26,56 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">New Message</h3>
                     </div>
-                    <div class="text-center" style="padding-top: 25px">
-                        <div style="padding-left: 30px ; padding-right: 90% ; " >    
-                            <button style="height: 60px " type="button" onclick="sendEmail();" class="form-control btn btn-primary">Send</button> 
-                        </div>
-                    </div>
-                    <div class="panel-body" style="padding-top: 50px">
+                    
+                    <div class="panel-body" style="padding-top: 30px">
                         <div class="col-sm-12">
-                            <div class="row">
-                                <label class="col-sm-1 control-label text-right">To : </label>
-                                <div class="col-sm-10" style="margin-left: 10px">
-                                    <div class="form-group">
-                                        <div class="input-group text-left" >
-                                            <input type="text" class="form-control" id="sendTo" name="sendTo" size="50" > 
-                                        </div>
-                                    </div>
+                            <div class="col-xs-1 text-right">
+                                <button style="height: 50px ;width: 120px" type="button" onclick="sendEmail();" class="form-control btn btn-primary">Send</button> 
+                            </div>
+                            <div class="col-xs-10 text-right">
+                                <label class="col-sm-2 control-label text-right">To : </label>
+                                <div class="input-group text-left" >
+                                    <input type="text" class="form-control" id="sendTo" name="sendTo" size="50" style="width: 200%" > 
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-12">
-                            <div class="row">
-                                <label class="col-sm-1 control-label text-right">Cc : </label>
-                                <div class="col-sm-10" style="margin-left: 10px">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" id="sendCc" name="sendCc" size="50" > 
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-xs-1 text-right">
                             </div>
-                        </div>            
-                        <div class="col-sm-12">
-                            <div class="row">
-                                <label class="col-sm-1 control-label text-right">Subject : </label>
-                                <div class="col-sm-10" style="margin-left: 10px">
-                                    <div class="form-group">
-                                        <div class="input-group" >
-                                            <input type="text" class="form-control" id="subject" name="subject" size="50" > 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>            
-                        <div class="col-sm-12">
-                            <div class="row">
-                                <label class="col-sm-1 control-label text-right">File : </label>
-                                <div class="col-sm-10" style="margin-left: 10px">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" id="attachfile" name="attachfile" size="50" > 
-                                        </div>
-                                    </div>
+                            <div class="col-xs-10 text-right">
+                                <label class="col-sm-2 control-label text-right">Cc : </label>
+                                <div class="input-group text-left" >
+                                    <input type="text" class="form-control" id="sendCc" name="sendCc" size="50" style="width: 200%"> 
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-12">
-                            <div class="row">
-                                <label class="col-sm-1 control-label text-right"></label>
-                                <div class="col-sm-10" style="margin-left: 10px">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <textarea rows="10" cols="52" class="form-control" id="content" name="content"></textarea> 
-                                        </div>
-                                    </div>
+                        <div class="col-sm-12" style="padding-top: 20px">
+                            <div class="col-xs-1 text-right">
+                            </div>
+                            <div class="col-xs-10 text-right">
+                                <label class="col-sm-2 control-label text-right">Subject : </label>
+                                <div class="input-group text-left" >
+                                    <input type="text" class="form-control" id="subject" name="subject" size="50" style="width: 200%"> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" style="padding-top: 20px">
+                            <div class="col-xs-1 text-right">
+                            </div>
+                            <div class="col-xs-10 text-right">
+                                <label class="col-sm-2 control-label text-right">File : </label>
+                                <div class="input-group text-left" >
+                                    <input type="text" class="form-control" id="attachfile" name="attachfile" size="50" style="width: 200%"> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" style="padding-top: 20px">
+                            <div class="col-xs-1 text-right">
+                            </div>
+                            <div class="col-xs-10 text-right">
+                                <label class="col-sm-2 control-label text-right"></label>
+                                <div class="input-group text-left" >
+                                    <textarea rows="10" cols="52" class="form-control" id="content" name="content" style="width: 200%"></textarea>  
                                 </div>
                             </div>
                         </div>
@@ -104,9 +91,9 @@
     $(document).ready(function() {
       
     });
-    
+
     function sendEmail(){
-//            alert($('#sendTo').val());
+
 //            alert($('#sendCc').val());
 //            alert($('#subject').val());
 //            alert($('#fileAttachment').val());
