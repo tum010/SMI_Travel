@@ -149,13 +149,13 @@
                     <div class="col-md-2 ">
                         <div class="form-group">
                             <label>Name</label>
-                            <input type="text" class="form-control" maxlength="100" id="NameSearch" name="StaffName" value="${requestScope['staffName']}"></input>
+                            <input type="text" style="text-transform:uppercase" class="form-control" maxlength="100" id="NameSearch" name="StaffName" value="${requestScope['staffName']}"></input>
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
                             <label>Position</label>
-                            <input type="text" class="form-control" maxlength="50" id="PositionSearch" name="Position" value="${requestScope['position']}">
+                            <input type="text" style="text-transform:uppercase" class="form-control" maxlength="50" id="PositionSearch" name="Position" value="${requestScope['position']}">
                         </div>
                     </div>
                     <div class="col-md-2">
@@ -290,13 +290,13 @@
                     <div class="form-group">
                         <label for="StaffName" class="col-sm-3 control-label" >Name <font style="color: red">*</font></label>
                         <div class="col-sm-8"> 
-                            <input type="text" class="form-control" maxlength="100" id="StaffName" name="StaffName" >
+                            <input type="text" style="text-transform:uppercase" class="form-control" maxlength="100" id="StaffName" name="StaffName" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="UserNames" class="col-sm-3 control-label" >Username <font style="color: red">*</font></label>
                         <div class="col-sm-8">  
-                            <input type="text" class="form-control" maxlength="50" id="UserName" name="UserName"   autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                            <input type="text" style="text-transform:uppercase" class="form-control" maxlength="50" id="UserName" name="UserName"   autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
                         </div>
                     </div>
                     <div class="form-group">
@@ -308,7 +308,7 @@
                     <div class="form-group">
                         <label for="Position" class="col-sm-3 control-label" >Position <font style="color: red">*</font></label>
                         <div class="col-sm-8">   
-                            <input type="text" class="form-control" maxlength="50" id="Position" name="Position" > 
+                            <input type="text" style="text-transform:uppercase" class="form-control" maxlength="50" id="Position" name="Position" > 
                         </div>
                     </div>
                     <div class="form-group">
