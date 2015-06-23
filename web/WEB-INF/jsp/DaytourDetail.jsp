@@ -28,15 +28,7 @@
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
-<!--Alert Save -->
-<div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Save Success!</strong> 
-</div>
-<div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Save Success!</strong> 
-</div>
+
 <section class="content-header" >
     <h1>
         Booking - Day Tours Detail
@@ -60,12 +52,24 @@
             <input hidden="" value="${booking_size[5]}" id="input-billable_size">
             <input hidden="" value="${booking_size[6]}" id="input-daytour_size">
         </div>
+        
         <div class="col-sm-10">
             <input type="hidden" value="${master.customer.MInitialname.name}" id="initialname_tmp">
             <input type="hidden" value="${master.customer.firstName}" id="firstname_tmp">
             <input type="hidden" value="${master.customer.lastName}" id="lastname_tmp"> 
             <div ng-include="'WebContent/Book/BookNavbar.html'"></div>
             <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
+            
+          <!--Alert Save -->
+            <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Success!</strong> 
+            </div>
+            <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Success!</strong> 
+            </div>
+     
             <div class="row" style="padding-left: 15px">  
                 <div class="col-md-6 " style="padding-right: 15px">
                     <h4><b>Day Tours Detail</b></h4>
