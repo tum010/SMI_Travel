@@ -13,9 +13,6 @@
         <li><a href="#"><i class="fa fa-dashboard"></i> Master</a></li>          
         <li class="active"><a href="#">Product MA</a></li>
     </ol>
-
-
-
 </section>
 
 <div class="container2" style="padding-top: 15px;" ng-app="">
@@ -91,7 +88,6 @@
                                     <option value="<c:out value="${table.id}" />" ${mySelected}><c:out value="${table.name}" /></option>                   
                                 </c:forEach>
                             </select>
-
                         </div>
                     </div>
 
@@ -108,10 +104,10 @@
             <hr>
 
             <div class="row" style="padding-left: 15px">  
-                <div class="col-md-8 ">
+                <div class="col-md-6 ">
                     <h4><b>Product</b></h4>
                 </div>
-                <div class="col-md-4 " style="padding-left:  290px">
+                <div class="col-md-6 " style="padding-left:  290px">
                     <a id="btnAdd" name="btnAdd" href="MProductDetail.smi" class="btn btn-success">
                         <span id="spanAdd" class="glyphicon glyphicon-plus"></span>Add
                     </a>

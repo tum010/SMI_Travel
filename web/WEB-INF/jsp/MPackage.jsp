@@ -8,20 +8,14 @@
 <section class="content-header" >
     <h1>
         Master - Package
-
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Master</a></li>          
         <li class="active"><a href="#">Package</a></li>
     </ol>
-
-
-
 </section>
 
 <div class ="container"  style="padding-top: 15px;" > 
-
-
     <div class="col-md-12">
         <div class="row" style="padding-left: 150px">
             <form action="MPackage.smi" method="post" id="SearchPackage" role="form">
@@ -29,7 +23,6 @@
                     <div class="form-group">
                         <label for="PackageCodeS">Code</label>
                         <input type="text" style="text-transform:uppercase"   class="form-control" maxlength="50" id="PackageCodeS" name="PackageCodeS" value="${requestScope['packageCode']}">
-
                     </div>
                 </div>
                         
@@ -115,12 +108,8 @@
                 </table>    
             </div>
         </div>
-
-
     </div>
-
 </div>
-
 
 <div class="modal fade" id="DelPackage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -159,9 +148,3 @@
     });
 
 </script>
-
-<c:if test="${! empty requestScope['result']}">
-    <script language="javascript">
-        alert('<c:out value="${requestScope['result']}" />');
-    </script>
-</c:if>

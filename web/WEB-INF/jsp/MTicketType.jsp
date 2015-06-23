@@ -56,7 +56,21 @@
         </script>
         <!-- main page -->
         <div class="col-md-10 ">
-
+            <!--Alert Save --> 
+            <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Success!</strong> 
+            </div>
+            <!--Alert Not Save --> 
+            <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Not Success!</strong> 
+            </div>
+            <!-- Alert Uni-->
+            <div id="textAlertLap"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Ticket type name already exist!</strong> 
+            </div>
             <div class="row">
                 <form action="MTicketType.smi" method="post" id="SearchTicketType" role="form">
                     <div class="col-md-3 ">
@@ -181,15 +195,20 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-
 <c:if test="${! empty requestScope['tickettypeLap']}">
     <script language="javascript">
-        alert('<c:out value="${requestScope['tickettypeLap']}" />');
+        $('#textAlertLap').show();
     </script>
 </c:if>
-
 <c:if test="${! empty requestScope['result']}">
-    <script language="javascript">
-        alert('<c:out value="${requestScope['result']}" />');
-    </script>
+    <c:if test="${requestScope['result'] =='save successful'}">        
+        <script language="javascript">
+            $('#textAlertDivSave').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['result'] =='save unsuccessful'}">        
+        <script language="javascript">
+           $('#textAlertDivNotSave').show();
+        </script>
+    </c:if>
 </c:if>

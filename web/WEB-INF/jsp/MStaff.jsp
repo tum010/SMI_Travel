@@ -8,17 +8,29 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-
 <c:set var="dataList" value="${requestScope['Staff_List']}" />
 <c:set var="roleList" value="${requestScope['Role_List']}" />
 <c:set var="deptList" value="${requestScope['Dept_List']}" />
 <c:set var="staffSearch" value="${requestScope['StaffSearch']}" />
+<script type="text/javascript" src="js/mstaff.js"></script> 
 <style>
     input:-webkit-autofill {
         -webkit-box-shadow: 0 0 0px 1000px white inset;
     }
+    #UserName,#Password:focus {
+
+        -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+
+    }
+    input:-webkit-autofill, 
+    input::-webkit-autofill:focus, 
+    :focus, input::focus:-webkit-autofill, 
+    input:-webkit-autofill:focus,  
+    input:focus:-webkit-autofill  {
+        -webkit-box-shadow: inset 0 0px 1000px #ffffff  !important;
+    }
 </style>
+
 <section class="content-header" >
     <h1>
         Master - Staff
@@ -50,17 +62,11 @@
                     <b class="arrow"></b>
                 </li>
             </ul>
-
         </div>
-
-
         <!--Script-->
         <script type="text/javascript" charset="utf-8">
             $(document).ready(function () {
-
                 $('#delStaffButton').hide();
-
-
                 var table = $('#MasterOthers').DataTable({
                     "bJQueryUI": true,
                     "sPaginationType": "full_numbers",
@@ -119,14 +125,25 @@
                 console.log(sub);
                 var $select = $('a[href*="' + sub + '"]');
                 $("#Menu").find($select).css('background-color', '#ccc');
-
             });
-
-
-
         </script>
         <!-- main page -->
         <div class="col-md-10">
+            <!--Alert Save --> 
+            <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Success!</strong> 
+            </div>
+            <!--Alert Not Save --> 
+            <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Not Success!</strong> 
+            </div>
+            <!-- Alert Uni-->
+            <div id="textAlertLap"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Staff name already exist!</strong> 
+            </div>
             <div class="row" style="padding-left: 15px">
                 <form action="MStaff.smi" method="post" id="SearchStaff" role="form">
                     <div class="col-md-2 ">
@@ -213,7 +230,6 @@
                 <div class="col-md-2">
                     <button title="${sessionScope['id']}" type="button" class="btn btn-success" id="addStaff"   data-toggle="modal"  data-target="#StaffModal"><span class="glyphicon glyphicon-plus" ></span>Add</button>
                 </div>
-
             </div>
 
             <div class="row" style="padding-left: 15px">    
@@ -372,32 +388,20 @@
     </div><!-- /.modal-dialog -->
 </div>
 
-<c:if test="${! empty requestScope['airlineLap']}">
+<c:if test="${! empty requestScope['staffLap']}">
     <script language="javascript">
-        alert('<c:out value="${requestScope['airlineLap']}" />');
+        $('#textAlertLap').show();
     </script>
 </c:if>
 <c:if test="${! empty requestScope['result']}">
-    <script language="javascript">
-        alert('<c:out value="${requestScope['result']}" />');
-    </script>
+    <c:if test="${requestScope['result'] =='save successful'}">        
+        <script language="javascript">
+            $('#textAlertDivSave').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['result'] =='save unsuccessful'}">        
+        <script language="javascript">
+           $('#textAlertDivNotSave').show();
+        </script>
+    </c:if>
 </c:if>
-<!--Script mstaff.js-->
-<script type="text/javascript" src="js/mstaff.js"></script> 
-
-<style>
-
-
-    #UserName,#Password:focus {
-
-        -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
-
-    }
-    input:-webkit-autofill, 
-    input::-webkit-autofill:focus, 
-    :focus, input::focus:-webkit-autofill, 
-    input:-webkit-autofill:focus,  
-    input:focus:-webkit-autofill  {
-        -webkit-box-shadow: inset 0 0px 1000px #ffffff  !important;
-    }
-</style>

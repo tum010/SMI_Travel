@@ -3,6 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="dataList" value="${requestScope['Airport_List']}" />
+<script type="text/javascript" src="js/MAirport.js"></script> 
 <section class="content-header" >
     <h1>
         Master Air ticket - Airport
@@ -13,12 +14,7 @@
         <li><a href="Mairticket.smi"> Master Air ticket</a></li>        
         <li class="active"><a href="MAirport.smi">Airport</a></li>
     </ol>
-
-
-
 </section>
-
-
 <div class ="container"  style="padding-top: 15px;" ng-app=""> 
     <div class="row">
         <!-- side bar -->
@@ -56,7 +52,21 @@
         </script>
         <!-- main page -->
         <div class="col-md-9 ">
-
+            <!--Alert Save --> 
+            <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Success!</strong> 
+            </div>
+            <!--Alert Not Save --> 
+            <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Not Success!</strong> 
+            </div>
+            <!-- Alert Uni-->
+            <div id="textAlertLap"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Airport name already exist!</strong> 
+            </div>
             <div class="row">
                 <form action="MAirport.smi" method="post" id="SearchAirport" role="form">
                     <div class="col-md-3 ">
@@ -187,12 +197,18 @@
 
 <c:if test="${! empty requestScope['airportLap']}">
     <script language="javascript">
-        alert('<c:out value="${requestScope['airportLap']}" />');
+        $('#textAlertLap').show();
     </script>
 </c:if>
-<c:if test="${! empty requestScope['result']}">
-    <script language="javascript">
-        alert('<c:out value="${requestScope['result']}" />');
-    </script>
+<c:if test="${! empty result}">
+    <c:if test="${result =='save successful'}">        
+        <script language="javascript">
+            $('#textAlertDivSave').show();
+        </script>
+    </c:if>
+    <c:if test="${result =='save unsuccessful'}">        
+        <script language="javascript">
+           $('#textAlertDivNotSave').show();
+        </script>
+    </c:if>
 </c:if>
-<script type="text/javascript" src="js/MAirport.js"></script> 

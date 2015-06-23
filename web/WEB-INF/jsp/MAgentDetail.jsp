@@ -17,7 +17,13 @@
         <li class="active"><a href="#">Agent MA</a></li>
     </ol>
 </section>
+
 <div class="container" style="padding-top: 10px;">
+            <!-- Alert Uni-->
+            <div id="textAlertLap"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Agent name already exist!</strong> 
+            </div>
     <form action="MAgentDetail.smi" method="post" id="AgentForm" role="form" class="form-horizontal">
         <div class="col-md-8 col-xs-offset-2">
             <div class="panel panel-default" style="margin-bottom:5px;">
@@ -216,14 +222,8 @@
     </form>   
 
 </div>
-
 <c:if test="${! empty requestScope['agentLap']}">
     <script language="javascript">
-        alert('<c:out value="${requestScope['agentLap']}" />');
-    </script>
-</c:if>
-<c:if test="${! empty requestScope['result']}">
-    <script language="javascript">
-        alert('<c:out value="${requestScope['result']}" />');
+        $('#textAlertLap').show();
     </script>
 </c:if>

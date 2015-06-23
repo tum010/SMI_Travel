@@ -9,23 +9,19 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="dataList" value="${requestScope['Galileo_List']}" />
+<script type="text/javascript" src="js/mgalileo.js"></script> 
 <section class="content-header" >
     <h1>
         Master - Galileo
-
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Master</a></li>          
         <li class="active"><a href="#">Galileo</a></li>
     </ol>
-
-
-
 </section>
 
 <div class ="container"  style="padding-top: 15px;"> 
     <div class="row">
-
         <!--Script-->
         <script type="text/javascript" charset="utf-8">
             $(document).ready(function () {
@@ -51,20 +47,16 @@
                     }
                 });
 //                $('.dataTables_length label').remove();
-
-
-
             });
-
-
-
         </script>
         <!-- main page -->
-
-  
-            <hr>
-            
+            <hr>           
              <div class="row" style="padding-left: 15px">  
+                <!--Alert Save --> 
+                <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Save Success!</strong> 
+                </div>
                 <div class="col-md-8">
                     <h4><b>Master Galileo</b></h4>
                 </div>
@@ -164,10 +156,9 @@
 </div>
 
 <c:if test="${! empty requestScope['result']}">
-    <script language="javascript">
-        alert('<c:out value="${requestScope['result']}" />');
-    </script>
+    <c:if test="${requestScope['result'] =='save successful'}">        
+        <script language="javascript">
+            $('#textAlertDivSave').show();
+        </script>
+    </c:if>
 </c:if>
-
-<!--Script mgalileo.js-->
-<script type="text/javascript" src="js/mgalileo.js"></script> 

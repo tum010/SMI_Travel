@@ -1,9 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<script type="text/javascript" src="js/MCountry.js"></script> 
 <c:set var="dataList" value="${requestScope['Country_List']}" />
 <section class="content-header" >
     <h1>
@@ -14,7 +13,6 @@
         <li class="active"><a href="#">Country</a></li>
     </ol>
 </section>
-
 
 <div class ="container"  style="padding-top: 15px;" ng-app=""> 
     <div class="row">
@@ -41,14 +39,26 @@
                     }
                 });
                 //$('.dataTables_length label').remove();
-
-
             });
 
         </script>
         <!-- main page -->
         <div class="col-md-9">
-
+            <!--Alert Save --> 
+            <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Success!</strong> 
+            </div>
+            <!--Alert Not Save --> 
+            <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Not Success!</strong> 
+            </div>
+            <!-- Alert Uni-->
+            <div id="textAlertLap"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Country name already exist!</strong> 
+            </div>
             <div class="row">
                 <form action="MCountry.smi" method="post" id="SearchCountry" role="form">
                     <div class="col-md-3 ">
@@ -173,15 +183,20 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-
 <c:if test="${! empty requestScope['countryLap']}">
     <script language="javascript">
-        alert('<c:out value="${requestScope['countryLap']}" />');
+        $('#textAlertLap').show();
     </script>
 </c:if>
 <c:if test="${! empty requestScope['result']}">
-    <script language="javascript">
-        alert('<c:out value="${requestScope['result']}" />');
-    </script>
+    <c:if test="${requestScope['result'] =='save successful'}">        
+        <script language="javascript">
+            $('#textAlertDivSave').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['result'] =='save unsuccessful'}">        
+        <script language="javascript">
+           $('#textAlertDivNotSave').show();
+        </script>
+    </c:if>
 </c:if>
-<script type="text/javascript" src="js/MCountry.js"></script> 

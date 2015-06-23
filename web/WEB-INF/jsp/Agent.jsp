@@ -13,9 +13,6 @@
         <li><a href="#"><i class="fa fa-dashboard"></i> Master</a></li>          
         <li class="active"><a href="#">Agent MA</a></li>
     </ol>
-
-
-
 </section>
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
@@ -40,7 +37,16 @@
     });
 </script>
 <div class="container" style="padding-top: 30px;">
-
+            <!--Alert Save --> 
+            <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Success!</strong> 
+            </div>
+            <!--Alert Not Save --> 
+            <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Not Success!</strong> 
+            </div>
     <form action="Agent.smi" method="post" id="AgentForm" role="form" >
         <div class="row">
             <div class="col-md-3  col-xs-offset-3">
@@ -133,8 +139,15 @@
 </div><!-- /.modal -->
 
 <c:if test="${! empty requestScope['result']}">
-    <script language="javascript">
-        alert('<c:out value="${requestScope['result']}" />');
-    </script>
+    <c:if test="${requestScope['result'] =='save successful'}">        
+        <script language="javascript">
+            $('#textAlertDivSave').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['result'] =='save unsuccessful'}">        
+        <script language="javascript">
+           $('#textAlertDivNotSave').show();
+        </script>
+    </c:if>
 </c:if>
 

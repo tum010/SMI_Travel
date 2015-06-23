@@ -70,6 +70,21 @@
 <div class ="container"  style="padding-top: 15px;"> 
     <form action="MProductDetail.smi" method="post" id="ProductDetailForm" role="form" class="form-horizontal">
         <div class="col-md-8 col-xs-offset-2">
+            <!--Alert Save --> 
+            <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Success!</strong> 
+            </div>
+            <!--Alert Not Save --> 
+            <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Not Success!</strong> 
+            </div>
+            <!-- Alert Uni-->
+            <div id="textAlertLap"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Product name already exist!</strong> 
+            </div>
             <div class="panel panel-default">
                 <div class="panel-heading">Detail</div>
                 <div class="panel-body">
@@ -117,7 +132,6 @@
                                         </c:forEach>
                                     </select>
                                 </div>
-
                             </div>
                         </div>                       
                     </div>
@@ -193,8 +207,6 @@
                             </table>    
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -329,16 +341,20 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->    
-<c:if test="${! empty requestScope['result']}">
-    <script language="javascript">
-        alert('<c:out value="${requestScope['result']}" />');
-    </script>
-</c:if>
 <c:if test="${! empty requestScope['product_lap']}">
     <script language="javascript">
-        alert('<c:out value="${requestScope['product_lap']}" />');
+        $('#textAlertLap').show();
     </script>
-</c:if> 
-    
-    
-    
+</c:if>
+<c:if test="${! empty requestScope['result']}">
+    <c:if test="${requestScope['result'] =='save successful'}">        
+        <script language="javascript">
+            $('#textAlertDivSave').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['result'] =='save unsuccessful'}">        
+        <script language="javascript">
+           $('#textAlertDivNotSave').show();
+        </script>
+    </c:if>
+</c:if>

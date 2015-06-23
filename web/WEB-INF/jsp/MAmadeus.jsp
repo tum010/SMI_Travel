@@ -9,6 +9,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="dataList" value="${requestScope['Amadeus_List']}" />
+<script type="text/javascript" src="js/mamadeus.js"></script> 
 <section class="content-header" >
     <h1>
         Master - Amadeus
@@ -18,18 +19,13 @@
         <li><a href="#"><i class="fa fa-dashboard"></i> Master</a></li>          
         <li class="active"><a href="#">Amadeus</a></li>
     </ol>
-
-
-
 </section>
-
+<!--<input type="text" value="${requestScope['result']}">-->
 <div class ="container"  style="padding-top: 15px;"> 
     <div class="row">
-
         <!--Script-->
         <script type="text/javascript" charset="utf-8">
             $(document).ready(function () {
-
                 var table = $('#MasterAmadeus').DataTable({
                     "bJQueryUI": true,
                     "bAutoWidth": false,
@@ -51,26 +47,21 @@
                     }
                 });
 //                $('.dataTables_length label').remove();
-
-
-
             });
-
-
-
         </script>
         <!-- main page -->
-
-  
             <hr>
-            
-             <div class="row" style="padding-left: 15px">  
+             <div class="row" style="padding-left: 15px"> 
+                <!--Alert Save --> 
+                <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Save Success!</strong> 
+                </div>
                 <div class="col-md-8">
                     <h4><b>Master Amadeus</b></h4>
                 </div>
                 <div class="col-md-4">
                 </div>
-
             </div>
           
             <div class="row" style="padding-left: 15px">    
@@ -164,10 +155,9 @@
 </div>
 
 <c:if test="${! empty requestScope['result']}">
-    <script language="javascript">
-        alert('<c:out value="${requestScope['result']}" />');
-    </script>
+    <c:if test="${requestScope['result'] =='save successful'}">        
+        <script language="javascript">
+            $('#textAlertDivSave').show();
+        </script>
+    </c:if>
 </c:if>
-
-<!--Script mamadeus.js-->
-<script type="text/javascript" src="js/mamadeus.js"></script> 

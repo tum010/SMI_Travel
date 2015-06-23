@@ -18,7 +18,17 @@
     <form action="MHotel.smi" method="post" id="HotelForm" role="form" >
 
         <div class="row">
-            <div class="col-md-3  col-xs-offset-3">
+            <div class="col-md-2  col-xs-offset-2">
+                <!--Alert Save --> 
+                <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Save Success!</strong> 
+                </div>
+                <!--Alert Not Save --> 
+                <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Save Not Success!</strong> 
+                </div>
                 <div class="form-group">
                     <label for="HotelCodeS">Code</label>
                     <input type="text" class="form-control" maxlength="10" id="CodeS" name="code" style="text-transform:uppercase" value="${requestScope['hotelCode']}">
@@ -40,11 +50,11 @@
                 </div>
             </div>                   
         </div>
-        <div class="row" style="padding-left: 15px">  
-            <div class="col-md-5  col-xs-offset-3">
+        <div class="row" style="padding-left: 5px">  
+            <div class="col-md-3  col-xs-offset-2">
                 <h4><b>Hotel</b></h4>
             </div>
-            <div class="col-md-4 " style="padding-left:  126px">
+            <div class="col-md-5 " style="padding-left:  235px">
                 <a id="btnAdd" href="MHotelDetail.smi" class="btn btn-success">
                     <span id="spanAdd" class="glyphicon glyphicon-plus"></span>Add
                 </a>
@@ -137,7 +147,14 @@
     });
 </script>
 <c:if test="${! empty requestScope['result']}">
-    <script language="javascript">
-        alert('<c:out value="${requestScope['result']}" />');
-    </script>
+    <c:if test="${requestScope['result'] =='save successful'}">        
+        <script language="javascript">
+            $('#textAlertDivSave').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['result'] =='save unsuccessful'}">        
+        <script language="javascript">
+           $('#textAlertDivNotSave').show();
+        </script>
+    </c:if>
 </c:if>

@@ -21,10 +21,25 @@
         <li class="active"><a href="#">Package Detail</a></li>
     </ol>
 </section>
-
+<!--<input type="text" value="${requestScope['packageLap']}">-->
 <div class ="container"  style="padding-top: 15px;"> 
     <form action="MPackageDetail.smi" method="post" id="PackageForm" role="form" class="form-horizontal">
         <div class="col-md-8 col-xs-offset-2">
+            <!--Alert Save --> 
+            <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Success!</strong> 
+            </div>
+            <!--Alert Not Save --> 
+            <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Not Success!</strong> 
+            </div>
+            <!-- Alert Uni-->
+            <div id="textAlertLap"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Package already exist!</strong> 
+            </div>
             <div class="panel panel-default">
                 <div class="panel-heading">Detail</div>
                 <div class="panel-body">
@@ -499,16 +514,20 @@
     }
 </script>
 
-<c:set var="result" value="${requestScope['result']}" />
-<c:if test="${! empty result}">
-        <script language="javascript">
-            alert('${result}');  
-        </script>
-        <META HTTP-EQUIV="Refresh" CONTENT="0;URL=MPackageDetail.smi?packageid=${requestScope['packageid']}&action=edit">
-</c:if>
-
 <c:if test="${! empty requestScope['packageLap']}">
     <script language="javascript">
-        alert('<c:out value="${requestScope['packageLap']}" />');
+        $('#textAlertLap').show();
     </script>
-</c:if>    
+</c:if>
+<c:if test="${! empty requestScope['result']}">
+    <c:if test="${requestScope['result'] =='save successful'}">        
+        <script language="javascript">
+            $('#textAlertDivSave').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['result'] =='save unsuccessful'}">        
+        <script language="javascript">
+           $('#textAlertDivNotSave').show();
+        </script>
+    </c:if>
+</c:if>

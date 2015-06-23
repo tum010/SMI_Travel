@@ -12,25 +12,20 @@
 <c:set var="dataList" value="${requestScope['Role_List']}" />
 <c:set var="funcList" value="${requestScope['Func_List']}" />
 <c:set var="roleSearch" value="${requestScope['RoleSearch']}" />
+<script type="text/javascript" src="js/mrole.js"></script> 
 <section class="content-header" >
     <h1>
         Master - Role
-
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Master</a></li>          
         <li class="active"><a href="#">Role</a></li>
     </ol>
-
-
-
 </section>
-
 
 <div class ="container"  style="padding-top: 15px;"> 
     <div class="row">
         <!-- side bar -->
-
         <div class="col-md-2" style="border-right:  solid 1px #01C632;padding-top: 10px" id="Menu">
             <ul class="nav nav-list" style="top: 0px;  background-color: #FAFEFA;border: solid 1px #0063DC">
                 <li class="">
@@ -48,21 +43,16 @@
                     <b class="arrow"></b>
                 </li>                
             </ul>
-
         </div>
-
 
         <script type="text/javascript" charset="utf-8">
             $(document).ready(function () {
-
-                $('#delRoleButton').hide();
-
+               $('#delRoleButton').hide();
                 var table = $('#MasterOthers').dataTable({bJQueryUI: true,
                     "sPaginationType": "full_numbers",
                     "bAutoWidth": false,
                     "bFilter": false,
                     "bSort": false
-
                 });
 
                 $('#MasterOthers tbody').on('click', 'tr', function () {
@@ -100,13 +90,19 @@
                 $("#Menu").find($select).css('background-color', '#ccc');
 
             });
-
-
-
         </script>
         <!-- main page -->
         <div class="col-md-10">
-
+            <!--Alert Save --> 
+            <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Success!</strong> 
+            </div>
+            <!--Alert Not Save --> 
+            <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Not Success!</strong> 
+            </div>
             <div class="row">
                 <form action="MRole.smi" method="post" id="SearchRole" role="form">
                     <div class="col-md-offset-5 col-md-3">
@@ -115,7 +111,6 @@
                             <input type="text"   class="form-control" id="NameSearch" maxlength="50" name="RoleName" value="${requestScope['roleName']}">
                         </div>
                     </div>
-
 
                     <div class="col-md-2">
                         <div  style="padding-top: 20px">   
@@ -241,8 +236,14 @@
 </div><!-- /.modal -->
 
 <c:if test="${! empty requestScope['result']}">
-    <script language="javascript">
-        alert('<c:out value="${requestScope['result']}" />');
-    </script>
+    <c:if test="${requestScope['result'] =='save successful'}">        
+        <script language="javascript">
+            $('#textAlertDivSave').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['result'] =='save unsuccessful'}">        
+        <script language="javascript">
+           $('#textAlertDivNotSave').show();
+        </script>
+    </c:if>
 </c:if>
-<script type="text/javascript" src="js/mrole.js"></script> 

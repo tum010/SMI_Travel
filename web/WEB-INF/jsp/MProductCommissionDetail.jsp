@@ -34,7 +34,9 @@
     </ol>
 </section>
 <div class ="container"  style="padding-top: 15px;">
-    <!--Alert delete -->
+    <!--Content -->
+    <div class="col-md-10  col-md-offset-1">
+        <!--Alert delete -->
     <div class="row" style="display:none;" id="textAlertDivDelete">
         <div class="col-md-10 col-md-offset-1">
             <div class="alert alert-warning alert-dismissable fade  in" role="alert">
@@ -68,8 +70,6 @@
             </div>
         </div>
     </div>
-    <!--Content -->
-    <div class="col-md-10  col-md-offset-1">
         <form action="MProductCommissionDetail.smi" method="post" role="form" id="MProductCommissionDetail" onsubmit="return validateCheckInput();" >
             <div class="panel panel-default">
                 <div class="panel-heading">Detail</div>

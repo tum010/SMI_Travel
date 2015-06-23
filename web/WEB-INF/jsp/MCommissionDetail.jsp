@@ -35,6 +35,7 @@
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <strong>Update Fail!</strong> 
 </div>
+<!--<input type="text" value="${requestScope['VALIDATE']}">-->
 <section class="content-header"  >
     <h1>
         <b>Master : Tour Commission</b>
@@ -48,6 +49,11 @@
 <div class ="container"  style="padding-top: 15px;">
     <!--Table add-->
     <div class="col-md-10  col-md-offset-1">
+        <!-- Alert Uni-->
+            <div id="textAlertLap"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Agent and tour commission already exist!</strong> 
+            </div>
         <form action="MCommissionDetail.smi" id="MCommissionDetailForm" method="post" role="form" onsubmit="return validateSubmit();" >
             <div class="panel panel-default">
                 <div class="panel-heading">Detail</div>
@@ -537,13 +543,6 @@
         <META HTTP-EQUIV="Refresh" CONTENT="0;URL=MCommissionDetail.smi?commissionId=${param.commissionId}&action=edit">
     </c:if>
 </c:if>
-<c:if test="${! empty requestScope['VALIDATE']}">
-    <script language="javascript">
-//        $('#textAlertDivSave').show();
-        alert('<c:out value="${requestScope['VALIDATE']}" />');
-    </script>
-</c:if>   
-
 <c:if test="${! empty requestScope['ResultSave']}">
     <script language="javascript">
         $('#textAlertDivSave').show();
@@ -728,3 +727,10 @@
         $('#commissionTable tbody').append(clone);
     } 
 </script>
+<c:if test="${! empty requestScope['VALIDATE']}">
+    <c:if test="${requestScope['VALIDATE'] =='Agent and tour commission already exist'}">        
+        <script language="javascript">
+             $('#textAlertLap').show();
+        </script>
+    </c:if>
+</c:if>

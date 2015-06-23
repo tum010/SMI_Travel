@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link href="css/jquery-ui.css" rel="stylesheet">
 <c:set var="dataList" value="${requestScope['City_List']}" />
+<script type="text/javascript" src="js/MCity.js"></script> 
 <section class="content-header" >
     <h1>
         Master - City
@@ -13,20 +14,14 @@
         <li><a href="#"><i class="fa fa-dashboard"></i> Master</a></li>          
         <li class="active"><a href="#">City</a></li>
     </ol>
-
-
-
 </section>
-
 
 <div class ="container"  style="padding-top: 15px;" ng-app=""> 
     <div class="row">
         <!-- side bar -->
- 
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
             <div ng-include="'WebContent/Master/OtherMenu.html'"></div>
         </div>
-
         <script type="text/javascript" charset="utf-8">
             $(document).ready(function() {
                 var table = $('#MasterCity').dataTable({bJQueryUI: true,
@@ -46,14 +41,25 @@
                     }
                 });
                 //$('.dataTables_length label').remove();
-
-
             });
-
         </script>
         <!-- main page -->
         <div class="col-md-9 ">
-
+            <!--Alert Save --> 
+            <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Success!</strong> 
+            </div>
+            <!--Alert Not Save --> 
+            <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Not Success!</strong> 
+            </div>
+            <!-- Alert Uni-->
+            <div id="textAlertLap"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>City name already exist!</strong> 
+            </div>
             <div class="row">
                 <form action="MCity.smi" method="post" id="SearchCity" role="form">
                     <div class="col-md-3 ">
@@ -177,16 +183,20 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
-
 <c:if test="${! empty requestScope['cityLap']}">
     <script language="javascript">
-        alert('<c:out value="${requestScope['cityLap']}" />');
+        $('#textAlertLap').show();
     </script>
 </c:if>
 <c:if test="${! empty requestScope['result']}">
-    <script language="javascript">
-        alert('<c:out value="${requestScope['result']}" />');
-    </script>
+    <c:if test="${requestScope['result'] =='save successful'}">        
+        <script language="javascript">
+            $('#textAlertDivSave').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['result'] =='save unsuccessful'}">        
+        <script language="javascript">
+           $('#textAlertDivNotSave').show();
+        </script>
+    </c:if>
 </c:if>
-<script type="text/javascript" src="js/MCity.js"></script> 

@@ -282,7 +282,7 @@ $(document).ready(function () {
             });
             
             var tableLength = $("#City tbody").find("tr").length;
-            console.log("table length " + tableLength);
+//            console.log("table length " + tableLength);
             var dataCity = [];
             dataCity = cityName ;
             
@@ -421,7 +421,7 @@ function CityAddRow(row) {
     $("#cityCounter").val(tempCount);
     
     var name = "#row-city-"+row+"-name";
-    console.log("name = " + name);
+//    console.log("name = " + name);
 
     $(name).selectize({
         removeItem: '',

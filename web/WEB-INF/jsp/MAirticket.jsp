@@ -3,12 +3,11 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="dataList" value="${requestScope['Airline_List']}" />
-
+<script type="text/javascript" src="js/MAirticket.js"></script> 
 
 <section class="content-header" >
     <h1>
         Master Air ticket - Airline
-
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Master</a></li>        
@@ -17,18 +16,12 @@
     </ol>
 </section>
 
-
 <div class ="container"  style="padding-top: 15px;" ng-app=""> 
-
     <div class="row">
         <!-- side bar -->
-
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
             <div ng-include="'WebContent/Master/AirticketMenu.html'"></div>
-
         </div>
-
-
         <script type="text/javascript" charset="utf-8">
             $(document).ready(function() {
                 var table = $('#MasterOthers').dataTable({bJQueryUI: true,
@@ -53,6 +46,21 @@
         </script>
         <!-- main page -->
         <div class="col-md-10">
+            <!--Alert Save --> 
+            <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Success!</strong> 
+            </div>
+            <!--Alert Not Save --> 
+            <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Not Success!</strong> 
+            </div>
+            <!-- Alert Uni-->
+            <div id="textAlertLap"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Air ticket name already exist!</strong> 
+            </div>
             <div class="row">
                 <form action="Mairticket.smi" method="post" id="SearchAirLine" role="form">
                     <div class="col-md-3">
@@ -127,10 +135,6 @@
                     </table>    
                 </div>
             </div>
-
-            <!--       
-                         
-            -->
         </div>
     </div>
 </div>
@@ -191,16 +195,20 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
 <c:if test="${! empty requestScope['airlineLap']}">
     <script language="javascript">
-        alert('<c:out value="${requestScope['airlineLap']}" />');
+        $('#textAlertLap').show();
     </script>
 </c:if>
 <c:if test="${! empty requestScope['result']}">
-    <script language="javascript">
-        alert('<c:out value="${requestScope['result']}" />');
-    </script>
+    <c:if test="${requestScope['result'] =='save successful'}">        
+        <script language="javascript">
+            $('#textAlertDivSave').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['result'] =='save unsuccessful'}">        
+        <script language="javascript">
+           $('#textAlertDivNotSave').show();
+        </script>
+    </c:if>
 </c:if>
-
-<script type="text/javascript" src="js/MAirticket.js"></script> 

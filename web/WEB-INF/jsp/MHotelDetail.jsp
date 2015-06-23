@@ -37,6 +37,11 @@
 <div class ="container"  style="padding-top: 15px;"> 
     <form action="MHotelDetail.smi" method="post" id="HotelForm" role="form" class="form-horizontal">
         <div class="col-md-8 col-xs-offset-2">
+            <!-- Alert Uni-->
+            <div id="textAlertLap"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Hotel name already exist!</strong> 
+            </div>
             <div class="panel panel-default">
                 <div class="panel-heading">Detail</div>
                 <div class="panel-body">
@@ -189,14 +194,8 @@
     </form>
 
 </div>
-
 <c:if test="${! empty requestScope['hotelLap']}">
     <script language="javascript">
-        alert('<c:out value="${requestScope['hotelLap']}" />');
-    </script>
-</c:if>
-<c:if test="${! empty requestScope['result']}">
-    <script language="javascript">
-        alert('<c:out value="${requestScope['result']}" />');
+        $('#textAlertLap').show();
     </script>
 </c:if>

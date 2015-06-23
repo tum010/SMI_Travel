@@ -1,7 +1,4 @@
- 
-
-
-<%-- 
+ <%-- 
     Document   : Comission
     Created on : Mar 26, 2015, 9:25:13 PM
     Author     : Winit
@@ -29,6 +26,7 @@
         <li class="active"><a href="#"> Commission</a></li>
     </ol>
 </section>
+<!--<input type="text" value="${requestScope['DeleteMCommission']}">-->
 <div class ="container"  style="padding-top: 15px;">
     <div class="row">
         <!-- side bar -->
@@ -50,10 +48,28 @@
                 </li>
             </ul>
         </div>
-
-
         <!-- main page -->
         <div class="col-md-10">
+            <!--Alert Update --> 
+            <div id="textAlertDivUpdate"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Update Success!</strong> 
+            </div>
+            <!--Alert Save --> 
+            <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Success!</strong> 
+            </div>
+            <!--Alert Delete Success --> 
+            <div id="textAlertDivDelete"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Delete Success!</strong> 
+            </div>
+            <!--Alert Not Save --> 
+            <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Update Not Success!</strong> 
+            </div>
             <div class="row" style="padding-left: 15px">
                 <form action="MCommission.smi" method="post" id="searchCommission" role="form">
                     <div class="col-md-2 ">
@@ -182,22 +198,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<c:if test="${! empty requestScope['DeleteMCommission']}">
-    <script language="javascript">
-        alert('<c:out value="${requestScope['DeleteMCommission']}" />');
-    </script>
-</c:if>
-<c:if test="${! empty requestScope['ResultSave']}">
-    <script language="javascript">
-        alert('<c:out value="${requestScope['ResultSave']}" />');
-    </script>
-</c:if>
-<c:if test="${! empty requestScope['VALIDATE']}">
-    <script language="javascript">
-        alert('<c:out value="${requestScope['VALIDATE']}" />');
-    </script>
-</c:if>
-    <script type="text/javascript" charset="utf-8">
+<script type="text/javascript" charset="utf-8">
         function DelCommissionAgent(id,agentcode,agentname,tourcode,tourname) {
 //            alert('id:'+id);
             $("#deleteId").val(id);
@@ -248,4 +249,32 @@ $(document).ready(function (){
 });
 
 </script>
-
+<c:if test="${! empty requestScope['DeleteMCommission']}">
+    <c:if test="${requestScope['DeleteMCommission'] =='delete: success'}">        
+        <script language="javascript">
+            $('#textAlertDivDelete').show();
+        </script>
+    </c:if>
+</c:if>
+<c:if test="${! empty requestScope['VALIDATE']}">
+    <script language="javascript">
+        alert('<c:out value="${requestScope['VALIDATE']}" />');
+    </script>
+</c:if>
+<c:if test="${! empty requestScope['ResultSave']}">
+    <c:if test="${requestScope['ResultSave'] =='update successful'}">        
+        <script language="javascript">
+            $('#textAlertDivUpdate').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['ResultSave'] =='update unsuccessful'}">        
+        <script language="javascript">
+           $('#textAlertDivNotSave').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['ResultSave'] =='save : success'}">        
+        <script language="javascript">
+           $('#textAlertDivSave').show();
+        </script>
+    </c:if>
+</c:if>

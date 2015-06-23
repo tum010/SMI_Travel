@@ -1,4 +1,4 @@
-    <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript" src="js/MCurrency.js"></script> 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -8,17 +8,12 @@
 <section class="content-header" >
     <h1>
         Master - Currency
-
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Master</a></li>          
         <li class="active"><a href="#">Currency</a></li>
     </ol>
-
-
-
 </section>
-
 
 <div class ="container"  style="padding-top: 15px;" ng-app=""> 
     <div class="row">
@@ -45,14 +40,26 @@
                     }
                 });
                 //$('.dataTables_length label').remove();
-
-
             });
 
         </script>
         <!-- main page -->
         <div class="col-md-9 ">
-
+            <!--Alert Save --> 
+            <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Success!</strong> 
+            </div>
+            <!--Alert Not Save --> 
+            <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Not Success!</strong> 
+            </div>
+            <!-- Alert Uni-->
+            <div id="textAlertLap"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Currency already exist!</strong> 
+            </div>
             <div class="row">
                 <form action="MCurrency.smi" method="post" id="SearchCurrency" role="form">
                     <div class="col-md-3 ">
@@ -177,14 +184,20 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-
 <c:if test="${! empty requestScope['currencyLap']}">
     <script language="javascript">
-        alert('<c:out value="${requestScope['currencyLap']}" />');
+        $('#textAlertLap').show();
     </script>
 </c:if>
 <c:if test="${! empty requestScope['result']}">
-    <script language="javascript">
-        alert('<c:out value="${requestScope['result']}" />');
-    </script>
+    <c:if test="${requestScope['result'] =='save successful'}">        
+        <script language="javascript">
+            $('#textAlertDivSave').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['result'] =='save unsuccessful'}">        
+        <script language="javascript">
+           $('#textAlertDivNotSave').show();
+        </script>
+    </c:if>
 </c:if>
