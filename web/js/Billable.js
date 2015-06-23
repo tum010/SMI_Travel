@@ -8,37 +8,9 @@
 
 $(document).ready(function() {
     // validate
+//alert(billArray);
 
     var Billable = $("#Billable");
-    /*
-    Billable.bootstrapValidator({
-        container: 'tooltip',
-        excluded: [':disabled'],
-        feedbackIcons: {
-            valid: 'uk-icon-check',
-            invalid: 'uk-icon-times',
-            validating: 'uk-icon-refresh'
-        },
-        fields: {
-            billdate: {
-                validators: {
-                    notEmpty: {
-                        message: 'bill date is required'
-                    },
-                    date: {
-                        format: 'YYYY-MM-DD',
-                        message: 'bill date is not a valid date'
-                    }
-                }
-            }
-        }
-    }).on('success.field.bv', function(e, data) {
-        if (data.bv.isValid()) {
-            data.bv.disableSubmitButtons(false);
-
-        }
-    });
-         */   
     Billable.on('mouseover', function () {
         var billto = $(this).find('[name="billto"]');
         var isEmpty = billto.val() === '';
@@ -57,9 +29,50 @@ $(document).ready(function() {
             searchCustomerAgentList($("#searchBillto").val());
         }
     });
+//    alert(billArray);
+    //autocomplete
+    
 
-
+//    $("#billto").keyup(function(){
+//        searchCustomerAutoList(this.value);
+//        var position = $(this).offset();
+//        $(".ui-widget").css("top", position.top + 30);
+//        $(".ui-widget").css("left", position.left);
+//    });
 });
+
+function searchCustomerAutoList(name){
+    var servletName = 'BillableServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&name=' + name +
+            '&type=' + 'getAutoListBillto';
+    CallAjaxAuto(param);
+}
+
+function CallAjaxAuto(param){
+     var url = 'AJAXServlet';
+     try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function(msg) {     
+                console.log("getAutoListBillto =="+msg);
+                $("#billto").autocomplete({
+                     source: msg
+                });
+            }, error: function(msg) {
+                alert('error');
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
+}
 
 function searchCustomerAgentList(name) {
     var servletName = 'BillableServlet';
@@ -70,7 +83,6 @@ function searchCustomerAgentList(name) {
             '&name=' + name +
             '&type=' + 'getListBillto';
     CallAjax(param);
-
 }
 
 function CallAjax(param) {

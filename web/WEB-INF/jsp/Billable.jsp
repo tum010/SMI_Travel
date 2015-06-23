@@ -606,6 +606,7 @@
                             });
                         });
 
+
                         // BillTo Table
                         var BillToTable = $('#BillToTable').dataTable({bJQueryUI: true,
                             "sPaginationType": "full_numbers",

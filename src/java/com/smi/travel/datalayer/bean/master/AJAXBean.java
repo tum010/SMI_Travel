@@ -279,9 +279,10 @@ public class AJAXBean extends AbstractBean implements
                 }
                 System.out.println("tabledata : " + tabledata);
                 result = tabledata;
-            }else  if ("AutoListBillto".equalsIgnoreCase(type)) {
+            }else  if ("getAutoListBillto".equalsIgnoreCase(type)) {
                 String name = map.get("name").toString();
-                List<CustomerAgentInfo> data = customerAgentInfoDao.SearchListCustomerAgentInfo(name);
+//                List<CustomerAgentInfo> data = customerAgentInfoDao.SearchListCustomerAgentInfo(name);
+                result = buildBillListJSON(customerAgentInfoDao.SearchListCustomerAgentInfo(name));
             }
         } else if (BOOKDAYTOUR.equalsIgnoreCase(servletName)) {
             String TourID = null;
@@ -461,6 +462,19 @@ public class AJAXBean extends AbstractBean implements
             field.put("id", airport.getId());
             field.put("code", airport.getCode());
             field.put("name", airport.getName());
+            record.add(field);
+        }
+        return record.toJSONString();
+    }
+    
+    public String buildBillListJSON(List<CustomerAgentInfo> listCutomerInfo) {
+        JSONArray record = new JSONArray();
+        for (int i = 0; i < listCutomerInfo.size(); i++) {
+            CustomerAgentInfo customer = listCutomerInfo.get(i);
+            JSONObject field = new JSONObject();
+            field.put("id", customer.getBillTo());
+            field.put("name", customer.getBillName());
+            field.put("address", customer.getAddress());
             record.add(field);
         }
         return record.toJSONString();
