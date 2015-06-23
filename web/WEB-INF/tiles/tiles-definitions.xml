@@ -307,6 +307,11 @@
         <put-attribute name="title" value="Master : Product Commission Detail" />
         <put-attribute name="body" value="/WEB-INF/jsp/MProductCommissionDetail.jsp" />
     </definition>
+    
+    <definition name="MBank" extends="baseLayout">
+        <put-attribute name="title" value="Master : Master Bank" />
+        <put-attribute name="body" value="/WEB-INF/jsp/MBank.jsp" />
+    </definition>
     <!--<add data>-->
     <definition name="SendMail" extends="baseLayout">
         <put-attribute name="title" value="SMI Travel : Send Mail" />
