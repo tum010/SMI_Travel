@@ -22,7 +22,7 @@
         <li class="active"><a href="#">Role</a></li>
     </ol>
 </section>
-
+<!--<input type="text" value="${requestScope['result']}">-->
 <div class ="container"  style="padding-top: 15px;"> 
     <div class="row">
         <!-- side bar -->
@@ -96,12 +96,32 @@
             <!--Alert Save --> 
             <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Save Success!</strong> 
+                    <strong>Add Success!</strong> 
             </div>
             <!--Alert Not Save --> 
             <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Save Not Success!</strong> 
+                    <strong>Add Not Success!</strong> 
+            </div>
+            <!--Alert Update --> 
+            <div id="textAlertDivUpdate"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Update Success!</strong> 
+            </div>
+            <!--Alert Delete --> 
+            <div id="textAlertDivDelete"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Delete Success!</strong> 
+            </div>
+            <!--Alert Not Update --> 
+            <div id="textAlertDivNotUpdate"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Update Not Success!</strong> 
+            </div>
+            <!-- Alert Uni-->
+            <div id="textAlertLap"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Add unsuccessful! role name already exist!</strong> 
             </div>
             <div class="row">
                 <form action="MRole.smi" method="post" id="SearchRole" role="form">
@@ -127,11 +147,10 @@
                     <h4><b>Role</b></h4>
                 </div>
                 <div class="col-md-6 " style="padding-left:  182px">
-                    <button id="btnAdd" type="button" class="btn btn-success" id="addRole"  data-toggle="modal" data-target="#RoleModal">
+                    <button  type="button" class="btn btn-success" id="addRole"  data-toggle="modal" data-target="#RoleModal">
                         <span id="spanAdd" class="glyphicon glyphicon-plus"></span>Add
                     </button>
                 </div>
-
             </div>
             <div class="row" style="padding-left: 15px">    
                 <div class="col-md-9"> 
@@ -236,14 +255,34 @@
 </div><!-- /.modal -->
 
 <c:if test="${! empty requestScope['result']}">
-    <c:if test="${requestScope['result'] =='save successful'}">        
+    <c:if test="${requestScope['result'] =='Add successful'}">        
         <script language="javascript">
             $('#textAlertDivSave').show();
         </script>
     </c:if>
-    <c:if test="${requestScope['result'] =='save unsuccessful'}">        
+    <c:if test="${requestScope['result'] =='Add unsuccessful'}">        
         <script language="javascript">
            $('#textAlertDivNotSave').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['result'] =='save successful'}">        
+        <script language="javascript">
+           $('#textAlertDivUpdate').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['result'] =='save unsuccessful'}">        
+        <script language="javascript">
+           $('#textAlertDivNotUpdate').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['result'] =='Add unsuccessful! role name already exist'}">        
+        <script language="javascript">
+           $('#textAlertLap').show();
+        </script>
+    </c:if>Delete successful
+    <c:if test="${requestScope['result'] =='Delete successful'}">        
+        <script language="javascript">
+           $('#textAlertDivDelete').show();
         </script>
     </c:if>
 </c:if>

@@ -97,7 +97,7 @@
                                         <td><center><c:out value="${table.otherTime}" /></center></td>
                                         <td><center><c:out value="${table.remark}" /></center></td>
                                         <td class="text-center">
-                                            <span id="RefBookTableButtonEdit" name="RefBookTableButtonEdit" class="glyphicon glyphicon-edit editicon" onclick="window.open('/SMITravel/DaytourDetail.smi?referenceNo=${dayTourDetai.master.referenceNo}&action=edit&daytourBooking=${dayTourDetai.id}');"></span>
+                                            <span id="RefBookTableButtonEdit" name="RefBookTableButtonEdit" class="glyphicon glyphicon-edit editicon" onclick="window.open('/SMITravel/OtherDetail.smi?referenceNo=${RefNo}&itemid=${table.id}&action=edit');"></span>
                                             <a data-toggle="collapse" href="#collapseExample${status.count}" aria-expanded="false" aria-controls="collapseExample${status.count}">
                                                 <span id="SpanEdit${status.count}" class="glyphicon glyphicon-list-alt"></span>
                                             </a>

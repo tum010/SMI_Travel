@@ -5,6 +5,7 @@
 <c:set var="dataList" value="${requestScope['MDaytour_list']}" />
 <c:set var="daytourSearch" value="${requestScope['DaytourSearch']}" />
 <c:set var="stafftour" value="${requestScope['stafftour']}" />
+<script type="text/javascript" src="js/mdaytour.js"></script> 
 <section class="content-header"  >
     <h4>
         <b>Master : Day Tours</b>
@@ -14,10 +15,20 @@
         <li class="active"><a href="#">Day Tours MA</a></li>
     </ol>
 </section>
-
+<!--<input type="text" value="${requestScope['result']}">-->
 <div class ="container"  style="padding-top: 15px;"> 
     <form action="MDaytour.smi" method="post" id="DaytourSearch" role="form" >
         <div class="row">
+            <!--Alert Save --> 
+            <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Success!</strong> 
+            </div> 
+            <!--Alert Delete --> 
+            <div id="textAlertDivDelete"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Delete Success!</strong> 
+            </div> 
             <div class="col-md-4  col-md-offset-2">
                 <div class="form-group">
                     <label for="tourCode">Tour code</label>
@@ -50,10 +61,7 @@
                     </button>
                 </a>
             </div>
-
         </div>
-
-
     </form>
 
     <div class="row">
@@ -102,24 +110,13 @@
                         </div> 
                        <div class="col-md-1 " style="padding:0 9px 0 0" >
                            <button  type="button" id="InitialVarButton" name="InitialVarButton" onclick="savestaff();"  class="form-control btn btn-primary"><i class="fa fa-save"></i>Save</button>           
-                      </div>  
-                        
-                      
+                      </div>                                            
                     </div>
-
                 </div>
-
             </div>    
          </div>           
     </div>    
-
 </div>
-<c:if test="${! empty requestScope['result']}">
-    <script language="javascript">
-        alert('<c:out value="${requestScope['result']}" />');
-    </script>
-</c:if>
-
 
 <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -141,17 +138,9 @@
             </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
-
- 
-<script type="text/javascript" src="js/mdaytour.js"></script> 
-
-    
+</div><!-- /.modal -->  
 <script type="text/javascript" >
         $(document).ready(function () {
-
             //Check enter key
             $("#tourCode,#tourName").keypress(function (event) {
                 if (event.which == 13) {
@@ -163,8 +152,22 @@
             // Set value back to search box.
             $("#tourName").val("<c:out value="${daytourSearch.name}" />");
             $("#tourCode").val("<c:out value="${daytourSearch.code}" />");
-        });
-        
-
+        });   
 </script>
-
+<c:if test="${! empty requestScope['result']}">
+    <c:if test="${requestScope['result'] =='save : success'}">        
+        <script language="javascript">
+            $('#textAlertDivSave').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['result'] =='delete successful'}">        
+        <script language="javascript">
+            $('#textAlertDivDelete').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['result'] =='tour code already exist'}">        
+        <script language="javascript">
+           $('#textAlertLap').show();
+        </script>
+    </c:if>
+</c:if>

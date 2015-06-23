@@ -2,6 +2,7 @@
 //      auto add row where input value in row
 
 $(document).ready(function () {
+    checkExpenseTour();
     $(".money").mask('000,000,000,000,000,000', {reverse: true});
     $("a").click(function () {
         $(".collapse").collapse('hide');
@@ -75,7 +76,6 @@ $(document).ready(function () {
                     }
                 }
             }
-
         });
     });
     $("#BookingExpenseTable").on("keyup", function () {
@@ -386,4 +386,19 @@ function printGuideJob() {
     var inputDetailTourCode = document.getElementById("InputDetailTourCode").value;
     var inputTourDetailTourDate = document.getElementById("InputTourDetailTourDate").value;
     window.open("report.smi?name=GuideJob&tourdate=" + inputTourDetailTourDate + "&tourcode=" + inputDetailTourCode);
+}
+
+function checkExpenseTour(){
+    var booking = document.getElementById('BookingExpenseTable').tBodies[0];
+    for (var r=0, n = booking.rows.length; r < n; r++) {
+        $('#toureExpenTable > tbody  > tr  ').each(
+        function() {
+                var book = booking.rows[r].cells[1].childNodes[0].value;
+                var tour = $(this).find("#rowImportExpenDescription").html();
+                var tourId = $(this).find("#rowImportExpenId").html();
+                if(book === tour){
+                     $('#expenID-'+tourId).hide();
+                }         
+        });  
+    }
 }

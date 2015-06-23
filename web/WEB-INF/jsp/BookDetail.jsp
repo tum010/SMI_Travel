@@ -42,7 +42,6 @@
     </c:otherwise>
 </c:choose>
 
-
 <section class="content-header" >
     <h1>
         Booking - Detail <!--${string2} - ${string3} -->
@@ -78,7 +77,6 @@
                 <input name="status_list" type="hidden" value="${status.name}">
             </c:forEach>
 
-
             <form action="BookDetail.smi" method="post" id="BookDetail" role="form">
                 <input type="hidden" class="form-control" id="referenceNo" name="referenceNo" value="${detail.referenceNo}"/>
                 <input type="hidden" class="form-control" id="agent_id" name="agent_id" value="${SelectedAgent.id}"/>
@@ -95,13 +93,11 @@
                     </c:otherwise>
                 </c:choose>
 
- 
-    <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Save Success!</strong> 
-    </div>
+            <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Save Success!</strong> 
+            </div>
                 <div class="panel panel-default">
-
                     <div class="panel-body">
 
                         <!--Agent-->

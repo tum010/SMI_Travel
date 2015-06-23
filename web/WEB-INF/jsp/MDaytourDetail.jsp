@@ -24,11 +24,27 @@
         <li class="active"><a href="#">Day Tours Detail</a></li>
     </ol>
 </section>
-
+<!--<input type="text" value="${param.result}">-->
+<!--<input type="text" value="${requestScope['VALIDATE']}">-->
 <div class ="container"  style="padding-top: 15px;"> 
     <div class="col-md-10  col-md-offset-1">
         <form id="MDaytourDetailForm" name="MDaytourDetailForm" action="MDaytourDetail.smi" method="post" role="form" >
             <div class="panel panel-default">
+                <!-- Alert Uni-->
+                <div id="textAlertLap"  style="display:none;" class="alert alert-danger" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>tour code already exist!</strong> 
+                </div>
+                <!-- Alert Not Update-->
+                <div id="textAlertDivNotUpdate"  style="display:none;" class="alert alert-danger" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Update unsuccessful!</strong> 
+                </div>
+                <!--Alert Not Save --> 
+                <div id="textAlertDivUpdate"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Update Success!</strong> 
+                </div>
                 <div class="panel-heading">Detail</div>
                 <div class="panel-body">
                     <div class="row">
@@ -185,10 +201,8 @@
                                 <i id="IGlyphiconPluse" class="glyphicon glyphicon-plus"></i> Add
                             </a>
                         </div>
-                    </div>
-                    
-                        <div class="col-xs-1 form-group"></div>
-                        
+                    </div>                  
+                    <div class="col-xs-1 form-group"></div>                       
                     <div class="col-xs-12 ">
                         <div class="col-xs-1"><label class="form-label">Expense</label></div>
                         <table class="display" id="ExpenseTable">
@@ -258,48 +272,23 @@
                                                   data-target="#DelExpense">
                                             </span>
                                         </td>
-
                                     </tr>
                                 </c:forEach>
-
                             </tbody>
                         </table>
                     </div>
-                      <div class="col-xs-1 form-group"></div>    
+                    <div class="col-xs-1 form-group"></div>    
                     <input name="daytourid" value="${daytour.id}"type="hidden">
                     <input type="hidden" id="action" name="action" value="save">
                     <div class="col-xs-12 text-center">
                         <button id="ButtonSave" name="ButtonSave" type="submit"  class="btn btn-success"><i class="fa fa-save"></i> Save</button>
                     </div>
-
                 </div>
             </div>
-
         </form>
     </div>
 </div>
                  
-<c:if test="${! empty param.result}">
-    <c:if test="${param.result =='success'}">        
-        <script language="javascript">
-            alert("update successful");
-        </script>
-        <META HTTP-EQUIV="Refresh" CONTENT="0;URL=MDaytourDetail.smi?daytourid=${param.daytourid}&action=edit">
-    </c:if>
-    <c:if test="${param.result =='fail'}">        
-        <script language="javascript">
-            alert("update unsuccessful");
-        </script>
-        <META HTTP-EQUIV="Refresh" CONTENT="0;URL=MDaytourDetail.smi?daytourid=${param.daytourid}&action=edit">
-    </c:if>
-</c:if>     
-<c:if test="${! empty requestScope['VALIDATE']}">
-    <script language="javascript">
-        alert('<c:out value="${requestScope['VALIDATE']}" />');
-    </script>
-</c:if>
-
-
 <!--Price Delete Modal-->
 <div class="modal fade" id="DelPrice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -343,10 +332,6 @@
 </div><!-- /.modal -->
 
 <script type="text/javascript" charset="utf-8">
-    
-  
-
-
     function DeletePrice(id, detail,objspan) {
         var countPrice =   $("#PriceTable tbody").find("tr").length;
         if($("#PriceTable tbody").find("tr").length !== 2){
@@ -456,5 +441,23 @@
                 }
         }
     }
-
 </script>
+<c:if test="${! empty param.result}">
+    <c:if test="${param.result =='success'}">            
+        <script language="javascript">
+           $('#textAlertDivUpdate').show();
+        </script>
+    </c:if>
+    <c:if test="${param.result =='fail'}">        
+        <script language="javascript">
+             $('#textAlertDivNotUpdate').show();
+        </script>
+    </c:if>
+</c:if>     
+<c:if test="${! empty requestScope['VALIDATE']}">
+    <c:if test="${requestScope['VALIDATE'] =='tour code already exist'}">        
+        <script language="javascript">
+           $('#textAlertLap').show();
+        </script>
+    </c:if>
+</c:if>
