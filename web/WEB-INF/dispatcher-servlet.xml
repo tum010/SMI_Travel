@@ -86,6 +86,7 @@
                 <prop key="MProductCommissionDetail.smi">MProductCommissionDetailController</prop>
                 <prop key="Excel.smi">ExportDataToExcelController</prop>
                 <prop key="SendMail.smi">Mail</prop>
+                <prop key="MBank.smi">MBankController</prop>
                 <!--<prop key="test_page.smi">TestPageController</prop>-->
                 <!-- add mapping url -->
             </props>
@@ -474,5 +475,9 @@
     </bean>
     
     <bean id="Mail" class="com.smi.travel.util.Mail">
+    </bean>
+    
+    <bean id="MBankController" class="com.smi.travel.masterdata.controller.MBankController">
+        <property name="mBankService" ref="MBankService" />
     </bean>
 </beans>

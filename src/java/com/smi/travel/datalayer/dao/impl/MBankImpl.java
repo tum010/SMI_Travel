@@ -74,17 +74,58 @@ public class MBankImpl  implements MBankDao{
 
     @Override
     public int insertBank(MBank bank) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int result = 0;
+        try {
+            Session session = this.sessionFactory.openSession();
+            transaction = session.beginTransaction();
+           
+            session.save(bank);
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+            result = 1;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            result = 0;
+        }
+        return result;    
     }
 
     @Override
     public int updateBank(MBank bank) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int result = 0;
+        try {
+            Session session = this.sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            session.update(bank);
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+            result = 1;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            result = 0;
+        }
+        return result;    
     }
 
     @Override
     public int DeleteBank(MBank bank) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int result = 0;
+        try {
+            Session session = this.sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            session.delete(bank);
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+            result = 1;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            transaction.rollback();
+            result = 0;
+        }
+        return result;    
     }
     
     public SessionFactory getSessionFactory() {
@@ -93,5 +134,13 @@ public class MBankImpl  implements MBankDao{
 
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+
+    public Transaction getTransaction() {
+        return transaction;
+    }
+
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
     }
 }

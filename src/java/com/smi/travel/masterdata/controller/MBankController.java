@@ -4,6 +4,7 @@ import com.smi.travel.datalayer.entity.MDepartment;
 import com.smi.travel.datalayer.entity.Role;
 import com.smi.travel.datalayer.entity.RoleMapping;
 import com.smi.travel.datalayer.entity.SystemUser;
+import com.smi.travel.datalayer.service.MBankService;
 import com.smi.travel.datalayer.service.MDepartmentService;
 import com.smi.travel.datalayer.service.MRoleService;
 import com.smi.travel.datalayer.service.MStaffService;
@@ -29,10 +30,19 @@ public class MBankController extends SMITravelController {
     private static final Logger log = Logger.getLogger(LoginController.class.getName());
     private static final ModelAndView Bank = new ModelAndView("MBank");
     private static final ModelAndView Bank_REFRESH = new ModelAndView(new RedirectView("MBank.smi", true));
+    private MBankService mBankService;
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         return Bank;
+    }
+
+    public MBankService getmBankService() {
+        return mBankService;
+    }
+
+    public void setmBankService(MBankService mBankService) {
+        this.mBankService = mBankService;
     }
     
 }
