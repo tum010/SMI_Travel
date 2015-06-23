@@ -71,6 +71,7 @@
                                                 "<li><a id='menu-mamadeus' href='MAmadeus.smi'>Configure Amadeus</a></li>",
                                                 "<li><a id='menu-mdaytour' href='MDaytour.smi'>Tour</a></li>",
                                                 "<li><a id='menu-mcommission' href='MCommission.smi'>Commission</a></li>",
+                                                "<li><a id='menu-mbank' href='MBank.smi'>Bank</a></li>",
                                                 "<li><a id='menu-mpackage' href='MPackage.smi'>Package</a></li>"];
                                             var bookingMenu = [
                                                 "<li><a href='Book.smi'> Booking</a></li>"
