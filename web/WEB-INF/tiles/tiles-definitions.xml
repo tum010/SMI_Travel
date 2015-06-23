@@ -308,5 +308,9 @@
         <put-attribute name="body" value="/WEB-INF/jsp/MProductCommissionDetail.jsp" />
     </definition>
     <!--<add data>-->
+    <definition name="SendMail" extends="baseLayout">
+        <put-attribute name="title" value="SMI Travel : Send Mail" />
+        <put-attribute name="body" value="/WEB-INF/jsp/SendMail.jsp" />
+    </definition>
 	
 </tiles-definitions>

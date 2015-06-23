@@ -314,7 +314,7 @@
     <bean id="DaytourServlet" class="com.smi.travel.servlet.DaytourServlet" />
     <bean id="AirTicketServlet" class="com.smi.travel.servlet.AirTicketServlet" />
     <bean id="PassengerServlet" class="com.smi.travel.servlet.PassengerServlet" />
-    
+    <bean id="MailServlet" class="com.smi.travel.servlet.MailServlet" />
 	<!--<add data>-->
 	
 </beans>

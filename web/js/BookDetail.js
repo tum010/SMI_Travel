@@ -167,7 +167,7 @@ $(document).ready(function () {
         var agentCode = [];
         $.each(agent, function (key, value) {
             console.log("agentCount=="+agent.length);
-            alert("Code Gooo");
+//            alert("Code Gooo");
             agentCode.push(value.code);
 //            if ( !(value.name in agentCode) ){
                agentCode.push(value.name);
