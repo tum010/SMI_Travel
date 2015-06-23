@@ -122,7 +122,6 @@
             var param = 'action=' + 'text' +
                 '&servletName=' + servletName +
                 '&servicesName=' + servicesName +
-                '&name=' + 'Porshii' +
                 '&sendTo=' + sendTo +
                 '&sendCc=' + sendCc +
                 '&subject=' + subject +
