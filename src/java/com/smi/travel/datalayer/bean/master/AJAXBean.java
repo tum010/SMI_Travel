@@ -32,13 +32,18 @@ import com.smi.travel.datalayer.view.dao.BookingSummaryDao;
 import com.smi.travel.datalayer.view.dao.CustomerAgentInfoDao;
 import com.smi.travel.datalayer.view.entity.BookSummary;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
+import com.smi.travel.util.Mail;
 import com.smi.travel.util.UtilityFunction;
+import java.net.MalformedURLException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.commons.mail.EmailException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -60,6 +65,7 @@ public class AJAXBean extends AbstractBean implements
     private static final String DAYTOUR = "DaytourServlet";
     private static final String AIRTICKET = "AirTicketServlet";
     private static final String PASSENGER = "PassengerServlet";
+    private static final String MAIL = "MailServlet";
     private CustomerDao customerdao;
     private ProductDetailDao productDetailDao;
     private BookingSummaryDao bookingsummarydao;
@@ -70,6 +76,7 @@ public class AJAXBean extends AbstractBean implements
     private PackageTourDao packagedao;
     private DaytourComissionDao daytourComdao;
     private MAirportDao airportdao;
+    private Mail sendMail;
 
     public AJAXBean(List queryList) {
         super(queryList);
@@ -97,6 +104,8 @@ public class AJAXBean extends AbstractBean implements
                     daytourComdao = (DaytourComissionDao) obj;
                 } else if (obj instanceof MAirportDao) {
                     airportdao = (MAirportDao) obj;
+                } else if (obj instanceof Mail) {
+                    sendMail = (Mail) obj;
                 }
             }
         }
@@ -113,12 +122,15 @@ public class AJAXBean extends AbstractBean implements
     }
 
     @Override
-    public Object loadSingle(Map map) {
+    public Object loadSingle(Map map) { 
         Object result = new Object();
         String servletName = String.valueOf(map.get("servletName"));
         String type = String.valueOf(map.get("type"));
-        System.out.println("servletName : " + servletName);
-        System.out.println("type : " + type);
+        String sendTo = String.valueOf(map.get("sendTo"));
+        String sendCc = String.valueOf(map.get("sendCc"));
+        String subject = String.valueOf(map.get("subject"));
+        String content = String.valueOf(map.get("content"));
+        String attachfile = String.valueOf(map.get("attachfile"));
         if (BOOKDETAIL.equalsIgnoreCase(servletName)) {
 
             if ("checkExistCustomer".equalsIgnoreCase(type)) {
@@ -391,7 +403,17 @@ public class AJAXBean extends AbstractBean implements
                 result = buildPassengerListHTML(customerList);
                 System.out.println("result passenger: "+result);
             }
-        }
+        }else if (MAIL.equalsIgnoreCase(servletName)) {
+            if ("sendMail".equalsIgnoreCase(type)) {
+                try {
+                    result = sendMail.main(sendTo,subject,content,attachfile,sendCc);
+                } catch (EmailException ex) {
+                    Logger.getLogger(AJAXBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (MalformedURLException ex) {
+                    Logger.getLogger(AJAXBean.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } 
         return result;
     }
     
@@ -732,5 +754,19 @@ public class AJAXBean extends AbstractBean implements
         data = data.replaceAll(System.getProperty("line.separator"), "");
         data = data.replaceAll("\\r|\\n", "");
         return data;
+    }
+
+    /**
+     * @return the sendMail
+     */
+    public Mail getSendMail() {
+        return sendMail;
+    }
+
+    /**
+     * @param sendMail the sendMail to set
+     */
+    public void setSendMail(Mail sendMail) {
+        this.sendMail = sendMail;
     }
 }
