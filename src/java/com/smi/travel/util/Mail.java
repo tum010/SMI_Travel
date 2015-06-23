@@ -6,19 +6,26 @@
 package com.smi.travel.util;
 
 import com.smi.travel.common.MailConfig;
+import com.smi.travel.master.controller.SMITravelController;
 import java.net.MalformedURLException;
+import java.sql.Statement;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
  * @author Surachai
  */
-public class Mail {
-
+public class Mail extends SMITravelController {
+    private static final ModelAndView SendMail = new ModelAndView("SendMail");
     private MailConfig mail;
 
     public Mail() {
@@ -26,12 +33,15 @@ public class Mail {
         mail = (MailConfig) applicationContext.getBean("mailSender");
     }
 
-    public static void main(String[] args) throws EmailException, MalformedURLException {
+    public static String main(String sendTo,String subject,String content,String attachfile,String sendCc) throws EmailException, MalformedURLException {
+        String result = "";
         Mail mail = new Mail();
-        mail.sendmailwithAttchfile("surachai.ns@gmail.com", "test", "test mail", "C:\\Users\\Surachai\\Documents\\NetBeansProjects\\SMITravel\\test.txt");
+        result = mail.sendmailwithAttchfile(sendTo,subject,content,attachfile,sendCc);
+        return result;
     }
 
-    public void sendmailwithAttchfile(String to,String Subject,String content ,String attachfile) throws EmailException {
+    public String sendmailwithAttchfile(String sendTo,String subject,String content ,String attachfile,String sendCc) throws EmailException {
+        String result = "";
         EmailAttachment attachment = new EmailAttachment();
         HtmlEmail email = new HtmlEmail();
         try {
@@ -39,24 +49,47 @@ public class Mail {
                 //attachment.setPath("C:\\Users\\Surachai\\Documents\\NetBeansProjects\\SMITravel\\test.txt");
                 attachment.setPath(attachfile);
                 attachment.setDisposition(EmailAttachment.ATTACHMENT);
-                attachment.setDescription("test attachment");
-                attachment.setName("test.txt");
+                attachment.setDescription("file attachment");
+                attachment.setName("text.txt");
                 email.attach(attachment);
             }
+                System.out.println(mail.getUsername() + mail.getPassword());
+                email.setHostName(mail.getHostname());
+                email.setSmtpPort(mail.getPort());
+                email.setAuthentication(mail.getUsername(), mail.getPassword());
+                email.setSSLOnConnect(true);
+                email.setFrom(mail.getUsername());
+                email.setSubject(subject);
+                email.setHtmlMsg(content);
+                String[] toSplit = sendTo.split("\\,");
+                for(int i=0;i<toSplit.length;i++){
+                    System.out.println("Print toSplit" + toSplit[i]);
+                    email.addTo(toSplit[i]);
+                }
+                if(!sendCc.isEmpty()){
+                String[] ccSplit = sendCc.split("\\,");
+                for(int i=0;i<ccSplit.length;i++){
+                    System.out.println("Print ccSplit" + ccSplit[i]);
+                    email.addCc(ccSplit[i]);
+                }}
+                email.send();
+             
+                result = "success";
+             
         } catch (EmailException ex) {
-            
-        }
-        System.out.println(mail.getUsername() + mail.getPassword());
-        email.setHostName(mail.getHostname());
-        email.setSmtpPort(mail.getPort());
-        email.setAuthentication(mail.getUsername(), mail.getPassword());
-        email.setSSLOnConnect(true);
-        email.setFrom(mail.getUsername());
-        email.setSubject(Subject);
-        email.setHtmlMsg(content);
-        email.addTo(to);
+            System.out.println("Email Exception");
+            ex.printStackTrace();
+            result = "fail";
+        }   
+        return result;
+    }
 
-        email.send();
+    protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+     return SendMail;
+    }
+
+    public Object sendmailwithAttchfile() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
