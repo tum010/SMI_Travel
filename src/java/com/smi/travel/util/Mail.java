@@ -42,6 +42,7 @@ public class Mail extends SMITravelController {
 
     public String sendmailwithAttchfile(String sendTo,String subject,String content ,String attachfile,String sendCc) throws EmailException {
         String result = "";
+        boolean send = false;
         EmailAttachment attachment = new EmailAttachment();
         HtmlEmail email = new HtmlEmail();
         try {
@@ -53,34 +54,38 @@ public class Mail extends SMITravelController {
                 attachment.setName("text.txt");
                 email.attach(attachment);
             }
-                System.out.println(mail.getUsername() + mail.getPassword());
-                email.setHostName(mail.getHostname());
-                email.setSmtpPort(mail.getPort());
-                email.setAuthentication(mail.getUsername(), mail.getPassword());
-                email.setSSLOnConnect(true);
-                email.setFrom(mail.getUsername());
-                email.setSubject(subject);
-                email.setHtmlMsg(content);
-                String[] toSplit = sendTo.split("\\,");
-                for(int i=0;i<toSplit.length;i++){
-                    System.out.println("Print toSplit" + toSplit[i]);
-                    email.addTo(toSplit[i]);
-                }
-                if(!sendCc.isEmpty()){
-                String[] ccSplit = sendCc.split("\\,");
-                for(int i=0;i<ccSplit.length;i++){
-                    System.out.println("Print ccSplit" + ccSplit[i]);
-                    email.addCc(ccSplit[i]);
-                }}
-                email.send();
-             
-                result = "success";
-             
+            send = true;
         } catch (EmailException ex) {
             System.out.println("Email Exception");
             ex.printStackTrace();
             result = "fail";
         }   
+        if(send){
+            System.out.println(mail.getUsername() + mail.getPassword());
+            email.setHostName(mail.getHostname());
+            email.setSmtpPort(mail.getPort());
+            email.setAuthentication(mail.getUsername(), mail.getPassword());
+            email.setSSLOnConnect(true);
+            email.setFrom(mail.getUsername());
+            email.setSubject(subject);
+            email.setHtmlMsg(content);
+            String[] toSplit = sendTo.split("\\,");
+            for(int i=0;i<toSplit.length;i++){
+                System.out.println("Print toSplit" + toSplit[i]);
+                email.addTo(toSplit[i]);
+            }
+            if(!sendCc.isEmpty()){
+            String[] ccSplit = sendCc.split("\\,");
+            for(int i=0;i<ccSplit.length;i++){
+                System.out.println("Print ccSplit" + ccSplit[i]);
+                email.addCc(ccSplit[i]);
+            }}
+            email.send();
+
+            result = "success";
+            
+            
+        }
         return result;
     }
 
