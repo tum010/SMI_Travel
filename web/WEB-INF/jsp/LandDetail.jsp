@@ -248,13 +248,7 @@
                        getItineraryDetail('${master.packageTour.id}');
                     }    
                 }
-            }
-            
-          
-
-
-
-
+            }                 
         </script>
 
         <div class="col-sm-10">
@@ -630,7 +624,7 @@
                             <c:forEach var="table" items="${itinerary_list}" varStatus="Counter">
                                 <tr>
                                     <td class="hidden"> <input  type="hidden"  value="${table.id}">  </td>
-                                    <td> <input style="width: 20px"  type="text"  class="form-control number" value="${table.orderNo}">  </td>
+                                    <td> <input style="width: 20px" id="row-${Counter.count}-no" name="row-${Counter.count}-no" type="text"  class="form-control number" value="${Counter.count}">  </td>
                                     <td> 
                                         <div class='input-group daydatepicker' id='daydatepicker-${Counter.count}' style="padding-left: 15px">
                                             <input style="width: 100px" type='text' class="form-control"  id="dayDate-${Counter.count}" name="dayDate-${Counter.count}" data-date-format="YYYY-MM-DD" value="${table.dayDate}" />
@@ -644,13 +638,10 @@
                                     <td class="text-center">
                                         <a class="remCF"><span  onclick="deletelist('${table.id}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
                                     </td>
-                                </tr>
-                         
-
+                                </tr>                       
                             </c:forEach>     
                         </tbody>
                     </table>    
-
                 </div>
 
                 <div id="tr_ItineraryAddRow" class="text-center hide" style="padding-top: 10px">
@@ -676,23 +667,12 @@
                             <button type="submit" id="savereal" onfocus="readdata()"  onmouseover="readdata()"  class="btn btn-success "><span class="fa fa-save"></span> Save</button>
                         </c:otherwise>
                     </c:choose>
-
-                </div>
-            </form>
-
-
-
-
-
+                </div>              
+            </form>               
         </div>  
-
-
-
     </div>
-
-
-
 </div>
+                
 
 <div class="modal fade" id="ProductModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -702,7 +682,6 @@
                 <h4 class="modal-title">Product</h4>
             </div>
             <div class="modal-body">
-
                 <table class="display" id="ProductTable">
                     <thead>  
                         <script>
@@ -713,7 +692,6 @@
                             <th class="">Code</th>
                             <th class="">Name</th>
                             <th class="">Detail</th>
-
                         </tr>
                     </thead>
                     <tbody>
@@ -729,11 +707,8 @@
                                 product.push({id: "${table.id}", code: "${table.code}", name: "${table.name}"});
                             </script>
                         </c:forEach>
-
-                    </tbody>
-
+                   </tbody>
                 </table>
-
             </div>
             <div class="modal-footer">
                 <div class="text-right">
@@ -763,9 +738,7 @@
                             <th class="hidden">ID</th>
                             <th class="">Code</th>
                             <th class="">Name</th>
-
-                        </tr>
-                        
+                        </tr>                      
                     </thead>
                     <tbody>
                         <c:forEach var="table" items="${agent_list}">
@@ -778,12 +751,8 @@
                                 agent.push({id: "${table.id}", code: "${table.code}", name: "${table.name}"});
                             </script>
                         </c:forEach>
-
                     </tbody>
-
                 </table>
-
-
             </div>
             <div class="modal-footer">
                 <div  class="text-right">
@@ -832,7 +801,7 @@
         $("#LandItinerary tbody").append(
                 '<tr style="higth 100px">' +
                 '<td class="hidden"> <input id="row-' + row + '-id" name="row-' + row + '-id"  type="hidden" >  </td>' +
-                '<td><input style="width: 20px" id="row-' + row + '-no" name="row-' + row + '-no"   type="text" class="form-control number" ></td>' +
+                '<td><input style="width: 20px" id="row-' + row + '-no" name="row-' + row + '-no"   type="text" class="form-control number"  ></td>' +
                 '<td><div class="input-group daydatepicker" id="daydatepicker-' + row + '" style="padding-left: 15px">'+
                 '<input style="width: 100px" type="text" class="form-control"  id="dayDate-' + row + '" name="dayDate-' + row + '" data-date-format="YYYY-MM-DD" />'+
                 '<span class="input-group-addon">' +                                               
