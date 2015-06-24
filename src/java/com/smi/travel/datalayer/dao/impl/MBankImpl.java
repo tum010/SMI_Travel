@@ -29,20 +29,35 @@ public class MBankImpl  implements MBankDao{
        String Prefix_Subfix ="";
        int check =0;
        if(option == 1){
-           queryOperation = " = ";
-           Prefix_Subfix = "";
+            queryOperation = " = ";
+            Prefix_Subfix = "";
        }else if(option == 2){
-           queryOperation = " Like ";
-           Prefix_Subfix = "%";
+            queryOperation = " Like ";
+            Prefix_Subfix = "%";
        }
        if((bank.getCode() != null) &&(!"".equalsIgnoreCase(bank.getCode()))){
-           query += " b.code "+queryOperation+" '"+Prefix_Subfix+bank.getCode()+Prefix_Subfix+"'";
-           check =1;
+            query += " b.code "+queryOperation+" '"+Prefix_Subfix+bank.getCode()+Prefix_Subfix+"'";
+            check =1;
        }
        if((bank.getName()!= null) &&(!"".equalsIgnoreCase(bank.getName()))){
-           if(check == 1){query += " and ";}
-           query += " b.name "+queryOperation+" '"+Prefix_Subfix+bank.getName()+Prefix_Subfix+"'";
-           check =1;
+            if(check == 1){query += " and ";}
+            query += " b.name "+queryOperation+" '"+Prefix_Subfix+bank.getName()+Prefix_Subfix+"'";
+            check =1;
+       }
+       if((bank.getBranch()!= null) &&(!"".equalsIgnoreCase(bank.getBranch()))){
+            if(check == 1){query += " and ";}
+            query += " b.branch "+queryOperation+" '"+Prefix_Subfix+bank.getBranch()+Prefix_Subfix+"'";
+            check =1;
+       }
+       if((bank.getAccNo() != null) &&(!"".equalsIgnoreCase(bank.getAccNo()))){
+            if(check == 1){query += " and ";}
+            query += " b.accNo "+queryOperation+" '"+Prefix_Subfix+bank.getAccNo()+Prefix_Subfix+"'";
+            check =1;
+       }
+       if((bank.getAccType()!= null)){
+            if(check == 1){query += " and ";}
+            query += " b.accType "+queryOperation+" '"+Prefix_Subfix+bank.getAccType()+Prefix_Subfix+"'";
+            check =1;
        }
        if(check == 0){
            query = query.replaceAll("where", " ");

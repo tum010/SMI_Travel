@@ -206,9 +206,9 @@
                             <tr class="datatable-header">
                                 <th>No</th>
                                 <th>PNR</th>
-                                <th>Flight No</th>
-                                <th>First Name</th>
+                                <th>Flight No</th>                               
                                 <th>Last Name</th>
+                                <th>First Name</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -226,8 +226,9 @@
                                     <td>${loopCounter.count}</td>
                                     <td>${p.pnr}</td>
                                     <td><c:out value="${p.airticketAirlines.toArray()[0].airticketFlights.toArray()[0].flightNo}"></c:out></td>
-                                    <td><c:out value="${p.airticketAirlines.toArray()[0].airticketPassengers.toArray()[0].firstName}"></c:out></td>
                                     <td><c:out value="${p.airticketAirlines.toArray()[0].airticketPassengers.toArray()[0].lastName}"></c:out></td>
+                                    <td><c:out value="${p.airticketAirlines.toArray()[0].airticketPassengers.toArray()[0].firstName}"></c:out></td>
+                                   
                                         <td class="text-center">
                                             <a id="AEdit${loopCounter.count}" href="AirTicketDetail.smi?referenceNo=${param.referenceNo}&pnr=${p.id}&action=edit">
                                             <span id="SpanGlyphiconEdit${loopCounter.count}" class="glyphicon glyphicon-edit editicon"></span>
@@ -387,12 +388,8 @@
                                 <td class="issue-position">${issue.position}</td>
                             </tr>
                         </c:forEach>
-
                     </tbody>
-
                 </table>
-
-
             </div>
             <div class="modal-footer">
                 <div class="text-right">

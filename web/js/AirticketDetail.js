@@ -427,25 +427,76 @@ function addFight(rowId) {
 }
 
 //// ON KEY INPUT AUTO SELECT AIRLIN FOR AIRLINE
+$(document).ready(function () {
 $(document).on('keyup', '.airline', function () {   
     var id = $(this).data("id"); 
     console.log("id :" + id);
+    
+    codeAirline = [];
+    $.each(airline, function (key, value) {
+        codeAirline.push(value.airline_code);
+        if ( !(value.airline_name in codeAirline) ){
+           codeAirline.push(value.airline_name);
+        }
+    });
+    console.log(codeAirline);
+    $("#airlineCode" + id).autocomplete({
+        source: codeAirline,
+        close:function( event, ui ) {
+           $("#airlineCode" + id).trigger('keyup');
+        }
+    });
+    
+    var position = $(this).offset();
+        console.log("positon :" + position.top);
+        $(".ui-widget").css("top", position.top + 30);
+        $(".ui-widget").css("left", position.left);
+        
     $("#airlineId" + id + ",#airlineName" + id).val(null);
+    
     var code = $(this).val().toUpperCase();
     console.log(code);
     $.each(airline, function (key, value) {
         //alert("key:"+value.airline_id);
         if (value.airline_code.toUpperCase() === code) {
-            console.log('add new');
+            console.log('add newww');
             $("#airlineId" + id).val(value.airline_id);
+            $("#airlineCode" + id).val(value.airline_code);
+            $("#airlineName" + id).val(value.airline_name);
+        }else if (value.airline_name.toUpperCase() === code){
+            $("#airlineId" + id).val(value.airline_id);
+            $("#airlineCode" + id).val(value.airline_code);
             $("#airlineName" + id).val(value.airline_name);
         }
     });
 });
+});
 // ON KEY INPUT AUTO SELECT AIRLIN FOR DEPARTURE
+$(document).ready(function () {
 $(document).on('keyup', '.departure', function () {
     var id = $(this).data("id");
     console.log("id :" + id);
+    
+    codeDeparture = [];
+    $.each(a, function (key, value) {
+        codeDeparture.push(value.code);
+        if ( !(value.name in codeDeparture) ){
+           codeDeparture.push(value.name);
+        }
+    });
+    console.log(codeDeparture);
+    $("#departure-" + id + "-code").autocomplete({
+        source: codeDeparture,
+        close:function( event, ui ) {
+           $("#departure-" + id + "-code").trigger('keyup');
+        }
+    });
+    
+    var position = $(this).offset();
+        console.log("positon :" + position.top);
+        $(".ui-widget").css("top", position.top + 30);
+        $(".ui-widget").css("left", position.left);
+    
     $("#departure-" + id + "-id,#departure" + id + "-name").val(null);
     var code = $(this).val().toUpperCase();
     console.log(code);
@@ -453,14 +504,42 @@ $(document).on('keyup', '.departure', function () {
         if (value.code.toUpperCase() === code) {
             console.log('add new');
             $("#departure-" + id + "-id").val(value.id);
+            $("#departure-" + id + "-code").val(value.code);
+            $("#departure-" + id + "-name").val(value.name);
+        }else if (value.name.toUpperCase() === code){
+            $("#departure-" + id + "-id").val(value.id);
+            $("#departure-" + id + "-code").val(value.code);
             $("#departure-" + id + "-name").val(value.name);
         }
     });
 });
+});
 // ON KEY INPUT AUTO SELECT AIRLIN FOR ARRIVAL
+$(document).ready(function () {
 $(document).on('keyup', '.arrival', function () {
     var id = $(this).data("id");
     console.log("id :" + id);
+    
+    codeArrival = [];
+    $.each(a, function (key, value) {
+        codeArrival.push(value.code);
+        if ( !(value.name in codeArrival) ){
+           codeArrival.push(value.name);
+        }
+    });
+    console.log(codeArrival);
+    $("#arrival-" + id + "-code").autocomplete({
+        source: codeArrival,
+        close:function( event, ui ) {
+           $("#arrival-" + id + "-code").trigger('keyup');
+        }
+    });
+    
+    var position = $(this).offset();
+        console.log("positon :" + position.top);
+        $(".ui-widget").css("top", position.top + 30);
+        $(".ui-widget").css("left", position.left);
+    
     $("#arrival-" + id + "-id,#arrival" + id + "-name").val(null);
     var code = $(this).val().toUpperCase();
     console.log(code);
@@ -468,9 +547,15 @@ $(document).on('keyup', '.arrival', function () {
         if (value.code.toUpperCase() === code) {
             console.log('add new');
             $("#arrival-" + id + "-id").val(value.id);
+            $("#arrival-" + id + "-code").val(value.code);
+            $("#arrival-" + id + "-name").val(value.name);
+        }else if (value.name.toUpperCase() === code){
+            $("#arrival-" + id + "-id").val(value.id);
+            $("#arrival-" + id + "-code").val(value.code);
             $("#arrival-" + id + "-name").val(value.name);
         }
     });
+});
 });
 
 function setId(rowId) {

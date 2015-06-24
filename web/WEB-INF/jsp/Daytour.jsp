@@ -92,7 +92,14 @@
                         <tr ${colourStatus} >
                             <td>${item.daytour.code}</td>
                             <td class="text-center">${item.tourDate}</td>
-                            <td>${item.place.place}</td>
+                            <c:choose>
+                                <c:when test="${item.place.place == 'OTHERS'}">
+                                    <td>${item.pickupDetail}</td>
+                                </c:when>           
+                                <c:otherwise>
+                                    <td>${item.place.place}</td>
+                                </c:otherwise>
+                            </c:choose>
                             <c:forEach var="price" items="${item.daytourBookingPrices}">
                                 <c:set var="sumPrice" value="${sumPrice + (price.price * price.qty)}" />
                                 <c:set var="sumQty" value="${sumQty + price.qty}" />

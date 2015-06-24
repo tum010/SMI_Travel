@@ -31,8 +31,8 @@ public class MBankService {
         this.mbankdao = mbankdao;
     }
     
-    public List<MBank> getListBank(MBank bank){
-        return mbankdao.getListBank(bank, 1);
+    public List<MBank> getListBank(MBank bank,int option){
+        return mbankdao.getListBank(bank, option);
     }
 
     public List<MBank> getListBank(){
