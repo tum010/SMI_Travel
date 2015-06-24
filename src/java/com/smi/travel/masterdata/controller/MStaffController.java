@@ -55,7 +55,7 @@ public class MStaffController extends SMITravelController {
         List<SystemUser> listStaffs = null;
 
         SystemUser staff = new SystemUser();
-        staff.setName(name);
+        staff.setName((String.valueOf(name)).toUpperCase());
         staff.setUsername(username);
         staff.setPassword(password);
         staff.setPosition(position);
