@@ -137,9 +137,11 @@
                                 <label for="billTo" class="col-sm-2 control-label text-right">Bill To <strong style="color: red">*</strong></label>
                                 <div class="col-sm-10">
                                     <div class="input-group">
-                                        <input type="text" id="billto"  name="billto" class="form-control" value="${billable.billTo}" 
-                                              data-bv-notempty="true" data-bv-notempty-message="Bill to is required"  >
+                                        <input type="text" id="billto"  name="billto" 
+                                               class="form-control" value="${billable.billTo}" 
+                                               data-bv-notempty="true" data-bv-notempty-message="Bill to is required" >      
                                         <span id="SpanBillToModal" name="SpanBillToModal" class="input-group-addon" data-toggle="modal" data-target="#BillToModal">
+                                            <i id="dataload" class="fa fa-spinner fa-spin hidden"></i>
                                             <span class="glyphicon-search glyphicon"></span>
                                         </span>          
                                     </div>
@@ -546,7 +548,7 @@
                     </thead>
                     <tbody>
                     <script>
-                        bill = [];
+//                        bill = [];
                     </script>
                     <c:forEach var="item" items="${customerAgentList}">
                         <tr onclick="setBillValue('${item.billTo}', '${item.billName}', '${item.address}', '${item.term}', '${item.pay}');">                                
@@ -556,11 +558,11 @@
                             <td class="item-tel hidden">${item.tel}</td>
                         </tr>
                         <script>
-                            bill.push({
-                                billto: "${item.billTo}",
-                                name: "${item.billName}",
-                                address: "${item.address}"
-                            });
+//                            bill.push({
+//                                billto: "${item.billTo}",
+//                                name: "${item.billName}",
+//                                address: "${item.address}"
+//                            });
                         </script>
                     </c:forEach>
                     </tbody>
@@ -569,42 +571,42 @@
                 <!--Script Bill To List Table-->
                 <script>
                     $(document).ready(function () {
-                         var billTo = [];
-                        $.each(bill, function (key, value) {
-                            billTo.push(value.billto);
-                            if ( !(value.name in billTo) ){
-                               billTo.push(value.name);
-                            }
-                           
-                        });
-                        $("#billto").autocomplete({
-                            source: billTo,
-                            close:function( event, ui ) {
-                               $("#billto").trigger('keyup');
-                            }
-                        });
-                        
-                        $("#billto").on('keyup', function () {
-                            var position = $(this).offset();
-                            $(".ui-widget").css("top", position.top + 30);
-                            $(".ui-widget").css("left", position.left);
-                            var code = this.value.toUpperCase();
-                            var name = this.value;
-                            $("#billname,#address").val(null);
-                            $.each(bill, function (key, value) {
-                                if (value.billto.toUpperCase() === code) {
-                                    console.log('ok');
-                                    $("#billname").val(value.name);
-                                    $("#address").val(value.address);
-                                }
-                                if(name === value.name) {
-                                    $("#billto").val(value.billto);
-                                    $("#billname").val(value.name);
-                                    $("#address").val(value.address);
-                                    code = $("#billto").val().toUpperCase();
-                                }
-                            });
-                        });
+//                         var billTo = [];
+//                        $.each(bill, function (key, value) {
+//                            billTo.push(value.billto);
+//                            if ( !(value.name in billTo) ){
+//                               billTo.push(value.name);
+//                            }
+//                           
+//                        });
+//                        $("#billto").autocomplete({
+//                            source: billTo,
+//                            close:function( event, ui ) {
+//                               $("#billto").trigger('keyup');
+//                            }
+//                        });
+//                        
+//                        $("#billto").on('keyup', function () {
+//                            var position = $(this).offset();
+//                            $(".ui-widget").css("top", position.top + 30);
+//                            $(".ui-widget").css("left", position.left);
+//                            var code = this.value.toUpperCase();
+//                            var name = this.value;
+//                            $("#billname,#address").val(null);
+//                            $.each(bill, function (key, value) {
+//                                if (value.billto.toUpperCase() === code) {
+//                                    console.log('ok');
+//                                    $("#billname").val(value.name);
+//                                    $("#address").val(value.address);
+//                                }
+//                                if(name === value.name) {
+//                                    $("#billto").val(value.billto);
+//                                    $("#billname").val(value.name);
+//                                    $("#address").val(value.address);
+//                                    code = $("#billto").val().toUpperCase();
+//                                }
+//                            });
+//                        });
 
 
                         // BillTo Table

@@ -467,7 +467,7 @@ public class AJAXBean extends AbstractBean implements
         return record.toJSONString();
     }
     
-    public String buildBillListJSON(List<CustomerAgentInfo> listCutomerInfo) {
+    public JSONArray buildBillListJSON(List<CustomerAgentInfo> listCutomerInfo) {
         JSONArray record = new JSONArray();
         for (int i = 0; i < listCutomerInfo.size(); i++) {
             CustomerAgentInfo customer = listCutomerInfo.get(i);
@@ -477,7 +477,7 @@ public class AJAXBean extends AbstractBean implements
             field.put("address", customer.getAddress());
             record.add(field);
         }
-        return record.toJSONString();
+        return record;
     }
 
     public String buildAirportListHTMLDeparture(List<MAirport> listAirport) {

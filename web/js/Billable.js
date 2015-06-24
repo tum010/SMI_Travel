@@ -29,16 +29,17 @@ $(document).ready(function() {
             searchCustomerAgentList($("#searchBillto").val());
         }
     });
-//    alert(billArray);
+
     //autocomplete
     
+   
 
-//    $("#billto").keyup(function(){
-//        searchCustomerAutoList(this.value);
-//        var position = $(this).offset();
-//        $(".ui-widget").css("top", position.top + 30);
-//        $(".ui-widget").css("left", position.left);
-//    });
+    $("#billto").keyup(function(){
+        searchCustomerAutoList(this.value);
+        var position = $(this).offset();
+        $(".ui-widget").css("top", position.top + 30);
+        $(".ui-widget").css("left", position.left);
+    });
 });
 
 function searchCustomerAutoList(name){
@@ -60,13 +61,37 @@ function CallAjaxAuto(param){
             url: url,
             cache: false,
             data: param,
+            beforeSend: function() {
+               $("#dataload").removeClass("hidden");    
+            },
             success: function(msg) {     
                 console.log("getAutoListBillto =="+msg);
+                var billArray = [];
+                var billJson =  JSON.parse(msg);
+                console.log("json_Bill="+billJson);
+                for (var i in billJson){
+                    if (billJson.hasOwnProperty(i)){
+                        var billid = billJson[i].id;
+                        var billname = billJson[i].name;
+                        var billaddr = billJson[i].address;
+                        console.log("billid = "+billid);
+                        console.log("billname = "+billname);
+                        billArray.push(billid);
+                        billArray.push(billname);
+                        $("#billto").val(billid);
+                        $("#billname").val(billname);
+                        $("#address").val(billaddr);
+                        
+                    }
+                    $("#dataload").addClass("hidden");
+                }
+                
                 $("#billto").autocomplete({
-                     source: msg
+                    source: billArray
                 });
+                  
             }, error: function(msg) {
-                alert('error');
+                alert('auto error');
             }
         });
     } catch (e) {
