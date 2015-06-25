@@ -95,6 +95,14 @@
                 <prop key="PaymentTourHotel.smi">PaymentTourHotelController</prop>
                 <prop key="SearchPaymentTourHotel.smi">SearchPaymentTourHotelController</prop>
                 <prop key="SearchPaymentOutbound.smi">SearchPaymentOutboundController</prop>
+                <prop key="SearchInvoice.smi">SearchInvoiceController</prop>
+                <prop key="Invoice.smi">InvoiceController</prop>
+                <prop key="Receipt.smi">ReceiptController</prop>
+                <prop key="SearchReceipt.smi">SearchReceiptController</prop>
+                <prop key="TaxInvoice.smi">TaxInvoiceController</prop>
+                <prop key="SearchTaxInvoice.smi">SearchTaxInvoiceController</prop>
+                <prop key="ReceiveTable.smi">ReceiveTableController</prop>
+                <prop key="LockUnlockBooking.smi">LockUnlockBookingController</prop>
                 <!-- add mapping url -->
             </props>
         </property>
@@ -438,6 +446,32 @@
     <bean id="SearchPaymentOutboundController" class="com.smi.travel.controller.SearchPaymentOutboundController">
         
     </bean>
+    
+    <bean id="SearchInvoiceController" class="com.smi.travel.controller.SearchInvoiceController">
+        
+    </bean>
+    <bean id="InvoiceController" class="com.smi.travel.controller.InvoiceController">
+        
+    </bean>
+    <bean id="ReceiptController" class="com.smi.travel.controller.ReceiptController">
+      
+    </bean>
+    <bean id="SearchReceiptController" class="com.smi.travel.controller.SearchReceiptController">
+      
+    </bean>
+    <bean id="TaxInvoiceController" class="com.smi.travel.controller.TaxInvoiceController">
+        
+    </bean>
+    <bean id="SearchTaxInvoiceController" class="com.smi.travel.controller.SearchTaxInvoiceController">
+        
+    </bean>
+    <bean id="ReceiveTableController" class="com.smi.travel.controller.ReceiveTableController">
+       
+    </bean>
+    <bean id="LockUnlockBookingController" class="com.smi.travel.controller.LockUnlockBookingController">
+
+    </bean>
+    
     <!-- add bean id controller -->
     
     <bean id="monitorGalileo" class="com.smi.travel.monitor.MonitorGalileo" init-method="init">
