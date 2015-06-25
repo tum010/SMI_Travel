@@ -375,7 +375,7 @@
                                                     <td>${dayTourDetai.remark}</td>
                                                     <td>${dayTourDetai.place.place eq 'OTHERS' ? dayTourDetai.pickupDetail : dayTourDetai.place.place}</td>
                                                     <td>${dayTourDetai.pickupRoom}</td>
-                                                    <td>${dayTourDetai.pickupTime}</td>
+                                                    <td>${fn:substring(dayTourDetai.pickupTime,0,5)}</td>
                                                     <td class="text-center">${dayTourDetai.isPay eq 1  ? 'Y' : 'N'}</td>
                                                     <td class="text-center">
                                                         <span id="RefBookTableButtonEdit" name="RefBookTableButtonEdit" class="glyphicon glyphicon-edit editicon" onclick="window.open('/SMITravel/DaytourDetail.smi?referenceNo=${dayTourDetai.master.referenceNo}&action=edit&daytourBooking=${dayTourDetai.id}');"></span>
