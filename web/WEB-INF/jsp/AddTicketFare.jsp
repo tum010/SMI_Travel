@@ -456,19 +456,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="table" items="${dayTourList}" varStatus="dayStatus">
-                            <tr class="refno">
-                                <td class="pack-date">${table.tourDate}</td>
-                                <td>${table.daytour.code}</td>
-                                <td class="text-center">
-                                    <a href="DaytourOperationDetail.smi?action=edit&tourID=${table.daytour.id}&tourDate=${table.tourDate}">
-                                        <span class="glyphicon glyphicon-check"></span>
-                                    </a>
-                                </td>
-                                <td class="hidden pack-guide">${table.guide}</td>
-                                <td class="hidden pack-id">${table.id}</td>
-                            </tr>
-                        </c:forEach>
+                        
                     </tbody>
                 </table>
             </div>
