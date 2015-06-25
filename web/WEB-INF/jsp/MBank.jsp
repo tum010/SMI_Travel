@@ -197,7 +197,7 @@
                     <div class="form-group hidden">
                         <label for="BankCode" class="col-sm-3 control-label" >Id <font style="color: red">*</font></label>
                         <div class="col-sm-8"> 
-                            <input type="text" style="text-transform:uppercase" class="form-control" maxlength="50" id="BankId" name="BankId" >
+                            <input type="text" style="text-transform:uppercase" class="form-control" maxlength="50" id="BankIdEdit" name="BankId" >
                         </div>
                     </div>
                     <div class="form-group">
