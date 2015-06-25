@@ -224,7 +224,7 @@
                             <div class="col-md-3" >
                                 <div class="form-group">
                                     <label class="col-sm-3   control-label" for="cost">Time</label>
-                                    <div class='col-sm-6 input-group times' style="padding-left: 20px" id="arrive-time">
+                                    <div class='col-sm-7 input-group times' style="padding-left: 20px" id="arrive-time">
                                         <input type='text' class="form-control" id="othertime" name="othertime" value="${requestScope['othertime']}"  />
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-time"></span>
@@ -260,7 +260,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="col-sm-3   control-label" for="cost">Cancel</label>
-                                    <div class='col-sm-6 input-group date' style="padding-left: 20px"id="arrive-time">
+                                    <div class='col-sm-7 input-group date' style="padding-left: 20px"id="arrive-time">
                                         <input type='text' disabled class="form-control" id="cancelDate" name="cancelDate" value="${requestScope['cancelDate']}"  />
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
