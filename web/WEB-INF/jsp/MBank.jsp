@@ -66,9 +66,9 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>Delete Not Success!</strong> 
         </div>
-        <div class="row" style="padding-left: 0px">
+        <div class="row" style="padding-left: 40px">
             <form action="MBank.smi" method="post" id="SearchBank" role="form">
-                <div class="col-md-1">
+                <div class="col-md-1 col-xs-offset-1" style="padding: 0px 0px 0px 5px">
                     <div class="form-group">
                         <label>Code</label>
                         <input type="text" style="text-transform:uppercase"   class="form-control" maxlength="100" id="CodeSearch" name="BankCode" value="${requestScope['bankCode']}">
@@ -76,28 +76,28 @@
                     </div>
                 </div>
                         
-                <div class="col-md-3 ">
+                <div class="col-md-2 " style="padding: 0px 0px 0px 30px">
                     <div class="form-group">
                         <label>Name</label>
                         <input type="text" style="text-transform:uppercase" class="form-control" maxlength="100" id="NameSearch" name="BankName" value="${requestScope['bankName']}">
                     </div>
                 </div>
                     
-                <div class="col-md-3 ">
+                <div class="col-md-2 " style="padding: 0px 0px 0px 30px">
                     <div class="form-group">
                         <label>Branch</label>
                         <input type="text" style="text-transform:uppercase" class="form-control" maxlength="100" id="BrachSearch" name="BankBranch" value="${requestScope['bankBrach']}">
                     </div>
                 </div>
                 
-                <div class="col-md-2 ">
+                <div class="col-md-2 " style="padding: 0px 0px 0px 30px">
                     <div class="form-group">
                         <label>Account No.</label>
-                        <input type="text" style="text-transform:uppercase" class="form-control" maxlength="100" id="AccountNoSearch" name="BankAccountNo" value="${requestScope['bankAccountNo']}">
+                        <input type="text" style="text-transform:uppercase" class="form-control" maxlength="50" id="AccountNoSearch" name="BankAccountNo" value="${requestScope['bankAccountNo']}">
                     </div>
                 </div>
                     
-                <div class="col-md-2">
+                <div class="col-md-2" style="padding: 0px 0px 0px 30px">
                     <div class="form-group">
                         <label>Account Type</label>
                             <select class="form-control" id="TypeSearch" name="BankAccountType">
@@ -119,7 +119,7 @@
                 </div>
 
                 <div class="col-md-1">
-                    <div  style="padding: 20px 0px 0px 0px">   
+                    <div  style="padding: 20px 0px 0px 10px">   
                         <button type="button" id="searchBank" onclick="searchAction()"  class="btn btn-primary">Search</button>           
                         <input type="hidden" name="action" id="Action"/>
                         <input type="hidden" id="BankId" name="BankId" >
@@ -129,11 +129,11 @@
 
         </div>
         <hr>
-        <div class="row" style="padding-left: 145px">  
+        <div class="row" style="padding-left: 130px">  
             <div class="col-md-8  ">
                 <h4><b>Bank</b></h4>
             </div>
-            <div class="col-md-4 " style="padding: 5px 0px 0px 175px">
+            <div class="col-md-4 " style="padding: 5px 0px 0px 185px">
                 <div class="col-md-2">
                     <button title="${sessionScope['id']}" type="button" class="btn btn-success" id="addBank"   data-toggle="modal"  data-target="#BankModal"><span class="glyphicon glyphicon-plus" ></span>Add</button>
                 </div>
@@ -141,7 +141,7 @@
 
         </div>
 
-        <div class="row" style="padding-left: 40px">    
+        <div class="row" style="padding-left:35px">    
             <div class="col-md-10  col-xs-offset-1">
                 <table id="MasterBank" class="display" cellspacing="0" >
                     <thead>
