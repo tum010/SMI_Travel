@@ -42,10 +42,8 @@
             <form action="AddTicketFare.smi" method="post" id="AddTicketFareForm" name="AddTicketFareForm" role="form">
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="col-xs-10 text-right" >
+                        <div class="col-xs-12 text-right" >
                             <button type="submit" id="ButtonSave" name="ButtonSave" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
-                        </div>
-                        <div class="col-xs-2 text-left" >
                             <button type="submit" id="ButtonSaveAndNew" name="ButtonSaveAndNew" class="btn btn-success"><i class="fa fa-save"></i> Save & New</button>
                         </div>
                     </div>
