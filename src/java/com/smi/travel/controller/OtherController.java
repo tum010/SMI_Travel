@@ -22,6 +22,7 @@ import org.springframework.web.servlet.view.RedirectView;
 public class OtherController extends SMITravelController {
 
     private static final ModelAndView Other = new ModelAndView("Other" );
+    private static final ModelAndView Daytour = new ModelAndView("Daytour");
     private BookingAirticketService bookingAirticketService;
     private static final String Booking_Size = "BookingSize";
     private static final String DATALIST = "OtherList";
@@ -39,6 +40,7 @@ public class OtherController extends SMITravelController {
         String refno = request.getParameter("referenceNo");
         String action = request.getParameter("action");
         String OtherID = request.getParameter("OtherID");
+        String callPageFrom = request.getParameter("callPageFrom");
         String pattern = "###,###.###";
         DecimalFormat dF = new DecimalFormat(pattern);
 
@@ -90,6 +92,10 @@ public class OtherController extends SMITravelController {
             if (request.getParameter(TransectionResult).equalsIgnoreCase("1")) {
                 request.setAttribute(TransectionResult, "save successful");
             }
+        }
+        
+        if(String.valueOf(callPageFrom).equalsIgnoreCase("FromDayTour")){
+            return new ModelAndView("redirect:Daytour.smi?referenceNo=" + refno + "&action=edit");
         }
 
         return Other;
