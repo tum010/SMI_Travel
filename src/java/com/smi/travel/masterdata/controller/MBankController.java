@@ -87,12 +87,15 @@ public class MBankController extends SMITravelController {
         } else if ("update".equalsIgnoreCase(action)) {
             log.info("Bank update function");
             MBank validateBank = new MBank();
+            validateBank.setId(bankId);
             validateBank.setCode(code);
             validateBank.setAccNo(accountNo);
             System.out.println("bank id :" + bankId);
+            System.out.println("bank code :" + code);
+            System.out.println("bank AccNo :" + accountNo);
             String validateList = mBankService.validateBank(validateBank, "update");
             if (!"".equalsIgnoreCase(validateList)) {
-                request.setAttribute(TransactionResult, validateList);
+                request.setAttribute(TransactionResult, "already used");
             } else {
                 bank.setId(bankId);
                 bank.setAccType(Integer.parseInt(accountType));
