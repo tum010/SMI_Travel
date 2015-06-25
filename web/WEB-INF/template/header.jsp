@@ -6,6 +6,7 @@
 <c:set var="daytourmenu" value="${sessionScope['daytourmenu']}" />
 <c:set var="financemenu" value="${sessionScope['financemenu']}" />
 <c:set var="reportmenu" value="${sessionScope['reportmenu']}" />
+<c:set var="checkingmenu" value="${sessionScope['checkingMenu']}" />
 <nav class="navbar " style="margin-bottom:5px;height: 25px;" role="navigation">
     <div class="navbar-header" >
         <a class="navbar-brand" style="padding: 0px" href="#">
@@ -59,6 +60,8 @@
                     var reportMenuList = '<c:forEach var="name" items="${reportmenu}"><c:out value="${name}" />:</c:forEach>';
                             var bookingMenuList = "<c:forEach var="name" items="${bookingmenu}"><c:out value="${name}" />:</c:forEach>";
                                     var daytourMenuList = "<c:forEach var="name" items="${daytourmenu}"><c:out value="${name}" />:</c:forEach>";
+                                            var CheckingMenuList = "<c:forEach var="name" items="${checkingmenu}"><c:out value="${name}" />:</c:forEach>";
+                                                var FinanceMenuList = "<c:forEach var="name" items="${financemenu}"><c:out value="${name}" />:</c:forEach>";
                                             var masterMenu = [
                                                 "<li><a id='menu-mairticket' href='Mairticket.smi'> Air ticket</a></li>",
                                                 "<li><a id='menu-mcity' href='MCity.smi'> Others</a></li>",
@@ -85,6 +88,13 @@
                                                 "<li><a href='HotelSumReport.smi'> Hotel</a></li>",
                                                 "<li><a href=''>Land</a></li>",
                                                 "<li><a href=''>Others</a></li>"];
+                                            var CheckingMenu = [
+                                                "<li><a href='PaymentTourHotel.smi'> PackageTour/Hotel </a></li>",
+                                                "<li><a href='AddTicketFare.smi'> AirTicket </a></li>",
+                                                "<li><a href='PaymentOutbound.smi'> Outbound </a></li>"];
+                                            var FinanceMenu = [
+                                                "<li><a href='#'> Payment</a></li>",
+                                                "<li><a href='#'> Receive</a></li>"];
 
                                             var menuString = getActiveMenuString(masterMenuList, masterMenu);
                                             document.getElementById("menuMaster").innerHTML = menuString;
@@ -97,6 +107,14 @@
 
                                             var reportMenuString = getActiveMenuString(reportMenuList, reportMenu);
                                             document.getElementById("reportMenu").innerHTML = reportMenuString;
+                                           
+                                            
+                                            var checkingMenuString = getActiveMenuString(CheckingMenuList, CheckingMenu);
+                                            
+                                            document.getElementById("checkingMenu").innerHTML = checkingMenuString;
+                                            
+                                            var financeMenuString = getActiveMenuString(FinanceMenuList, FinanceMenu);
+                                            document.getElementById("financeMenu").innerHTML = financeMenuString;
 
 
                                         });
@@ -139,12 +157,18 @@
                 <ul class="dropdown-menu" role="menu" id="daytourMenu">
                 </ul>
             </li>
+            
+            <li class="dropdown">
+                <a href="#" class="dropdown-header" data-toggle="dropdown">  <span class="glyphicon glyphicon-check"></span> Checking <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu" id="checkingMenu">
+                </ul>
+            </li>
 
             <li class="dropdown">
                 <a href="#" class="dropdown-header" data-toggle="dropdown">  <span class="glyphicon glyphicon-euro"></span> Finance & Accountingr <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu" id="financeMenu">
 
-                    <li><a href="#"> sub menu1</a></li>
+                    
                 </ul>
             </li>
             <li class="">

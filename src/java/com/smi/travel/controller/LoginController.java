@@ -68,21 +68,27 @@ public class LoginController extends SMITravelController {
                         String[] daytourMenu = null;
                         String[] financeMenu = null;
                         String[] reportMenu = null;
+                        String[] checkingMenu = null;
                         if (menuActivate != null) {
                             masterMenu = activateMenu(menuActivate, 1);
-                            
                             bookingMenu = activateMenu(menuActivate, 2);
                             daytourMenu = activateMenu(menuActivate, 3);
                             financeMenu = activateMenu(menuActivate, 4);
                             reportMenu = activateMenu(menuActivate, 5);
+                            checkingMenu = activateMenu(menuActivate, 6);
                         }
                         Arrays.sort(masterMenu);
                         Arrays.sort(reportMenu);
+                        for(int i=0;i<financeMenu.length;i++){
+                            System.out.println("checking :"+financeMenu[i]);
+                        }
+                        
                         session.setAttribute("mastermenu", masterMenu);
                         session.setAttribute("bookingmenu", bookingMenu);
                         session.setAttribute("daytourmenu", daytourMenu);
                         session.setAttribute("financemenu", financeMenu);
                         session.setAttribute("reportmenu", reportMenu);
+                        session.setAttribute("checkingMenu", checkingMenu);
                     } else {
                         request.setAttribute("ResultLogin", "User have not role.Please contact admin to assign role.");
                         log.info("Login fail!!");

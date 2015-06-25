@@ -312,6 +312,48 @@
         <put-attribute name="title" value="Master : Master Bank" />
         <put-attribute name="body" value="/WEB-INF/jsp/MBank.jsp" />
     </definition>
+    
+    
+    
+    <definition name="AddTicketFare" extends="baseLayout">
+        <put-attribute name="title" value="Checking:Add Ticket Fare Airline" />
+        <put-attribute name="body" value="/WEB-INF/jsp/AddTicketFare.jsp" />
+    </definition>
+    
+    <definition name="SearchTicketFare" extends="baseLayout">
+        <put-attribute name="title" value="Checking:Search Ticket Fare" />
+        <put-attribute name="body" value="/WEB-INF/jsp/SearchTicketFare.jsp" />
+    </definition>
+    
+    <definition name="RefundAirline" extends="baseLayout">
+        <put-attribute name="title" value="Checking:Refund Airline" />
+        <put-attribute name="body" value="/WEB-INF/jsp/RefundAirline.jsp" />
+    </definition>
+    
+    <definition name="PaymentAirline" extends="baseLayout">
+        <put-attribute name="title" value="Checking:Payment Airline" />
+        <put-attribute name="body" value="/WEB-INF/jsp/PaymentAirline.jsp" />
+    </definition>
+    
+    <definition name="PaymentOutbound" extends="baseLayout">
+        <put-attribute name="title" value="Checking:Payment Outbound" />
+        <put-attribute name="body" value="/WEB-INF/jsp/PaymentOutbound.jsp" />
+    </definition>
+    
+    <definition name="PaymentTourHotel" extends="baseLayout">
+        <put-attribute name="title" value="Checking:Payment Package Tour Hotel" />
+        <put-attribute name="body" value="/WEB-INF/jsp/PaymentTourHotel.jsp" />
+    </definition>
+    
+    <definition name="SearchPaymentTourHotel" extends="baseLayout">
+        <put-attribute name="title" value="Checking:Search Payment Package Tour Hotel" />
+        <put-attribute name="body" value="/WEB-INF/jsp/SearchPaymentTourHotel.jsp" />
+    </definition>
+    
+    <definition name="SearchPaymentOutbound" extends="baseLayout">
+        <put-attribute name="title" value="Checking:Search Payment Outbound" />
+        <put-attribute name="body" value="/WEB-INF/jsp/SearchPaymentOutbound.jsp" />
+    </definition>
     <!--<add data>-->
     <definition name="SendMail" extends="baseLayout">
         <put-attribute name="title" value="SMI Travel : Send Mail" />

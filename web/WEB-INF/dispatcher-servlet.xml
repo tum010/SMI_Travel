@@ -87,7 +87,14 @@
                 <prop key="Excel.smi">ExportDataToExcelController</prop>
                 <prop key="SendMail.smi">Mail</prop>
                 <prop key="MBank.smi">MBankController</prop>
-                <!--<prop key="test_page.smi">TestPageController</prop>-->
+                <prop key="AddTicketFare.smi">AddTicketFareController</prop>
+                <prop key="SearchTicketFare.smi">SearchTicketFareController</prop>
+                <prop key="RefundAirline.smi">RefundAirlineController</prop>
+                <prop key="PaymentAirline.smi">PaymentAirlineController</prop>
+                <prop key="PaymentOutbound.smi">PaymentOutboundController</prop>
+                <prop key="PaymentTourHotel.smi">PaymentTourHotelController</prop>
+                <prop key="SearchPaymentTourHotel.smi">SearchPaymentTourHotelController</prop>
+                <prop key="SearchPaymentOutbound.smi">SearchPaymentOutboundController</prop>
                 <!-- add mapping url -->
             </props>
         </property>
@@ -406,26 +413,48 @@
        <property name="packageTourservice" ref="PackageTourService" /> 
        <property name="utilityService" ref="UtilityService" /> 
     </bean>
-    
- 
-    
+   
+    <bean id="AddTicketFareController" class="com.smi.travel.controller.AddTicketFareController">
+        
+    </bean>
+    <bean id="SearchTicketFareController" class="com.smi.travel.controller.SearchTicketFareController">
+       
+    </bean>
+    <bean id="RefundAirlineController" class="com.smi.travel.controller.RefundAirlineController">
+       
+    </bean>
+    <bean id="PaymentAirlineController" class="com.smi.travel.controller.PaymentAirlineController">
+       
+    </bean>
+    <bean id="PaymentOutboundController" class="com.smi.travel.controller.PaymentOutboundController">
+       
+    </bean>
+    <bean id="PaymentTourHotelController" class="com.smi.travel.controller.PaymentTourHotelController">
+        
+    </bean>
+    <bean id="SearchPaymentTourHotelController" class="com.smi.travel.controller.SearchPaymentTourHotelController">
+       
+    </bean>
+    <bean id="SearchPaymentOutboundController" class="com.smi.travel.controller.SearchPaymentOutboundController">
+        
+    </bean>
     <!-- add bean id controller -->
     
     <bean id="monitorGalileo" class="com.smi.travel.monitor.MonitorGalileo" init-method="init">
         <constructor-arg index="0" type="java.lang.String">  
-                 <value>C:/Users/Administrator/Desktop/PNR/galileo/</value>  
+           <!--        <value>C:/Users/Administrator/Desktop/PNR/galileo/</value>  -->
          <!--   <value>D:/PNR/gali/</value>   -->
-         <!--    <value>S:/BackupPNR/</value>  -->
+           <value>S:/BackupPNR/</value>  
         </constructor-arg> 
         <constructor-arg index="1" type="java.lang.String">  
-            <value>C:/Users/Administrator/Desktop/PNR/galileo/archived/</value>  
+           <!--  <value>C:/Users/Administrator/Desktop/PNR/galileo/archived/</value>   -->
          <!--       <value>D:/PNR/archived/</value> -->
-           <!--       <value>S:/BackupPNR/archived/</value>   -->
+                 <value>S:/BackupPNR/archived/</value>  
         </constructor-arg> 
         <constructor-arg index="2" type="java.lang.String">  
-            <value>C:/Users/Administrator/Desktop/PNR/galileo/error/</value>
+           <!-- <value>C:/Users/Administrator/Desktop/PNR/galileo/error/</value> -->
           <!--    <value>D:/PNR/error/</value>  --> 
-         <!--          <value>S:/BackupPNR/error/</value>    -->
+                   <value>S:/BackupPNR/error/</value>   
         </constructor-arg>         
         <property name="mGalileoService" ref="MGalileoService" />
         <property name="mAirticketService" ref="MAirticketService" />
@@ -434,30 +463,30 @@
     
     <bean id="monitorAmadeus" class="com.smi.travel.monitor.MonitorAmadeus" init-method="init">
         <constructor-arg index="0" type="java.lang.String">  
-                <value>C:/Users/Administrator/Desktop/PNR/amadeus/</value>  
+          <!--         <value>C:/Users/Administrator/Desktop/PNR/amadeus/</value>  --> 
         <!--       <value>D:/PNR/ama/</value> -->
-         <!--      <value>T:/BackupPNR/</value>   -->
+            <value>T:/BackupPNR/</value>  
         </constructor-arg> 
         <constructor-arg index="1" type="java.lang.String">  
-                 <value>C:/Users/Administrator/Desktop/PNR/amadeus/archived/</value>
-         <!--   <value>D:/PNR/archived/</value>   -->
-         <!--    <value>T:/BackupPNR/archived/</value>   -->
+         <!--        <value>C:/Users/Administrator/Desktop/PNR/amadeus/archived/</value>-->
+         <!--    <value>D:/PNR/archived/</value>   -->
+             <value>T:/BackupPNR/archived/</value>   
         </constructor-arg> 
         <constructor-arg index="2" type="java.lang.String">  
-                 <value>C:/Users/Administrator/Desktop/PNR/amadeus/error/</value> 
+          <!--       <value>C:/Users/Administrator/Desktop/PNR/amadeus/error/</value>  -->
        <!--      <value>D:/PNR/error/</value> --> 
-         <!--    <value>T:/BackupPNR/error/</value>   -->
+             <value>T:/BackupPNR/error/</value>  
         </constructor-arg>         
         <property name="mAmadeusService" ref="MAmadeusService" />
         <property name="mAirticketService" ref="MAirticketService" />
         <property name="bookingAirticketService" ref="BookingAirticket" />
     </bean>
-<!--
+
     <task:scheduled-tasks>
         <task:scheduled ref="monitorAmadeus" method="run" fixed-delay="5000" /> 
         <task:scheduled ref="monitorGalileo" method="run" fixed-delay="5000" />         
     </task:scheduled-tasks>   
--->
+
     <bean id="MProductTypeController" class="com.smi.travel.masterdata.controller.MProductTypeController">
         <property name="productTypeService" ref="MProductTypeService" />
     </bean>
