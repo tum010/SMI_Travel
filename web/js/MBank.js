@@ -69,7 +69,7 @@ function searchAction() {
 
 function EditBank(id, code, name, branch, accNo, accType) {
     $('#Bankform').bootstrapValidator('resetForm', true);
-    $("#BankId").val(id);
+    $("#BankIdEdit").val(id);
     $("#BankCode").val(code);
     $("#BankName").val(name);
     $("#BankBranch").val(branch);
