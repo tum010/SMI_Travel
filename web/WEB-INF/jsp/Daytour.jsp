@@ -343,7 +343,6 @@
     }
     
     function DeleteOther(id,code){
-        $('#delCode').html("Are you sure to disabled booking daytour  : " + code + " ? ");
         var OtherID = document.getElementById('OtherIdDelete');
         OtherID.value = id;
         document.getElementById('delCode').innerHTML = "Are you sure to delete booking other : " + code + " ?";
