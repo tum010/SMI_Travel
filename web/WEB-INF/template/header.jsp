@@ -93,9 +93,12 @@
                                                 "<li><a href='AddTicketFare.smi'> AirTicket </a></li>",
                                                 "<li><a href='PaymentOutbound.smi'> Outbound </a></li>"];
                                             var FinanceMenu = [
-                                                "<li><a href='#'> Payment</a></li>",
-                                                "<li><a href='#'> Receive</a></li>"];
-
+                                                "<li><a href='SearchInvoice.smi'> Invoice</a></li>",
+                                                "<li><a href='SearchReceipt.smi'> Receipt</a></li>",
+                                                "<li><a href='TaxInvoice.smi'> Tax Invoice</a></li>",
+                                                "<li><a href='ReceiveTable.smi'> Receive Table</a></li>",
+                                                "<li><a href='LockUnlockBooking.smi'>Lock And UnLock Booking</a></li>"];
+                                            
                                             var menuString = getActiveMenuString(masterMenuList, masterMenu);
                                             document.getElementById("menuMaster").innerHTML = menuString;
 
@@ -112,7 +115,7 @@
                                             var checkingMenuString = getActiveMenuString(CheckingMenuList, CheckingMenu);
                                             
                                             document.getElementById("checkingMenu").innerHTML = checkingMenuString;
-                                            
+                                           
                                             var financeMenuString = getActiveMenuString(FinanceMenuList, FinanceMenu);
                                             document.getElementById("financeMenu").innerHTML = financeMenuString;
 
@@ -165,7 +168,7 @@
             </li>
 
             <li class="dropdown">
-                <a href="#" class="dropdown-header" data-toggle="dropdown">  <span class="glyphicon glyphicon-euro"></span> Finance & Accountingr <span class="caret"></span></a>
+                <a href="#" class="dropdown-header" data-toggle="dropdown">  <span class="glyphicon glyphicon-euro"></span> Finance & Cashier <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu" id="financeMenu">
 
                     
