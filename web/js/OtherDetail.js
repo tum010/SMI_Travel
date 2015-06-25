@@ -258,14 +258,28 @@ function CallAjax(param, booktype) {
             data: param,
             success: function(msg) {
                 var path = msg.split(',');
-                var AD_Cost = document.getElementById('ad_cost').value; 
+                var AD_Cost = document.getElementById('ad_cost').value;
+                var AD_Price = document.getElementById('ad_price').value;
                 var CH_Cost = document.getElementById('ch_cost').value;
+                var CH_Price = document.getElementById('ch_price').value;
                 var IN_Cost = document.getElementById('in_cost').value;
+                var IN_Price = document.getElementById('in_price').value;
                 var AD_CostRP = AD_Cost.replace(',','');
+                var AD_PriceRP = AD_Price.replace(',','');
                 var CH_CostRP = CH_Cost.replace(',','');
+                var CH_PriceRP = CH_Price.replace(',','');
                 var IN_CostRP = IN_Cost.replace(',','');
+                var IN_PriceRP = IN_Price.replace(',','');
+                
+                if(AD_CostRP == ''){ AD_CostRP = 0; }
+                if(AD_PriceRP == ''){ AD_PriceRP = 0; }
+                if(CH_CostRP == ''){ CH_CostRP = 0; }
+                if(CH_PriceRP == ''){ CH_PriceRP =0; }
+                if(IN_CostRP == ''){IN_CostRP = 0; }
+                if(IN_PriceRP == ''){IN_PriceRP = 0; }
+                
                 if (booktype == 'i') {                
-                    if((AD_CostRP == path[0]) && (CH_CostRP == path[1]) && (IN_CostRP == path[2])){
+                    if((AD_CostRP == path[0]) && (CH_CostRP == path[1]) && (IN_CostRP == path[2]) && (AD_PriceRP == path[3]) && (CH_PriceRP == path[4]) && (IN_PriceRP == path[5])){
                             
                     } else {
                         document.getElementById('path0').value = path[0];
@@ -279,18 +293,18 @@ function CallAjax(param, booktype) {
                 }
 
                 if (booktype == 'o') {
-                    if((AD_CostRP == path[0]) && (CH_CostRP == path[1]) && (IN_CostRP == path[2])){
+                    if((AD_CostRP == path[0]) && (CH_CostRP == path[1]) && (IN_CostRP == path[2]) && (AD_PriceRP == path[3]) && (CH_PriceRP == path[4]) && (IN_PriceRP == path[5])){
                             
-                        } else {
-                            document.getElementById('path0').value = path[0];
-                            document.getElementById('path1').value = path[1];
-                            document.getElementById('path2').value = path[2];
-                            document.getElementById('path3').value = path[3];
-                            document.getElementById('path4').value = path[4];
-                            document.getElementById('path5').value = path[5];
-                            $('#Confirm').modal('show');
-                        }                                   
-                    //calculateVat();
+                    } else {
+                        document.getElementById('path0').value = path[0];
+                        document.getElementById('path1').value = path[1];
+                        document.getElementById('path2').value = path[2];
+                        document.getElementById('path3').value = path[3];
+                        document.getElementById('path4').value = path[4];
+                        document.getElementById('path5').value = path[5];
+                        $('#Confirm').modal('show');
+                    }                                   
+                //calculateVat();
                 }
             }, error: function(msg) {
                 //alert('error');
