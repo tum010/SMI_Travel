@@ -59,7 +59,7 @@ public class MBankService {
         if (list != null) {
             if ("update".equalsIgnoreCase(operation)) {
                 if (!(list.get(0).getId().equalsIgnoreCase(bank.getId()))) {
-                    validate = "bank code already exist";
+                    validate = "";
                 }
             } else {
                 validate = "bank code already exist";
@@ -71,7 +71,7 @@ public class MBankService {
         if (list != null) {
             if ("update".equalsIgnoreCase(operation)) {
                 if (!(list.get(0).getId().equalsIgnoreCase(bank.getId()))) {
-                    validate = "account no already exist";
+                    validate = "";
                 }
             } else {
                 validate = "account no already exist";
