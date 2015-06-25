@@ -354,7 +354,54 @@
         <put-attribute name="title" value="Checking:Search Payment Outbound" />
         <put-attribute name="body" value="/WEB-INF/jsp/SearchPaymentOutbound.jsp" />
     </definition>
+    
+        <definition name="SearchPaymentOutbound" extends="baseLayout">
+        <put-attribute name="title" value="Finance And Cashier:Search Payment Outbound" />
+        <put-attribute name="body" value="/WEB-INF/jsp/SearchPaymentOutbound.jsp" />
+    </definition>
+    
+    <definition name="SearchInvoice" extends="baseLayout">
+        <put-attribute name="title" value="Finance And Cashier:Search Invoice " />
+        <put-attribute name="body" value="/WEB-INF/jsp/SearchInvoice.jsp" />
+    </definition>
+    
+    <definition name="Invoice" extends="baseLayout">
+        <put-attribute name="title" value="Checking:Search Invoice" />
+        <put-attribute name="body" value="/WEB-INF/jsp/Invoice.jsp" />
+    </definition>
+    
+    <definition name="Receipt" extends="baseLayout">
+        <put-attribute name="title" value="Finance And Cashier: Receipt " />
+        <put-attribute name="body" value="/WEB-INF/jsp/Receipt.jsp" />
+    </definition>
+    
+    <definition name="SearchReceipt" extends="baseLayout">
+        <put-attribute name="title" value="Finance And Cashier:SearchReceipt" />
+        <put-attribute name="body" value="/WEB-INF/jsp/SearchReceipt.jsp" />
+    </definition>
+    
+    <definition name="TaxInvoice" extends="baseLayout">
+        <put-attribute name="title" value="Finance And Cashier: TaxInvoice " />
+        <put-attribute name="body" value="/WEB-INF/jsp/TaxInvoice.jsp" />
+    </definition>
+    
+    <definition name="SearchTaxInvoice" extends="baseLayout">
+        <put-attribute name="title" value="Finance And Cashier: SearchTaxInvoice " />
+        <put-attribute name="body" value="/WEB-INF/jsp/SearchTaxInvoice.jsp" />
+    </definition>
+    
+    <definition name="ReceiveTable" extends="baseLayout">
+        <put-attribute name="title" value="Finance And Cashier: ReceiveTable " />
+        <put-attribute name="body" value="/WEB-INF/jsp/ReceiveTable.jsp" />
+    </definition>
+    
+    <definition name="LockUnlockBooking" extends="baseLayout">
+        <put-attribute name="title" value="Finance And Cashier: Lock and Unlock Booking " />
+        <put-attribute name="body" value="/WEB-INF/jsp/LockUnlockBooking.jsp" />
+    </definition>
+    
     <!--<add data>-->
+    
     <definition name="SendMail" extends="baseLayout">
         <put-attribute name="title" value="SMI Travel : Send Mail" />
         <put-attribute name="body" value="/WEB-INF/jsp/SendMail.jsp" />
