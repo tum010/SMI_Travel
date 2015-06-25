@@ -35,10 +35,16 @@ $(document).ready(function() {
    
 
     $("#billto").keyup(function(){
-        searchCustomerAutoList(this.value);
         var position = $(this).offset();
         $(".ui-widget").css("top", position.top + 30);
         $(".ui-widget").css("left", position.left);
+        if($(this).val() === ""){
+            $("#billname").val("");
+            $("#address").val(""); 
+        }else{
+            searchCustomerAutoList(this.value);
+        }
+        
     });
 });
 
@@ -69,29 +75,32 @@ function CallAjaxAuto(param){
                 var billArray = [];
                 var billJson =  JSON.parse(msg);
                 console.log("json_Bill="+billJson);
+                var billid , billname ,billaddr;
                 for (var i in billJson){
                     if (billJson.hasOwnProperty(i)){
-                        var billid = billJson[i].id;
-                        var billname = billJson[i].name;
-                        var billaddr = billJson[i].address;
+                        billid = billJson[i].id;
+                        billname = billJson[i].name;
+                        billaddr = billJson[i].address;
                         console.log("billid = "+billid);
                         console.log("billname = "+billname);
+                        console.log("billaddr = "+billaddr);
                         billArray.push(billid);
                         billArray.push(billname);
                         $("#billto").val(billid);
                         $("#billname").val(billname);
                         $("#address").val(billaddr);
-                        
                     }
-                    $("#dataload").addClass("hidden");
+                     $("#dataload").addClass("hidden"); 
                 }
+               
+                
                 
                 $("#billto").autocomplete({
                     source: billArray
                 });
                   
             }, error: function(msg) {
-                alert('auto error');
+                console.log('auto ERROR');
             }
         });
     } catch (e) {
