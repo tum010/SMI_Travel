@@ -217,7 +217,7 @@ public class AJAXBean extends AbstractBean implements
                 UtilityFunction util = new UtilityFunction();
                 String Iti = "";
                 PackageTour pa = packagedao.getPackageFromID(packageID);
-                List<PackageItinerary> packItinerary = packagedao.SortItineraryList(new ArrayList<PackageItinerary>(pa.getPackageItineraries()));
+                List<PackageItinerary> packItinerary = pa.getPackageItineraries();
                 for (int i = 0; i < packItinerary.size(); i++) {
                     PackageItinerary ItiList = packItinerary.get(i);
                     Iti += ItiList.getOrderNo() + "&=" + util.convertTimeToString(ItiList.getTime()) + "&=" + ItiList.getDetail();
