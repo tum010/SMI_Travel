@@ -171,8 +171,16 @@
                 </thead>
                 <tbody>
                     <c:forEach var="table" items="${OtherLists}">
-                        <tr>
-                            <td class="tdcenter">${table.otherDate}</td>
+                        <c:set var="colourStatus" value="" />
+                        <c:set var="colourStatusFirstrow" value="" />
+                            
+                        <c:if test="${table.status.id == 2}">
+                            <c:set var="colourStatus" value="style='background-color: #FFD3D3'" />
+                            <c:set var="colourStatusFirstrow" value="background-color: #FFD3D3" />
+                            <c:set var="statusicon" value="glyphicon-remove deleteicon" />
+                        </c:if>
+                        <tr data-toggle="tooltip"  data-placement="left" title="<p align='left'>  date :${table.otherDate} <br> remark :${table.remark} </p>" ${colourStatus}>
+                            <td class="tdcenter ${colourStatus}" style="width:75px;${colourStatusFirstrow}"> ${table.otherDate} </td>
                             <td>${table.product.name}</td>
                             <td class="tdright moneyformat"> ${table.adCost}</td>
                             <td class="tdcenter moneyformat"> ${table.adQty}</td>
@@ -230,6 +238,44 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<div class="modal fade" id="DelOther" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Booking other </h4>
+            </div>
+            <div class="modal-body" id="delCode">
+     
+           </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick='window.top.location.href="Other.smi?referenceNo=${param.referenceNo}&action=delete&callPageFrom=FromDayTour&OtherID=" + document.getElementById("OtherIdDelete").value;'>Delete</button>               
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+                <input type="hidden" id="OtherIdDelete" name="OtherID" />
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->      
+
+<div class="modal fade" id="EnableOther" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Booking other </h4>
+            </div>
+            <div class="modal-body" id="enableCode">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick='window.top.location.href="Other.smi?referenceNo=${param.referenceNo}&action=enable&callPageFrom=FromDayTour&OtherID=" + document.getElementById("OtherIdEnable").value;'>Enable</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+                <input type="hidden" id="OtherIdEnable" name="OtherID" />
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->      
 
 <c:if test="${! empty param.result}">
     <c:if test="${param.result =='success'}">        
@@ -295,10 +341,32 @@
             });
         });
     }
+    
+    function DeleteOther(id,code){
+        $('#delCode').html("Are you sure to disabled booking daytour  : " + code + " ? ");
+        var OtherID = document.getElementById('OtherIdDelete');
+        OtherID.value = id;
+        document.getElementById('delCode').innerHTML = "Are you sure to delete booking other : " + code + " ?";
+    }
+
+    function EnableOther(id,code){
+        var OtherID = document.getElementById('OtherIdEnable');
+        OtherID.value = id;
+        document.getElementById('enableCode').innerHTML = "Are you sure to enable booking other : " + code + " ?";
+    }
 
     $(document).ready(function () {
 
-        var table = $('#OtherTable').DataTable({
+        var tableOther = $('#OtherTable').DataTable({
+            "bJQueryUI": true,
+            "sPaginationType": "full_numbers",
+            "bAutoWidth": false,
+            "bFilter": false,
+            "bInfo": true,
+            "bSort": false
+
+        });
+        var tableHotel = $('#HotelTable').DataTable({
             "bJQueryUI": true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
@@ -313,9 +381,20 @@
                 $('#hdGridSelected').val('');
             }
             else {
-                table.$('tr.row_selected').removeClass('row_selected');
+                tableOther.$('tr.row_selected').removeClass('row_selected');
                 $(this).addClass('row_selected');
                 $('#hdGridSelected').val($('#OtherTable tbody tr.row_selected').attr("id"));
+            }
+        });
+        $('#HotelTable tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('row_selected')) {
+                $(this).removeClass('row_selected');
+                $('#hdGridSelected').val('');
+            }
+            else {
+                tableHotel.$('tr.row_selected').removeClass('row_selected');
+                $(this).addClass('row_selected');
+                $('#hdGridSelected').val($('#HotelTable tbody tr.row_selected').attr("id"));
             }
         });
         $('.time').mask('00:00');
