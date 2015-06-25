@@ -1,16 +1,86 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+<ul id="InvoiceMenuLeft" class="nav nav-list" style="top: 0px;  background-color: #FAFEFA;border: solid 1px #0063DC">
+    <li>
+        <a href="#">
+            <i class="fa fa-search-plus"></i> 
+            <span class="menu-text"> Search Invoice </span>
+        </a>
+
+        <b class="arrow"></b>
+    </li>
+    
+    <li>
+        <a href="#">
+            <span class="menu-text"><b>Wendy/Outbound</b></span>
+        </a>    
+            
+        <b class="arrow"></b>
+    </li>
+	
+    <li>
+        <a href="#" id="menu-temp">
+            <i class="fa fa-file-o"></i>
+            <span class="menu-text"> Temp <strong></strong> </span>
+
+        </a>
+
+    </li>
+
+    <li>
+        <a href="#" id="menu-vat">
+            <i class="fa fa-file-text-o"></i>
+            <span class="menu-text">Vat<strong></strong> </span>
+        </a>
+        <b class="arrow"></b>
+    </li>
+	
+    <li>
+        <a href="#" id="menu-no-vat">
+            <i class="fa fa-times"></i>
+            <span class="menu-text"> No vat <strong></strong> </span>
+        </a>
+        <b class="arrow"></b>
+    </li>
+</ul>
+
+<script>
+    $(document).ready(function () {
+        // use datetimepicker
+        $('.date').datetimepicker();
+        $('.spandate').click(function () {
+            var position = $(this).offset();
+            console.log("positon :" + position.top);
+            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+
+        });
+
+       $('table tbody').on('click', 'tr', function () {
+            $(this).addClass('row_selected').siblings().removeClass('row_selected');
+           
+        });
+
+        var path = location.pathname;
+        var name = path.split("/");
+        //console.log(name[2]);
+        str = name[2].split(".");
+        //console.log(str[0]);
+        sub = str[0].substr(0, 9);
+        //console.log(sub);
+        var $select = $('a[href*="' + sub + '"]');
+        $("#InvoiceMenuLeft").find($select).css('background-color', '#ccc');
+
+        $("#InvoiceMenuLeft a").one('mouseover', function () {
+
+            var action = '?action=edit';
+            if ($("#actionIDown").val() == 'new') {
+                action = "&action=new";
+                $('#InvoiceMenuLeft a').click(function (e) {
+                    e.preventDefault();
+                });
+            }
+            //console.log("href");
+            $(this).attr('href', $(this).attr('href') + action);
+        });
+    });
+
+
+</script>
