@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.0.4.final using JasperReports Library version 6.0.4  -->
-<!-- 2015-06-23T17:02:52 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GuideJob" language="groovy" pageWidth="647" pageHeight="788" columnWidth="647" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="afe86f30-4ddb-453a-8429-dac3373d85ce">
 	<property name="ireport.zoom" value="1.366026910730141"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="184"/>
+	<property name="ireport.y" value="336"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<field name="guide" class="java.lang.String"/>
 	<field name="driver" class="java.lang.String"/>
@@ -33,6 +31,7 @@
 	<field name="bookremark" class="java.lang.String"/>
 	<field name="stafftour" class="java.lang.String"/>
 	<field name="coupon" class="java.lang.String"/>
+	<field name="coup_name" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -280,7 +279,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="65" splitType="Stretch">
+		<band height="66" splitType="Immediate">
 			<textField>
 				<reportElement x="43" y="0" width="39" height="40" uuid="9392217b-7e2c-41fa-abb0-21694db0789d"/>
 				<box>
@@ -419,14 +418,14 @@
 				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="139" y="40" width="440" height="20" uuid="41a723f5-62f4-4e7d-a62d-1170c42b1a23"/>
+				<reportElement stretchType="RelativeToBandHeight" x="139" y="40" width="440" height="24" uuid="41a723f5-62f4-4e7d-a62d-1170c42b1a23"/>
 				<box>
 					<topPen lineWidth="0.1"/>
 				</box>
-				<textElement verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle" rotation="None" markup="html">
 					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{bookremark}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{bookremark}+$F{coup_name}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="23" y="-24" width="1" height="89" uuid="862561fb-169b-4e7a-961e-fd568ce118fb"/>

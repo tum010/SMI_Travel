@@ -63,6 +63,7 @@ public class GuideJobImpl implements GuideJobDao{
                 .addScalar("book_remark", Hibernate.STRING)
                 .addScalar("stafftour", Hibernate.STRING)
                 .addScalar("coupon", Hibernate.INTEGER)
+                .addScalar("coup_name", Hibernate.STRING)
                 .list();
         
          for (Object[] B : QueryGuideJobList) {
@@ -98,18 +99,39 @@ public class GuideJobImpl implements GuideJobDao{
              guidejob.setPay(util.ConvertString(B[19]));
              guidejob.setMeal(util.ConvertString(B[20]));
              guidejob.setRemark(getremark(tourdate,tourID));
+             if(B[22] != null){
+                String coup = "<br>"+util.ConvertString(B[25]);
+                if(B[25] != null){
+                    String coupNew = splitIndexCoupon(coup);
+                    guidejob.setCoup_name(coupNew);
+                }else{
+                    guidejob.setCoup_name("");
+                }  
+                guidejob.setBookremark(util.ConvertString(B[22]));
+             }else{
+                if(B[25] != null){
+//                    String coupNew = splitIndexCoupon(util.ConvertString(B[25]));
+                    guidejob.setCoup_name(util.ConvertString(B[25]));
+                } 
+             }
              guidejob.setBookremark(util.ConvertString(B[22]));
              guidejob.setStafftour(util.ConvertString(B[23]));
              if(B[24] != null){
                  guidejob.setCoupon(util.ConvertString(decimalFormat.format(B[24])));
              }
-             data.add(guidejob);
-             
+                    
+             data.add(guidejob);            
          }
          this.sessionFactory.close();
          session.close();
 
         return data;
+    }
+    
+    public String splitIndexCoupon(String couponName){
+        int indexOf = couponName.lastIndexOf("<br>");
+        String coupNew = couponName.substring(indexOf);
+        return coupNew;
     }
     
     public String getremark(String tourdate ,String tourid){

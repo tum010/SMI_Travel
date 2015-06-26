@@ -39,7 +39,8 @@ public class GuideJob {
     private String user;
     private String bookremark;
     private String stafftour;
-
+    private String coup_name;
+    
     public String getGuide() {
         return guide;
     }
@@ -255,9 +256,14 @@ public class GuideJob {
     public void setCoupon(String coupon) {
         this.coupon = coupon;
     }
-    
-    
-    
+
+    public String getCoup_name() {
+        return coup_name;
+    }
+
+    public void setCoup_name(String coup_name) {
+        this.coup_name = coup_name;
+    }
     
 }
 
