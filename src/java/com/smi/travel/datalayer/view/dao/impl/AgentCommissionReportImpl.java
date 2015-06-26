@@ -34,6 +34,7 @@ public class AgentCommissionReportImpl implements AgentCommissionReportDao {
             + "sum(db.agent_comission) as comission "
             + "from daytour_booking db "
             + "inner JOIN agent agt on db.agent_id = agt.id "
+            + "INNER JOIN daytour_booking_price dp on dp.daytour_booking_id = db.id "
             + "INNER JOIN `master` mt on mt.id = db.master_id ";
 
     
@@ -56,7 +57,7 @@ public class AgentCommissionReportImpl implements AgentCommissionReportDao {
         if((agentid != null)&&(!"".equalsIgnoreCase(agentid))){
             sql += " and agt.id ="+agentid;
         }
-        sql += " GROUP BY agt.`code`,agt.`name` HAVING  sum(`db`.`agent_comission`) <> 0";
+        sql += " GROUP BY agt.`code`,agt.`name` HAVING  sum(`db`.`agent_comission`) <> 0 ORDER BY `agt`.`name`";
         System.out.println("sql :" +sql);
         List<Object[]> QueryAgentComSummaryList = session.createSQLQuery(sql)
                 .addScalar("code", Hibernate.STRING)
@@ -65,6 +66,7 @@ public class AgentCommissionReportImpl implements AgentCommissionReportDao {
                 .addScalar("comission", Hibernate.INTEGER)
                 .list();
   
+        System.out.println("QueryAgentComSummaryList.size : "+QueryAgentComSummaryList.size());
         for (Object[] B : QueryAgentComSummaryList) {
              AgentCommissionSummaryReport   report = new  AgentCommissionSummaryReport(); 
              report.setCode(util.ConvertString(B[0]));
