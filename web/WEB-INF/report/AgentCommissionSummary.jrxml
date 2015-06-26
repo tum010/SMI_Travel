@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.0.4.final using JasperReports Library version 6.0.4  -->
-<!-- 2015-06-23T16:16:11 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AirlineVolumn" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isFloatColumnFooter="true" uuid="36591689-e817-40b9-bb01-c68bf69d6b71">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="39"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[]]>
@@ -164,7 +162,7 @@
 				</graphicElement>
 			</rectangle>
 			<textField>
-				<reportElement x="0" y="0" width="76" height="15" uuid="46f0834d-b1c6-4cb2-8b2f-e0c87ffe44f6"/>
+				<reportElement x="0" y="2" width="76" height="15" uuid="46f0834d-b1c6-4cb2-8b2f-e0c87ffe44f6"/>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
@@ -177,9 +175,9 @@
 				</graphicElement>
 			</rectangle>
 			<textField>
-				<reportElement x="76" y="0" width="297" height="15" uuid="2e4d4b2f-2287-4064-9c48-bfd5a71934cc"/>
+				<reportElement x="78" y="0" width="295" height="15" uuid="2e4d4b2f-2287-4064-9c48-bfd5a71934cc"/>
 				<textElement>
-					<font fontName="TH SarabunPSK" size="8" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="TH SarabunPSK" size="13" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 			</textField>
@@ -190,7 +188,7 @@
 				</graphicElement>
 			</rectangle>
 			<textField>
-				<reportElement x="373" y="0" width="86" height="15" uuid="cb5565c0-7352-45c0-a366-10a1e68a7517"/>
+				<reportElement x="373" y="2" width="86" height="15" uuid="cb5565c0-7352-45c0-a366-10a1e68a7517"/>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
@@ -203,7 +201,7 @@
 				</graphicElement>
 			</rectangle>
 			<textField pattern="#,##0">
-				<reportElement x="459" y="0" width="96" height="15" uuid="d93d87d5-e5da-4dd5-bdc2-761a3caf5837"/>
+				<reportElement x="458" y="3" width="96" height="15" uuid="d93d87d5-e5da-4dd5-bdc2-761a3caf5837"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
@@ -238,7 +236,7 @@
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
-			<textField>
+			<textField pattern="#,##0">
 				<reportElement x="459" y="1" width="96" height="13" uuid="a998d3cc-5fab-45c8-8e0f-87b02911c195"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
@@ -246,7 +244,7 @@
 				<textFieldExpression><![CDATA[$V{totalcommission}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="373" y="0" width="86" height="14" uuid="cf1ed627-5515-4840-bd7d-f711473f5a69"/>
+				<reportElement x="374" y="2" width="85" height="14" uuid="4c169337-b0a8-4672-b818-ab62644d6311"/>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
