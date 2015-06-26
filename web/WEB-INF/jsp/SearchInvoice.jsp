@@ -114,10 +114,12 @@
                 <div class="col-xs-12 form-group">
                     <div class="col-xs-1 text-right">                        
                     </div>
-                     <div class="col-md-1 text-right ">                        
-                        <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="" class="btn btn-primary btn-primary">Search</button>                                          
-                    </div>                    
                     <div class="col-md-1 text-right ">
+                        <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="" class="btn btn-primary btn-primary ">
+                            <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
+                        </button>                                          
+                    </div>                   
+                    <div class="col-md-2 text-right " style="padding: 0px 60px 0px 0px">
                         <button type="button" onclick="printVoucher('');" class="btn btn-default">
                             <span id="SpanPrint" class="glyphicon glyphicon-print"></span> Print
                         </button>
