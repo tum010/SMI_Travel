@@ -11,6 +11,24 @@ public class InvoiceController extends SMITravelController {
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        String callPageFrom = request.getParameter("type");
+        String buttonVoid = request.getParameter("buttonVoid");
+        
+        
+        if(buttonVoid != null){
+            if(buttonVoid.equalsIgnoreCase("enable")){
+                request.setAttribute("button", buttonVoid);     
+            } else if (buttonVoid.equalsIgnoreCase("disable")){
+                request.setAttribute("buttonVoid", buttonVoid);        
+            }
+        }
+        
+        if(callPageFrom != null){
+           String[] type = callPageFrom.split("\\?");
+           request.setAttribute("typeInvoice", type[0]);  
+        }
+              
+    
         return Invoice;
     }
 }
