@@ -57,16 +57,26 @@
             $(this).addClass('row_selected').siblings().removeClass('row_selected');
            
         });
-
         var path = location.pathname;
         var name = path.split("/");
-        //console.log(name[2]);
-        str = name[2].split(".");
-        //console.log(str[0]);
-        sub = str[0].substr(0, 9);
-        //console.log(sub);
-        var $select = $('a[href*="' + sub + '"]');
-        $("#InvoiceMenuLeft").find($select).css('background-color', '#ccc');
+        var listpara = location.search;
+        
+        if(listpara.indexOf('temp') != -1){
+            $("#menu-invoicetemp").css('background-color', '#ccc');
+        }else if(listpara.indexOf('vat') != -1){
+            $("#menu-invoicevat").css('background-color', '#ccc');
+        }else if(listpara.indexOf('NoVat') != -1){
+            $("#menu-invoicenovat").css('background-color', '#ccc');
+        }else{
+            //console.log(name[2]);
+            str = name[2].split(".");
+            //console.log(str[0]);
+            sub = str[0].substr(0, 9);
+            //console.log(sub);
+            var $select = $('a[href*="' + sub + '"]');
+            $("#InvoiceMenuLeft").find($select).css('background-color', '#ccc');           
+        }
+
         
        
         
