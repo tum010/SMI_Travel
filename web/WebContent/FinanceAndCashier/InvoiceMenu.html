@@ -1,6 +1,6 @@
 <ul id="InvoiceMenuLeft" class="nav nav-list" style="top: 0px;  background-color: #FAFEFA;border: solid 1px #0063DC">
     <li>
-        <a href="#">
+        <a href="SearchInvoice.smi" id="menu-searchinvoice">
             <i class="fa fa-search-plus"></i> 
             <span class="menu-text"> Search Invoice </span>
         </a>
@@ -15,28 +15,28 @@
             
         <b class="arrow"></b>
     </li>
-	
+
     <li>
-        <a href="#" id="menu-temp">
+        <a href="Invoice.smi?type=temp" id="menu-invoicetemp">
             <i class="fa fa-file-o"></i>
-            <span class="menu-text"> Temp <strong></strong> </span>
+            <span class="menu-text">Invoice temp <strong></strong> </span>
 
         </a>
 
     </li>
 
     <li>
-        <a href="#" id="menu-vat">
+        <a href="Invoice.smi?type=vat" id="menu-invoicevat">
             <i class="fa fa-file-text-o"></i>
-            <span class="menu-text">Vat<strong></strong> </span>
+            <span class="menu-text">Invoice vat<strong></strong> </span>
         </a>
         <b class="arrow"></b>
     </li>
 	
     <li>
-        <a href="#" id="menu-no-vat">
+        <a href="Invoice.smi?type=NoVat" id="menu-invoicenovat">
             <i class="fa fa-times"></i>
-            <span class="menu-text"> No vat <strong></strong> </span>
+            <span class="menu-text">Invoice no vat<strong></strong> </span>
         </a>
         <b class="arrow"></b>
     </li>
@@ -67,7 +67,9 @@
         //console.log(sub);
         var $select = $('a[href*="' + sub + '"]');
         $("#InvoiceMenuLeft").find($select).css('background-color', '#ccc');
-
+        
+       
+        
         $("#InvoiceMenuLeft a").one('mouseover', function () {
 
             var action = '?action=edit';
