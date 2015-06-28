@@ -5,8 +5,7 @@
  */
 
 
- var billArray = [];
- var billid , billname ,billaddr;
+ 
 $(document).ready(function() {
     // validate
     var Billable = $("#Billable");
@@ -31,17 +30,16 @@ $(document).ready(function() {
 
     //autocomplete
     $("#billto").keyup(function(e){
+        
         if($(this).val() === ""){
             $("#billname").val("");
             $("#address").val(""); 
         }else{
             if(e.keyCode === 13){
-               
                 billArray = [];
                 searchCustomerAutoList(this.value);
                 console.log("billArray=="+billArray);
-               
-            } 
+            }
         }
         var position = $(this).offset();
         $(".ui-widget").css("top", position.top + 30);
@@ -76,8 +74,9 @@ function CallAjaxAuto(param){
                
             },
             success: function(msg) {     
-//                console.log("getAutoListBillto =="+msg);
-             
+                console.log("getAutoListBillto =="+msg);
+                var billArray = [];
+                var billid , billname ,billaddr;
                 var billJson =  JSON.parse(msg);
                 console.log("json_Bill="+billJson);
                 for (var i in billJson){
@@ -93,16 +92,22 @@ function CallAjaxAuto(param){
 
                     }
                      $("#dataload").addClass("hidden"); 
+                     
                 }
-                $("#billto").autocomplete({
-                    source: billArray,
-                    close:function( event, ui ) {
-                       $("#billto").trigger('keyup');
-                    }
-                });
                 $("#billto").val(billid);
                 $("#billname").val(billname);
                 $("#address").val(billaddr);
+                
+               
+                $("#billto").autocomplete({
+                    source: billArray,
+                    minLength: 0,
+                    close:function( event, ui ) {
+                       $(this).trigger('keyup');
+                    }
+                 });
+   
+                
             }, error: function(msg) {
                 console.log('auto ERROR');
             }
