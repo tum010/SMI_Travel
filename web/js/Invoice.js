@@ -27,4 +27,15 @@ function Disable() {
     document.getElementById('OtherForm').submit();
 }
 
+function DeleteDetailBill(){
+    var OtherID = document.getElementById('OtherID');
+    OtherID.value = id;
+    document.getElementById('disableVoid').innerHTML = "Are you sure to delete booking other : " +  + " ?";
+}
+
+function DeleteBill() {
+    var action = document.getElementById('action');
+    action.value = 'delete';
+    document.getElementById('OtherForm').submit();
+}
 
