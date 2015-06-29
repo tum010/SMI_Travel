@@ -111,6 +111,9 @@
 .selectize-control {
   position: relative;
 }
+.selectize.not-full {
+  width: 603px !important;
+}
 .selectize-dropdown,
 .selectize-input,
 .selectize-input input {
