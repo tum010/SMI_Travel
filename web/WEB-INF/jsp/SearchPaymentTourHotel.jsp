@@ -14,7 +14,7 @@
         <li class="active"><a href="#">Search Payment</a></li>
     </ol>
 </section>
-<div class ="container"  style="padding-top: 15px;" ng-app=""> 
+<div class ="container"  style="padding-top: 15px;padding-left: 5px;" ng-app=""> 
     <!-- side bar -->
     <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
         <div ng-include="'WebContent/Checking/CheckingPackageTourHotel.html'"></div>
