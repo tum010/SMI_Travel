@@ -327,9 +327,11 @@ public class PackageTourImpl implements PackageTourDao {
     public PackageTour getPackageFromID(String packageID) {
         Session session = this.sessionFactory.openSession();
         List<PackageTour> list = session.createQuery(SEARCH_PACKAGE_QUERY).setParameter("packageid", packageID).list();
+        
         if (list.isEmpty()) {
             return null;
         } else {
+            list.get(0).setPackageItineraries(SortItineraryList(list.get(0).getPackageItineraries()));
             return list.get(0);
         }
     }
@@ -383,12 +385,25 @@ public class PackageTourImpl implements PackageTourDao {
             for (int j = 0; j < data.size(); j++) {
                 if (Dataindex.get(i).equals(data.get(j).getOrderNo())) {
                     System.out.println("order no : " + data.get(j).getOrderNo());
-                    sortItinerary.add(data.get(j));
+                    if(!IsItineraryDupicate(sortItinerary,data.get(j))){
+                        sortItinerary.add(data.get(j));
+                    }   
                 }
             }
         }
 
         return sortItinerary;
+    }
+    
+    public boolean IsItineraryDupicate(List<PackageItinerary> Listdata,PackageItinerary newData){
+        boolean isDup = false;
+        for(int i=0;i<Listdata.size();i++){
+            if(Listdata.get(i).getId().equalsIgnoreCase(newData.getId())){
+                isDup = true;
+                break;
+            }
+        }
+        return isDup;
     }
 
     @Override
