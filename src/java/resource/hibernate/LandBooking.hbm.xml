@@ -104,11 +104,11 @@
             <column name="inbound_hotel" length="255" />
         </property>
         
-         <set name="landItineraries" table="land_itinerary" inverse="true" lazy="true" fetch="select">
+         <bag name="landItineraries" table="land_itinerary" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="land_booking_id" not-null="true" />
             </key>
             <one-to-many class="com.smi.travel.datalayer.entity.LandItinerary" />
-        </set>
+        </bag>
     </class>
 </hibernate-mapping>
