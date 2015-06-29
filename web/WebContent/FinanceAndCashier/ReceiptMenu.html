@@ -1,16 +1,105 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+<ul id="ReceiptMenu" class="nav nav-list" style="top: 0px;  background-color: #FAFEFA;border: solid 1px #0063DC">
+    <li>
+        <a href="SearchReceipt.smi">
+            <i class="menu-icon fa fa-search-plus"></i>
+            <span class="menu-text">Search Receipt</span>
+        </a>
+
+        <b class="arrow"></b>
+    </li>
+    <li>
+        <a href="#" id="Outbound">
+            <span class="menu-text"><b>Wendy/Outbound</b></span>
+        </a>  
+    </li>
+    <li>
+        <a href="Receipt.smi?type=outtemp" id="menu-outtemp">
+            <i class="menu-icon fa fa-file-o"></i>
+            <span class="menu-text">Receipt Temp<strong></strong> </span>
+        </a>
+
+    </li>
+    <li>
+        <a href="Receipt.smi?type=outvat" id="menu-outvat">
+            <i class="menu-icon fa fa-file-text-o"></i>
+            <span class="menu-text">Receipt Vat<strong></strong> </span>
+        </a>
+        <b class="arrow"></b>
+    </li>
+    <li>
+        <a href="#" id="Inbound">
+            <span class="menu-text"><b>Inbound</b></span>
+        </a>  
+    </li>
+    <li>
+        <a href="Receipt.smi?type=intemp" id="menu-intemp">
+            <i class="menu-icon fa fa-file-o"></i>
+            <span class="menu-text">Receipt Temp<strong></strong> </span>
+        </a>
+
+    </li>
+    <li>
+        <a href="Receipt.smi?type=invat" id="menu-invat">
+            <i class="menu-icon fa fa-file-text-o"></i>
+            <span class="menu-text">Receipt Vat<strong></strong> </span>
+        </a>
+        <b class="arrow"></b>
+    </li>
+</ul>
+
+<script>
+    $(document).ready(function () {
+        // use datetimepicker
+        $('.date').datetimepicker();
+        $('.spandate').click(function () {
+            var position = $(this).offset();
+            console.log("positon :" + position.top);
+            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+
+        });
+
+       $('table tbody').on('click', 'tr', function () {
+            $(this).addClass('row_selected').siblings().removeClass('row_selected');
+           
+        });
+        var path = location.pathname;
+        var name = path.split("/");
+        var listpara = location.search;
+        
+        if(listpara.indexOf('outtemp') != -1){
+            $("#menu-outtemp").css('background-color', '#ccc');
+        }else if(listpara.indexOf('intemp') != -1){
+            $("#menu-intemp").css('background-color', '#ccc');
+        }else if(listpara.indexOf('outvat') != -1){
+            $("#menu-outvat").css('background-color', '#ccc');
+        }else if(listpara.indexOf('invat') != -1){
+            $("#menu-invat").css('background-color', '#ccc');
+        }else{
+            //console.log(name[2]);
+            str = name[2].split(".");
+            //console.log(str[0]);
+            sub = str[0].substr(0, 9);
+            //console.log(sub);
+            var $select = $('a[href*="' + sub + '"]');
+            $("#ReceiptMenu").find($select).css('background-color', '#ccc');           
+        }
+
+        
+       
+        
+        $("#ReceiptMenu a").one('mouseover', function () {
+
+            var action = '?action=edit';
+            if ($("#actionIDown").val() == 'new') {
+                action = "&action=new";
+                $('#ReceiptMenu a').click(function (e) {
+                    e.preventDefault();
+                });
+            }
+            //console.log("href");
+            $(this).attr('href', $(this).attr('href') + action);
+        });
+    });
+
+
+</script>
