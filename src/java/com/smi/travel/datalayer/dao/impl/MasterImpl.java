@@ -170,6 +170,11 @@ public class MasterImpl implements MasterDao{
        return result; 
     }
 
+    @Override
+    public int LockAndUnLockBooking(String MasterID, int[] Flag) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     
 
    

@@ -19,5 +19,6 @@ public interface MasterDao {
     public int insertBooking(Master master,Passenger passenger);
     public int updateBooking(Master master,Passenger passenger);
     public int getMaxRefno();
+    public int LockAndUnLockBooking(String MasterID,int[] Flag);
 
 }
