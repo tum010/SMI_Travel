@@ -1,13 +1,13 @@
 <ul id="PaymentTourHotel" class="nav nav-list" style="top: 0px;  background-color: #FAFEFA;border: solid 1px #0063DC">
     <li>
-        <a href="PaymentTourHotel.smi">
+        <a href="PaymentTourHotel.smi" id="payment">
            <i class="fa fa-money"></i>
             <span class="menu-text">Payment Tour Hotel</span>
         </a>
         <b class="arrow"></b>
     </li>
     <li>
-        <a href="SearchPaymentTourHotel.smi" >
+        <a href="SearchPaymentTourHotel.smi" id="paymentSearch" >
             <i class="fa fa-search-plus"></i>
             <span class="menu-text"> Search Payment </span>
         </a>
@@ -17,20 +17,14 @@
 <script>
     $(document).ready(function () {
         var path = location.pathname;
-//        alert("Path : "+path);
-        var name = path.split("/");
-//        alert("Name : "+name);
-        console.log(name);
-        str = name[2].split(".");
-//        alert("str : "+str);
-        console.log(str);
-        sub = str[0].substr(0, 9);
-//        alert("sub : "+sub);
-        console.log(sub);
-        var $select = $('a[href*="' + sub + '"]');
-         console.log($select);
-        $("#PaymentTourHotel").find($select).css('background-color', '#ccc');
-
+//        alert("Path : "+path)
+        alert(path.indexOf('PaymentTourHotel'));
+        if(path.indexOf('PaymentTourHotel') == 11){
+            $("#payment").css('background-color', '#ccc');
+        }else if(path.indexOf('PaymentTourHotel') == 17){
+             $("#paymentSearch").css('background-color', '#ccc');
+        }
+        
         $("#PaymentTourHotel a").one('mouseover', function () {
 
             var action = '?action=edit';
