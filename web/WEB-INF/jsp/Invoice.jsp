@@ -56,8 +56,11 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4>
-                                            <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}">
+                                            <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="">
                                             <span id="SpanEdit${advanced.search}">Reservation</span>
+                                            </a>
+                                            <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" style="margin-left: 50em" onclick="">
+                                                <span id="arrowReservstion" class="arrowReservstion glyphicon glyphicon-chevron-down"></span> 
                                             </a>
                                         </h4>               
                                     </div>
@@ -430,6 +433,14 @@
                 $(this).addClass('row_selected');
                 $('#hdGridSelected').val($('#MasterReservation tbody tr.row_selected').attr("id"));
             }
+        });
+        
+        $('#collapseExample${advanced.search}').on('shown.bs.collapse', function () {
+            $(".arrowReservstion").removeClass("glyphicon glyphicon-chevron-down").addClass("glyphicon glyphicon-chevron-up");
+        });
+
+        $('#collapseExample${advanced.search}').on('hidden.bs.collapse', function () {
+           $(".arrowReservstion").removeClass("glyphicon glyphicon-chevron-up").addClass("glyphicon glyphicon-chevron-down");
         });
     });   
 </script>
