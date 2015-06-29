@@ -288,11 +288,11 @@
                                         <td>
                                             ${city.count}
                                         </td>
-                                        <td class="form-group">                 
+                                        <td >                 
                                             <input id="input-get-city-${city.count}" value="${pa.MCity.id}" hidden="">
                                                         <!--<input type="text" class="form-control cityName" id="select-passneger-${city.count}" name="row-city-${city.count}-name"  valHidden="${cityList.id}" value="${cityList.name}"  />-->
                                             
-                                            <select name="row-city-${city.count}-name" id="row-city-${city.count}-name" class="form-control selectize">
+                                            <select name="row-city-${city.count}-name" id="row-city-${city.count}-name" class="selectize not-full">
                                                 <option value="">- - City - -</option>
                                                 <c:forEach var="passen" items="${ListCity}">
                                                     <c:set var="select" value="" />
