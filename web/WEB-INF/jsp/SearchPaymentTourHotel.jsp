@@ -68,7 +68,7 @@
                         </div>
                     </div>
                     <!--Button Print and Search -->
-                    <div class="col-md-2 form-group text-left" style="padding-left:0px;padding-right:0px;">
+                    <div class="col-md-3 form-group text-left" style="padding-left:0px;padding-right:0px;">
                         <div class="col-xs-6 text-left">
                             <a id="ButtonNew" name="ButtonNew" onclick="" class="btn btn-primary">
                                 <i class="fa fa-search"></i> Search
