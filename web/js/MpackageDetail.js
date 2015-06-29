@@ -410,7 +410,7 @@ function CityAddRow(row) {
             '<tr>' +
             '<td hidden="">' + row + '</td>' +
             '<td  >'+row+'</td>' +
-            '<td><select id="row-city-' + row + '-name" name="row-city-' + row + '-name" class="form-control selectize"><option value="">- - City - -</option></select></td>' +
+            '<td><select id="row-city-' + row + '-name" name="row-city-' + row + '-name" class="selectize not-full" ><option value="">- - City - -</option></select></td>' +
             '<td class="text-center">' +
             '<a class="remCF" onclick="ConfirmDelete(\'3\', \'\', \''+row+'\')">  '+
             '<span  id="SpanRemove'+row+'"  class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+                   
