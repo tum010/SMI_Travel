@@ -184,7 +184,7 @@
                             <label class="control-label" for="">Name :</lable>
                         </div>    
                         <div class="col-sm-4">
-                            <input  type="text" id="" name="" class="form-control" value="" readonly="">
+                            <input  type="text" id="" name="" class="form-control" value="" >
                         </div>
                         <div class="form-group">
                             <div class="col-sm-2" style="padding-left: 53px">
@@ -200,7 +200,7 @@
                             <label class="control-label" for="">Address :</lable>
                         </div>
                         <div class="col-sm-4">
-                            <textarea  rows="3" cols="100" id="" name="" class="form-control" value="" readonly=""></textarea>
+                            <textarea  rows="3" cols="100" id="" name="" class="form-control" value="" ></textarea>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-2"></div>
