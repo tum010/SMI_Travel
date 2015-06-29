@@ -1,8 +1,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript" src="js/PaymentTourHotel.js"></script> 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script type="text/javascript" src="js/workspace.js"></script> 
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+<link href="css/jquery-ui.css" rel="stylesheet">
 <section class="content-header" >
     <h1>
         Checking - Package Tour/Hotel
@@ -12,13 +14,19 @@
         <li class="active"><a href="#">Package Tour/Hotel</a></li>
     </ol>
 </section>
-<div class ="container"  style="padding-top: 15px;" ng-app=""> 
+<div class ="container"  style="padding-top: 15px;padding-left: 5px;" ng-app=""> 
     <!-- side bar -->
     <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
         <div ng-include="'WebContent/Checking/CheckingPackageTourHotel.html'"></div>
     </div>
     <!--Content -->
     <div class="col-sm-10">
+        <div class="row" style="padding-left: 15px">  
+            <div class="col-sm-6" style="padding-right: 15px">
+                <h4><b>Payment Tour / Hotel</b></h4>
+            </div>
+        </div>
+        <hr/>
         <!--Row 1 -->
         <div class="row" style="padding-left: 15px">
             <div class="col-xs-12 ">
@@ -41,7 +49,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-1 text-right" style="padding-left:0px;padding-right:0px;">
+                <div class="col-xs-1 text-left" style="padding-left:10px;padding-right:0px;">
                     <label class="control-label">Account:</lable>
                 </div>
                 <div class="col-md-3  text-left" style="padding-top : 5px;padding-left:0px;padding-right:0px;">
@@ -76,14 +84,14 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-xs-2 text-right" style="padding-left:0px;">
+                <div class="col-xs-2 text-right" style="padding-left:5px;padding-right: 10px;">
                     <label class="control-label">Department:</lable>
                 </div>
                 <div class="col-md-3  text-left" style="padding-top:5px;padding-left:0px;padding-right:0px;">
-                    <div class="col-sm-6 text-left" style="padding-left:2px;" >
+                    <div class="col-sm-6 text-left" style="padding-left:15px;" >
                         <input type="radio" name="Wendy"  id="Wendy" value="Wendy" checked />&nbsp;Wendy
                     </div>
-                    <div class="col-sm-6 text-left"  style="padding-left:2px;">
+                    <div class="col-sm-6 text-left"  style="padding-left:15px;">
                         <input type="radio" name="Outbound"  id="Outbound" value="Outbound" /> Outbound
                     </div>
                 </div>
