@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript" src="js/Invoice.js"></script> 
+<script type="text/javascript" src="js/SearchInvoice.js"></script> 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -160,7 +160,7 @@
                                         <span id="spanEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon"      
                                           onclick="EditBank('${table.id}', '${table.code}', '${table.name}', '${table.branch}', '${table.accNo}', '${table.accType}')" data-toggle="modal" data-target="#BankModal" >
                                         </span>
-                                        <span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteBank('${table.id}', '${table.code}', '${table.name}')" data-toggle="modal" data-target="#DelBank" >  </span>
+                                        <span  class="glyphicon glyphicon-remove deleteicon"  onclick="DisableInvoice('', '')" data-toggle="modal" data-target="#DisableInvoice">  </span>
                                         </center>
                                     </td>
                                 </tr>
@@ -172,6 +172,44 @@
     </div>
 </div>        
 
+<!--Disable-->
+<div class="modal fade" id="DisableInvoice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Finance & Cashier - Search invoice</h4>
+            </div>
+            <div class="modal-body" id="disableVoid">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick='window.top.location.href="Invoice.smi?button=disable"'>Delete</button>               
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->      
+
+<!--Enable-->
+<div class="modal fade" id="EnableInvoid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Finance & Cashier - Search invoice </h4>
+            </div>
+            <div class="modal-body" id="enableCode">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="Enable()" class="btn btn-success">Enable</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal --> 
+                                        
 <!--Script-->
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
@@ -193,5 +231,6 @@
                 $('#hdGridSelected').val($('#MasterInvoice tbody tr.row_selected').attr("id"));
             }
         });
+               
     });   
 </script>
