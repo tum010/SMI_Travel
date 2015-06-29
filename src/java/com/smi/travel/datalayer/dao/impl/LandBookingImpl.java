@@ -9,8 +9,11 @@ package com.smi.travel.datalayer.dao.impl;
 import com.smi.travel.datalayer.dao.LandBookingDao;
 import com.smi.travel.datalayer.entity.LandBooking;
 import com.smi.travel.datalayer.entity.LandItinerary;
+import com.smi.travel.datalayer.entity.PackageItinerary;
 import com.smi.travel.datalayer.entity.PackageTour;
 import com.smi.travel.datalayer.entity.Product;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import org.hibernate.Query;
@@ -47,6 +50,7 @@ public class LandBookingImpl implements LandBookingDao{
         if (LandList.isEmpty()) {
             return null;
         }
+        LandList.get(0).setLandItineraries(SortItineraryList(LandList.get(0).getLandItineraries()));
         result = LandList.get(0);
         return result;
     }
@@ -135,6 +139,51 @@ public class LandBookingImpl implements LandBookingDao{
         session.close();
         this.sessionFactory.close();
         return result;
+    }
+    
+    public List<LandItinerary> SortItineraryList(List<LandItinerary> data) {
+        List<LandItinerary> sortItinerary = new ArrayList<LandItinerary>();
+        if(data == null){
+            return data;
+        }else if(data.size() == 0){
+            return data;
+        }
+        List Dataindex = new ArrayList();
+        for (int i = 0; i < data.size(); i++) {
+            System.out.println("data id : " + data.get(i).getOrderNo());
+            if (data.get(i).getOrderNo() == 0) {
+                System.out.println("data id : null ");
+                return data;
+            }
+        }
+        for (int i = 0; i < data.size(); i++) {
+            Dataindex.add(data.get(i).getOrderNo());
+        }
+
+        Collections.sort(Dataindex);
+        for (int i = 0; i < Dataindex.size(); i++) {
+            for (int j = 0; j < data.size(); j++) {
+                if (Dataindex.get(i).equals(data.get(j).getOrderNo())) {
+                    System.out.println("order no : " + data.get(j).getOrderNo());
+                    if(!IsItineraryDupicate(sortItinerary,data.get(j))){
+                        sortItinerary.add(data.get(j));
+                    }   
+                }
+            }
+        }
+
+        return sortItinerary;
+    }
+    
+    public boolean IsItineraryDupicate(List<LandItinerary> Listdata,LandItinerary newData){
+        boolean isDup = false;
+        for(int i=0;i<Listdata.size();i++){
+            if(Listdata.get(i).getId().equalsIgnoreCase(newData.getId())){
+                isDup = true;
+                break;
+            }
+        }
+        return isDup;
     }
     
     /*
