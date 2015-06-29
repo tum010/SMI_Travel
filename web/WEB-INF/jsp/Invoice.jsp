@@ -8,8 +8,8 @@
 <link href="css/selectize.bootstrap3.css" rel="stylesheet">
 <link href="css/jquery-ui.css" rel="stylesheet">
 
-<c:set var="Type" value="${requestScope['typeInvoice']}" />
-<input type="hidden" id="Type" name="Type" value="${param.Type}">
+<c:set var="type" value="${requestScope['typeInvoice']}" />
+<input type="hidden" id="type" name="type" value="${param.type}">
 
 
 <section class="content-header" >
@@ -34,13 +34,13 @@
             <div class="row" style="padding-left: 15px">  
                 <div class="col-sm-6 " style="padding-right: 15px">
                     <c:choose>
-                        <c:when test="${fn:contains(Type , 'temp')}">
+                        <c:when test="${fn:contains(type , 'temp')}">
                             <h4><b>Invoice Temp</b></h4>
                         </c:when>
-                        <c:when test="${fn:contains(Type , 'vat')}">
+                        <c:when test="${fn:contains(type , 'vat')}">
                             <h4><b>Invoice Vat</b></h4>
                         </c:when>    
-                        <c:when test="${fn:contains(Type , 'NoVat')}">
+                        <c:when test="${fn:contains(type , 'NoVat')}">
                             <h4><b>Invoice No Vat</b></h4>
                         </c:when>    
                     </c:choose>                
@@ -111,7 +111,7 @@
                                                                     <td align="center" > 
                                                                         <center> 
                                                                             <span id="spanEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon"      
-                                                                              onclick="EditBank('${table.id}', '${table.code}', '${table.name}', '${table.branch}', '${table.accNo}', '${table.accType}')" data-toggle="modal" data-target="#BankModal" >
+                                                                              onclick="" data-toggle="modal" data-target="#BankModal" >
                                                                             </span>
                                                                         </center>
                                                                     </td>
@@ -288,9 +288,9 @@
                                                 <td align="center" > 
                                                 <center> 
                                                     <span id="spanEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon"      
-                                                      onclick="EditBank('${table.id}', '${table.code}', '${table.name}', '${table.branch}', '${table.accNo}', '${table.accType}')" data-toggle="modal" data-target="#BankModal" >
+                                                      onclick="" data-toggle="modal" data-target="#BankModal" >
                                                     </span>
-                                                    <span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteBank('${table.id}', '${table.code}', '${table.name}')" data-toggle="modal" data-target="#DelBank" >  
+                                                    <span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('', '')" data-toggle="modal" data-target="#DelDetailBill" >  
                                                     </span>
                                                 </center>
                                                 </td>
@@ -344,12 +344,12 @@
                                 <div class="panel-body">
                                     <div class="col-xs-12 ">
                                         <div class="col-md-2 text-right ">
-                                            <button type="button" onclick="printVoucher('');" class="btn btn-default">
+                                            <button type="button" onclick="" class="btn btn-default">
                                                 <span id="SpanPrint" class="glyphicon glyphicon-print"></span> Print Package
                                             </button>
                                         </div>
                                         <div class="col-md-2 text-left " style="padding-left: 0px">
-                                            <button type="button" onclick="printVoucher('');" class="btn btn-default">
+                                            <button type="button" onclick="" class="btn btn-default">
                                                 <span id="SpanPrint" class="glyphicon glyphicon-print"></span> Print Invoice New
                                             </button>
                                         </div>
@@ -400,15 +400,35 @@
                 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" onclick='window.top.location.href="Invoice.smi?button=disable"'>Delete</button>               
+                <button type="button" class="btn btn-danger" onclick='window.top.location.href="Invoice.smi?type=${param.type}&action=edit"'>Delete</button>               
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->      
 
-<!--Enable-->
-<div class="modal fade" id="EnableVoid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!--Disable-->
+<div class="modal fade" id="DisableVoid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Finance & Cashier - Invoice</h4>
+            </div>
+            <div class="modal-body" id="disableVoid">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="">Delete</button>               
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->      
+
+
+<!--Delete Detail Billable-->
+<div class="modal fade" id="DelDetailBill" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -418,8 +438,8 @@
             <div class="modal-body" id="enableCode">
                 
             </div>
-            <div class="modal-footer">
-                <button type="button" onclick="Enable()" class="btn btn-success">Enable</button>
+            <div class="modal-footer">  
+                <button type="button" onclick="DeleteDetailBill()" class="btn btn-danger">Delete</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
@@ -438,6 +458,18 @@
                 table.$('tr.row_selected').removeClass('row_selected');
                 $(this).addClass('row_selected');
                 $('#hdGridSelected').val($('#MasterReservation tbody tr.row_selected').attr("id"));
+            }
+        });
+        
+        $('#DetailBillableTable tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('row_selected')) {
+                $(this).removeClass('row_selected');
+                $('#hdGridSelected').val('');
+            }
+            else {
+                table.$('tr.row_selected').removeClass('row_selected');
+                $(this).addClass('row_selected');
+                $('#hdGridSelected').val($('#DetailBillableTable tbody tr.row_selected').attr("id"));
             }
         });
         
