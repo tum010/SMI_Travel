@@ -23,7 +23,7 @@ public class LandItineraryImpl implements LandItineraryDao{
     
     @Override
     public List<LandItinerary> getListItinerary(String landID) {
-        String query = "from LandItinerary l where l.landBooking.id = :landID";
+        String query = "from LandItinerary l where l.landBooking.id = :landID order by l.orderNo";
         Session session = this.sessionFactory.openSession();
         List<LandItinerary> ItineraryList = session.createQuery(query).setParameter("landID", landID).list();
         if (ItineraryList.isEmpty()) {
