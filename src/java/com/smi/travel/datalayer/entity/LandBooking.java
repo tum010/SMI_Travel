@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.entity;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -48,7 +49,7 @@ public class LandBooking {
      private Date outboundDepart;
      private Date outboundArrive;
      private String inboundHotel;
-     private Set landItineraries = new HashSet(0);
+     private List landItineraries;
 
     public LandBooking() {
         
@@ -60,7 +61,7 @@ public class LandBooking {
         this.okBy = okBy;
         this.inboundQty = inboundQty;
     }
-    public LandBooking(Agent agent, MItemstatus MItemstatus, PackageTour packageTour, Master master, String okBy, String category, String description, int inboundQty, Long inboundCost, Long inboundPrice, Integer isBill, Date createDate, Integer outboundAdQty, Long outboundAdCost, Long outboundAdPrice, Integer outboundChQty, Long outboundChCost, Long outboundChPrice, Integer outboundInQty, Long outboundInCost, Long outboundInPrice,String remark,Integer inboundChQty, Long inboundChCost, Long inboundChPrice, Integer inboundInQty, Long inboundInCost, Long inboundInPrice, String currency,Set landItineraries,Date outboundDepart,Date outboundArrive,String inboundHotel) {
+    public LandBooking(Agent agent, MItemstatus MItemstatus, PackageTour packageTour, Master master, String okBy, String category, String description, int inboundQty, Long inboundCost, Long inboundPrice, Integer isBill, Date createDate, Integer outboundAdQty, Long outboundAdCost, Long outboundAdPrice, Integer outboundChQty, Long outboundChCost, Long outboundChPrice, Integer outboundInQty, Long outboundInCost, Long outboundInPrice,String remark,Integer inboundChQty, Long inboundChCost, Long inboundChPrice, Integer inboundInQty, Long inboundInCost, Long inboundInPrice, String currency,List landItineraries,Date outboundDepart,Date outboundArrive,String inboundHotel) {
        this.agent = agent;
        this.MItemstatus = MItemstatus;
        this.packageTour = packageTour;
@@ -254,11 +255,11 @@ public class LandBooking {
         this.outboundInPrice = outboundInPrice;
     }
 
-    public Set getLandItineraries() {
+    public List getLandItineraries() {
         return landItineraries;
     }
 
-    public void setLandItineraries(Set landItineraries) {
+    public void setLandItineraries(List landItineraries) {
         this.landItineraries = landItineraries;
     }
 
