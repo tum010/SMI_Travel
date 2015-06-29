@@ -296,7 +296,6 @@
 </script>
 <script type="text/javascript">
 $(document).ready(function(){
-    var counter = 2;
     $("#addButton").click(function () {
         $('#TextBoxDiv2').show();
     });
