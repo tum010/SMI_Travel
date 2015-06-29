@@ -44,7 +44,7 @@
 
             <div class="col-md-3" style="padding-left:  24px" >
                 <div  style="padding-top: 20px">   
-                    <button type="button" id="acs" onclick="searchAction()"  class="btn btn-primary">Search</button>           
+                    <button type="button" id="acs" onclick="searchAction()"  class="btn btn-primary"><span class="fa fa-search"></span> Search</button>           
                     <input type="hidden" name="action" id="Action"/>
                     <input type="hidden" id="HotelID" name="hotelID" >
                 </div>

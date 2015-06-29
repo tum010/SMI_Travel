@@ -99,7 +99,7 @@
                     <div class="col-md-2">
                         <div style="padding-top: 20px">   
                             <input type="hidden" name="action" id="action" value="search">
-                            <button type="submit" id="btnSearchCommission" name="btnSearchCommission" onclick="" class="btn btn-primary">Search</button>           
+                            <button type="submit" id="btnSearchCommission" name="btnSearchCommission" onclick="" class="btn btn-primary"><span class="fa fa-search"></span> Search</button>           
                         </div>
                     </div>
                 </form>

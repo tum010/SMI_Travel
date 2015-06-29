@@ -120,7 +120,7 @@
 
                 <div class="col-md-1">
                     <div  style="padding: 20px 0px 0px 10px">   
-                        <button type="button" id="searchBank" onclick="searchAction()"  class="btn btn-primary">Search</button>           
+                        <button type="button" id="searchBank" onclick="searchAction()"  class="btn btn-primary"><span class="fa fa-search"></span> Search</button>           
                         <input type="hidden" name="action" id="Action"/>
                         <input type="hidden" id="BankId" name="BankId" >
                     </div>
@@ -238,7 +238,7 @@
                     <input type="hidden" id="actionIUP" name="action">
                 </div>
                 <div class="modal-footer">
-                    <button id="btnSave" type="submit" onclick class="btn btn-primary" >Save</button>
+                    <button id="btnSave" type="submit" onclick class="btn btn-success" ><span  class="fa fa-save"></span> Save</button>
                     <button id="btnClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div><!-- /.modal-content -->

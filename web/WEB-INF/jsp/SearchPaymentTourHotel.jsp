@@ -1,8 +1,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript" src="js/SearchPaymentTourHotel.js"></script> 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script type="text/javascript" src="js/workspace.js"></script> 
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+<link href="css/jquery-ui.css" rel="stylesheet">
 <section class="content-header" >
     <h1>
         Checking - Search Payment
@@ -19,6 +21,12 @@
     </div>
     <!--Content -->
     <div class="col-sm-10">
+        <div class="row" style="padding-left: 15px">  
+            <div class="col-sm-6" style="padding-right: 15px">
+                <h4><b>Search Payment Tour / Hotel</b></h4>
+            </div>
+        </div>
+        <hr/>
         <!--Input Search -->
         <div class="panel panel-default">  
             <div class="panel-heading">

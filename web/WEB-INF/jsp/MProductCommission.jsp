@@ -56,10 +56,10 @@
                             <input type="text" class="form-control" maxlength="255" id="ProductNameSearch" name="ProductNameSearch" value="<c:out value="${ProductName}" />">
                         </div>
                     </div>       
-                    <div class="col-md-1">
-                        <div style="padding-top: 20px">   
+                    <div class="col-md-2">
+                        <div style="padding-top: 20px;">   
                             <input type="hidden" name="action" id="action" value="search">
-                            <button type="submit" id="btnSearchCommission" name="btnSearchCommission" onclick="searchAction()" class="btn btn-primary">Search</button>           
+                            <button type="submit" id="btnSearchCommission" name="btnSearchCommission" onclick="searchAction()" class="btn btn-primary"><span class="fa fa-search"></span> Search</button>           
                         </div>
                     </div>
                     <div class="col-md-2" >

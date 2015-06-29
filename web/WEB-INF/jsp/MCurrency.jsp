@@ -78,7 +78,7 @@
 
                     <div class="col-md-3">
                         <div  style="padding-top: 20px">   
-                            <button type="button" id="acs" onclick="searchAction()"  class="btn btn-primary">Search</button>           
+                            <button type="button" id="acs" onclick="searchAction()"  class="btn btn-primary"><span class="fa fa-search"></span> Search</button>           
                             <input type="hidden" name="action" id="Action"/>
                         </div>
                     </div>
@@ -160,7 +160,7 @@
                
             </div>
             <div class="modal-footer">
-                <button id="btnSave" type="submit"  class="btn btn-primary">Save</button>
+                <button id="btnSave" type="submit"  class="btn btn-success"><span  class="fa fa-save"></span> Save</button>
                 <button id="btnClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->

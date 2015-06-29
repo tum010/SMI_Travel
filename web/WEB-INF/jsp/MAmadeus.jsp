@@ -146,7 +146,7 @@
                     <input type="hidden" id="Name" name="Name" >
                 </div>
                 <div class="modal-footer">
-                    <button id="saveConfigButton" name="saveConfigButton" type="submit" onclick class="btn btn-primary" disabled>Save</button>
+                    <button id="saveConfigButton" name="saveConfigButton" type="submit" onclick class="btn btn-success" disabled><span  class="fa fa-save"></span> Save</button>
                     <button id="closeConfigButton" name="closeConfigButton" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div><!-- /.modal-content -->

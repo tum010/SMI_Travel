@@ -45,7 +45,7 @@
 
             <div class="col-md-2 " >
                 <div  style="padding-top: 20px; padding-left: 8px">   
-                    <button type="button" id="daytourSearchButton" name="daytourSearchButton" onclick="searchAction()"  class="btn btn-primary">Search</button>           
+                    <button type="button" id="daytourSearchButton" name="daytourSearchButton" onclick="searchAction()"  class="btn btn-primary"><span class="fa fa-search"></span> Search</button>           
                     <input type="hidden" name="action" id="Action" value="search"/>
                 </div>
             </div>   
