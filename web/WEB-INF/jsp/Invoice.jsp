@@ -60,12 +60,12 @@
                                             <span id="SpanEdit${advanced.search}">Reservation</span>
                                             </a>
                                             <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" style="margin-left: 50em" onclick="">
-                                                <span id="arrowReservstion" class="arrowReservstion glyphicon glyphicon-chevron-down"></span> 
+                                                <span id="arrowReservstion" class="arrowReservstion glyphicon glyphicon-chevron-up"></span> 
                                             </a>
                                         </h4>               
                                     </div>
                                     <div class="panel-body">               
-                                        <div class="collapsing" id="collapseExample${advanced.search}" aria-expanded="false">
+                                        <div class=" accordion-body collapse in" id="collapseExample${advanced.search}" aria-expanded="false">
                                             <div class="col-md-12">
                                                 <div class="col-xs-2 col-md-2 text-left">
                                                     <label class="control-label" for="">Reservation Travox </lable>
@@ -220,10 +220,16 @@
                             <label class="control-label" for="">Sale&nbsp;Staff</label>
                         </div>                       
                         <div class="col-md-2 form-group">
-                            <input type="text"  class="form-control" id="" name=""  value="" >
+                            <div class="input-group">
+                            <input type="hidden" class="form-control" id="" name="" value=""/>
+                            <input type="text" class="form-control" id="" name="" value="" style="background-color: #ffffff">
+                            <span class="input-group-addon" id=""  data-toggle="modal" data-target="#">
+                                <span class="glyphicon-search glyphicon"></span>
+                            </span>
+                            </div>
                         </div>
                         <div class="col-md-3 form-group">
-                            <input type="text"  class="form-control" id="" name=""  value="" >
+                            <input type="text"  class="form-control" id="" name=""  value="" readonly="">
                         </div>
                         <div class="col-md-2 form-group">
                              <label class="control-label"><input onclick='' type="checkbox" id="Grpup" name="Grpup" ${enableGrpup} ${checkGrpup}>  Group Yes/No</label>
@@ -354,7 +360,7 @@
                                             </button>
                                         </div>
                                         <div class="col-md-1 text-right ">
-                                            <button type="button" class="btn btn-primary" onclick="EnableVoid();" data-toggle="modal" data-target="#EnableVoid">
+                                            <button type="button" class="btn btn-primary hidden" onclick="EnableVoid();" data-toggle="modal" data-target="#EnableVoid">
                                                 <span id="SpanPrint" class="glyphicon glyphicon-ok" ></span> Void
                                             </button>
                                             <button type="button" class="btn btn-danger" onclick="DisableVoid();" data-toggle="modal" data-target="#DisableVoid">
