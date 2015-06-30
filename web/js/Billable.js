@@ -39,10 +39,14 @@ $(document).ready(function() {
         }else{
             if(event.keyCode === 13){
                 billArray = [];
-                searchCustomerAutoList(this.value);
-                
+                searchCustomerAutoList(this.value);             
             }
         }
+    });
+    $("#billto").keydown(function(){
+        var position = $(this).offset();
+        $(".ui-widget").css("top", position.top + 30);
+        $(".ui-widget").css("left", position.left); 
     });
 });
 
@@ -91,7 +95,6 @@ function CallAjaxAuto(param){
                 $("#billto").val(billid);
                 $("#billname").val(billname);
                 $("#address").val(billaddr);
-//                $("#billto").trigger("keypress");
                 $("#billto").autocomplete({
                     source: billArray,
                     close:function( event, ui ) {
@@ -100,14 +103,8 @@ function CallAjaxAuto(param){
                  });
                 var event = jQuery.Event('keydown');
                 event.keyCode = 40;
-                $("#billto").trigger(event,function(){
-                   
-                }); 
-//                $("#billto").keydown(function(){
-//                    var position = $(this).offset();
-//                    $(".ui-widget").css("top", position.top + 30);
-//                    $(".ui-widget").css("left", position.left); 
-//                });
+                $("#billto").trigger(event);
+
                 
             }, error: function(msg) {
                 console.log('auto ERROR');
