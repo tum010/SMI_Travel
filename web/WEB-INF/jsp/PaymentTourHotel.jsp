@@ -106,7 +106,7 @@
                 <div class="col-sm-12">
                     <div class="input-group" id="CodeValidate">
                         <input name="InputInvoiceSupCode" id="InputInvoiceSupCode" type="text" class="form-control" value="" />
-                        <span class="input-group-addon" data-toggle="modal" data-target="#InvoiceSupModal">
+                        <span class="input-group-addon" data-toggle="modal" data-target="#SearchInvoiceSup">
                             <span class="glyphicon-search glyphicon"></span>
                         </span>    
                     </div>    
@@ -181,7 +181,7 @@
                             <td>test description</td>
                             <td class="text-center">
                                 <a href="#" onclick=""  data-toggle="modal" data-target="">
-                                    <span id="" class="glyphicon glyphicon-remove deleteicon"></span>
+                                    <span id="" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal" data-target="#delSearchPaymentTourHotelModal"></span>
                                 </a>
                             </td>
                         </tr>
@@ -261,9 +261,72 @@
         </div><!--End Button -->
     </div>
 </div>
+<!--Delete Payment Outbound Modal-->
+<div class="modal fade" id="delSearchPaymentTourHotelModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Delete Payment Tour/Hotel</h4>
+            </div>
+            <div class="modal-body" id="delCode"></div>
+            <div class="modal-footer">
+                <button id="btnDelete" type="button" onclick="Delete()" class="btn btn-danger">Delete</button>
+                <button id="btnDeleteClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--Search Invoice Sup-->
+<div class="modal fade" id="SearchInvoiceSup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Search Invoice</h4>
+            </div>
+            <div class="modal-body">
+                <table class="display" id="SearchInvoicSupTable">
+                    <thead class="datatable-header">
+                        <tr>
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr class="packet">
+                                <td class="">XXX
+                                <td>XXXXX</td>
+                                <td class="text-center">
+                                    <a href="">
+                                        <span class="glyphicon glyphicon-check"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button id="SearchInvoiceSupOK" name="SearchInvoiceSupOK" type="button"  class="btn btn-success" data-dismiss="modal">OK</button>
+                <button id="SearchInvoiceSupClose" name="SearchInvoiceSupClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal-dialog -->
 <script type="text/javascript">
     $(document).ready(function () {
         $('.date').datetimepicker();
         $('.datemask').mask('0000-00-00');
-    });
+        
+        $('#SearchInvoicSupTable').dataTable({bJQueryUI: true,
+        "sPaginationType": "full_numbers",
+        "bAutoWidth": true,
+        "bFilter": true,
+        "bPaginate": true,
+        "bInfo": false,
+        "bLengthChange": false,
+        "iDisplayLength": 3
+        });
+    });  
 </script>
