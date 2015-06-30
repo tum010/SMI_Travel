@@ -1,16 +1,82 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+<ul id="TaxInvoiceMenuLeft" class="nav nav-list" style="top: 0px;  background-color: #FAFEFA;border: solid 1px #0063DC">
+    <li>
+        <a href="SearchTaxInvoice.smi" id="menu-searchtaxinvoice">
+            <i class="menu-icon fa fa-search-plus"></i> 
+            <span class="menu-text">Search Tax Invoice </span>
+        </a>
+        <b class="arrow"></b>
+    </li>   
+    <li>
+        <a href="#" >
+            <span class="menu-text"><b>Wendy/Outbound</b></span>
+        </a>               
+        <b class="arrow"></b>
+    </li>
+    <li>
+        <a href="TaxInvoice.smi?Department=WO&" id="menu-wendyoutbound">
+            <i class="menu-icon fa fa-file-text-o"></i>
+            <span class="menu-text"><b>Tax Invoice</b></span>
+        </a>
+    </li>
+    <li>
+        <a href="#" >
+            <span class="menu-text"><b>Inbound</b></span>
+        </a>
+    </li>
+    <li>
+        <a href="TaxInvoice.smi?Department=INB&" id="menu-invoicetemp">
+            <i class="menu-icon fa fa-file-text-o"></i>
+            <span class="menu-text"><b>Tax Invoice</b></span>
+        </a>
+    </li>
+</ul>
+
+<script>
+    $(document).ready(function () {
+        // use datetimepicker
+        $('.date').datetimepicker();
+        $('.spandate').click(function () {
+            var position = $(this).offset();
+            console.log("positon :" + position.top);
+            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+
+        });
+
+       $('table tbody').on('click', 'tr', function () {
+            $(this).addClass('row_selected').siblings().removeClass('row_selected');
+           
+        });
+        var path = location.pathname;
+        var name = path.split("/");
+        var listpara = location.search;
+        
+        if(listpara.indexOf('WO') != -1){
+            $("#menu-wendyoutbound").css('background-color', '#ccc');
+        }else if(listpara.indexOf('INB') != -1){
+            $("#menu-invoicetemp").css('background-color', '#ccc');
+        }else{
+            //console.log(name[2]);
+            str = name[2].split(".");
+            //console.log(str[0]);
+            sub = str[0].substr(0, 9);
+            //console.log(sub);
+            var $select = $('a[href*="' + sub + '"]');
+            $("#InvoiceMenuLeft").find($select).css('background-color', '#ccc');           
+        }
+ 
+        $("#TaxInvoiceMenuLeft a").one('mouseover', function () {
+
+            var action = '?action=edit';
+            if ($("#actionIDown").val() == 'new') {
+                action = "&action=new";
+                $('#TaxInvoiceMenuLeft a').click(function (e) {
+                    e.preventDefault();
+                });
+            }
+            //console.log("href");
+            $(this).attr('href', $(this).attr('href') + action);
+        });
+    });
+
+
+</script>

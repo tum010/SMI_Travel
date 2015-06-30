@@ -249,22 +249,22 @@
         <div class="row text-center" >
             <div class="col-xs-4 text-right" ></div>
             <div class="col-xs-2 text-right" style="width: 100px;" >
-                <button type="submit" id="ButtonSave" name="ButtonSave" class="btn btn-primary">
+                <button type="submit" id="ButtonPrint" name="ButtonPrint" class="btn btn-primary">
                     <i class="fa fa-print"></i> Print             
                 </button>
             </div>
             <div class="col-xs-2 text-right" style="width: 100px;" >
-                <button type="submit" id="ButtonSave" name="ButtonSave" class="btn btn-default">
+                <button type="submit" id="ButtonClear" name="ButtonClear" class="btn btn-default">
                     <i class="fa fa-refresh"></i> Clear             
                 </button>
             </div>
             <div class="col-xs-2 text-left" style="width: 100px;">
-                <a id="ButtonNew" name="ButtonNew" onclick="" class="btn btn-success">
+                <a id="ButtonSave" name="ButtonSave" onclick="" class="btn btn-success">
                     <i class="fa fa-save"></i> Save
                 </a>
             </div> 
             <div class="col-xs-2 text-right" style="width: 100px;" >
-                <button type="submit" id="ButtonSave" name="ButtonSave" class="btn btn-success">
+                <button type="submit" id="ButtonNew" name="ButtonNew" class="btn btn-success">
                     <i class="fa fa-plus"></i> New             
                 </button>
             </div>
