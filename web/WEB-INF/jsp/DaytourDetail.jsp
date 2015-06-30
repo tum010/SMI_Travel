@@ -349,6 +349,7 @@
 
                             <tbody>
                                 <c:forEach var="item" items="${Coupons}" varStatus="status">
+                                    
                                     <c:set var="checkedCoupon" value="" />
                                     <c:set var="CouponId" value="" />
                                     <c:forEach var="coupon" items="${daytourBooking.coupons}">
@@ -357,21 +358,23 @@
                                             <c:set var="CouponId" value="${coupon.id}" />
                                         </c:if>
                                     </c:forEach>
-                                    <!-- OtherBooking is CouponList , BookingId is DaytourBook and Coupons id is relationship between OtherBooking Id and DaytourBooking. -->
-                                    <tr id="${status.count}" >
-                                        <td class="hide"><input type="text" id="row-${status.count}-bookingotherid" name="row-${status.count}-bookingotherid" value="${item.id}">${item.id}</td>
-                                        <td class="hide"><input type="text" id="row-${status.count}-couponid" name="row-${status.count}-couponid" value="${CouponId}"></td>
-                                        <td>${status.count}</td>  
-                                        <td class="text-center">${item.otherDate}</td>
-                                        <td class="text-center">${item.otherTime}</td>
-                                        <td class="text-center money">${item.adQty + item.chQty + item.inQty }</td>
-                                        <td><input type="hidden" id="row-${status.count}-couponname" name="row-${status.count}-couponname" value="${item.product.name}">${item.product.name}</td>
-                                        <td class="text-center"><input  type="checkbox"   id="row-${status.count}-couponcheck" name="row-${status.count}-couponcheck"  ${checkedCoupon}></td>
-                                            <c:if test="${status.last}">
-                                    <input type="hidden" id="counterCoupon" name="counterCoupon" />
-                                </c:if>
+                                    <c:if test="${item.status.id  == 1}" >
+                                         <!-- OtherBooking is CouponList , BookingId is DaytourBook and Coupons id is relationship between OtherBooking Id and DaytourBooking. -->
+                                        <tr id="${status.count}" >
+                                            <td class="hide"><input type="text" id="row-${status.count}-bookingotherid" name="row-${status.count}-bookingotherid" value="${item.id}">${item.id}</td>
+                                            <td class="hide"><input type="text" id="row-${status.count}-couponid" name="row-${status.count}-couponid" value="${CouponId}"></td>
+                                            <td>${status.count}</td>  
+                                            <td class="text-center">${item.otherDate}</td>
+                                            <td class="text-center">${item.otherTime}</td>
+                                            <td class="text-center money">${item.adQty + item.chQty + item.inQty }</td>
+                                            <td><input type="hidden" id="row-${status.count}-couponname" name="row-${status.count}-couponname" value="${item.product.name}">${item.product.name}</td>
+                                            <td class="text-center"><input  type="checkbox"   id="row-${status.count}-couponcheck" name="row-${status.count}-couponcheck"  ${checkedCoupon}></td>
+                                                <c:if test="${status.last}">
+                                                    <input type="hidden" id="counterCoupon" name="counterCoupon" />
+                                                </c:if>
 
-                                </tr>
+                                        </tr>
+                                    </c:if>
                             </c:forEach>
                             </tbody>
                         </table>

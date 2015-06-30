@@ -255,7 +255,7 @@
      
            </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" onclick='window.top.location.href="Other.smi?referenceNo=${param.referenceNo}&action=delete&callPageFrom=FromDayTour&OtherID=" + document.getElementById("OtherIdDelete").value;'>Delete</button>               
+                <button type="button" class="btn btn-danger" onclick='window.top.location.href="Other.smi?referenceNo=${param.referenceNo}&action=delete&callPageFrom=FromDayTour&OtherID=" + document.getElementById("OtherIdDelete").value;'>Disable</button>               
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
                 <input type="hidden" id="OtherIdDelete" name="OtherID" />
@@ -350,7 +350,7 @@
     function DeleteOther(id,code){
         var OtherID = document.getElementById('OtherIdDelete');
         OtherID.value = id;
-        document.getElementById('delCode').innerHTML = "Are you sure to delete booking other : " + code + " ?";
+        document.getElementById('delCode').innerHTML = "Are you sure to disable booking other : " + code + " ?";
     }
 
     function EnableOther(id,code){
