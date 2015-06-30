@@ -30,16 +30,16 @@
                 <div class="col-sm-6 " style="padding-right: 15px">
                     <c:choose>
                         <c:when test="${fn:contains(Type , 'outtemp')}">
-                            <h4><b>Receipt Temp</b></h4>
+                            <h4><b>Receipt Temp Wendy/Outbound</b></h4>
                         </c:when>
                         <c:when test="${fn:contains(Type , 'outvat')}">
-                            <h4><b>Receipt Vat</b></h4>
+                            <h4><b>Receipt Vat Wendy/Outbound</b></h4>
                         </c:when>    
                         <c:when test="${fn:contains(Type , 'intemp')}">
-                            <h4><b>Receipt Temp</b></h4>
+                            <h4><b>Receipt Temp Inbound</b></h4>
                         </c:when>    
                         <c:when test="${fn:contains(Type , 'invat')}">
-                            <h4><b>Receipt Vat</b></h4>
+                            <h4><b>Receipt Vat Inbound</b></h4>
                         </c:when> 
                     </c:choose>                
                 </div>

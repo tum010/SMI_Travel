@@ -144,7 +144,7 @@
                                 <tr ${colourStatus}>
                                     <td>${i.count}</td>
                                     <td>${flight.airticketAirline.MAirline.getCode()}</td>
-                                    <td>${flight.airticketAirline.MAirline.code}-${flight.flightNo}</td>
+                                    <td>${flight.flightNo}</td>
                                     <td>${flight.sourceCode}</td>
                                     <td>${flight.desCode}</td>
                                     <td>${flight.departDate}</td>

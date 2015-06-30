@@ -29,25 +29,25 @@ $(document).ready(function() {
     });
 
     //autocomplete
-    $("#billto").keyup(function(e){
-        
+    $("#billto").keyup(function(event){
+        var position = $(this).offset();
+        $(".ui-widget").css("top", position.top + 30);
+        $(".ui-widget").css("left", position.left); 
         if($(this).val() === ""){
             $("#billname").val("");
             $("#address").val(""); 
         }else{
-            if(e.keyCode === 13){
+            if(event.keyCode === 13){
                 billArray = [];
-                searchCustomerAutoList(this.value);
-                console.log("billArray=="+billArray);
+                searchCustomerAutoList(this.value);    
             }
         }
+    });
+    $("#billto").keydown(function(){
         var position = $(this).offset();
         $(".ui-widget").css("top", position.top + 30);
         $(".ui-widget").css("left", position.left); 
-       
     });
-    
-   
 });
 
 function searchCustomerAutoList(name){
@@ -70,8 +70,7 @@ function CallAjaxAuto(param){
             cache: false,
             data: param,
             beforeSend: function() {
-               $("#dataload").removeClass("hidden");   
-               
+               $("#dataload").removeClass("hidden");    
             },
             success: function(msg) {     
                 console.log("getAutoListBillto =="+msg);
@@ -89,24 +88,21 @@ function CallAjaxAuto(param){
                         console.log("billaddr = "+billaddr);
                         billArray.push(billid);
                         billArray.push(billname);
-
-                    }
+                    }                 
                      $("#dataload").addClass("hidden"); 
-                     
                 }
                 $("#billto").val(billid);
                 $("#billname").val(billname);
                 $("#address").val(billaddr);
-                
-               
                 $("#billto").autocomplete({
                     source: billArray,
-                    minLength: 0,
                     close:function( event, ui ) {
-                       $(this).trigger('keyup');
+                       $("#billto").trigger("keyup");    
                     }
                  });
-   
+                var event = jQuery.Event('keydown');
+                event.keyCode = 40;
+                $("#billto").trigger(event);
                 
             }, error: function(msg) {
                 console.log('auto ERROR');

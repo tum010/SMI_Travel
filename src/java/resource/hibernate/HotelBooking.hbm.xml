@@ -57,23 +57,23 @@
         </property>
         
 
-        <set name="hotelPassengers" table="hotel_passenger" cascade="save-update" inverse="true" lazy="true" fetch="select">
+        <bag name="hotelPassengers" table="hotel_passenger" cascade="save-update" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="booking_hotel_id" not-null="true" />
             </key>
             <one-to-many class="com.smi.travel.datalayer.entity.HotelPassenger" />
-        </set>
-        <set name="hotelRooms" table="hotel_room" inverse="true" cascade="save-update" lazy="true" fetch="select">
+        </bag>
+        <bag name="hotelRooms" table="hotel_room" inverse="true" cascade="save-update" lazy="true" fetch="select">
             <key>
                 <column name="booking_hotel_id" not-null="true" />
             </key>
             <one-to-many class="com.smi.travel.datalayer.entity.HotelRoom" />
-        </set>
-        <set name="hotelRequests" table="hotel_request" inverse="true" cascade="save-update" lazy="true" fetch="select">
+        </bag>
+        <bag name="hotelRequests" table="hotel_request" inverse="true" cascade="save-update" lazy="true" fetch="select">
             <key>
                 <column name="booking_hotel_id" not-null="true" />
             </key>
             <one-to-many class="com.smi.travel.datalayer.entity.HotelRequest" />
-        </set>
+        </bag>
     </class>
 </hibernate-mapping>

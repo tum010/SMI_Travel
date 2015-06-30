@@ -624,7 +624,7 @@
                             <c:forEach var="table" items="${itinerary_list}" varStatus="Counter">
                                 <tr>
                                     <td class="hidden"> <input  type="hidden"  value="${table.id}">  </td>
-                                    <td> <input style="width: 20px" id="row-${Counter.count}-no" name="row-${Counter.count}-no" type="text"  class="form-control number" value="${Counter.count}">  </td>
+                                    <td> <input style="width: 20px" id="row-${Counter.count}-no" name="row-${Counter.count}-no" type="text"  class="form-control number" value="${table.orderNo}">  </td>
                                     <td> 
                                         <div class='input-group daydatepicker' id='daydatepicker-${Counter.count}' style="padding-left: 15px">
                                             <input style="width: 100px" type='text' class="form-control"  id="dayDate-${Counter.count}" name="dayDate-${Counter.count}" data-date-format="YYYY-MM-DD" value="${table.dayDate}" />

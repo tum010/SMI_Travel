@@ -169,6 +169,11 @@
 
                     </tr>
                 </thead>
+                <script>
+                    $(function() {
+                        $('[data-toggle="tooltip"]').tooltip({html: true});
+                    });
+                </script>
                 <tbody>
                     <c:forEach var="table" items="${OtherLists}">
                         <c:set var="colourStatus" value="" />
@@ -179,7 +184,7 @@
                             <c:set var="colourStatusFirstrow" value="background-color: #FFD3D3" />
                             <c:set var="statusicon" value="glyphicon-remove deleteicon" />
                         </c:if>
-                        <tr data-toggle="tooltip"  data-placement="left" title="<p align='left'>  date :${table.otherDate} <br> remark :${table.remark} </p>" ${colourStatus}>
+                        <tr data-toggle="tooltip"  data-placement="left" title="<p align='left'>  date :${table.otherDate} <br> remark :${table.remark} </p>" ${colourStatus} ${colourStatus}>
                             <td class="tdcenter ${colourStatus}" style="width:75px;${colourStatusFirstrow}"> ${table.otherDate} </td>
                             <td>${table.product.name}</td>
                             <td class="tdright moneyformat"> ${table.adCost}</td>
@@ -191,7 +196,7 @@
                             <td class="tdright moneyformat"> ${table.inCost}</td>
                             <td class="tdcenter moneyformat"> ${table.inQty}</td>
                             <td class="tdright moneyformat"> ${table.inPrice}</td>
-                            <td class="tdcenter">${master.currency}</td>
+                            <td class="tdcenter">${table.currency}</td>
                             <td class="tdright moneyformat"> ${(table.adPrice * table.adQty) + 
                                                                (table.chPrice * table.chQty) + 
                                                                (table.inPrice * table.inQty)}
@@ -250,7 +255,7 @@
      
            </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" onclick='window.top.location.href="Other.smi?referenceNo=${param.referenceNo}&action=delete&callPageFrom=FromDayTour&OtherID=" + document.getElementById("OtherIdDelete").value;'>Delete</button>               
+                <button type="button" class="btn btn-danger" onclick='window.top.location.href="Other.smi?referenceNo=${param.referenceNo}&action=delete&callPageFrom=FromDayTour&OtherID=" + document.getElementById("OtherIdDelete").value;'>Disable</button>               
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
                 <input type="hidden" id="OtherIdDelete" name="OtherID" />
@@ -345,7 +350,7 @@
     function DeleteOther(id,code){
         var OtherID = document.getElementById('OtherIdDelete');
         OtherID.value = id;
-        document.getElementById('delCode').innerHTML = "Are you sure to delete booking other : " + code + " ?";
+        document.getElementById('delCode').innerHTML = "Are you sure to disable booking other : " + code + " ?";
     }
 
     function EnableOther(id,code){
