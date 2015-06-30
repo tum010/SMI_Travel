@@ -473,19 +473,26 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                  
                                     <c:set var="guideBill" value="0"/>
                                     <c:set var="total" value="0"/>
-                                    <c:forEach var="expen" items="${dayTourOperationExpense}" varStatus="status">
+                                    <c:forEach var="expen" items="${dayTourOperationExpense}" varStatus="i">
                                         <tr>
                                             <td class="hidden">
-                                                <input id="expenId${status.count}" name="expenId${status.count}" class="form-control" value="${expen.id}">
-                                                <input id="countExpen${status.count}" name="countExpen" class="form-control" value="${status.count}">
+                                                <input id="expenId${i.count}" name="expenId${i.count}" class="form-control" value="${expen.id}">
+                                                <input id="countExpen${i.count}" name="countExpen" class="form-control" value="${i.count}">
                                             </td>
-                                            <td><input id="expenDescription${status.count}" name="expenDescription${status.count}" class="form-control" value="${expen.description}"></td>
-                                            <td style="width: 80px"><input id="expenQty${status.count}" name="expenQty${status.count}" class="form-control money" value="${expen.qty}"></td>
-                                            <td style="width: 100px"><input id="expenAmount${status.count}" name="expenAmount${status.count}" class="form-control money" value="${expen.amount}"></td>
-                                            <td>                            
-                                                <select name="expenSelectCur${status.count}" id="expenSelectCur${status.count}" class="form-control">
+                                            <td><input id="expenDescription${i.count}" name="expenDescription${i.count}" class="form-control" value="${expen.description}"></td>
+                                            <td style="width: 80px">
+                                                <input id="expenQty${i.count}" name="expenQty${i.count}" 
+                                                       class="form-control money" value="${expen.qty}">
+                                            </td>
+                                            <td style="width: 100px">
+                                                <input id="expenAmount${i.count}" name="expenAmount${i.count}" 
+                                                       class="form-control money" value="${expen.amount}">
+                                            </td>
+<!--                                            <td>                            
+                                                <select name="expenSelectCur${i.count}" id="expenSelectCur${i.count}" class="form-control">
                                                     <option value="${expen.currency}">${expen.currency}</option>
                                                     <c:forEach var="price" items="${mCurrency}" varStatus="status">
                                                         <c:if test="${expen.currency != price.code}">
@@ -493,24 +500,43 @@
                                                         </c:if>
                                                     </c:forEach>
                                                 </select>
-
-                                            </td>
+                                            </td>-->
+                                            <td>
+                                               <select id="expenSelectCur${i.count}" name="expenSelectCur${i.count}" class="">
+                                                   <option></option>
+                                                   <c:forEach var="price" items="${mCurrency}" >
+                                                       <c:set var="select1" value="" />
+                                                       <c:set var="selectedPlaceId1" value="${driver.staff.id}" />
+                                                       <c:if test="${expen.currency == price.code}">
+                                                           <c:set var="select1" value="selected" />
+                                                       </c:if>
+                                                       <option value="<c:out value="${price.code}" />" ${select1}><c:out value="${price.code}" /></option>   
+                                                   </c:forEach>
+                                               </select>
+                                               <script>
+                                                   $("#expenSelectCur${i.count}").selectize({
+                                                       sortField: 'text'
+                                                       
+                                                   });
+                                               </script>
+                                           </td>
                                             <td class="text-center">
-                                                <input type="hidden" value="${expen.priceType}" id="expenPriceTypeHiden${status.count}">
-                                                <input id="expenTypeS${status.count}" type="radio" value="S" name="expenPriceType${status.count}">&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;
-                                                <input id="expenTypeG${status.count}" type="radio" value="G" name="expenPriceType${status.count}">&nbsp;&nbsp;G
+                                                <input type="hidden" value="${expen.priceType}" id="expenPriceTypeHiden${i.count}">
+                                                <input  type="radio" value="S" 
+                                                         name="expenPriceType${i.count}" ${expen.priceType.equals("S") ? 'checked' : ''}>&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;
+                                                <input  type="radio" value="G" 
+                                                         name="expenPriceType${i.count}" ${expen.priceType.equals("G") ? 'checked' : ''}>&nbsp;&nbsp;G
                                                 <script>
-                                                    $(document).ready(function () {
-                                                        var status = $("#expenPriceTypeHiden${status.count}").val();
-                                                        $("input[name=expenPriceType${status.count}][value=" + status + "]").attr('checked', 'checked');
+                                                    $(document).ready(function () {  
+                                                        var status = $("#expenPriceTypeHiden${i.count}").val();
+                                                        $("input[name=expenPriceType${i.count}][value=" + status + "]").attr('checked', 'checked');
                                                     });
                                                 </script>
-
                                             </td>
 
                                             <td class="text-center">
-                                                <a id="expenButtonRemove${status.count}" name="expenButtonRemove${status.count}" onclick="setExpenId(${expen.id})"  data-toggle="modal" data-target="#DeleteExpenModal">
-                                                    <span id="expenSpanRemove${status.count}" name="expenSpanRemove${status.count}"  class="glyphicon glyphicon-remove deleteicon"></span>
+                                                <a id="expenButtonRemove${i.count}" name="expenButtonRemove${i.count}" onclick="setExpenId(${expen.id})"  data-toggle="modal" data-target="#DeleteExpenModal">
+                                                    <span id="expenSpanRemove${i.count}" name="expenSpanRemove${i.count}"  class="glyphicon glyphicon-remove deleteicon"></span>
                                                 </a>
                                             </td>
                                         </tr>
@@ -946,11 +972,23 @@
             id: "${dr.id}",
             name: "${dr.name}",
             username: "${dr.username}",
-            car: "${dr.car}",
+            car: "${dr.car}"
         });
     </script>
 </c:forEach>
-
+    
+<script> 
+    currency = [];
+</script>
+<c:forEach var="cur" items="${mCurrency}">
+    <script>
+        currency.push({
+            id: "${cur.id}",
+            code: "${cur.code}"
+        });
+    </script>
+</c:forEach>    
+    
 <c:if test="${! empty param.result}">
     <c:if test="${param.result =='success'}">        
         <script language="javascript">
@@ -964,6 +1002,3 @@
     </c:if>
 </c:if>
 
-<style>
-
-</style>

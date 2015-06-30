@@ -81,7 +81,7 @@ $(document).ready(function () {
     $("#BookingExpenseTable").on("keyup", function () {
         var rowAll = $("#BookingExpenseTable tr").length;
         $("td").keyup(function () {
-            if ($(this).find("input").val() != '') {
+            if ($(this).find("input").val() !== '') {
                 var colIndex = $(this).parent().children().index($(this));
                 var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
                 rowAll = $("#BookingExpenseTable tr").length;
@@ -93,7 +93,6 @@ $(document).ready(function () {
                     BookingExpenseTableAddRow(rowAll);
                 }
             }
-
         });
     });
     var tourId = $("#tourID").val();
@@ -241,7 +240,7 @@ function BookingExpenseTableAddRow(row) {
             '<td><input id="expenDescription' + row + '" name="expenDescription' + row + '"  type="text" class="form-control" maxlength="50"></td>' +
             '<td style="width:80px"><input id="expenQty' + row + '" name="expenQty' + row + '" type="text" class="form-control money" maxlength="50"></td>' +
             '<td style="width: 100px"><input id="expenAmount' + row + '" name="expenAmount' + row + '" type="text" class="form-control money" maxlength="50"></td>' +       
-            '<td><select name="expenSelectCur' + row + '" id="expenSelectCur' + row + '" class="form-control"><option value="THB">THB</option></select></td>' +
+            '<td><select name="expenSelectCur' + row + '" id="expenSelectCur' + row + '" class=""><option value=""></option></select></td>' +
             '<td class="text-center"><input id="expenTypeS' + row + '" name="expenPriceType' + row + '" type="radio" value="S" checked="checked">&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;&nbsp;' +
             '<input id="expenTypeG' + row + '" name="expenPriceType' + row + '" type="radio" value="G">&nbsp;&nbsp;G</td>' +
             '<td class="text-center">' +
@@ -251,7 +250,18 @@ function BookingExpenseTableAddRow(row) {
             '</tr>'
             );
     $("input[name=countExpen]").val(row);
+
+    $.each(currency,function(i,item){
+        $('#expenSelectCur' + row).append($('<option>', {
+            value: item.code,
+            text: item.code
+        }));
+    });
+    $('#expenSelectCur' + row).selectize({
+        sortField: 'text'
+    });
 }
+
 
 // import expen
 function importExpen() {
@@ -290,8 +300,8 @@ function addImportExpen(arrExpen) {
                 '<td class="hidden"><input id="expenId' + row + '" name="expenId' + row + '"  type="text">' +
                 '<td class="hidden"><input id="countExpen' + row + '" name="countExpen"  type="text" value="' + row + '">' +
                 '<td><input id="expenDescription' + row + '" name="expenDescription' + row + '"  type="text" class="form-control text-left" maxlength="50" value="' + item.desciption + '"></td>' +
-                '<td><input id="expenQty' + row + '" name="expenQty' + row + '" type="text" class="form-control money" maxlength="50"></td>' +
-                '<td><input id="expenAmount' + row + '" name="expenAmount' + row + '" type="text" class="form-control money" maxlength="50" value="' + item.amount + '"></td>' +
+                '<td style="width: 80px"><input id="expenQty' + row + '" name="expenQty' + row + '" type="text" class="form-control money" maxlength="50"></td>' +
+                '<td style="width: 100px"><input id="expenAmount' + row + '" name="expenAmount' + row + '" type="text" class="form-control money" maxlength="50" value="' + item.amount + '"></td>' +
                 '<td><select name="expenSelectCur' + row + '" id="expenSelectCur' + row + '" class="form-control"><option value="' + item.cur + '">' + item.cur + '</option></select></td>' +
                 '<td class="text-center"><input id="expenTypeS' + row + '" name="expenPriceType' + row + '" type="radio" value="S" '+(item.priceType==="S"?"checked":"")+ ' >&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;&nbsp;' +
                 '<input id="expenTypeG' + row + '" name="expenPriceType' + row + '" type="radio" value="G" '+(item.priceType==="G"?"checked":"")+ ' >&nbsp;&nbsp;G</td>' +

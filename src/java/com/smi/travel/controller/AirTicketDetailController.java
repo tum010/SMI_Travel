@@ -693,7 +693,7 @@ public class AirTicketDetailController extends SMITravelController {
             AirticketFlight airFlight = new AirticketFlight();
             airFlight.setAirticketAirline(airAirline);
 
-            airFlight.setFlightNo(bFlight.getBookingAirline().getAirlineCode()+""+bFlight.getFlightNo());
+            airFlight.setFlightNo(bFlight.getFlightNo());
             airFlight.setDepartDate(bFlight.getDepartureDate());
             airFlight.setDepartTime(bFlight.getDepartTime());
             airFlight.setArriveDate(bFlight.getArrivalDate());
