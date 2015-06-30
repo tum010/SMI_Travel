@@ -35,13 +35,13 @@
                 <div class="col-sm-6 " style="padding-right: 15px">
                     <c:choose>
                         <c:when test="${fn:contains(type , 'temp')}">
-                            <h4><b>Invoice Temp</b></h4>
+                            <h4><b>Invoice Temp Wendy/Outbound</b></h4>
                         </c:when>
                         <c:when test="${fn:contains(type , 'vat')}">
-                            <h4><b>Invoice Vat</b></h4>
+                            <h4><b>Invoice Vat Wendy/Outbound</b></h4>
                         </c:when>    
                         <c:when test="${fn:contains(type , 'NoVat')}">
-                            <h4><b>Invoice No Vat</b></h4>
+                            <h4><b>Invoice No Vat Wendy/Outbound</b></h4>
                         </c:when>    
                     </c:choose>                
                 </div>
