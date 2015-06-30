@@ -285,7 +285,7 @@ public class MonitorAmadeus extends MonitorScheduler {
             }
 //            System.out.println("Line " + line);
             String flightNo = getField("flight number", line);
-            flightNo = flightNo.replaceAll("\\s+", "");
+            flightNo = bAir.getAirlineCode() + flightNo.replaceAll("\\s+", "");
             String sourceCode = getField("source", line);
             String desCode = getField("destination", line);
             String deptDateS = getField("departure date", line);
