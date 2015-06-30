@@ -103,7 +103,6 @@ function CallAjaxAuto(param){
                 var event = jQuery.Event('keydown');
                 event.keyCode = 40;
                 $("#billto").trigger(event);
-
                 
             }, error: function(msg) {
                 console.log('auto ERROR');
