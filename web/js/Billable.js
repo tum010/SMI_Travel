@@ -39,7 +39,7 @@ $(document).ready(function() {
         }else{
             if(event.keyCode === 13){
                 billArray = [];
-                searchCustomerAutoList(this.value);             
+                searchCustomerAutoList(this.value);    
             }
         }
     });
@@ -70,8 +70,7 @@ function CallAjaxAuto(param){
             cache: false,
             data: param,
             beforeSend: function() {
-               $("#dataload").removeClass("hidden");   
-               
+               $("#dataload").removeClass("hidden");    
             },
             success: function(msg) {     
                 console.log("getAutoListBillto =="+msg);
