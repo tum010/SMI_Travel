@@ -282,7 +282,8 @@
                                                                 </select>
                                                                 <script>
                                                             $('#SelectTableDrive${status.count}').selectize({
-                                                                sortField: 'text'
+                                                                sortField: 'text',
+                                                                dropdownParent: 'body'
                                                             });
                                                             $("#SelectTableDrive${status.count}").change(function () {
                                                                 var driverId = $(this).val();

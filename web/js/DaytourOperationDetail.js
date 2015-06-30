@@ -193,7 +193,8 @@ function BookingDriverTableAddRow(row) {
 
     });
     $('#SelectTableDrive' + row).selectize({
-        sortField: 'text'
+        sortField: 'text',
+        dropdownParent: 'body'
     });
 
     $("#SelectTableDrive" + row).change(function () {
