@@ -113,9 +113,9 @@
                             <td>THB</td>
                             <td>wait</td>
                             <td class="text-center">
-                                <span id="RefBookTableButtonEdit" name="RefBookTableButtonEdit" class="glyphicon glyphicon-edit editicon" onclick="window.open('/SMITravel/DaytourDetail.smi?referenceNo=${dayTourDetai.master.referenceNo}&action=edit&daytourBooking=${dayTourDetai.id}');"></span>
-                                <a data-toggle="collapse" href="#collapseExample${status.count}" aria-expanded="false" aria-controls="collapseExample${status.count}">
-                                    <span id="SpanEdit${status.count}" class="glyphicon glyphicon-list-alt"></span>
+                                <span id="RefBookTableButtonEdit" name="RefBookTableButtonEdit" class="glyphicon glyphicon-edit editicon" onclick=""></span>
+                                <a href="#" onclick=""  data-toggle="modal" data-target="">
+                                    <span id="" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal" data-target="#delSearchPaymentTourHotelModal"></span>
                                 </a>
                             </td>                           
                         </tr>
@@ -125,6 +125,22 @@
         </div><!--End Table -->
     </div>
 </div>
+<!--Delete Payment Tour Hotel Modal-->
+<div class="modal fade" id="delSearchPaymentTourHotelModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Delete Payment Outbound</h4>
+            </div>
+            <div class="modal-body" id="delCode"></div>
+            <div class="modal-footer">
+                <button id="btnDelete" type="button" onclick="Delete()" class="btn btn-danger">Delete</button>
+                <button id="btnDeleteClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <script type="text/javascript">
     $(document).ready(function () {
         $('.date').datetimepicker();
