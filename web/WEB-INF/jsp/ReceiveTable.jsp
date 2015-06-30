@@ -299,7 +299,6 @@ $(document).ready(function(){
     $("#addButton").click(function () {
         $('#TextBoxDiv2').show();
     });
-
     $("#removeButton").click(function () {
         $('#TextBoxDiv2').hide();
     });
