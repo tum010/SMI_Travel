@@ -166,14 +166,14 @@ public class HotelDetailController extends SMITravelController {
             HotelBooking hotel = bookingHotelService.getHotelFromID(request.getParameter("id"));
             System.out.println("ID : " + request.getParameter("id"));
             request.setAttribute(HotelBooking, hotel);
-            List<HotelRequest> hotelRequests = new ArrayList<HotelRequest>(hotel.getHotelRequests());
+            List<HotelRequest> hotelRequests = hotel.getHotelRequests();
             for (HotelRequest re : hotelRequests) {
                 System.out.println("Description : " + re.getDescription());
             }
             request.setAttribute(HotelRequestsList, hotelRequests);
-            List<HotelRoom> hotelRooms = new ArrayList<HotelRoom>(hotel.getHotelRooms());
+            List<HotelRoom> hotelRooms = hotel.getHotelRooms();
             request.setAttribute(HotelRooms, hotelRooms);
-            List<HotelPassenger> hotelPassengerList = new ArrayList<HotelPassenger>(hotel.getHotelPassengers());
+            List<HotelPassenger> hotelPassengerList = hotel.getHotelPassengers();
             request.setAttribute(HotelPassengerList, hotelPassengerList);
             setResponseAttribute(request, refNo);
         } else if ("delete".equalsIgnoreCase(action)) {
