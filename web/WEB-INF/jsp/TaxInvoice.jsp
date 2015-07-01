@@ -21,22 +21,18 @@
     </div>
     <!--Content -->
     <div class="col-sm-10">
-        <div class="row" style="padding-left: 15px">  
-           <div class="col-sm-6 " style="padding-right: 15px">
+        <div class="panel panel-default">            
+            <div class="panel-heading">
                 <c:choose>
                     <c:when test="${param.Department=='WO'}">
-                        <h4><b>Wendy/Outbound</b></h4>
+                        <label class="control-label">Tax Invoice Wendy/Outbound</lable>
                     </c:when>
                     <c:when test="${param.Department=='INB'}">
-                        <h4><b>Invoice Outbound</b></h4>
-                    </c:when>        
-                </c:choose>                
+                        <label class="control-label">Tax Invoice Inbound</lable>
+                    </c:when> 
+                </c:choose> 
             </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                 <label class="control-label">Tax Invoice</lable>                             
-            </div>
+            
             <div class="row text-right" style="padding-top: 5px;padding-right: 15px;" >
                 <a class="col-xs-12 text-right" data-toggle="collapse" href="#collapseTab" aria-expanded="false" aria-controls="collapseTab">
                     <span id="arrowReceipt" class="arrowReceipt glyphicon glyphicon-chevron-up"></span>
@@ -202,7 +198,7 @@
                                     <td>XXXXX</td>
                                     <td class="text-center">
                                         <a href="#" onclick=""  data-toggle="modal" data-target="">
-                                            <span id="" class="glyphicon glyphicon-remove deleteicon"></span>
+                                            <span id="" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal" data-target="#delTaxInvoiceModal"></span>
                                         </a>
                                     </td>
                                 </tr>
@@ -276,15 +272,23 @@
             <div class="modal-body">
                 <!--Agent List Table-->
                 <table class="display" id="ToTable">
-                    <thead>                        
-                        <tr class="datatable-header">
-                            <th class="hidden">ID</th>                       
+                    <thead class="datatable-header">
+                        <tr>
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>  
-                        <tr>
-                            <td class="agent-id hidden">aaaa</td>
-                        </tr>                  
+                    <tbody>
+                            <tr class="packet">
+                                <td class="">XXX
+                                <td>XXXXX</td>
+                                <td class="text-center">
+                                    <a href="">
+                                        <span class="glyphicon glyphicon-check"></span>
+                                    </a>
+                                </td>
+                            </tr>
                     </tbody>
                 </table>
             </div>
@@ -307,15 +311,23 @@
             <div class="modal-body">
                 <!--Agent List Table-->
                 <table class="display" id="PassengerTable">
-                    <thead>                        
-                        <tr class="datatable-header">
-                            <th class="hidden">ID</th>                       
+                    <thead class="datatable-header">
+                        <tr>
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>  
-                        <tr>
-                            <td class="agent-id hidden">aaa</td>
-                        </tr>                  
+                    <tbody>
+                            <tr class="packet">
+                                <td class="">XXX
+                                <td>XXXXX</td>
+                                <td class="text-center">
+                                    <a href="">
+                                        <span class="glyphicon glyphicon-check"></span>
+                                    </a>
+                                </td>
+                            </tr>
                     </tbody>
                 </table>
             </div>
@@ -327,6 +339,30 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
+<!--Delete Tax Invoice Modal-->
+<div class="modal fade" id="delTaxInvoiceModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <c:choose>
+                    <c:when test="${param.Department=='WO'}">
+                        <h4 class="modal-title">Delete Tax Invoice Wendy/Outbound</h4>
+                    </c:when>
+                    <c:when test="${param.Department=='INB'}">
+                        <h4 class="modal-title">Delete Tax Invoice Inbound</h4>
+                    </c:when> 
+                </c:choose>
+                <!--<h4 class="modal-title">Delete Tax Invoice </h4>-->
+            </div>
+            <div class="modal-body" id="delCode"></div>
+            <div class="modal-footer">
+                <button id="btnDelete" type="button" onclick="Delete()" class="btn btn-danger">Delete</button>
+                <button id="btnDeleteClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <script language="javascript">
     $(document).ready(function () {
         $('.date').datetimepicker();
@@ -340,13 +376,25 @@
            $(".arrowReceipt").removeClass("glyphicon glyphicon-chevron-up").addClass("glyphicon glyphicon-chevron-down");
         });
         
-//        var tableTaxInvoice = $('#TaxInvoiceTable').DataTable({
-//            "bJQueryUI": true,
-//            "sPaginationType": "full_numbers",
-//            "bAutoWidth": true,
-//            "bFilter": false,
-//            "bInfo": true,
-//            "bSort": false
-//        });
+        $('#ToTable').dataTable({bJQueryUI: true,
+        "sPaginationType": "full_numbers",
+        "bAutoWidth": true,
+        "bFilter": false,
+        "bPaginate": true,
+        "bInfo": false,
+        "bLengthChange": false,
+        "iDisplayLength": 3
+        });
+    
+        $('#PassengerTable').dataTable({bJQueryUI: true,
+        "sPaginationType": "full_numbers",
+        "bAutoWidth": true,
+        "bFilter": true,
+        "bPaginate": true,
+        "bInfo": false,
+        "bLengthChange": false,
+        "iDisplayLength": 3
+        });
+        
     });
 </script>
