@@ -95,7 +95,7 @@
                                             var FinanceMenu = [
                                                 "<li><a href='SearchInvoice.smi'> Invoice</a></li>",
                                                 "<li><a href='SearchReceipt.smi'> Receipt</a></li>",
-                                                "<li><a href='TaxInvoice.smi'> Tax Invoice</a></li>",
+                                                "<li><a href='SearchTaxInvoice.smi'> Tax Invoice</a></li>",
                                                 "<li><a href='ReceiveTable.smi'> Receive Table</a></li>",
                                                 "<li><a href='LockUnlockBooking.smi'>Lock And UnLock Booking</a></li>"];
                                             

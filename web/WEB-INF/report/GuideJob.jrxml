@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GuideJob" language="groovy" pageWidth="647" pageHeight="788" columnWidth="647" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="afe86f30-4ddb-453a-8429-dac3373d85ce">
 	<property name="ireport.zoom" value="1.366026910730141"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="240"/>
+	<property name="ireport.y" value="181"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<field name="guide" class="java.lang.String"/>
 	<field name="driver" class="java.lang.String"/>
@@ -33,7 +33,47 @@
 	<field name="coupon" class="java.lang.String"/>
 	<field name="coup_name" class="java.lang.String"/>
 	<background>
-		<band splitType="Stretch"/>
+		<band height="788">
+			<line>
+				<reportElement x="43" y="257" width="1" height="320" uuid="330782e5-2b61-4cb4-8c98-06a3c699ce46"/>
+			</line>
+			<line>
+				<reportElement x="251" y="257" width="1" height="320" uuid="ff20aaac-955c-4ce2-8382-9a9473c6bf6a"/>
+			</line>
+			<line>
+				<reportElement x="23" y="257" width="1" height="320" uuid="0a5e8ffa-a907-4d3b-8b57-08707931b6f1"/>
+			</line>
+			<line>
+				<reportElement x="577" y="257" width="1" height="320" uuid="8a8613a5-e63f-4589-b1de-60b9b16f442f"/>
+			</line>
+			<line>
+				<reportElement x="24" y="577" width="554" height="1" uuid="5f405b51-9758-4374-8b95-729819eef16b"/>
+			</line>
+			<line>
+				<reportElement x="81" y="257" width="1" height="320" uuid="1908b6c9-cc31-449a-b9ab-0126ee3f18ba"/>
+			</line>
+			<line>
+				<reportElement x="269" y="257" width="1" height="321" uuid="e4f73321-beb7-4db9-b128-3aadbf95be3b"/>
+			</line>
+			<line>
+				<reportElement x="292" y="257" width="1" height="321" uuid="5d2dc683-b3c6-483f-880b-35ddbc6cc6d5"/>
+			</line>
+			<line>
+				<reportElement x="313" y="257" width="2" height="320" uuid="0a5c9e91-c98d-4c9b-b094-13e6a3f5346e"/>
+			</line>
+			<line>
+				<reportElement x="412" y="257" width="1" height="320" uuid="09ea212c-466d-481a-8dc6-11d632536b9f"/>
+			</line>
+			<line>
+				<reportElement x="450" y="257" width="1" height="321" uuid="37abab20-e25a-49aa-a127-d29a0e5a286f"/>
+			</line>
+			<line>
+				<reportElement x="486" y="257" width="1" height="321" uuid="633fbbfe-e849-4af6-8810-541a4b7eaf8f"/>
+			</line>
+			<line>
+				<reportElement x="533" y="257" width="1" height="320" uuid="4650d761-dae7-4a19-8d36-3860b84dade6"/>
+			</line>
+		</band>
 	</background>
 	<title>
 		<band splitType="Stretch"/>
@@ -153,7 +193,7 @@
 					<topPen lineWidth="0.1"/>
 					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.1"/>
-					<rightPen lineWidth="0.1"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="11"/>
@@ -164,9 +204,9 @@
 				<reportElement x="269" y="0" width="23" height="25" uuid="86a6cdda-4762-466e-ac6d-acbcb86ee694"/>
 				<box>
 					<topPen lineWidth="0.1"/>
-					<leftPen lineWidth="0.1"/>
+					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.1"/>
-					<rightPen lineWidth="0.1"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="11"/>
@@ -177,9 +217,9 @@
 				<reportElement x="292" y="0" width="23" height="25" uuid="add6d983-5329-4537-82ce-67aef01579e0"/>
 				<box>
 					<topPen lineWidth="0.1"/>
-					<leftPen lineWidth="0.1"/>
+					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.1"/>
-					<rightPen lineWidth="0.1"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="11"/>
@@ -190,9 +230,9 @@
 				<reportElement x="485" y="0" width="47" height="25" uuid="99c3097e-e830-4ca2-8c98-193387d146fd"/>
 				<box>
 					<topPen lineWidth="0.1"/>
-					<leftPen lineWidth="0.1"/>
+					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.1"/>
-					<rightPen lineWidth="0.1"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="11"/>
@@ -200,12 +240,12 @@
 				<text><![CDATA[Amount]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="532" y="0" width="47" height="25" uuid="f361995b-120c-4c83-9aa0-18b71ae456ca"/>
+				<reportElement x="532" y="0" width="46" height="25" uuid="f361995b-120c-4c83-9aa0-18b71ae456ca"/>
 				<box>
 					<topPen lineWidth="0.1"/>
-					<leftPen lineWidth="0.1"/>
+					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.1"/>
-					<rightPen lineWidth="0.1"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="11"/>
@@ -213,7 +253,7 @@
 				<text><![CDATA[Pay]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="315" y="0" width="170" height="12" uuid="587ac165-821a-48b0-8b6f-8feff2e20d12"/>
+				<reportElement mode="Opaque" x="313" y="0" width="174" height="12" uuid="587ac165-821a-48b0-8b6f-8feff2e20d12"/>
 				<box>
 					<topPen lineWidth="0.1"/>
 					<leftPen lineWidth="0.1"/>
@@ -229,9 +269,9 @@
 				<reportElement x="413" y="12" width="38" height="13" uuid="4921c9b8-aafd-47d7-bda7-2d9a64c09f7e"/>
 				<box>
 					<topPen lineWidth="0.1"/>
-					<leftPen lineWidth="0.1"/>
+					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.1"/>
-					<rightPen lineWidth="0.1"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
@@ -242,9 +282,9 @@
 				<reportElement x="451" y="12" width="34" height="13" uuid="5b12d383-663b-402b-93b6-60afe1250ad7"/>
 				<box>
 					<topPen lineWidth="0.1"/>
-					<leftPen lineWidth="0.1"/>
+					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.1"/>
-					<rightPen lineWidth="0.1"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
@@ -255,9 +295,9 @@
 				<reportElement x="315" y="12" width="98" height="13" uuid="cd3570af-b5f9-4ba7-bb22-926054ed2a1d"/>
 				<box>
 					<topPen lineWidth="0.1"/>
-					<leftPen lineWidth="0.1"/>
+					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.2"/>
-					<rightPen lineWidth="0.1"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[place]]></text>
@@ -277,10 +317,30 @@
 				</textElement>
 				<text><![CDATA[No.]]></text>
 			</staticText>
+			<line>
+				<reportElement x="24" y="24" width="555" height="1" uuid="d3991959-effa-4e5d-9a86-3f1d231fe85b"/>
+			</line>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="66" splitType="Immediate">
+		<band height="65" splitType="Immediate">
+			<staticText>
+				<reportElement x="43" y="39" width="39" height="26" uuid="f36b7216-04a3-4bb0-afd2-f182fbcb6570"/>
+				<box>
+					<leftPen lineWidth="0.1"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="139" y="40" width="423" height="24" backcolor="#FFFFFF" uuid="41a723f5-62f4-4e7d-a62d-1170c42b1a23"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle" rotation="None" markup="html">
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bookremark}+$F{coup_name}]]></textFieldExpression>
+			</textField>
 			<textField>
 				<reportElement x="43" y="0" width="39" height="40" uuid="9392217b-7e2c-41fa-abb0-21694db0789d"/>
 				<box>
@@ -306,9 +366,9 @@
 			<textField>
 				<reportElement x="252" y="0" width="17" height="40" uuid="83aa479c-2577-4251-af5c-a3ab47d2aa7f"/>
 				<box>
-					<leftPen lineWidth="0.1"/>
+					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.0"/>
-					<rightPen lineWidth="0.1"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[$F{ad}]]></textFieldExpression>
@@ -316,9 +376,9 @@
 			<textField>
 				<reportElement x="269" y="0" width="23" height="40" uuid="0b9850f0-a141-40a2-ab11-81df1bbe269b"/>
 				<box>
-					<leftPen lineWidth="0.1"/>
+					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.0"/>
-					<rightPen lineWidth="0.1"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[$F{ch}]]></textFieldExpression>
@@ -326,9 +386,9 @@
 			<textField>
 				<reportElement x="292" y="0" width="23" height="40" uuid="b99db9fe-6f8b-45cf-ada2-ea8112526f3d"/>
 				<box>
-					<leftPen lineWidth="0.1"/>
+					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.0"/>
-					<rightPen lineWidth="0.1"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[$F{inf}]]></textFieldExpression>
@@ -336,9 +396,9 @@
 			<textField>
 				<reportElement x="413" y="0" width="38" height="40" uuid="41c50549-5f25-4c55-b655-cbe6694c0388"/>
 				<box>
-					<leftPen lineWidth="0.1"/>
+					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.0"/>
-					<rightPen lineWidth="0.1"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font fontName="TH SarabunPSK" size="16" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -348,9 +408,9 @@
 			<textField>
 				<reportElement x="451" y="0" width="34" height="40" uuid="727cc97a-6d37-4e9c-bd52-aabf1b19f83b"/>
 				<box>
-					<leftPen lineWidth="0.1"/>
+					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.0"/>
-					<rightPen lineWidth="0.1"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[$F{time}]]></textFieldExpression>
@@ -358,9 +418,9 @@
 			<textField>
 				<reportElement x="532" y="0" width="47" height="40" uuid="f6ad77db-9d2e-40fa-8e04-17e9aeea2615"/>
 				<box>
-					<leftPen lineWidth="0.1"/>
+					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.0"/>
-					<rightPen lineWidth="0.1"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[$F{pay}]]></textFieldExpression>
@@ -368,9 +428,9 @@
 			<textField>
 				<reportElement x="24" y="0" width="19" height="40" uuid="2a189648-ea5b-4b4a-8569-49dd9d1929df"/>
 				<box>
-					<leftPen lineWidth="0.1"/>
+					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.0"/>
-					<rightPen lineWidth="0.1"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[$F{no}]]></textFieldExpression>
@@ -378,9 +438,9 @@
 			<textField>
 				<reportElement x="315" y="0" width="98" height="40" uuid="6914ef55-c980-4579-9814-44c01d7147d4"/>
 				<box>
-					<leftPen lineWidth="0.1"/>
+					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.0"/>
-					<rightPen lineWidth="0.1"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Top">
 					<font fontName="TH SarabunPSK" size="16" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -401,55 +461,26 @@
 			<textField pattern="#,##0">
 				<reportElement x="485" y="0" width="47" height="20" uuid="9cb8b4c0-5c11-4815-9c7e-6bd2b526bb9a"/>
 				<box>
-					<leftPen lineWidth="0.1"/>
+					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.0"/>
-					<rightPen lineWidth="0.1"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement stretchType="RelativeToBandHeight" x="139" y="40" width="440" height="24" uuid="41a723f5-62f4-4e7d-a62d-1170c42b1a23"/>
-				<box>
-					<topPen lineWidth="0.0"/>
-				</box>
-				<textElement verticalAlignment="Middle" rotation="None" markup="html">
-					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{bookremark}+$F{coup_name}]]></textFieldExpression>
-			</textField>
 			<line>
-				<reportElement x="23" y="-24" width="1" height="89" uuid="862561fb-169b-4e7a-961e-fd568ce118fb"/>
-				<graphicElement>
-					<pen lineWidth="1.0"/>
-				</graphicElement>
-			</line>
-			<line>
-				<reportElement x="578" y="-24" width="1" height="89" uuid="6ae36bd3-21b0-4226-8432-10bb5719efb7"/>
-			</line>
-			<line>
-				<reportElement x="23" y="64" width="556" height="1" uuid="cde032ce-22c5-4043-84fb-3566a2670c73"/>
+				<reportElement positionType="Float" x="23" y="63" width="556" height="1" uuid="cde032ce-22c5-4043-84fb-3566a2670c73"/>
 			</line>
 			<textField pattern="">
 				<reportElement x="486" y="20" width="46" height="20" uuid="565d2e1b-c5fb-4cdf-9bc7-b4ea60090dfa"/>
 				<box>
 					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.0"/>
-					<rightPen lineWidth="0.1"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[($F{coupon} == null )?"":"("+$F{coupon}+")"]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="43" y="40" width="39" height="26" uuid="f36b7216-04a3-4bb0-afd2-f182fbcb6570"/>
-				<box>
-					<leftPen lineWidth="0.1"/>
-				</box>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<line>
-				<reportElement x="24" y="-1" width="555" height="1" uuid="d3991959-effa-4e5d-9a86-3f1d231fe85b"/>
-			</line>
 		</band>
 	</detail>
 	<columnFooter>
