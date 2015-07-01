@@ -183,8 +183,8 @@ public class BillableController extends SMITravelController {
                 request.setAttribute(ACTION, "insert");
             }
 
-            List<BillableDesc> billableDesc = new ArrayList<BillableDesc>(billable.getBillableDescs());
-            billableDesc = SortBillDescList(billableDesc);
+            List<BillableDesc> billableDesc = billable.getBillableDescs();
+            //billableDesc = SortBillDescList(billableDesc);
             List<BillableDesc> billableDescNopay = billableService.getListBillableNopay(refNo);
             if (billableDescNopay != null) {
                 System.out.println("billableDesc size :" + billable.getBillableDescs().size());
