@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GuideJob" language="groovy" pageWidth="647" pageHeight="788" columnWidth="647" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="afe86f30-4ddb-453a-8429-dac3373d85ce">
 	<property name="ireport.zoom" value="1.366026910730141"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="232"/>
+	<property name="ireport.y" value="240"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<field name="guide" class="java.lang.String"/>
 	<field name="driver" class="java.lang.String"/>
@@ -263,17 +263,17 @@
 				<text><![CDATA[place]]></text>
 			</staticText>
 			<line>
-				<reportElement x="23" y="0" width="556" height="1" uuid="0be3d6bb-1449-4c63-a126-38f575272c81"/>
+				<reportElement x="24" y="-1" width="555" height="1" uuid="0be3d6bb-1449-4c63-a126-38f575272c81"/>
 			</line>
 			<staticText>
-				<reportElement x="24" y="0" width="19" height="25" uuid="706d0d32-da5e-4acc-b8dd-2d168e6e4b81"/>
+				<reportElement mode="Opaque" x="24" y="0" width="19" height="25" uuid="706d0d32-da5e-4acc-b8dd-2d168e6e4b81"/>
 				<box>
 					<topPen lineWidth="0.1"/>
 					<leftPen lineWidth="0.1"/>
 					<rightPen lineWidth="0.1"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="11"/>
+					<font size="11" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[No.]]></text>
 			</staticText>
@@ -447,6 +447,9 @@
 				</box>
 				<text><![CDATA[]]></text>
 			</staticText>
+			<line>
+				<reportElement x="24" y="-1" width="555" height="1" uuid="d3991959-effa-4e5d-9a86-3f1d231fe85b"/>
+			</line>
 		</band>
 	</detail>
 	<columnFooter>
