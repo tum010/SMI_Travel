@@ -4,6 +4,8 @@ package com.smi.travel.datalayer.entity;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -19,8 +21,8 @@ public class AirticketBooking {
      private Date deadline;
      private String reConfirm;
      private String remark;
-     private Set airticketDescs = new HashSet(0);
-     private Set airticketPnrs = new HashSet(0);
+     private List airticketDescs = new LinkedList<AirticketDesc>();
+     private List airticketPnrs = new LinkedList<AirticketPnr>();
 
     public AirticketBooking() {
     }
@@ -29,7 +31,7 @@ public class AirticketBooking {
     public AirticketBooking(Master master) {
         this.master = master;
     }
-    public AirticketBooking(SystemUser staffByIssueBy, Master master, SystemUser staffByOwnerBy, Date deadline, String reConfirm, Set airticketDescs, Set airticketPnrs) {
+    public AirticketBooking(SystemUser staffByIssueBy, Master master, SystemUser staffByOwnerBy, Date deadline, String reConfirm, List airticketDescs, List airticketPnrs) {
        this.staffByIssueBy = staffByIssueBy;
        this.master = master;
        this.staffByOwnerBy = staffByOwnerBy;
@@ -91,18 +93,18 @@ public class AirticketBooking {
         this.remark = remark;
     }
     
-    public Set getAirticketDescs() {
+    public List getAirticketDescs() {
         return this.airticketDescs;
     }
     
-    public void setAirticketDescs(Set airticketDescs) {
+    public void setAirticketDescs(List airticketDescs) {
         this.airticketDescs = airticketDescs;
     }
-    public Set getAirticketPnrs() {
+    public List getAirticketPnrs() {
         return this.airticketPnrs;
     }
     
-    public void setAirticketPnrs(Set airticketPnrs) {
+    public void setAirticketPnrs(List airticketPnrs) {
         this.airticketPnrs = airticketPnrs;
     }
 
