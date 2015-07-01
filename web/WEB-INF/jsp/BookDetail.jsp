@@ -177,7 +177,7 @@
                                 </div>     
                                 <div class="col-sm-1"> </div>
                                 <label class="col-sm-1 text-right" style="margin-left: -24px">Name</label>
-                                <div class="col-sm-2"> 
+                                <div class="col-sm-2" style="margin-left: -7px"> 
                                     <input type="text" class="form-control" id="lastname" name="lastname" value="${detail.customer.lastName}" readonly="">
                                 </div>
                                 <div class="col-sm-2" style="margin-left: -7px"> 
@@ -244,9 +244,9 @@
                                     </c:otherwise>
                                 </c:choose>
                                 <label class="col-sm-2 control-label text-right" style="margin-left: -9px">Package</label>
-                                    <div class="col-sm-3" style="padding-left: 25px;margin-left: -15px"> 
+                                    <div class="col-sm-3" style="padding-left: 20px;margin-left: -15px"> 
                                         <input id="input-get-city" value="${detail.packageTour.id}" hidden="">
-                                        <select name="packagecode" id="packagecode"  class="selectize"  >
+                                        <select name="packagecode" id="packagecode"  class="selectize form-control"  >
                                             <option value="">- - package - -</option>
                                             <c:forEach var="item" items="${packList}" >
                                                 <c:set var="select" value="" />
