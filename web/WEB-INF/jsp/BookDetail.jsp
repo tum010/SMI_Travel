@@ -1,8 +1,7 @@
-<%-- 
-    Document   : BookDetail
+<!--    Document   : BookDetail
     Created on : Dec 19, 2014, 1:55:09 PM
-    Author     : sumeta
---%>
+    Author     : sumeta-->
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -245,23 +244,57 @@
                                     </c:otherwise>
                                 </c:choose>
                                 <label class="col-sm-2 control-label text-right" style="margin-left: -9px">Package</label>
-                              
-                                <div class="col-sm-3" style="padding-left: 25px;margin-left: -15px"> 
-                                   <!--   <input type="checkbox"  name="pax" value="1" id="pax" style="margin-top: 10px;">-->
-                                   <select name="packagecode" id="packagecode" class="form-control" >
-                                        <option value=""  selected="selected"></option>
-                                        <c:forEach var="table" items="${packList}">
-                                            <c:set var="select" value="" />
-                                            <c:if test="${table.id == detail.packageTour.id}">
-                                                <c:set var="select" value="selected" />
-                                            </c:if>
-                                            <option value="<c:out value="${table.id}" />" ${select}><c:out value="${table.code}" /></option>   
+                                    <div class="col-sm-3" style="padding-left: 25px;margin-left: -15px"> 
+                                        <input id="input-get-city" value="${detail.packageTour.id}" hidden="">
+                                        <select name="packagecode" id="packagecode"  class="selectize"  >
+                                            <option value="">- - package - -</option>
+                                            <c:forEach var="item" items="${packList}" >
+                                                <c:set var="select" value="" />
+                                                <c:set var="selectedId" value="${detail.packageTour.id}" />
+                                                <c:if test="${item.id == selectedId}">
+                                                    <c:set var="select" value="selected" />
+                                                </c:if>
+                                                 <option value="${item.id}" ${select}>${item.code}</option>   
+                                            </c:forEach>
+                                        </select> 
+                                            <input type="hidden" id="ch_pax" value="${master.isPackage}">
+                                    </div>
+                                   <script>
+                                        $(document).ready(function () {
+                                            Selectize.define( 'clear_selection', function ( options ) {
+                                                var self = this;
+                                                self.plugins.settings.dropdown_header = {
+                                                    title: 'Clear Selection'
+                                                };
+                                                this.require( 'dropdown_header' );
+                                                self.setup = (function () {
+                                                    var original = self.setup;
+                                                    return function () {
+                                                        original.apply( this, arguments );
+                                                        this.$dropdown.on( 'mousedown', '.selectize-dropdown-header', function ( e ) {
+                                                            self.setValue( '' );
+                                                            self.close();
+                                                            self.blur();
+                                                            return false;
+                                                        });
+                                                    };
+                                                })();
+                                            });
 
-                                        </c:forEach>
-                                    </select>
-                                    <input type="hidden" id="ch_pax" value="${master.isPackage}">
-                                </div> 
-          
+                                            var name = "#packagecode";
+                                            console.log("name = " + name);
+
+                                            $(name).selectize({
+                                                removeItem: '',
+                                                sortField: 'text' ,
+                                                create: false ,
+                                                dropdownParent: 'body',
+                                                plugins: {
+                                                    'clear_selection': {}
+                                                }
+                                            });
+                                        });
+                                    </script>
                             </div>
                         </div>
                     </div>
