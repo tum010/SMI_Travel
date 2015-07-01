@@ -24,4 +24,5 @@ public interface OtherBookingDao {
     public int cancelBookDetailOther(String otherID);
     public int enableBookDetailOther(String otherID);
     public String saveOtherBookCommission(List<OtherBooking> BookList);
+    public Boolean CheckUsabilityCoupon(String CouponId);
 }

@@ -268,4 +268,9 @@ public class OtherBookingImpl implements OtherBookingDao{
         this.sessionFactory.close();
         return result;
     }
+
+    @Override
+    public Boolean CheckUsabilityCoupon(String CouponId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
