@@ -5,7 +5,7 @@
  */
 
 
- 
+
 $(document).ready(function() {
     // validate
     var Billable = $("#Billable");
@@ -29,17 +29,16 @@ $(document).ready(function() {
     });
 
     //autocomplete
-    $("#billto").keyup(function(event){
+    $("#billto").keyup(function(event){   
         var position = $(this).offset();
         $(".ui-widget").css("top", position.top + 30);
         $(".ui-widget").css("left", position.left); 
         if($(this).val() === ""){
             $("#billname").val("");
-            $("#address").val(""); 
+            $("#address").val("");
         }else{
             if(event.keyCode === 13){
-                billArray = [];
-                searchCustomerAutoList(this.value);    
+                searchCustomerAutoList(this.value); 
             }
         }
     });
@@ -47,6 +46,7 @@ $(document).ready(function() {
         var position = $(this).offset();
         $(".ui-widget").css("top", position.top + 30);
         $(".ui-widget").css("left", position.left); 
+        
     });
 });
 
@@ -63,6 +63,8 @@ function searchCustomerAutoList(name){
 
 function CallAjaxAuto(param){
      var url = 'AJAXServlet';
+     var billArray = [];
+     var billid , billname ,billaddr;
      try {
         $.ajax({
             type: "POST",
@@ -74,38 +76,36 @@ function CallAjaxAuto(param){
             },
             success: function(msg) {     
                 console.log("getAutoListBillto =="+msg);
-                var billArray = [];
-                var billid , billname ,billaddr;
                 var billJson =  JSON.parse(msg);
-                console.log("json_Bill="+billJson);
                 for (var i in billJson){
                     if (billJson.hasOwnProperty(i)){
                         billid = billJson[i].id;
                         billname = billJson[i].name;
                         billaddr = billJson[i].address;
-                        console.log("billid = "+billid);
-                        console.log("billname = "+billname);
-                        console.log("billaddr = "+billaddr);
                         billArray.push(billid);
                         billArray.push(billname);
+                        
                     }                 
                      $("#dataload").addClass("hidden"); 
                 }
                 $("#billto").val(billid);
                 $("#billname").val(billname);
                 $("#address").val(billaddr);
+               
                 $("#billto").autocomplete({
                     source: billArray,
-                    close:function( event, ui ) {
-                       $("#billto").trigger("keyup");    
+                    close: function(){
+                         $("#billto").trigger("keyup");
                     }
                  });
+                
                 var event = jQuery.Event('keydown');
                 event.keyCode = 40;
                 $("#billto").trigger(event);
                 
             }, error: function(msg) {
                 console.log('auto ERROR');
+                $("#dataload").addClass("hidden");
             }
         });
     } catch (e) {
