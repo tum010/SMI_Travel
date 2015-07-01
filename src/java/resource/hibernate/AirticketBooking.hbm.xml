@@ -25,17 +25,17 @@
         <property name="remark" type="string">
             <column name="remark" />
         </property>
-        <set name="airticketDescs" table="airticket_desc" inverse="true" lazy="true" fetch="select">
+        <bag name="airticketDescs" table="airticket_desc" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="booking_id" not-null="true" />
             </key>
             <one-to-many class="com.smi.travel.datalayer.entity.AirticketDesc" />
-        </set>
-        <set name="airticketPnrs" table="airticket_pnr" inverse="true" lazy="true" fetch="select">
+        </bag>
+        <bag name="airticketPnrs" table="airticket_pnr" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="booking_id" not-null="true" />
             </key>
             <one-to-many class="com.smi.travel.datalayer.entity.AirticketPnr" />
-        </set>
+        </bag>
     </class>
 </hibernate-mapping>
