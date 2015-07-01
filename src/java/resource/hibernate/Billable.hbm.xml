@@ -40,11 +40,11 @@
         <property name="remark" type="string">
             <column name="remark" length="100" />
         </property>
-        <set name="billableDescs" table="billable_desc" inverse="true" lazy="true" fetch="select">
+        <bag name="billableDescs" table="billable_desc" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="billable_id" not-null="true" />
             </key>
             <one-to-many class="com.smi.travel.datalayer.entity.BillableDesc" />
-        </set>
+        </bag>
     </class>
 </hibernate-mapping>
