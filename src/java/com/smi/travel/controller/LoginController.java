@@ -50,7 +50,12 @@ public class LoginController extends SMITravelController {
                 }
                 if (session.getAttribute("USER") != null) {
                     log.info("Login Successful with " + UserAuthen.getUsername());
-
+                    
+                    if(UserAuthen.getRole() == null){
+                        request.setAttribute("ResultLogin", "Role is null.Please contact admin.");
+                        log.info("Login fail!!");
+                        return LOG_IN;
+                    }
                     session.setAttribute("username", UserAuthen.getName());
                     session.setAttribute("rolename", UserAuthen.getRole().getName());
                     session.setAttribute("id", UserAuthen.getId());
