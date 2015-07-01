@@ -69,8 +69,8 @@
                 });
 
                 $(function() {
-                    $('[data-toggle="tooltip"]').tooltip({html: true});
-                });
+                    $('[data-toggle="tooltip"]').tooltip({html: true})
+                })
                 
                 setformat();
             });
@@ -152,7 +152,7 @@
                                 <c:set var="statusicon" value="glyphicon-remove deleteicon" />
                              </c:if>
                             <tr data-toggle="tooltip"  data-placement="left" title="<p align='left'>  date :${table.otherDate} <br> remark :${table.remark} </p>" ${colourStatus}>
-                                <td class="hidden tdcenter ${colourStatus}" style="width:75px;${colourStatusFirstrow}"> ${table.product.code} </td> 
+                                <td class="hidden tdcenter ${colourStatus}" style="width:75px;${colourStatusFirstrow}"> </td> 
                                 <td class="tdcenter ${colourStatus}" style="width:75px;${colourStatusFirstrow}"> ${table.otherDate} </td>
                                 <td> ${table.product.name}</td>
                                 
