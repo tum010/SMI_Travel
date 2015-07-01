@@ -45,7 +45,7 @@
                             </div>
                         </div>
                         <div class="col-xs-2 text-left" style="width: 100px;">
-                            <a id="ButtonNew" name="ButtonFind" onclick="" class="btn btn-primary">
+                            <a id="ButtonSearch" name="ButtonSearch" onclick="" class="btn btn-primary">
                                 <i class="glyphicon glyphicon-search"></i> Search
                             </a>
                         </div>
