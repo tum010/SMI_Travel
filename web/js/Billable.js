@@ -65,6 +65,7 @@ function CallAjaxAuto(param){
      var url = 'AJAXServlet';
      var billArray = [];
      var billid , billname ,billaddr;
+     $("#billto").autocomplete("destroy");
      try {
         $.ajax({
             type: "POST",
@@ -91,7 +92,8 @@ function CallAjaxAuto(param){
                 $("#billto").val(billid);
                 $("#billname").val(billname);
                 $("#address").val(billaddr);
-               
+                
+                
                 $("#billto").autocomplete({
                     source: billArray,
                     close: function(){
