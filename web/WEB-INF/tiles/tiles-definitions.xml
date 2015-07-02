@@ -400,6 +400,16 @@
         <put-attribute name="body" value="/WEB-INF/jsp/LockUnlockBooking.jsp" />
     </definition>
     
+    
+    <definition name="Stock" extends="baseLayout">
+        <put-attribute name="title" value="Master : Manage Stock" />
+        <put-attribute name="body" value="/WEB-INF/jsp/Stock.jsp" />
+    </definition>
+    
+    <definition name="SearchStock" extends="baseLayout">
+        <put-attribute name="title" value="Master : Search Stock" />
+        <put-attribute name="body" value="/WEB-INF/jsp/SearchStock.jsp" />
+    </definition>
     <!--<add data>-->
     
     <definition name="SendMail" extends="baseLayout">
