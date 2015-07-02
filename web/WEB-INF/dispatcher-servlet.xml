@@ -103,6 +103,8 @@
                 <prop key="SearchTaxInvoice.smi">SearchTaxInvoiceController</prop>
                 <prop key="ReceiveTable.smi">ReceiveTableController</prop>
                 <prop key="LockUnlockBooking.smi">LockUnlockBookingController</prop>
+                <prop key="Stock.smi">StockController</prop>
+                <prop key="SearchStock.smi">SearchStockController</prop>
                 <!-- add mapping url -->
             </props>
         </property>
@@ -472,23 +474,29 @@
 
     </bean>
     
+    <bean id="StockController" class="com.smi.travel.controller.StockController">
+       
+    </bean>
+    <bean id="SearchStockController" class="com.smi.travel.controller.SearchStockController">
+        
+    </bean>
     <!-- add bean id controller -->
     
     <bean id="monitorGalileo" class="com.smi.travel.monitor.MonitorGalileo" init-method="init">
         <constructor-arg index="0" type="java.lang.String">  
-           <!--        <value>C:/Users/Administrator/Desktop/PNR/galileo/</value>  -->
-         <!--   <value>D:/PNR/gali/</value>   -->
-           <value>S:/BackupPNR/</value>  
+            <!--        <value>C:/Users/Administrator/Desktop/PNR/galileo/</value>   -->
+         <value>D:/PNR/gali/</value>  
+        <!--     <value>S:/BackupPNR/</value>  -->
         </constructor-arg> 
         <constructor-arg index="1" type="java.lang.String">  
-           <!--  <value>C:/Users/Administrator/Desktop/PNR/galileo/archived/</value>   -->
-         <!--       <value>D:/PNR/archived/</value> -->
-                 <value>S:/BackupPNR/archived/</value>  
+          <!--       <value>C:/Users/Administrator/Desktop/PNR/galileo/archived/</value>    -->
+            <value>D:/PNR/archived/</value>
+          <!--       <value>S:/BackupPNR/archived/</value>  -->
         </constructor-arg> 
         <constructor-arg index="2" type="java.lang.String">  
-           <!-- <value>C:/Users/Administrator/Desktop/PNR/galileo/error/</value> -->
-          <!--    <value>D:/PNR/error/</value>  --> 
-                   <value>S:/BackupPNR/error/</value>   
+          <!--   <value>C:/Users/Administrator/Desktop/PNR/galileo/error/</value> --> 
+             <value>D:/PNR/error/</value>  
+          <!--         <value>S:/BackupPNR/error/</value>   -->
         </constructor-arg>         
         <property name="mGalileoService" ref="MGalileoService" />
         <property name="mAirticketService" ref="MAirticketService" />
@@ -497,19 +505,19 @@
     
     <bean id="monitorAmadeus" class="com.smi.travel.monitor.MonitorAmadeus" init-method="init">
         <constructor-arg index="0" type="java.lang.String">  
-          <!--         <value>C:/Users/Administrator/Desktop/PNR/amadeus/</value>  --> 
-        <!--       <value>D:/PNR/ama/</value> -->
-            <value>T:/BackupPNR/</value>  
+         <!--        <value>C:/Users/Administrator/Desktop/PNR/amadeus/</value> -->
+               <value>D:/PNR/ama/</value> 
+           <!--   <value>T:/BackupPNR/</value>   --> 
         </constructor-arg> 
         <constructor-arg index="1" type="java.lang.String">  
-         <!--        <value>C:/Users/Administrator/Desktop/PNR/amadeus/archived/</value>-->
-         <!--    <value>D:/PNR/archived/</value>   -->
-             <value>T:/BackupPNR/archived/</value>   
+          <!--      <value>C:/Users/Administrator/Desktop/PNR/amadeus/archived/</value> -->
+             <value>D:/PNR/archived/</value>  
+          <!--    <value>T:/BackupPNR/archived/</value>   -->
         </constructor-arg> 
         <constructor-arg index="2" type="java.lang.String">  
-          <!--       <value>C:/Users/Administrator/Desktop/PNR/amadeus/error/</value>  -->
-       <!--      <value>D:/PNR/error/</value> --> 
-             <value>T:/BackupPNR/error/</value>  
+         <!--      <value>C:/Users/Administrator/Desktop/PNR/amadeus/error/</value>  --> 
+             <value>D:/PNR/error/</value>
+         <!--      <value>T:/BackupPNR/error/</value>  -->
         </constructor-arg>         
         <property name="mAmadeusService" ref="MAmadeusService" />
         <property name="mAirticketService" ref="MAirticketService" />
