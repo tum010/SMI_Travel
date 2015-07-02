@@ -214,18 +214,18 @@ public class AirTicketDetailController extends SMITravelController {
         request.setAttribute(List_BookingPnrs, listBookingPnr);
 
         calculateTotalEachFlightInPnr(airticketPnr);
-//        TreeSet<AirticketFlight> sortedFlight = new TreeSet<AirticketFlight>(new AirticketFlightComparator());
+        TreeSet<AirticketFlight> sortedFlight = new TreeSet<AirticketFlight>(new AirticketFlightComparator());
         if (airticketPnr != null) {
             List<AirticketAirline> airlines = new ArrayList<AirticketAirline>(airticketPnr.getAirticketAirlines());
             List<AirticketFlight> allFlights = new ArrayList<AirticketFlight>();
             List<AirticketPassenger> allPassengers = new ArrayList<AirticketPassenger>();
             for (int i = 0; i < airlines.size(); i++) {
-                allFlights.addAll(airlines.get(i).getAirticketFlights());
-//                sortedFlight.addAll(airlines.get(i).getAirticketFlights());
+//                allFlights.addAll(airlines.get(i).getAirticketFlights());
+                sortedFlight.addAll(airlines.get(i).getAirticketFlights());
                 allPassengers.addAll(airlines.get(i).getAirticketPassengers());
             }
 
-//            allFlights.addAll(sortedFlight);
+            allFlights.addAll(sortedFlight);
             request.setAttribute(CurrentPnr, airticketPnr);
             request.setAttribute(Airline, airlines);
             request.setAttribute(AllFlights, allFlights);
