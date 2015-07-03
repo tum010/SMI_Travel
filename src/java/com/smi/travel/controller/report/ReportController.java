@@ -55,6 +55,7 @@ public class ReportController extends SMITravelController {
     private static final String AgentCommission = "AgentCommission";
     private static final String DaytourOther = "DaytourOther";
     private static final String OtherVouncherEmail = "otherVouncherEmail";
+    private static final String ReceiveList = "ReceiveList";
     
     private DataSource datasource;
     private static final Logger LOG = Logger.getLogger(ReportController.class.getName());
@@ -153,6 +154,9 @@ public class ReportController extends SMITravelController {
             PrintMethod = 0;
             data = reportservice.getDaytourOtherReport(refno);
         }else if (OtherVouncherEmail.equalsIgnoreCase(name)){
+            PrintMethod = 0;
+            data = reportservice.getDaytourOtherReport(refno);
+        }else if (ReceiveList.equalsIgnoreCase(name)){
             PrintMethod = 0;
             data = reportservice.getDaytourOtherReport(refno);
         }
