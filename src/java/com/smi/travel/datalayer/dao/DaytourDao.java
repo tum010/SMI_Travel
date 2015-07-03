@@ -28,4 +28,5 @@ public interface DaytourDao {
     public List<DaytourPrice> sortPriceList(List<DaytourPrice> priceList);
     public String saveStafftour(String stafftourname);
     public String getStafftour();
+    
 }

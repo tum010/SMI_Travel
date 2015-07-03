@@ -219,7 +219,7 @@ public class MasterImpl implements MasterDao{
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
     }
-    
+
     
     
     

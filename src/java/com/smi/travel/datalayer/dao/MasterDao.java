@@ -22,6 +22,5 @@ public interface MasterDao {
     public int getMaxRefno();
     public int LockAndUnLockBooking(Master master);
     public int[] getBookStatusFromRefno(String Refno);
-    public int getaaa(String aaa);
 
 }
