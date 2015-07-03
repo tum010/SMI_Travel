@@ -18,6 +18,7 @@ import com.smi.travel.datalayer.view.dao.HotelInboundDao;
 import com.smi.travel.datalayer.view.dao.HotelVoucherDao;
 import com.smi.travel.datalayer.view.dao.InvoiceSummaryDao;
 import com.smi.travel.datalayer.view.dao.LandVoucherDao;
+import com.smi.travel.datalayer.view.dao.ReceiveListDao;
 import com.smi.travel.datalayer.view.dao.StaffSummaryDao;
 import com.smi.travel.datalayer.view.dao.TicketOrderDao;
 import com.smi.travel.datalayer.view.dao.TicketSaleProfitVolumnDao;
@@ -46,6 +47,7 @@ public class ReportService {
     private GuideJobDao guideJobdao;
     private DaytourOtherDao daytourOtherdao;
     private AgentCommissionReportDao agentCommissiondao;
+    private ReceiveListDao  receiveListDao;
     
     public List getHotelVoucher(String hotelID,String name) {
         List data  = new ArrayList();
@@ -120,6 +122,10 @@ public class ReportService {
     
     public List getAgentCommissionReportInfo(String datefrom,String dateto,String user,String agentid){
         return agentCommissiondao.getAgentReportInfo(datefrom, dateto, user,agentid);
+    }
+    
+    public List getReceiveList(String datefrom,String dateto,String user,String agentid){
+        return receiveListDao.getReceiveList(datefrom, agentid, dateto, dateto, dateto, agentid, user);
     }
 
     public HotelVoucherDao getHotelVoucherdao() {
@@ -233,5 +239,16 @@ public class ReportService {
     public void setInvoiceSummaryDao(InvoiceSummaryDao invoiceSummaryDao) {
         this.invoiceSummaryDao = invoiceSummaryDao;
     }
-   
+
+    public void setReceiveListDao(ReceiveListDao receiveListDao) {
+        this.receiveListDao = receiveListDao;
+    }
+
+    public ReceiveListDao getReceiveListDao() {
+        return receiveListDao;
+    }
+
+    public InvoiceSummaryDao getInvoiceSummaryDao() {
+        return invoiceSummaryDao;
+    }
 }
