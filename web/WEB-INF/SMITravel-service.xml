@@ -236,5 +236,9 @@
         <property name="mbankdao" ref="MBankDao" />
     </bean>    
     
+    <bean id="LockUnlockBookingService" class="com.smi.travel.datalayer.service.LockUnlockBookingService">
+        <property name="masterdao" ref="MasterDao" />
+        <property name="listitemdao" ref="MListItemDao" />
+    </bean>    
     <!--<add data>-->
 </beans>

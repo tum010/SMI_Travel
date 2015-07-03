@@ -6,12 +6,14 @@
 package com.smi.travel.datalayer.bean.master;
 
 import com.smi.travel.common.bean.AbstractBean;
+import com.smi.travel.controller.LockUnlockBookingController;
 import com.smi.travel.datalayer.ajax.service.AbstractAJAXServices;
 import com.smi.travel.datalayer.dao.CustomerDao;
 import com.smi.travel.datalayer.dao.DaytourBookingDao;
 import com.smi.travel.datalayer.dao.DaytourComissionDao;
 import com.smi.travel.datalayer.dao.DaytourDao;
 import com.smi.travel.datalayer.dao.MAirportDao;
+import com.smi.travel.datalayer.dao.MasterDao;
 import com.smi.travel.datalayer.dao.PackageTourDao;
 import com.smi.travel.datalayer.dao.ProductDetailDao;
 import com.smi.travel.datalayer.dao.TransferJobDao;
@@ -66,6 +68,10 @@ public class AJAXBean extends AbstractBean implements
     private static final String AIRTICKET = "AirTicketServlet";
     private static final String PASSENGER = "PassengerServlet";
     private static final String MAIL = "MailServlet";
+    private static final String BOOKINGSTATUS = "BookingStatusServlet";
+    private static final String BOOKSTATUSFROMREFNO = "bookStatusFromRefNo";
+
+    
     private CustomerDao customerdao;
     private ProductDetailDao productDetailDao;
     private BookingSummaryDao bookingsummarydao;
@@ -77,6 +83,7 @@ public class AJAXBean extends AbstractBean implements
     private DaytourComissionDao daytourComdao;
     private MAirportDao airportdao;
     private Mail sendMail;
+    private MasterDao masterdao;
 
     public AJAXBean(List queryList) {
         super(queryList);
@@ -106,6 +113,8 @@ public class AJAXBean extends AbstractBean implements
                     airportdao = (MAirportDao) obj;
                 } else if (obj instanceof Mail) {
                     sendMail = (Mail) obj;
+                } else if (obj instanceof MasterDao) {
+                    masterdao = (MasterDao) obj;
                 }
             }
         }
@@ -131,6 +140,7 @@ public class AJAXBean extends AbstractBean implements
         String subject = String.valueOf(map.get("subject"));
         String content = String.valueOf(map.get("content"));
         String attachfile = String.valueOf(map.get("attachfile"));
+        String refNo = String.valueOf(map.get("refNo"));
         if (BOOKDETAIL.equalsIgnoreCase(servletName)) {
 
             if ("checkExistCustomer".equalsIgnoreCase(type)) {
@@ -413,6 +423,25 @@ public class AJAXBean extends AbstractBean implements
                 } catch (MalformedURLException ex) {
                     Logger.getLogger(AJAXBean.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            }
+        } else if (BOOKINGSTATUS.equalsIgnoreCase(servletName)) {
+            if ("search".equalsIgnoreCase(type)) {
+                if(refNo == null){
+                    System.out.print("refno is null");
+                }else{
+                    int[] bookStatus = masterdao.getBookStatusFromRefno(refNo);
+                    if (bookStatus == null) {
+                        result = "0,0,0,0,0,0";
+                    }else{
+                        result = bookStatus[0]+ "," 
+                                + bookStatus[1] + "," 
+                                + bookStatus[2] + ","
+                                + bookStatus[3] + "," 
+                                + bookStatus[4] + "," 
+                                + bookStatus[5];
+                    }
+                }
+                System.out.println("result :" + result);
             }
         } 
         return result;
@@ -783,4 +812,7 @@ public class AJAXBean extends AbstractBean implements
     public void setSendMail(Mail sendMail) {
         this.sendMail = sendMail;
     }
+
+ 
+  
 }

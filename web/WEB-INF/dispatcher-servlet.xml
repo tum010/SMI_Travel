@@ -470,9 +470,7 @@
     <bean id="ReceiveTableController" class="com.smi.travel.controller.ReceiveTableController">
        
     </bean>
-    <bean id="LockUnlockBookingController" class="com.smi.travel.controller.LockUnlockBookingController">
 
-    </bean>
     
     <bean id="StockController" class="com.smi.travel.controller.StockController">
        
@@ -550,5 +548,9 @@
     
     <bean id="MBankController" class="com.smi.travel.masterdata.controller.MBankController">
         <property name="mBankService" ref="MBankService" />
+    </bean>
+    
+    <bean id="LockUnlockBookingController" class="com.smi.travel.controller.LockUnlockBookingController">
+        <property name="lockUnlockBookingService" ref="LockUnlockBookingService" />
     </bean>
 </beans>

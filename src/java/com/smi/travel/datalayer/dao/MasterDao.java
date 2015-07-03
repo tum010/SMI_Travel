@@ -5,6 +5,7 @@
  */
 
 package com.smi.travel.datalayer.dao;
+import com.smi.travel.datalayer.entity.MBookingstatus;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.Passenger;
 import java.util.List;
@@ -19,7 +20,8 @@ public interface MasterDao {
     public int insertBooking(Master master,Passenger passenger);
     public int updateBooking(Master master,Passenger passenger);
     public int getMaxRefno();
-    public int LockAndUnLockBooking(String MasterID,int[] Flag);
+    public int LockAndUnLockBooking(Master master);
     public int[] getBookStatusFromRefno(String Refno);
+    public int getaaa(String aaa);
 
 }
