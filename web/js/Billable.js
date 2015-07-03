@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+var showflag = 1;
 
 
 $(document).ready(function() {
@@ -43,11 +43,18 @@ $(document).ready(function() {
         }
     });
     $("#billtoVal").keydown(function(){
-        var position = $(this).offset();
-        $(".ui-widget").css("top", position.top + 30);
-        $(".ui-widget").css("left", position.left); 
+        
+            var position = $(this).offset();
+            $(".ui-widget").css("top", position.top + 30);
+            $(".ui-widget").css("left", position.left); 
+            if(showflag == 0){
+                $(".ui-widget").css("top", -1000);
+                showflag=1;
+            }
         
     });
+    
+  
 });
 
 function searchCustomerAutoList(name){
@@ -64,6 +71,9 @@ function searchCustomerAutoList(name){
 function CallAjaxAuto(param){
      var url = 'AJAXServlet';
      var billArray = [];
+     var billListId= [];
+     var billListName= [];
+     var billListAddress= [];
      var billid , billname ,billaddr;
      $("#billtoVal").autocomplete("destroy");
      try {
@@ -76,7 +86,7 @@ function CallAjaxAuto(param){
                $("#dataload").removeClass("hidden");    
             },
             success: function(msg) {     
-                console.log("getAutoListBillto =="+msg);
+             //   console.log("getAutoListBillto =="+msg);
                 var billJson =  JSON.parse(msg);
                 for (var i in billJson){
                     if (billJson.hasOwnProperty(i)){
@@ -85,7 +95,9 @@ function CallAjaxAuto(param){
                         billaddr = billJson[i].address;
                         billArray.push(billid);
                         billArray.push(billname);
-                        
+                        billListId.push(billid);
+                        billListName.push(billname);
+                        billListAddress.push(billaddr);
                     }                 
                      $("#dataload").addClass("hidden"); 
                 }
@@ -93,18 +105,35 @@ function CallAjaxAuto(param){
                 $("#billname").val(billname);
                 $("#address").val(billaddr);
                 
-                
+              
                 $("#billtoVal").autocomplete({
                     source: billArray,
                     close: function(){
                          $("#billtoVal").trigger("keyup");
+                         var billselect = $("#billtoVal").val();
+                        for(var i =0;i<billListId.length;i++){
+                            if((billselect==billListName[i])||(billselect==billListId[i])){      
+                                $("#billtoVal").val(billListId[i]);
+                                $("#billname").val(billListName[i]);
+                                $("#address").val(billListAddress[i]);
+                            }                 
+                        }   
                     }
                  });
                 
+                var billval = $("#billtoVal").val();
+                for(var i =0;i<billListId.length;i++){
+                    if(billval==billListName[i]){
+                        $("#billtoVal").val(billListId[i])
+                    }
+                }
+                if(billListId.length == 1){
+                    showflag = 0;
+                }
                 var event = jQuery.Event('keydown');
                 event.keyCode = 40;
                 $("#billtoVal").trigger(event);
-                
+                  
             }, error: function(msg) {
                 console.log('auto ERROR');
                 $("#dataload").addClass("hidden");
