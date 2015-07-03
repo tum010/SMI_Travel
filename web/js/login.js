@@ -18,7 +18,7 @@ document.formApplication.submit();
 $(document).ready(function () {
     // validate
    
-    $("#password").keyup(function (event) {
+    $("#username,#password").keyup(function (event) {
         if (event.keyCode === 13) {
             login();
         }
