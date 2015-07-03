@@ -129,6 +129,7 @@ function CallAjaxAuto(param){
                 }
                 if(billListId.length == 1){
                     showflag = 0;
+                    $("#billtoVal").val(billListId[0])
                 }
                 var event = jQuery.Event('keydown');
                 event.keyCode = 40;
