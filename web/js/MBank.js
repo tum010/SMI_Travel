@@ -53,11 +53,17 @@ $(document).ready(function () {
         },
         
     }
-}).on('success.field.bv', function (e, data) {
-    if (data.bv.isValid()) {
-        data.bv.disableSubmitButtons(false);
-    }
-});
+    }).on('success.field.bv', function (e, data) {
+        if (data.bv.isValid()) {
+            data.bv.disableSubmitButtons(false);
+        }
+    });
+    
+    $("#CodeSearch,#NameSearch,#BrachSearch,#AccountNoSearch,#TypeSearch").keyup(function (event) {
+        if (event.keyCode === 13) {
+            searchAction();
+        }
+    });
 });
 
 
