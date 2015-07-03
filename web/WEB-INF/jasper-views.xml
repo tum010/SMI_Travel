@@ -66,6 +66,11 @@
 	   <property name="url" value="/WEB-INF/report/AirlineSummary.jrxml"/>
 	</bean>
         
+        <bean id="InvoiceSummary"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/InvoiceSummary.jrxml"/>
+	</bean>
+        
          <bean id="TicketSaleVolumn"
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/TicketSaleVolumn.jrxml"/>
