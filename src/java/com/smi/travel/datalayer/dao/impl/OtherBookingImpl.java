@@ -271,6 +271,17 @@ public class OtherBookingImpl implements OtherBookingDao{
 
     @Override
     public Boolean CheckUsabilityCoupon(String CouponId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        String result = "";
+        String query = "from Coupon c where c.otherBooking = '" + CouponId + "'";
+        
+        Session session = this.sessionFactory.openSession();
+
+        Query CouponList = session.createQuery(query); 
+        List list = CouponList.list();
+        if(list.isEmpty()){
+            return true;
+        }
+        return false;
     }
 }
