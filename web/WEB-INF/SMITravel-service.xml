@@ -145,6 +145,7 @@
         <property name="guideJobdao" ref="GuideJobDao" />
         <property name="daytourOtherdao" ref="DaytourOtherDao" />
         <property name="agentCommissiondao" ref="AgentCommissionReportDao" />
+        <property name="receiptEmailDao" ref="ReceiptEmailDao" />
     </bean> 
     
     

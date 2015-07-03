@@ -113,5 +113,9 @@
          
         <bean id="ExportDataToExcelView" class="com.smi.travel.controller.excel.ExportDataToExcelView">
         </bean> 
-         
+        
+        <bean id="ReceiptEmail"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/ReceiptEmail.jrxml"/>
+        </bean>
 </beans>
