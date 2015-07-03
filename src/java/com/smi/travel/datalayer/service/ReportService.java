@@ -18,6 +18,7 @@ import com.smi.travel.datalayer.view.dao.HotelInboundDao;
 import com.smi.travel.datalayer.view.dao.HotelVoucherDao;
 import com.smi.travel.datalayer.view.dao.InvoiceSummaryDao;
 import com.smi.travel.datalayer.view.dao.LandVoucherDao;
+import com.smi.travel.datalayer.view.dao.ReceiptEmailDao;
 import com.smi.travel.datalayer.view.dao.ReceiveListDao;
 import com.smi.travel.datalayer.view.dao.StaffSummaryDao;
 import com.smi.travel.datalayer.view.dao.TicketOrderDao;
@@ -47,6 +48,7 @@ public class ReportService {
     private GuideJobDao guideJobdao;
     private DaytourOtherDao daytourOtherdao;
     private AgentCommissionReportDao agentCommissiondao;
+    private ReceiptEmailDao receiptEmailDao;
     private ReceiveListDao  receiveListDao;
     
     public List getHotelVoucher(String hotelID,String name) {
@@ -122,6 +124,12 @@ public class ReportService {
     
     public List getAgentCommissionReportInfo(String datefrom,String dateto,String user,String agentid){
         return agentCommissiondao.getAgentReportInfo(datefrom, dateto, user,agentid);
+    }
+    
+    public List getReceiptEmail(){
+        List data  = new ArrayList();
+        data.add(receiptEmailDao.getReceiptEmail());
+        return data;
     }
     
     public List getReceiveList(String datefrom,String dateto,String user,String agentid){
@@ -236,8 +244,12 @@ public class ReportService {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void setInvoiceSummaryDao(InvoiceSummaryDao invoiceSummaryDao) {
-        this.invoiceSummaryDao = invoiceSummaryDao;
+    public ReceiptEmailDao getReceiptEmailDao() {
+        return receiptEmailDao;
+    }
+
+    public void setReceiptEmailDao(ReceiptEmailDao receiptEmailDao) {
+        this.receiptEmailDao = receiptEmailDao;
     }
 
     public void setReceiveListDao(ReceiveListDao receiveListDao) {
@@ -247,7 +259,11 @@ public class ReportService {
     public ReceiveListDao getReceiveListDao() {
         return receiveListDao;
     }
-
+    
+    public void setInvoiceSummaryDao(InvoiceSummaryDao invoiceSummaryDao) {
+        this.invoiceSummaryDao = invoiceSummaryDao;
+    }
+    
     public InvoiceSummaryDao getInvoiceSummaryDao() {
         return invoiceSummaryDao;
     }
