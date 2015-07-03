@@ -75,7 +75,7 @@ public class CustomerAgentInfoImpl implements CustomerAgentInfoDao{
     public List<CustomerAgentInfo> SearchListCustomerAgentInfo(String name) {
         Session session = this.sessionFactory.openSession();
         util = new UtilityFunction();
-        String sql ="SELECT * FROM `customer_agent_info` where bill_name like '"+name+"%' or bill_to like '"+name+"%' limit 500";
+        String sql ="SELECT * FROM `customer_agent_info` where bill_name like '%"+name+"%' or bill_to like '"+name+"%' limit 200";
         List<Object[]> QueryList =  session.createSQLQuery(sql)
                 .addScalar("bill_To",Hibernate.STRING)
                 .addScalar("bill_Name",Hibernate.STRING)
