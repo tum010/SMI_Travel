@@ -133,15 +133,17 @@
             <div class="col-md-8  ">
                 <h4><b>Bank</b></h4>
             </div>
-            <div class="col-md-4 " style="padding: 5px 0px 0px 185px">
+            <div class="col-md-4 " style="padding: 5px 0px 0px 200px">
                 <div class="col-md-2">
-                    <button title="${sessionScope['id']}" type="button" class="btn btn-success" id="addBank"   data-toggle="modal"  data-target="#BankModal"><span class="glyphicon glyphicon-plus" ></span>Add</button>
+                    <button title="${sessionScope['id']}" type="button" class="btn btn-success" id="addBank"   data-toggle="modal"  data-target="#BankModal">
+                        <span class="glyphicon glyphicon-plus" ></span>Add
+                    </button>
                 </div>
             </div>
 
         </div>
 
-        <div class="row" style="padding-left:35px">    
+        <div class="row" style="padding-left:40px">    
             <div class="col-md-10  col-xs-offset-1">
                 <table id="MasterBank" class="display" cellspacing="0" >
                     <thead>
