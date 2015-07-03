@@ -7,6 +7,7 @@
 package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.report.model.HotelVoucher;
+import com.smi.travel.datalayer.report.model.InvoiceSummary;
 import com.smi.travel.datalayer.report.model.LandVoucher;
 import com.smi.travel.datalayer.view.dao.AgentCommissionReportDao;
 import com.smi.travel.datalayer.view.dao.AirlineSummaryDao;
@@ -15,6 +16,7 @@ import com.smi.travel.datalayer.view.dao.GuideCommissionReportDao;
 import com.smi.travel.datalayer.view.dao.GuideJobDao;
 import com.smi.travel.datalayer.view.dao.HotelInboundDao;
 import com.smi.travel.datalayer.view.dao.HotelVoucherDao;
+import com.smi.travel.datalayer.view.dao.InvoiceSummaryDao;
 import com.smi.travel.datalayer.view.dao.LandVoucherDao;
 import com.smi.travel.datalayer.view.dao.StaffSummaryDao;
 import com.smi.travel.datalayer.view.dao.TicketOrderDao;
@@ -35,6 +37,7 @@ public class ReportService {
     private LandVoucherDao landVoucherdao;
     private TicketOrderDao ticketOrderdao;
     private TicketSummaryDao ticketsummaryDao;
+    private InvoiceSummaryDao invoiceSummaryDao;
     private AirlineSummaryDao airlinesummaryDao;
     private StaffSummaryDao staffsummaryDao;
     private TicketSaleProfitVolumnDao ticketsaleprofitVolumnDao;
@@ -67,6 +70,10 @@ public class ReportService {
     
     public List getTicketSummary(String ticketfrom,String tickettype,String startdate,String enddate,String billto,String  passenger,String username){
         return ticketsummaryDao.getTicketSummary(ticketfrom, tickettype, startdate, enddate, billto, passenger,username);
+    }
+    
+    public List getInvoiceSummary(String ticketfrom,String tickettype,String startdate,String enddate,String billto,String  passenger,String username){
+        return invoiceSummaryDao.getInvoiceSummary(ticketfrom, tickettype, startdate, enddate, billto, passenger,username);
     }
     
     public List getHotelInboundVoucher(String hotelID){
@@ -218,4 +225,13 @@ public class ReportService {
     public DaytourOtherDao getDaytourOtherdao() {
         return daytourOtherdao;
     }
+
+    public List getInvoiceSummary(String ticketfrom, String tickettype, String startdate, String enddate) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void setInvoiceSummaryDao(InvoiceSummaryDao invoiceSummaryDao) {
+        this.invoiceSummaryDao = invoiceSummaryDao;
+    }
+   
 }
