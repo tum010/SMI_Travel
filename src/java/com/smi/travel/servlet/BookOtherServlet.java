@@ -26,12 +26,14 @@ public class BookOtherServlet implements AbstractAJAXServlet {
         String productid = request.getParameter("productid");
         String otherdate = request.getParameter("otherdate");
         String type = request.getParameter("type");
+        String couponId = request.getParameter("couponId");
         System.out.print("set parameter mapping");
         Map result = new HashMap();
         result.put("productid", productid);
         result.put("otherdate", otherdate);
         result.put("servletName", servletName);
         result.put("type", type);
+        result.put("couponId", couponId);
         return result;
     }
     
