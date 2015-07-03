@@ -46,6 +46,7 @@ public class ReportController extends SMITravelController {
     private static final String ReportName = "name";
     private static final String TicketSaleSummary = "TicketSaleSummary";
     private static final String TicketProfitSummary = "TicketProfitSummary";
+    private static final String InvoiceSummary = "InvoiceSummary";
     private static final String GuideJob = "GuideJob";
     private static final String TransferJob = "TransferJob";
     private static final String GuideCommission = "GuideCommission";
@@ -125,6 +126,9 @@ public class ReportController extends SMITravelController {
         }else if (TicketProfitSummary.equalsIgnoreCase(name)) {
             PrintMethod = 0;
             data = reportservice.getTicketProfitVolumn(ticketfrom, tickettype, startdate, enddate);
+        }else if (InvoiceSummary.equalsIgnoreCase(name)) {
+            PrintMethod = 0;
+            data = reportservice.getInvoiceSummary(ticketfrom, tickettype, startdate, enddate);
         }else if (GuideJob.equalsIgnoreCase(name)) {
             PrintMethod = 0;
             data = reportservice.getGuildJobReport(tourDate, tourCode, user.getName());
