@@ -137,7 +137,8 @@
                                 <label for="billTo" class="col-sm-2 control-label text-right">Bill To <strong style="color: red">*</strong></label>
                                 <div class="col-sm-10">
                                     <div class="input-group">
-                                        <input type="text" id="billto"  name="billto" 
+                                        <input type="hidden" id="billto"  name="billto" placeholder="test"  value="${billable.billTo}"/>
+                                        <input type="text" id="billtoVal"  name="billtoVal" 
                                                class="form-control" value="${billable.billTo}" 
                                                data-bv-notempty="true" data-bv-notempty-message="Bill to is required" >      
                                         <span id="SpanBillToModal" name="SpanBillToModal" class="input-group-addon" data-toggle="modal" data-target="#BillToModal">
