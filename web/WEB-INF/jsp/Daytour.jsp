@@ -208,7 +208,7 @@
                             <span class="glyphicon glyphicon-plus addicon"   onclick="EnableOther('${table.id}', ' ${table.product.code}');" data-toggle="modal" data-target="#EnableOther" ></span>
                         </c:if>
                         <c:if test="${table.status.id == 1}">
-                            <span class="glyphicon glyphicon-remove deleteicon"   onclick="DeleteOther('${table.id}', ' ${table.product.code}');" data-toggle="modal" data-target="#DelOther" ></span>
+                            <span class="glyphicon glyphicon-remove deleteicon"   onclick="getCouponCheck('${table.id}', ' ${table.product.code}');" data-toggle="modal" data-target="" ></span>
                         </c:if>                                   
                     </center>
                     </td>
@@ -350,13 +350,52 @@
     function DeleteOther(id,code){
         var OtherID = document.getElementById('OtherIdDelete');
         OtherID.value = id;
-        document.getElementById('delCode').innerHTML = "Are you sure to disable booking other : " + code + " ?";
+        document.getElementById('delCode').innerHTML = "Are you sure to delete booking other : " + code + " ?";
+        $('#DelOther').modal('show');
     }
 
     function EnableOther(id,code){
         var OtherID = document.getElementById('OtherIdEnable');
         OtherID.value = id;
         document.getElementById('enableCode').innerHTML = "Are you sure to enable booking other : " + code + " ?";
+    }
+    
+    function getCouponCheck(id,code) {
+        var servletName = 'BookOtherServlet';
+        var servicesName = 'AJAXBean';
+        var couponId = id;
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&couponId=' + couponId +
+                '&type=' + 'getCouponCheck';
+        CallAjax(param, id, code);
+    }
+    
+    function CallAjax(param, id, code) {
+        var url = 'AJAXServlet';
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                success: function(msg) {
+                    var result = msg; 
+                    if (result == 'true') {                
+                        DeleteOther(id,code);                                
+                    }
+
+                    if (result == 'false') {
+                        alert('Can\'t Delete this other package!!!'); 
+                    }
+                }, error: function(msg) {
+                    //alert('error');
+                }
+            });
+        } catch (e) {
+            alert(e);
+        }
     }
 
     $(document).ready(function () {
