@@ -9,6 +9,7 @@ function DeleteOther(id,code){
     var OtherID = document.getElementById('OtherID');
     OtherID.value = id;
     document.getElementById('delCode').innerHTML = "Are you sure to delete booking other : " + code + " ?";
+    $('#DelOther').modal('show');
 }
 
 function EnableOther(id,code){
@@ -41,4 +42,43 @@ $(document).ready(function () {
         $('#textAlertDivNotSave').show();
     }
 });
+
+function getCouponCheck(id,code) {
+    var servletName = 'BookOtherServlet';
+    var servicesName = 'AJAXBean';
+    var couponId = id;
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&couponId=' + couponId +
+            '&type=' + 'getCouponCheck';
+    CallAjax(param, id, code);
+    
+}
+
+function CallAjax(param, id, code) {
+    var url = 'AJAXServlet';
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function(msg) {
+                var result = msg; 
+                if (result == 'true') {                
+                    DeleteOther(id,code);                                
+                }
+
+                if (result == 'false') {
+                    alert('Can\'t Delete this other package!!!'); 
+                }
+            }, error: function(msg) {
+                //alert('error');
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
+}
 
