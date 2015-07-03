@@ -14,6 +14,7 @@ import com.smi.travel.datalayer.dao.DaytourComissionDao;
 import com.smi.travel.datalayer.dao.DaytourDao;
 import com.smi.travel.datalayer.dao.MAirportDao;
 import com.smi.travel.datalayer.dao.MasterDao;
+import com.smi.travel.datalayer.dao.OtherBookingDao;
 import com.smi.travel.datalayer.dao.PackageTourDao;
 import com.smi.travel.datalayer.dao.ProductDetailDao;
 import com.smi.travel.datalayer.dao.TransferJobDao;
@@ -84,6 +85,7 @@ public class AJAXBean extends AbstractBean implements
     private MAirportDao airportdao;
     private Mail sendMail;
     private MasterDao masterdao;
+    private OtherBookingDao otherBookingDao;
 
     public AJAXBean(List queryList) {
         super(queryList);
@@ -115,6 +117,8 @@ public class AJAXBean extends AbstractBean implements
                     sendMail = (Mail) obj;
                 } else if (obj instanceof MasterDao) {
                     masterdao = (MasterDao) obj;
+                } else if (obj instanceof OtherBookingDao) {
+                    otherBookingDao = (OtherBookingDao) obj;
                 }
             }
         }
@@ -201,9 +205,17 @@ public class AJAXBean extends AbstractBean implements
                                 + product.getAdPrice() + "," + product.getChPrice() + "," + product.getInPrice();
                     }
                 }
-
                 System.out.println("result :" + result);
-
+            }
+            if ("getCouponCheck".equalsIgnoreCase(type)){
+                String couponId = map.get("couponId").toString();
+                boolean coupons = otherBookingDao.CheckUsabilityCoupon(couponId);
+                if(coupons){
+                    result = "true";
+                } else {
+                    result = "false";
+                }
+                System.out.println("result :" + result);
             }
         } else if (BOOKLAND.equalsIgnoreCase(servletName)) {
             //result = customerdao.isExistCustomer(initialID, first, last);
