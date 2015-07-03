@@ -174,7 +174,7 @@
                                             <span class="glyphicon glyphicon-plus addicon"   onclick="EnableOther('${table.id}',' ${table.product.code}');" data-toggle="modal" data-target="#EnableOther" ></span>
                                         </c:if>
                                         <c:if test="${table.status.id == 1}">
-                                            <span class="glyphicon glyphicon-remove deleteicon"   onclick="DeleteOther('${table.id}',' ${table.product.code}');" data-toggle="modal" data-target="#DelOther" ></span>
+                                            <span class="glyphicon glyphicon-remove deleteicon"   onclick="getCouponCheck('${table.id}',' ${table.product.code}');" data-toggle="modal" data-target="" ></span>
                                         </c:if>
                                         
                                     </center>
