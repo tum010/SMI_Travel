@@ -123,7 +123,12 @@
         $('#ReceiptListTable').hide();
        
         $('.date').datetimepicker();
-        
+        $('.spandate').click(function() {
+            var position = $(this).offset();
+            console.log("positon :" + position.top);
+            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+
+        });
         $('#ButtonShow').on('click', function() {
             $('#ReceiptListTable').show();
 

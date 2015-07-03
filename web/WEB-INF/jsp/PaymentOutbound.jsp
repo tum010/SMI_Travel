@@ -299,7 +299,14 @@
 <script type="text/javascript">
 $(document).ready(function () {
     $('.date').datetimepicker();
-    $('.datemask').mask('0000-00-00');
+     $(".datemask").mask('00-00-0000', {reverse: true});
+     $('.spandate').click(function() {
+            var position = $(this).offset();
+            console.log("positon :" + position.top);
+            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+
+        });
+//    $(document).on('click', '#commissionTable tbody tr:last td  input ,#commissionTable tbody tr:last td .input-group-addon', function (e) { // .input-group-addon, .datemask
     $('#InvoiceTable').dataTable({bJQueryUI: true,
         "sPaginationType": "full_numbers",
         "bAutoWidth": true,

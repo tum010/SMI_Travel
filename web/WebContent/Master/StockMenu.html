@@ -1,16 +1,51 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+<ul id="StockMenu" class="nav nav-list" style="top: 0px;  background-color: #FAFEFA;border: solid 1px #0063DC">
+     <li class="" >
+         <a href="SearchStock.smi?type=stockSearch" id="SearchStock">
+            <i class="fa fa-search-plus"></i> 
+            <span class="menu-text"> Search Stock </span>
+        </a>
+        <b class="arrow"></b>
+    </li>
+    <li class="">
+        <a href="Stock.smi?type=search" id="Stock">
+            <i class="fa fa-stack-overflow"></i> 
+            <span class="menu-text">  Stock </span>
+        </a>
+        <b class="arrow"></b>
+    </li>
+</ul>
+<script>
+    $(document).ready(function () {
+        var path = location.pathname;
+        var name = path.split("/");
+        var listpara = location.search;
+//        alert("Path : "+path)
+//        alert(path.indexOf('StockMenu'));
+         if(listpara.indexOf('stockSearch') != -1){
+            $("#SearchStock").css('background-color', '#ccc');
+        }else if(listpara.indexOf('search') != -1){
+            $("#Stock").css('background-color', '#ccc');
+        }else{
+            //console.log(name[2]);
+            str = name[2].split(".");
+            //console.log(str[0]);
+            sub = str[0].substr(0, 9);
+            console.log(sub);
+            var $select = $('a[href*="' + sub + '"]');
+            $("#StockMenu").find($select).css('background-color', '#ccc');           
+        }
+        
+        $("#StockMenu a").one('mouseover', function () {
+
+            var action = '?action=edit';
+            if ($("#actionIDown").val() == 'new') {
+                action = "&action=new";
+                $('#StockMenu a').click(function (e) {
+                    e.preventDefault();
+                });
+            }
+            //console.log("href");
+            $(this).attr('href', $(this).attr('href') + action);
+        });
+    });
+</script> 

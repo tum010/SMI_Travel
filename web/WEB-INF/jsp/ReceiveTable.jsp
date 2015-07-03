@@ -292,6 +292,12 @@
     $(document).ready(function () {
         $('.date').datetimepicker();
         $('.datemask').mask('0000-00-00');
+        $('.spandate').click(function() {
+            var position = $(this).offset();
+            console.log("positon :" + position.top);
+            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+
+        });
     });
 </script>
 <script type="text/javascript">
