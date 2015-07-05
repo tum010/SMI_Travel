@@ -70,7 +70,7 @@
                         <div class="row-fluid"> 
                             <div class="padding5">
                                 <div class="form-group">
-                                    <input type="hidden" class="form-control" id="customerId" name="customerId" />
+                                    <input type="hidden" class="form-control" id="customerId" placeholder="id" name="customerId" value="${passenger.getCustomer().getId()}" />
                                     <label for="Order" class="col-sm-2 text-right">Order</label>
                                     <div class="col-sm-3">
                                         <input  value="${passenger.orderNo}" type="text" class="form-control" id="Order" placeholder="Order" name="orderNo" readonly="" />
@@ -81,8 +81,12 @@
                                     <div class="col-sm-4">
                                         <div class="form-group">
                                             <div class="input-group" id="PassengerInput">
-                                                <input  value="${passenger.getCustomer().getCode()}" type="text" class="form-control" id="passengerId" name="code"/>
-                                                <span id="SpanGroupAddon" class="input-group-addon"   data-toggle="modal" data-target="#CustomerModal"><span class="glyphicon-search glyphicon"></span>
+                                                <input type="hidden" id="passengerId"  name="code" placeholder="test"  value="${passenger.getCustomer().getCode()}"/>
+                                                <input type="text" class="form-control" id="passengerIdVal" name="passengerIdVal"   
+                                                       value="${passenger.getCustomer().getCode()}" />
+                                                <span id="SpanGroupAddon" class="input-group-addon"   data-toggle="modal" data-target="#CustomerModal">
+                                                    <i id="dataload" class="fa fa-spinner fa-spin hidden"></i>
+                                                    <span class="glyphicon-search glyphicon"></span>
                                                 </span>
                                             </div>
                                         </div>
@@ -280,7 +284,7 @@
                     </thead>
                     <tbody>
                     <script>
-                        customer = [];
+//                        customer = [];
                     </script>
                     <c:forEach var="customer" items="${customerList}">
                         <tr>
@@ -302,24 +306,24 @@
                             <td class="customer-passportno hidden">${customer.passportNo}</td>                                
                         </tr>
                         <script>
-                            customer.push({
-                                id: "${customer.id}",
-                                code: "${customer.code}",
-                                initial: "${customer.getMInitialname().getName()}",
-                                initialId: "${customer.getMInitialname().getId()}",
-                                firstname: "${customer.firstName}",
-                                lastname: "${customer.lastName}",
-                                sex: "${customer.sex}",
-                                address: "${customer.address}",
-                                tel: "${customer.tel}",
-                                phone: "${customer.phone}",
-                                postalCode: "${customer.postalCode}",
-                                email: "${customer.email}",
-                                firstNameJpan: "${customer.firstNameJapan}",
-                                lastNameJapan: "${customer.lastNameJapan}",
-                                remark: "${customer.remark}",
-                                passportNo: "${customer.passportNo}",
-                            });
+//                            customer.push({
+//                                id: "${customer.id}",
+//                                code: "${customer.code}",
+//                                initial: "${customer.getMInitialname().getName()}",
+//                                initialId: "${customer.getMInitialname().getId()}",
+//                                firstname: "${customer.firstName}",
+//                                lastname: "${customer.lastName}",
+//                                sex: "${customer.sex}",
+//                                address: "${customer.address}",
+//                                tel: "${customer.tel}",
+//                                phone: "${customer.phone}",
+//                                postalCode: "${customer.postalCode}",
+//                                email: "${customer.email}",
+//                                firstNameJpan: "${customer.firstNameJapan}",
+//                                lastNameJapan: "${customer.lastNameJapan}",
+//                                remark: "${customer.remark}",
+//                                passportNo: "${customer.passportNo}",
+//                            });
                         </script>
 
 

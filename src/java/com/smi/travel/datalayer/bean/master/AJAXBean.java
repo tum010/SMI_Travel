@@ -303,7 +303,6 @@ public class AJAXBean extends AbstractBean implements
                 result = tabledata;
             }else  if ("getAutoListBillto".equalsIgnoreCase(type)) {
                 String name = map.get("name").toString();
-//                List<CustomerAgentInfo> data = customerAgentInfoDao.SearchListCustomerAgentInfo(name);
                 result = buildBillListJSON(customerAgentInfoDao.SearchListCustomerAgentInfo(name));
             }
         } else if (BOOKDAYTOUR.equalsIgnoreCase(servletName)) {
@@ -425,6 +424,25 @@ public class AJAXBean extends AbstractBean implements
                 List<Customer> customerList = customerdao.FiterCustomer(customer, filter);
                 result = buildPassengerListHTML(customerList);
                 System.out.println("result passenger: "+result);
+            }else if("searchAutoPassenger".equalsIgnoreCase(type)){
+                Customer customer = new Customer();
+                String[] pathname = name.trim().split("/");
+                int filter = 0;
+                if (pathname.length == 1) {
+                    
+                    customer.setFirstName(pathname[0]);
+                    customer.setLastName(pathname[0]);
+                    customer.setCode(pathname[0]);
+                    filter = 1;
+                } else {
+                    System.out.println("First : "+pathname[1]);
+                    System.out.println("Last : "+pathname[0]);
+                    filter = 0;
+                    customer.setFirstName(pathname[1]);
+                    customer.setLastName(pathname[0]);
+                    customer.setCode(pathname[0] + pathname[1]);
+                }
+                result = buildPassengerListJSON(customerdao.FiterCustomer(customer,filter));
             }
         }else if (MAIL.equalsIgnoreCase(servletName)) {
             if ("sendMail".equalsIgnoreCase(type)) {
@@ -495,6 +513,8 @@ public class AJAXBean extends AbstractBean implements
         return passenger;
     }
     
+    
+    
     public String buildAirportListJSON(List<MAirport> listAirport) {
         JSONArray record = new JSONArray();
         for (int i = 0; i < listAirport.size(); i++) {
@@ -506,6 +526,30 @@ public class AJAXBean extends AbstractBean implements
             record.add(field);
         }
         return record.toJSONString();
+    }
+    
+    public JSONArray buildPassengerListJSON(List<Customer> listCutomer) {
+        JSONArray record = new JSONArray();
+        for (int i = 0; i < listCutomer.size(); i++) {
+            Customer customer = listCutomer.get(i);
+            JSONObject field = new JSONObject();
+            field.put("id", customer.getId());
+            field.put("code", customer.getCode());
+            field.put("initialname", customer.getMInitialname().getId());
+            field.put("firstname", customer.getFirstName());
+            field.put("lastname", customer.getLastName());
+            field.put("sex", customer.getSex());
+            field.put("address", customer.getAddress());
+            field.put("tel", customer.getTel());
+            field.put("phone", customer.getPhone());
+            field.put("email", customer.getEmail());
+            field.put("remark", customer.getRemark());
+            field.put("passportno", customer.getPassportNo());
+            field.put("firstnamejapan", customer.getFirstNameJapan());
+            field.put("lastnamejapan", customer.getLastNameJapan());
+            record.add(field);
+        }
+        return record;
     }
     
     public JSONArray buildBillListJSON(List<CustomerAgentInfo> listCutomerInfo) {

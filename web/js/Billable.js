@@ -124,12 +124,12 @@ function CallAjaxAuto(param){
                 var billval = $("#billtoVal").val();
                 for(var i =0;i<billListId.length;i++){
                     if(billval==billListName[i]){
-                        $("#billtoVal").val(billListId[i])
+                        $("#billtoVal").val(billListId[i]);
                     }
                 }
                 if(billListId.length == 1){
                     showflag = 0;
-                    $("#billtoVal").val(billListId[0])
+                    $("#billtoVal").val(billListId[0]);
                 }
                 var event = jQuery.Event('keydown');
                 event.keyCode = 40;
