@@ -221,6 +221,7 @@ public class AirTicketDetailController extends SMITravelController {
             List<AirticketPassenger> allPassengers = new ArrayList<AirticketPassenger>();
             for (int i = 0; i < airlines.size(); i++) {
 //                allFlights.addAll(airlines.get(i).getAirticketFlights());
+                // AirTicketDetail.jsp in TableAir
                 sortedFlight.addAll(airlines.get(i).getAirticketFlights());
                 allPassengers.addAll(airlines.get(i).getAirticketPassengers());
             }
