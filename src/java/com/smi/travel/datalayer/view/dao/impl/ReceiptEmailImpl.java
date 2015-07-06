@@ -5,11 +5,9 @@
  */
 package com.smi.travel.datalayer.view.dao.impl;
 
-import com.smi.travel.controller.report.EnglishNumberToWords;
 import com.smi.travel.datalayer.report.model.ReceiptEmail;
 import com.smi.travel.datalayer.view.dao.ReceiptEmailDao;
 import com.smi.travel.util.UtilityFunction;
-import java.text.DecimalFormat;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -19,12 +17,13 @@ import org.hibernate.SessionFactory;
  */
 public class ReceiptEmailImpl implements ReceiptEmailDao{
     private SessionFactory sessionFactory;
-    private EnglishNumberToWords englishNumberToWords;
+    private UtilityFunction utilityFunction;
+    
     
     @Override
     public ReceiptEmail getReceiptEmail() {
         Session session = this.sessionFactory.openSession();
-        UtilityFunction util = new UtilityFunction();  
+//        UtilityFunction util = new UtilityFunction();  
         
         ReceiptEmail receiptEmail = new ReceiptEmail();
         
@@ -50,7 +49,7 @@ public class ReceiptEmailImpl implements ReceiptEmailDao{
         receiptEmail.setTotal(5200);
         receiptEmail.setChqno("12312314233");
         receiptEmail.setChqdate("01-07-2015");
-        receiptEmail.setTextmoney(englishNumberToWords.convert(receiptEmail.getTotal())+" baht");
+        receiptEmail.setTextmoney(utilityFunction.convert(receiptEmail.getTotal())+" baht");
         session.close();
         this.sessionFactory.close();
         return receiptEmail;
@@ -64,18 +63,11 @@ public class ReceiptEmailImpl implements ReceiptEmailDao{
         this.sessionFactory = sessionFactory;
     }
 
-    /**
-     * @return the englishNumberToWords
-     */
-    public EnglishNumberToWords getEnglishNumberToWords() {
-        return englishNumberToWords;
+    public UtilityFunction getUtilityFunction() {
+        return utilityFunction;
     }
 
-    /**
-     * @param englishNumberToWords the englishNumberToWords to set
-     */
-    public void setEnglishNumberToWords(EnglishNumberToWords englishNumberToWords) {
-        this.englishNumberToWords = englishNumberToWords;
+    public void setUtilityFunction(UtilityFunction utilityFunction) {
+        this.utilityFunction = utilityFunction;
     }
-    
 }
