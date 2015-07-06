@@ -146,6 +146,7 @@
         <property name="daytourOtherdao" ref="DaytourOtherDao" />
         <property name="agentCommissiondao" ref="AgentCommissionReportDao" />
         <property name="receiptEmailDao" ref="ReceiptEmailDao" />
+        <property name="invoiceReportdao" ref="InvoiceReportDao" />
     </bean> 
     
     
