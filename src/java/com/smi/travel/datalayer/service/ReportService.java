@@ -131,6 +131,9 @@ public class ReportService {
     public List getReceiptEmail(){
         List data  = new ArrayList();
         data.add(receiptEmailDao.getReceiptEmail());
+        data.add(receiptEmailDao.getReceiptEmail());
+        data.add(receiptEmailDao.getReceiptEmail());
+        data.add(receiptEmailDao.getReceiptEmail());
         return data;
     }
     
@@ -140,6 +143,9 @@ public class ReportService {
     
     public List getInvoiceReport(){
         List data  = new ArrayList();
+        data.add(invoiceReportdao.getInvoiceReport());
+        data.add(invoiceReportdao.getInvoiceReport());
+        data.add(invoiceReportdao.getInvoiceReport());
         data.add(invoiceReportdao.getInvoiceReport());
         return data;
     }
