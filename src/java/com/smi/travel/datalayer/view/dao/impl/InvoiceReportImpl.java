@@ -21,18 +21,12 @@ import org.hibernate.SessionFactory;
  */
 public class InvoiceReportImpl implements InvoiceReportDao{
     private SessionFactory sessionFactory;
+     private UtilityFunction utilityFunction;
 
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-    
     @Override
     public InvoiceReport getInvoiceReport() {
-        
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();  
         InvoiceReport invoiceReport = new InvoiceReport();
         invoiceReport.setAccname("TestMan");
         invoiceReport.setAccno("11111111");
@@ -63,7 +57,7 @@ public class InvoiceReportImpl implements InvoiceReportDao{
                 + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
                 + "Hello World Hello World Hello World Hello World Hello World Hello World");
         invoiceReport.setGross("999999");
-        int a = 199999999;
+        int a = 1999999999;
         invoiceReport.setGrtotal(a);
         invoiceReport.setInvdate("01-12-15");
         invoiceReport.setInvno("123456789");
@@ -71,11 +65,31 @@ public class InvoiceReportImpl implements InvoiceReportDao{
         invoiceReport.setPayment("Mr. Test Man");
         invoiceReport.setRefno("11111111");
         invoiceReport.setStaff("Minions");
-        invoiceReport.setTotal("1000000");
+        invoiceReport.setTotal(a);
         invoiceReport.setUser("Mike Jr. Robert");
         invoiceReport.setVat("7");
-        invoiceReport.setTextmoney("one million bath");
+        invoiceReport.setTextmoney(utilityFunction.convert(invoiceReport.getTotal())+" baht");
+        session.close();
+        this.sessionFactory.close();
         return invoiceReport;
     }
+
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    public UtilityFunction getUtilityFunction() {
+        return utilityFunction;
+    }
+
+    public void setUtilityFunction(UtilityFunction utilityFunction) {
+        this.utilityFunction = utilityFunction;
+    }
     
+    
+       
 }

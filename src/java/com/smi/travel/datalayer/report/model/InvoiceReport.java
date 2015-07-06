@@ -21,7 +21,7 @@ public class InvoiceReport {
     private String gross;
     private String vat;
     private String amount;
-    private String total;
+    private int total;
     private int grtotal;
     private String accname;
     private String bank;
@@ -111,11 +111,11 @@ public class InvoiceReport {
         this.amount = amount;
     }
 
-    public String getTotal() {
+    public int getTotal() {
         return total;
     }
 
-    public void setTotal(String total) {
+    public void setTotal(int total) {
         this.total = total;
     }
 

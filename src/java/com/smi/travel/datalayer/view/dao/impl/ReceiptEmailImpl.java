@@ -33,7 +33,28 @@ public class ReceiptEmailImpl implements ReceiptEmailDao{
         receiptEmail.setRecno("15070012");
         receiptEmail.setRecdate("01-07-2015");
         receiptEmail.setPaidby("Bank Transfer");
-        receiptEmail.setDescription("JR Area 5 DaysJR");
+        receiptEmail.setDescription("Hello World Hello World Hello World Hello World Hello World Hello World "
+                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
+                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
+                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
+                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
+                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
+                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
+                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
+                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
+                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
+                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
+                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
+                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
+                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
+                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
+                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
+                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
+                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
+                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
+                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
+                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
+                + "Hello World Hello World Hello World Hello World Hello World Hello World");
         receiptEmail.setAmount("5200");
         receiptEmail.setCashflag("");
         receiptEmail.setCash("1000");
