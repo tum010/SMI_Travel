@@ -21,8 +21,8 @@ public class InvoiceReport {
     private String gross;
     private String vat;
     private String amount;
-    private int total;
-    private int grtotal;
+    private String total;
+    private String grtotal;
     private String accname;
     private String bank;
     private String branch;
@@ -111,19 +111,19 @@ public class InvoiceReport {
         this.amount = amount;
     }
 
-    public int getTotal() {
+    public String getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(String total) {
         this.total = total;
     }
 
-    public int getGrtotal() {
+    public String getGrtotal() {
         return grtotal;
     }
 
-    public void setGrtotal(int grtotal) {
+    public void setGrtotal(String grtotal) {
         this.grtotal = grtotal;
     }
 
