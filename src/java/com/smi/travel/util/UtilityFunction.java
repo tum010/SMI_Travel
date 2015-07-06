@@ -15,6 +15,42 @@ import java.util.Date;
  * @author Surachai
  */
 public class UtilityFunction {
+     
+    private static final String[] tensNames = {
+        "",
+        " ten",
+        " twenty",
+        " thirty",
+        " forty",
+        " fifty",
+        " sixty",
+        " seventy",
+        " eighty",
+        " ninety"
+      };
+
+    private static final String[] numNames = {
+      "",
+      " one",
+      " two",
+      " three",
+      " four",
+      " five",
+      " six",
+      " seven",
+      " eight",
+      " nine",
+      " ten",
+      " eleven",
+      " twelve",
+      " thirteen",
+      " fourteen",
+      " fifteen",
+      " sixteen",
+      " seventeen",
+      " eighteen",
+      " nineteen"
+    };
 
     public Date convertStringToDate(String day) {
         Date resultDate = new Date();
@@ -220,43 +256,7 @@ public class UtilityFunction {
         data = data.replaceAll("\\r|\\n", "");
         return data;
     }
-    
-    private static final String[] tensNames = {
-        "",
-        " ten",
-        " twenty",
-        " thirty",
-        " forty",
-        " fifty",
-        " sixty",
-        " seventy",
-        " eighty",
-        " ninety"
-      };
-
-    private static final String[] numNames = {
-      "",
-      " one",
-      " two",
-      " three",
-      " four",
-      " five",
-      " six",
-      " seven",
-      " eight",
-      " nine",
-      " ten",
-      " eleven",
-      " twelve",
-      " thirteen",
-      " fourteen",
-      " fifteen",
-      " sixteen",
-      " seventeen",
-      " eighteen",
-      " nineteen"
-    };
-
+   
     private static String convertLessThanOneThousand(int number) {
       String soFar;
 

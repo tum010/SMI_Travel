@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptEmail" language="groovy" pageWidth="595" pageHeight="421" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0038deea-02d3-4a9f-8925-fb54dc3fc533">
 	<property name="ireport.zoom" value="1.331000000000019"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="148"/>
+	<property name="ireport.y" value="131"/>
 	<field name="recto" class="java.lang.String"/>
 	<field name="recadd" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -294,7 +294,7 @@
 	<detail>
 		<band height="33" splitType="Stretch">
 			<rectangle radius="10">
-				<reportElement x="0" y="1" width="555" height="31" uuid="014abad7-a1fe-4342-ab34-9c52f405347d"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="1" width="555" height="31" uuid="014abad7-a1fe-4342-ab34-9c52f405347d"/>
 			</rectangle>
 			<line>
 				<reportElement x="468" y="-19" width="1" height="51" uuid="e5c3d7f1-9631-4f64-a026-fd57dda74d7f"/>
@@ -306,8 +306,8 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="4" y="7" width="460" height="14" uuid="5ca36030-1d00-413e-a98d-6b86fa0619c4"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="4" y="7" width="460" height="14" uuid="5ca36030-1d00-413e-a98d-6b86fa0619c4"/>
 				<textElement textAlignment="Left">
 					<font isBold="false"/>
 				</textElement>
