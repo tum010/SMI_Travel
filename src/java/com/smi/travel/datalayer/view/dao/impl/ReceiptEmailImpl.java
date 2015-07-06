@@ -23,7 +23,7 @@ public class ReceiptEmailImpl implements ReceiptEmailDao{
     @Override
     public ReceiptEmail getReceiptEmail() {
         Session session = this.sessionFactory.openSession();
-       
+        UtilityFunction util = new UtilityFunction();
         ReceiptEmail receiptEmail = new ReceiptEmail();
         
         receiptEmail.setRecto("Jittima S");
@@ -33,29 +33,8 @@ public class ReceiptEmailImpl implements ReceiptEmailDao{
         receiptEmail.setRecno("15070012");
         receiptEmail.setRecdate("01-07-2015");
         receiptEmail.setPaidby("Bank Transfer");
-        receiptEmail.setDescription("Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World");
-        receiptEmail.setAmount("5200");
+        receiptEmail.setDescription("JR Area 5 DaysJR JR ");
+        receiptEmail.setAmount(util.ConvertString("5200"));
         receiptEmail.setCashflag("");
         receiptEmail.setCash("1000");
         receiptEmail.setChqbankflag("");
@@ -66,10 +45,12 @@ public class ReceiptEmailImpl implements ReceiptEmailDao{
         receiptEmail.setTransferflag("");
         receiptEmail.setTax("7%");
         receiptEmail.setTaxflag("");
-        receiptEmail.setTotal(5200);
+        receiptEmail.setTotal("5200");
         receiptEmail.setChqno("12312314233");
         receiptEmail.setChqdate("01-07-2015");
-        receiptEmail.setTextmoney(utilityFunction.convert(receiptEmail.getTotal())+" baht");
+        int totalWord = 0;
+        totalWord = Integer.parseInt(String.valueOf(receiptEmail.getTotal()));
+        receiptEmail.setTextmoney(utilityFunction.convert(totalWord)+" baht");
         session.close();
         this.sessionFactory.close();
         return receiptEmail;
