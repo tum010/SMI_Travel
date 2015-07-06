@@ -30,7 +30,7 @@ public class ReceiptEmail {
     private String transferflag;
     private String tax;
     private String taxflag;
-    private int total;
+    private String total;
     private String chqno;
     private String chqdate;
     private String textmoney;
@@ -332,14 +332,14 @@ public class ReceiptEmail {
     /**
      * @return the total
      */
-    public int getTotal() {
+    public String getTotal() {
         return total;
     }
 
     /**
      * @param total the total to set
      */
-    public void setTotal(int total) {
+    public void setTotal(String total) {
         this.total = total;
     }
 
@@ -356,6 +356,8 @@ public class ReceiptEmail {
     public void setTextmoney(String textmoney) {
         this.textmoney = textmoney;
     }
+
+
 
    
 
