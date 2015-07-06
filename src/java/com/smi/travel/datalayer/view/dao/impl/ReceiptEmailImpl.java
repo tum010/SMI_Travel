@@ -47,7 +47,7 @@ public class ReceiptEmailImpl implements ReceiptEmailDao{
         receiptEmail.setTransferflag("");
         receiptEmail.setTax("7%");
         receiptEmail.setTaxflag("");
-        receiptEmail.setTotal(6000);
+        receiptEmail.setTotal(5200);
         receiptEmail.setChqno("12312314233");
         receiptEmail.setChqdate("01-07-2015");
         receiptEmail.setTextmoney(englishNumberToWords.convert(receiptEmail.getTotal())+" baht");
