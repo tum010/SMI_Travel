@@ -1681,7 +1681,6 @@
         font-weight: normal;
     }
 </style>
-
 <script type="text/javascript">
     var tabindex = 1; //start tabindex || 150 is last tabindex
     $(document).keypress(function(event) {
