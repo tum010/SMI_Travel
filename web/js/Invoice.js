@@ -39,3 +39,9 @@ function DeleteBill() {
     document.getElementById('OtherForm').submit();
 }
 
+function printVoucher(){
+   
+    window.open("report.smi?name=InvoiceReport");
+    
+}
+
