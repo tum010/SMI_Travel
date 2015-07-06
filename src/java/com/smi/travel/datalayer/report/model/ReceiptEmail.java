@@ -33,7 +33,7 @@ public class ReceiptEmail {
     private int total;
     private String chqno;
     private String chqdate;
-
+    private String textmoney;
     /**
      * @return the recto
      */
@@ -342,6 +342,22 @@ public class ReceiptEmail {
     public void setTotal(int total) {
         this.total = total;
     }
+
+    /**
+     * @return the textmoney
+     */
+    public String getTextmoney() {
+        return textmoney;
+    }
+
+    /**
+     * @param textmoney the textmoney to set
+     */
+    public void setTextmoney(String textmoney) {
+        this.textmoney = textmoney;
+    }
+
+   
 
 
 }

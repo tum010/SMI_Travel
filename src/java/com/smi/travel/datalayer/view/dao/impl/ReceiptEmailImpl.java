@@ -5,9 +5,11 @@
  */
 package com.smi.travel.datalayer.view.dao.impl;
 
+import com.smi.travel.controller.report.EnglishNumberToWords;
 import com.smi.travel.datalayer.report.model.ReceiptEmail;
 import com.smi.travel.datalayer.view.dao.ReceiptEmailDao;
 import com.smi.travel.util.UtilityFunction;
+import java.text.DecimalFormat;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -17,6 +19,7 @@ import org.hibernate.SessionFactory;
  */
 public class ReceiptEmailImpl implements ReceiptEmailDao{
     private SessionFactory sessionFactory;
+    private EnglishNumberToWords englishNumberToWords;
     
     @Override
     public ReceiptEmail getReceiptEmail() {
@@ -32,7 +35,7 @@ public class ReceiptEmailImpl implements ReceiptEmailDao{
         receiptEmail.setRecno("15070012");
         receiptEmail.setRecdate("01-07-2015");
         receiptEmail.setPaidby("Bank Transfer");
-        receiptEmail.setDescription("JR Area 5 Days");
+        receiptEmail.setDescription("JR Area 5 DaysJR ");
         receiptEmail.setAmount("5200");
         receiptEmail.setCashflag("");
         receiptEmail.setCash("1000");
@@ -44,20 +47,35 @@ public class ReceiptEmailImpl implements ReceiptEmailDao{
         receiptEmail.setTransferflag("");
         receiptEmail.setTax("7%");
         receiptEmail.setTaxflag("");
-        receiptEmail.setTotal(5200);
+        receiptEmail.setTotal(6000);
         receiptEmail.setChqno("12312314233");
         receiptEmail.setChqdate("01-07-2015");
+        receiptEmail.setTextmoney(englishNumberToWords.convert(receiptEmail.getTotal())+" baht");
         session.close();
         this.sessionFactory.close();
         return receiptEmail;
     }
-
+ 
     public SessionFactory getSessionFactory() {
         return sessionFactory;
     }
 
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+
+    /**
+     * @return the englishNumberToWords
+     */
+    public EnglishNumberToWords getEnglishNumberToWords() {
+        return englishNumberToWords;
+    }
+
+    /**
+     * @param englishNumberToWords the englishNumberToWords to set
+     */
+    public void setEnglishNumberToWords(EnglishNumberToWords englishNumberToWords) {
+        this.englishNumberToWords = englishNumberToWords;
     }
     
 }
