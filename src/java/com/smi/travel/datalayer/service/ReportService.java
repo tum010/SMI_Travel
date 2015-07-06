@@ -134,6 +134,8 @@ public class ReportService {
         data.add(receiptEmailDao.getReceiptEmail());
         data.add(receiptEmailDao.getReceiptEmail());
         data.add(receiptEmailDao.getReceiptEmail());
+        data.add(receiptEmailDao.getReceiptEmail());
+        data.add(receiptEmailDao.getReceiptEmail());
         return data;
     }
     
