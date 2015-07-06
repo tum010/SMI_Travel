@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptEmail" language="groovy" pageWidth="595" pageHeight="421" columnWidth="525" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="0038deea-02d3-4a9f-8925-fb54dc3fc533">
-	<property name="ireport.zoom" value="2.6573415000000016"/>
-	<property name="ireport.x" value="462"/>
-	<property name="ireport.y" value="364"/>
+	<property name="ireport.zoom" value="1.815000000000003"/>
+	<property name="ireport.x" value="28"/>
+	<property name="ireport.y" value="243"/>
 	<field name="recto" class="java.lang.String"/>
 	<field name="recadd" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -27,7 +27,14 @@
 	<field name="chqdate" class="java.lang.String"/>
 	<field name="textmoney" class="java.lang.String"/>
 	<background>
-		<band splitType="Stretch"/>
+		<band height="250">
+			<rectangle>
+				<reportElement x="0" y="157" width="429" height="56" uuid="1c4af645-ae69-4603-bda4-e7c0d100feb0"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="429" y="157" width="96" height="56" uuid="e375ee91-2287-4e8c-b972-814ce1c75fd7"/>
+			</rectangle>
+		</band>
 	</background>
 	<pageHeader>
 		<band height="149">
@@ -295,14 +302,14 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="60" splitType="Stretch">
+		<band height="16" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="429" height="60" uuid="5ca36030-1d00-413e-a98d-6b86fa0619c4"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="429" height="16" uuid="5ca36030-1d00-413e-a98d-6b86fa0619c4"/>
 				<box>
 					<pen lineWidth="0.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Left">
@@ -311,13 +318,13 @@
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="429" y="0" width="96" height="60" uuid="dd249f80-444e-443e-b320-4b8a62986dd1"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="429" y="0" width="96" height="16" uuid="dd249f80-444e-443e-b320-4b8a62986dd1"/>
 				<box>
 					<pen lineWidth="0.75"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="0.75"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="13" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
