@@ -185,8 +185,8 @@ function CallAjaxPassengerAuto(param){
                         pslastnamejapan  = PSJson[i].lastnamejapan;
                         
                         PSArray.push(pscode);
-                        PSArray.push(pslastname);
-                        PSArray.push(psfirstname);
+                        PSArray.push(pslastname+" "+psfirstname);
+//                        PSArray.push();
                         
                         PSListId.push(psid);
                         PSListCode.push(pscode);
@@ -233,7 +233,7 @@ function CallAjaxPassengerAuto(param){
                         $("#passengerIdVal").trigger("keyup");
                         var psselect = $("#passengerIdVal").val();
                         for(var i =0;i < PSListCode.length;i++){
-                            if((psselect===PSListLastName[i])||(psselect===PSListFirtName[i])||(psselect===PSListCode[i])){  
+                            if((psselect===PSListLastName[i]+" "+PSListFirtName[i])||(psselect===PSListCode[i])){  
                                 $("#customerId").val(PSListId[i]);
                                 $("#passengerIdVal").val(PSListCode[i]);
                                 $("#MInitialname").val(PSListInitialName[i]);
