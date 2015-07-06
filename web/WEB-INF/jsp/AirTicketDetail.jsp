@@ -397,21 +397,21 @@
                                     <div class="row form-group">
                                         <label class="col-lg-3 control-label text-right">Adult</label>
                                         <div class="col-sm-6">
-                                            <input id="adCost-${fStatus.count}" name="adCost-${fStatus.count}" class="form-control text-right money" value="${flight.adCost}" type="text" maxlength="10" />
+                                            <input id="adCost-${fStatus.count}" name="adCost-${fStatus.count}" class="form-control text-right money" value="${flight.adCost}" type="text" maxlength="10"  tabindex="1"/>
                                         </div>
 
                                     </div>
                                     <div class="row form-group">
                                         <label class="col-lg-3 control-label text-right">Child</label>
                                         <div class="col-sm-6">
-                                            <input id="chCost-${fStatus.count}" name="chCost-${fStatus.count}" class="form-control text-right money" value="${flight.chCost}" type="text" maxlength="10" />
+                                            <input id="chCost-${fStatus.count}" name="chCost-${fStatus.count}" class="form-control text-right money" value="${flight.chCost}" type="text" maxlength="10" tabindex="4"/>
                                         </div>
 
                                     </div>
                                     <div class="row form-group text-right">
                                         <label class="col-lg-3 control-label">Infant</label>
                                         <div class="col-sm-6">
-                                            <input id="inCost-${fStatus.count}" name="inCost-${fStatus.count}" class="form-control text-right money" value="${flight.inCost}" type="text" maxlength="10"/>
+                                            <input id="inCost-${fStatus.count}" name="inCost-${fStatus.count}" class="form-control text-right money" value="${flight.inCost}" type="text" maxlength="10" tabindex="7"/>
                                         </div>
                                     </div>
                                 </div>
@@ -422,21 +422,21 @@
                                     <div class="row form-group">
                                         <label class="col-lg-3 control-label text-right">Adult</label>
                                         <div class="col-sm-6">
-                                            <input id="adPrice-${fStatus.count}" name="adPrice-${fStatus.count}" class="form-control text-right money" value="${flight.adPrice}" type="text" maxlength="10"/>
+                                            <input id="adPrice-${fStatus.count}" name="adPrice-${fStatus.count}" class="form-control text-right money" value="${flight.adPrice}" type="text" maxlength="10" tabindex="2"/>
                                         </div>
 
                                     </div>
                                     <div class="row form-group">
                                         <label class="col-lg-3 control-label text-right">Child</label>
                                         <div class="col-sm-6">
-                                            <input id="chPrice-${fStatus.count}" name="chPrice-${fStatus.count}" class="form-control text-right money" value="${flight.chPrice}" type="text" maxlength="10"/>
+                                            <input id="chPrice-${fStatus.count}" name="chPrice-${fStatus.count}" class="form-control text-right money" value="${flight.chPrice}" type="text" maxlength="10" tabindex="5"/>
                                         </div>
 
                                     </div>
                                     <div class="row form-group text-right">
                                         <label class="col-lg-3 control-label">Infant</label>
                                         <div class="col-sm-6">
-                                            <input id="inPrice-${fStatus.count}" name="inPrice-${fStatus.count}" class="form-control text-right money" value="${flight.inPrice}" type="text" maxlength="10" />
+                                            <input id="inPrice-${fStatus.count}" name="inPrice-${fStatus.count}" class="form-control text-right money" value="${flight.inPrice}" type="text" maxlength="10" tabindex="8"/>
                                         </div>
                                     </div>
                                 </div>
@@ -447,21 +447,21 @@
                                     <div class="row form-group">
                                         <label class="col-lg-3 control-label text-right">Adult</label>
                                         <div class="col-sm-6">
-                                            <input id="adTax-${fStatus.count}" name="adTax-${fStatus.count}" class="form-control text-right money" value="${flight.adTax}" type="text" maxlength="10"/>
+                                            <input id="adTax-${fStatus.count}" name="adTax-${fStatus.count}" class="form-control text-right money" value="${flight.adTax}" type="text" maxlength="10" tabindex="3"/>
                                         </div>
 
                                     </div>
                                     <div class="row form-group">
                                         <label class="col-lg-3 control-label text-right">Child</label>
                                         <div class="col-sm-6">
-                                            <input id="chTax-${fStatus.count}" name="chTax-${fStatus.count}" class="form-control text-right money" value="${flight.chTax}" type="text" maxlength="10"/>
+                                            <input id="chTax-${fStatus.count}" name="chTax-${fStatus.count}" class="form-control text-right money" value="${flight.chTax}" type="text" maxlength="10" tabindex="6"/>
                                         </div>
 
                                     </div>
                                     <div class="row form-group text-right">
                                         <label class="col-lg-3 control-label">Infant</label>
                                         <div class="col-sm-6">
-                                            <input id="inTax-${fStatus.count}" name="inTax-${fStatus.count}" class="form-control text-right money" value="${flight.inTax}" type="text" maxlength="10"/>
+                                            <input id="inTax-${fStatus.count}" name="inTax-${fStatus.count}" class="form-control text-right money" value="${flight.inTax}" type="text" maxlength="10" tabindex="9"/>
                                         </div>
                                     </div>
                                 </div>
@@ -1681,6 +1681,29 @@
         font-weight: normal;
     }
 </style>
+
+<script type="text/javascript">
+    var tabindex = 1; //start tabindex || 150 is last tabindex
+    $(document).keypress(function(event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if(keycode == '13') { //onEnter
+            tabindex++;
+            //while element exist or it's readonly and tabindex not reached max do
+            while(($("[TabIndex='"+tabindex+"']").length == 0 || $("[TabIndex='"+tabindex+"']:not([readonly])").length == 0) && tabindex != 150 ){
+                tabindex++;
+            }
+            if(tabindex == 150){ tabindex = 1 } //reseting tabindex if finished
+            $("[TabIndex='"+tabindex+"']").focus()
+            return false;
+        }
+    });
+
+    $("input").click(function() { //if changing field manualy with click - reset tabindex 
+        var input = $(this);
+        tabindex = input.attr("tabindex");
+    })
+</script>
+
 
 
 
