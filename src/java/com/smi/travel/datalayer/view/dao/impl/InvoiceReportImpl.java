@@ -34,28 +34,7 @@ public class InvoiceReportImpl implements InvoiceReportDao{
         invoiceReport.setAmount("1000000000");
         invoiceReport.setBank("KBank");
         invoiceReport.setBranch("Bangkapi");
-        invoiceReport.setDescription("Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World "
-                + "Hello World Hello World Hello World Hello World Hello World Hello World");
+        invoiceReport.setDescription("test ภาษาไทย");
         invoiceReport.setGross("999999");
         int a = 1999999999;
         invoiceReport.setGrtotal("1999999999");
