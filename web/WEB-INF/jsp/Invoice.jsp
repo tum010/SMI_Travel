@@ -45,173 +45,183 @@
                         </c:when>    
                     </c:choose>                
                 </div>
+                <div class="col-xs-12 form-group"><hr/></div>
             </div>
             
-            <!--Reservation-->
+            <!--Search Invoice-->
             <div class="row" style="padding-left: 15px">  
-                <form action="" method="post" id="ReservationTravox">
-                    <div role="tabpanel">
-                        <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane  active" id="info">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4>
-                                            <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="">
-                                            <span id="SpanEdit${advanced.search}">Reservation</span>
-                                            </a>
-                                            <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" style="margin-left: 50em" onclick="">
-                                                <span id="arrowReservstion" class="arrowReservstion glyphicon glyphicon-chevron-up"></span> 
-                                            </a>
-                                        </h4>               
-                                    </div>
-                                    <div class="panel-body">               
-                                        <div class=" accordion-body collapse in" id="collapseExample${advanced.search}" aria-expanded="false">
-                                            <div class="col-md-12">
-                                                <div class="col-xs-2 col-md-2 text-left">
-                                                    <label class="control-label" for="">Reservation Travox </lable>
-                                                </div>
-                                                <div class="col-md-2 form-group">
-                                                    <div class="input-group">
-                                                        <input type="hidden" class="form-control" id="" name="" value=""/>
-                                                        <input type="text" class="form-control" id="" name="" value="" style="background-color: #ffffff">
-                                                        <span class="input-group-addon" id=""  data-toggle="modal" data-target="#">
-                                                            <span class="glyphicon-search glyphicon"></span>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-1 text-right">
-                                                    <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="" class="btn btn-primary btn-sm">
-                                                        <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
-                                                    </button>                                          
-                                                </div>      
+                <div role="tabpanel">
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane  active" id="info">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h2 class="panel-title">
+                                        <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="">
+                                            <span id="SpanEdit${advanced.search}">Search Invoice</span>
+                                        </a>
+                                        <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" style="margin-left: 55em" onclick="">
+                                            <span id="arrowReservstion" class="arrowReservstion glyphicon glyphicon-chevron-up"></span> 
+                                        </a>
+                                    </h2>               
+                                </div>
+                                <div class="panel-body">               
+                                    <div class=" accordion-body collapse in" id="collapseExample${advanced.search}" aria-expanded="false">
+                                        <div class="col-md-12">
+                                            <div class="col-xs-1 text-right">
+                                                <label class="control-label" for="">Ref no </lable>
                                             </div>
-                                            <div class="col-xs-12 form-group"></div>
-                                            <div class="row" style="padding-left:35px">    
-                                                <div class="col-md-12">
-                                                    <table id="MasterReservation" class="display" cellspacing="0" width="100%">
-                                                        <thead>
-                                                            <tr class="datatable-header">
-                                                                <th style="width: 5%" >No</th>
-                                                                <th style="width: 15%" >Type</th>
-                                                                <th style="width: 60%">Description</th>
-                                                                <th style="width: 10%">Cost</th>
-                                                                <th style="width: 10%">Price</th>
-                                                                <th style="width: 1%">Currency</th>
-                                                                <th style="width: 1%">Action</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>               
-                                                                <tr>
-                                                                    <td align="center">1</td>
-                                                                    <td>TEST</td>
-                                                                    <td>Hello World</td>
-                                                                    <td align="center">100000</td>
-                                                                    <td align="center">100000</td>
-                                                                    <td align="center">THB</td>
-                                                                    <td align="center" > 
-                                                                        <center> 
-                                                                            <span id="spanEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon"      
-                                                                              onclick="" data-toggle="modal" data-target="#BankModal" >
-                                                                            </span>
-                                                                        </center>
-                                                                    </td>
-                                                                </tr>
-                                                        </tbody>
-                                                    </table>    
+                                            <div class="col-md-2 form-group">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" id="SearchRefNo" name="SearchRefNo" value="" >                                 
                                                 </div>
                                             </div>
-                                            <div class="col-xs-12 form-group"><hr/></div>
+                                            <div class="col-md-1 text-right">
+                                                <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="" class="btn btn-primary btn-sm">
+                                                    <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
+                                                </button>                                          
+                                            </div>      
                                         </div>
+                                        <div class="col-xs-12 form-group"></div>
+                                        <div class="row" style="padding-left:35px">    
+                                            <div class="col-md-12">
+                                                <table id="MasterReservation" class="display" cellspacing="0" width="100%">
+                                                    <thead>
+                                                        <tr class="datatable-header">
+                                                            <th style="width: 5%" >No</th>
+                                                            <th style="width: 15%" >Type</th>
+                                                            <th style="width: 60%">Description</th>
+                                                            <th style="width: 10%">Cost</th>
+                                                            <th style="width: 10%">Price</th>
+                                                            <th style="width: 1%">Currency</th>
+                                                            <th style="width: 1%">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>               
+                                                        <tr>
+                                                            <td align="center">1</td>
+                                                            <td>TEST</td>
+                                                            <td>Hello World</td>
+                                                            <td align="center">100000</td>
+                                                            <td align="center">100000</td>
+                                                            <td align="center">THB</td>
+                                                            <td align="center" > 
+                                                                <center> 
+                                                                    <a href=""><span class="glyphicon glyphicon-plus"></span></a>
+                                                                </center>
+                                                            </td>
+                                                        </tr>
+                                                   </tbody>
+                                                </table>    
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 form-group"><hr/></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </form>                                        
-                <div class="col-xs-12 form-group"></div>
+                </div>                                      
+            <div class="col-xs-12 form-group"></div>
                 
                 <!--Search-->  
                 <form action="" method="post" id="" name="" role="form">
                     <div class="col-xs-12 ">
                         <div class="col-xs-1 text-right">
-                            <label class="control-label" for="">INV No :</lable>
+                            <label class="control-label" for="">INV no</lable>
                         </div>
                         <div class="col-md-2 form-group">
-                            <input type="text"  class="form-control" id="" name=""  value="" >
+                            <input type="text"  class="form-control" id="InvNo" name="InvNo"  value="" >
                         </div>
                         <div class="col-xs-2 text-right">
-                            <label class="control-label" for="">Invoice Date :</lable>
+                            <label class="control-label" for="">Invoice date</lable>
                         </div>
                         <div class="col-md-2 form-group">
-                            <input type="text"  class="form-control" id="" name=""  value="" >
+                            <div class='input-group date' id='InputDatePicker'>
+                            <c:if test='${dayTourOperation.tourDate != null}'>
+                                <input id="InputInvDate" name="InputInvDate"  type="text" 
+                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                                
+                            </c:if>
+                            <c:if test='${dayTourOperation.tourDate == null}'>
+                                <input id="InputInvDate" name="InputInvDate"  type="text" 
+                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['']}">
+                                <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                                
+                            </c:if>                             
+                        </div>
                         </div>
                         <div class="col-xs-2 text-right">
-                            <label class="control-label" for="">Due Date :</lable>
+                            <label class="control-label" for="">Due date </lable>
                         </div>
                         <div class="col-md-2 form-group">
-                            <input type="text"  class="form-control" id="" name=""  value="" >
+                            <div class='input-group date' id='InputDatePicker'>
+                            <c:if test='${dayTourOperation.tourDate != null}'>
+                                <input id="InputDueDate" name="InputDueDate"  type="text" 
+                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                         
+                            </c:if>
+                            <c:if test='${dayTourOperation.tourDate == null}'>
+                                <input id="InputDueDate" name="InputDueDate"  type="text" 
+                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['']}">
+                                <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                              
+                            </c:if>                             
+                        </div>
                         </div>
                     </div>
                     <div class="col-xs-12 ">
                         <div class="col-sm-1 text-right">
-                            <label class="control-label" for="">Inv To :</lable>
+                            <label class="control-label" for="">Inv To</lable>
                         </div>
-                        <div class="col-md-2 form-group">
+                        <div class="col-md-6 form-group">
                             <div class="input-group">
-                            <input type="hidden" class="form-control" id="" name="" value=""/>
-                            <input type="text" class="form-control" id="" name="" value="" style="background-color: #ffffff">
-                            <span class="input-group-addon" id=""  data-toggle="modal" data-target="#">
+                            <input type="hidden" class="form-control" id="InvTo_Id" name="InvToId" value=""/>
+                            <input type="text" class="form-control" id="InvTo" name="InvTo" value="" style="background-color: #ffffff">
+                            <span class="input-group-addon" id="InvTo_Modal"  data-toggle="modal" data-target="#InvToModal">
                                 <span class="glyphicon-search glyphicon"></span>
                             </span>
                             </div>
                         </div>
-                        <div class="col-sm-4">  
-                            <input value="${detail.customer.MInitialname.name}" id="get-initial" type="hidden">                                
-                                <c:forEach var="initial" items="${initialList}">
-                                    <option value="${initial.id}">${initial.name}</option>
-                                </c:forEach>
-                            <input  type="text" id="initialname" name="initialname" class="form-control" value="${detail.customer.MInitialname.name}" readonly="">
-                        </div>
                         <div class="col-xs-2 text-right">
-                            <label class="control-label" for="">Term Pay :</lable>
+                            <label class="control-label" for="">Term pay</lable>
                         </div>
                         <div class="col-md-2 form-group">
-                            <input type="text"  class="form-control" id="" name=""  value="" >
+                            <input type="text"  class="form-control" id="TermPay" name="TermPay"  value="" >
                         </div>
                     </div>
                     <div class="col-xs-12 ">
-                        <div class="col-sm-3" style="padding-left: 190px">
-                            <label class="control-label" for="">Name :</lable>
+                        <div class="col-sm-1 text-right">
+                            <label class="control-label" for="">Name </lable>
                         </div>    
-                        <div class="col-sm-4">
-                            <input  type="text" id="" name="" class="form-control" value="" >
+                        <div class="col-md-6 form-group">
+                            <input  type="text" id="InvToName" name="InvToName" class="form-control" value="" readonly="">
                         </div>
                         <div class="form-group">
                             <div class="col-sm-2" style="padding-left: 53px">
-                            <label for="Department" class="col-sm-3 control-label" >Department&nbsp;:</label>
+                            <label for="Department" class="col-sm-3 control-label" >Department</label>
                             </div>
                             <div class="radio col-sm-2">   
-                                <label ><input value="" id="DepartmentInactive" name="Department" type="radio" >Wendy Air Ticket</label>
+                                <label><input value="WendyAirTicket" id="DepartmentAirTicket" name="Department" type="radio" >Wendy Air Ticket</label>
                             </div>
                         </div>
                     </div>
                     <div class="col-xs-12 ">
-                        <div class="col-sm-3" style="padding-left: 170px">
-                            <label class="control-label" for="">Address :</lable>
+                        <div class="col-sm-1 text-right">
+                            <label class="control-label" for="">Address </lable>
                         </div>
-                        <div class="col-sm-4">
-                            <textarea  rows="3" cols="100" id="" name="" class="form-control" value="" ></textarea>
+                        <div class="col-md-6 form-group">
+                            <textarea  rows="3" cols="100" id="InvToAddress" name="InvToAddress" class="form-control" value="" ></textarea>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-2"></div>
                             <div class="radio col-sm-2">   
-                                <label><input value="" id="DepartmentInactive" name="Department" type="radio" >Wendy Package</label>
+                                <label><input value="WendyPackage" id="DepartmentPackage" name="Department" type="radio" >Wendy Package</label>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-2"></div>
                             <div class="radio col-sm-2">   
-                                <label><input value="" id="DepartmentInactive" name="Department" type="radio" >Outbound</label>
+                                <label><input value="Outbound" id="DepartmentOutbound" name="Department" type="radio" >Outbound</label>
                             </div>
                         </div>
                     </div>
@@ -222,8 +232,8 @@
                         <div class="col-md-2 form-group">
                             <div class="input-group">
                             <input type="hidden" class="form-control" id="" name="" value=""/>
-                            <input type="text" class="form-control" id="" name="" value="" style="background-color: #ffffff">
-                            <span class="input-group-addon" id=""  data-toggle="modal" data-target="#">
+                            <input type="text" class="form-control" id="SaleStaffName" name="SaleStaffName" value="" style="background-color: #ffffff">
+                            <span class="input-group-addon" id="SaleStaff_Modal"  data-toggle="modal" data-target="#SaleStaffModal">
                                 <span class="glyphicon-search glyphicon"></span>
                             </span>
                             </div>
@@ -240,8 +250,8 @@
                         <div class="col-md-2 form-group">
                             <div class="input-group">
                                 <input type="hidden" class="form-control" id="" name="" value=""/>
-                                <input type="text" class="form-control" id="" name="" value="" style="background-color: #ffffff">
-                                <span class="input-group-addon" id=""  data-toggle="modal" data-target="#">
+                                <input type="text" class="form-control" id="ARCode" name="ARCode" value="" style="background-color: #ffffff">
+                                <span class="input-group-addon" id="ARCode_Modal"  data-toggle="modal" data-target="#ARCodeModal">
                                    <span class="glyphicon-search glyphicon"></span>
                                 </span>
                             </div>
@@ -250,7 +260,7 @@
                 </form>                
             </div>
             
-            <form action="DaytourOperationDetail.smi" method="post" id="AirticketForm">
+            <form action="Invoice.smi" method="post" id="DetailBillableForm">
                 <div role="tabpanel">
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane  active" id="info">
@@ -288,7 +298,7 @@
                                                 <td align="center" > 
                                                 <center> 
                                                     <span id="spanEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon"      
-                                                      onclick="" data-toggle="modal" data-target="#BankModal" >
+                                                      onclick="" data-toggle="modal" data-target="#EditDetailBill" >
                                                     </span>
                                                     <span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('', '')" data-toggle="modal" data-target="#DelDetailBill" >  
                                                     </span>
@@ -302,8 +312,7 @@
                         </div>
                     </div>
                 </div>
-            </form>
-            <form action="DaytourOperationDetail.smi" method="post" id="AirticketForm">
+            
                 <div role="tabpanel">
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane  active" id="info">
@@ -311,7 +320,7 @@
                                 <div class="panel-body">
                                     <div class="col-xs-12 ">
                                         <div class="col-sm-1">
-                                            <label class="control-label" for="">Remark&nbsp;:</lable>                                         
+                                            <label class="control-label" for="">Remark&nbsp;</lable>                                         
                                         </div>
                                         <div class="col-sm-6" style="padding-left: 50px">
                                             <textarea  rows="3" cols="200" id="" name="" class="form-control" value=""></textarea>
@@ -388,7 +397,7 @@
     </div>
 </div>        
 
-<!--Disable-->
+<!--Disable Modal-->
 <div class="modal fade" id="DisableVoid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -407,27 +416,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->      
 
-<!--Disable-->
-<div class="modal fade" id="DisableVoid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title"  id="Titlemodel">Finance & Cashier - Invoice</h4>
-            </div>
-            <div class="modal-body" id="disableVoid">
-                
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" onclick="">Delete</button>               
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->      
-
-
-<!--Delete Detail Billable-->
+<!--Delete Detail Billable Modal-->
 <div class="modal fade" id="DelDetailBill" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -444,11 +433,153 @@
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->      
+</div><!-- /.modal -->  
+
+<!--Inv To Modal-->
+<div class="modal fade" id="InvToModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Inv To</h4>
+            </div>
+            <div class="modal-body">
+                <!--Bill To List Table-->
+
+                <table class="display" id="InvToTable">
+                    <thead>    
+                        <script>
+                            var inv_to = [];
+                        </script>
+                        <tr class="datatable-header">
+                            <th class="hidden">ID</th>
+                            <th class="">Code</th>
+                            <th class="">Name</th>
+                        </tr>                      
+                    </thead>
+                    <tbody>
+                        <c:forEach var="table" items="${agent_list}">
+                            <tr onclick ="setupagentvalue('${table.id}', '${table.code}', '${table.name}')" >
+                                <td class="hidden">${table.id}</td>
+                                <td>${table.code} </td>
+                                <td>${table.name} </td>
+                            </tr>    
+                            <script>
+                                inv_to.push({id: "${table.id}", code: "${table.code}", name: "${table.name}"});
+                            </script>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <div  class="text-right">
+                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<!--Sale Staff To Modal-->
+<div class="modal fade" id="SaleStaffModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Sale Staff</h4>
+            </div>
+            <div class="modal-body">
+                <!--Bill To List Table-->
+
+                <table class="display" id="SaleStaffTable">
+                    <thead>    
+                        <script>
+                            var sale_staff = [];
+                        </script>
+                        <tr class="datatable-header">
+                            <th class="hidden">ID</th>
+                            <th class="">Code</th>
+                            <th class="">Name</th>
+                        </tr>                      
+                    </thead>
+                    <tbody>
+                        <c:forEach var="table" items="${agent_list}">
+                            <tr onclick ="setupagentvalue('${table.id}', '${table.code}', '${table.name}')" >
+                                <td class="hidden">${table.id}</td>
+                                <td>${table.code} </td>
+                                <td>${table.name} </td>
+                            </tr>    
+                            <script>
+                                sale_staff.push({id: "${table.id}", code: "${table.code}", name: "${table.name}"});
+                            </script>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <div  class="text-right">
+                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<!--A/R Code Modal-->
+<div class="modal fade" id="ARCodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">A/R Code</h4>
+            </div>
+            <div class="modal-body">
+                <!--Bill To List Table-->
+
+                <table class="display" id="ARCodeTable">
+                    <thead>    
+                        <script>
+                            var sale_staff = [];
+                        </script>
+                        <tr class="datatable-header">
+                            <th class="hidden">ID</th>
+                            <th class="">Code</th>
+                        </tr>                      
+                    </thead>
+                    <tbody>
+                        <c:forEach var="table" items="${agent_list}">
+                            <tr onclick ="setupagentvalue('${table.id}', '${table.code}', '${table.name}')" >
+                                <td class="hidden">${table.id}</td>
+                                <td>${table.code} </td>
+                                <td>${table.name} </td>
+                            </tr>    
+                            <script>
+                                sale_staff.push({id: "${table.id}", code: "${table.code}", name: "${table.name}"});
+                            </script>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <div  class="text-right">
+                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>  
                                                     
 <!--Script-->
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
+       $('.date').datetimepicker();
+       $('.datemask').mask('0000-00-00');
+       $('.spandate').click(function() {
+            var position = $(this).offset();
+            console.log("positon :" + position.top);
+            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+
+       });
        $('#MasterReservation tbody').on('click', 'tr', function () {
             if ($(this).hasClass('row_selected')) {
                 $(this).removeClass('row_selected');
