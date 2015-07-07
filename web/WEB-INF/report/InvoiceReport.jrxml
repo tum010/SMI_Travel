@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="522" leftMargin="45" rightMargin="28" topMargin="59" bottomMargin="56" uuid="573bfe06-de4f-4adc-b5b3-76cb68d89d08">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="82"/>
-	<property name="ireport.y" value="1591"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="390"/>
+	<property name="ireport.y" value="1602"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
@@ -25,25 +25,25 @@
 	<background>
 		<band height="658">
 			<line>
-				<reportElement x="0" y="247" width="1" height="343" uuid="684538a6-00f6-4fc5-9889-2ad18afd4e6e"/>
+				<reportElement x="0" y="239" width="1" height="351" uuid="684538a6-00f6-4fc5-9889-2ad18afd4e6e"/>
 			</line>
 			<line>
-				<reportElement x="319" y="247" width="1" height="343" uuid="a2d6d9e0-3a99-4e75-bddb-73c1f80ab321"/>
+				<reportElement x="319" y="240" width="1" height="350" uuid="a2d6d9e0-3a99-4e75-bddb-73c1f80ab321"/>
 			</line>
 			<line>
-				<reportElement x="22" y="247" width="1" height="344" uuid="4d55a96d-41d9-4c66-b975-a27220559c23"/>
+				<reportElement x="22" y="240" width="1" height="351" uuid="4d55a96d-41d9-4c66-b975-a27220559c23"/>
 			</line>
 			<line>
-				<reportElement x="380" y="247" width="1" height="343" uuid="c5786474-bb38-49f6-ad5b-f32a34f0251a"/>
+				<reportElement x="380" y="239" width="1" height="351" uuid="c5786474-bb38-49f6-ad5b-f32a34f0251a"/>
 			</line>
 			<line>
-				<reportElement x="439" y="247" width="1" height="343" uuid="027f36d7-62de-4cd8-8589-7252ef60942b"/>
+				<reportElement x="439" y="240" width="1" height="350" uuid="027f36d7-62de-4cd8-8589-7252ef60942b"/>
 			</line>
 			<line>
-				<reportElement x="522" y="246" width="1" height="344" uuid="69c50df8-8e40-4e13-ad4c-0c5bbb131702"/>
+				<reportElement x="520" y="240" width="1" height="351" uuid="69c50df8-8e40-4e13-ad4c-0c5bbb131702"/>
 			</line>
 			<line>
-				<reportElement x="0" y="590" width="522" height="1" uuid="3e3b1550-664a-40e9-87f2-4138566b94ac"/>
+				<reportElement x="0" y="590" width="520" height="1" uuid="3e3b1550-664a-40e9-87f2-4138566b94ac"/>
 			</line>
 		</band>
 	</background>
@@ -262,17 +262,11 @@
 	</pageHeader>
 	<columnHeader>
 		<band height="21" splitType="Stretch">
-			<rectangle>
-				<reportElement x="0" y="0" width="522" height="20" forecolor="#FFFFFF" backcolor="#F0F0F0" uuid="15b05457-5ff4-484e-a25c-a296bd3d942a"/>
-			</rectangle>
 			<staticText>
 				<reportElement x="0" y="0" width="22" height="20" forecolor="#000000" uuid="b5037a15-96e8-4308-9e7c-e7dcf8c8194e"/>
 				<box>
-					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
 					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="14" isBold="true" isItalic="false" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -282,11 +276,8 @@
 			<staticText>
 				<reportElement x="22" y="0" width="295" height="20" uuid="6a01acce-c9e8-4426-aba9-8b5711ec980a"/>
 				<box>
-					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
 					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="14" isBold="true" isItalic="false" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -296,11 +287,8 @@
 			<staticText>
 				<reportElement x="317" y="0" width="63" height="20" uuid="ab8e73ec-2b9b-4195-8b9d-c28958464d55"/>
 				<box>
-					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
 					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="14" isBold="true" isItalic="false" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -310,11 +298,8 @@
 			<staticText>
 				<reportElement x="380" y="0" width="59" height="20" uuid="4fba126d-3354-4cbb-abb9-aa24f7f176f9"/>
 				<box>
-					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
 					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="14" isBold="true" isItalic="false" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -324,11 +309,8 @@
 			<staticText>
 				<reportElement x="439" y="0" width="81" height="20" uuid="3c0a0717-f4d0-4baa-81b2-b4caa279ad78"/>
 				<box>
-					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
 					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="14" isBold="true" isItalic="false" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
