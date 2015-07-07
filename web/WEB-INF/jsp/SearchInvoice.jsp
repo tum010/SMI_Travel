@@ -37,14 +37,14 @@
                     <div class="col-md-2 form-group"> 
                         <div class='input-group date' id='InputDatePicker'>
                             <c:if test='${dayTourOperation.tourDate != null}'>
-                                <input id="InputTourDetailTourDate" name="InputTourDetailTourDate"  type="text" 
-                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${dayTourOperation.tourDate}">
+                                <input id="FromDate" name="FromDate"  type="text" 
+                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 
                             </c:if>
                             <c:if test='${dayTourOperation.tourDate == null}'>
-                                <input id="InputTourDetailTourDate" name="InputTourDetailTourDate"  type="text" 
-                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['tourDate']}">
+                                <input id="FromDate" name="FromDate"  type="text" 
+                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['']}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 
                             </c:if>                             
@@ -56,14 +56,14 @@
                     <div class="col-md-2 form-group"> 
                         <div class='input-group date' id='InputDatePicker'>
                             <c:if test='${dayTourOperation.tourDate != null}'>
-                                <input id="InputTourDetailTourDate" name="InputTourDetailTourDate"  type="text" 
-                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${dayTourOperation.tourDate}">
+                                <input id="ToDate" name="ToDate"  type="text" 
+                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 
                             </c:if>
                             <c:if test='${dayTourOperation.tourDate == null}'>
-                                <input id="InputTourDetailTourDate" name="InputTourDetailTourDate"  type="text" 
-                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['tourDate']}">
+                                <input id="ToDate" name="ToDate"  type="text" 
+                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['']}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 
                             </c:if>                             
@@ -73,7 +73,7 @@
                         <label class="control-label" for="">Department<font style="color: red">*</font></lable>
                     </div>
                     <div class="col-md-2 form-group" style="padding: 0px 0px 0px 30px">
-                        <select class="form-control" id="" name="">
+                        <select class="form-control" id="Department" name="Department">
                             <option value="">Choose</option>
                                 <c:choose>
                                     <c:when test="${requestScope['BankAccountType'] == '1'}">
@@ -93,7 +93,7 @@
                         <label class="control-label" for="">Type<font style="color: red">*</font></lable>
                     </div>
                     <div class="col-md-2 form-group" style="padding: 0px 0px 0px 30px">
-                        <select class="form-control" id="" name="">
+                        <select class="form-control" id="Type" name="Type">
                             <option value="">Choose</option>
                                 <c:choose>
                                     <c:when test="${requestScope['BankAccountType'] == '1'}">
