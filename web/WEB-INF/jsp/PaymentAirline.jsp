@@ -93,7 +93,7 @@
                             <div class="col-xs-1 text-right"  style="width: 115px">
                                 <label class="control-label text-right">A/P Code </label>
                             </div>
-                            <div class="col-xs-1"  style="width: 155px">
+                            <div class="col-xs-1"  style="width: 170px">
                                 <div class="input-group" id="apCodeValidate">
                                     <input type="text" class="form-control" id="apCode" name="apCode" value="${SelectedAp.code}" />
                                     <span class="input-group-addon" id="ap_modal"  data-toggle="modal" data-target="#ApModal">
@@ -359,7 +359,7 @@
                     <thead class="datatable-header">                     
                         <tr>
                             <th class="hidden">ID</th>
-                            <th>User</th>
+                            <th>Code</th>
                             <th>Name</th>
                             <th class="hidden">Address</th>
                             <th class="hidden">Tel</th>
@@ -408,7 +408,7 @@
                     <thead class="datatable-header">                     
                         <tr>
                             <th class="hidden">ID</th>
-                            <th>User</th>
+                            <th>Code</th>
                             <th>Name</th>
                             <th class="hidden">Address</th>
                             <th class="hidden">Tel</th>
@@ -444,3 +444,31 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
+
+
+<!--Script-->       
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+        var ApCodeTable = $('#ApCodeTable').dataTable({bJQueryUI: true,
+            "sPaginationType": "full_numbers",
+            "bAutoWidth": false,
+            "bFilter": true,
+            "bPaginate": true,
+            "bInfo": false,
+            "bLengthChange": false,
+            "iDisplayLength": 10
+        });
+        
+        var AgentTable = $('#AgentTable').dataTable({bJQueryUI: true,
+            "sPaginationType": "full_numbers",
+            "bAutoWidth": false,
+            "bFilter": true,
+            "bPaginate": true,
+            "bInfo": false,
+            "bLengthChange": false,
+            "iDisplayLength": 10
+        });
+        
+    });
+
+</script>

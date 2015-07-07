@@ -794,7 +794,30 @@
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
         $("#bl,#com").removeClass('hidden');
-
+        
+        $('#ReceiptForm').bootstrapValidator({
+            container: 'tooltip',
+            excluded: [':disabled'],
+            feedbackIcons: {
+                valid: 'uk-icon-check',
+                invalid: 'uk-icon-times',
+                validating: 'uk-icon-refresh'
+            },
+            fields: {
+                billToCode: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The Code is required'
+                        }
+                    }
+                }       
+            }
+        }).on('success.field.bv', function (e, data) {
+            if (data.bv.isValid()) {
+                data.bv.disableSubmitButtons(false);
+            }
+        });
+            
         $('#addChqButton').on('click', function() {
             $("#addChq").removeClass('hidden');
         });
@@ -840,31 +863,7 @@
             "bLengthChange": false,
             "iDisplayLength": 10
         });
-//        $("#ReceiptForm")
-//            .bootstrapValidator({
-//                container: 'tooltip',
-//                excluded: [':disabled', ':hidden', ':not(:visible)'],
-//                feedbackIcons: {
-//                    valid: 'uk-icon-check',
-//                    invalid: 'uk-icon-times',
-//                    validating: 'uk-icon-refresh'
-//                },
-//                fields: {
-//                    billToCode: {
-//                        trigger: 'focus keyup',
-//                        validators: {
-//                            notEmpty: {
-//                                message: 'Bill To is required'
-//                            }
-//                        }
-//                    }
-//                }
-//            })
-//            .on('success.field.fv', function (e, data) {
-//                if (data.field === 'billToCode:' && data.fv.isValidField('billToCode:') === false) {
-//                    data.fv.revalidateField('billToCode:');
-//                }
-//            });
+
     });
 
 </script>

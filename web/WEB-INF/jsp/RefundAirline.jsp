@@ -224,7 +224,16 @@
     $(document).ready(function() {
    
         $('.date').datetimepicker();
-    
+        
+        var RefundAgentTable = $('#RefundAgentTable').dataTable({bJQueryUI: true,
+            "sPaginationType": "full_numbers",
+            "bAutoWidth": false,
+            "bFilter": true,
+            "bPaginate": true,
+            "bInfo": false,
+            "bLengthChange": false,
+            "iDisplayLength": 10
+        });
     });
     
 </script>
