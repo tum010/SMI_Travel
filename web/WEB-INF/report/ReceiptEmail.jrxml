@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptEmail" language="groovy" pageWidth="595" pageHeight="421" columnWidth="525" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="0038deea-02d3-4a9f-8925-fb54dc3fc533">
-	<property name="ireport.zoom" value="2.196150000000005"/>
+	<property name="ireport.zoom" value="1.8150000000000066"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="349"/>
+	<property name="ireport.y" value="306"/>
 	<field name="recto" class="java.lang.String"/>
 	<field name="recadd" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -304,7 +304,7 @@
 	<detail>
 		<band height="13" splitType="Stretch">
 			<textField isStretchWithOverflow="true" pattern="#,##0.00">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="429" y="-2" width="96" height="14" uuid="dd249f80-444e-443e-b320-4b8a62986dd1"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="421" y="-2" width="96" height="14" uuid="dd249f80-444e-443e-b320-4b8a62986dd1"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.0"/>
@@ -318,7 +318,7 @@
 				<textFieldExpression><![CDATA[($F{amount} != null && $F{amount}.length() > 0) ? Double.valueOf($F{amount}) : ""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="-2" width="429" height="14" uuid="5ca36030-1d00-413e-a98d-6b86fa0619c4"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="5" y="-2" width="429" height="14" uuid="5ca36030-1d00-413e-a98d-6b86fa0619c4"/>
 				<box>
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -393,7 +393,7 @@
 				<text><![CDATA[Witholding Tax : ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="403" y="-1" width="41" height="17" uuid="75618c8a-bf11-40f3-bc4b-f394bcc6a0e2"/>
+				<reportElement x="396" y="-1" width="41" height="17" uuid="75618c8a-bf11-40f3-bc4b-f394bcc6a0e2"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="15" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
@@ -414,7 +414,7 @@
 				<text><![CDATA[Date : ]]></text>
 			</staticText>
 			<textField pattern="#,##0.00">
-				<reportElement x="452" y="-2" width="73" height="18" uuid="2a496a9c-ee13-4ad3-ab36-4696317e98c3"/>
+				<reportElement x="444" y="-2" width="73" height="18" uuid="2a496a9c-ee13-4ad3-ab36-4696317e98c3"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="15" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
