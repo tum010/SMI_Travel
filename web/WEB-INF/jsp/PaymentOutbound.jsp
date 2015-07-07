@@ -75,7 +75,7 @@
                 <div class="col-md-1 form-group text-left" style="padding-left:0px;padding-right: 0px;width: 180px;">
                     <div class="col-sm-12">
                         <div class="input-group" id="CodeValidate">
-                            <input name="InputInvoiceSupCode" id="InputInvoiceSupCode" type="text" class="form-control" value="" />
+                            <input name="InputAPCode" id="InputAPCode" type="text" class="form-control" value="" />
                             <span class="input-group-addon" data-toggle="modal" data-target="#SearchAPCode">
                                 <span class="glyphicon-search glyphicon"></span>
                             </span>    
@@ -85,7 +85,7 @@
         </div><!--End row 2-->
         <div class="row text-right" style="padding-right: 60px">
             <div class="col-md-12 form-group text-right" style="padding-left:30px;padding-right:0px;">              
-                <a id="ButtonNew" name="ButtonFind" onclick="" class="btn btn-primary" data-toggle="modal" data-target="">
+                <a id="ButtonSearch" name="ButtonSearch" onclick="" class="btn btn-primary" data-toggle="modal" data-target="">
                     <span id=""   onclick="" data-toggle="modal" data-target="#SearchPaymentOutboundModal"><i class="glyphicon glyphicon-search" ></i> Search</span>
                 </a>
             </div>              
@@ -170,7 +170,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title"  id="Titlemodel">Search</h4>
+                <h4 class="modal-title"  id="Titlemodel">Search Payment Outbound</h4>
             </div>
             <div class="modal-body">
                 <div style="height: 200px;">
@@ -262,7 +262,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title"  id="Titlemodel">Search Invoice</h4>
+                <h4 class="modal-title"  id="Titlemodel">Search Invoice Sup</h4>
             </div>
             <div class="modal-body">
                 <table class="display" id="SearchInvoicSupTable">
