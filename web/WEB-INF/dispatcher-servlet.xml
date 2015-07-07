@@ -473,10 +473,10 @@
 
     
     <bean id="StockController" class="com.smi.travel.controller.StockController">
-       
+       <property name="stockService" ref="StockService" /> 
     </bean>
     <bean id="SearchStockController" class="com.smi.travel.controller.SearchStockController">
-        
+        <property name="stockService" ref="StockService" />  
     </bean>
     <!-- add bean id controller -->
     
