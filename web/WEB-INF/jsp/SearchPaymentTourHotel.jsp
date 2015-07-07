@@ -7,11 +7,11 @@
 <link href="css/jquery-ui.css" rel="stylesheet">
 <section class="content-header" >
     <h1>
-        Checking - Search Payment
+        Checking - Search Payment Tour / Hotel
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-book"></i> Checking</a></li>          
-        <li class="active"><a href="#">Search Payment</a></li>
+        <li class="active"><a href="#">Search Payment Tour / Hotel</a></li>
     </ol>
 </section>
 <div class ="container"  style="padding-top: 15px;padding-left: 5px;" ng-app=""> 
@@ -26,16 +26,11 @@
                 <h4><b>Search Payment Tour / Hotel</b></h4>
             </div>
         </div>
-        <hr/>
+        <hr/><br>
         <!--Input Search -->
-        <div class="panel panel-default">  
-            <div class="panel-heading">
-                <h4 class="panel-title">Search</h4>
-            </div>
-            <div class="panel-body">
-                <div class="row" >
-                    <div class="col-xs-1 text-right" style="width:70px;">
-                        <label class="control-label">From:</lable>
+                <div class="row" style="padding-left: 5px" >
+                    <div class="col-xs-1 text-left" style="width:70px;">
+                        <label class="control-label">From</lable>
                     </div>
                     <div class="col-md-2 form-group text-left" style="padding-left:5px">
                         <div class="col-sm-12">
@@ -46,7 +41,7 @@
                         </div>
                     </div>
                     <div class="col-xs-1 text-right" style="width:70px;">
-                        <label class="control-label">To:</lable>
+                        <label class="control-label">To</lable>
                     </div>
                     <div class="col-md-2 form-group text-left" style="padding-left:5px">
                         <div class="col-sm-12">
@@ -57,7 +52,7 @@
                         </div>
                     </div>
                     <div class="col-xs-2 text-right" style="padding-left:0px;padding-right:20px;width:100px;">
-                        <label class="control-label">PV Type:</lable>
+                        <label class="control-label">PV Type</lable>
                     </div>
                     <div class="col-md-2 form-group text-left" style="padding-left:0px;padding-right:0px;">
                         <div class="col-sm-12">
@@ -70,22 +65,19 @@
                     <!--Button Print and Search -->
                     <div class="col-md-3 form-group text-left" style="padding-left:0px;padding-right:0px;">
                         <div class="col-xs-6 text-left">
-                            <a id="ButtonNew" name="ButtonNew" onclick="" class="btn btn-primary">
+                            <a id="ButtonSearch" name="ButtonSearch" onclick="" class="btn btn-primary">
                                 <i class="fa fa-search"></i> Search
                             </a>
                         </div>
-                        <div class="col-xs-6 text-right">
-                            <button type="submit" id="ButtonSave" name="ButtonSave" class="btn btn-success">
+                        <div class="col-xs-6 text-right" style="padding-left:0px;width:60px;">
+                            <button type="submit" id="ButtonPrint" name="ButtonPrint" class="btn btn-default">
                                 <i class="fa fa-print"></i> Print             
                             </button>
                         </div>                        
                     </div>
-                </div>
-            </div>
-        </div><!--End Search -->
-        <!-- Table -->
-        <div class="panel panel-default">                    
-            <div class="panel-body">
+                </div><!--End Search --><br>
+        <!-- Table -->                  
+            <div class="row" style="padding-left: 15px;width: 1030px;">
                 <table class="display" id="SearchPaymentHotelTable">
                     <thead class="datatable-header">
                         <tr>
@@ -113,7 +105,7 @@
                             <td>THB</td>
                             <td>wait</td>
                             <td class="text-center">
-                                <span id="RefBookTableButtonEdit" name="RefBookTableButtonEdit" class="glyphicon glyphicon-edit editicon" onclick=""></span>
+                                <span id="RefPaymentHotelEdit" name="RefPaymentHotelEdit" class="glyphicon glyphicon-edit editicon" onclick=""></span>
                                 <a href="#" onclick=""  data-toggle="modal" data-target="">
                                     <span id="" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal" data-target="#delSearchPaymentTourHotelModal"></span>
                                 </a>
@@ -121,8 +113,7 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
-        </div><!--End Table -->
+            </div><!--End Table -->
     </div>
 </div>
 <!--Delete Payment Tour Hotel Modal-->
