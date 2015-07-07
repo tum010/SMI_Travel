@@ -156,7 +156,7 @@
                             <label class="control-label" for="">Name </lable>
                         </div>    
                         <div class="col-md-6 form-group">
-                            <input  type="text" id="InvToName" name="InvToName" class="form-control" value="" readonly="">
+                            <input  type="text" id="InvToName" name="InvToName" class="form-control" value="">
                         </div>  
                     </div>
                     <div class="col-xs-12 ">
