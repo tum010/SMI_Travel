@@ -249,31 +249,14 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                     <div class="col-xs-1 text-right" style="width: 140px">
-                                        <label class="control-label text-right">Receive From </label>                                    
-                                    </div>
-                                    <div class="col-xs-1 form-group" style="width: 140px">
-                                        <div class="input-group" id="receiveFromValidate">
-                                            <input type="text" class="form-control" id="receiveFrom" name="receiveFrom" value="${Selected.code}" />
-                                            <span class="input-group-addon" id="receive_modal"  data-toggle="modal" data-target="#ReceiveFromModal">
-                                                <span class="glyphicon-search glyphicon"></span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-1 text-left" style="width: 440px">
-                                        <input type="text" class="form-control" id="receiveFromName" name="receiveFromName" value="${Selected.name}" readonly=""
-                                            data-bv-notempty="true" data-bv-notempty-message="Receive From empty !">                           
-                                    </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-xs-1 text-right" style="width: 140px">
-                                        <label class="control-label text-right" for="codeBillto">Bill To<font style="color: red">*</font></label> 
+                                        <label class="control-label text-right" for="codeBillto">Receive From <font style="color: red">*</font></label> 
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 580px">
                                         <div class="input-group" id="receiveFromValidate">
-                                            <input type="hidden" class="form-control" id="billToId" name="billToId" value="">                           
-                                            <input type="text" class="form-control" id="billToCode" name="billToCode" value="" />
-                                            <span class="input-group-addon" id="receive_modal"  data-toggle="modal" data-target="#BillToModal">
+                                            <input type="hidden" class="form-control" id="receiveFromId" name="receiveFromId" value="${Selected.id}">                           
+                                            <input type="text" class="form-control" id="receiveFromCode" name="receiveFromCode" value="${Selected.code}" />
+                                            <span class="input-group-addon" id="receive_modal"  data-toggle="modal" data-target="#ReceiveFromModal">
                                                 <span class="glyphicon-search glyphicon"></span>
                                             </span>
                                         </div>
@@ -284,7 +267,7 @@
                                          <label class="control-label text-right">Name </label> 
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 580px">
-                                        <input type="text" class="form-control" id="billToName" name="billToName" value="" readonly="">                           
+                                        <input type="text" class="form-control" id="receiveFromName" name="receiveFromName" value="${Selected.name}">                           
                                     </div>
                                 </div>  
                                 <div class="row" style="padding-top: 16px;">
@@ -706,36 +689,6 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal-dialog -->
 
-<div class="modal fade" id="BillToModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title"  id="Titlemodel">Bill To</h4>
-            </div>
-            <div class="modal-body">
-                <table class="display" id="ListBillToTable">
-                    <thead class="datatable-header">
-                        <tr>
-                            <th>Code</th>
-                            <th>Name</th>
-                            <th class="hidden"></th>
-                            <th class="hidden"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button id="ListBillToModalOK" name="ListBillToModalOK" type="button"  class="btn btn-success" data-dismiss="modal">OK</button>
-                <button id="ListBillToModalClose" name="ListBillToModalClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal-dialog -->
-
 <!--Disable-->
 <div class="modal fade" id="DisableVoid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -804,7 +757,7 @@
 //                validating: 'uk-icon-refresh'
 //            },
 //            fields: {
-//                billToCode: {
+//                receiveFromCode: {
 //                    validators: {
 //                        notEmpty: {
 //                            message: 'The Code is required'
@@ -844,16 +797,6 @@
            $(".arrowReceipt").removeClass("glyphicon glyphicon-chevron-up").addClass("glyphicon glyphicon-chevron-down");
         });
 
-        var ListBillToTable = $('#ListBillToTable').dataTable({bJQueryUI: true,
-            "sPaginationType": "full_numbers",
-            "bAutoWidth": false,
-            "bFilter": true,
-            "bPaginate": true,
-            "bInfo": false,
-            "bLengthChange": false,
-            "iDisplayLength": 10
-        });
-        
         var receiveFromTable = $('#ListReceiveFromTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
