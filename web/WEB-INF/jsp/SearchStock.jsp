@@ -19,13 +19,18 @@
     <div class="col-sm-10">
         <div class="row" style="padding-left: 15px">  
             <div class="col-sm-6" style="padding-right: 15px">
-                <h4><b>Stock</b></h4>
+                <h4><b>Search Stock</b></h4>
             </div>
         </div>
         <hr/>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Detail
+            </div>
+            <div class="panel-body">
                 <div class="row" >
                     <div class="col-xs-12 ">
-                        <div class="col-xs-1 text-right"  >
+                        <div class="col-xs-1 text-right" style="width: 130px;"> 
                             <label class="control-label">Product</lable>
                         </div> 
                         <input name="InputId" id="InputId" type="hidden" class="form-control" value="" />
@@ -43,13 +48,13 @@
                         <div class="col-xs-1 text-right" style="width: 100px;padding-right: 10px;padding-left: 0px;">
                             <label class="control-label">Pay Status</lable>
                         </div>
-                        <div class="col-md-2 form-group text-left" style="padding-left: 5px;">
+                        <div class="col-md-2 form-group text-left" style="padding-left: 0px;">
                             <select name="Selecttype" id="Selecttype" class="form-control">
                                 <option id="" value="">---select--</option>
                                 <option id="" value="">---s1elect--</option>
                             </select>
                         </div>
-                        <div class="col-xs-1 text-right" style="width: 100px;padding-right: 0px;padding-left: 0px;">
+                        <div class="col-xs-1 text-right" style="width: 80px;padding-right: 0px;padding-left: 0px;">
                             <label class="control-label">Item Status</lable>
                         </div>
                         <div class="col-md-2 form-group text-left" style="padding-left: 8px;">
@@ -61,7 +66,7 @@
                     </div>   
                 </div><!-- End Row 1-->
                 <div class="row" >
-                    <div class="col-xs-1 text-right" style="width: 98px;" >
+                    <div class="col-xs-1 text-right" style="width: 143px;"> 
                         <label class="control-label">Add Date</lable>
                     </div>
                     <div class="col-md-3 form-group text-left" style="width: 170px;" >
@@ -70,7 +75,7 @@
                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                     </div>
-                    <div class="col-xs-2 text-right" style="width: 265px;padding-right: 0px;padding-left: 7px;" >
+                    <div class="col-xs-2 text-right" style="width: 250px;padding-right: 0px;padding-left: 7px;" >
                         <label class="control-label">Effective From</lable>
                     </div>
                     <div class="col-md-2 form-group text-left" style="padding-left: 12px;"> 
@@ -79,7 +84,7 @@
                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                     </div>
-                    <div class="col-xs-1 text-right" style="width: 100px;padding-right: 0px;padding-left: 0px;">
+                    <div class="col-xs-1 text-right" style="width: 85px;padding-right: 0px;padding-left: 0px;">
                         <label class="control-label">Effective To</lable>
                     </div>
                     <div class="col-md-2 form-group text-left" style="padding-left: 10px;"> 
@@ -90,7 +95,7 @@
                     </div>
                 </div><!-- End Row 2-->
                 <div class="row" >
-                    <div class="col-xs-12"  style="padding-right:70px;">
+                    <div class="col-xs-12"  style="padding-right:33px;">
                         <div class="col-md-10 text-right"></div>
                         <div class="col-md-2 text-right">
                             <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="" class="btn btn-primary" style="width: 100px;">
@@ -99,15 +104,16 @@
                         </div>                   
                     </div>   
                 </div><!-- End Row 3--><br>
-                
+            </div>
+        </div>
         <div class="panel panel-default">
              <div class="panel-heading">
-                 <label class="control-label">Summary</lable>
+                 Summary
             </div>
             <div class="panel-body">
                 <div class="row" >
                     <div class="col-xs-12 ">
-                        <div class="col-xs-2 text-right"  >
+                        <div class="col-xs-2 text-right" style="width: 130px;"> 
                             <label class="control-label">Product</lable>
                         </div>
                         <div class="col-md-2 form-group text-left" style="width: 170px;"> 
@@ -137,7 +143,7 @@
                 </div><!-- End Row 1-->
                 <div class="row" >
                     <div class="col-xs-12"  style="padding-left: 15px;">
-                        <div class="col-xs-2 text-right" >
+                        <div class="col-xs-2 text-right" style="width: 130px;"> 
                             <label class="control-label">Effective From</lable>
                         </div>
                         <div class="col-md-2 form-group text-left" style="width: 170px;">
@@ -180,33 +186,36 @@
                                 </tbody>
                             </table>    
                         </div>   
-                    </div><!-- End Row 3--><br>
-                    <div class="row" style="padding-left: 0px">
-                        <div class="col-xs-12 ">
-                            <table class="display" id="TaxInvoiceTable">
-                                <thead class="datatable-header">
-                                    <tr>
-                                        <th style="width: 5%">No</th>                                   
-                                        <th style="width: 10%">Code</th>
-                                        <th style="width: 15%">Ref No</th>
-                                        <th style="width: 10%">Pick Up</th>
-                                        <th style="width: 15%">Pay Status</th>
-                                        <th style="width: 15%">Item Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>XX</td>
-                                        <td>4XX</td>
-                                        <td>XXX</td>                                
-                                        <td>XXXX</td>
-                                        <td>XXXX</td>
-                                        <td>XXXX</td>                            
-                                    </tr>
-                                </tbody>
-                            </table>    
-                        </div>   
-                    </div><!-- End Row 3--><br>
+                    </div><!-- End Row 3-->
+            </div>
+        </div>
+        <div class="panel panel-default">            
+            <div class="panel-heading">
+                Item List
+            </div>
+            <div class="panel-body">
+                <table class="display" id="ItemListTable">
+                    <thead class="datatable-header">
+                        <tr>
+                            <th style="width: 5%">No</th>                                   
+                            <th style="width: 10%">Code</th>
+                            <th style="width: 15%">Ref No</th>
+                            <th style="width: 10%">Pick Up</th>
+                            <th style="width: 15%">Pay Status</th>
+                            <th style="width: 15%">Item Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>XX</td>
+                            <td>4XX</td>
+                            <td>XXX</td>                                
+                            <td>XXXX</td>
+                            <td>XXXX</td>
+                            <td>XXXX</td>                            
+                        </tr>
+                    </tbody>
+                </table>   
             </div>
         </div>
     </div>
@@ -312,6 +321,15 @@ $(document).ready(function () {
         "bPaginate": true,
         "bInfo": false,
         "bLengthChange": false,
+        "iDisplayLength": 10
+    });
+    $('#ItemListTable').dataTable({bJQueryUI: true,
+        "sPaginationType": "full_numbers",
+        "bAutoWidth": true,
+        "bFilter": false,
+        "bPaginate": true,
+        "bInfo": false,
+        "bLengthChange": true,
         "iDisplayLength": 10
     });
 });
