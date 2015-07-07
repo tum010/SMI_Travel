@@ -52,7 +52,7 @@
             <div class="row" style="padding-left: 15px">  
                 <div role="tabpanel">
                     <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane  active" id="info">
+                        <div role="tabpanel" class="tab-pane  active" id="infoSearchInvoice">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h2 class="panel-title">
@@ -263,7 +263,7 @@
             <form action="Invoice.smi" method="post" id="DetailBillableForm">
                 <div role="tabpanel">
                     <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane  active" id="info">
+                        <div role="tabpanel" class="tab-pane  active" id="infoDetailBillable">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">Detail Billable</h4>
@@ -315,7 +315,7 @@
             
                 <div role="tabpanel">
                     <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane  active" id="info">
+                        <div role="tabpanel" class="tab-pane  active" id="infoRemark">
                             <div class="panel panel-default">                              
                                 <div class="panel-body">
                                     <div class="col-xs-12 ">
@@ -323,7 +323,7 @@
                                             <label class="control-label" for="">Remark&nbsp;</lable>                                         
                                         </div>
                                         <div class="col-sm-6" style="padding-left: 50px">
-                                            <textarea  rows="3" cols="200" id="" name="" class="form-control" value=""></textarea>
+                                            <textarea  rows="3" cols="200" id="Remark" name="Remark" class="form-control" value=""></textarea>
                                         </div>
                                     </div>
                                     <div class="col-xs-12 form-group"></div>
@@ -332,13 +332,13 @@
                                             <label class="control-label" for="">Text&nbsp;Amount&nbsp;:</lable>                                         
                                         </div>                                      
                                         <div class="col-sm-6" style="padding-left: 50px">
-                                            <input  rows="3" cols="200" id="" name="" class="form-control" value="" readonly="">
+                                            <input  rows="3" cols="200" id="TextAmount" name="TextAmount" class="form-control" value="" readonly="">
                                         </div>
                                         <div class="col-sm-1">
                                             <label class="control-label" for="">Total&nbsp;Net&nbsp;:</lable>                                         
                                         </div>
                                         <div class="col-sm-3" >
-                                            <input  rows="3" cols="200" id="" name="" class="form-control" value="" readonly="">
+                                            <input  rows="3" cols="200" id="TotalNet" name="TotalNet" class="form-control" value="" readonly="">
                                         </div>
                                     </div>    
                                 </div>
@@ -348,18 +348,18 @@
                 </div>
                 <div role="tabpanel">
                     <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane  active" id="info">
+                        <div role="tabpanel" class="tab-pane  active" id="infoButton">
                             <div class="panel panel-default">                              
                                 <div class="panel-body">
                                     <div class="col-xs-12 ">
                                         <div class="col-md-2 text-right ">
                                             <button type="button" onclick="" class="btn btn-default">
-                                                <span id="SpanPrint" class="glyphicon glyphicon-print"></span> Print Package
+                                                <span id="SpanPrintPackage" class="glyphicon glyphicon-print"></span> Print Package
                                             </button>
                                         </div>
                                         <div class="col-md-2 text-left " style="padding-left: 0px">
                                             <button type="button" onclick="" class="btn btn-default">
-                                                <span id="SpanPrint" class="glyphicon glyphicon-print"></span> Print Invoice New
+                                                <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Print Invoice New
                                             </button>
                                         </div>
                                         <div class="col-md-4 text-right "></div>
@@ -370,20 +370,20 @@
                                         </div>
                                         <div class="col-md-1 text-right ">
                                             <button type="button" class="btn btn-primary hidden" onclick="EnableVoid();" data-toggle="modal" data-target="#EnableVoid">
-                                                <span id="SpanPrint" class="glyphicon glyphicon-ok" ></span> Void
+                                                <span id="SpanEnableVoid" class="glyphicon glyphicon-ok" ></span> Void
                                             </button>
                                             <button type="button" class="btn btn-danger" onclick="DisableVoid();" data-toggle="modal" data-target="#DisableVoid">
-                                                <span id="SpanPrint" class="glyphicon glyphicon-remove" ></span> Void
+                                                <span id="SpanDisableVoid" class="glyphicon glyphicon-remove" ></span> Void
                                             </button>
                                         </div>
                                         <div class="col-md-1 text-right ">
                                             <button type="button" onclick="" class="btn btn-success">
-                                                <span id="SpanPrint" class="fa fa-save"></span> Save 
+                                                <span id="SpanSave" class="fa fa-save"></span> Save 
                                             </button>
                                         </div>
                                         <div class="col-md-1 text-right ">
                                             <button type="button" onclick="" class="btn btn-success">
-                                                <span id="" class="fa fa-plus-circle"></span> New 
+                                                <span id="SpanNew" class="fa fa-plus-circle"></span> New 
                                             </button>
                                         </div>
                                     </div>
