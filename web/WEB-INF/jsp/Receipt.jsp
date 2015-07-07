@@ -714,7 +714,7 @@
                 <h4 class="modal-title"  id="Titlemodel">Bill To</h4>
             </div>
             <div class="modal-body">
-                <table class="display" id="ListARCodeTable">
+                <table class="display" id="ListBillToTable">
                     <thead class="datatable-header">
                         <tr>
                             <th>Code</th>
@@ -844,6 +844,16 @@
            $(".arrowReceipt").removeClass("glyphicon glyphicon-chevron-up").addClass("glyphicon glyphicon-chevron-down");
         });
 
+        var ListBillToTable = $('#ListBillToTable').dataTable({bJQueryUI: true,
+            "sPaginationType": "full_numbers",
+            "bAutoWidth": false,
+            "bFilter": true,
+            "bPaginate": true,
+            "bInfo": false,
+            "bLengthChange": false,
+            "iDisplayLength": 10
+        });
+        
         var receiveFromTable = $('#ListReceiveFromTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
