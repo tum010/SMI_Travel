@@ -795,28 +795,28 @@
     $(document).ready(function() {
         $("#bl,#com").removeClass('hidden');
         
-        $('#ReceiptForm').bootstrapValidator({
-            container: 'tooltip',
-            excluded: [':disabled'],
-            feedbackIcons: {
-                valid: 'uk-icon-check',
-                invalid: 'uk-icon-times',
-                validating: 'uk-icon-refresh'
-            },
-            fields: {
-                billToCode: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The Code is required'
-                        }
-                    }
-                }       
-            }
-        }).on('success.field.bv', function (e, data) {
-            if (data.bv.isValid()) {
-                data.bv.disableSubmitButtons(false);
-            }
-        });
+//        $('#ReceiptForm').bootstrapValidator({
+//            container: 'tooltip',
+//            excluded: [':disabled'],
+//            feedbackIcons: {
+//                valid: 'uk-icon-check',
+//                invalid: 'uk-icon-times',
+//                validating: 'uk-icon-refresh'
+//            },
+//            fields: {
+//                billToCode: {
+//                    validators: {
+//                        notEmpty: {
+//                            message: 'The Code is required'
+//                        }
+//                    }
+//                }       
+//            }
+//        }).on('success.field.bv', function (e, data) {
+//            if (data.bv.isValid()) {
+//                data.bv.disableSubmitButtons(false);
+//            }
+//        });
             
         $('#addChqButton').on('click', function() {
             $("#addChq").removeClass('hidden');
