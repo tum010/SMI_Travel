@@ -20,6 +20,6 @@ public interface PaymentWendytourDao {
     public String DeletePaymentWendy(PaymentWendy payment);
     public String DeletePaymentWendyDetail(String DetailID);
     public PaymentWendy SearchPaymentWendyFromPayno(String payno);
-    public List<PaymentWendytourView> SearchPaymentFromFilter(String from,String to,String pvtype);
+    public List<PaymentWendytourView> SearchPaymentFromFilter(PaymentWendy payment);
     
 }

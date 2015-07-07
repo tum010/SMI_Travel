@@ -6,9 +6,9 @@
 
 package com.smi.travel.datalayer.dao.impl;
 
-import com.smi.travel.datalayer.dao.PaymentWendytourDao;
-import com.smi.travel.datalayer.entity.PaymentWendy;
-import com.smi.travel.datalayer.view.entity.PaymentWendytourView;
+import com.smi.travel.datalayer.dao.StockDao;
+import com.smi.travel.datalayer.entity.Stock;
+import com.smi.travel.datalayer.view.entity.StockViewSummary;
 import java.util.List;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -17,45 +17,40 @@ import org.hibernate.Transaction;
  *
  * @author Surachai
  */
-public class PaymentWendytourImpl implements PaymentWendytourDao{
+public class StockImpl implements StockDao{
+    
     private SessionFactory sessionFactory;
     private Transaction transaction;
     
     @Override
-    public String InsertPaymentWendy(PaymentWendy payment) {
+    public String InsertStock(Stock ItemLot) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String UpdatePaymentWendy(PaymentWendy payment) {
+    public String UpdateStock(Stock ItemLot) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String DeletePaymentWendy(PaymentWendy payment) {
+    public String DeleteStock(Stock ItemLot) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String DeletePaymentWendyDetail(String DetailID) {
+    public String DeleteStockDetail(String DetailID) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public PaymentWendy SearchPaymentWendyFromPayno(String payno) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<PaymentWendytourView> SearchPaymentFromFilter(PaymentWendy payment) {
+    public StockViewSummary SearchStockFromFilter(Stock stockData) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    
-    private PaymentWendytourView mappingPaymentWendytourView(PaymentWendy payment){
-         PaymentWendytourView paymentView = new PaymentWendytourView();
-         
-         return paymentView;
+    private StockViewSummary mappingStockView(Stock stockData){
+        StockViewSummary stockview = new StockViewSummary();
+        
+        return stockview;
     }
 
     public SessionFactory getSessionFactory() {
@@ -65,7 +60,9 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-
-
+    
+    
     
 }
+
+
