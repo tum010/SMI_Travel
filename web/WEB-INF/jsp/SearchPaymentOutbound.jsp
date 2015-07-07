@@ -91,8 +91,8 @@
                             <td>THB</td>
                             <td>XXX</td>
                             <td class="text-center">
-                                <span id="" name="" class="glyphicon glyphicon-edit editicon" onclick=""></span>                                          
-                                <a href="#" onclick=""  data-toggle="modal" data-target="">
+                                <span  class="glyphicon glyphicon-edit editicon" onclick=""></span>                                          
+                                <a href="#" onclick=""  data-toggle="modal" data-target="" id="deletePayment" name="deletePayment">
                                     <span id="" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal" data-target="#delSearchPaymentOutboundModal"></span>
                                 </a>
                             </td>
