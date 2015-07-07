@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 4, 2014 5:36:02 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.PaymentWendy" table="payment_wendy" catalog="smitravel">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="MPaymentDoctype" class="com.smi.travel.datalayer.entity.MPaymentDoctype" fetch="select">
+            <column name="pay_type" />
+        </many-to-one>
+        <many-to-one name="MAccpay" class="com.smi.travel.datalayer.entity.MAccpay" fetch="select">
+            <column name="payment" />
+        </many-to-one>
+        <many-to-one name="MItemstatus" class="com.smi.travel.datalayer.entity.MItemstatus" fetch="select">
+            <column name="status" />
+        </many-to-one>
+        <property name="payNo" type="string">
+            <column name="pay_no" length="20" />
+        </property>
+        <property name="payDate" type="date">
+            <column name="pay_date" length="10" />
+        </property>
+        <property name="account" type="java.lang.Integer">
+            <column name="account" />
+        </property>
+        <property name="invoiceSup" type="string">
+            <column name="invoice_sup" length="10" />
+        </property>
+        <property name="apCode" type="string">
+            <column name="ap_code" length="10" />
+        </property>
+        <property name="detail" type="string">
+            <column name="detail" />
+        </property>
+        <property name="remark" type="string">
+            <column name="remark" />
+        </property>
+        <property name="currency" type="string">
+            <column name="currency" length="3" />
+        </property>
+        <property name="chqNo" type="string">
+            <column name="chq_no" length="20" />
+        </property>
+        <property name="cash" type="big_decimal">
+            <column name="cash" precision="10" />
+        </property>
+        <property name="chqAmount" type="big_decimal">
+            <column name="chq_amount" precision="10" />
+        </property>
+        <property name="createBy" type="string">
+            <column name="create_by" length="5" />
+        </property>
+        <property name="createDate" type="date">
+            <column name="create_date" length="10" />
+        </property>
+        <bag name="paymentDetailWendies" table="payment_detail_wendy" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="pay_wendy_id" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.PaymentDetailWendy" />
+        </bag>
+    </class>
+</hibernate-mapping>
