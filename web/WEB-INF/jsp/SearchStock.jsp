@@ -5,7 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <section class="content-header" >
     <h1>
-        Master Search Stock
+        Master Stock
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-book"></i> Master </a></li>          
@@ -17,87 +17,89 @@
         <div ng-include="'WebContent/Master/StockMenu.html'"></div>
     </div>
     <div class="col-sm-10">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                 <label class="control-label">Check Stock</lable>
+        <div class="row" style="padding-left: 15px">  
+            <div class="col-sm-6" style="padding-right: 15px">
+                <h4><b>Stock</b></h4>
             </div>
-            <div class="panel-body">
+        </div>
+        <hr/>
                 <div class="row" >
                     <div class="col-xs-12 ">
                         <div class="col-xs-1 text-right"  >
                             <label class="control-label">Product</lable>
-                        </div>
+                        </div> 
+                        <input name="InputId" id="InputId" type="hidden" class="form-control" value="" />
                         <div class="col-md-2 form-group text-left" > 
                             <div class="input-group" id="gr" >
-                                <input type="text" class="form-control" id="InputProduct" name="InputProduct" value="" />
+                                <input type="text" class="form-control" id="InputProductId" name="InputProductId" value="" />
                                 <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#SearchProduct">
                                     <span class="glyphicon-search glyphicon"></span>
                                 </span>
                             </div>
                         </div>
-                         <div class="col-md-2 form-group text-left" > 
-                            <input name="InputPrefix" id="InputPrefix" type="text" class="form-control" value="" />
+                        <div class="col-md-2 form-group text-left" > 
+                            <input name="InputProductName" id="InputProductName" type="text" class="form-control" value="" />
                         </div>
-                        <div class="col-xs-1 text-right" style="width: 100px;padding-right: 0px;padding-left: 0px;">
-                            <label class="control-label">Effective From</lable>
-                        </div>
-                        <div class="col-md-2 form-group text-left" style="padding-left: 5px;">
-                            <div class='input-group date' >
-                                <input name="InputEffectiveFromDate" id="InputEffectiveFromDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
-                                <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                            </div>
-                        </div>
-                        <div class="col-xs-1 text-right" style="width: 100px;padding-right: 0px;padding-left: 0px;">
-                            <label class="control-label">Effective To</lable>
+                        <div class="col-xs-1 text-right" style="width: 100px;padding-right: 10px;padding-left: 0px;">
+                            <label class="control-label">Pay Status</lable>
                         </div>
                         <div class="col-md-2 form-group text-left" style="padding-left: 5px;">
-                            <div class='input-group date' >
-                                <input name="InputInputEffectiveToDate" id="InputInputEffectiveToDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
-                                <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                            </div>
+                            <select name="Selecttype" id="Selecttype" class="form-control">
+                                <option id="" value="">---select--</option>
+                                <option id="" value="">---s1elect--</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-1 text-right" style="width: 100px;padding-right: 0px;padding-left: 0px;">
+                            <label class="control-label">Item Status</lable>
+                        </div>
+                        <div class="col-md-2 form-group text-left" style="padding-left: 8px;">
+                            <select name="Selecttype" id="Selecttype" class="form-control">
+                                <option id="" value="">---select--</option>
+                                <option id="" value="">---s1elect--</option>
+                            </select>
                         </div>
                     </div>   
                 </div><!-- End Row 1-->
                 <div class="row" >
-                    <div class="col-xs-1 text-right" style="width: 95px;" >
+                    <div class="col-xs-1 text-right" style="width: 98px;" >
                         <label class="control-label">Add Date</lable>
                     </div>
-                    <div class="col-md-3 form-group text-left" >
+                    <div class="col-md-3 form-group text-left" style="width: 170px;" >
                         <div class='input-group date' >
                             <input name="InputStockDate" id="InputStockDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                     </div>
-                    <div class="col-xs-2 text-right" style="padding-left: 0px;" >
-                            <label class="control-label">Pay Status</lable>
+                    <div class="col-xs-2 text-right" style="width: 265px;padding-right: 0px;padding-left: 7px;" >
+                        <label class="control-label">Effective From</lable>
                     </div>
-                    <div class="col-md-2 form-group text-left" style="padding-left: 10px;"> 
-                        <select name="Selecttype" id="Selecttype" class="form-control">
-                            <option id="" value="">---select--</option>
-                            <option id="" value="">---s1elect--</option>
-                        </select>
+                    <div class="col-md-2 form-group text-left" style="padding-left: 12px;"> 
+                        <div class='input-group date' >
+                            <input name="InputEffectiveFromDate" id="InputEffectiveFromDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
+                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                        </div>
                     </div>
                     <div class="col-xs-1 text-right" style="width: 100px;padding-right: 0px;padding-left: 0px;">
-                            <label class="control-label">Item Status</lable>
+                        <label class="control-label">Effective To</lable>
                     </div>
                     <div class="col-md-2 form-group text-left" style="padding-left: 10px;"> 
-                        <select name="Selecttype" id="Selecttype" class="form-control">
-                            <option id="" value="">---select--</option>
-                            <option id="" value="">---s1elect--</option>
-                        </select>
+                        <div class='input-group date' >
+                            <input name="InputInputEffectiveToDate" id="InputInputEffectiveToDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
+                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                        </div>
                     </div>
                 </div><!-- End Row 2-->
                 <div class="row" >
-                    <div class="col-xs-12"  style="padding-left: 20px;">
-                        <div class="col-md-11 text-right">
-                            <button type="submit"  id="ButtonAdd"  name="ButtonAdd" onclick="" class="btn btn-primary" style="width: 100px;">
-                                <span id="SpanAdd" class="glyphicon glyphicon-print fa fa-plus-circle"></span> Add
+                    <div class="col-xs-12"  style="padding-right:70px;">
+                        <div class="col-md-10 text-right"></div>
+                        <div class="col-md-2 text-right">
+                            <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="" class="btn btn-primary" style="width: 100px;">
+                                <span id="SpanSearch" class="glyphicon glyphicon-search"></span> Search
                             </button>                                          
                         </div>                   
                     </div>   
-                </div><!-- End Row 3-->
-            </div>
-        </div><!-- End Panel One-->
+                </div><!-- End Row 3--><br>
+                
         <div class="panel panel-default">
              <div class="panel-heading">
                  <label class="control-label">Summary</lable>
@@ -108,13 +110,13 @@
                         <div class="col-xs-2 text-right"  >
                             <label class="control-label">Product</lable>
                         </div>
-                        <div class="col-md-2 form-group text-left" > 
+                        <div class="col-md-2 form-group text-left" style="width: 170px;"> 
                             <input name="InputProduct" id="InputProduct" type="text" class="form-control" value="" />
                         </div>
                         <div class="col-xs-2 text-right" style="width: 100px;padding-right: 0px;" >
                             <label class="control-label">Staff</lable>
                         </div>
-                        <div class="col-md-2 form-group text-left" > 
+                        <div class="col-md-2 form-group text-left" style="width: 170px;"> 
                             <input name="InputStaff" id="InputStaff" type="text" class="form-control" value="" />
                         </div>
                         <div class="col-xs-1 text-right" style="width: 100px;">
@@ -127,18 +129,18 @@
                             </div>
                         </div>
                         <div class="col-md-1 text-right">
-                            <button type="submit" id="ButtonSave" name="ButtonSave" class="btn btn-success">
-                                <i class="fa fa-save"></i> Save             
+                            <button type="submit" id="ButtonSave" name="ButtonSave" class="btn btn-warning">
+                                <i class="fa fa-edit"></i> Edit             
                             </button>                                         
                         </div>    
                     </div>   
                 </div><!-- End Row 1-->
                 <div class="row" >
-                    <div class="col-xs-12"  style="padding-left: 20px;">
+                    <div class="col-xs-12"  style="padding-left: 15px;">
                         <div class="col-xs-2 text-right" >
                             <label class="control-label">Effective From</lable>
                         </div>
-                        <div class="col-md-2 form-group text-left" >
+                        <div class="col-md-2 form-group text-left" style="width: 170px;">
                             <div class='input-group date' >
                                 <input name="InputEffectiveFromDate" id="InputEffectiveFromDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -147,7 +149,7 @@
                         <div class="col-xs-1 text-right" style="width: 100px;padding-left: 0px;padding-right: 0px;">
                             <label class="control-label">Effective To</lable>
                         </div>
-                        <div class="col-md-2 form-group text-left" >
+                        <div class="col-md-2 form-group text-left" style="width: 170px;">
                             <div class='input-group date' >
                                 <input name="InputInputEffectiveToDate" id="InputInputEffectiveToDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
