@@ -5,11 +5,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <section class="content-header" >
     <h1>
-        Checking - Package Outbound
+        Checking - Search Payment Outbound
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-book"></i> Checking</a></li>          
-        <li class="active"><a href="#">Search Package Outbound</a></li>
+        <li class="active"><a href="#">Search Payment Outbound</a></li>
     </ol>
 </section>
 <div class ="container"  style="padding-top: 15px;padding-left: 5px;" ng-app=""> 
@@ -19,11 +19,12 @@
     </div>
     <!--Content -->
     <div class="col-sm-10">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                 <label class="control-label">Search</lable>
+        <div class="row" style="padding-left: 0px">  
+            <div class="col-sm-6" style="padding-right: 15px">
+                <h4><b>Search Payment Outbound</b></h4>
             </div>
-            <div class="panel-body">
+        </div>
+        <hr/>
                 <div class="row" style="padding-left: 0px">
                         <div class="col-xs-1 text-right" >
                             <label class="control-label">From </lable>
@@ -57,16 +58,12 @@
                             </a>
                         </div>
                         <div class="col-xs-1 text-left" style="width: 100px;">
-                            <a id="ButtonPrint" name="ButtonPrint" onclick="" class="btn btn-primary">
+                            <a id="ButtonPrint" name="ButtonPrint" onclick="" class="btn btn-default">
                                 <i class="glyphicon glyphicon-print"></i> Print
                             </a>
                         </div>
-                </div><!-- End Row 1-->
-            </div>
-        </div>
-        <!-- Table -->
-        <div class="panel panel-default">
-            <div class="panel-body">
+                </div><!-- End Row 1--><br>
+                <div class="row" style="padding-left: 15px;width: 1040px;">
                 <table class="display" id="SearchPaymentTable">
                     <thead class="datatable-header">
                         <tr>
@@ -103,7 +100,6 @@
                     </tbody>
                 </table>
             </div>
-        </div><!--End Table -->
     </div>
 </div>
 <!--Delete Payment Outbound Modal-->
@@ -139,7 +135,7 @@ $(document).ready(function () {
         "bFilter": false,
         "bPaginate": true,
         "bInfo": false,
-        "bLengthChange": false,
+        "bLengthChange": true,
         "iDisplayLength": 10
     });
 });
