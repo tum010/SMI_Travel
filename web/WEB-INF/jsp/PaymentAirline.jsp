@@ -6,7 +6,7 @@
 
 <section class="content-header" >
     <h1>
-        Checking - Payment Airline
+        Checking - Air Ticket
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-book"></i>Checking</a></li>          
@@ -46,9 +46,9 @@
                             <div class="col-xs-1 text-right"  style="width: 128px">
                                 <label class="control-label text-right">Payment No :</label>
                             </div>
-                            <div class="col-xs-1" style="width: 280px">
+                            <div class="col-xs-1" style="width:290px">
                                 <div class='input-group'>
-                                    <input id="paymentNo" name="paymentNo" type="text" style="width: 260px" class="form-control" value="">
+                                    <input id="paymentNo" name="paymentNo" type="text" style="width: 285px" class="form-control" value="">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 140px">
@@ -75,11 +75,12 @@
                         
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right"  style="width: 128px">
-                                <label class="control-label text-right">Agent :</label>
+                                <label class="control-label text-right">Invoice Sup :</label>
                             </div>
-                            <div class="col-xs-1"  style="width: 130px">
+                            <div class="col-xs-1"  style="width: 155px">
                                 <div class="input-group" id="agentCodeValidate">
-                                    <input type="text" class="form-control" id="agentUser" name="agentUser" value="${SelectedAgent.code}" />
+                                    <input type="hidden" class="form-control" id="agentId" name="agentId" value="" />
+                                    <input type="text" class="form-control" id="agentCode" name="agentCode" value="" />
                                     <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#AgentModal">
                                         <span class="glyphicon-search glyphicon"></span>
                                     </span>
@@ -89,10 +90,10 @@
                                 <input type="text" class="form-control" id="agentName" name="agentName" value="${SelectedAgent.name}" readonly=""
                                                data-bv-notempty="true" data-bv-notempty-message="agent empty !">                           
                             </div>
-                            <div class="col-xs-1 text-right"  style="width: 130px">
+                            <div class="col-xs-1 text-right"  style="width: 115px">
                                 <label class="control-label text-right">A/P Code :</label>
                             </div>
-                            <div class="col-xs-1"  style="width: 130px">
+                            <div class="col-xs-1"  style="width: 155px">
                                 <div class="input-group" id="apCodeValidate">
                                     <input type="text" class="form-control" id="apCode" name="apCode" value="${SelectedAp.code}" />
                                     <span class="input-group-addon" id="ap_modal"  data-toggle="modal" data-target="#ApModal">
@@ -100,10 +101,10 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="col-xs-1 text-left" style="width: 160px">
+<!--                            <div class="col-xs-1 text-left" style="width: 160px">
                                 <input type="text" class="form-control" id="apName" name="apName" value="${SelectedAp.name}" readonly=""
                                                data-bv-notempty="true" data-bv-notempty-message="agent empty !">                               
-                            </div>   
+                            </div>   -->
                         </div>
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -111,10 +112,10 @@
                             </div>
                             <div class="col-xs-1"  style="width: 310px">
                                 <div class="input-group">                                    
-                                    <textarea rows="3" class="form-control" id="detail" name="detail" style="width: 160%"></textarea>  
+                                    <textarea rows="3" class="form-control" id="detail" name="detail" style="width: 175%"></textarea>  
                                 </div>
                             </div>
-                            <div class="col-xs-1 text-right"  style="width: 110px">
+                            <div class="col-xs-1 text-right"  style="width: 120px">
                                 <label class="control-label text-right">Pay By :</label>
                             </div>
                             <div class="col-xs-1" style="width: 170px">
@@ -127,9 +128,9 @@
                 </div>
 
                 <div class="panel panel-default">
-<!--                    <div class="panel-heading">
-                        <h4 class="panel-title">Detail</h4>
-                    </div> -->
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Ticket Fare</h4>
+                    </div> 
                     <div class="panel-body" style="width: 100%">
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right" style="width: 128px">
@@ -197,9 +198,9 @@
                 </div>
                             
                 <div class="panel panel-default">
-<!--                    <div class="panel-heading">
-                        <h4 class="panel-title">Detail</h4>
-                    </div> -->
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Refund Ticket</h4>
+                    </div> 
                     <div class="panel-body" style="width: 100%">
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right" style="width: 128px">
@@ -320,6 +321,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 140px">
+                                <label class="control-label text-right">Total Payment :</label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
@@ -336,7 +338,7 @@
                   
                             <button type="submit" id="ButtonSaveAndNew" name="ButtonSaveAndNew" class="btn btn-success"><i class="fa fa-save"></i> Save & New</button>
           
-                            <button type="submit" id="ButtonPrint" name="ButtonPrint" class="btn btn-success"><i class="fa fa-print"></i> Print </button>
+                            <button type="submit" id="ButtonPrint" name="ButtonPrint" class="btn btn-default"><i class="fa fa-print"></i> Print </button>
                         </div>
                     </div>
                 </div>           
@@ -350,7 +352,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title"  id="Titlemodel">Agent</h4>
+                <h4 class="modal-title"  id="Titlemodel">Invoice Sup</h4>
             </div>
             <div class="modal-body">
                 <table class="display" id="AgentTable">

@@ -9,7 +9,7 @@
 
 <section class="content-header" >
     <h1>
-        Checking - Refund Airline
+        Checking - Air Ticket
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-book"></i>Checking</a></li>          
@@ -38,7 +38,7 @@
                         <div class="col-xs-1 text-right" style="width: 140px">
                             <label class="control-label text-right">Refund No :</label>
                         </div>
-                        <div class="col-xs-1" style="width: 320px">
+                        <div class="col-xs-1" style="width: 400px">
                             <input id="refundNo" name="refundNo" type="text" class="form-control" value="">
                         </div>
                         <div class="col-xs-1 text-right"  style="width: 140px">
@@ -58,15 +58,16 @@
                         <div class="col-xs-1 text-right"  style="width: 140px">
                             <label class="control-label text-right">Refund Agent :</label>
                         </div>
-                        <div class="col-xs-1"  style="width: 120px">
+                        <div class="col-xs-1"  style="width: 150px">
                             <div class="input-group" id="refundAgentCodeValidate">
+                                <input type="hidden" class="form-control" id="refundAgentId" name="refundAgentId" value="${SelectedAgent.id}" />
                                 <input type="text" class="form-control" id="refundAgentUser" name="refundAgentUser" value="${SelectedAgent.code}" />
                                 <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#RefundAgentModal">
                                     <span class="glyphicon-search glyphicon"></span>
                                 </span>
                             </div>
                         </div>
-                        <div class="col-xs-1 text-left" style="width: 200px">
+                        <div class="col-xs-1 text-left" style="width: 250px">
                             <input type="text" class="form-control" id="refundAgentName" name="refundAgentName" value="${SelectedAgent.name}" readonly=""
                                 data-bv-notempty="true" data-bv-notempty-message="agent empty !">                           
                         </div>
@@ -87,18 +88,18 @@
                         </div>
                         <div class="col-xs-1" style="width: 200px">
                             <div class="input-group">                                    
-                                <textarea rows="3" class="form-control" id="remark" name="remark" style="width: 180%"></textarea>  
+                                <textarea rows="3" class="form-control" id="remark" name="remark" style="width: 228%"></textarea>  
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
+<!--                <div class="row">
                     <div class="col-xs-12">
                         <div class="col-xs-12 text-right" >
                             <button style="height:30px" type="submit"  id="ButtonAdd"  name="ButtonAdd" onclick="addAction();" class="btn btn-primary btn-sm">&nbsp;&nbsp;Add&nbsp;&nbsp;</button>
                         </div>
                     </div>
-                </div>
+                </div>-->
             </form>
                                 
             <!--Table-->
@@ -122,7 +123,29 @@
                             </tr>
                         </thead>
                         <tbody>
-
+                              <%--<c:forEach var="refundAirline" items="${refundAirlineList}" varStatus="varRefundAirline">--%>
+                            <tr>
+                                <td style="text-align:center">1</td>
+                                <td style="text-align:center">12345678321</td>
+                                <td style="text-align:center">2015-01-01</td>
+                                <td style="text-align:center">Wendy</td>
+                                <td style="text-align:center">Jittima S.</td>
+                                <td style="text-align:center">BKK-ARM-BKK</td>
+                                <td style="text-align:center">ARM-BKK</td>
+                                <td style="text-align:center">2300</td>
+                                <td style="text-align:center">100</td>
+                                <td style="text-align:center">500</td>
+                                <td style="text-align:center">300</td>
+                                <td class="text-center">
+                                    <a id="ButtonEdit${varRefundAirline.count}" href="">
+                                        <i id="IEdit${varRefundAirline.count}" class="glyphicon glyphicon-edit editicon"></i>
+                                    </a>
+                                    <a id="ButtonRemove${varRefundAirline.count}" data-toggle="modal" data-target="#DeleteRefundAirline" onclick="">
+                                        <i id="IRemove${varRefundAirline.count}" class="glyphicon glyphicon-remove deleteicon"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <%--</c:forEach>--%>
                         </tbody>
                     </table>      
                 </div>
@@ -180,7 +203,22 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
-
+<div class="modal fade" id="DeleteRefundAirline" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Refund Airline</h4>
+            </div> 
+            <div class="modal-body" id="delCode">
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="Delete()" class="btn btn-danger">Delete</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /Delete Hotel modal -->
 <!--Script-->       
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {

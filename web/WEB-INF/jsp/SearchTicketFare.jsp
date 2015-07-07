@@ -9,7 +9,7 @@
 
 <section class="content-header" >
     <h1>
-        Checking - Search Ticket Fare
+        Checking - Air Ticket
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-book"></i>Checking</a></li>          
@@ -105,7 +105,8 @@
                             <div class="col-xs-1 text-right" style="width: 150px">
                             </div>
                             <div class="col-xs-1 text-left" style="width: 190px">
-                                <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="searchAction();" class="btn btn-primary btn-sm"> Search </button>
+                                <button style="height:34px" type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="searchAction();" class="btn btn-primary btn-sm">
+                                    <i class="fa fa-search"></i>&nbsp;Search</button></button>
                             </div>
                         </div>
                     </div>

@@ -6,7 +6,7 @@
 
 <section class="content-header" >
     <h1>
-        Finance & Cashier - Search Receipt
+        Finance & Cashier - Receipt
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-book"></i>Finance & Cashier</a></li>          
@@ -29,73 +29,66 @@
             </div>
             <hr/>
             
-            <!--<form action="SearchReceipt.smi" method="post" id="SearchReceiptForm" name="SearchReceiptForm" role="form">-->
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">Search</h4>
-                    </div> 
-                    <div class="panel-body"  style="width: 100%">
-                        <div class="col-xs-12 form-group">
-                            <div class="col-xs-1 text-right"  style="width: 80px">
-                                <label class="control-label text-right">From :</label>
-                            </div>
-                            <div class="col-xs-1"  style="width: 200px">
-                                <div class='input-group date'>
-                                    <input id="inputFromDate" name="inputFromDate"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
-                                    <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                                </div>
-                            </div>
-                            <div class="col-xs-1 text-right"  style="width: 80px">
-                                <label class="control-label text-right">To :</label>
-                            </div>
-                            <div class="col-xs-1"  style="width: 200px">
-                                <div class='input-group date'>
-                                    <input id="inputToDate" name="inputToDate"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
-                                    <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                                </div>
-                            </div>
-                            <div class="col-xs-1 text-right" style="width: 140px">
-                                <label class="control-label text-right">Department :</label>
-                            </div>
-                            <div class="col-xs-1" style="width: 200px">
-                                <select id="inputDepartment" name="inputDepartment" class="form-control selectize">
-                                    <option value="">---Department---</option>
-
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 text-right" >
-                            <div class="col-xs-1 text-right"  style="width: 246px">
-                                <button type="submit" id="ButtonShow" name="ButtonShow" onclick="showReceiptListTable()" class="btn btn-success"><i class=""></i> Show </button>
-                                <button type="submit" id="ButtonPrint" name="ButtonPrint" class="btn btn-success"><i class="fa fa-print"></i> Print </button>
-                            </div>
+            <form action="SearchReceipt.smi" method="post" id="SearchReceiptForm" name="SearchReceiptForm" role="form">
+                <div class="col-xs-12 form-group">
+                    <div class="col-xs-1 text-right"  style="width: 80px">
+                        <label class="control-label text-right">From :</label>
+                    </div>
+                    <div class="col-xs-1"  style="width: 200px">
+                        <div class='input-group date'>
+                            <input id="inputFromDate" name="inputFromDate"  type="text" 
+                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                     </div>
+                    <div class="col-xs-1 text-right"  style="width: 80px">
+                        <label class="control-label text-right">To :</label>
+                    </div>
+                    <div class="col-xs-1"  style="width: 200px">
+                        <div class='input-group date'>
+                            <input id="inputToDate" name="inputToDate"  type="text" 
+                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                        </div>
+                    </div>
+                    <div class="col-xs-1 text-right" style="width: 140px">
+                        <label class="control-label text-right">Department :</label>
+                    </div>
+                    <div class="col-xs-1" style="width: 200px">
+                        <select id="inputDepartment" name="inputDepartment" class="form-control selectize">
+                            <option value="">---Department---</option>
+
+                        </select>
+                    </div>
+                    <div class="col-xs-1 text-left" >
+                        <button type="submit" id="ButtonShow" name="ButtonShow" onclick="showReceiptListTable()" style="height:34px" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Show </button>
+                    </div>
+                    <div class="col-xs-1 text-left" >
+                        <button type="submit" id="ButtonPrint" name="ButtonPrint" class="btn btn-default"><i class="fa fa-print"></i> Print </button>
+                    </div>
                 </div>
-            <!--</form>-->
+            </form>
             <!--Table-->
             <div class="row">
                 <div class="col-md-12 ">
-                    <table id="ReceiptListTable" class="display" cellspacing="0" width="100%">
+                    <table id="ReceiptListTable" class="display hidden active" cellspacing="0" width="100%">
                         <thead>
                             <tr class="datatable-header" >
-                                <th style="width:5%;">Receive No</th>
+                                <th style="width:7%;">Receive No</th>
                                 <th style="width:7%;">Date</th>
                                 <th style="width:7%;">To</th>
-                                <th style="width:10%;">Name</th>
+                                <th style="width:15%;">Name</th>
                                 <th style="width:10%;">Invoice No</th>
                                 <th style="width:10%;">Amount</th>
                                 <th style="width:7%;">Term Pay</th>
                                 <th style="width:7%;">Department</th>
-                                <th style="width:10%;">Action</th>
+                                <th style="width:7%;">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><center>111111</center></td>
-                                <td><center>222222</center></td>
+                                <td><center>2015-01-02</center></td>
                                 <td><center>333333</center></td>
                                 <td><center>444444</center></td>
                                 <td><center>555555</center></td>
@@ -104,7 +97,7 @@
                                 <td><center>888888</center></td>
                                 <td>
                                     <center>
-                                        <a href="Receipt.smi"><span class="glyphicon glyphicon-th-list"></span></a>
+                                        <a href="Receipt.smi"><span class="glyphicon glyphicon-edit editicon"></span></a>
                                     </center>
                                 </td>
                             </tr>
@@ -120,8 +113,15 @@
 <!--Script-->       
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
-        $('#ReceiptListTable').hide();
-       
+        $("#ReceiptListTable").removeClass('hidden');
+        
+        var table = $('#ReceiptListTable').dataTable({bJQueryUI: true,
+            "sPaginationType": "full_numbers",
+            "bAutoWidth": false,
+            "bFilter": false,
+            "aaSorting": [[ 0, "desc" ]]
+        });
+            
         $('.date').datetimepicker();
         $('.spandate').click(function() {
             var position = $(this).offset();
@@ -130,8 +130,7 @@
 
         });
         $('#ButtonShow').on('click', function() {
-            $('#ReceiptListTable').show();
-
+            $("#ReceiptListTable").removeClass('hidden');
             var table = $('#ReceiptListTable').dataTable({bJQueryUI: true,
                 "sPaginationType": "full_numbers",
                 "bAutoWidth": false,

@@ -7,7 +7,7 @@
 
 <section class="content-header" >
     <h1>
-        Checking - Add Ticket Fare
+        Checking - Air Ticket
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-book"></i>Checking</a></li>          
@@ -42,14 +42,6 @@
             <form action="AddTicketFare.smi" method="post" id="AddTicketFareForm" name="AddTicketFareForm" role="form">
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="col-xs-12 text-right" >
-                            <button type="submit" id="ButtonSave" name="ButtonSave" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
-                            <button type="submit" id="ButtonSaveAndNew" name="ButtonSaveAndNew" class="btn btn-success"><i class="fa fa-save"></i> Save & New</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
                         <div class="col-xs-1 text-right" style="width: 150px">
                             <label class="control-label text-right">Ticket&nbsp;No&nbsp;:</label>
                         </div>
@@ -59,13 +51,13 @@
                             </div>
                         </div>
                         <div class="col-xs-1 text-right" style="width: 100px">
-                            <button style="height:34px" type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="searchAction();" class="btn btn-primary btn-sm"> Search </button>
+                            <button style="height:34px" type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="searchAction();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
 
                         </div>
                         
                         <div class="col-xs-1 text-right" style="width: 100px">
                             <!--<button type="submit"  id="ButtonRefno"  name="ButtonRefno" onclick="refnoAction();"  class="btn btn-primary" data-toggle="modal" data-target="#ListRefnoModal"> Refno </button>-->
-                            <a  id="ButtonRefno" class="btn btn-primary" data-toggle="modal" data-target="#ListRefnoModal"> Refno </a>
+                            <a  id="ButtonRefno" class="btn btn-primary" data-toggle="modal" data-target="#ListRefnoModal"  style="height: 34px"><i class="glyphicon glyphicon-th-list"></i>&nbsp;Refno</a>
                         </div>
                     </div>
                 </div>
@@ -350,8 +342,15 @@
                         </div>
                     </div>
                 </div>
-                
-                                
+                <div class="row" style="padding-bottom: 20px">
+                    <div class="col-xs-12">
+                        <div class="col-xs-12 text-center" >
+                            <button type="submit" id="ButtonSave" name="ButtonSave" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+                            <button type="submit" id="ButtonSaveAndNew" name="ButtonSaveAndNew" class="btn btn-success"><i class="fa fa-save"></i> Save & New</button>
+                        </div>
+                    </div>
+                </div>
+                            
                 <!----- Invoice Detail ----->
                 <div class="panel panel-default">
                     <div class="panel-heading">
