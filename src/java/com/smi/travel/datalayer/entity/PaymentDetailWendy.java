@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 public class PaymentDetailWendy   {
 
 
-     private Integer id;
+     private String id;
      private Master master;
      private MPaytype MPaytype;
      private PaymentWendy paymentWendy;
@@ -32,11 +32,11 @@ public class PaymentDetailWendy   {
        this.description = description;
     }
    
-    public Integer getId() {
+    public String getId() {
         return this.id;
     }
     
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
     public Master getMaster() {

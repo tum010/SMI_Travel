@@ -3,9 +3,9 @@
 <!-- Generated Dec 4, 2014 5:36:02 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="com.smi.travel.datalayer.entity.PaymentWendy" table="payment_wendy" catalog="smitravel">
-        <id name="id" type="int">
+        <id name="id" type="string">
             <column name="id" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <many-to-one name="MPaymentDoctype" class="com.smi.travel.datalayer.entity.MPaymentDoctype" fetch="select">
             <column name="pay_type" />

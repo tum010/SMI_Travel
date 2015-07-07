@@ -18,6 +18,7 @@ public class Product {
      private String name;
      private String description;
      private String remark;
+     private  int isStock;
      private Set productDetails = new HashSet(0);
      private List productComissions;
      
@@ -29,12 +30,13 @@ public class Product {
         this.code = code;
         this.name = name;
     }
-    public Product(MProductType MProductType, String code, String name, String description, String remark, Set productDetails,List productComissions) {
+    public Product(MProductType MProductType, String code, String name, String description, String remark, Set productDetails,List productComissions, int isStock) {
        this.MProductType = MProductType;
        this.code = code;
        this.name = name;
        this.description = description;
        this.remark = remark;
+       this.isStock = isStock;
        this.productDetails = productDetails;
        this.productComissions = productComissions;
     }
@@ -95,6 +97,14 @@ public class Product {
 
     public void setProductComissions(List productComissions) {
         this.productComissions = productComissions;
+    }
+
+    public int getIsStock() {
+        return isStock;
+    }
+
+    public void setIsStock(int isStock) {
+        this.isStock = isStock;
     }
 
 

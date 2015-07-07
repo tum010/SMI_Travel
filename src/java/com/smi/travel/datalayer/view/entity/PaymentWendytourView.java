@@ -24,6 +24,10 @@ public class PaymentWendytourView {
     private double total;
     private String currency;
     private String status;
+    
+    public PaymentWendytourView(){
+        
+    }
 
     public PaymentWendytourView(String id, String payNo, Date payDate, String payType, String InvoiceSup, int accNo, String department, double total, String currency, String status) {
         this.id = id;

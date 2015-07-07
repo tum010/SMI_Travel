@@ -2,19 +2,19 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated Dec 4, 2014 5:36:02 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-    <class name="com.smi.travel.datalayer.entity.MPaytype" table="m_paytype" catalog="smitravel">
+    <class name="com.smi.travel.datalayer.entity.MStockStatus" table="m_stock_status" catalog="smitravel">
         <id name="id" type="string">
             <column name="id" />
             <generator class="identity" />
         </id>
         <property name="name" type="string">
-            <column name="name" length="50" not-null="true" />
+            <column name="name" length="20" not-null="true" />
         </property>
-        <bag name="paymentDetailWendies" table="payment_detail_wendy" inverse="true" lazy="true" fetch="select">
+        <bag name="stockDetails" table="stock_detail" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="product_type" />
+                <column name="item_status" />
             </key>
-            <one-to-many class="com.smi.travel.datalayer.entity.PaymentDetailWendy" />
+            <one-to-many class="com.smi.travel.datalayer.entity.StockDetail" />
         </bag>
     </class>
 </hibernate-mapping>

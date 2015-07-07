@@ -13,7 +13,7 @@ import java.util.List;
 public class PaymentWendy   {
 
 
-     private int id;
+     private String id;
      private MPaymentDoctype MPaymentDoctype;
      private MAccpay MAccpay;
      private MItemstatus MItemstatus;
@@ -35,12 +35,8 @@ public class PaymentWendy   {
     public PaymentWendy() {
     }
 
-	
-    public PaymentWendy(int id) {
-        this.id = id;
-    }
-    public PaymentWendy(int id, MPaymentDoctype MPaymentDoctype, MAccpay MAccpay, MItemstatus MItemstatus, String payNo, Date payDate, Integer account, String invoiceSup, String apCode, String detail, String remark, String currency, String chqNo, BigDecimal cash, BigDecimal chqAmount, String createBy, Date createDate, List paymentDetailWendies) {
-       this.id = id;
+
+    public PaymentWendy( MPaymentDoctype MPaymentDoctype, MAccpay MAccpay, MItemstatus MItemstatus, String payNo, Date payDate, Integer account, String invoiceSup, String apCode, String detail, String remark, String currency, String chqNo, BigDecimal cash, BigDecimal chqAmount, String createBy, Date createDate, List paymentDetailWendies) {
        this.MPaymentDoctype = MPaymentDoctype;
        this.MAccpay = MAccpay;
        this.MItemstatus = MItemstatus;
@@ -60,11 +56,11 @@ public class PaymentWendy   {
        this.paymentDetailWendies = paymentDetailWendies;
     }
    
-    public int getId() {
+    public String getId() {
         return this.id;
     }
     
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
     public MPaymentDoctype getMPaymentDoctype() {

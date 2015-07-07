@@ -12,7 +12,7 @@ import java.util.List;
 public class MPaytype   {
 
 
-     private Integer id;
+     private String id;
      private String name;
      private List paymentDetailWendies = new LinkedList<PaymentDetailWendy>();
 
@@ -28,11 +28,11 @@ public class MPaytype   {
        this.paymentDetailWendies = paymentDetailWendies;
     }
    
-    public Integer getId() {
+    public String getId() {
         return this.id;
     }
     
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
     public String getName() {

@@ -21,6 +21,9 @@
         <property name="remark" type="string">
             <column name="remark" length="255" />
         </property>
+        <property name="isStock" type="java.lang.Integer">
+            <column name="is_stock" />
+        </property>
         <set name="productDetails" table="product_detail" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="product_id" not-null="true" />
