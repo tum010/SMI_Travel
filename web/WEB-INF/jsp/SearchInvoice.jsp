@@ -9,7 +9,7 @@
 <link href="css/jquery-ui.css" rel="stylesheet">
 <section class="content-header" >
     <h1>
-        Finance & Cashier - Search Invoice
+        Finance & Cashier - Invoice
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-book"></i> Finance & Cashier </a></li>          
@@ -26,13 +26,13 @@
         <div class="col-sm-10">
             <div class="row" style="padding-left: 15px">  
                 <div class="col-sm-6 " style="padding-right: 15px">
-                    <h4><b>Search</b></h4>
+                    <h4><b>Search Invoice</b></h4>
                 </div>            
             </div>
             <form action="" method="post" id="" name="" role="form">
                 <div class="col-xs-12 ">
                     <div class="col-xs-1 text-right">
-                        <label class="control-label" for="">From<font style="color: red">*</font>&nbsp;:</lable>
+                        <label class="control-label" for="">From<font style="color: red">*</font>&nbsp;</lable>
                     </div>
                     <div class="col-md-2 form-group"> 
                         <div class='input-group date' id='InputDatePicker'>
@@ -51,7 +51,7 @@
                         </div>
                     </div>
                     <div class="col-xs-1 text-right">
-                        <label class="control-label" for="">To<font style="color: red">*</font>&nbsp;:</lable>
+                        <label class="control-label" for="">To<font style="color: red">*</font>&nbsp;</lable>
                     </div>
                     <div class="col-md-2 form-group"> 
                         <div class='input-group date' id='InputDatePicker'>
@@ -112,14 +112,14 @@
                 </div>
                 <div class="col-xs-12 form-group"></div>        
                 <div class="col-xs-12 form-group">
-                    <div class="col-xs-1 text-right">                        
+                    <div class="col-xs-10 text-right">                        
                     </div>
-                    <div class="col-md-1 text-right ">
+                    <div class="col-md-1 text-right " style="padding: 0px 20px 0px 0px">
                         <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="" class="btn btn-primary btn-primary ">
                             <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
                         </button>                                          
                     </div>                   
-                    <div class="col-md-2 text-right " style="padding: 0px 60px 0px 0px">
+                    <div class="col-md-1 text-right " style="padding: 0px 0px 0px 0px">
                         <button type="button" onclick="printVoucher('');" class="btn btn-default">
                             <span id="SpanPrint" class="glyphicon glyphicon-print"></span> Print
                         </button>
@@ -127,7 +127,7 @@
                 </div>
             </form>
             <div class="col-xs-12 form-group"><hr/></div>
-            <div class="row" style="padding-left:35px">    
+            <div class="row">    
                 <div class="col-md-12">
                     <table id="MasterInvoice" class="display" cellspacing="0" width="100%">
                         <thead>
@@ -160,7 +160,6 @@
                                         <span id="spanEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon"      
                                           onclick="EditBank('${table.id}', '${table.code}', '${table.name}', '${table.branch}', '${table.accNo}', '${table.accType}')" data-toggle="modal" data-target="#BankModal" >
                                         </span>
-                                        <span  class="glyphicon glyphicon-remove deleteicon"  onclick="DisableInvoice('', '')" data-toggle="modal" data-target="#DisableInvoice">  </span>
                                         </center>
                                     </td>
                                 </tr>
@@ -171,44 +170,6 @@
         </div>
     </div>
 </div>        
-
-<!--Disable-->
-<div class="modal fade" id="DisableInvoice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title"  id="Titlemodel">Finance & Cashier - Search invoice</h4>
-            </div>
-            <div class="modal-body" id="disableVoid">
-                
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" onclick='window.top.location.href="Invoice.smi?button=disable"'>Delete</button>               
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->      
-
-<!--Enable-->
-<div class="modal fade" id="EnableInvoid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title"  id="Titlemodel">Finance & Cashier - Search invoice </h4>
-            </div>
-            <div class="modal-body" id="enableCode">
-                
-            </div>
-            <div class="modal-footer">
-                <button type="button" onclick="Enable()" class="btn btn-success">Enable</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal --> 
                                         
 <!--Script-->
 <script type="text/javascript" charset="utf-8">
