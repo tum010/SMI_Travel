@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="col-xs-1 text-left" style="width:80px;padding-left:10px;padding-right:0px;">
-                    <label class="control-label">Account:</lable>
+                    <label class="control-label">Account</lable>
                 </div>
                 <div class="col-md-3  text-left" style="padding-top : 5px;padding-left:0px;padding-right:0px;">
                     <div class="col-sm-6" text-left>
@@ -69,13 +69,18 @@
                 <div class="col-md-2 form-group text-left" >
                     <input name="InputSupName" id="InputSupName" type="text" class="form-control" value="" />
                 </div>
-                <div class="col-xs-1 text-left" style="width:90px;">
-                    <label class="control-label">Status</lable>
+                <div class="col-xs-1 text-left" style="width:78px;padding-right: 0px;">
+                    <label class="control-label">A/P Code</lable>
                 </div>
-                <div class="col-md-1 form-group text-left" style="padding-left:0px;padding-right: 0px;width: 150px;">
-                    <select class="form-control" id="status" name="status"> 
-                        <option>--select--</option>
-                    </select>
+                <div class="col-md-1 form-group text-left" style="padding-left:0px;padding-right: 0px;width: 180px;">
+                    <div class="col-sm-12">
+                        <div class="input-group" id="CodeValidate">
+                            <input name="InputInvoiceSupCode" id="InputInvoiceSupCode" type="text" class="form-control" value="" />
+                            <span class="input-group-addon" data-toggle="modal" data-target="#SearchAPCode">
+                                <span class="glyphicon-search glyphicon"></span>
+                            </span>    
+                        </div>    
+                    </div> 
                 </div>
         </div><!--End row 2-->
         <div class="row text-right" style="padding-right: 60px">
@@ -85,12 +90,7 @@
                 </a>
             </div>              
         </div><!--End row 3-->
-        <div class="row" style="padding-left: 0px;">
-            <div class="panel panel-default">     
-                <div class="panel-heading">
-                    <label class="control-label">Payment Detail</lable>
-                </div>
-                <div class="panel-body">              
+        <div class="row" style="padding-left: 15px;width: 1040px;">             
                     <div class="row" style="padding-left: 0px">
                         <div class="col-xs-12 ">
                             <table class="display" id="TaxInvoiceTable">
@@ -115,8 +115,7 @@
                                         <td>XXX</td>                                
                                         <td>XXXX</td>
                                         <td>THB</td>
-                                        <td class="text-center">
-                                            <span id="" name="" class="glyphicon glyphicon-edit editicon" onclick=""></span>                                          
+                                        <td class="text-center">                                 
                                             <a href="#" onclick=""  data-toggle="modal" data-target="">
                                                 <span id="" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal" data-target="#delPaymentOutboundModal"></span>
                                             </a>
@@ -126,11 +125,9 @@
                             </table>    
                         </div>   
                     </div><!-- End Row 1-->
-                </div>
-            </div><!--End Panel 4 -->
-        </div>
+        </div><br>
         <div class="row text-right" >
-            <div class="col-md-12 form-group text-right" style="padding-left:30px;padding-right:0px;"> 
+            <div class="col-md-12 form-group text-right" style="padding-left:30px;padding-right:20px;"> 
                 <div class="row">
                     <div class="col-md-9 text-right"><label class="control-label">Total</lable></div>
                     <div class="col-md-3 text-right"><input name="InputTotal" id="InputTotal" type="text" class="form-control" value="" /></div>
