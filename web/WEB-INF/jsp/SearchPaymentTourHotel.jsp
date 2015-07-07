@@ -35,7 +35,7 @@
                     <div class="col-md-2 form-group text-left" style="padding-left:5px">
                         <div class="col-sm-12">
                             <div class='input-group date' style="width:140px;">
-                                <input name="InputPayDate" id="InputPayDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
+                                <input name="InputFromDate" id="InputFromDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
@@ -46,7 +46,7 @@
                     <div class="col-md-2 form-group text-left" style="padding-left:5px">
                         <div class="col-sm-12">
                             <div class='input-group date' style="width:140px;">
-                                <input name="InputPayDate" id="InputPayDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
+                                <input name="InputToDate" id="InputToDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
@@ -122,7 +122,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">Delete Payment Outbound</h4>
+                <h4 class="modal-title">Delete Tour / Hotel</h4>
             </div>
             <div class="modal-body" id="delCode"></div>
             <div class="modal-footer">
