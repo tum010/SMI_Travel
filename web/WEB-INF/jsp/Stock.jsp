@@ -17,17 +17,19 @@
         <div ng-include="'WebContent/Master/StockMenu.html'"></div>
     </div>
     <div class="col-sm-10">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                 <label class="control-label">Stock</lable>
+        <div class="row" style="padding-left: 15px">  
+            <div class="col-sm-6" style="padding-right: 15px">
+                <h4><b>Stock</b></h4>
             </div>
-            <div class="panel-body">
-                <div class="row" >
+        </div>
+        <hr/>
+   
+                <div class="row" style="padding-left: 15px"> 
                     <div class="col-xs-12 ">
-                        <div class="col-xs-2 text-right"  >
+                        <div class="col-xs-2 text-right"  style="padding-right: 25px">
                             <label class="control-label">Product</lable>
                         </div>
-                        <div class="col-md-3 form-group text-left" > 
+                        <div class="col-md-3 form-group text-left" style="padding-left:0px;width: 160px;"> 
                             <div class="input-group" id="gr" >
                                 <input type="text" class="form-control" id="InputProduct" name="InputProduct" value="" />
                                 <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#SearchProduct">
@@ -35,7 +37,7 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="col-md-2 form-group text-left" >
+                        <div class="col-md-2 form-group text-left" style="width: 200px;">
                             <input name="InputProductName" id="InputProductName" type="text" class="form-control" value="" />
                         </div>
                         <div class="col-xs-1 text-right"  >
@@ -49,7 +51,7 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="col-md-2 form-group text-left" >
+                        <div class="col-md-2 form-group text-left" style="width: 200px;">
                             <input name="InputStaffName" id="InputStaffName" type="text" class="form-control" value="" />
                         </div>
                     </div>   
@@ -59,16 +61,16 @@
                         <div class="col-xs-2 text-right" >
                             <label class="control-label">Effective From</lable>
                         </div>
-                        <div class="col-md-3 form-group text-left" >
+                        <div class="col-md-3 form-group text-left" style="width: 170px;" >
                             <div class='input-group date' >
                                 <input name="InputEffectiveFromDate" id="InputEffectiveFromDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
-                        <div class="col-xs-3 text-right" >
+                        <div class="col-xs-3 text-right" style="width: 285px;">
                             <label class="control-label">Effective To</lable>
                         </div>
-                        <div class="col-md-3 form-group text-left" style="padding-left: 17px;" >
+                        <div class="col-md-3 form-group text-left" style="padding-left: 17px;width: 170px;" >
                             <div class='input-group date' >
                                 <input name="InputInputEffectiveToDate" id="InputInputEffectiveToDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -81,13 +83,13 @@
                         <div class="col-xs-2 text-right" >
                             <label class="control-label">Description</lable>
                         </div>
-                        <div class="col-md-5 form-group text-left" >
+                        <div class="col-md-5 form-group text-left" style="width: 370px;" >
                              <textarea class="form-control" rows="3" id="descriptionStock"></textarea>
                         </div>
                         <div class="col-xs-1 text-left" style="width: 100px;padding-left: 3px;padding-right: 0px;">
                             <label class="control-label">Add Date</lable>
                         </div>
-                        <div class="col-md-3 form-group text-left" style="padding-left: 0px;width: 230px;">
+                        <div class="col-md-3 form-group text-left" style="padding-left: 0px;width: 155px;">
                             <div class='input-group date' >
                                 <input name="InputStockDate" id="InputStockDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -95,8 +97,7 @@
                         </div>
                     </div>   
                 </div><!-- End Row 3-->
-            </div>
-        </div><!-- End Panel One-->
+
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="row" >
@@ -131,13 +132,15 @@
                     </div>   
                 </div><!-- End Row 1-->
                 <div class="row" >
-                    <div class="col-xs-12"  style="padding-left: 20px;">
-                        <div class="col-md-9 text-right">
+                    <div class="col-xs-12" style="padding-right: 45px;">
+                        <div class="col-md-8 text-right" >                                          
+                        </div> 
+                        <div class="col-md-2 text-right">
                             <button type="submit"  id="ButtonAdd"  name="ButtonAdd" onclick="" class="btn btn-primary btn-primary " style="width: 100px;">
                                 <span id="SpanAdd" class="glyphicon glyphicon-print fa fa-plus-circle"></span> Add
                             </button>                                          
-                        </div>                   
-                        <div class="col-md-3 text-right" >
+                        </div> 
+                        <div class="col-md-2 text-right" >
                             <button type="button" onclick="" class="btn btn-danger" style="width: 160px;">
                                 <span id="SpanPrint" class="glyphicon glyphicon-refresh"></span> Clear Expire Stock
                             </button>
