@@ -539,7 +539,7 @@
                 <table class="display" id="ARCodeTable">
                     <thead>    
                         <script>
-                            var sale_staff = [];
+                            var arcode = [];
                         </script>
                         <tr class="datatable-header">
                             <th class="hidden">ID</th>
@@ -554,7 +554,7 @@
                                 <td>${table.name} </td>
                             </tr>    
                             <script>
-                                sale_staff.push({id: "${table.id}", code: "${table.code}", name: "${table.name}"});
+                                arcode.push({id: "${table.id}", code: "${table.code}", name: "${table.name}"});
                             </script>
                         </c:forEach>
                     </tbody>
