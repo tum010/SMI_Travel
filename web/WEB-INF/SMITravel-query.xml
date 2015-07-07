@@ -291,6 +291,11 @@
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
     
+    <bean id="StockDao" class="com.smi.travel.datalayer.dao.impl.StockImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    
     
     <!-- Component Bean -->
     <bean id="AJAXBean" class="com.smi.travel.datalayer.bean.master.AJAXBean">
