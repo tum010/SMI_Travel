@@ -45,3 +45,35 @@ function printVoucher(){
     
 }
 
+ $(document).ready(function () {
+    var tableSaleStaff = $('#SaleStaffTable').dataTable({bJQueryUI: true,
+        "sPaginationType": "full_numbers",
+        "bAutoWidth": false,
+        "bFilter": true,
+        "bPaginate": true,
+        "bInfo": false,
+        "bLengthChange": false,
+        "iDisplayLength": 10
+    });ARCodeTable
+    
+    var tableARCode = $('#ARCodeTable').dataTable({bJQueryUI: true,
+        "sPaginationType": "full_numbers",
+        "bAutoWidth": false,
+        "bFilter": true,
+        "bPaginate": true,
+        "bInfo": false,
+        "bLengthChange": false,
+        "iDisplayLength": 10
+    });
+    
+    var tableInvTo = $('#InvToTable').dataTable({bJQueryUI: true,
+        "sPaginationType": "full_numbers",
+        "bAutoWidth": false,
+        "bFilter": true,
+        "bPaginate": true,
+        "bInfo": false,
+        "bLengthChange": false,
+        "iDisplayLength": 10
+    });
+ });  
+
