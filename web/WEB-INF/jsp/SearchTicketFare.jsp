@@ -37,7 +37,7 @@
                     <div class="panel-body"  style="width: 100%">
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right" style="width: 150px">
-                                <label class="control-label text-right">Ticket&nbsp;Type&nbsp;:</label>
+                                <label class="control-label text-right">Ticket&nbsp;Type&nbsp;</label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <select id="inputTicketType" name="inputTicketType" class="form-control selectize">
@@ -46,7 +46,7 @@
                                 </select>
                             </div>
                             <div class="col-xs-1 text-right" style="width: 150px">
-                                <label class="control-label text-right">Ticket Routing :</label>
+                                <label class="control-label text-right">Ticket Routing </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <select id="inputTicketRouting" name="inputTicketRouting" class="form-control selectize">
@@ -55,7 +55,7 @@
                                 </select>
                             </div>
                             <div class="col-xs-1 text-right" style="width: 150px">
-                                <label class="control-label text-right">Airline&nbsp;:</label>
+                                <label class="control-label text-right">Airline&nbsp;</label>
                             </div>
                             <div class="col-xs-1" style="width: 190px">
                                 <select id="inputAirline" name="inputAirline" class="form-control selectize">
@@ -66,7 +66,7 @@
                         </div>
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right" style="width: 150px">
-                                <label class="control-label text-right">Ticket No :</label>
+                                <label class="control-label text-right">Ticket No </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">
@@ -74,7 +74,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 150px">
-                                <label class="control-label text-right">Issue Date :</label>
+                                <label class="control-label text-right">Issue Date </label>
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class='input-group date'>
@@ -86,7 +86,7 @@
                         </div>
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right" style="width: 150px">
-                                <label class="control-label text-right">Invoice No :</label>
+                                <label class="control-label text-right">Invoice No </label>
                             </div>
                             <div class="col-xs-1 form-group" style="width: 200px">
                                 <div class="input-group">
@@ -94,7 +94,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right" style="width: 150px">
-                                <label class="control-label text-right">Department :</label>
+                                <label class="control-label text-right">Department </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <select id="inputDepartment" name="inputDepartment" class="form-control selectize">

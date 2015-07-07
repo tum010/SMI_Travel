@@ -32,7 +32,7 @@
             <form action="SearchReceipt.smi" method="post" id="SearchReceiptForm" name="SearchReceiptForm" role="form">
                 <div class="col-xs-12 form-group">
                     <div class="col-xs-1 text-right"  style="width: 80px">
-                        <label class="control-label text-right">From :</label>
+                        <label class="control-label text-right">From </label>
                     </div>
                     <div class="col-xs-1"  style="width: 200px">
                         <div class='input-group date'>
@@ -42,7 +42,7 @@
                         </div>
                     </div>
                     <div class="col-xs-1 text-right"  style="width: 80px">
-                        <label class="control-label text-right">To :</label>
+                        <label class="control-label text-right">To </label>
                     </div>
                     <div class="col-xs-1"  style="width: 200px">
                         <div class='input-group date'>
@@ -52,7 +52,7 @@
                         </div>
                     </div>
                     <div class="col-xs-1 text-right" style="width: 140px">
-                        <label class="control-label text-right">Department :</label>
+                        <label class="control-label text-right">Department </label>
                     </div>
                     <div class="col-xs-1" style="width: 200px">
                         <select id="inputDepartment" name="inputDepartment" class="form-control selectize">

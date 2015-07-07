@@ -65,7 +65,7 @@
                                 <div role="tabpanel" class="tab-pane hidden active" id="bl">
                                     <div class="col-xs-6 form-group" style="padding-top: 20px;">
                                         <div class="col-xs-1 text-right" style="width: 120px">
-                                            <label class="control-label text-right">Invoice No :</label>
+                                            <label class="control-label text-right">Invoice No </label>
                                         </div>
                                         <div class="col-xs-1 form-group" style="width: 200px">
                                             <div class="input-group">
@@ -103,7 +103,7 @@
                                     </div>
                                     <div class="col-xs-6 form-group" style="padding-top: 20px;">
                                         <div class="col-xs-1 text-right" style="width: 120px">
-                                            <label class="control-label text-right">Ref No :</label>
+                                            <label class="control-label text-right">Ref No </label>
                                         </div>
                                         <div class="col-xs-1 form-group" style="width: 200px">
                                             <div class="input-group">
@@ -185,7 +185,7 @@
                                     <div class="col-xs-8 form-group" style="padding-top: 20px;">
                                         <div class="row">
                                             <div class="col-xs-1 text-right" style="width: 200px">
-                                                <label class="control-label text-right">Payment No :</label>
+                                                <label class="control-label text-right">Payment No </label>
                                             </div>
                                             <div class="col-xs-1 form-group" style="width: 300px">
                                                 <input id="paymentNo" name="paymentNo" type="text" class="form-control" value="">
@@ -193,7 +193,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-xs-1 text-right" style="width: 200px">
-                                                <label class="control-label text-right">Airline :</label>
+                                                <label class="control-label text-right">Airline </label>
                                             </div>
                                             <div class="col-xs-1 form-group" style="width: 300px">
                                                 <select id="inputAirline" name="inputAirline" class="form-control selectize">
@@ -204,7 +204,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-xs-1 text-right" style="width: 200px">
-                                                <label class="control-label text-right">Commission :</label>
+                                                <label class="control-label text-right">Commission </label>
                                             </div>
                                             <div class="col-xs-1 form-group" style="width: 300px">
                                                 <input id="commission" name="commission" type="text" class="form-control" value="">
@@ -226,7 +226,7 @@
                             <div class="col-xs-8 form-group" style="padding-top: 0px;">
                                 <div class="row">
                                     <div class="col-xs-1 text-right" style="width: 140px">
-                                        <label class="control-label text-right">Receive No :</label>                                    
+                                        <label class="control-label text-right">Receive No </label>                                    
                                     </div>
                                     <div class="col-xs-1 form-group" style="width: 140px">
                                         <input id="receiveNo" name="receiveNo" type="text" class="form-control" value="">
@@ -238,7 +238,7 @@
                                         <input type="hidden" id="groupCheckbox" value=""/>
                                     </div>
                                     <div class="col-xs-1 text-left" style="width: 70px">
-                                        <label class="control-label text-right">Date :</label>
+                                        <label class="control-label text-right">Date </label>
                                     </div>
                                     <div class="col-xs-1 form-group" style="width: 170px">
                                         <div class='input-group date'>
@@ -250,7 +250,7 @@
                                 </div>
                                 <div class="row">
                                      <div class="col-xs-1 text-right" style="width: 140px">
-                                        <label class="control-label text-right">Receive From :</label>                                    
+                                        <label class="control-label text-right">Receive From </label>                                    
                                     </div>
                                     <div class="col-xs-1 form-group" style="width: 140px">
                                         <div class="input-group" id="receiveFromValidate">
@@ -267,7 +267,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-1 text-right" style="width: 140px">
-                                        <label class="control-label text-right" for="codeBillto">Bill To<font style="color: red">*</font> :</label> 
+                                        <label class="control-label text-right" for="codeBillto">Bill To<font style="color: red">*</font></label> 
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 580px">
                                         <div class="input-group" id="receiveFromValidate">
@@ -281,25 +281,25 @@
                                 </div>  
                                 <div class="row" style="padding-top: 16px;">
                                     <div class="col-xs-1 text-right" style="width: 140px">
-                                         <label class="control-label text-right">Name :</label> 
+                                         <label class="control-label text-right">Name </label> 
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 580px">
-                                        <input type="text" class="form-control" id="receiveName" name="receiveName" value="">                           
+                                        <input type="text" class="form-control" id="billToName" name="billToName" value="" readonly="">                           
                                     </div>
                                 </div>  
                                 <div class="row" style="padding-top: 16px;">
                                     <div class="col-xs-1 text-right" style="width: 140px">
-                                         <label class="control-label text-right">Address :</label> 
+                                         <label class="control-label text-right">Address </label> 
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 580px">
                                         <div class="input-group">                                    
-                                            <textarea rows="3" class="form-control" id="receiveFromAddress" name="receiveFromAddress" style="width: 339%"></textarea>  
+                                            <textarea rows="3" class="form-control" id="billToAddress" name="billToAddress" style="width: 339%"></textarea>  
                                         </div>                               
                                     </div>
                                 </div>  
                                 <div class="row" style="padding-top: 16px;">
                                     <div class="col-xs-1 text-right" style="width: 140px">
-                                         <label class="control-label text-right">Remark :</label> 
+                                         <label class="control-label text-right">Remark </label> 
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 580px">
                                         <input type="text" class="form-control" id="remark" name="remark" value="">                           
@@ -309,7 +309,7 @@
                             <div class="col-xs-4 form-group" style="padding-top: 0px;">
                                 <div class="row">
                                     <div class="col-xs-1 text-right" style="width: 130px">
-                                        <label class="control-label text-right">Receive Date :</label>
+                                        <label class="control-label text-right">Receive Date </label>
                                     </div>
                                     <div class="col-xs-1 form-group" style="width: 170px">
                                         <div class='input-group date'>
@@ -321,7 +321,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-1 text-right" style="width: 130px">
-                                        <label class="control-label text-right">Confirm Date :</label>
+                                        <label class="control-label text-right">Confirm Date </label>
                                     </div>
                                     <div class="col-xs-1 form-group" style="width: 170px">
                                         <div class='input-group date'>
@@ -333,7 +333,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-1 text-right" style="width: 130px">
-                                        <label class="control-label text-right">Status :</label>
+                                        <label class="control-label text-right">Status </label>
                                     </div>
                                     <div class="col-xs-1" style="width: 170px">
                                         <select id="inputStatus" name="inputStatus" class="form-control selectize">
@@ -344,7 +344,7 @@
                                 </div>
                                 <div class="row" style="padding-top: 15px;">
                                     <div class="col-xs-1 text-right" style="width: 130px">
-                                        <label class="control-label text-right">A/R Code :</label>                                    
+                                        <label class="control-label text-right">A/R Code </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 170px">
                                         <div class="input-group" id="arCodeValidate">
@@ -357,7 +357,7 @@
                                 </div>
                                 <div class="row" style="padding-top: 15px;">
                                     <div class="col-xs-1 text-right" style="width: 130px">
-                                        <label class="control-label text-right">Credit No :</label>
+                                        <label class="control-label text-right">Credit No </label>
                                     </div>
                                     <div class="col-xs-1" style="width: 170px">
                                         <input type="text" class="form-control" id="creditNo" name="creditNo" value="" />
@@ -406,7 +406,7 @@
                         </div>
                         <div class="row" style="padding-top: 15px;padding-bottom:  15px; padding-left:  650px;">
                             <div class="col-xs-1 text-right" style="width: 130px">
-                                <label class="control-label text-right">Grand Total :</label>
+                                <label class="control-label text-right">Grand Total </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <input type="text" class="form-control" id="grandTotal" name="grandTotal" value="" />
@@ -418,7 +418,7 @@
                             <div class="col-xs-12 form-group">
                                 <div class="row">
                                     <div class="col-xs-1 text-right" style="width: 140px">
-                                        <label class="control-label text-right">W/T :</label>                                    
+                                        <label class="control-label text-right">W/T </label>                                    
                                     </div>
                                     <div class="col-xs-1 " style="width: 200px">
                                         <input id="inputWt" name="inputWt" type="text" class="form-control" value="">
@@ -426,7 +426,7 @@
                                 </div><hr/>
                                 <div class="row">
                                     <div class="col-xs-1 text-right" style="width: 140px">
-                                        <label class="control-label text-right">Cash Amount :</label>                                    
+                                        <label class="control-label text-right">Cash Amount </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 200px">
                                         <input id="cashAmount" name="cashAmount" type="text" class="form-control" value="">
@@ -437,7 +437,7 @@
                                 </div><hr/>
                                 <div class="row">
                                     <div class="col-xs-1 text-right" style="width: 140px">
-                                        <label class="control-label text-right">Bank Transfer :</label>                                    
+                                        <label class="control-label text-right">Bank Transfer </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 200px">
                                         <input id="bankTransfer" name="bankTransfer" type="text" class="form-control" value="">
@@ -445,19 +445,19 @@
                                 </div><hr/>
                                 <div class="row">
                                     <div class="col-xs-1 text-right" style="width: 140px">
-                                        <label class="control-label text-right">Chq Bank :</label>                                    
+                                        <label class="control-label text-right">Chq Bank </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 130px">
                                         <input style="width: 130px" id="chqBank" name="chqBank" type="text" class="form-control" value="">
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 110px">
-                                        <label class="control-label text-right">Chq No :</label>                                    
+                                        <label class="control-label text-right">Chq No </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 120px">
                                         <input style="width: 115px" id="chqNo" name="chqNo" type="text" class="form-control" value="">
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 130px">
-                                        <label class="control-label text-right">Date :</label>                                    
+                                        <label class="control-label text-right">Date </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 170px">
                                         <div class='input-group date'>
@@ -467,7 +467,7 @@
                                         </div>
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 100px">
-                                        <label class="control-label text-right">Amount :</label>                                    
+                                        <label class="control-label text-right">Amount </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 120px">
                                         <input id="chqAmount" name="chqAmount" type="text" class="form-control" value="">
@@ -481,19 +481,19 @@
                                 </div>
                                 <div class="row hidden active" id="addChq" style="padding-top: 8px ">
                                     <div class="col-xs-1 text-right" style="width: 140px">
-                                        <label class="control-label text-right">Chq Bank :</label>                                    
+                                        <label class="control-label text-right">Chq Bank </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 130px">
                                         <input style="width: 130px" id="chqBank2" name="chqBank2" type="text" class="form-control" value="">
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 110px">
-                                        <label class="control-label text-right">Chq No :</label>                                    
+                                        <label class="control-label text-right">Chq No </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 120px">
                                         <input  style="width: 115px" id="chqNo2" name="chqNo2" type="text" class="form-control" value="">
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 130px">
-                                        <label class="control-label text-right">Date :</label>                                    
+                                        <label class="control-label text-right">Date </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 170px">
                                         <div class='input-group date'>
@@ -503,7 +503,7 @@
                                         </div>
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 100px">
-                                        <label class="control-label text-right">Amount :</label>                                    
+                                        <label class="control-label text-right">Amount </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 120px">
                                         <input id="chqAmount2" name="chqAmount2" type="text" class="form-control" value="">
@@ -517,7 +517,7 @@
                                 <hr/>
                                 <div class="row">
                                     <div class="col-xs-1 text-right" style="width: 140px">
-                                        <label class="control-label text-right">Credit Bank :</label>                                    
+                                        <label class="control-label text-right">Credit Bank </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 130px">
                                         <select style="width: 130px" id="creditBank" name="creditBank" class="form-control selectize">
@@ -525,13 +525,13 @@
                                         </select>
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 110px">
-                                        <label class="control-label text-right">Credit No :</label>                                    
+                                        <label class="control-label text-right">Credit No </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 120px">
                                         <input style="width: 115px" id="creditNo" name="creditNo" type="text" class="form-control" value="">
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 130px">
-                                        <label class="control-label text-right">Credit Expire :</label>                                    
+                                        <label class="control-label text-right">Credit Expire </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 170px">
                                         <div class='input-group date'>
@@ -541,7 +541,7 @@
                                         </div>
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 100px">
-                                        <label class="control-label text-right">Amount :</label>                                    
+                                        <label class="control-label text-right">Amount </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 120px">
                                         <input id="creditAmount" name="creditAmount" type="text" class="form-control" value="">
@@ -554,7 +554,7 @@
                                 </div>
                                 <div class="row hidden active" id="addCredit" style="padding-top: 8px ">
                                     <div class="col-xs-1 text-right" style="width: 140px">
-                                        <label class="control-label text-right">Credit Bank :</label>                                    
+                                        <label class="control-label text-right">Credit Bank </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 130px">
                                         <select style="width: 130px" id="creditBank2" name="creditBank2" class="form-control selectize">
@@ -562,13 +562,13 @@
                                         </select>
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 110px">
-                                        <label class="control-label text-right">Credit No :</label>                                    
+                                        <label class="control-label text-right">Credit No </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 120px">
                                         <input style="width: 115px" id="creditNo2" name="creditNo2" type="text" class="form-control" value="">
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 130px">
-                                        <label class="control-label text-right">Credit Expire :</label>                                    
+                                        <label class="control-label text-right">Credit Expire </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 170px">
                                         <div class='input-group date'>
@@ -578,7 +578,7 @@
                                         </div>
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 100px">
-                                        <label class="control-label text-right">Amount :</label>                                    
+                                        <label class="control-label text-right">Amount </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 120px">
                                         <input id="creditAmount2" name="creditAmount2" type="text" class="form-control" value="">

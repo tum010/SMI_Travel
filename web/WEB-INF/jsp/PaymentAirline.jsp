@@ -44,7 +44,7 @@
                     <div class="panel-body"  style="padding-right: 0px;" style="width: 100%">
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right"  style="width: 128px">
-                                <label class="control-label text-right">Payment No :</label>
+                                <label class="control-label text-right">Payment No </label>
                             </div>
                             <div class="col-xs-1" style="width:290px">
                                 <div class='input-group'>
@@ -52,7 +52,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 140px">
-                                <label class="control-label text-right">Payment Date :</label>
+                                <label class="control-label text-right">Payment Date </label>
                             </div>
                             <div class="col-xs-1" style="width: 170px">
                                 <div class='input-group date'>
@@ -62,7 +62,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 165px">
-                                <label class="control-label text-right">Due Payment Date :</label>
+                                <label class="control-label text-right">Due Payment Date </label>
                             </div>
                             <div class="col-xs-1" style="width: 170px">
                                 <div class='input-group date'>
@@ -75,7 +75,7 @@
                         
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right"  style="width: 128px">
-                                <label class="control-label text-right">Invoice Sup :</label>
+                                <label class="control-label text-right">Invoice Sup </label>
                             </div>
                             <div class="col-xs-1"  style="width: 155px">
                                 <div class="input-group" id="agentCodeValidate">
@@ -91,7 +91,7 @@
                                                data-bv-notempty="true" data-bv-notempty-message="agent empty !">                           
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 115px">
-                                <label class="control-label text-right">A/P Code :</label>
+                                <label class="control-label text-right">A/P Code </label>
                             </div>
                             <div class="col-xs-1"  style="width: 155px">
                                 <div class="input-group" id="apCodeValidate">
@@ -108,7 +108,7 @@
                         </div>
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right"  style="width: 128px">
-                                <label class="control-label text-right">Detail :</label>
+                                <label class="control-label text-right">Detail </label>
                             </div>
                             <div class="col-xs-1"  style="width: 310px">
                                 <div class="input-group">                                    
@@ -116,7 +116,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 120px">
-                                <label class="control-label text-right">Pay By :</label>
+                                <label class="control-label text-right">Pay By </label>
                             </div>
                             <div class="col-xs-1" style="width: 170px">
                                 <select id="inputPayBy" name="inputPayBy" class="form-control selectize">
@@ -134,7 +134,7 @@
                     <div class="panel-body" style="width: 100%">
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right" style="width: 128px">
-                                <label class="control-label text-right">Ticket Form :</label>
+                                <label class="control-label text-right">Ticket Form </label>
                             </div>
                             <div class="col-xs-1" style="width: 300px">
                                 <select id="inputTicketForm" name="inputTicketForm" class="form-control selectize">
@@ -143,7 +143,7 @@
                                 </select>
                             </div>
                             <div class="col-xs-1 text-right" style="width: 122px">
-                                <label class="control-label text-right">Type Airline :</label>
+                                <label class="control-label text-right">Type Airline </label>
                             </div>
                             <div class="col-xs-1" style="width: 300px">
                                 <select id="inputTypeAirline" name="inputTypeAirline" class="form-control selectize">
@@ -154,7 +154,7 @@
                         </div>
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right" style="width: 128px">
-                                <label class="control-label text-right">Form :</label>
+                                <label class="control-label text-right">Form </label>
                             </div>
                             <div class="col-xs-1" style="width: 170px">
                                 <div class='input-group date'>
@@ -166,7 +166,7 @@
                             <div class="col-xs-1 text-right" style="width: 130px">
                             </div>
                             <div class="col-xs-1 text-right" style="width: 122px">
-                                <label class="control-label text-right">To :</label>
+                                <label class="control-label text-right">To </label>
                             </div>
                             <div class="col-xs-1" style="width: 170px">
                                 <div class='input-group date'>
@@ -204,7 +204,7 @@
                     <div class="panel-body" style="width: 100%">
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right" style="width: 128px">
-                                <label class="control-label text-right">Refund :</label>
+                                <label class="control-label text-right">Refund </label>
                             </div>
                             <div class="col-xs-1" style="width: 280px">
                                 <div class='input-group'>
@@ -241,7 +241,7 @@
                     <div class="panel-body" style="width: 100%">
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right"  style="width: 150px">
-                                <label class="control-label text-right">Agent Amount :</label>
+                                <label class="control-label text-right">Agent Amount </label>
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
@@ -249,7 +249,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 155px">
-                                <label class="control-label text-right">Credit Note :</label>
+                                <label class="control-label text-right">Credit Note </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
@@ -257,7 +257,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 140px">
-                                <label class="control-label text-right">Credit Amount :</label>
+                                <label class="control-label text-right">Credit Amount </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
@@ -268,7 +268,7 @@
                         
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right"  style="width: 150px">
-                                <label class="control-label text-right">Commission Vat :</label>
+                                <label class="control-label text-right">Commission Vat </label>
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
@@ -276,7 +276,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 155px">
-                                <label class="control-label text-right">Debit Note :</label>
+                                <label class="control-label text-right">Debit Note </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
@@ -286,7 +286,7 @@
                         </div>
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right"  style="width: 150px">
-                                <label class="control-label text-right">Cash :</label>
+                                <label class="control-label text-right">Cash </label>
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
@@ -294,7 +294,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 155px">
-                                <label class="control-label text-right">Withholding Tax :</label>
+                                <label class="control-label text-right">Withholding Tax </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
@@ -305,7 +305,7 @@
                         
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right"  style="width: 150px">
-                                <label class="control-label text-right">Chq No :</label>
+                                <label class="control-label text-right">Chq No </label>
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
@@ -313,7 +313,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 155px">
-                                <label class="control-label text-right">Amount :</label>
+                                <label class="control-label text-right">Amount </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
@@ -321,7 +321,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 140px">
-                                <label class="control-label text-right">Total Payment :</label>
+                                <label class="control-label text-right">Total Payment </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    

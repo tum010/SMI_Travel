@@ -43,7 +43,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="col-xs-1 text-right" style="width: 150px">
-                            <label class="control-label text-right">Ticket&nbsp;No&nbsp;:</label>
+                            <label class="control-label text-right">Ticket&nbsp;No&nbsp;</label>
                         </div>
                         <div class="col-xs-1 form-group" style="width: 200px">
                             <div class="input-group">
@@ -64,7 +64,7 @@
                 <div class="row">
                     <div class="col-xs-12 form-group">
                         <div class="col-xs-1 text-right" style="width: 150px">
-                            <label class="control-label text-right">Ticket&nbsp;Type&nbsp;:</label>
+                            <label class="control-label text-right">Ticket&nbsp;Type&nbsp;</label>
                         </div>
                         <div class="col-xs-1" style="width: 200px">
                             <select id="inputTicketType" name="inputTicketType" class="form-control selectize">
@@ -73,7 +73,7 @@
                             </select>
                         </div>
                         <div class="col-xs-1 text-right" style="width: 150px">
-                            <label class="control-label text-right">Ticket Routing :</label>
+                            <label class="control-label text-right">Ticket Routing </label>
                         </div>
                         <div class="col-xs-1" style="width: 200px">
                             <select id="inputTicketRouting" name="inputTicketRouting" class="form-control selectize">
@@ -82,7 +82,7 @@
                             </select>
                         </div>
                         <div class="col-xs-1 text-right" style="width: 150px">
-                            <label class="control-label text-right">Airline&nbsp;:</label>
+                            <label class="control-label text-right">Airline&nbsp;</label>
                         </div>
                         <div class="col-xs-1" style="width: 200px">
                             <select id="inputAirline" name="inputAirline" class="form-control selectize">
@@ -96,7 +96,7 @@
                     <div class="col-xs-12">
                         <div class="col-xs-1 text-right" style="width: 150px">
                             <label class="control-label">
-                                <input type="checkbox" id="passengerCheck" name="passengerCheck"/>&nbsp;Passenger&nbsp;:  
+                                <input type="checkbox" id="passengerCheck" name="passengerCheck"/>&nbsp;Passenger&nbsp; 
                             </label>
                             <input type="hidden" id="passengerCheckbox" value=""/>
     <!--                        <label class="control-label text-right">Passenger&nbsp;:</label>-->
@@ -107,7 +107,7 @@
                             </div>
                         </div>
                         <div class="col-xs-1 text-right" style="width: 150px">
-                            <label class="control-label text-right">Ticket&nbsp;By&nbsp;:</label>
+                            <label class="control-label text-right">Ticket&nbsp;By&nbsp;</label>
                         </div>
                         <div class="col-xs-1" style="width: 200px">
                             <select id="inputTicketBy" name="inputTicketBy" class="form-control selectize">
@@ -126,7 +126,7 @@
                     <div class="panel-body"  style="padding-right: 0px;" style="width: 100%">
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right"  style="width: 121px">
-                                <label class="control-label text-right">Issue Date :</label>
+                                <label class="control-label text-right">Issue Date </label>
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class='input-group date' id='InputDatePicker'>
@@ -136,7 +136,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
-                                <label class="control-label text-right">Ticket Fare :</label>
+                                <label class="control-label text-right">Ticket Fare </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
@@ -144,7 +144,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
-                                <label class="control-label text-right">Ticket Tax :</label>
+                                <label class="control-label text-right">Ticket Tax </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
@@ -155,7 +155,7 @@
                         
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right"  style="width: 121px">
-                                <label class="control-label text-right">Ticket Ins :</label>
+                                <label class="control-label text-right">Ticket Ins </label>
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
@@ -163,7 +163,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
-                                <label class="control-label text-right">Ticket Comm :</label>
+                                <label class="control-label text-right">Ticket Comm </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
@@ -171,7 +171,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
-                                <label class="control-label text-right">Agent Comm :</label>
+                                <label class="control-label text-right">Agent Comm </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
@@ -181,7 +181,7 @@
                         </div>
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right"  style="width: 121px">
-                                <label class="control-label text-right">Sale Price :</label>
+                                <label class="control-label text-right">Sale Price </label>
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
@@ -189,7 +189,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
-                                <label class="control-label text-right">Diff Vat :</label>
+                                <label class="control-label text-right">Diff Vat </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
@@ -197,7 +197,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
-                                <label class="control-label text-right">Agent Name :</label>
+                                <label class="control-label text-right">Agent Name </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
@@ -207,7 +207,7 @@
                         </div>
                         <div class="col-xs-10 form-group">
                             <div class="col-xs-1 text-right"  style="width: 121px">
-                                <label class="control-label text-right">Remark :</label>
+                                <label class="control-label text-right">Remark </label>
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
@@ -226,7 +226,7 @@
                     <div class="panel-body"  style="padding-right: 0px;" style="width: 100%">
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right"  style="width: 121px">
-                                <label class="control-label text-right">Over Comm :</label>
+                                <label class="control-label text-right">Over Comm </label>
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class='input-group date'>
@@ -234,7 +234,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
-                                <label class="control-label text-right">Add Pay :</label>
+                                <label class="control-label text-right">Add Pay </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
@@ -242,7 +242,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
-                                <label class="control-label text-right">Agent Comm Pay :</label>
+                                <label class="control-label text-right">Agent Comm Pay </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
@@ -252,7 +252,7 @@
                         </div>
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right"  style="width: 121px">
-                                <label class="control-label text-right">Date :</label>
+                                <label class="control-label text-right">Date </label>
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class='input-group date'>
@@ -262,7 +262,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
-                                <label class="control-label text-right">Date :</label>
+                                <label class="control-label text-right">Date </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class='input-group date'>
@@ -272,7 +272,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
-                                <label class="control-label text-right">Date :</label>
+                                <label class="control-label text-right">Date </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class='input-group date'>
@@ -284,7 +284,7 @@
                         </div>
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right"  style="width: 121px">
-                                <label class="control-label text-right">Little Comm :</label>
+                                <label class="control-label text-right">Little Comm </label>
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class='input-group date'>
@@ -292,7 +292,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
-                                <label class="control-label text-right">Dec Pay :</label>
+                                <label class="control-label text-right">Dec Pay </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
@@ -300,7 +300,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
-                                <label class="control-label text-right">Agent Comm Receive :</label>
+                                <label class="control-label text-right">Agent Comm Receive </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
@@ -310,7 +310,7 @@
                         </div>
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right"  style="width: 121px">
-                                <label class="control-label text-right">Date :</label>
+                                <label class="control-label text-right">Date </label>
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class='input-group date'>
@@ -320,7 +320,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
-                                <label class="control-label text-right">Date :</label>
+                                <label class="control-label text-right">Date </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class='input-group date'>
@@ -330,7 +330,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
-                                <label class="control-label text-right">Date :</label>
+                                <label class="control-label text-right">Date </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class='input-group date'>

@@ -36,13 +36,13 @@
                <div class="row">
                     <div class="col-xs-12 form-group">
                         <div class="col-xs-1 text-right" style="width: 140px">
-                            <label class="control-label text-right">Refund No :</label>
+                            <label class="control-label text-right">Refund No </label>
                         </div>
                         <div class="col-xs-1" style="width: 400px">
                             <input id="refundNo" name="refundNo" type="text" class="form-control" value="">
                         </div>
                         <div class="col-xs-1 text-right"  style="width: 140px">
-                            <label class="control-label text-right">Refund Date :</label>
+                            <label class="control-label text-right">Refund Date </label>
                         </div>
                         <div class="col-xs-1"  style="width: 200px">
                             <div class='input-group date'>
@@ -56,7 +56,7 @@
                 <div class="row">
                     <div class="col-xs-12 form-group">
                         <div class="col-xs-1 text-right"  style="width: 140px">
-                            <label class="control-label text-right">Refund Agent :</label>
+                            <label class="control-label text-right">Refund Agent </label>
                         </div>
                         <div class="col-xs-1"  style="width: 150px">
                             <div class="input-group" id="refundAgentCodeValidate">
@@ -72,7 +72,7 @@
                                 data-bv-notempty="true" data-bv-notempty-message="agent empty !">                           
                         </div>
                         <div class="col-xs-1 text-right" style="width: 140px">
-                            <label class="control-label text-right">Refund By :</label>
+                            <label class="control-label text-right">Refund By </label>
                         </div>
                         <div class="col-xs-1" style="width: 200px">
                             <div class="input-group">
@@ -84,7 +84,7 @@
                 <div class="row">
                     <div class="col-xs-12 form-group">
                         <div class="col-xs-1 text-right"  style="width: 140px">
-                            <label class="control-label text-right">Remark :</label>
+                            <label class="control-label text-right">Remark </label>
                         </div>
                         <div class="col-xs-1" style="width: 200px">
                             <div class="input-group">                                    
