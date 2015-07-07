@@ -54,7 +54,7 @@ function printVoucher(){
         "bInfo": false,
         "bLengthChange": false,
         "iDisplayLength": 10
-    });ARCodeTable
+    });
     
     var tableARCode = $('#ARCodeTable').dataTable({bJQueryUI: true,
         "sPaginationType": "full_numbers",
