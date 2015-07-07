@@ -23,13 +23,17 @@
             </div>
         </div>
         <hr/>
-   
-                <div class="row" style="padding-left: 15px"> 
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Detail
+            </div>
+            <div class="panel-body">
+                <div class="row" > 
                     <div class="col-xs-12 ">
-                        <div class="col-xs-2 text-right"  style="padding-right: 25px">
+                        <div class="col-xs-2 text-right"  style="padding-right: 25px;width: 140px;">
                             <label class="control-label">Product</lable>
                         </div>
-                        <div class="col-md-3 form-group text-left" style="padding-left:0px;width: 160px;"> 
+                        <div class="col-md-3 form-group text-left" style="padding-left:5px;width: 160px;"> 
                             <div class="input-group" id="gr" >
                                 <input type="text" class="form-control" id="InputProduct" name="InputProduct" value="" />
                                 <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#SearchProduct">
@@ -40,10 +44,10 @@
                         <div class="col-md-2 form-group text-left" style="width: 200px;">
                             <input name="InputProductName" id="InputProductName" type="text" class="form-control" value="" />
                         </div>
-                        <div class="col-xs-1 text-right"  >
+                        <div class="col-xs-1 text-right"  style="width: 87px;" >
                             <label class="control-label">Staff</lable>
                         </div>
-                        <div class="col-md-2 form-group text-left" > 
+                        <div class="col-md-2 form-group text-left" style="width: 170px;" > 
                             <div class="input-group" id="gr" >
                                 <input type="text" class="form-control" id="InputStaff" name="InputStaff" value="" />
                                 <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#SearchStaff">
@@ -58,7 +62,7 @@
                 </div><!-- End Row 1-->
                 <div class="row" >
                     <div class="col-xs-12 ">
-                        <div class="col-xs-2 text-right" >
+                        <div class="col-xs-2 text-right" style="width: 130px;">
                             <label class="control-label">Effective From</lable>
                         </div>
                         <div class="col-md-3 form-group text-left" style="width: 170px;" >
@@ -80,13 +84,13 @@
                 </div><!-- End Row 2-->
                 <div class="row" >
                     <div class="col-xs-12 ">
-                        <div class="col-xs-2 text-right" >
+                        <div class="col-xs-2 text-right" style="padding-right: 25px;width: 140px;">
                             <label class="control-label">Description</lable>
                         </div>
-                        <div class="col-md-5 form-group text-left" style="width: 370px;" >
+                        <div class="col-md-5 form-group text-left" style="width: 370px;padding-left: 3px;" >
                              <textarea class="form-control" rows="3" id="descriptionStock"></textarea>
                         </div>
-                        <div class="col-xs-1 text-left" style="width: 100px;padding-left: 3px;padding-right: 0px;">
+                        <div class="col-xs-1 text-left" style="width: 90px;padding-left: 3px;padding-right: 0px;">
                             <label class="control-label">Add Date</lable>
                         </div>
                         <div class="col-md-3 form-group text-left" style="padding-left: 0px;width: 155px;">
@@ -97,24 +101,28 @@
                         </div>
                     </div>   
                 </div><!-- End Row 3-->
-
+            </div>
+        </div>
         <div class="panel panel-default">
+            <div class="panel-heading">
+                Item List
+            </div>
             <div class="panel-body">
                 <div class="row" >
                     <div class="col-xs-12 ">
-                        <div class="col-xs-1 text-right"  >
+                        <div class="col-xs-1 text-right" style="width: 130px;">
                             <label class="control-label">Prefix</lable>
                         </div>
-                        <div class="col-md-2 form-group text-left" > 
+                        <div class="col-md-2 form-group text-left" style="width: 163px;"> 
                             <input name="InputPrefix" id="InputPrefix" type="text" class="form-control" value="" />
                         </div>
-                        <div class="col-xs-1 text-right"  >
+                        <div class="col-xs-1 text-right"  style="width: 60px;">
                             <label class="control-label">Start</lable>
                         </div>
-                        <div class="col-md-2 form-group text-left" > 
+                        <div class="col-md-2 form-group text-left" style="width: 163px;">  
                             <input name="InputStart" id="InputStart" type="text" class="form-control" value="" />
                         </div>
-                        <div class="col-xs-2 text-right"  >
+                        <div class="col-xs-2 text-right" style="width: 140px;">
                             <label class="control-label">Number Of Item</lable>
                         </div>
                         <div class="col-md-1 form-group text-left" > 
@@ -149,33 +157,33 @@
                 </div><!-- End Row 2--><br>
                 <div class="row" style="padding-left: 0px">
                         <div class="col-xs-12 ">
-                            <table class="display" id="TaxInvoiceTable">
-                                <thead class="datatable-header">
-                                    <tr>
-                                        <th style="width: 5%">No</th>                                   
-                                        <th style="width: 10%">Code</th>
-                                        <th style="width: 15%">Type</th>
-                                        <th style="width: 20%">Pay Status</th>
-                                        <th style="width: 15%">Item Status</th>
-                                        <th style="width: 8%">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>XX</td>
-                                        <td>4XX</td>
-                                        <td>XXX</td>                                
-                                        <td>XXXX</td>
-                                        <td>XXXX</td>
-                                        <td class="text-center">                                          
-                                            <a href="#" onclick=""  data-toggle="modal" data-target="">
-                                                <span id="" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal" data-target="#delStockModal"></span>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>    
-                        </div>   
+                                    <table class="display" id="TaxInvoiceTable">
+                                        <thead class="datatable-header">
+                                            <tr>
+                                                <th style="width: 5%">No</th>                                   
+                                                <th style="width: 10%">Code</th>
+                                                <th style="width: 15%">Type</th>
+                                                <th style="width: 20%">Pay Status</th>
+                                                <th style="width: 15%">Item Status</th>
+                                                <th style="width: 8%">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>XX</td>
+                                                <td>4XX</td>
+                                                <td>XXX</td>                                
+                                                <td>XXXX</td>
+                                                <td>XXXX</td>
+                                                <td class="text-center">                                          
+                                                    <a href="#" onclick=""  data-toggle="modal" data-target="">
+                                                        <span id="" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal" data-target="#delStockModal"></span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table> 
+                                </div>
                     </div><!-- End Row 3--><br>
                     <div class="row" >
                     <div class="col-xs-12"  style="padding-left: 20px;">
@@ -203,19 +211,13 @@
                     <thead class="datatable-header">
                         <tr>
                             <th>Code</th>
-                            <th> Product Name</th>
-                            <th>Action</th>
+                            <th>Name</th>
                         </tr>
                     </thead>
                     <tbody>
                             <tr class="packet">
                                 <td class="">XXX
                                 <td>XXXXX</td>
-                                <td class="text-center">
-                                    <a href="">
-                                        <span class="glyphicon glyphicon-check"></span>
-                                    </a>
-                                </td>
                             </tr>
                     </tbody>
                 </table>
@@ -241,18 +243,12 @@
                         <tr>
                             <th>Code</th>
                             <th> Staff Name</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                             <tr class="packet">
                                 <td class="">XXX
-                                <td>XXXXX</td>
-                                <td class="text-center">
-                                    <a href="">
-                                        <span class="glyphicon glyphicon-check"></span>
-                                    </a>
-                                </td>
+                                <td>XXXXX</td>                             
                             </tr>
                     </tbody>
                 </table>
