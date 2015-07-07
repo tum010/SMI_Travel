@@ -21,273 +21,286 @@
     </div>
     <!--Content -->
     <div class="col-sm-10">
-        <div class="panel panel-default">            
-            <div class="panel-heading">
-                <c:choose>
+        <div class="row" style="padding-left: 15px">  
+            <div class="col-sm-6 " style="padding-right: 15px">
+		<c:choose>
                     <c:when test="${param.Department=='WO'}">
-                        <label class="control-label">Tax Invoice Wendy/Outbound</lable>
+                        <h4><b>Tax Invoice Wendy/Outbound</b></h4>
                     </c:when>
                     <c:when test="${param.Department=='INB'}">
-                        <label class="control-label">Tax Invoice Inbound</lable>
+                        <h4><b>Tax Invoice Inbound</b></h4>
                     </c:when> 
-                </c:choose> 
+		</c:choose> 
             </div>
-            
-            <div class="row text-right" style="padding-top: 5px;padding-right: 15px;" >
-                <a class="col-xs-12 text-right" data-toggle="collapse" href="#collapseTab" aria-expanded="false" aria-controls="collapseTab">
-                    <span id="arrowReceipt" class="arrowReceipt glyphicon glyphicon-chevron-up"></span>
-                </a>
-            </div>
-            <div class="panel-body">
-            <div class="tab-content collapse in" id="collapseTab" aria-expanded="false">
-                <div class="row" >
-                    <div class="col-xs-12 ">
-                        <div class="col-xs-1 text-left" style="width: 120px;" >
-                            <label class="control-label">Invoice No </lable>
-                        </div>
-                        <div class="col-md-2 form-group text-left" style="width: 200px;" >                         
-                            <input name="InputInvoiceNo" id="InputInvoiceNo" type="text" class="form-control"  placeholder="" value="" />                                   
-                        </div>                
-                        <div class="col-xs-2 text-left" style="width: 100px;">
-                            <a id="ButtonNew" name="ButtonFind" onclick="" class="btn btn-primary">
-                                <i class="glyphicon glyphicon-search"></i> Search
-                            </a>
-                        </div>                     
-                    </div>   
-                </div><!-- End Row 1-->
-                <div class="row" style="padding-left: 0px">
-                    <div class="col-xs-12 ">
-                        <table class="display" id="TaxInvoiceTable">
-                            <thead class="datatable-header">
-                                <tr>
-                                    <th style="width: 20%">Product</th>
-                                    <th style="width: 25%">Description</th>
-                                    <th style="width: 10%">Amount</th>
-                                    <th style="width: 10%">Cur</th>
-                                    <th style="width: 10%">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>product1</td>
-                                    <td>description</td>
-                                    <td>30</td>                                
-                                    <td>THB</td>
-                                    <td class="text-center">
-                                        <a href="#" onclick=""  data-toggle="modal" data-target="">
-                                            <span id="removeSpan${dataStatus.count}" class="glyphicon glyphicon-plus"  onclick="" data-toggle="modal" data-target=""></span>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>    
-                    </div>   
-                </div><!-- End Row 2-->
-            </div>
+            <div class="col-xs-12 form-group"><hr/></div>
         </div>
-        </div><!--End Panel 1 -->
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div class="row" style="padding-left: 0px">
-                        <div class="col-xs-1 text-right" style="width:140px;">
-                            <label class="control-label">Tax Invoice No</lable>
-                        </div>
-                        <div class="col-md-2 form-group text-left" style="width:200px;">
-                            <input name="InputTaxInvoiceNo" id="InputTaxInvoiceNo" type="text" class="form-control" value="" />
-                        </div>
-                        <div class="col-xs-2 text-right" style="width:150px;">
-                            <label class="control-label">Invoice Date</lable>
-                        </div>
-                        <div class="col-md-3 form-group text-left" style="padding-left:5px">
-                            <div class="col-sm-12">
-                                <div class='input-group date' style="width:155px;">
-                                    <input name="InputTaxInvoiceDate" id="InputTaxInvoiceDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
-                                    <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+        
+        <!--Search Invoice-->
+        <div class="row" style="padding-left: 15px">  
+            <form action="" method="post" id="ReservationTravox">
+                <div role="tabpanel">
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane  active" id="infoSearchInvoice">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h2 class="panel-title">
+                                        <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="">
+                                            <span id="SpanEdit${advanced.search}">Search Invoice</span>
+                                        </a>
+                                        <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" style="margin-left: 54em" onclick="">
+                                            <span id="arrowReservstion" class="arrowReservstion glyphicon glyphicon-chevron-up"></span> 
+                                        </a>
+                                    </h2>               
+                                </div>
+                                    <div class="panel-body">               
+                                        <div class=" accordion-body collapse in" id="collapseExample${advanced.search}" aria-expanded="false">
+                                            <div class="col-md-12">
+                                                <div class="col-xs-1 text-right">
+                                                    <label class="control-label" for="">Inv No </lable>
+                                                </div>
+                                                <div class="col-md-2 form-group">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" id="SearchRefNo" name="SearchRefNo" value="" >                                 
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-1 text-right">
+                                                    <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="" class="btn btn-primary btn-sm">
+                                                        <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
+                                                    </button>                                          
+                                                </div>      
+                                            </div>
+                                            <div class="col-xs-12 form-group"></div>
+                                            <div class="row" style="padding-left:35px">    
+                                                <div class="col-md-12">
+                                                    <table id="MasterReservation" class="display" cellspacing="0" width="100%">
+                                                        <thead>
+                                                            <tr class="datatable-header">
+                                                                <th style="width: 15%" >Product</th>
+                                                                <th style="width: 60%">Description</th>
+                                                                <th style="width: 10%">Amount</th>
+                                                                <th style="width: 1%">Currency</th>
+                                                                <th style="width: 1%">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>               
+                                                            <tr>
+                                                                <td>TEST</td>
+                                                                <td>Hello World</td>
+                                                                <td align="center">100000</td>
+                                                                <td align="center">THB</td>
+                                                                <td align="center" > 
+                                                                    <center> 
+                                                                    <a href=""><span class="glyphicon glyphicon-plus"></span></a>
+                                                                    </center>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>    
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 form-group"><hr/></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>                     
-                </div><!--End Row 1 -->
-                <div class="row" style="padding-left: 0px">
-                        <div class="col-xs-1 text-right" style="width:140px;">
-                            <label class="control-label">To</lable>
                         </div>
-                        <div class="col-md-2 form-group text-left" style="width:200px;"> 
-                            <div class="input-group" id="gr" >
-                                <input type="text" class="form-control" id="InputTo" name="InputTo" value="" />
-                                <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#SearchToModal">
-                                    <span class="glyphicon-search glyphicon"></span>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="col-md-4 form-group text-left" >
-                            <input name="InputToDescription" id="InputToDescription" type="text" class="form-control" value="" />
-                        </div>
-                        <div class="col-xs-1 text-right" style="width:100px;">
-                            <label class="control-label">A/R Code</lable>
-                        </div>
-                        <div class="col-md-2 form-group text-left" >
-                            <input name="InputARCode" id="InputARCode" type="text" class="form-control" placeholder="" value="" />
-                        </div>                     
-                </div><!--End Row 2 -->
-                <div class="row" style="padding-left: 0px">
-                        <div class="col-xs-1 text-right" style="width:140px;"></div>
-                        <div class="col-md-2 form-group text-right" style="width:200px;"> 
-                            <label class="control-label">Name</lable>
-                        </div>
-                        <div class="col-md-4 form-group text-left" >
-                            <input name="InputToDescription" id="InputToDescription" type="text" class="form-control" value="" />
-                        </div>                    
-                </div><!--End Row 3 -->
-                <div class="row" style="padding-left: 0px">
-                    <div class="col-xs-1 text-right" style="width:140px;"></div>
-                    <div class="col-md-2 form-group text-right" style="width:200px;"> 
-                        <label class="control-label">Address</lable>
                     </div>
-                    <div class="col-md-4 form-group text-left" >
-                        <textarea rows="3" cols="60" class="form-control">                     
-                        </textarea>
-                    </div>                    
-                </div><!--End Row 4 -->
-                <div class="row" style="padding-left: 0px">
-                        <div class="col-xs-1 text-right" style="width:140px;">
-                            <label class="control-label">Passenger</lable>
-                        </div>
-                        <div class="col-md-2 form-group text-left" style="width:200px;"> 
-                            <div class="input-group" id="gr" >
-                                <input type="text" class="form-control" id="InputPassenger" name="InputPassenger" value="" />
-                                <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#SearchPassengerModal">
-                                    <span class="glyphicon-search glyphicon"></span>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="col-md-4 form-group text-left" >
-                            <input name="InputPassengerDescription" id="InputPassengerDescription" type="text" class="form-control" value="" />
-                        </div>                                     
-                </div><!--End Row 5 -->
-            </div>        
-        </div><!-- End Panel 2-->
-        <div class="panel panel-default">         
-            <div class="panel-body">              
-                <div class="row" style="padding-left: 0px">
+                </form>                                        
+                <div class="col-xs-12 form-group"></div>
+                
+                <!--Search-->  
+                <form action="" method="post" id="" name="" role="form">
                     <div class="col-xs-12 ">
-                        <table class="display" id="TaxInvoiceTable">
-                            <thead class="datatable-header">
-                                <tr>
-                                    <th style="width: 5%">No</th>
-                                    <th style="width: 15%">Product</th>
-                                    <th style="width: 10%">Ref No</th>
-                                    <th style="width: 20%">Description</th>
-                                    <th style="width: 5%">T/C</th>
-                                    <th style="width: 10%">Cost</th>                                   
-                                    <th style="width: 10%">Amount</th>
-                                    <th style="width: 10%">Vat</th>
-                                    <th style="width: 10%"></th>
-                                    <th style="width: 8%">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>pppp</td>
-                                    <td>3330</td>                                
-                                    <td>test dddddd</td>
-                                    <td>T</td>
-                                    <td>3000</td>
-                                    <td>5</td>                                
-                                    <td>32</td>
-                                    <td>XXXXX</td>
-                                    <td class="text-center">
-                                        <a href="#" onclick=""  data-toggle="modal" data-target="">
-                                            <span id="" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal" data-target="#delTaxInvoiceModal"></span>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>    
-                    </div>   
-                </div><!-- End Row 1--><br>
-                <div class="row text-left" >
-                    <div class="col-md-2 form-group text-right" > 
-                        <label class="control-label">Remark</lable>
+                        <div class="col-md-2 text-left">
+                            <label class="control-label" for="">Tax Invoice No</lable>
+                        </div>
+                        <div class="col-md-2 form-group">
+                            <input type="text"  class="form-control" id="TaxInvNo" name="TaxInvNo"  value="" >
+                        </div>
+                        <div class="col-xs-2 text-right">
+                            <label class="control-label" for="">Invoice date</lable>
+                        </div>
+                        <div class="col-md-2 form-group">
+                            <div class='input-group date' id='InputDatePicker'>
+                            <c:if test='${dayTourOperation.tourDate != null}'>
+                                <input id="InputInvDate" name="InputInvDate"  type="text" 
+                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                                
+                            </c:if>
+                            <c:if test='${dayTourOperation.tourDate == null}'>
+                                <input id="InputInvDate" name="InputInvDate"  type="text" 
+                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['']}">
+                                <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                                
+                            </c:if>                             
+                            </div>               
+                        </div>
+                    </div>    
+                    <div class="col-xs-12 ">
+                        <div class="col-md-2 text-left">
+                            <label class="control-label" for="">Tax Inv To</lable>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <div class="input-group">
+                            <input type="hidden" class="form-control" id="TaxInvTo_Id" name="TaxInvToId" value=""/>
+                            <input type="text" class="form-control" id="TaxInvTo" name="TaxInvTo" value="" style="background-color: #ffffff">
+                            <span class="input-group-addon" id="TaxInvTo_Modal"  data-toggle="modal" data-target="#TaxInvToModal">
+                                <span class="glyphicon-search glyphicon"></span>
+                            </span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-4 form-group text-left" >
-                        <textarea rows="3" cols="60" class="form-control">                    
-                        </textarea>
-                    </div>                    
-                </div><!--End Row 2 -->
-                <div class="row" style="padding-left: 0px">
-                    <div class="col-xs-2 text-right" >
-                            <label class="control-label">Text Amount</lable>
+                    <div class="col-xs-12 ">
+                        <div class="col-md-2 text-left">
+                            <label class="control-label" for="">Name </lable>
+                        </div>    
+                        <div class="col-md-6 form-group">
+                            <input  type="text" id="InvToName" name="InvToName" class="form-control" value="" readonly="">
+                        </div>  
                     </div>
-                    <div class="col-md-4 form-group text-left" >                        
-                        <input type="text" class="form-control" id="InputTextAmount" name="InputTextAmount" value="" />
+                    <div class="col-xs-12 ">
+                        <div class="col-md-2 text-left">
+                            <label class="control-label" for="">Address </lable>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <textarea  rows="3" cols="100" id="InvToAddress" name="InvToAddress" class="form-control" value="" ></textarea>
+                        </div>
                     </div>
-                    <div class="col-xs-1 text-left" >
-                            <label class="control-label">Total</lable>
+                    <div class="col-xs-12 ">
+                        <div class="col-md-2 text-left">
+                            <label class="control-label" for="">Passenger</label>
+                        </div>                       
+                        <div class="col-md-2 form-group">
+                            <div class="input-group">
+                            <input type="hidden" class="form-control" id="PassengerId" name="PassengerId" value=""/>
+                            <input type="text" class="form-control" id="PassengerCode" name="PassengerCode" value="" style="background-color: #ffffff">
+                            <span class="input-group-addon" id="Passenger_Modal"  data-toggle="modal" data-target="#PassengerModal">
+                                <span class="glyphicon-search glyphicon"></span>
+                            </span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <input type="text"  class="form-control" id="PassengerName" name="PassengerName"  value="" readonly="">
+                        </div>
+                        <div class="col-md-1 text-right">
+                            <label class="control-label" for="" >A/R&nbsp;Code</label>
+                        </div>  
+                        <div class="col-md-2 form-group">
+                            <div class="input-group">
+                                <input type="hidden" class="form-control" id="ARCodeId" name="ARCodeId" value=""/>
+                                <input type="text" class="form-control" id="ARCode" name="ARCode" value="" style="background-color: #ffffff">
+                                <span class="input-group-addon" id="ARCode_Modal"  data-toggle="modal" data-target="#ARCodeModal">
+                                   <span class="glyphicon-search glyphicon"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>    
+                </form>                
+            </div>
+                        
+                <div role="tabpanel">
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane  active" id="infoRemark">
+                            <div class="panel panel-default">                              
+                                <div class="panel-body">
+                                    <div class="col-xs-12 ">
+                                        <div class="col-sm-1">
+                                            <label class="control-label" for="">Remark&nbsp;</lable>                                         
+                                        </div>
+                                        <div class="col-sm-6" style="padding-left: 50px">
+                                            <textarea  rows="3" cols="200" id="Remark" name="Remark" class="form-control" value=""></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 form-group"></div>
+                                    <div class="col-xs-12 ">
+                                        <div class="col-sm-1">
+                                            <label class="control-label" for="">Text&nbsp;Amount&nbsp;:</lable>                                         
+                                        </div>                                      
+                                        <div class="col-sm-6" style="padding-left: 50px">
+                                            <input  rows="3" cols="200" id="TextAmount" name="TextAmount" class="form-control" value="" readonly="">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <label class="control-label" for="">Total&nbsp;Net&nbsp;:</lable>                                         
+                                        </div>
+                                        <div class="col-sm-3" >
+                                            <input  rows="3" cols="200" id="TotalNet" name="TotalNet" class="form-control" value="" readonly="">
+                                        </div>
+                                    </div>    
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-2 form-group text-left" >
-                            <input name="InputTotal" id="InputTotal" type="text" class="form-control" value="" />
-                    </div>                                     
-                </div><!--End Row 3 -->
-            </div>
-        </div><!--End Panel 3 -->
-        <div class="row text-center" >
-            <div class="col-xs-3 text-right" ></div>
-            <div class="col-xs-2 text-right" style="width: 120px;" >
-                <button type="submit" id="ButtonPrintNew" name="ButtonPrintNew" class="btn btn-primary">
-                    <i class="fa fa-print"></i> Print New             
-                </button>
-            </div>
-            <div class="col-xs-2 text-right" style="width: 100px;" >
-                <button type="submit" id="ButtonPrint" name="ButtonPrint" class="btn btn-primary">
-                    <i class="fa fa-print"></i> Print             
-                </button>
-            </div>
-            <div class="col-xs-2 text-right" style="width: 100px;" >
-                <button type="submit" id="ButtonSave" name="ButtonVoid" class="btn btn-danger">
-                    <i class="fa fa-refresh"></i> Void             
-                </button>
-            </div>
-            <div class="col-xs-2 text-left" style="width: 100px;">
-                <a id="ButtonSave" name="ButtonSave" onclick="" class="btn btn-success">
-                    <i class="fa fa-save"></i> Save
-                </a>
-            </div> 
-            <div class="col-xs-2 text-right" style="width: 100px;" >
-                <button type="submit" id="ButtonNew" name="ButtonNew" class="btn btn-success">
-                    <i class="fa fa-plus"></i> New             
-                </button>
-            </div>
-        </div>
+                </div>
+                <div role="tabpanel">
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane  active" id="infoButton">
+                            <div class="panel panel-default">                              
+                                <div class="panel-body">
+                                    <div class="col-xs-12 ">
+                                        <div class="col-md-2 text-right ">
+                                            <button type="button" onclick="" class="btn btn-default">
+                                                <span id="SpanPrintPackage" class="glyphicon glyphicon-print"></span> Print Package
+                                            </button>
+                                        </div>
+                                        <div class="col-md-2 text-left " style="padding-left: 0px">
+                                            <button type="button" onclick="" class="btn btn-default">
+                                                <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Print Invoice New
+                                            </button>
+                                        </div>
+                                        <div class="col-md-4 text-right "></div>
+                                        <div class="col-md-1 text-right ">
+                                            <button type="button" onclick="printVoucher('');" class="btn btn-default">
+                                                <span id="SpanPrint" class="glyphicon glyphicon-print"></span> Print 
+                                            </button>
+                                        </div>
+                                        <div class="col-md-1 text-right ">
+                                            <button type="button" class="btn btn-primary hidden" onclick="EnableVoid();" data-toggle="modal" data-target="#EnableVoid">
+                                                <span id="SpanEnableVoid" class="glyphicon glyphicon-ok" ></span> Void
+                                            </button>
+                                            <button type="button" class="btn btn-danger" onclick="DisableVoid();" data-toggle="modal" data-target="#DisableVoid">
+                                                <span id="SpanDisableVoid" class="glyphicon glyphicon-remove" ></span> Void
+                                            </button>
+                                        </div>
+                                        <div class="col-md-1 text-right ">
+                                            <button type="button" onclick="" class="btn btn-success">
+                                                <span id="SpanSave" class="fa fa-save"></span> Save 
+                                            </button>
+                                        </div>
+                                        <div class="col-md-1 text-right ">
+                                            <button type="button" onclick="" class="btn btn-success">
+                                                <span id="SpanNew" class="fa fa-plus-circle"></span> New 
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
     </div>
-</div>
-<!--Modal Search To -->
-<div class="modal fade" id="SearchToModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                            
+<!--Modal Search Tax Inv To-->
+<div class="modal fade" id="TaxInvToModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">To</h4>
+                <h4 class="modal-title">Tax Invoice To</h4>
             </div>
             <div class="modal-body">
                 <!--Agent List Table-->
-                <table class="display" id="ToTable">
+                <table class="display" id="TaxInvoiceToTable">
                     <thead class="datatable-header">
                         <tr>
                             <th>Code</th>
                             <th>Name</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                             <tr class="packet">
                                 <td class="">XXX
-                                <td>XXXXX</td>
-                                <td class="text-center">
-                                    <a href="">
-                                        <span class="glyphicon glyphicon-check"></span>
-                                    </a>
-                                </td>
+                                <td>XXXXX</td>                              
                             </tr>
                     </tbody>
                 </table>
@@ -300,8 +313,9 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
+
 <!--Modal Search Passenger -->
-<div class="modal fade" id="SearchPassengerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="PassengerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -309,24 +323,18 @@
                 <h4 class="modal-title">Passenger</h4>
             </div>
             <div class="modal-body">
-                <!--Agent List Table-->
+                <!--Passenger List Table-->
                 <table class="display" id="PassengerTable">
                     <thead class="datatable-header">
                         <tr>
                             <th>Code</th>
                             <th>Name</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                             <tr class="packet">
                                 <td class="">XXX
-                                <td>XXXXX</td>
-                                <td class="text-center">
-                                    <a href="">
-                                        <span class="glyphicon glyphicon-check"></span>
-                                    </a>
-                                </td>
+                                <td>XXXXX</td>  
                             </tr>
                     </tbody>
                 </table>
@@ -339,6 +347,51 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
+
+<!--A/R Code Modal-->
+<div class="modal fade" id="ARCodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">A/R Code</h4>
+            </div>
+            <div class="modal-body">
+                <!--Bill To List Table-->
+
+                <table class="display" id="ARCodeTable">
+                    <thead>    
+                        <script>
+                            var arcode = [];
+                        </script>
+                        <tr class="datatable-header">
+                            <th class="hidden">ID</th>
+                            <th class="">Code</th>
+                        </tr>                      
+                    </thead>
+                    <tbody>
+                        <c:forEach var="table" items="${agent_list}">
+                            <tr onclick ="setupagentvalue('${table.id}', '${table.code}', '${table.name}')" >
+                                <td class="hidden">${table.id}</td>
+                                <td>${table.code} </td>
+                                <td>${table.name} </td>
+                            </tr>    
+                            <script>
+                                arcode.push({id: "${table.id}", code: "${table.code}", name: "${table.name}"});
+                            </script>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <div  class="text-right">
+                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>  
+
 <!--Delete Tax Invoice Modal-->
 <div class="modal fade" id="delTaxInvoiceModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
@@ -373,33 +426,46 @@
             $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
 
         });
-        $('#collapseTab').on('shown.bs.collapse', function () {
-            $(".arrowReceipt").removeClass("glyphicon glyphicon-chevron-down").addClass("glyphicon glyphicon-chevron-up");
-        });
-
-        $('#collapseTab').on('hidden.bs.collapse', function () {
-           $(".arrowReceipt").removeClass("glyphicon glyphicon-chevron-up").addClass("glyphicon glyphicon-chevron-down");
+        
+        $('#PassengerTable').dataTable({bJQueryUI: true,
+            "sPaginationType": "full_numbers",
+            "bAutoWidth": true,
+            "bFilter": true,
+            "bPaginate": true,
+            "bInfo": false,
+            "bLengthChange": false,
+            "iDisplayLength": 3
         });
         
-        $('#ToTable').dataTable({bJQueryUI: true,
-        "sPaginationType": "full_numbers",
-        "bAutoWidth": true,
-        "bFilter": false,
-        "bPaginate": true,
-        "bInfo": false,
-        "bLengthChange": false,
-        "iDisplayLength": 3
+        $('#TaxInvoiceToTable').dataTable({bJQueryUI: true,
+            "sPaginationType": "full_numbers",
+            "bAutoWidth": false,
+            "bFilter": true,
+            "bPaginate": true,
+            "bInfo": false,
+            "bLengthChange": false,
+            "iDisplayLength": 10
         });
-    
-        $('#PassengerTable').dataTable({bJQueryUI: true,
-        "sPaginationType": "full_numbers",
-        "bAutoWidth": true,
-        "bFilter": true,
-        "bPaginate": true,
-        "bInfo": false,
-        "bLengthChange": false,
-        "iDisplayLength": 3
+        
+        $('#ARCodeTable').dataTable({bJQueryUI: true,
+            "sPaginationType": "full_numbers",
+            "bAutoWidth": false,
+            "bFilter": true,
+            "bPaginate": true,
+            "bInfo": false,
+            "bLengthChange": false,
+            "iDisplayLength": 10
         });
+        
+         $('#collapseExample${advanced.search}').on('shown.bs.collapse', function () {
+            $(".arrowReservstion").removeClass("glyphicon glyphicon-chevron-down").addClass("glyphicon glyphicon-chevron-up");
+        });
+
+        $('#collapseExample${advanced.search}').on('hidden.bs.collapse', function () {
+           $(".arrowReservstion").removeClass("glyphicon glyphicon-chevron-up").addClass("glyphicon glyphicon-chevron-down");
+        });
+        
+        
         
     });
 </script>
