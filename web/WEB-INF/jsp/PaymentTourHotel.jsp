@@ -124,7 +124,7 @@
             <div class="col-md-2 form-group text-left" style="padding-left:9px;width:190px;">
                 <div class="col-sm-12">
                     <div class="input-group" id="CodeValidate">
-                        <input name="InputInvoiceSupCode" id="InputInvoiceSupCode" type="text" class="form-control" value="" />
+                        <input name="InputAPCode" id="InputAPCode" type="text" class="form-control" value="" />
                         <span class="input-group-addon" data-toggle="modal" data-target="#SearchAPCode">
                             <span class="glyphicon-search glyphicon"></span>
                         </span>    

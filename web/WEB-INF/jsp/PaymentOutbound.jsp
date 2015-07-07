@@ -230,7 +230,6 @@
                             <th>Description</th>
                             <th>Cost</th>
                             <th>Price</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -239,11 +238,6 @@
                                 <td>xxx</td>
                                 <td class="">xxxx</td>
                                 <td>xxx</td>
-                                <td class="text-center">
-                                    <a href="">
-                                        <span class="glyphicon glyphicon-check"></span>
-                                    </a>
-                                </td>
                             </tr>
                     </tbody>
                 </table>
@@ -270,18 +264,12 @@
                         <tr>
                             <th>Code</th>
                             <th>Name</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                             <tr class="packet">
                                 <td class="">XXX
                                 <td>XXXXX</td>
-                                <td class="text-center">
-                                    <a href="">
-                                        <span class="glyphicon glyphicon-check"></span>
-                                    </a>
-                                </td>
                             </tr>
                     </tbody>
                 </table>
@@ -289,6 +277,37 @@
             <div class="modal-footer">
                 <button id="SearchInvoiceSupOK" name="SearchInvoiceSupOK" type="button"  class="btn btn-success" data-dismiss="modal">OK</button>
                 <button id="SearchInvoiceSupClose" name="SearchInvoiceSupClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal-dialog -->
+<!--Search A/P Code-->
+<div class="modal fade" id="SearchAPCode" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">A/P </h4>
+            </div>
+            <div class="modal-body">
+                <table class="display" id="SearchAPCodeTable">
+                    <thead class="datatable-header">
+                        <tr>
+                            <th>Code</th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr class="packet">
+                                <td class="">XXX
+                                <td>XXXXX</td> 
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button id="SearchAPCodeOK" name="SearchAPCodeOK" type="button"  class="btn btn-success" data-dismiss="modal">OK</button>
+                <button id="SearchAPCodeClose" name="SearchAPCodeClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -316,7 +335,7 @@ $(document).ready(function () {
     $('#RefNoTable').dataTable({bJQueryUI: true,
         "sPaginationType": "full_numbers",
         "bAutoWidth": true,
-        "bFilter": false,
+        "bFilter": true,
         "bPaginate": true,
         "bInfo": false,
         "bLengthChange": false,
@@ -324,6 +343,15 @@ $(document).ready(function () {
     });
     
     $('#SearchInvoicSupTable').dataTable({bJQueryUI: true,
+        "sPaginationType": "full_numbers",
+        "bAutoWidth": true,
+        "bFilter": true,
+        "bPaginate": true,
+        "bInfo": false,
+        "bLengthChange": false,
+        "iDisplayLength": 3
+        });
+    $('#SearchAPCodeTable').dataTable({bJQueryUI: true,
         "sPaginationType": "full_numbers",
         "bAutoWidth": true,
         "bFilter": true,

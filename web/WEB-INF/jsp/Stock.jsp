@@ -88,7 +88,7 @@
                             <label class="control-label">Description</lable>
                         </div>
                         <div class="col-md-5 form-group text-left" style="width: 370px;padding-left: 3px;" >
-                             <textarea class="form-control" rows="3" id="descriptionStock"></textarea>
+                             <textarea class="form-control" rows="3" id="descriptionStock" name="descriptionStock"></textarea>
                         </div>
                         <div class="col-xs-1 text-left" style="width: 90px;padding-left: 3px;padding-right: 0px;">
                             <label class="control-label">Add Date</lable>
@@ -149,8 +149,8 @@
                             </button>                                          
                         </div> 
                         <div class="col-md-2 text-right" >
-                            <button type="button" onclick="" class="btn btn-danger" style="width: 160px;">
-                                <span id="SpanPrint" class="glyphicon glyphicon-refresh"></span> Clear Expire Stock
+                            <button type="button" onclick="" class="btn btn-danger" id="SpanClearStock" name="SpanClearStock" style="width: 160px;">
+                                <span  class="glyphicon glyphicon-refresh"></span> Clear Expire Stock
                             </button>
                         </div>
                     </div>   
@@ -290,7 +290,7 @@ $(document).ready(function () {
     $('#ProductTable').dataTable({bJQueryUI: true,
         "sPaginationType": "full_numbers",
         "bAutoWidth": true,
-        "bFilter": false,
+        "bFilter": true,
         "bPaginate": true,
         "bInfo": false,
         "bLengthChange": false,
@@ -299,7 +299,7 @@ $(document).ready(function () {
     $('#StaffTable').dataTable({bJQueryUI: true,
         "sPaginationType": "full_numbers",
         "bAutoWidth": true,
-        "bFilter": false,
+        "bFilter": true,
         "bPaginate": true,
         "bInfo": false,
         "bLengthChange": false,

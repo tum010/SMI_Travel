@@ -44,7 +44,7 @@
                             <label class="control-label">Pay Status</lable>
                         </div>
                         <div class="col-md-2 form-group text-left" style="padding-left: 0px;">
-                            <select name="Selecttype" id="Selecttype" class="form-control">
+                            <select name="SelectPayStatus" id="SelectPayStatus" class="form-control">
                                 <option id="" value="">---select--</option>
                                 <option id="" value="">---s1elect--</option>
                             </select>
@@ -53,7 +53,7 @@
                             <label class="control-label">Item Status</lable>
                         </div>
                         <div class="col-md-2 form-group text-left" style="padding-left: 8px;width: 180px;">
-                            <select name="Selecttype" id="Selecttype" class="form-control">
+                            <select name="SelectItemStatus" id="SelectItemStatus" class="form-control">
                                 <option id="" value="">---select--</option>
                                 <option id="" value="">---s1elect--</option>
                             </select>
@@ -227,18 +227,12 @@
                         <tr>
                             <th>Code</th>
                             <th> Product Name</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                             <tr class="packet">
                                 <td class="">XXX
                                 <td>XXXXX</td>
-                                <td class="text-center">
-                                    <a href="">
-                                        <span class="glyphicon glyphicon-check"></span>
-                                    </a>
-                                </td>
                             </tr>
                     </tbody>
                 </table>
@@ -264,18 +258,12 @@
                         <tr>
                             <th>Code</th>
                             <th> Staff Name</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                             <tr class="packet">
                                 <td class="">XXX
                                 <td>XXXXX</td>
-                                <td class="text-center">
-                                    <a href="">
-                                        <span class="glyphicon glyphicon-check"></span>
-                                    </a>
-                                </td>
                             </tr>
                     </tbody>
                 </table>
@@ -301,7 +289,7 @@ $(document).ready(function () {
     $('#ProductTable').dataTable({bJQueryUI: true,
         "sPaginationType": "full_numbers",
         "bAutoWidth": true,
-        "bFilter": false,
+        "bFilter": true,
         "bPaginate": true,
         "bInfo": false,
         "bLengthChange": false,
@@ -310,7 +298,7 @@ $(document).ready(function () {
     $('#StaffTable').dataTable({bJQueryUI: true,
         "sPaginationType": "full_numbers",
         "bAutoWidth": true,
-        "bFilter": false,
+        "bFilter": true,
         "bPaginate": true,
         "bInfo": false,
         "bLengthChange": false,
