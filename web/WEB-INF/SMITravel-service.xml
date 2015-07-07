@@ -238,6 +238,10 @@
         <property name="mbankdao" ref="MBankDao" />
     </bean>    
     
+    <bean id="StockService" class="com.smi.travel.datalayer.service.StockService">
+        <property name="stockDao" ref="StockDao" />
+    </bean>    
+    
     <bean id="LockUnlockBookingService" class="com.smi.travel.datalayer.service.LockUnlockBookingService">
         <property name="masterdao" ref="MasterDao" />
         <property name="listitemdao" ref="MListItemDao" />
