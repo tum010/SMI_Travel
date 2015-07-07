@@ -18,7 +18,7 @@ public class Product {
      private String name;
      private String description;
      private String remark;
-     private  int isStock;
+     private Integer isStock;
      private Set productDetails = new HashSet(0);
      private List productComissions;
      
@@ -99,11 +99,11 @@ public class Product {
         this.productComissions = productComissions;
     }
 
-    public int getIsStock() {
+    public Integer getIsStock() {
         return isStock;
     }
 
-    public void setIsStock(int isStock) {
+    public void setIsStock(Integer isStock) {
         this.isStock = isStock;
     }
 
