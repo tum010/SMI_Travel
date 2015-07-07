@@ -23,11 +23,6 @@
             </div>
         </div>
         <hr/>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Detail
-            </div>
-            <div class="panel-body">
                 <div class="row" >
                     <div class="col-xs-12 ">
                         <div class="col-xs-1 text-right" style="width: 130px;"> 
@@ -57,7 +52,7 @@
                         <div class="col-xs-1 text-right" style="width: 80px;padding-right: 0px;padding-left: 0px;">
                             <label class="control-label">Item Status</lable>
                         </div>
-                        <div class="col-md-2 form-group text-left" style="padding-left: 8px;">
+                        <div class="col-md-2 form-group text-left" style="padding-left: 8px;width: 180px;">
                             <select name="Selecttype" id="Selecttype" class="form-control">
                                 <option id="" value="">---select--</option>
                                 <option id="" value="">---s1elect--</option>
@@ -75,10 +70,10 @@
                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                     </div>
-                    <div class="col-xs-2 text-right" style="width: 250px;padding-right: 0px;padding-left: 7px;" >
+                    <div class="col-xs-2 text-right" style="width: 265px;padding-right: 0px;padding-left: 7px;" >
                         <label class="control-label">Effective From</lable>
                     </div>
-                    <div class="col-md-2 form-group text-left" style="padding-left: 12px;"> 
+                    <div class="col-md-2 form-group text-left" style="padding-left: 8px;"> 
                         <div class='input-group date' >
                             <input name="InputEffectiveFromDate" id="InputEffectiveFromDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -87,7 +82,7 @@
                     <div class="col-xs-1 text-right" style="width: 85px;padding-right: 0px;padding-left: 0px;">
                         <label class="control-label">Effective To</lable>
                     </div>
-                    <div class="col-md-2 form-group text-left" style="padding-left: 10px;"> 
+                    <div class="col-md-2 form-group text-left" style="padding-left: 6px;"> 
                         <div class='input-group date' >
                             <input name="InputInputEffectiveToDate" id="InputInputEffectiveToDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -95,7 +90,7 @@
                     </div>
                 </div><!-- End Row 2-->
                 <div class="row" >
-                    <div class="col-xs-12"  style="padding-right:33px;">
+                    <div class="col-xs-12"  style="padding-right:36px;">
                         <div class="col-md-10 text-right"></div>
                         <div class="col-md-2 text-right">
                             <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="" class="btn btn-primary" style="width: 100px;">
@@ -104,8 +99,6 @@
                         </div>                   
                     </div>   
                 </div><!-- End Row 3--><br>
-            </div>
-        </div>
         <div class="panel panel-default">
              <div class="panel-heading">
                  Summary
@@ -130,7 +123,7 @@
                         </div>
                         <div class="col-md-2 form-group text-left" style="padding-left: 0px;width: 160px;">
                             <div class='input-group date' >
-                                <input name="InputStockDate" id="InputStockDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
+                                <input name="InputStockDateSummary" id="InputStockDateSummary" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
@@ -148,7 +141,7 @@
                         </div>
                         <div class="col-md-2 form-group text-left" style="width: 170px;">
                             <div class='input-group date' >
-                                <input name="InputEffectiveFromDate" id="InputEffectiveFromDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
+                                <input name="InputEffectiveFromDateSummary" id="InputEffectiveFromDateSummary" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
@@ -157,7 +150,7 @@
                         </div>
                         <div class="col-md-2 form-group text-left" style="width: 170px;">
                             <div class='input-group date' >
-                                <input name="InputInputEffectiveToDate" id="InputInputEffectiveToDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
+                                <input name="InputInputEffectiveToDateSummary" id="InputInputEffectiveToDateSummary" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
