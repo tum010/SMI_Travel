@@ -279,6 +279,25 @@
                     </div>
                 </div>    
     </div>
+
+<!--Disable Modal-->
+<div class="modal fade" id="DisableVoid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Finance & Cashier - Tax Invoice</h4>
+            </div>
+            <div class="modal-body" id="disableVoid">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick='window.top.location.href="Invoice.smi?type=${param.type}&action=edit"'>Delete</button>               
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->                                                  
                                             
 <!--Modal Search Tax Inv To-->
 <div class="modal fade" id="TaxInvToModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
