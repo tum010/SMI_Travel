@@ -31,7 +31,7 @@ public class ProductService {
         Product product = new Product();
         product.setName(Vproduct.getName());
         product.setCode(Vproduct.getCode());
-        List<Product> list = productDao.searchProduct(product, 1);
+        List<Product> list = productDao.validateProduct(product);
         if (list != null) {
             if ("update".equalsIgnoreCase(operation)) {
                 System.out.println(list.get(0).getId() +" , "+Vproduct.getId());
@@ -141,7 +141,6 @@ public class ProductService {
     public void setProductPriceDetailDao(ProductPriceDetailDao productPriceDetailDao) {
         this.productPriceDetailDao = productPriceDetailDao;
     }
-    
     
     
     
