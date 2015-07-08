@@ -12,6 +12,6 @@ import com.smi.travel.datalayer.report.model.InvoiceReport;
  *
  * @author chonnasith
  */
-public interface InvoiceReportDao {
-    public InvoiceReport getInvoiceReport();
+public interface InvoiceEmailDao {
+    public InvoiceReport getInvoiceEmail();
 }
