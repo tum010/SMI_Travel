@@ -56,7 +56,9 @@ public class ReportController extends SMITravelController {
     private static final String DaytourOther = "DaytourOther";
     private static final String OtherVouncherEmail = "otherVouncherEmail";
     private static final String ReceiptEmail = "ReceiptEmail";
+    private static final String ReceiptReport = "ReceiptReport";
     private static final String ReceiveList = "ReceiveList";
+    private static final String InvoiceEmail = "InvoiceEmail";
     private static final String InvoiceReport = "InvoiceReport";
 
     private DataSource datasource;
@@ -161,13 +163,19 @@ public class ReportController extends SMITravelController {
         }else if (ReceiptEmail.equalsIgnoreCase(name)){
             PrintMethod = 0;
             data = reportservice.getReceiptEmail();
+        }else if (ReceiptReport.equalsIgnoreCase(name)){
+            PrintMethod = 0;
+            data = reportservice.getReceipt();
         }else if (ReceiveList.equalsIgnoreCase(name)){
             PrintMethod = 0;
             data = reportservice.getDaytourOtherReport(refno);
+        }else if (InvoiceEmail.equalsIgnoreCase(name)){
+            PrintMethod = 0;
+            data = reportservice.getInvoiceEmail();
         }else if (InvoiceReport.equalsIgnoreCase(name)){
             PrintMethod = 0;
-            data = reportservice.getInvoiceReport();
-        } 
+            data = reportservice.getInvoice();
+        }  
                
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);
 
