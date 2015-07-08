@@ -68,6 +68,7 @@ public class BillableController extends SMITravelController {
     private static final String CustomerAgent = "customerAgent";
     private static final String TransectionResult = "result";
     private static final String MBankList = "MBankList";
+    private static final String LockUnlockBooking = "LockUnlockBooking";
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         int result = 0;
@@ -301,6 +302,12 @@ public class BillableController extends SMITravelController {
         
         List<MBank> mBankList = utilservice.getListBank();
         request.setAttribute(MBankList, mBankList);
+        
+        if(("2").equals(String.valueOf(master.getMBookingstatus().getId())) || ("5").equals(String.valueOf(master.getMBookingstatus().getId()))){
+            request.setAttribute(LockUnlockBooking,1);
+        }else{
+            request.setAttribute(LockUnlockBooking,0);
+        }
     }
 
     private Integer convertStringToInteger(String input) {

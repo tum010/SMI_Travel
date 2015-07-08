@@ -44,7 +44,7 @@ public class PassengerDetailController extends SMITravelController {
     private static final String Master = "Master";
     private static final String initialList = "initialList";
     private static final String CustomerList = "customerList";
-
+    private static final String LockUnlockBooking = "LockUnlockBooking";
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 
@@ -195,6 +195,12 @@ public class PassengerDetailController extends SMITravelController {
         request.setAttribute(initialList, mInitial);
         List<Customer> customerList = utilservice.getListCustomer();
         request.setAttribute(CustomerList, customerList);
+        
+        if(("2").equals(String.valueOf(master.getMBookingstatus().getId())) || ("5").equals(String.valueOf(master.getMBookingstatus().getId()))){
+            request.setAttribute(LockUnlockBooking,1);
+        }else{
+            request.setAttribute(LockUnlockBooking,0);
+        }
 
     }
 

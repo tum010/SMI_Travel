@@ -53,6 +53,7 @@ public class BookDetailController extends SMITravelController {
     private static final String PackageList = "packagelist";
     private static final String PACKAGEID = "packageID";
     private static final String[] resultText = {"Save unsuccessful", "Save successful"};
+    private static final String LockUnlockBooking = "LockUnlockBooking";
 
     private UtilityService utilservice;
     private MInitialname mInitialname;
@@ -270,6 +271,11 @@ public class BookDetailController extends SMITravelController {
         }
         Master master = utilservice.getMasterdao().getBookingFromRefno(refNo);
         request.setAttribute(Master, master);
+        if(("2").equals(String.valueOf(master.getMBookingstatus().getId())) || ("5").equals(String.valueOf(master.getMBookingstatus().getId()))){
+            request.setAttribute(LockUnlockBooking,1);
+        }else{
+            request.setAttribute(LockUnlockBooking,0);
+        }
         List<MCurrency> mCurrency = utilservice.getListMCurrency();
         request.setAttribute(CurrencyList, mCurrency);
         List<MBookingstatus> mBookingstatuses = utilservice.getListMBookingstatus();
