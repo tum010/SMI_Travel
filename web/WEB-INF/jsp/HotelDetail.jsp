@@ -289,9 +289,14 @@
                                     <td><input id="row-room-${formula.count}-cost" name="row-room-${formula.count}-cost" class="form-control text-right money" value="${re.cost}" maxlength="11"></td>
                                     <td><input id="row-room-${formula.count}-price" name="row-room-${formula.count}-price" class="form-control text-right money" value="${re.price}" maxlength="11"></td>
                                     <td class="text-center">
-                                        <a id="ButtonRemove${formula.count}" class="remCF" onclick="ConfirmDelete('${hotelBooking.id}', '1', '${re.id}', '${formula.count}')">
-                                            <span id="SpanRemove${formula.count}" class="glyphicon glyphicon-remove deleteicon"></span>
-                                        </a>
+                                        <c:if test="${lockUnlockBooking == 0}">
+                                            <a id="ButtonRemove${formula.count}" class="remCF" onclick="ConfirmDelete('${hotelBooking.id}', '1', '${re.id}', '${formula.count}')">
+                                                <span id="SpanRemove${formula.count}" class="glyphicon glyphicon-remove deleteicon"></span>
+                                            </a>                                            
+                                        </c:if>
+                                        <c:if test="${lockUnlockBooking == 1}">
+                                            <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                        </c:if>    
                                     </td>
                                 <script>
                                     $(document).ready(function () {
@@ -329,6 +334,7 @@
                             </thead>
                             <tbody>
                             <input type="text" class="hidden" id="requestCounter" name="requestCounter" value="0" />
+                            <input type="hidden" id="requestLock" name="requestLock" value="${lockUnlockBooking}"/>
                             <c:forEach var="re" items="${hotelRequestsList}" varStatus="additional">
                                 <tr>
                                     <td class="hidden"><input id="row-request-${additional.count}-id" name="row-request-${additional.count}-id" class="form-control" value="${re.id}"></td>
@@ -337,9 +343,14 @@
                                     <td><input id="row-request-${additional.count}-cost" name="row-request-${additional.count}-cost" class="form-control text-right money" value="${re.cost}" maxlength="11"></td>
                                     <td><input id="row-request-${additional.count}-price" name="row-request-${additional.count}-price" class="form-control text-right money" value="${re.price}" maxlength="11"></td>
                                     <td class="text-center">
-                                        <a id="AdditionalButtonRemove${additional.count}" class="remCF" onclick="ConfirmDelete('${hotelBooking.id}', '2', '${re.id}', '${additional.count}')">
-                                            <span id="AdditionalSpanRemove${additional.count}" class="glyphicon glyphicon-remove deleteicon"></span>
-                                        </a>
+                                        <c:if test="${lockUnlockBooking == 0}">
+                                            <a id="AdditionalButtonRemove${additional.count}" class="remCF" onclick="ConfirmDelete('${hotelBooking.id}', '2', '${re.id}', '${additional.count}')">
+                                                <span id="AdditionalSpanRemove${additional.count}" class="glyphicon glyphicon-remove deleteicon"></span>
+                                            </a>                                            
+                                        </c:if>
+                                        <c:if test="${lockUnlockBooking == 1}">
+                                            <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                        </c:if>                                         
                                     </td>
                                 <script>
                                     $(document).ready(function () {
@@ -404,9 +415,15 @@
                                         </script>
                                     </td>          
                                     <td class="text-center">
-                                        <a id="PassengerButtonRemove${passenger.count}" class="remCF" onclick="ConfirmDelete('${hotelBooking.id}', '3', '${pa.id}', '${passenger.count}')">
-                                            <span id="PassengerSpanRemove${passenger.count}"" class="glyphicon glyphicon-remove deleteicon"></span>
-                                        </a>
+                                        <c:if test="${lockUnlockBooking == 0}">
+                                            <a id="PassengerButtonRemove${passenger.count}" class="remCF" onclick="ConfirmDelete('${hotelBooking.id}', '3', '${pa.id}', '${passenger.count}')">
+                                                <span id="PassengerSpanRemove${passenger.count}" class="glyphicon glyphicon-remove deleteicon"></span>
+                                            </a>                                           
+                                        </c:if>
+                                        <c:if test="${lockUnlockBooking == 1}">
+                                            <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                        </c:if>  
+
                                     </td>
                                 </tr>
                                 <script>
