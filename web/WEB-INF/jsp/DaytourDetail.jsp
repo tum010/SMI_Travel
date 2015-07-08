@@ -81,6 +81,7 @@
             </div>
             <hr/>
             <form action="DaytourDetail.smi" method="post" id="DaytourDetailForm" name="DaytourDetailForm" role="form">
+                <input type="hidden" id="requestLock" name="requestLock" value="${lockUnlockBooking}"/>
                 <input type="hidden" class="form-control" id="referenceNo"   name="referenceNo"  value="${param.referenceNo}" > 
                 <input name="action" value="save"type="hidden">
                 <input type="hidden" id="daytourBooking" name="daytourBooking" value="${daytourBooking.id}" />
@@ -303,12 +304,18 @@
                                         <td class="priceTotal money"><input  type=hidden class="form-control money" id="row-${loop.count}-pricetotal" name="row-${loop.count}-pricetotal" value="${item.qty * item.price}" readonly="">${item.qty * item.price}</td>
                                         <td class="priceCurrency text-center"><input  type=hidden id="row-${loop.count}-pricecurrency" name="row-${loop.count}-pricecurrency" value="${item.currency}" >${item.currency}</td>
                                         <td class="text-center">
+                                        <c:if test="${lockUnlockBooking == 0}">
                                             <a id="RowPriceButtonRemove-${loop.count}"  name="RowPriceButtonRemove-${loop.count}"  ParentTrPriceId=""  class="RemovePriceRow">
                                                 <span id="RowPriceSpanRemove-${loop.count}"  name="RowPriceSpanRemove-${loop.count}"  
                                                       class="glyphicon glyphicon-remove deleteicon" 
                                                       onclick="DeletePrice('${item.id}', '${item.detail}');"
                                                       data-toggle="modal" data-target="#DelPrice" ></span>
-                                            </a></td>
+                                            </a>                                       
+                                        </c:if>
+                                        <c:if test="${lockUnlockBooking == 1}">
+                                            <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                        </c:if>   
+                                        </td>
                                     </tr>
 
                                 </c:forEach>
