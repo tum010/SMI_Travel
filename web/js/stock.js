@@ -124,7 +124,7 @@ function addItemList(row){
             '<td><select id="SeleteTypeItemList' + i + '" name="SeleteTypeItemList' + i + '" class="form-control"><option value="'+type.value+'">'+type.value+'</option></select></td>' +
             '<td><input type="text" class="form-control" name="payStatusItemList' + i + '" id="payStatusItemList' + i + '" value="0" readonly/></td>' +
             '<td><input type="text" class="form-control" name="itemStatusItemList' + i + '" id="itemStatusItemList' + i + '" value="normal" readonly/></td>' +
-            '<td class="text-center"><a href="#"  class="remCF" id="ButtonRemove' + i + '" onclick="deleteItemListRow('+i+','+ prefix.value+'-'+start.value+')" data-toggle="modal" data-target="#delStockModal"><span id="Spanremove' + i + '" class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
+            '<td class="text-center"><a href="#"  class="remCF" id="ButtonRemove' + i + '" onclick="deleteItemListRow('+i+",'"+ +prefix.value+"-"+start.value+"'"+')" data-toggle="modal" data-target="#delStockModal"><span id="Spanremove' + i + '" class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
             '</tr>'
             );
             start.value++;
