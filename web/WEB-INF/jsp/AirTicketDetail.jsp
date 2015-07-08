@@ -203,7 +203,12 @@
                                                 </a>
                                             </c:if>
                                             <c:if test="${flight.MItemstatus.id != 2}">
-                                                <span id="SpanRemove${i.count}" class="glyphicon glyphicon-remove deleteicon" onclick="setDisableFlight('${flight.id}', '${flight.flightNo}');" data-toggle="modal" data-target="#DisableFlight" ></span>
+                                                <c:if test="${lockUnlockBooking == 0}">
+                                                    <span id="SpanRemove${i.count}" class="glyphicon glyphicon-remove deleteicon" onclick="setDisableFlight('${flight.id}', '${flight.flightNo}');" data-toggle="modal" data-target="#DisableFlight" ></span>
+                                                </c:if>
+                                                <c:if test="${lockUnlockBooking == 1}">
+                                                    <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                                </c:if>                                                
                                             </c:if>
                                             <c:if test="${flight.MItemstatus.id == 2}">
                                                 <span id="SpanPlus${i.count}" class="glyphicon glyphicon-plus addicon" onclick="setEnableFlight('${flight.id}', '${flight.flightNo}');" data-toggle="modal" data-target="#EnableFlight" ></span>
@@ -855,9 +860,17 @@
                                         <a id="passenger_tableButtonEdit${pStatus.count}" class="carousel" data-toggle="collapse" data-parent="#accordion" data-target="#passenger${pStatus.count}" aria-expanded="true" aria-controls="collapseExample">
                                             <span id="passenger_tableSpanEdit${pStatus.count}" class="glyphicon glyphicon-edit editicon"></span>
                                         </a>
-                                        <a id="passenger_tableButtonRemove${pStatus.count}" href="#" class="confirm-delete" data-id="${passenger.id}">
-                                                <span id="passenger_tableSpanRemove${pStatus.count}" class="glyphicon glyphicon-remove deleteicon"></span>
-                                        </a> 
+                                        <c:if test="${flight.MItemstatus.id != 2}">
+                                            <c:if test="${lockUnlockBooking == 0}">
+                                                <a id="passenger_tableButtonRemove${pStatus.count}" href="#" class="confirm-delete" data-id="${passenger.id}">
+                                                    <span id="passenger_tableSpanRemove${pStatus.count}" class="glyphicon glyphicon-remove deleteicon"></span>
+                                                </a>                                                 
+                                            </c:if>
+                                            <c:if test="${lockUnlockBooking == 1}">
+                                                <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                            </c:if>                                                
+                                       </c:if>
+
                                     </td>
                                 </tr>
 
