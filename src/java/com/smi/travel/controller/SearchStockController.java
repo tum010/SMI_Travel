@@ -10,7 +10,6 @@ public class SearchStockController extends SMITravelController {
     private StockService   stockService;
     private static final ModelAndView SearchStock = new ModelAndView("SearchStock");
     private static final ModelAndView SearchStock_REFRESH = new ModelAndView(new RedirectView("SearchStock.smi", true));
-    
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         return SearchStock;

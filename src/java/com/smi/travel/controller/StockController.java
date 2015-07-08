@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 public class StockController extends SMITravelController {
-    private static final ModelAndView Stock = new ModelAndView("Stock");
+    private static final ModelAndView Stock = new ModelAndView("StockService");
     private static final ModelAndView Stock_REFRESH = new ModelAndView(new RedirectView("Stock.smi", true));
     private StockService stockService;
     
@@ -23,4 +23,6 @@ public class StockController extends SMITravelController {
     public StockService getStockService() {
         return stockService;
     }
+
+   
 }
