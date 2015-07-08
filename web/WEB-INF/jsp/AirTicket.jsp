@@ -24,6 +24,8 @@
 <c:set var="add_button" value="${requestScope['AddButton']}" />
 <c:set var="result" value="${requestScope['Result']}" />
 <c:set var="booking_size" value="${requestScope['BookingSize']}" />
+<c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
+
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
 
@@ -193,9 +195,16 @@
                         </button>
                     </div>
                     <div class="col-md-1 text-right">
-                        <a id="ButtonAdd"  href="AirTicketDetail.smi?referenceNo=${param.referenceNo}&action=add" class="btn btn-success ${add_button}">
-                            <span id="SpanAdd" class="glyphicon glyphicon-plus"></span> Add
-                        </a>
+                        <c:if test="${lockUnlockBooking == 0}">
+                            <a id="ButtonAdd"  href="AirTicketDetail.smi?referenceNo=${param.referenceNo}&action=add" class="btn btn-success ${add_button}">
+                                <span id="SpanAdd" class="glyphicon glyphicon-plus"></span> Add
+                            </a>
+                        </c:if>
+                        <c:if test="${lockUnlockBooking == 1}">
+                            <a class="btn btn-success disabled">
+                                <span class="glyphicon glyphicon-plus"></span>Add</button>
+                            </a>   
+                        </c:if>
                     </div>
                 </div>
                 <hr/>
@@ -237,7 +246,12 @@
                                             <span id="SpanGlyphiconAdd${loopCounter.count}" class="glyphicon glyphicon-plus addicon"   onclick="setEnablePnrForm('${p.id}', ' ${p.pnr}');" data-toggle="modal" data-target="#EnablePnr" ></span>
                                         </c:if>
                                         <c:if test="${p.MItemstatus.id == 1}">
-                                            <span id="SpanGlyphiconRemove${loopCounter.count}" class="glyphicon glyphicon-remove deleteicon" onclick="setDisablePnrForm('${p.id}', '${p.pnr}');" data-toggle="modal" data-target="#DisablePnr" ></span>
+                                            <c:if test="${lockUnlockBooking == 0}">
+                                                <span id="SpanGlyphiconRemove${loopCounter.count}" class="glyphicon glyphicon-remove deleteicon" onclick="setDisablePnrForm('${p.id}', '${p.pnr}');" data-toggle="modal" data-target="#DisablePnr" ></span>
+                                            </c:if>
+                                            <c:if test="${lockUnlockBooking == 1}">
+                                                <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                            </c:if>
                                         </c:if>
                                     </td>
                                 </tr>
@@ -273,9 +287,14 @@
                                     <td><input  type="text" class="form-control money" id="row-${airdesc.count}-cost" name="row-${airdesc.count}-cost" value="${detail.cost}" maxlength="11"/></td>
                                     <td><input  type="text" class="form-control money" id="row-${airdesc.count}-amount" name="row-${airdesc.count}-amount" value="${detail.amount}" maxlength="11"/></td>
                                     <td class="text-center">
-                                        <a id="ButtonRemove${airdesc.count}" class="remCF" onclick="deleteDesc(${param.referenceNo},${detail.id})">
-                                            <span id="SpanRemove${airdesc.count}"  class="glyphicon glyphicon-remove deleteicon"></span>
-                                        </a>
+                                        <c:if test="${lockUnlockBooking == 0}">
+                                            <a id="ButtonRemove${airdesc.count}" class="remCF" onclick="deleteDesc(${param.referenceNo},${detail.id})">
+                                                <span id="SpanRemove${airdesc.count}"  class="glyphicon glyphicon-remove deleteicon"></span>
+                                            </a>                                            
+                                        </c:if>
+                                        <c:if test="${lockUnlockBooking == 1}">
+                                            <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                        </c:if>
                                     </td>
                                     <c:if test="${airdesc.last}">
                                     <script>
@@ -307,7 +326,12 @@
                 </div>
                 <!--Save-->
                 <div class="text-center" style="margin-top: 10px">
-                    <button id="ButtonSave" type="submit" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
+                    <c:if test="${lockUnlockBooking == 0}">
+                        <button id="ButtonSave" type="submit" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
+                    </c:if>
+                    <c:if test="${lockUnlockBooking == 1}">
+                        <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
+                    </c:if>    
                 </div>
             </form>
         </div>
