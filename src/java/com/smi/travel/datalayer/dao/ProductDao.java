@@ -17,6 +17,7 @@ import java.util.List;
 public interface ProductDao {
     public List<Product> getListProduct();
     public List<Product> searchProduct(Product product,int option);
+    public List<Product> validateProduct(Product product);
     public Product getProductFromID(String ProductID);
     public Product getProductFromCode(String ProductCode);
     public int insertProduct(Product product);
