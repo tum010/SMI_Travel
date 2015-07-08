@@ -183,7 +183,15 @@ public class AirTicketDetailController extends SMITravelController {
         String codeAirline = request.getParameter("");
         Master master = utilservice.getMasterdao().getBookingFromRefno(referenceNo);
         request.setAttribute(Master, master);
-        request.setAttribute(LockUnlockBooking,master.getFlagAir());
+        // Mbookstatus ==> 2 Finish , 5 Finish by Finance
+        if(("1").equals(String.valueOf(master.getFlagAir())) 
+            || ("2").equals(String.valueOf(master.getMBookingstatus().getId()))
+            || ("5").equals(String.valueOf(master.getMBookingstatus().getId()))){
+            request.setAttribute(LockUnlockBooking,1);
+        }else{
+            request.setAttribute(LockUnlockBooking,0);
+        }
+        
         int[] booksize = utilservice.getCountItemFromBooking(referenceNo);
         request.setAttribute(Bookiing_Size, booksize);
 

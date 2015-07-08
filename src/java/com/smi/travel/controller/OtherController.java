@@ -98,7 +98,14 @@ public class OtherController extends SMITravelController {
         if(String.valueOf(callPageFrom).equalsIgnoreCase("FromDayTour")){
             return new ModelAndView("redirect:Daytour.smi?referenceNo=" + refno + "&action=edit");
         }
-        request.setAttribute(LockUnlockBooking,master.getFlagOther());
+        if(("1").equals(String.valueOf(master.getFlagOther())) 
+            || ("2").equals(String.valueOf(master.getMBookingstatus().getId()))
+            || ("5").equals(String.valueOf(master.getMBookingstatus().getId()))){
+            request.setAttribute(LockUnlockBooking,1);
+        }else{
+            request.setAttribute(LockUnlockBooking,0);
+        }
+
         return Other;
     }
 

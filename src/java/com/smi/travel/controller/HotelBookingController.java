@@ -103,7 +103,15 @@ public class HotelBookingController extends SMITravelController {
         request.setAttribute(BookType,BookingType);
         request.setAttribute(Master, master);
         request.setAttribute(CURRENCY, master.getCurrency());
-        request.setAttribute(LockUnlockBooking,master.getFlagHotel());
+
+        // Mbookstatus ==> 2 Finish , 5 Finish by Finance
+        if(("1").equals(String.valueOf(master.getFlagHotel())) 
+            || ("2").equals(String.valueOf(master.getMBookingstatus().getId()))
+            || ("5").equals(String.valueOf(master.getMBookingstatus().getId()))){
+            request.setAttribute(LockUnlockBooking,1);
+        }else{
+            request.setAttribute(LockUnlockBooking,0);
+        }
     }
 
     public BookingAirticketService getBookingAirticketService() {

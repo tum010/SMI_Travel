@@ -215,8 +215,13 @@ public class DaytourDetailController extends SMITravelController {
 
         List<OtherBooking> couponList = bookingDaytourService.getCouponList(refNo);
         request.setAttribute(Coupons, couponList);
-        
-        request.setAttribute(LockUnlockBooking,master.getFlagDaytour());
+        if(("1").equals(String.valueOf(master.getFlagDaytour())) 
+            || ("2").equals(String.valueOf(master.getMBookingstatus().getId()))
+            || ("5").equals(String.valueOf(master.getMBookingstatus().getId()))){
+            request.setAttribute(LockUnlockBooking,1);
+        }else{
+            request.setAttribute(LockUnlockBooking,0);
+        }
     }
 
     //price

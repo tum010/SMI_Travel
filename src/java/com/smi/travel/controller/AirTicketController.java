@@ -318,7 +318,14 @@ public class AirTicketController extends SMITravelController {
         int[] booksize = utilservice.getCountItemFromBooking(refNo);
         request.setAttribute(Bookiing_Size, booksize);
         
-        request.setAttribute(LockUnlockBooking,master.getFlagAir());
+        // Mbookstatus ==> 2 Finish , 5 Finish by Finance
+        if(("1").equals(String.valueOf(master.getFlagAir())) 
+            || ("2").equals(String.valueOf(master.getMBookingstatus().getId()))
+            || ("5").equals(String.valueOf(master.getMBookingstatus().getId()))){
+            request.setAttribute(LockUnlockBooking,1);
+        }else{
+            request.setAttribute(LockUnlockBooking,0);
+        }
     }
 
     private SystemUser getUpdateSystemUserByName(String name, SystemUser existUser) {
