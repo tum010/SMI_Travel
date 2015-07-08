@@ -10,12 +10,10 @@
 <script type="text/javascript" src="js/Passenger.js"></script> 
 <c:set var="booking_size" value="${requestScope['BookingSize']}" />
 <c:set var="passengerList" value="${requestScope['PassengerList']}" />
-
 <c:set var="master" value="${requestScope['Master']}" />
-
-
 <c:set var="refno1" value="${fn:substring(param.referenceNo, 0, 2)}" />
 <c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
+<c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
@@ -69,9 +67,17 @@
                     <h4><b>Passenger</b></h4>
                 </div>
                 <div class="col-md-6 text-right">
-                    <a id="ButtonAdd" href="PassengerDetail.smi?referenceNo=${param.referenceNo}&action=add" class="btn btn-success">
-                        <span id="SpanAdd" class="glyphicon glyphicon-plus"></span> Add
-                    </a>
+                    <c:if test="${lockUnlockBooking == 0}">
+                        <a id="ButtonAdd" href="PassengerDetail.smi?referenceNo=${param.referenceNo}&action=add" class="btn btn-success">
+                            <span id="SpanAdd" class="glyphicon glyphicon-plus"></span> Add
+                        </a>
+                    </c:if>
+                    <c:if test="${lockUnlockBooking == 1}">
+                        <a class="btn btn-success disabled">
+                            <span class="glyphicon glyphicon-plus"></span>Add</button>
+                        </a>   
+                    </c:if>
+
                 </div>
 
             </div>
@@ -119,9 +125,14 @@
                         <a id="ButtonEdit${varPassenger.count}" href="PassengerDetail.smi?referenceNo=${param.referenceNo}&id=${passenger.id}&action=edit">
                             <i id="IEdit${varPassenger.count}" class="glyphicon glyphicon-edit editicon"></i>
                         </a>
-                        <a id="ButtonRemove${varPassenger.count}" data-toggle="modal" data-target="#DeletePassenger" onclick="ModalPassneger(${passenger.id},'${passenger.getCustomer().getCode()}')">
-                            <i id="IRemove${varPassenger.count}" class="glyphicon glyphicon-remove deleteicon"></i>
-                        </a>
+                        <c:if test="${lockUnlockBooking == 0}">
+                            <a id="ButtonRemove${varPassenger.count}" data-toggle="modal" data-target="#DeletePassenger" onclick="ModalPassneger(${passenger.id},'${passenger.getCustomer().getCode()}')">
+                                <i id="IRemove${varPassenger.count}" class="glyphicon glyphicon-remove deleteicon"></i>
+                            </a>                        
+                        </c:if>
+                        <c:if test="${lockUnlockBooking == 1}">
+                            <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                        </c:if>
                     </td>
                     </tr>
                 </c:forEach>
