@@ -13,9 +13,9 @@
 <c:set var="amount" value="${requestScope['amount']}" />
 <c:set var="markup" value="${requestScope['markup']}" />
 <c:set var="master" value="${requestScope['Master']}" />
-
 <c:set var="refno1" value="${fn:substring(param.referenceNo, 0, 2)}" />
 <c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
+<c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
@@ -106,7 +106,14 @@
 
                 <div class="row-fluid">
                     <div class="form-actions pull-right" style="padding-right: 20px">
-                        <a href="OtherDetail.smi?referenceNo=${param.referenceNo}&action=new&callPageFrom=FromOther"><button type="button" id="acs" onclick=""  class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>Add</button>  </a>  
+                        <c:if test="${lockUnlockBooking == 0}">
+                            <a href="OtherDetail.smi?referenceNo=${param.referenceNo}&action=new&callPageFrom=FromOther"><button type="button" id="acs" onclick=""  class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>Add</button>  </a>  
+                        </c:if>
+                        <c:if test="${lockUnlockBooking == 1}">
+                            <a class="btn btn-success disabled">
+                                <span class="glyphicon glyphicon-plus"></span>Add</button>
+                            </a>   
+                        </c:if>
                     </div>
                 </div> 
 
@@ -174,22 +181,21 @@
                                             <span class="glyphicon glyphicon-plus addicon"   onclick="EnableOther('${table.id}',' ${table.product.code}');" data-toggle="modal" data-target="#EnableOther" ></span>
                                         </c:if>
                                         <c:if test="${table.status.id == 1}">
-                                            <span class="glyphicon glyphicon-remove deleteicon"   onclick="getCouponCheck('${table.id}',' ${table.product.code}');" data-toggle="modal" data-target="" ></span>
+                                            <c:if test="${lockUnlockBooking == 0}">
+                                                <span class="glyphicon glyphicon-remove deleteicon"   onclick="getCouponCheck('${table.id}',' ${table.product.code}');" data-toggle="modal" data-target="" ></span>
+                                            </c:if>
+                                            <c:if test="${lockUnlockBooking == 1}">
+                                                <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                            </c:if>
                                         </c:if>
                                         
                                     </center>
                                 </td>
-                        </tr>
-
-                    </c:forEach>
-
-
-
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>        
-
             </div>
-
 
             <div class="panel panel-default">
                 <div class="panel-heading">
