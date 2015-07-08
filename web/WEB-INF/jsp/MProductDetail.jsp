@@ -80,10 +80,10 @@
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong>Save Not Success!</strong> 
             </div>
-            <!-- Alert Uni-->
+            <!-- Alert Uni -->
             <div id="textAlertLap"  style="display:none;" class="alert alert-danger" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Product name already exist!</strong> 
+                    <strong>Product code or name already exist!</strong> 
             </div>
             <div class="panel panel-default">
                 <div class="panel-heading">Detail</div>
@@ -216,7 +216,7 @@
                         <button id="saveProduct" name="saveProduct" type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
                  </div>
         </div>               
-        <input type="hidden" id="ProductID" name="ProductID" value="${requestScope['ProductID']}" >
+        <input type="hidden" id="F" name="ProductID" value="${requestScope['ProductID']}" >
         <input type="hidden" id="actionIUP" name="action" value="save">
     </form>      
 </div>
@@ -340,7 +340,7 @@
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->    
+</div><!-- /.modal --> 
 <c:if test="${! empty requestScope['product_lap']}">
     <script language="javascript">
         $('#textAlertLap').show();
