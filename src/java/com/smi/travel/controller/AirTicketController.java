@@ -70,6 +70,8 @@ public class AirTicketController extends SMITravelController {
     private static final String TransactionResult = "result";
     private static final String Result = "Result";
     private static final String[] resultText = {"Unsuccesful save", "Save successful"};
+    private static final String LockUnlockBooking = "LockUnlockBooking";
+
 
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -315,6 +317,8 @@ public class AirTicketController extends SMITravelController {
 
         int[] booksize = utilservice.getCountItemFromBooking(refNo);
         request.setAttribute(Bookiing_Size, booksize);
+        
+        request.setAttribute(LockUnlockBooking,master.getFlagAir());
     }
 
     private SystemUser getUpdateSystemUserByName(String name, SystemUser existUser) {
