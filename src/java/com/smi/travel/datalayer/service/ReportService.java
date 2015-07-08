@@ -19,13 +19,15 @@ import com.smi.travel.datalayer.view.dao.HotelVoucherDao;
 import com.smi.travel.datalayer.view.dao.InvoiceSummaryDao;
 import com.smi.travel.datalayer.view.dao.LandVoucherDao;
 import com.smi.travel.datalayer.view.dao.ReceiptEmailDao;
+import com.smi.travel.datalayer.view.dao.ReceiptDao;
 import com.smi.travel.datalayer.view.dao.ReceiveListDao;
 import com.smi.travel.datalayer.view.dao.StaffSummaryDao;
 import com.smi.travel.datalayer.view.dao.TicketOrderDao;
 import com.smi.travel.datalayer.view.dao.TicketSaleProfitVolumnDao;
 import com.smi.travel.datalayer.view.dao.TicketSummaryDao;
 import com.smi.travel.datalayer.view.dao.TransferJobReportDao;
-import com.smi.travel.datalayer.view.dao.InvoiceReportDao;
+import com.smi.travel.datalayer.view.dao.InvoiceEmailDao;
+import com.smi.travel.datalayer.view.dao.InvoiceDao;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,8 +52,10 @@ public class ReportService {
     private DaytourOtherDao daytourOtherdao;
     private AgentCommissionReportDao agentCommissiondao;
     private ReceiptEmailDao receiptEmailDao;
+    private ReceiptDao receiptDao;
     private ReceiveListDao  receiveListDao;
-    private InvoiceReportDao invoiceReportdao;
+    private InvoiceEmailDao invoiceEmaildao;
+    private InvoiceDao invoicedao;
     
     public List getHotelVoucher(String hotelID,String name) {
         List data  = new ArrayList();
@@ -139,16 +143,63 @@ public class ReportService {
         return data;
     }
     
+     public List getReceipt(){
+        List data  = new ArrayList();
+        data.add(receiptDao.getReceipt());
+        data.add(receiptDao.getReceipt());
+        data.add(receiptDao.getReceipt());
+        data.add(receiptDao.getReceipt());
+        data.add(receiptDao.getReceipt());
+        data.add(receiptDao.getReceipt());
+        data.add(receiptDao.getReceipt());
+        data.add(receiptDao.getReceipt());
+        data.add(receiptDao.getReceipt());
+        data.add(receiptDao.getReceipt());
+        data.add(receiptDao.getReceipt());
+        data.add(receiptDao.getReceipt());
+        return data;
+    }
+    
     public List getReceiveList(String datefrom,String dateto,String user,String agentid){
         return receiveListDao.getReceiveList(datefrom, agentid, dateto, dateto, dateto, agentid, user);
     }
     
-    public List getInvoiceReport(){
+    public List getInvoiceEmail(){
         List data  = new ArrayList();
-        data.add(invoiceReportdao.getInvoiceReport());
-        data.add(invoiceReportdao.getInvoiceReport());
-        data.add(invoiceReportdao.getInvoiceReport());
-        data.add(invoiceReportdao.getInvoiceReport());
+        data.add(invoiceEmaildao.getInvoiceEmail());  
+        return data;
+    }
+    
+    public List getInvoice(){
+        List data  = new ArrayList();
+        data.add(invoicedao.getInvoice());
+        data.add(invoicedao.getInvoice());  
+        data.add(invoicedao.getInvoice());  
+        data.add(invoicedao.getInvoice());  
+        data.add(invoicedao.getInvoice());  
+        data.add(invoicedao.getInvoice());  
+        data.add(invoicedao.getInvoice());  
+        data.add(invoicedao.getInvoice());  
+        data.add(invoicedao.getInvoice());  
+        data.add(invoicedao.getInvoice());  
+        data.add(invoicedao.getInvoice());  
+        data.add(invoicedao.getInvoice());  
+        data.add(invoicedao.getInvoice());  
+        data.add(invoicedao.getInvoice());  
+        data.add(invoicedao.getInvoice());  
+        data.add(invoicedao.getInvoice());  
+        data.add(invoicedao.getInvoice());  
+        data.add(invoicedao.getInvoice());  
+        data.add(invoicedao.getInvoice());  
+        data.add(invoicedao.getInvoice());  
+        data.add(invoicedao.getInvoice());  
+        data.add(invoicedao.getInvoice());
+        data.add(invoicedao.getInvoice());  
+        data.add(invoicedao.getInvoice());  
+        data.add(invoicedao.getInvoice());  
+        data.add(invoicedao.getInvoice());  
+        data.add(invoicedao.getInvoice());  
+        data.add(invoicedao.getInvoice());  
         return data;
     }
 
@@ -268,6 +319,14 @@ public class ReportService {
         this.receiptEmailDao = receiptEmailDao;
     }
 
+    public ReceiptDao getReceiptDao() {
+        return receiptDao;
+    }
+
+    public void setReceiptDao(ReceiptDao receiptDao) {
+        this.receiptDao = receiptDao;
+    }
+       
     public void setReceiveListDao(ReceiveListDao receiveListDao) {
         this.receiveListDao = receiveListDao;
     }
@@ -284,13 +343,20 @@ public class ReportService {
         return invoiceSummaryDao;
     }
 
-    public void setInvoiceReportdao(InvoiceReportDao invoiceReportdao) {
-        this.invoiceReportdao = invoiceReportdao;
+    public void setInvoiceEmaildao(InvoiceEmailDao invoiceEmaildao) {
+        this.invoiceEmaildao = invoiceEmaildao;
     }
 
-    public InvoiceReportDao getInvoiceReportdao() {
-        return invoiceReportdao;
+    public InvoiceEmailDao getInvoiceEmaildao() {
+        return invoiceEmaildao;
     }
-    
-    
+
+    public void setInvoicedao(InvoiceDao invoicedao) {
+        this.invoicedao = invoicedao;
+    }
+
+    public InvoiceDao getInvoicedao() {
+        return invoicedao;
+    }
+   
 }
