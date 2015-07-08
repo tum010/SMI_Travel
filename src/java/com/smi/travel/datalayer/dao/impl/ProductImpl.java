@@ -51,6 +51,28 @@ public class ProductImpl implements ProductDao {
         
         return product;
     }
+    
+    @Override
+    public List<Product> validateProduct(Product product) {
+        String queryCode = "from Product p where p.code = '" + product.getCode() + "'"; 
+        Session session = this.sessionFactory.openSession();
+        System.out.println("query : " + queryCode);
+        List<Product> ProductListCode = session.createQuery(queryCode).list();
+        if (ProductListCode.isEmpty()) {
+
+        } else {
+            return ProductListCode;
+        }
+        
+        String queryName = "from Product p where p.code = '" + product.getName()+ "'"; 
+        System.out.println("query : " + queryName);
+        List<Product> ProductListName = session.createQuery(queryName).list();
+        if (ProductListCode.isEmpty()) {
+            return null;
+        } else {
+            return ProductListName;
+        }
+    }
 
     @Override
     public List<Product> searchProduct(Product product, int option) {
@@ -181,6 +203,8 @@ public class ProductImpl implements ProductDao {
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
+
+    
 
     
 }
