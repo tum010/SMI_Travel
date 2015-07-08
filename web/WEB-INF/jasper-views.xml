@@ -119,6 +119,16 @@
 	   <property name="url" value="/WEB-INF/report/ReceiptEmail.jrxml"/>
         </bean>
         
+        <bean id="ReceiptReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/ReceiptReport.jrxml"/>
+        </bean>
+        
+        <bean id="InvoiceEmail"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/InvoiceEmail.jrxml"/>
+	</bean>
+        
         <bean id="InvoiceReport"
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/InvoiceReport.jrxml"/>
