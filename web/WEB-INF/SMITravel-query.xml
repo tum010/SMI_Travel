@@ -283,7 +283,15 @@
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
     
-    <bean id="InvoiceReportDao" class="com.smi.travel.datalayer.view.dao.impl.InvoiceReportImpl">
+    <bean id="ReceiptDao" class="com.smi.travel.datalayer.view.dao.impl.ReceiptImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="InvoiceEmailDao" class="com.smi.travel.datalayer.view.dao.impl.InvoiceEmailImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="InvoiceDao" class="com.smi.travel.datalayer.view.dao.impl.InvoiceImpl">
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
     
