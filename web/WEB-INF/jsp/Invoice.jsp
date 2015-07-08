@@ -358,13 +358,13 @@
                                             </button>
                                         </div>
                                         <div class="col-md-2 text-left " style="padding-left: 0px">
-                                            <button type="button" onclick="" class="btn btn-default">
+                                            <button type="button" onclick="printInvoiceNew('')" class="btn btn-default">
                                                 <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Print Invoice New
                                             </button>
                                         </div>
                                         <div class="col-md-4 text-right "></div>
                                         <div class="col-md-1 text-right ">
-                                            <button type="button" onclick="printVoucher('');" class="btn btn-default">
+                                            <button type="button" onclick="printInvoice('');" class="btn btn-default">
                                                 <span id="SpanPrint" class="glyphicon glyphicon-print"></span> Print 
                                             </button>
                                         </div>
