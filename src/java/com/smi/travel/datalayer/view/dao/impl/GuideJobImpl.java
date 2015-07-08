@@ -102,8 +102,8 @@ public class GuideJobImpl implements GuideJobDao{
              if(B[22] != null){
                 String coup = "<br>"+util.ConvertString(B[25]);
                 if(B[25] != null){
-                    String coupNew = splitIndexCoupon(coup);
-                    guidejob.setCoup_name(coupNew);
+//                    String coupNew = splitIndexCoupon(coup);
+                    guidejob.setCoup_name(coup);
                 }else{
                     guidejob.setCoup_name("");
                 }  
@@ -113,8 +113,9 @@ public class GuideJobImpl implements GuideJobDao{
 //                    String coupNew = splitIndexCoupon(util.ConvertString(B[25]));
                     guidejob.setCoup_name(util.ConvertString(B[25]));
                 } 
+                guidejob.setBookremark("");
              }
-             guidejob.setBookremark(util.ConvertString(B[22]));
+             
              guidejob.setStafftour(util.ConvertString(B[23]));
              if(B[24] != null){
                  guidejob.setCoupon(util.ConvertString(decimalFormat.format(B[24])));
