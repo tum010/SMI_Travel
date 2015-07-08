@@ -39,10 +39,12 @@ function DeleteBill() {
     document.getElementById('OtherForm').submit();
 }
 
-function printVoucher(){
-   
-    window.open("report.smi?name=InvoiceReport");
-    
+function printInvoice(){  
+    window.open("report.smi?name=InvoiceReport");   
+}
+
+function printInvoiceNew(){  
+    window.open("report.smi?name=InvoiceEmail");   
 }
 
  $(document).ready(function () {
