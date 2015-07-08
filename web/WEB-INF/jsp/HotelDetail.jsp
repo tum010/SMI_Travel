@@ -28,6 +28,7 @@
 <c:set var="passengerList" value="${requestScope['PassengerList']}" />
 <c:set var="refno1" value="${fn:substring(param.referenceNo, 0, 2)}" />
 <c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
+<c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
@@ -435,7 +436,12 @@
                     </c:if>
                     <input name="id" value="${param.id}"type="hidden">
                     <input name="referenceNo" value="${param.referenceNo}"type="hidden">
-                    <button id="hotelSave" name="hotelSave" class="btn btn-success" type="submit"><span class="fa fa-save"></span> Save</button>
+                    <c:if test="${lockUnlockBooking == 0}">
+                        <button id="hotelSave" name="hotelSave" type="submit" class="btn btn-success" ><span class="fa fa-save"></span> Save</button>
+                    </c:if>
+                    <c:if test="${lockUnlockBooking == 1}">
+                        <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
+                    </c:if>    
                 </div>
             </form>
         </div>
