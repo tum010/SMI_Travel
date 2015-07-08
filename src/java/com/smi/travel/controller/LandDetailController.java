@@ -38,6 +38,7 @@ public class LandDetailController extends SMITravelController {
     private static final String PACKAGELIST = "package_list";
     private static final String TransectionResult = "result";
     private static final String CurrencyList = "CurrencyList";
+    private static final String LockUnlockBooking = "LockUnlockBooking";
     private UtilityService utilservice;
     private AgentService agentservice;
     private ProductService productservice;
@@ -302,7 +303,7 @@ public class LandDetailController extends SMITravelController {
             request.setAttribute("departdate", departDate); 
             request.setAttribute("remark", remark);
         }
-
+        request.setAttribute(LockUnlockBooking,master.getFlagLand());
         return LandDetail;
     }
 

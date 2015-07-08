@@ -30,6 +30,8 @@ public class DaytourController extends SMITravelController {
     private static final String OtherLists = "OtherLists";
     private static final String Master = "Master";
     private static final String DaytourBookingList = "DaytourBookingList";
+    private static final String LockUnlockBooking = "LockUnlockBooking";
+
     private BookingOtherService OtherService;
 
     @Override
@@ -73,7 +75,7 @@ public class DaytourController extends SMITravelController {
         request.setAttribute(Bookiing_Size, booksize);
         Master master = utilservice.getMasterdao().getBookingFromRefno(refNo);
         request.setAttribute(Master, master);
-
+        request.setAttribute(LockUnlockBooking,master.getFlagDaytour());
     }
 
     public UtilityService getUtilservice() {

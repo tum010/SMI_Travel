@@ -60,7 +60,8 @@ public class HotelDetailController extends SMITravelController {
     private static final String Result = "Result";
     private static final String TransectionResult = "result";
     private static final String PassengerList = "PassengerList";
-
+    private static final String LockUnlockBooking = "LockUnlockBooking";
+    
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 
@@ -419,6 +420,7 @@ public class HotelDetailController extends SMITravelController {
         request.setAttribute(Bookiing_Size, booksize);
         Master master = utilservice.getMasterdao().getBookingFromRefno(refNo);
         request.setAttribute(Master, master);
+        request.setAttribute(LockUnlockBooking,master.getFlagHotel());
     }
 
     public BookingAirticketService getBookingAirticketService() {

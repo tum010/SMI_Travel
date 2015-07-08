@@ -21,6 +21,7 @@ public class LandController extends SMITravelController {
     private static final String TransectionResult = "result";
     private static final String Booking_Size = "BookingSize";
     private static final String DATALIST = "Land_list";
+    private static final String LockUnlockBooking = "LockUnlockBooking";
     private UtilityService utilservice;
     private BookingLandService landservice;
     
@@ -57,6 +58,7 @@ public class LandController extends SMITravelController {
             }
             
         }
+        request.setAttribute(LockUnlockBooking,master.getFlagLand());
         return Land;
     }
 

@@ -48,6 +48,7 @@ public class DaytourDetailController extends SMITravelController {
     private static final String Coupons = "Coupons";
     private static final String DAYTOURBOOKPRICES = "DAYTOURBOOKPRICES";
     private static final String GuideList = "GuideList";
+    private static final String LockUnlockBooking = "LockUnlockBooking";
 
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -214,6 +215,8 @@ public class DaytourDetailController extends SMITravelController {
 
         List<OtherBooking> couponList = bookingDaytourService.getCouponList(refNo);
         request.setAttribute(Coupons, couponList);
+        
+        request.setAttribute(LockUnlockBooking,master.getFlagDaytour());
     }
 
     //price

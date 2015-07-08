@@ -11,6 +11,7 @@ import com.smi.travel.datalayer.entity.HotelRoom;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.service.BookingAirticketService;
 import com.smi.travel.datalayer.service.BookingHotelService;
+import com.smi.travel.datalayer.service.LockUnlockBookingService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
@@ -40,6 +41,7 @@ public class HotelBookingController extends SMITravelController {
     private UtilityService utilservice;
     private static final String Master = "Master"; 
     private static final String BookType = "BOOKING_TYPE";
+    private static final String LockUnlockBooking = "LockUnlockBooking";
 
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -62,7 +64,7 @@ public class HotelBookingController extends SMITravelController {
             request.setAttribute(HotelBookingList, hotelBookingList);
             setGeneralResponseAttribute(request, refNo);
         }
-
+        
         return HotelBooking;
     }
     
@@ -101,6 +103,7 @@ public class HotelBookingController extends SMITravelController {
         request.setAttribute(BookType,BookingType);
         request.setAttribute(Master, master);
         request.setAttribute(CURRENCY, master.getCurrency());
+        request.setAttribute(LockUnlockBooking,master.getFlagHotel());
     }
 
     public BookingAirticketService getBookingAirticketService() {
@@ -126,4 +129,5 @@ public class HotelBookingController extends SMITravelController {
     public void setUtilservice(UtilityService utilservice) {
         this.utilservice = utilservice;
     }
+
 }

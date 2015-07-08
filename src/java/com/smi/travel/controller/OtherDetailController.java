@@ -27,6 +27,7 @@ public class OtherDetailController extends SMITravelController {
     private static final String TransectionResult = "result";
     private static final String BOOKINGTYPE = "BOOKING_TYPE";
     private static final String CurrencyList = "currency_list";
+    private static final String LockUnlockBooking = "LockUnlockBooking";
     private UtilityService utilservice;
     private BookingOtherService OtherService;
     private UtilityFunction util;
@@ -235,6 +236,7 @@ public class OtherDetailController extends SMITravelController {
         List<MCurrency> mCurrency = utilservice.getListMCurrency();
         request.setAttribute(CurrencyList, mCurrency);
         System.out.println("OtherController");
+        request.setAttribute(LockUnlockBooking,master.getFlagOther());
         return OtherDetail;
     }
 

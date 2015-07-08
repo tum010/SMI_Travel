@@ -32,6 +32,7 @@ public class OtherController extends SMITravelController {
     private static final String TOTALPRICE = "totalprice";
     private static final String AMOUNT = "amount";
     private static final String MARKUP = "markup";
+    private static final String LockUnlockBooking = "LockUnlockBooking";
     private UtilityService utilservice;
     private BookingOtherService OtherService;
 
@@ -97,7 +98,7 @@ public class OtherController extends SMITravelController {
         if(String.valueOf(callPageFrom).equalsIgnoreCase("FromDayTour")){
             return new ModelAndView("redirect:Daytour.smi?referenceNo=" + refno + "&action=edit");
         }
-
+        request.setAttribute(LockUnlockBooking,master.getFlagOther());
         return Other;
     }
 
