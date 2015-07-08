@@ -174,19 +174,21 @@ $(document).ready(function () {
 // DETAIL TABLE
 $(document).ready(function () {
     AddRow(parseInt($("#counter").val()));
-
+    var templock = parseInt($("#requestLock").val());
     $("#DetailTable").on('click', '.remCF', function () {
-        //console.log('remove');
-        $(this).parent().parent().remove();
-        //$(this).parent().parent().hide();
-        var rowAll = $("#DetailTable tr").length;
-        console.log("rowAll : " + rowAll);
-        $("#counter").val(rowAll);
+        if(templock == 0){
+            //console.log('remove');
+            $(this).parent().parent().remove();
+            //$(this).parent().parent().hide();
+            var rowAll = $("#DetailTable tr").length;
+            console.log("rowAll : " + rowAll);
+            $("#counter").val(rowAll);
 
-        if (rowAll < 2) {
-            console.log("show button tr_FormulaAddRow");
-            $("#tr_FormulaAddRow").removeClass("hide");
-            $("#tr_FormulaAddRow").addClass("show");
+            if (rowAll < 2) {
+                console.log("show button tr_FormulaAddRow");
+                $("#tr_FormulaAddRow").removeClass("hide");
+                $("#tr_FormulaAddRow").addClass("show");
+            }
         }
     });
     $("#tr_FormulaAddRow a").on('click', function () {
