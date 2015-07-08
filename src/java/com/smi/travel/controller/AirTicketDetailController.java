@@ -82,6 +82,8 @@ public class AirTicketDetailController extends SMITravelController {
     private static final String[] resultText = {"Save unsuccessful", "Save successful", "Airline doesnot exist"};
     private static final String MInitialname = "MInitialname";
     private static final String Result = "Result";
+    private static final String LockUnlockBooking = "LockUnlockBooking";
+
 
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -181,7 +183,7 @@ public class AirTicketDetailController extends SMITravelController {
         String codeAirline = request.getParameter("");
         Master master = utilservice.getMasterdao().getBookingFromRefno(referenceNo);
         request.setAttribute(Master, master);
-
+        request.setAttribute(LockUnlockBooking,master.getFlagAir());
         int[] booksize = utilservice.getCountItemFromBooking(referenceNo);
         request.setAttribute(Bookiing_Size, booksize);
 
