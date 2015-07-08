@@ -195,16 +195,19 @@ function getDate() {
 // ### Formula PANAL ### //
 $(document).ready(function () {
     FormulaAddRow(parseInt($("#table-formula-size").val()) + 1);
+    var templock = parseInt($("#requestLock").val());
     $("#formula-table").on('click', '.newRemCF', function () {
+        if(templock == 0){
         //console.log('remove');
-        $(this).parent().parent().remove();
-        var rowAll = $("#formula-table tr").length;
-        console.log("rowAll : " + rowAll);
-        $("#roomCounter").val(rowAll);
-        if (rowAll < 2) {
-            console.log("show button tr_FormulaAddRow");
-            $("#tr_FormulaAddRow").removeClass("hide");
-            $("#tr_FormulaAddRow").addClass("show");
+            $(this).parent().parent().remove();
+            var rowAll = $("#formula-table tr").length;
+            console.log("rowAll : " + rowAll);
+            $("#roomCounter").val(rowAll);
+            if (rowAll < 2) {
+                console.log("show button tr_FormulaAddRow");
+                $("#tr_FormulaAddRow").removeClass("hide");
+                $("#tr_FormulaAddRow").addClass("show");
+            }
         }
     });
     $("#tr_FormulaAddRow a").on('click', function () {
@@ -273,14 +276,17 @@ function deleteRoom(hotelId, roomId) {
 // ### ADDTION PANEL ### //
 $(document).ready(function () {
     AdditionAddRow(parseInt($("#table-additional-size").val()) + 1);
+    var templock = parseInt($("#requestLock").val());
     $("#addition-table").on('click', '.newRemCF', function () {
-        $(this).parent().parent().remove();
-        var rowAll = $("#addition-table tr").length;
-        console.log("rowAll : " + rowAll);
-        if (rowAll < 2) {
-            console.log("show button");
-            $("#tr_AdditionAddRow").removeClass("hide");
-            $("#tr_AdditionAddRow").addClass("show");
+        if(templock == 0){
+            $(this).parent().parent().remove();
+            var rowAll = $("#addition-table tr").length;
+            console.log("rowAll : " + rowAll);
+            if (rowAll < 2) {
+                console.log("show button");
+                $("#tr_AdditionAddRow").removeClass("hide");
+                $("#tr_AdditionAddRow").addClass("show");
+            }
         }
     });
     $("#tr_AdditionAddRow a").click(function () {
@@ -345,14 +351,17 @@ function deleteAddition(hotelId, requestId) {
 // ### PASSENGER PANEL ### //
 $(document).ready(function () {
     PassengerAddRow((parseInt($("#table-passenger-size").val()) + 1));
+    var templock = parseInt($("#requestLock").val());
     $("#passenger-table").on('click', '.newRemCF', function () {
-        $(this).parent().parent().remove();
-        var rowAll = $("#passenger-table tr").length;
-        console.log("rowAll : " + rowAll);
-        if (rowAll < 2) {
-            console.log("show button");
-            $("#tr_PassengerAddRow").removeClass("hide");
-            $("#tr_PassengerAddRow").addClass("show");
+        if(templock == 0){
+            $(this).parent().parent().remove();
+            var rowAll = $("#passenger-table tr").length;
+            console.log("rowAll : " + rowAll);
+            if (rowAll < 2) {
+                console.log("show button");
+                $("#tr_PassengerAddRow").removeClass("hide");
+                $("#tr_PassengerAddRow").addClass("show");
+            }
         }
     });
     $("#tr_PassengerAddRow a").click(function () {
