@@ -24,6 +24,7 @@
 <c:set var="packList" value="${requestScope['packagelist']}" />
 <c:set var="refno1" value="${fn:substring(param.referenceNo, 0, 2)}" />
 <c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
+<c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
 
 <input type="hidden" value="1" id="enable-status">
 <input type="hidden" value="${param.action}" id="actionIDown">
@@ -302,9 +303,14 @@
 
                 <!--Save-->
                 <div class="text-center" style="margin-top: 10px">
-                    <button id="BookDetailButtonSave" type="submit" class="btn btn-success" >
-                        <span id="BookDetailSpanSave" class="fa fa-save"></span> Save
-                    </button>
+                    <c:if test="${lockUnlockBooking == 0}">
+                        <button id="BookDetailButtonSave" type="submit" class="btn btn-success" >
+                            <span id="BookDetailSpanSave" class="fa fa-save"></span> Save
+                        </button>                           
+                    </c:if>
+                    <c:if test="${lockUnlockBooking == 1}">
+                        <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
+                    </c:if> 
                 </div>
 
 
