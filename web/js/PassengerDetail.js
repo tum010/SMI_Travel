@@ -235,6 +235,7 @@ function CallAjaxPassengerAuto(param){
                         for(var i =0;i < PSListCode.length;i++){
                             if((psselect===PSListLastName[i]+" "+PSListFirtName[i])||(psselect===PSListCode[i])){  
                                 $("#customerId").val(PSListId[i]);
+                                $("#passengerId").val(PSListCode[i]);
                                 $("#passengerIdVal").val(PSListCode[i]);
                                 $("#MInitialname").val(PSListInitialName[i]);
                                 $("#firstName").val(PSListFirtName[i]);

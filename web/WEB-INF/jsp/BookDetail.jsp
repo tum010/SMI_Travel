@@ -161,8 +161,10 @@
                                 <div class="col-sm-2 form-group"> 
                                     <div class="input-group">
                                         <input type="hidden" class="form-control" id="leaderId" name="leaderId" value="${detail.customer.id}"/>
-                                        <input type="text" class="form-control" id="FamilyLeaderCode" name="leaderCode" value="${detail.customer.code}"   style="background-color: #ffffff">
+                                        <input type="hidden" class="form-control" id="FamilyLeaderCode"  name="leaderCode" value="${detail.customer.code}"/>
+                                        <input type="text" class="form-control" id="FamilyLeaderCodeVal" name="leaderCodeVal" value="${detail.customer.code}"   style="background-color: #ffffff">
                                         <span class="input-group-addon" id="familyleader-modal"  data-toggle="modal" data-target="#FamilyLeaderModal">
+                                            <i id="datafamilyload" class="fa fa-spinner fa-spin hidden"></i>
                                             <span class="glyphicon-search glyphicon"></span>
                                         </span>
                                     </div>
@@ -399,7 +401,7 @@
                     </thead>
                     <tbody>
                     <script>
-                        customer = [];
+//                        customer = [];
                     </script>
                     <c:forEach var="customer" items="${customerList}">
                         <tr onclick="setCustomerDetail('${customer.id}', '${customer.code}', '${customer.MInitialname.name}', '${customer.firstName}', '${customer.lastName}', '${customer.address}', '${customer.tel}')">
@@ -412,9 +414,9 @@
                             <td >${customer.tel}</td>
                         </tr>
                         <script>
-                            customer.push({id: "${customer.id}", code: "${customer.code}", 
-                                            initial: "${customer.MInitialname.name}", firstName: "${customer.firstName}", 
-                                            lastName: "${customer.lastName}", address: "${customer.address}", tel: "${customer.tel}"});   
+//                            customer.push({id: "${customer.id}", code: "${customer.code}", 
+//                                            initial: "${customer.MInitialname.name}", firstName: "${customer.firstName}", 
+//                                            lastName: "${customer.lastName}", address: "${customer.address}", tel: "${customer.tel}"});   
                         </script>
                     </c:forEach>
                     </tbody>

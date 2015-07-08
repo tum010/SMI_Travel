@@ -89,6 +89,8 @@ $(document).ready(function () {
     if ($("#ch_pax").val() === "1") {
         $('#pax').prop('checked', true);
     }
+    
+    //on modal Customer
     $("#filtercus").keyup(function (event) {
         if (event.keyCode === 13) {
             FilterCustomerList($("#filtercus").val());
@@ -99,67 +101,207 @@ $(document).ready(function () {
 
 });
 
-
+var showflag = 1;
 // ON KEY INPUT AUTO SELECT  FAMILY LEADER
-$(function () {
-    //console.log(customer);
-    var codeCustomer = [];
-    $.each(customer, function (key, value) {
-        codeCustomer.push(value.code);
-        if ( !(value.lastName in codeCustomer) ){
-           codeCustomer.push(value.lastName);
-        }
-        if ( !(value.firstName in codeCustomer) ){
-           codeCustomer.push(value.firstName);
-          
-        }
-    });
+function searchCustomerAutoList(name){
+    var servletName = 'BookDetailServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&name=' + name +
+            '&type=' + 'getCustomerAutoList';
+    CallAjaxFamilyAuto(param);
+}
 
-    $("#FamilyLeaderCode").autocomplete({
-        source: codeCustomer,
-        close:function( event, ui ) {
-           $("#FamilyLeaderCode").trigger('keyup');
-        }
-    });
-    $("#FamilyLeaderCode").keyup(function () {
-        var position = $(this).offset();
-        $(".ui-widget").css("top", position.top + 30);
-        $(".ui-widget").css("left", position.left);
-        var code = this.value.toUpperCase();
-        var firstname,lastname = this.value;
-        $("#leaderId,#initialname,#firstname,#lastName,#address,#tel").val(null);
-        $.each(customer, function (key, value) {
-            if (value.code.toUpperCase() === code) {
-                $("#leaderId").val(value.id);
-                $("#initialname").val(value.initial);
-                $("#firstname").val(value.firstName);
-                $("#lastname").val(value.lastName);
-                $("#address").val(value.address);
-                $("#tel").val(value.tel);
-            }
-            if(firstname === value.firstName){
-                $("#FamilyLeaderCode").val(value.code);
-                $("#leaderId").val(value.id);
-                $("#initialname").val(value.initial);
-                $("#lastname").val(value.lastName);
-                $("#firstname").val(value.firstName);
-                $("#address").val(value.address);
-                $("#tel").val(value.tel);
-                code = $("#FamilyLeaderCode").val().toUpperCase();
-            }
-            if(lastname === value.lastName){
-                $("#FamilyLeaderCode").val(value.code);
-                $("#leaderId").val(value.id);
-                $("#initialname").val(value.initial);
-                $("#lastname").val(value.lastName);
-                $("#firstname").val(value.firstName);
-                $("#address").val(value.address);
-                $("#tel").val(value.tel);
-                code = $("#FamilyLeaderCode").val().toUpperCase();
+function CallAjaxFamilyAuto(param){
+     var url = 'AJAXServlet';
+     var cusArray = [];
+     var cusListId= [];
+     var cusListCode= [];
+     var cusListInitialname= [];
+     var cusListFirstname= [];
+     var cusListLastname= [];
+     var cusListTel= [];
+     var cusListAddress= [];
+     var cusid , cuscode,cusinitialname ,cusfirstname,cuslastname,custel,cusaddress;
+     $("#FamilyLeaderCodeVal").autocomplete("destroy");
+     try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            beforeSend: function() {
+               $("#datafamilyload").removeClass("hidden");    
+            },
+            success: function(msg) {     
+                console.log("getCustomerAutoList =="+msg);
+                var cusJson =  JSON.parse(msg);
+                for (var i in cusJson){
+                    if (cusJson.hasOwnProperty(i)){
+                        cusid = cusJson[i].id;
+                        cuscode = cusJson[i].code;
+                        cusinitialname = cusJson.initialname;
+                        cusfirstname = cusJson[i].firstname;
+                        cuslastname = cusJson[i].lastname;
+                        custel = cusJson[i].tel;
+                        cusaddress = cusJson[i].address;
+                        cusArray.push(cuscode);
+                        cusArray.push(cuslastname+" "+cusfirstname);
+                        
+                        cusListId.push(cusid);
+                        cusListCode.push(cuscode);
+                        cusListInitialname.push(cusinitialname);
+                        cusListFirstname.push(cusfirstname);
+                        cusListLastname.push(cuslastname);
+                        cusListTel.push(custel);
+                        cusListAddress.push(cusaddress);
+                    }                 
+                     $("#datafamilyload").addClass("hidden"); 
+                }
+                $("#leaderId").val(cusid);
+                $("#FamilyLeaderCode").val(cuscode);
+                $("#get-initial").val(cusinitialname);
+                $("#firstname").val(cusfirstname);
+                $("#lastname").val(cuslastname);
+                $("#tel").val(custel);
+                $("#address").val(cusaddress);
+                $("#FamilyLeaderCodeVal").autocomplete({
+                    source: cusArray,
+                    close: function(){
+                         $("#FamilyLeaderCodeVal").trigger("keyup");
+                         var familyselect = $("#FamilyLeaderCodeVal").val();
+                        for(var i =0;i<cusListId.length;i++){
+                            if((familyselect===cusListLastname[i]+" "+cusListFirstname[i]) || (familyselect===cusListCode[i])){      
+                                $("#leaderId").val(cusListId[i]);
+                                $("#FamilyLeaderCode").val(cusListCode[i]);
+                                $("#FamilyLeaderCodeVal").val(cusListCode[i]);
+                                $("#get-initial").val(cusListInitialname[i]);
+                                $("#firstname").val(cusListFirstname[i]);
+                                $("#lastname").val(cusListLastname[i]);
+                                $("#tel").val(cusListTel[i]);
+                                $("#address").val(cusListAddress[i]);
+                            }                 
+                        }   
+                    }
+                 });
+                
+                var familyVal = $("#FamilyLeaderCodeVal").val();
+                for(var i =0;i<cusListId.length;i++){
+                    if(familyVal===cusListFirstname[i]){
+                        $("#FamilyLeaderCodeVal").val(cusListCode[i]);
+                    }
+                }
+                if(cusListId.length === 1){
+                    showflag = 0;
+                    $("#FamilyLeaderCodeVal").val(cusListCode[0]);
+                }
+                var event = jQuery.Event('keydown');
+                event.keyCode = 40;
+                $("#FamilyLeaderCodeVal").trigger(event);
+                  
+            }, error: function(msg) {
+                console.log('auto ERROR');
+                $("#datafamilyload").addClass("hidden");
             }
         });
+    } catch (e) {
+        alert(e);
+    }
+}
+
+$(function () {//getCustomerAutoList
+  //Autocomplete Ajax begin     
+    $("#FamilyLeaderCodeVal").keyup(function(event){   
+        var position = $(this).offset();
+        $(".ui-widget").css("top", position.top + 30);
+        $(".ui-widget").css("left", position.left); 
+        if($(this).val() === ""){
+            $("#leaderId").val("");
+            $("#initialname").val("");
+            $("#firstname").val("");
+            $("#lastname").val("");
+            $("#tel").val("");
+            $("#address").val("");
+        }else{
+            if(event.keyCode === 13){
+                searchCustomerAutoList(this.value); 
+            }
+        }
+    });
+    $("#FamilyLeaderCodeVal").keydown(function(){
+            var position = $(this).offset();
+            $(".ui-widget").css("top", position.top + 30);
+            $(".ui-widget").css("left", position.left); 
+            if(showflag === 0){
+                $(".ui-widget").css("top", -1000);
+                showflag=1;
+            }
         
     });
+    
+//Autocomplete Ajax end 
+ 
+ 
+//.>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//    var codeCustomer = [];
+//    $.each(customer, function (key, value) {
+//        codeCustomer.push(value.code);
+//        if ( !(value.lastName in codeCustomer) ){
+//           codeCustomer.push(value.lastName);
+//        }
+//        if ( !(value.firstName in codeCustomer) ){
+//           codeCustomer.push(value.firstName);
+//          
+//        }
+//    });
+//
+//    $("#FamilyLeaderCode").autocomplete({
+//        source: codeCustomer,
+//        close:function( event, ui ) {
+//           $("#FamilyLeaderCode").trigger('keyup');
+//        }
+//    });
+//    $("#FamilyLeaderCode").keyup(function () {
+//        var position = $(this).offset();
+//        $(".ui-widget").css("top", position.top + 30);
+//        $(".ui-widget").css("left", position.left);
+//        var code = this.value.toUpperCase();
+//        var firstname,lastname = this.value;
+//        $("#leaderId,#initialname,#firstname,#lastName,#address,#tel").val(null);
+//        $.each(customer, function (key, value) {
+//            if (value.code.toUpperCase() === code) {
+//                $("#leaderId").val(value.id);
+//                $("#initialname").val(value.initial);
+//                $("#firstname").val(value.firstName);
+//                $("#lastname").val(value.lastName);
+//                $("#address").val(value.address);
+//                $("#tel").val(value.tel);
+//            }
+//            if(firstname === value.firstName){
+//                $("#FamilyLeaderCode").val(value.code);
+//                $("#leaderId").val(value.id);
+//                $("#initialname").val(value.initial);
+//                $("#lastname").val(value.lastName);
+//                $("#firstname").val(value.firstName);
+//                $("#address").val(value.address);
+//                $("#tel").val(value.tel);
+//                code = $("#FamilyLeaderCode").val().toUpperCase();
+//            }
+//            if(lastname === value.lastName){
+//                $("#FamilyLeaderCode").val(value.code);
+//                $("#leaderId").val(value.id);
+//                $("#initialname").val(value.initial);
+//                $("#lastname").val(value.lastName);
+//                $("#firstname").val(value.firstName);
+//                $("#address").val(value.address);
+//                $("#tel").val(value.tel);
+//                code = $("#FamilyLeaderCode").val().toUpperCase();
+//            }
+//        });
+//        
+//    });
 });
 
 // AGENT 
