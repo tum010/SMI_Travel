@@ -249,6 +249,5 @@
     <bean id="StockService" class="com.smi.travel.datalayer.service.StockService">
         <property name="stockDao" ref="StockDao" />
     </bean>
-   
     <!--<add data>-->
 </beans>
