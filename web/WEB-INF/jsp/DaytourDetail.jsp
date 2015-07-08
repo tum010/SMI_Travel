@@ -21,9 +21,10 @@
 <c:set var="coupons" value="${requestScope['Coupons']}" />
 <c:set var="daytourbookPrices" value="${requestScope['DAYTOURBOOKPRICES']}" />
 <c:set var="guideList" value="${requestScope['GuideList']}" />
-
 <c:set var="refno1" value="${fn:substring(param.referenceNo, 0, 2)}" />
 <c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
+<c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
+
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
@@ -383,7 +384,12 @@
                 <!--</div>-->
                 <div class="col-xs-12 form-group"  ></div>
                 <div class="text-center" style="margin-top: 20px">
-                    <button id="ButtonSave" type="submit" onclick="submitAction();" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
+                    <c:if test="${lockUnlockBooking == 0}">
+                        <button id="ButtonSave" type="submit" onclick="submitAction();" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
+                    </c:if>
+                    <c:if test="${lockUnlockBooking == 1}">
+                        <button class="btn btn-success disabled"><span class="fa fa-save"></span> Save</button>
+                    </c:if>   
                     <input type="hidden" name="action" id="action" value="${param.action}">
                 </div>
             </form>
