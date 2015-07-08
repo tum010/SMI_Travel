@@ -34,10 +34,14 @@
                         <label class="control-label">REF NO.</lable>
                     </div>
                     <div class="col-md-2 form-group text-left" style="padding-left:0px;padding-right:0px;width:150px;">
-                        <div class="col-sm-12">
-                            <input type="text"  class="form-control" id="referenceNo" name="referenceNo"  value="${bookStatusFromRefNo.referenceNo}" >
+                        <div class="col-sm-9">
+                            <input style="width:100px;" type="text"  class="form-control" id="referenceNo" name="referenceNo"  value="${bookStatusFromRefNo.referenceNo}" >
+                        </div>
+                        <div class="col-sm-1 text-right" style="padding-top: 8px;">
+                            <i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i>
                         </div>
                     </div>
+                   
                     <div class="col-xs-1 text-right" style="padding-left: 0px;width:100px;">
                         <label class="control-label">Status</lable>
                     </div>
@@ -97,7 +101,7 @@
                     </button>
                 </div>
                 <div class="col-xs-2 text-left" style="width: 100px;">
-                    <a id="ButtonNew" name="ButtonNew" onclick="" class="btn btn-primary">
+                    <a id="ButtonNew" name="ButtonNew" onclick="clearAction()" class="btn btn-primary">
                         <i class="glyphicon glyphicon-plus"></i> New
                     </a>
                 </div> 
@@ -255,9 +259,9 @@ function CallAjax(param) {
                 document.getElementById('flagLand').value = path[4];
                 document.getElementById('flagOther').value = path[5];
                 setCheckboxFlag();
+                $("#ajaxload").addClass("hidden");
             }, error: function(msg) {
                 $("#ajaxload").addClass("hidden");
-                alert('error');
             }
         });
     } catch (e) {
@@ -314,7 +318,20 @@ function inputCheckBoxVal(){
         $("#flagOther").val('0');
     }
 }
-
+function clearAction() {
+    $("#referenceNo").val('');
+    $("#SelectStatus").val('1');
+    $('input:checkbox[name=flagAir]').attr('checked',false);
+    $("#flagAir").val('0');
+    $('input:checkbox[name=flagHotel]').attr('checked',false);
+    $("#flagHotel").val('0');
+    $('input:checkbox[name=flagDaytour]').attr('checked',false);
+    $("#flagDaytour").val('0');
+    $('input:checkbox[name=flagLand]').attr('checked',false);
+    $("#flagLand").val('0');
+    $('input:checkbox[name=flagOther]').attr('checked',false);
+    $("#flagOther").val('0');
+}
     $('input[type="checkbox"]').checkbox({
         checkedClass: 'icon-check',
         uncheckedClass: 'icon-check-empty'
