@@ -64,7 +64,7 @@
                         <button type="submit" id="ButtonShow" name="ButtonShow" onclick="showReceiptListTable()" style="height:34px" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Show </button>
                     </div>
                     <div class="col-xs-1 text-left" >
-                        <button type="submit" id="ButtonPrint" name="ButtonPrint" class="btn btn-default"><i class="fa fa-print"></i> Print </button>
+                        <button type="submit" id="ButtonPrint" name="ButtonPrint" class="btn btn-default"><i class="glyphicon glyphicon-print"></i> Print </button>
                     </div>
                 </div>
             </form>
