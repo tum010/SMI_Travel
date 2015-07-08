@@ -10,6 +10,7 @@
 <c:set var="master" value="${requestScope['Master']}" />
 <c:set var="refno1" value="${fn:substring(param.referenceNo, 0, 2)}" />
 <c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
+<c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
@@ -64,8 +65,14 @@
                 <div class="row-fluid">
 
                     <div class="form-actions pull-right" style="padding-right: 20px">
-                        <a href="LandDetail.smi?referenceNo=${param.referenceNo}&action=add"><button type="button" id="acs" onclick=""  class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>Add</button>  </a>   
-
+                        <c:if test="${lockUnlockBooking == 0}">
+                            <a href="LandDetail.smi?referenceNo=${param.referenceNo}&action=add"><button type="button" id="acs" onclick=""  class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>Add</button>  </a>   
+                        </c:if>
+                        <c:if test="${lockUnlockBooking == 1}">
+                            <a class="btn btn-success disabled">
+                                <span class="glyphicon glyphicon-plus"></span>Add</button>
+                            </a>   
+                        </c:if>
                     </div>
                     <c:choose>
                         <c:when test="${booktype == 'i'}">
@@ -173,7 +180,12 @@
                                         <span class="glyphicon glyphicon-plus addicon"   onclick="EnableLand('${table.id}', ' ${table.agent.code}');" data-toggle="modal" data-target="#EnableLand" ></span>
                                     </c:if>
                                     <c:if test="${table.MItemstatus.id == 1}">
-                                        <span class="glyphicon glyphicon-remove deleteicon"   onclick="DeleteLand('${table.id}', ' ${table.agent.code}');" data-toggle="modal" data-target="#DelLand" ></span>
+                                        <c:if test="${lockUnlockBooking == 0}">
+                                            <span class="glyphicon glyphicon-remove deleteicon"   onclick="DeleteLand('${table.id}', ' ${table.agent.code}');" data-toggle="modal" data-target="#DelLand" ></span>
+                                        </c:if>
+                                        <c:if test="${lockUnlockBooking == 1}">
+                                            <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                        </c:if>
                                     </c:if>
                                 </td>
                             </tr>
