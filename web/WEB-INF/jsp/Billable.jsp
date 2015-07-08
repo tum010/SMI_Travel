@@ -24,6 +24,8 @@
 <c:set var="mBankList" value="${requestScope['MBankList']}" />
 <c:set var="refno1" value="${fn:substring(param.referenceNo, 0, 2)}" />
 <c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
+<c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
+
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
@@ -360,10 +362,15 @@
                         <textarea id="description" maxlength="100" name="description" class="form-control" >${billable.remark}</textarea>
                     </div>
                 </div>
-
+                    
 
                 <div class="text-center" style="padding-top: 10px">
-                    <button id="ButtonSave" name="ButtonSave" type="submit" onclick class="btn btn-success" ><span id="SpanButtonSave" class="fa fa-save"></span> Save</button>
+                    <c:if test="${lockUnlockBooking == 0}">
+                        <button id="ButtonSave" name="ButtonSave" type="submit" onclick class="btn btn-success" ><span id="SpanButtonSave" class="fa fa-save"></span> Save</button>
+                    </c:if>
+                    <c:if test="${lockUnlockBooking == 1}">
+                        <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
+                    </c:if> 
                 </div>
 
             </form>
