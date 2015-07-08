@@ -43,6 +43,7 @@
                         </c:when> 
                     </c:choose>                
                 </div>
+                <div class="col-xs-12 form-group"><hr/></div>
             </div>
             <hr/>
             
@@ -589,13 +590,13 @@
                                     </button>
                                 </div>
                                 <div class="col-md-1 text-left " style="width: 150px">
-                                    <button type="button" class="btn btn-default">
+                                    <button type="button" class="btn btn-default" onclick="printReceiptNew('')">
                                         <span id="buttonPrintReceiptNew" class="glyphicon glyphicon-print"></span> Print Receipt New
                                     </button>
                                 </div>
                                 <div class="col-md-2 text-right "></div>
                                 <div class="col-md-1 text-right " style="width: 100px">
-                                    <button type="button" class="btn btn-default">
+                                    <button type="button" class="btn btn-default" onclick="printReceipt('')">
                                         <span id="buttonPrint" class="glyphicon glyphicon-print"></span> Print 
                                     </button>
                                 </div>
@@ -818,5 +819,13 @@
         });
 
     });
+    
+    function printReceiptNew() {
+        window.open("report.smi?name=ReceiptEmail");
+    }
+    
+    function printReceipt() {
+        window.open("report.smi?name=ReceiptReport");
+    }
 
 </script>
