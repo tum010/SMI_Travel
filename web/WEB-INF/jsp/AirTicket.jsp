@@ -96,6 +96,7 @@
                         <input type="hidden" value="${master.referenceNo}" id="referenceNo" name="referenceNo"/>
                     </c:otherwise>
                 </c:choose>
+                <input type="hidden" id="requestLock" name="requestLock" value="${lockUnlockBooking}"/>
                 <input type="hidden" value="${action}" id="action" name="action" />
                 <!--Detail Panel-->
                 <div class="panel panel-default">
