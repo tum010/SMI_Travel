@@ -137,13 +137,16 @@
                     }
                 });
 
-*/
+*/              
+                var templock = parseInt($("#requestLock").val());
                 $("#LandItinerary").on('click', '.remCF', function() {
-                    $(this).parent().parent().remove();
-                     var rowAll = $("#LandItinerary tr").length;
-                    if (rowAll < 2) {
-                        $("#tr_ItineraryAddRow").removeClass("hide");
-                        $("#tr_ItineraryAddRow").addClass("show");
+                    if(templock == 0){
+                        $(this).parent().parent().remove();
+                         var rowAll = $("#LandItinerary tr").length;
+                        if (rowAll < 2) {
+                            $("#tr_ItineraryAddRow").removeClass("hide");
+                            $("#tr_ItineraryAddRow").addClass("show");
+                        }
                     }
                 });
                 $("#LandItinerary").on("keyup", function() {
@@ -255,7 +258,7 @@
         <div class="col-sm-10">
             <div ng-include="'WebContent/Book/BookNavbar.html'"></div>
             <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
-
+            <input type="hidden" id="requestLock" name="requestLock" value="${lockUnlockBooking}"/>
             <form  id="landForm" action="LandDetail.smi" method="post" role="form" class="form-horizontal">
                 <div class="row">
                     <div class="col-sm-3">
