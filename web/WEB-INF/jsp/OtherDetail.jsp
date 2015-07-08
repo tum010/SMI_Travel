@@ -30,6 +30,8 @@
     <c:set var="enableVat" value="disabled" />
     <c:set var="checkVat" value="" />
 </c:if>
+<c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
+
 <section class="content-header" >
     <h1>
         Booking - Other Detail
@@ -295,7 +297,12 @@
                                     <button type="submit" disabled  class="btn btn-success"><span class="fa fa-save"></span> Save</button>
                                 </c:when>
                                 <c:otherwise>
-                                     <button type="submit"  class="btn btn-success"><span class="fa fa-save"></span> Save</button>
+                                    <c:if test="${lockUnlockBooking == 0}">
+                                        <button type="submit"  class="btn btn-success"><span class="fa fa-save"></span> Save</button>
+                                    </c:if>
+                                    <c:if test="${lockUnlockBooking == 1}">
+                                        <button class="btn btn-success disabled"><span class="fa fa-save"></span> Save</button>
+                                    </c:if>   
                                 </c:otherwise>
                             </c:choose>
                                  
