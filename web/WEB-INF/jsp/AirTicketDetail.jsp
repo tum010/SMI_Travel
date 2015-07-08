@@ -33,6 +33,8 @@
 <c:set var="result" value="${requestScope['Result']}" />
 <c:set var="refno1" value="${fn:substring(param.referenceNo, 0, 2)}" />
 <c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
+<c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
+
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
@@ -99,7 +101,14 @@
                                 <button type="button" disabled class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add</button>
                             </c:when>
                             <c:otherwise>
-                                <a id="btn-add"  class="btn btn-success" data-toggle="collapse" data-parent="#accordion" aria-controls="collapseExample"><span class="glyphicon glyphicon-plus"></span> Add</a>
+                                <c:if test="${lockUnlockBooking == 0}">
+                                    <a id="btn-add"  class="btn btn-success" data-toggle="collapse" data-parent="#accordion" aria-controls="collapseExample"><span class="glyphicon glyphicon-plus"></span> Add</a>
+                                </c:if>
+                                <c:if test="${lockUnlockBooking == 1}">
+                                    <a class="btn btn-success disabled">
+                                        <span class="glyphicon glyphicon-plus"></span>Add</button>
+                                    </a>   
+                                </c:if>
                             </c:otherwise>
                         </c:choose>
 
@@ -757,9 +766,16 @@
                     </div>
                     <div class="text-right" style="padding:5px 15px">
                         <%--<c:if test="${empty currentPnr.pnr || currentPnr.pnr=='DUMMY' }">--%>
-                        <a id="btn-addPassenger" class="btn btn-success" data-toggle="collapse" data-parent="#accordion"  aria-controls="collapseExample">
-                            <span class="glyphicon glyphicon-plus"></span> Add
-                        </a>
+                        <c:if test="${lockUnlockBooking == 0}">
+                            <a id="btn-addPassenger" class="btn btn-success" data-toggle="collapse" data-parent="#accordion"  aria-controls="collapseExample">
+                                <span class="glyphicon glyphicon-plus"></span> Add
+                            </a>
+                        </c:if>
+                        <c:if test="${lockUnlockBooking == 1}">
+                            <a class="btn btn-success disabled">
+                                <span class="glyphicon glyphicon-plus"></span>Add</button>
+                            </a>   
+                        </c:if>
                         <%--</c:if>--%>
                     </div>
                     <div class="panel-body">
@@ -840,8 +856,8 @@
                                             <span id="passenger_tableSpanEdit${pStatus.count}" class="glyphicon glyphicon-edit editicon"></span>
                                         </a>
                                         <a id="passenger_tableButtonRemove${pStatus.count}" href="#" class="confirm-delete" data-id="${passenger.id}">
-                                            <span id="passenger_tableSpanRemove${pStatus.count}" class="glyphicon glyphicon-remove deleteicon"></span>
-                                        </a>
+                                                <span id="passenger_tableSpanRemove${pStatus.count}" class="glyphicon glyphicon-remove deleteicon"></span>
+                                        </a> 
                                     </td>
                                 </tr>
 
@@ -1006,7 +1022,12 @@
                             <button type="button" disabled id="saveDetail" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
                         </c:when>
                         <c:otherwise>
-                            <button id="ButtonSave" class="btn btn-success" type="submit"><span class="fa fa-save"></span> Save</button>
+                            <c:if test="${lockUnlockBooking == 0}">
+                                <button id="ButtonSave" class="btn btn-success" type="submit"><span class="fa fa-save"></span> Save</button>
+                            </c:if>
+                            <c:if test="${lockUnlockBooking == 1}">
+                                <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
+                            </c:if> 
                         </c:otherwise>
                     </c:choose>
                 </div>
