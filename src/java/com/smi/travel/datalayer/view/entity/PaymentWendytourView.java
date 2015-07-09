@@ -21,7 +21,7 @@ public class PaymentWendytourView {
     private String InvoiceSup;
     private int accNo;
     private String department;
-    private double total;
+    private BigDecimal total;
     private String currency;
     private String status;
     
@@ -29,7 +29,7 @@ public class PaymentWendytourView {
         
     }
 
-    public PaymentWendytourView(String id, String payNo, Date payDate, String payType, String InvoiceSup, int accNo, String department, double total, String currency, String status) {
+    public PaymentWendytourView(String id, String payNo, Date payDate, String payType, String InvoiceSup, int accNo, String department, BigDecimal total, String currency, String status) {
         this.id = id;
         this.payNo = payNo;
         this.payDate = payDate;
@@ -98,11 +98,11 @@ public class PaymentWendytourView {
         this.department = department;
     }
 
-    public double getTotal() {
+    public BigDecimal getTotal() {
         return total;
     }
 
-    public void setTotal(double total) {
+    public void setTotal(BigDecimal total) {
         this.total = total;
     }
 
