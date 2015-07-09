@@ -35,7 +35,7 @@
                     </div>
                     <div class="col-md-2 form-group text-left" style="padding-left:0px;padding-right:0px;width:150px;">
                         <div class="col-sm-9">
-                            <input style="width:100px;" type="text" class="form-control" id="referenceNo" name="referenceNo"  value="${bookStatusFromRefNo.referenceNo}" onkeypress="return isNumberKey(event)" onchange="saveValidate()">
+                            <input style="width:100px;" type="text" class="form-control" id="referenceNo" name="referenceNo"  value="${bookStatusFromRefNo.referenceNo}" onkeypress="return isNumberKey(event)">
                         </div>
                         <div class="col-sm-1 text-right" style="padding-top: 8px;">
                             <i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i>
@@ -363,7 +363,8 @@ function clearAction() {
 
 function isNumberKey(evt){
     var charCode = (evt.which) ? evt.which : evt.keyCode;
-
+    $("#ButtonSave").attr("disabled", "disabled");
+    
     if (charCode == 45 || (charCode >= 48 && charCode <= 57)){
        return true;
     }
@@ -373,9 +374,7 @@ function isNumberKey(evt){
     
 //    return true;
 }
-function saveValidate(){
-   $("#ButtonSave").attr("disabled", "disabled");
-}
+
     $('input[type="checkbox"]').checkbox({
         checkedClass: 'icon-check',
         uncheckedClass: 'icon-check-empty'
