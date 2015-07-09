@@ -271,10 +271,14 @@ public class BookDetailController extends SMITravelController {
         }
         Master master = utilservice.getMasterdao().getBookingFromRefno(refNo);
         request.setAttribute(Master, master);
-        if(("2").equals(String.valueOf(master.getMBookingstatus().getId())) || ("5").equals(String.valueOf(master.getMBookingstatus().getId()))){
-            request.setAttribute(LockUnlockBooking,1);
+        if(master != null){
+            if(("2").equals(String.valueOf(master.getMBookingstatus().getId())) || ("5").equals(String.valueOf(master.getMBookingstatus().getId()))){
+                request.setAttribute(LockUnlockBooking,1);
+            }else{
+                request.setAttribute(LockUnlockBooking,0);
+            }
         }else{
-            request.setAttribute(LockUnlockBooking,0);
+             request.setAttribute(LockUnlockBooking,0);
         }
         List<MCurrency> mCurrency = utilservice.getListMCurrency();
         request.setAttribute(CurrencyList, mCurrency);
