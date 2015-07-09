@@ -20,6 +20,7 @@ import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.entity.MItemstatus;
 import com.smi.travel.datalayer.entity.MMeal;
 import com.smi.travel.datalayer.entity.MPaymentDoctype;
+import com.smi.travel.datalayer.entity.MPaytype;
 import com.smi.travel.datalayer.entity.PackageTour;
 import com.smi.travel.datalayer.entity.MPricecategory;
 import com.smi.travel.datalayer.entity.MProductType;
@@ -386,6 +387,21 @@ public class MListItemImpl implements MListItemDao {
         session.close();
         this.sessionFactory.close();
         return MAirlineAgentList;
+    }
+
+    @Override
+    public List<MPaytype> getListMPayType() {
+        String query = "from MPaytype";
+        Session session = this.sessionFactory.openSession();
+
+        List<MPaytype> MPaytypeList = session.createQuery(query).list();
+
+        if (MPaytypeList.isEmpty()) {
+            return null;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return MPaytypeList; 
     }
 
   
