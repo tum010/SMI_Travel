@@ -440,7 +440,8 @@
        
     </bean>
     <bean id="PaymentTourHotelController" class="com.smi.travel.controller.PaymentTourHotelController">
-        
+        <property name="paymentTourHotelService" ref="PaymentTourHotelService" /> 
+        <property name="utilservice" ref="UtilityService" /> 
     </bean>
     <bean id="SearchPaymentTourHotelController" class="com.smi.travel.controller.SearchPaymentTourHotelController">
        
