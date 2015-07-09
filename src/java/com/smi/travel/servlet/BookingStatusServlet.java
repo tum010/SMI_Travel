@@ -24,11 +24,24 @@ public class BookingStatusServlet implements AbstractAJAXServlet{
         String refNo = request.getParameter("refNo");
         String servletName = request.getParameter("servletName");
         String Type = request.getParameter("type");
+        String selectStatus = request.getParameter("selectStatus");
+        String flagAir = request.getParameter("flagAir");
+        String flagHotel = request.getParameter("flagHotel");
+        String flagDaytour = request.getParameter("flagDaytour");
+        String flagLand = request.getParameter("flagLand");
+        String flagOther = request.getParameter("flagOther");
         System.out.print("set parameter mapping");
         Map result = new HashMap();
         result.put("refNo", refNo);
         result.put("servletName", servletName);
         result.put("type", Type);   
-        return result;    }
+        result.put("selectStatus", selectStatus); 
+        result.put("flagAir", flagAir);
+        result.put("flagHotel", flagHotel);
+        result.put("flagDaytour", flagDaytour);
+        result.put("flagLand", flagLand);
+        result.put("flagOther", flagOther);
+        return result;    
+    }
     
 }

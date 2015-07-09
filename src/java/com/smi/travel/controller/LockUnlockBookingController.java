@@ -32,62 +32,7 @@ public class LockUnlockBookingController extends SMITravelController {
         String flagDaytour = request.getParameter("flagDaytour");
         String flagLand = request.getParameter("flagLand");
         String flagOther = request.getParameter("flagOther");
-        if ("save".equalsIgnoreCase(action)) {
-            if(flagAir == null){
-                flagAir = "0";
-            }
-            if(flagHotel == null){
-                flagHotel = "0";
-            }
-            if(flagDaytour == null){
-                flagDaytour = "0";
-            }
-            if(flagLand == null){
-                flagLand = "0";
-            }
-            if(flagOther == null){
-                flagOther = "0";
-            }
-            
-            Flag[1] = Integer.parseInt(String.valueOf(flagAir));
-            Flag[2] = Integer.parseInt(String.valueOf(flagHotel));
-            Flag[3] = Integer.parseInt(String.valueOf(flagDaytour));
-            Flag[4] = Integer.parseInt(String.valueOf(flagLand));
-            Flag[5] = Integer.parseInt(String.valueOf(flagOther));
-            
-            MBookingstatus mbookstatus = new MBookingstatus();
-            mbookstatus.setId(String.valueOf(bookStatus));
-            Master masterlist = lockUnlockBookingService.getbookingFromRefno(referenceNo);
-            Master master = new Master();
-            master.setId(masterlist.getId());
-            master.setReferenceNo(masterlist.getReferenceNo());
-            master.setStaff(masterlist.getStaff());
-            master.setAgent(masterlist.getAgent());
-            master.setCustomer(masterlist.getCustomer());
-            master.setAdult(masterlist.getAdult());
-            master.setChild(masterlist.getChild());
-            master.setInfant(masterlist.getInfant());
-            master.setIsPackage(masterlist.getIsPackage());
-            master.setAgentRef(masterlist.getAgentRef());
-            master.setRevisedBy(masterlist.getRevisedBy());
-            master.setRevisedDate(masterlist.getRevisedDate());
-            master.setBookingType(masterlist.getBookingType());
-            master.setCreateBy(masterlist.getCreateBy());
-            master.setCreateDate(masterlist.getCreateDate());
-            master.setCurrency(masterlist.getCurrency());
-            master.setMBookingstatus(mbookstatus);
-            master.setFlagAir(Flag[1]);
-            master.setFlagHotel(Flag[2]);
-            master.setFlagDaytour(Flag[3]);
-            master.setFlagLand(Flag[4]);
-            master.setFlagOther(Flag[5]);
-
-            result = lockUnlockBookingService.LockAndUnLockBooking(master);
-            System.out.print("result :"+result);
-            request.setAttribute(SAVESUCCESS,result);
-            request.setAttribute(BOOKSTATUSFROMREFNO,master);
-
-        }
+        
         List<MBookingstatus> bookList = lockUnlockBookingService.getListMBookingstatus();
         request.setAttribute(STATUSLIST,bookList);
         return LockUnlockBooking;

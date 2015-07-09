@@ -97,7 +97,7 @@
                 <div class="col-xs-2 text-right" style="width: 100px;" >
                     <input type="hidden" name="temp" id="temp" value="1">
                     <input type="hidden" name="action" id="action" value="">
-                    <button type="submit" id="ButtonSave" name="ButtonSave" onclick="saveAction();" class="btn btn-success">
+                    <button type="button" id="ButtonSave" name="ButtonSave" onclick="saveAction();" class="btn btn-success">
                         <i class="fa fa-save"></i> Save             
                     </button>
                 </div>
@@ -117,7 +117,8 @@
 <script type="text/javascript">
     $(document).ready(function () {
         setCheckboxFlag();
-       
+        $("#ButtonSave").attr("disabled", "disabled");
+        
         $("#referenceNo").keyup(function (event) {
             if(event.keyCode === 13){
                var refNo = $("#referenceNo").val();
@@ -279,16 +280,14 @@ function CallAjax(param) {
                 document.getElementById('flagDaytour').value = path[3];
                 document.getElementById('flagLand').value = path[4];
                 document.getElementById('flagOther').value = path[5];
-                document.getElementById('temp').value = 0;
                 setCheckboxFlag();
-                $("#ButtonSave").removeAttr("disabled");
                 $("#ajaxload").addClass("hidden");
-                    
+                $("#ButtonSave").removeAttr("disabled");
             }, error: function(msg) {
                 $("#ajaxload").addClass("hidden");
-                document.getElementById('temp').value = 1;
-                alert('Reference No Not Valid');
-                    test();
+                $("#ButtonSave").attr("disabled", "disabled");
+                alert('Reference No. Not Valid');
+                clearAction();
             }
         });
     } catch (e) {
@@ -298,57 +297,69 @@ function CallAjax(param) {
 
 function saveAction() {
     var refNo = $("#referenceNo").val();
-    searchBookStatus(refNo);
-    var tempSave = $("#temp").val();
-    if(tempSave == 0){
-        inputCheckBoxVal();
-        var action = document.getElementById('action');
-        action.value = 'save';
-        var referenceNo = document.getElementById('referenceNo');
-        referenceNo.value = $("#referenceNo").val();
-        var SelectStatus = document.getElementById('SelectStatus');
-        SelectStatus.value = $("#SelectStatus").val();
-        var flagAir = document.getElementById('flagAir');
-        flagAir.value = $("#flagAir").val();
-        var flagHotel = document.getElementById('flagHotel');
-        flagHotel.value = $("#flagHotel").val();
-        var flagDaytour = document.getElementById('flagDaytour');
-        flagDaytour.value = $("#flagDaytour").val();
-        var flagLand = document.getElementById('flagLand');
-        flagLand.value = $("#flagLand").val();
-        var flagOther = document.getElementById('flagOther');
-        flagOther.value = $("#flagOther").val();
-        document.getElementById('LockUnlockBookingForm').submit();
+    var selectStatus = $("#SelectStatus").val();
+    var flagAir = $("#flagAir").val();
+    var flagHotel = $("#flagHotel").val();
+    var flagDaytour = $("#flagDaytour").val();
+    var flagLand = $("#flagLand").val();
+    var flagOther = $("#flagOther").val();
+    saveBookStatus(refNo,selectStatus,flagAir,flagHotel,flagDaytour,flagLand,flagOther);
+}
+
+function saveBookStatus(refNo,selectStatus,flagAir,flagHotel,flagDaytour,flagLand,flagOther){
+    var servletName = 'BookingStatusServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&refNo=' + refNo +
+            '&selectStatus=' + selectStatus +
+            '&flagAir=' + flagAir +
+            '&flagHotel=' + flagHotel +
+            '&flagDaytour=' + flagDaytour +
+            '&flagLand=' + flagLand +
+            '&flagOther=' + flagOther +
+            '&type=' + 'save';
+    CallAjaxSave(param);
+}
+
+function CallAjaxSave(param) {
+    var url = 'AJAXServlet';
+    $("#ajaxload").removeClass("hidden");
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function(msg) {
+                var path = msg.split(',');
+                document.getElementById('SelectStatus').value = path[0];
+                document.getElementById('flagAir').value = path[1];
+                document.getElementById('flagHotel').value = path[2];
+                document.getElementById('flagDaytour').value = path[3];
+                document.getElementById('flagLand').value = path[4];
+                document.getElementById('flagOther').value = path[5];
+                setCheckboxFlag();
+                if(path[6] == 1){
+                    alert('Save Success !!!');
+                }else{
+                    alert('Save Not Success !!!');
+                }
+                $("#ajaxload").addClass("hidden");
+                $("#ButtonSave").removeAttr("disabled");
+            }, error: function(msg) {
+                $("#ajaxload").addClass("hidden");
+                $("#ButtonSave").attr("disabled", "disabled");
+                clearAction();
+                alert('Reference No. Not Valid');
+            }
+        });
+    } catch (e) {
+        alert(e);
     }
 }
 
-function inputCheckBoxVal(){
-    if($('input:checkbox[name=flagAir]').is(':checked')){
-        $("#flagAir").val('1');
-    }else{
-        $("#flagAir").val('0');
-    }
-    if($('input:checkbox[name=flagHotel]').is(':checked')){
-        $("#flagHotel").val('1');
-    }else{
-        $("#flagHotel").val('0');
-    }
-    if($('input:checkbox[name=flagDaytour]').is(':checked')){
-        $("#flagDaytour").val('1');
-    }else{
-        $("#flagDaytour").val('0');
-    }
-    if($('input:checkbox[name=flagLand]').is(':checked')){
-        $("#flagLand").val('1');
-    }else{
-        $("#flagLand").val('0');
-    }
-    if($('input:checkbox[name=flagOther]').is(':checked')){
-        $("#flagOther").val('1');
-    }else{
-        $("#flagOther").val('0');
-    }
-}
 function clearAction() {
     $("#referenceNo").val('');
     $("#SelectStatus").val('1');
@@ -373,7 +384,6 @@ function isNumberKey(evt){
     if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)){
        return false;
     }
-    
 //    return true;
 }
 

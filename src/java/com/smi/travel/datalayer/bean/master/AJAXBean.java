@@ -24,7 +24,9 @@ import com.smi.travel.datalayer.entity.DaytourBooking;
 import com.smi.travel.datalayer.entity.DaytourBookingPrice;
 import com.smi.travel.datalayer.entity.DaytourPrice;
 import com.smi.travel.datalayer.entity.MAirport;
+import com.smi.travel.datalayer.entity.MBookingstatus;
 import com.smi.travel.datalayer.entity.MInitialname;
+import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.PackageItinerary;
 import com.smi.travel.datalayer.entity.PackagePrice;
 import com.smi.travel.datalayer.entity.PackageTour;
@@ -144,7 +146,21 @@ public class AJAXBean extends AbstractBean implements
         String subject = String.valueOf(map.get("subject"));
         String content = String.valueOf(map.get("content"));
         String attachfile = String.valueOf(map.get("attachfile"));
+        
         String refNo = String.valueOf(map.get("refNo"));
+        String selectStatus = String.valueOf(map.get("selectStatus"));
+        String flagAir = String.valueOf(map.get("flagAir"));
+        String flagHotel = String.valueOf(map.get("flagHotel"));
+        String flagDaytour = String.valueOf(map.get("flagDaytour"));
+        String flagLand = String.valueOf(map.get("flagLand"));
+        String flagOther = String.valueOf(map.get("flagOther"));
+//
+//        System.out.println("bookStatus : "+selectStatus);
+//        System.out.println("flagAir : "+flagAir);
+//        System.out.println("flagHotel : "+flagHotel);
+//        System.out.println("flagDaytour : "+flagDaytour);
+//        System.out.println("flagOther : "+flagOther);
+//        System.out.println("flagLand : "+flagLand);
         if (BOOKDETAIL.equalsIgnoreCase(servletName)) {
 
             if ("checkExistCustomer".equalsIgnoreCase(type)) {
@@ -488,6 +504,48 @@ public class AJAXBean extends AbstractBean implements
                     }
                 }
                 System.out.println("result :" + result);
+            }
+            if ("save".equalsIgnoreCase(type)) {
+                if(refNo == null){
+                    System.out.print("refno is null");
+                }else{
+                    MBookingstatus mbookstatus = new MBookingstatus();
+                    mbookstatus.setId(String.valueOf(selectStatus));
+                    Master masterlist = masterdao.getBookingFromRefno(refNo);
+                    Master master = new Master();
+                    master.setId(masterlist.getId());
+                    master.setReferenceNo(masterlist.getReferenceNo());
+                    master.setStaff(masterlist.getStaff());
+                    master.setAgent(masterlist.getAgent());
+                    master.setCustomer(masterlist.getCustomer());
+                    master.setAdult(masterlist.getAdult());
+                    master.setChild(masterlist.getChild());
+                    master.setInfant(masterlist.getInfant());
+                    master.setIsPackage(masterlist.getIsPackage());
+                    master.setAgentRef(masterlist.getAgentRef());
+                    master.setRevisedBy(masterlist.getRevisedBy());
+                    master.setRevisedDate(masterlist.getRevisedDate());
+                    master.setBookingType(masterlist.getBookingType());
+                    master.setCreateBy(masterlist.getCreateBy());
+                    master.setCreateDate(masterlist.getCreateDate());
+                    master.setCurrency(masterlist.getCurrency());
+                    master.setMBookingstatus(mbookstatus);
+                    master.setFlagAir(Integer.parseInt(String.valueOf(flagAir)));
+                    master.setFlagHotel(Integer.parseInt(String.valueOf(flagHotel)));
+                    master.setFlagDaytour(Integer.parseInt(String.valueOf(flagDaytour)));
+                    master.setFlagLand(Integer.parseInt(String.valueOf(flagLand)));
+                    master.setFlagOther(Integer.parseInt(String.valueOf(flagOther)));
+                    int savesuccess = masterdao.LockAndUnLockBooking(master);
+                    result = selectStatus + "," 
+                            + flagAir + ","
+                            + flagHotel + "," 
+                            + flagDaytour + "," 
+                            + flagLand + "," 
+                            + flagOther + ","
+                            + savesuccess
+                            ;
+                }
+                System.out.println("result save:" + result);
             }
         } 
         return result;
