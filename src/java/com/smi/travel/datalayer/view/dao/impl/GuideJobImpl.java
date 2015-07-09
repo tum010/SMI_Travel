@@ -103,6 +103,8 @@ public class GuideJobImpl implements GuideJobDao{
                 String coup = "<br>"+util.ConvertString(B[25]);
                 if(B[25] != null){
 //                    String coupNew = splitIndexCoupon(coup);
+                    System.out.println("coup : "+coup);
+                    coup = coup.replaceAll("<br>", "<br>Coupon : ");
                     guidejob.setCoup_name(coup);
                 }else{
                     guidejob.setCoup_name("");
@@ -110,8 +112,10 @@ public class GuideJobImpl implements GuideJobDao{
                 guidejob.setBookremark(util.ConvertString(B[22]));
              }else{
                 if(B[25] != null){
-//                    String coupNew = splitIndexCoupon(util.ConvertString(B[25]));
-                    guidejob.setCoup_name(util.ConvertString(B[25]));
+                    String coupNew = splitIndexCoupon(util.ConvertString(B[25]));
+                    System.out.println("data : "+coupNew);
+                    coupNew = coupNew.replaceAll("<br>", "<br>Coupon : ");
+                    guidejob.setCoup_name(coupNew);
                 } 
                 guidejob.setBookremark("");
              }
