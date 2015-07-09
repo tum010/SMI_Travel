@@ -20,6 +20,7 @@ import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.entity.MItemstatus;
 import com.smi.travel.datalayer.entity.MMeal;
 import com.smi.travel.datalayer.entity.MPaymentDoctype;
+import com.smi.travel.datalayer.entity.MPaytype;
 import com.smi.travel.datalayer.entity.MPricecategory;
 import com.smi.travel.datalayer.entity.MProductType;
 import com.smi.travel.datalayer.entity.MStockStatus;
@@ -56,6 +57,7 @@ public interface MListItemDao {
     public MBilltype getMBilltypeFromName(String name);
     public List<MPaymentDoctype>  getListMpaymentDocType();
     public List<MAirlineAgent> getListMAirLineAgent();
+    public List<MPaytype> getListMPayType();
     
     
 }
