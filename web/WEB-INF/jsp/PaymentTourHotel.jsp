@@ -5,6 +5,14 @@
 <script type="text/javascript" src="js/workspace.js"></script> 
 <script type="text/javascript" src="js/jquery-ui.js"></script>
 <link href="css/jquery-ui.css" rel="stylesheet">
+
+<c:set var="agent_list" value="${requestScope['agent_list']}" />
+<c:set var="pvType_list" value="${requestScope['pvType_list']}" />
+<c:set var="status_list" value="${requestScope['status_list']}" />
+<c:set var="invoiceSup_list" value="${requestScope['invoiceSup_list']}" />
+<c:set var="APcode_list" value="${requestScope['APcode_list']}" />
+<c:set var="payment_list" value="${requestScope['payment_list']}" />
+
 <section class="content-header" >
     <h1>
         Checking - Package Tour/Hotel
@@ -33,28 +41,18 @@
                 <div class="col-xs-1 text-right">
                     <label class="control-label">Pay No</lable>
                 </div>
-                <div class="col-md-2 form-group text-left">
+                <div class="col-md-3 form-group text-left">
                     <div class="col-sm-12">
                         <input name="InputPayNo" id="InputPayNo" type="text" class="form-control" value="" />
                     </div>
                 </div>
-                <div class="col-xs-2 text-right">
-                    <label class="control-label">Pay Date</lable>
-                </div>
-                <div class="col-md-3 form-group text-left" style="padding-left:5px">
-                    <div class="col-sm-12">
-                        <div class='input-group date' style="width:140px;">
-                            <input name="InputPayDate" id="InputPayDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
-                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                        </div>
-                    </div>
-                </div>
+                <div class="col-xs-4 text-left" style="padding-left:10px;padding-right:0px;"></div>
                 <div class="col-xs-1 text-left" style="padding-left:10px;padding-right:0px;">
-                    <label class="control-label">Account</lable>
+                    <label class="control-label">Account<font style="color: red">*</font></lable>
                 </div>
                 <div class="col-md-3  text-left" style="padding-top : 5px;padding-left:0px;padding-right:0px;">
                     <div class="col-sm-6" text-left>
-                        <input type="radio" name="account1"  id="account1" value="account1" checked /> &nbsp;account(1)
+                        <input type="radio" name="account1"  id="account1" value="account1" /> &nbsp;account(1)
                     </div>
                     <div class="col-sm-6" text-left>
                         <input type="radio" name="account1"  id="account2" value="account2" />&nbsp;account(2)
@@ -63,14 +61,17 @@
             </div>
         </div>
         <!--Row 2 -->
-        <div class="row" style="padding-left: 15px">
+        <div class="row" style="padding-left: 0px">
             <div class="col-xs-12 ">
-                <div class="col-xs-1 text-right">
-                    <label class="control-label">PV No</lable>
-                </div>
-                <div class="col-md-2 form-group text-left">
+                <div class="col-xs-2 text-right" style="padding-left:0px;padding-right:0px;width:85px;">
+                    <label class="control-label">Pay Date</lable>
+                </div>               
+                <div class="col-md-2 form-group text-left" style="padding-left:28px">
                     <div class="col-sm-12">
-                        <input name="InputPvNo" id="InputPvNo" type="text" class="form-control" value="" />
+                        <div class='input-group date' style="width:140px;">
+                            <input name="InputPayDate" id="InputPayDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
+                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                        </div>
                     </div>
                 </div>
                 <div class="col-xs-2 text-right" style="padding-left:0px;padding-right:20px;">
@@ -78,21 +79,33 @@
                 </div>
                 <div class="col-md-2 form-group text-left" style="padding-left:5px;padding-right:0px;">
                     <div class="col-sm-12">
-                        <select name="SelectPvType" id="SelectPvType" class="form-control">
-                            <option id="" value="">--</option>
-                            <option id="" value="">---type--</option>
+                        <select name="itemPvType" id="itemPvType" class="form-control">
+                            <option id="" value="">---------</option>  
+                            <c:forEach var="PVType" items="${pvType_list}">
+                                <c:set var="select" value="" />
+                                <c:if test="${PVType.id == requestScope['currency']}">
+                                    <c:set var="select" value="selected" />
+                                </c:if>
+                                <option value="<c:out value="${PVType.id}" />" ${select}><c:out value="${PVType.name}" /></option>                                         
+                            </c:forEach>
                         </select>
                     </div>
                 </div>
                 <div class="col-xs-2 text-right" style="padding-left:5px;padding-right: 10px;">
-                    <label class="control-label">Status</lable>
+                    <label class="control-label">Status<font style="color: red">*</font></lable>
                 </div>
                 <div class="col-md-2  text-left" style="padding-top:5px;padding-left:0px;padding-right:0px;">
                     <div class="col-sm-12">
-                        <select name="status" id="status" class="form-control">
-                            <option id="" value="">--</option>
-                            <option id="" value="">---status--</option>
-                        </select>           
+                        <select class="form-control" id="itemStatus" name="itemStatus">
+                            <option id="" value="">---------</option>  
+                            <c:forEach var="status" items="${status_list}">
+                                <c:set var="select" value="" />
+                                <c:if test="${status.name == requestScope['currency']}">
+                                    <c:set var="select" value="selected" />
+                                </c:if>
+                                <option value="<c:out value="${status.id}" />" ${select}><c:out value="${status.name}" /></option>                                         
+                            </c:forEach>
+                        </select>    
                     </div>
                 </div>
             </div>
@@ -101,7 +114,7 @@
         <div class="row" >
             <input name="InputInvoiceSupId" id="InputInvoiceSupId" type="hidden" class="form-control" value="" />
             <div class="col-xs-2 text-right" style="padding-left:10px;padding-right:0px;width:100px;">
-                    <label class="control-label">Invoice Sup</lable>
+                    <label class="control-label">Invoice Sup<font style="color: red">*</font></lable>
             </div>
             <div class="col-md-2 form-group text-right" style="padding-left:30px;padding-right:0px;"> 
                 <div class="col-sm-12">
@@ -119,7 +132,7 @@
                 </div>
             </div>
             <div class="col-xs-2 text-right" style="padding-left:10px;padding-right:0px;width:140px;">
-                <label class="control-label">A/P Code</lable>
+                <label class="control-label">A/P Code<font style="color: red">*</font></lable>
             </div>
             <div class="col-md-2 form-group text-left" style="padding-left:9px;width:190px;">
                 <div class="col-sm-12">
@@ -149,11 +162,16 @@
             </div>
             <div class="col-md-2 form-group text-left" style="padding-left:9px;width:190px;">
                 <div class="col-sm-12">
-                    <select name="statusPayment" id="statusPayment" class="form-control">
-                        <option id="" value="credit">credit</option>
-                        <option id="" value="cash">cash</option>
-                        <option id="" value="card">card</option>
-                    </select>           
+                    <select class="form-control" id="itemPayment" name="itemPayment">
+                            <option id="" value="">---------</option>  
+                            <c:forEach var="payment" items="${payment_list}">
+                                <c:set var="select" value="" />
+                                <c:if test="${payment.name == requestScope['currency']}">
+                                    <c:set var="select" value="selected" />
+                                </c:if>
+                                <option value="<c:out value="${payment.id}" />" ${select}><c:out value="${payment.name}" /></option>                                         
+                            </c:forEach>
+                        </select>         
                 </div>
             </div>
         </div>
@@ -163,35 +181,56 @@
                 <table class="display" id="PaymentHotelTable">
                     <thead class="datatable-header">
                         <tr>
-                            <th style="width: 15%">Product</th>
+                            <th style="width: 13%">Product</th>
                             <th style="width: 8%">Ref No</th>
                             <th style="width: 10%">Inv No</th>
                             <th style="width: 8%">Code</th>
-                            <th style="width: 6%">Type</th>
+                            <th style="width: 8%">Type</th>
                             <th style="width: 10%">Amount</th>
-                            <th style="width: 4%">Cur</th>
-                            <th style="width: 22%">Description</th>
+                            <th style="width: 9%">Cur</th>
+                            <th style="width: 20%">Description</th>
                             <th style="width: 8%">A/C</th>
                             <th style="width: 8%">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Hotel</td>
-                            <td>23-0924</td>
-                            <td>1222</td>
-                            <td>A15010001</td>
-                            <td>test</td>
-                            <td>5,000</td>
-                            <td>THB</td>
-                            <td>test description</td>
-                            <td>52014</td>
-                            <td class="text-center">
-                                <a href="#" onclick=""  data-toggle="modal" data-target="">
-                                    <span id="" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal" data-target="#delSearchPaymentTourHotelModal"></span>
-                                </a>
-                            </td>
-                        </tr>
+                      
+                            <tr>
+                                <td class="hidden"> <input  type="hidden"  value="${table.id}">  </td>
+                                <td> 
+                                    <select class="form-control" id="row-${Counter.count}-product" name="row-${Counter.count}-product">
+                                        <option value="">--</option>                                 
+                                        <option value="1">test 1</option>                                   
+                                        <option value="2">test 2</option>
+                                    </select>                                 
+                                </td>
+                                <td> <input style="width: ${RefNo}" maxlength ="10"  type="text" class="form-control" value="${table.description}"> </td>
+                                <td> <input style="width: ${InvNo}" maxlength ="15"  type="text" class="form-control" value="${table.description}">  </td>
+                                <td> <input style="width: ${Code}" maxlength ="15"  type="text" class="form-control" value="${table.description}">  </td>
+                                <td>
+                                    <input type="radio" name="Type" id="Type_T" value="T" checked=""> T&nbsp;
+                                    <input type="radio" name="Type" id="Type_C" value="C" > C
+                                </td>
+                                <td> <input style="width: ${Amount}" maxlength ="15"  type="text" class="form-control" value="${table.description}"> </td>
+                                <td> 
+                                    <select class="form-control" id="row-${Counter.count}-cur" name="row-${Counter.count}-cur">
+                                        <option value="">--</option>                                 
+                                        <option value="1">test 1</option>                                   
+                                        <option value="2">test 2</option>
+                                    </select>                                 
+                                </td>
+                                <td> <input style="width: ${Description}" maxlength ="255"  type="text" class="form-control" value="${table.description}"> </td>
+                                <td> <input style="width: ${AC}" maxlength ="15"  type="text" class="form-control" value="${table.description}"> </td>
+                                <td class="text-center">
+                                    
+                                        <a class="remCF"><span  onclick="deletelist('${table.id}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
+                                   
+                                    <c:if test="${lockUnlockBooking == 1}">
+                                        <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                    </c:if>
+                                </td>
+                            </tr>                       
+                         
                     </tbody>
                 </table>
             </div>
@@ -208,10 +247,10 @@
                         <input name="InputRemark" id="InputRemark" type="text" class="form-control" value="" />           
                     </div>
                     <div class="col-xs-2 text-right">
-                        <label class="control-label">Grand  Total</lable>
+                        <label class="control-label">Grand Total</lable>
                     </div>
                     <div class="col-md-2 form-group text-left">
-                        <input name="InputGrandTotal" id="InputGrandTotal" type="text" class="form-control" value="" />            
+                        <input name="InputGrandTotal" id="InputGrandTotal" type="text" class="form-control" value="" readonly=""/>            
                     </div>
                 </div>
                 <!--Row 1.2 -->
