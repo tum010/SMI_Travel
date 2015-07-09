@@ -20,6 +20,7 @@ import com.smi.travel.datalayer.entity.Customer;
 import com.smi.travel.datalayer.entity.Daytour;
 import com.smi.travel.datalayer.entity.MAccpay;
 import com.smi.travel.datalayer.entity.MAccterm;
+import com.smi.travel.datalayer.entity.MAirlineAgent;
 import com.smi.travel.datalayer.entity.MBank;
 import com.smi.travel.datalayer.entity.MBilltype;
 import com.smi.travel.datalayer.entity.MBookingstatus;
@@ -176,6 +177,10 @@ public class UtilityService {
         return listitemdao.getListMpaymentDocType();
     }
     
+    public List<MAirlineAgent> getListMAirLineAgent() {
+        return listitemdao.getListMAirLineAgent();
+    }
+    
     public List<SystemUser> getGuildeList() {
         return systemUserdao.getGuildeList();
     }
@@ -267,5 +272,6 @@ public class UtilityService {
     public void setMbankdao(MBankDao mbankdao) {
         this.mbankdao = mbankdao;
     }
+    
     
 }
