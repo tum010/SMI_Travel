@@ -2,6 +2,7 @@ package com.smi.travel.datalayer.entity;
 // Generated Jul 9, 2015 9:38:50 AM by Hibernate Tools 4.3.1
 
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,20 +22,20 @@ public class TicketFareAirline {
      private String passenger;
      private Date issueDate;
      private Date ticketDate;
-     private Long ticketFare;
-     private Long ticketTax;
-     private Long ticketIns;
-     private Long ticketCommission;
-     private Long agentCommission;
-     private Long salePrice;
+     private BigDecimal ticketFare;
+     private BigDecimal ticketTax;
+     private BigDecimal ticketIns;
+     private BigDecimal ticketCommission;
+     private BigDecimal agentCommission;
+     private BigDecimal salePrice;
      private Integer agentId;
      private String remark;
-     private Long overCommission;
-     private Long litterCommission;
-     private Long decPay;
-     private Long addPay;
-     private Long agentComPay;
-     private Long agentComReceive;
+     private BigDecimal overCommission;
+     private BigDecimal litterCommission;
+     private BigDecimal decPay;
+     private BigDecimal addPay;
+     private BigDecimal agentComPay;
+     private BigDecimal agentComReceive;
      private Date overDate;
      private Date litterDate;
      private Date decPayDate;
@@ -47,7 +48,7 @@ public class TicketFareAirline {
     public TicketFareAirline() {
     }
 
-    public TicketFareAirline(MAirlineAgent MAirlineAgent, String ticketNo, String ticketType, String ticketBuy, String ticketRounting, String passenger, Date issueDate, Date ticketDate, Long ticketFare, Long ticketTax, Long ticketIns, Long ticketCommission, Long agentCommission, Long salePrice, Integer agentId, String remark, Long overCommission, Long litterCommission, Long decPay, Long addPay, Long agentComPay, Long agentComReceive, Date overDate, Date litterDate, Date decPayDate, Date addPayDate, Date agentPayDate, Date agentReceiveDate, List paymentAirticketFares, List refundAirticketDetails) {
+    public TicketFareAirline(MAirlineAgent MAirlineAgent, String ticketNo, String ticketType, String ticketBuy, String ticketRounting, String passenger, Date issueDate, Date ticketDate, BigDecimal ticketFare, BigDecimal ticketTax, BigDecimal ticketIns, BigDecimal ticketCommission, BigDecimal agentCommission, BigDecimal salePrice, Integer agentId, String remark, BigDecimal overCommission, BigDecimal litterCommission, BigDecimal decPay, BigDecimal addPay, BigDecimal agentComPay, BigDecimal agentComReceive, Date overDate, Date litterDate, Date decPayDate, Date addPayDate, Date agentPayDate, Date agentReceiveDate, List paymentAirticketFares, List refundAirticketDetails) {
        this.MAirlineAgent = MAirlineAgent;
        this.ticketNo = ticketNo;
        this.ticketType = ticketType;
@@ -144,46 +145,46 @@ public class TicketFareAirline {
     public void setTicketDate(Date ticketDate) {
         this.ticketDate = ticketDate;
     }
-    public Long getTicketFare() {
+    public BigDecimal getTicketFare() {
         return this.ticketFare;
     }
     
-    public void setTicketFare(Long ticketFare) {
+    public void setTicketFare(BigDecimal ticketFare) {
         this.ticketFare = ticketFare;
     }
-    public Long getTicketTax() {
+    public BigDecimal getTicketTax() {
         return this.ticketTax;
     }
     
-    public void setTicketTax(Long ticketTax) {
+    public void setTicketTax(BigDecimal ticketTax) {
         this.ticketTax = ticketTax;
     }
-    public Long getTicketIns() {
+    public BigDecimal getTicketIns() {
         return this.ticketIns;
     }
     
-    public void setTicketIns(Long ticketIns) {
+    public void setTicketIns(BigDecimal ticketIns) {
         this.ticketIns = ticketIns;
     }
-    public Long getTicketCommission() {
+    public BigDecimal getTicketCommission() {
         return this.ticketCommission;
     }
     
-    public void setTicketCommission(Long ticketCommission) {
+    public void setTicketCommission(BigDecimal ticketCommission) {
         this.ticketCommission = ticketCommission;
     }
-    public Long getAgentCommission() {
+    public BigDecimal getAgentCommission() {
         return this.agentCommission;
     }
     
-    public void setAgentCommission(Long agentCommission) {
+    public void setAgentCommission(BigDecimal agentCommission) {
         this.agentCommission = agentCommission;
     }
-    public Long getSalePrice() {
+    public BigDecimal getSalePrice() {
         return this.salePrice;
     }
     
-    public void setSalePrice(Long salePrice) {
+    public void setSalePrice(BigDecimal salePrice) {
         this.salePrice = salePrice;
     }
     public Integer getAgentId() {
@@ -200,46 +201,46 @@ public class TicketFareAirline {
     public void setRemark(String remark) {
         this.remark = remark;
     }
-    public Long getOverCommission() {
+    public BigDecimal getOverCommission() {
         return this.overCommission;
     }
     
-    public void setOverCommission(Long overCommission) {
+    public void setOverCommission(BigDecimal overCommission) {
         this.overCommission = overCommission;
     }
-    public Long getLitterCommission() {
+    public BigDecimal getLitterCommission() {
         return this.litterCommission;
     }
     
-    public void setLitterCommission(Long litterCommission) {
+    public void setLitterCommission(BigDecimal litterCommission) {
         this.litterCommission = litterCommission;
     }
-    public Long getDecPay() {
+    public BigDecimal getDecPay() {
         return this.decPay;
     }
     
-    public void setDecPay(Long decPay) {
+    public void setDecPay(BigDecimal decPay) {
         this.decPay = decPay;
     }
-    public Long getAddPay() {
+    public BigDecimal getAddPay() {
         return this.addPay;
     }
     
-    public void setAddPay(Long addPay) {
+    public void setAddPay(BigDecimal addPay) {
         this.addPay = addPay;
     }
-    public Long getAgentComPay() {
+    public BigDecimal getAgentComPay() {
         return this.agentComPay;
     }
     
-    public void setAgentComPay(Long agentComPay) {
+    public void setAgentComPay(BigDecimal agentComPay) {
         this.agentComPay = agentComPay;
     }
-    public Long getAgentComReceive() {
+    public BigDecimal getAgentComReceive() {
         return this.agentComReceive;
     }
     
-    public void setAgentComReceive(Long agentComReceive) {
+    public void setAgentComReceive(BigDecimal agentComReceive) {
         this.agentComReceive = agentComReceive;
     }
     public Date getOverDate() {
