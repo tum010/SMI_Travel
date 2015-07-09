@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 9, 2015 9:38:51 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.PaymentAirticketRefund" table="payment_airticket_refund" catalog="smitravel" >
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="paymentAirticket" class="com.smi.travel.datalayer.entity.PaymentAirticket" fetch="select">
+            <column name="paymane_air_id" />
+        </many-to-one>
+        <many-to-one name="refundAirticketDetail" class="com.smi.travel.datalayer.entity.RefundAirticketDetail" fetch="select">
+            <column name="refund_detail_id" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

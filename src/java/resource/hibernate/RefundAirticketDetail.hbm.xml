@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 9, 2015 9:38:51 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.RefundAirticketDetail" table="refund_airticket_detail" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="refundAirticket" class="com.smi.travel.datalayer.entity.RefundAirticket" fetch="select">
+            <column name="refund_id" />
+        </many-to-one>
+        <many-to-one name="ticketFareAirline" class="com.smi.travel.datalayer.entity.TicketFareAirline" fetch="select">
+            <column name="ticket_fare_id" />
+        </many-to-one>
+        <property name="sectorRefund" type="string">
+            <column name="sector_refund" />
+        </property>
+        <property name="receiveAirline" type="java.lang.Long">
+            <column name="receive_airline" precision="10" scale="0" />
+        </property>
+        <property name="payCustomer" type="java.lang.Long">
+            <column name="pay_customer" precision="10" scale="0" />
+        </property>
+        <property name="commission" type="java.lang.Long">
+            <column name="commission" precision="10" scale="0" />
+        </property>
+        <bag name="paymentAirticketRefunds" table="payment_airticket_refund" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="refund_detail_id" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.PaymentAirticketRefund" />
+        </bag>
+    </class>
+</hibernate-mapping>

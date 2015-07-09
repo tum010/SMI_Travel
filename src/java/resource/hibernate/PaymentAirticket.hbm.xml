@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 9, 2015 9:38:51 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.PaymentAirticket" table="payment_airticket" catalog="smitravel" >
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="MAccpay" class="com.smi.travel.datalayer.entity.MAccpay" fetch="select">
+            <column name="payment" />
+        </many-to-one>
+        <property name="payNo" type="string">
+            <column name="pay_no" length="20" />
+        </property>
+        <property name="payDate" type="date">
+            <column name="pay_date" length="10" />
+        </property>
+        <property name="dueDate" type="date">
+            <column name="due_date" length="10" />
+        </property>
+        <property name="invoiceSup" type="java.lang.Integer">
+            <column name="invoice_sup" />
+        </property>
+        <property name="apCode" type="java.lang.Integer">
+            <column name="ap_code" />
+        </property>
+        <property name="detail" type="string">
+            <column name="detail" />
+        </property>
+        <property name="agentAmount" type="big_decimal">
+            <column name="agent_amount" precision="10" />
+        </property>
+        <property name="cash" type="big_decimal">
+            <column name="cash" precision="10" />
+        </property>
+        <property name="witholdingTax" type="big_decimal">
+            <column name="witholding_tax" precision="10" />
+        </property>
+        <property name="chqNo" type="string">
+            <column name="chq_no" />
+        </property>
+        <property name="chqAmount" type="big_decimal">
+            <column name="chq_amount" precision="10" />
+        </property>
+        <property name="ticketInsurance" type="big_decimal">
+            <column name="ticket_insurance" precision="10" />
+        </property>
+        <property name="creditNote" type="string">
+            <column name="credit_note" length="50" />
+        </property>
+        <property name="debitNote" type="string">
+            <column name="debit_note" length="50" />
+        </property>
+        <property name="createBy" type="string">
+            <column name="create_by" length="5" />
+        </property>
+        <property name="createDate" type="date">
+            <column name="create_date" length="10" />
+        </property>
+        <bag name="paymentAirticketRefunds" table="payment_airticket_refund" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="paymane_air_id" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.PaymentAirticketRefund" />
+        </bag>
+        <bag name="paymentAirticketFares" table="payment_airticket_fare" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="payment_air_id" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.PaymentAirticketFare" />
+        </bag>
+    </class>
+</hibernate-mapping>

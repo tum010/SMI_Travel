@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 9, 2015 9:38:51 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.RefundAirticket" table="refund_airticket" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="agent" class="com.smi.travel.datalayer.entity.Agent" fetch="select">
+            <column name="refund_agent" />
+        </many-to-one>
+        <property name="refundNo" type="string">
+            <column name="refund_no" length="20" />
+        </property>
+        <property name="refundDate" type="date">
+            <column name="refund_date" length="10" />
+        </property>
+        <property name="refundBy" type="string">
+            <column name="refund_by" length="5" />
+        </property>
+        <property name="renark" type="string">
+            <column name="renark" />
+        </property>
+        <bag name="refundAirticketDetails" table="refund_airticket_detail" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="refund_id" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.RefundAirticketDetail" />
+        </bag>
+    </class>
+</hibernate-mapping>

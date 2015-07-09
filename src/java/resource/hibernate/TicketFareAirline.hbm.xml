@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 9, 2015 9:38:51 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.TicketFareAirline" table="ticket_fare_airline" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="MAirlineAgent" class="com.smi.travel.datalayer.entity.MAirlineAgent" fetch="select">
+            <column name="airline_agent_id" />
+        </many-to-one>
+        <property name="ticketNo" type="string">
+            <column name="ticket_no" length="20" />
+        </property>
+        <property name="ticketType" type="string">
+            <column name="ticket_type" length="1" />
+        </property>
+        <property name="ticketBuy" type="string">
+            <column name="ticket_buy" length="1" />
+        </property>
+        <property name="ticketRounting" type="string">
+            <column name="ticket_rounting" length="1" />
+        </property>
+        <property name="passenger" type="string">
+            <column name="passenger" length="50" />
+        </property>
+        <property name="issueDate" type="date">
+            <column name="issue_date" length="10" />
+        </property>
+        <property name="ticketDate" type="date">
+            <column name="ticket_date" length="10" />
+        </property>
+        <property name="ticketFare" type="java.lang.Long">
+            <column name="ticket_fare" precision="10" scale="0" />
+        </property>
+        <property name="ticketTax" type="java.lang.Long">
+            <column name="ticket_tax" precision="10" scale="0" />
+        </property>
+        <property name="ticketIns" type="java.lang.Long">
+            <column name="ticket_ins" precision="10" scale="0" />
+        </property>
+        <property name="ticketCommission" type="java.lang.Long">
+            <column name="ticket_commission" precision="10" scale="0" />
+        </property>
+        <property name="agentCommission" type="java.lang.Long">
+            <column name="agent_commission" precision="10" scale="0" />
+        </property>
+        <property name="salePrice" type="java.lang.Long">
+            <column name="sale_price" precision="10" scale="0" />
+        </property>
+        <property name="agentId" type="java.lang.Integer">
+            <column name="agent_id" />
+        </property>
+        <property name="remark" type="string">
+            <column name="remark" />
+        </property>
+        <property name="overCommission" type="java.lang.Long">
+            <column name="over_commission" precision="10" scale="0" />
+        </property>
+        <property name="litterCommission" type="java.lang.Long">
+            <column name="litter_commission" precision="10" scale="0" />
+        </property>
+        <property name="decPay" type="java.lang.Long">
+            <column name="dec_pay" precision="10" scale="0" />
+        </property>
+        <property name="addPay" type="java.lang.Long">
+            <column name="add_pay" precision="10" scale="0" />
+        </property>
+        <property name="agentComPay" type="java.lang.Long">
+            <column name="agent_com_pay" precision="10" scale="0" />
+        </property>
+        <property name="agentComReceive" type="java.lang.Long">
+            <column name="agent_com_receive" precision="10" scale="0" />
+        </property>
+        <property name="overDate" type="date">
+            <column name="over_date" length="10" />
+        </property>
+        <property name="litterDate" type="date">
+            <column name="litter_date" length="10" />
+        </property>
+        <property name="decPayDate" type="date">
+            <column name="dec_pay_date" length="10" />
+        </property>
+        <property name="addPayDate" type="date">
+            <column name="add_pay_date" length="10" />
+        </property>
+        <property name="agentPayDate" type="date">
+            <column name="agent_pay_date" length="10" />
+        </property>
+        <property name="agentReceiveDate" type="date">
+            <column name="agent_receive_date" length="10" />
+        </property>
+        <bag name="paymentAirticketFares" table="payment_airticket_fare" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ticket_fare_id" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.PaymentAirticketFare" />
+        </bag>
+        <bag name="refundAirticketDetails" table="refund_airticket_detail" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ticket_fare_id" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.RefundAirticketDetail" />
+        </bag>
+    </class>
+</hibernate-mapping>
