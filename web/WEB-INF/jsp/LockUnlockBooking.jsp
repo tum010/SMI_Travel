@@ -116,6 +116,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         setCheckboxFlag();
+        $("#ButtonSave").attr("disabled", "disabled");
         
         $("#referenceNo").keyup(function (event) {
             if(event.keyCode === 13){
@@ -154,32 +155,8 @@
             $('input:checkbox[name=flagLand]').attr('checked',false);
         }
 
-         $("#LockUnlockBookingForm")
-            .bootstrapValidator({
-//                framework: 'bootstrap',
-                container: 'tooltip',
-                excluded: [':disabled', ':hidden', ':not(:visible)'],
-                feedbackIcons: {
-                    valid: 'uk-icon-check',
-                    invalid: 'uk-icon-times',
-                    validating: 'uk-icon-refresh'
-                },
-                fields: {
-                    referenceNo: {
-                        trigger: 'focus keyup',
-                        validators: {
-                            notEmpty: {trigger: 'change',
-                                message: ' Ref No is required'
-                            }
-                        }
-                    }
-                }
-            })
-            .on('success.field.fv', function (e, data) {
-                if (data.field === 'referenceNo' && data.fv.isValidField('referenceNo') === false) {
-                    data.fv.revalidateField('referenceNo');
-                }
-            });
+    
+    
 });
 
 function setCheckboxFlag(){
@@ -284,6 +261,7 @@ function CallAjax(param) {
                 document.getElementById('flagLand').value = path[4];
                 document.getElementById('flagOther').value = path[5];
                 setCheckboxFlag();
+                $("#ButtonSave").removeAttr("disabled");
                 $("#ajaxload").addClass("hidden");
             }, error: function(msg) {
                 $("#ajaxload").addClass("hidden");
