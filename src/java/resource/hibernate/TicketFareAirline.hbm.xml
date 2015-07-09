@@ -31,23 +31,23 @@
         <property name="ticketDate" type="date">
             <column name="ticket_date" length="10" />
         </property>
-        <property name="ticketFare" type="java.lang.Long">
-            <column name="ticket_fare" precision="10" scale="0" />
+        <property name="ticketFare" type="big_decimal">
+            <column name="ticket_fare" precision="10" />
         </property>
-        <property name="ticketTax" type="java.lang.Long">
-            <column name="ticket_tax" precision="10" scale="0" />
+        <property name="ticketTax" type="big_decimal">
+            <column name="ticket_tax" precision="10" />
         </property>
-        <property name="ticketIns" type="java.lang.Long">
-            <column name="ticket_ins" precision="10" scale="0" />
+        <property name="ticketIns" type="big_decimal">
+            <column name="ticket_ins" precision="10"  />
         </property>
-        <property name="ticketCommission" type="java.lang.Long">
-            <column name="ticket_commission" precision="10" scale="0" />
+        <property name="ticketCommission" type="big_decimal">
+            <column name="ticket_commission" precision="10"  />
         </property>
-        <property name="agentCommission" type="java.lang.Long">
-            <column name="agent_commission" precision="10" scale="0" />
+        <property name="agentCommission" type="big_decimal">
+            <column name="agent_commission" precision="10"  />
         </property>
-        <property name="salePrice" type="java.lang.Long">
-            <column name="sale_price" precision="10" scale="0" />
+        <property name="salePrice" type="big_decimal">
+            <column name="sale_price" precision="10" />
         </property>
         <property name="agentId" type="java.lang.Integer">
             <column name="agent_id" />
@@ -55,23 +55,23 @@
         <property name="remark" type="string">
             <column name="remark" />
         </property>
-        <property name="overCommission" type="java.lang.Long">
-            <column name="over_commission" precision="10" scale="0" />
+        <property name="overCommission" type="big_decimal">
+            <column name="over_commission" precision="10"  />
         </property>
-        <property name="litterCommission" type="java.lang.Long">
-            <column name="litter_commission" precision="10" scale="0" />
+        <property name="litterCommission" type="big_decimal">
+            <column name="litter_commission" precision="10"  />
         </property>
-        <property name="decPay" type="java.lang.Long">
-            <column name="dec_pay" precision="10" scale="0" />
+        <property name="decPay" type="big_decimal">
+            <column name="dec_pay" precision="10"/>
         </property>
-        <property name="addPay" type="java.lang.Long">
-            <column name="add_pay" precision="10" scale="0" />
+        <property name="addPay" type="big_decimal">
+            <column name="add_pay" precision="10"  />
         </property>
-        <property name="agentComPay" type="java.lang.Long">
-            <column name="agent_com_pay" precision="10" scale="0" />
+        <property name="agentComPay" type="big_decimal">
+            <column name="agent_com_pay" precision="10"  />
         </property>
-        <property name="agentComReceive" type="java.lang.Long">
-            <column name="agent_com_receive" precision="10" scale="0" />
+        <property name="agentComReceive" type="big_decimal">
+            <column name="agent_com_receive" precision="10" />
         </property>
         <property name="overDate" type="date">
             <column name="over_date" length="10" />
