@@ -154,9 +154,33 @@
         }else{
             $('input:checkbox[name=flagLand]').attr('checked',false);
         }
-
-    
-    
+        
+//        $("#LockUnlockBookingForm")
+//            .bootstrapValidator({
+//    //                framework: 'bootstrap',
+//                container: 'tooltip',
+//                excluded: [':disabled', ':hidden', ':not(:visible)'],
+//                feedbackIcons: {
+//                    valid: 'uk-icon-check',
+//                    invalid: 'uk-icon-times',
+//                    validating: 'uk-icon-refresh'
+//                },
+//                fields: {
+//                    referenceNo: {
+//                        trigger: 'focus keyup',
+//                        validators: {
+//                            notEmpty: {trigger: 'change',
+//                                message: ' Reference No is required'
+//                            }
+//                        }
+//                    }
+//                }
+//            })
+//            .on('success.field.fv', function (e, data) {
+//                if (data.field === 'referenceNo' && data.fv.isValidField('referenceNo') === false) {
+//                    data.fv.revalidateField('referenceNo');
+//                }
+//            });
 });
 
 function setCheckboxFlag(){
@@ -265,6 +289,7 @@ function CallAjax(param) {
                 $("#ajaxload").addClass("hidden");
             }, error: function(msg) {
                 $("#ajaxload").addClass("hidden");
+                $("#ButtonSave").attr("disabled", "disabled");
                 alert('Reference No Not Valid');
             }
         });
@@ -292,7 +317,6 @@ function saveAction() {
     var flagOther = document.getElementById('flagOther');
     flagOther.value = $("#flagOther").val();
     document.getElementById('LockUnlockBookingForm').submit();
-    
 }
 
 function inputCheckBoxVal(){
@@ -341,11 +365,13 @@ function isNumberKey(evt){
     var charCode = (evt.which) ? evt.which : evt.keyCode;
 
     if (charCode == 45 || (charCode >= 48 && charCode <= 57)){
+       $("#ButtonSave").attr("disabled", "disabled");
        return true;
     }
     if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)){
        return false;
     }
+    
 //    return true;
 }
 
