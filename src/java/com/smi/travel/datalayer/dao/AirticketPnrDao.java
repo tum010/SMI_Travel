@@ -29,4 +29,5 @@ public interface AirticketPnrDao {
     public MFlight MappingFlightClass(String Flight);
     public MTicketType MappintTicketLife(String TicketLife);
     public String MappingTicketType(String TicketType);
+    public List<String> getListPnrFromRefno(String Refno);
 }

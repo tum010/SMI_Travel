@@ -209,4 +209,8 @@ public class BookingAirticketService {
     public MTicketType MappingTicketLife(String TicketLife) {
         return airticketPnrDao.MappintTicketLife(TicketLife);
     }
+    
+    public List<String> getListPnrFromRefno(String Refno){
+        return airticketPnrDao.getListPnrFromRefno(Refno);
+    }
 }

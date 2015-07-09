@@ -16,6 +16,7 @@ import com.smi.travel.datalayer.entity.BookingPnr;
 import com.smi.travel.datalayer.entity.MFlight;
 import com.smi.travel.datalayer.entity.MTicketType;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import org.hibernate.Query;
@@ -349,6 +350,30 @@ public class AirticketPnrImpl implements AirticketPnrDao {
             return "D";
         }
         return null;
+    }
+
+    @Override
+    public List<String> getListPnrFromRefno(String Refno) {
+        List<String> pnrList = new LinkedList<String>();
+        String query = "from AirticketPnr pnr where  pnr.airticketBooking.master.referenceNo = :refno";
+        Session session = this.sessionFactory.openSession();
+        List<AirticketPnr> List = session.createQuery(query)
+                .setParameter("refno", Refno)
+                .list();
+        if (List.isEmpty()) {
+            session.close();
+            this.sessionFactory.close();
+            return null;
+        }else{
+           for(int i=0;i<List.size();i++){
+               pnrList.add(List.get(i).getPnr());
+           }
+        }
+       
+        session.close();
+        this.sessionFactory.close();
+        return pnrList;
+
     }
 
 }
