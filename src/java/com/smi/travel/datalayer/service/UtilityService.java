@@ -31,6 +31,7 @@ import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.entity.MItemstatus;
 import com.smi.travel.datalayer.entity.MMeal;
 import com.smi.travel.datalayer.entity.MPaymentDoctype;
+import com.smi.travel.datalayer.entity.MPaytype;
 import com.smi.travel.datalayer.entity.MPricecategory;
 import com.smi.travel.datalayer.entity.MTicketType;
 import com.smi.travel.datalayer.entity.Master;
@@ -191,6 +192,10 @@ public class UtilityService {
     
     public List<Place> getPickupList(){
         return placedao.getListPlaceFromStatus("active");
+    }
+    
+    public List<MPaytype> getListMPayType() {
+        return listitemdao.getListMPayType();
     }
 
     public MasterDao getMasterdao() {
