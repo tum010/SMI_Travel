@@ -927,10 +927,13 @@ public class AirTicketDetailController extends SMITravelController {
 
         @Override
         public int compare(AirticketFlight f1, AirticketFlight f2) {
-            int f1Id = Integer.parseInt(f1.getId());
-            int f2Id = Integer.parseInt(f2.getId());
-
-            return Integer.compare(f1Id, f2Id);
+            if(f1.getId()!=null && f1.getId()!=null){
+                int f1Id = Integer.parseInt(f1.getId());
+                int f2Id = Integer.parseInt(f2.getId());          
+                return Integer.compare(f1Id, f2Id);
+            } else {
+                return -1;
+            }
         }
 
     }
