@@ -142,7 +142,7 @@ function CallAjaxFamilyAuto(param){
                     if (cusJson.hasOwnProperty(i)){
                         cusid = cusJson[i].id;
                         cuscode = cusJson[i].code;
-                        cusinitialname = cusJson.initialname;
+                        cusinitialname = cusJson[i].initialname;
                         cusfirstname = cusJson[i].firstname;
                         cuslastname = cusJson[i].lastname;
                         custel = cusJson[i].tel;
@@ -160,9 +160,10 @@ function CallAjaxFamilyAuto(param){
                     }                 
                      $("#datafamilyload").addClass("hidden"); 
                 }
+               
                 $("#leaderId").val(cusid);
                 $("#FamilyLeaderCode").val(cuscode);
-                $("#get-initial").val(cusinitialname);
+                $("#initialname").val(cusinitialname);
                 $("#firstname").val(cusfirstname);
                 $("#lastname").val(cuslastname);
                 $("#tel").val(custel);
@@ -177,7 +178,7 @@ function CallAjaxFamilyAuto(param){
                                 $("#leaderId").val(cusListId[i]);
                                 $("#FamilyLeaderCode").val(cusListCode[i]);
                                 $("#FamilyLeaderCodeVal").val(cusListCode[i]);
-                                $("#get-initial").val(cusListInitialname[i]);
+                                $("#initialname").val(cusListInitialname[i]);
                                 $("#firstname").val(cusListFirstname[i]);
                                 $("#lastname").val(cusListLastname[i]);
                                 $("#tel").val(cusListTel[i]);
@@ -189,8 +190,9 @@ function CallAjaxFamilyAuto(param){
                 
                 var familyVal = $("#FamilyLeaderCodeVal").val();
                 for(var i =0;i<cusListId.length;i++){
-                    if(familyVal===cusListFirstname[i]){
+                    if(familyVal===cusListLastname[i]+" "+cusListFirstname[i]){
                         $("#FamilyLeaderCodeVal").val(cusListCode[i]);
+                        
                     }
                 }
                 if(cusListId.length === 1){

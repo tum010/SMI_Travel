@@ -170,13 +170,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-2">  
-                                    <input value="${detail.customer.MInitialname.name}" id="get-initial" type="hidden">
-                                    <!--                                    <select class="form-control " id="initialname" name="initialname">
-                                    <c:forEach var="initial" items="${initialList}">
-                                        <option value="${initial.id}">${initial.name}</option>
-                                    </c:forEach>
-                                </select>-->
-                                    <input  type="text" id="initialname" name="initialname" class="form-control" value="${detail.customer.MInitialname.name}" readonly="">
+                                    <input  type="text" id="initialname" name="initialname" class="form-control" value="${detail.customer.MInitialname.name}" readonly>
                                 </div>     
                                 <div class="col-sm-1"> </div>
                                 <label class="col-sm-1 text-right" style="margin-left: -24px">Name</label>
