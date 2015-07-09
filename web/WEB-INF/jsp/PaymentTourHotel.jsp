@@ -163,25 +163,29 @@
                 <table class="display" id="PaymentHotelTable">
                     <thead class="datatable-header">
                         <tr>
-                            <th style="width: 12%">Product</th>
-                            <th style="width: 10%">Ref No</th>
-                            <th style="width: 10%">Invoice No</th>
+                            <th style="width: 15%">Product</th>
+                            <th style="width: 8%">Ref No</th>
+                            <th style="width: 10%">Inv No</th>
+                            <th style="width: 8%">Code</th>
+                            <th style="width: 6%">Type</th>
                             <th style="width: 10%">Amount</th>
-                            <th style="width: 12%">Type</th>
-                            <th style="width: 8%">Currency</th>
-                            <th style="width: 30%">Description</th>
+                            <th style="width: 4%">Cur</th>
+                            <th style="width: 22%">Description</th>
+                            <th style="width: 8%">A/C</th>
                             <th style="width: 8%">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>Hotel</td>
-                            <td>344555</td>
+                            <td>23-0924</td>
                             <td>1222</td>
-                            <td>5,000</td>
+                            <td>A15010001</td>
                             <td>test</td>
+                            <td>5,000</td>
                             <td>THB</td>
                             <td>test description</td>
+                            <td>52014</td>
                             <td class="text-center">
                                 <a href="#" onclick=""  data-toggle="modal" data-target="">
                                     <span id="" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal" data-target="#delSearchPaymentTourHotelModal"></span>
