@@ -2,10 +2,13 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<c:set var="result" value="${requestScope['result']}" />
 <c:set var="ListProductStock" value="${requestScope['ListProductStock']}" />
 <c:set var="ListStaffStock" value="${requestScope['ListStaffStock']}" />
 <c:set var="getType" value="${requestScope['getType']}" />
+<c:set var="stockData" value="${requestScope['stockData']}" />
+<c:set var="listStockDetail" value="${requestScope['listStockDetail']}" />
+
 <section class="content-header" >
     <h1>
         Master Stock
@@ -21,6 +24,15 @@
     </div>
     <form action="Stock.smi" method="post" id="StockForm" role="form" >
     <div class="col-sm-10">
+        <!--Alert Save -->
+        <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Save Success!</strong> 
+        </div>
+        <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Save Not Success!</strong> 
+        </div>
         <div class="row" style="padding-left: 15px">  
             <div class="col-sm-6" style="padding-right: 15px">
                 <h4><b>Stock</b></h4>
@@ -34,34 +46,36 @@
             <div class="panel-body">
                 <div class="row" > 
                     <div class="col-xs-12 ">
-                        <input type="text" class="form-control hidden" id="InputProductId" name="InputProductId" value="" />
+                        <input type="text" class="form-control hidden" id="InputStockId" name="InputStockId" value="${stockData.id}" />
+                        <input type="text" class="form-control hidden" id="InputProductId" name="InputProductId" value="${stockData.product.id}" />
                         <div class="col-xs-2 text-right"  style="padding-right: 25px;width: 140px;">
                             <label class="control-label">Product</lable>
                         </div>
                         <div class="col-md-3 form-group text-left" style="padding-left:5px;width: 160px;"> 
                             <div class="input-group" id="gr" >
-                                <input type="text" class="form-control" id="InputProduct" name="InputProduct" value="" />
+                                <input type="text" class="form-control" id="InputProduct" name="InputProduct" value="${stockData.product.code}" />
                                 <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#SearchProduct">
                                     <span class="glyphicon-search glyphicon"></span>
                                 </span>
                             </div>
                         </div>
                         <div class="col-md-2 form-group text-left" style="width: 200px;">
-                            <input name="InputProductName" id="InputProductName" type="text" class="form-control" value="" />
+                            <input name="InputProductName" id="InputProductName" type="text" class="form-control" value="${stockData.product.name}" />
                         </div>
                         <div class="col-xs-1 text-right"  style="width: 87px;" >
                             <label class="control-label">Staff</lable>
                         </div>
                         <div class="col-md-2 form-group text-left" style="width: 170px;" > 
+                            <input name="InputStaffId" id="InputStaffId" type="hidden" class="form-control" value="${stockData.staff.id}" />
                             <div class="input-group" id="gr" >
-                                <input type="text" class="form-control" id="InputStaff" name="InputStaff" value="" />
+                                <input type="text" class="form-control" id="InputStaff" name="InputStaff" value="${stockData.staff.username}" />
                                 <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#SearchStaff">
                                     <span class="glyphicon-search glyphicon"></span>
                                 </span>
                             </div>
                         </div>
                         <div class="col-md-2 form-group text-left" style="width: 200px;">
-                            <input name="InputStaffName" id="InputStaffName" type="text" class="form-control" value="" />
+                            <input name="InputStaffName" id="InputStaffName" type="text" class="form-control" value="${stockData.staff.name}" />
                         </div>
                     </div>   
                 </div><!-- End Row 1-->
@@ -72,7 +86,7 @@
                         </div>
                         <div class="col-md-3 form-group text-left" style="width: 170px;" >
                             <div class='input-group date' >
-                                <input name="InputEffectiveFromDate" id="InputEffectiveFromDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
+                                <input name="InputEffectiveFromDate" id="InputEffectiveFromDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${stockData.effectiveFrom}" />
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
@@ -81,7 +95,7 @@
                         </div>
                         <div class="col-md-3 form-group text-left" style="padding-left: 17px;width: 170px;" >
                             <div class='input-group date' >
-                                <input name="InputInputEffectiveToDate" id="InputInputEffectiveToDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
+                                <input name="InputInputEffectiveToDate" id="InputInputEffectiveToDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${stockData.effectiveTo}" />
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
@@ -93,14 +107,14 @@
                             <label class="control-label">Description</lable>
                         </div>
                         <div class="col-md-5 form-group text-left" style="width: 370px;padding-left: 3px;" >
-                             <textarea class="form-control" rows="3" id="descriptionStock" name="descriptionStock"></textarea>
+                             <textarea class="form-control" rows="3" id="descriptionStock" name="descriptionStock">${stockData.description}</textarea>
                         </div>
                         <div class="col-xs-1 text-left" style="width: 90px;padding-left: 3px;padding-right: 0px;">
                             <label class="control-label">Add Date</lable>
                         </div>
                         <div class="col-md-3 form-group text-left" style="padding-left: 0px;width: 155px;">
                             <div class='input-group date' >
-                                <input name="InputStockDate" id="InputStockDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
+                                <input name="InputStockDate" id="InputStockDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${stockData.createDate}" />
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
@@ -152,7 +166,7 @@
                         <div class="col-md-2 text-right">
                             <button type="button"  id="ButtonAdd"  name="ButtonAdd" onclick=" return addItemList()" class="btn btn-primary btn-primary " style="width: 100px;">
                                 <span id="SpanAdd" class="glyphicon glyphicon-print fa fa-plus-circle"></span> Add
-                                <input type="hidden" name="action" id="action"/>
+<!--                                <input type="hidden" name="action" id="action"/>-->
                             </button>                                          
                         </div> 
                         <div class="col-md-2 text-right" >
@@ -175,25 +189,30 @@
                                                 <th style="width: 8%">Action</th>
                                             </tr>
                                         </thead>
+                                        
                                         <tbody>
                                             <input type="text" class="hidden" id="counter" name="counter" value="1" />
+                                            <input type="text" class="hidden" id="counterTable" name="counterTable" value="1" />
+                                            <input type="text" class="hidden" id="counterAdd" name="counterAdd" value="1" />
                                             <c:set var="count" value="1"></c:set>
-                                            <%--<c:forEach var="tax" items="${ListTaxInvoice}" varStatus="taxdesc">--%>
+                                            <c:forEach var="std" items="${listStockDetail}" varStatus="taxdesc">
+                                            
                                             <tr>
-                                                <td><input type="text" class="form-control" name="id${count}" id="id${count}" value="${count}" readonly/></td>
-                                                <td><input type="text"  class="form-control" name="codeItemList${count}" id="codeItemList${count}" value=""/></td>
+                                                <td class="hidden"><input type="text" class="hidden" id="stockDetailId${taxdesc.count}" name="stockDetailId${taxdesc.count}" value="${std.id}" /></td>
+                                                <td>${taxdesc.count}</td>
+                                                <td><input type="text"  class="form-control" name="codeItemList${taxdesc.count}" id="codeItemList${taxdesc.count}" value="${std.code}"/></td>
                                                 <td>       
-                                                    <select id="SeleteTypeItemList${count}" name="SeleteTypeItemList${count}" class="form-control">
+                                                    <select id="SeleteTypeItemList${taxdesc.count}" name="SeleteTypeItemList${taxdesc.count}" class="form-control">
                                                         <c:forEach var="type" items="${getType}">
                                                             <option value="${type.name}"><c:out value="${type.name}" /></option>
                                                         </c:forEach>
                                                     </select>                                             
                                                 </td>                                
-                                                <td><input type="text" class="form-control" name="payStatusItemList${count}" id="payStatusItemList${count}" value="" readonly/></td>
-                                                <td><input type="text" class="form-control" name="itemStatusItemList${count}" id="itemStatusItemList${count}" value="" readonly/></td>
+                                                <td>${std.payStatus}</td>
+                                                <td>NEW</td>
                                                 <td class="text-center">                                          
-                                                    <a href="#" onclick="deleteItemListRow(${count})"  data-toggle="modal" data-target="" class="remCF" id="ButtonRemove${count}">
-                                                        <span id="Spanremove${count}" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal" data-target="#delStockModal"></span>
+                                                    <a href="#" onclick="deleteItemListRow(${taxdesc.count})"  data-toggle="modal" data-target="" class="remCF" id="ButtonRemove${taxdesc.count}">
+                                                        <span id="Spanremove${taxdesc.count}" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal" data-target="#delStockModal"></span>
                                                     </a>
                                                     
                                                 </td>
@@ -201,19 +220,20 @@
                                             </tr>
                                             <c:if test="${taxdesc.last}">
                                                 <script>
-                                                    $("#counter").val(${taxdesc.count} + 1);
+                                                        $("#counter").val(${taxdesc.count} + 1);
                                                 </script>
                                                 <input value="${taxdesc.count}" id="taxDescRows" name="taxDescRows" type="text" class="hidden" />
-                                            </c:if>                                            
-                                            <%--</c:forEach>--%>
+                                            </c:if>                                               
+                                            </c:forEach>
                                         </tbody>
                                     </table> 
                                 </div>
                     </div><!-- End Row 3--><br>
                     <div class="row" >
                     <div class="col-xs-12"  style="padding-left: 20px;">
+                        <input name="action" id="action" type="hidden" class="form-control" value="save" />
                         <div class="col-md-12 text-right">
-                            <button type="submit" id="ButtonSave" name="ButtonSave" class="btn btn-success">
+                            <button type="submit" id="ButtonSave" name="ButtonSave" class="btn btn-success" onclick="searchAction()">
                                 <i class="fa fa-save"></i> Save             
                             </button>                           
                         </div>                                         
@@ -292,12 +312,10 @@
                             tourTable.$('tr.row_selected').removeClass('row_selected');
                             $(this).addClass('row_selected');
                         }
-
                     });
                     // ON KEY INPUT AUTO SELECT PRODUCTCODE
                     $(function () {
                         var availableTags = [];
-
                         $.each(productCode, function (key, value) {
                             availableTags.push(value.code);
                             if (!(value.name in availableTags)) {
@@ -311,7 +329,6 @@
                                 $("#InputProduct").trigger('keyup');
                             }
                         });
-
 
                         $("#InputProduct").keyup(function () {
                             var position = $(this).offset();
@@ -332,9 +349,7 @@
                             }); //end each productCode
                         }); // end InputproductCode keyup
                     }); // end AutoComplete productCode
-
-                });
-                
+                });               
             </script>
             <div class="modal-footer">
                 <button id="" type="button" onclick="" class="btn btn-success">OK</button>
@@ -357,7 +372,7 @@
                     <thead class="datatable-header">
                         <tr>
                             <th>Code</th>
-                            <th> Staff Name</th>
+                            <th>staff Name</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -366,11 +381,12 @@
                     </script>
                         <c:forEach var="item" items="${ListStaffStock}" varStatus="loop">
                             <tr class="packet">
-                                <td class="staff-code"><c:out value="${item.id}" /></td>
+                                <td class="staff-id hidden"><c:out value="${item.id}" /></td>
+                                <td class="staff-code"><c:out value="${item.username}" /></td>
                                 <td class="staff-name"><c:out value="${item.name}" /></td>                            
                             </tr>
                             <script>
-                                staff.push({id: "${item.id}", code: "${item.id}", name: "${item.name}"});
+                                staff.push({id: "${item.id}", code: "${item.username}", name: "${item.name}"});
                             </script>
                         </c:forEach>
                     </tbody>
@@ -392,35 +408,27 @@
                 <h4 class="modal-title">Delete Stock</h4>
             </div>
             <div class="modal-body" >
-                <div id="delCodeStock">Are You Sure?</div>
+                <input type="hidden" id="idCodeStockDelete" value="" />
+                <div id="delCodeStock"></div>
             </div>
             <div class="modal-footer">
-                <button id="btnDelete" type="button" onclick="Delete()" class="btn btn-danger">Delete</button>
+                <button id="btnDelete" type="button" onclick=" return deleteStock()" class="btn btn-danger" data-dismiss="modal">Delete</button>
                 <button id="btnDeleteClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<script type="text/javascript">
-$(document).ready(function () {
-    $('.date').datetimepicker();
-    $(".datemask").mask('00-00-0000', {reverse: true});
-    
-    $('.spandate').click(function() {
-        var position = $(this).offset();
-        console.log("positon :" + position.top);
-        $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
-    });
-    
-//    $('#StaffTable').dataTable({bJQueryUI: true,
-//        "sPaginationType": "full_numbers",
-//        "bAutoWidth": true,
-//        "bFilter": true,
-//        "bPaginate": true,
-//        "bInfo": false,
-//        "bLengthChange": false,
-//        "iDisplayLength": 10
-//    });
-});
-</script>
+
+<c:if test="${! empty result}">
+    <c:if test="${result =='success'}">        
+        <script language="javascript">
+            $('#textAlertDivSave').show();
+        </script>
+    </c:if>
+    <c:if test="${result =='fail'}">        
+        <script language="javascript">
+           $('#textAlertDivNotSave').show();
+        </script>
+    </c:if>
+</c:if>
 <script type="text/javascript" src="js/stock.js"></script>

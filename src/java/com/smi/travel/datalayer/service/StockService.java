@@ -23,16 +23,18 @@ public class StockService {
         return  stockDao.getListStockProduct();
     }
     
-    public String InsertStock(Stock ItemLot){
-        return  stockDao.InsertStock(ItemLot);
+    public String saveStock(Stock ItemLot){
+        if(ItemLot.getId() == null){
+            return stockDao.InsertStock(ItemLot);
+        }else{
+            return stockDao.UpdateStock(ItemLot);
+        }
     }
     
-    public String UpdateStock(Stock ItemLot){
-        return  stockDao.UpdateStock(ItemLot);
-    }
     public String DeleteStock(Stock ItemLot){
         return  stockDao.DeleteStock(ItemLot);
     }
+    
     public String DeleteStockDetail(String DetailID){
         return  stockDao.DeleteStockDetail(DetailID);
     }
@@ -48,6 +50,5 @@ public class StockService {
     public StockDao getStockDao() {
         return stockDao;
     }
-    
-    
+ 
 }
