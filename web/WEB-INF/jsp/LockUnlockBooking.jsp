@@ -35,7 +35,7 @@
                     </div>
                     <div class="col-md-2 form-group text-left" style="padding-left:0px;padding-right:0px;width:150px;">
                         <div class="col-sm-9">
-                            <input style="width:100px;" type="text" class="form-control" id="referenceNo" name="referenceNo"  value="${bookStatusFromRefNo.referenceNo}" onkeypress="return isNumberKey(event)" >
+                            <input style="width:100px;" type="text" class="form-control" id="referenceNo" name="referenceNo"  value="${bookStatusFromRefNo.referenceNo}" onkeypress="return isNumberKey(event)" onchange="saveValidate()">
                         </div>
                         <div class="col-sm-1 text-right" style="padding-top: 8px;">
                             <i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i>
@@ -154,7 +154,7 @@
         }else{
             $('input:checkbox[name=flagLand]').attr('checked',false);
         }
-        
+    
 //        $("#LockUnlockBookingForm")
 //            .bootstrapValidator({
 //    //                framework: 'bootstrap',
@@ -365,7 +365,6 @@ function isNumberKey(evt){
     var charCode = (evt.which) ? evt.which : evt.keyCode;
 
     if (charCode == 45 || (charCode >= 48 && charCode <= 57)){
-       $("#ButtonSave").attr("disabled", "disabled");
        return true;
     }
     if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)){
@@ -374,7 +373,9 @@ function isNumberKey(evt){
     
 //    return true;
 }
-
+function saveValidate(){
+   $("#ButtonSave").attr("disabled", "disabled");
+}
     $('input[type="checkbox"]').checkbox({
         checkedClass: 'icon-check',
         uncheckedClass: 'icon-check-empty'
