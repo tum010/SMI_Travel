@@ -9,6 +9,7 @@ package com.smi.travel.datalayer.dao;
 import com.smi.travel.datalayer.entity.Function;
 import com.smi.travel.datalayer.entity.MAccpay;
 import com.smi.travel.datalayer.entity.MAccterm;
+import com.smi.travel.datalayer.entity.MAirlineAgent;
 import com.smi.travel.datalayer.entity.MBilltype;
 import com.smi.travel.datalayer.entity.MBookingstatus;
 import com.smi.travel.datalayer.entity.MBranch;
@@ -19,11 +20,11 @@ import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.entity.MItemstatus;
 import com.smi.travel.datalayer.entity.MMeal;
 import com.smi.travel.datalayer.entity.MPaymentDoctype;
-import com.smi.travel.datalayer.entity.PackageTour;
 import com.smi.travel.datalayer.entity.MPricecategory;
 import com.smi.travel.datalayer.entity.MProductType;
 import com.smi.travel.datalayer.entity.MStockStatus;
 import com.smi.travel.datalayer.entity.MTicketType;
+import com.smi.travel.datalayer.entity.PackageTour;
 import java.util.List;
 
 /**
@@ -54,6 +55,7 @@ public interface MListItemDao {
     public MInitialname getMInitialnameFromName(String name);
     public MBilltype getMBilltypeFromName(String name);
     public List<MPaymentDoctype>  getListMpaymentDocType();
+    public List<MAirlineAgent> getListMAirLineAgent();
     
     
 }

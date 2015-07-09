@@ -9,6 +9,7 @@ import com.smi.travel.datalayer.dao.MListItemDao;
 import com.smi.travel.datalayer.entity.Function;
 import com.smi.travel.datalayer.entity.MAccpay;
 import com.smi.travel.datalayer.entity.MAccterm;
+import com.smi.travel.datalayer.entity.MAirlineAgent;
 import com.smi.travel.datalayer.entity.MBilltype;
 import com.smi.travel.datalayer.entity.MBookingstatus;
 import com.smi.travel.datalayer.entity.MBranch;
@@ -370,6 +371,21 @@ public class MListItemImpl implements MListItemDao {
         session.close();
         this.sessionFactory.close();
         return MPayDocList;
+    }
+
+    @Override
+    public List<MAirlineAgent> getListMAirLineAgent() {
+         String query = "from MAirlineAgent";
+        Session session = this.sessionFactory.openSession();
+
+        List<MAirlineAgent> MAirlineAgentList = session.createQuery(query).list();
+
+        if (MAirlineAgentList.isEmpty()) {
+            return null;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return MAirlineAgentList;
     }
 
   
