@@ -95,8 +95,9 @@
             <div class="row" style="padding-left: 25px;padding-top: 10px;">
                 <div class="col-xs-4 text-right" ></div>
                 <div class="col-xs-2 text-right" style="width: 100px;" >
-                    <input type="hidden" name="action" id="action" value="save">
-                    <button type="submit" id="ButtonSave" name="ButtonSave" onclick="saveAction()" class="btn btn-success">
+                    <input type="hidden" name="temp" id="temp" value="1">
+                    <input type="hidden" name="action" id="action" value="">
+                    <button type="submit" id="ButtonSave" name="ButtonSave" onclick="saveAction();" class="btn btn-success">
                         <i class="fa fa-save"></i> Save             
                     </button>
                 </div>
@@ -116,8 +117,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         setCheckboxFlag();
-        $("#ButtonSave").attr("disabled", "disabled");
-        
+       
         $("#referenceNo").keyup(function (event) {
             if(event.keyCode === 13){
                var refNo = $("#referenceNo").val();
@@ -155,32 +155,27 @@
             $('input:checkbox[name=flagLand]').attr('checked',false);
         }
     
-//        $("#LockUnlockBookingForm")
-//            .bootstrapValidator({
-//    //                framework: 'bootstrap',
-//                container: 'tooltip',
-//                excluded: [':disabled', ':hidden', ':not(:visible)'],
-//                feedbackIcons: {
-//                    valid: 'uk-icon-check',
-//                    invalid: 'uk-icon-times',
-//                    validating: 'uk-icon-refresh'
-//                },
-//                fields: {
-//                    referenceNo: {
-//                        trigger: 'focus keyup',
-//                        validators: {
-//                            notEmpty: {trigger: 'change',
-//                                message: ' Reference No is required'
-//                            }
-//                        }
-//                    }
-//                }
-//            })
-//            .on('success.field.fv', function (e, data) {
-//                if (data.field === 'referenceNo' && data.fv.isValidField('referenceNo') === false) {
-//                    data.fv.revalidateField('referenceNo');
-//                }
-//            });
+        $("#LockUnlockBookingForm")
+            .bootstrapValidator({
+    //                framework: 'bootstrap',
+                container: 'tooltip',
+                excluded: [':disabled', ':hidden', ':not(:visible)'],
+                feedbackIcons: {
+                    valid: 'uk-icon-check',
+                    invalid: 'uk-icon-times',
+                    validating: 'uk-icon-refresh'
+                },
+                fields: {
+                    referenceNo: {
+                        trigger: 'focus keyup',
+                        validators: {
+                            notEmpty: {trigger: 'change',
+                                message: ' Reference No is required'
+                            }
+                        }
+                    }
+                }
+            });
 });
 
 function setCheckboxFlag(){
@@ -284,13 +279,16 @@ function CallAjax(param) {
                 document.getElementById('flagDaytour').value = path[3];
                 document.getElementById('flagLand').value = path[4];
                 document.getElementById('flagOther').value = path[5];
+                document.getElementById('temp').value = 0;
                 setCheckboxFlag();
                 $("#ButtonSave").removeAttr("disabled");
                 $("#ajaxload").addClass("hidden");
+                    
             }, error: function(msg) {
                 $("#ajaxload").addClass("hidden");
-                $("#ButtonSave").attr("disabled", "disabled");
+                document.getElementById('temp').value = 1;
                 alert('Reference No Not Valid');
+                    test();
             }
         });
     } catch (e) {
@@ -299,24 +297,29 @@ function CallAjax(param) {
 }
 
 function saveAction() {
-    inputCheckBoxVal();
-    var action = document.getElementById('action');
-    action.value = 'save';
-    var referenceNo = document.getElementById('referenceNo');
-    referenceNo.value = $("#referenceNo").val();
-    var SelectStatus = document.getElementById('SelectStatus');
-    SelectStatus.value = $("#SelectStatus").val();
-    var flagAir = document.getElementById('flagAir');
-    flagAir.value = $("#flagAir").val();
-    var flagHotel = document.getElementById('flagHotel');
-    flagHotel.value = $("#flagHotel").val();
-    var flagDaytour = document.getElementById('flagDaytour');
-    flagDaytour.value = $("#flagDaytour").val();
-    var flagLand = document.getElementById('flagLand');
-    flagLand.value = $("#flagLand").val();
-    var flagOther = document.getElementById('flagOther');
-    flagOther.value = $("#flagOther").val();
-    document.getElementById('LockUnlockBookingForm').submit();
+    var refNo = $("#referenceNo").val();
+    searchBookStatus(refNo);
+    var tempSave = $("#temp").val();
+    if(tempSave == 0){
+        inputCheckBoxVal();
+        var action = document.getElementById('action');
+        action.value = 'save';
+        var referenceNo = document.getElementById('referenceNo');
+        referenceNo.value = $("#referenceNo").val();
+        var SelectStatus = document.getElementById('SelectStatus');
+        SelectStatus.value = $("#SelectStatus").val();
+        var flagAir = document.getElementById('flagAir');
+        flagAir.value = $("#flagAir").val();
+        var flagHotel = document.getElementById('flagHotel');
+        flagHotel.value = $("#flagHotel").val();
+        var flagDaytour = document.getElementById('flagDaytour');
+        flagDaytour.value = $("#flagDaytour").val();
+        var flagLand = document.getElementById('flagLand');
+        flagLand.value = $("#flagLand").val();
+        var flagOther = document.getElementById('flagOther');
+        flagOther.value = $("#flagOther").val();
+        document.getElementById('LockUnlockBookingForm').submit();
+    }
 }
 
 function inputCheckBoxVal(){
@@ -363,8 +366,7 @@ function clearAction() {
 
 function isNumberKey(evt){
     var charCode = (evt.which) ? evt.which : evt.keyCode;
-    $("#ButtonSave").attr("disabled", "disabled");
-    
+
     if (charCode == 45 || (charCode >= 48 && charCode <= 57)){
        return true;
     }
