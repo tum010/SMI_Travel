@@ -31,11 +31,11 @@
             <div class="row" style="padding-left: 0px">
                 <div class="col-xs-12 ">
                     <div class="col-xs-1 text-right" style="padding-left: 0px;width:100px;">
-                        <label class="control-label">REF NO.</lable>
+                        <label class="control-label">REF NO.<font style="color: red">*</font></lable>
                     </div>
                     <div class="col-md-2 form-group text-left" style="padding-left:0px;padding-right:0px;width:150px;">
                         <div class="col-sm-9">
-                            <input style="width:100px;" type="text"  class="form-control" id="referenceNo" name="referenceNo"  value="${bookStatusFromRefNo.referenceNo}" >
+                            <input style="width:100px;" type="text" class="form-control" id="referenceNo" name="referenceNo"  value="${bookStatusFromRefNo.referenceNo}" onkeypress="return isNumberKey(event)" >
                         </div>
                         <div class="col-sm-1 text-right" style="padding-top: 8px;">
                             <i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i>
@@ -154,7 +154,32 @@
             $('input:checkbox[name=flagLand]').attr('checked',false);
         }
 
-    
+         $("#LockUnlockBookingForm")
+            .bootstrapValidator({
+//                framework: 'bootstrap',
+                container: 'tooltip',
+                excluded: [':disabled', ':hidden', ':not(:visible)'],
+                feedbackIcons: {
+                    valid: 'uk-icon-check',
+                    invalid: 'uk-icon-times',
+                    validating: 'uk-icon-refresh'
+                },
+                fields: {
+                    referenceNo: {
+                        trigger: 'focus keyup',
+                        validators: {
+                            notEmpty: {trigger: 'change',
+                                message: ' Ref No is required'
+                            }
+                        }
+                    }
+                }
+            })
+            .on('success.field.fv', function (e, data) {
+                if (data.field === 'referenceNo' && data.fv.isValidField('referenceNo') === false) {
+                    data.fv.revalidateField('referenceNo');
+                }
+            });
 });
 
 function setCheckboxFlag(){
@@ -262,6 +287,7 @@ function CallAjax(param) {
                 $("#ajaxload").addClass("hidden");
             }, error: function(msg) {
                 $("#ajaxload").addClass("hidden");
+                alert('Reference No Not Valid');
             }
         });
     } catch (e) {
@@ -332,6 +358,19 @@ function clearAction() {
     $('input:checkbox[name=flagOther]').attr('checked',false);
     $("#flagOther").val('0');
 }
+
+function isNumberKey(evt){
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+
+    if (charCode == 45 || (charCode >= 48 && charCode <= 57)){
+       return true;
+    }
+    if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)){
+       return false;
+    }
+//    return true;
+}
+
     $('input[type="checkbox"]').checkbox({
         checkedClass: 'icon-check',
         uncheckedClass: 'icon-check-empty'
