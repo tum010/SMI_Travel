@@ -1093,16 +1093,18 @@
                     <script>
 
                         $(document).ready(function () {
-                            $("#PnrTable tr").on('click', function () {
-                                pnr_id = $(this).find(".pnr-id").text();
-                                pnr_name = $(this).find(".pnr-name").text();
+                            $("#PnrTable td").on('click', function () {
+                                pnr_id = $(this).parent().find(".pnr-id").text();
+                                pnr_name = $(this).parent().find(".pnr-name").text();
                                 $("#pnrid").val(pnr_id);
                                 $("#pnrname").val(pnr_name);
                                 $("#actionIUP").val('import');
                                 $("#Pnrform").submit();
-
-                                alert("select pnr id[" + $("#pnrid").val() + "] name[" + $("#pnrname").val() + "] refNo[" + $("#referenceNo").val() + "]");
-                                $("#ImportModal").modal('hide');
+                                
+                                if(($("#pnrid").val()!="") && ($("#pnrname").val()!="")){
+                                    alert("select pnr id[" + $("#pnrid").val() + "] name[" + $("#pnrname").val() + "] refNo[" + $("#referenceNo").val() + "]");
+                                    $("#ImportModal").modal('hide');
+                                }
                             });
 
                             $("#pnr_name").keyup(function (e) {
@@ -1736,7 +1738,7 @@
         tabindex = input.attr("tabindex");
     })
 </script>
-
+<input type="text" id="test" name="test" value="39BBE7"/>
 
 
 
