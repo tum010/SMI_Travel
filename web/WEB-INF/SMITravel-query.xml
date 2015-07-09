@@ -303,6 +303,10 @@
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
     
+    <bean id="InvoiceSuppilerDao" class="com.smi.travel.datalayer.view.dao.impl.InvoiceSuppilerImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
     
     
     <!-- Component Bean -->
