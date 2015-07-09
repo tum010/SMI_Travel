@@ -12,7 +12,7 @@ import java.util.List;
 public class MPaymentDoctype   {
 
 
-     private Integer id;
+     private String id;
      private String name;
      private List paymentWendies = new LinkedList<PaymentWendy>();
 
@@ -28,11 +28,11 @@ public class MPaymentDoctype   {
        this.paymentWendies = paymentWendies;
     }
    
-    public Integer getId() {
+    public String getId() {
         return this.id;
     }
     
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
     public String getName() {
