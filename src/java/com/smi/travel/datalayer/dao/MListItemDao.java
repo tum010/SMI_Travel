@@ -18,9 +18,11 @@ import com.smi.travel.datalayer.entity.MFlight;
 import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.entity.MItemstatus;
 import com.smi.travel.datalayer.entity.MMeal;
+import com.smi.travel.datalayer.entity.MPaymentDoctype;
 import com.smi.travel.datalayer.entity.PackageTour;
 import com.smi.travel.datalayer.entity.MPricecategory;
 import com.smi.travel.datalayer.entity.MProductType;
+import com.smi.travel.datalayer.entity.MStockStatus;
 import com.smi.travel.datalayer.entity.MTicketType;
 import java.util.List;
 
@@ -51,5 +53,7 @@ public interface MListItemDao {
     public MInitialname getMInitialnameFromId(String id);
     public MInitialname getMInitialnameFromName(String name);
     public MBilltype getMBilltypeFromName(String name);
+    public List<MPaymentDoctype>  getListMpaymentDocType();
+    
     
 }

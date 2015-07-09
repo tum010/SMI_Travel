@@ -29,6 +29,7 @@ import com.smi.travel.datalayer.entity.MFlight;
 import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.entity.MItemstatus;
 import com.smi.travel.datalayer.entity.MMeal;
+import com.smi.travel.datalayer.entity.MPaymentDoctype;
 import com.smi.travel.datalayer.entity.MPricecategory;
 import com.smi.travel.datalayer.entity.MTicketType;
 import com.smi.travel.datalayer.entity.Master;
@@ -169,6 +170,10 @@ public class UtilityService {
 
     public MBilltype getMBilltypeFromName(String name) {
         return listitemdao.getMBilltypeFromName(name);
+    }
+    
+    public List<MPaymentDoctype> getListMpaymentDocType(){
+        return listitemdao.getListMpaymentDocType();
     }
     
     public List<SystemUser> getGuildeList() {
