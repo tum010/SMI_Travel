@@ -244,8 +244,13 @@
         <property name="masterdao" ref="MasterDao" />
         <property name="listitemdao" ref="MListItemDao" />
     </bean> 
+    
     <bean id="StockService" class="com.smi.travel.datalayer.service.StockService">
         <property name="stockDao" ref="StockDao" />
+    </bean>
+    
+    <bean id="PaymentTourHotelService" class="com.smi.travel.datalayer.service.PaymentTourHotelService">
+        <property name="invoiceSuppilerDao" ref="InvoiceSuppilerDao" />
     </bean>
     <!--<add data>-->
 </beans>
