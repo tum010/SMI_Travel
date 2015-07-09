@@ -75,7 +75,9 @@
                             </button>
                         </div>                        
                     </div>
-                </div><!--End Search --><br>
+                </div><!--End Search -->
+                
+                <br>
         <!-- Table -->                  
             <div class="row" style="padding-left: 15px;width: 1030px;">
                 <table class="display" id="SearchPaymentHotelTable">
@@ -86,7 +88,7 @@
                             <th style="width: 20%">PV Type</th>
                             <th style="width: 20%">Invoice Sup</th>
                             <th style="width: 5%">Acc</th>
-                            <th style="width: 8%">Dept.</th>
+                           
                             <th style="width: 8%">Total</th>
                             <th style="width: 5%">Car</th>
                             <th style="width: 8%">Status</th>
@@ -100,7 +102,7 @@
                             <td>Wendy Van</td>
                             <td>Hook In</td>
                             <td>1</td>
-                            <td>Wendy</td>
+                            
                             <td>23,000</td>
                             <td>THB</td>
                             <td>wait</td>
