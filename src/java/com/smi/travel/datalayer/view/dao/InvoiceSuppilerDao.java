@@ -13,5 +13,5 @@ import java.util.List;
  * @author chonnasith
  */
 public interface InvoiceSuppilerDao {
-    public List<InvoiceSupplier> getListInvoiceSupplier();   
+    public List<InvoiceSupplier> getListInvoiceSupplier(InvoiceSupplier invoiceSupplier);   
 }
