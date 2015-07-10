@@ -33,7 +33,8 @@
 <c:set var="result" value="${requestScope['Result']}" />
 <c:set var="refno1" value="${fn:substring(param.referenceNo, 0, 2)}" />
 <c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
-<c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
+<c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />checkPnr_list
+<c:set var="checkPnr_list" value="${requestScope['checkPnr_list']}" />
 
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
@@ -1099,12 +1100,19 @@
                                 $("#pnrid").val(pnr_id);
                                 $("#pnrname").val(pnr_name);
                                 $("#actionIUP").val('import');
-                                $("#Pnrform").submit();
                                 
-                                if(($("#pnrid").val()!="") && ($("#pnrname").val()!="")){
-                                    alert("select pnr id[" + $("#pnrid").val() + "] name[" + $("#pnrname").val() + "] refNo[" + $("#referenceNo").val() + "]");
-                                    $("#ImportModal").modal('hide');
-                                }
+                                
+                                var pnr_check = document.getElementById("checkPnr").value
+                                var checkRe = pnr_check.indexOf($("#pnrname").val());
+                                if(checkRe === -1){                                                             
+                                    if(($("#pnrid").val()!="") && ($("#pnrname").val()!="")){
+                                        alert("select pnr id[" + $("#pnrid").val() + "] name[" + $("#pnrname").val() + "] refNo[" + $("#referenceNo").val() + "]");
+                                        $("#Pnrform").submit();
+                                        $("#ImportModal").modal('hide');
+                                    }
+                                } else {
+                                    alert('This pnr is already used.');
+                                }  
                             });
 
                             $("#pnr_name").keyup(function (e) {
@@ -1738,7 +1746,7 @@
         tabindex = input.attr("tabindex");
     })
 </script>
-<input type="text" id="test" name="test" value="39BBE7"/>
+<input type="hidden" id="checkPnr" name="checkPnr" value="${checkPnr_list}"/>
 
 
 
