@@ -157,5 +157,4 @@ public class StockController extends SMITravelController {
     public UtilityService getUtilityService() {
         return utilityService;
     }
-    
 }
