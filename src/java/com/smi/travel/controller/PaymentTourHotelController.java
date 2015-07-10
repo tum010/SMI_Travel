@@ -23,6 +23,7 @@ public class PaymentTourHotelController extends SMITravelController {
     private static final String STATUS ="status_list";
     private static final String INVOICESUPLIST ="invoiceSup_list";
     private static final String APCODELIST ="APcode_list";
+    private static final String PAYMENHOTELTLIST ="paymentHotel_list";
     private static final String PAYMENTLIST ="payment_list";
     private UtilityService utilservice;
     private PaymentTourHotelService paymentTourHotelService;
