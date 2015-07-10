@@ -8,7 +8,11 @@ package com.smi.travel.datalayer.view.dao.impl;
 import com.smi.travel.datalayer.view.dao.InvoiceSuppilerDao;
 import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
 import com.smi.travel.util.UtilityFunction;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -33,29 +37,23 @@ public class InvoiceSuppilerImpl implements InvoiceSuppilerDao{
     public List<InvoiceSupplier> getListInvoiceSupplier() {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
-        List<InvoiceSupplier> invoiceSupplierList = session.createSQLQuery(" SELECT * FROM `invoice_supplier` ")
+        List<Object[]> invoiceSupplierList = session.createSQLQuery(" SELECT * FROM `invoice_supplier` ")
                 .addScalar("id", Hibernate.STRING)
                 .addScalar("code", Hibernate.STRING)
                 .addScalar("name", Hibernate.STRING)
                 .addScalar("apcode", Hibernate.STRING)
                 .list();
         
-//        for (List<InvoiceSupplier> A : invoiceSupplierList) {
-//            InvoiceSupplier invoiceSupplier = new InvoiceSupplier();
-//            invoiceSupplier.setId(String.valueOf(A));
-//            invoiceSupplier.setCode(String.valueOf(A));
-//        }
-        
-//        for (int i=0;i<=invoiceSupplierList.size();i++) {
-//            InvoiceSupplier invoiceSupplierListRe = new InvoiceSupplier();
-//            System.out.println("invoiceSupplierList.get(i).getId()" +invoiceSupplierList.get(i).getId());
-//            invoiceSupplierListRe.setId(util.ConvertString(invoiceSupplierList.get(i).getId()));
-//            invoiceSupplierListRe.setCode(util.ConvertString(invoiceSupplierList.get(i).getCode()));
-//            invoiceSupplierListRe.setName(util.ConvertString(invoiceSupplierList.get(i).getName()));
-//            invoiceSupplierListRe.setApcode(util.ConvertString(invoiceSupplierList.get(i).getApcode()));
-//
-//         }
-        return invoiceSupplierList;
+        List<InvoiceSupplier> result = new ArrayList<InvoiceSupplier>();
+        for (Object[] A : invoiceSupplierList) {
+            InvoiceSupplier invoiceSupplier = new InvoiceSupplier();
+            invoiceSupplier.setId(util.ConvertString(A[0]));
+            invoiceSupplier.setCode(util.ConvertString(A[1]));
+            invoiceSupplier.setName(util.ConvertString(A[2]));
+            invoiceSupplier.setApcode(util.ConvertString(A[3]));
+            result.add(invoiceSupplier);
+        }       
+        return result;
     }
     
 }
