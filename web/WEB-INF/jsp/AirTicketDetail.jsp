@@ -1124,13 +1124,21 @@
                                     var result = $.grep(pnr, function (e) {
                                         return e.pnr === name;
                                     });
-                                    if (result.length > 0) {
-                                        $("#Pnrform").submit();
-                                        alert('import pnr ' + $("#pnr_name").val() + ' !');
+                                    
+                                    var pnr_check = document.getElementById("checkPnr").value
+                                    var checkRe = pnr_check.indexOf($("#pnr_name").val());
+                                    if(checkRe === -1){ 
+                                        if (result.length > 0) {
+                                            $("#Pnrform").submit();
+                                            alert('import pnr ' + $("#pnr_name").val() + ' !');
+                                        } else {
+                                            alert('pnr name "' + name + '" doesn\'t exist! ');
+                                            $("#pnr_name").val("");
+                                        }
                                     } else {
-                                        alert('pnr name "' + name + '" doesn\'t exist! ');
-                                        $("#pnr_name").val("");
-                                    }
+                                        alert('This pnr is already used.');
+                                        document.getElementById("pnr_name").value = "";
+                                    }                                                                                                                      
                                 }
                             });
 
@@ -1746,7 +1754,7 @@
         tabindex = input.attr("tabindex");
     })
 </script>
-<input type="hidden" id="checkPnr" name="checkPnr" value="${checkPnr_list}"/>
+<input type="text" id="checkPnr" name="checkPnr" value="${checkPnr_list}"/>
 
 
 
