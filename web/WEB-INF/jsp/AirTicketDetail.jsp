@@ -91,7 +91,12 @@
                             <div class="input-group">
                                 <input type="hidden" class="form-control" id="pnr" name="pnr" value="${currentPnr.id}">
                                 <input type="text" class="form-control" id="pnr_name" name="pnr_name" value="${currentPnr.pnr}">
-                                <span class="input-group-addon"><span data-toggle="modal" data-target="#ImportModal" class="glyphicon-import glyphicon"></span></span>
+                                <c:if test="${lockUnlockBooking == 0}">
+                                    <span class="input-group-addon"><span data-toggle="modal" data-target="#ImportModal" class="glyphicon-import glyphicon"></span></span>
+                                </c:if>
+                                <c:if test="${lockUnlockBooking == 1}">
+                                    <span class="input-group-addon"><span class="glyphicon-import glyphicon disabled"></span></span>
+                                </c:if>
                             </div>
                         </div>
                     </div>
@@ -1116,29 +1121,31 @@
                             });
 
                             $("#pnr_name").keyup(function (e) {
-                                if (e.keyCode === 13) {
-                                    /*e.preventDefault();*/
-                                    var name = $("#pnr_name").val();
-                                    $("#pnrname").val($("#pnr_name").val());
-                                    $("#actionIUP").val('import');
-                                    var result = $.grep(pnr, function (e) {
-                                        return e.pnr === name;
-                                    });
-                                    
-                                    var pnr_check = document.getElementById("checkPnr").value
-                                    var checkRe = pnr_check.indexOf($("#pnr_name").val());
-                                    if(checkRe === -1){ 
-                                        if (result.length > 0) {
-                                            $("#Pnrform").submit();
-                                            alert('import pnr ' + $("#pnr_name").val() + ' !');
+                                if(${lockUnlockBooking == 0}){
+                                    if (e.keyCode === 13) {
+                                        /*e.preventDefault();*/
+                                        var name = $("#pnr_name").val();
+                                        $("#pnrname").val($("#pnr_name").val());
+                                        $("#actionIUP").val('import');
+                                        var result = $.grep(pnr, function (e) {
+                                            return e.pnr === name;
+                                        });
+
+                                        var pnr_check = document.getElementById("checkPnr").value
+                                        var checkRe = pnr_check.indexOf($("#pnr_name").val());
+                                        if(checkRe === -1){ 
+                                            if (result.length > 0) {
+                                                $("#Pnrform").submit();
+                                                alert('import pnr ' + $("#pnr_name").val() + ' !');
+                                            } else {
+                                                alert('pnr name "' + name + '" doesn\'t exist! ');
+                                                $("#pnr_name").val("");
+                                            }
                                         } else {
-                                            alert('pnr name "' + name + '" doesn\'t exist! ');
-                                            $("#pnr_name").val("");
-                                        }
-                                    } else {
-                                        alert('This pnr is already used.');
-                                        document.getElementById("pnr_name").value = "";
-                                    }                                                                                                                      
+                                            alert('This pnr is already used.');
+                                            document.getElementById("pnr_name").value = "";
+                                        }                                                                                                                      
+                                    }
                                 }
                             });
 
