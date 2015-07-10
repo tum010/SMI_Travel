@@ -53,7 +53,7 @@ function Delete() {
 
 $(document).ready(function () {
     var bla = $('#resultText').val();
-
+   
     if(bla == "save successful"){
         
         $('#textAlertDivSave').show();
