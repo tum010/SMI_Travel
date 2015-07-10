@@ -150,39 +150,39 @@
     <!--Table-->
     <div class="row">
         <div class="col-md-12 ">
-            <table id="BookList" class="display" cellspacing="0" width="100%">
+            <table id="BookList" class="display" cellspacing="0" style="table-layout: fixed">
                 <thead>
                     <tr class="datatable-header" >
-                        <th>Ref No</th>
-                        <th>Agent</th>
-                        <th>Leader</th>
+                        <th style="width: 6%">Ref No</th>
+                        <th style="width: 7%">Agent</th>
+                        <th style="width: 15%">Leader</th>
                             <c:choose>
                                 <c:when test="${userdepartment  == 1}">
                                 <th>PNR</th>
-                                <th>Depart Date</th>
+                                <th style="width: 7%">Depart Date</th>
                                 </c:when>
                                 <c:when test="${userdepartment  == 4}">
-                                <th>Hotel</th>
-                                <th>Check in Date</th>
+                                <th style="width: 10%">Hotel</th>
+                                <th style="width: 7%">Check in Date</th>
                                 </c:when> 
                                 <c:otherwise>
                                 <th>PNR</th>
-                                <th>Depart Date</th>
-                                <th>Hotel</th>
-                                <th>Check in Date</th>
+                                <th style="width: 7%">Depart Date</th>
+                                <th style="width: 10%">Hotel</th>
+                                <th style="width: 7%">Check in Date</th>
                                 </c:otherwise>
                             </c:choose>
-                        <th>Create Date</th>
-                        <th>By</th>
+                        <th style="width: 7%">Create Date</th>
+                        <th style="width: 5%">By</th>
                        
-                        <th>Action</th>
+                        <th style="width: 5%">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <c:forEach var="table" items="${dataList}">
                         <c:set var="refno1" value="${fn:substring(table.refno, 0, 2)}" />
                         <c:set var="refno2" value="${fn:substring(table.refno, 2,7)}" />
-                        <tr>
+                <tr>
                             <td><center><c:out value="${refno1}-${refno2}" /></center></td>
                     <td><center><c:out value="${table.agentCode}" /></center></td>
                     <td><c:out value="${table.leaderName}" /> </td>
@@ -212,7 +212,7 @@
                             <span onclick="getSummaryBook('${table.refno}'); getSummaryTel('${table.tel}','${table.remark}','${table.email}');" class="glyphicon glyphicon glyphicon-list-alt"></span>
                         </center>
                     </td>           
-            </tr>  
+                </tr>  
                 </c:forEach>
                 </tbody>
             </table>      
