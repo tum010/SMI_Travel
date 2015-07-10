@@ -40,6 +40,10 @@
         <property name="ticketIns" type="big_decimal">
             <column name="ticket_ins" precision="10"  />
         </property>
+        <property name="diffVat" type="big_decimal">
+            <column name="diff_vat" precision="10"  />
+        </property>
+        
         <property name="ticketCommission" type="big_decimal">
             <column name="ticket_commission" precision="10"  />
         </property>

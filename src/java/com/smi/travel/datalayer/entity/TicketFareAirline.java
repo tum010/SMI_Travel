@@ -36,6 +36,7 @@ public class TicketFareAirline {
      private BigDecimal addPay;
      private BigDecimal agentComPay;
      private BigDecimal agentComReceive;
+     private BigDecimal diffVat;
      private Date overDate;
      private Date litterDate;
      private Date decPayDate;
@@ -48,7 +49,7 @@ public class TicketFareAirline {
     public TicketFareAirline() {
     }
 
-    public TicketFareAirline(MAirlineAgent MAirlineAgent, String ticketNo, String ticketType, String ticketBuy, String ticketRounting, String passenger, Date issueDate, Date ticketDate, BigDecimal ticketFare, BigDecimal ticketTax, BigDecimal ticketIns, BigDecimal ticketCommission, BigDecimal agentCommission, BigDecimal salePrice, Integer agentId, String remark, BigDecimal overCommission, BigDecimal litterCommission, BigDecimal decPay, BigDecimal addPay, BigDecimal agentComPay, BigDecimal agentComReceive, Date overDate, Date litterDate, Date decPayDate, Date addPayDate, Date agentPayDate, Date agentReceiveDate, List paymentAirticketFares, List refundAirticketDetails) {
+    public TicketFareAirline(MAirlineAgent MAirlineAgent, String ticketNo, String ticketType, String ticketBuy, String ticketRounting, String passenger, Date issueDate, Date ticketDate, BigDecimal ticketFare, BigDecimal ticketTax, BigDecimal ticketIns, BigDecimal ticketCommission, BigDecimal agentCommission, BigDecimal salePrice, Integer agentId, String remark, BigDecimal overCommission, BigDecimal litterCommission, BigDecimal decPay, BigDecimal addPay, BigDecimal agentComPay, BigDecimal agentComReceive, Date overDate, Date litterDate, Date decPayDate, Date addPayDate, Date agentPayDate, Date agentReceiveDate, List paymentAirticketFares, List refundAirticketDetails,BigDecimal diffVat) {
        this.MAirlineAgent = MAirlineAgent;
        this.ticketNo = ticketNo;
        this.ticketType = ticketType;
@@ -77,6 +78,7 @@ public class TicketFareAirline {
        this.addPayDate = addPayDate;
        this.agentPayDate = agentPayDate;
        this.agentReceiveDate = agentReceiveDate;
+       this.diffVat = diffVat;
        this.paymentAirticketFares = paymentAirticketFares;
        this.refundAirticketDetails = refundAirticketDetails;
     }
@@ -302,6 +304,15 @@ public class TicketFareAirline {
         this.refundAirticketDetails = refundAirticketDetails;
     }
 
+    public BigDecimal getDiffVat() {
+        return diffVat;
+    }
+
+    public void setDiffVat(BigDecimal diffVat) {
+        this.diffVat = diffVat;
+    }
+
+    
 }
 
 
