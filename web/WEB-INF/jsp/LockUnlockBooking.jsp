@@ -20,6 +20,17 @@
     </ol>
 </section>
 <div class ="container"  style="padding-top: 15px;padding-left: 5px;" ng-app="">
+    <div class="row">
+        <!--Alert Save and Update-->
+        <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Save Success!</strong> 
+        </div>
+        <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Save Unsuccess!</strong> 
+        </div>
+    </div>
     <div class="col-sm-3"></div>
     <div class="col-sm-6">
     <form action="LockUnlockBooking.smi" method="post" id="LockUnlockBookingForm" name="LockUnlockBookingForm" role="form">
@@ -342,9 +353,9 @@ function CallAjaxSave(param) {
                 document.getElementById('flagOther').value = path[5];
                 setCheckboxFlag();
                 if(path[6] == 1){
-                    alert('Save Success !!!');
+                    $('#textAlertDivSave').show();
                 }else{
-                    alert('Save Not Success !!!');
+                    $('#textAlertDivNotSave').show();
                 }
                 $("#ajaxload").addClass("hidden");
                 $("#ButtonSave").removeAttr("disabled");

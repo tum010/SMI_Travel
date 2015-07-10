@@ -11,6 +11,7 @@ import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.BookingFlight;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import java.util.List;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
@@ -23,18 +24,59 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
     private Transaction transaction;
     
     @Override
-    public String InsertTicketFare(TicketFareAirline ticket) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int InsertTicketFare(TicketFareAirline ticket) {
+        int result = 0;
+        try {
+            Session session = this.sessionFactory.openSession();
+            setTransaction(session.beginTransaction());
+           
+            session.save(ticket);
+            getTransaction().commit();
+            session.close();
+            this.sessionFactory.close();
+            result = 1;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            result = 0;
+        }
+        return result;    
     }
 
     @Override
-    public String UpdateTicketFare(TicketFareAirline ticket) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int UpdateTicketFare(TicketFareAirline ticket) {
+        int result = 0;
+        try {
+            Session session = this.sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            session.update(ticket);
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+            result = 1;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            result = 0;
+        }
+        return result;     
     }
 
     @Override
-    public String DeleteTicketFare(TicketFareAirline ticket) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int DeleteTicketFare(TicketFareAirline ticket) {
+        int result = 0;
+        try {
+            Session session = this.sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            session.delete(ticket);
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+            result = 1;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            transaction.rollback();
+            result = 0;
+        }
+        return result;        
     }
 
     @Override
@@ -63,6 +105,14 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
 
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+
+    public Transaction getTransaction() {
+        return transaction;
+    }
+
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
     }
     
     

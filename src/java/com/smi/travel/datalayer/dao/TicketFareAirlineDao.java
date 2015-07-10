@@ -16,14 +16,14 @@ import java.util.List;
  * @author Surachai
  */
 public interface TicketFareAirlineDao {
-    public String InsertTicketFare(TicketFareAirline ticket);
-    public String UpdateTicketFare(TicketFareAirline ticket);
-    public String DeleteTicketFare(TicketFareAirline ticket);
+    public int InsertTicketFare(TicketFareAirline ticket);
+    public int UpdateTicketFare(TicketFareAirline ticket);
+    public int DeleteTicketFare(TicketFareAirline ticket);
     public TicketFareAirline getTicketFareFromTicketNo(String TicketNo);
     public AirticketPassenger getTicketFareBookingFromTicketNo(String TicketNo);
     public List<AirticketPassenger> getListTicketFareFromRefno(String Refno);
     public List<BookingFlight> getListFlightFromTicketNo(String TicketNo);
 
-     
+    
 
 }
