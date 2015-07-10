@@ -31,7 +31,7 @@ public class DaytourController extends SMITravelController {
     private static final String Master = "Master";
     private static final String DaytourBookingList = "DaytourBookingList";
     private static final String LockUnlockBooking = "LockUnlockBooking";
-
+    private static final String LockUnlockBookingOther = "lockUnlockBookingOther";
     private BookingOtherService OtherService;
 
     @Override
@@ -81,6 +81,14 @@ public class DaytourController extends SMITravelController {
             request.setAttribute(LockUnlockBooking,1);
         }else{
             request.setAttribute(LockUnlockBooking,0);
+        }
+        
+        if(("1").equals(String.valueOf(master.getFlagOther()))
+            || ("2").equals(String.valueOf(master.getMBookingstatus().getId()))
+            || ("5").equals(String.valueOf(master.getMBookingstatus().getId()))){
+            request.setAttribute(LockUnlockBookingOther,1);
+        }else{
+            request.setAttribute(LockUnlockBookingOther,0);
         }
     }
 
