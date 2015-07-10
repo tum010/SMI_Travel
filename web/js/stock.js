@@ -99,7 +99,11 @@ $(document).ready(function () {
             }
         });
     });
-    
+    validFrom();
+
+});
+
+function validFrom(){
     // Validator Date From and To
     $("#StockForm")
             .bootstrapValidator({
@@ -150,6 +154,13 @@ $(document).ready(function () {
                                 message: 'The value is not an integer'
                             }
                         }
+                    },
+                    InputProduct : {
+                        validators: {
+                            notEmpty: {
+                                message: 'The full name is required'
+                            }
+                        }
                     }
                 }
             }).on('success.field.fv', function (e, data) {
@@ -168,7 +179,8 @@ $(document).ready(function () {
             $('#DateTo').datetimepicker().on('dp.change', function (e) {
                 $('#StockForm').bootstrapValidator('revalidateField', 'InputInputEffectiveToDate');
             });
-});  
+//            $('#StockForm').submit();
+}
 
 function AddRow(row) {
     $("#TaxInvoiceTable tbody").append(
