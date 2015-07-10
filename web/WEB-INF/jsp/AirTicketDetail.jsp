@@ -1754,7 +1754,7 @@
         tabindex = input.attr("tabindex");
     })
 </script>
-<input type="text" id="checkPnr" name="checkPnr" value="${checkPnr_list}"/>
+<input type="hidden" id="checkPnr" name="checkPnr" value="${checkPnr_list}"/>
 
 
 
