@@ -1,10 +1,6 @@
 package com.smi.travel.controller;
-import com.smi.travel.datalayer.entity.Agent;
 import com.smi.travel.datalayer.entity.MBookingstatus;
-import com.smi.travel.datalayer.entity.Master;
-import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.LockUnlockBookingService;
-import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
