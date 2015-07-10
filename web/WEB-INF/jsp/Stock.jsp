@@ -33,7 +33,7 @@
     <div class="col-sm-2">
         <div ng-include="'WebContent/Master/StockMenu.html'"></div>
     </div>
-    <form action="Stock.smi" method="post" id="StockForm" name="StockFormName" role="form" >
+    <form action="Stock.smi" method="post" id="StockForm" name="StockFormName" role="form" onsubmit=" return validFrom()">
     <div class="col-sm-10">
         <!--Alert Save -->
         <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
@@ -60,7 +60,7 @@
                         <input type="text" class="form-control hidden" id="InputStockId" name="InputStockId" value="${stockData.id}" />
                         <input type="text" class="form-control hidden" id="InputProductId" name="InputProductId" value="${stockData.product.id}" />
                         <div class="col-xs-2 text-right"  style="padding-right: 25px;width: 140px;">
-                            <label class="control-label">Product</lable>
+                            <label class="control-label">Product<font style="color: red">*</font></lable>
                         </div>
                         <div class="col-md-3 form-group text-left" style="padding-left:5px;width: 160px;"> 
                             <div class="input-group" id="gr" >
@@ -92,10 +92,10 @@
                 </div><!-- End Row 1-->
                 <div class="row" >
                     <div class="col-xs-12 ">
-                        <div class="col-xs-2 text-right" style="width: 130px;">
-                            <label class="control-label">Effective From</lable>
+                        <div class="col-xs-2 text-right" style="width: 140px;">
+                            <label class="control-label">Effective From<font style="color: red">*</font></lable>
                         </div>
-                        <div class="col-md-3 form-group text-left" style="width: 170px;" >
+                        <div class="col-md-3 form-group text-left" style="width: 170px;padding-left: 3px;" >
                             <div class='input-group date' id="DateFrom">
                                 <!--<input name="InputEffectiveFromDate0" id="InputEffectiveFromDate0" type="text" class="form-control " data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${from}" />-->
                                 <input name="InputEffectiveFromDate" id="InputEffectiveFromDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${from}" />
@@ -103,9 +103,9 @@
                             </div>
                         </div>
                         <div class="col-xs-3 text-right" style="width: 285px;">
-                            <label class="control-label">Effective To</lable>
+                            <label class="control-label">Effective To<font style="color: red">*</font></lable>
                         </div>
-                        <div class="col-md-3 form-group text-left" style="padding-left: 17px;width: 170px;" >
+                        <div class="col-md-3 form-group text-left" style="padding-left: 6px;width: 170px;" >
                             <div class='input-group date' id="DateTo">
                                 <input name="InputInputEffectiveToDate" id="InputInputEffectiveToDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${to}" />
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -246,7 +246,7 @@
                     <div class="col-xs-12"  style="padding-left: 20px;">
                         <input name="action" id="action" type="hidden" class="form-control" value="save" />
                         <div class="col-md-12 text-right">
-                            <button type="submit" id="ButtonSave" name="ButtonSave" class="btn btn-success" onclick="searchAction()">
+                            <button type="button" id="ButtonSave" name="ButtonSave" class="btn btn-success" onclick="searchAction()">
                                 <i class="fa fa-save"></i> Save             
                             </button>                           
                         </div>                                         
