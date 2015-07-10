@@ -12,6 +12,7 @@
 <c:set var="invoiceSup_list" value="${requestScope['invoiceSup_list']}" />
 <c:set var="APcode_list" value="${requestScope['APcode_list']}" />
 <c:set var="payment_list" value="${requestScope['payment_list']}" />
+<c:set var="paymentHotel_list" value="${requestScope['paymentHotel_list']}" />
 
 <section class="content-header" >
     <h1>
@@ -112,13 +113,13 @@
         </div>
         <!--Row 3 -->
         <div class="row" >
-            <input name="InputInvoiceSupId" id="InputInvoiceSupId" type="hidden" class="form-control" value="" />
             <div class="col-xs-2 text-right" style="padding-left:10px;padding-right:0px;width:100px;">
                     <label class="control-label">Invoice Sup<font style="color: red">*</font></lable>
             </div>
             <div class="col-md-2 form-group text-right" style="padding-left:30px;padding-right:0px;"> 
                 <div class="col-sm-12">
                     <div class="input-group" id="CodeValidate">
+                        <input name="InputInvoiceSupId" id="InputInvoiceSupId" type="hidden" class="form-control" value="" />
                         <input name="InputInvoiceSupCode" id="InputInvoiceSupCode" type="text" class="form-control" value="" />
                         <span class="input-group-addon" data-toggle="modal" data-target="#SearchInvoiceSup">
                             <span class="glyphicon-search glyphicon"></span>
@@ -194,7 +195,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                      
+                        <c:forEach var="table" items="${paymentHotel_list}" varStatus="Counter">
                             <tr>
                                 <td class="hidden"> <input  type="hidden"  value="${table.id}">  </td>
                                 <td> 
@@ -204,14 +205,14 @@
                                         <option value="2">test 2</option>
                                     </select>                                 
                                 </td>
-                                <td> <input style="width: ${RefNo}" maxlength ="10"  type="text" class="form-control" value="${table.description}"> </td>
-                                <td> <input style="width: ${InvNo}" maxlength ="15"  type="text" class="form-control" value="${table.description}">  </td>
-                                <td> <input style="width: ${Code}" maxlength ="15"  type="text" class="form-control" value="${table.description}">  </td>
+                                <td> <input style="width: ${RefNo}" id="row-${Counter.count}-refNo" name="row-${Counter.count}-refNo" maxlength ="10"  type="text" class="form-control" value="${table.description}"> </td>
+                                <td> <input style="width: ${InvNo}" id="row-${Counter.count}-invNo" name="row-${Counter.count}-invNo" maxlength ="15"  type="text" class="form-control" value="${table.description}">  </td>
+                                <td> <input style="width: ${Code}" id="row-${Counter.count}-code" name="row-${Counter.count}-code" maxlength ="15"  type="text" class="form-control" value="${table.description}">  </td>
                                 <td>
-                                    <input type="radio" name="Type" id="Type_T" value="T" checked=""> T&nbsp;
-                                    <input type="radio" name="Type" id="Type_C" value="C" > C
+                                    <input type="radio" name="row-${Counter.count}-type" id="row-${Counter.count}-typeT" value="T" checked=""> T&nbsp;
+                                    <input type="radio" name="row-${Counter.count}-type" id="row-${Counter.count}-typeC" value="C" > C
                                 </td>
-                                <td> <input style="width: ${Amount}" maxlength ="15"  type="text" class="form-control" value="${table.description}"> </td>
+                                <td> <input style="width: ${Amount}" id="row-${Counter.count}-amount" name="row-${Counter.count}-amount" maxlength ="15"  type="text" class="form-control" value="${table.description}"> </td>
                                 <td> 
                                     <select class="form-control" id="row-${Counter.count}-cur" name="row-${Counter.count}-cur">
                                         <option value="">--</option>                                 
@@ -219,8 +220,8 @@
                                         <option value="2">test 2</option>
                                     </select>                                 
                                 </td>
-                                <td> <input style="width: ${Description}" maxlength ="255"  type="text" class="form-control" value="${table.description}"> </td>
-                                <td> <input style="width: ${AC}" maxlength ="15"  type="text" class="form-control" value="${table.description}"> </td>
+                                <td> <input style="width: ${Description}" id="row-${Counter.count}-description" name="row-${Counter.count}-description" maxlength ="255"  type="text" class="form-control" value="${table.description}"> </td>
+                                <td> <input style="width: ${AC}" id="row-${Counter.count}-ac" name="row-${Counter.count}-ac" maxlength ="15"  type="text" class="form-control" value="${table.description}"> </td>
                                 <td class="text-center">
                                     
                                         <a class="remCF"><span  onclick="deletelist('${table.id}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
@@ -230,7 +231,7 @@
                                     </c:if>
                                 </td>
                             </tr>                       
-                         
+                        </c:forEach> 
                     </tbody>
                 </table>
             </div>
@@ -333,8 +334,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="invSup" items="">
-                            <tr class="packet">
+                        <c:forEach var="invSup" items="${invoiceSup_list}">
+                            <tr onclick ="setupInvSupValue('${invSup.id}', '${invSup.code}', '${invSup.name}', '${invSup.apcode}')" >
                                 <td class="">${invSup.id}</td>
                                 <td>${invSup.code}</td>
                                 <td>${invSup.name}</td>
@@ -391,22 +392,35 @@
         $('.datemask').mask('0000-00-00');
         
         $('#SearchInvoicSupTable').dataTable({bJQueryUI: true,
-        "sPaginationType": "full_numbers",
-        "bAutoWidth": true,
-        "bFilter": true,
-        "bPaginate": true,
-        "bInfo": false,
-        "bLengthChange": false,
-        "iDisplayLength": 3
-        });
+            "sPaginationType": "full_numbers",
+            "bAutoWidth": true,
+            "bFilter": true,
+            "bPaginate": true,
+            "bInfo": false,
+            "bLengthChange": false,
+            "iDisplayLength": 10
+            });
+            
         $('#SearchAPCodeTable').dataTable({bJQueryUI: true,
-        "sPaginationType": "full_numbers",
-        "bAutoWidth": true,
-        "bFilter": true,
-        "bPaginate": true,
-        "bInfo": false,
-        "bLengthChange": false,
-        "iDisplayLength": 3
+            "sPaginationType": "full_numbers",
+            "bAutoWidth": true,
+            "bFilter": true,
+            "bPaginate": true,
+            "bInfo": false,
+            "bLengthChange": false,
+            "iDisplayLength": 10
+            });
         });
-    });  
+    
+    function setupInvSupValue(id,code,name,apcode){
+        $('#SearchInvoiceSup').modal('hide');
+        document.getElementById('InputInvoiceSupId').value = id;
+        document.getElementById('InputInvoiceSupCode').value = code;
+        document.getElementById('InputInvoiceSupName').value = name;
+        document.getElementById('InputAPCode').value = apcode;
+        document.getElementById('InputInvoiceSupCode').focus();
+        //$('#landForm').bootstrapValidator('revalidateField', 'agent_code');
+    }
+    
+    
 </script>
