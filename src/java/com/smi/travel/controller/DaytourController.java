@@ -75,20 +75,18 @@ public class DaytourController extends SMITravelController {
         request.setAttribute(Bookiing_Size, booksize);
         Master master = utilservice.getMasterdao().getBookingFromRefno(refNo);
         request.setAttribute(Master, master);
-        if(("1").equals(String.valueOf(master.getFlagDaytour())) 
-            || ("2").equals(String.valueOf(master.getMBookingstatus().getId()))
-            || ("5").equals(String.valueOf(master.getMBookingstatus().getId()))){
+
+        request.setAttribute(LockUnlockBooking,0);
+        request.setAttribute(LockUnlockBookingOther,0);
+        if(("2").equals(String.valueOf(master.getMBookingstatus().getId()))|| ("5").equals(String.valueOf(master.getMBookingstatus().getId()))){
             request.setAttribute(LockUnlockBooking,1);
-        }else{
-            request.setAttribute(LockUnlockBooking,0);
-        }
-        
-        if(("1").equals(String.valueOf(master.getFlagOther()))
-            || ("2").equals(String.valueOf(master.getMBookingstatus().getId()))
-            || ("5").equals(String.valueOf(master.getMBookingstatus().getId()))){
             request.setAttribute(LockUnlockBookingOther,1);
-        }else{
-            request.setAttribute(LockUnlockBookingOther,0);
+        }
+        if(("1").equals(String.valueOf(master.getFlagDaytour()))){
+            request.setAttribute(LockUnlockBooking,1);
+        }
+        if(("1").equals(String.valueOf(master.getFlagOther()))){
+            request.setAttribute(LockUnlockBookingOther,1);
         }
     }
 
