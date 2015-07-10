@@ -322,16 +322,28 @@
             <div class="modal-body">
                 <table class="display" id="SearchInvoicSupTable">
                     <thead class="datatable-header">
+                        <script>
+                            var invoiceSup = [];
+                        </script>
                         <tr>
+                            <th>Id</th>
                             <th>Code</th>
                             <th>Name</th>
+                            <th>AP code</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <c:forEach var="invSup" items="">
                             <tr class="packet">
-                                <td class="">XXX
-                                <td>XXXXX</td> 
+                                <td class="">${invSup.id}</td>
+                                <td>${invSup.code}</td>
+                                <td>${invSup.name}</td>
+                                <td>${invSup.apcode}</td> 
                             </tr>
+                            <script>
+                                invoiceSup.push({id: "${invSup.id}", code: "${invSup.code}", name: "${invSup.name}", apcode "${invSup.apcode}"});
+                            </script>
+                        </c:forEach>    
                     </tbody>
                 </table>
             </div>
