@@ -83,6 +83,7 @@ public class AirTicketDetailController extends SMITravelController {
     private static final String MInitialname = "MInitialname";
     private static final String Result = "Result";
     private static final String LockUnlockBooking = "LockUnlockBooking";
+    private static final String CHECKPNR = "checkPnr_list";
 
 
     @Override
@@ -98,6 +99,8 @@ public class AirTicketDetailController extends SMITravelController {
             System.out.println(AirTicketDetailController.class.getName() + " add");
             request.setAttribute(Action, "newpnr");
             setResponseAttribute(request, null, referenceNo);
+            List<String> checkPnr = bookingAirticketService.getListPnrFromRefno(referenceNo);
+            request.setAttribute(CHECKPNR, checkPnr);
         } else if ("import".equalsIgnoreCase(action)) {
             String bookingPnrNo = request.getParameter("pnrname");
             System.out.println(AirTicketDetailController.class.getName() + " import");
@@ -159,6 +162,8 @@ public class AirTicketDetailController extends SMITravelController {
             //Error occurs when others tab is no object yet.
             setResponseAttribute(request, airticketPnr, referenceNo);
             request.setAttribute(Action, "update");
+            List<String> checkPnr = bookingAirticketService.getListPnrFromRefno(referenceNo);
+            request.setAttribute(CHECKPNR, checkPnr);
         }
 
         return AirTicketDetail;
