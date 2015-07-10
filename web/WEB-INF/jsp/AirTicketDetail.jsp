@@ -549,7 +549,7 @@
 
                                     }
                                     , error: function (msg) {
-                                        alert("msg error : " + msg);
+                                        console.log("msg error : " + msg);
                                     }
                                 });
                             } catch (e) {
@@ -579,7 +579,7 @@
 
                                     }
                                     , error: function (msg) {
-                                        alert("msg error : " + msg);
+                                        console.log("msg error : " + msg);
                                     }
                                 });
                             } catch (e) {
