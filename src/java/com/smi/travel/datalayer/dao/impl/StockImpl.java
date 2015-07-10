@@ -31,6 +31,8 @@ public class StockImpl implements StockDao{
     private static final String DELETE_STOCKDETAIL_QUERY ="DELETE FROM StockDetail std where std.id = :stockDetailID";
     private static final String SELECT_STOCK_DETAIL = "FROM StockDetail std where std.stock.id = :stockID";
     private static final String SELECT_STOCK_PRODUCT = "FROM Product pr where pr.isStock = 1";
+    private static final String GET_STOCK_ID = "FROM Stock st where st.product.id = :proID and st.staff.username = :staffID and st.effectiveFrom = :from  and st.effectiveTo = :to and st.createDate = :create ";
+    private static final String GET_STOCK = "FROM Stock st where st.id = :stockID";
     
     @Override
     public String InsertStock(Stock ItemLot) {
@@ -40,11 +42,11 @@ public class StockImpl implements StockDao{
             transaction = session.beginTransaction();
             session.save(ItemLot);
             List<StockDetail> stockDetail =ItemLot.getStockDetails();
-           
-            for (int i = 0; i < stockDetail.size(); i++) {
-                session.save(stockDetail.get(i));
+            if(stockDetail != null){
+                for (int i = 0; i < stockDetail.size(); i++) {
+                    session.save(stockDetail.get(i));
+                }
             }
-
             transaction.commit();
             session.close();
             this.sessionFactory.close();
@@ -78,11 +80,11 @@ public class StockImpl implements StockDao{
             transaction.commit();
             session.close();
             this.sessionFactory.close();
-            result = "success";
+            result = "update success";
         } catch (Exception ex) {
             transaction.rollback();
             ex.printStackTrace();
-            result = "fail";
+            result = "update fail";
         }
         return result;
     }
@@ -187,7 +189,7 @@ public class StockImpl implements StockDao{
     }
 
 
-    private List<StockDetail> checkStockDetail(String stockId) {
+    public List<StockDetail> checkStockDetail(String stockId) {
         Session session = this.sessionFactory.openSession();
         List<StockDetail> stockDetailList = session.createQuery(SELECT_STOCK_DETAIL)
                 .setParameter("stockID", stockId)
@@ -207,6 +209,44 @@ public class StockImpl implements StockDao{
             return null;
         }
         return productList;
+    }
+
+    @Override
+    public String getStockId(Stock stock) {
+        String stockId = "";       
+        List<Stock> result = new LinkedList<Stock>();
+        Session session = this.sessionFactory.openSession();
+        List<Stock> stockNew = session.createQuery(GET_STOCK_ID)
+                .setParameter("proID", stock.getProduct().getId())
+                .setParameter("staffID", stock.getStaff().getUsername())
+                .setParameter("from", stock.getEffectiveFrom())
+                .setParameter("to", stock.getEffectiveTo())
+                .setParameter("create", stock.getCreateDate())
+                .list();
+        if (!stockNew.isEmpty()) {
+               stockId = stockNew.get(0).getId();
+        }
+        return stockId;
+    }
+
+    @Override
+    public Stock getStock(String stockId) {
+        Session session = this.sessionFactory.openSession();
+        Stock stock = new Stock();
+        List<Stock> stockList = session.createQuery(GET_STOCK)
+                .setParameter("stockID", stockId)
+                .list();
+        if (!stockList.isEmpty()) {
+            stock.setId(stockList.get(0).getId());
+            stock.setProduct(stockList.get(0).getProduct());
+            stock.setStaff(stockList.get(0).getStaff());
+            stock.setEffectiveFrom(stockList.get(0).getEffectiveFrom());
+            stock.setEffectiveTo(stockList.get(0).getEffectiveTo());
+            stock.setCreateDate(stockList.get(0).getCreateDate());
+            stock.setDescription(stockList.get(0).getDescription());
+            stock.setStockDetails(stockList.get(0).getStockDetails());
+        }
+        return stock;
     }
 
 }

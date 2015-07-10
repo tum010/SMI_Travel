@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.dao;
 
 import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.datalayer.entity.Stock;
+import com.smi.travel.datalayer.entity.StockDetail;
 import com.smi.travel.datalayer.view.entity.StockViewSummary;
 import java.util.Date;
 import java.util.List;
@@ -23,4 +24,7 @@ public interface StockDao {
     public String DeleteStockDetail(String DetailID);
     public StockViewSummary SearchStockFromFilter(String productId,String payStatus,String itemStatus,Date createDate,Date EffecttiveFrom,Date EffectiveTo);
     public List<Product> getListStockProduct();
+    public String getStockId(Stock stock);
+    public Stock getStock(String stockId);
+    public List<StockDetail> checkStockDetail(String stockId);
 }

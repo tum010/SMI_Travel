@@ -10,6 +10,7 @@ import com.smi.travel.datalayer.service.StockService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +41,8 @@ public class StockController extends SMITravelController {
             // Search Item List
             List<MPricecategory> mPriceCategory = utilityService.getListMPricecategory();
             request.setAttribute("getType", mPriceCategory);
+            
+            request.setAttribute("thisdate", utility.convertDateToString(new Date()));
         // Save Stock
         if("save".equals(action)){
             Stock stock = new Stock();
@@ -88,7 +91,33 @@ public class StockController extends SMITravelController {
                 String isSave = stockService.saveStock(stock);
                 if(isSave.equals("success")){
                     isSave = "success";
+                    // Search Stock Id from Data Add
+                    String  findStockId = stockService.getStockId(stock);
+                    //  Search Stock and StockDetail from  stock id
+                    Stock stockNew = new Stock();
+                    List<StockDetail> listStockDetailNew =  new LinkedList<StockDetail>();
+                    // Stock and StockDetail New
+                    stockNew = stockService.getStock(findStockId);
+                    listStockDetailNew = stockService.checkStockDetail(findStockId);
+                    if(stockNew != null){
+                        request.setAttribute("stockData", stockNew);
+                    }else{
+                        request.setAttribute("stockData", null);
+                    }
+                    if(listStockDetailNew != null){
+                        request.setAttribute("listStockDetail", listStockDetailNew);
+                    }else{
+                        request.setAttribute("listStockDetail", null);
+                    }
+                    request.setAttribute("FromDate", effectiveFrom);
+                    request.setAttribute("ToDate", effectiveTo);
+                    request.setAttribute("CreateDate", createDate);
+                }else if(isSave.equals("update success")){
+                    isSave = "success";
                     request.setAttribute("stockData", stock);
+                    request.setAttribute("FromDate", effectiveFrom);
+                    request.setAttribute("ToDate", effectiveTo);
+                    request.setAttribute("CreateDate", createDate);
                     request.setAttribute("listStockDetail", listStockDetail);
                 }else{
                     isSave = "fail";
@@ -122,7 +151,7 @@ public class StockController extends SMITravelController {
             Integer  payStatusItemListInt = new Integer("0");
             mStockStatus.setName("NEW");
             mStockStatus.setId("1");
-            if(!stockDetailId.equals("")){
+            if(!"".equals(stockDetailId)){
                 stockDetail.setId(stockDetailId);
             }
             stockDetail.setCode(codeItemList);

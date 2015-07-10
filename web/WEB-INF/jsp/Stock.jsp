@@ -7,6 +7,17 @@
 <c:set var="ListStaffStock" value="${requestScope['ListStaffStock']}" />
 <c:set var="getType" value="${requestScope['getType']}" />
 <c:set var="stockData" value="${requestScope['stockData']}" />
+<c:set var="from" value="${requestScope['FromDate']}" />
+<c:set var="to" value="${requestScope['ToDate']}" />
+<c:choose>
+    <c:when test="${requestScope['CreateDate'] != null}">
+        <c:set var="create" value="${requestScope['CreateDate']}" />
+    </c:when>
+    <c:otherwise>
+       <c:set var="create" value="${requestScope['thisdate']}" />
+       
+    </c:otherwise>
+</c:choose>
 <c:set var="listStockDetail" value="${requestScope['listStockDetail']}" />
 
 <section class="content-header" >
@@ -22,7 +33,7 @@
     <div class="col-sm-2">
         <div ng-include="'WebContent/Master/StockMenu.html'"></div>
     </div>
-    <form action="Stock.smi" method="post" id="StockForm" role="form" >
+    <form action="Stock.smi" method="post" id="StockForm" name="StockFormName" role="form" >
     <div class="col-sm-10">
         <!--Alert Save -->
         <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
@@ -85,8 +96,9 @@
                             <label class="control-label">Effective From</lable>
                         </div>
                         <div class="col-md-3 form-group text-left" style="width: 170px;" >
-                            <div class='input-group date' >
-                                <input name="InputEffectiveFromDate" id="InputEffectiveFromDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${stockData.effectiveFrom}" />
+                            <div class='input-group date' id="DateFrom">
+                                <!--<input name="InputEffectiveFromDate0" id="InputEffectiveFromDate0" type="text" class="form-control " data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${from}" />-->
+                                <input name="InputEffectiveFromDate" id="InputEffectiveFromDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${from}" />
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
@@ -94,8 +106,8 @@
                             <label class="control-label">Effective To</lable>
                         </div>
                         <div class="col-md-3 form-group text-left" style="padding-left: 17px;width: 170px;" >
-                            <div class='input-group date' >
-                                <input name="InputInputEffectiveToDate" id="InputInputEffectiveToDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${stockData.effectiveTo}" />
+                            <div class='input-group date' id="DateTo">
+                                <input name="InputInputEffectiveToDate" id="InputInputEffectiveToDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${to}" />
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
@@ -114,7 +126,7 @@
                         </div>
                         <div class="col-md-3 form-group text-left" style="padding-left: 0px;width: 155px;">
                             <div class='input-group date' >
-                                <input name="InputStockDate" id="InputStockDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${stockData.createDate}" />
+                                <input name="InputStockDate" id="InputStockDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${create}" />
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
@@ -139,7 +151,7 @@
                             <label class="control-label">Start</lable>
                         </div>
                         <div class="col-md-2 form-group text-left" style="width: 163px;">  
-                            <input name="InputStart" id="InputStart" type="text" class="form-control" value="" />
+                            <input name="InputStart" id="InputStart"  maxlength="10" type="text" class="form-control" value="" />
                         </div>
                         <div class="col-xs-2 text-right" style="width: 140px;">
                             <label class="control-label">Number Of Item</lable>
@@ -181,6 +193,7 @@
                                     <table class="display" id="TaxInvoiceTable">
                                         <thead class="datatable-header">
                                             <tr>
+                                                <th class="hidden">id</th>
                                                 <th style="width: 5%">No</th>                                   
                                                 <th style="width: 10%">Code</th>
                                                 <th style="width: 15%">Type</th>
@@ -278,11 +291,10 @@
                     </tbody>
                 </table>
             </div>
-            <!-- Script Daytour List table-->
+            <!-- Script Product List table-->
             <script>
                 $(document).ready(function () {
-                    $('.date').datetimepicker();
-                    $('.datemask').mask('0000-00-00');
+//                    alert("<%=new java.util.Date()%>");
                     $("#productTable tr").on('click', function () {//winit
                         $("#SearchProduct").modal('hide');
                         var tour_id = $(this).find(".product-id").html();
@@ -371,6 +383,7 @@
                 <table class="display" id="StaffTable">
                     <thead class="datatable-header">
                         <tr>
+                            <th class="hidden">ID</th>
                             <th>Code</th>
                             <th>staff Name</th>
                         </tr>

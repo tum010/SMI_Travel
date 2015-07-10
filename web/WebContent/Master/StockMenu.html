@@ -1,13 +1,13 @@
 <ul id="StockMenu" class="nav nav-list" style="top: 0px;  background-color: #FAFEFA;border: solid 1px #0063DC">
      <li class="" >
-         <a href="SearchStock.smi?type=stockSearch" id="SearchStock">
+         <a href="SearchStock.smi"  id="SearchStock">
             <i class="fa fa-search-plus"></i> 
             <span class="menu-text"> Search Stock </span>
         </a>
         <b class="arrow"></b>
     </li>
     <li class="">
-        <a href="Stock.smi?type=search" id="Stock">
+        <a href="Stock.smi" id="Stock">
             <i class="fa fa-stack-overflow"></i> 
             <span class="menu-text">  Stock </span>
         </a>
@@ -21,19 +21,24 @@
         var listpara = location.search;
 //        alert("Path : "+path)
 //        alert(path.indexOf('StockMenu'));
-         if(listpara.indexOf('stockSearch') != -1){
-            $("#SearchStock").css('background-color', '#ccc');
-        }else if(listpara.indexOf('search') != -1){
-            $("#Stock").css('background-color', '#ccc');
-        }else{
-            //console.log(name[2]);
+//         if(listpara.indexOf('stockSearch') != -1){
+//            $("#SearchStock").css('background-color', '#ccc');
+//        }else if(listpara.indexOf('search') != -1){
+//            $("#Stock").css('background-color', '#ccc');
+//        }else{
+            console.log(listpara);
             str = name[2].split(".");
-            //console.log(str[0]);
-            sub = str[0].substr(0, 9);
-            console.log(sub);
-            var $select = $('a[href*="' + sub + '"]');
-            $("#StockMenu").find($select).css('background-color', '#ccc');           
-        }
+            console.log(name);
+            sub = str[0].substr(0, 11);
+//            console.log("'"+sub+"'");
+//            var $select = $('a[href$="' + sub + '|"]');
+            if(sub === "Stock"){
+                $("#Stock").css('background-color', '#ccc');
+            }else{
+                $("#SearchStock").css('background-color', '#ccc');
+            }
+                       
+//        }
         
         $("#StockMenu a").one('mouseover', function () {
 

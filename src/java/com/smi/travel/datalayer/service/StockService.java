@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.service;
 import com.smi.travel.datalayer.dao.StockDao;
 import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.datalayer.entity.Stock;
+import com.smi.travel.datalayer.entity.StockDetail;
 import com.smi.travel.datalayer.view.entity.StockViewSummary;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +19,10 @@ import java.util.List;
  */
 public class StockService {
     private StockDao stockDao;
+    
+    public String getStockId(Stock stock){
+        return stockDao.getStockId(stock);
+    }
     
     public List<Product> getListStockProduct(){
         return  stockDao.getListStockProduct();
@@ -50,5 +55,12 @@ public class StockService {
     public StockDao getStockDao() {
         return stockDao;
     }
- 
+    
+    public Stock getStock(String stockId){
+        return stockDao.getStock(stockId);
+    }
+    
+    public List<StockDetail> checkStockDetail(String stockId){
+        return stockDao.checkStockDetail(stockId);
+    }
 }

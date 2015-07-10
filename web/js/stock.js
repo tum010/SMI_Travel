@@ -1,7 +1,19 @@
 // staff 
 $(document).ready(function () {
+    var rows = document.getElementById("TaxInvoiceTable").getElementsByTagName("tr").length;
+    var count = document.getElementById('counterTable');
+    count.value = rows;
+    
     $('.date').datetimepicker();
     $(".datemask").mask('0000-00-00', {reverse: true});
+    
+    var currentDate = new Date();  
+    $("#InputStockDate").datepicker("setDate",currentDate);
+    
+    $('#InputDatePicker').datetimepicker({
+        }).on('change', function(e) {
+            $('#StockForm').bootstrapValidator('revalidateField', 'InputEffectiveFromDate');
+    });
     
     $('.spandate').click(function() {
         var position = $(this).offset();
@@ -47,30 +59,31 @@ $(document).ready(function () {
             });           
         });       
         
-    $("#StaffTable tr").on('click', function () {
-       $("#SearchStaff").modal('hide');
-       var staff_id = $(this).find(".staff-id").text();
-        var staff_code = $(this).find(".staff-code").text();
-        var staff_name = $(this).find(".staff-name").text();
-        $("#InputStaffId").val(staff_id);
-        $("#InputStaff").val(staff_code);
-        $("#InputStaffName").val(staff_name);
-    });
-    
-    // StaffTable
-    $('#StaffTable').dataTable({bJQueryUI: true,
-        "sPaginationType": "full_numbers",
-        "bAutoWidth": false,
-        "bFilter": true,
-        "bPaginate": true,
-        "bInfo": false,
-        "bLengthChange": false,
-        "iDisplayLength": 10
-    });
-    
-    $('#StaffTable tbody').on('click', 'tr', function () {
-        $(this).addClass('row_selected').siblings().removeClass('row_selected');
-    });
+        $("#StaffTable tr").on('click', function () {
+            $("#SearchStaff").modal('hide');
+            var staff_id = $(this).find(".staff-id").text();
+            var staff_code = $(this).find(".staff-code").text();
+            var staff_name = $(this).find(".staff-name").text();
+            $("#InputStaffId").val(staff_id);
+            $("#InputStaff").val(staff_code);
+            $("#InputStaffName").val(staff_name);
+        });
+                
+//      StaffTable
+        $('#StaffTable').dataTable({bJQueryUI: true,
+            "sPaginationType": "full_numbers",
+            "bAutoWidth": false,
+            "bFilter": true,
+            "bPaginate": true,
+            "bInfo": false,
+            "bLengthChange": false,
+            "iDisplayLength": 10
+        });
+
+        $('#StaffTable tbody').on('click', 'tr', function () {
+            $(this).addClass('row_selected').siblings().removeClass('row_selected');
+        });
+
     
     $("#TaxInvoiceTable").on("keyup", function () {
         var rowAll = $("#TaxInvoiceTable tr").length;
@@ -86,6 +99,75 @@ $(document).ready(function () {
             }
         });
     });
+    
+    // Validator Date From and To
+    $("#StockForm")
+            .bootstrapValidator({
+                framework: 'bootstrap',
+//                container: 'tooltip',
+                feedbackIcons: {
+                    valid: 'uk-icon-check',
+                    invalid: 'uk-icon-times',
+                    validating: 'uk-icon-refresh'
+                },
+                fields: {
+                    InputEffectiveFromDate: {
+                        trigger: 'focus keyup change',
+                        validators: {
+                            notEmpty: {
+                                message: 'The Date From is required'
+                            },
+                            date: {
+                                format: 'YYYY-MM-DD',
+                                max: 'InputInputEffectiveToDate',
+                                message: 'The Date From is not a valid'
+                            }
+                        }
+                    },
+                    InputInputEffectiveToDate: {
+                        trigger: 'focus keyup change',
+                        validators: {
+                            notEmpty: {
+                                message: 'The Date To is required'
+                            },
+                            date: {
+                                format: 'YYYY-MM-DD',
+                                min: 'InputEffectiveFromDate',
+                                message: 'The Date To is not a valid'
+                            }
+                        }
+                    },
+                    InputNumberOfItem: {
+                        validators: {
+                            integer: {
+                                message: 'The value is not an integer'
+                            }
+                        }
+                    },
+                    InputStart : {
+                        validators: {
+                            integer: {
+                                message: 'The value is not an integer'
+                            }
+                        }
+                    }
+                }
+            }).on('success.field.fv', function (e, data) {
+                if (data.field === 'InputEffectiveFromDate' && data.fv.isValidField('InputInputEffectiveToDate') === false) {
+                    data.fv.revalidateField('InputInputEffectiveToDate');
+                }
+
+                if (data.field === 'InputInputEffectiveToDate' && data.fv.isValidField('InputEffectiveFromDate') === false) {
+                    data.fv.revalidateField('InputEffectiveFromDate');
+                }
+            });
+            
+            $('#DateFrom').datetimepicker().on('dp.change', function (e) {
+                $('#StockForm').bootstrapValidator('revalidateField', 'InputEffectiveFromDate');
+            });
+            $('#DateTo').datetimepicker().on('dp.change', function (e) {
+                $('#StockForm').bootstrapValidator('revalidateField', 'InputInputEffectiveToDate');
+            });
 });  
 
 function AddRow(row) {
@@ -104,8 +186,7 @@ function AddRow(row) {
     $("#counter").val(tempCount);
 }
 
-function searchAction() {
-    
+function searchAction() { 
     var action = document.getElementById('action');
     action.value = 'save';
     document.getElementById('StockForm').submit();
@@ -123,16 +204,17 @@ function addItemList(){
     }else{
         $("#TaxInvoiceTable tr:last").remove();
     }
+ 
     for (var i = 1 ; i <= number.value; i++){
         $("#TaxInvoiceTable tbody").append(
             '<tr>' +
-            '<td class="hidden"><input type="hidden"  id="stockDetailId' + i + '" name="stockDetailId' + i + '" value="" /></td>' +
+            '<td class="hidden"><input type="hidden"  id="stockDetailId' + count.value + '" name="stockDetailId' + count.value + '" value="" /></td>' +
             '<td>'+ count.value +'</td>' +
-            '<td><input type="text"  class="form-control" name="codeItemList' + i + '" id="codeItemList' + i + '" value="'+prefix.value+'-'+start.value+'"/></td>' +
-            '<td><select id="SeleteTypeItemList' + i + '" name="SeleteTypeItemList' + i + '" class="form-control"><option value="'+type.value+'">'+type.value+'</option></select></td>' +
+            '<td><input type="text"  class="form-control" name="codeItemList' + count.value + '" id="codeItemList' + count.value + '" value="'+prefix.value+'-'+start.value+'"/></td>' +
+            '<td><select id="SeleteTypeItemList' + count.value + '" name="SeleteTypeItemList' + count.value + '" class="form-control"><option value="'+type.value+'">'+type.value+'</option></select></td>' +
             '<td>0</td>' +
             '<td>NEW</td>' +
-            '<td class="text-center"><a href="#"  class="remCF" id="ButtonRemove' + i + '" onclick="deleteItemListRow('+count.value+",'"+ prefix.value+"-"+start.value+"'"+')" data-toggle="modal" data-target="#delStockModal"><span id="Spanremove' + i + '" class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
+            '<td class="text-center"><a href="#"  class="remCF" id="ButtonRemove' + count.value + '" onclick="deleteItemListRow('+count.value+",'"+ prefix.value+"-"+start.value+"'"+')" data-toggle="modal" data-target="#delStockModal"><span id="Spanremove' + count.value + '" class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
             '</tr>'
             );
             start.value++;
@@ -140,6 +222,7 @@ function addItemList(){
     }
     countAdd.value++;
     AddRow(count.value);
+    resetNumberItemList();
 }
 
 function deleteItemListRow(rowId,code){
@@ -157,9 +240,9 @@ function deleteStock(){
 
 function resetNumberItemList(){
     var rows = document.getElementById("TaxInvoiceTable").getElementsByTagName("tr").length;
-    var countRow = document.getElementById('TaxInvoiceTable').rows;
-    for (var i = 1 ; i <= (rows -1); i++){   
-        countRow[i].cells[0].innerHTML = i; 
-         alert(countRow[i].cells[0]);
+    var countRow = document.getElementById('TaxInvoiceTable').rows; 
+    for (var i = 1 ; i <= (rows-1); i++){  
+        countRow[i].cells[1].innerHTML = i; 
+//          alert("Row : "+ countRow[i].cells[1].innerHTML + " Value : " + countRow[i].cells[0].innerHTML);
     }
 }
