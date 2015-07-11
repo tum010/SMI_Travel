@@ -33,7 +33,7 @@
 <c:set var="result" value="${requestScope['Result']}" />
 <c:set var="refno1" value="${fn:substring(param.referenceNo, 0, 2)}" />
 <c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
-<c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />checkPnr_list
+<c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
 <c:set var="checkPnr_list" value="${requestScope['checkPnr_list']}" />
 
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
@@ -508,7 +508,7 @@
                                 getArrivalAirport(this.value,${fStatus.count});
                             });
                         });
-                        function getDepartureAirport(name, count) {
+                        function getDepartureAirport(name, count) {//winit
                             var servletName = 'AirTicketServlet';
                             var servicesName = 'AJAXBean';
                             var param = 'action=' + 'text' +
