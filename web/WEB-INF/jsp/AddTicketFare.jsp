@@ -1,10 +1,16 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript" src="js/AddTicketFare.js"></script> 
+<script type="text/javascript" src="js/workspace.js"></script> 
+<script type="text/javascript" src="js/jquery-ui.js"></script>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-
+<%--<c:set var="ticketTypeList" value="${requestScope['ticketTypeList']}" />
+<c:set var="ticketRoutingList" value="${requestScope['ticketRoutingList']}" />
+<c:set var="ticketByList" value="${requestScope['ticketByList']}" />--%>
+<c:set var="airlineList" value="${requestScope['airlineList']}" />
+<c:set var="ticketFare" value="${requestScope['ticketFare']}" />
+<c:set var="agent" value="${requestScope['Agent']}" />
 <section class="content-header" >
     <h1>
         Checking - Air Ticket
@@ -47,7 +53,7 @@
                         </div>
                         <div class="col-xs-1 form-group" style="width: 200px">
                             <div class="input-group">
-                                <input id="ticketNo" name="ticketNo" type="text" class="form-control" value="">
+                                <input id="ticketNo" name="ticketNo" type="text" class="form-control" value="${ticketFare.ticketNo}">
                             </div>
                         </div>
                         <div class="col-xs-1 text-right" style="width: 100px">
@@ -67,27 +73,35 @@
                             <label class="control-label text-right">Ticket&nbsp;Type&nbsp;</label>
                         </div>
                         <div class="col-xs-1" style="width: 200px">
-                            <select id="inputTicketType" name="inputTicketType" class="form-control selectize">
-                                <option value="">---Ticket Type---</option>
-
+                            <select id="ticketType" name="ticketType" class="form-control selectize">
+                                <option value="B">BSP</option>
+                                <option value="D">DOMESTIC</option>
+                                <option value="A">AGENT</option>
                             </select>
                         </div>
                         <div class="col-xs-1 text-right" style="width: 150px">
                             <label class="control-label text-right">Ticket Routing </label>
                         </div>
                         <div class="col-xs-1" style="width: 200px">
-                            <select id="inputTicketRouting" name="inputTicketRouting" class="form-control selectize">
-                                <option value="">---Ticket Routing---</option>
-
+                            <select id="ticketRounting" name="ticketRounting" class="form-control selectize" >
+                                <option value="I">INTER</option>
+                                <option value="D">DOMESTIC</option>
+                                <option value="C">CANCEL</option>
                             </select>
                         </div>
                         <div class="col-xs-1 text-right" style="width: 150px">
                             <label class="control-label text-right">Airline&nbsp;</label>
                         </div>
                         <div class="col-xs-1" style="width: 200px">
-                            <select id="inputAirline" name="inputAirline" class="form-control selectize">
-                                <option value="">---Airline---</option>
-
+                            <select name="ticketAirline" id="ticketAirline" class="form-control">
+                                <c:forEach var="table" items="${airlineList}" >
+                                    <c:set var="select" value="" />
+                                    <c:set var="selectedId" value="${MAirline.MAirlineAgent.id}" />
+                                    <c:if test="${table.id == selectedId}">
+                                        <c:set var="select" value="selected" />
+                                    </c:if>
+                                    <option value="${table.id}" ${select}>${table.name}</option> 
+                                </c:forEach>
                             </select>
                         </div>
                     </div>
@@ -96,10 +110,8 @@
                     <div class="col-xs-12">
                         <div class="col-xs-1 text-right" style="width: 150px">
                             <label class="control-label">
-                                <input type="checkbox" id="passengerCheck" name="passengerCheck"/>&nbsp;Passenger&nbsp; 
+                                <input type="checkbox" id="passengerCheckbox" name="passengerCheckbox" data-label="passengerCheckbox" value=""/>&nbsp;Passenger&nbsp; 
                             </label>
-                            <input type="hidden" id="passengerCheckbox" value=""/>
-    <!--                        <label class="control-label text-right">Passenger&nbsp;:</label>-->
                         </div>
                         <div class="col-xs-1 form-group" style="width: 200px">
                             <div class="input-group">
@@ -107,12 +119,12 @@
                             </div>
                         </div>
                         <div class="col-xs-1 text-right" style="width: 150px">
-                            <label class="control-label text-right">Ticket&nbsp;By&nbsp;</label>
+                            <label class="control-label text-right">Ticket&nbsp;Buy&nbsp;</label>
                         </div>
                         <div class="col-xs-1" style="width: 200px">
-                            <select id="inputTicketBy" name="inputTicketBy" class="form-control selectize">
-                                <option value="">---Ticket By---</option>
-
+                            <select name="ticketBuy" id="ticketBuy" class="form-control">
+                                <option value="C">IN</option>
+                                <option value="O">OUT</option>
                             </select>
                         </div>
                     </div>
@@ -130,7 +142,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class='input-group date' id='InputDatePicker'>
-                                    <input id="inputIssueDate" name="inputIssueDate"  type="text" 
+                                    <input id="issueDate" name="issueDate"  type="text" 
                                        class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
@@ -140,7 +152,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="ticketFare" name="ticketFare" type="text" class="form-control" value="">
+                                    <input id="ticketFare" name="ticketFare" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
@@ -148,7 +160,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="ticketTax" name="ticketTax" type="text" class="form-control" value="">
+                                    <input id="ticketTax" name="ticketTax" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="">
                                 </div>
                             </div>
                         </div>
@@ -159,7 +171,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="ticketIns" name="ticketIns" type="text" class="form-control" value="">
+                                    <input id="ticketIns" name="ticketIns" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -167,7 +179,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="ticketComm" name="ticketComm" type="text" class="form-control" value="">
+                                    <input id="ticketCommission" name="ticketCommission" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
@@ -175,7 +187,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="agentComm" name="agentComm" type="text" class="form-control" value="">
+                                    <input id="agentCommission" name="agentCommission" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="">
                                 </div>
                             </div>
                         </div>
@@ -185,7 +197,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="salePrice" name="salePrice" type="text" class="form-control" value="">
+                                    <input id="salePrice" name="salePrice" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -193,16 +205,29 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="diffVat" name="diffVat" type="text" class="form-control" value="">
+                                    <input id="diffVat" name="diffVat" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="">
                                 </div>
                             </div>
-                            <div class="col-xs-1 text-right"  style="width: 185px">
-                                <label class="control-label text-right">Agent Name </label>
+
+                        </div>
+                        <div class="col-xs-12 form-group">
+                            <div class="col-xs-1 text-right"  style="width: 121px">
+                                <label class="control-label text-right">Agent</label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
-                                <div class="input-group">                                    
-                                    <input id="agentName" name="agentName" type="text" class="form-control" value="">
+                                <div class="input-group">
+                                    <input type="hidden" class="form-control" id="agent_id" name="agent_id" value="${SelectedAgent.id}"/>
+                                    <input type="text" class="form-control" id="agent_user" name="agent_user" value="${SelectedAgent.code}" />
+                                    <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#AgentModal">
+                                        <span class="glyphicon-search glyphicon"></span>
+                                    </span>
                                 </div>
+                            </div>
+                            <div class="col-xs-1" style="width: 5px">   
+                            </div>
+                            <div class="col-xs-1" style="width: 298px">
+                                <input type="text" class="form-control" id="agent_name" name="agent_name" value="${SelectedAgent.name}" readonly=""
+                                    data-bv-notempty="true" data-bv-notempty-message="agent empty !">
                             </div>
                         </div>
                         <div class="col-xs-10 form-group">
@@ -230,7 +255,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class='input-group date'>
-                                    <input id="overComm" name="overComm" type="text" class="form-control" value="">
+                                    <input id="overCommission" name="overCommission" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -238,7 +263,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="addPay" name="addPay" type="text" class="form-control" value="">
+                                    <input id="addPay" name="addPay" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
@@ -246,7 +271,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="agentCommPay" name="agentCommPay" type="text" class="form-control" value="">
+                                    <input id="agentComPay" name="agentComPay" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="">
                                 </div>
                             </div>
                         </div>
@@ -256,7 +281,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class='input-group date'>
-                                    <input id="inputOverCommDate" name="inputOverCommDate"  type="text" 
+                                    <input id="overDate" name="overDate"  type="text" 
                                        class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
@@ -266,7 +291,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class='input-group date'>
-                                    <input id="inputAddPayDate" name="inputAddPayDate"  type="text" 
+                                    <input id="addPayDate" name="addPayDate"  type="text" 
                                        class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
@@ -276,7 +301,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class='input-group date'>
-                                    <input id="inputAgentCommPayDate" name="inputAgentCommPayDate"  type="text" 
+                                    <input id="agentPayDate" name="agentPayDate"  type="text" 
                                        class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
@@ -288,7 +313,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class='input-group date'>
-                                    <input id="littleComm" name="littleComm" type="text" class="form-control" value="">
+                                    <input id="litterCommission" name="litterCommission" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -296,7 +321,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="decPay" name="decPay" type="text" class="form-control" value="">
+                                    <input id="decPay" name="decPay" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
@@ -304,7 +329,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="agentCommReceive" name="agentCommReceive" type="text" class="form-control" value="">
+                                    <input id="agentComReceive" name="agentComReceive" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="">
                                 </div>
                             </div>
                         </div>
@@ -314,7 +339,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class='input-group date'>
-                                    <input id="inputLittleCommDate" name="inputLittleCommDate"  type="text" 
+                                    <input id="litterDate" name="litterDate"  type="text" 
                                        class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
@@ -324,7 +349,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class='input-group date'>
-                                    <input id="inputDecPayDate" name="inputDecPayDate"  type="text" 
+                                    <input id="decPayDate" name="decPayDate"  type="text" 
                                        class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
@@ -334,7 +359,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class='input-group date'>
-                                    <input id="inputAgentCommReceiveDate" name="inputAgentCommReceiveDate"  type="text" 
+                                    <input id="agentReceiveDate" name="agentReceiveDate"  type="text" 
                                        class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
@@ -345,7 +370,8 @@
                 <div class="row" style="padding-bottom: 20px">
                     <div class="col-xs-12">
                         <div class="col-xs-12 text-center" >
-                            <button type="submit" id="ButtonSave" name="ButtonSave" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+                            <input type="hidden" name="action" id="action" value="">
+                            <button type="submit" id="ButtonSave" name="ButtonSave" onclick="saveAction()" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
                             <button type="submit" id="ButtonSaveAndNew" name="ButtonSaveAndNew" class="btn btn-success"><i class="fa fa-save"></i> Save & New</button>
                         </div>
                     </div>
@@ -464,3 +490,113 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal-dialog -->
+<!--Modal  Agent-->
+
+<div class="modal fade" id="AgentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Agent</h4>
+            </div>
+            <div class="modal-body">
+                <!--Agent List Table-->
+                <table class="display" id="AgentTable">
+                    <thead>                        
+                        <tr class="datatable-header">
+                            <th class="hidden">ID</th>
+                            <th>User</th>
+                            <th>Name</th>
+                            <th class="hidden">Address</th>
+                            <th class="hidden">Tel</th>
+                            <th class="hidden">Fax</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <script>
+                        agent = [];
+                    </script>
+                    <c:forEach var="a" items="${agent}">
+                        <tr>
+                            <td class="agent-id hidden">${a.id}</td>
+                            <td class="agent-user">${a.code}</td>
+                            <td class="agent-name">${a.name}</td>
+                            <td class="agent-addr hidden">${a.address}</td>
+                            <td class="agent-tel hidden">${a.tel}</td>
+                            <td class="agent-fax hidden">${a.fax}</td>
+                        </tr>
+                        <script>
+                            agent.push({id: "${a.id}", code: "${a.code}", name: "${a.name}", 
+                                        address: "${a.address}", tel: "${a.tel}", fax: "${a.fax}"});
+                        </script>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <div class="text-right">
+                    <button id="AgentModalClose" type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#AgentTable tr").on('click', function () {
+            var agent_id = $(this).find(".agent-id").text();
+            var agent_user = $(this).find(".agent-user").text();
+            var agent_name = $(this).find(".agent-name").text();
+            var agent_addr = $(this).find(".agent-addr").text();
+            var agent_tel = $(this).find(".agent-tel").text();
+            $("#agent_id").val(agent_id);
+            $("#agent_user").val(agent_user);
+            $("#agent_name").val(agent_name);
+            $("#agent_addr").val(agent_addr);
+            $("#agent_tel").val(agent_tel);
+            $("#AgentModal").modal('hide');
+        });
+        // AGENT TABLE
+        $('#AgentTable').dataTable({bJQueryUI: true,
+            "sPaginationType": "full_numbers",
+            "bAutoWidth": false,
+            "bFilter": true,
+            "bPaginate": true,
+            "bInfo": false,
+            "bLengthChange": false,
+            "iDisplayLength": 10
+        });
+        $('#AgentTable tbody').on('click', 'tr', function () {
+            $(this).addClass('row_selected').siblings().removeClass('row_selected');
+        });
+   });
+   
+function isNumberKey(evt){
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    
+    if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)){
+       return false;
+    }
+    
+    return true;
+}
+
+function saveAction() {
+    var action = document.getElementById('action');
+    action.value = 'save';
+    var ticketNo = document.getElementById('ticketNo');
+    ticketNo.value = $("#ticketNo").val();
+    var ticketType = document.getElementById('ticketType');
+    ticketType.value = $("#ticketType").val();
+    var ticketBuy = document.getElementById('ticketBuy');
+    ticketBuy.value = $("#ticketBuy").val();
+    var ticketRounting = document.getElementById('ticketRounting');
+    ticketRounting.value = $("#ticketRounting").val();
+    var ticketAirline = document.getElementById('ticketAirline');
+    ticketAirline.value = $("#ticketAirline").val();
+
+    document.getElementById('AddTicketFareForm').submit();
+    
+}
+</script>
