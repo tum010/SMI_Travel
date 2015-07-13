@@ -81,7 +81,7 @@
                     </div>
 
                     <div class="col-xs-2 text-right">
-                        <button type="submit" id="ButtonSearch" name="ButtonSearch" onclick="searchAction() class="btn btn-primary btn-sm">Search</button>
+                        <button type="submit" id="ButtonSearch" name="ButtonSearch" onclick="searchAction()" class="btn btn-primary "><i class="fa fa-search"></i> Search</button>
                     </div>
                 </div>
                 <div class="col-xs-12 form-group">
