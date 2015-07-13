@@ -410,6 +410,11 @@
         <put-attribute name="title" value="Master : Search Stock" />
         <put-attribute name="body" value="/WEB-INF/jsp/SearchStock.jsp" />
     </definition>
+    
+    <definition name="DefineVar" extends="baseLayout">
+        <put-attribute name="title" value="Master : Define Variable" />
+        <put-attribute name="body" value="/WEB-INF/jsp/DefineVar.jsp" />
+    </definition>
     <!--<add data>-->
     
     <definition name="SendMail" extends="baseLayout">
