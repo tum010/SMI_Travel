@@ -162,7 +162,7 @@ function CallAjaxFamilyAuto(param){
                 }
                
                 $("#leaderId").val(cusid);
-                $("#FamilyLeaderCode").val(cuscode);
+                $("#FamilyLeaderCodeVal").val(cuscode);
                 $("#initialname").val(cusinitialname);
                 $("#firstname").val(cusfirstname);
                 $("#lastname").val(cuslastname);
@@ -605,13 +605,14 @@ function CallAjax(param) {
                 var str = msg.split("|");
                 var id = str[0];
                 var code = str[1];
+                alert(code);
                 var initia = str[2];
                 var fname = str[3];
                 var lname = str[4];
                 var address = str[5];
                 var tel = str[6];
                 $("#leaderId").val(id);
-                $("#FamilyLeaderCode").val(code);
+                $("#FamilyLeaderCodeVal").val(code);
                 $("#initialname").val(initia);
                 $("#firstname").val(fname);
                 $("#lastname").val(lname);
