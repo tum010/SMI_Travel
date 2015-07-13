@@ -19,7 +19,7 @@
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
 <input type="hidden" value="${param.tourID}" id="tourID">
-<input type="" value="${isDuplicate}" id="Duplicate">
+<input type="hidden" value="${isDuplicate}" id="Duplicate">
 
 <section class="content-header" >
     <h1>
