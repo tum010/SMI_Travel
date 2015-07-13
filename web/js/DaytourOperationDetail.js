@@ -325,7 +325,6 @@ $(document).ready(function () {
         $(this).parent().parent().remove();
     });
     $("#BookingExpenseTable").on('click', '.RemoveRow', function () {
-        //console.log('remove');
         if($(this).attr('idExpen')){
             var expenseTrNode = $(window.expensTable.fnGetNodes());
             var delId = $(this).attr('idExpen');
@@ -335,15 +334,8 @@ $(document).ready(function () {
                 }               
             });
         }
-        $(this).parent().parent().remove();
-        var rowAll = $("#BookingExpenseTable tr").length;
-        // console.log("rowAll : " + rowAll);
-        //$("#roomCounter").val(rowAll);
-//    if (rowAll < 2) {
-//        console.log("show button tr_FormulaAddRow");
-//        $("#tr_FormulaAddRow").removeClass("hide");
-//        $("#tr_FormulaAddRow").addClass("show");
-//    }
+//        $(this).parent().parent().remove();
+
     });
 
 });
