@@ -17,6 +17,7 @@ import com.smi.travel.datalayer.dao.MasterDao;
 import com.smi.travel.datalayer.dao.OtherBookingDao;
 import com.smi.travel.datalayer.dao.PackageTourDao;
 import com.smi.travel.datalayer.dao.ProductDetailDao;
+import com.smi.travel.datalayer.dao.TicketFareAirlineDao;
 import com.smi.travel.datalayer.dao.TransferJobDao;
 import com.smi.travel.datalayer.entity.Customer;
 import com.smi.travel.datalayer.entity.Daytour;
@@ -33,6 +34,7 @@ import com.smi.travel.datalayer.entity.PackageTour;
 import com.smi.travel.datalayer.entity.Passenger;
 import com.smi.travel.datalayer.entity.Place;
 import com.smi.travel.datalayer.entity.ProductDetail;
+import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.view.dao.BookingSummaryDao;
 import com.smi.travel.datalayer.view.dao.CustomerAgentInfoDao;
 import com.smi.travel.datalayer.view.entity.BookSummary;
@@ -72,8 +74,7 @@ public class AJAXBean extends AbstractBean implements
     private static final String PASSENGER = "PassengerServlet";
     private static final String MAIL = "MailServlet";
     private static final String BOOKINGSTATUS = "BookingStatusServlet";
-    private static final String BOOKSTATUSFROMREFNO = "bookStatusFromRefNo";
-
+    private static final String TICKETFAREAIRLINE = "TicketFareAirlineServlet";
     
     private CustomerDao customerdao;
     private ProductDetailDao productDetailDao;
@@ -88,7 +89,7 @@ public class AJAXBean extends AbstractBean implements
     private Mail sendMail;
     private MasterDao masterdao;
     private OtherBookingDao otherBookingDao;
-
+    private TicketFareAirlineDao ticketFareAirlineDao; 
     public AJAXBean(List queryList) {
         super(queryList);
         if (queryList != null && queryList.size() > 0) {
@@ -121,7 +122,9 @@ public class AJAXBean extends AbstractBean implements
                     masterdao = (MasterDao) obj;
                 } else if (obj instanceof OtherBookingDao) {
                     otherBookingDao = (OtherBookingDao) obj;
-                }
+                } else if (obj instanceof TicketFareAirlineDao) {
+                    ticketFareAirlineDao = (TicketFareAirlineDao) obj;
+                } 
             }
         }
     }
@@ -154,13 +157,7 @@ public class AJAXBean extends AbstractBean implements
         String flagDaytour = String.valueOf(map.get("flagDaytour"));
         String flagLand = String.valueOf(map.get("flagLand"));
         String flagOther = String.valueOf(map.get("flagOther"));
-//
-//        System.out.println("bookStatus : "+selectStatus);
-//        System.out.println("flagAir : "+flagAir);
-//        System.out.println("flagHotel : "+flagHotel);
-//        System.out.println("flagDaytour : "+flagDaytour);
-//        System.out.println("flagOther : "+flagOther);
-//        System.out.println("flagLand : "+flagLand);
+
         if (BOOKDETAIL.equalsIgnoreCase(servletName)) {
 
             if ("checkExistCustomer".equalsIgnoreCase(type)) {
@@ -546,6 +543,16 @@ public class AJAXBean extends AbstractBean implements
                             ;
                 }
                 System.out.println("result save:" + result);
+            }
+        } else if (TICKETFAREAIRLINE.equalsIgnoreCase(servletName)) {
+            if ("search".equalsIgnoreCase(type)) {
+                String ticketNo = String.valueOf(map.get("ticketNo"));
+                System.out.println("ticketNo : "+ticketNo);
+                if(ticketNo == null){
+                    System.out.print("ticketNo is null");
+                }else{
+                    result = ticketFareAirlineDao.checkDuplicateTicketNo(ticketNo);
+                }
             }
         } 
         return result;

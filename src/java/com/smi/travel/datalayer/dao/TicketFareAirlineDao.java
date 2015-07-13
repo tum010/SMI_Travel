@@ -23,7 +23,6 @@ public interface TicketFareAirlineDao {
     public AirticketPassenger getTicketFareBookingFromTicketNo(String TicketNo);
     public List<AirticketPassenger> getListTicketFareFromRefno(String Refno);
     public List<BookingFlight> getListFlightFromTicketNo(String TicketNo);
-
-    
+    public int checkDuplicateTicketNo(String TicketNo);
 
 }

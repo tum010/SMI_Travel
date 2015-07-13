@@ -428,6 +428,7 @@
     <bean id="AddTicketFareController" class="com.smi.travel.controller.AddTicketFareController">
         <property name="utilityService" ref="UtilityService" />
         <property name="ticketFareAirlineService" ref="TicketFareAirlineService" />
+        <property name="agentService" ref="AgentService" />
     </bean>
     
     <bean id="SearchTicketFareController" class="com.smi.travel.controller.SearchTicketFareController">

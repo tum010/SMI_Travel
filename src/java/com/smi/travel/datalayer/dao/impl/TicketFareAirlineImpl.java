@@ -81,7 +81,17 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
 
     @Override
     public TicketFareAirline getTicketFareFromTicketNo(String TicketNo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        TicketFareAirline ticketFare = new TicketFareAirline();
+        String query = "from TicketFareAirline t where t.ticketNo = :ticketNo";
+        Session session = this.sessionFactory.openSession();
+        List<TicketFareAirline> ticketFareList = session.createQuery(query).setParameter("ticketNo", TicketNo).list();
+        session.close();
+        if (ticketFareList.isEmpty()) {
+            return null;
+        }else{
+            ticketFare =  ticketFareList.get(0);
+        }
+        return ticketFare;
     }
 
     @Override
@@ -99,6 +109,21 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public int checkDuplicateTicketNo(String TicketNo) {
+        int result = 0;
+        String query = "from TicketFareAirline t where t.ticketNo = :ticketNo";
+        Session session = this.sessionFactory.openSession();
+        List<TicketFareAirline> ticketFareList = session.createQuery(query).setParameter("ticketNo", TicketNo).list();
+        session.close();
+        if (ticketFareList.isEmpty()) {
+            result = 0;
+        }else{
+            result = 1;
+        }
+        return result;
+    }
+    
     public SessionFactory getSessionFactory() {
         return sessionFactory;
     }
@@ -114,7 +139,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
     }
-    
+
     
     
 }

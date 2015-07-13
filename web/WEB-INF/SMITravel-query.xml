@@ -330,7 +330,8 @@
                 <ref local="OtherBookingDao" />  
                 <ref local="MAirportDao" />  
                 <ref local="PassengerDao" />
-                <ref local="MasterDao" />  
+                <ref local="MasterDao" />
+                <ref local="TicketFareAirlineDao" />  
             </list>
         </constructor-arg>
     </bean>
@@ -350,6 +351,7 @@
     <bean id="PassengerServlet" class="com.smi.travel.servlet.PassengerServlet" />
     <bean id="MailServlet" class="com.smi.travel.servlet.MailServlet" />
     <bean id="BookingStatusServlet" class="com.smi.travel.servlet.BookingStatusServlet" />
+    <bean id="TicketFareAirlineServlet" class="com.smi.travel.servlet.TicketFareAirlineServlet" />
 	<!--<add data>-->
 	
 </beans>

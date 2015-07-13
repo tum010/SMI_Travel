@@ -27,6 +27,10 @@ public class TicketFareAirlineService {
         return ticketFareAirlineDao.DeleteTicketFare(ticket);
     }
     
+    public TicketFareAirline getTicketFareFromTicketNo(String TicketNo){
+        return ticketFareAirlineDao.getTicketFareFromTicketNo(TicketNo);
+    }
+    
     public TicketFareAirlineDao getTicketFareAirlineDao() {
         return ticketFareAirlineDao;
     }

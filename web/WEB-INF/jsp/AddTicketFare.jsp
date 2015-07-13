@@ -5,12 +5,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%--<c:set var="ticketTypeList" value="${requestScope['ticketTypeList']}" />
-<c:set var="ticketRoutingList" value="${requestScope['ticketRoutingList']}" />
-<c:set var="ticketByList" value="${requestScope['ticketByList']}" />--%>
 <c:set var="airlineList" value="${requestScope['airlineList']}" />
 <c:set var="ticketFare" value="${requestScope['ticketFare']}" />
 <c:set var="agent" value="${requestScope['Agent']}" />
+<c:set var="SelectedAgent" value="${requestScope['SelectedAgent']}" />
 <section class="content-header" >
     <h1>
         Checking - Air Ticket
@@ -55,7 +53,9 @@
                             <div class="input-group">
                                 <input id="ticketNo" name="ticketNo" type="text" class="form-control" value="${ticketFare.ticketNo}">
                             </div>
+                            
                         </div>
+                        <div class="col-xs-1  text-right" style="width: 8px"><i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i></div>
                         <div class="col-xs-1 text-right" style="width: 100px">
                             <button style="height:34px" type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="searchAction();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
 
@@ -65,7 +65,7 @@
                             <!--<button type="submit"  id="ButtonRefno"  name="ButtonRefno" onclick="refnoAction();"  class="btn btn-primary" data-toggle="modal" data-target="#ListRefnoModal"> Refno </button>-->
                             <a  id="ButtonRefno" class="btn btn-primary" data-toggle="modal" data-target="#ListRefnoModal"  style="height: 34px"><i class="glyphicon glyphicon-th-list"></i>&nbsp;Refno</a>
                         </div>
-                    </div>
+                    </div> 
                 </div>
                 <div class="row">
                     <div class="col-xs-12 form-group">
@@ -73,30 +73,60 @@
                             <label class="control-label text-right">Ticket&nbsp;Type&nbsp;</label>
                         </div>
                         <div class="col-xs-1" style="width: 200px">
-                            <select id="ticketType" name="ticketType" class="form-control selectize">
-                                <option value="B">BSP</option>
-                                <option value="D">DOMESTIC</option>
-                                <option value="A">AGENT</option>
+                            <select id="ticketType" name="ticketType" class="form-control selectize" >
+                                <c:choose>
+                                    <c:when test="${requestScope['TicketType'] == 'B'}">
+                                        <c:set var="selectedB" value="selected" />
+                                    </c:when>
+                                </c:choose>
+                                <option value="B" ${selectedB}>BSP</option>
+                                <c:choose>
+                                    <c:when test="${requestScope['TicketType'] == 'D'}">
+                                        <c:set var="selectedD" value="selected" />
+                                    </c:when>
+                                </c:choose>
+                                <option value="D" ${selectedD}>DOMESTIC</option>
+                                <c:choose>
+                                    <c:when test="${requestScope['TicketType'] == 'A'}">
+                                        <c:set var="selectedA" value="selected" />
+                                    </c:when>
+                                </c:choose>
+                                <option value="A" ${selectedA}>AGENT</option>
                             </select>
                         </div>
                         <div class="col-xs-1 text-right" style="width: 150px">
                             <label class="control-label text-right">Ticket Routing </label>
                         </div>
                         <div class="col-xs-1" style="width: 200px">
-                            <select id="ticketRounting" name="ticketRounting" class="form-control selectize" >
-                                <option value="I">INTER</option>
-                                <option value="D">DOMESTIC</option>
-                                <option value="C">CANCEL</option>
+                            <select id="ticketRounting" name="ticketRounting" class="form-control selectize">
+                                <c:choose>
+                                    <c:when test="${requestScope['TicketRounting'] == 'I'}">
+                                        <c:set var="selectedI" value="selected" />
+                                    </c:when>
+                                </c:choose>
+                                <option value="I" ${selectedI}>INTER</option>
+                                <c:choose>
+                                    <c:when test="${requestScope['TicketRounting'] == 'D'}">
+                                        <c:set var="selectedD" value="selected" />
+                                    </c:when>
+                                </c:choose>
+                                <option value="D" ${selectedD}>DOMESTIC</option>
+                                <c:choose>
+                                    <c:when test="${requestScope['TicketRounting'] == 'C'}">
+                                        <c:set var="selectedC" value="selected" />
+                                    </c:when>
+                                </c:choose>
+                                <option value="C" ${selectedC}>CANCEL</option>
                             </select>
                         </div>
                         <div class="col-xs-1 text-right" style="width: 150px">
                             <label class="control-label text-right">Airline&nbsp;</label>
-                        </div>
+                        </div> 
                         <div class="col-xs-1" style="width: 200px">
                             <select name="ticketAirline" id="ticketAirline" class="form-control">
                                 <c:forEach var="table" items="${airlineList}" >
                                     <c:set var="select" value="" />
-                                    <c:set var="selectedId" value="${MAirline.MAirlineAgent.id}" />
+                                    <c:set var="selectedId" value="${ticketFare.MAirlineAgent.id}" />
                                     <c:if test="${table.id == selectedId}">
                                         <c:set var="select" value="selected" />
                                     </c:if>
@@ -115,7 +145,7 @@
                         </div>
                         <div class="col-xs-1 form-group" style="width: 200px">
                             <div class="input-group">
-                                <input id="passenger" name="passenger" type="text" class="form-control" value="">
+                                <input id="passenger" name="passenger" type="text" class="form-control" value="${ticketFare.passenger}">
                             </div>
                         </div>
                         <div class="col-xs-1 text-right" style="width: 150px">
@@ -123,8 +153,18 @@
                         </div>
                         <div class="col-xs-1" style="width: 200px">
                             <select name="ticketBuy" id="ticketBuy" class="form-control">
-                                <option value="C">IN</option>
-                                <option value="O">OUT</option>
+                                 <c:choose>
+                                    <c:when test="${requestScope['TicketBuy'] == 'I'}">
+                                        <c:set var="selectedC" value="selected" />
+                                    </c:when>
+                                </c:choose>
+                                <option value="I" ${selectedC}>IN</option>
+                                <c:choose>
+                                    <c:when test="${requestScope['TicketBuy'] == 'O'}">
+                                        <c:set var="selectedO" value="selected" />
+                                    </c:when>
+                                </c:choose>
+                                <option value="O" ${selectedO}>OUT</option>
                             </select>
                         </div>
                     </div>
@@ -143,7 +183,7 @@
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class='input-group date' id='InputDatePicker'>
                                     <input id="issueDate" name="issueDate"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                       class="form-control" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['issueDate']}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
@@ -152,15 +192,15 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="ticketFare" name="ticketFare" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="">
+                                    <input id="ticketFare" name="ticketFare" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketFare}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
-                                <label class="control-label text-right">Ticket Tax </label>
+                                <label class="control-label text-right">Ticket Tax </label> 
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="ticketTax" name="ticketTax" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="">
+                                    <input id="ticketTax" name="ticketTax" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketTax}">
                                 </div>
                             </div>
                         </div>
@@ -171,7 +211,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="ticketIns" name="ticketIns" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="">
+                                    <input id="ticketIns" name="ticketIns" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketIns}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -179,7 +219,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="ticketCommission" name="ticketCommission" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="">
+                                    <input id="ticketCommission" name="ticketCommission" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketCommission}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
@@ -187,7 +227,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="agentCommission" name="agentCommission" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="">
+                                    <input id="agentCommission" name="agentCommission" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.agentCommission}">
                                 </div>
                             </div>
                         </div>
@@ -197,7 +237,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="salePrice" name="salePrice" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="">
+                                    <input id="salePrice" name="salePrice" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.salePrice}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -205,7 +245,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="diffVat" name="diffVat" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="">
+                                    <input id="diffVat" name="diffVat" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.diffVat}">
                                 </div>
                             </div>
 
@@ -236,7 +276,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
-                                    <textarea rows="3" class="form-control" id="remark" name="remark" style="width: 307%"></textarea>  
+                                    <textarea rows="3" class="form-control" id="remark" name="remark" style="width: 307%" >${ticketFare.remark}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -255,7 +295,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class='input-group date'>
-                                    <input id="overCommission" name="overCommission" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="">
+                                    <input id="overCommission" name="overCommission" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${requestScope['issueDate']}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -263,7 +303,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="addPay" name="addPay" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="">
+                                    <input id="addPay" name="addPay" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.addPay}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
@@ -271,7 +311,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="agentComPay" name="agentComPay" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="">
+                                    <input id="agentComPay" name="agentComPay" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.agentComPay}">
                                 </div>
                             </div>
                         </div>
@@ -282,7 +322,7 @@
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class='input-group date'>
                                     <input id="overDate" name="overDate"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['overDate']}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
@@ -292,7 +332,7 @@
                             <div class="col-xs-1" style="width: 200px">
                                 <div class='input-group date'>
                                     <input id="addPayDate" name="addPayDate"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['addPayDate']}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
@@ -302,7 +342,7 @@
                             <div class="col-xs-1" style="width: 200px">
                                 <div class='input-group date'>
                                     <input id="agentPayDate" name="agentPayDate"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['agentPayDate']}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
@@ -313,7 +353,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class='input-group date'>
-                                    <input id="litterCommission" name="litterCommission" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="">
+                                    <input id="litterCommission" name="litterCommission" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.litterCommission}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -321,7 +361,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="decPay" name="decPay" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="">
+                                    <input id="decPay" name="decPay" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.decPay}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
@@ -329,7 +369,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="agentComReceive" name="agentComReceive" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="">
+                                    <input id="agentComReceive" name="agentComReceive" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.agentComReceive}">
                                 </div>
                             </div>
                         </div>
@@ -340,7 +380,7 @@
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class='input-group date'>
                                     <input id="litterDate" name="litterDate"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['litterDate']}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
@@ -350,7 +390,7 @@
                             <div class="col-xs-1" style="width: 200px">
                                 <div class='input-group date'>
                                     <input id="decPayDate" name="decPayDate"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['decPayDate']}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
@@ -360,7 +400,7 @@
                             <div class="col-xs-1" style="width: 200px">
                                 <div class='input-group date'>
                                     <input id="agentReceiveDate" name="agentReceiveDate"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['agentReceiveDate']}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
@@ -371,6 +411,7 @@
                     <div class="col-xs-12">
                         <div class="col-xs-12 text-center" >
                             <input type="hidden" name="action" id="action" value="">
+                            <input type="hidden" name="temp" id="temp" value="">
                             <button type="submit" id="ButtonSave" name="ButtonSave" onclick="saveAction()" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
                             <button type="submit" id="ButtonSaveAndNew" name="ButtonSaveAndNew" class="btn btn-success"><i class="fa fa-save"></i> Save & New</button>
                         </div>
@@ -542,8 +583,28 @@
     </div><!-- /.modal-dialog -->
 </div>
 
+<c:if test="${! empty requestScope['saveresult']}">
+    <c:if test="${requestScope['saveresult'] =='save successful'}">        
+        <script language="javascript">
+            $('#textAlertDivSave').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['saveresult'] =='save unsuccessful'}">        
+        <script language="javascript">
+           $('#textAlertDivNotSave').show();
+        </script>
+    </c:if>
+</c:if>
+        
 <script type="text/javascript">
     $(document).ready(function () {
+        $('.date').datetimepicker();
+        $("#ticketNo").keyup(function (event) {
+            if(event.keyCode === 13){
+               var ticketNo = $("#ticketNo").val();
+               searchTicketNo(ticketNo);
+            }
+        });
         $("#AgentTable tr").on('click', function () {
             var agent_id = $(this).find(".agent-id").text();
             var agent_user = $(this).find(".agent-user").text();
@@ -570,6 +631,29 @@
         $('#AgentTable tbody').on('click', 'tr', function () {
             $(this).addClass('row_selected').siblings().removeClass('row_selected');
         });
+        
+        $("#AddTicketFareForm")
+            .bootstrapValidator({
+    //                framework: 'bootstrap',
+                container: 'tooltip',
+                excluded: [':disabled', ':hidden', ':not(:visible)'],
+                feedbackIcons: {
+                    valid: 'uk-icon-check',
+                    invalid: 'uk-icon-times',
+                    validating: 'uk-icon-refresh'
+                },
+                fields: {
+                    ticketNo: {
+                        trigger: 'focus keyup',
+                        validators: {
+                            notEmpty: {trigger: 'change',
+                                message: ' Ticket No is required'
+                            }
+                        }
+                    }
+                }
+            });
+ 
    });
    
 function isNumberKey(evt){
@@ -583,6 +667,8 @@ function isNumberKey(evt){
 }
 
 function saveAction() {
+    searchTicketNo();
+    if($("#temp").val() == 'SAVE'){
     var action = document.getElementById('action');
     action.value = 'save';
     var ticketNo = document.getElementById('ticketNo');
@@ -595,8 +681,93 @@ function saveAction() {
     ticketRounting.value = $("#ticketRounting").val();
     var ticketAirline = document.getElementById('ticketAirline');
     ticketAirline.value = $("#ticketAirline").val();
-
+    var passenger = document.getElementById('passenger');
+    passenger.value = $("#passenger").val();
+    var issueDate = document.getElementById('issueDate');
+    issueDate.value = $("#issueDate").val();
+    var ticketFare = document.getElementById('ticketFare');
+    ticketFare.value = $("#ticketFare").val();
+    var ticketTax = document.getElementById('ticketTax');
+    ticketTax.value = $("#ticketTax").val();
+    var ticketIns = document.getElementById('ticketIns');
+    ticketIns.value = $("#ticketIns").val();
+    var ticketCommission = document.getElementById('ticketCommission');
+    ticketCommission.value = $("#ticketCommission").val();
+    var agentCommission = document.getElementById('agentCommission');
+    agentCommission.value = $("#agentCommission").val();
+    var salePrice = document.getElementById('salePrice');
+    salePrice.value = $("#salePrice").val();
+    var diffVat = document.getElementById('diffVat');
+    diffVat.value = $("#diffVat").val();
+    var agentId = document.getElementById('agentId');
+    agentId.value = $("#agentId").val();
+    var remark = document.getElementById('remark');
+    remark.value = $("#remark").val();
+    var overCommission = document.getElementById('overCommission');
+    overCommission.value = $("#overCommission").val();
+    var litterCommission = document.getElementById('litterCommission');
+    litterCommission.value = $("#litterCommission").val();
+    var decPay = document.getElementById('decPay');
+    decPay.value = $("#decPay").val();
+    var addPay = document.getElementById('addPay');
+    addPay.value = $("#addPay").val();
+    var agentComPay = document.getElementById('agentComPay');
+    agentComPay.value = $("#agentComPay").val();
+    var agentComReceive = document.getElementById('agentComReceive');
+    agentComReceive.value = $("#agentComReceive").val();
+    var overDate = document.getElementById('overDate');
+    overDate.value = $("#overDate").val();
+    var litterDate = document.getElementById('litterDate');
+    litterDate.value = $("#litterDate").val();
+    var decPayDate = document.getElementById('decPayDate');
+    decPayDate.value = $("#decPayDate").val();
+    var addPayDate = document.getElementById('addPayDate');
+    addPayDate.value = $("#addPayDate").val();
+    var agentPayDate = document.getElementById('agentPayDate');
+    agentPayDate.value = $("#agentPayDate").val();
+    var agentReceiveDate = document.getElementById('agentReceiveDate');
+    agentReceiveDate.value = $("#agentReceiveDate").val();
     document.getElementById('AddTicketFareForm').submit();
-    
+    }else{
+        alert('Not Save -- Duplicate Ticket No ');
+    }
 }
+function searchTicketNo(ticketNo) {
+    var servletName = 'TicketFareAirlineServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&ticketNo=' + ticketNo +
+            '&type=' + 'search';
+    CallAjax(param);
+}
+
+function CallAjax(param) {
+    var url = 'AJAXServlet';
+    $("#ajaxload").removeClass("hidden");
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function(msg) {
+                if(msg == 1) {
+                    alert('Duplicate Ticket No');
+                    $("#temp").val('NOTSAVE');
+                }else{
+                    $("#temp").val('SAVE');
+                }
+                $("#ajaxload").addClass("hidden");
+            }, error: function(msg) {
+                $("#ajaxload").addClass("hidden");
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
+}
+   
+
 </script>
