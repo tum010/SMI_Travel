@@ -162,7 +162,7 @@ function CallAjaxFamilyAuto(param){
                 }
                
                 $("#leaderId").val(cusid);
-                $("#FamilyLeaderCodeVal").val(cuscode);
+                $("#FamilyLeaderCode").val(cuscode);
                 $("#initialname").val(cusinitialname);
                 $("#firstname").val(cusfirstname);
                 $("#lastname").val(cuslastname);
@@ -526,6 +526,7 @@ function CallFilterAjax(param) {
 function setCustomerDetail(customerId, customerCode, customerInitialname, customerFirstname, customerLastname, customerAddress, customerTel) {
     $("#leaderId").val(customerId);
     $("#FamilyLeaderCode").val(customerCode);
+    $("#FamilyLeaderCodeVal").val(customerCode);
     $("#initialname").val(customerInitialname);
     $("#firstname").val(customerFirstname);
     $("#lastname").val(customerLastname);
