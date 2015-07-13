@@ -303,18 +303,7 @@
                                         </div>  
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-xs-1 text-right" style="width: 130px">
-                                        <label class="control-label text-right">Confirm Date </label>
-                                    </div>
-                                    <div class="col-xs-1 form-group" style="width: 170px">
-                                        <div class='input-group date'>
-                                            <input id="inputConfirmDate" name="inputConfirmDate"  type="text" 
-                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
-                                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                                        </div>  
-                                    </div>
-                                </div>
+                                
                                 <div class="row">
                                     <div class="col-xs-1 text-right" style="width: 130px">
                                         <label class="control-label text-right">Status </label>
@@ -339,14 +328,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row" style="padding-top: 15px;">
-                                    <div class="col-xs-1 text-right" style="width: 130px">
-                                        <label class="control-label text-right">Credit No </label>
-                                    </div>
-                                    <div class="col-xs-1" style="width: 170px">
-                                        <input type="text" class="form-control" id="creditNo" name="creditNo" value="" />
-                                    </div>
-                                </div>
+                                
                                             
                             </div>
                         </div>
@@ -416,7 +398,10 @@
                                         <input id="cashAmount" name="cashAmount" type="text" class="form-control" value="">
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 160px">
-                                        <label class="control-label text-right">Cash - Amount</label>                                    
+                                        <label class="control-label text-right">Cash(-) Amount</label>                                    
+                                    </div>
+                                    <div class="col-xs-1" style="width: 200px">
+                                        <input id="cashMAmount" name="cashMAmount" type="text" class="form-control" value="">
                                     </div>
                                 </div><hr/>
                                 <div class="row">
