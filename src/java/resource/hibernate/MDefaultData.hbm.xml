@@ -13,5 +13,8 @@
         <property name="value" type="string">
             <column name="value" />
         </property>
+        <property name="type" type="string">
+            <column name="type" />
+        </property>
     </class>
 </hibernate-mapping>
