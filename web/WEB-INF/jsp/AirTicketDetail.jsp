@@ -287,9 +287,9 @@
                                                 <input type="hidden" class="form-control" id="departure-${fStatus.count}-id" 
                                                        name="departure-${fStatus.count}-id">
                                                 <input type="hidden" class="form-control" id="departure-${fStatus.count}-code"  
-                                                       name="departure-${fStatus.count}-code" value="${flight.sourceCode}" maxlength="5" />
+                                                       name="departure-${fStatus.count}-code" value="${flight.sourceCode}" />
                                                 <input type="text" class="form-control" id="departure-${fStatus.count}-codeVal" 
-                                                       name="departure-${fStatus.count}-codeVal" value="${flight.sourceCode}" maxlength="5" 
+                                                       name="departure-${fStatus.count}-codeVal" value="${flight.sourceCode}" 
                                                        data-bv-notempty data-bv-notempty-message="The departure is required"/>
                                                 <span class="input-group-addon" data-toggle="modal" data-target="#DepartureModal" onclick="get_id(${fStatus.count})">
                                                     <i id="datadep_load-${fStatus.count}" class="fa fa-spinner fa-spin hidden"></i>
@@ -335,9 +335,9 @@
                                             <div class="input-group ">
                                                 <input type="hidden" class="form-control" id="arrival-${fStatus.count}-id" name="arrival-${fStatus.count}-id">
                                                 <input type="hidden" class="form-control" id="arrival-${fStatus.count}-code" 
-                                                       name="arrival-${fStatus.count}-code" value="${flight.desCode}" maxlength="5" />
+                                                       name="arrival-${fStatus.count}-code" value="${flight.desCode}"  />
                                                 <input type="text" class="form-control" id="arrival-${fStatus.count}-codeVal" 
-                                                       name="arrival-${fStatus.count}-codeVal" value="${flight.desCode}" maxlength="5" 
+                                                       name="arrival-${fStatus.count}-codeVal" value="${flight.desCode}" 
                                                        data-bv-notempty data-bv-notempty-message="The arrival is required"/>
                                                 <span class="input-group-addon" data-toggle="modal" data-target="#ArrivalModal" onclick="get_id(${fStatus.count})">
                                                     <i id="dataarri_load-${fStatus.count}" class="fa fa-spinner fa-spin hidden"></i>
