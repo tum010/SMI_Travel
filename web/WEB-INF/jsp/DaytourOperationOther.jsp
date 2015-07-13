@@ -89,7 +89,7 @@
                                 <c:if test="${listOtherBooking != null}"> 
                                     
                                     <c:forEach var="table" items="${listOtherBooking}" varStatus="status">
-                                    
+                                    <c:set var="counter" value="${status.count}"></c:set>               
                                     <tr>
                                         <td><center><c:out value="${table.product.code}" /></center></td>
                                         <td><center><c:out value="${table.product.name}" /></center></td>
@@ -98,19 +98,20 @@
                                         <td><center><c:out value="${table.remark}" /></center></td>
                                         <td class="text-center">
                                             <span id="RefBookTableButtonEdit" name="RefBookTableButtonEdit" class="glyphicon glyphicon-edit editicon" onclick="window.open('/SMITravel/OtherDetail.smi?referenceNo=${RefNo}&itemid=${table.id}&action=edit');"></span>
-                                            <a data-toggle="collapse" href="#collapseExample${status.count}" aria-expanded="false" aria-controls="collapseExample${status.count}">
-                                                <span id="SpanEdit${status.count}" class="glyphicon glyphicon-list-alt"></span>
+                                            <a  href="#" >
+                                                <span  class="glyphicon glyphicon-list-alt" id="SpanEdit${status.count}" onclick="selectListOther(${status.count})"  ></span>
                                             </a>
                                         </td>
-                                </tr>
+                                    </tr>
                                     </c:forEach>
                                 </c:if>
+                                    <input type="hidden" id="countListOther" name="countListOther" value="${counter}" >
                             </tbody>
                         </table>
                     </div>
                     <!--View Detail Tour Pop up -->
                     <c:forEach var="table2" items="${listOtherBooking}" varStatus="status">
-                    <div class="collapsing" id="collapseExample${status.count}" aria-expanded="false">
+                        <div class="" id="TableOther${status.count}" name="TableOther${status.count}" style="display: none;">
                         <label class="control-label" style="margin-top: 10px;margin-left: 20px;">Price (<c:out value="${table2.product.code}" />)</label>
                         <table class="display" style="width:97%;margin-top: 10px;">
                             <thead class="datatable-header">
@@ -271,7 +272,3 @@
     </script>
     <META HTTP-EQUIV="Refresh" CONTENT="0;URL=${requestScope['redirectUrl']}">
 </c:if>
-
-<style>
-
-</style>
