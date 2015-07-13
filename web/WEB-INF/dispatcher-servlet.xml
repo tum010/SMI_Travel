@@ -105,6 +105,7 @@
                 <prop key="LockUnlockBooking.smi">LockUnlockBookingController</prop>
                 <prop key="Stock.smi">StockController</prop>
                 <prop key="SearchStock.smi">SearchStockController</prop>
+                <prop key="DefineVar.smi">DefineVarController</prop>
                 <!-- add mapping url -->
             </props>
         </property>
@@ -482,6 +483,9 @@
     </bean>
     <bean id="SearchStockController" class="com.smi.travel.controller.SearchStockController">
      
+    </bean>
+    <bean id="DefineVarController" class="com.smi.travel.masterdata.controller.DefineVarController">
+        
     </bean>
     <!-- add bean id controller -->
     
