@@ -43,7 +43,7 @@ $(document).ready(function () {
             var code = this.value.toUpperCase();
             var name = this.value.toUpperCase();
             console.log("Name :"+ name);
-            $("#InputStaff,#InputStaffName,#InputStaffId").val(null);
+            $("#InputStaffId,#InputStaff,#InputStaffName").val(null);
             $.each(staff, function (key, value) {
                 
                 if (value.code.toUpperCase() === code ) { 

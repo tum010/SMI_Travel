@@ -12,5 +12,5 @@ import java.util.List;
  * @author Kanokporn
  */
 public interface DaytourOtherDao {
-    public List getDaytourOtherReport(String refno);
+    public List getDaytourOtherReport(String refno,String status);
 }

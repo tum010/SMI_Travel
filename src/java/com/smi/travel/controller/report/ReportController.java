@@ -86,6 +86,7 @@ public class ReportController extends SMITravelController {
         String agentid = request.getParameter("agentID");
         String landId = request.getParameter("landId");
         SystemUser user = (SystemUser) session.getAttribute("USER");
+        String status = request.getParameter("comfirm");
               
         Map model = new HashMap();
         List data = new ArrayList();
@@ -156,10 +157,10 @@ public class ReportController extends SMITravelController {
             data = reportservice.getAgentCommissionReportInfo(startdate, enddate, user.getName(),agentid);
         }else if (DaytourOther.equalsIgnoreCase(name)){
             PrintMethod = 0;
-            data = reportservice.getDaytourOtherReport(refno);
+            data = reportservice.getDaytourOtherReport(refno,status);
         }else if (OtherVouncherEmail.equalsIgnoreCase(name)){
             PrintMethod = 0;
-            data = reportservice.getDaytourOtherReport(refno);
+            data = reportservice.getDaytourOtherReport(refno,status);
         }else if (ReceiptEmail.equalsIgnoreCase(name)){
             PrintMethod = 0;
             data = reportservice.getReceiptEmail();
@@ -168,7 +169,7 @@ public class ReportController extends SMITravelController {
             data = reportservice.getReceipt();
         }else if (ReceiveList.equalsIgnoreCase(name)){
             PrintMethod = 0;
-            data = reportservice.getDaytourOtherReport(refno);
+            data = reportservice.getDaytourOtherReport(refno,status);
         }else if (InvoiceEmail.equalsIgnoreCase(name)){
             PrintMethod = 0;
             data = reportservice.getInvoiceEmail();

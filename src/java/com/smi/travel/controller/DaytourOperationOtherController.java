@@ -10,6 +10,7 @@ import com.smi.travel.datalayer.entity.Passenger;
 import com.smi.travel.datalayer.service.BookingOtherService;
 import com.smi.travel.datalayer.service.PassengerService;
 import com.smi.travel.master.controller.SMITravelController;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -52,6 +53,13 @@ public class DaytourOperationOtherController extends SMITravelController {
                 for(int i = 0; i < listOtherBooking.size(); i++) {
                     System.out.println(""+listOtherBooking.get(i).getStatus());
                 }
+                int count = checkReportUni(listOtherBooking);
+                String duplicate = "";
+                if(count == 0){
+                     request.setAttribute("Duplicate","NoDuplicate");
+                }else{
+                      request.setAttribute("Duplicate","Duplicate");
+                }
                 request.setAttribute("listOtherBooking", listOtherBooking);
                 
             }else{
@@ -87,6 +95,20 @@ public class DaytourOperationOtherController extends SMITravelController {
             request.setAttribute("ListBookingAll", listOtherBookingAll);
         }
         return DaytourOperationOther;
+    }
+    
+    private int  checkReportUni(List<OtherBooking> listOtherBooking){
+        int count = 0;
+        int j = 0 ;
+        int i = 0 ;
+        for ( i = 0; i < listOtherBooking.size(); i++) {
+            for (j = (i+1) ; j < listOtherBooking.size() ; j++) {
+                if(listOtherBooking.get(i).getProduct().getCode().equalsIgnoreCase(listOtherBooking.get(j).getProduct().getCode())){
+                    count++;
+                }
+            }
+        }
+        return count;
     }
     
     public void setOtherBookingService(BookingOtherService otherBookingService) {

@@ -110,8 +110,8 @@ public class ReportService {
         return guideComissiondao.getGuideComissionReport(datefrom, dateto, username,guideid);
     }
     
-    public List getDaytourOtherReport(String refno){
-        return daytourOtherdao.getDaytourOtherReport(refno);
+    public List getDaytourOtherReport(String refno,String status){
+        return daytourOtherdao.getDaytourOtherReport(refno,status);
     }
     
     public List getGuildJobReport(String tourdate,String tourID, String username){

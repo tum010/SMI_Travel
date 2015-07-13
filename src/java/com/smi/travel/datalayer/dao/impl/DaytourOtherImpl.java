@@ -28,7 +28,7 @@ import org.hibernate.SessionFactory;
 public class DaytourOtherImpl implements DaytourOtherDao{
     private SessionFactory sessionFactory;
     @Override
-    public List getDaytourOtherReport(String refno) {
+    public List getDaytourOtherReport(String refno, String status) {
         Session session = this.sessionFactory.openSession();
         List data = new ArrayList();
         UtilityFunction util = new UtilityFunction();
@@ -73,8 +73,26 @@ public class DaytourOtherImpl implements DaytourOtherDao{
              daytourother.setRemark(util.ConvertString(B[11]));
              data.add(daytourother);  
          }
+        if("OK".equals(status)){
+            data = checkReportUni(data);
+        }
         this.sessionFactory.close();
         session.close();
+        return data;
+    }
+    
+    private List<DaytourOther>  checkReportUni(List<DaytourOther> listDaytourOld){
+        List data = new ArrayList<DaytourOther>();
+        int j = 0 ;
+        int i = 0 ;
+        for ( i = 0; i < listDaytourOld.size(); i++) {
+            for (j = (i+1) ; j < listDaytourOld.size() ; j++) {
+                if(listDaytourOld.get(i).getCode().equalsIgnoreCase(listDaytourOld.get(j).getCode())){
+                    listDaytourOld.remove(j);
+                }
+            }
+        }
+        data = listDaytourOld;
         return data;
     }
     

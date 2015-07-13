@@ -110,12 +110,25 @@ function CallFilterAjax(param) {
     }
 }
 
-function printOtherVoucher() {
+function printOtherVoucher(status) {  
     var voucher = document.getElementById("voucher").value;
+//    if(status == "Duplicate"){
+//       checkDuplicate();  
+//    }
+
     var InputRefNo = document.getElementById("InputRefNo").value;
     if (voucher == "OtherVouncher"){
-        window.open("report.smi?name=DaytourOther&refno=" + InputRefNo);
+        window.open("report.smi?name=DaytourOther&refno=" + InputRefNo+"&comfirm="+status);
     }else{
-        window.open("report.smi?name=OtherVouncherEmail&refno=" + InputRefNo);
+        window.open("report.smi?name=OtherVouncherEmail&refno=" + InputRefNo+"&comfirm="+status);
+    }
+}
+
+function checkDuplicate(){
+    var duplicate = document.getElementById("Duplicate").value;
+    if(duplicate === 'Duplicate'){
+        $('#PrintModal').modal("show");
+    }else{
+        printOtherVoucher('');
     }
 }

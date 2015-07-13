@@ -13,11 +13,13 @@
 <c:set var="listPassenger" value="${requestScope['listPassenger']}" />
 <c:set var="RefNo" value="${requestScope['RefNo']}" />
 <c:set var="ListBookingAll" value="${requestScope['ListBookingAll']}" />
+<c:set var="isDuplicate" value="${requestScope['Duplicate']}" />
 
 <input type="hidden" value="${param.referenceNo}" id="getUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
 <input type="hidden" value="${param.tourID}" id="tourID">
+<input type="" value="${isDuplicate}" id="Duplicate">
 
 <section class="content-header" >
     <h1>
@@ -199,7 +201,7 @@
                         </select>
                     </div>
                     <div class="col-xs-3">
-                         <a id="ButtonPrint" name="ButtonPrint" onclick="printOtherVoucher();" class="btn btn-default">
+                        <a id="ButtonPrint" name="ButtonPrint"  class="btn btn-default" onclick="checkDuplicate()">
                              <i class="fa fa-print"></i> Print
                          </a>
                     </div>
@@ -249,6 +251,26 @@
             <div class="modal-footer">
                 <button id="ListPacketModalOK" name="ListPacketModalOK" type="button"  class="btn btn-success" data-dismiss="modal">OK</button>
                 <button id="ListPacketModalClose" name="ListPacketModalClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal-dialog -->
+
+<!--Print Modal-->
+<div class="modal fade" id="PrintModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Print Other Voucher</h4>
+            </div>
+            <div class="modal-body">
+                <!--<input type="" id="ConfirmPrint"  name="ConfirmPrint" value="">-->
+                Coupon is duplicate.Are you sure to print all coupon?
+            </div>
+            <div class="modal-footer">
+                <button id="PrintOK" name="PrintOK" type="button"  class="btn btn-success" data-dismiss="modal" onclick="printOtherVoucher('CANCEL');">YES</button><!--Print All -->
+                <button id="PrintCancel" name="PrintCancel" type="button" class="btn btn-default" data-dismiss="modal" onclick="printOtherVoucher('OK');">NO</button><!--Print No Duplicate -->
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
