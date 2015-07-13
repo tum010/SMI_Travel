@@ -3,13 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+function selectListOther(counter){
+    var count = document.getElementById('countListOther');
+    for(var i = 1 ; i <= count.value ; i++){
+        $('#TableOther'+i).css("display","none");
+    }
+    $('#SpanEdit'+ counter).click(function() {
+//        $('#TableOther'+counter).css("display","block");
+        for(var i = 1 ; i <= count.value ; i++){                  
+            if(i === counter){
+                alert(i +" : " +counter +">>>" + count.value);
+                $('#TableOther'+counter).css("display","block");
+            }
+        }
+
+    });
+}
 function searchAction() {
     //alert("OK");
     var action = document.getElementById('action');
     action.value = 'search';
     document.getElementById('DaytourOtherForm').submit();
 }
-$(document).ready(function () {
+$(document).ready(function () {      
+   
     // validate
    $("#InputRefNo").focus();
     $("#InputRefNo").keyup(function (event) {
@@ -40,6 +57,7 @@ $(document).ready(function () {
             FilterBookingList($("#filtercus").val());
         }
     });
+
 });
 
 function FilterBookingList(name) {
