@@ -118,7 +118,9 @@
         <property name="bookingviewdao" ref="BookingViewImplDao" />
         <property name="listitemdao" ref="MListItemDao" />  
     </bean>
-    
+      <bean id="DefineVarService" class="com.smi.travel.datalayer.service.DefineVarService">
+        <property name="defineVarDao" ref="DefineVarDao"/>
+    </bean>
     <bean id="MAmadeusService" class="com.smi.travel.datalayer.service.MAmadeusService">
         <property name="amadeusDao" ref="MAmadeusDao" />
     </bean>

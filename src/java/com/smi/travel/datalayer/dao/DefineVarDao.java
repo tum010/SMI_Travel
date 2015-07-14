@@ -14,6 +14,6 @@ import java.util.List;
  * @author Surachai
  */
 public interface DefineVarDao {
-    public String saveVariable(MDefaultData data);
+    public String saveVariable(List<MDefaultData> datas);
     public List<MDefaultData> getListDefaultData();
 }

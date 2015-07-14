@@ -49,7 +49,10 @@
     <bean id="MCurrencyDao" class="com.smi.travel.datalayer.dao.impl.MCurrencyImpl">
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
-    
+     <bean id="DefineVarDao" class="com.smi.travel.datalayer.dao.impl.DefineVarDaoImpl">
+        	<property name="sessionFactory" ref="sessionFactory"></property>
+        	
+    </bean>
     <bean id="MFlightDao" class="com.smi.travel.datalayer.dao.impl.MFlightDaoImpl">
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
