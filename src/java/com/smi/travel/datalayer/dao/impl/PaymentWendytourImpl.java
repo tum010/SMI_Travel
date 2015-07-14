@@ -94,7 +94,11 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
         if (paymentList.isEmpty()) {
             return null;
         }
-        return mappingPaymentWendytourView(paymentList);
+        
+        List<PaymentWendytourView> paymentviewList = mappingPaymentWendytourView(paymentList);
+        this.sessionFactory.close();
+        session.close();
+        return paymentviewList;
     }
     
     
