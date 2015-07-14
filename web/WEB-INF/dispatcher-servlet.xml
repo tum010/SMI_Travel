@@ -448,7 +448,8 @@
         <property name="utilservice" ref="UtilityService" /> 
     </bean>
     <bean id="SearchPaymentTourHotelController" class="com.smi.travel.controller.SearchPaymentTourHotelController">
-       
+        <property name="utilityService" ref="UtilityService" /> 
+        <property name="paymentTourHotelService" ref="PaymentTourHotelService" /> 
     </bean>
     <bean id="SearchPaymentOutboundController" class="com.smi.travel.controller.SearchPaymentOutboundController">
         

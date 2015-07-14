@@ -251,6 +251,7 @@
     
     <bean id="PaymentTourHotelService" class="com.smi.travel.datalayer.service.PaymentTourHotelService">
         <property name="invoiceSuppilerDao" ref="InvoiceSuppilerDao" />
+        <property name="paymentWendytourDao" ref="PaymentWendytourDao" />
     </bean>
     
     <bean id="TicketFareAirlineService" class="com.smi.travel.datalayer.service.TicketFareAirlineService">

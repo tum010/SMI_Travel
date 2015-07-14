@@ -5,8 +5,11 @@
  */
 
 package com.smi.travel.datalayer.service;
+import com.smi.travel.datalayer.dao.PaymentWendytourDao;
+import com.smi.travel.datalayer.entity.PaymentWendy;
 import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
 import com.smi.travel.datalayer.view.dao.InvoiceSuppilerDao;
+import com.smi.travel.datalayer.view.entity.PaymentWendytourView;
 import java.util.List;
 /**
  *
@@ -15,6 +18,7 @@ import java.util.List;
 public class PaymentTourHotelService {
     
     private InvoiceSuppilerDao invoiceSuppilerDao;
+    private PaymentWendytourDao paymentWendytourDao;
 
     public InvoiceSuppilerDao getInvoiceSuppilerDao() {
         return invoiceSuppilerDao;
@@ -27,7 +31,29 @@ public class PaymentTourHotelService {
     
 
     public List<InvoiceSupplier> getListInvoiceSuppiler() {
-        return invoiceSuppilerDao.getListInvoiceSupplier();
+        return getInvoiceSuppilerDao().getListInvoiceSupplier();
+    }
+
+    public List<PaymentWendytourView> getListPayment(String inputFromDate, String inputToDate, String selectPvType) {
+        return getPaymentWendytourDao().SearchPaymentFromFilter(inputFromDate, inputToDate, selectPvType);
+    }
+
+    /**
+     * @return the paymentWendytourDao
+     */
+    public PaymentWendytourDao getPaymentWendytourDao() {
+        return paymentWendytourDao;
+    }
+
+    /**
+     * @param paymentWendytourDao the paymentWendytourDao to set
+     */
+    public void setPaymentWendytourDao(PaymentWendytourDao paymentWendytourDao) {
+        this.paymentWendytourDao = paymentWendytourDao;
+    }
+
+    public String deletePaymentWendy(PaymentWendy paymentWendy) {
+        return this.paymentWendytourDao.DeletePaymentWendy(paymentWendy);
     }
 
 }

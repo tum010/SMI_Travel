@@ -18,7 +18,7 @@ public class PaymentWendytourView {
     private String payNo;
     private Date payDate;
     private String payType;
-    private String InvoiceSup;
+    private String invoiceSup;
     private int accNo;
     private String department;
     private BigDecimal total;
@@ -34,7 +34,7 @@ public class PaymentWendytourView {
         this.payNo = payNo;
         this.payDate = payDate;
         this.payType = payType;
-        this.InvoiceSup = InvoiceSup;
+        this.invoiceSup = InvoiceSup;
         this.accNo = accNo;
         this.department = department;
         this.total = total;
@@ -75,11 +75,11 @@ public class PaymentWendytourView {
     }
 
     public String getInvoiceSup() {
-        return InvoiceSup;
+        return invoiceSup;
     }
 
     public void setInvoiceSup(String InvoiceSup) {
-        this.InvoiceSup = InvoiceSup;
+        this.invoiceSup = InvoiceSup;
     }
 
     public int getAccNo() {

@@ -11,9 +11,10 @@ import com.smi.travel.datalayer.entity.PaymentDetailWendy;
 import com.smi.travel.datalayer.entity.PaymentWendy;
 import com.smi.travel.datalayer.view.entity.PaymentWendytourView;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.LinkedList;
 import java.util.List;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
@@ -24,6 +25,7 @@ import org.hibernate.Transaction;
 public class PaymentWendytourImpl implements PaymentWendytourDao{
     private SessionFactory sessionFactory;
     private Transaction transaction;
+    private static final int MAX_ROW = 200;
     
     @Override
     public String InsertPaymentWendy(PaymentWendy payment) {
@@ -37,7 +39,21 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
 
     @Override
     public String DeletePaymentWendy(PaymentWendy payment) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        String result = "fail";
+        try {
+            Session session = this.sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            session.delete(payment);
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+            result = "success";
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            result = "fail";
+        }
+        return result;
     }
 
     @Override
@@ -51,8 +67,34 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
     }
 
     @Override
-    public List<PaymentWendytourView> SearchPaymentFromFilter(String DateFrom ,String Dateto,String PVType) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<PaymentWendytourView> SearchPaymentFromFilter(String dateFrom ,String dateTo,String payType) {
+        StringBuffer query = new StringBuffer("from PaymentWendy payment ");
+        boolean haveCondition = false;
+        if ((dateFrom != null) && (!"".equalsIgnoreCase(dateFrom))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" payment.payDate >= '" + dateFrom + "'");
+            haveCondition = true;
+        }
+        if ((dateTo != null) && (!"".equalsIgnoreCase(dateTo))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" payment.payDate <= '" + dateTo + "'");
+            haveCondition = true;
+        }
+        if ((payType != null) && (!"".equalsIgnoreCase(payType))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" payment.MPaymentDoctype = " + payType);
+            haveCondition = true;
+        }
+        
+        Session session = this.sessionFactory.openSession();
+        Query HqlQuery = session.createQuery(query.toString());
+        System.out.println(HqlQuery.toString());
+        HqlQuery.setMaxResults(MAX_ROW);
+        List<PaymentWendy> paymentList = HqlQuery.list();
+        if (paymentList.isEmpty()) {
+            return null;
+        }
+        return mappingPaymentWendytourView(paymentList);
     }
     
     
@@ -74,6 +116,7 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
              }
 
              paymentview.setId(payment.getId());
+             paymentview.setPayNo(payment.getPayNo());
              paymentview.setPayDate((payment.getPayDate()));
              paymentview.setPayType(payment.getMPaymentDoctype().getName());
              paymentview.setInvoiceSup(payment.getInvoiceSup());

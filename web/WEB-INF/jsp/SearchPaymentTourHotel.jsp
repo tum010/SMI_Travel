@@ -2,9 +2,13 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<script type="text/javascript" src="js/workspace.js"></script> 
 <script type="text/javascript" src="js/jquery-ui.js"></script>
+<script type="text/javascript" src="js/SearchPaymentTourHotel.js"></script> 
+<script type="text/javascript" src="js/selectize.js"></script>
 <link href="css/jquery-ui.css" rel="stylesheet">
+<link href="css/selectize.bootstrap3.css" rel="stylesheet">
+<c:set var="dataList" value="${requestScope['payment_list']}" />
+<c:set var="PaymentTypeList" value="${requestScope['payment_type']}" />
 <section class="content-header" >
     <h1>
         Checking - Search Payment Tour / Hotel
@@ -28,25 +32,26 @@
         </div>
         <hr/><br>
         <!--Input Search -->
+        <form action="SearchPaymentTourHotel.smi" method="post" id="PaymentSearchForm" role="form">
                 <div class="row" style="padding-left: 5px" >
                     <div class="col-xs-1 text-left" style="width:70px;">
-                        <label class="control-label">From</lable>
+                        <label class="control-label">From <font style="color: red">*</font></lable>
                     </div>
                     <div class="col-md-2 form-group text-left" style="padding-left:5px">
                         <div class="col-sm-12">
                             <div class='input-group date' style="width:140px;">
-                                <input name="InputFromDate" id="InputFromDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
+                                <input name="InputFromDate" id="InputFromDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['inputFromDate']}" />
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
                     </div>
                     <div class="col-xs-1 text-right" style="width:70px;">
-                        <label class="control-label">To</lable>
+                        <label class="control-label">To <font style="color: red">*</font></lable>
                     </div>
                     <div class="col-md-2 form-group text-left" style="padding-left:5px">
                         <div class="col-sm-12">
                             <div class='input-group date' style="width:140px;">
-                                <input name="InputToDate" id="InputToDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
+                                <input name="InputToDate" id="InputToDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['inputToDate']}" />
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
@@ -56,18 +61,23 @@
                     </div>
                     <div class="col-md-2 form-group text-left" style="padding-left:0px;padding-right:0px;">
                         <div class="col-sm-12">
-                            <select name="SelectPvType" id="SelectPvType" class="form-control">
-                                <option id="" value="">--</option>
+                            <select name="selectPvType" id="SelectPvType" class="form-control" value="${requestScope['selectPvType']}">
                                 <option id="" value="">---type--</option>
+                                <c:forEach var="type" items="${PaymentTypeList}">
+                                    <option value='${type.id}'  ${type.id == requestScope['selectPvType'] ? 'selected="selected"' : ''}> ${type.name}</option>
+                                </c:forEach>
                             </select>
                         </div>
                     </div>
                     <!--Button Print and Search -->
                     <div class="col-md-3 form-group text-left" style="padding-left:0px;padding-right:0px;">
                         <div class="col-xs-6 text-left">
-                            <a id="ButtonSearch" name="ButtonSearch" onclick="" class="btn btn-primary">
+<!--                            <a id="ButtonSearch" name="ButtonSearch" type="submit" class="btn btn-primary">
                                 <i class="fa fa-search"></i> Search
-                            </a>
+                            </a>-->
+                            <button type="submit" id="ButtonSearch" name="ButtonSearch" onclick="" class="btn btn-primary btn-sm">Search</button>
+                            <input type="hidden" name="action" id="action" value="search">
+                            <input type="hidden" id="paymentID" name="paymentID" >
                         </div>
                         <div class="col-xs-6 text-right" style="padding-left:0px;width:60px;">
                             <button type="submit" id="ButtonPrint" name="ButtonPrint" class="btn btn-default">
@@ -75,7 +85,8 @@
                             </button>
                         </div>                        
                     </div>
-                </div><!--End Search -->
+                </div>
+        </form><!--End Search -->
                 
                 <br>
         <!-- Table -->                  
@@ -96,7 +107,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+<!--                        <tr>
                             <td>41399</td>
                             <td>2015-05-05</td>
                             <td>Wendy Van</td>
@@ -112,7 +123,25 @@
                                     <span id="" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal" data-target="#delSearchPaymentTourHotelModal"></span>
                                 </a>
                             </td>                           
+                        </tr>-->
+                    <c:forEach var="payment" items="${dataList}">
+                        <tr>
+                            <td>${payment.payNo}</td>
+                            <td>${payment.payDate}</td>
+                            <td>${payment.payType}</td>
+                            <td>${payment.invoiceSup}</td>
+                            <td>${payment.accNo}</td>
+                            <td>${payment.total}</td>
+                            <td>${payment.currency}</td>
+                            <td>${payment.status}</td>
+                            <td class="text-center">
+                                <span id="RefPaymentHotelEdit" name="RefPaymentHotelEdit" class="glyphicon glyphicon-edit editicon" onclick="location.href='PaymentTourHotel.smi?action=edit&paymentId=${payment.id}'"></span>
+                                <a href="#" onclick=""  data-toggle="modal" data-target="">
+                                    <span id="" class="glyphicon glyphicon-remove deleteicon"  onclick="DeletePayment('${payment.id}','${payment.payNo}')" data-toggle="modal" data-target="#delSearchPaymentTourHotelModal"></span>
+                                </a>
+                            </td>  
                         </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
             </div><!--End Table -->
@@ -136,23 +165,6 @@
 </div><!-- /.modal -->
 <script type="text/javascript">
     $(document).ready(function () {
-        $('.date').datetimepicker();
-        $('.datemask').mask('0000-00-00');
-        $('.spandate').click(function() {
-            var position = $(this).offset();
-            console.log("positon :" + position.top);
-            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
-
-        });
-        jQuery.curCSS = jQuery.css;
-        $('#SearchPaymentHotelTable').dataTable({
-            bJQueryUI: true,
-            "sPaginationType": "full_numbers",
-            "bAutoWidth": false,
-            "bFilter": false,
-            "bPaginate": true,
-            "bInfo": true,
-            "iDisplayLength":10
-        });
     });
+  
 </script>
