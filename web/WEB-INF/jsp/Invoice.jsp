@@ -273,13 +273,16 @@
                                         <thead class="datatable-header">
                                             <tr>
                                                 <th style="width:10%;">Product</th>
-                                                <th style="width:20%;">Description</th>
+                                                <th style="width:16%;">Description</th>
                                                 <th style="width: 1%">T/C</th>
                                                 <th style="width: 5%">Cost</th>
+                                                <th style="width: 2%">Cur</th>
                                                 <th style="width: 5%">Cost Local</th>
                                                 <th style="width: 5%">Amount</th>
+                                                <th style="width: 2%">Cur</th>
                                                 <th style="width: 5%">Amount Local</th>
-                                                <th style="width: 2%">Vat</th> 
+                                                <th style="width: 1%" >Vat</th> 
+                                                <th style="width: 1%">Use</th> 
                                                 <th style="width: 5%">Net</th>
                                                 <th style="width: 2%">Action</th>    
                                             </tr>
@@ -289,11 +292,14 @@
                                                 <td>TEST</td>
                                                 <td>Hello World</td>
                                                 <td align="center">[T][C]</td>
-                                                <td>1000000 THB</td>
+                                                <td>1000000</td>
+                                                <td>THB</td>
                                                 <td>100000</td>
-                                                <td>100000 THB</td>
                                                 <td>100000</td>
+                                                <td>THB</td>
                                                 <td>100000</td>
+                                                <td>7</td>
+                                                <td>[]</td>
                                                 <td>100000</td>
                                                 <td align="center" > 
                                                 <center> 
