@@ -12,7 +12,7 @@ function selectListOther(counter){
 //        $('#TableOther'+counter).css("display","block");
         for(var i = 1 ; i <= count.value ; i++){                  
             if(i === counter){
-                alert(i +" : " +counter +">>>" + count.value);
+//                alert(i +" : " +counter +">>>" + count.value);
                 $('#TableOther'+counter).css("display","block");
             }
         }

@@ -606,7 +606,7 @@ function CallAjax(param) {
                 var str = msg.split("|");
                 var id = str[0];
                 var code = str[1];
-                alert(code);
+//                alert(code);
                 var initia = str[2];
                 var fname = str[3];
                 var lname = str[4];

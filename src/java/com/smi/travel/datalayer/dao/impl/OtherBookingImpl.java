@@ -6,10 +6,10 @@
 
 package com.smi.travel.datalayer.dao.impl;
 
+import com.mysql.jdbc.StringUtils;
 import com.smi.travel.datalayer.dao.OtherBookingDao;
-import com.smi.travel.datalayer.entity.DaytourBooking;
+import com.smi.travel.datalayer.entity.Customer;
 import com.smi.travel.datalayer.entity.OtherBooking;
-import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.util.UtilityFunction;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +17,6 @@ import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.classic.Session;
-
 /**
  *
  * @author Surachai
@@ -138,10 +137,12 @@ public class OtherBookingImpl implements OtherBookingDao{
 
     @Override
     public List<OtherBooking> getListBookingAll() {
-        String query = "from OtherBooking other";
+        String query = "from OtherBooking other order by other.id DESC";
         Session session = this.sessionFactory.openSession();
 
         Query OtherList = session.createQuery(query);  
+        OtherList.setFirstResult(0);
+        OtherList.setMaxResults(500);
         List list = OtherList.list();
         if (list.isEmpty()) {
             return null;
@@ -283,5 +284,36 @@ public class OtherBookingImpl implements OtherBookingDao{
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<OtherBooking> searchOtherBooking(Customer customer, int option) {
+        String query = "from OtherBooking ob where ";
+        String queryOperation = "";
+        String Prefix_Subfix = "";
+        int check = 0;
+        if (option == 1) {
+            queryOperation = " = ";
+            Prefix_Subfix = "";
+        } else if (option == 2) {
+            queryOperation = " Like ";
+            Prefix_Subfix = "%";
+        }
+
+        if (!StringUtils.isNullOrEmpty(customer.getFirstName())) {
+            query += " ob.firstName " + queryOperation + " '" + Prefix_Subfix + customer.getFirstName() + Prefix_Subfix + "'";
+            check = 1;
+        }
+
+        if (check == 0) {
+            query = query.replaceAll("where", " ");
+        }
+        System.out.println("searchOtherBooking query : " + query);
+        //  List<SystemUser> list = getHibernateTemplate().find(query);
+        org.hibernate.Session session = this.sessionFactory.openSession();
+        List<OtherBooking> list = session.createQuery(query).list();
+
+        return list;
+
     }
 }

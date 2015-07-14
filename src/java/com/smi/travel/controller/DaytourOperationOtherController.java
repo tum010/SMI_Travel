@@ -10,7 +10,6 @@ import com.smi.travel.datalayer.entity.Passenger;
 import com.smi.travel.datalayer.service.BookingOtherService;
 import com.smi.travel.datalayer.service.PassengerService;
 import com.smi.travel.master.controller.SMITravelController;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -88,7 +87,7 @@ public class DaytourOperationOtherController extends SMITravelController {
         
         //Bookig List
         listOtherBookingAll = otherBookingService.getListBookingAll();
-        if(listOtherBookingAll.isEmpty()){
+        if(listOtherBookingAll == null){
             request.setAttribute("ListBookingAll", null);
         }else{
             System.out.println("List Booking All");

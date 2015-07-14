@@ -92,15 +92,16 @@ $(document).ready(function () {
                 var colIndex = $(this).parent().children().index($(this));
                 var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
                 rowAll = $("#TaxInvoiceTable tr").length;
-                if (rowIndex === rowAll) {
+                alert("RowIn : " +rowIndex + " Row All : " + rowAll );
+//                if (rowIndex === rowAll) {
                     console.log("rowAll : " + rowAll);
                     AddRow(rowAll);
-                }
+//                }
             }
         });
     });
     validFrom();
-
+    
 });
 
 function validFrom(){
@@ -183,12 +184,13 @@ function validFrom(){
 }
 
 function AddRow(row) {
+//    alert("Se" + select);
     $("#TaxInvoiceTable tbody").append(
             '<tr>' +
             '<td class="hidden"><input type="hidden"  id="stockDetailId' + row + '" name="stockDetailId' + row + '" value="" /></td>' +
             '<td>' + row + '</td>' +
             '<td><input type="text"  class="form-control" name="codeItemList' + row + '" id="codeItemList' + row + '" value=""/></td>' +
-            '<td><select id="SeleteTypeItemList' + row + '" name="SeleteTypeItemList' + row + '" class="form-control"><option value=""><c:out value="" /></option></select></td>' +
+            '<td><select id="SeleteTypeItemList' + row + '" name="SeleteTypeItemList' + row + '" class="form-control"><option></option>'+select +'</select></td>' +
             '<td>0</td>' +
             '<td>NEW</td>' +
             '<td class="text-center"><a href="#" onclick=""  data-toggle="modal" data-target="" class="remCF" id="ButtonRemove' + row + '"><span id="Spanremove' + row + '" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal" data-target="#delStockModal"></span></a></td>' +
@@ -211,19 +213,22 @@ function addItemList(){
     var type  = document.getElementById('Selecttype');
     var count = document.getElementById('counterTable');
     var countAdd = document.getElementById('counterAdd');
+    var st = start.value;
+//    alert("Type : " + type.value +" Start : " + st);
     if(countAdd.value === 1){
         document.getElementById("TaxInvoiceTable").deleteRow(1);
     }else{
         $("#TaxInvoiceTable tr:last").remove();
     }
- 
+    var res = select.replace("value='"+ type.value+"'", "selected value='"+ type.value+"'");
+//    alert(res);
     for (var i = 1 ; i <= number.value; i++){
         $("#TaxInvoiceTable tbody").append(
             '<tr>' +
             '<td class="hidden"><input type="hidden"  id="stockDetailId' + count.value + '" name="stockDetailId' + count.value + '" value="" /></td>' +
             '<td>'+ count.value +'</td>' +
             '<td><input type="text"  class="form-control" name="codeItemList' + count.value + '" id="codeItemList' + count.value + '" value="'+prefix.value+'-'+start.value+'"/></td>' +
-            '<td><select id="SeleteTypeItemList' + count.value + '" name="SeleteTypeItemList' + count.value + '" class="form-control"><option value="'+type.value+'">'+type.value+'</option></select></td>' +
+            '<td><select id="SeleteTypeItemList' + count.value + '" name="SeleteTypeItemList' + count.value + '" class="form-control">' + res + '</select></td>' +
             '<td>0</td>' +
             '<td>NEW</td>' +
             '<td class="text-center"><a href="#"  class="remCF" id="ButtonRemove' + count.value + '" onclick="deleteItemListRow('+count.value+",'"+ prefix.value+"-"+start.value+"'"+')" data-toggle="modal" data-target="#delStockModal"><span id="Spanremove' + count.value + '" class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
@@ -231,7 +236,11 @@ function addItemList(){
             );
             start.value++;
             count.value++;
+//            $("#SeleteTypeItemList"+count.value+"  option[value='" + type.value +"']").attr("selected","selected");
+
+            
     }
+    start.value = st;
     countAdd.value++;
     AddRow(count.value);
     resetNumberItemList();

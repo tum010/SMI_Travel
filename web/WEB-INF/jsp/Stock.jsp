@@ -208,6 +208,10 @@
                                             <input type="text" class="hidden" id="counterTable" name="counterTable" value="1" />
                                             <input type="text" class="hidden" id="counterAdd" name="counterAdd" value="1" />
                                             <c:set var="count" value="1"></c:set>
+                                            <script>
+                                                stock = [];
+                                            </script>
+                                            
                                             <c:forEach var="std" items="${listStockDetail}" varStatus="taxdesc">
                                             
                                             <tr>
@@ -445,3 +449,16 @@
     </c:if>
 </c:if>
 <script type="text/javascript" src="js/stock.js"></script>
+<script>
+    var select = "";
+    $(document).ready(function () {
+        var cout = document.getElementById('counterTable');
+        var type  = document.getElementById('Selecttype');
+//                            alert("cout :"+ cout.value);
+        <c:forEach var="type" items="${getType}">
+            select += "<option value='${type.name}'><c:out value='${type.name}' /></option>";
+        </c:forEach>
+        
+        $('#SeleteTypeItemList'+cout.value).append(select);
+    });
+</script>

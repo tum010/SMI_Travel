@@ -247,6 +247,24 @@ public class AJAXBean extends AbstractBean implements
                 }
                 System.out.println("result :" + result);
             }
+            if ("getOtherBookList".equalsIgnoreCase(type)){
+                String name = map.get("name").toString();
+                Customer customer = new Customer();
+                String[] pathname = name.trim().split("/");
+                int filter = 0;
+                if (pathname.length == 1) {
+                    customer.setFirstName(pathname[0]);
+                    customer.setLastName(pathname[0]);
+                    customer.setCode(pathname[0]);
+                    filter = 1;
+                } else {
+                    filter = 0;
+                    customer.setFirstName(pathname[1]);
+                    customer.setLastName(pathname[0]);
+                    customer.setCode(pathname[0] + pathname[1]);
+                }
+                result = otherBookingDao.searchOtherBooking(customer, filter);
+            }
         } else if (BOOKLAND.equalsIgnoreCase(servletName)) {
             //result = customerdao.isExistCustomer(initialID, first, last);
             System.out.println("ajax : " + BOOKLAND);

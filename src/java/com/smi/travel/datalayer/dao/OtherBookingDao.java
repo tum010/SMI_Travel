@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.dao;
 
+import com.smi.travel.datalayer.entity.Customer;
 import com.smi.travel.datalayer.entity.OtherBooking;
 import com.smi.travel.datalayer.entity.Product;
 import java.util.List;
@@ -25,4 +26,5 @@ public interface OtherBookingDao {
     public int enableBookDetailOther(String otherID);
     public String saveOtherBookCommission(List<OtherBooking> BookList);
     public Boolean CheckUsabilityCoupon(String CouponId);
+    public  List<OtherBooking> searchOtherBooking(Customer customer, int filter);
 }

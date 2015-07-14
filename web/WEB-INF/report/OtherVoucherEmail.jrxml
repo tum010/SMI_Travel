@@ -80,7 +80,7 @@ FROM
 				<reportElement x="15" y="281" width="524" height="1" uuid="a428cff0-2587-44db-b40f-9dfc02ed6352"/>
 			</line>
 			<rectangle>
-				<reportElement mode="Transparent" x="282" y="281" width="100" height="18" uuid="9e71e5a3-6e27-4111-b7ac-71f4965f14bd"/>
+				<reportElement mode="Transparent" x="283" y="280" width="100" height="18" uuid="9e71e5a3-6e27-4111-b7ac-71f4965f14bd"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="287" y="282" width="95" height="18" uuid="5ee2a8fa-db0e-41fc-b718-ac6d9edc4436"/>
@@ -224,21 +224,21 @@ FROM
 			</textField>
 			<textField>
 				<reportElement x="431" y="186" width="36" height="20" uuid="dab51c6c-aebd-4763-8f0c-9d6cef5ee112"/>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="11" isBold="false" isUnderline="false" pdfEncoding="Cp1252"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{adult}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="467" y="186" width="36" height="20" uuid="6794661d-7d55-43df-baec-18e0d2e48a07"/>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="11" isBold="false" pdfEncoding="Cp1252"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{child}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="503" y="186" width="36" height="20" uuid="157dcc3c-3deb-4413-b4cc-9e1b1e52dde2"/>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="11" pdfEncoding="Cp1252"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{infant}]]></textFieldExpression>

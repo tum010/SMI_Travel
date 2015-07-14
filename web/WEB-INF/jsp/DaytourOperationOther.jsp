@@ -239,10 +239,14 @@
                             <tr class="packet">
                                 <td class="pack-date">${table1.master.referenceNo}</td>
                                 <td>${table1.otherDate}</td>
-                                <td class="text-center"> </td>
+                                <td class="text-center"> ${table1.master.customer.firstName}</td>
                                 <td class="text-center">${table1.product.name}</td>
                                 <td class="text-center">${table1.master.MBookingstatus.name}</td>
-                                <td class="text-center"></td>
+                                <td class="text-center">
+                                    <a href="DaytourOperationOther.smi?InputRefNo=${table1.master.referenceNo}&action=search">
+                                        <span class="glyphicon glyphicon-check"></span>
+                                    </a>
+                                </td>
                             </tr>
                         </c:forEach>
                     </tbody>
