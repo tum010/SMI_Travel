@@ -23,27 +23,27 @@ public class SearchPaymentTourHotelController extends SMITravelController {
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String action = request.getParameter("action");
-        String inputFromDate = request.getParameter("inputFromDate");
-        String inputToDate = request.getParameter("inputToDate");
+        String InputFromDate = request.getParameter("InputFromDate");
+        String InputToDate = request.getParameter("InputToDate");
         String selectPvType = request.getParameter("selectPvType");
         String paymentID = request.getParameter("paymentID");
         List<PaymentWendytourView> paymentList = new ArrayList<PaymentWendytourView>();
         
         if("search".equalsIgnoreCase(action)){
-            paymentList = getPaymentTourHotelService().getListPayment(inputFromDate, inputToDate, selectPvType);    
+            paymentList = getPaymentTourHotelService().getListPayment(InputFromDate, InputToDate, selectPvType);    
         } else if ("delete".equalsIgnoreCase(action)) {
             PaymentWendy paymentWendy = new PaymentWendy();
             paymentWendy.setId(paymentID);
             String result = getPaymentTourHotelService().deletePaymentWendy(paymentWendy);
             if ("success".equals(result)) {
-                paymentList = getPaymentTourHotelService().getListPayment(inputFromDate, inputToDate, selectPvType);
+                paymentList = getPaymentTourHotelService().getListPayment(InputFromDate, InputToDate, selectPvType);
             }
         }
         
         request.setAttribute(DATALIST,paymentList);
         request.setAttribute(TYPELIST,getUtilityService().getListMpaymentDocType());
-        request.setAttribute("inputFromDate", inputFromDate);
-        request.setAttribute("inputToDate", inputToDate);
+        request.setAttribute("InputFromDate", InputFromDate);
+        request.setAttribute("InputToDate", InputToDate);
         request.setAttribute("selectPvType", selectPvType);
         return SearchPaymentTourHotel;
     }

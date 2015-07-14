@@ -9,6 +9,8 @@
 <link href="css/selectize.bootstrap3.css" rel="stylesheet">
 <c:set var="dataList" value="${requestScope['payment_list']}" />
 <c:set var="PaymentTypeList" value="${requestScope['payment_type']}" />
+<c:set var="InputFromDate" value="${requestScope['InputFromDate']}" />
+<c:set var="InputToDate" value="${requestScope['InputToDate']}" />
 <section class="content-header" >
     <h1>
         Checking - Search Payment Tour / Hotel
@@ -40,7 +42,7 @@
                     <div class="col-md-2 form-group text-left" style="padding-left:5px">
                         <div class="col-sm-12">
                             <div class='input-group date' style="width:140px;">
-                                <input name="InputFromDate" id="InputFromDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['inputFromDate']}" />
+                                <input name="InputFromDate" id="InputFromDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${InputFromDate}" />
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
@@ -51,7 +53,7 @@
                     <div class="col-md-2 form-group text-left" style="padding-left:5px">
                         <div class="col-sm-12">
                             <div class='input-group date' style="width:140px;">
-                                <input name="InputToDate" id="InputToDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['inputToDate']}" />
+                                <input name="InputToDate" id="InputToDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${InputToDate}" />
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
@@ -99,9 +101,9 @@
                             <th style="width: 20%">PV Type</th>
                             <th style="width: 20%">Invoice Sup</th>
                             <th style="width: 5%">Acc</th>
-                           
+                            <th style="width: 5%">Dept</th>
                             <th style="width: 8%">Total</th>
-                            <th style="width: 5%">Car</th>
+                            <th style="width: 5%">Cur</th>
                             <th style="width: 8%">Status</th>
                             <th style="width: 10%">Action</th>
                         </tr>
