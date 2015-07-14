@@ -74,6 +74,7 @@
                         </div>
                         <div class="col-xs-1" style="width: 200px">
                             <select id="ticketType" name="ticketType" class="form-control selectize" >
+                                <option value="">--- Type ---</option> 
                                 <c:choose>
                                     <c:when test="${requestScope['TicketType'] == 'B'}">
                                         <c:set var="selectedB" value="selected" />
@@ -99,6 +100,7 @@
                         </div>
                         <div class="col-xs-1" style="width: 200px">
                             <select id="ticketRounting" name="ticketRounting" class="form-control selectize">
+                                <option value="">--- Rounting ---</option> 
                                 <c:choose>
                                     <c:when test="${requestScope['TicketRounting'] == 'I'}">
                                         <c:set var="selectedI" value="selected" />
@@ -124,13 +126,14 @@
                         </div> 
                         <div class="col-xs-1" style="width: 200px">
                             <select name="ticketAirline" id="ticketAirline" class="form-control">
+                                <option value="">--- Airline ---</option> 
                                 <c:forEach var="table" items="${airlineList}" >
                                     <c:set var="select" value="" />
                                     <c:set var="selectedId" value="${ticketFare.MAirlineAgent.id}" />
                                     <c:if test="${table.id == selectedId}">
                                         <c:set var="select" value="selected" />
                                     </c:if>
-                                    <option value="${table.id}" ${select}>${table.name}</option> 
+                                    <option value="${table.id}" ${select}>${table.code}</option>  
                                 </c:forEach>
                             </select>
                         </div>
@@ -153,6 +156,7 @@
                         </div>
                         <div class="col-xs-1" style="width: 200px">
                             <select name="ticketBuy" id="ticketBuy" class="form-control">
+                                <option value="">--- Buy ---</option> 
                                  <c:choose>
                                     <c:when test="${requestScope['TicketBuy'] == 'I'}">
                                         <c:set var="selectedC" value="selected" />
@@ -729,7 +733,7 @@ function saveAction() {
     agentReceiveDate.value = $("#agentReceiveDate").val();
     document.getElementById('AddTicketFareForm').submit();
     }else{
-        alert('Not Save -- Duplicate Ticket No ');
+        alert('Ticket no. already exist!');
     }
 }
 function searchTicketNo(ticketNo) {
@@ -754,7 +758,7 @@ function CallAjax(param) {
             data: param,
             success: function(msg) {
                 if(msg == 1) {
-                    alert('Duplicate Ticket No');
+                    alert('Ticket no. already exist!');
                     $("#temp").val('NOTSAVE');
                 }else{
                     $("#temp").val('SAVE');

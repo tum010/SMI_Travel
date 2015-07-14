@@ -87,7 +87,9 @@ public class AddTicketFareController extends SMITravelController {
             mAirlineAgent.setId(ticketAirline);
            
             TicketFareAirline ticketFareAirline = new TicketFareAirline();
-            ticketFareAirline.setMAirlineAgent(mAirlineAgent);
+            if(StringUtils.isNotEmpty(ticketAirline)){
+                ticketFareAirline.setMAirlineAgent(mAirlineAgent);
+            }
             ticketFareAirline.setTicketNo(ticketNo);
             ticketFareAirline.setTicketType(ticketType);
             request.setAttribute(TICKETTYPE, ticketType);

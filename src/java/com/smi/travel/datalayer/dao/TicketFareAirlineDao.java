@@ -9,6 +9,7 @@ package com.smi.travel.datalayer.dao;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.BookingFlight;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
+import com.smi.travel.datalayer.view.entity.TicketFareView;
 import java.util.List;
 
 /**
@@ -24,5 +25,6 @@ public interface TicketFareAirlineDao {
     public List<AirticketPassenger> getListTicketFareFromRefno(String Refno);
     public List<BookingFlight> getListFlightFromTicketNo(String TicketNo);
     public int checkDuplicateTicketNo(String TicketNo);
+    public List<TicketFareView> getListTicketFare(TicketFareView ticket,int option);
 
 }

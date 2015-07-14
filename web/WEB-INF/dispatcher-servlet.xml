@@ -432,7 +432,8 @@
     </bean>
     
     <bean id="SearchTicketFareController" class="com.smi.travel.controller.SearchTicketFareController">
-       
+       <property name="utilityService" ref="UtilityService" />
+       <property name="ticketFareAirlineService" ref="TicketFareAirlineService" />
     </bean>
     <bean id="RefundAirlineController" class="com.smi.travel.controller.RefundAirlineController">
        

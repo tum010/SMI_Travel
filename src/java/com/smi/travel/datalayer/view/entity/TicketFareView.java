@@ -7,126 +7,145 @@
 package com.smi.travel.datalayer.view.entity;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  *
  * @author Surachai
  */
 public class TicketFareView {
-    private String Type;
-    private String Buy;
-    private String Airline;
-    private String TicketNo;
-    private String IssueDate;
-    private String InvoiceNo;
-    private String Department;
-    private BigDecimal Fare;
-    private BigDecimal Tax;
-    private BigDecimal TicketCommission;
-    private BigDecimal AgentCommission;
-    private BigDecimal DiffVat;
+    private String id;
+    private String type;
+    private String buy;
+    private String rounting;
+    private String airline;
+    private String ticketNo;
+    private Date issueDate;
+    private String invoiceNo;
+    private String department;
+    private BigDecimal fare;
+    private BigDecimal tax;
+    private BigDecimal ticketCommission;
+    private BigDecimal agentCommission;
+    private BigDecimal diffVat;
     
     public TicketFareView(){
         
     }
 
-    public String getType() {
-        return Type;
+    public String getId() {
+        return id;
     }
 
-    public void setType(String Type) {
-        this.Type = Type;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getBuy() {
-        return Buy;
+        return buy;
     }
 
-    public void setBuy(String Buy) {
-        this.Buy = Buy;
+    public void setBuy(String buy) {
+        this.buy = buy;
+    }
+
+    public String getRounting() {
+        return rounting;
+    }
+
+    public void setRounting(String rounting) {
+        this.rounting = rounting;
     }
 
     public String getAirline() {
-        return Airline;
+        return airline;
     }
 
-    public void setAirline(String Airline) {
-        this.Airline = Airline;
+    public void setAirline(String airline) {
+        this.airline = airline;
     }
 
     public String getTicketNo() {
-        return TicketNo;
+        return ticketNo;
     }
 
-    public void setTicketNo(String TicketNo) {
-        this.TicketNo = TicketNo;
+    public void setTicketNo(String ticketNo) {
+        this.ticketNo = ticketNo;
     }
 
-    public String getIssueDate() {
-        return IssueDate;
+    public Date getIssueDate() {
+        return issueDate;
     }
 
-    public void setIssueDate(String IssueDate) {
-        this.IssueDate = IssueDate;
+    public void setIssueDate(Date issueDate) {
+        this.issueDate = issueDate;
     }
 
     public String getInvoiceNo() {
-        return InvoiceNo;
+        return invoiceNo;
     }
 
-    public void setInvoiceNo(String InvoiceNo) {
-        this.InvoiceNo = InvoiceNo;
+    public void setInvoiceNo(String invoiceNo) {
+        this.invoiceNo = invoiceNo;
     }
 
     public String getDepartment() {
-        return Department;
+        return department;
     }
 
-    public void setDepartment(String Department) {
-        this.Department = Department;
+    public void setDepartment(String department) {
+        this.department = department;
     }
 
     public BigDecimal getFare() {
-        return Fare;
+        return fare;
     }
 
-    public void setFare(BigDecimal Fare) {
-        this.Fare = Fare;
+    public void setFare(BigDecimal fare) {
+        this.fare = fare;
     }
 
     public BigDecimal getTax() {
-        return Tax;
+        return tax;
     }
 
-    public void setTax(BigDecimal Tax) {
-        this.Tax = Tax;
+    public void setTax(BigDecimal tax) {
+        this.tax = tax;
     }
 
     public BigDecimal getTicketCommission() {
-        return TicketCommission;
+        return ticketCommission;
     }
 
-    public void setTicketCommission(BigDecimal TicketCommission) {
-        this.TicketCommission = TicketCommission;
+    public void setTicketCommission(BigDecimal ticketCommission) {
+        this.ticketCommission = ticketCommission;
     }
 
     public BigDecimal getAgentCommission() {
-        return AgentCommission;
+        return agentCommission;
     }
 
-    public void setAgentCommission(BigDecimal AgentCommission) {
-        this.AgentCommission = AgentCommission;
+    public void setAgentCommission(BigDecimal agentCommission) {
+        this.agentCommission = agentCommission;
     }
 
     public BigDecimal getDiffVat() {
-        return DiffVat;
+        return diffVat;
     }
 
-    public void setDiffVat(BigDecimal DiffVat) {
-        this.DiffVat = DiffVat;
+    public void setDiffVat(BigDecimal diffVat) {
+        this.diffVat = diffVat;
     }
-    
-    
+
+
     
     
     
