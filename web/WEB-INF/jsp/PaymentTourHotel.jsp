@@ -13,6 +13,8 @@
 <c:set var="APcode_list" value="${requestScope['APcode_list']}" />
 <c:set var="payment_list" value="${requestScope['payment_list']}" />
 <c:set var="paymentHotel_list" value="${requestScope['paymentHotel_list']}" />
+<c:set var="product_list" value="${requestScope['product_list']}" />
+<c:set var="currency_list" value="${requestScope['currency_list']}" />
 
 <section class="content-header" >
     <h1>
@@ -29,6 +31,7 @@
         <div ng-include="'WebContent/Checking/CheckingPackageTourHotel.html'"></div>
     </div>
     <!--Content -->
+    <form action="PaymentTourHotel.smi" method="post" id="PaymentTourHotelForm" autocomplete="off" role="form">
     <div class="col-sm-10">
         <div class="row" style="padding-left: 15px">  
             <div class="col-sm-6" style="padding-right: 15px">
@@ -36,6 +39,7 @@
             </div>
         </div>
         <hr/>
+        
         <!--Row 1 -->
         <div class="row" style="padding-left: 15px">
             <div class="col-xs-12 ">
@@ -53,10 +57,10 @@
                 </div>
                 <div class="col-md-3  text-left" style="padding-top : 5px;padding-left:0px;padding-right:0px;">
                     <div class="col-sm-6" text-left>
-                        <input type="radio" name="account1"  id="account1" value="account1" /> &nbsp;account(1)
+                        <input type="radio" name="account"  id="account1" value="account1" /> &nbsp;account(1)
                     </div>
                     <div class="col-sm-6" text-left>
-                        <input type="radio" name="account1"  id="account2" value="account2" />&nbsp;account(2)
+                        <input type="radio" name="account"  id="account2" value="account2" />&nbsp;account(2)
                     </div>
                 </div>
             </div>
@@ -176,6 +180,7 @@
                 </div>
             </div>
         </div>
+       
         <!-- Table -->
         <div class="row" >
             <div class="col-12" style="width:1035px;padding-left:15px;">
@@ -195,36 +200,35 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="table" items="${paymentHotel_list}" varStatus="Counter">
+                        <c:forEach var="pl" items="${paymentHotel_list}" varStatus="i">
                             <tr>
-                                <td class="hidden"> <input  type="hidden"  value="${table.id}">  </td>
-                                <td> 
-                                    <select class="form-control" id="row-${Counter.count}-product" name="row-${Counter.count}-product">
-                                        <option value="">--</option>                                 
-                                        <option value="1">test 1</option>                                   
-                                        <option value="2">test 2</option>
-                                    </select>                                 
-                                </td>
-                                <td> <input style="width: ${RefNo}" id="row-${Counter.count}-refNo" name="row-${Counter.count}-refNo" maxlength ="10"  type="text" class="form-control" value="${table.description}"> </td>
-                                <td> <input style="width: ${InvNo}" id="row-${Counter.count}-invNo" name="row-${Counter.count}-invNo" maxlength ="15"  type="text" class="form-control" value="${table.description}">  </td>
-                                <td> <input style="width: ${Code}" id="row-${Counter.count}-code" name="row-${Counter.count}-code" maxlength ="15"  type="text" class="form-control" value="${table.description}">  </td>
                                 <td>
-                                    <input type="radio" name="row-${Counter.count}-type" id="row-${Counter.count}-typeT" value="T" checked=""> T&nbsp;
-                                    <input type="radio" name="row-${Counter.count}-type" id="row-${Counter.count}-typeC" value="C" > C
+                                    <select class="form-control" name="select-product${i.count}" id="select-product${i.count}">
+                                    <c:forEach var="product" items="${product_list}" varStatus="status">                                
+                                        <option  value="${product.id}">${product.name}</option>
+                                    </c:forEach>
+                                    </select>                                                                  
                                 </td>
-                                <td> <input style="width: ${Amount}" id="row-${Counter.count}-amount" name="row-${Counter.count}-amount" maxlength ="15"  type="text" class="form-control" value="${table.description}"> </td>
+                                <td> <input style="width: ${RefNo}" id="refNo${i.count}" name="refNo${i.count}" maxlength ="10"  type="text" class="form-control" value=""> </td>
+                                <td> <input style="width: ${InvNo}" id="invNo${i.count}" name="invNo${i.count}" maxlength ="15"  type="text" class="form-control" value="">  </td>
+                                <td> <input style="width: ${Code}" id="code${i.count}" name="code${i.count}" maxlength ="15"  type="text" class="form-control" value="">  </td>
+                                <td>
+                                    <input type="radio" name="type${i.count}" id="row-${i.count}-typeT" value="T" checked=""> T&nbsp;
+                                    <input type="radio" name="type${i.count}" id="row-${i.count}-typeC" value="C" > C
+                                </td>
+                                <td> <input style="width: ${Amount}" id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control" value=""> </td>
                                 <td> 
-                                    <select class="form-control" id="row-${Counter.count}-cur" name="row-${Counter.count}-cur">
-                                        <option value="">--</option>                                 
-                                        <option value="1">test 1</option>                                   
-                                        <option value="2">test 2</option>
+                                    <select class="form-control" id="select_currency${i.count}" name="select_currency${i.count}">
+                                        <c:forEach var="currency" items="${currency_list}" varStatus="status">                                
+                                        <option  value="${currency.id}">${currency.code}</option>
+                                        </c:forEach>
                                     </select>                                 
                                 </td>
-                                <td> <input style="width: ${Description}" id="row-${Counter.count}-description" name="row-${Counter.count}-description" maxlength ="255"  type="text" class="form-control" value="${table.description}"> </td>
-                                <td> <input style="width: ${AC}" id="row-${Counter.count}-ac" name="row-${Counter.count}-ac" maxlength ="15"  type="text" class="form-control" value="${table.description}"> </td>
+                                <td> <input style="width: ${Description}" id="description${i.count}" name="description${i.count}" maxlength ="255"  type="text" class="form-control" value="${table.description}"> </td>
+                                <td> <input style="width: ${AC}" id="ac${i.count}" name="ac${i.count}" maxlength ="15"  type="text" class="form-control" value="${table.description}"> </td>
                                 <td class="text-center">
                                     
-                                        <a class="remCF"><span  onclick="deletelist('${table.id}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
+                                        <a class="remCF"><span id="SpanRemove${i.count}" onclick="deletelist('${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
                                    
                                     <c:if test="${lockUnlockBooking == 1}">
                                         <span class="glyphicon glyphicon-remove deleteicon" ></span>
@@ -234,6 +238,8 @@
                         </c:forEach> 
                     </tbody>
                 </table>
+                <input type="text"  id="counter" name="counter" value="${paymenthotelcount}" />
+                <input type="hidden"  id="productList_id" name="productList_id" />
             </div>
         </div><!--End Table --><br>
         <!-- Table Content -->
@@ -251,7 +257,7 @@
                         <label class="control-label">Grand Total</lable>
                     </div>
                     <div class="col-md-2 form-group text-left">
-                        <input name="InputGrandTotal" id="InputGrandTotal" type="text" class="form-control" value="" readonly=""/>            
+                        <input name="InputGrandTotal" id="InputGrandTotal" type="text" class="form-control money" value="" readonly=""/>            
                     </div>
                 </div>
                 <!--Row 1.2 -->
@@ -260,7 +266,7 @@
                         <label class="control-label">Cash</lable>
                     </div>
                     <div class="col-md-2 form-group text-left">
-                        <input name="InputCash" id="InputCash" type="text" class="form-control" value="" />           
+                        <input name="InputCash" id="InputCash" type="text" class="form-control money number" value="" />           
                     </div>
                 </div>
                 <!--Row 1.3 -->
@@ -269,13 +275,13 @@
                         <label class="control-label">Chq No</lable>
                     </div>
                     <div class="col-md-2 form-group text-left">
-                        <input name="InputChqNo" id="InputChqNo" type="text" class="form-control" value="" />             
+                        <input maxlength="20" name="InputChqNo" id="InputChqNo" type="text" class="form-control" value="" />             
                     </div>
                     <div class="col-xs-3 text-right">
                         <label class="control-label">Chq Amount</lable>
                     </div>
                     <div class="col-md-2 form-group text-left">
-                        <input name="InputChqAmount" id="InputChqAmount" type="text" class="form-control" value="" />           
+                        <input name="InputChqAmount" id="InputChqAmount" type="text" class="form-control money number" value="" />           
                     </div>
                     
                 </div>
@@ -284,18 +290,33 @@
         <!--Button -->
         <div class="row text-center" >
             <div class="col-xs-6 text-right">
-                <button type="submit" id="ButtonSave" name="ButtonSave" class="btn btn-success">
+                <button type="submit" id="btnSave" name="btnSave" class="btn btn-success" onclick="">
                     <i class="fa fa-save"></i> Save             
                 </button>
             </div>
             <div class="col-xs-6 text-left">
-                <a id="ButtonNew" name="ButtonNew" onclick="" class="btn btn-primary">
+                <button type="submit" id="btnNew" name="btnNew" onclick="" class="btn btn-primary">
                     <i class="glyphicon glyphicon-plus"></i> New
-                </a>
+                </button>
             </div>                         
         </div><!--End Button -->
     </div>
+    <input type="hidden" name="action" id="action" value="add" class="form-control" >            
+    </form>
 </div>
+            
+<select class="hidden" name="select_product_list" id="select_product_list">
+    <c:forEach var="product" items="${product_list}" varStatus="status">                                
+        <option  value="${product.id}">${product.name}</option>
+    </c:forEach>
+</select> 
+
+<select class="hidden" name="select_currency_list" id="select_currency_list">
+    <c:forEach var="currency" items="${currency_list}" varStatus="status">                                
+        <option  value="${currency.id}">${currency.code}</option>
+    </c:forEach>
+</select> 
+               
 <!--Delete Payment Outbound Modal-->
 <div class="modal fade" id="delSearchPaymentTourHotelModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
@@ -386,6 +407,27 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal-dialog -->
+
+<!--DELETE MODAL-->
+<div class="modal fade" id="DeleteProduct" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Master Package Detail</h4>
+            </div>
+            <div class="modal-body" id="delProduct">
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" onclick="DeleteRowProduct()" class="btn btn-danger">Delete</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <input type="text" name="productCountDel" id="productCountDel">
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
 <script type="text/javascript">
     $(document).ready(function () {
         $('.date').datetimepicker();
@@ -410,7 +452,80 @@
             "bLengthChange": false,
             "iDisplayLength": 10
             });
+                  
+        $('#PaymentHotelTable tbody tr:last td .input-group-addon').click(function() {  
+            AddRow(parseInt($("#counter").val()));
         });
+        
+        $("#PaymentHotelTable").on("keyup", function() {
+            var rowAll = $("#PaymentHotelTable tr").length;
+            $("td").keyup(function() {
+                if ($(this).find("input").val() != '') {
+                    var colIndex = $(this).parent().children().index($(this));
+                    var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
+                    rowAll = $("#PaymentHotelTable tr").length;
+                    //console.log('Row: ' + rowIndex + ', Column: ' + colIndex + ', All Row ' + rowAll);
+                    if (rowIndex == rowAll) {
+                        AddRow(parseInt($("#counter").val()));
+                    }
+                    if (rowAll < 2) {
+                        $("#tr_ItineraryAddRow").removeClass("hide");
+                        $("#tr_ItineraryAddRow").addClass("show");
+                    }
+                 }
+            });
+        });
+   
+        $(".money").mask('000,000,000,000,000,000', {reverse: true});
+        
+        $('#PaymentTourHotelForm').bootstrapValidator({
+            container: 'tooltip',
+            excluded: [':disabled', ':hidden', ':not(:visible)'],
+            feedbackIcons: {
+                valid: 'uk-icon-check',
+                invalid: 'uk-icon-times',
+                validating: 'uk-icon-refresh'
+            },
+            fields: {
+                InputInvoiceSupCode: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Invoice Sup is required'
+                        }
+                    }
+                },
+                InputAPCode: {
+                    validators: {
+                        notEmpty: {
+                            message: 'A/P Code is required'
+                        }
+                    }
+                },
+                itemStatus: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Status is required'
+                        }
+                    }
+                },
+                account: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Account is required'
+                        }
+                    }
+                }           
+        }
+        });
+        
+        $("#PaymentHotelTable").on("change", "select:last", function () {
+            var row = parseInt($("#counter").val());
+            AddRow(row);
+        });
+        
+     
+
+    });
     
     function setupInvSupValue(id,code,name,apcode){
         $('#SearchInvoiceSup').modal('hide');
@@ -419,8 +534,107 @@
         document.getElementById('InputInvoiceSupName').value = name;
         document.getElementById('InputAPCode').value = apcode;
         document.getElementById('InputInvoiceSupCode').focus();
-        //$('#landForm').bootstrapValidator('revalidateField', 'agent_code');
+        $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputInvoiceSupCode');
     }
     
+    AddRow(parseInt($("#counter").val()));
+                  
+    function AddRow(row) {
+        $("#PaymentHotelTable tbody").append(
+                '<tr style="higth 100px">' +
+                '<td>' + 
+                '<select class="form-control" name="select-product' + row + '" id="select-product' + row + '" ><option value="">- - Product - -</option></select>' +                          
+                '</td>' +
+                '<td><input maxlength ="10" id="refNo' + row + '" name="refNo' + row + '"   type="text" class="form-control "></td>' +
+                '<td><input maxlength ="15" id="invNo' + row + '" name="invNo' + row + '"   type="text" class="form-control "></td>' +
+                '<td><input maxlength ="15" id="code' + row + '" name="code' + row + '"   type="text" class="form-control "></td>' +
+                '<td>' +
+                '<input type="radio" name="type' + row + '" id="typeT' + row + '" value="T" checked=""> T' +
+                '<input type="radio" name="type' + row + '" id="typeC' +row + '" value="C" > C' +
+                '</td>' +
+                '<td><input class="money" id="amount' + row + '" name="amount' + row + '"   type="text" ></td>' +
+                '<td>' + 
+                '<select class="form-control" id="select-currency' + row + '" name="select-currency' + row + '"><option value="">- - Currency - -</option></select>' +                                 
+                '</td>' +
+                '<td><input class="form-control" maxlength="255" style="width: ${DescriptionSize}" id="description' + row + '" name="description' + row + '" rows="2" ></td>' +
+                '<td><input id="ac' + row + '" name="ac' + row + '"   type="text" class="form-control "></td>' +
+                '<td class="text-center">' +
+                '<a class="remCF" onclick="deletelist(\''+row+'\')">  '+
+                '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
+                '</tr>'
+        );
+        $("#select_product_list option").clone().appendTo("#select-product" + row);
+        $("#select_currency_list option").clone().appendTo("#select-currency" + row);
+        var tempCount = parseInt($("#counter").val()) + 1;
+        $("#counter").val(tempCount);
+        CalculateGrandTotal(row);
+      
+    }
     
+    function CalculateGrandTotal(row){
+        var i;
+        var result =0;
+        for(i=0;i<row;i++){
+            var amount = document.getElementById("amount" + i);
+            
+            if (amount !== null){
+                var value = amount.value; 
+                value = value.replace(/,/g,"");
+                var total = parseInt(value);
+                result += total;
+
+            }    
+        }
+        document.getElementById('InputGrandTotal').value = result;
+        
+    }    
+    
+    function AddRowFromValue(no,hour,description) {
+        row = parseInt($("#counter").val());
+        $("#PaymentHotelTable tbody").append(
+                '<tr style="higth 100px">' +
+                '<td class="hidden"> <input id="row-' + row + '-id" name="row-' + row + '-id"  type="hidden" >  </td>' +
+                '<td><select class="form-control" id="row-' + row + '-product" name="row-' + row + '-product">' +
+                '<option value="">--</option>' +                                 
+                '<option value="1">test 1</option>' +                                   
+                '<option value="2">test 2</option>' +
+                '</select>' +                                 
+                '</td>' +
+                '<td><input style="width: 20px" id="row-' + row + '-no" name="row-' + row + '-no"   type="text" class="form-control number" value="'+no+'" ></td>' +
+                '<td><div class="input-group daydatepicker" id="daydatepicker-' + row + '" style="padding-left: 15px">'+
+                '<input style="width: 100px" type="text" class="form-control"  id="row-' + row + '-date" name="row-' + row + '-date" data-date-format="YYYY-MM-DD" />'+
+                '<span class="input-group-addon">' +                                               
+                '<i class="glyphicon glyphicon-calendar"></i></span></div></td>' +
+                '<td><input style="width: 80px" type="text" id="row-' + row + '-hour" name="row-' + row + '-hour" class="form-control time" placeholder="HH:MM" value="'+hour+'" ></td>' +
+                '<td><input   class="form-control" maxlength="255" style="width: ${DescriptionSize}" id="row-' + row + '-des" name="row-' + row + '-des" rows="2" value="'+description+'" ></td>' +
+                '<td class="text-center">' +
+                '<a class="remCF" onclick="deletelist(\'\', \''+row+'\')">  '+
+                '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
+                '</tr>'
+                );
+                var tempCount = parseInt($("#counter").val()) + 1;
+        $("#counter").val(tempCount);
+        reloadDatePicker()
+    }
+    
+    function deletelist(Ccount) {
+        
+        $("#cCount").val(Ccount);
+        document.getElementById('productCountDel').value = Ccount;
+        $("#delProduct").text('Are you sure delete this product ?'+ Ccount);
+        $('#DeleteProduct').modal('show');
+    }
+    
+    function DeleteRowProduct(){
+        var cCount = document.getElementById('productCountDel').value;
+        
+            $("#select-product" + cCount).parent().parent().remove();
+            var rowAll = $("#PaymentHotelTable tr").length;
+            if (rowAll <= 2) {
+                $("#tr_PackagePriceAddRow").removeClass("hide");
+                $("#tr_PackagePriceAddRow").addClass("show");
+            }        
+        $('#DeleteProduct').modal('hide');
+    }
+   
 </script>
