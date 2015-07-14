@@ -108,38 +108,39 @@
                     <table id="RefundAirlineList" class="display" cellspacing="0" width="100%">
                         <thead>
                             <tr class="datatable-header" >
-                                <th style="width:5%;">No</th>
+                                
                                 <th style="width:10%;">Ticket No</th>
-                                <th style="width:10%;">Issue Date</th>
-                                <th style="width:10%;">Department</th>
+                                <th style="width:8%;">Ticket Date</th>
+                                <th style="width:5%;">Dept.</th>
                                 <th style="width:10%;">Passenger</th>
                                 <th style="width:10%;">Sector Issue</th>
                                 <th style="width:10%;">Sector Refund</th>
+                                <th style="width:5%;">Total</th>
                                 <th style="width:7%;">Receive</th>
                                 <th style="width:7%;">Pay</th>
                                 <th style="width:7%;">Profit</th>
                                 <th style="width:7%;">Com</th>
-                                <th style="width:10%;">Action</th>
+                                <th style="width:8%;">Date</th>
+                                <th style="width:5%;">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                               <%--<c:forEach var="refundAirline" items="${refundAirlineList}" varStatus="varRefundAirline">--%>
                             <tr>
-                                <td style="text-align:center">1</td>
+                                
                                 <td style="text-align:center">12345678321</td>
                                 <td style="text-align:center">2015-01-01</td>
-                                <td style="text-align:center">Wendy</td>
+                                <td style="text-align:center">W</td>
                                 <td style="text-align:center">Jittima S.</td>
                                 <td style="text-align:center">BKK-ARM-BKK</td>
                                 <td style="text-align:center">ARM-BKK</td>
+                                <td style="text-align:center">2500</td>
                                 <td style="text-align:center">2300</td>
                                 <td style="text-align:center">100</td>
                                 <td style="text-align:center">500</td>
                                 <td style="text-align:center">300</td>
+                                <td style="text-align:center">2015-01-01</td>
                                 <td class="text-center">
-                                    <a id="ButtonEdit${varRefundAirline.count}" href="">
-                                        <i id="IEdit${varRefundAirline.count}" class="glyphicon glyphicon-edit editicon"></i>
-                                    </a>
                                     <a id="ButtonRemove${varRefundAirline.count}" data-toggle="modal" data-target="#DeleteRefundAirline" onclick="">
                                         <i id="IRemove${varRefundAirline.count}" class="glyphicon glyphicon-remove deleteicon"></i>
                                     </a>
