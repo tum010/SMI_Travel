@@ -74,9 +74,11 @@ public class SearchStockController extends SMITravelController {
             StockViewSummary stockDataDetail = stockService.searchStockDetail(stockId, status);
             
             if(stockDataDetail != null){
-                 request.setAttribute("stockDetail", stockDataDetail);
+                System.out.println("set summary");
+                 request.setAttribute("stockSummary", stockDataDetail);
+                 request.setAttribute("stockSumDetail", stockDataDetail.getItemList());
             }else{
-                request.setAttribute("stockDetail", null);
+                request.setAttribute("stockSummary", null);
             }
             // Data Before Search
             Stock stock = new Stock();
@@ -108,7 +110,7 @@ public class SearchStockController extends SMITravelController {
             
         }else{
             request.setAttribute("listStock", null);
-            request.setAttribute("stockDetail", null);
+            request.setAttribute("stockSummary", null);
         }
             
         return SearchStock;
