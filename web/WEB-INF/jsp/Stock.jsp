@@ -93,7 +93,7 @@
                 <div class="row" >
                     <div class="col-xs-12 ">
                         <div class="col-xs-2 text-right" style="width: 140px;">
-                            <label class="control-label">Effective From<font style="color: red">*</font></lable>
+                            <label class="control-label">Effective From</lable>
                         </div>
                         <div class="col-md-3 form-group text-left" style="width: 170px;padding-left: 3px;" >
                             <div class='input-group date' id="DateFrom">
@@ -103,7 +103,7 @@
                             </div>
                         </div>
                         <div class="col-xs-3 text-right" style="width: 285px;">
-                            <label class="control-label">Effective To<font style="color: red">*</font></lable>
+                            <label class="control-label">Effective To</lable>
                         </div>
                         <div class="col-md-3 form-group text-left" style="padding-left: 6px;width: 170px;" >
                             <div class='input-group date' id="DateTo">
