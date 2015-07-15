@@ -14,7 +14,7 @@
 		<li class="active"><a href="#">Define Variable</a></li>
 	</ol>
 </section>
-<div class="container" style="padding-top: 15px; padding-left: 5px;" ng-app="">
+<div class="container" style="padding-top: 15px; padding-left: 5px;">
 	<div class="row">
 		<c:choose>
 			<c:when test="${result == 'saved'}">
@@ -78,7 +78,7 @@
 						<div class="col-xs-4 text-right"></div>
 						<div class="col-xs-4 text-right" style="width: 100px;">
 							<input type="hidden" name="temp" id="temp" value="1"> <input type="hidden" name="action" id="action" value="">
-							<button type="button" id="ButtonSave" name="ButtonSave" onclick="saveAction();" class="btn btn-success">
+							<button type="submit" id="ButtonSave" name="ButtonSave" onclick="saveAction();" class="btn btn-success">
 								<i class="fa fa-save"></i> Save
 							</button>
 						</div>
@@ -92,7 +92,8 @@
 </div>
 <script>
 	function saveAction() {
-		$('#DefineVarForm').attr('action', 'Save');
+		console.log('Save action');
+		$('#action').val('Save');
 		$('#DefineVarForm').submit();
 	}
 
