@@ -454,7 +454,6 @@
     $(document).ready(function () {
         var cout = document.getElementById('counterTable');
         var type  = document.getElementById('Selecttype');
-//                            alert("cout :"+ cout.value);
         <c:forEach var="type" items="${getType}">
             select += "<option value='${type.name}'><c:out value='${type.name}' /></option>";
         </c:forEach>
