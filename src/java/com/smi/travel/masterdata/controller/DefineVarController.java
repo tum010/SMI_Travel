@@ -19,7 +19,6 @@ public class DefineVarController extends SMITravelController {
 	private static final ModelAndView DefineVar = new ModelAndView("DefineVar");
 	private static final ModelAndView DefineVar_REFRESH = new ModelAndView(new RedirectView("DefineVar.smi", true));
 
-	
 	private DefineVarService defineVarService;
 
 	@Override
@@ -43,10 +42,12 @@ public class DefineVarController extends SMITravelController {
 			form.put("withholdingtax", withholdingTaxm.getValue());
 			if("1".equals(defineVarService.saveVariable(list))){
 				//success
+				request.setAttribute("result", "saved");
 			}else{
 				//fail
+				request.setAttribute("result", "fail");
 			}
-			return DefineVar_REFRESH;
+			return DefineVar;
 		} else {
 			List<MDefaultData> list = defineVarService.getListDefaultData();
 			for(MDefaultData data: list){
@@ -54,13 +55,9 @@ public class DefineVarController extends SMITravelController {
 			}
 			return DefineVar;
 		}
-
 	}
-
 	
-
 	public  void setDefineVarService(final DefineVarService defineVarService) {
 		this.defineVarService = defineVarService;
 	}
-
 }
