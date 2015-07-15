@@ -249,4 +249,30 @@ public class StockImpl implements StockDao{
         return stock;
     }
 
+    @Override
+    public List<Stock> searchStock(String productId, Date createDate, Date EffecttiveFrom, Date EffectiveTo) {
+        Session session = this.sessionFactory.openSession();
+        String query = "FROM Stock st where" ;
+        
+        if ( productId != null && (!"".equalsIgnoreCase(productId)) ) {
+            query += " st.product.id = " + productId;
+        }
+       
+        if (createDate != null ) {
+            query += " and st.createDate = '" + createDate + "'";
+        }
+        
+        if (EffecttiveFrom != null ) {
+            query += " and st.effectiveFrom = '" + EffecttiveFrom + "'";
+        }
+        
+        if (EffectiveTo != null ) {
+            query += " and st.effectiveTo = '" + EffectiveTo + "'";
+        }
+        
+        System.out.println("query : " + query);
+        List<Stock> list = session.createQuery(query).list();
+        return list;
+    }
+
 }
