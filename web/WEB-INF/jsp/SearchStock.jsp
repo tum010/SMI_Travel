@@ -7,7 +7,9 @@
 <c:set var="listStock" value="${requestScope['listStock']}" />
 <c:set var="listStockDetail" value="${requestScope['listStockDetail']}" />
 <c:set var="stockClass" value="${requestScope['stock']}" />
-<c:set var="stockDetail" value="${requestScope['stockDetail']}" />
+<c:set var="stockSum" value="${requestScope['stockSummary']}" />
+<c:set var="stockSumDetail" value="${requestScope['stockSumDetail']}" />
+
 <section class="content-header" >
     <h1>
         Master Stock
@@ -219,15 +221,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="sd" items="${stockDetail}" >
-                        <tr>
-                            <td>${sd.NumOfItem}</td>
-                            <td>${sd.Normal}</td>
-                            <td>${sd.Cancel}</td>                                
-                            <td>${sd.Bill}</td>
-                            <td>${sd.Inuse}</td>                
-                        </tr>
-                        </c:forEach>
+                            <td>${stockSum.numOfItem}</td>
+                            <td>${stockSum.normal}</td>
+                            <td>${stockSum.cancel}</td>
+                            <td>${stockSum.bill}</td>
+                            <td>${stockSum.inuse}</td>
                     </tbody>
                 </table><br>       
                 <table class="display" id="ItemListTable">
@@ -242,16 +240,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <%--<c:forEach var="stockDe" items="${stockDetail.ItemList}" varStatus="num1">--%>
-<!--                        <tr>
+                        <c:forEach var="stockDetail" items="${stockSum.itemList}" varStatus="num1">
+                        <tr>
                             <td>${num1.count}</td>
-                            <td></td>
-                            <td>${stockDe.ItemList.RefNo}</td>                                
-                            <td>${stockDe.ItemList.Pickup}</td>
-                            <td>${stockDe.ItemList.PayStatusName}</td>
-                            <td>${stockDe.ItemList.ItemStatus}</td>                            
-                        </tr>-->
-                        <%--</c:forEach>--%>
+                            <td>${stockDetail.code}</td>
+                            <td>${stockDetail.refNo}</td>                                
+                            <td>${stockDetail.pickup}</td>
+                            <td>${stockDetail.payStatusName}</td>
+                            <td>${stockDetail.itemStatus}</td>                            
+                        </tr>
+                        </c:forEach>
                     </tbody>
                 </table>           
             </div>
@@ -363,7 +361,10 @@
                             }); //end each productCode
                         }); // end InputproductCode keyup
                     }); // end AutoComplete productCode
-                });               
+                });        
+      
+                
+                
             </script>
             <div class="modal-footer">
                 <button id="SearchProductOK" name="SearchProductOK" type="button"  class="btn btn-success" data-dismiss="modal">OK</button>
