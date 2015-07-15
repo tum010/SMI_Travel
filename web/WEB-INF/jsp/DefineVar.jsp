@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript" src="js/DefineVar.js"></script>
+<!--  script type="text/javascript" src="js/DefineVar.js"></script>-->
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -92,21 +92,46 @@
 </div>
 <script>
 	function saveAction() {
-
-		if ($("#vat").val() === "") {
-			alert("please input vat ! ");
-			return;
-		} else if ($("#bankChart").val() === "") {
-			alert("please input bankChart ! ");
-			return;
-		} else if ($("#withholdingTax").val() === "") {
-			alert("please input withholdingTax ! ");
-			return;
-		}
-
-		var form = document.getElementById('DefineVarForm');
-		var action = document.getElementById('action');
-		action.value = 'Save';
-		form.submit();
+		$('#DefineVarForm').attr('action', 'Save');
+		$('#DefineVarForm').submit();
 	}
+
+	$(function() {
+		$('#DefineVarForm').bootstrapValidator({
+			container : 'tooltip',
+			excluded : [ ':disabled' ],
+			feedbackIcons : {
+				valid : 'uk-icon-check',
+				invalid : 'uk-icon-times',
+				validating : 'uk-icon-refresh'
+			},
+			fields : {
+				vat : {
+					validators : {
+						notEmpty : {
+							message : 'Vat is required'
+						}
+					}
+				},
+				bankChart : {
+					validators : {
+						notEmpty : {
+							message : 'Bank Chart is required'
+						}
+					}
+				},
+				withholdingTax : {
+					validators : {
+						notEmpty : {
+							message : 'Withholding Tax is required'
+						}
+					}
+				}
+			}
+		}).on('success.field.bv', function(e, data) {
+			if (data.bv.isValid()) {
+				data.bv.disableSubmitButtons(false);
+			}
+		});
+	});
 </script>
