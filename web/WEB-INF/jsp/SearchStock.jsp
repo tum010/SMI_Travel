@@ -219,13 +219,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="std" items="${stockDetail}" varStatus="num">
+                        <c:forEach var="sd" items="${stockDetail}" >
                         <tr>
-                            <td>${std.NumOfItem}</td>
-                            <td>${std.Normal}</td>
-                            <td>${std.Cancel}</td>                                
-                            <td>${std.Bill}</td>
-                            <td>${std.Inuse}</td>                
+                            <td>${sd.NumOfItem}</td>
+                            <td>${sd.Normal}</td>
+                            <td>${sd.Cancel}</td>                                
+                            <td>${sd.Bill}</td>
+                            <td>${sd.Inuse}</td>                
                         </tr>
                         </c:forEach>
                     </tbody>
