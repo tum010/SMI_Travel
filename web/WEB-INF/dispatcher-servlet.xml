@@ -485,7 +485,9 @@
        <property name="utilityService" ref="UtilityService" />
     </bean>
     <bean id="SearchStockController" class="com.smi.travel.controller.SearchStockController">
-     
+        <property name="stockService" ref="StockService" /> 
+        <property name="mStaffService" ref="MStaffService" />
+        <property name="utilityService" ref="UtilityService" />
     </bean>
     <bean id="DefineVarController" class="com.smi.travel.masterdata.controller.DefineVarController">
         <property name="defineVarService" ref="DefineVarService"></property>

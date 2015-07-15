@@ -123,6 +123,16 @@ public class StockController extends SMITravelController {
                     isSave = "fail";
                 }
                 request.setAttribute("result", isSave);
+        }else if("edit".equals(action)){
+            String stockId = request.getParameter("InputStockId");
+            Stock stockData = stockService.getStock(stockId);         
+            List<StockDetail> listStockDetail = stockService.checkStockDetail(stockId);
+            
+            request.setAttribute("listStockDetail", listStockDetail);
+            request.setAttribute("stockData", stockData);
+            request.setAttribute("FromDate", stockData.getEffectiveFrom());
+            request.setAttribute("ToDate", stockData.getEffectiveTo());
+            request.setAttribute("CreateDate", stockData.getCreateDate());
         }
         
         return Stock;

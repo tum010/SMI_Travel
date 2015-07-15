@@ -7,6 +7,7 @@
 package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.StockDao;
+import com.smi.travel.datalayer.entity.MStockStatus;
 import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.datalayer.entity.Stock;
 import com.smi.travel.datalayer.entity.StockDetail;
@@ -171,23 +172,41 @@ public class StockImpl implements StockDao{
         System.out.println("query : " + query);
         List<StockDetail> list = session.createQuery(query).list();
         // Set Value In StockViewSummary >>>>>>>>>> Map
-        
+        session.close();
+        this.sessionFactory.close();
         return stockViewSummary;
     }
     
-   private StockViewSummary mappingStockViewSummary(Stock stockData){
+   private StockViewSummary mappingStockViewSummary(List<StockDetail> stockDataList){
         StockViewSummary stockview = new StockViewSummary();
         UtilityFunction util = new UtilityFunction();
+        if(stockDataList == null){
+            return null;
+        }
+        Stock stockData = stockDataList.get(0).getStock();
+        int SumNormal = 0;
+        int SumCancel = 0;
+        int SumInuse =0;
+        for(int i=0;i<stockDataList.size();i++){
+            MStockStatus status =  stockDataList.get(i).getMStockStatus();
+            if("1".equalsIgnoreCase(status.getId())){
+                SumNormal += 1;
+            }else if("2".equalsIgnoreCase(status.getId())){
+                SumInuse += 1;
+            }else if("3".equalsIgnoreCase(status.getId())){
+                SumCancel +=1;
+            }
+        }
         stockview.setId(stockData.getId());
         stockview.setAdddate(util.convertDateToString(stockData.getCreateDate()));
         stockview.setEffectiveDateFrom(util.convertDateToString(stockData.getEffectiveFrom()));
         stockview.setEffectiveDateTo(util.convertDateToString(stockData.getEffectiveTo()));
-        stockview.setNormal(0);
+        stockview.setNormal(SumNormal);
         stockview.setNumOfItem(stockData.getStockDetails().size());
         stockview.setProductName(stockData.getProduct().getName());
         stockview.setStaff(stockData.getStaff().getUsername());
-        stockview.setCancel(0);
-        stockview.setInuse(0);
+        stockview.setCancel(SumCancel);
+        stockview.setInuse(SumInuse);
         stockview.setItemList(mappingStockView(stockData.getStockDetails()));
         return stockview;
     }
@@ -201,9 +220,12 @@ public class StockImpl implements StockDao{
             StockView stock = new StockView();
             StockDetail detail = Listdetail.get(i);
             stock.setCode(detail.getCode());
-            stock.setRefNo(detail.getOtherBooking().getMaster().getReferenceNo());
-            stock.setItemStatus(detail.getMStockStatus().getName());
-            stock.setPickup(detail.getOtherBooking().getMaster().getCreateBy());
+            if(detail.getOtherBooking() != null){
+                stock.setRefNo(detail.getOtherBooking().getMaster().getReferenceNo());
+                stock.setPickup(detail.getOtherBooking().getMaster().getCreateBy());
+            }
+            
+            stock.setItemStatus(detail.getMStockStatus().getName());          
             stock.setPickupDate(util.convertDateToString(detail.getPickupDate()));
             stock.setPayStatusName(String.valueOf(detail.getPayStatus()));
             StockList.add(stock);
@@ -230,6 +252,7 @@ public class StockImpl implements StockDao{
         if (stockDetailList.isEmpty()) {
             return null;
         }
+       
         return stockDetailList;
     }
 
@@ -241,6 +264,7 @@ public class StockImpl implements StockDao{
         if (productList.isEmpty()) {
             return null;
         }
+
         return productList;
     }
 
@@ -259,6 +283,7 @@ public class StockImpl implements StockDao{
         if (!stockNew.isEmpty()) {
                stockId = stockNew.get(0).getId();
         }
+
         return stockId;
     }
 
@@ -279,6 +304,7 @@ public class StockImpl implements StockDao{
             stock.setDescription(stockList.get(0).getDescription());
             stock.setStockDetails(stockList.get(0).getStockDetails());
         }
+
         return stock;
     }
 
@@ -305,7 +331,30 @@ public class StockImpl implements StockDao{
         
         System.out.println("query : " + query);
         List<Stock> list = session.createQuery(query).list();
+
         return list;
+    }
+
+    @Override
+    public StockViewSummary searchStockDetail(String productId, String payStatus) {
+        StockViewSummary stockview = new StockViewSummary();
+        Session session = this.sessionFactory.openSession();
+        String query = "FROM StockDetail st where" ;
+        
+        if ( productId != null && (!"".equalsIgnoreCase(productId)) ) {
+            query += " st.stock.id = " + productId;
+        }
+       
+        if (payStatus != null ) {
+            query += " and st.payStatus = '" + payStatus + "'";
+        }
+        
+        System.out.println("query : " + query);
+        List<StockDetail> list = session.createQuery(query).list();
+        stockview = mappingStockViewSummary(list);
+        session.close();
+        this.sessionFactory.close();
+        return stockview;
     }
 
 }

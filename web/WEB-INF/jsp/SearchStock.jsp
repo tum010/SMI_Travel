@@ -1,8 +1,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript" src="js/Stock.js"></script> 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<c:set var="ListProductStock" value="${requestScope['ListProductStock']}" />
+<c:set var="listStock" value="${requestScope['listStock']}" />
+<c:set var="listStockDetail" value="${requestScope['listStockDetail']}" />
+<c:set var="stockClass" value="${requestScope['stock']}" />
+<c:set var="stockDetail" value="${requestScope['stockDetail']}" />
 <section class="content-header" >
     <h1>
         Master Stock
@@ -13,6 +18,7 @@
     </ol>
 </section>
 <div class ="container"  style="padding-top: 15px;padding-left: 5px;" ng-app="">
+    <form action="SearchStock.smi" method="post" id="SearchStockForm" role="form">
     <div class="col-sm-2">
         <div ng-include="'WebContent/Master/StockMenu.html'"></div>
     </div>
@@ -23,83 +29,121 @@
             </div>
         </div>
         <hr/>
-                <div class="row" >
-                    <div class="col-xs-12 ">
-                        <div class="col-xs-1 text-right" style="width: 130px;"> 
-                            <label class="control-label">Product</lable>
-                        </div> 
-                        <input name="InputId" id="InputId" type="hidden" class="form-control" value="" />
-                        <div class="col-md-2 form-group text-left" > 
-                            <div class="input-group" id="gr" >
-                                <input type="text" class="form-control" id="InputProductId" name="InputProductId" value="" />
-                                <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#SearchProduct">
-                                    <span class="glyphicon-search glyphicon"></span>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="col-md-2 form-group text-left" > 
-                            <input name="InputProductName" id="InputProductName" type="text" class="form-control" value="" />
-                        </div>
-                        <div class="col-xs-1 text-right" style="width: 100px;padding-right: 10px;padding-left: 0px;">
-                            <label class="control-label">Pay Status</lable>
-                        </div>
-                        <div class="col-md-2 form-group text-left" style="padding-left: 0px;">
-                            <select name="SelectPayStatus" id="SelectPayStatus" class="form-control">
-                                <option id="" value="">---select--</option>
-                                <option id="" value="">---s1elect--</option>
-                            </select>
-                        </div>
-                        <div class="col-xs-1 text-right" style="width: 80px;padding-right: 0px;padding-left: 0px;">
-                            <label class="control-label">Item Status</lable>
-                        </div>
-                        <div class="col-md-2 form-group text-left" style="padding-left: 8px;width: 180px;">
-                            <select name="SelectItemStatus" id="SelectItemStatus" class="form-control">
-                                <option id="" value="">---select--</option>
-                                <option id="" value="">---s1elect--</option>
-                            </select>
-                        </div>
-                    </div>   
-                </div><!-- End Row 1-->
-                <div class="row" >
-                    <div class="col-xs-1 text-right" style="width: 143px;"> 
-                        <label class="control-label">Add Date</lable>
+        <div class="row" >
+            <div class="col-xs-12 ">
+                <div class="col-xs-1 text-right" style="width: 130px;"> 
+                    <label class="control-label">Product</lable>
+                </div> 
+                <input name="InputId" id="InputId" type="hidden" class="form-control" value="${stockClass.product.id}" />
+                <div class="col-md-2 form-group text-left" > 
+                    <div class="input-group" id="gr" >
+                        <input type="text" class="form-control" id="InputProductId" name="InputProductId" value="${stockClass.product.code}" />
+                        <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#SearchProduct">
+                            <span class="glyphicon-search glyphicon"></span>
+                        </span>
                     </div>
-                    <div class="col-md-3 form-group text-left" style="width: 170px;" >
-                        <div class='input-group date' >
-                            <input name="InputStockDate" id="InputStockDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
-                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                        </div>
-                    </div>
-                    <div class="col-xs-2 text-right" style="width: 265px;padding-right: 0px;padding-left: 7px;" >
-                        <label class="control-label">Effective From</lable>
-                    </div>
-                    <div class="col-md-2 form-group text-left" style="padding-left: 8px;"> 
-                        <div class='input-group date' >
-                            <input name="InputEffectiveFromDate" id="InputEffectiveFromDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
-                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                        </div>
-                    </div>
-                    <div class="col-xs-1 text-right" style="width: 85px;padding-right: 0px;padding-left: 0px;">
-                        <label class="control-label">Effective To</lable>
-                    </div>
-                    <div class="col-md-2 form-group text-left" style="padding-left: 6px;"> 
-                        <div class='input-group date' >
-                            <input name="InputInputEffectiveToDate" id="InputInputEffectiveToDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
-                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                        </div>
-                    </div>
-                </div><!-- End Row 2-->
-                <div class="row" >
-                    <div class="col-xs-12"  style="padding-right:36px;">
-                        <div class="col-md-10 text-right"></div>
-                        <div class="col-md-2 text-right">
-                            <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="" class="btn btn-primary" style="width: 100px;">
-                                <span id="SpanSearch" class="glyphicon glyphicon-search"></span> Search
-                            </button>                                          
-                        </div>                   
-                    </div>   
-                </div><!-- End Row 3--><br>
-        <div class="panel panel-default">
+                </div>
+                <div class="col-md-2 form-group text-left" > 
+                    <input name="InputProductName" id="InputProductName" type="text" class="form-control" value="${stockClass.product.name}" />
+                </div>
+                <div class="col-xs-1 text-right" style="width: 100px;padding-right: 10px;padding-left: 0px;">
+                    <label class="control-label">Pay Status</lable>
+                </div>
+                <div class="col-md-2 form-group text-left" style="padding-left: 0px;">
+                    <select name="SelectPayStatus" id="SelectPayStatus" class="form-control">
+                        <option id="" value="">---select--</option>
+                        <option id="" value="">---s1elect--</option>
+                    </select>
+                </div>
+                <div class="col-xs-1 text-right" style="width: 80px;padding-right: 0px;padding-left: 0px;">
+                    <label class="control-label">Item Status</lable>
+                </div>
+                <div class="col-md-2 form-group text-left" style="padding-left: 8px;width: 180px;">
+                    <select name="SelectItemStatus" id="SelectItemStatus" class="form-control">
+                        <option id="" value="">---select--</option>
+                        <option id="" value="">---s1elect--</option>
+                    </select>
+                </div>
+            </div>   
+        </div><!-- End Row 1-->
+        <div class="row" >
+            <div class="col-xs-1 text-right" style="width: 143px;"> 
+                <label class="control-label">Add Date</lable>
+            </div>
+            <div class="col-md-3 form-group text-left" style="width: 170px;" >
+                <div class='input-group date' >
+                    <input name="InputStockDate" id="InputStockDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${stockClass.createDate}" />
+                    <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+            </div>
+            <div class="col-xs-2 text-right" style="width: 265px;padding-right: 0px;padding-left: 7px;" >
+                <label class="control-label">Effective From</lable>
+            </div>
+            <div class="col-md-2 form-group text-left" style="padding-left: 8px;"> 
+                <div class='input-group date' >
+                    <input name="InputEffectiveFromDate" id="InputEffectiveFromDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${stockClass.effectiveFrom}" />
+                    <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+            </div>
+            <div class="col-xs-1 text-right" style="width: 85px;padding-right: 0px;padding-left: 0px;">
+                <label class="control-label">Effective To</lable>
+            </div>
+            <div class="col-md-2 form-group text-left" style="padding-left: 6px;"> 
+                <div class='input-group date' >
+                    <input name="InputInputEffectiveToDate" id="InputInputEffectiveToDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${stockClass.effectiveTo}" />
+                    <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+            </div>
+        </div><!-- End Row 2-->
+        <div class="row" >
+            <div class="col-xs-12"  style="padding-right:36px;">
+                <div class="col-md-10 text-right"></div>
+                <div class="col-md-2 text-right">
+                    <input type="hidden" name="action" id="action">
+                    <button type="button"  id="ButtonSearch"  name="ButtonSearch" onclick="searchAction()" class="btn btn-primary" style="width: 100px;">
+                        <span id="SpanSearch" class="glyphicon glyphicon-search"></span> Search
+                    </button>                                          
+                </div>                   
+            </div>   
+        </div><!-- End Row 3--><br>
+        <div class="row" >
+            <div class="col-xs-12" >
+                <table class="display" id="StockTable">
+                    <thead class="datatable-header">
+                        <tr>
+                            <th class="hidden" >id</th>
+                            <th style="width: 15%">Product</th>                                   
+                            <th style="width: 15%">Staff</th>
+                            <th style="width: 20%">Add Date</th>
+                            <th style="width: 20%">Effective From</th>
+                            <th style="width: 20%">Effective To</th>
+                            <th style="width: 10%">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <input type="hidden" value="" id="stockIdView" name="stockIdView">
+                    <%--<c:forEach ></c:forEach>--%>
+                    <c:forEach var="stock" items="${listStock}" varStatus="stockCount">    
+                        <tr>
+                            <td class="hidden">${stock.id}</td>
+                            <td>${stock.product.code}</td>
+                            <td>${stock.staff.name}</td>
+                            <td>${stock.createDate}</td>                                
+                            <td>${stock.effectiveFrom}</td>
+                            <td>${stock.effectiveTo}</td> 
+                            <td class="text-center">
+                                <span id="RefStockTableButtonEdit" name="RefStockTableButtonEdit" class="glyphicon glyphicon-edit editicon" onclick="window.open('/SMITravel/Stock.smi?InputStockId=${stock.id}&action=edit');"></span>
+                                <a  href="#" >
+                                    <span  class="glyphicon glyphicon-list-alt" id="SpanEdit${stockCount.count}" onclick="viewStockDetailAction('${stock.id}')"  ></span>
+                                </a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>    
+            </div>
+        </div><br>
+<!--        <div class="panel panel-default">
              <div class="panel-heading">
                  Summary
             </div>
@@ -133,7 +177,7 @@
                             </button>                                         
                         </div>    
                     </div>   
-                </div><!-- End Row 1-->
+                </div> End Row 1
                 <div class="row" >
                     <div class="col-xs-12"  style="padding-left: 15px;">
                         <div class="col-xs-2 text-right" style="width: 130px;"> 
@@ -155,38 +199,37 @@
                             </div>
                         </div>
                     </div>   
-                </div><!-- End Row 2--><br>
-                <div class="row" style="padding-left: 0px">
-                        <div class="col-xs-12 ">
-                            <table class="display" id="TaxInvoiceTable">
-                                <thead class="datatable-header">
-                                    <tr>
-                                        <th style="width: 15%">Number Of Item</th>                                   
-                                        <th style="width: 10%">Normal</th>
-                                        <th style="width: 15%">Cancel</th>
-                                        <th style="width: 20%">Bill</th>
-                                        <th style="width: 15%">In Use</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>XX</td>
-                                        <td>4XX</td>
-                                        <td>XXX</td>                                
-                                        <td>XXXX</td>
-                                        <td>XXXX</td>                
-                                    </tr>
-                                </tbody>
-                            </table>    
-                        </div>   
-                    </div><!-- End Row 3-->
+                </div> End Row 2<br>
+                
             </div>
-        </div>
+        </div>-->
         <div class="panel panel-default">            
             <div class="panel-heading">
                 Item List
             </div>
             <div class="panel-body">
+                <table class="display" id="TaxInvoiceTable">
+                    <thead class="datatable-header">
+                        <tr>
+                            <th style="width: 15%">Number Of Item</th>                                   
+                            <th style="width: 10%">Normal</th>
+                            <th style="width: 15%">Cancel</th>
+                            <th style="width: 20%">Bill</th>
+                            <th style="width: 15%">In Use</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="std" items="${stockDetail}" varStatus="num">
+                        <tr>
+                            <td>${std.NumOfItem}</td>
+                            <td>${std.Normal}</td>
+                            <td>${std.Cancel}</td>                                
+                            <td>${std.Bill}</td>
+                            <td>${std.Inuse}</td>                
+                        </tr>
+                        </c:forEach>
+                    </tbody>
+                </table><br>       
                 <table class="display" id="ItemListTable">
                     <thead class="datatable-header">
                         <tr>
@@ -199,19 +242,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>XX</td>
-                            <td>4XX</td>
-                            <td>XXX</td>                                
-                            <td>XXXX</td>
-                            <td>XXXX</td>
-                            <td>XXXX</td>                            
-                        </tr>
+                        <%--<c:forEach var="stockDe" items="${stockDetail.ItemList}" varStatus="num1">--%>
+<!--                        <tr>
+                            <td>${num1.count}</td>
+                            <td></td>
+                            <td>${stockDe.ItemList.RefNo}</td>                                
+                            <td>${stockDe.ItemList.Pickup}</td>
+                            <td>${stockDe.ItemList.PayStatusName}</td>
+                            <td>${stockDe.ItemList.ItemStatus}</td>                            
+                        </tr>-->
+                        <%--</c:forEach>--%>
                     </tbody>
-                </table>   
+                </table>           
             </div>
         </div>
     </div>
+    </form>
 </div>
 <!--Search Product-->
 <div class="modal fade" id="SearchProduct" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -222,21 +268,103 @@
                 <h4 class="modal-title"  id="Titlemodel">Search Product</h4>
             </div>
             <div class="modal-body">
-                <table class="display" id="ProductTable">
+                <table class="display" id="productTable">
                     <thead class="datatable-header">
                         <tr>
-                            <th>Code</th>
-                            <th> Product Name</th>
+                            <th class="hidden">ID</th>
+                            <th style="width:20%">Code</th>
+                            <th>Name</th>
                         </tr>
                     </thead>
+                    <script>
+                        productCode = [];
+                    </script>
                     <tbody>
-                            <tr class="packet">
-                                <td class="">XXX
-                                <td>XXXXX</td>
+                        <c:forEach var="pro" items="${ListProductStock}">
+                            <tr>
+                                <td class="product-id hidden">${pro.id}</td>
+                                <td class="product-code">${pro.code}</td>
+                                <td class="product-name">${pro.name}</td>
                             </tr>
+                        <script>
+                            productCode.push({id: "${pro.id}", code: "${pro.code}", name: "${pro.name}"});
+                        </script>
+                    </c:forEach>
                     </tbody>
                 </table>
             </div>
+            <!-- Script Product List table-->
+            <script>
+                $(document).ready(function () {
+//                    alert("<%=new java.util.Date()%>");
+                    $("#productTable tr").on('click', function () {//winit
+                        $("#SearchProduct").modal('hide');
+                        var product_id = $(this).find(".product-id").html();
+                        var product_code = $(this).find(".product-code").html();
+                        var product_name = $(this).find(".product-name").html();
+                        $("#InputId").val(product_id);
+                        $("#InputProductId").val(product_code);
+                        $("#InputProductName").val(product_name);
+                    });
+
+                    // productTable
+                    var productTable = $('#productTable').dataTable({bJQueryUI: true,
+                        "sPaginationType": "full_numbers",
+                        "bAutoWidth": false,
+                        "bFilter": true,
+                        "bPaginate": true,
+                        "bInfo": false,
+                        "bLengthChange": false,
+                        "iDisplayLength": 10
+                    });
+
+                    $('#productTable tbody').on('click', 'tr', function () {
+                        if ($(this).hasClass('row_selected')) {
+                            $(this).removeClass('row_selected');
+                        }
+                        else {
+                            productTable.$('tr.row_selected').removeClass('row_selected');
+                            $(this).addClass('row_selected');
+                        }
+                    });
+                    // ON KEY INPUT AUTO SELECT PRODUCTCODE
+                    $(function () {
+                        var availableTags = [];
+                        $.each(productCode, function (key, value) {
+                            availableTags.push(value.code);
+                            if (!(value.name in availableTags)) {
+                                availableTags.push(value.name);
+                            }
+                        });
+
+                        $("#InputProductId").autocomplete({
+                            source: availableTags,
+                            close: function (event, ui) {
+                                $("#InputProductId").trigger('keyup');
+                            }
+                        });
+
+                        $("#InputProductId").keyup(function () {
+                            var position = $(this).offset();
+                            $(".ui-widget").css("top", position.top + 30);
+                            $(".ui-widget").css("left", position.left);
+                            var name = this.value;
+                            var code = this.value.toUpperCase();
+                            $("#InputProductName").val(null);
+                            $.each(productCode, function (key, value) {
+                                if (name === value.name) {
+                                    $("#InputProductId").val(value.code);
+                                    code = $("#InputProductId").val().toUpperCase();
+                                }
+                                if (value.code.toUpperCase() === code) {
+                                    $("#InputId").val(value.id);
+                                    $("#InputProductName").val(value.name);
+                                }
+                            }); //end each productCode
+                        }); // end InputproductCode keyup
+                    }); // end AutoComplete productCode
+                });               
+            </script>
             <div class="modal-footer">
                 <button id="SearchProductOK" name="SearchProductOK" type="button"  class="btn btn-success" data-dismiss="modal">OK</button>
                 <button id="SearchProductClose" name="SearchProductClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -315,3 +443,4 @@ $(document).ready(function () {
     });
 });
 </script>
+<script type="text/javascript" src="js/searchStock.js"></script>
