@@ -16,7 +16,7 @@ public class StockView {
     private String code;
     private String RefNo;
     private String Pickup;
-    private Date PickupDate;
+    private String PickupDate;
     private String PayStatusName;
     private String ItemStatus;
 
@@ -44,11 +44,11 @@ public class StockView {
         this.Pickup = Pickup;
     }
 
-    public Date getPickupDate() {
+    public String getPickupDate() {
         return PickupDate;
     }
 
-    public void setPickupDate(Date PickupDate) {
+    public void setPickupDate(String PickupDate) {
         this.PickupDate = PickupDate;
     }
 

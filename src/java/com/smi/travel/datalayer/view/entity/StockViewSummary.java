@@ -18,9 +18,9 @@ public class StockViewSummary {
     private String id;
     private String ProductName;
     private String Staff;
-    private Date Adddate;
-    private Date EffectiveDateFrom;
-    private Date EffectiveDateTo;
+    private String Adddate;
+    private String EffectiveDateFrom;
+    private String EffectiveDateTo;
     private int NumOfItem;
     private int Normal;
     private int Cancel;
@@ -57,27 +57,27 @@ public class StockViewSummary {
         this.Staff = Staff;
     }
 
-    public Date getAdddate() {
+    public String getAdddate() {
         return Adddate;
     }
 
-    public void setAdddate(Date Adddate) {
+    public void setAdddate(String Adddate) {
         this.Adddate = Adddate;
     }
 
-    public Date getEffectiveDateFrom() {
+    public String getEffectiveDateFrom() {
         return EffectiveDateFrom;
     }
 
-    public void setEffectiveDateFrom(Date EffectiveDateFrom) {
+    public void setEffectiveDateFrom(String EffectiveDateFrom) {
         this.EffectiveDateFrom = EffectiveDateFrom;
     }
 
-    public Date getEffectiveDateTo() {
+    public String getEffectiveDateTo() {
         return EffectiveDateTo;
     }
 
-    public void setEffectiveDateTo(Date EffectiveDateTo) {
+    public void setEffectiveDateTo(String EffectiveDateTo) {
         this.EffectiveDateTo = EffectiveDateTo;
     }
 
