@@ -19,7 +19,7 @@
 		<c:choose>
 			<c:when test="${result == 'saved'}">
 				<!--Alert Save and Update-->
-				<div id="textAlertDivSave" style="display: none;" class="alert alert-success alert-dismissible" role="alert">
+				<div id="textAlertDivSave"  class="alert alert-success alert-dismissible" role="alert">
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -27,7 +27,7 @@
 				</div>
 			</c:when>
 			<c:when test="${result == 'fail'}">
-				<div id="textAlertDivNotSave" style="display: none;" class="alert alert-success alert-dismissible" role="alert">
+				<div id="textAlertDivNotSave"  class="alert alert-success alert-dismissible" role="alert">
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
