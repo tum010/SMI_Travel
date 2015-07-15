@@ -12,6 +12,7 @@ import com.smi.travel.datalayer.entity.Stock;
 import com.smi.travel.datalayer.entity.StockDetail;
 import com.smi.travel.datalayer.view.entity.StockView;
 import com.smi.travel.datalayer.view.entity.StockViewSummary;
+import com.smi.travel.util.UtilityFunction;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -174,10 +175,42 @@ public class StockImpl implements StockDao{
         return stockViewSummary;
     }
     
-    private StockViewSummary mappingStockView(Stock stockData){
+   private StockViewSummary mappingStockViewSummary(Stock stockData){
         StockViewSummary stockview = new StockViewSummary();
-        
+        UtilityFunction util = new UtilityFunction();
+        stockview.setId(stockData.getId());
+        stockview.setAdddate(util.convertDateToString(stockData.getCreateDate()));
+        stockview.setEffectiveDateFrom(util.convertDateToString(stockData.getEffectiveFrom()));
+        stockview.setEffectiveDateTo(util.convertDateToString(stockData.getEffectiveTo()));
+        stockview.setNormal(0);
+        stockview.setNumOfItem(stockData.getStockDetails().size());
+        stockview.setProductName(stockData.getProduct().getName());
+        stockview.setStaff(stockData.getStaff().getUsername());
+        stockview.setCancel(0);
+        stockview.setInuse(0);
+        stockview.setItemList(mappingStockView(stockData.getStockDetails()));
         return stockview;
+    }
+    
+    private List<StockView> mappingStockView(List<StockDetail> Listdetail){
+        
+        List<StockView> StockList =new LinkedList<StockView>();
+        
+        UtilityFunction util = new UtilityFunction();
+        for(int i =0;i<Listdetail.size();i++){
+            StockView stock = new StockView();
+            StockDetail detail = Listdetail.get(i);
+            stock.setCode(detail.getCode());
+            stock.setRefNo(detail.getOtherBooking().getMaster().getReferenceNo());
+            stock.setItemStatus(detail.getMStockStatus().getName());
+            stock.setPickup(detail.getOtherBooking().getMaster().getCreateBy());
+            stock.setPickupDate(util.convertDateToString(detail.getPickupDate()));
+            stock.setPayStatusName(String.valueOf(detail.getPayStatus()));
+            StockList.add(stock);
+        }
+        
+        
+        return StockList;
     }
 
     public SessionFactory getSessionFactory() {
