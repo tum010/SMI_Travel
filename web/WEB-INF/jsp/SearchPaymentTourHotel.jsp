@@ -101,7 +101,7 @@
                             <th style="width: 20%">PV Type</th>
                             <th style="width: 20%">Invoice Sup</th>
                             <th style="width: 5%">Acc</th>
-                            <th style="width: 5%">Dept</th>
+                            
                             <th style="width: 8%">Total</th>
                             <th style="width: 5%">Cur</th>
                             <th style="width: 8%">Status</th>
@@ -135,6 +135,7 @@
                             <td>${payment.accNo}</td>
                             <td>${payment.total}</td>
                             <td>${payment.currency}</td>
+                          
                             <td>${payment.status}</td>
                             <td class="text-center">
                                 <span id="RefPaymentHotelEdit" name="RefPaymentHotelEdit" class="glyphicon glyphicon-edit editicon" onclick="location.href='PaymentTourHotel.smi?action=edit&paymentId=${payment.id}'"></span>
