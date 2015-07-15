@@ -24,7 +24,6 @@ public class PaymentWendy   {
      private String apCode;
      private String detail;
      private String remark;
-     private String currency;
      private String chqNo;
      private BigDecimal cash;
      private BigDecimal chqAmount;
@@ -37,7 +36,7 @@ public class PaymentWendy   {
     }
 
 
-    public PaymentWendy( MPaymentDoctype MPaymentDoctype, MAccpay MAccpay, MItemstatus MItemstatus, String payNo, Date payDate, Integer account, String invoiceSup, String apCode, String detail, String remark, String currency, String chqNo, BigDecimal cash, BigDecimal chqAmount, String createBy, Date createDate, List paymentDetailWendies,Integer isExport) {
+    public PaymentWendy( MPaymentDoctype MPaymentDoctype, MAccpay MAccpay, MItemstatus MItemstatus, String payNo, Date payDate, Integer account, String invoiceSup, String apCode, String detail, String remark, String chqNo, BigDecimal cash, BigDecimal chqAmount, String createBy, Date createDate, List paymentDetailWendies,Integer isExport) {
        this.MPaymentDoctype = MPaymentDoctype;
        this.MAccpay = MAccpay;
        this.MItemstatus = MItemstatus;
@@ -48,7 +47,6 @@ public class PaymentWendy   {
        this.apCode = apCode;
        this.detail = detail;
        this.remark = remark;
-       this.currency = currency;
        this.chqNo = chqNo;
        this.cash = cash;
        this.chqAmount = chqAmount;
@@ -135,13 +133,7 @@ public class PaymentWendy   {
     public void setRemark(String remark) {
         this.remark = remark;
     }
-    public String getCurrency() {
-        return this.currency;
-    }
-    
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
+ 
     public String getChqNo() {
         return this.chqNo;
     }

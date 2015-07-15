@@ -126,7 +126,7 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
              paymentview.setInvoiceSup(payment.getInvoiceSup());
              paymentview.setAccNo(payment.getAccount());
              paymentview.setTotal(sum);
-             paymentview.setCurrency(payment.getCurrency());
+           //  paymentview.setCurrency(payment.getCurrency());
              paymentview.setStatus(payment.getMItemstatus().getName());
              paymentviewList.add(paymentview);
          }

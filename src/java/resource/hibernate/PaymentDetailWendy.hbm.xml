@@ -25,6 +25,12 @@
         <property name="amountType" type="string">
             <column name="amount_type" length="1" />
         </property>
+        <property name="currency" type="string">
+            <column name="currency" length="3" />
+        </property>
+        <property name="accCode" type="string">
+            <column name="acc_code" length="10" />
+        </property>
         <property name="description" type="string">
             <column name="description" />
         </property>

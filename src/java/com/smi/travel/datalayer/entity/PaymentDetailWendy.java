@@ -18,11 +18,13 @@ public class PaymentDetailWendy   {
      private BigDecimal amount;
      private String amountType;
      private String description;
+     private String accCode;
+     private String currency;
 
     public PaymentDetailWendy() {
     }
 
-    public PaymentDetailWendy(Master master, MPaytype MPaytype, PaymentWendy paymentWendy, String invoiceCreditor, BigDecimal amount, String amountType, String description) {
+    public PaymentDetailWendy(Master master, MPaytype MPaytype, PaymentWendy paymentWendy, String invoiceCreditor, BigDecimal amount, String amountType, String description,String currency,String accCode) {
        this.master = master;
        this.MPaytype = MPaytype;
        this.paymentWendy = paymentWendy;
@@ -30,6 +32,8 @@ public class PaymentDetailWendy   {
        this.amount = amount;
        this.amountType = amountType;
        this.description = description;
+       this.currency = currency;
+       this.accCode = accCode;
     }
    
     public String getId() {
@@ -87,6 +91,22 @@ public class PaymentDetailWendy   {
     
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getAccCode() {
+        return accCode;
+    }
+
+    public void setAccCode(String accCode) {
+        this.accCode = accCode;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
 
