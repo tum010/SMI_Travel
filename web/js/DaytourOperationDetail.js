@@ -325,6 +325,8 @@ $(document).ready(function () {
         $(this).parent().parent().remove();
     });
     $("#BookingExpenseTable").on('click', '.RemoveRow', function () {
+       var lentable =  $("#BookingExpenseTable tbody").find("tr").length;
+       console.log("lentable"+lentable);
         if($(this).attr('idExpen')){
             var expenseTrNode = $(window.expensTable.fnGetNodes());
             var delId = $(this).attr('idExpen');
@@ -333,8 +335,15 @@ $(document).ready(function () {
                    $(value).removeClass("hidden");
                 }               
             });
+        }else{
+            if(lentable == 1){
+                alert("this row for add data");
+            }else{
+                $(this).parent().parent().remove(); 
+            }
+                
         }
-//        $(this).parent().parent().remove();
+        
 
     });
 
