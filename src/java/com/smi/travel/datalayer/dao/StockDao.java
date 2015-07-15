@@ -27,4 +27,5 @@ public interface StockDao {
     public String getStockId(Stock stock);
     public Stock getStock(String stockId);
     public List<StockDetail> checkStockDetail(String stockId);
+    public List<Stock> searchStock(String productId,Date createDate,Date EffecttiveFrom,Date EffectiveTo);
 }
