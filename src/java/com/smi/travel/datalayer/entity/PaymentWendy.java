@@ -30,13 +30,14 @@ public class PaymentWendy   {
      private BigDecimal chqAmount;
      private String createBy;
      private Date createDate;
+     private Integer isExport;
      private List paymentDetailWendies = new LinkedList<PaymentDetailWendy>();
 
     public PaymentWendy() {
     }
 
 
-    public PaymentWendy( MPaymentDoctype MPaymentDoctype, MAccpay MAccpay, MItemstatus MItemstatus, String payNo, Date payDate, Integer account, String invoiceSup, String apCode, String detail, String remark, String currency, String chqNo, BigDecimal cash, BigDecimal chqAmount, String createBy, Date createDate, List paymentDetailWendies) {
+    public PaymentWendy( MPaymentDoctype MPaymentDoctype, MAccpay MAccpay, MItemstatus MItemstatus, String payNo, Date payDate, Integer account, String invoiceSup, String apCode, String detail, String remark, String currency, String chqNo, BigDecimal cash, BigDecimal chqAmount, String createBy, Date createDate, List paymentDetailWendies,Integer isExport) {
        this.MPaymentDoctype = MPaymentDoctype;
        this.MAccpay = MAccpay;
        this.MItemstatus = MItemstatus;
@@ -54,6 +55,7 @@ public class PaymentWendy   {
        this.createBy = createBy;
        this.createDate = createDate;
        this.paymentDetailWendies = paymentDetailWendies;
+       this.isExport =isExport;
     }
    
     public String getId() {
@@ -181,6 +183,14 @@ public class PaymentWendy   {
     
     public void setPaymentDetailWendies(List paymentDetailWendies) {
         this.paymentDetailWendies = paymentDetailWendies;
+    }
+
+    public Integer getIsExport() {
+        return isExport;
+    }
+
+    public void setIsExport(Integer isExport) {
+        this.isExport = isExport;
     }
 
 

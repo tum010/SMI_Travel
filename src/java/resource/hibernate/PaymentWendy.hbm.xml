@@ -55,6 +55,9 @@
         <property name="createDate" type="date">
             <column name="create_date" length="10" />
         </property>
+        <property name="isExport" type="java.lang.Integer">
+            <column name="is_export" />
+        </property>
         <bag name="paymentDetailWendies" table="payment_detail_wendy" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="pay_wendy_id" />

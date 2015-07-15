@@ -31,14 +31,16 @@ public class PaymentAirticket  {
      private String creditNote;
      private String debitNote;
      private String createBy;
+     private String department;
      private Date createDate;
+     private Integer isExport;
      private List paymentAirticketRefunds = new LinkedList<PaymentAirticketRefund>();
      private List paymentAirticketFares = new LinkedList<PaymentAirticketFare>();
 
     public PaymentAirticket() {
     }
 
-    public PaymentAirticket(MAccpay MAccpay, String payNo, Date payDate, Date dueDate, Integer invoiceSup, Integer apCode, String detail, BigDecimal agentAmount, BigDecimal cash, BigDecimal witholdingTax, String chqNo, BigDecimal chqAmount, BigDecimal ticketInsurance, String creditNote, String debitNote, String createBy, Date createDate, List paymentAirticketRefunds, List paymentAirticketFares) {
+    public PaymentAirticket(MAccpay MAccpay, String payNo, Date payDate, Date dueDate, Integer invoiceSup, Integer apCode, String detail, BigDecimal agentAmount, BigDecimal cash, BigDecimal witholdingTax, String chqNo, BigDecimal chqAmount, BigDecimal ticketInsurance, String creditNote, String debitNote, String createBy, Date createDate, List paymentAirticketRefunds, List paymentAirticketFares,Integer isExport,String department) {
        this.MAccpay = MAccpay;
        this.payNo = payNo;
        this.payDate = payDate;
@@ -58,6 +60,8 @@ public class PaymentAirticket  {
        this.createDate = createDate;
        this.paymentAirticketRefunds = paymentAirticketRefunds;
        this.paymentAirticketFares = paymentAirticketFares;
+       this.isExport = isExport;
+       this.department = department;
     }
    
     public String getId() {
@@ -203,6 +207,24 @@ public class PaymentAirticket  {
     public void setPaymentAirticketFares(List paymentAirticketFares) {
         this.paymentAirticketFares = paymentAirticketFares;
     }
+
+    public Integer getIsExport() {
+        return isExport;
+    }
+
+    public void setIsExport(Integer isExport) {
+        this.isExport = isExport;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+    
+    
 
 }
 

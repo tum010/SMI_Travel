@@ -58,6 +58,9 @@
         <property name="createDate" type="date">
             <column name="create_date" length="10" />
         </property>
+        <property name="isExport" type="java.lang.Integer">
+            <column name="is_export" />
+        </property>
         <bag name="paymentAirticketRefunds" table="payment_airticket_refund" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="paymane_air_id" />
