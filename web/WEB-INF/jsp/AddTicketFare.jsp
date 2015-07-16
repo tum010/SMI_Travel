@@ -678,28 +678,27 @@
         $('#AgentTable tbody').on('click', 'tr', function () {
             $(this).addClass('row_selected').siblings().removeClass('row_selected');
         });
-        
-        $("#AddTicketFareForm")
-            .bootstrapValidator({
-    //                framework: 'bootstrap',
-                container: 'tooltip',
-                excluded: [':disabled', ':hidden', ':not(:visible)'],
-                feedbackIcons: {
-                    valid: 'uk-icon-check',
-                    invalid: 'uk-icon-times',
-                    validating: 'uk-icon-refresh'
-                },
-                fields: {
-                    ticketNo: {
-                        trigger: 'focus keyup',
-                        validators: {
-                            notEmpty: {trigger: 'change',
-                                message: ' Ticket No is required'
-                            }
-                        }
-                    }
-                }
-            });
+ 
+//        $("#AddTicketFareForm")
+//            .bootstrapValidator({
+//                container: 'tooltip',
+//                excluded: [':disabled', ':hidden', ':not(:visible)'],
+//                feedbackIcons: {
+//                    valid: 'uk-icon-check',
+//                    invalid: 'uk-icon-times',
+//                    validating: 'uk-icon-refresh'
+//                },
+//                fields: {
+//                    ticketNo: {
+//                        trigger: 'focus keyup',
+//                        validators: {
+//                            notEmpty: {trigger: 'change',
+//                                message: ' Ticket No is required'
+//                            }
+//                        }
+//                    }
+//                }
+//            });
  
    });
    
