@@ -19,6 +19,8 @@ import com.smi.travel.datalayer.dao.PackageTourDao;
 import com.smi.travel.datalayer.dao.ProductDetailDao;
 import com.smi.travel.datalayer.dao.TicketFareAirlineDao;
 import com.smi.travel.datalayer.dao.TransferJobDao;
+import com.smi.travel.datalayer.entity.AirticketFlight;
+import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.Customer;
 import com.smi.travel.datalayer.entity.Daytour;
 import com.smi.travel.datalayer.entity.DaytourBooking;
@@ -157,7 +159,8 @@ public class AJAXBean extends AbstractBean implements
         String flagDaytour = String.valueOf(map.get("flagDaytour"));
         String flagLand = String.valueOf(map.get("flagLand"));
         String flagOther = String.valueOf(map.get("flagOther"));
-
+         System.out.println("servletName : " + servletName);
+         System.out.println("type : " + type);
         if (BOOKDETAIL.equalsIgnoreCase(servletName)) {
 
             if ("checkExistCustomer".equalsIgnoreCase(type)) {
@@ -569,8 +572,38 @@ public class AJAXBean extends AbstractBean implements
                 if(ticketNo == null){
                     System.out.print("ticketNo is null");
                 }else{
-                    result = ticketFareAirlineDao.checkDuplicateTicketNo(ticketNo);
+                    TicketFareAirline  ticketFare = ticketFareAirlineDao.getTicketFareFromTicketNo(ticketNo);
+                    if(ticketFare == null){
+                        result = ticketFareAirlineDao.getTicketFareBookingFromTicketNo(ticketNo);
+			System.out.println("result +======== "+result);	
+                    }else{
+                        System.out.println("+ ticketFare + "+ticketFare.getTicketFare());
+                        //1	Ticket Fare				
+                        //2	Ticket tax				
+                        //3	Issue date				
+                        //4	Ticket Routing				
+                        //5	Airline				
+                        //6	Ticket By				
+                        //7	Passenger				
+                        //8	Department
+                        result = "TicketFareAirline" + ","  
+                                + ticketFare.getTicketFare() + "," 
+                                + ticketFare.getTicketTax() + "," 
+                                + ticketFare.getIssueDate() + "," 
+                                + ticketFare.getTicketRounting() + "," 
+                                + ticketFare.getMAirlineAgent().getId() + "," 
+                                + ticketFare.getTicketBuy() + "," 
+                                + ticketFare.getPassenger() 
+//                                + "," 
+//                                + ticketFare.getDepartment + "," 
+                                ;
+                    }
                 }
+            }else if ("getTicketList".equalsIgnoreCase(type)) {
+                AirticketPassenger airPassenger = new AirticketPassenger();
+                String referNo = map.get("referNo").toString();
+                System.out.println("referNo"+referNo);
+                result = ticketFareAirlineDao.getListTicketFareFromRefno(referNo);
             }
         } 
         return result;
@@ -970,17 +1003,13 @@ public class AJAXBean extends AbstractBean implements
         data = data.replaceAll("\\r|\\n", "");
         return data;
     }
-
-    /**
-     * @return the sendMail
-     */
+    
+    
+    
     public Mail getSendMail() {
         return sendMail;
     }
-
-    /**
-     * @param sendMail the sendMail to set
-     */
+    
     public void setSendMail(Mail sendMail) {
         this.sendMail = sendMail;
     }

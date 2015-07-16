@@ -24,14 +24,14 @@ public class TicketFareAirlineServlet implements AbstractAJAXServlet{
         String ticketNo = request.getParameter("ticketNo");
         String servletName = request.getParameter("servletName");
         String Type = request.getParameter("type");
-
+        String referNo = request.getParameter("referNo");
         System.out.print("set parameter mapping");
         Map result = new HashMap();
         
         result.put("ticketNo", ticketNo);
         result.put("servletName", servletName);
         result.put("type", Type);   
-
+        result.put("referNo", referNo);
         return result;    }
     
 }

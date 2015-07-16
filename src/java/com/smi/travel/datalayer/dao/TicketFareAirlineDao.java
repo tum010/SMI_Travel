@@ -21,10 +21,10 @@ public interface TicketFareAirlineDao {
     public int UpdateTicketFare(TicketFareAirline ticket);
     public int DeleteTicketFare(TicketFareAirline ticket);
     public TicketFareAirline getTicketFareFromTicketNo(String TicketNo);
-    public AirticketPassenger getTicketFareBookingFromTicketNo(String TicketNo);
-    public List<AirticketPassenger> getListTicketFareFromRefno(String Refno);
+    public String getTicketFareBookingFromTicketNo(String TicketNo);
+    public String getListTicketFareFromRefno(String Refno);
     public List<BookingFlight> getListFlightFromTicketNo(String TicketNo);
-    public int checkDuplicateTicketNo(String TicketNo);
+    public int validateTicket(String TicketNo);
     public List<TicketFareView> getListTicketFare(TicketFareView ticket,int option);
-
+    public TicketFareAirline getTicketFareFromId(String id);
 }

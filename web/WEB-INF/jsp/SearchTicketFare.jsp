@@ -223,11 +223,9 @@
                                         <td align="center"> <c:out value="${table.diffVat}" /></td>
                                         <td> 
                                             <center> 
-                                            <span id="spanEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon"      
-                                              onclick="EditTicket('${table.id}','${table.type}', '${table.buy}', '${table.airline}', '${table.ticketNo}', '${table.issueDate}', '${table.invoiceNo}'
-                                              , '${table.department}', '${table.fare}', '${table.tax}', '${table.ticketCommission}', '${table.agentCommission}', '${table.diffVat}')" 
-                                              data-toggle="modal" data-target="#TicketModal" >
-                                            </span>
+                                            <a  href="AddTicketFare.smi?ticketId=${table.id}&action=edit">
+                                                <span class="glyphicon glyphicon-edit editicon"  ></span>
+                                            </a>
                                             <span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteTicket('${table.id}','${table.ticketNo}')" 
                                                    data-toggle="modal" data-target="#DelTicket" >  </span>
                                             </center>
@@ -242,12 +240,6 @@
         </div> 
     </div> 
 </div>
-<!--Bank Modal-->
-<div class="modal fade" id="TicketModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width: 550px">
-        
-    </div><!-- /.modal-dialog -->
-</div>               
 
 <!--Delete Bank Modal-->
 <div class="modal fade" id="DelTicket" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

@@ -6,6 +6,7 @@
 package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.dao.TicketFareAirlineDao;
+import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
 import java.util.List;
@@ -37,6 +38,22 @@ public class TicketFareAirlineService {
         return ticketFareAirlineDao.getListTicketFare(ticket, option);
     }
     
+    public TicketFareAirline getTicketFareFromId(String id){
+        return ticketFareAirlineDao.getTicketFareFromId(id);
+    }
+    
+    public int validateTicket(String TicketNo){
+        return ticketFareAirlineDao.validateTicket(TicketNo);
+    }
+    
+    public String getTicketFareBookingFromTicketNo(String TicketNo){
+        return ticketFareAirlineDao.getTicketFareBookingFromTicketNo(TicketNo);
+    }
+    
+    public String getListTicketFareFromRefno(String Refno){
+        return ticketFareAirlineDao.getListTicketFareFromRefno(Refno);
+    }
+
     public TicketFareAirlineDao getTicketFareAirlineDao() {
         return ticketFareAirlineDao;
     }

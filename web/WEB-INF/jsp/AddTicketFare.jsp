@@ -9,6 +9,8 @@
 <c:set var="ticketFare" value="${requestScope['ticketFare']}" />
 <c:set var="agent" value="${requestScope['Agent']}" />
 <c:set var="SelectedAgent" value="${requestScope['SelectedAgent']}" />
+<c:set var="ticketList" value="${requestScope['ticketList']}" />
+
 <section class="content-header" >
     <h1>
         Checking - Air Ticket
@@ -47,7 +49,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="col-xs-1 text-right" style="width: 150px">
-                            <label class="control-label text-right">Ticket&nbsp;No&nbsp;</label>
+                            <label class="control-label text-right">Ticket&nbsp;No&nbsp;<font style="color: red">*</font></label>
                         </div>
                         <div class="col-xs-1 form-group" style="width: 200px">
                             <div class="input-group">
@@ -57,7 +59,7 @@
                         </div>
                         <div class="col-xs-1  text-right" style="width: 8px"><i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i></div>
                         <div class="col-xs-1 text-right" style="width: 100px">
-                            <button style="height:34px" type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="searchAction();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
+                            <button style="height:34px" type="button"  id="ButtonSearch"  name="ButtonSearch" onclick="searchTicketNo();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
 
                         </div>
                         
@@ -171,6 +173,32 @@
                                 <option value="O" ${selectedO}>OUT</option>
                             </select>
                         </div>
+                        <div class="col-xs-1 text-right" style="width: 150px">
+                            <label class="control-label text-right">Department&nbsp;</label>
+                        </div>
+                        <div class="col-xs-1" style="width: 200px">
+                            <select id="department" name="department" class="form-control selectize">
+                                <option value="">--- Department ---</option> 
+                                 <c:choose>
+                                    <c:when test="${requestScope['department'] == 'wendy'}">
+                                        <c:set var="selected1" value="selected" />
+                                    </c:when>
+                                </c:choose>
+                                <option value="wendy" ${selected1}>wendy</option>
+                                <c:choose>
+                                    <c:when test="${requestScope['department'] == 'inbound'}">
+                                        <c:set var="selected2" value="selected" />
+                                    </c:when>
+                                </c:choose>
+                                <option value="inbound" ${selected2}>inbound</option>
+                                <c:choose>
+                                    <c:when test="${requestScope['department'] == 'outbound'}">
+                                        <c:set var="selected3" value="selected" />
+                                    </c:when>
+                                </c:choose>
+                                <option value="outbound" ${selected3}>outbound</option>
+                            </select>
+                        </div>    
                     </div>
                 </div>
                 
@@ -196,7 +224,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="ticketFare" name="ticketFare" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketFare}">
+                                    <input id="ticketFare" name="ticketFare" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketFare}" onkeyup="calculateVat()">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
@@ -204,7 +232,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="ticketTax" name="ticketTax" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketTax}">
+                                    <input id="ticketTax" name="ticketTax" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketTax}" onkeyup="calculateVat()">
                                 </div>
                             </div>
                         </div>
@@ -215,7 +243,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="ticketIns" name="ticketIns" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketIns}">
+                                    <input id="ticketIns" name="ticketIns" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketIns}" onkeyup="calculateVat()">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -237,6 +265,14 @@
                         </div>
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right"  style="width: 121px">
+                                <label class="control-label text-right">Inv Amount</label>
+                            </div>
+                            <div class="col-xs-1"  style="width: 200px">
+                                <div class="input-group">                                    
+                                    <input id="invoiceAmount" name="invoiceAmount" type="text" class="form-control" value="${ticketFare.invoiceAmount}" readonly="" onkeyup="calculateVat()">
+                                </div>
+                            </div>
+                            <div class="col-xs-1 text-right"  style="width: 128px">
                                 <label class="control-label text-right">Sale Price </label>
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
@@ -244,7 +280,7 @@
                                     <input id="salePrice" name="salePrice" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.salePrice}">
                                 </div>
                             </div>
-                            <div class="col-xs-1 text-right"  style="width: 128px">
+                            <div class="col-xs-1 text-right"  style="width: 185px">
                                 <label class="control-label text-right">Diff Vat </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
@@ -270,8 +306,7 @@
                             <div class="col-xs-1" style="width: 5px">   
                             </div>
                             <div class="col-xs-1" style="width: 298px">
-                                <input type="text" class="form-control" id="agent_name" name="agent_name" value="${SelectedAgent.name}" readonly=""
-                                    data-bv-notempty="true" data-bv-notempty-message="agent empty !">
+                                <input type="text" class="form-control" id="agent_name" name="agent_name" value="${SelectedAgent.name}" readonly="">
                             </div>
                         </div>
                         <div class="col-xs-10 form-group">
@@ -299,7 +334,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class='input-group date'>
-                                    <input id="overCommission" name="overCommission" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${requestScope['issueDate']}">
+                                    <input id="overCommission" name="overCommission" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.overCommission}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -440,7 +475,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                
+                               
                             </tbody>
                         </table>
                     </div>
@@ -509,6 +544,7 @@
                 <h4 class="modal-title"  id="Titlemodel">List Ticket No</h4>
             </div>
             <div class="modal-body">
+                <div style="text-align: right"><i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i>Search : <input placeholder ="Ref No" type="text" style="width: 175px" id="filtercus" name="filtercus"/> </div> 
                 <table class="display" id="ListRefnoTable">
                     <thead class="datatable-header">
                         <tr>
@@ -519,10 +555,10 @@
                             <th>Fare</th>
                             <th>Tax</th>
                             <th>Action</th>
-                            <th class="hidden"></th>
-                            <th class="hidden"></th>
                         </tr>
                     </thead>
+                    <script>
+                    </script>
                     <tbody>
                         
                     </tbody>
@@ -605,8 +641,14 @@
         $('.date').datetimepicker();
         $("#ticketNo").keyup(function (event) {
             if(event.keyCode === 13){
-               var ticketNo = $("#ticketNo").val();
-               searchTicketNo(ticketNo);
+               searchTicketNo();
+            }
+        });
+        
+        //on modal List Ticket
+        $("#filtercus").keyup(function (event) {
+            if (event.keyCode === 13) {
+                FilterTicketList($("#filtercus").val());
             }
         });
         $("#AgentTable tr").on('click', function () {
@@ -671,8 +713,6 @@ function isNumberKey(evt){
 }
 
 function saveAction() {
-    searchTicketNo();
-    if($("#temp").val() == 'SAVE'){
     var action = document.getElementById('action');
     action.value = 'save';
     var ticketNo = document.getElementById('ticketNo');
@@ -684,7 +724,9 @@ function saveAction() {
     var ticketRounting = document.getElementById('ticketRounting');
     ticketRounting.value = $("#ticketRounting").val();
     var ticketAirline = document.getElementById('ticketAirline');
-    ticketAirline.value = $("#ticketAirline").val();
+    ticketAirline.value = $("#ticketAirline").val(); 
+    var department = document.getElementById('department');
+    department.value = $("#department").val();
     var passenger = document.getElementById('passenger');
     passenger.value = $("#passenger").val();
     var issueDate = document.getElementById('issueDate');
@@ -732,11 +774,9 @@ function saveAction() {
     var agentReceiveDate = document.getElementById('agentReceiveDate');
     agentReceiveDate.value = $("#agentReceiveDate").val();
     document.getElementById('AddTicketFareForm').submit();
-    }else{
-        alert('Ticket no. already exist!');
-    }
 }
-function searchTicketNo(ticketNo) {
+function searchTicketNo() {
+    var ticketNo = $("#ticketNo").val();
     var servletName = 'TicketFareAirlineServlet';
     var servicesName = 'AJAXBean';
     var param = 'action=' + 'text' +
@@ -757,12 +797,40 @@ function CallAjax(param) {
             cache: false,
             data: param,
             success: function(msg) {
-                if(msg == 1) {
-                    alert('Ticket no. already exist!');
-                    $("#temp").val('NOTSAVE');
+                var path = msg.split(',');
+                if(path[0] == 'AirticketPassenger'){
+                    document.getElementById('ticketFare').value = path[1];
+                    document.getElementById('ticketTax').value = path[2];
+                    if(path[3] == 'I'){
+                        document.getElementById('department').value = "wendy";
+                    }else if(path[3] == 'O'){
+                        document.getElementById('department').value = "outbound";
+                    }
+                    if(path[4] == 'Other'){
+                        document.getElementById('ticketAirline').value = "1";
+                    } else if(path[4] == 'TG'){
+                        document.getElementById('ticketAirline').value = "2";
+                    }
                 }else{
-                    $("#temp").val('SAVE');
+                        //1	Ticket Fare				
+                        //2	Ticket tax				
+                        //3	Issue date				
+                        //4	Ticket Routing				
+                        //5	Airline				
+                        //6	Ticket By				
+                        //7	Passenger				
+                        //8	Department	
+                    document.getElementById('ticketFare').value = path[1];
+                    document.getElementById('ticketTax').value = path[2];
+                    document.getElementById('issueDate').value = path[3];
+                    document.getElementById('ticketRounting').value = path[4];
+                    document.getElementById('ticketAirline').value = path[5];
+                    document.getElementById('ticketBuy').value = path[6];
+                    document.getElementById('passenger').value = path[7];
+                    document.getElementById('department').value = path[8];
                 }
+                
+                
                 $("#ajaxload").addClass("hidden");
             }, error: function(msg) {
                 $("#ajaxload").addClass("hidden");
@@ -772,6 +840,90 @@ function CallAjax(param) {
         alert(e);
     }
 }
-   
+function FilterTicketList(referNo) {
+    var servletName = 'TicketFareAirlineServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&referNo=' + referNo +
+            '&type=' + 'getTicketList';
+    CallFilterAjax(param);
+}
 
+function CallFilterAjax(param) {
+    var url = 'AJAXServlet';
+    $("#ajaxload").removeClass("hidden");
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function (msg) {
+                try {
+                    $('#ListRefnoTable').dataTable().fnClearTable();
+                    $('#ListRefnoTable').dataTable().fnDestroy();
+                    $("#ListRefnoTable tbody").empty().append(msg);
+                    $('#ListRefnoTable').dataTable({bJQueryUI: true,
+                        "sPaginationType": "full_numbers",
+                        "bAutoWidth": false,
+                        "bFilter": false,
+                        "bPaginate": true,
+                        "bInfo": false,
+                        "bLengthChange": false,
+                        "iDisplayLength": 10
+                    });
+                     $("#ajaxload").addClass("hidden");
+                } catch (e) {
+                    alert(e);
+                }
+
+            }, error: function (msg) {
+                 $("#ajaxload").addClass("hidden");
+                alert(msg);
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
+}   
+function setTicketDetail(ticket, name, ticketClass, departDate, ticketFare, ticketTax) {
+    $("#ticketNo").val(ticket);
+//    $("#name").val(name);
+//    $("#ticketClass").val(ticketClass);
+//    $("#departDate").val(departDate);
+    $("#ticketFare").val(ticketFare);
+    $("#ticketTax").val(ticketTax);
+    $("#ListRefnoModal").modal('hide');
+}
+
+function calculateVat() {
+    //Diff Vat = Inv Amount - Fare - Tax - Ins (ค่า Diff vat สามารถติดลบได้)
+    var invAmount = document.getElementById('invoiceAmount').value;
+    if (invAmount == ""){
+        invAmount = 0;
+    }
+    
+    var ticketfare = document.getElementById('ticketFare').value;
+    if (ticketfare == ""){
+        ticketfare = 0;
+    }
+    
+    var tickettax = document.getElementById('ticketTax').value;
+    if (tickettax == ""){
+        tickettax = 0;
+    }
+    
+    var ticketins = document.getElementById('ticketIns').value;
+    if (ticketins == ""){
+        ticketins = 0;
+    }
+
+   var inv = parseFloat(invAmount);
+   var fare = parseFloat(ticketfare);
+   var tax = parseFloat(tickettax);
+   var ins = parseFloat(ticketins);
+   document.getElementById("diffVat").value = inv - fare - tax - ins ;
+}
 </script>

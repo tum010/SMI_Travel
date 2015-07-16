@@ -58,18 +58,18 @@
         var $select = $('a[href*="' + sub + '"]');
         $("#CheckingAirTicketMenu").find($select).css('background-color', '#ccc');
 
-        $("#CheckingAirTicketMenu a").one('mouseover', function () {
-
-            var action = '?action=edit';
-            if ($("#actionIDown").val() == 'new') {
-                action = "&action=new";
-                $('#CheckingAirTicketMenu a').click(function (e) {
-                    e.preventDefault();
-                });
-            }
-            //console.log("href");
-            $(this).attr('href', $(this).attr('href') + action);
-        });
+//        $("#CheckingAirTicketMenu a").one('mouseover', function () {
+//
+//            var action = '?action=edit';
+//            if ($("#actionIDown").val() == 'new') {
+//                action = "&action=new";
+//                $('#CheckingAirTicketMenu a').click(function (e) {
+//                    e.preventDefault();
+//                });
+//            }
+//            //console.log("href");
+//            $(this).attr('href', $(this).attr('href') + action);
+//        });
     });
 
 

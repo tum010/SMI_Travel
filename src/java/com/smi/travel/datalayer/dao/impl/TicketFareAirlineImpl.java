@@ -7,8 +7,10 @@
 package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.TicketFareAirlineDao;
+import com.smi.travel.datalayer.entity.AirticketFlight;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.BookingFlight;
+import com.smi.travel.datalayer.entity.MAirlineAgent;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
 import com.smi.travel.util.UtilityFunction;
@@ -102,13 +104,85 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
     }
 
     @Override
-    public AirticketPassenger getTicketFareBookingFromTicketNo(String TicketNo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String getTicketFareBookingFromTicketNo(String TicketNo) {
+        String result ="";
+        AirticketPassenger ticketPass = new AirticketPassenger();
+        String query = "from AirticketPassenger pass where pass.series1||pass.series2||pass.series3 = :ticketNo";
+        Session session = this.sessionFactory.openSession();
+        List<AirticketPassenger> ticketPassList = session.createQuery(query).setParameter("ticketNo", TicketNo).list();
+        if (ticketPassList.isEmpty()) {
+            return null;
+        }else{
+             for(int i = 0 ; i < ticketPassList.size() ; i++ ){
+                 result = "AirticketPassenger" + ","  
+                         + ticketPassList.get(i).getTicketFare() + "," 
+                         + ticketPassList.get(i).getTicketTax() + "," 
+                         + ticketPassList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType() + "," //department 
+                         + ticketPassList.get(i).getAirticketAirline().getMAirline().getCode() //airline
+                         ;
+             }
+        }
+        session.close();
+        this.sessionFactory.close();
+        return result;
     }
 
     @Override
-    public List<AirticketPassenger> getListTicketFareFromRefno(String Refno) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String getListTicketFareFromRefno(String Refno) {
+        String result ="";
+        System.out.println(" Refno ::: "+Refno);
+        String query = " from AirticketPassenger  airP where airP.airticketAirline.airticketPnr.airticketBooking.master.referenceNo = :refno";
+        Session session = this.sessionFactory.openSession();
+        List<AirticketPassenger> ticketPassList = session.createQuery(query).setParameter("refno", Refno).list();
+        
+        if (ticketPassList.isEmpty()) {
+            return null;
+        }else{
+            result =  buildTicketListHTML(ticketPassList);
+        }
+        session.close();
+        this.sessionFactory.close();
+        return result;
+    }
+    
+    public String buildTicketListHTML(List<AirticketPassenger> airPassengerList) {
+        StringBuffer html = new StringBuffer();
+        if (airPassengerList == null || airPassengerList.size() == 0) {
+            return html.toString();
+        } 
+
+        for(int i = 0 ; i < airPassengerList.size() ; i++ ){
+            System.out.println(" airPassengerList.get(i).getId() "+airPassengerList.get(i).getId());
+            System.out.println(" airPassengerList.get(i).getSeries1() "+airPassengerList.get(i).getSeries1());
+            System.out.println(" aairPassengerList.get(i).getLastName() "+airPassengerList.get(i).getLastName());
+            String id = airPassengerList.get(i).getId();
+            String ticket = airPassengerList.get(i).getSeries1() 
+                            + airPassengerList.get(i).getSeries2() 
+                            + airPassengerList.get(i).getSeries3();
+            String name = airPassengerList.get(i).getMInitialname().getName() 
+                            + airPassengerList.get(i).getLastName() + " "  
+                            + airPassengerList.get(i).getFirstName();
+            List<AirticketFlight> airlines = new ArrayList<AirticketFlight>(airPassengerList.get(i).getAirticketAirline().getAirticketFlights());
+            String ticketClass = airlines.get(i).getMFlight().getName();
+            String departDate = String.valueOf(airlines.get(i).getDepartDate());
+            String ticketFare = String.valueOf(airPassengerList.get(i).getTicketFare());
+            String ticketTax = String.valueOf(airPassengerList.get(i).getTicketTax());
+
+            String newrow
+                    = "<tr>"
+                    + "<td>" + ticket + "</td>"
+                    + "<td>" + name + "</td>"
+                    + "<td>" + ticketClass + "</td>"
+                    + "<td>" + departDate + "</td>"
+                    + "<td>" + ticketFare + "</td>"
+                    + "<td>" + ticketTax + "</td>"
+                    + "<td class=\"text-center\" onclick=\"setTicketDetail('" + ticket + "','" + name + "','" + ticketClass + "','" + departDate + "','" + ticketFare + "','" + ticketTax + "')\">"
+                    + "<a href=\"\"><span class=\"glyphicon glyphicon-check\"></span></a>" + "</td>"
+                    + "</tr>";
+            html.append(newrow);
+        }
+
+        return html.toString();
     }
 
     @Override
@@ -117,17 +191,21 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
     }
 
     @Override
-    public int checkDuplicateTicketNo(String TicketNo) {
+    public int validateTicket(String TicketNo) {
         int result = 0;
-        String query = "from TicketFareAirline t where t.ticketNo = :ticketNo";
+        String query = "from TicketFareAirline t where t.ticketNo = :TicketNo";
         Session session = this.sessionFactory.openSession();
-        List<TicketFareAirline> ticketFareList = session.createQuery(query).setParameter("ticketNo", TicketNo).list();
-        session.close();
+        List<TicketFareAirline> ticketFareList = session.createQuery(query).setParameter("TicketNo",TicketNo).list();
+        System.out.println("query : "+query );
+        
         if (ticketFareList.isEmpty()) {
             result = 0;
         }else{
             result = 1;
-        }
+        }        
+        System.out.print("++++++++++ result ++++++++++"+result);
+        session.close();
+        this.sessionFactory.close();
         return result;
     }
 
@@ -185,6 +263,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         List<TicketFareAirline> listAirline =  session.createQuery(query).list();
         List<TicketFareView> listView = new ArrayList<TicketFareView>();
         System.out.println("listAirline.size() "+listAirline.size());
+        
         if(listAirline.isEmpty()){
             System.out.println("List null ");
             return null;
@@ -195,8 +274,11 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                 ticketFareView.setType(String.valueOf(listAirline.get(i).getTicketType()));
                 ticketFareView.setBuy(String.valueOf(listAirline.get(i).getTicketBuy()));
                 ticketFareView.setRounting(String.valueOf(listAirline.get(i).getTicketRounting()));
-                if (("").equals(listAirline.get(i).getMAirlineAgent())){
-                    ticketFareView.setAirline(String.valueOf(listAirline.get(i).getMAirlineAgent().getCode()));
+                MAirlineAgent mAirlineAgent = new MAirlineAgent();
+                if(listAirline.get(i).getMAirlineAgent() != null){
+                    mAirlineAgent.setId(listAirline.get(i).getMAirlineAgent().getId());
+                    mAirlineAgent.setCode(listAirline.get(i).getMAirlineAgent().getCode());
+                    ticketFareView.setAirline(String.valueOf(mAirlineAgent.getCode()));
                 }
                 ticketFareView.setTicketNo(String.valueOf(listAirline.get(i).getTicketNo()));
                 ticketFareView.setIssueDate(listAirline.get(i).getIssueDate());
@@ -214,6 +296,19 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         this.sessionFactory.close();
         return listView; 
     }
+        
+    public TicketFareAirline getTicketFareFromId(String id) {
+        Session session = this.sessionFactory.openSession();
+        String query ="from TicketFareAirline t where t.id = :ticketId"; 
+        List<TicketFareAirline> list = session.createQuery(query).setParameter("ticketId", id).list();
+        
+        if (list.isEmpty()) {
+            return null;
+        } else {
+            return list.get(0);
+        }
+    }
+    
     public SessionFactory getSessionFactory() {
         return sessionFactory;
     }
@@ -230,8 +325,6 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         this.transaction = transaction;
     }
 
-
-
-    
+   
     
 }
