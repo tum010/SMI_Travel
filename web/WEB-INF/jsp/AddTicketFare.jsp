@@ -53,7 +53,8 @@
                         </div>
                         <div class="col-xs-1 form-group" style="width: 200px">
                             <div class="input-group">
-                                <input id="ticketNo" name="ticketNo" type="text" class="form-control" value="${ticketFare.ticketNo}">
+                                <input id="ticketId" name="ticketId" type="hidden" class="form-control" maxlength="11" value="${ticketFare.id}">
+                                <input id="ticketNo" name="ticketNo" type="text" class="form-control" maxlength="20" value="${ticketFare.ticketNo}">
                             </div>
                             
                         </div>
@@ -150,7 +151,7 @@
                         </div>
                         <div class="col-xs-1 form-group" style="width: 200px">
                             <div class="input-group">
-                                <input id="passenger" name="passenger" type="text" class="form-control" value="${ticketFare.passenger}">
+                                <input id="passenger" name="passenger" type="text" class="form-control" maxlength="50" value="${ticketFare.passenger}">
                             </div>
                         </div>
                         <div class="col-xs-1 text-right" style="width: 150px">
@@ -224,7 +225,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="ticketFare" name="ticketFare" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketFare}" onkeyup="calculateVat()">
+                                    <input id="ticketFare" name="ticketFare" type="text" class="form-control" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketFare}" onkeyup="calculateVat()">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
@@ -232,7 +233,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="ticketTax" name="ticketTax" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketTax}" onkeyup="calculateVat()">
+                                    <input id="ticketTax" name="ticketTax" type="text" class="form-control" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketTax}" onkeyup="calculateVat()">
                                 </div>
                             </div>
                         </div>
@@ -243,7 +244,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="ticketIns" name="ticketIns" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketIns}" onkeyup="calculateVat()">
+                                    <input id="ticketIns" name="ticketIns" type="text" class="form-control" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketIns}" onkeyup="calculateVat()">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -251,7 +252,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="ticketCommission" name="ticketCommission" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketCommission}">
+                                    <input id="ticketCommission" name="ticketCommission" type="text" class="form-control" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketCommission}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
@@ -259,7 +260,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="agentCommission" name="agentCommission" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.agentCommission}">
+                                    <input id="agentCommission" name="agentCommission" type="text" class="form-control" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.agentCommission}">
                                 </div>
                             </div>
                         </div>
@@ -268,8 +269,8 @@
                                 <label class="control-label text-right">Inv Amount</label>
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
-                                <div class="input-group">                                    
-                                    <input id="invoiceAmount" name="invoiceAmount" type="text" class="form-control" value="${ticketFare.invoiceAmount}" readonly="" onkeyup="calculateVat()">
+                                <div class="input-group">
+                                    <input id="invoiceAmount" name="invoiceAmount" type="text" class="form-control" maxlength="10" value="" readonly="" onkeyup="calculateVat()">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -277,7 +278,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="salePrice" name="salePrice" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.salePrice}">
+                                    <input id="salePrice" name="salePrice" type="text" class="form-control" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.salePrice}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
@@ -285,7 +286,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="diffVat" name="diffVat" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.diffVat}">
+                                    <input id="diffVat" name="diffVat" type="text" class="form-control" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.diffVat}">
                                 </div>
                             </div>
 
@@ -315,7 +316,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
-                                    <textarea rows="3" class="form-control" id="remark" name="remark" style="width: 307%" >${ticketFare.remark}</textarea>
+                                    <textarea rows="3" class="form-control" id="remark" maxlength="255" name="remark" style="width: 307%" >${ticketFare.remark}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -334,7 +335,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class='input-group date'>
-                                    <input id="overCommission" name="overCommission" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.overCommission}">
+                                    <input id="overCommission" name="overCommission" type="text" class="form-control" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.overCommission}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -342,7 +343,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="addPay" name="addPay" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.addPay}">
+                                    <input id="addPay" name="addPay" type="text" class="form-control" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.addPay}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
@@ -350,7 +351,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="agentComPay" name="agentComPay" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.agentComPay}">
+                                    <input id="agentComPay" name="agentComPay" type="text" class="form-control" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.agentComPay}">
                                 </div>
                             </div>
                         </div>
@@ -392,7 +393,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class='input-group date'>
-                                    <input id="litterCommission" name="litterCommission" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.litterCommission}">
+                                    <input id="litterCommission" name="litterCommission" type="text" class="form-control" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.litterCommission}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -400,7 +401,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="decPay" name="decPay" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.decPay}">
+                                    <input id="decPay" name="decPay" type="text" class="form-control" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.decPay}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
@@ -408,7 +409,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="agentComReceive" name="agentComReceive" type="text" class="form-control" onkeypress="return isNumberKey(event)" value="${ticketFare.agentComReceive}">
+                                    <input id="agentComReceive" name="agentComReceive" type="text" class="form-control" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.agentComReceive}">
                                 </div>
                             </div>
                         </div>
@@ -644,7 +645,7 @@
                searchTicketNo();
             }
         });
-        
+
         //on modal List Ticket
         $("#filtercus").keyup(function (event) {
             if (event.keyCode === 13) {

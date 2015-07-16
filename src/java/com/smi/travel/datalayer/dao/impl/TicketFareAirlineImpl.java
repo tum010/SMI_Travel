@@ -36,7 +36,6 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         try {
             Session session = this.sessionFactory.openSession();
             setTransaction(session.beginTransaction());
-           
             session.save(ticket);
             getTransaction().commit();
             session.close();
@@ -54,9 +53,9 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         int result = 0;
         try {
             Session session = this.sessionFactory.openSession();
-            transaction = session.beginTransaction();
+            setTransaction(session.beginTransaction());
             session.update(ticket);
-            transaction.commit();
+            getTransaction().commit();
             session.close();
             this.sessionFactory.close();
             result = 1;
@@ -64,7 +63,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
             ex.printStackTrace();
             result = 0;
         }
-        return result;     
+        return result;    
     }
 
     @Override
@@ -150,9 +149,6 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         } 
 
         for(int i = 0 ; i < airPassengerList.size() ; i++ ){
-            System.out.println(" airPassengerList.get(i).getId() "+airPassengerList.get(i).getId());
-            System.out.println(" airPassengerList.get(i).getSeries1() "+airPassengerList.get(i).getSeries1());
-            System.out.println(" aairPassengerList.get(i).getLastName() "+airPassengerList.get(i).getLastName());
             String id = airPassengerList.get(i).getId();
             String ticket = airPassengerList.get(i).getSeries1() 
                             + airPassengerList.get(i).getSeries2() 
@@ -189,16 +185,18 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
     }
 
     @Override
-    public int validateTicket(String TicketNo) {
+    public int validateSaveTicket(TicketFareAirline ticket) {
         int result = 0;
         String query = "from TicketFareAirline t where t.ticketNo = :TicketNo";
         Session session = this.sessionFactory.openSession();
-        List<TicketFareAirline> ticketFareList = session.createQuery(query).setParameter("TicketNo",TicketNo).list();
+        List<TicketFareAirline> ticketFareList = session.createQuery(query).setParameter("TicketNo",ticket.getTicketNo()).list();
         System.out.println("query : "+query );
-        if (ticketFareList.isEmpty()) {
-            result = 0;
+        if (ticketFareList.isEmpty()){
+            System.out.println("+++++++++++ InsertTicketFare ++++++++++++");
+            result = InsertTicketFare(ticket);
         }else{
-            result = 1;
+            System.out.println("+++++++++++ UpdateTicketFare ++++++++++++");
+            result = UpdateTicketFare(ticket);
         }        
         session.close();
         this.sessionFactory.close();

@@ -76,6 +76,9 @@ public class AddTicketFareController extends SMITravelController {
         String agentPayDate = request.getParameter("agentPayDate");
         String agentReceiveDate = request.getParameter("agentReceiveDate");
         String ticketId = request.getParameter("ticketId");
+        String invoiceAmount = request.getParameter("invoiceAmount");
+        String department = request.getParameter("department");
+        System.out.println("department +++ "+ department);
         
         int result = 0;
         List<MAirlineAgent> mAirlineAgentsList = utilityService.getListMAirLineAgent();
@@ -85,12 +88,10 @@ public class AddTicketFareController extends SMITravelController {
         Agent agents = new Agent();
 
         util = new UtilityFunction();
-        System.out.print("action :" + action + "// action //");
+        System.out.print("action :" + action + "//");
 
         if ("save".equalsIgnoreCase(action)){
-            int validateTicket = ticketFareAirlineService.validateTicket(ticketNo);
-            System.out.print("validateTicket :" + validateTicket + "// //");
-            
+            System.out.println("ticketId : "+ ticketId);
             MAirlineAgent mAirlineAgent = new MAirlineAgent();
             mAirlineAgent.setId(ticketAirline);
            
@@ -184,27 +185,15 @@ public class AddTicketFareController extends SMITravelController {
                 ticketFareAirline.setAgentReceiveDate(util.convertStringToDate(agentReceiveDate));
                 request.setAttribute(AGENTRECEIVEDATE, agentReceiveDate);
             }
-            if(validateTicket == 0){
-                System.out.print("validateTicket :" + validateTicket + "// 0 = Save //");
-                result = ticketFareAirlineService.InsertTicketFare(ticketFareAirline);
-                if (result == 1) {
-                    request.setAttribute(SAVERESULT, "save successful");
-                } else {
-                    request.setAttribute(SAVERESULT, "save unsuccessful");
-                } 
-
-                request.setAttribute(TICKETFARE,ticketFareAirline); 
-            }
-            else{
-                System.out.print("validateTicket :" + validateTicket + "// 1 = Update //");
-                result = ticketFareAirlineService.UpdateTicketFare(ticketFareAirline);
-                if (result == 1) {
-                    request.setAttribute(SAVERESULT, "save successful");
-                } else {
-                    request.setAttribute(SAVERESULT, "save unsuccessful");
-                } 
-                request.setAttribute(TICKETFARE,ticketFareAirline); 
-            }
+            result = ticketFareAirlineService.validateSaveTicket(ticketFareAirline);
+            System.out.print("result :" + result + " =================== ");
+            if (result == 1) {
+                request.setAttribute(SAVERESULT, "save successful");
+            } else {
+                request.setAttribute(SAVERESULT, "save unsuccessful");
+            } 
+            request.setAttribute(TICKETFARE,ticketFareAirline); 
+            
         } else if ("edit".equalsIgnoreCase(action)) {
             System.out.print("ticketId : " +ticketId);
             TicketFareAirline ticketFareAirlines = new TicketFareAirline();
@@ -223,10 +212,7 @@ public class AddTicketFareController extends SMITravelController {
             request.setAttribute(AGENTPAYDATE, ticketFareAirlines.getAgentPayDate());
             request.setAttribute(AGENTRECEIVEDATE, ticketFareAirlines.getAgentReceiveDate());
         }
-//        MAirlineAgent mAirlineAgent = new MAirlineAgent();
-//        mAirlineAgent.setId(ticketAirline);
-//        TicketFareAirline ticketFareAirline = new TicketFareAirline();
-//        request.setAttribute(TICKETFARE,ticketFareAirline);
+
         return AddTicketFare;
     }
 
