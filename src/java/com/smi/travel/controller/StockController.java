@@ -71,13 +71,13 @@ public class StockController extends SMITravelController {
                 if(productName != null){
                     product.setName(productName);
                 }
-                if(staffId != null){
+                if(staffId != null && (!"".equals(staffId))){
                      staff.setId(staffId);
                 }
-                if(staffCode != null){
+                if(staffCode != null && (!"".equals(staffId)) ){
                      staff.setUsername(staffCode);
                 }
-                if(staffName != null){
+                if(staffName != null && (!"".equals(staffId))){
                      staff.setName(staffName);
                 } 
                 stock.setProduct(product);
@@ -133,6 +133,20 @@ public class StockController extends SMITravelController {
             request.setAttribute("FromDate", stockData.getEffectiveFrom());
             request.setAttribute("ToDate", stockData.getEffectiveTo());
             request.setAttribute("CreateDate", stockData.getCreateDate());
+        }else if("delete".equals(action)){
+            String stockId = request.getParameter("InputStockId");
+            String stockDetailId = request.getParameter("idStockDelete");
+            String result = stockService.DeleteStockDetail(stockDetailId);
+            
+            if("success".equals(result)){
+                Stock stockData = stockService.getStock(stockId);         
+                List<StockDetail> listStockDetail = stockService.checkStockDetail(stockId);
+                request.setAttribute("listStockDetail", listStockDetail);
+                request.setAttribute("stockData", stockData);
+                request.setAttribute("FromDate", stockData.getEffectiveFrom());
+                request.setAttribute("ToDate", stockData.getEffectiveTo());
+                request.setAttribute("CreateDate", stockData.getCreateDate());
+            }          
         }
         
         return Stock;
@@ -168,7 +182,11 @@ public class StockController extends SMITravelController {
             stockDetail.setPayStatus(payStatusItemListInt);
             stockDetail.setStock(stock);
             stockDetail.setMStockStatus(mStockStatus);
-            listStockDetail.add(stockDetail);
+            if("".equals(codeItemList)){
+                listStockDetail.remove(stockDetail);
+            }else{
+                listStockDetail.add(stockDetail);
+            }
         }
         return  listStockDetail;
     }

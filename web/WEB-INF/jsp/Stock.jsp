@@ -30,17 +30,23 @@
     </ol>
 </section>
 <div class ="container"  style="padding-top: 15px;padding-left: 5px;" ng-app="">
+   
     <div class="col-sm-2">
         <div ng-include="'WebContent/Master/StockMenu.html'"></div>
     </div>
     <form action="Stock.smi" method="post" id="StockForm" name="StockFormName" role="form" onsubmit=" return validFrom()">
     <div class="col-sm-10">
+        <input type="hidden" id="idStockDelete" name= "idStockDelete" value="1" />
         <!--Alert Save -->
         <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Save Success!</strong> 
         </div>
-        <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+        <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Save Not Success!</strong> 
+        </div>
+        <div id="textAlertDelete"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Save Not Success!</strong> 
         </div>
@@ -228,7 +234,7 @@
                                                 <td>${std.payStatus}</td>
                                                 <td>NEW</td>
                                                 <td class="text-center">                                          
-                                                    <a href="#" onclick="deleteItemListRow(${taxdesc.count})"  data-toggle="modal" data-target="" class="remCF" id="ButtonRemove${taxdesc.count}">
+                                                    <a href="#" onclick="deleteItemListRow('${taxdesc.count}','${std.code}')"  data-toggle="modal" data-target="" class="remCF" id="ButtonRemove${taxdesc.count}">
                                                         <span id="Spanremove${taxdesc.count}" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal" data-target="#delStockModal"></span>
                                                     </a>
                                                     
@@ -425,7 +431,7 @@
                 <h4 class="modal-title">Delete Stock</h4>
             </div>
             <div class="modal-body" >
-                <input type="hidden" id="idCodeStockDelete" value="" />
+                
                 <div id="delCodeStock"></div>
             </div>
             <div class="modal-footer">

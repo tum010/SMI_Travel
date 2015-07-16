@@ -92,11 +92,11 @@ $(document).ready(function () {
                 var colIndex = $(this).parent().children().index($(this));
                 var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
                 rowAll = $("#TaxInvoiceTable tr").length;
-                alert("RowIn : " +rowIndex + " Row All : " + rowAll );
-//                if (rowIndex === rowAll) {
+//                alert("RowIn : " +rowIndex + " Row All : " + rowAll );
+                if (rowIndex === rowAll) {
                     console.log("rowAll : " + rowAll);
                     AddRow(rowAll);
-//                }
+                }
             }
         });
     });
@@ -248,15 +248,28 @@ function addItemList(){
 
 function deleteItemListRow(rowId,code){
     // Click Action Delete
-    $("#idCodeStockDelete").val(rowId);
+    $("#idStockDelete").val(rowId);
     $("#delCodeStock").text(' Are you sure to delete Item code : ' + code + ' in Row : ' + rowId +' ??');
+//    console.log("rowAll : " + rowAll);
+    resetNumberItemList();
 }
 
 function deleteStock(){
     // ID In Modal Delete
-    var rowId  = document.getElementById('idCodeStockDelete');
+    var rowId  = document.getElementById('idStockDelete');
+    var stockDetailId  = $("#stockDetailId"+rowId.value).val();
+
+    alert(" R : " + rowId.value);
     document.getElementById("TaxInvoiceTable").deleteRow(rowId.value);
     resetNumberItemList();
+    if(stockDetailId !== ""){
+        rowId.value = stockDetailId ;
+        var action = document.getElementById('action');
+        action.value = 'delete';
+        document.getElementById('StockForm').submit();
+    }
+    
+    //$(rowId).remove();
 }
 
 function resetNumberItemList(){
@@ -264,6 +277,15 @@ function resetNumberItemList(){
     var countRow = document.getElementById('TaxInvoiceTable').rows; 
     for (var i = 1 ; i <= (rows-1); i++){  
         countRow[i].cells[1].innerHTML = i; 
+        //alert(countRow[i].cells[2].attr('name').val());
+        countRow[i].cells[2].getElementsByTagName("input")[0].name = "codeItemList" + i;
+        //alert("test");
+//        $("#" + id).attr('name', 'sel' + rowIndex);
+//        countRow[i].cells[3].innerHTML = "SeleteTypeItemList"+i;
 //          alert("Row : "+ countRow[i].cells[1].innerHTML + " Value : " + countRow[i].cells[0].innerHTML);
     }
+
+
+    
+    
 }
