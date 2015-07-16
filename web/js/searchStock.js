@@ -19,7 +19,7 @@ function searchAction() {
  
  function validFrom(){
     // Validator Date From and To
-    $("#StockForm")
+    $("#SearchStockForm")
             .bootstrapValidator({
                 framework: 'bootstrap',
 //                container: 'tooltip',
