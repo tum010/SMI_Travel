@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.dao;
 
+import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.PaymentWendy;
 import com.smi.travel.datalayer.view.entity.PaymentWendytourView;
 import java.util.List;
@@ -21,5 +22,6 @@ public interface PaymentWendytourDao {
     public String DeletePaymentWendyDetail(String DetailID);
     public PaymentWendy SearchPaymentWendyFromPayno(String payno);
     public List<PaymentWendytourView> SearchPaymentFromFilter(String DateFrom ,String Dateto,String PVType);
+    public Master getMasterFromRefno(String refno);
     
 }
