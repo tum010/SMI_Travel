@@ -8,6 +8,7 @@ import com.smi.travel.datalayer.entity.MPaymentDoctype;
 import com.smi.travel.datalayer.entity.MPaytype;
 import com.smi.travel.datalayer.entity.PaymentDetailWendy;
 import com.smi.travel.datalayer.entity.PaymentWendy;
+import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.PaymentTourHotelService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
@@ -34,11 +35,11 @@ public class PaymentTourHotelController extends SMITravelController {
     private static final String STATUS ="status_list";
     private static final String INVOICESUPLIST ="invoiceSup_list";
     private static final String APCODELIST ="APcode_list";
-    private static final String PAYMENHOTELTLIST ="paymentHotel_list";
     private static final String PAYMENHOTELTCOUNT ="paymenthotelcount";
     private static final String PAYMENTLIST ="payment_list";
     private static final String PRODUCTLIST ="product_list";
     private static final String CURRENCYLIST ="currency_list";
+    private static final String PRODUCTDETAILLIST ="productDetail_list";
     private UtilityService utilservice;
     UtilityFunction util;
     private PaymentTourHotelService paymentTourHotelService;
@@ -46,7 +47,22 @@ public class PaymentTourHotelController extends SMITravelController {
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-
+    
+        List<MItemstatus> mItemstatusList = utilservice.getListMItemstatus();
+        request.setAttribute(STATUS, mItemstatusList);
+        List<MPaymentDoctype> mPaymentList = utilservice.getListMpaymentDocType();
+        request.setAttribute(PVTYPE, mPaymentList);
+        List<MAccpay> mAccpayList = utilservice.getListMAccpay();
+        request.setAttribute(PAYMENTLIST, mAccpayList);
+        List<InvoiceSupplier> invoiceSupplierList = paymentTourHotelService.getListInvoiceSuppiler();
+        request.setAttribute(INVOICESUPLIST, invoiceSupplierList);
+        List<MPaytype> mProdictList = utilservice.getListMPayType();
+        request.setAttribute(PRODUCTLIST, mProdictList);
+        List<MCurrency> mCurrencyList = utilservice.getListMCurrency();
+        request.setAttribute(CURRENCYLIST, mCurrencyList);
+        request.setAttribute(PAYMENHOTELTCOUNT, "0");
+        request.setAttribute("btnSave", "save");
+        
         String action = request.getParameter("action");
         System.out.println("action : " + action);
         String InputPayNo = request.getParameter("InputPayNo");
@@ -81,7 +97,7 @@ public class PaymentTourHotelController extends SMITravelController {
         System.out.println("InputChqAmount : " + InputChqAmount);
         String counter = request.getParameter("counter");
         System.out.println("counter : " + counter);
-        
+
         if ("add".equalsIgnoreCase(action)) {
             UtilityFunction utilfunction = new UtilityFunction();
             PaymentWendy paymentWendy = new PaymentWendy();
@@ -119,29 +135,67 @@ public class PaymentTourHotelController extends SMITravelController {
                 setPaymentDetailWendy(request, counter, paymentWendy);
             }
             
+            SystemUser user = (SystemUser) session.getAttribute("USER");
+            paymentWendy.setCreateBy(user.getUsername());
+            
             String result = paymentTourHotelService.InsertPaymentWendy(paymentWendy);
             System.out.println("result : " + result);
             
+        } else if("edit".equalsIgnoreCase(action)) {
+            String paymentId = request.getParameter("paymentId");
+            System.out.println("paymentId : " + paymentId);
+            
+            PaymentWendy paymentWendy = paymentTourHotelService.getPaymentWendyFromID(paymentId);
+            InputPayNo = paymentWendy.getPayNo();
+            account = String.valueOf(paymentWendy.getAccount());
+            InputPayDate = String.valueOf(paymentWendy.getPayDate());            
+            itemPvType = paymentWendy.getMPaymentDoctype().getId();
+            itemStatus = paymentWendy.getMItemstatus().getId();
+            InputInvoiceSupId = paymentWendy.getInvoiceSup();
+            Detail = paymentWendy.getDetail();
+            itemPayment = paymentWendy.getMAccpay().getId();
+            InputRemark = paymentWendy.getRemark();
+            InputCash = String.valueOf(paymentWendy.getCash());
+            InputChqNo = paymentWendy.getChqNo();
+            InputChqAmount = String.valueOf(paymentWendy.getChqAmount());
+            
+            InvoiceSupplier invoiceSupplierData = paymentTourHotelService.getDataInvoiceSuppiler(InputInvoiceSupId);
+            InputInvoiceSupCode = invoiceSupplierData.getCode();
+            InputInvoiceSupName = invoiceSupplierData.getName();
+            InputAPCode = invoiceSupplierData.getApcode();
+            List<PaymentDetailWendy> paymentDetailWendyList = new ArrayList<PaymentDetailWendy>(paymentWendy.getPaymentDetailWendies());
+            int i = 1;
+            String size = String.valueOf(paymentDetailWendyList.size()+1);
+        
+            request.setAttribute("InputPayNo", InputPayNo);
+            request.setAttribute("account", account);
+            request.setAttribute("InputPayDate", InputPayDate);
+            request.setAttribute("itemPvType", itemPvType);
+            request.setAttribute("itemStatus", itemStatus);
+            request.setAttribute("InputInvoiceSupId", InputInvoiceSupId);
+            request.setAttribute("InputInvoiceSupCode", InputInvoiceSupCode);
+            request.setAttribute("InputInvoiceSupName", InputInvoiceSupName);
+            request.setAttribute("InputAPCode", InputAPCode);
+            request.setAttribute("Detail", Detail);
+            request.setAttribute("itemPayment", itemPayment);
+            request.setAttribute("InputRemark", InputRemark);
+            request.setAttribute("InputCash", InputCash);
+            request.setAttribute("InputChqNo", InputChqNo);
+            request.setAttribute("InputChqAmount", InputChqAmount);
+            request.setAttribute(PRODUCTDETAILLIST, paymentDetailWendyList);
+            request.setAttribute(PAYMENHOTELTCOUNT, size);
+            request.setAttribute("btnSave", "update");
+        
         } else if("deleteProductDetail".equalsIgnoreCase(action)) {
             System.out.println("deleteProductDetail");
             String ProductDetail = request.getParameter("ProductDetail");
-            String result = paymentTourHotelService.DeletePaymentWendyDetail(ProductDetail);
+            PaymentDetailWendy paymentDetailWendy = new PaymentDetailWendy();
+            paymentDetailWendy.setId(ProductDetail);
+            String result = paymentTourHotelService.DeletePaymentWendyDetail(paymentDetailWendy);
             System.out.println(result);
         }
         
-        List<MItemstatus> mItemstatusList = utilservice.getListMItemstatus();
-        request.setAttribute(STATUS, mItemstatusList);
-        List<MPaymentDoctype> mPaymentList = utilservice.getListMpaymentDocType();
-        request.setAttribute(PVTYPE, mPaymentList);
-        List<MAccpay> mAccpayList = utilservice.getListMAccpay();
-        request.setAttribute(PAYMENTLIST, mAccpayList);
-        List<InvoiceSupplier> invoiceSupplierList = paymentTourHotelService.getListInvoiceSuppiler();
-        request.setAttribute(INVOICESUPLIST, invoiceSupplierList);
-        List<MPaytype> mProdictList = utilservice.getListMPayType();
-        request.setAttribute(PRODUCTLIST, mProdictList);
-        List<MCurrency> mCurrencyList = utilservice.getListMCurrency();
-        request.setAttribute(CURRENCYLIST, mCurrencyList);
-        request.setAttribute(PAYMENHOTELTCOUNT, "0");
+       
         
         
         return PaymentTourHotel;
@@ -229,5 +283,5 @@ public class PaymentTourHotelController extends SMITravelController {
             }                        
         }
     }
-    
+
 }
