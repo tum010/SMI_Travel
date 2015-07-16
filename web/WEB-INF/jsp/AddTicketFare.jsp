@@ -900,30 +900,33 @@ function setTicketDetail(ticket, name, ticketClass, departDate, ticketFare, tick
 
 function calculateVat() {
     //Diff Vat = Inv Amount - Fare - Tax - Ins (ค่า Diff vat สามารถติดลบได้)
-    var invAmount = document.getElementById('invoiceAmount').value;
-    if (invAmount == ""){
-        invAmount = 0;
-    }
-    
-    var ticketfare = document.getElementById('ticketFare').value;
-    if (ticketfare == ""){
-        ticketfare = 0;
-    }
-    
-    var tickettax = document.getElementById('ticketTax').value;
-    if (tickettax == ""){
-        tickettax = 0;
-    }
-    
-    var ticketins = document.getElementById('ticketIns').value;
-    if (ticketins == ""){
-        ticketins = 0;
-    }
+    var ticketType = document.getElementById('ticketType').value;
+    if(ticketType == "A" || ticketType == "B"){
+        var invAmount = document.getElementById('invoiceAmount').value;
+        if (invAmount == ""){
+            invAmount = 0;
+        }
 
-   var inv = parseFloat(invAmount);
-   var fare = parseFloat(ticketfare);
-   var tax = parseFloat(tickettax);
-   var ins = parseFloat(ticketins);
-   document.getElementById("diffVat").value = inv - fare - tax - ins ;
+        var ticketfare = document.getElementById('ticketFare').value;
+        if (ticketfare == ""){
+            ticketfare = 0;
+        }
+
+        var tickettax = document.getElementById('ticketTax').value;
+        if (tickettax == ""){
+            tickettax = 0;
+        }
+
+        var ticketins = document.getElementById('ticketIns').value;
+        if (ticketins == ""){
+            ticketins = 0;
+        }
+
+       var inv = parseFloat(invAmount);
+       var fare = parseFloat(ticketfare);
+       var tax = parseFloat(tickettax);
+       var ins = parseFloat(ticketins);
+       document.getElementById("diffVat").value = inv - fare - tax - ins ;
+    }
 }
 </script>
