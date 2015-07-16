@@ -28,6 +28,7 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
     private Transaction transaction;
     private static final int MAX_ROW = 200;
     private static final String FIND_MASTER_QUERY = "from Master M where M.referenceNo := refno";
+    private static final String FIND_PAYMENT_QUERY = "from PaymentWendy P where P.id := paymentId";
     
     @Override
     public String InsertPaymentWendy(PaymentWendy payment) {
@@ -84,8 +85,8 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
     }
 
     @Override
-    public String DeletePaymentWendyDetail(String DetailID) {
-         String result = "fail";
+    public String DeletePaymentWendyDetail(PaymentDetailWendy DetailID) {
+        String result = "fail";
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
@@ -190,6 +191,32 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
 
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+
+    @Override
+    public PaymentWendy getPaymentWendyFromID(String paymentId) {
+        String query = "from PaymentWendy p where p.id = :paymentId";
+        Session session = this.sessionFactory.openSession();
+        PaymentWendy result = new PaymentWendy();
+        List<PaymentWendy> List = session.createQuery(query).setParameter("paymentId", paymentId).list();
+        if (List.isEmpty()) {
+            return null;
+        }
+
+        result = List.get(0);
+        return result;
+    }
+
+    @Override
+    public List<PaymentDetailWendy> getPaymentDetailWendyList(String paymentId) {
+        String query = "from PaymentDetailWendy p where p.paymentWendy = :paymentId";
+        Session session = this.sessionFactory.openSession();
+        List<PaymentDetailWendy> List = session.createQuery(query).setParameter("paymentId", paymentId).list();
+        if (List.isEmpty()) {
+            return null;
+        }
+
+        return List;
     }
 
 
