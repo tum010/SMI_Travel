@@ -13,12 +13,8 @@ import com.smi.travel.datalayer.entity.BookingFlight;
 import com.smi.travel.datalayer.entity.MAirlineAgent;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
-import com.smi.travel.util.UtilityFunction;
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type;
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -197,13 +193,11 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         Session session = this.sessionFactory.openSession();
         List<TicketFareAirline> ticketFareList = session.createQuery(query).setParameter("TicketNo",TicketNo).list();
         System.out.println("query : "+query );
-        
         if (ticketFareList.isEmpty()) {
             result = 0;
         }else{
             result = 1;
         }        
-        System.out.print("++++++++++ result ++++++++++"+result);
         session.close();
         this.sessionFactory.close();
         return result;
