@@ -21,17 +21,22 @@ public class TicketFareAirlineServlet implements AbstractAJAXServlet{
 
     @Override
     public Map process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String ticketNo = request.getParameter("ticketNo");
+
         String servletName = request.getParameter("servletName");
         String Type = request.getParameter("type");
+        String ticketId = request.getParameter("ticketId");
+        String ticketNo = request.getParameter("ticketNo");
         String referNo = request.getParameter("referNo");
         System.out.print("set parameter mapping");
         Map result = new HashMap();
         
-        result.put("ticketNo", ticketNo);
         result.put("servletName", servletName);
-        result.put("type", Type);   
+        result.put("type", Type);
+        result.put("ticketId", ticketId);
+        result.put("ticketNo", ticketNo);
         result.put("referNo", referNo);
-        return result;    }
+        
+        return result;    
+    }
     
 }

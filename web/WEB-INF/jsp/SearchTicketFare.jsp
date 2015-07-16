@@ -8,7 +8,8 @@
 <link href="css/jquery-ui.css" rel="stylesheet">
 <c:set var="airlineList" value="${requestScope['airlineList']}" />
 <c:set var="ticketFare" value="${requestScope['ticketFare']}" />
-<c:set var="dataList" value="${requestScope['Ticket_List']}" />
+<c:set var="dataList" value="${requestScope['Ticket_List']}" /> 
+<%--<c:set var="ticketAlreadyUse" value="${requestScope['TicketAlreadyUse']}" />--%>
 <section class="content-header" >
     <h1>
         Checking - Air Ticket
@@ -226,9 +227,11 @@
                                             <a  href="AddTicketFare.smi?ticketId=${table.id}&action=edit">
                                                 <span class="glyphicon glyphicon-edit editicon"  ></span>
                                             </a>
-                                            <span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteTicket('${table.id}','${table.ticketNo}')" 
+                                            <span  class="glyphicon glyphicon-remove deleteicon"  onclick="deleteTicket('${table.id}','${table.ticketNo}')" 
                                                    data-toggle="modal" data-target="#DelTicket" >  </span>
                                             </center>
+                                            <input type="hidden" name="deleteTicketNo" id="deleteTicketNo" value="${table.ticketNo}">
+                                            <input type="hidden" name="deleteTicketId" id="deleteTicketId" value="${table.id}">
                                         </td>                                    
                                     </tr>
                                 </c:forEach>
@@ -250,7 +253,7 @@
                 <h4 class="modal-title"> Delete Ticket </h4>
             </div>
             <div class="modal-body" id="delTicketNo"></div>
-            <div class="modal-footer">
+            <div class="modal-footer" id="delfooter">
                 <button id="btnDelete" type="button" onclick="Delete()" class="btn btn-danger">Delete</button>
                 <button id="btnDeleteClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
@@ -268,8 +271,33 @@
         <script language="javascript">
            $('#textAlertDivNotDelete').show();
         </script>
-    </c:if>    
+    </c:if>
+    <c:if test="${requestScope['result'] =='already use all'}">        
+        <script language="javascript">
+           $(document).ready(function() {
+               var TicketAlreadyUse = ${requestScope['TicketAlreadyUse']}
+               alert("TicketNo "+TicketAlreadyUse+" is already use in payment airline & refund airline.");
+           });
+        </script>
+    </c:if>
+    <c:if test="${requestScope['result'] =='already use payment'}">        
+        <script language="javascript">
+           $(document).ready(function() {
+               var TicketAlreadyUse = ${requestScope['TicketAlreadyUse']}
+               alert("TicketNo "+TicketAlreadyUse+" is already use in payment airline.");
+           });
+        </script>
+    </c:if>   
+    <c:if test="${requestScope['result'] =='already use refund'}">        
+        <script language="javascript">
+           $(document).ready(function() {
+               var TicketAlreadyUse = ${requestScope['TicketAlreadyUse']}
+               alert("TicketNo "+TicketAlreadyUse+" is already use in refund airline.");
+           });
+        </script>
+    </c:if>   
 </c:if>  
+        
 <!--Script-->       
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
@@ -315,27 +343,24 @@ function searchAction() {
     document.getElementById('SearchTicketFareForm').submit();
 }
 
-function DeleteTicket(id,ticketNo){
+function deleteTicket(id,ticketNo){
     var TicketId = document.getElementById('ticketId');
     TicketId.value = id;
     var TicketNo = document.getElementById('ticketNo');
     TicketNo.value = ticketNo;
+    $("#deleteTicketNo").val(ticketNo);
+    $("#deleteTicketId").val(id);
     document.getElementById('delTicketNo').innerHTML = "Are you sure to delete Ticket No : " + ticketNo + " ?";
 }
 
 function Delete() {
     var action = document.getElementById('action');
     action.value = 'delete';
+    var deleteTicketNo = document.getElementById('deleteTicketNo');
+    deleteTicketNo.value = $("#deleteTicketNo").val();
+    var deleteTicketId = document.getElementById('deleteTicketId');
+    deleteTicketId.value = $("#deleteTicketId").val();
     document.getElementById('SearchTicketFareForm').submit();
 }
-//function EditTicket(id, code, name, branch, accNo, accType) {
-//    $('#Bankform').bootstrapValidator('resetForm', true);
-//    $("#BankIdEdit").val(id);
-//    $("#BankCode").val(code);
-//    $("#BankName").val(name);
-//    $("#BankBranch").val(branch);
-//    $("#BankAccountNo").val(accNo);
-//    $("#BankAccountType").val(accType);
-//    $("#actionIUP").val('update');
-//}
+
 </script>

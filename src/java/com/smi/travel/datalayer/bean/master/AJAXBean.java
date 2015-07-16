@@ -159,8 +159,7 @@ public class AJAXBean extends AbstractBean implements
         String flagDaytour = String.valueOf(map.get("flagDaytour"));
         String flagLand = String.valueOf(map.get("flagLand"));
         String flagOther = String.valueOf(map.get("flagOther"));
-         System.out.println("servletName : " + servletName);
-         System.out.println("type : " + type);
+
         if (BOOKDETAIL.equalsIgnoreCase(servletName)) {
 
             if ("checkExistCustomer".equalsIgnoreCase(type)) {

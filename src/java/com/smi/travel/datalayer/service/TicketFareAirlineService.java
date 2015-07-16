@@ -53,7 +53,14 @@ public class TicketFareAirlineService {
     public String getListTicketFareFromRefno(String Refno){
         return ticketFareAirlineDao.getListTicketFareFromRefno(Refno);
     }
-
+    public int checkDeletePaymentFromTicketNo(String ticketNo){
+        return ticketFareAirlineDao.checkDeletePaymentFromTicketNo(ticketNo);
+    }
+    
+    public int checkDeleteRefundFromTicketNo(String ticketNo){
+        return ticketFareAirlineDao.checkDeleteRefundFromTicketNo(ticketNo);
+    }
+    
     public TicketFareAirlineDao getTicketFareAirlineDao() {
         return ticketFareAirlineDao;
     }

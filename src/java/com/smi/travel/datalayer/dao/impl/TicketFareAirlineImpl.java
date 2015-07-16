@@ -11,6 +11,8 @@ import com.smi.travel.datalayer.entity.AirticketFlight;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.BookingFlight;
 import com.smi.travel.datalayer.entity.MAirlineAgent;
+import com.smi.travel.datalayer.entity.PaymentAirticketFare;
+import com.smi.travel.datalayer.entity.RefundAirticketDetail;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
 import java.util.ArrayList;
@@ -317,6 +319,40 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
 
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
+    }
+
+    @Override
+    public int checkDeletePaymentFromTicketNo(String ticketNo) {
+        int result = 0;
+        String query = "from PaymentAirticketFare air where air.ticketFareAirline.ticketNo =:ticketNo";
+        Session session = this.sessionFactory.openSession();
+        List<PaymentAirticketFare> paymentList = session.createQuery(query).setParameter("ticketNo", ticketNo).list();
+        if (paymentList.isEmpty()) {
+            result = 0;
+        }else{
+            result = 1;
+        }
+        System.out.println("=== result === " + result + "===");
+        session.close();
+        this.sessionFactory.close();
+        return result;
+    }
+
+    @Override
+    public int checkDeleteRefundFromTicketNo(String ticketNo) {
+        int result = 0;
+        String query = "from RefundAirticketDetail  refund where refund.ticketFareAirline.ticketNo =:ticketNo";
+        Session session = this.sessionFactory.openSession();
+        List<RefundAirticketDetail> refundList = session.createQuery(query).setParameter("ticketNo", ticketNo).list();
+        if (refundList.isEmpty()) {
+            result = 0;
+        }else{
+            result = 1;
+        }
+        System.out.println("=== result === " + result + "===");
+        session.close();
+        this.sessionFactory.close();
+        return result;    
     }
 
    

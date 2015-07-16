@@ -26,6 +26,7 @@ public class SearchTicketFareController extends SMITravelController {
     private static final String DEPARTMENT = "department";
     private static final String DATALIST = "Ticket_List";
     private static final String TransactionResult = "result";
+    private static final String TICKETALREADYUSE = "TicketAlreadyUse";
     private UtilityService utilityService;
     private TicketFareAirlineService ticketFareAirlineService;
     UtilityFunction util;
@@ -40,6 +41,8 @@ public class SearchTicketFareController extends SMITravelController {
         String invoiceNo = request.getParameter("invoiceNo");
         String department = request.getParameter("department");
         String ticketId = request.getParameter("ticketId");
+        String deleteTicketNo = request.getParameter("deleteTicketNo");
+        String deleteTicketId = request.getParameter("deleteTicketId");
         List<MAirlineAgent> mAirlineAgentsList = utilityService.getListMAirLineAgent();
         request.setAttribute(AIRLINELIST,mAirlineAgentsList);
         util = new UtilityFunction();
@@ -61,16 +64,40 @@ public class SearchTicketFareController extends SMITravelController {
             listTicket = ticketFareAirlineService.getListTicketFare(ticketFareView,2);
             request.setAttribute(DATALIST, listTicket);
             request.setAttribute(TICKETFARE,ticketFareView);
-        }else if ("delete".equalsIgnoreCase(action)) {
+        }
+        else if ("delete".equalsIgnoreCase(action)) {
             System.out.println("ticketId : "+ ticketId);
             TicketFareAirline ticketFareAirline = new TicketFareAirline();
             ticketFareAirline.setId(ticketId);
             ticketFareAirline.setTicketNo(ticketNo);
-            result = ticketFareAirlineService.DeleteTicketFare(ticketFareAirline);
-            if (result == 1) {
-                request.setAttribute(TransactionResult, "delete successful");
-            } else {
-                request.setAttribute(TransactionResult, "delete unsuccessful");
+            int deletePayment = ticketFareAirlineService.checkDeletePaymentFromTicketNo(ticketNo); // 0 = not use , 1 = use
+            int deleteRefund = ticketFareAirlineService.checkDeleteRefundFromTicketNo(ticketNo);
+           
+            if(deletePayment == 0 && deleteRefund == 0){  //Delete
+                result = ticketFareAirlineService.DeleteTicketFare(ticketFareAirline);
+                if (result == 1) {
+                    request.setAttribute(TransactionResult, "delete successful");
+                }else{
+                    request.setAttribute(TransactionResult, "delete unsuccessful");
+                }
+            }
+            if(deletePayment == 1){  //alert already use payment
+                if(deleteRefund == 1){ 
+                    request.setAttribute(TransactionResult, "already use all"); //alert already use payment & refund
+                    request.setAttribute(TICKETALREADYUSE, ticketNo);
+                }else{
+                request.setAttribute(TransactionResult, "already use payment"); //alert already use payment
+                request.setAttribute(TICKETALREADYUSE, ticketNo);
+                }
+            }
+            if(deleteRefund == 1){ //alert already use refund
+                if(deletePayment == 1){
+                    request.setAttribute(TransactionResult, "already use all"); //alert already use payment & refund
+                    request.setAttribute(TICKETALREADYUSE, ticketNo);
+                }else{
+                    request.setAttribute(TransactionResult, "already use refund"); //alert already use refund
+                    request.setAttribute(TICKETALREADYUSE, ticketNo);
+                }
             }
         } 
 

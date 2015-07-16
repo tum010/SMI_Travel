@@ -27,4 +27,6 @@ public interface TicketFareAirlineDao {
     public int validateTicket(String TicketNo);
     public List<TicketFareView> getListTicketFare(TicketFareView ticket,int option);
     public TicketFareAirline getTicketFareFromId(String id);
+    public int checkDeletePaymentFromTicketNo(String ticketNo);
+    public int checkDeleteRefundFromTicketNo(String ticketNo);
 }
