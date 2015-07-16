@@ -7,6 +7,7 @@
 package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.PaymentWendytourDao;
+import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.PaymentDetailWendy;
 import com.smi.travel.datalayer.entity.PaymentWendy;
 import com.smi.travel.datalayer.view.entity.PaymentWendytourView;
@@ -26,10 +27,36 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
     private SessionFactory sessionFactory;
     private Transaction transaction;
     private static final int MAX_ROW = 200;
+    private static final String FIND_MASTER_QUERY = "from Master M where M.referenceNo := refno";
     
     @Override
     public String InsertPaymentWendy(PaymentWendy payment) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        String result = "fail";
+        try {
+            Session session = this.sessionFactory.openSession();
+            transaction = session.beginTransaction();          
+            session.save(payment);
+            
+            List<PaymentDetailWendy> paymentDetailWendy = payment.getPaymentDetailWendies();
+            
+            if(paymentDetailWendy != null){
+                for (int i = 0; i < paymentDetailWendy.size(); i++) {
+                    session.save(paymentDetailWendy.get(i));
+                }
+            }
+            
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+            result = "success";
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            result = "fail";
+        }
+         
+        return result;    
     }
 
     @Override
@@ -58,7 +85,20 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
 
     @Override
     public String DeletePaymentWendyDetail(String DetailID) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         String result = "fail";
+        try {
+            Session session = this.sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            session.delete(DetailID);
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+            result = "success";
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            result = "fail";
+        }
+        return result;
     }
 
     @Override
@@ -133,6 +173,16 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
          
          return paymentviewList;
     }
+    
+    public Master getMasterFromRefno(String refno){
+        Session session = this.sessionFactory.openSession();
+        List<Master> list = session.createQuery(FIND_MASTER_QUERY).setParameter("refno", refno).list();
+        if (list.isEmpty()) {
+            return null;
+        }
+        return list.get(0);   
+    }
+
 
     public SessionFactory getSessionFactory() {
         return sessionFactory;
