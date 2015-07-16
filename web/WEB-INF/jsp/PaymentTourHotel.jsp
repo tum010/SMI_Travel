@@ -49,7 +49,7 @@
                 </div>
                 <div class="col-md-3 form-group text-left">
                     <div class="col-sm-12">
-                        <input name="InputPayNo" id="InputPayNo" type="text" class="form-control" value="" />
+                        <input name="InputPayNo" id="InputPayNo" type="text" class="form-control" value="${requestScope['InputPayNo']}"/>
                     </div>
                 </div>
                 <div class="col-xs-4 text-left" style="padding-left:10px;padding-right:0px;"></div>
@@ -57,11 +57,19 @@
                     <label class="control-label">Account<font style="color: red">*</font></lable>
                 </div>
                 <div class="col-md-3  text-left" style="padding-top : 5px;padding-left:0px;padding-right:0px;">
-                    <div class="col-sm-6" text-left>
-                        <input type="radio" name="account"  id="account1" value="1" /> &nbsp;account(1)
+                    <div class="col-sm-6" text-left> 
+                        <c:set var="check1" value="" />
+                        <c:if test="${1 == requestScope['account']}">
+                            <c:set var="check1" value="checked" />
+                        </c:if>  
+                        <input type="radio" name="account"  id="account1" value="1" ${check1}/> &nbsp;account(1)
                     </div>
                     <div class="col-sm-6" text-left>
-                        <input type="radio" name="account"  id="account2" value="2" />&nbsp;account(2)
+                        <c:set var="check2" value="" />
+                        <c:if test="${2 == requestScope['account']}">
+                            <c:set var="check2" value="checked" />
+                        </c:if>  
+                        <input type="radio" name="account"  id="account2" value="2" ${check2}/>&nbsp;account(2)
                     </div>
                 </div>
             </div>
@@ -75,7 +83,7 @@
                 <div class="col-md-2 form-group text-left" style="padding-left:28px">
                     <div class="col-sm-12">
                         <div class='input-group date' style="width:140px;">
-                            <input name="InputPayDate" id="InputPayDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
+                            <input name="InputPayDate" id="InputPayDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['InputPayDate']}" />
                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                     </div>
@@ -89,7 +97,7 @@
                             <option id="" value="">---------</option>  
                             <c:forEach var="PVType" items="${pvType_list}">
                                 <c:set var="select" value="" />
-                                <c:if test="${PVType.id == requestScope['currency']}">
+                                <c:if test="${PVType.id == requestScope['itemPvType']}">
                                     <c:set var="select" value="selected" />
                                 </c:if>
                                 <option value="<c:out value="${PVType.id}" />" ${select}><c:out value="${PVType.name}" /></option>                                         
@@ -106,7 +114,7 @@
                             <option id="" value="">---------</option>  
                             <c:forEach var="status" items="${status_list}">
                                 <c:set var="select" value="" />
-                                <c:if test="${status.name == requestScope['currency']}">
+                                <c:if test="${status.id == requestScope['itemStatus']}">
                                     <c:set var="select" value="selected" />
                                 </c:if>
                                 <option value="<c:out value="${status.id}" />" ${select}><c:out value="${status.name}" /></option>                                         
@@ -124,8 +132,8 @@
             <div class="col-md-2 form-group text-right" style="padding-left:30px;padding-right:0px;"> 
                 <div class="col-sm-12">
                     <div class="input-group" id="CodeValidate">
-                        <input name="InputInvoiceSupId" id="InputInvoiceSupId" type="hidden" class="form-control" value="" />
-                        <input name="InputInvoiceSupCode" id="InputInvoiceSupCode" type="text" class="form-control" value="" />
+                        <input name="InputInvoiceSupId" id="InputInvoiceSupId" type="hidden" class="form-control" value="${requestScope['InputInvoiceSupId']}" />
+                        <input name="InputInvoiceSupCode" id="InputInvoiceSupCode" type="text" class="form-control" value="${requestScope['InputInvoiceSupCode']}" />
                         <span class="input-group-addon" data-toggle="modal" data-target="#SearchInvoiceSup">
                             <span class="glyphicon-search glyphicon"></span>
                         </span>    
@@ -134,7 +142,7 @@
             </div>
             <div class="col-md-4 form-group text-left" style="width:360px;">
                 <div class="col-sm-12">
-                    <input name="InputInvoiceSupName" id="InputInvoiceSupName" type="text" class="form-control" value="" />           
+                    <input name="InputInvoiceSupName" id="InputInvoiceSupName" type="text" class="form-control" value="${requestScope['InputInvoiceSupName']}" />           
                 </div>
             </div>
             <div class="col-xs-2 text-right" style="padding-left:10px;padding-right:0px;width:140px;">
@@ -143,7 +151,7 @@
             <div class="col-md-2 form-group text-left" style="padding-left:9px;width:190px;">
                 <div class="col-sm-12">
                     <div class="input-group" id="CodeValidate">
-                        <input name="InputAPCode" id="InputAPCode" type="text" class="form-control" value="" />
+                        <input name="InputAPCode" id="InputAPCode" type="text" class="form-control" value="${requestScope['InputAPCode']}" />
                         <span class="input-group-addon" data-toggle="modal" data-target="#SearchAPCode">
                             <span class="glyphicon-search glyphicon"></span>
                         </span>    
@@ -158,9 +166,7 @@
             </div>
             <div class="col-md-6 form-group text-left" style="padding-left:30px;padding-right:0px;width:520px;">
                 <div class="col-sm-12">
-                    <textarea rows="3" cols="255" class="form-control" id="Detail" name="Detail">
-                      
-                    </textarea>
+                    <textarea rows="3" cols="255" class="form-control" id="Detail" name="Detail">${requestScope['Detail']}</textarea>
                 </div>   
             </div>
             <div class="col-xs-2 text-right" style="padding-left:10px;padding-right:0px;width:155px;">
@@ -172,12 +178,12 @@
                             <option id="" value="">---------</option>  
                             <c:forEach var="payment" items="${payment_list}">
                                 <c:set var="select" value="" />
-                                <c:if test="${payment.name == requestScope['currency']}">
+                                <c:if test="${payment.id == requestScope['itemPayment']}">
                                     <c:set var="select" value="selected" />
                                 </c:if>
                                 <option value="<c:out value="${payment.id}" />" ${select}><c:out value="${payment.name}" /></option>                                         
                             </c:forEach>
-                        </select>         
+                    </select>         
                 </div>
             </div>
         </div>
@@ -188,46 +194,63 @@
                 <table class="display" id="PaymentHotelTable">
                     <thead class="datatable-header">
                         <tr>
+                            <th class="hidden" style="width: 13%">Id</th>
                             <th style="width: 13%">Product</th>
                             <th style="width: 8%">Ref No</th>
                             <th style="width: 10%">Inv No</th>
                             <th style="width: 8%">Code</th>
-                            <th style="width: 8%">Type</th>
+                            <th style="width: 9%">Type</th>
                             <th style="width: 10%">Amount</th>
                             <th style="width: 9%">Cur</th>
                             <th style="width: 20%">Description</th>
                             <th style="width: 8%">A/C</th>
-                            <th style="width: 8%">Action</th>
+                            <th style="width: 7%">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="pl" items="${paymentHotel_list}" varStatus="i">
+                        <c:forEach var="pl" items="${productDetail_list}" varStatus="i">
                             <tr>
-                                <td class="hidden"><input id="tableId${i.count}" name="tableId${i.count}"  type="hidden" ></td>
-                                <td>
+                                <td class="hidden"><input id="tableId${i.count}" name="tableId${i.count}"  type="hidden" value="${pl.id}"></td>
+                                <td>                                   
                                     <select class="form-control" name="select-product${i.count}" id="select-product${i.count}">
-                                    <c:forEach var="product" items="${product_list}" varStatus="status">                                
-                                        <option  value="${product.id}">${product.name}</option>
+                                    <c:forEach var="product" items="${product_list}" varStatus="status"> 
+                                        <c:set var="select" value="" />
+                                        <c:if test="${product.id == pl.MPaytype.id}">
+                                            <c:set var="select" value="selected" />
+                                        </c:if>
+                                        <option  value="${product.id}" ${select}>${product.name}</option>
                                     </c:forEach>
                                     </select>                                                                  
                                 </td>
-                                <td> <input style="width: ${RefNo}" id="refNo${i.count}" name="refNo${i.count}" maxlength ="10"  type="text" class="form-control" value=""> </td>
-                                <td> <input style="width: ${InvNo}" id="invNo${i.count}" name="invNo${i.count}" maxlength ="15"  type="text" class="form-control" value="">  </td>
+                                <td> <input style="width: ${RefNo}" id="refNo${i.count}" name="refNo${i.count}" maxlength ="10"  type="text" class="form-control" value="${pl.id}"> </td>
+                                <td> <input style="width: ${InvNo}" id="invNo${i.count}" name="invNo${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.invoiceCreditor}">  </td>
                                 <td> <input style="width: ${Code}" id="code${i.count}" name="code${i.count}" maxlength ="15"  type="text" class="form-control" value="">  </td>
                                 <td>
-                                    <input type="radio" name="type${i.count}" id="row-${i.count}-typeT" value="T" checked=""> T&nbsp;
-                                    <input type="radio" name="type${i.count}" id="row-${i.count}-typeC" value="C" > C
+                                    <c:set var="type1" value="" />
+                                    <c:if test="${'T' == pl.amountType}">
+                                        <c:set var="type1" value="checked" />
+                                    </c:if>  
+                                    <input type="radio" name="type${i.count}" id="row-${i.count}-typeT" value="T" ${type1}> T&nbsp;
+                                    <c:set var="type2" value="" />
+                                    <c:if test="${'C' == pl.amountType}">
+                                        <c:set var="type2" value="checked" />
+                                    </c:if>  
+                                    <input type="radio" name="type${i.count}" id="row-${i.count}-typeC" value="C" ${type2}> C
                                 </td>
-                                <td> <input style="width: ${Amount}" id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control" value=""> </td>
+                                <td> <input style="width: ${Amount}" id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control money" onkeyup="CalculateGrandTotal('${pl.id}','${i.count}')" value="${pl.amount}"> </td>
                                 <td> 
                                     <select class="form-control" id="select_currency${i.count}" name="select_currency${i.count}">
-                                        <c:forEach var="currency" items="${currency_list}" varStatus="status">                                
-                                        <option  value="${currency.id}">${currency.code}</option>
+                                        <c:forEach var="currency" items="${currency_list}" varStatus="status">
+                                            <c:set var="select" value="" />
+                                            <c:if test="${currency.id == pl.currency}">
+                                                <c:set var="select" value="selected" />
+                                            </c:if>
+                                            <option  value="${currency.id}" ${select}>${currency.code}</option>
                                         </c:forEach>
                                     </select>                                 
                                 </td>
-                                <td> <input style="width: ${Description}" id="description${i.count}" name="description${i.count}" maxlength ="255"  type="text" class="form-control" value="${table.description}"> </td>
-                                <td> <input style="width: ${AC}" id="ac${i.count}" name="ac${i.count}" maxlength ="15"  type="text" class="form-control" value="${table.description}"> </td>
+                                <td> <input style="width: ${Description}" id="description${i.count}" name="description${i.count}" maxlength ="255"  type="text" class="form-control" value="${pl.description}"> </td>
+                                <td> <input style="width: ${AC}" id="ac${i.count}" name="ac${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.accCode}"> </td>
                                 <td class="text-center">
                                     
                                         <a class="remCF"><span id="SpanRemove${i.count}" onclick="deletelist('${pl.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
@@ -262,7 +285,7 @@
                         <label class="control-label">Remark</lable>
                     </div>
                     <div class="col-md-3 form-group text-left">
-                        <input name="InputRemark" id="InputRemark" type="text" class="form-control" value="" />           
+                        <input name="InputRemark" id="InputRemark" type="text" class="form-control" value="${requestScope['InputRemark']}" />           
                     </div>
                     <div class="col-xs-2 text-right">
                         <label class="control-label">Grand Total</lable>
@@ -277,7 +300,7 @@
                         <label class="control-label">Cash</lable>
                     </div>
                     <div class="col-md-2 form-group text-left">
-                        <input name="InputCash" id="InputCash" type="text" class="form-control money number" value="" />           
+                        <input name="InputCash" id="InputCash" type="text" class="form-control money number" value="${requestScope['InputCash']}" />           
                     </div>
                 </div>
                 <!--Row 1.3 -->
@@ -286,13 +309,13 @@
                         <label class="control-label">Chq No</lable>
                     </div>
                     <div class="col-md-2 form-group text-left">
-                        <input maxlength="20" name="InputChqNo" id="InputChqNo" type="text" class="form-control" value="" />             
+                        <input maxlength="20" name="InputChqNo" id="InputChqNo" type="text" class="form-control" value="${requestScope['InputChqNo']}" />             
                     </div>
                     <div class="col-xs-3 text-right">
                         <label class="control-label">Chq Amount</lable>
                     </div>
                     <div class="col-md-2 form-group text-left">
-                        <input name="InputChqAmount" id="InputChqAmount" type="text" class="form-control money number" value="" />           
+                        <input name="InputChqAmount" id="InputChqAmount" type="text" class="form-control money number" value="${requestScope['InputChqAmount']}" />           
                     </div>
                     
                 </div>
@@ -301,9 +324,18 @@
         <!--Button -->
         <div class="row text-center" >
             <div class="col-xs-6 text-right">
-                <button type="submit" id="btnSave" name="btnSave" class="btn btn-success" onclick="">
-                    <i class="fa fa-save"></i> Save             
-                </button>
+                <c:if test="${requestScope['btnSave'] =='save'}">                   
+                    <button type="submit" id="btnSave" name="btnSave" class="btn btn-success" onclick="">
+                        <i class="fa fa-save"></i> Save             
+                    </button>
+                    <input type="hidden" name="action" id="action" value="add" class="form-control" >    
+                </c:if>
+                <c:if test="${requestScope['btnSave'] =='update'}">
+                    <button type="submit" id="btnSave" name="btnSave" class="btn btn-success" onclick="">
+                        <i class="fa fa-save"></i> Save             
+                    </button>
+                    <input type="hidden" name="action" id="action" value="update" class="form-control" >
+                </c:if>    
             </div>
             <div class="col-xs-6 text-left">
                 <button type="submit" id="btnNew" name="btnNew" onclick="" class="btn btn-primary">
@@ -312,7 +344,7 @@
             </div>                         
         </div><!--End Button -->
     </div>
-    <input type="hidden" name="action" id="action" value="add" class="form-control" >            
+            
     </form>
 </div>
             
@@ -574,10 +606,10 @@
                 '<td><input maxlength ="15" id="invNo' + row + '" name="invNo' + row + '"   type="text" class="form-control "></td>' +
                 '<td><input maxlength ="15" id="code' + row + '" name="code' + row + '"   type="text" class="form-control "></td>' +
                 '<td>' +
-                '<input type="radio" name="type' + row + '" id="typeT' + row + '" value="T" checked=""> T' +
+                '<input type="radio" name="type' + row + '" id="typeT' + row + '" value="T"> T&nbsp;&nbsp;' +
                 '<input type="radio" name="type' + row + '" id="typeC' +row + '" value="C" > C' +
                 '</td>' +
-                '<td><input class="money" id="amount' + row + '" name="amount' + row + '"   type="text" ></td>' +
+                '<td><input class="money" id="amount' + row + '" name="amount' + row + '" type="text" onkeyup="CalculateGrandTotal(\'\', \''+row+'\')"></td>' +
                 '<td>' + 
                 '<select class="form-control" id="select-currency' + row + '" name="select-currency' + row + '"><option value="">- - Currency - -</option></select>' +                                 
                 '</td>' +
@@ -592,28 +624,28 @@
         $("#select_currency_list option").clone().appendTo("#select-currency" + row);
         var tempCount = parseInt($("#counter").val()) + 1;
         $("#counter").val(tempCount);
-        CalculateGrandTotal(row);
       
     }
     
-    function CalculateGrandTotal(row){
+    function CalculateGrandTotal(id,row){
         var i;
         var result =0;
-        for(i=0;i<row;i++){
-            var amount = document.getElementById("amount" + i);
-            
-            if (amount !== null){
-                var value = amount.value;
-                
-                if(value !== ''){
-                    value = value.replace(/,/g,"");
-                    var total = parseInt(value);
-                    result += total;
-                }
-            }    
+        if((id!==null) || (id!=='') ){
+            for(i=0;i<row;i++){
+                var amount = document.getElementById("amount" + i);
+
+                if (amount !== null){
+                    var value = amount.value;
+
+                    if(value !== ''){
+                        value = value.replace(/,/g,"");
+                        var total = parseInt(value);
+                        result += total;
+                    }
+                }    
+            }
+            document.getElementById('InputGrandTotal').value = result;
         }
-        document.getElementById('InputGrandTotal').value = result;
-        
     }    
      
     function deletelist(id,Ccount) {
