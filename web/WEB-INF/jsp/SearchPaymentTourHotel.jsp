@@ -37,7 +37,7 @@
         <form action="SearchPaymentTourHotel.smi" method="post" id="PaymentSearchForm" role="form">
                 <div class="row" style="padding-left: 5px" >
                     <div class="col-xs-1 text-left" style="width:70px;">
-                        <label class="control-label">From <font style="color: red">*</font></lable>
+                        <label class="control-label">From<font style="color: red">*</font></lable>
                     </div>
                     <div class="col-md-2 form-group text-left" style="padding-left:5px">
                         <div class="col-sm-12">
@@ -96,6 +96,7 @@
                 <table class="display" id="SearchPaymentHotelTable">
                     <thead class="datatable-header">
                         <tr>
+                            <th style="width: 8%">Id</th>
                             <th style="width: 8%">PV No</th>
                             <th style="width: 10%">Pay Date</th>
                             <th style="width: 20%">PV Type</th>
@@ -103,7 +104,6 @@
                             <th style="width: 5%">Acc</th>
                             
                             <th style="width: 8%">Total</th>
-                            <th style="width: 5%">Cur</th>
                             <th style="width: 8%">Status</th>
                             <th style="width: 10%">Action</th>
                         </tr>
@@ -128,14 +128,13 @@
                         </tr>-->
                     <c:forEach var="payment" items="${dataList}">
                         <tr>
+                            <td>${payment.id}</td>
                             <td>${payment.payNo}</td>
                             <td>${payment.payDate}</td>
                             <td>${payment.payType}</td>
                             <td>${payment.invoiceSup}</td>
                             <td>${payment.accNo}</td>
                             <td>${payment.total}</td>
-                            <td>${payment.currency}</td>
-                          
                             <td>${payment.status}</td>
                             <td class="text-center">
                                 <span id="RefPaymentHotelEdit" name="RefPaymentHotelEdit" class="glyphicon glyphicon-edit editicon" onclick="location.href='PaymentTourHotel.smi?action=edit&paymentId=${payment.id}'"></span>
