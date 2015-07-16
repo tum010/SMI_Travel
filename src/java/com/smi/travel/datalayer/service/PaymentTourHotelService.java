@@ -7,6 +7,7 @@
 package com.smi.travel.datalayer.service;
 import com.smi.travel.datalayer.dao.PaymentWendytourDao;
 import com.smi.travel.datalayer.entity.Master;
+import com.smi.travel.datalayer.entity.PaymentDetailWendy;
 import com.smi.travel.datalayer.entity.PaymentWendy;
 import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
 import com.smi.travel.datalayer.view.dao.InvoiceSuppilerDao;
@@ -31,6 +32,10 @@ public class PaymentTourHotelService {
     
     public List<InvoiceSupplier> getListInvoiceSuppiler() {
         return getInvoiceSuppilerDao().getListInvoiceSupplier();
+    }
+    
+    public InvoiceSupplier getDataInvoiceSuppiler(String InputInvoiceSupId) {
+        return getInvoiceSuppilerDao().getDataInvoiceSuppiler(InputInvoiceSupId);
     }
 
     public List<PaymentWendytourView> getListPayment(String inputFromDate, String inputToDate, String selectPvType) {
@@ -59,11 +64,21 @@ public class PaymentTourHotelService {
         return this.paymentWendytourDao.InsertPaymentWendy(payment);
     }    
     
-    public String DeletePaymentWendyDetail(String DetailID) {
+    public String DeletePaymentWendyDetail(PaymentDetailWendy DetailID) {
         return this.paymentWendytourDao.DeletePaymentWendyDetail(DetailID);
-    }          
+    }   
+    
+    public PaymentWendy getPaymentWendyFromID(String paymentId) {
+        return this.paymentWendytourDao.getPaymentWendyFromID(paymentId);
+    }
        
     public Master getMasterFromRefno(String refno) {
         return this.paymentWendytourDao.getMasterFromRefno(refno);
     }         
+
+    public List<PaymentDetailWendy> getPaymentDetailWendyList(String paymentId) {
+        return this.paymentWendytourDao.getPaymentDetailWendyList(paymentId);
+    }
+
+   
 }
