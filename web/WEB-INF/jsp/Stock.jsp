@@ -34,7 +34,7 @@
     <div class="col-sm-2">
         <div ng-include="'WebContent/Master/StockMenu.html'"></div>
     </div>
-    <form action="Stock.smi" method="post" id="StockForm" name="StockFormName" role="form" onsubmit=" return validFrom()">
+    <form action="Stock.smi" method="post" id="StockForm" name="StockFormName" role="form" onsubmit="validFrom()">
     <div class="col-sm-10">
         <input type="hidden" id="idStockDelete" name= "idStockDelete" value="1" />
         <!--Alert Save -->
@@ -43,10 +43,6 @@
                 <strong>Save Success!</strong> 
         </div>
         <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Save Not Success!</strong> 
-        </div>
-        <div id="textAlertDelete"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Save Not Success!</strong> 
         </div>

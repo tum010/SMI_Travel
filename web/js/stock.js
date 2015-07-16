@@ -180,6 +180,7 @@ function validFrom(){
             $('#DateTo').datetimepicker().on('dp.change', function (e) {
                 $('#StockForm').bootstrapValidator('revalidateField', 'InputInputEffectiveToDate');
             });
+            
 //            $('#StockForm').submit();
 }
 

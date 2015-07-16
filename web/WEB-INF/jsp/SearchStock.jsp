@@ -20,7 +20,7 @@
     </ol>
 </section>
 <div class ="container"  style="padding-top: 15px;padding-left: 5px;" ng-app="">
-    <form action="SearchStock.smi" method="post" id="SearchStockForm" role="form">
+    <form action="SearchStock.smi" method="post" id="SearchStockForm" role="form" onsubmit="validFrom()">
     <div class="col-sm-2">
         <div ng-include="'WebContent/Master/StockMenu.html'"></div>
     </div>

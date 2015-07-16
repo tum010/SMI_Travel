@@ -16,3 +16,62 @@ function searchAction() {
     stockIdView.value = id;
     document.getElementById('SearchStockForm').submit();
  }
+ 
+ function validFrom(){
+    // Validator Date From and To
+    $("#StockForm")
+            .bootstrapValidator({
+                framework: 'bootstrap',
+//                container: 'tooltip',
+                feedbackIcons: {
+                    valid: 'uk-icon-check',
+                    invalid: 'uk-icon-times',
+                    validating: 'uk-icon-refresh'
+                },
+                fields: {
+                    InputEffectiveFromDate: {
+                        trigger: 'focus keyup change',
+                        validators: {
+                            notEmpty: {
+                                message: 'The Date From is required'
+                            },
+                            date: {
+                                format: 'YYYY-MM-DD',
+                                max: 'InputInputEffectiveToDate',
+                                message: 'The Date From is not a valid'
+                            }
+                        }
+                    },
+                    InputInputEffectiveToDate: {
+                        trigger: 'focus keyup change',
+                        validators: {
+                            notEmpty: {
+                                message: 'The Date To is required'
+                            },
+                            date: {
+                                format: 'YYYY-MM-DD',
+                                min: 'InputEffectiveFromDate',
+                                message: 'The Date To is not a valid'
+                            }
+                        }
+                    }
+                }
+            }).on('success.field.fv', function (e, data) {
+                if (data.field === 'InputEffectiveFromDate' && data.fv.isValidField('InputInputEffectiveToDate') === false) {
+                    data.fv.revalidateField('InputInputEffectiveToDate');
+                }
+
+                if (data.field === 'InputInputEffectiveToDate' && data.fv.isValidField('InputEffectiveFromDate') === false) {
+                    data.fv.revalidateField('InputEffectiveFromDate');
+                }
+            });
+            
+            $('#DateFrom').datetimepicker().on('dp.change', function (e) {
+                $('#StockForm').bootstrapValidator('revalidateField', 'InputEffectiveFromDate');
+            });
+            $('#DateTo').datetimepicker().on('dp.change', function (e) {
+                $('#StockForm').bootstrapValidator('revalidateField', 'InputInputEffectiveToDate');
+            });
+            
+//            $('#StockForm').submit();
+}
