@@ -15,6 +15,7 @@
 <c:set var="paymentHotel_list" value="${requestScope['paymentHotel_list']}" />
 <c:set var="product_list" value="${requestScope['product_list']}" />
 <c:set var="currency_list" value="${requestScope['currency_list']}" />
+<c:set var="detail" value="${requestScope['BookDetail']}" />
 
 <section class="content-header" >
     <h1>
@@ -57,10 +58,10 @@
                 </div>
                 <div class="col-md-3  text-left" style="padding-top : 5px;padding-left:0px;padding-right:0px;">
                     <div class="col-sm-6" text-left>
-                        <input type="radio" name="account"  id="account1" value="account1" /> &nbsp;account(1)
+                        <input type="radio" name="account"  id="account1" value="1" /> &nbsp;account(1)
                     </div>
                     <div class="col-sm-6" text-left>
-                        <input type="radio" name="account"  id="account2" value="account2" />&nbsp;account(2)
+                        <input type="radio" name="account"  id="account2" value="2" />&nbsp;account(2)
                     </div>
                 </div>
             </div>
@@ -157,7 +158,7 @@
             </div>
             <div class="col-md-6 form-group text-left" style="padding-left:30px;padding-right:0px;width:520px;">
                 <div class="col-sm-12">
-                    <textarea rows="3" cols="60" class="form-control" id="Detail" name="Detail">
+                    <textarea rows="3" cols="255" class="form-control" id="Detail" name="Detail">
                       
                     </textarea>
                 </div>   
@@ -202,6 +203,7 @@
                     <tbody>
                         <c:forEach var="pl" items="${paymentHotel_list}" varStatus="i">
                             <tr>
+                                <td class="hidden"><input id="tableId${i.count}" name="tableId${i.count}"  type="hidden" ></td>
                                 <td>
                                     <select class="form-control" name="select-product${i.count}" id="select-product${i.count}">
                                     <c:forEach var="product" items="${product_list}" varStatus="status">                                
@@ -228,7 +230,7 @@
                                 <td> <input style="width: ${AC}" id="ac${i.count}" name="ac${i.count}" maxlength ="15"  type="text" class="form-control" value="${table.description}"> </td>
                                 <td class="text-center">
                                     
-                                        <a class="remCF"><span id="SpanRemove${i.count}" onclick="deletelist('${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
+                                        <a class="remCF"><span id="SpanRemove${i.count}" onclick="deletelist('${pl.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
                                    
                                     <c:if test="${lockUnlockBooking == 1}">
                                         <span class="glyphicon glyphicon-remove deleteicon" ></span>
@@ -238,8 +240,17 @@
                         </c:forEach> 
                     </tbody>
                 </table>
-                <input type="text"  id="counter" name="counter" value="${paymenthotelcount}" />
-                <input type="hidden"  id="productList_id" name="productList_id" />
+                <div id="tr_ProductDetailAddRow" class="text-center hide" style="padding-top: 10px">
+                    <a class="btn btn-success" onclick="AddRow()">
+                        <i class="glyphicon glyphicon-plus"></i> Add
+                    </a>
+                </div>
+                <input type="hidden" class="form-control" id="counter" name="counter" value="${paymenthotelcount}" />
+                <input type="hidden" class="form-control" id="ProductTourHotel" name="ProductTourHotel">  
+                <input type="hidden" class="form-control" id="productList_id" name="productList_id" />
+                <input type="hidden" name="productCountDel" id="productCountDel">
+                <input type="hidden" name="plTableId" id="plTableId">
+                <input type="hidden" value="${detail.createBy}" id="master-createBy">
             </div>
         </div><!--End Table --><br>
         <!-- Table Content -->
@@ -421,8 +432,7 @@
             </div>
             <div class="modal-footer">
                 <button type="submit" onclick="DeleteRowProduct()" class="btn btn-danger">Delete</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <input type="text" name="productCountDel" id="productCountDel">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>               
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -523,6 +533,20 @@
             AddRow(row);
         });
         
+        $("#PaymentHotelTable").on('click', '.newRemCF', function () {
+            $(this).parent().parent().remove();
+                var rowAll = $("#PaymentHotelTable tr").length;
+                if (rowAll < 2) {
+
+                    $("#tr_ProductDetailAddRow").removeClass("hide");
+                    $("#tr_ProductDetailAddRow").addClass("show");
+            }
+        });
+        
+        $("#tr_ProductDetailAddRow a").click(function () {
+            $(this).parent().removeClass("show");
+            $(this).parent().addClass("hide");
+        });
      
 
     });
@@ -542,6 +566,7 @@
     function AddRow(row) {
         $("#PaymentHotelTable tbody").append(
                 '<tr style="higth 100px">' +
+                '<td class="hidden"> <input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >  </td>' +
                 '<td>' + 
                 '<select class="form-control" name="select-product' + row + '" id="select-product' + row + '" ><option value="">- - Product - -</option></select>' +                          
                 '</td>' +
@@ -559,7 +584,7 @@
                 '<td><input class="form-control" maxlength="255" style="width: ${DescriptionSize}" id="description' + row + '" name="description' + row + '" rows="2" ></td>' +
                 '<td><input id="ac' + row + '" name="ac' + row + '"   type="text" class="form-control "></td>' +
                 '<td class="text-center">' +
-                '<a class="remCF" onclick="deletelist(\''+row+'\')">  '+
+                '<a class="remCF" onclick="deletelist(\'\', \''+row+'\')">  '+
                 '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
                 '</tr>'
         );
@@ -578,62 +603,59 @@
             var amount = document.getElementById("amount" + i);
             
             if (amount !== null){
-                var value = amount.value; 
-                value = value.replace(/,/g,"");
-                var total = parseInt(value);
-                result += total;
-
+                var value = amount.value;
+                
+                if(value !== ''){
+                    value = value.replace(/,/g,"");
+                    var total = parseInt(value);
+                    result += total;
+                }
             }    
         }
         document.getElementById('InputGrandTotal').value = result;
         
     }    
-    
-    function AddRowFromValue(no,hour,description) {
-        row = parseInt($("#counter").val());
-        $("#PaymentHotelTable tbody").append(
-                '<tr style="higth 100px">' +
-                '<td class="hidden"> <input id="row-' + row + '-id" name="row-' + row + '-id"  type="hidden" >  </td>' +
-                '<td><select class="form-control" id="row-' + row + '-product" name="row-' + row + '-product">' +
-                '<option value="">--</option>' +                                 
-                '<option value="1">test 1</option>' +                                   
-                '<option value="2">test 2</option>' +
-                '</select>' +                                 
-                '</td>' +
-                '<td><input style="width: 20px" id="row-' + row + '-no" name="row-' + row + '-no"   type="text" class="form-control number" value="'+no+'" ></td>' +
-                '<td><div class="input-group daydatepicker" id="daydatepicker-' + row + '" style="padding-left: 15px">'+
-                '<input style="width: 100px" type="text" class="form-control"  id="row-' + row + '-date" name="row-' + row + '-date" data-date-format="YYYY-MM-DD" />'+
-                '<span class="input-group-addon">' +                                               
-                '<i class="glyphicon glyphicon-calendar"></i></span></div></td>' +
-                '<td><input style="width: 80px" type="text" id="row-' + row + '-hour" name="row-' + row + '-hour" class="form-control time" placeholder="HH:MM" value="'+hour+'" ></td>' +
-                '<td><input   class="form-control" maxlength="255" style="width: ${DescriptionSize}" id="row-' + row + '-des" name="row-' + row + '-des" rows="2" value="'+description+'" ></td>' +
-                '<td class="text-center">' +
-                '<a class="remCF" onclick="deletelist(\'\', \''+row+'\')">  '+
-                '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
-                '</tr>'
-                );
-                var tempCount = parseInt($("#counter").val()) + 1;
-        $("#counter").val(tempCount);
-        reloadDatePicker()
-    }
-    
-    function deletelist(Ccount) {
-        
-        $("#cCount").val(Ccount);
+     
+    function deletelist(id,Ccount) {
+        document.getElementById('plTableId').value = id;
         document.getElementById('productCountDel').value = Ccount;
-        $("#delProduct").text('Are you sure delete this product ?'+ Ccount);
+        $("#delProduct").text('Are you sure delete this product ?');
         $('#DeleteProduct').modal('show');
     }
     
     function DeleteRowProduct(){
         var cCount = document.getElementById('productCountDel').value;
+        var id = document.getElementById('plTableId').value;
         
+        if(id === ''){
             $("#select-product" + cCount).parent().parent().remove();
             var rowAll = $("#PaymentHotelTable tr").length;
-            if (rowAll <= 2) {
-                $("#tr_PackagePriceAddRow").removeClass("hide");
-                $("#tr_PackagePriceAddRow").addClass("show");
-            }        
+            if (rowAll <= 1) {
+                $("#tr_ProductDetailAddRow").removeClass("hide");
+                $("#tr_ProductDetailAddRow").addClass("show");
+            }
+            
+        } else {
+            $.ajax({
+                url: 'PaymentTourHotel.smi?action=deleteProductDetail',
+                type: 'get',
+                data: {ProductDetail: id},
+                success: function () {
+
+                    $("#select-product" + cCount).parent().parent().remove();
+                    var rowAll = $("#PaymentHotelTable tr").length;
+                    if (rowAll <= 1) {
+                        $("#tr_ProductDetailAddRow").removeClass("hide");
+                        $("#tr_ProductDetailAddRow").addClass("show");
+                    }
+
+                },
+                error: function () {
+                    console.log("error");
+                    result =0;
+                }
+            }); 
+        }    
         $('#DeleteProduct').modal('hide');
     }
    
