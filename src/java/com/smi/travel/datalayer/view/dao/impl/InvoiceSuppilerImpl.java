@@ -55,5 +55,27 @@ public class InvoiceSuppilerImpl implements InvoiceSuppilerDao{
         }       
         return result;
     }
+
+    @Override
+    public InvoiceSupplier getDataInvoiceSuppiler(String InputInvoiceSupId) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        InvoiceSupplier invoiceSupplier = new InvoiceSupplier();
+        List<Object[]> invoiceSupplierList = session.createSQLQuery(" SELECT * FROM `invoice_supplier` WHERE `invoice_supplier`.id = " + InputInvoiceSupId)
+                .addScalar("id", Hibernate.STRING)
+                .addScalar("code", Hibernate.STRING)
+                .addScalar("name", Hibernate.STRING)
+                .addScalar("apcode", Hibernate.STRING)
+                .list();
+        
+      
+        for (Object[] A : invoiceSupplierList) {
+             invoiceSupplier.setId(util.ConvertString(A[0]));
+             invoiceSupplier.setCode(util.ConvertString(A[1]));
+             invoiceSupplier.setName(util.ConvertString(A[2]));
+             invoiceSupplier.setApcode(util.ConvertString(A[3]));
+         }
+        return invoiceSupplier;
+    }
     
 }
