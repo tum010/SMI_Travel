@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.service;
 import com.smi.travel.datalayer.dao.PaymentWendytourDao;
+import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.PaymentWendy;
 import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
 import com.smi.travel.datalayer.view.dao.InvoiceSuppilerDao;
@@ -28,8 +29,6 @@ public class PaymentTourHotelService {
         this.invoiceSuppilerDao = invoiceSuppilerDao;
     }
     
-    
-
     public List<InvoiceSupplier> getListInvoiceSuppiler() {
         return getInvoiceSuppilerDao().getListInvoiceSupplier();
     }
@@ -56,4 +55,15 @@ public class PaymentTourHotelService {
         return this.paymentWendytourDao.DeletePaymentWendy(paymentWendy);
     }
 
+    public String InsertPaymentWendy(PaymentWendy payment) {
+        return this.paymentWendytourDao.InsertPaymentWendy(payment);
+    }    
+    
+    public String DeletePaymentWendyDetail(String DetailID) {
+        return this.paymentWendytourDao.DeletePaymentWendyDetail(DetailID);
+    }          
+       
+    public Master getMasterFromRefno(String refno) {
+        return this.paymentWendytourDao.getMasterFromRefno(refno);
+    }         
 }
