@@ -32,6 +32,10 @@ body{
     min-height: 150px;
 }
 
+#StockSummary_wrapper{
+    min-height: 150px;
+}
+
 #MasterItinerary_wrapper{
     min-height: 150px;
 }
