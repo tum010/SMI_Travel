@@ -93,8 +93,8 @@ $(document).ready(function () {
                 var colIndex = $(this).parent().children().index($(this));
                 var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
                 rowAll = $("#StockTable tr").length;
-//                alert("Goo : " + colIndex + " " + rowIndex);
-                if (rowIndex !== rowAll) {
+//                alert("Goo : " + colIndex + " " + rowIndex +"Row All :  " + rowAll);
+                if (rowIndex === rowAll) {
                     console.log("rowAll : " + rowAll);
                     AddRow(rowAll);
                 }
