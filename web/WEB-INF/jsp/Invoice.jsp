@@ -303,9 +303,7 @@
                                                 <td>100000</td>
                                                 <td align="center" > 
                                                 <center> 
-                                                    <span id="spanEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon"      
-                                                      onclick="" data-toggle="modal" data-target="#EditDetailBill" >
-                                                    </span>
+                                                  
                                                     <span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('', '')" data-toggle="modal" data-target="#DelDetailBill" >  
                                                     </span>
                                                 </center>
