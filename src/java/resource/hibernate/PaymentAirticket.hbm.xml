@@ -61,6 +61,10 @@
         <property name="isExport" type="java.lang.Integer">
             <column name="is_export" />
         </property>
+        <property name="department" type="string">
+            <column name="department" length="20"/>
+        </property>
+        
         <bag name="paymentAirticketRefunds" table="payment_airticket_refund" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="paymane_air_id" />
