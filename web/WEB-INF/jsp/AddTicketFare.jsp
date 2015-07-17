@@ -102,22 +102,22 @@
                             <label class="control-label text-right">Ticket Routing </label>
                         </div>
                         <div class="col-xs-1" style="width: 200px">
-                            <select id="ticketRounting" name="ticketRounting" class="form-control selectize">
-                                <option value="">--- Rounting ---</option> 
+                            <select id="ticketRouting" name="ticketRouting" class="form-control selectize">
+                                <option value="">--- Routing ---</option> 
                                 <c:choose>
-                                    <c:when test="${requestScope['TicketRounting'] == 'I'}">
+                                    <c:when test="${requestScope['TicketRouting'] == 'I'}">
                                         <c:set var="selectedI" value="selected" />
                                     </c:when>
                                 </c:choose>
                                 <option value="I" ${selectedI}>INTER</option>
                                 <c:choose>
-                                    <c:when test="${requestScope['TicketRounting'] == 'D'}">
+                                    <c:when test="${requestScope['TicketRouting'] == 'D'}">
                                         <c:set var="selectedD" value="selected" />
                                     </c:when>
                                 </c:choose>
                                 <option value="D" ${selectedD}>DOMESTIC</option>
                                 <c:choose>
-                                    <c:when test="${requestScope['TicketRounting'] == 'C'}">
+                                    <c:when test="${requestScope['TicketRouting'] == 'C'}">
                                         <c:set var="selectedC" value="selected" />
                                     </c:when>
                                 </c:choose>
@@ -161,11 +161,11 @@
                             <select name="ticketBuy" id="ticketBuy" class="form-control">
                                 <option value="">--- Buy ---</option> 
                                  <c:choose>
-                                    <c:when test="${requestScope['TicketBuy'] == 'I'}">
+                                    <c:when test="${requestScope['TicketBuy'] == 'C'}">
                                         <c:set var="selectedC" value="selected" />
                                     </c:when>
                                 </c:choose>
-                                <option value="I" ${selectedC}>IN</option>
+                                <option value="C" ${selectedC}>IN</option>
                                 <c:choose>
                                     <c:when test="${requestScope['TicketBuy'] == 'O'}">
                                         <c:set var="selectedO" value="selected" />
@@ -721,8 +721,8 @@ function saveAction() {
     ticketType.value = $("#ticketType").val();
     var ticketBuy = document.getElementById('ticketBuy');
     ticketBuy.value = $("#ticketBuy").val();
-    var ticketRounting = document.getElementById('ticketRounting');
-    ticketRounting.value = $("#ticketRounting").val();
+    var ticketRouting = document.getElementById('ticketRouting');
+    ticketRouting.value = $("#ticketRouting").val();
     var ticketAirline = document.getElementById('ticketAirline');
     ticketAirline.value = $("#ticketAirline").val(); 
     var department = document.getElementById('department');
@@ -812,18 +812,10 @@ function CallAjax(param) {
                         document.getElementById('ticketAirline').value = "2";
                     }
                 }else{
-                        //1	Ticket Fare				
-                        //2	Ticket tax				
-                        //3	Issue date				
-                        //4	Ticket Routing				
-                        //5	Airline				
-                        //6	Ticket By				
-                        //7	Passenger				
-                        //8	Department	
                     document.getElementById('ticketFare').value = path[1];
                     document.getElementById('ticketTax').value = path[2];
                     document.getElementById('issueDate').value = path[3];
-                    document.getElementById('ticketRounting').value = path[4];
+                    document.getElementById('ticketRouting').value = path[4];
                     document.getElementById('ticketAirline').value = path[5];
                     document.getElementById('ticketBuy').value = path[6];
                     document.getElementById('passenger').value = path[7];
@@ -888,13 +880,30 @@ function CallFilterAjax(param) {
         alert(e);
     }
 }   
-function setTicketDetail(ticket, name, ticketClass, departDate, ticketFare, ticketTax) {
+function setTicketDetail(ticket,ticketFare,ticketTax,issueDate,ticketRouting,airline,ticketBy,passenger,department) {
+    alert(ticket+","+ticketFare+","+ticketTax+","+issueDate+","+ticketRouting+","+airline+","+ticketBy+","+passenger+","+department);
     $("#ticketNo").val(ticket);
 //    $("#name").val(name);
 //    $("#ticketClass").val(ticketClass);
 //    $("#departDate").val(departDate);
     $("#ticketFare").val(ticketFare);
     $("#ticketTax").val(ticketTax);
+
+    $("#issueDate").val(issueDate);
+    $("#ticketRouting").val(ticketRouting);
+    $("#ticketBuy").val(ticketBy);
+    $("#passenger").val(passenger);
+    if(airline == 'Other'){
+        document.getElementById('ticketAirline').value = "1";
+    } else if(airline == 'TG'){
+        document.getElementById('ticketAirline').value = "2";
+    }
+    
+    if(department == 'I'){
+        document.getElementById('department').value = "wendy";
+    }else if(department == 'O'){
+        document.getElementById('department').value = "outbound";
+    }
     $("#ListRefnoModal").modal('hide');
 }
 

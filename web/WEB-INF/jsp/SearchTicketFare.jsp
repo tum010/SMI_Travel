@@ -79,22 +79,22 @@
                                 <label class="control-label text-right">Ticket Routing </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
-                                <select id="ticketRounting" name="ticketRounting" class="form-control selectize">
-                                    <option value="">--- Rounting ---</option> 
+                                <select id="ticketRouting" name="ticketRouting" class="form-control selectize">
+                                    <option value="">--- Routing ---</option> 
                                     <c:choose>
-                                        <c:when test="${requestScope['TicketRounting'] == 'I'}">
+                                        <c:when test="${requestScope['TicketRouting'] == 'I'}">
                                             <c:set var="selectedI" value="selected" />
                                         </c:when>
                                     </c:choose>
                                     <option value="I" ${selectedI}>INTER</option>
                                     <c:choose>
-                                        <c:when test="${requestScope['TicketRounting'] == 'D'}">
+                                        <c:when test="${requestScope['TicketRouting'] == 'D'}">
                                             <c:set var="selectedD" value="selected" />
                                         </c:when>
                                     </c:choose>
                                     <option value="D" ${selectedD}>DOMESTIC</option>
                                     <c:choose>
-                                        <c:when test="${requestScope['TicketRounting'] == 'C'}">
+                                        <c:when test="${requestScope['TicketRouting'] == 'C'}">
                                             <c:set var="selectedC" value="selected" />
                                         </c:when>
                                     </c:choose>
@@ -332,8 +332,8 @@ function searchAction() {
     ticketNo.value = $("#ticketNo").val();
     var ticketType = document.getElementById('ticketType');
     ticketType.value = $("#ticketType").val();
-    var ticketRounting = document.getElementById('ticketRounting');
-    ticketRounting.value = $("#ticketRounting").val();
+    var ticketRouting = document.getElementById('ticketRouting');
+    ticketRouting.value = $("#ticketRouting").val();
     var ticketAirline = document.getElementById('ticketAirline');
     ticketAirline.value = $("#ticketAirline").val();
     var issueDate = document.getElementById('issueDate');

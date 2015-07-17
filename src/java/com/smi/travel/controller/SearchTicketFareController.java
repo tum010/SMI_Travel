@@ -19,7 +19,7 @@ public class SearchTicketFareController extends SMITravelController {
     private static final ModelAndView SearchTicketFare_REFRESH = new ModelAndView(new RedirectView("SearchTicketFare.smi", true));
     private static final String AIRLINELIST = "airlineList";
     private static final String TICKETFARE = "ticketFare";
-    private static final String TICKETROUNTING = "TicketRounting";
+    private static final String TICKETROUTING = "TicketRouting";
     private static final String TICKETTYPE = "TicketType";
     private static final String ISSUEDATE = "issueDate";
     private static final String INVOICENO = "invoiceNo";
@@ -35,7 +35,7 @@ public class SearchTicketFareController extends SMITravelController {
         String action = request.getParameter("action");
         String ticketNo = request.getParameter("ticketNo");
         String ticketType = request.getParameter("ticketType");
-        String ticketRounting = request.getParameter("ticketRounting");
+        String ticketRouting = request.getParameter("ticketRouting");
         String ticketAirline = request.getParameter("ticketAirline");
         String issueDate = request.getParameter("issueDate");
         String invoiceNo = request.getParameter("invoiceNo");
@@ -49,7 +49,7 @@ public class SearchTicketFareController extends SMITravelController {
         int result = 0;
         TicketFareView ticketFareView = new TicketFareView();
         ticketFareView.setType(ticketType);
-        ticketFareView.setRounting(ticketRounting);
+        ticketFareView.setRouting(ticketRouting);
         ticketFareView.setAirline(ticketAirline);
         ticketFareView.setTicketNo(ticketNo);
         if(StringUtils.isNotEmpty(issueDate)){
@@ -101,7 +101,7 @@ public class SearchTicketFareController extends SMITravelController {
             }
         } 
 
-        request.setAttribute(TICKETROUNTING,ticketRounting);
+        request.setAttribute(TICKETROUTING,ticketRouting);
         request.setAttribute(TICKETTYPE,ticketType);
         request.setAttribute(INVOICENO,invoiceNo);
         request.setAttribute(DEPARTMENT,department);

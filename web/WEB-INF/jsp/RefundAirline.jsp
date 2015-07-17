@@ -105,7 +105,7 @@
             <!--Table-->
             <div class="row">
                 <div class="col-md-12 ">
-                    <table id="RefundAirlineList" class="display" cellspacing="0" width="100%">
+                    <table id="RefundAirlineTable" class="display" cellspacing="0" width="100%">
                         <thead>
                             <tr class="datatable-header" >
                                 
@@ -214,7 +214,7 @@
             <div class="modal-body" id="delCode">
             </div>
             <div class="modal-footer">
-                <button type="button" onclick="Delete()" class="btn btn-danger">Delete</button>
+                <button type="button" onclick="deleteRow()" class="btn btn-danger">Delete</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
@@ -226,6 +226,9 @@
    
         $('.date').datetimepicker();
         
+        $(".daydatepicker").datetimepicker({
+            pickTime: false   
+        }); 
         var RefundAgentTable = $('#RefundAgentTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
@@ -235,6 +238,122 @@
             "bLengthChange": false,
             "iDisplayLength": 10
         });
+        
+        var rowRefund = $("#RefundAirlineTable tr").length;
+        RefundAirlineTableAddRow(rowRefund);
+        
+        $("#RefundAirlineTable").on("keyup", function () {
+            var rowAll = $("#RefundAirlineTable tr").length;
+            $("td").keyup(function () {
+                if ($(this).find("input").val() !== '') {
+                    var colIndex = $(this).parent().children().index($(this));
+                    var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
+                    rowAll = $("#RefundAirlineTable tr").length;
+                    if (rowIndex == rowAll) {
+                        RefundAirlineTableAddRow(rowAll);
+                    }
+                }
+            });
+        });
+        
+ 
     });
     
+// Refund Table add row
+function RefundAirlineTableAddRow(row) {
+    if (!row) {
+        row = 1;
+    }
+    //Total	Receive	Pay	Profit	Com	Date	Action
+    $("#RefundAirlineTable tbody").append(
+            '<tr>' +
+            '<td class="hidden"><input id="refundId' + row + '" name="refundId' + row + '"  type="text">' +
+            '<td class="hidden"><input id="refundCount' + row + '" name="refundCount"  type="text" value="' + row + '">' +
+            '<td><input id="ticketNo-' + row + '" name="ticketNo-' + row + '"  type="text" class="form-control" maxlength="20"></td>' +
+            '<td><div class="input-group daydatepicker" id="daydatepicker-'+row+'" style="padding-left: 0px"><input style="width: 100%" type="text" class="form-control"  id="ticketDate-'+row+'" name="ticketDate-'+row+'" data-date-format="YYYY-MM-DD"/><span class="input-group-addon" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span></div></td>' +
+            '<td><input id="dept-' + row + '" name="dept-' + row + '"  type="text" class="form-control" maxlength="20"></td>' +
+            '<td><input id="passenger-' + row + '" name="passenger-' + row + '"  type="text" class="form-control"></td>' +
+            '<td><input id="sectorIssue-' + row + '" name="sectorIssue-' + row + '"  type="text" class="form-control"></td>' +
+            '<td><input id="sectorRefund-' + row + '" name="sectorRefund-' + row + '"  type="text" class="form-control" maxlength="255"></td>' +
+            '<td><input id="total-' + row + '" name="total-' + row + '"  type="text" class="form-control" maxlength="20"></td>' +
+            '<td><input id="receive-' + row + '" name="receive-' + row + '"  type="text" class="form-control"></td>' +
+            '<td><input id="pay-' + row + '" name="pay-' + row + '"  type="text" class="form-control"></td>' +
+            '<td><input id="profit-' + row + '" name="profit-' + row + '"  type="text" class="form-control"></td>' +
+            '<td><input id="com-' + row + '" name="com-' + row + '"  type="text" class="form-control"></td>' +
+            '<td><div class="input-group daydatepicker" id="daydatepicker-'+row+'" style="padding-left: 0px"><input style="width: 100%" type="text" class="form-control"  id="inputDate-'+row+'" name="inputDate-'+row+'" data-date-format="YYYY-MM-DD"/><span class="input-group-addon" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span></div></td>' +
+            '<td class="text-center">' +
+            '<a class="remCF" onclick="ConfirmDelete(\'1\', \'\', \''+row+'\')">  '+
+            '<span  id="SpanRemove'+row+'"  class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+   
+            '</tr>'
+            );
+    $("input[name=countRefund]").val(row);
+
+}
+
+function ConfirmDelete(rowType,itineraryid,Ccount) {
+    $("#rowType").val(rowType);
+    $("#Itiid").val(itineraryid);
+    $("#cCount").val(Ccount);
+    var deleteType;
+    if (rowType === '1'){
+        deleteType = 'Refund Airline ?';
+    }
+    $("#delCode").text('are you sure delete ' + deleteType);
+    $('#DeleteRefundAirline').modal('show');
+}
+
+function deleteRow() {
+    var rowType = $("#rowType").val();
+    var ItiId = $("#Itiid").val();
+    var cCount = $("#cCount").val();
+    if(rowType === '3'){
+        deleteRefund(ItiId,cCount);
+    }
+    $('#DeleteRefundAirline').modal('hide');
+}
+//
+//function deleteRefund(refundId,count){
+////    alert("Delete City");
+//    if(refundId === ''){
+//            var countrow=0;
+////            alert($("#row-passenger-2-name").parent().parent().html());
+//            $("#row-city-" + count + "-name").parent().parent().remove();
+//            var rowAll = $("#RefundAirlineTable tr").length;
+//            if (rowAll < 2) {
+////                console.log("show button tr_FormulaAddRow");
+//                $("#tr_CityAddRow").removeClass("hide");
+//                $("#tr_CityAddRow").addClass("show");
+//            }            
+//     //       $("#counterItinerary").val(parseInt($("#counterItinerary").val()) -1);
+//            $('#City tr:gt(0) ').each(function() {
+//                $(this).find('td:eq(1)').html(countrow) ; 
+//                countrow = countrow+1;
+//            });   
+//    }else{
+//     $.ajax({
+//        url: 'MPackageDetail.smi?action=deleteCity',
+//        type: 'get',
+//        data: {refundId refundId},
+//        success: function () { 
+//            var countrow=1;
+//            $("#row-packcity-" + count + "-id").parent().parent().remove();
+//            var rowAll = $("#City tr").length;
+//            if (rowAll < 2) {
+//                console.log("show button tr_FormulaAddRow");
+//                $("#tr_CityAddRow").removeClass("hide");
+//                $("#tr_CityAddRow").addClass("show");
+//            }            
+//     //       $("#counterItinerary").val(parseInt($("#counterItinerary").val()) -1);
+//            $('#City tr:gt(0) ').each(function() {
+//                $(this).find('td:eq(1)').html(countrow) ; 
+//                countrow = countrow+1;
+//            });
+//        },
+//        error: function () {
+//            console.log("error");
+//            result =0;
+//        }
+//    });       
+//    }
+//}
 </script>

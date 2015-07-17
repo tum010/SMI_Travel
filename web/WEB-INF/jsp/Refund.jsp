@@ -70,7 +70,7 @@
                                     <tr class="datatable-header">
                                         <th>name</th>
                                         <th colspan="3">Ticket</th>
-                                        <th>Rounting</th>
+                                        <th>Routing</th>
                                         <th>section refund</th>
                                         <th>Action</th>
                                     </tr>

@@ -34,11 +34,11 @@ public class AddTicketFareController extends SMITravelController {
     private static final String ADDPAYDATE = "addPayDate";
     private static final String AGENTPAYDATE = "agentPayDate";
     private static final String AGENTRECEIVEDATE = "agentReceiveDate";
-    private static final String TICKETROUNTING = "TicketRounting";
+    private static final String TICKETROUTING = "TicketRouting";
     private static final String TICKETBUY = "TicketBuy";
     private static final String TICKETTYPE = "TicketType";
     private static final String TICKETLIST = "ticketList";
-    
+    private static final String DEPARTMENT = "department";
     private UtilityService utilityService;
     private TicketFareAirlineService ticketFareAirlineService;
     private AgentService agentService;
@@ -49,7 +49,7 @@ public class AddTicketFareController extends SMITravelController {
         String ticketNo = request.getParameter("ticketNo");
         String ticketType = request.getParameter("ticketType");
         String ticketBuy = request.getParameter("ticketBuy");
-        String ticketRounting = request.getParameter("ticketRounting");
+        String ticketRouting = request.getParameter("ticketRouting");
         String ticketAirline = request.getParameter("ticketAirline");
         String passenger = request.getParameter("passenger");
         String issueDate = request.getParameter("issueDate");
@@ -107,8 +107,8 @@ public class AddTicketFareController extends SMITravelController {
             request.setAttribute(TICKETTYPE, ticketType);
             ticketFareAirline.setTicketBuy(ticketBuy);
             request.setAttribute(TICKETBUY, ticketBuy);
-            ticketFareAirline.setTicketRounting(ticketRounting);
-            request.setAttribute(TICKETROUNTING, ticketRounting);
+            ticketFareAirline.setTicketRouting(ticketRouting);
+            request.setAttribute(TICKETROUTING, ticketRouting);
 
             ticketFareAirline.setPassenger(passenger);
             if(StringUtils.isNotEmpty(issueDate)){
@@ -185,6 +185,10 @@ public class AddTicketFareController extends SMITravelController {
                 ticketFareAirline.setAgentReceiveDate(util.convertStringToDate(agentReceiveDate));
                 request.setAttribute(AGENTRECEIVEDATE, agentReceiveDate);
             }
+            if (StringUtils.isNotEmpty(department)){
+                ticketFareAirline.setDepartment(department);
+                request.setAttribute(DEPARTMENT, department);
+            }
             result = ticketFareAirlineService.validateSaveTicket(ticketFareAirline);
             System.out.print("result :" + result + " =================== ");
             if (result == 1) {
@@ -201,7 +205,7 @@ public class AddTicketFareController extends SMITravelController {
             request.setAttribute(TICKETFARE,ticketFareAirlines);
             request.setAttribute(TICKETTYPE, ticketFareAirlines.getTicketType());
             request.setAttribute(TICKETBUY, ticketFareAirlines.getTicketBuy());
-            request.setAttribute(TICKETROUNTING, ticketFareAirlines.getTicketRounting());
+            request.setAttribute(TICKETROUTING, ticketFareAirlines.getTicketRouting());
             request.setAttribute(ISSUEDATE, ticketFareAirlines.getIssueDate());
             agents = getAgentService().getAgentFromID(String.valueOf(ticketFareAirlines.getAgentId()));
             request.setAttribute(SELECTEDAGENT, agents);
@@ -211,6 +215,7 @@ public class AddTicketFareController extends SMITravelController {
             request.setAttribute(ADDPAYDATE, ticketFareAirlines.getAddPayDate());
             request.setAttribute(AGENTPAYDATE, ticketFareAirlines.getAgentPayDate());
             request.setAttribute(AGENTRECEIVEDATE, ticketFareAirlines.getAgentReceiveDate());
+            request.setAttribute(DEPARTMENT, ticketFareAirlines.getDepartment());
         }
 
         return AddTicketFare;

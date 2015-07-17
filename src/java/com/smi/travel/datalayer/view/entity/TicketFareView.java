@@ -17,7 +17,7 @@ public class TicketFareView {
     private String id;
     private String type;
     private String buy;
-    private String rounting;
+    private String routing;
     private String airline;
     private String ticketNo;
     private Date issueDate;
@@ -57,12 +57,12 @@ public class TicketFareView {
         this.buy = buy;
     }
 
-    public String getRounting() {
-        return rounting;
+    public String getRouting() {
+        return routing;
     }
 
-    public void setRounting(String rounting) {
-        this.rounting = rounting;
+    public void setRouting(String routing) {
+        this.routing = routing;
     }
 
     public String getAirline() {

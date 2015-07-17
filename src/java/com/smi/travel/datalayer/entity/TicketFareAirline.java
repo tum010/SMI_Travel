@@ -18,7 +18,7 @@ public class TicketFareAirline {
      private String ticketNo;
      private String ticketType;
      private String ticketBuy;
-     private String ticketRounting;
+     private String ticketRouting;
      private String passenger;
      private Date issueDate;
      private Date ticketDate;
@@ -50,12 +50,12 @@ public class TicketFareAirline {
     public TicketFareAirline() {
     }
 
-    public TicketFareAirline(MAirlineAgent MAirlineAgent, String ticketNo, String ticketType, String ticketBuy, String ticketRounting, String passenger, Date issueDate, Date ticketDate, BigDecimal ticketFare, BigDecimal ticketTax, BigDecimal ticketIns, BigDecimal ticketCommission, BigDecimal agentCommission, BigDecimal salePrice, Integer agentId, String remark, BigDecimal overCommission, BigDecimal litterCommission, BigDecimal decPay, BigDecimal addPay, BigDecimal agentComPay, BigDecimal agentComReceive, Date overDate, Date litterDate, Date decPayDate, Date addPayDate, Date agentPayDate, Date agentReceiveDate, List paymentAirticketFares, List refundAirticketDetails,BigDecimal diffVat,String department) {
+    public TicketFareAirline(MAirlineAgent MAirlineAgent, String ticketNo, String ticketType, String ticketBuy, String ticketRouting, String passenger, Date issueDate, Date ticketDate, BigDecimal ticketFare, BigDecimal ticketTax, BigDecimal ticketIns, BigDecimal ticketCommission, BigDecimal agentCommission, BigDecimal salePrice, Integer agentId, String remark, BigDecimal overCommission, BigDecimal litterCommission, BigDecimal decPay, BigDecimal addPay, BigDecimal agentComPay, BigDecimal agentComReceive, Date overDate, Date litterDate, Date decPayDate, Date addPayDate, Date agentPayDate, Date agentReceiveDate, List paymentAirticketFares, List refundAirticketDetails,BigDecimal diffVat,String department) {
        this.MAirlineAgent = MAirlineAgent;
        this.ticketNo = ticketNo;
        this.ticketType = ticketType;
        this.ticketBuy = ticketBuy;
-       this.ticketRounting = ticketRounting;
+       this.ticketRouting = ticketRouting;
        this.passenger = passenger;
        this.issueDate = issueDate;
        this.ticketDate = ticketDate;
@@ -131,12 +131,12 @@ public class TicketFareAirline {
     public void setTicketBuy(String ticketBuy) {
         this.ticketBuy = ticketBuy;
     }
-    public String getTicketRounting() {
-        return this.ticketRounting;
+    public String getTicketRouting() {
+        return this.ticketRouting;
     }
     
-    public void setTicketRounting(String ticketRounting) {
-        this.ticketRounting = ticketRounting;
+    public void setTicketRouting(String ticketRouting) {
+        this.ticketRouting = ticketRouting;
     }
     public String getPassenger() {
         return this.passenger;

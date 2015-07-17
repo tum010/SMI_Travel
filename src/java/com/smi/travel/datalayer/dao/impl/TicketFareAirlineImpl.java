@@ -35,9 +35,9 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         int result = 0;
         try {
             Session session = this.sessionFactory.openSession();
-            setTransaction(session.beginTransaction());
+            transaction = session.beginTransaction();
             session.save(ticket);
-            getTransaction().commit();
+            transaction.commit();
             session.close();
             this.sessionFactory.close();
             result = 1;
@@ -53,9 +53,9 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         int result = 0;
         try {
             Session session = this.sessionFactory.openSession();
-            setTransaction(session.beginTransaction());
+            transaction = session.beginTransaction();
             session.update(ticket);
-            getTransaction().commit();
+            transaction.commit();
             session.close();
             this.sessionFactory.close();
             result = 1;
@@ -161,7 +161,11 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
             String departDate = String.valueOf(airlines.get(i).getDepartDate());
             String ticketFare = String.valueOf(airPassengerList.get(i).getTicketFare());
             String ticketTax = String.valueOf(airPassengerList.get(i).getTicketTax());
-
+            String issueDate = String.valueOf(airPassengerList.get(i).getAirticketAirline().getTicketDate());
+            String ticketRouting = String.valueOf(airPassengerList.get(i).getTicketType());
+            String airline = String.valueOf(airPassengerList.get(i).getAirticketAirline().getMAirline().getCode());
+            String ticketBy = String.valueOf(airPassengerList.get(i).getTicketFrom());
+            String department = String.valueOf(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType());
             String newrow
                     = "<tr>"
                     + "<td>" + ticket + "</td>"
@@ -170,9 +174,10 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                     + "<td>" + departDate + "</td>"
                     + "<td>" + ticketFare + "</td>"
                     + "<td>" + ticketTax + "</td>"
-                    + "<td class=\"text-center\" onclick=\"setTicketDetail('" + ticket + "','" + name + "','" + ticketClass + "','" + departDate + "','" + ticketFare + "','" + ticketTax + "')\">"
+                    + "<td class=\"text-center\" onclick=\"setTicketDetail('" + ticket + "','" + ticketFare + "','" + ticketTax + "','" + issueDate + "','" + ticketRouting + "','" + airline + "','" + ticketBy + "','" + name + "','" + department + "')\">"
                     + "<a href=\"\"><span class=\"glyphicon glyphicon-check\"></span></a>" + "</td>"
                     + "</tr>";
+            System.out.println("newrow [[[[[[[ "+newrow +" ]]]]");
             html.append(newrow);
         }
 
@@ -220,9 +225,9 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
             query += " t.ticketType "+queryOperation+" '"+Prefix_Subfix+ticket.getType()+Prefix_Subfix+"'";
             check =1;
        }
-        if((ticket.getRounting()!= null) &&(!"".equalsIgnoreCase(ticket.getRounting()))){
+        if((ticket.getRouting()!= null) &&(!"".equalsIgnoreCase(ticket.getRouting()))){
             if(check == 1){query += " and ";}
-            query += " t.ticketRounting "+queryOperation+" '"+Prefix_Subfix+ticket.getRounting()+Prefix_Subfix+"'";
+            query += " t.ticketRouting "+queryOperation+" '"+Prefix_Subfix+ticket.getRouting()+Prefix_Subfix+"'";
             check =1;
         }
         if((ticket.getAirline() != null) &&(!"".equalsIgnoreCase(ticket.getAirline()))){
@@ -245,11 +250,11 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
 //            query += " t.ticketNo "+queryOperation+" '"+Prefix_Subfix+ticket.getInvoiceNo()+Prefix_Subfix+"'";
 //            check =1;
 //        } 
-//        if((ticket.getDepartment() != null) &&(!"".equalsIgnoreCase(ticket.getDepartment()))){
-//            if(check == 1){query += " and ";}
-//            query += " t.ticketNo "+queryOperation+" '"+Prefix_Subfix+ticket.getDepartment()+Prefix_Subfix+"'";
-//            check =1;
-//        } 
+        if((ticket.getDepartment() != null) &&(!"".equalsIgnoreCase(ticket.getDepartment()))){
+            if(check == 1){query += " and ";}
+            query += " t.department "+queryOperation+" '"+Prefix_Subfix+ticket.getDepartment()+Prefix_Subfix+"'";
+            check =1;
+        } 
         if(check == 0){
             query = query.replaceAll("where", " ");
         }
@@ -267,7 +272,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                 ticketFareView.setId(String.valueOf(listAirline.get(i).getId()));
                 ticketFareView.setType(String.valueOf(listAirline.get(i).getTicketType()));
                 ticketFareView.setBuy(String.valueOf(listAirline.get(i).getTicketBuy()));
-                ticketFareView.setRounting(String.valueOf(listAirline.get(i).getTicketRounting()));
+                ticketFareView.setRouting(String.valueOf(listAirline.get(i).getTicketRouting()));
                 MAirlineAgent mAirlineAgent = new MAirlineAgent();
                 if(listAirline.get(i).getMAirlineAgent() != null){
                     mAirlineAgent.setId(listAirline.get(i).getMAirlineAgent().getId());
