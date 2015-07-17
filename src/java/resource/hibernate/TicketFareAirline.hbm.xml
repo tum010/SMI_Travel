@@ -19,7 +19,7 @@
         <property name="ticketBuy" type="string">
             <column name="ticket_buy" length="1" />
         </property>
-        <property name="ticketRounting" type="string">
+        <property name="ticketRouting" type="string">
             <column name="ticket_rounting" length="1" />
         </property>
         <property name="passenger" type="string">
