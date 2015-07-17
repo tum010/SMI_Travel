@@ -43,13 +43,14 @@ public class TicketFareAirline {
      private Date addPayDate;
      private Date agentPayDate;
      private Date agentReceiveDate;
+     private String department;
      private List paymentAirticketFares = new LinkedList<PaymentAirticketFare>();
      private List refundAirticketDetails = new LinkedList<RefundAirticketDetail>();
 
     public TicketFareAirline() {
     }
 
-    public TicketFareAirline(MAirlineAgent MAirlineAgent, String ticketNo, String ticketType, String ticketBuy, String ticketRounting, String passenger, Date issueDate, Date ticketDate, BigDecimal ticketFare, BigDecimal ticketTax, BigDecimal ticketIns, BigDecimal ticketCommission, BigDecimal agentCommission, BigDecimal salePrice, Integer agentId, String remark, BigDecimal overCommission, BigDecimal litterCommission, BigDecimal decPay, BigDecimal addPay, BigDecimal agentComPay, BigDecimal agentComReceive, Date overDate, Date litterDate, Date decPayDate, Date addPayDate, Date agentPayDate, Date agentReceiveDate, List paymentAirticketFares, List refundAirticketDetails,BigDecimal diffVat) {
+    public TicketFareAirline(MAirlineAgent MAirlineAgent, String ticketNo, String ticketType, String ticketBuy, String ticketRounting, String passenger, Date issueDate, Date ticketDate, BigDecimal ticketFare, BigDecimal ticketTax, BigDecimal ticketIns, BigDecimal ticketCommission, BigDecimal agentCommission, BigDecimal salePrice, Integer agentId, String remark, BigDecimal overCommission, BigDecimal litterCommission, BigDecimal decPay, BigDecimal addPay, BigDecimal agentComPay, BigDecimal agentComReceive, Date overDate, Date litterDate, Date decPayDate, Date addPayDate, Date agentPayDate, Date agentReceiveDate, List paymentAirticketFares, List refundAirticketDetails,BigDecimal diffVat,String department) {
        this.MAirlineAgent = MAirlineAgent;
        this.ticketNo = ticketNo;
        this.ticketType = ticketType;
@@ -79,6 +80,7 @@ public class TicketFareAirline {
        this.agentPayDate = agentPayDate;
        this.agentReceiveDate = agentReceiveDate;
        this.diffVat = diffVat;
+       this.department = department;
        this.paymentAirticketFares = paymentAirticketFares;
        this.refundAirticketDetails = refundAirticketDetails;
     }
@@ -90,6 +92,16 @@ public class TicketFareAirline {
     public void setId(String id) {
         this.id = id;
     }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+    
+    
     
     public MAirlineAgent getMAirlineAgent() {
         return this.MAirlineAgent;

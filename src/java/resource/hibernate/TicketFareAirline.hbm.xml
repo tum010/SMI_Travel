@@ -25,6 +25,9 @@
         <property name="passenger" type="string">
             <column name="passenger" length="50" />
         </property>
+        <property name="department" type="string">
+            <column name="department" length="10" />
+        </property>
         <property name="issueDate" type="date">
             <column name="issue_date" length="10" />
         </property>
