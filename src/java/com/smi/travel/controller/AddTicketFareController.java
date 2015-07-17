@@ -120,24 +120,40 @@ public class AddTicketFareController extends SMITravelController {
             }
             if(StringUtils.isNotEmpty(ticketFare)){
                 ticketFareAirline.setTicketFare(new BigDecimal(String.valueOf(ticketFare))); 
+            }else{
+                ticketFareAirline.setTicketFare(new BigDecimal(0)); 
             }
+            
             if(StringUtils.isNotEmpty(ticketTax)){
                 ticketFareAirline.setTicketTax(new BigDecimal(String.valueOf(ticketTax)));
+            }else{
+                ticketFareAirline.setTicketTax(new BigDecimal(0)); 
             }
+           
             if(StringUtils.isNotEmpty(ticketIns)){
                 ticketFareAirline.setTicketIns(new BigDecimal(String.valueOf(ticketIns)));
+            }else{
+                ticketFareAirline.setTicketIns(new BigDecimal(0)); 
             }
             if(StringUtils.isNotEmpty(ticketCommission)){
                 ticketFareAirline.setTicketCommission(new BigDecimal(String.valueOf(ticketCommission)));
+            }else{
+                ticketFareAirline.setTicketCommission(new BigDecimal(0)); 
             }
             if(StringUtils.isNotEmpty(agentCommission)){
                 ticketFareAirline.setAgentCommission(new BigDecimal(String.valueOf(agentCommission)));
+            }else{
+                ticketFareAirline.setAgentCommission(new BigDecimal(0)); 
             }
             if(StringUtils.isNotEmpty(salePrice)){
                 ticketFareAirline.setSalePrice(new BigDecimal(String.valueOf(salePrice)));
+            }else{
+                ticketFareAirline.setSalePrice(new BigDecimal(0)); 
             }
             if(StringUtils.isNotEmpty(diffVat)){
                 ticketFareAirline.setDiffVat(new BigDecimal(String.valueOf(diffVat)));
+            }else{
+                ticketFareAirline.setDiffVat(new BigDecimal(0)); 
             }
             if (StringUtils.isNotEmpty(agentId)){
                 ticketFareAirline.setAgentId(util.convertStringToInteger(agentId));
@@ -148,21 +164,33 @@ public class AddTicketFareController extends SMITravelController {
             ticketFareAirline.setRemark(remark);
             if(StringUtils.isNotEmpty(overCommission)){
                 ticketFareAirline.setOverCommission(new BigDecimal(String.valueOf(overCommission)));
+            }else{
+                ticketFareAirline.setOverCommission(new BigDecimal(0)); 
             }
             if(StringUtils.isNotEmpty(litterCommission)){
                 ticketFareAirline.setLitterCommission(new BigDecimal(String.valueOf(litterCommission)));
+            }else{
+                ticketFareAirline.setLitterCommission(new BigDecimal(0)); 
             }
             if(StringUtils.isNotEmpty(decPay)){
                 ticketFareAirline.setDecPay(new BigDecimal(String.valueOf(decPay)));
+            }else{
+                ticketFareAirline.setDecPay(new BigDecimal(0)); 
             }
             if(StringUtils.isNotEmpty(addPay)){
                 ticketFareAirline.setAddPay(new BigDecimal(String.valueOf(addPay)));
+            }else{
+                ticketFareAirline.setAddPay(new BigDecimal(0)); 
             }
             if(StringUtils.isNotEmpty(agentComPay)){
                 ticketFareAirline.setAgentComPay(new BigDecimal(String.valueOf(agentComPay)));
+            }else{
+                ticketFareAirline.setAgentComPay(new BigDecimal(0)); 
             }
             if(StringUtils.isNotEmpty(agentComReceive)){
                 ticketFareAirline.setAgentComReceive(new BigDecimal(String.valueOf(agentComReceive)));
+            }else{
+                ticketFareAirline.setAgentComReceive(new BigDecimal(0)); 
             }
             if (StringUtils.isNotEmpty(overDate)){
                 ticketFareAirline.setOverDate(util.convertStringToDate(overDate));
@@ -265,6 +293,46 @@ public class AddTicketFareController extends SMITravelController {
                     request.setAttribute(ISSUEDATE, IssueDate);
                     request.setAttribute(DEPARTMENT, Department);
                 }else{
+                    if(StringUtils.isEmpty(String.valueOf(ticketFareAirline.getTicketFare()))){
+                        ticketFareAirline.setTicketFare(new BigDecimal(0)); 
+                    }
+                    if(StringUtils.isEmpty(String.valueOf(ticketFareAirline.getTicketTax()))){
+                        ticketFareAirline.setTicketTax(new BigDecimal(0)); 
+                    }
+                    if(StringUtils.isEmpty(String.valueOf(ticketFareAirline.getTicketIns()))){
+                        ticketFareAirline.setTicketIns(new BigDecimal(0)); 
+                    }
+                    if(StringUtils.isEmpty(String.valueOf(ticketFareAirline.getTicketCommission()))){
+                        ticketFareAirline.setTicketCommission(new BigDecimal(0)); 
+                    }
+                    if(StringUtils.isEmpty(String.valueOf(ticketFareAirline.getAgentCommission()))){
+                        ticketFareAirline.setAgentCommission(new BigDecimal(0)); 
+                    }                    
+                    if(StringUtils.isEmpty(String.valueOf(ticketFareAirline.getSalePrice()))){
+                        ticketFareAirline.setSalePrice(new BigDecimal(0)); 
+                    }
+                    if(StringUtils.isEmpty(String.valueOf(ticketFareAirline.getDiffVat()))){
+                        ticketFareAirline.setDiffVat(new BigDecimal(0)); 
+                    }             
+                    if(StringUtils.isEmpty(String.valueOf(ticketFareAirline.getOverCommission()))){
+                        ticketFareAirline.setOverCommission(new BigDecimal(0)); 
+                    }                    
+                    if(StringUtils.isEmpty(String.valueOf(ticketFareAirline.getAddPay()))){
+                        ticketFareAirline.setAddPay(new BigDecimal(0)); 
+                    }                    
+                    if(StringUtils.isEmpty(String.valueOf(ticketFareAirline.getAgentComPay()))){
+                        ticketFareAirline.setAgentComPay(new BigDecimal(0)); 
+                    }                    
+                    if(StringUtils.isEmpty(String.valueOf(ticketFareAirline.getLitterCommission()))){
+                        ticketFareAirline.setLitterCommission(new BigDecimal(0)); 
+                    }
+                    if(StringUtils.isEmpty(String.valueOf(ticketFareAirline.getDecPay()))){
+                        ticketFareAirline.setDecPay(new BigDecimal(0)); 
+                    }
+                    if(StringUtils.isEmpty(String.valueOf(ticketFareAirline.getAgentComReceive()))){
+                        ticketFareAirline.setAgentComReceive(new BigDecimal(0)); 
+                    }                    
+
                     request.setAttribute(TICKETFARE,ticketFareAirline);
                     request.setAttribute(TICKETTYPE, ticketFareAirline.getTicketType());
                     request.setAttribute(TICKETBUY, ticketFareAirline.getTicketBuy());
