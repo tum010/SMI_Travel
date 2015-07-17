@@ -315,6 +315,7 @@
                         $("#InputProductId").val(tour_id);
                         $("#InputProduct").val(tour_code);
                         $("#InputProductName").val(tour_name);
+                        validFrom();
                     });
 
                     // tourTable
