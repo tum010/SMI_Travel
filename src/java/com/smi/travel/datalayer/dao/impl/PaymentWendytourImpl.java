@@ -27,8 +27,6 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
     private SessionFactory sessionFactory;
     private Transaction transaction;
     private static final int MAX_ROW = 200;
-    private static final String FIND_MASTER_QUERY = "from Master M where M.referenceNo := refno";
-    private static final String FIND_PAYMENT_QUERY = "from PaymentWendy P where P.id := paymentId";
     
     @Override
     public String InsertPaymentWendy(PaymentWendy payment) {
@@ -189,8 +187,9 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
     }
     
     public Master getMasterFromRefno(String refno){
+        String query = "from Master M where M.referenceNo =  :refno";
         Session session = this.sessionFactory.openSession();
-        List<Master> list = session.createQuery(FIND_MASTER_QUERY).setParameter("refno", refno).list();
+        List<Master> list = session.createQuery(query).setParameter("refno", refno).list();
         if (list.isEmpty()) {
             return null;
         }
@@ -207,11 +206,11 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
     }
 
     @Override
-    public PaymentWendy getPaymentWendyFromID(String paymentId) {
-        String query = "from PaymentWendy p where p.id = :paymentId";
+    public PaymentWendy getPaymentWendyFromID(String payNo) {
+        String query = "from PaymentWendy p where p.payNo = :payNo";
         Session session = this.sessionFactory.openSession();
         PaymentWendy result = new PaymentWendy();
-        List<PaymentWendy> List = session.createQuery(query).setParameter("paymentId", paymentId).list();
+        List<PaymentWendy> List = session.createQuery(query).setParameter("payNo", payNo).list();
         if (List.isEmpty()) {
             return null;
         }
