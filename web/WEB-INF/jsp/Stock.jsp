@@ -95,7 +95,7 @@
                             </div>
                         </div>
                         <div class="col-md-2 form-group text-left" style="width: 200px;">
-                            <input name="InputStaffName" id="InputStaffName" type="text" class="form-control" value="${stockData.staff.name}" />
+                            <input name="InputStaffName" id="InputStaffName" type="text" class="form-control" value="${stockData.staff.name}" readonly=""/>
                         </div>
                     </div>   
                 </div><!-- End Row 1-->
