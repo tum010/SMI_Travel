@@ -68,7 +68,7 @@ public class StockService {
         return stockDao.searchStock(productId, createDate, EffecttiveFrom, EffectiveTo);
     }
     
-    public StockViewSummary searchStockDetail(String productId,String payStatus){
-        return stockDao.searchStockDetail(productId, payStatus);
+    public StockViewSummary searchStockDetail(String productId,String payStatus,String itemStatus){
+        return stockDao.searchStockDetail(productId, payStatus,itemStatus);
     }
 }

@@ -1,6 +1,6 @@
 // staff 
 $(document).ready(function () {
-    var rows = document.getElementById("TaxInvoiceTable").getElementsByTagName("tr").length;
+    var rows = document.getElementById("StockTable").getElementsByTagName("tr").length;
     var count = document.getElementById('counterTable');
     count.value = rows;
     
@@ -86,15 +86,15 @@ $(document).ready(function () {
         });
 
     
-    $("#TaxInvoiceTable").on("keyup", function () {
-        var rowAll = $("#TaxInvoiceTable tr").length;
+    $("#StockTable").on("keyup", function () {
+        var rowAll = $("#StockTable tr").length;
         $("td").keyup(function () {
             if ($(this).find("input").val() !== '') {
                 var colIndex = $(this).parent().children().index($(this));
                 var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
-                rowAll = $("#TaxInvoiceTable tr").length;
-//                alert("RowIn : " +rowIndex + " Row All : " + rowAll );
-                if (rowIndex === rowAll) {
+                rowAll = $("#StockTable tr").length;
+//                alert("Goo : " + colIndex + " " + rowIndex);
+                if (rowIndex !== rowAll) {
                     console.log("rowAll : " + rowAll);
                     AddRow(rowAll);
                 }
@@ -171,7 +171,7 @@ function validFrom(){
 
 function AddRow(row) {
 //    alert("Se" + select);
-    $("#TaxInvoiceTable tbody").append(
+    $("#StockTable tbody").append(
             '<tr>' +
             '<td class="hidden"><input type="hidden"  id="stockDetailId' + row + '" name="stockDetailId' + row + '" value="" /></td>' +
             '<td>' + row + '</td>' +
@@ -202,14 +202,14 @@ function addItemList(){
     var st = start.value;
 //    alert("Type : " + type.value +" Start : " + st);
     if(countAdd.value === 1){
-        document.getElementById("TaxInvoiceTable").deleteRow(1);
+        document.getElementById("StockTable").deleteRow(1);
     }else{
-        $("#TaxInvoiceTable tr:last").remove();
+        $("#StockTable tr:last").remove();
     }
     var res = select.replace("value='"+ type.value+"'", "selected value='"+ type.value+"'");
 //    alert(res);
     for (var i = 1 ; i <= number.value; i++){
-        $("#TaxInvoiceTable tbody").append(
+        $("#StockTable tbody").append(
             '<tr>' +
             '<td class="hidden"><input type="hidden"  id="stockDetailId' + count.value + '" name="stockDetailId' + count.value + '" value="" /></td>' +
             '<td>'+ count.value +'</td>' +
@@ -245,8 +245,8 @@ function deleteStock(){
     var rowId  = document.getElementById('idStockDelete');
     var stockDetailId  = $("#stockDetailId"+rowId.value).val();
 
-    alert(" R : " + rowId.value);
-    document.getElementById("TaxInvoiceTable").deleteRow(rowId.value);
+//    alert(" R : " + rowId.value);
+    document.getElementById("StockTable").deleteRow(rowId.value);
     resetNumberItemList();
     if(stockDetailId !== ""){
         rowId.value = stockDetailId ;
@@ -259,8 +259,8 @@ function deleteStock(){
 }
 
 function resetNumberItemList(){
-    var rows = document.getElementById("TaxInvoiceTable").getElementsByTagName("tr").length;
-    var countRow = document.getElementById('TaxInvoiceTable').rows; 
+    var rows = document.getElementById("StockTable").getElementsByTagName("tr").length;
+    var countRow = document.getElementById('StockTable').rows; 
     for (var i = 1 ; i <= (rows-1); i++){  
         countRow[i].cells[1].innerHTML = i; 
         //alert(countRow[i].cells[2].attr('name').val());

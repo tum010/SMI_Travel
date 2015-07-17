@@ -198,7 +198,7 @@
                 </div><!-- End Row 2--><br>
                 <div class="row" style="padding-left: 0px">
                         <div class="col-xs-12 ">
-                                    <table class="display" id="TaxInvoiceTable">
+                                    <table class="display" id="StockTable">
                                         <thead class="datatable-header">
                                             <tr>
                                                 <th class="hidden">id</th>

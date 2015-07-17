@@ -1,4 +1,5 @@
 package com.smi.travel.controller;
+import com.smi.travel.datalayer.entity.MStockStatus;
 import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.datalayer.entity.Stock;
 import com.smi.travel.datalayer.entity.StockDetail;
@@ -40,7 +41,11 @@ public class SearchStockController extends SMITravelController {
             // Serach Product Stock
             List<Product> listProductStock =  stockService.getListStockProduct();
             request.setAttribute("ListProductStock", listProductStock);
-        
+            
+            //List Item Status
+            List<MStockStatus> listItemStatus = utilityService.getListStockStatus();
+            request.setAttribute("ListItemStatus", listItemStatus);
+            
         if("search".equalsIgnoreCase(action)){
             Stock stock = new Stock();
             Product product = new Product();
@@ -59,7 +64,8 @@ public class SearchStockController extends SMITravelController {
             }
             if(EffecttiveFrom != null){
                 stock.setEffectiveFrom(from);
-            }
+            }           
+           
             if(EffectiveTo != null){
                 stock.setEffectiveTo(to);
             }
@@ -71,7 +77,8 @@ public class SearchStockController extends SMITravelController {
         }else if("view".equalsIgnoreCase(action)){
             String stockId = request.getParameter("stockIdView");
             String status = request.getParameter("SelectPayStatus");
-            StockViewSummary stockDataDetail = stockService.searchStockDetail(stockId, status);
+            String itemStatus =  request.getParameter("SelectItemStatus");
+            StockViewSummary stockDataDetail = stockService.searchStockDetail(stockId, status, itemStatus);
             
             if(stockDataDetail != null){
                 System.out.println("set summary");

@@ -9,6 +9,7 @@
 <c:set var="stockClass" value="${requestScope['stock']}" />
 <c:set var="stockSum" value="${requestScope['stockSummary']}" />
 <c:set var="stockSumDetail" value="${requestScope['stockSumDetail']}" />
+<c:set var="ListItemStatus" value="${requestScope['ListItemStatus']}" />
 
 <section class="content-header" >
     <h1>
@@ -53,8 +54,8 @@
                 </div>
                 <div class="col-md-2 form-group text-left" style="padding-left: 0px;">
                     <select name="SelectPayStatus" id="SelectPayStatus" class="form-control">
-                        <option id="" value="">---select--</option>
-                        <option id="" value="">---s1elect--</option>
+                        <option id="" value="1">Pay</option>
+                        <option id="" value="0">Not Paid</option>
                     </select>
                 </div>
                 <div class="col-xs-1 text-right" style="width: 80px;padding-right: 0px;padding-left: 0px;">
@@ -62,8 +63,10 @@
                 </div>
                 <div class="col-md-2 form-group text-left" style="padding-left: 8px;width: 180px;">
                     <select name="SelectItemStatus" id="SelectItemStatus" class="form-control">
-                        <option id="" value="">---select--</option>
-                        <option id="" value="">---s1elect--</option>
+                        <option id="" value="">--Status--</option>
+                        <c:forEach var="sta" items="${ListItemStatus}">
+                            <option id="${sta.id}" value="${sta.id}">${sta.name}</option>
+                        </c:forEach>
                     </select>
                 </div>
             </div>   
@@ -221,11 +224,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                            <td>${stockSum.numOfItem}</td>
-                            <td>${stockSum.normal}</td>
-                            <td>${stockSum.cancel}</td>
-                            <td>${stockSum.bill}</td>
-                            <td>${stockSum.inuse}</td>
+                        <td class="text-right">${stockSum.numOfItem}</td>
+                        <td class="text-right">${stockSum.normal}</td>
+                        <td class="text-right">${stockSum.cancel}</td>
+                        <td class="text-right">${stockSum.bill}</td>
+                        <td class="text-right">${stockSum.inuse}</td>
                     </tbody>
                 </table><br>       
                 <table class="display" id="ItemListTable">

@@ -182,6 +182,8 @@ public class StockImpl implements StockDao{
         UtilityFunction util = new UtilityFunction();
         if(stockDataList == null){
             return null;
+        }else if(stockDataList.isEmpty()){
+            return null;
         }
         Stock stockData = stockDataList.get(0).getStock();
         int SumNormal = 0;
@@ -363,7 +365,7 @@ public class StockImpl implements StockDao{
     }
 
     @Override
-    public StockViewSummary searchStockDetail(String productId, String payStatus) {
+    public StockViewSummary searchStockDetail(String productId, String payStatus,String itemStatus) {
         StockViewSummary stockview = new StockViewSummary();
         Session session = this.sessionFactory.openSession();
         String query = "FROM StockDetail st where" ;
@@ -372,8 +374,12 @@ public class StockImpl implements StockDao{
             query += " st.stock.id = " + productId;
         }
        
-        if (payStatus != null ) {
+        if (payStatus != null && (!"".equalsIgnoreCase(payStatus))) {
             query += " and st.payStatus = '" + payStatus + "'";
+        }
+        
+        if (itemStatus != null && (!"".equalsIgnoreCase(itemStatus))) {
+            query += " and st.MStockStatus.id = '" + itemStatus + "'";
         }
         
         System.out.println("query : " + query);
