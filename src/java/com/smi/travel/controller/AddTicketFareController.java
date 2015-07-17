@@ -203,7 +203,6 @@ public class AddTicketFareController extends SMITravelController {
             
         } else if ("edit".equalsIgnoreCase(action)) {
             System.out.print("ticketId : " +ticketId);
-            
             ticketFareAirline = ticketFareAirlineService.getTicketFareFromId(ticketId);
             request.setAttribute(TICKETFARE,ticketFareAirline);
             request.setAttribute(TICKETTYPE, ticketFareAirline.getTicketType());
