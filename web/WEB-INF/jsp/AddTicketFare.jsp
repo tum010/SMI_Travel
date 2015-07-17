@@ -225,7 +225,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="ticketFare" name="ticketFare" type="text" class="form-control" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketFare}" onkeyup="calculateVat()">
+                                    <input id="ticketFare" name="ticketFare" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketFare}" onkeyup="calculateVat()">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
@@ -233,7 +233,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="ticketTax" name="ticketTax" type="text" class="form-control" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketTax}" onkeyup="calculateVat()">
+                                    <input id="ticketTax" name="ticketTax" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketTax}" onkeyup="calculateVat()">
                                 </div>
                             </div>
                         </div>
@@ -244,7 +244,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="ticketIns" name="ticketIns" type="text" class="form-control" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketIns}" onkeyup="calculateVat()">
+                                    <input id="ticketIns" name="ticketIns" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketIns}" onkeyup="calculateVat()">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -252,7 +252,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="ticketCommission" name="ticketCommission" type="text" class="form-control" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketCommission}">
+                                    <input id="ticketCommission" name="ticketCommission" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketCommission}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
@@ -260,7 +260,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="agentCommission" name="agentCommission" type="text" class="form-control" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.agentCommission}">
+                                    <input id="agentCommission" name="agentCommission" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.agentCommission}">
                                 </div>
                             </div>
                         </div>
@@ -270,7 +270,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">
-                                    <input id="invoiceAmount" name="invoiceAmount" type="text" class="form-control" maxlength="10" value="" readonly="" onkeyup="calculateVat()">
+                                    <input id="invoiceAmount" name="invoiceAmount" type="text" class="form-control money" maxlength="10" value="" readonly="" onkeyup="calculateVat()">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -278,7 +278,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="salePrice" name="salePrice" type="text" class="form-control" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.salePrice}">
+                                    <input id="salePrice" name="salePrice" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.salePrice}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
@@ -286,7 +286,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="diffVat" name="diffVat" type="text" class="form-control" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.diffVat}">
+                                    <input id="diffVat" name="diffVat" type="text" class="form-control money" onkeypress="return isNumberKey(event)" value="${ticketFare.diffVat}">
                                 </div>
                             </div>
 
@@ -335,7 +335,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class='input-group date'>
-                                    <input id="overCommission" name="overCommission" type="text" class="form-control" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.overCommission}">
+                                    <input id="overCommission" name="overCommission" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.overCommission}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -343,7 +343,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="addPay" name="addPay" type="text" class="form-control" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.addPay}">
+                                    <input id="addPay" name="addPay" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.addPay}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
@@ -351,7 +351,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="agentComPay" name="agentComPay" type="text" class="form-control" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.agentComPay}">
+                                    <input id="agentComPay" name="agentComPay" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.agentComPay}">
                                 </div>
                             </div>
                         </div>
@@ -393,7 +393,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class='input-group date'>
-                                    <input id="litterCommission" name="litterCommission" type="text" class="form-control" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.litterCommission}">
+                                    <input id="litterCommission" name="litterCommission" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.litterCommission}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -401,7 +401,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="decPay" name="decPay" type="text" class="form-control" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.decPay}">
+                                    <input id="decPay" name="decPay" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.decPay}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
@@ -409,7 +409,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="agentComReceive" name="agentComReceive" type="text" class="form-control" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.agentComReceive}">
+                                    <input id="agentComReceive" name="agentComReceive" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.agentComReceive}">
                                 </div>
                             </div>
                         </div>
@@ -640,6 +640,7 @@
        
 <script type="text/javascript">
     $(document).ready(function () {
+        $(".money").mask('000,000,000', {reverse: true});
         $('.date').datetimepicker();
         $("#ticketNo").keyup(function (event) {
             if(event.keyCode === 13){
@@ -679,27 +680,27 @@
         $('#AgentTable tbody').on('click', 'tr', function () {
             $(this).addClass('row_selected').siblings().removeClass('row_selected');
         });
- 
-//        $("#AddTicketFareForm")
-//            .bootstrapValidator({
-//                container: 'tooltip',
-//                excluded: [':disabled', ':hidden', ':not(:visible)'],
-//                feedbackIcons: {
-//                    valid: 'uk-icon-check',
-//                    invalid: 'uk-icon-times',
-//                    validating: 'uk-icon-refresh'
-//                },
-//                fields: {
-//                    ticketNo: {
-//                        trigger: 'focus keyup',
-//                        validators: {
-//                            notEmpty: {trigger: 'change',
-//                                message: ' Ticket No is required'
-//                            }
-//                        }
-//                    }
-//                }
-//            });
+        
+        $("#AddTicketFareForm")
+            .bootstrapValidator({
+                container: 'tooltip',
+                excluded: [':disabled', ':hidden', ':not(:visible)'],
+                feedbackIcons: {
+                    valid: 'uk-icon-check',
+                    invalid: 'uk-icon-times',
+                    validating: 'uk-icon-refresh'
+                },
+                fields: {
+                    ticketNo: {
+                        validators: {
+                            notEmpty: {trigger: 'change',
+                                message: ' Ticket No is required'
+                            }
+                        }
+                    }
+                }
+            });
+
  
    });
    
@@ -782,63 +783,7 @@ function searchTicketNo() {
     var ticketNo = document.getElementById('ticketNo');
     ticketNo.value = $("#ticketNo").val();
     document.getElementById('AddTicketFareForm').submit();
-//    var ticketNo = $("#ticketNo").val();
-//    var servletName = 'TicketFareAirlineServlet';
-//    var servicesName = 'AJAXBean';
-//    var param = 'action=' + 'text' +
-//            '&servletName=' + servletName +
-//            '&servicesName=' + servicesName +
-//            '&ticketNo=' + ticketNo +
-//            '&type=' + 'search';
-//    CallAjax(param);
 }
-//
-//function CallAjax(param) {
-//    var url = 'AJAXServlet';
-//    $("#ajaxload").removeClass("hidden");
-//    try {
-//        $.ajax({
-//            type: "POST",
-//            url: url,
-//            cache: false,
-//            data: param,
-//            success: function(msg) {
-//                var path = msg.split(',');
-//                alert(path[0]+","+path[1]+","+path[2]+","+path[3]+","+path[4]);
-//                if(path[0] == 'AirticketPassenger'){
-//                    document.getElementById('ticketFare').value = path[1];
-//                    document.getElementById('ticketTax').value = path[2];
-//                    if(path[3] == 'I'){
-//                        document.getElementById('department').value = "wendy";
-//                    }else if(path[3] == 'O'){
-//                        document.getElementById('department').value = "outbound";
-//                    }
-//                    if(path[4] == 'Other'){
-//                        document.getElementById('ticketAirline').value = "1";
-//                    } else if(path[4] == 'TG'){
-//                        document.getElementById('ticketAirline').value = "2";
-//                    }
-//                }else{
-//                    document.getElementById('ticketFare').value = path[1];
-//                    document.getElementById('ticketTax').value = path[2];
-//                    document.getElementById('issueDate').value = path[3];
-//                    document.getElementById('ticketRouting').value = path[4];
-//                    document.getElementById('ticketAirline').value = path[5];
-//                    document.getElementById('ticketBuy').value = path[6];
-//                    document.getElementById('passenger').value = path[7];
-//                    document.getElementById('department').value = path[8];
-//                }
-//                
-//                
-//                $("#ajaxload").addClass("hidden");
-//            }, error: function(msg) {
-//                $("#ajaxload").addClass("hidden");
-//            }
-//        });
-//    } catch (e) {
-//        alert(e);
-//    }
-//}
 function FilterTicketList(referNo) {
     var servletName = 'TicketFareAirlineServlet';
     var servicesName = 'AJAXBean';
@@ -890,9 +835,6 @@ function CallFilterAjax(param) {
 function setTicketDetail(ticket,ticketFare,ticketTax,issueDate,ticketRouting,airline,ticketBy,passenger,department) {
     alert(ticket+","+ticketFare+","+ticketTax+","+issueDate+","+ticketRouting+","+airline+","+ticketBy+","+passenger+","+department);
     $("#ticketNo").val(ticket);
-//    $("#name").val(name);
-//    $("#ticketClass").val(ticketClass);
-//    $("#departDate").val(departDate);
     $("#ticketFare").val(ticketFare);
     $("#ticketTax").val(ticketTax);
 
@@ -919,21 +861,25 @@ function calculateVat() {
     var ticketType = document.getElementById('ticketType').value;
     if(ticketType == "A" || ticketType == "B"){
         var invAmount = document.getElementById('invoiceAmount').value;
+        invAmount.replace(",","");
         if (invAmount == ""){
             invAmount = 0;
         }
 
         var ticketfare = document.getElementById('ticketFare').value;
+        ticketfare.replace(",","");
         if (ticketfare == ""){
             ticketfare = 0;
         }
 
         var tickettax = document.getElementById('ticketTax').value;
+        tickettax.replace(",","");
         if (tickettax == ""){
             tickettax = 0;
         }
 
         var ticketins = document.getElementById('ticketIns').value;
+        ticketins.replace(",","");
         if (ticketins == ""){
             ticketins = 0;
         }
@@ -945,4 +891,5 @@ function calculateVat() {
        document.getElementById("diffVat").value = inv - fare - tax - ins ;
     }
 }
+
 </script>
