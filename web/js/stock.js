@@ -108,8 +108,7 @@ function validFrom(){
     // Validator Date From and To
     $("#StockForm")
             .bootstrapValidator({
-                container: 'tooltip',
-                excluded: [':disabled'],
+                framework: 'bootstrap',
                 feedbackIcons: {
                     valid: 'uk-icon-check',
                     invalid: 'uk-icon-times',
