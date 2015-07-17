@@ -16,6 +16,7 @@
 <c:set var="product_list" value="${requestScope['product_list']}" />
 <c:set var="currency_list" value="${requestScope['currency_list']}" />
 <c:set var="detail" value="${requestScope['BookDetail']}" />
+<c:set var="resultText" value="${requestScope['resultText']}" />
 
 <section class="content-header" >
     <h1>
@@ -32,8 +33,21 @@
         <div ng-include="'WebContent/Checking/CheckingPackageTourHotel.html'"></div>
     </div>
     <!--Content -->
+   
     <form action="PaymentTourHotel.smi" method="post" id="PaymentTourHotelForm" autocomplete="off" role="form">
     <div class="col-sm-10">
+        <c:if test="${requestScope['resultText'] =='success'}">                                            
+            <div id="textAlertDivSave"  style="" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Save Success!</strong> 
+            </div>
+        </c:if>
+        <c:if test="${requestScope['resultText'] =='fail'}">
+        <div id="textAlertDivNotSave"  style="" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+           <strong>Save Unsuccess!</strong> 
+        </div>
+        </c:if>
         <div class="row" style="padding-left: 15px">  
             <div class="col-sm-6" style="padding-right: 15px">
                 <h4><b>Payment Tour / Hotel</b></h4>
@@ -222,7 +236,7 @@
                                     </c:forEach>
                                     </select>                                                                  
                                 </td>
-                                <td> <input style="width: ${RefNo}" id="refNo${i.count}" name="refNo${i.count}" maxlength ="10"  type="text" class="form-control" value="${pl.id}"> </td>
+                                <td> <input style="width: ${RefNo}" id="refNo${i.count}" name="refNo${i.count}" maxlength ="10"  type="text" class="form-control" value="${pl.master.referenceNo}"> </td>
                                 <td> <input style="width: ${InvNo}" id="invNo${i.count}" name="invNo${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.invoiceCreditor}">  </td>
                                 <td> <input style="width: ${Code}" id="code${i.count}" name="code${i.count}" maxlength ="15"  type="text" class="form-control" value="">  </td>
                                 <td>
@@ -580,9 +594,21 @@
             $(this).parent().removeClass("show");
             $(this).parent().addClass("hide");
         });
-     
-
+        
+        $("#InputPayNo").keyup(function (event) {
+            if (event.keyCode === 13) {
+                searchPaymentTour();
+            }
+        });
+        
     });
+    
+    function searchPaymentTour() {
+        var action = document.getElementById('action');
+        var payNo = document.getElementById('InputPayNo').value;
+        action.value = 'edit';
+        document.getElementById('PaymentTourHotelForm').submit();
+    }
     
     function setupInvSupValue(id,code,name,apcode){
         $('#SearchInvoiceSup').modal('hide');
