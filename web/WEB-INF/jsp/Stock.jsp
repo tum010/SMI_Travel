@@ -80,7 +80,7 @@
                             </div>
                         </div>
                         <div class="col-md-2 form-group text-left" style="width: 200px;">
-                            <input name="InputProductName" id="InputProductName" type="text" class="form-control" value="${stockData.product.name}" />
+                            <input name="InputProductName" id="InputProductName" type="text" class="form-control" value="${stockData.product.name}" readonly=""/>
                         </div>
                         <div class="col-xs-1 text-right"  style="width: 87px;" >
                             <label class="control-label">Staff</lable>
