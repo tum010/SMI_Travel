@@ -60,7 +60,7 @@
                         </div>
                         <div class="col-xs-1  text-right" style="width: 8px"><i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i></div>
                         <div class="col-xs-1 text-right" style="width: 100px">
-                            <button style="height:34px" type="button"  id="ButtonSearch"  name="ButtonSearch" onclick="searchTicketNo();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
+                            <button style="height:34px" type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="searchTicketNo();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
 
                         </div>
                         
@@ -636,7 +636,8 @@
         </script>
     </c:if>
 </c:if>
-        
+         
+       
 <script type="text/javascript">
     $(document).ready(function () {
         $('.date').datetimepicker();
@@ -776,62 +777,68 @@ function saveAction() {
     document.getElementById('AddTicketFareForm').submit();
 }
 function searchTicketNo() {
-    var ticketNo = $("#ticketNo").val();
-    var servletName = 'TicketFareAirlineServlet';
-    var servicesName = 'AJAXBean';
-    var param = 'action=' + 'text' +
-            '&servletName=' + servletName +
-            '&servicesName=' + servicesName +
-            '&ticketNo=' + ticketNo +
-            '&type=' + 'search';
-    CallAjax(param);
+    var action = document.getElementById('action');
+    action.value = 'search';
+    var ticketNo = document.getElementById('ticketNo');
+    ticketNo.value = $("#ticketNo").val();
+    document.getElementById('AddTicketFareForm').submit();
+//    var ticketNo = $("#ticketNo").val();
+//    var servletName = 'TicketFareAirlineServlet';
+//    var servicesName = 'AJAXBean';
+//    var param = 'action=' + 'text' +
+//            '&servletName=' + servletName +
+//            '&servicesName=' + servicesName +
+//            '&ticketNo=' + ticketNo +
+//            '&type=' + 'search';
+//    CallAjax(param);
 }
-
-function CallAjax(param) {
-    var url = 'AJAXServlet';
-    $("#ajaxload").removeClass("hidden");
-    try {
-        $.ajax({
-            type: "POST",
-            url: url,
-            cache: false,
-            data: param,
-            success: function(msg) {
-                var path = msg.split(',');
-                if(path[0] == 'AirticketPassenger'){
-                    document.getElementById('ticketFare').value = path[1];
-                    document.getElementById('ticketTax').value = path[2];
-                    if(path[3] == 'I'){
-                        document.getElementById('department').value = "wendy";
-                    }else if(path[3] == 'O'){
-                        document.getElementById('department').value = "outbound";
-                    }
-                    if(path[4] == 'Other'){
-                        document.getElementById('ticketAirline').value = "1";
-                    } else if(path[4] == 'TG'){
-                        document.getElementById('ticketAirline').value = "2";
-                    }
-                }else{
-                    document.getElementById('ticketFare').value = path[1];
-                    document.getElementById('ticketTax').value = path[2];
-                    document.getElementById('issueDate').value = path[3];
-                    document.getElementById('ticketRouting').value = path[4];
-                    document.getElementById('ticketAirline').value = path[5];
-                    document.getElementById('ticketBuy').value = path[6];
-                    document.getElementById('passenger').value = path[7];
-                    document.getElementById('department').value = path[8];
-                }
-                
-                
-                $("#ajaxload").addClass("hidden");
-            }, error: function(msg) {
-                $("#ajaxload").addClass("hidden");
-            }
-        });
-    } catch (e) {
-        alert(e);
-    }
-}
+//
+//function CallAjax(param) {
+//    var url = 'AJAXServlet';
+//    $("#ajaxload").removeClass("hidden");
+//    try {
+//        $.ajax({
+//            type: "POST",
+//            url: url,
+//            cache: false,
+//            data: param,
+//            success: function(msg) {
+//                var path = msg.split(',');
+//                alert(path[0]+","+path[1]+","+path[2]+","+path[3]+","+path[4]);
+//                if(path[0] == 'AirticketPassenger'){
+//                    document.getElementById('ticketFare').value = path[1];
+//                    document.getElementById('ticketTax').value = path[2];
+//                    if(path[3] == 'I'){
+//                        document.getElementById('department').value = "wendy";
+//                    }else if(path[3] == 'O'){
+//                        document.getElementById('department').value = "outbound";
+//                    }
+//                    if(path[4] == 'Other'){
+//                        document.getElementById('ticketAirline').value = "1";
+//                    } else if(path[4] == 'TG'){
+//                        document.getElementById('ticketAirline').value = "2";
+//                    }
+//                }else{
+//                    document.getElementById('ticketFare').value = path[1];
+//                    document.getElementById('ticketTax').value = path[2];
+//                    document.getElementById('issueDate').value = path[3];
+//                    document.getElementById('ticketRouting').value = path[4];
+//                    document.getElementById('ticketAirline').value = path[5];
+//                    document.getElementById('ticketBuy').value = path[6];
+//                    document.getElementById('passenger').value = path[7];
+//                    document.getElementById('department').value = path[8];
+//                }
+//                
+//                
+//                $("#ajaxload").addClass("hidden");
+//            }, error: function(msg) {
+//                $("#ajaxload").addClass("hidden");
+//            }
+//        });
+//    } catch (e) {
+//        alert(e);
+//    }
+//}
 function FilterTicketList(referNo) {
     var servletName = 'TicketFareAirlineServlet';
     var servicesName = 'AJAXBean';
@@ -895,7 +902,7 @@ function setTicketDetail(ticket,ticketFare,ticketTax,issueDate,ticketRouting,air
     $("#passenger").val(passenger);
     if(airline == 'Other'){
         document.getElementById('ticketAirline').value = "1";
-    } else if(airline == 'TG'){
+    }else if(airline == 'TG'){
         document.getElementById('ticketAirline').value = "2";
     }
     

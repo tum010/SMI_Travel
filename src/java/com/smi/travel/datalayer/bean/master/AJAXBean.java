@@ -565,33 +565,7 @@ public class AJAXBean extends AbstractBean implements
                 System.out.println("result save:" + result);
             }
         } else if (TICKETFAREAIRLINE.equalsIgnoreCase(servletName)) {
-            if ("search".equalsIgnoreCase(type)) {
-                String ticketNo = String.valueOf(map.get("ticketNo"));
-                System.out.println("ticketNo : "+ticketNo);
-                if(ticketNo == null){
-                    System.out.print("ticketNo is null");
-                }else{
-                    TicketFareAirline  ticketFare = ticketFareAirlineDao.getTicketFareFromTicketNo(ticketNo);
-                    if(ticketFare == null){
-                        result = ticketFareAirlineDao.getTicketFareBookingFromTicketNo(ticketNo);
-                        //Ticket Fare , Ticket tax , Department , Airline
-			System.out.println("result +======== "+result);	
-                    }else{
-                        System.out.println("+ ticketFare + "+ticketFare.getTicketFare());
-                        //Ticket Fare , Ticket tax , Issue date , Ticket Routing , Airline , Ticket By , Passenger , Department		
-                        result = "TicketFareAirline" + ","  
-                                + ticketFare.getTicketFare() + "," 
-                                + ticketFare.getTicketTax() + "," 
-                                + ticketFare.getIssueDate() + "," 
-                                + ticketFare.getTicketRouting() + "," 
-                                + ticketFare.getMAirlineAgent().getId() + "," 
-                                + ticketFare.getTicketBuy() + "," 
-                                + ticketFare.getPassenger() + "," 
-                                + ticketFare.getDepartment()
-                                ;
-                    }
-                }
-            }else if ("getTicketList".equalsIgnoreCase(type)) {
+            if ("getTicketList".equalsIgnoreCase(type)) {
                 String referNo = map.get("referNo").toString();
                 System.out.println("referNo"+referNo);
                 result = ticketFareAirlineDao.getListTicketFareFromRefno(referNo);

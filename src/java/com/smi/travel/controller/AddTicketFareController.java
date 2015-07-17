@@ -1,5 +1,6 @@
 package com.smi.travel.controller;
 import com.smi.travel.datalayer.entity.Agent;
+import com.smi.travel.datalayer.entity.AirticketFlight;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.MAirlineAgent;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
@@ -11,6 +12,7 @@ import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -89,13 +91,14 @@ public class AddTicketFareController extends SMITravelController {
 
         util = new UtilityFunction();
         System.out.print("action :" + action + "//");
-
+        TicketFareAirline ticketFareAirline = new TicketFareAirline();
+        AirticketPassenger airticketPassenger = new AirticketPassenger();
+        MAirlineAgent mAirlineAgent = new MAirlineAgent();
         if ("save".equalsIgnoreCase(action)){
             System.out.println("ticketId : "+ ticketId);
-            MAirlineAgent mAirlineAgent = new MAirlineAgent();
+            
             mAirlineAgent.setId(ticketAirline);
            
-            TicketFareAirline ticketFareAirline = new TicketFareAirline();
             if(StringUtils.isNotEmpty(ticketAirline)){
                 ticketFareAirline.setMAirlineAgent(mAirlineAgent);
             }
@@ -200,22 +203,85 @@ public class AddTicketFareController extends SMITravelController {
             
         } else if ("edit".equalsIgnoreCase(action)) {
             System.out.print("ticketId : " +ticketId);
-            TicketFareAirline ticketFareAirlines = new TicketFareAirline();
-            ticketFareAirlines = ticketFareAirlineService.getTicketFareFromId(ticketId);
-            request.setAttribute(TICKETFARE,ticketFareAirlines);
-            request.setAttribute(TICKETTYPE, ticketFareAirlines.getTicketType());
-            request.setAttribute(TICKETBUY, ticketFareAirlines.getTicketBuy());
-            request.setAttribute(TICKETROUTING, ticketFareAirlines.getTicketRouting());
-            request.setAttribute(ISSUEDATE, ticketFareAirlines.getIssueDate());
-            agents = getAgentService().getAgentFromID(String.valueOf(ticketFareAirlines.getAgentId()));
+            
+            ticketFareAirline = ticketFareAirlineService.getTicketFareFromId(ticketId);
+            request.setAttribute(TICKETFARE,ticketFareAirline);
+            request.setAttribute(TICKETTYPE, ticketFareAirline.getTicketType());
+            request.setAttribute(TICKETBUY, ticketFareAirline.getTicketBuy());
+            request.setAttribute(TICKETROUTING, ticketFareAirline.getTicketRouting());
+            request.setAttribute(ISSUEDATE, ticketFareAirline.getIssueDate());
+            agents = getAgentService().getAgentFromID(String.valueOf(ticketFareAirline.getAgentId()));
             request.setAttribute(SELECTEDAGENT, agents);
-            request.setAttribute(OVERDATE, ticketFareAirlines.getOverDate());
-            request.setAttribute(LITTERDATE, ticketFareAirlines.getLitterDate());
-            request.setAttribute(DECPAYDATE, ticketFareAirlines.getDecPayDate());
-            request.setAttribute(ADDPAYDATE, ticketFareAirlines.getAddPayDate());
-            request.setAttribute(AGENTPAYDATE, ticketFareAirlines.getAgentPayDate());
-            request.setAttribute(AGENTRECEIVEDATE, ticketFareAirlines.getAgentReceiveDate());
-            request.setAttribute(DEPARTMENT, ticketFareAirlines.getDepartment());
+            request.setAttribute(OVERDATE, ticketFareAirline.getOverDate());
+            request.setAttribute(LITTERDATE, ticketFareAirline.getLitterDate());
+            request.setAttribute(DECPAYDATE, ticketFareAirline.getDecPayDate());
+            request.setAttribute(ADDPAYDATE, ticketFareAirline.getAddPayDate());
+            request.setAttribute(AGENTPAYDATE, ticketFareAirline.getAgentPayDate());
+            request.setAttribute(AGENTRECEIVEDATE, ticketFareAirline.getAgentReceiveDate());
+            request.setAttribute(DEPARTMENT, ticketFareAirline.getDepartment());
+        }else if ("search".equalsIgnoreCase(action)) {
+            System.out.print("ticketNo : " +ticketNo);
+            if(ticketNo == null){
+                System.out.print("ticketNo is null");
+            }else{
+                ticketFareAirline = ticketFareAirlineService.getTicketFareFromTicketNo(ticketNo);
+                if(ticketFareAirline == null){
+                    String airticketPass = ticketFareAirlineService.getTicketFareBookingFromTicketNo(ticketNo);
+                    TicketFareAirline ticketFareAirlines = new TicketFareAirline();
+                    String[] parts = airticketPass.split(",");
+                    String TicketFare = parts[0].trim(); 
+                    String TicketTax = parts[1].trim(); 
+                    String IssueDate = parts[2].trim(); 
+                    String TicketRouting = parts[3].trim(); 
+                    String Airline = parts[4].trim(); 
+                    String TicketBy = parts[5].trim(); 
+                    String Passenger = parts[6].trim(); 
+                    String Department = parts[7].trim(); 
+                    ticketFareAirlines.setTicketNo(ticketNo);
+                    if(StringUtils.isNotEmpty(TicketFare)){
+                        ticketFareAirlines.setTicketFare(new BigDecimal(TicketFare));
+                    }else{
+                        ticketFareAirlines.setTicketFare(new BigDecimal(0));
+                    }
+                    if(StringUtils.isNotEmpty(TicketTax)){
+                        ticketFareAirlines.setTicketTax(new BigDecimal(TicketTax));
+                    }else{
+                        ticketFareAirlines.setTicketTax(new BigDecimal(0));
+                    }
+
+                    if(Department.equalsIgnoreCase("I")){
+                        Department = "wendy";
+                    }else if(Department.equalsIgnoreCase("O")){
+                        Department = "outbound";
+                    }
+                    mAirlineAgent.setId(Airline);
+                    if(StringUtils.isNotEmpty(Airline)){
+                        ticketFareAirlines.setMAirlineAgent(mAirlineAgent);
+                    }
+                    ticketFareAirlines.setPassenger(Passenger);
+
+                    request.setAttribute(TICKETFARE,ticketFareAirlines);
+                    request.setAttribute(TICKETBUY, TicketBy);
+                    request.setAttribute(TICKETROUTING, TicketRouting);
+                    request.setAttribute(ISSUEDATE, IssueDate);
+                    request.setAttribute(DEPARTMENT, Department);
+                }else{
+                    request.setAttribute(TICKETFARE,ticketFareAirline);
+                    request.setAttribute(TICKETTYPE, ticketFareAirline.getTicketType());
+                    request.setAttribute(TICKETBUY, ticketFareAirline.getTicketBuy());
+                    request.setAttribute(TICKETROUTING, ticketFareAirline.getTicketRouting());
+                    request.setAttribute(ISSUEDATE, ticketFareAirline.getIssueDate());
+                    agents = getAgentService().getAgentFromID(String.valueOf(ticketFareAirline.getAgentId()));
+                    request.setAttribute(SELECTEDAGENT, agents);
+                    request.setAttribute(OVERDATE, ticketFareAirline.getOverDate());
+                    request.setAttribute(LITTERDATE, ticketFareAirline.getLitterDate());
+                    request.setAttribute(DECPAYDATE, ticketFareAirline.getDecPayDate());
+                    request.setAttribute(ADDPAYDATE, ticketFareAirline.getAddPayDate());
+                    request.setAttribute(AGENTPAYDATE, ticketFareAirline.getAgentPayDate());
+                    request.setAttribute(AGENTRECEIVEDATE, ticketFareAirline.getAgentReceiveDate());
+                    request.setAttribute(DEPARTMENT, ticketFareAirline.getDepartment());
+                }	
+            }
         }
 
         return AddTicketFare;

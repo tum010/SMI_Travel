@@ -109,14 +109,20 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         List<AirticketPassenger> ticketPassList = session.createQuery(query).setParameter("ticketNo", TicketNo).list();
         if (ticketPassList.isEmpty()) {
             return null;
-        }else{
+        }else{ 
              for(int i = 0 ; i < ticketPassList.size() ; i++ ){
-                 result = "AirticketPassenger" + ","  
-                         + ticketPassList.get(i).getTicketFare() + "," 
+                 System.out.println("airline" + ticketPassList.get(i).getAirticketAirline().getMAirline().getCode());
+                 String ticketAirline = getMAirlineAgentIdFromCode(ticketPassList.get(i).getAirticketAirline().getMAirline().getCode());
+                 result = ticketPassList.get(i).getTicketFare() + "," 
                          + ticketPassList.get(i).getTicketTax() + "," 
-                         + ticketPassList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType() + "," //department 
-                         + ticketPassList.get(i).getAirticketAirline().getMAirline().getCode() //airline
+                         + ticketPassList.get(i).getAirticketAirline().getTicketDate() + "," 
+                         + ticketPassList.get(i).getTicketType() + "," 
+                         + ticketAirline + "," 
+                         + ticketPassList.get(i).getTicketFrom() + "," 
+                         + ticketPassList.get(i).getMInitialname().getName()+ticketPassList.get(i).getLastName()+ " "+ticketPassList.get(i).getFirstName()+ ","   
+                         + ticketPassList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType() //department 
                          ;
+                 System.err.println("getTicketFareBookingFromTicketNo " + i + " result ::: "+result);
              }
         }
         session.close();
@@ -356,6 +362,22 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         session.close();
         this.sessionFactory.close();
         return result;    
+    }
+    
+    public String getMAirlineAgentIdFromCode(String code) {
+        String result = "";
+        String query = "from MAirlineAgent a where a.code =:code";
+        Session session = this.sessionFactory.openSession();
+        List<MAirlineAgent> mAirlineAgentList = session.createQuery(query).setParameter("code", code).list();
+        if (mAirlineAgentList.isEmpty()) {
+            result = "1";
+        }else{
+            result = mAirlineAgentList.get(0).getId();
+        }
+        System.out.println("=== result === " + result + "===");
+        session.close();
+        this.sessionFactory.close();
+        return result;   
     }
 
    
