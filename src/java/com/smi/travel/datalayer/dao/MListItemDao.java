@@ -58,6 +58,7 @@ public interface MListItemDao {
     public List<MPaymentDoctype>  getListMpaymentDocType();
     public List<MAirlineAgent> getListMAirLineAgent();
     public List<MPaytype> getListMPayType();
+    public List<MStockStatus> getListMStockStatus();
     
     
 }

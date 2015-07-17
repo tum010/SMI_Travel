@@ -33,6 +33,7 @@ import com.smi.travel.datalayer.entity.MMeal;
 import com.smi.travel.datalayer.entity.MPaymentDoctype;
 import com.smi.travel.datalayer.entity.MPaytype;
 import com.smi.travel.datalayer.entity.MPricecategory;
+import com.smi.travel.datalayer.entity.MStockStatus;
 import com.smi.travel.datalayer.entity.MTicketType;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.Place;
@@ -188,6 +189,10 @@ public class UtilityService {
     
     public List<SystemUser> getDriverList() {
         return systemUserdao.getDriverList();
+    }
+    
+    public List<MStockStatus> getListStockStatus(){
+        return listitemdao.getListMStockStatus();
     }
     
     public List<Place> getPickupList(){

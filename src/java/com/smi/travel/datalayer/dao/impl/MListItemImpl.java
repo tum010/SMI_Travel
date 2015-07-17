@@ -24,6 +24,7 @@ import com.smi.travel.datalayer.entity.MPaytype;
 import com.smi.travel.datalayer.entity.PackageTour;
 import com.smi.travel.datalayer.entity.MPricecategory;
 import com.smi.travel.datalayer.entity.MProductType;
+import com.smi.travel.datalayer.entity.MStockStatus;
 import com.smi.travel.datalayer.entity.MTicketType;
 import java.util.List;
 import org.hibernate.Session;
@@ -402,6 +403,21 @@ public class MListItemImpl implements MListItemDao {
         session.close();
         this.sessionFactory.close();
         return MPaytypeList; 
+    }
+
+    @Override
+    public List<MStockStatus> getListMStockStatus() {
+        String query = "from MStockStatus";
+        Session session = this.sessionFactory.openSession();
+
+        List<MStockStatus> MStockStatusList = session.createQuery(query).list();
+
+        if (MStockStatusList.isEmpty()) {
+            return null;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return MStockStatusList; 
     }
 
   
