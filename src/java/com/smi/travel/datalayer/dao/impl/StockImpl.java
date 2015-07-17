@@ -204,7 +204,10 @@ public class StockImpl implements StockDao{
         stockview.setNormal(SumNormal);
         stockview.setNumOfItem(stockData.getStockDetails().size());
         stockview.setProductName(stockData.getProduct().getName());
-        stockview.setStaff(stockData.getStaff().getUsername());
+        if(stockData.getStaff() != null){
+            stockview.setStaff(stockData.getStaff().getUsername());
+        }
+        
         stockview.setCancel(SumCancel);
         stockview.setInuse(SumInuse);
         stockview.setItemList(mappingStockView(stockData.getStockDetails()));
@@ -270,21 +273,44 @@ public class StockImpl implements StockDao{
 
     @Override
     public String getStockId(Stock stock) {
-        String stockId = "";       
-        List<Stock> result = new LinkedList<Stock>();
+        UtilityFunction utility = new UtilityFunction();
         Session session = this.sessionFactory.openSession();
-        List<Stock> stockNew = session.createQuery(GET_STOCK_ID)
-                .setParameter("proID", stock.getProduct().getId())
-                .setParameter("staffID", stock.getStaff().getUsername())
-                .setParameter("from", stock.getEffectiveFrom())
-                .setParameter("to", stock.getEffectiveTo())
-                .setParameter("create", stock.getCreateDate())
-                .list();
-        if (!stockNew.isEmpty()) {
+        String stockId = "";       
+        String query = "FROM Stock st where" ;
+        
+        if ( stock.getProduct().getId() != null && (!"".equalsIgnoreCase(stock.getProduct().getId())) ) {
+            query += " st.product.id = " + stock.getProduct().getId();
+        }
+        
+        if (stock.getStaff() != null  ) {
+            query += " and st.staff.username = '" + stock.getStaff().getUsername() + "'";
+        }
+       
+        if (stock.getCreateDate() != null ) {          
+            query += " and st.createDate = '" + utility.convertDateToString(stock.getCreateDate()) + "'";
+        }
+        
+        if (stock.getEffectiveFrom() != null ) {
+            query += " and st.effectiveFrom = '" + utility.convertDateToString(stock.getEffectiveFrom()) + "'";
+        }
+        
+        if (stock.getEffectiveTo() != null ) {
+            query += " and st.effectiveTo = '" + utility.convertDateToString(stock.getEffectiveTo()) + "'";
+        }
+        
+        System.out.println("query : " + query);
+        List<Stock> stockNew = session.createQuery(query).list();
+
+       if (!stockNew.isEmpty()) {
+           if(stockNew.size() > 1){
+               stockId = "fail";
+           }else{
                stockId = stockNew.get(0).getId();
+           }
         }
 
         return stockId;
+       
     }
 
     @Override
@@ -297,14 +323,15 @@ public class StockImpl implements StockDao{
         if (!stockList.isEmpty()) {
             stock.setId(stockList.get(0).getId());
             stock.setProduct(stockList.get(0).getProduct());
-            stock.setStaff(stockList.get(0).getStaff());
+            if(stockList.get(0).getStaff() != null){
+                stock.setStaff(stockList.get(0).getStaff());
+            }           
             stock.setEffectiveFrom(stockList.get(0).getEffectiveFrom());
             stock.setEffectiveTo(stockList.get(0).getEffectiveTo());
             stock.setCreateDate(stockList.get(0).getCreateDate());
             stock.setDescription(stockList.get(0).getDescription());
             stock.setStockDetails(stockList.get(0).getStockDetails());
         }
-
         return stock;
     }
 

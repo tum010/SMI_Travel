@@ -73,15 +73,15 @@ public class StockController extends SMITravelController {
                 }
                 if(staffId != null && (!"".equals(staffId))){
                      staff.setId(staffId);
+                    if(staffCode != null && (!"".equals(staffId)) ){
+                        staff.setUsername(staffCode);
+                    }
+                    if(staffName != null && (!"".equals(staffId))){
+                         staff.setName(staffName);
+                    } 
+                    stock.setStaff(staff);
                 }
-                if(staffCode != null && (!"".equals(staffId)) ){
-                     staff.setUsername(staffCode);
-                }
-                if(staffName != null && (!"".equals(staffId))){
-                     staff.setName(staffName);
-                } 
-                stock.setProduct(product);
-                stock.setStaff(staff);
+                stock.setProduct(product);            
                 stock.setCreateDate(utility.convertStringToDate(createDate));
                 stock.setEffectiveFrom(utility.convertStringToDate(effectiveFrom));
                 stock.setEffectiveTo(utility.convertStringToDate(effectiveTo));
@@ -89,29 +89,33 @@ public class StockController extends SMITravelController {
                 stock.setStockDetails(setStockDetails(request, stock));
                 List<StockDetail> listStockDetail = setStockDetails(request, stock);
                 String isSave = stockService.saveStock(stock);
-                if(isSave.equals("success")){
-                    isSave = "success";
+                if(isSave.equals("success")){                
                     // Search Stock Id from Data Add
                     String  findStockId = stockService.getStockId(stock);
-                    //  Search Stock and StockDetail from  stock id
-                    Stock stockNew = new Stock();
-                    List<StockDetail> listStockDetailNew =  new LinkedList<StockDetail>();
-                    // Stock and StockDetail New
-                    stockNew = stockService.getStock(findStockId);
-                    listStockDetailNew = stockService.checkStockDetail(findStockId);
-                    if(stockNew != null){
-                        request.setAttribute("stockData", stockNew);
+                    if("fail".equals(findStockId)){
+                        isSave = "moreOne";
                     }else{
-                        request.setAttribute("stockData", null);
+                        isSave = "success";
+                        //  Search Stock and StockDetail from  stock id
+                        Stock stockNew = new Stock();
+                        List<StockDetail> listStockDetailNew =  new LinkedList<StockDetail>();
+                        // Stock and StockDetail New
+                        stockNew = stockService.getStock(findStockId);
+                        listStockDetailNew = stockService.checkStockDetail(findStockId);
+                        if(stockNew != null){
+                            request.setAttribute("stockData", stockNew);
+                        }else{
+                            request.setAttribute("stockData", null);
+                        }
+                        if(listStockDetailNew != null){
+                            request.setAttribute("listStockDetail", listStockDetailNew);
+                        }else{
+                            request.setAttribute("listStockDetail", null);
+                        }
+                        request.setAttribute("FromDate", effectiveFrom);
+                        request.setAttribute("ToDate", effectiveTo);
+                        request.setAttribute("CreateDate", createDate);
                     }
-                    if(listStockDetailNew != null){
-                        request.setAttribute("listStockDetail", listStockDetailNew);
-                    }else{
-                        request.setAttribute("listStockDetail", null);
-                    }
-                    request.setAttribute("FromDate", effectiveFrom);
-                    request.setAttribute("ToDate", effectiveTo);
-                    request.setAttribute("CreateDate", createDate);
                 }else if(isSave.equals("update success")){
                     isSave = "success";
                     request.setAttribute("stockData", stock);

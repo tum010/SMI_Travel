@@ -6,6 +6,7 @@ $(document).ready(function () {
     
     $('.date').datetimepicker();
     $(".datemask").mask('0000-00-00', {reverse: true});
+    $(".money").mask('000,000,000,000,000,000', {reverse: true});
     
     var currentDate = new Date();  
     $("#InputStockDate").datepicker("setDate",currentDate);
@@ -101,15 +102,14 @@ $(document).ready(function () {
         });
     });
     validFrom();
-    
 });
 
 function validFrom(){
     // Validator Date From and To
     $("#StockForm")
             .bootstrapValidator({
-                framework: 'bootstrap',
-//                container: 'tooltip',
+                container: 'tooltip',
+                excluded: [':disabled'],
                 feedbackIcons: {
                     valid: 'uk-icon-check',
                     invalid: 'uk-icon-times',
@@ -139,20 +139,6 @@ function validFrom(){
                                 format: 'YYYY-MM-DD',
                                 min: 'InputEffectiveFromDate',
                                 message: 'The Date To is not a valid'
-                            }
-                        }
-                    },
-                    InputNumberOfItem: {
-                        validators: {
-                            integer: {
-                                message: 'The value is not an integer'
-                            }
-                        }
-                    },
-                    InputStart : {
-                        validators: {
-                            integer: {
-                                message: 'The value is not an integer'
                             }
                         }
                     },

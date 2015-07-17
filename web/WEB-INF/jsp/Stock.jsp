@@ -2,6 +2,9 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<script type="text/javascript" src="js/jquery.mask.min.js"></script>
+
 <c:set var="result" value="${requestScope['result']}" />
 <c:set var="ListProductStock" value="${requestScope['ListProductStock']}" />
 <c:set var="ListStaffStock" value="${requestScope['ListStaffStock']}" />
@@ -34,7 +37,7 @@
     <div class="col-sm-2">
         <div ng-include="'WebContent/Master/StockMenu.html'"></div>
     </div>
-    <form action="Stock.smi" method="post" id="StockForm" name="StockFormName" role="form" onsubmit="validFrom()">
+    <form action="Stock.smi" method="post" id="StockForm" name="StockFormName" role="form" onsubmit="">
     <div class="col-sm-10">
         <input type="hidden" id="idStockDelete" name= "idStockDelete" value="1" />
         <!--Alert Save -->
@@ -45,6 +48,10 @@
         <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Save Not Success!</strong> 
+        </div>
+        <div id="textAlertMoreOne"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Duplicate !!</strong> 
         </div>
         <div class="row" style="padding-left: 15px">  
             <div class="col-sm-6" style="padding-right: 15px">
@@ -159,7 +166,7 @@
                             <label class="control-label">Number Of Item</lable>
                         </div>
                         <div class="col-md-1 form-group text-left" > 
-                            <input name="InputNumberOfItem" id="InputNumberOfItem" type="text" class="form-control" value="" placeholder="123"/>
+                            <input name="InputNumberOfItem" id="InputNumberOfItem" type="text" class="form-control money" value="" placeholder="123"/>
                         </div>
                         <div class="col-xs-1 text-right"  >
                             <label class="control-label">Type</lable>
@@ -180,7 +187,6 @@
                         <div class="col-md-2 text-right">
                             <button type="button"  id="ButtonAdd"  name="ButtonAdd" onclick=" return addItemList()" class="btn btn-primary btn-primary " style="width: 100px;">
                                 <span id="SpanAdd" class="glyphicon glyphicon-print fa fa-plus-circle"></span> Add
-<!--                                <input type="hidden" name="action" id="action"/>-->
                             </button>                                          
                         </div> 
                         <div class="col-md-2 text-right" >
@@ -252,7 +258,7 @@
                     <div class="col-xs-12"  style="padding-left: 20px;">
                         <input name="action" id="action" type="hidden" class="form-control" value="save" />
                         <div class="col-md-12 text-right">
-                            <button type="button" id="ButtonSave" name="ButtonSave" class="btn btn-success" onclick="searchAction()">
+                            <button type="submit" id="ButtonSave" name="ButtonSave" class="btn btn-success" >
                                 <i class="fa fa-save"></i> Save             
                             </button>                           
                         </div>                                         
@@ -447,6 +453,11 @@
     <c:if test="${result =='fail'}">        
         <script language="javascript">
            $('#textAlertDivNotSave').show();
+        </script>
+    </c:if>
+    <c:if test="${result =='moreOne'}">        
+        <script language="javascript">
+           $('#textAlertMoreOne').show();
         </script>
     </c:if>
 </c:if>
