@@ -254,24 +254,12 @@ function deleteStock(){
         action.value = 'delete';
         document.getElementById('StockForm').submit();
     }
-    
-    //$(rowId).remove();
 }
-
 function resetNumberItemList(){
     var rows = document.getElementById("StockTable").getElementsByTagName("tr").length;
     var countRow = document.getElementById('StockTable').rows; 
     for (var i = 1 ; i <= (rows-1); i++){  
         countRow[i].cells[1].innerHTML = i; 
-        //alert(countRow[i].cells[2].attr('name').val());
         countRow[i].cells[2].getElementsByTagName("input")[0].name = "codeItemList" + i;
-        //alert("test");
-//        $("#" + id).attr('name', 'sel' + rowIndex);
-//        countRow[i].cells[3].innerHTML = "SeleteTypeItemList"+i;
-//          alert("Row : "+ countRow[i].cells[1].innerHTML + " Value : " + countRow[i].cells[0].innerHTML);
-    }
-
-
-    
-    
+    }  
 }

@@ -10,6 +10,7 @@
 <c:set var="stockSum" value="${requestScope['stockSummary']}" />
 <c:set var="stockSumDetail" value="${requestScope['stockSumDetail']}" />
 <c:set var="ListItemStatus" value="${requestScope['ListItemStatus']}" />
+<c:set var="itemStatus" value="${requestScope['itemStatus']}" />
 
 <section class="content-header" >
     <h1>
@@ -54,6 +55,7 @@
                 </div>
                 <div class="col-md-2 form-group text-left" style="padding-left: 0px;">
                     <select name="SelectPayStatus" id="SelectPayStatus" class="form-control">
+                        <option id="" value="">--status--</option>
                         <option id="" value="1">Pay</option>
                         <option id="" value="0">Not Paid</option>
                     </select>
@@ -64,8 +66,11 @@
                 <div class="col-md-2 form-group text-left" style="padding-left: 8px;width: 180px;">
                     <select name="SelectItemStatus" id="SelectItemStatus" class="form-control">
                         <option id="" value="">--Status--</option>
+                        <c:if test="${!itemStatus == ''}">
+                            <option id="" value="">--Status--</option>
+                        </c:if>
                         <c:forEach var="sta" items="${ListItemStatus}">
-                            <option id="${sta.id}" value="${sta.id}">${sta.name}</option>
+                                <option id="${sta.id}" value="${sta.id}">${sta.name}</option>
                         </c:forEach>
                     </select>
                 </div>
@@ -127,7 +132,6 @@
                     </thead>
                     <tbody>
                     <input type="hidden" value="" id="stockIdView" name="stockIdView">
-                    <%--<c:forEach ></c:forEach>--%>
                     <c:forEach var="stock" items="${listStock}" varStatus="stockCount">    
                         <tr>
                             <td class="hidden">${stock.id}</td>
@@ -148,66 +152,6 @@
                 </table>    
             </div>
         </div><br>
-<!--        <div class="panel panel-default">
-             <div class="panel-heading">
-                 Summary
-            </div>
-            <div class="panel-body">
-                <div class="row" >
-                    <div class="col-xs-12 ">
-                        <div class="col-xs-2 text-right" style="width: 130px;"> 
-                            <label class="control-label">Product</lable>
-                        </div>
-                        <div class="col-md-2 form-group text-left" style="width: 170px;"> 
-                            <input name="InputProduct" id="InputProduct" type="text" class="form-control" value="" />
-                        </div>
-                        <div class="col-xs-2 text-right" style="width: 100px;padding-right: 0px;" >
-                            <label class="control-label">Staff</lable>
-                        </div>
-                        <div class="col-md-2 form-group text-left" style="width: 170px;"> 
-                            <input name="InputStaff" id="InputStaff" type="text" class="form-control" value="" />
-                        </div>
-                        <div class="col-xs-1 text-right" style="width: 100px;">
-                            <label class="control-label">Add Date</lable>
-                        </div>
-                        <div class="col-md-2 form-group text-left" style="padding-left: 0px;width: 160px;">
-                            <div class='input-group date' >
-                                <input name="InputStockDateSummary" id="InputStockDateSummary" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
-                                <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                            </div>
-                        </div>
-                        <div class="col-md-1 text-right">
-                            <button type="submit" id="ButtonSave" name="ButtonSave" class="btn btn-warning">
-                                <i class="fa fa-edit"></i> Edit             
-                            </button>                                         
-                        </div>    
-                    </div>   
-                </div> End Row 1
-                <div class="row" >
-                    <div class="col-xs-12"  style="padding-left: 15px;">
-                        <div class="col-xs-2 text-right" style="width: 130px;"> 
-                            <label class="control-label">Effective From</lable>
-                        </div>
-                        <div class="col-md-2 form-group text-left" style="width: 170px;">
-                            <div class='input-group date' >
-                                <input name="InputEffectiveFromDateSummary" id="InputEffectiveFromDateSummary" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
-                                <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                            </div>
-                        </div>
-                        <div class="col-xs-1 text-right" style="width: 100px;padding-left: 0px;padding-right: 0px;">
-                            <label class="control-label">Effective To</lable>
-                        </div>
-                        <div class="col-md-2 form-group text-left" style="width: 170px;">
-                            <div class='input-group date' >
-                                <input name="InputInputEffectiveToDateSummary" id="InputInputEffectiveToDateSummary" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
-                                <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                            </div>
-                        </div>
-                    </div>   
-                </div> End Row 2<br>
-                
-            </div>
-        </div>-->
         <div class="panel panel-default">            
             <div class="panel-heading">
                 Item List

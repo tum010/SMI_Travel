@@ -375,11 +375,11 @@ public class StockImpl implements StockDao{
         }
        
         if (payStatus != null && (!"".equalsIgnoreCase(payStatus))) {
-            query += " and st.payStatus = '" + payStatus + "'";
+            query += " and st.payStatus = " + payStatus ;
         }
         
         if (itemStatus != null && (!"".equalsIgnoreCase(itemStatus))) {
-            query += " and st.MStockStatus.id = '" + itemStatus + "'";
+            query += " and st.MStockStatus.id = " + itemStatus ;
         }
         
         System.out.println("query : " + query);

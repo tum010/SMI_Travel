@@ -83,6 +83,7 @@ public class SearchStockController extends SMITravelController {
             if(stockDataDetail != null){
                 System.out.println("set summary");
                  request.setAttribute("stockSummary", stockDataDetail);
+                 request.setAttribute("itemStatus", itemStatus);
                  request.setAttribute("stockSumDetail", stockDataDetail.getItemList());
             }else{
                 request.setAttribute("stockSummary", null);
