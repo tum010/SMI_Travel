@@ -62,7 +62,20 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
 
     @Override
     public String UpdatePaymentWendy(PaymentWendy payment) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String result = "fail";
+        try {
+            Session session = this.sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            session.update(payment);
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+            result = "success";
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            result = "fail";
+        }
+        return result;    
     }
 
     @Override
