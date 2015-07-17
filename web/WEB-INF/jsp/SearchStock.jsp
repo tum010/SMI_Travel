@@ -210,7 +210,7 @@
                 Item List
             </div>
             <div class="panel-body">
-                <table class="display" id="TaxInvoiceTable">
+                <table class="display" id="StockSummary">
                     <thead class="datatable-header">
                         <tr>
                             <th style="width: 15%">Number Of Item</th>                                   
@@ -440,6 +440,15 @@ $(document).ready(function () {
         "bPaginate": true,
         "bInfo": false,
         "bLengthChange": true,
+        "iDisplayLength": 10
+    });
+    $('#StockSummary').dataTable({bJQueryUI: true,
+        "sPaginationType": "full_numbers",
+        "bAutoWidth": true,
+        "bFilter": false,
+        "bPaginate": false,
+        "bInfo": false,
+        "bLengthChange": false,
         "iDisplayLength": 10
     });
 });
