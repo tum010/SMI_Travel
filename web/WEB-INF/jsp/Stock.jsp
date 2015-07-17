@@ -309,13 +309,14 @@
 //                    alert("<%=new java.util.Date()%>");
                     $("#productTable tr").on('click', function () {//winit
                         $("#SearchProduct").modal('hide');
+                        validFrom();
                         var tour_id = $(this).find(".product-id").html();
                         var tour_code = $(this).find(".product-code").html();
                         var tour_name = $(this).find(".product-name").html();
                         $("#InputProductId").val(tour_id);
                         $("#InputProduct").val(tour_code);
                         $("#InputProductName").val(tour_name);
-                        validFrom();
+                        
                     });
 
                     // tourTable
@@ -332,10 +333,12 @@
                     $('#productTable tbody').on('click', 'tr', function () {
                         if ($(this).hasClass('row_selected')) {
                             $(this).removeClass('row_selected');
+                            validFrom();
                         }
                         else {
                             tourTable.$('tr.row_selected').removeClass('row_selected');
                             $(this).addClass('row_selected');
+                            validFrom();
                         }
                     });
                     // ON KEY INPUT AUTO SELECT PRODUCTCODE
