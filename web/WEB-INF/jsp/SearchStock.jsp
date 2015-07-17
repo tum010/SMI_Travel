@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="col-md-2 form-group text-left" > 
-                    <input name="InputProductName" id="InputProductName" type="text" class="form-control" value="${stockClass.product.name}" />
+                    <input name="InputProductName" id="InputProductName" type="text" class="form-control" value="${stockClass.product.name}" readonly="" />
                 </div>
                 <div class="col-xs-1 text-right" style="width: 100px;padding-right: 10px;padding-left: 0px;">
                     <label class="control-label">Pay Status</lable>
