@@ -137,7 +137,7 @@
                             <td>${payment.total}</td>
                             <td>${payment.status}</td>
                             <td class="text-center">
-                                <span id="RefPaymentHotelEdit" name="RefPaymentHotelEdit" class="glyphicon glyphicon-edit editicon" onclick="location.href='PaymentTourHotel.smi?action=edit&paymentId=${payment.id}'"></span>
+                                <span id="RefPaymentHotelEdit" name="RefPaymentHotelEdit" class="glyphicon glyphicon-edit editicon" onclick="location.href='PaymentTourHotel.smi?action=edit&payNo=${payment.payNo}'"></span>
                                 <a href="#" onclick=""  data-toggle="modal" data-target="">
                                     <span id="" class="glyphicon glyphicon-remove deleteicon"  onclick="DeletePayment('${payment.id}','${payment.payNo}')" data-toggle="modal" data-target="#delSearchPaymentTourHotelModal"></span>
                                 </a>
