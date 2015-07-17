@@ -79,6 +79,10 @@ public class PaymentTourHotelService {
     public List<PaymentDetailWendy> getPaymentDetailWendyList(String paymentId) {
         return this.paymentWendytourDao.getPaymentDetailWendyList(paymentId);
     }
+    
+    public String UpdatePaymentWendy(PaymentWendy payment) {
+        return this.paymentWendytourDao.UpdatePaymentWendy(payment);
+    }
 
    
 }
