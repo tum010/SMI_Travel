@@ -368,7 +368,7 @@ public class StockImpl implements StockDao{
     public StockViewSummary searchStockDetail(String productId, String payStatus,String itemStatus) {
         StockViewSummary stockview = new StockViewSummary();
         Session session = this.sessionFactory.openSession();
-        String query = "FROM StockDetail st" ;
+        String query = "FROM StockDetail st where" ;
         
         if ( productId != null && (!"".equalsIgnoreCase(productId)) ) {
             query += " st.stock.id = " + productId;
