@@ -201,7 +201,7 @@
                         <tr>
                             <td>${num1.count}</td>
                             <td>${stockDetail.code}</td>
-                            <td>${stockDetail.typeId.name}</td>
+                            <td>${stockDetail.typeId}</td>
                             <td>${stockDetail.refNo}</td>                                
                             <td>${stockDetail.pickup}</td>
                             <td>${stockDetail.payStatusName}</td>
