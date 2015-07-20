@@ -225,7 +225,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="ticketFare" name="ticketFare" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketFare}" onkeyup="calculateVat()">
+                                    <input id="ticketFare" name="ticketFare" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketFare}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
@@ -233,7 +233,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="ticketTax" name="ticketTax" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketTax}" onkeyup="calculateVat()">
+                                    <input id="ticketTax" name="ticketTax" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketTax}">
                                 </div>
                             </div>
                         </div>
@@ -244,7 +244,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="ticketIns" name="ticketIns" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketIns}" onkeyup="calculateVat()">
+                                    <input id="ticketIns" name="ticketIns" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketIns}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -270,7 +270,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">
-                                    <input id="invoiceAmount" name="invoiceAmount" type="text" class="form-control money" maxlength="10" value="" readonly="" onkeyup="calculateVat()">
+                                    <input id="invoiceAmount" name="invoiceAmount" type="text" class="form-control money" maxlength="10" value="" readonly="">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -640,7 +640,7 @@
        
 <script type="text/javascript">
     $(document).ready(function () {
-        $(".money").mask('000,000,000', {reverse: true});
+        $(".money").mask('000,000,000.00', {reverse: true});
         $('.date').datetimepicker();
         $("#ticketNo").keyup(function (event) {
             if(event.keyCode === 13){
@@ -700,13 +700,27 @@
                     }
                 }
             });
-
+        $("#invoiceAmount").focusout(function(){
+            calculateVat();
+        });
+        
+        $("#ticketFare").focusout(function(){
+            calculateVat();
+        });
+        
+       $("#ticketTax").focusout(function(){
+            calculateVat();
+        });
+        
+        $("#ticketIns").focusout(function(){
+            calculateVat();
+        });
  
    });
-   
+
 function isNumberKey(evt){
     var charCode = (evt.which) ? evt.which : evt.keyCode;
-    
+
     if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)){
        return false;
     }
@@ -733,8 +747,8 @@ function saveAction() {
     passenger.value = $("#passenger").val();
     var issueDate = document.getElementById('issueDate');
     issueDate.value = $("#issueDate").val();
-    var ticketFare = document.getElementById('ticketFare');
-    ticketFare.value = $("#ticketFare").val();
+    var ticketFare = document.getElementById('ticketFare'); 
+    ticketFare.value = $("#ticketFare").val().replace(",","");
     var ticketTax = document.getElementById('ticketTax');
     ticketTax.value = $("#ticketTax").val();
     var ticketIns = document.getElementById('ticketIns');
@@ -857,39 +871,49 @@ function setTicketDetail(ticket,ticketFare,ticketTax,issueDate,ticketRouting,air
 }
 
 function calculateVat() {
+
     //Diff Vat = Inv Amount - Fare - Tax - Ins (ค่า Diff vat สามารถติดลบได้)
     var ticketType = document.getElementById('ticketType').value;
     if(ticketType == "A" || ticketType == "B"){
-        var invAmount = document.getElementById('invoiceAmount').value;
-        invAmount.replace(",","");
+        var invAmount = replaceAll(",","",$('#invoiceAmount').val()); 
         if (invAmount == ""){
             invAmount = 0;
         }
 
-        var ticketfare = document.getElementById('ticketFare').value;
-        ticketfare.replace(",","");
+        var ticketfare = replaceAll(",","",$('#ticketFare').val()); 
         if (ticketfare == ""){
             ticketfare = 0;
         }
 
-        var tickettax = document.getElementById('ticketTax').value;
-        tickettax.replace(",","");
+        var tickettax = replaceAll(",","",$('#ticketTax').val()); 
         if (tickettax == ""){
             tickettax = 0;
         }
 
-        var ticketins = document.getElementById('ticketIns').value;
-        ticketins.replace(",","");
+        var ticketins = replaceAll(",","",$('#ticketIns').val()); 
         if (ticketins == ""){
             ticketins = 0;
         }
-
-       var inv = parseFloat(invAmount);
+      
+       var inv = parseFloat(invAmount); 
        var fare = parseFloat(ticketfare);
        var tax = parseFloat(tickettax);
        var ins = parseFloat(ticketins);
-       document.getElementById("diffVat").value = inv - fare - tax - ins ;
+       var diffvat = inv - fare - tax - ins;
+       document.getElementById("diffVat").value = formatNumber(diffvat);
     }
 }
+function replaceAll(find, replace, str) {
+  return str.replace(new RegExp(find, 'g'), replace);
+}
 
+function formatNumber(num) {
+    return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+}
+
+function setformatmoney(){
+    var ticketF = $("#ticketFare").val();
+    document.getElementById("ticketFare").value = formatNumber(ticketF);
+    alert($("#ticketFare").val());
+}
 </script>
