@@ -124,6 +124,7 @@ http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
            <value>resource/hibernate/RefundAirticket.hbm.xml</value>
            <value>resource/hibernate/RefundAirticketDetail.hbm.xml</value>
            <value>resource/hibernate/TicketFareAirline.hbm.xml</value>
+           <value>resource/hibernate/MRunningCode.hbm.xml</value>
 	</list>
       </property>	
  
