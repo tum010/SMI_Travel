@@ -160,7 +160,7 @@
                             <label class="control-label">Start</lable>
                         </div>
                         <div class="col-md-2 form-group text-left" style="width: 163px;">  
-                            <input name="InputStart" id="InputStart"  maxlength="10" type="text" class="form-control" value="" />
+                            <input name="InputStart" id="InputStart"  maxlength="10" type="text" class="form-control money" value="" />
                         </div>
                         <div class="col-xs-2 text-right" style="width: 140px;">
                             <label class="control-label">Number Of Item</lable>
@@ -174,7 +174,7 @@
                         <div class="col-md-2 form-group text-left" > 
                             <select name="Selecttype" id="Selecttype" class="form-control">
                                 <c:forEach var="type1" items="${getType}">
-                                    <option value="${type1.name}"><c:out value="${type1.name}" /></option>
+                                    <option value="${type1.id}"><c:out value="${type1.name}" /></option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -185,7 +185,7 @@
                         <div class="col-md-8 text-right" >                                          
                         </div> 
                         <div class="col-md-2 text-right"  >
-<!--                            <button type="button" onclick="" class="btn btn-danger" id="SpanClearStock" name="SpanClearStock" style="width: 160px;">
+                        <!--<button type="button" onclick="" class="btn btn-danger" id="SpanClearStock" name="SpanClearStock" style="width: 160px;">
                                 <span  class="glyphicon glyphicon-refresh"></span> Clear Expire Stock
                             </button>-->
                         </div>
@@ -214,11 +214,8 @@
                                             <input type="text" class="hidden" id="counter" name="counter" value="1" />
                                             <input type="text" class="hidden" id="counterTable" name="counterTable" value="1" />
                                             <input type="text" class="hidden" id="counterAdd" name="counterAdd" value="1" />
-                                            <c:set var="count" value="1"></c:set>
-                                            
-                                            
-                                            <c:forEach var="std" items="${listStockDetail}" varStatus="taxdesc">
-                                            
+                                            <c:set var="count" value="1"></c:set>                                          
+                                            <c:forEach var="std" items="${listStockDetail}" varStatus="taxdesc">                                    
                                             <tr>
                                                 <td class="hidden"><input type="text" class="hidden" id="stockDetailId${taxdesc.count}" name="stockDetailId${taxdesc.count}" value="${std.id}" /></td>
                                                 <td>${taxdesc.count}</td>
@@ -230,7 +227,7 @@
                                                                 <c:if test="${type.name == std.typeId.name}">
                                                                     <c:set var="select" value="selected" />
                                                                 </c:if>   
-                                                            <option value="${type.name}"><c:out value="${type.name}" /></option>
+                                                            <option value="${type.id}" ${select}><c:out value="${type.name}" /></option>
                                                         </c:forEach>
                                                     </select>                                             
                                                 </td>                                
@@ -244,15 +241,19 @@
                                                 </td>
                                                 <c:set var="valueNameRow" value="${count}"></c:set>
                                             </tr>
-                                            <c:if test="${taxdesc.last}">
+                                                                                         
+                                            </c:forEach>
+                                        </tbody>
+                                    </table> 
+                                            
+                                            <c:forEach var="std" items="${listStockDetail}" varStatus="taxdesc"> 
+                                                 <c:if test="${taxdesc.last}">
                                                 <script>
                                                         $("#counter").val(${taxdesc.count} + 1);
                                                 </script>
                                                 <input value="${taxdesc.count}" id="taxDescRows" name="taxDescRows" type="text" class="hidden" />
                                             </c:if>                                               
                                             </c:forEach>
-                                        </tbody>
-                                    </table> 
                                 </div>
                     </div><!-- End Row 3--><br>
                     <div class="row" >
@@ -474,7 +475,7 @@
         var cout = document.getElementById('counterTable');
         var type  = document.getElementById('Selecttype');
         <c:forEach var="type" items="${getType}">
-            select += "<option value='${type.name}'><c:out value='${type.name}' /></option>";
+            select += "<option value='${type.id}'><c:out value='${type.name}' /></option>";
         </c:forEach>
 //        alert(select);
         $('#SeleteTypeItemList'+cout.value).append(select);
