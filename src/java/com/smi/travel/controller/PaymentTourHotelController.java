@@ -64,6 +64,7 @@ public class PaymentTourHotelController extends SMITravelController {
         request.setAttribute(PAYMENHOTELTCOUNT, "0");
         request.setAttribute("btnSave", "save");
         
+        
         String action = request.getParameter("action");
         String InputPayNo = request.getParameter("InputPayNo");
         String account = request.getParameter("account");
@@ -82,6 +83,7 @@ public class PaymentTourHotelController extends SMITravelController {
         String InputChqAmount = request.getParameter("InputChqAmount");
         String counter = request.getParameter("counter");
 
+        
         if ("add".equalsIgnoreCase(action)) {
             UtilityFunction utilfunction = new UtilityFunction();
             PaymentWendy paymentWendy = new PaymentWendy();
@@ -339,7 +341,8 @@ public class PaymentTourHotelController extends SMITravelController {
             }                        
         }
     }
-
+    
+  
     private void getPaymentDetailWendy(HttpServletRequest request, String InputPayNo) {
         String payNo = InputPayNo;
         System.out.println("payNo : " + payNo);
