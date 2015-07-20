@@ -210,15 +210,12 @@
                                                 <th style="width: 8%">Action</th>
                                             </tr>
                                         </thead>
-                                        
                                         <tbody>
                                             <input type="text" class="hidden" id="counter" name="counter" value="1" />
                                             <input type="text" class="hidden" id="counterTable" name="counterTable" value="1" />
                                             <input type="text" class="hidden" id="counterAdd" name="counterAdd" value="1" />
                                             <c:set var="count" value="1"></c:set>
-                                            <script>
-                                                stock = [];
-                                            </script>
+                                            
                                             
                                             <c:forEach var="std" items="${listStockDetail}" varStatus="taxdesc">
                                             
@@ -396,6 +393,9 @@
                 <h4 class="modal-title"  id="Titlemodel">Search Staff</h4>
             </div>
             <div class="modal-body">
+                <script>
+                        staff = [];
+                    </script>
                 <table class="display" id="StaffTable">
                     <thead class="datatable-header">
                         <tr>
@@ -404,10 +404,9 @@
                             <th>staff Name</th>
                         </tr>
                     </thead>
+                    
                     <tbody>
-                    <script>
-                        staff = [];
-                    </script>
+                    
                         <c:forEach var="item" items="${ListStaffStock}" varStatus="loop">
                             <tr class="packet">
                                 <td class="staff-id hidden"><c:out value="${item.id}" /></td>
@@ -465,7 +464,6 @@
         </script>
     </c:if>
 </c:if>
-<script type="text/javascript" src="js/stock.js"></script>
 <script>
     var select = "";
     $(document).ready(function () {
@@ -474,7 +472,8 @@
         <c:forEach var="type" items="${getType}">
             select += "<option value='${type.name}'><c:out value='${type.name}' /></option>";
         </c:forEach>
-        
+//        alert(select);
         $('#SeleteTypeItemList'+cout.value).append(select);
     });
 </script>
+<script type="text/javascript" src="js/stock.js"></script>
