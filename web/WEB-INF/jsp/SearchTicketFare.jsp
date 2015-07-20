@@ -209,7 +209,6 @@
                             <tbody>
                                 <c:forEach var="table" items="${dataList}" varStatus="dataStatus">
                                     <tr>
-                                        <td class="hidden"> <c:out value="${table.id}" /></td>
                                         <td align="center"> <c:out value="${table.type}" /></td>
                                         <td align="center"> <c:out value="${table.buy}" /></td>
                                         <td align="center"> <c:out value="${table.airline}" /></td>
@@ -305,8 +304,7 @@
         var table = $('#TicketFareList').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
-            "bFilter": false,
-            "aaSorting": [[ 0, "desc" ]]
+            "bFilter": false
         });
 
         $('#TicketFareList tbody').on('click', 'tr', function() {
