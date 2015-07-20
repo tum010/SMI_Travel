@@ -219,7 +219,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
        // System.out.println(" Refno ::: "+Refno);
         
         String Ticketquery = " from BookingPassenger  pass where pass.series1||pass.series2||pass.series3 = :ticketNo";
-        String Flightquery = " from BookingPassenger  flight where  flight.bookingAirline.id = :airlineid";
+        String Flightquery = " from BookingFlight  flight where  flight.bookingAirline.id = :airlineid";
         Session session = this.sessionFactory.openSession();
         List<BookingPassenger> ticketPassList = session.createQuery(Ticketquery).setParameter("ticketNo", TicketNo).list();
         
