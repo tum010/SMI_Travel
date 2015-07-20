@@ -169,19 +169,28 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
              if(payment.getPaymentDetailWendies() != null){
                 List<PaymentDetailWendy> detail = payment.getPaymentDetailWendies();         
                 for(int j=0;j<detail.size();j++){
-                    sum.add(detail.get(j).getAmount());
+                    if(detail.get(j).getAmount() != null){
+                        sum.add(detail.get(j).getAmount());
+                    }
+                    
                 }                
              }
 
              paymentview.setId(payment.getId());
              paymentview.setPayNo(payment.getPayNo());
              paymentview.setPayDate((payment.getPayDate()));
-             paymentview.setPayType(payment.getMPaymentDoctype().getName());
+             if(payment.getMPaymentDoctype() != null){
+                 paymentview.setPayType(payment.getMPaymentDoctype().getName());
+             }
+             
              paymentview.setInvoiceSup(payment.getInvoiceSup());
              paymentview.setAccNo(payment.getAccount());
              paymentview.setTotal(sum);
            //  paymentview.setCurrency(payment.getCurrency());
-             paymentview.setStatus(payment.getMItemstatus().getName());
+             if(payment.getMItemstatus() != null){
+                 paymentview.setStatus(payment.getMItemstatus().getName());
+             }
+             
              paymentviewList.add(paymentview);
          }
          
