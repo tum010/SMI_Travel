@@ -545,7 +545,7 @@
                 <h4 class="modal-title"  id="Titlemodel">List Ticket No</h4>
             </div>
             <div class="modal-body">
-                <div style="text-align: right"><i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i>Search : <input placeholder ="Ref No" type="text" style="width: 175px" id="filtercus" name="filtercus"/> </div> 
+                <div style="text-align: right;padding-bottom: 12px"><i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i>Search : <input placeholder ="Ref No" type="text" style="width: 175px" id="filtercus" name="filtercus"/> </div> 
                 <table class="display" id="ListRefnoTable">
                     <thead class="datatable-header">
                         <tr>
@@ -640,7 +640,7 @@
        
 <script type="text/javascript">
     $(document).ready(function () {
-        $(".money").mask('000,000,000.00', {reverse: true});
+        $(".money").mask('000,000,000,000,000,000', {reverse: true});
         $('.date').datetimepicker();
         $("#ticketNo").keyup(function (event) {
             if(event.keyCode === 13){
@@ -839,7 +839,6 @@ function CallFilterAjax(param) {
 
             }, error: function (msg) {
                  $("#ajaxload").addClass("hidden");
-                alert(msg);
             }
         });
     } catch (e) {
@@ -847,7 +846,6 @@ function CallFilterAjax(param) {
     }
 }   
 function setTicketDetail(ticket,ticketFare,ticketTax,issueDate,ticketRouting,airline,ticketBy,passenger,department) {
-    alert(ticket+","+ticketFare+","+ticketTax+","+issueDate+","+ticketRouting+","+airline+","+ticketBy+","+passenger+","+department);
     $("#ticketNo").val(ticket);
     $("#ticketFare").val(ticketFare);
     $("#ticketTax").val(ticketTax);
