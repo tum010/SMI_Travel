@@ -3,7 +3,7 @@ $(document).ready(function () {
     var rows = document.getElementById("StockTable").getElementsByTagName("tr").length;
     var count = document.getElementById('counterTable');
     count.value = rows;
-    
+    console.log(" Row is Now : " + count.value );
     $('.date').datetimepicker();
     $(".datemask").mask('0000-00-00', {reverse: true});
     $(".money").mask('000,000,000,000,000,000', {reverse: true});
@@ -91,11 +91,11 @@ $(document).ready(function () {
         $("td").keyup(function () {
             if ($(this).find("input").val() !== '') {
                 var colIndex = $(this).parent().children().index($(this));
-                var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
+                var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 1;
                 rowAll = $("#StockTable tr").length;
 //                alert("Goo : " + colIndex + " " + rowIndex +"Row All :  " + rowAll);
-                if (rowIndex !== rowAll) {
-                    console.log("rowAll : " + rowAll);
+                if (rowIndex == rowAll) {
+                    console.log("rowAll : " + rowAll + " Row Index : " + rowIndex);
                     AddRow(rowAll);
                 }
             }
@@ -176,13 +176,15 @@ function AddRow(row) {
             '<td class="hidden"><input type="hidden"  id="stockDetailId' + row + '" name="stockDetailId' + row + '" value="" /></td>' +
             '<td>' + row + '</td>' +
             '<td><input type="text"  class="form-control" name="codeItemList' + row + '" id="codeItemList' + row + '" value=""/></td>' +
-            '<td><select id="SeleteTypeItemList' + row + '" name="SeleteTypeItemList' + row + '" class="form-control"><option></option>'+select +'</select></td>' +
+            '<td><select id="SeleteTypeItemList' + row + '" name="SeleteTypeItemList' + row + '" class="form-control"><option></option>'+ select +'</select></td>' +
             '<td>0</td>' +
             '<td>NEW</td>' +
-            '<td class="text-center"><a href="#" onclick=""  data-toggle="modal" data-target="" class="remCF" id="ButtonRemove' + row + '"><span id="Spanremove' + row + '" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal" data-target="#delStockModal"></span></a></td>' +
+            '<td class="text-center"><a href="#" onclick="deleteItemListRow('+row+')"  data-toggle="modal" data-target="" class="remCF" id="ButtonRemove' + row + '"><span id="Spanremove' + row + '" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal" data-target="#delStockModal"></span></a></td>' +
             '</tr>'
             );
     var tempCount = parseInt($("#counter").val()) + 1;
+    var count = document.getElementById('counterTable');
+    count.value++;
     $("#counter").val(tempCount);
 }
 
@@ -234,32 +236,35 @@ function addItemList(){
 
 function deleteItemListRow(rowId,code){
     // Click Action Delete
+    console.log("Code : " + code + "Row Id : " +rowId);
     $("#idStockDelete").val(rowId);
     $("#delCodeStock").text(' Are you sure to delete Item code : ' + code + ' in Row : ' + rowId +' ??');
-//    console.log("rowAll : " + rowAll);
+    
     resetNumberItemList();
 }
 
 function deleteStock(){
     // ID In Modal Delete
     var rowId  = document.getElementById('idStockDelete');
-    var stockDetailId  = $("#stockDetailId"+rowId.value).val();
-
-//    alert(" R : " + rowId.value);
-    document.getElementById("StockTable").deleteRow(rowId.value);
-    resetNumberItemList();
+    var stockDetailId  = $("#stockDetailId"+rowId.value).val();   
     if(stockDetailId !== ""){
         rowId.value = stockDetailId ;
         var action = document.getElementById('action');
         action.value = 'delete';
         document.getElementById('StockForm').submit();
+    }else{
+        document.getElementById("StockTable").deleteRow(rowId.value);
+        alert("Row Delete : " + rowId.value);
+        resetNumberItemList();
     }
+    resetNumberItemList();
 }
 function resetNumberItemList(){
     var rows = document.getElementById("StockTable").getElementsByTagName("tr").length;
     var countRow = document.getElementById('StockTable').rows; 
     for (var i = 1 ; i <= (rows-1); i++){  
         countRow[i].cells[1].innerHTML = i; 
-        countRow[i].cells[2].getElementsByTagName("input")[0].name = "codeItemList" + i;
+//        countRow[i].cells[2].getElementsByTagName("input")[0].name = "codeItemList" + i;
+//        countRow[i].cells[2].getElementById("input")[0].value = "codeItemList" + i;
     }  
 }
