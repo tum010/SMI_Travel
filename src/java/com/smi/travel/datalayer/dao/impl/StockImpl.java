@@ -230,7 +230,9 @@ public class StockImpl implements StockDao{
                 stock.setRefNo(detail.getOtherBooking().getMaster().getReferenceNo());
                 stock.setPickup(detail.getOtherBooking().getMaster().getCreateBy());
             }
-            
+            if(detail.getTypeId() != null){
+                stock.setTypeId(detail.getTypeId().getName());
+            }
             stock.setItemStatus(detail.getMStockStatus().getName());          
             stock.setPickupDate(util.convertDateToString(detail.getPickupDate()));
             stock.setPayStatusName(String.valueOf(detail.getPayStatus()));
