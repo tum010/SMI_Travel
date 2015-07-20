@@ -40,8 +40,7 @@ public class StockImpl implements StockDao{
     public String InsertStock(Stock ItemLot) {
         String result = "";
         Session session = this.sessionFactory.openSession();
-        try {
-            session.flush();
+        try { 
             transaction = session.beginTransaction();
             session.save(ItemLot);
             List<StockDetail> stockDetail =ItemLot.getStockDetails();
