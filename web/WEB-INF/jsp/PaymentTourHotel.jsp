@@ -147,7 +147,7 @@
                 <div class="col-sm-12">
                     <div class="input-group" id="CodeValidate">
                         <input name="InputInvoiceSupId" id="InputInvoiceSupId" type="hidden" class="form-control" value="${requestScope['InputInvoiceSupId']}" />
-                        <input name="InputInvoiceSupCode" id="InputInvoiceSupCode" type="text" class="form-control" value="${requestScope['InputInvoiceSupCode']}" />
+                        <input name="InputInvoiceSupCode" id="InputInvoiceSupCode" type="text" class="form-control" value="${requestScope['InputInvoiceSupCode']}" onkeypress="getInvoiceSup()" style="text-transform:uppercase"/>
                         <span class="input-group-addon" data-toggle="modal" data-target="#SearchInvoiceSup">
                             <span class="glyphicon-search glyphicon"></span>
                         </span>    
@@ -408,7 +408,7 @@
                             var invoiceSup = [];
                         </script>
                         <tr>
-                            <th>Id</th>
+                            <th class="hidden">Id</th>
                             <th>Code</th>
                             <th>Name</th>
                             <th>AP code</th>
@@ -417,13 +417,13 @@
                     <tbody>
                         <c:forEach var="invSup" items="${invoiceSup_list}">
                             <tr onclick ="setupInvSupValue('${invSup.id}', '${invSup.code}', '${invSup.name}', '${invSup.apcode}')" >
-                                <td class="">${invSup.id}</td>
+                                <td class="hidden">${invSup.id}</td>
                                 <td>${invSup.code}</td>
                                 <td>${invSup.name}</td>
                                 <td>${invSup.apcode}</td> 
                             </tr>
                             <script>
-                                invoiceSup.push({id: "${invSup.id}", code: "${invSup.code}", name: "${invSup.name}", apcode "${invSup.apcode}"});
+                                invoiceSup.push({id: "${invSup.id}", code: "${invSup.code}", name: "${invSup.name}", apcode: "${invSup.apcode}"});
                             </script>
                         </c:forEach>    
                     </tbody>
@@ -607,6 +607,58 @@
             CalculateGrandTotal('',$("#counter").val());
         });
         
+        var codeInvoiceSup = [];
+        $.each(invoiceSup, function (key, value) {
+            codeInvoiceSup.push(value.code);
+            if ( !(value.name in codeInvoiceSup) ){
+               codeInvoiceSup.push(value.name);        
+            }
+        });
+        
+        $("#InputInvoiceSupCode").autocomplete({
+            source: codeInvoiceSup,
+            close:function( event, ui ) {
+               $("#InputInvoiceSupCode").trigger('keyup');
+            }
+        });
+        
+        $("#InputInvoiceSupCode").on('keyup', function () {
+            var position = $(this).offset();
+            $(".ui-widget").css("top", position.top + 30);
+            $(".ui-widget").css("left", position.left);
+            var code = this.value.toUpperCase();
+            var name = this.value;
+            $("#InputInvoiceSupId,#InputInvoiceSupName,#InputAPCode").val(null);
+
+            $.each(invoiceSup, function (key, value) {
+                if (value.code.toUpperCase() === code) {           
+                    $("#InputInvoiceSupId").val(value.id);
+                    $("#InputInvoiceSupName").val(value.name);
+                    $("#InputAPCode").val(value.apcode);
+                }
+                if(name === value.name){
+                    $("#InputInvoiceSupCode").val(value.code);
+                    code = $("#InputInvoiceSupCode").val().toUpperCase();
+                }
+            });  
+        });
+        
+        $("#InputInvoiceSupCode").on('blur', function () {
+            var delay=500;//1 seconds
+             setTimeout(function(){
+               $.each(invoiceSup, function (key, value) {
+                  //alert(value.code);
+                    if($("#InputInvoiceSupCode").val() === value.code){
+                        $("#InputInvoiceSupId").val(value.id);
+                        $("#InputInvoiceSupCodeName").val(value.name);
+                        $("#InputAPCode").val(value.apcode);
+                    }     
+                });   
+
+            },delay); 
+
+        });
+        
     });
     
     function searchPaymentTour() {
@@ -726,6 +778,18 @@
         }    
         $('#DeleteProduct').modal('hide');
         CalculateGrandTotal('',cCount);
+    }
+   
+   function getInvoiceSup(){
+
+        $.each(invoiceSup, function (key, value) {
+
+            if($("#InputInvoiceSupCode").val() == value.code){
+                $("#InputInvoiceSupId").val(value.id);
+                $("#InputInvoiceSupName").val(value.name);
+                $("#InputAPCode").val(value.apcode);
+            }     
+        });  
     }
    
 </script>
