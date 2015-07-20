@@ -91,7 +91,7 @@ $(document).ready(function () {
         $("td").keyup(function () {
             if ($(this).find("input").val() !== '') {
                 var colIndex = $(this).parent().children().index($(this));
-                var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 1;
+                var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
                 rowAll = $("#StockTable tr").length;
 //                alert("Goo : " + colIndex + " " + rowIndex +"Row All :  " + rowAll);
                 if (rowIndex == rowAll) {
