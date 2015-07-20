@@ -63,15 +63,34 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
     @Override
     public String UpdatePaymentWendy(PaymentWendy payment) {
         String result = "fail";
+        Session session = this.sessionFactory.openSession();
         try {
-            Session session = this.sessionFactory.openSession();
+            
             transaction = session.beginTransaction();
             session.update(payment);
+            
+            List<PaymentDetailWendy> paymentDetailWendy = payment.getPaymentDetailWendies();
+            
+            if(paymentDetailWendy != null){
+                for (int i = 0; i < paymentDetailWendy.size(); i++) {
+                    
+                    if(paymentDetailWendy.get(i).getId() == null){
+                        session.save(paymentDetailWendy.get(i));
+                    } else {
+                        session.update(paymentDetailWendy.get(i));
+                    }                   
+                }
+            }
+            
             transaction.commit();
             session.close();
             this.sessionFactory.close();
             result = "success";
         } catch (Exception ex) {
+            transaction.rollback();
+            session.close();
+            this.sessionFactory.close();
+            System.out.println("Fail !!!!!");
             ex.printStackTrace();
             result = "fail";
         }
