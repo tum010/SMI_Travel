@@ -282,8 +282,8 @@
                         <i class="glyphicon glyphicon-plus"></i> Add
                     </a>
                 </div>
-                <input type="hidden" class="form-control" id="paymentId" name="paymentId" value="${paymentId}" />
-                <input type="hidden" class="form-control" id="counter" name="counter" value="${paymenthotelcount}" />
+                <input type="text" class="form-control" id="paymentId" name="paymentId" value="${requestScope['paymentId']}" />
+                <input type="text" class="form-control" id="counter" name="counter" value="${requestScope['paymenthotelcount']}" />
                 <input type="hidden" class="form-control" id="ProductTourHotel" name="ProductTourHotel">  
                 <input type="hidden" class="form-control" id="productList_id" name="productList_id" />
                 <input type="hidden" name="productCountDel" id="productCountDel">
