@@ -10,6 +10,7 @@ import com.smi.travel.datalayer.dao.TicketFareAirlineDao;
 import com.smi.travel.datalayer.entity.AirticketFlight;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.BookingFlight;
+import com.smi.travel.datalayer.entity.BookingPassenger;
 import com.smi.travel.datalayer.entity.MAirlineAgent;
 import com.smi.travel.datalayer.entity.PaymentAirticketFare;
 import com.smi.travel.datalayer.entity.RefundAirticketDetail;
@@ -214,7 +215,22 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
 
     @Override
     public List<BookingFlight> getListFlightFromTicketNo(String TicketNo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String result ="";
+       // System.out.println(" Refno ::: "+Refno);
+        
+        String Ticketquery = " from BookingPassenger  pass where pass.series1||pass.series2||pass.series3 = :ticketNo";
+        String Flightquery = " from BookingPassenger  flight where  flight.bookingAirline.id = :airlineid";
+        Session session = this.sessionFactory.openSession();
+        List<BookingPassenger> ticketPassList = session.createQuery(Ticketquery).setParameter("ticketNo", TicketNo).list();
+        
+        if (ticketPassList.isEmpty()) {
+            return null;
+        }
+        List<BookingFlight> FlightList = session.createQuery(Flightquery).setParameter("airlineid", ticketPassList.get(0).getBookingAirline().getId()).list();
+        if (FlightList.isEmpty()) {
+            return null;
+        }
+        return FlightList;
     }
 
     @Override
