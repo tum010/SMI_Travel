@@ -7,6 +7,7 @@
 package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.PaymentWendytourDao;
+import com.smi.travel.datalayer.entity.MRunningCode;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.PaymentDetailWendy;
 import com.smi.travel.datalayer.entity.PaymentWendy;
@@ -34,9 +35,10 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
         String result = "fail";
         try {
             Session session = this.sessionFactory.openSession();
-            transaction = session.beginTransaction();          
-            session.save(payment);
-            
+            transaction = session.beginTransaction();    
+            String runningCode = gennaratePaymentRunning("PW");
+            payment.setPayNo(runningCode);
+            session.save(payment);    
             List<PaymentDetailWendy> paymentDetailWendy = payment.getPaymentDetailWendies();
             
             if(paymentDetailWendy != null){
@@ -185,6 +187,21 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
          
          return paymentviewList;
     }
+    
+    public String gennaratePaymentRunning(String type){
+        String query = "from MRunningCode run where run.type =  :type";
+        Session session = this.sessionFactory.openSession();
+        List<MRunningCode> list = session.createQuery(query).setParameter("type", type).list();
+        if (list.isEmpty()) {
+            return null;
+        }
+        String code = String.valueOf(list.get(0).getRunning()+1);
+        for(int i=code.length();i<6;i++){
+            code = "0"+code;
+        }
+        return code;
+    }
+
     
     public Master getMasterFromRefno(String refno){
         String query = "from Master M where M.referenceNo =  :refno";
