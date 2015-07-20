@@ -153,25 +153,47 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         if (airPassengerList == null || airPassengerList.size() == 0) {
             return html.toString();
         } 
-
+        String id = "" ;
+        String name = "";
+        String ticket = "";
+        String ticketClass = "";
+        String departDate = "";
+        String ticketFare = "";
+        String ticketTax = "";
+        String issueDate = "";
+        String ticketRouting = "";
+        String airline = "";
+        String ticketBy = "";
+        String department = "";
         for(int i = 0 ; i < airPassengerList.size() ; i++ ){
-            String id = airPassengerList.get(i).getId();
-            String ticket = airPassengerList.get(i).getSeries1() 
+            id = airPassengerList.get(i).getId();
+            ticket = airPassengerList.get(i).getSeries1() 
                             + airPassengerList.get(i).getSeries2() 
                             + airPassengerList.get(i).getSeries3();
-            String name = airPassengerList.get(i).getMInitialname().getName() 
-                            + airPassengerList.get(i).getLastName() + " "  
-                            + airPassengerList.get(i).getFirstName();
+            ticketFare = String.valueOf(airPassengerList.get(i).getTicketFare());
+            ticketTax = String.valueOf(airPassengerList.get(i).getTicketTax());
+            ticketRouting = String.valueOf(airPassengerList.get(i).getTicketType());
+            ticketBy = String.valueOf(airPassengerList.get(i).getTicketFrom());
+            if(airPassengerList.get(i).getMInitialname() != null){
+                name = airPassengerList.get(i).getMInitialname().getName() 
+                                + airPassengerList.get(i).getLastName() + " "  
+                                + airPassengerList.get(i).getFirstName();
+            }
             List<AirticketFlight> airlines = new ArrayList<AirticketFlight>(airPassengerList.get(i).getAirticketAirline().getAirticketFlights());
-            String ticketClass = airlines.get(i).getMFlight().getName();
-            String departDate = String.valueOf(airlines.get(i).getDepartDate());
-            String ticketFare = String.valueOf(airPassengerList.get(i).getTicketFare());
-            String ticketTax = String.valueOf(airPassengerList.get(i).getTicketTax());
-            String issueDate = String.valueOf(airPassengerList.get(i).getAirticketAirline().getTicketDate());
-            String ticketRouting = String.valueOf(airPassengerList.get(i).getTicketType());
-            String airline = String.valueOf(airPassengerList.get(i).getAirticketAirline().getMAirline().getCode());
-            String ticketBy = String.valueOf(airPassengerList.get(i).getTicketFrom());
-            String department = String.valueOf(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType());
+            departDate = String.valueOf(airlines.get(i).getDepartDate());
+            if(airlines.get(i).getMFlight() != null){
+                ticketClass = airlines.get(i).getMFlight().getName();
+            }
+            if(airPassengerList.get(i).getAirticketAirline() != null){
+                issueDate = String.valueOf(airPassengerList.get(i).getAirticketAirline().getTicketDate());
+                if(airPassengerList.get(i).getAirticketAirline().getMAirline() != null){
+                    airline = String.valueOf(airPassengerList.get(i).getAirticketAirline().getMAirline().getCode());
+                }
+                if(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster() != null){
+                    department = String.valueOf(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType());
+                }
+            }
+
             String newrow
                     = "<tr>"
                     + "<td>" + ticket + "</td>"
