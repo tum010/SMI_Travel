@@ -166,7 +166,7 @@
                 <div class="col-sm-12">
                     <div class="input-group" id="CodeValidate">
                         <input name="InputAPCode" id="InputAPCode" type="text" class="form-control" value="${requestScope['InputAPCode']}" />
-                        <span class="input-group-addon" data-toggle="modal" data-target="#SearchAPCode">
+                        <span class="input-group-addon hidden" data-toggle="modal" data-target="#SearchAPCode">
                             <span class="glyphicon-search glyphicon"></span>
                         </span>    
                     </div>    
@@ -227,7 +227,8 @@
                                 <td class="hidden"><input id="tableId${i.count}" name="tableId${i.count}"  type="hidden" value="${pl.id}"></td>
                                 <td>                                   
                                     <select class="form-control" name="select-product${i.count}" id="select-product${i.count}">
-                                    <c:forEach var="product" items="${product_list}" varStatus="status"> 
+                                        <option  value="" >- - Product - -</option>
+                                    <c:forEach var="product" items="${product_list}" varStatus="status">                                       
                                         <c:set var="select" value="" />
                                         <c:if test="${product.id == pl.MPaytype.id}">
                                             <c:set var="select" value="selected" />
@@ -251,9 +252,10 @@
                                     </c:if>  
                                     <input type="radio" name="type${i.count}" id="row-${i.count}-typeC" value="C" ${type2}> C
                                 </td>
-                                <td> <input style="width: ${Amount}" id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control money" onkeyup="CalculateGrandTotal('${pl.id}','${i.count}')" value="${pl.amount}"> </td>
+                                <td> <input style="width: ${Amount}" id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control money" onfocusout="CalculateGrandTotal('${pl.id}','${i.count}')" value="${pl.amount}"> </td>
                                 <td> 
-                                    <select class="form-control" id="select_currency${i.count}" name="select_currency${i.count}">
+                                    <select class="form-control" id="select_currency${i.count}" name="select-currency${i.count}">
+                                            <option  value="" >- - Currency - -</option>
                                         <c:forEach var="currency" items="${currency_list}" varStatus="status">
                                             <c:set var="select" value="" />
                                             <c:if test="${currency.id == pl.currency}">
@@ -282,8 +284,8 @@
                         <i class="glyphicon glyphicon-plus"></i> Add
                     </a>
                 </div>
-                <input type="text" class="form-control" id="paymentId" name="paymentId" value="${requestScope['paymentId']}" />
-                <input type="text" class="form-control" id="counter" name="counter" value="${requestScope['paymenthotelcount']}" />
+                <input type="hidden" class="form-control" id="paymentId" name="paymentId" value="${requestScope['paymentId']}" />
+                <input type="hidden" class="form-control" id="counter" name="counter" value="${requestScope['paymenthotelcount']}" />
                 <input type="hidden" class="form-control" id="ProductTourHotel" name="ProductTourHotel">  
                 <input type="hidden" class="form-control" id="productList_id" name="productList_id" />
                 <input type="hidden" name="productCountDel" id="productCountDel">
@@ -533,7 +535,7 @@
             });
         });
    
-        $(".money").mask('000,000,000,000,000,000', {reverse: true});
+        $(".money").mask('000,000,000,000,000,000.00', {reverse: true});
         
         $('#PaymentTourHotelForm').bootstrapValidator({
             container: 'tooltip',
@@ -575,7 +577,7 @@
         }
         });
         
-        $("#PaymentHotelTable").on("change", "select:last", function () {
+        $("#PaymentHotelTable").on("keyup", "select:last", function () {
             var row = parseInt($("#counter").val());
             AddRow(row);
         });
@@ -601,11 +603,14 @@
             }
         });
         
+        $('#InputGrandTotal').ready(function () {
+            CalculateGrandTotal('',$("#counter").val());
+        });
+        
     });
     
     function searchPaymentTour() {
         var action = document.getElementById('action');
-        var payNo = document.getElementById('InputPayNo').value;
         action.value = 'edit';
         document.getElementById('PaymentTourHotelForm').submit();
     }
@@ -636,7 +641,7 @@
                 '<input type="radio" name="type' + row + '" id="typeT' + row + '" value="T"> T&nbsp;&nbsp;' +
                 '<input type="radio" name="type' + row + '" id="typeC' +row + '" value="C" > C' +
                 '</td>' +
-                '<td><input class="money" id="amount' + row + '" name="amount' + row + '" type="text" onkeyup="CalculateGrandTotal(\'\', \''+row+'\')"></td>' +
+                '<td><input class="money" id="amount' + row + '" name="amount' + row + '" type="text" onfocusout="CalculateGrandTotal(\'\', \''+row+'\')"></td>' +
                 '<td>' + 
                 '<select class="form-control" id="select-currency' + row + '" name="select-currency' + row + '"><option value="">- - Currency - -</option></select>' +                                 
                 '</td>' +
@@ -656,24 +661,28 @@
     
     function CalculateGrandTotal(id,row){
         var i;
-        var result =0;
+        var result = 0;
         if((id!==null) || (id!=='') ){
-            for(i=0;i<row;i++){
+            for(i=0;i<row+1;i++){
                 var amount = document.getElementById("amount" + i);
 
                 if (amount !== null){
                     var value = amount.value;
-
+                    
                     if(value !== ''){
                         value = value.replace(/,/g,"");
-                        var total = parseInt(value);
+                        var total = parseFloat(value);
                         result += total;
                     }
                 }    
             }
-            document.getElementById('InputGrandTotal').value = result;
+            document.getElementById('InputGrandTotal').value = formatNumber(result);
         }
-    }    
+    }
+    
+    function formatNumber(num) {
+        return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+    }
      
     function deletelist(id,Ccount) {
         document.getElementById('plTableId').value = id;
@@ -716,6 +725,7 @@
             }); 
         }    
         $('#DeleteProduct').modal('hide');
+        CalculateGrandTotal('',cCount);
     }
    
 </script>
