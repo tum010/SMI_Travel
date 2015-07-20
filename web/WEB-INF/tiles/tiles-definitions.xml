@@ -421,5 +421,10 @@
         <put-attribute name="title" value="SMI Travel : Send Mail" />
         <put-attribute name="body" value="/WEB-INF/jsp/SendMail.jsp" />
     </definition>
+    
+     <definition name="Pratz" extends="baseLayout">
+        <put-attribute name="title" value="SMI Travel : Pratz" />
+        <put-attribute name="body" value="/WEB-INF/jsp/Pratz.jsp" />
+    </definition>
 	
 </tiles-definitions>
