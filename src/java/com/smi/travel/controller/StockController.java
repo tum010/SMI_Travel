@@ -181,7 +181,7 @@ public class StockController extends SMITravelController {
             Integer  payStatusItemListInt = new Integer("0");
             mStockStatus.setName("NEW");
             mStockStatus.setId("1");
-            mPriceCategory.setName(typeitem);
+            mPriceCategory.setId(typeitem);
             if(!"".equals(stockDetailId)){
                 stockDetail.setId(stockDetailId);
             }
