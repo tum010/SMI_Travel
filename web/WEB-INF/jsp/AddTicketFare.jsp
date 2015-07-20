@@ -10,7 +10,7 @@
 <c:set var="agent" value="${requestScope['Agent']}" />
 <c:set var="SelectedAgent" value="${requestScope['SelectedAgent']}" />
 <c:set var="ticketList" value="${requestScope['ticketList']}" />
-
+<c:set var="flightDetail" value="${requestScope['Flight_Detail']}" /> 
 <section class="content-header" >
     <h1>
         Checking - Air Ticket
@@ -503,14 +503,14 @@
                             </tbody>
                         </table>
                     </div>
-                </div> 
+                </div>  
                 <!----- Flight Detail ----->
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">Flight Detail</h4>
                     </div> 
                     <div class="panel-body">
-                        <table class="display" id="FlightDeailTable">
+                        <table class="display" id="FlightDeailTable" cellspacing="0" >
                             <thead class="datatable-header">
                                 <tr>
                                     <th style="width:5%;">No</th>
@@ -524,7 +524,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                
+                                <c:forEach var="table" items="${flightDetail}" varStatus="dataStatus">
+                                    <tr>
+                                        <td align="center"> <c:out value="${dataStatus.count}" /></td>
+                                        <td align="center"> <c:out value="${table.bookingAirline.airlineCode}" /></td>
+                                        <td align="center"> <c:out value="${table.flightNo}" /></td>
+                                        <td align="center"> <c:out value="${table.flightClass}" /></td>
+                                        <td align="center"> <c:out value="${table.sourceCode}" /></td>
+                                        <td align="center"> <c:out value="${table.desCode}" /></td>
+                                        <td align="center"> <c:out value="${table.departureDate}" /></td>
+                                        <td align="center"> <c:out value="${table.arrivalDate}" /></td>
+                                </c:forEach>
                             </tbody>
                         </table>
                     </div>

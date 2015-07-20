@@ -2,6 +2,7 @@ package com.smi.travel.controller;
 import com.smi.travel.datalayer.entity.Agent;
 import com.smi.travel.datalayer.entity.AirticketFlight;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
+import com.smi.travel.datalayer.entity.BookingFlight;
 import com.smi.travel.datalayer.entity.MAirlineAgent;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.service.AgentService;
@@ -41,6 +42,8 @@ public class AddTicketFareController extends SMITravelController {
     private static final String TICKETTYPE = "TicketType";
     private static final String TICKETLIST = "ticketList";
     private static final String DEPARTMENT = "department";
+    private static final String FLIGHTDETAIL = "Flight_Detail";
+
     private UtilityService utilityService;
     private TicketFareAirlineService ticketFareAirlineService;
     private AgentService agentService;
@@ -252,6 +255,9 @@ public class AddTicketFareController extends SMITravelController {
                 System.out.print("ticketNo is null");
             }else{
                 ticketFareAirline = ticketFareAirlineService.getTicketFareFromTicketNo(ticketNo);
+                List<BookingFlight> bookingFlights = new ArrayList<BookingFlight>();
+                bookingFlights = ticketFareAirlineService.getListFlightFromTicketNo(ticketNo);
+                request.setAttribute(FLIGHTDETAIL, bookingFlights);
                 if(ticketFareAirline == null){
                     String airticketPass = ticketFareAirlineService.getTicketFareBookingFromTicketNo(ticketNo);
                     TicketFareAirline ticketFareAirlines = new TicketFareAirline();

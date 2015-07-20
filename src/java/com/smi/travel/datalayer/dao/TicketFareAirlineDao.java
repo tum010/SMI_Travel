@@ -20,10 +20,10 @@ public interface TicketFareAirlineDao {
     public int InsertTicketFare(TicketFareAirline ticket);
     public int UpdateTicketFare(TicketFareAirline ticket);
     public int DeleteTicketFare(TicketFareAirline ticket);
-    public TicketFareAirline getTicketFareFromTicketNo(String TicketNo);
-    public String getTicketFareBookingFromTicketNo(String TicketNo);
+    public TicketFareAirline getTicketFareFromTicketNo(String ticketNo);
+    public String getTicketFareBookingFromTicketNo(String ticketNo);
     public String getListTicketFareFromRefno(String Refno);
-    public List<BookingFlight> getListFlightFromTicketNo(String TicketNo);
+    public List<BookingFlight> getListFlightFromTicketNo(String ticketNo);
     public int validateSaveTicket(TicketFareAirline ticket);
     public List<TicketFareView> getListTicketFare(TicketFareView ticket,int option);
     public TicketFareAirline getTicketFareFromId(String id);

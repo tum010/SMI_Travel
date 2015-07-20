@@ -214,14 +214,14 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
     }
 
     @Override
-    public List<BookingFlight> getListFlightFromTicketNo(String TicketNo) {
+    public List<BookingFlight> getListFlightFromTicketNo(String ticketNo) {
         String result ="";
-       // System.out.println(" Refno ::: "+Refno);
+        System.out.println(" ticketNo ::: "+ticketNo);
         
-        String Ticketquery = " from BookingPassenger  pass where pass.series1||pass.series2||pass.series3 = :ticketNo";
+        String Ticketquery = " from BookingPassenger  pass where pass.ticketnoS1||pass.ticketnoS2||pass.ticketnoS3 = :ticketNo";
         String Flightquery = " from BookingFlight  flight where  flight.bookingAirline.id = :airlineid";
         Session session = this.sessionFactory.openSession();
-        List<BookingPassenger> ticketPassList = session.createQuery(Ticketquery).setParameter("ticketNo", TicketNo).list();
+        List<BookingPassenger> ticketPassList = session.createQuery(Ticketquery).setParameter("ticketNo", ticketNo).list();
         
         if (ticketPassList.isEmpty()) {
             return null;
