@@ -186,7 +186,7 @@ public class StockController extends SMITravelController {
             stockDetail.setPayStatus(payStatusItemListInt);
             stockDetail.setStock(stock);
             stockDetail.setMStockStatus(mStockStatus);
-            if("".equals(codeItemList)){
+            if("".equals(codeItemList) || codeItemList == null){
                 listStockDetail.remove(stockDetail);
             }else{
                 listStockDetail.add(stockDetail);
