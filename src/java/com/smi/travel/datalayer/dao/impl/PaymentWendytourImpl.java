@@ -217,16 +217,27 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
     }
     
     public String gennaratePaymentRunning(String type){
-        String query = "from MRunningCode run where run.type =  :type";
+        
+        String hql = "from MRunningCode run where run.type =  :type";
         Session session = this.sessionFactory.openSession();
-        List<MRunningCode> list = session.createQuery(query).setParameter("type", type).list();
+        List<MRunningCode> list = session.createQuery(hql).setParameter("type", type).list();
         if (list.isEmpty()) {
             return null;
         }
+        
         String code = String.valueOf(list.get(0).getRunning()+1);
         for(int i=code.length();i<6;i++){
             code = "0"+code;
         }
+        
+        Query query = session.createQuery("update MRunningCode run set run.running = :running" +
+    				" where run.type = :type");
+        query.setParameter("running", list.get(0).getRunning()+1);
+        query.setParameter("type", "PW");
+        int result = query.executeUpdate();
+        
+        session.close();
+        this.sessionFactory.close();
         return code;
     }
 
