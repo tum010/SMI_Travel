@@ -96,7 +96,6 @@ public class AddTicketFareController extends SMITravelController {
         MAirlineAgent mAirlineAgent = new MAirlineAgent();
         if ("save".equalsIgnoreCase(action)){
             System.out.println("ticketId : "+ ticketId);
-            
             mAirlineAgent.setId(ticketAirline);
            
             if(StringUtils.isNotEmpty(ticketAirline)){
@@ -118,40 +117,41 @@ public class AddTicketFareController extends SMITravelController {
                 ticketFareAirline.setIssueDate(util.convertStringToDate(issueDate));
                 request.setAttribute(ISSUEDATE, issueDate);
             }
+            
             if(StringUtils.isNotEmpty(ticketFare)){
-                ticketFareAirline.setTicketFare(new BigDecimal(String.valueOf(ticketFare))); 
+                ticketFareAirline.setTicketFare(new BigDecimal(String.valueOf(ticketFare.replaceAll(",","")))); 
             }else{
                 ticketFareAirline.setTicketFare(new BigDecimal(0)); 
             }
             
             if(StringUtils.isNotEmpty(ticketTax)){
-                ticketFareAirline.setTicketTax(new BigDecimal(String.valueOf(ticketTax)));
+                ticketFareAirline.setTicketTax(new BigDecimal(String.valueOf(ticketTax.replaceAll(",",""))));
             }else{
                 ticketFareAirline.setTicketTax(new BigDecimal(0)); 
             }
            
             if(StringUtils.isNotEmpty(ticketIns)){
-                ticketFareAirline.setTicketIns(new BigDecimal(String.valueOf(ticketIns)));
+                ticketFareAirline.setTicketIns(new BigDecimal(String.valueOf(ticketIns.replaceAll(",",""))));
             }else{
                 ticketFareAirline.setTicketIns(new BigDecimal(0)); 
             }
             if(StringUtils.isNotEmpty(ticketCommission)){
-                ticketFareAirline.setTicketCommission(new BigDecimal(String.valueOf(ticketCommission)));
+                ticketFareAirline.setTicketCommission(new BigDecimal(String.valueOf(ticketCommission.replaceAll(",",""))));
             }else{
                 ticketFareAirline.setTicketCommission(new BigDecimal(0)); 
             }
             if(StringUtils.isNotEmpty(agentCommission)){
-                ticketFareAirline.setAgentCommission(new BigDecimal(String.valueOf(agentCommission)));
+                ticketFareAirline.setAgentCommission(new BigDecimal(String.valueOf(agentCommission.replaceAll(",",""))));
             }else{
                 ticketFareAirline.setAgentCommission(new BigDecimal(0)); 
             }
             if(StringUtils.isNotEmpty(salePrice)){
-                ticketFareAirline.setSalePrice(new BigDecimal(String.valueOf(salePrice)));
+                ticketFareAirline.setSalePrice(new BigDecimal(String.valueOf(salePrice.replaceAll(",",""))));
             }else{
                 ticketFareAirline.setSalePrice(new BigDecimal(0)); 
             }
             if(StringUtils.isNotEmpty(diffVat)){
-                ticketFareAirline.setDiffVat(new BigDecimal(String.valueOf(diffVat)));
+                ticketFareAirline.setDiffVat(new BigDecimal(String.valueOf(diffVat.replaceAll(",",""))));
             }else{
                 ticketFareAirline.setDiffVat(new BigDecimal(0)); 
             }
@@ -163,32 +163,32 @@ public class AddTicketFareController extends SMITravelController {
 
             ticketFareAirline.setRemark(remark);
             if(StringUtils.isNotEmpty(overCommission)){
-                ticketFareAirline.setOverCommission(new BigDecimal(String.valueOf(overCommission)));
+                ticketFareAirline.setOverCommission(new BigDecimal(String.valueOf(overCommission.replaceAll(",",""))));
             }else{
                 ticketFareAirline.setOverCommission(new BigDecimal(0)); 
             }
             if(StringUtils.isNotEmpty(litterCommission)){
-                ticketFareAirline.setLitterCommission(new BigDecimal(String.valueOf(litterCommission)));
+                ticketFareAirline.setLitterCommission(new BigDecimal(String.valueOf(litterCommission.replaceAll(",",""))));
             }else{
                 ticketFareAirline.setLitterCommission(new BigDecimal(0)); 
             }
             if(StringUtils.isNotEmpty(decPay)){
-                ticketFareAirline.setDecPay(new BigDecimal(String.valueOf(decPay)));
+                ticketFareAirline.setDecPay(new BigDecimal(String.valueOf(decPay.replaceAll(",",""))));
             }else{
                 ticketFareAirline.setDecPay(new BigDecimal(0)); 
             }
             if(StringUtils.isNotEmpty(addPay)){
-                ticketFareAirline.setAddPay(new BigDecimal(String.valueOf(addPay)));
+                ticketFareAirline.setAddPay(new BigDecimal(String.valueOf(addPay.replaceAll(",",""))));
             }else{
                 ticketFareAirline.setAddPay(new BigDecimal(0)); 
             }
             if(StringUtils.isNotEmpty(agentComPay)){
-                ticketFareAirline.setAgentComPay(new BigDecimal(String.valueOf(agentComPay)));
+                ticketFareAirline.setAgentComPay(new BigDecimal(String.valueOf(agentComPay.replaceAll(",",""))));
             }else{
                 ticketFareAirline.setAgentComPay(new BigDecimal(0)); 
             }
             if(StringUtils.isNotEmpty(agentComReceive)){
-                ticketFareAirline.setAgentComReceive(new BigDecimal(String.valueOf(agentComReceive)));
+                ticketFareAirline.setAgentComReceive(new BigDecimal(String.valueOf(agentComReceive.replaceAll(",",""))));
             }else{
                 ticketFareAirline.setAgentComReceive(new BigDecimal(0)); 
             }
@@ -255,43 +255,46 @@ public class AddTicketFareController extends SMITravelController {
                 if(ticketFareAirline == null){
                     String airticketPass = ticketFareAirlineService.getTicketFareBookingFromTicketNo(ticketNo);
                     TicketFareAirline ticketFareAirlines = new TicketFareAirline();
-                    String[] parts = airticketPass.split(",");
-                    String TicketFare = parts[0].trim(); 
-                    String TicketTax = parts[1].trim(); 
-                    String IssueDate = parts[2].trim(); 
-                    String TicketRouting = parts[3].trim(); 
-                    String Airline = parts[4].trim(); 
-                    String TicketBy = parts[5].trim(); 
-                    String Passenger = parts[6].trim(); 
-                    String Department = parts[7].trim(); 
+                    if(StringUtils.isNotEmpty(airticketPass)){
+                        String[] parts = airticketPass.split(",");
+                        String TicketFare = parts[0].trim(); 
+                        String TicketTax = parts[1].trim(); 
+                        String IssueDate = parts[2].trim(); 
+                        String TicketRouting = parts[3].trim(); 
+                        String Airline = parts[4].trim(); 
+                        String TicketBy = parts[5].trim(); 
+                        String Passenger = parts[6].trim(); 
+                        String Department = parts[7].trim(); 
+
+                        ticketFareAirlines.setTicketNo(ticketNo);
+                        if(StringUtils.isNotEmpty(TicketFare)){
+                            ticketFareAirlines.setTicketFare(new BigDecimal(TicketFare));
+                        }else{
+                            ticketFareAirlines.setTicketFare(new BigDecimal(0));
+                        }
+                        if(StringUtils.isNotEmpty(TicketTax)){
+                            ticketFareAirlines.setTicketTax(new BigDecimal(TicketTax));
+                        }else{
+                            ticketFareAirlines.setTicketTax(new BigDecimal(0));
+                        }
+
+                        if(Department.equalsIgnoreCase("I")){
+                            Department = "wendy";
+                        }else if(Department.equalsIgnoreCase("O")){
+                            Department = "outbound";
+                        }
+                        mAirlineAgent.setId(Airline);
+                        if(StringUtils.isNotEmpty(Airline)){
+                            ticketFareAirlines.setMAirlineAgent(mAirlineAgent);
+                        }
+                        ticketFareAirlines.setPassenger(Passenger);
+                        request.setAttribute(TICKETBUY, TicketBy);
+                        request.setAttribute(TICKETROUTING, TicketRouting);
+                        request.setAttribute(ISSUEDATE, IssueDate);
+                        request.setAttribute(DEPARTMENT, Department);
+                    }
                     ticketFareAirlines.setTicketNo(ticketNo);
-                    if(StringUtils.isNotEmpty(TicketFare)){
-                        ticketFareAirlines.setTicketFare(new BigDecimal(TicketFare));
-                    }else{
-                        ticketFareAirlines.setTicketFare(new BigDecimal(0));
-                    }
-                    if(StringUtils.isNotEmpty(TicketTax)){
-                        ticketFareAirlines.setTicketTax(new BigDecimal(TicketTax));
-                    }else{
-                        ticketFareAirlines.setTicketTax(new BigDecimal(0));
-                    }
-
-                    if(Department.equalsIgnoreCase("I")){
-                        Department = "wendy";
-                    }else if(Department.equalsIgnoreCase("O")){
-                        Department = "outbound";
-                    }
-                    mAirlineAgent.setId(Airline);
-                    if(StringUtils.isNotEmpty(Airline)){
-                        ticketFareAirlines.setMAirlineAgent(mAirlineAgent);
-                    }
-                    ticketFareAirlines.setPassenger(Passenger);
-
                     request.setAttribute(TICKETFARE,ticketFareAirlines);
-                    request.setAttribute(TICKETBUY, TicketBy);
-                    request.setAttribute(TICKETROUTING, TicketRouting);
-                    request.setAttribute(ISSUEDATE, IssueDate);
-                    request.setAttribute(DEPARTMENT, Department);
                 }else{
                     if(StringUtils.isEmpty(String.valueOf(ticketFareAirline.getTicketFare()))){
                         ticketFareAirline.setTicketFare(new BigDecimal(0)); 
