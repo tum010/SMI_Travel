@@ -19,6 +19,9 @@
         <many-to-one name="otherBooking" class="com.smi.travel.datalayer.entity.OtherBooking" fetch="select">
             <column name="other_booking_id" />
         </many-to-one>
+         <many-to-one name="typeId" class="com.smi.travel.datalayer.entity.MPricecategory" fetch="select">
+            <column name="type_id" />
+        </many-to-one>
         <property name="code" type="string">
             <column name="code" length="50" />
         </property>
