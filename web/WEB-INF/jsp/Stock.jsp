@@ -85,7 +85,7 @@
                         <div class="col-xs-1 text-right"  style="width: 87px;" >
                             <label class="control-label">Staff</lable>
                         </div>
-                        <div class="col-md-2 form-group text-left" style="width: 170px;" > 
+                        <div class="col-md-2 form-group text-left" style="width: 178px;" > 
                             <input name="InputStaffId" id="InputStaffId" type="hidden" class="form-control" value="${stockData.staff.id}" />
                             <div class="input-group" id="gr" >
                                 <input type="text" class="form-control" id="InputStaff" name="InputStaff" value="${stockData.staff.username}" />
@@ -133,7 +133,7 @@
                         <div class="col-xs-1 text-left" style="width: 90px;padding-left: 3px;padding-right: 0px;">
                             <label class="control-label">Add Date</lable>
                         </div>
-                        <div class="col-md-3 form-group text-left" style="padding-left: 0px;width: 155px;">
+                        <div class="col-md-3 form-group text-left" style="padding-left: 0px;width: 165px;">
                             <div class='input-group date' >
                                 <input name="InputStockDate" id="InputStockDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${create}" />
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -181,18 +181,18 @@
                     </div>   
                 </div><!-- End Row 1-->
                 <div class="row" >
-                    <div class="col-xs-12" style="padding-right: 45px;">
+                    <div class="col-xs-12" style="padding-right: 17px;">
                         <div class="col-md-8 text-right" >                                          
                         </div> 
+                        <div class="col-md-2 text-right"  >
+<!--                            <button type="button" onclick="" class="btn btn-danger" id="SpanClearStock" name="SpanClearStock" style="width: 160px;">
+                                <span  class="glyphicon glyphicon-refresh"></span> Clear Expire Stock
+                            </button>-->
+                        </div>
                         <div class="col-md-2 text-right">
                             <button type="button"  id="ButtonAdd"  name="ButtonAdd" onclick=" return addItemList()" class="btn btn-primary btn-primary " style="width: 100px;">
                                 <span id="SpanAdd" class="glyphicon glyphicon-print fa fa-plus-circle"></span> Add
                             </button>                                          
-                        </div> 
-                        <div class="col-md-2 text-right" >
-                            <button type="button" onclick="" class="btn btn-danger" id="SpanClearStock" name="SpanClearStock" style="width: 160px;">
-                                <span  class="glyphicon glyphicon-refresh"></span> Clear Expire Stock
-                            </button>
                         </div>
                     </div>   
                 </div><!-- End Row 2--><br>
@@ -226,6 +226,10 @@
                                                 <td>       
                                                     <select id="SeleteTypeItemList${taxdesc.count}" name="SeleteTypeItemList${taxdesc.count}" class="form-control">
                                                         <c:forEach var="type" items="${getType}">
+                                                            <c:set var="select" value="" />
+                                                                <c:if test="${type.name == std.typeId.name}">
+                                                                    <c:set var="select" value="selected" />
+                                                                </c:if>   
                                                             <option value="${type.name}"><c:out value="${type.name}" /></option>
                                                         </c:forEach>
                                                     </select>                                             

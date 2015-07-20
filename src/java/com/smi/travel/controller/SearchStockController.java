@@ -47,6 +47,10 @@ public class SearchStockController extends SMITravelController {
             request.setAttribute("ListItemStatus", listItemStatus);
             
         if("search".equalsIgnoreCase(action)){
+            // Pay Status
+            String pStatus = request.getParameter("SelectPayStatus");
+            // Item Status
+            String iStatus =  request.getParameter("SelectItemStatus");
             Stock stock = new Stock();
             Product product = new Product();
             if(productId != null){
@@ -69,25 +73,34 @@ public class SearchStockController extends SMITravelController {
             if(EffectiveTo != null){
                 stock.setEffectiveTo(to);
             }
+            // Search Stock
             List<Stock> listStock = stockService.searchStock(productId, create, from, to);
             if(listStock != null){
                 request.setAttribute("stock", stock);
                 request.setAttribute("listStock", listStock);
             }
+            request.setAttribute("payStatus", pStatus);
+            request.setAttribute("itemStatus", iStatus);
         }else if("view".equalsIgnoreCase(action)){
+            // view Stock Detail After Search Stock
             String stockId = request.getParameter("stockIdView");
             String status = request.getParameter("SelectPayStatus");
             String itemStatus =  request.getParameter("SelectItemStatus");
+            // Search Stock
             StockViewSummary stockDataDetail = stockService.searchStockDetail(stockId, status, itemStatus);
             
             if(stockDataDetail != null){
                 System.out.println("set summary");
                  request.setAttribute("stockSummary", stockDataDetail);
+                 request.setAttribute("payStatus", status);
                  request.setAttribute("itemStatus", itemStatus);
                  request.setAttribute("stockSumDetail", stockDataDetail.getItemList());
             }else{
                 request.setAttribute("stockSummary", null);
             }
+            
+            request.setAttribute("itemStatus", itemStatus);
+            request.setAttribute("payStatus", status);
             // Data Before Search
             Stock stock = new Stock();
             Product product = new Product();
@@ -110,6 +123,7 @@ public class SearchStockController extends SMITravelController {
             if(EffectiveTo != null){
                 stock.setEffectiveTo(to);
             }
+            // Search Stock Detail
             List<Stock> listStock = stockService.searchStock(productId, create, from, to);
             if(listStock != null){
                 request.setAttribute("stock", stock);
@@ -119,8 +133,7 @@ public class SearchStockController extends SMITravelController {
         }else{
             request.setAttribute("listStock", null);
             request.setAttribute("stockSummary", null);
-        }
-            
+        }           
         return SearchStock;
     }
 

@@ -89,7 +89,7 @@ public class StockController extends SMITravelController {
                 stock.setStockDetails(setStockDetails(request, stock));
                 List<StockDetail> listStockDetail = setStockDetails(request, stock);
                 String isSave = stockService.saveStock(stock);
-                if(isSave.equals("success")){                
+                if(isSave.equals("success")){  // Save New Stock              
                     // Search Stock Id from Data Add
                     String  findStockId = stockService.getStockId(stock);
                     if("fail".equals(findStockId)){
@@ -116,7 +116,7 @@ public class StockController extends SMITravelController {
                         request.setAttribute("ToDate", effectiveTo);
                         request.setAttribute("CreateDate", createDate);
                     }
-                }else if(isSave.equals("update success")){
+                }else if(isSave.equals("update success")){ // Save is Update
                     isSave = "success";
                     request.setAttribute("stockData", stock);
                     request.setAttribute("FromDate", effectiveFrom);
@@ -170,21 +170,25 @@ public class StockController extends SMITravelController {
         for (int i = 1; i <= driverRows; i++) {
             StockDetail stockDetail = new StockDetail();
             MStockStatus mStockStatus = new MStockStatus();
+            MPricecategory mPriceCategory = new MPricecategory();
             
             String stockDetailId = request.getParameter("stockDetailId"+i);
             String codeItemList = request.getParameter("codeItemList"+i);
+            String typeitem = request.getParameter("SeleteTypeItemList"+i);
 //            String payStatusItemList = request.getParameter("payStatusItemList"+i);
 //            String itemStatusItemList = request.getParameter("payStatusItemList"+i);
 //            System.out.println("Status : " + payStatusItemList);
             Integer  payStatusItemListInt = new Integer("0");
             mStockStatus.setName("NEW");
             mStockStatus.setId("1");
+            mPriceCategory.setName(typeitem);
             if(!"".equals(stockDetailId)){
                 stockDetail.setId(stockDetailId);
             }
             stockDetail.setCode(codeItemList);
             stockDetail.setPayStatus(payStatusItemListInt);
             stockDetail.setStock(stock);
+            stockDetail.setTypeId(mPriceCategory);
             stockDetail.setMStockStatus(mStockStatus);
             if("".equals(codeItemList) || codeItemList == null){
                 listStockDetail.remove(stockDetail);

@@ -41,6 +41,7 @@ public class StockImpl implements StockDao{
         String result = "";
         Session session = this.sessionFactory.openSession();
         try {
+            session.flush();
             transaction = session.beginTransaction();
             session.save(ItemLot);
             List<StockDetail> stockDetail =ItemLot.getStockDetails();
@@ -340,7 +341,12 @@ public class StockImpl implements StockDao{
     @Override
     public List<Stock> searchStock(String productId, Date createDate, Date EffecttiveFrom, Date EffectiveTo) {
         Session session = this.sessionFactory.openSession();
-        String query = "FROM Stock st where" ;
+        String query = "";
+        if("".equals(productId) && createDate == null && EffecttiveFrom == null &&  EffectiveTo == null){
+            query = "FROM Stock st " ;
+        }else{
+            query = "FROM Stock st where" ;
+        }
         
         if ( productId != null && (!"".equalsIgnoreCase(productId)) ) {
             query += " st.product.id = " + productId;
@@ -368,8 +374,19 @@ public class StockImpl implements StockDao{
     public StockViewSummary searchStockDetail(String productId, String payStatus,String itemStatus) {
         StockViewSummary stockview = new StockViewSummary();
         Session session = this.sessionFactory.openSession();
-        String query = "FROM StockDetail st where" ;
-        
+        String query = "";
+        if(productId == null && payStatus == null && itemStatus == null){
+            if("".equals(productId) && "".equals(payStatus) && "".equals(itemStatus)){
+                query = "FROM StockDetail st" ;
+            }else{
+                query = "FROM StockDetail st where" ;
+            }
+        }else if("".equals(productId) && "".equals(payStatus) && "".equals(itemStatus)){
+            query = "FROM StockDetail st" ;
+        }else{
+            query = "FROM StockDetail st where" ;
+        }
+            
         if ( productId != null && (!"".equalsIgnoreCase(productId)) ) {
             query += " st.stock.id = " + productId;
         }

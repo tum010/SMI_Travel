@@ -11,6 +11,7 @@
 <c:set var="stockSumDetail" value="${requestScope['stockSumDetail']}" />
 <c:set var="ListItemStatus" value="${requestScope['ListItemStatus']}" />
 <c:set var="itemStatus" value="${requestScope['itemStatus']}" />
+<c:set var="payStatus" value="${requestScope['payStatus']}" />
 
 <section class="content-header" >
     <h1>
@@ -55,9 +56,16 @@
                 </div>
                 <div class="col-md-2 form-group text-left" style="padding-left: 0px;">
                     <select name="SelectPayStatus" id="SelectPayStatus" class="form-control">
+                         <c:set var="select" value="" />
+                            <c:if test="${payStatus == '1'}">
+                                <c:set var="select" value="selected" />
+                            </c:if>
+                            <c:if test="${payStatus == '0'}">
+                                <c:set var="select" value="selected" />
+                            </c:if>
                         <option id="" value="">--status--</option>
-                        <option id="" value="1">Pay</option>
-                        <option id="" value="0">Not Paid</option>
+                        <option id="" value="1" ${select}>Pay</option>
+                        <option id="" value="0" ${select}>Not Paid</option>
                     </select>
                 </div>
                 <div class="col-xs-1 text-right" style="width: 80px;padding-right: 0px;padding-left: 0px;">
@@ -65,12 +73,13 @@
                 </div>
                 <div class="col-md-2 form-group text-left" style="padding-left: 8px;width: 180px;">
                     <select name="SelectItemStatus" id="SelectItemStatus" class="form-control">
-                        <option id="" value="">--Status--</option>
-                        <c:if test="${!itemStatus == ''}">
-                            <option id="" value="">--Status--</option>
-                        </c:if>
+                        <option value=""  selected="selected">--status--</option>
                         <c:forEach var="sta" items="${ListItemStatus}">
-                                <option id="${sta.id}" value="${sta.id}">${sta.name}</option>
+                            <c:set var="select" value="" />
+                            <c:if test="${sta.id == itemStatus}">
+                                <c:set var="select" value="selected" />
+                            </c:if>
+                            <option value="${sta.id}" ${select}>${sta.name}</option>   
                         </c:forEach>
                     </select>
                 </div>
@@ -180,6 +189,7 @@
                         <tr>
                             <th style="width: 5%">No</th>                                   
                             <th style="width: 10%">Code</th>
+                            <th style="width: 10%">Type</th>
                             <th style="width: 15%">Ref No</th>
                             <th style="width: 10%">Pick Up</th>
                             <th style="width: 15%">Pay Status</th>
@@ -191,6 +201,7 @@
                         <tr>
                             <td>${num1.count}</td>
                             <td>${stockDetail.code}</td>
+                            <td>${stockDetail.typeId.name}</td>
                             <td>${stockDetail.refNo}</td>                                
                             <td>${stockDetail.pickup}</td>
                             <td>${stockDetail.payStatusName}</td>
