@@ -96,7 +96,7 @@
                 <table class="display" id="SearchPaymentHotelTable">
                     <thead class="datatable-header">
                         <tr>
-                            <th style="width: 8%">Id</th>
+                            <th style="width: 8%" class="hidden">Id</th>
                             <th style="width: 8%">PV No</th>
                             <th style="width: 10%">Pay Date</th>
                             <th style="width: 20%">PV Type</th>
@@ -128,7 +128,7 @@
                         </tr>-->
                     <c:forEach var="payment" items="${dataList}">
                         <tr>
-                            <td>${payment.id}</td>
+                            <td class="hidden">${payment.id}</td>
                             <td>${payment.payNo}</td>
                             <td>${payment.payDate}</td>
                             <td>${payment.payType}</td>
@@ -137,7 +137,7 @@
                             <td>${payment.total}</td>
                             <td>${payment.status}</td>
                             <td class="text-center">
-                                <span id="RefPaymentHotelEdit" name="RefPaymentHotelEdit" class="glyphicon glyphicon-edit editicon" onclick="location.href='PaymentTourHotel.smi?action=edit&payNo=${payment.payNo}'"></span>
+                                <span id="RefPaymentHotelEdit" name="RefPaymentHotelEdit" class="glyphicon glyphicon-edit editicon" onclick="location.href='PaymentTourHotel.smi?action=edit&InputPayNo=${payment.payNo}'"></span>
                                 <a href="#" onclick=""  data-toggle="modal" data-target="">
                                     <span id="" class="glyphicon glyphicon-remove deleteicon"  onclick="DeletePayment('${payment.id}','${payment.payNo}')" data-toggle="modal" data-target="#delSearchPaymentTourHotelModal"></span>
                                 </a>
