@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 20, 2015 5:52:41 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.ReceiptCredit" table="receipt_credit" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="MCreditBank" class="com.smi.travel.datalayer.entity.MCreditBank" fetch="select">
+            <column name="credit_card" />
+        </many-to-one>
+        <many-to-one name="receipt" class="com.smi.travel.datalayer.entity.Receipt" fetch="select">
+            <column name="rec_id" />
+        </many-to-one>
+        <property name="creditNo" type="string">
+            <column name="credit_no" length="20" />
+        </property>
+        <property name="creditExpire" type="date">
+            <column name="credit_expire" length="10" />
+        </property>
+        <property name="creditAmount" type="java.lang.Long">
+            <column name="credit_amount" precision="10" scale="0" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 20, 2015 5:19:25 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.Invoice" table="invoice" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="MAccpay" class="com.smi.travel.datalayer.entity.MAccpay" fetch="select">
+            <column name="term_pay" />
+        </many-to-one>
+        <many-to-one name="MFinanceItemstatus" class="com.smi.travel.datalayer.entity.MFinanceItemstatus" fetch="select">
+            <column name="status" />
+        </many-to-one>
+        <many-to-one name="staff" class="com.smi.travel.datalayer.entity.SystemUser" fetch="select">
+            <column name="staff_id" />
+        </many-to-one>
+        <property name="invNo" type="string">
+            <column name="inv_no" length="50" />
+        </property>
+        <property name="invTo" type="string">
+            <column name="inv_to" length="20" />
+        </property>
+        <property name="invName" type="string">
+            <column name="inv_name" length="50" />
+        </property>
+        <property name="invAddress" type="string">
+            <column name="inv_address" />
+        </property>
+        <property name="dueDate" type="date">
+            <column name="due_date" length="10" />
+        </property>
+        <property name="deparement" type="string">
+            <column name="deparement" length="20" />
+        </property>
+        <property name="arcode" type="java.lang.Integer">
+            <column name="arcode" />
+        </property>
+        <property name="remark" type="string">
+            <column name="remark" />
+        </property>
+        <property name="invType" type="string">
+            <column name="inv_type" length="11" />
+        </property>
+        <property name="isGroup" type="java.lang.Integer">
+            <column name="is_group" />
+        </property>
+        <property name="isLock" type="java.lang.Integer">
+            <column name="is_lock" />
+        </property>
+        <property name="createBy" type="string">
+            <column name="create_by" length="5" />
+        </property>
+        <property name="createDate" type="date">
+            <column name="create_date" length="10" />
+        </property>
+        <property name="subDepartment" type="string">
+            <column name="sub_department" length="20" />
+        </property>
+        <bag name="invoiceDetails" table="invoice_detail" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="invoice_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.InvoiceDetail" />
+        </bag>
+    </class>
+</hibernate-mapping>

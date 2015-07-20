@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 20, 2015 5:19:25 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.InvoiceDetail" table="invoice_detail" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="billableDesc" class="com.smi.travel.datalayer.entity.BillableDesc" fetch="select">
+            <column name="bill_desc_id" />
+        </many-to-one>
+        <many-to-one name="invoice" class="com.smi.travel.datalayer.entity.Invoice" fetch="select">
+            <column name="invoice_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="MPaytype" class="com.smi.travel.datalayer.entity.MPaytype" fetch="select">
+            <column name="item_type_id" />
+        </many-to-one>
+        <property name="description" type="string">
+            <column name="description" />
+        </property>
+        <property name="valueType" type="string">
+            <column name="value_type" length="1" />
+        </property>
+        <property name="cost" type="big_decimal">
+            <column name="cost" precision="10" />
+        </property>
+        <property name="costLocal" type="big_decimal">
+            <column name="cost_local" precision="10" />
+        </property>
+        <property name="curCost" type="string">
+            <column name="cur_cost" length="3" />
+        </property>
+        <property name="amount" type="big_decimal">
+            <column name="amount" precision="10" />
+        </property>
+        <property name="amountLocal" type="big_decimal">
+            <column name="amount_local" precision="10" />
+        </property>
+        <property name="curAmount" type="string">
+            <column name="cur_amount" length="3" />
+        </property>
+        <property name="vat" type="big_decimal">
+            <column name="vat" precision="10" />
+        </property>
+        <property name="isCalVat" type="java.lang.Integer">
+            <column name="is_cal_vat" />
+        </property>
+        <bag name="invoiceDocuments" table="invoice_document" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="invoice_detail_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.InvoiceDocument" />
+        </bag>
+    </class>
+</hibernate-mapping>
