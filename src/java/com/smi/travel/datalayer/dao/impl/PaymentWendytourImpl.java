@@ -50,7 +50,7 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
             transaction.commit();
             session.close();
             this.sessionFactory.close();
-            result = "success";
+            result = runningCode;
             
         } catch (Exception ex) {
             ex.printStackTrace();
