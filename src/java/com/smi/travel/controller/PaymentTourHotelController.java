@@ -349,9 +349,13 @@ public class PaymentTourHotelController extends SMITravelController {
                         paymentDetailWendy.setMPaytype(mpayType);
                     }
                   
-//                    Master master = paymentTourHotelService.getMasterFromRefno(refNo);
-//                    paymentDetailWendy.setMaster(master);
-                    paymentDetailWendy.setMaster(null);
+                    Master master = paymentTourHotelService.getMasterFromRefno(refNo);
+                    if(master == null){
+                        paymentDetailWendy.setMaster(null);
+                    } else {
+                        paymentDetailWendy.setMaster(master);                                          
+                    }                  
+                    
                     paymentWendy.getPaymentDetailWendies().add(paymentDetailWendy);
                     
                 } else {
@@ -368,11 +372,17 @@ public class PaymentTourHotelController extends SMITravelController {
                     } else {
                         mpayType.setId(product);
                         paymentDetailWendy.setMPaytype(mpayType);
-                    }
+                    }                                     
                     
                     Master master = paymentTourHotelService.getMasterFromRefno(refNo);
-                    paymentDetailWendy.setMaster(master);
+                    if(master == null){
+                        paymentDetailWendy.setMaster(null);
+                    } else {
+                        paymentDetailWendy.setMaster(master);                                          
+                    }         
+                    
                     paymentWendy.getPaymentDetailWendies().add(paymentDetailWendy);
+                    
                 }               
             }                        
         }
