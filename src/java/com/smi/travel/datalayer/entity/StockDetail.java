@@ -13,6 +13,7 @@ public class StockDetail {
      private String id;
      private SystemUser staff;
      private Stock stock;
+     private MPricecategory typeId;
      private MStockStatus MStockStatus;
      private OtherBooking otherBooking;
      private String code;
@@ -26,7 +27,7 @@ public class StockDetail {
     public StockDetail(Stock stock) {
         this.stock = stock;
     }
-    public StockDetail(SystemUser staff, Stock stock, MStockStatus MStockStatus, OtherBooking otherBooking, String code, Date pickupDate, Integer payStatus) {
+    public StockDetail(SystemUser staff, Stock stock, MStockStatus MStockStatus, OtherBooking otherBooking, String code, Date pickupDate, Integer payStatus,MPricecategory typeId) {
        this.staff = staff;
        this.stock = stock;
        this.MStockStatus = MStockStatus;
@@ -34,6 +35,7 @@ public class StockDetail {
        this.code = code;
        this.pickupDate = pickupDate;
        this.payStatus = payStatus;
+       this.typeId = typeId;
     }
    
     public String getId() {
@@ -91,6 +93,14 @@ public class StockDetail {
     
     public void setPayStatus(Integer payStatus) {
         this.payStatus = payStatus;
+    }
+
+    public MPricecategory getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(MPricecategory typeId) {
+        this.typeId = typeId;
     }
 
 
