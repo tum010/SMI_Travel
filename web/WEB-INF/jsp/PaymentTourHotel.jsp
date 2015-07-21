@@ -362,7 +362,7 @@
                 </c:if>    
             </div>
             <div class="col-xs-6 text-left">
-                <button type="submit" id="btnNew" name="btnNew" onclick="" class="btn btn-primary">
+                <button type="button" id="btnNew" name="btnNew" onclick="clearScreen()" class="btn btn-primary">
                     <i class="glyphicon glyphicon-plus"></i> New
                 </button>
             </div>                         
@@ -797,6 +797,28 @@
                 $("#InputAPCode").val(value.apcode);
             }     
         });  
+    }
+    
+    function clearScreen(){
+        //this.form.reset();
+        //location.reload();
+        $('#InputPayNo, #InputPayDate, #itemPvType, #itemStatus, #InputInvoiceSupId, #InputInvoiceSupCode, #InputInvoiceSupName, #InputAPCode, #Detail, #itemPayment, #InputRemark, #InputGrandTotal, #InputCash, #InputChqNo, #InputChqAmount').val('');
+        document.getElementById("account1").checked = false;
+        document.getElementById("account2").checked = false;
+        var count = document.getElementById("counter").value;
+        var i ;
+        for(i=0;i<=count;i++){
+           document.getElementById("select-product"+i).value = '';
+           document.getElementById("refNo"+i).value = ''; 
+           document.getElementById("invNo"+i).value = ''; 
+           document.getElementById("code"+i).value = ''; 
+           document.getElementById("amount"+i).value = ''; 
+           document.getElementById("select-currency"+i).value = ''; 
+           document.getElementById("description"+i).value = ''; 
+           document.getElementById("ac"+i).value = '';
+           document.getElementById("typeT"+i).checked = false;
+           document.getElementById("typeC"+i).checked = false;
+        }    
     }
    
 </script>
