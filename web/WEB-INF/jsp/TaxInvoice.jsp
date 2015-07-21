@@ -211,12 +211,12 @@
                                             <thead>
                                                 <tr class="datatable-header">
                                                     <th style="width: 1%" class="hidden">Id</th>
-                                                    <th style="width: 15%" >Product</th>
+                                                    <th style="width: 10%" >Product</th>
                                                     <th style="width: 5%" >Ref No</th>
-                                                    <th style="width: 60%">Description</th>
+                                                    <th style="width: 50%">Description</th>
                                                     <th style="width: 5%" >T/C</th>
                                                     <th style="width: 15%" >Cost</th>
-                                                    <th style="width: 10%">Amount</th>
+                                                    <th style="width: 15%">Amount</th>
                                                     <th style="width: 10%">Vat</th>
                                                     <th style="width: 15%"></th>
                                                     <th style="width: 1%">Action</th>
