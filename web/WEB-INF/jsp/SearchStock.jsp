@@ -189,9 +189,10 @@
                         <tr>
                             <th style="width: 5%">No</th>                                   
                             <th style="width: 10%">Code</th>
-                            <th style="width: 10%">Type</th>
-                            <th style="width: 15%">Ref No</th>
+                            <th style="width: 6%">Type</th>
+                            <th style="width: 10%">Ref No</th>
                             <th style="width: 10%">Pick Up</th>
+                             <th style="width: 9%">Pick Up Date</th>
                             <th style="width: 15%">Pay Status</th>
                             <th style="width: 15%">Item Status</th>
                         </tr>
@@ -204,6 +205,7 @@
                             <td>${stockDetail.typeId}</td>
                             <td>${stockDetail.refNo}</td>                                
                             <td>${stockDetail.pickup}</td>
+                            <td>${stockDetail.pickupDate}</td>
                             <td>${stockDetail.payStatusName}</td>
                             <td>${stockDetail.itemStatus}</td>                            
                         </tr>
