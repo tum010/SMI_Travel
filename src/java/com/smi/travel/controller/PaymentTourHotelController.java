@@ -161,6 +161,7 @@ public class PaymentTourHotelController extends SMITravelController {
             PaymentWendy paymentWendy = paymentTourHotelService.getPaymentWendyFromID(InputPayNo);
             
             if(paymentWendy==null){
+                request.setAttribute("resultText", "not found");
                 return PaymentTourHotel;
             }
             
