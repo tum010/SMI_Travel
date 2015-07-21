@@ -23,7 +23,7 @@ public interface PaymentWendytourDao {
     public String DeletePaymentWendyDetail(PaymentDetailWendy DetailID);
     public PaymentWendy SearchPaymentWendyFromPayno(String payno);
     public PaymentWendy getPaymentWendyFromID(String payNo);
-    public List<PaymentWendytourView> SearchPaymentFromFilter(String DateFrom ,String Dateto,String PVType);
+    public List<PaymentWendytourView> SearchPaymentFromFilter(String DateFrom ,String Dateto,String PVType ,String InvoiceSupCode);
     public Master getMasterFromRefno(String refno);
     public List<PaymentDetailWendy> getPaymentDetailWendyList(String paymentId);
     
