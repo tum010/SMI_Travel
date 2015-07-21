@@ -11,10 +11,14 @@ import com.smi.travel.datalayer.entity.MRunningCode;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.PaymentDetailWendy;
 import com.smi.travel.datalayer.entity.PaymentWendy;
+import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
 import com.smi.travel.datalayer.view.entity.PaymentWendytourView;
+import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -140,7 +144,7 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
     }
 
     @Override
-    public List<PaymentWendytourView> SearchPaymentFromFilter(String dateFrom ,String dateTo,String payType) {
+    public List<PaymentWendytourView> SearchPaymentFromFilter(String dateFrom ,String dateTo,String payType ,String InvoiceSupCode) {
         StringBuffer query = new StringBuffer("from PaymentWendy payment ");
         boolean haveCondition = false;
         if ((dateFrom != null) && (!"".equalsIgnoreCase(dateFrom))) {
@@ -156,6 +160,11 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
         if ((payType != null) && (!"".equalsIgnoreCase(payType))) {
             query.append(haveCondition ? " and" : " where");
             query.append(" payment.MPaymentDoctype = " + payType);
+            haveCondition = true;
+        }
+        if ((InvoiceSupCode != null) && (!"".equalsIgnoreCase(InvoiceSupCode))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" payment.invoiceSup = '" + InvoiceSupCode + "'");
             haveCondition = true;
         }
         
@@ -202,7 +211,8 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
                  paymentview.setPayType(payment.getMPaymentDoctype().getName());
              }
              
-             paymentview.setInvoiceSup(payment.getInvoiceSup());
+             String InvoiceSupName = getInvoiceSupName(payment.getInvoiceSup());
+             paymentview.setInvoiceSup(InvoiceSupName);
              paymentview.setAccNo(payment.getAccount());
              paymentview.setTotal(sum);
            //  paymentview.setCurrency(payment.getCurrency());
@@ -214,6 +224,29 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
          }
          
          return paymentviewList;
+    }
+    
+    private String getInvoiceSupName(String invoiceSupCode) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List<Object[]> invoiceSupplierList = session.createSQLQuery(" SELECT * FROM `invoice_supplier` WHERE `invoice_supplier`.code = '" + invoiceSupCode + "'")
+                .addScalar("id", Hibernate.STRING)
+                .addScalar("code", Hibernate.STRING)
+                .addScalar("name", Hibernate.STRING)
+                .addScalar("apcode", Hibernate.STRING)
+                .list();
+        
+        String invoiceSupName = "";
+        List<InvoiceSupplier> result = new ArrayList<InvoiceSupplier>();
+        for (Object[] A : invoiceSupplierList) {
+            InvoiceSupplier invoiceSupplier = new InvoiceSupplier();
+            invoiceSupplier.setId(util.ConvertString(A[0]));
+            invoiceSupplier.setCode(util.ConvertString(A[1]));
+            invoiceSupplier.setName(util.ConvertString(A[2]));
+            invoiceSupplier.setApcode(util.ConvertString(A[3]));
+            invoiceSupName = invoiceSupplier.getName();
+        }       
+        return invoiceSupName;
     }
     
     public String gennaratePaymentRunning(String type){
@@ -287,6 +320,7 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
         return List;
     }
 
+    
 
     
 }
