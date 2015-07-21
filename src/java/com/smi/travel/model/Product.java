@@ -10,7 +10,7 @@ package com.smi.travel.model;
  *
  * @author Surachai
  */
-public class Product  implements java.io.Serializable {
+public class Product {
 
 
      private Integer productId;
