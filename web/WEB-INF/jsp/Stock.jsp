@@ -221,7 +221,7 @@
                                                 <td>${taxdesc.count}</td>
                                                 <td><input type="text"  class="form-control" name="codeItemList${taxdesc.count}" id="codeItemList${taxdesc.count}" value="${std.code}"/></td>
                                                 <td>       
-                                                    <select id="SeleteTypeItemList${taxdesc.count}" name="SeleteTypeItemList${taxdesc.count}" class="form-control" onchange="selectType(${taxdesc.count})">
+                                                    <select id="SeleteTypeItemList${taxdesc.count}" name="SeleteTypeItemList${taxdesc.count}" class="form-control" >
                                                         <c:forEach var="type" items="${getType}">
                                                             <c:set var="select" value="" />
                                                                 <c:if test="${type.id == std.typeId.id}">
