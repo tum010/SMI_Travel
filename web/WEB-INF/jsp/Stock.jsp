@@ -198,64 +198,62 @@
                 </div><!-- End Row 2--><br>
                 <div class="row" style="padding-left: 0px">
                         <div class="col-xs-12 ">
-                                    <table class="display" id="StockTable">
-                                        <thead class="datatable-header">
-                                            <tr>
-                                                <th class="hidden">id</th>
-                                                <th style="width: 5%">No</th>                                   
-                                                <th style="width: 10%">Code</th>
-                                                <th style="width: 15%">Type</th>
-                                                <th style="width: 20%">Pay Status</th>
-                                                <th style="width: 15%">Item Status</th>
-                                                <th style="width: 8%">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <input type="text" class="hidden" id="counter" name="counter" value="1" />
-                                            <input type="text" class="hidden" id="counterTable" name="counterTable" value="1" />
-                                            <input type="text" class="hidden" id="counterAdd" name="counterAdd" value="1" />
-                                            <c:set var="count" value="1"></c:set>                                          
-                                            <c:forEach var="std" items="${listStockDetail}" varStatus="taxdesc">                                    
-                                            <tr>
-                                                <td class="hidden"><input type="text" class="hidden" id="stockDetailId${taxdesc.count}" name="stockDetailId${taxdesc.count}" value="${std.id}" /></td>
-                                                <td>${taxdesc.count}</td>
-                                                <td><input type="text"  class="form-control" name="codeItemList${taxdesc.count}" id="codeItemList${taxdesc.count}" value="${std.code}"/></td>
-                                                <td>       
-                                                    <select id="SeleteTypeItemList${taxdesc.count}" name="SeleteTypeItemList${taxdesc.count}" class="form-control" >
-                                                        <c:forEach var="type" items="${getType}">
-                                                            <c:set var="select" value="" />
-                                                                <c:if test="${type.id == std.typeId.id}">
-                                                                    <c:set var="select" value="selected" />
-                                                               
-                                                                </c:if>   
-                                                             <option value="${type.id}" ${select}><c:out value="${type.name}" /></option>
-                                                        </c:forEach>
-                                                    </select>                                             
-                                                </td>                                
-                                                <td>${std.payStatus}</td>
-                                                <td>NEW</td>
-                                                <td class="text-center">                                          
-                                                    <a href="#" onclick="deleteItemListRow('${taxdesc.count}','${std.code}')"  data-toggle="modal" data-target="" class="remCF" id="ButtonRemove${taxdesc.count}">
-                                                        <span id="Spanremove${taxdesc.count}" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal" data-target="#delStockModal"></span>
-                                                    </a>
-                                                    
-                                                </td>
-                                                <c:set var="valueNameRow" value="${count}"></c:set>
-                                            </tr>
-                                                                                         
-                                            </c:forEach>
-                                        </tbody>
-                                    </table> 
-                                            
-                                            <c:forEach var="std" items="${listStockDetail}" varStatus="taxdesc"> 
-                                                 <c:if test="${taxdesc.last}">
-                                                <script>
-                                                        $("#counter").val(${taxdesc.count} + 1);
-                                                </script>
-                                                <input value="${taxdesc.count}" id="taxDescRows" name="taxDescRows" type="text" class="hidden" />
-                                            </c:if>                                               
-                                            </c:forEach>
-                                </div>
+                            <table class="display" id="StockTable">
+                                <thead class="datatable-header">
+                                    <tr>
+                                        <th class="hidden">id</th>
+                                        <th style="width: 5%">No</th>                                   
+                                        <th style="width: 10%">Code</th>
+                                        <th style="width: 15%">Type</th>
+                                        <th style="width: 20%">Pay Status</th>
+                                        <th style="width: 15%">Item Status</th>
+                                        <th style="width: 8%">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <input type="text" class="hidden" id="counter" name="counter" value="1" />
+                                    <input type="text" class="hidden" id="counterTable" name="counterTable" value="1" />
+                                    <input type="text" class="hidden" id="counterAdd" name="counterAdd" value="1" />
+                                    <c:set var="count" value="1"></c:set>                                          
+                                    <c:forEach var="std" items="${listStockDetail}" varStatus="taxdesc">                                    
+                                    <tr>
+                                        <td class="hidden"><input type="text" class="hidden" id="stockDetailId${taxdesc.count}" name="stockDetailId${taxdesc.count}" value="${std.id}" /></td>
+                                        <td>${taxdesc.count}</td>
+                                        <td><input type="text"  class="form-control" name="codeItemList${taxdesc.count}" id="codeItemList${taxdesc.count}" value="${std.code}"/></td>
+                                        <td>       
+                                            <select id="SeleteTypeItemList${taxdesc.count}" name="SeleteTypeItemList${taxdesc.count}" class="form-control" >
+                                                <c:forEach var="type" items="${getType}">
+                                                    <c:set var="select" value="" />
+                                                        <c:if test="${type.id == std.typeId.id}">
+                                                            <c:set var="select" value="selected" />
+
+                                                        </c:if>   
+                                                     <option value="${type.id}" ${select}><c:out value="${type.name}" /></option>
+                                                </c:forEach>
+                                            </select>                                             
+                                        </td>                                
+                                        <td>${std.payStatus}</td>
+                                        <td>NEW</td>
+                                        <td class="text-center">                                          
+                                            <a href="#" onclick="deleteItemListRow('${taxdesc.count}','${std.code}')"  data-toggle="modal" data-target="" class="remCF" id="ButtonRemove${taxdesc.count}">
+                                                <span id="Spanremove${taxdesc.count}" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal" data-target="#delStockModal"></span>
+                                            </a>
+
+                                        </td>
+                                        <c:set var="valueNameRow" value="${count}"></c:set>
+                                    </tr>                                                                                       
+                                    </c:forEach>
+                                </tbody>
+                            </table>                                            
+                            <c:forEach var="std" items="${listStockDetail}" varStatus="taxdesc"> 
+                                 <c:if test="${taxdesc.last}">
+                                <script>
+                                        $("#counter").val(${taxdesc.count} + 1);
+                                </script>
+                                <input value="${taxdesc.count}" id="taxDescRows" name="taxDescRows" type="text" class="hidden" />
+                            </c:if>                                               
+                            </c:forEach>
+                        </div>
                     </div><!-- End Row 3--><br>
                     <div class="row" >
                     <div class="col-xs-12"  style="padding-left: 20px;">
@@ -409,10 +407,8 @@
                             <th>Code</th>
                             <th>staff Name</th>
                         </tr>
-                    </thead>
-                    
-                    <tbody>
-                    
+                    </thead>                  
+                    <tbody>                  
                         <c:forEach var="item" items="${ListStaffStock}" varStatus="loop">
                             <tr class="packet">
                                 <td class="staff-id hidden"><c:out value="${item.id}" /></td>
@@ -452,7 +448,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
 <c:if test="${! empty result}">
     <c:if test="${result =='success'}">        
         <script language="javascript">
@@ -478,8 +473,6 @@
         <c:forEach var="type" items="${getType}">
             select += "<option value='${type.id}' ><c:out value='${type.name}' /></option>";
         </c:forEach>
-//        alert(select);
-//        $('#SeleteTypeItemList'+cout.value).append(select);
     });
 </script>
 <script type="text/javascript" src="js/stock.js"></script>

@@ -84,8 +84,7 @@ $(document).ready(function () {
         $('#StaffTable tbody').on('click', 'tr', function () {
             $(this).addClass('row_selected').siblings().removeClass('row_selected');
         });
-
-    
+   
     $("#StockTable").on("keyup", function () {
         var rowAll = $("#StockTable tr").length;
         $("td").keyup(function () {
@@ -183,7 +182,6 @@ function validFrom(){
 }
 
 function AddRow(row) {
-//    alert("Se" + select);
     $("#StockTable tbody").append(
             '<tr>' +
             '<td class="hidden"><input type="hidden"  id="stockDetailId' + row + '" name="stockDetailId' + row + '" value="" /></td>' +
@@ -215,14 +213,12 @@ function addItemList(){
     var count = document.getElementById('counterTable');
     var countAdd = document.getElementById('counterAdd');
     var st = start.value;
-//    alert("Type : " + type.value +" Start : " + st);
     if(countAdd.value === 1){
         document.getElementById("StockTable").deleteRow(1);
     }else{
         $("#StockTable tr:last").remove();
     }
     var res = select.replace("value='"+ type.value+"'", "selected value='"+ type.value+"'");
-//    alert(res);
     for (var i = 1 ; i <= number.value; i++){
         $("#StockTable tbody").append(
             '<tr>' +
@@ -236,10 +232,7 @@ function addItemList(){
             '</tr>'
             );
             start.value++;
-            count.value++;
-//            $("#SeleteTypeItemList"+count.value+"  option[value='" + type.value +"']").attr("selected","selected");
-
-            
+            count.value++;          
     }
     start.value = st;
     countAdd.value++;
@@ -277,7 +270,5 @@ function resetNumberItemList(){
     var countRow = document.getElementById('StockTable').rows; 
     for (var i = 1 ; i <= (rows-1); i++){  
         countRow[i].cells[1].innerHTML = i; 
-//        countRow[i].cells[2].getElementsByTagName("input")[0].name = "codeItemList" + i;
-//        countRow[i].cells[2].getElementById("input")[0].value = "codeItemList" + i;
     }  
 }
