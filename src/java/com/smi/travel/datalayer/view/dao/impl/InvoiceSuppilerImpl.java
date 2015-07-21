@@ -57,11 +57,11 @@ public class InvoiceSuppilerImpl implements InvoiceSuppilerDao{
     }
 
     @Override
-    public InvoiceSupplier getDataInvoiceSuppiler(String InputInvoiceSupId) {
+    public InvoiceSupplier getDataInvoiceSuppiler(String InputInvoiceSupCode) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         InvoiceSupplier invoiceSupplier = new InvoiceSupplier();
-        List<Object[]> invoiceSupplierList = session.createSQLQuery(" SELECT * FROM `invoice_supplier` WHERE `invoice_supplier`.id = " + InputInvoiceSupId)
+        List<Object[]> invoiceSupplierList = session.createSQLQuery(" SELECT * FROM `invoice_supplier` WHERE `invoice_supplier`.code = '" + InputInvoiceSupCode + "'")
                 .addScalar("id", Hibernate.STRING)
                 .addScalar("code", Hibernate.STRING)
                 .addScalar("name", Hibernate.STRING)
@@ -70,11 +70,11 @@ public class InvoiceSuppilerImpl implements InvoiceSuppilerDao{
         
       
         for (Object[] A : invoiceSupplierList) {
-             invoiceSupplier.setId(util.ConvertString(A[0]));
-             invoiceSupplier.setCode(util.ConvertString(A[1]));
-             invoiceSupplier.setName(util.ConvertString(A[2]));
-             invoiceSupplier.setApcode(util.ConvertString(A[3]));
-         }
+            invoiceSupplier.setId(util.ConvertString(A[0]));
+            invoiceSupplier.setCode(util.ConvertString(A[1]));
+            invoiceSupplier.setName(util.ConvertString(A[2]));
+            invoiceSupplier.setApcode(util.ConvertString(A[3]));
+        }
         return invoiceSupplier;
     }
     
