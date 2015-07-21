@@ -251,17 +251,17 @@
                                     <c:if test="${'T' == pl.amountType}">
                                         <c:set var="type1" value="checked" />
                                     </c:if>  
-                                    <input type="radio" name="type${i.count}" id="row-${i.count}-typeT" value="T" ${type1}> T&nbsp;
+                                    <input type="radio" name="type${i.count}" id="typeT${i.count}" value="T" ${type1}> T&nbsp;
                                     <c:set var="type2" value="" />
                                     <c:if test="${'C' == pl.amountType}">
                                         <c:set var="type2" value="checked" />
                                     </c:if>  
-                                    <input type="radio" name="type${i.count}" id="row-${i.count}-typeC" value="C" ${type2}> C
+                                    <input type="radio" name="type${i.count}" id="typeC${i.count}" value="C" ${type2}> C
                                 </td>
                                 <td> <input style="width: ${Amount}" id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control money" onfocusout="CalculateGrandTotal('${pl.id}','${i.count}')" value="${pl.amount}"> </td>
                                 <td> 
-                                    <select class="form-control" id="select_currency${i.count}" name="select-currency${i.count}">
-                                            <option  value="" >- - Currency - -</option>
+                                    <select class="form-control" id="select-currency${i.count}" name="select-currency${i.count}">
+                                        <option  value="" >- - Currency - -</option>
                                         <c:forEach var="currency" items="${currency_list}" varStatus="status">
                                             <c:set var="select" value="" />
                                             <c:if test="${currency.id == pl.currency}">
@@ -348,18 +348,13 @@
         <!--Button -->
         <div class="row text-center" >
             <div class="col-xs-6 text-right">
-                <c:if test="${requestScope['btnSave'] =='save'}">                   
-                    <button type="submit" id="btnSave" name="btnSave" class="btn btn-success" onclick="">
+                                  
+                    <button type="button" id="btnSave" name="btnSave" class="btn btn-success" onclick="saveORupdateData()">
                         <i class="fa fa-save"></i> Save             
                     </button>
-                    <input type="hidden" name="action" id="action" value="add" class="form-control" >    
-                </c:if>
-                <c:if test="${requestScope['btnSave'] =='update'}">
-                    <button type="submit" id="btnSave" name="btnSave" class="btn btn-success" onclick="">
-                        <i class="fa fa-save"></i> Save             
-                    </button>
-                    <input type="hidden" name="action" id="action" value="update" class="form-control" >
-                </c:if>    
+                    <input type="hidden" name="action" id="action" value="" class="form-control" >    
+                
+               
             </div>
             <div class="col-xs-6 text-left">
                 <button type="button" id="btnNew" name="btnNew" onclick="clearScreen()" class="btn btn-primary">
@@ -645,6 +640,9 @@
                 }
                 if(name === value.name){
                     $("#InputInvoiceSupCode").val(value.code);
+                    $("#InputInvoiceSupId").val(value.id);
+                    $("#InputInvoiceSupName").val(value.name);
+                    $("#InputAPCode").val(value.apcode);
                     code = $("#InputInvoiceSupCode").val().toUpperCase();
                 }
             });  
@@ -802,23 +800,65 @@
     function clearScreen(){
         //this.form.reset();
         //location.reload();
-        $('#InputPayNo, #InputPayDate, #itemPvType, #itemStatus, #InputInvoiceSupId, #InputInvoiceSupCode, #InputInvoiceSupName, #InputAPCode, #Detail, #itemPayment, #InputRemark, #InputGrandTotal, #InputCash, #InputChqNo, #InputChqAmount').val('');
+        $('#paymentId, #InputPayNo, #InputPayDate, #itemPvType, #itemStatus, #InputInvoiceSupId, #InputInvoiceSupCode, #InputInvoiceSupName, #InputAPCode, #Detail, #itemPayment, #InputRemark, #InputGrandTotal, #InputCash, #InputChqNo, #InputChqAmount').val('');
         document.getElementById("account1").checked = false;
         document.getElementById("account2").checked = false;
         var count = document.getElementById("counter").value;
         var i ;
         for(i=0;i<=count;i++){
-           document.getElementById("select-product"+i).value = '';
-           document.getElementById("refNo"+i).value = ''; 
-           document.getElementById("invNo"+i).value = ''; 
-           document.getElementById("code"+i).value = ''; 
-           document.getElementById("amount"+i).value = ''; 
-           document.getElementById("select-currency"+i).value = ''; 
-           document.getElementById("description"+i).value = ''; 
-           document.getElementById("ac"+i).value = '';
-           document.getElementById("typeT"+i).checked = false;
-           document.getElementById("typeC"+i).checked = false;
+           var select_product = document.getElementById("select-product" + i);
+           var select_currency = document.getElementById("select-currency" + i);
+           var refNo = document.getElementById("refNo"+i); 
+           var invNo = document.getElementById("invNo"+i); 
+           var code = document.getElementById("code"+i); 
+           var amount = document.getElementById("amount"+i); 
+           var description = document.getElementById("description"+i); 
+           var ac = document.getElementById("ac"+i);
+           var typeT = document.getElementById("typeT"+i);
+           var typeC = document.getElementById("typeC"+i);
+           
+           if(select_product !== null){
+               document.getElementById("select-product"+i).value = '';
+           }
+           if(select_currency !== null){
+               document.getElementById("select-currency"+i).value = '';
+           }
+           if(refNo !== null){
+               document.getElementById("refNo"+i).value = ''; 
+           }
+           if(invNo !== null){
+               document.getElementById("invNo"+i).value = ''; 
+           }
+           if(code !== null){
+               document.getElementById("code"+i).value = '';
+           }
+           if(amount !== null){
+               document.getElementById("amount"+i).value = '';
+           }
+           if(description !== null){
+               document.getElementById("description"+i).value = '';
+           }
+           if(ac !== null){
+               document.getElementById("ac"+i).value = '';
+           }
+           if((typeT !== null) && (typeC !== null)){
+               document.getElementById("typeT"+i).checked = false;
+               document.getElementById("typeC"+i).checked = false;
+           }
+             
         }    
+    }
+    
+    function saveORupdateData(){
+        var action = document.getElementById('action');
+        var paymentId = document.getElementById('paymentId').value;
+        
+        if(paymentId === ''){
+            action.value = 'add';
+        } else {
+            action.value = 'update';
+        }            
+        document.getElementById('PaymentTourHotelForm').submit();
     }
    
 </script>
