@@ -281,8 +281,3 @@ function resetNumberItemList(){
 //        countRow[i].cells[2].getElementById("input")[0].value = "codeItemList" + i;
     }  
 }
-
-function selectType(count){
-    var type  = document.getElementById('SeleteTypeItemList1'+count.value);
-    alert("Val :" + type.value);
-}
