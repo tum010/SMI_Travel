@@ -14,5 +14,5 @@ import java.util.List;
  */
 public interface InvoiceSuppilerDao {
     public List<InvoiceSupplier> getListInvoiceSupplier();   
-    public InvoiceSupplier getDataInvoiceSuppiler(String InputInvoiceSupId);
+    public InvoiceSupplier getDataInvoiceSuppiler(String InputInvoiceSupCode);
 }
