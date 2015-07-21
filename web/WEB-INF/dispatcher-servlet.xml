@@ -108,6 +108,8 @@
 				<prop key="Stock.smi">StockController</prop>
 				<prop key="SearchStock.smi">SearchStockController</prop>
 				<prop key="DefineVar.smi">DefineVarController</prop>
+                                <prop key="CreditNote.smi">CreditNoteController</prop>
+                                <prop key="SearchCreditNote.smi">SearchCreditNoteController</prop>
 				<!-- add mapping url -->
 			</props>
 		</property>
@@ -513,6 +515,13 @@
 		class="com.smi.travel.masterdata.controller.DefineVarController">
 		<property name="defineVarService" ref="DefineVarService"></property>
 	</bean>
+        
+        <bean id="CreditNoteController" class="com.smi.travel.controller.CreditNoteController">
+        </bean>
+    
+        <bean id="SearchCreditNoteController" class="com.smi.travel.controller.SearchCreditNoteController">
+        </bean>
+        
 	<!-- add bean id controller -->
 
 	<bean id="monitorGalileo" class="com.smi.travel.monitor.MonitorGalileo"

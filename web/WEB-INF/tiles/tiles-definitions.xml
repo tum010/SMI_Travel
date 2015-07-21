@@ -415,6 +415,16 @@
         <put-attribute name="title" value="Master : Define Variable" />
         <put-attribute name="body" value="/WEB-INF/jsp/DefineVar.jsp" />
     </definition>
+    
+    <definition name="CreditNote" extends="baseLayout">
+        <put-attribute name="title" value="Finance And Cashier : Credit Note" />
+        <put-attribute name="body" value="/WEB-INF/jsp/CreditNote.jsp" />
+    </definition>
+    
+    <definition name="SearchCreditNote" extends="baseLayout">
+        <put-attribute name="title" value="Finance And Cashier : Search Credit Note" />
+        <put-attribute name="body" value="/WEB-INF/jsp/SearchCreditNote.jsp" />
+    </definition>
     <!--<add data>-->
     
     <definition name="SendMail" extends="baseLayout">
