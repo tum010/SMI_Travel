@@ -502,7 +502,7 @@
             "bInfo": false,
             "bLengthChange": false,
             "iDisplayLength": 10
-            });
+        });
             
         $('#SearchAPCodeTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
@@ -512,7 +512,7 @@
             "bInfo": false,
             "bLengthChange": false,
             "iDisplayLength": 10
-            });
+        });
                   
         $('#PaymentHotelTable tbody tr:last td .input-group-addon').click(function() {  
             AddRow(parseInt($("#counter").val()));
