@@ -198,6 +198,56 @@
                     </div>    
                 </form>                
             </div>
+                                            
+            <div class="col-xs-12 form-group"></div>
+            <div role="tabpanel">
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane  active" id="infoMasterProduct">
+                        <div class="panel panel-default">                              
+                            <div class="panel-body">
+                                <div class="row" style="">    
+                                    <div class="col-md-12">
+                                        <table id="MasterProduct" class="display" cellspacing="0" width="100%">
+                                            <thead>
+                                                <tr class="datatable-header">
+                                                    <th style="width: 1%" class="hidden">Id</th>
+                                                    <th style="width: 15%" >Product</th>
+                                                    <th style="width: 5%" >Ref No</th>
+                                                    <th style="width: 60%">Description</th>
+                                                    <th style="width: 5%" >T/C</th>
+                                                    <th style="width: 15%" >Cost</th>
+                                                    <th style="width: 10%">Amount</th>
+                                                    <th style="width: 10%">Vat</th>
+                                                    <th style="width: 15%"></th>
+                                                    <th style="width: 1%">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>               
+                                                <tr>
+                                                    <td class="hidden">1</td>
+                                                    <td>TEST</td>
+                                                    <td>2500001</td>
+                                                    <td>Hello World</td>
+                                                    <td align="center">T</td>
+                                                    <td align="center">100000</td>
+                                                    <td align="center">1000000</td>
+                                                    <td align="center">7</td>
+                                                    <td align="center">77777777</td>
+                                                    <td align="center" > 
+                                                        <center> 
+                                                            <a href=""><span class="glyphicon glyphicon-plus"></span></a>
+                                                        </center>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
                         
                 <div role="tabpanel">
                     <div class="tab-content">
