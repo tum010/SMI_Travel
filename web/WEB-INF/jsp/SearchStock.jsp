@@ -188,13 +188,13 @@
                     <thead class="datatable-header">
                         <tr>
                             <th style="width: 5%">No</th>                                   
-                            <th style="width: 10%">Code</th>
+                            <th style="width: 13%">Code</th>
                             <th style="width: 6%">Type</th>
                             <th style="width: 10%">Ref No</th>
                             <th style="width: 10%">Pick Up</th>
-                             <th style="width: 9%">Pick Up Date</th>
-                            <th style="width: 15%">Pay Status</th>
-                            <th style="width: 15%">Item Status</th>
+                            <th style="width: 12%">Pick Up Date</th>
+                            <th style="width: 12%">Pay Status</th>
+                            <th style="width: 12%">Item Status</th>
                         </tr>
                     </thead>
                     <tbody>
