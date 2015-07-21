@@ -89,14 +89,13 @@ public class PaymentTourHotelController extends SMITravelController {
         if ("add".equalsIgnoreCase(action)) {
             UtilityFunction utilfunction = new UtilityFunction();
             PaymentWendy paymentWendy = new PaymentWendy();
-            //paymentWendy.setPayNo(InputPayNo);
             paymentWendy.setAccount(utilfunction.convertStringToInteger(account));
             paymentWendy.setPayDate(utilfunction.convertStringToDate(InputPayDate));
             
             MItemstatus mitemStatus = new MItemstatus();
             mitemStatus.setId(itemStatus);
             paymentWendy.setMItemstatus(mitemStatus);
-            paymentWendy.setInvoiceSup(InputInvoiceSupId);
+            paymentWendy.setInvoiceSup(InputInvoiceSupCode);
             paymentWendy.setApCode(InputAPCode);
             paymentWendy.setDetail(Detail);
                  
@@ -170,7 +169,7 @@ public class PaymentTourHotelController extends SMITravelController {
             account = String.valueOf(paymentWendy.getAccount());
             itemStatus = paymentWendy.getMItemstatus().getId();
             InputPayDate = String.valueOf(paymentWendy.getPayDate());                       
-            InputInvoiceSupId = paymentWendy.getInvoiceSup();
+            InputInvoiceSupCode = paymentWendy.getInvoiceSup();
             Detail = paymentWendy.getDetail();
             InputRemark = paymentWendy.getRemark();
             InputCash = String.valueOf(paymentWendy.getCash());
@@ -190,8 +189,8 @@ public class PaymentTourHotelController extends SMITravelController {
                 itemPayment = paymentWendy.getMAccpay().getId();
             }
                       
-            InvoiceSupplier invoiceSupplierData = paymentTourHotelService.getDataInvoiceSuppiler(InputInvoiceSupId);
-            InputInvoiceSupCode = invoiceSupplierData.getCode();
+            InvoiceSupplier invoiceSupplierData = paymentTourHotelService.getDataInvoiceSuppiler(InputInvoiceSupCode);
+            InputInvoiceSupId = invoiceSupplierData.getId();
             InputInvoiceSupName = invoiceSupplierData.getName();
             InputAPCode = invoiceSupplierData.getApcode();
             List<PaymentDetailWendy> paymentDetailWendyList = new ArrayList<PaymentDetailWendy>(paymentWendy.getPaymentDetailWendies());
@@ -231,7 +230,7 @@ public class PaymentTourHotelController extends SMITravelController {
             MItemstatus mitemStatus = new MItemstatus();
             mitemStatus.setId(itemStatus);
             paymentWendy.setMItemstatus(mitemStatus);
-            paymentWendy.setInvoiceSup(InputInvoiceSupId);
+            paymentWendy.setInvoiceSup(InputInvoiceSupCode);
             paymentWendy.setApCode(InputAPCode);
             paymentWendy.setDetail(Detail);
             paymentWendy.setRemark(InputRemark);
@@ -410,7 +409,8 @@ public class PaymentTourHotelController extends SMITravelController {
         String account = String.valueOf(paymentWendy.getAccount());
         String InputPayDate = String.valueOf(paymentWendy.getPayDate());                   
         String itemStatus = paymentWendy.getMItemstatus().getId();
-        String InputInvoiceSupId = paymentWendy.getInvoiceSup();
+        //String InputInvoiceSupId = paymentWendy.getInvoiceSup();
+        String InputInvoiceSupCode = paymentWendy.getInvoiceSup();
         String Detail = paymentWendy.getDetail();
         String InputRemark = paymentWendy.getRemark();
         String InputCash = String.valueOf(paymentWendy.getCash());
@@ -431,8 +431,8 @@ public class PaymentTourHotelController extends SMITravelController {
             itemPayment = paymentWendy.getMAccpay().getId();
         }
             
-        InvoiceSupplier invoiceSupplierData = paymentTourHotelService.getDataInvoiceSuppiler(InputInvoiceSupId);
-        String InputInvoiceSupCode = invoiceSupplierData.getCode();
+        InvoiceSupplier invoiceSupplierData = paymentTourHotelService.getDataInvoiceSuppiler(InputInvoiceSupCode);
+        String InputInvoiceSupId = invoiceSupplierData.getId();
         String InputInvoiceSupName = invoiceSupplierData.getName();
         String InputAPCode = invoiceSupplierData.getApcode();
         
