@@ -53,6 +53,10 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Duplicate !!</strong> 
         </div>
+        <div id="checklengthCode"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Max length More 50!!</strong> 
+        </div>
         <div class="row" style="padding-left: 15px">  
             <div class="col-sm-6" style="padding-right: 15px">
                 <h4><b>Stock</b></h4>
@@ -68,6 +72,7 @@
                     <div class="col-xs-12 ">
                         <input type="text" class="form-control hidden" id="InputStockId" name="InputStockId" value="${stockData.id}" />
                         <input type="text" class="form-control hidden" id="InputProductId" name="InputProductId" value="${stockData.product.id}" />
+                         <input name="InputStaffId" id="InputStaffId" type="hidden" class="form-control" value="${stockData.staff.id}" />
                         <div class="col-xs-2 text-right"  style="padding-right: 25px;width: 140px;">
                             <label class="control-label">Product<font style="color: red">*</font></lable>
                         </div>
@@ -84,10 +89,9 @@
                         </div>
                         <div class="col-xs-1 text-right"  style="width: 87px;" >
                             <label class="control-label">Staff</lable>
-                        </div>
+                        </div>                     
                         <div class="col-md-2 form-group text-left" style="width: 178px;" > 
-                            <input name="InputStaffId" id="InputStaffId" type="hidden" class="form-control" value="${stockData.staff.id}" />
-                            <div class="input-group" id="gr" >
+                            <div class="input-group" id="gr"  >
                                 <input type="text" class="form-control" id="InputStaff" name="InputStaff" value="${stockData.staff.username}" />
                                 <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#SearchStaff">
                                     <span class="glyphicon-search glyphicon"></span>
@@ -128,7 +132,7 @@
                             <label class="control-label">Description</lable>
                         </div>
                         <div class="col-md-5 form-group text-left" style="width: 370px;padding-left: 3px;" >
-                             <textarea class="form-control" rows="3" id="descriptionStock" name="descriptionStock">${stockData.description}</textarea>
+                            <textarea class="form-control" rows="3" id="descriptionStock" name="descriptionStock" maxlength="255">${stockData.description}</textarea>
                         </div>
                         <div class="col-xs-1 text-left" style="width: 90px;padding-left: 3px;padding-right: 0px;">
                             <label class="control-label">Add Date <font style="color: red">*</font></lable>
@@ -219,7 +223,7 @@
                                     <tr>
                                         <td class="hidden"><input type="text" class="hidden" id="stockDetailId${taxdesc.count}" name="stockDetailId${taxdesc.count}" value="${std.id}" /></td>
                                         <td>${taxdesc.count}</td>
-                                        <td><input type="text"  class="form-control" name="codeItemList${taxdesc.count}" id="codeItemList${taxdesc.count}" value="${std.code}"/></td>
+                                        <td><input type="text"  class="form-control" name="codeItemList${taxdesc.count}" id="codeItemList${taxdesc.count}" value="${std.code}" maxlength="50"/></td>
                                         <td>       
                                             <select id="SeleteTypeItemList${taxdesc.count}" name="SeleteTypeItemList${taxdesc.count}" class="form-control" >
                                                 <c:forEach var="type" items="${getType}">
