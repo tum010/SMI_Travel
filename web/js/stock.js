@@ -115,20 +115,40 @@ function validFrom(){
                     validating: 'uk-icon-refresh'
                 },
                 fields: {
-                    InputEffectiveFromDate: {
-                        trigger: 'focus keyup change',
+//                    InputEffectiveFromDate: {
+//                        trigger: 'focus keyup change',
+//                        validators: {
+//                            notEmpty: {
+//                                message: 'The Date From is required'
+//                            },
+//                            date: {
+//                                format: 'YYYY-MM-DD',
+//                                max: 'InputInputEffectiveToDate',
+//                                message: 'The Date From is not a valid'
+//                            }
+//                        }
+//                    },
+//                    InputInputEffectiveToDate: {
+//                        trigger: 'focus keyup change',
+//                        validators: {
+//                            notEmpty: {
+//                                message: 'The Date To is required'
+//                            },
+//                            date: {
+//                                format: 'YYYY-MM-DD',
+//                                min: 'InputEffectiveFromDate',
+//                                message: 'The Date To is not a valid'
+//                            }
+//                        }
+//                    },
+                    InputProduct : {
                         validators: {
                             notEmpty: {
-                                message: 'The Date From is required'
-                            },
-                            date: {
-                                format: 'YYYY-MM-DD',
-                                max: 'InputInputEffectiveToDate',
-                                message: 'The Date From is not a valid'
+                                message: 'The full name is required'
                             }
                         }
                     },
-                    InputInputEffectiveToDate: {
+                    InputStockDate : {
                         trigger: 'focus keyup change',
                         validators: {
                             notEmpty: {
@@ -136,15 +156,8 @@ function validFrom(){
                             },
                             date: {
                                 format: 'YYYY-MM-DD',
-                                min: 'InputEffectiveFromDate',
+                                min: 'InputStockDate',
                                 message: 'The Date To is not a valid'
-                            }
-                        }
-                    },
-                    InputProduct : {
-                        validators: {
-                            notEmpty: {
-                                message: 'The full name is required'
                             }
                         }
                     }
@@ -267,4 +280,9 @@ function resetNumberItemList(){
 //        countRow[i].cells[2].getElementsByTagName("input")[0].name = "codeItemList" + i;
 //        countRow[i].cells[2].getElementById("input")[0].value = "codeItemList" + i;
     }  
+}
+
+function selectType(count){
+    var type  = document.getElementById('SeleteTypeItemList1'+count.value);
+    alert("Val :" + type.value);
 }
