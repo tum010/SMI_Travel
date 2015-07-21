@@ -38,8 +38,8 @@ public class PaymentTourHotelService {
         return getInvoiceSuppilerDao().getDataInvoiceSuppiler(InputInvoiceSupCode);
     }
 
-    public List<PaymentWendytourView> getListPayment(String inputFromDate, String inputToDate, String selectPvType) {
-        return getPaymentWendytourDao().SearchPaymentFromFilter(inputFromDate, inputToDate, selectPvType);
+    public List<PaymentWendytourView> getListPayment(String inputFromDate, String inputToDate, String selectPvType, String InvoiceSupCode) {
+        return getPaymentWendytourDao().SearchPaymentFromFilter(inputFromDate, inputToDate, selectPvType, InvoiceSupCode);
     }
 
     /**
