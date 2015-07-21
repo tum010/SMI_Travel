@@ -131,7 +131,7 @@
                              <textarea class="form-control" rows="3" id="descriptionStock" name="descriptionStock">${stockData.description}</textarea>
                         </div>
                         <div class="col-xs-1 text-left" style="width: 90px;padding-left: 3px;padding-right: 0px;">
-                            <label class="control-label">Add Date</lable>
+                            <label class="control-label">Add Date <font style="color: red">*</font></lable>
                         </div>
                         <div class="col-md-3 form-group text-left" style="padding-left: 0px;width: 165px;">
                             <div class='input-group date' >
@@ -221,13 +221,14 @@
                                                 <td>${taxdesc.count}</td>
                                                 <td><input type="text"  class="form-control" name="codeItemList${taxdesc.count}" id="codeItemList${taxdesc.count}" value="${std.code}"/></td>
                                                 <td>       
-                                                    <select id="SeleteTypeItemList${taxdesc.count}" name="SeleteTypeItemList${taxdesc.count}" class="form-control">
+                                                    <select id="SeleteTypeItemList${taxdesc.count}" name="SeleteTypeItemList${taxdesc.count}" class="form-control" onchange="selectType(${taxdesc.count})">
                                                         <c:forEach var="type" items="${getType}">
                                                             <c:set var="select" value="" />
-                                                                <c:if test="${type.name == std.typeId.name}">
+                                                                <c:if test="${type.id == std.typeId.id}">
                                                                     <c:set var="select" value="selected" />
+                                                               
                                                                 </c:if>   
-                                                            <option value="${type.id}" ${select}><c:out value="${type.name}" /></option>
+                                                             <option value="${type.id}" ${select}><c:out value="${type.name}" /></option>
                                                         </c:forEach>
                                                     </select>                                             
                                                 </td>                                
@@ -475,10 +476,10 @@
         var cout = document.getElementById('counterTable');
         var type  = document.getElementById('Selecttype');
         <c:forEach var="type" items="${getType}">
-            select += "<option value='${type.id}'><c:out value='${type.name}' /></option>";
+            select += "<option value='${type.id}' ><c:out value='${type.name}' /></option>";
         </c:forEach>
 //        alert(select);
-        $('#SeleteTypeItemList'+cout.value).append(select);
+//        $('#SeleteTypeItemList'+cout.value).append(select);
     });
 </script>
 <script type="text/javascript" src="js/stock.js"></script>
