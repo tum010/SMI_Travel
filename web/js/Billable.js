@@ -195,8 +195,7 @@ function CallAjax(param) {
 }
 
 function setBillValue(billto, billname, address, term, pay) {
-
-    $("#billto").val(billto);
+    $("#billtoVal").val(billto);
     $("#billname").val(billname);
     if (address == 'null') {
         $("#address").val("");

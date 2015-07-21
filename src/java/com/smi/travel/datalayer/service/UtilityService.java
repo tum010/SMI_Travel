@@ -38,6 +38,8 @@ import com.smi.travel.datalayer.entity.MTicketType;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.Place;
 import com.smi.travel.datalayer.entity.SystemUser;
+import com.smi.travel.datalayer.view.dao.CustomerAgentInfoDao;
+import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
@@ -57,7 +59,7 @@ public class UtilityService {
     private DaytourDao daytourdao;
     private MCityDao citydao;
     private MBankDao mbankdao;
-    
+    private CustomerAgentInfoDao customeragentinfodao;
     public int[] getCountItemFromBooking(String refno) {
         int[] Booking_size = new int[7];
         try {
@@ -202,7 +204,11 @@ public class UtilityService {
     public List<MPaytype> getListMPayType() {
         return listitemdao.getListMPayType();
     }
-
+    
+    public List<CustomerAgentInfo> getListCustomerAgentInfo() {
+        return getCustomeragentinfodao().getListCustomerAgentInfo();
+    }
+    
     public MasterDao getMasterdao() {
         return masterdao;
     }
@@ -281,6 +287,14 @@ public class UtilityService {
 
     public void setMbankdao(MBankDao mbankdao) {
         this.mbankdao = mbankdao;
+    }
+
+    public CustomerAgentInfoDao getCustomeragentinfodao() {
+        return customeragentinfodao;
+    }
+
+    public void setCustomeragentinfodao(CustomerAgentInfoDao customeragentinfodao) {
+        this.customeragentinfodao = customeragentinfodao;
     }
     
     
