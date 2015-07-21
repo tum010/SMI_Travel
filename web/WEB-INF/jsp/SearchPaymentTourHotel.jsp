@@ -98,22 +98,9 @@
                             </span>    
                         </div>     
                 </div>
-                <div class="col-xs-1 text-left" style="width:370px;">
+                <div class="col-xs-1 text-left" style="width:475px;">
                         <input name="InputInvoiceSupName" id="InputInvoiceSupName" type="text" class="form-control" value="${requestScope['InputInvoiceSupName']}" />           
-                </div>
-                <div class="col-xs-1 text-right" style="width:110px;">
-                    <label class="control-label">A/P Code</lable>
-                </div>
-                <div class="col-md-2 form-group text-left" style="padding-left:9px;width:190px;">
-                    <div class="col-sm-12">
-                        <div class="input-group" id="CodeValidate">
-                            <input name="InputAPCode" id="InputAPCode" type="text" class="form-control" value="${requestScope['InputAPCode']}" />
-                            <span class="input-group-addon hidden" data-toggle="modal" data-target="#SearchAPCode">
-                                <span class="glyphicon-search glyphicon"></span>
-                            </span>    
-                        </div>    
-                    </div>  
-                </div>
+                </div>               
             </div>            
         </form><!--End Search -->
                 
