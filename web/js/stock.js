@@ -24,54 +24,22 @@ $(document).ready(function () {
     
     var count  = document.getElementById('counter');
     AddRow(count.value);
-        var staffCode = [];
-        $.each(staff, function (key, value) {
-            staffCode.push(value.username);
-            staffCode.push(value.name);
-        });
-
-        $("#InputStaff").autocomplete({
-            source: staffCode,
-            close:function( event, ui ) {
-            $("#InputStaff").trigger('keyup');               
-           }
-        });
-          
-        $("#InputStaff").on('keyup',function(){
-            var position = $(this).offset();
-            $(".ui-widget").css("top", position.top + 30);
-            $(".ui-widget").css("left", position.left);
-            var code = this.value.toUpperCase();
-            var name = this.value.toUpperCase();
-            console.log("Name :"+ name);
-            $("#InputStaffId,#InputStaff,#InputStaffName").val(null);
-            $.each(staff, function (key, value) {
-                
-                if (value.code.toUpperCase() === code ) { 
-                    $("#InputStaffId").val(value.id);
-                    $("#InputStaff").val(value.username);
-                    $("#InputStaffName").val(value.name);
-                }
-                else if(value.name.toUpperCase() === name){
-                    $("#InputStaffId").val(value.id);
-                    $("#InputStaff").val(value.username);
-                    $("#InputStaffName").val(value.name);
-                }
-            });           
-        });       
-        
-        $("#StaffTable tr").on('click', function () {
+    
+        var staffCode = [];       
+        $("#StaffTable tr").on('click', function () {//winit
             $("#SearchStaff").modal('hide');
-            var staff_id = $(this).find(".staff-id").text();
-            var staff_code = $(this).find(".staff-code").text();
-            var staff_name = $(this).find(".staff-name").text();
+            validFrom();
+            var staff_id = $(this).find(".staff-id").html();
+            var staff_code = $(this).find(".staff-code").html();
+            var staff_name = $(this).find(".staff-name").html();
             $("#InputStaffId").val(staff_id);
             $("#InputStaff").val(staff_code);
             $("#InputStaffName").val(staff_name);
+
         });
-                
-//      StaffTable
-        $('#StaffTable').dataTable({bJQueryUI: true,
+
+        // tourTable
+        var staffTable = $('#StaffTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
             "bFilter": true,
@@ -82,9 +50,56 @@ $(document).ready(function () {
         });
 
         $('#StaffTable tbody').on('click', 'tr', function () {
-            $(this).addClass('row_selected').siblings().removeClass('row_selected');
+            if ($(this).hasClass('row_selected')) {
+                $(this).removeClass('row_selected');
+                validFrom();
+            }
+            else {
+                staffTable.$('tr.row_selected').removeClass('row_selected');
+                $(this).addClass('row_selected');
+                validFrom();
+            }
         });
-   
+        // ON KEY INPUT AUTO SELECT PRODUCTCODE
+        $(function () {
+            var availableTags = [];
+            $.each(staff, function (key, value) {
+                availableTags.push(value.code);
+                if (!(value.name in availableTags)) {
+                    availableTags.push(value.name);
+                }
+            });
+
+            $("#InputStaff").autocomplete({
+                source: availableTags,
+                close: function (event, ui) {
+                    $("#InputStaff").trigger('keyup');
+                }
+            });
+
+            $("#InputStaff").keyup(function () {
+                var position = $(this).offset();
+                $(".ui-widget").css("top", position.top + 30);
+                $(".ui-widget").css("left", position.left);
+                var name = this.value;
+                var code = this.value.toUpperCase();
+                $("#InputStaffName").val(null);
+                $.each(staff, function (key, value) {
+                    if (name === value.name.toUpperCase()) {
+                        $("#InputStaffId").val(value.id);
+                        $("#InputStaff").val(value.code);
+                        $("#InputStaffName").val(value.name);
+//                        code = $("#InputStaff").val().toUpperCase();
+                    }
+                    if (value.code.toUpperCase() === code) {
+                        $("#InputStaffId").val(value.id);
+                        $("#InputStaff").val(value.code);
+                        $("#InputStaffName").val(value.name);
+                    }
+                }); //end each productCode
+            }); // end InputproductCode keyup
+        }); // end AutoComplete productCode
+     
     $("#StockTable").on("keyup", function () {
         var rowAll = $("#StockTable tr").length;
         $("td").keyup(function () {
@@ -204,7 +219,7 @@ function searchAction() {
     action.value = 'save';
     document.getElementById('StockForm').submit();
 }
-
+var isCheckLength = 0;
 function addItemList(){
     var prefix  = document.getElementById('InputPrefix');
     var start  = document.getElementById('InputStart');
@@ -212,32 +227,53 @@ function addItemList(){
     var type  = document.getElementById('Selecttype');
     var count = document.getElementById('counterTable');
     var countAdd = document.getElementById('counterAdd');
-    var st = start.value;
-    if(countAdd.value === 1){
-        document.getElementById("StockTable").deleteRow(1);
+    //check length code 
+    checklength(prefix.value,start.value);
+//    alert("Is Check : " + isCheckLength);
+    if(isCheckLength === 0){      
+        var st = start.value;
+        if(countAdd.value === 1){
+            document.getElementById("StockTable").deleteRow(1);
+        }else{
+            $("#StockTable tr:last").remove();
+        }
+        var res = select.replace("value='"+ type.value+"'", "selected value='"+ type.value+"'");
+        for (var i = 1 ; i <= number.value; i++){
+            $("#StockTable tbody").append(
+                '<tr>' +
+                '<td class="hidden"><input type="hidden"  id="stockDetailId' + count.value + '" name="stockDetailId' + count.value + '" value="" /></td>' +
+                '<td>'+ count.value +'</td>' +
+                '<td><input type="text"  class="form-control" name="codeItemList' + count.value + '" id="codeItemList' + count.value + '" value="'+prefix.value+'-'+start.value+'"/></td>' +
+                '<td><select id="SeleteTypeItemList' + count.value + '" name="SeleteTypeItemList' + count.value + '" class="form-control">' + res + '</select></td>' +
+                '<td>0</td>' +
+                '<td>NEW</td>' +
+                '<td class="text-center"><a href="#"  class="remCF" id="ButtonRemove' + count.value + '" onclick="deleteItemListRow('+count.value+",'"+ prefix.value+"-"+start.value+"'"+')" data-toggle="modal" data-target="#delStockModal"><span id="Spanremove' + count.value + '" class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
+                '</tr>'
+                );
+                start.value++;
+                count.value++;          
+        }
+        start.value = st;
+        countAdd.value++;
+        AddRow(count.value);
+        resetNumberItemList();
+    }
+}
+
+function checklength(prefix,start){
+    var code = "";
+    var  len = 0;
+    code = prefix + "-" + start;
+    len = code.length;
+//    alert("Length : "+len);
+    if(len > 50){
+//        $('#checklengthCode').show();
+        alert("Max length More 50");
+        isCheckLength = 1;
     }else{
-        $("#StockTable tr:last").remove();
+//        $('#checklengthCode').hide();
+        isCheckLength = 0;
     }
-    var res = select.replace("value='"+ type.value+"'", "selected value='"+ type.value+"'");
-    for (var i = 1 ; i <= number.value; i++){
-        $("#StockTable tbody").append(
-            '<tr>' +
-            '<td class="hidden"><input type="hidden"  id="stockDetailId' + count.value + '" name="stockDetailId' + count.value + '" value="" /></td>' +
-            '<td>'+ count.value +'</td>' +
-            '<td><input type="text"  class="form-control" name="codeItemList' + count.value + '" id="codeItemList' + count.value + '" value="'+prefix.value+'-'+start.value+'"/></td>' +
-            '<td><select id="SeleteTypeItemList' + count.value + '" name="SeleteTypeItemList' + count.value + '" class="form-control">' + res + '</select></td>' +
-            '<td>0</td>' +
-            '<td>NEW</td>' +
-            '<td class="text-center"><a href="#"  class="remCF" id="ButtonRemove' + count.value + '" onclick="deleteItemListRow('+count.value+",'"+ prefix.value+"-"+start.value+"'"+')" data-toggle="modal" data-target="#delStockModal"><span id="Spanremove' + count.value + '" class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
-            '</tr>'
-            );
-            start.value++;
-            count.value++;          
-    }
-    start.value = st;
-    countAdd.value++;
-    AddRow(count.value);
-    resetNumberItemList();
 }
 
 function deleteItemListRow(rowId,code){
