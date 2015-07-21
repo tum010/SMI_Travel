@@ -97,6 +97,7 @@
                                                 "<li><a href='PaymentOutbound.smi'> Outbound </a></li>"];
                                             var FinanceMenu = [
                                                 "<li><a href='SearchInvoice.smi'> Invoice</a></li>",
+                                                "<li><a href='SearchCreditNote.smi'> Credit Note</a></li>",
                                                 "<li><a href='SearchReceipt.smi'> Receipt</a></li>",
                                                 "<li><a href='SearchTaxInvoice.smi'> Tax Invoice</a></li>",
                                                 "<li><a href='ReceiveTable.smi'> Receive Table</a></li>",
