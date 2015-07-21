@@ -349,10 +349,10 @@
         <div class="row text-center" >
             <div class="col-xs-6 text-right">
                                   
-                    <button type="button" id="btnSave" name="btnSave" class="btn btn-success" onclick="saveORupdateData()">
-                        <i class="fa fa-save"></i> Save             
-                    </button>
-                    <input type="hidden" name="action" id="action" value="" class="form-control" >    
+                <button type="submit" id="btnSave" name="btnSave" class="btn btn-success" onclick="" value="add">
+                    <i class="fa fa-save"></i> Save             
+                </button>
+                <input type="hidden" name="action" id="action" value="add" class="form-control" >    
                 
                
             </div>
@@ -680,6 +680,7 @@
         document.getElementById('InputAPCode').value = apcode;
         document.getElementById('InputInvoiceSupCode').focus();
         $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputInvoiceSupCode');
+        $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputAPCode');
     }
     
     AddRow(parseInt($("#counter").val()));
