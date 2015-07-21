@@ -83,8 +83,11 @@ public class PaymentTourHotelController extends SMITravelController {
         String InputChqAmount = request.getParameter("InputChqAmount");
         String counter = request.getParameter("counter");
         String crateDate = request.getParameter("crateDate");
-        String paymentId = "";
-
+        String paymentId = request.getParameter("paymentId");
+        
+        if(paymentId != "" && paymentId != null){
+            action = "update";
+        }
         
         if ("add".equalsIgnoreCase(action)) {
             UtilityFunction utilfunction = new UtilityFunction();
@@ -218,7 +221,6 @@ public class PaymentTourHotelController extends SMITravelController {
             request.setAttribute("btnSave", "update");
         
         }else if("update".equalsIgnoreCase(action)) {
-            paymentId = request.getParameter("paymentId");
             InputPayNo = request.getParameter("InputPayNo");
             crateDate = request.getParameter("crateDate");
             UtilityFunction utilfunction = new UtilityFunction();
