@@ -320,6 +320,16 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
         return List;
     }
 
+    @Override
+    public String getAccountCode(String PayType) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getPaymentRefernenceCode(String from, String to, List<String> tour) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     
 
     

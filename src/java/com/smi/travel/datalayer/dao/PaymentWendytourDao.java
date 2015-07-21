@@ -26,5 +26,7 @@ public interface PaymentWendytourDao {
     public List<PaymentWendytourView> SearchPaymentFromFilter(String DateFrom ,String Dateto,String PVType ,String InvoiceSupCode);
     public Master getMasterFromRefno(String refno);
     public List<PaymentDetailWendy> getPaymentDetailWendyList(String paymentId);
+    public String getAccountCode(String PayType);
+    public String getPaymentRefernenceCode(String from,String to,List<String> tour);
     
 }
