@@ -20,6 +20,7 @@ public class StockView {
     private String PayStatusName;
     private String ItemStatus;
     private String TypeId;
+    private String TypeName;
 
     public String getCode() {
         return code;
@@ -75,6 +76,14 @@ public class StockView {
 
     public void setTypeId(String TypeId) {
         this.TypeId = TypeId;
+    }
+
+    public String getTypeName() {
+        return TypeName;
+    }
+
+    public void setTypeName(String TypeName) {
+        this.TypeName = TypeName;
     }
     
     
