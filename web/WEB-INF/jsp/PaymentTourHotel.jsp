@@ -48,6 +48,12 @@
            <strong>Save Unsuccess!</strong> 
         </div>
         </c:if>
+        <c:if test="${requestScope['resultText'] =='not found'}">
+        <div id="textAlertDivFindNotFound"  style="" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+           <strong>Pay no not found.</strong> 
+        </div>
+        </c:if>
         <div class="row" style="padding-left: 15px">  
             <div class="col-sm-6" style="padding-right: 15px">
                 <h4><b>Payment Tour / Hotel</b></h4>
