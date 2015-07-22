@@ -523,7 +523,7 @@
         <bean id="SearchCreditNoteController" class="com.smi.travel.controller.SearchCreditNoteController">
         </bean>
         
-    <bean id="MAccountCodeController" class="com.smi.travel.controller.MAccountCodeController">
+    <bean id="MAccountCodeController" class="com.smi.travel.masterdata.controller.MAccountCodeController">
       
     </bean>
 	<!-- add bean id controller -->
