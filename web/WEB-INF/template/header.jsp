@@ -77,6 +77,7 @@
                                                 "<li><a id='menu-mbank' href='MBank.smi'>Bank</a></li>",
                                                 "<li><a id='menu-stock' href='SearchStock.smi'>Stock</a></li>",
                                                 "<li><a id='menu-DefineVar' href='DefineVar.smi'>Define Variable</a></li>",
+                                                "<li><a id='menu-maccount' href='MAccountCode.smi'>Account</a></li>",
                                                 "<li><a id='menu-mpackage' href='MPackage.smi'>Package</a></li>"];
                                             
                                             var bookingMenu = [
