@@ -84,5 +84,7 @@ public class PaymentTourHotelService {
         return this.paymentWendytourDao.UpdatePaymentWendy(payment);
     }
 
-   
+    public String getAccountCode(String PayType) {
+        return this.paymentWendytourDao.getAccountCode(PayType);
+    }
 }
