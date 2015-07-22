@@ -21,11 +21,11 @@ http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
          
          <prop key= "hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</prop>      
          <prop key="hibernate.c3p0.acquire_increment">5</prop>
-         <prop key="hibernate.c3p0.idle_test_period">1800</prop>
-         <prop key="hibernate.c3p0.max_size">2000</prop>
+         <prop key="hibernate.c3p0.idle_test_period">60</prop>
+         <prop key="hibernate.c3p0.max_size">50</prop>
          <prop key="hibernate.c3p0.max_statements">50</prop>
          <prop key="hibernate.c3p0.min_size">5</prop>
-         <prop key="hibernate.c3p0.timeout">3600</prop>
+         <prop key="hibernate.c3p0.timeout">200</prop>
        </props>
      </property>
      
