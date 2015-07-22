@@ -322,7 +322,17 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
 
     @Override
     public String getAccountCode(String PayType) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String acc_code = "";
+        switch(PayType){
+            case("1"): acc_code = "51010"; break;
+            case("2"): acc_code = "51040"; break;
+            case("3"): acc_code = "51020"; break;
+            case("4"): acc_code = "51023"; break;
+            case("5"): acc_code = "51030"; break;
+            case("6"): acc_code = "51035"; break;
+        }
+        
+        return acc_code;
     }
 
     @Override
