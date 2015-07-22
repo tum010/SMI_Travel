@@ -18,6 +18,5 @@ public interface RefundAirticketDao {
     public String DeleteRefundAirticket(RefundAirticket refund);
     public String DeleteRefundAirticketDetail(String refundDetailID); 
     public RefundAirticket getRefundAirTicketFromRefundNo(String RefundNo);
-
     
 }

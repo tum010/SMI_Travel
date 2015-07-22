@@ -17,6 +17,7 @@ import com.smi.travel.datalayer.entity.RefundAirticketDetail;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -417,6 +418,54 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         this.sessionFactory.close();
         return result;   
     }
+
+    @Override
+    public HashMap<String, Object> getDetailTicketFareAirline(String TicketNo) {
+        HashMap<String, Object> result = new HashMap<String, Object>();
+        AirticketPassenger ticketFare = new AirticketPassenger();
+        String query = "from AirticketPassenger t where t.series1||t.series2||t.series3 = :ticketNo";
+        Session session = this.sessionFactory.openSession();
+        List<AirticketPassenger> ticketFareList = session.createQuery(query).setParameter("ticketNo", TicketNo).list();
+        if (ticketFareList.isEmpty()) {
+            return null;
+        }else{
+            ticketFare =  ticketFareList.get(0);
+        }
+        String Initialname ="";
+        if(ticketFare.getMInitialname() != null ){
+            Initialname = ticketFare.getMInitialname().getName();
+        }
+        //AirticketPassenger.airticketAirline.airticketPnr.airticketBooking.master.bookingType
+        String BookingType = ticketFare.getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType();
+        List<AirticketFlight> FlightList =   new ArrayList<AirticketFlight>(ticketFare.getAirticketAirline().getAirticketFlights());
+        String rounting = "";
+        for(int i =0;i<FlightList.size();i++){
+            System.out.println(FlightList.get(i).getSourceCode()+"-"+FlightList.get(i).getDesCode());
+            String source = FlightList.get(i).getSourceCode();
+            String des = FlightList.get(i).getDesCode();
+            if(i == 0){
+                rounting += source + "-" + des;
+            }else{
+                if (!rounting.substring(rounting.lastIndexOf("-") + 1).equalsIgnoreCase(source)) {
+                    rounting += "," + source + "-" + des;
+                } else {
+                    rounting += "-" + des;
+                }
+            }
+            
+        }
+        result.put("TicketNo",TicketNo); 
+        result.put("TicketDate", ticketFare.getAirticketAirline().getTicketDate());
+        result.put("Dept", BookingType.equalsIgnoreCase("O")? "O":"W");
+        result.put("Passenger", Initialname+" " + ticketFare.getLastName() +" "+ticketFare.getFirstName());
+        result.put("Total", ticketFare.getTicketFare()+ticketFare.getTicketTax());
+        result.put("Sector", rounting);
+        session.close();
+        this.sessionFactory.close();
+        return result;
+    }
+    
+   
 
    
     

@@ -226,11 +226,16 @@ public class StockImpl implements StockDao{
             StockDetail detail = Listdetail.get(i);
             stock.setCode(detail.getCode());
             if(detail.getOtherBooking() != null){
-                stock.setRefNo(detail.getOtherBooking().getMaster().getReferenceNo());
-                stock.setPickup(detail.getOtherBooking().getMaster().getCreateBy());
+                stock.setRefNo(detail.getOtherBooking().getMaster().getReferenceNo()); 
             }
+            if(detail.getStaff() != null){
+                stock.setPickup(detail.getStaff().getUsername());
+            }
+            
             if(detail.getTypeId() != null){
-                stock.setTypeId(detail.getTypeId().getName());
+                System.out.println("type : "+detail.getTypeId().getId());
+                stock.setTypeId(detail.getTypeId().getId());
+              //  stock.setTypeName(GET_STOCK);
             }
             stock.setItemStatus(detail.getMStockStatus().getName());          
             stock.setPickupDate(util.convertDateToString(detail.getPickupDate()));
@@ -259,6 +264,10 @@ public class StockImpl implements StockDao{
         if (stockDetailList.isEmpty()) {
             return null;
         }
+        for(int i=0;i<stockDetailList.size();i++){
+           System.out.println("stockDetailList : "+stockDetailList.get(i).getTypeId().getName());
+        }
+        
        
         return stockDetailList;
     }
