@@ -199,6 +199,7 @@
         <property name="citydao" ref="MCityDao" />
         <property name="mbankdao" ref="MBankDao" />
         <property name="customeragentinfodao" ref="CustomerAgentInfoDao" />
+        <property name="invoicesuppilerdao" ref="InvoiceSuppilerDao" />
     </bean> 
     
     <bean id="MProductTypeService" class="com.smi.travel.datalayer.service.MProductTypeService">

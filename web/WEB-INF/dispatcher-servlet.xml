@@ -460,7 +460,7 @@
 
 	</bean>
 	<bean id="PaymentAirlineController" class="com.smi.travel.controller.PaymentAirlineController">
-
+            <property name="utilityService" ref="UtilityService" />
 	</bean>
 	<bean id="PaymentOutboundController" class="com.smi.travel.controller.PaymentOutboundController">
 

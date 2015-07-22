@@ -3,7 +3,11 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<c:set var="airlineList" value="${requestScope['airlineList']}" />
+<c:set var="payByList" value="${requestScope['payByList']}" />
+<c:set var="invoiceSupList" value="${requestScope['invoiceSupList']}" />
+<c:set var="paymentAirline" value="${requestScope['paymentAirline']}" />
+<c:set var="SelectedInvoiceSup" value="${requestScope['SelectedInvoiceSup']}" />
 <section class="content-header" >
     <h1>
         Checking - Air Ticket
@@ -75,36 +79,32 @@
                         
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right"  style="width: 128px">
-                                <label class="control-label text-right">Invoice Sup </label>
+                                <label class="control-label text-right">Invoice Sup<font style="color: red">*</font></label>
                             </div>
                             <div class="col-xs-1"  style="width: 155px">
-                                <div class="input-group" id="agentCodeValidate">
-                                    <input type="hidden" class="form-control" id="agentId" name="agentId" value="" />
-                                    <input type="text" class="form-control" id="agentCode" name="agentCode" value="" />
-                                    <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#AgentModal">
+                                <div class="input-group">
+                                    <input type="hidden" class="form-control" id="invoiceSupId" name="invoiceSupId" value="${SelectedInvoiceSup.id}"/>
+                                    <input type="text" class="form-control" id="invoiceSupCode" name="invoiceSupCode" value="${SelectedInvoiceSup.code}" style="text-transform:uppercase"/>
+                                    <span class="input-group-addon" id="invoiceSup_modal"  data-toggle="modal" data-target="#InvoiceSupModal">
                                         <span class="glyphicon-search glyphicon"></span>
                                     </span>
                                 </div>
                             </div>
                             <div class="col-xs-1 text-left" style="width: 160px">
-                                <input type="text" class="form-control" id="agentName" name="agentName" value="${SelectedAgent.name}" readonly=""
+                                <input type="text" class="form-control" id="invoiceSupName" name="invoiceSupName" value="${SelectedInvoiceSup.name}" readonly=""
                                                data-bv-notempty="true" data-bv-notempty-message="agent empty !">                           
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 115px">
-                                <label class="control-label text-right">A/P Code </label>
+                                <label class="control-label text-right">A/P Code<font style="color: red">*</font></label>
                             </div>
                             <div class="col-xs-1"  style="width: 170px">
-                                <div class="input-group" id="apCodeValidate">
-                                    <input type="text" class="form-control" id="apCode" name="apCode" value="${SelectedAp.code}" />
-                                    <span class="input-group-addon" id="ap_modal"  data-toggle="modal" data-target="#ApModal">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="apCode" name="apCode" value="${SelectedInvoiceSup.apcode}" />
+<!--                                    <span class="input-group-addon" id="ap_modal"  data-toggle="modal" data-target="#ApModal">
                                         <span class="glyphicon-search glyphicon"></span>
-                                    </span>
+                                    </span>-->
                                 </div>
                             </div>
-<!--                            <div class="col-xs-1 text-left" style="width: 160px">
-                                <input type="text" class="form-control" id="apName" name="apName" value="${SelectedAp.name}" readonly=""
-                                               data-bv-notempty="true" data-bv-notempty-message="agent empty !">                               
-                            </div>   -->
                         </div>
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -119,8 +119,16 @@
                                 <label class="control-label text-right">Pay By </label>
                             </div>
                             <div class="col-xs-1" style="width: 170px">
-                                <select id="inputPayBy" name="inputPayBy" class="form-control selectize">
-                                    <option value="">---Pay By---</option>
+                                <select name="payBy" id="payBy" class="form-control">
+                                    <option value="">--- Pay By ---</option> 
+                                    <c:forEach var="table" items="${payByList}" >
+                                        <c:set var="select" value="" />
+                                        <c:set var="selectedId" value="${paymentAirline.MAccpay.id}" />
+                                        <c:if test="${table.id == selectedId}">
+                                            <c:set var="select" value="selected" />
+                                        </c:if>
+                                        <option value="${table.id}" ${select}>${table.code}</option>  
+                                    </c:forEach>
                                 </select>
                             </div>
                         </div>
@@ -137,18 +145,36 @@
                                 <label class="control-label text-right">Ticket Form </label>
                             </div>
                             <div class="col-xs-1" style="width: 300px">
-                                <select id="inputTicketForm" name="inputTicketForm" class="form-control selectize">
-                                    <option value="">---Ticket Form---</option>
-
+                                <select name="ticketForm" id="ticketForm" class="form-control">
+                                    <option value="">--- Ticket Form ---</option> 
+                                     <c:choose>
+                                        <c:when test="${requestScope['TicketForm'] == 'C'}">
+                                            <c:set var="selectedC" value="selected" />
+                                        </c:when>
+                                    </c:choose>
+                                    <option value="C" ${selectedC}>IN</option>
+                                    <c:choose>
+                                        <c:when test="${requestScope['TicketForm'] == 'O'}">
+                                            <c:set var="selectedO" value="selected" />
+                                        </c:when>
+                                    </c:choose>
+                                    <option value="O" ${selectedO}>OUT</option>
                                 </select>
                             </div>
                             <div class="col-xs-1 text-right" style="width: 122px">
                                 <label class="control-label text-right">Type Airline </label>
                             </div>
                             <div class="col-xs-1" style="width: 300px">
-                                <select id="inputTypeAirline" name="inputTypeAirline" class="form-control selectize">
-                                    <option value="">---Ticket Form---</option>
-
+                                <select name="typeAirline" id="typeAirline" class="form-control">
+                                    <option value="">--- Airline ---</option> 
+                                    <c:forEach var="table" items="${airlineList}" >
+                                        <c:set var="select" value="" />
+                                        <c:set var="selectedId" value="${ticketFare.MAirlineAgent.id}" />
+                                        <c:if test="${table.id == selectedId}">
+                                            <c:set var="select" value="selected" />
+                                        </c:if>
+                                        <option value="${table.id}" ${select}>${table.code}</option>  
+                                    </c:forEach>
                                 </select>
                             </div>
                         </div>
@@ -338,7 +364,6 @@
                   
                             <button type="submit" id="ButtonSaveAndNew" name="ButtonSaveAndNew" class="btn btn-success"><i class="fa fa-save"></i> Save & New</button>
           
-                            <button type="submit" id="ButtonPrint" name="ButtonPrint" class="btn btn-default"><i class="fa fa-print"></i> Print </button>
                         </div>
                     </div>
                 </div>           
@@ -347,7 +372,7 @@
     </div>
                                                
 <!--Modal  Agent-->
-<div class="modal fade" id="AgentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="InvoiceSupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -355,41 +380,38 @@
                 <h4 class="modal-title"  id="Titlemodel">Invoice Sup</h4>
             </div>
             <div class="modal-body">
-                <table class="display" id="AgentTable">
+                 <table class="display" id="InvoiceSupTable">
                     <thead class="datatable-header">                     
                         <tr>
                             <th class="hidden">ID</th>
                             <th>Code</th>
                             <th>Name</th>
-                            <th class="hidden">Address</th>
-                            <th class="hidden">Tel</th>
-                            <th class="hidden">Fax</th>
+                            <th class="hidden">AP Code</th>
                         </tr>
                     </thead>
                     <tbody>
-                    <script>
-                        agent = [];
-                    </script>
-                    <c:forEach var="a" items="${agent}">
-                        <tr>
-                            <td class="agent-id hidden">${a.id}</td>
-                            <td class="agent-user">${a.code}</td>
-                            <td class="agent-name">${a.name}</td>
-                            <td class="agent-addr hidden">${a.address}</td>
-                            <td class="agent-tel hidden">${a.tel}</td>
-                            <td class="agent-fax hidden">${a.fax}</td>
-                        </tr>
                         <script>
-                            agent.push({id: "${a.id}", code: "${a.code}", name: "${a.name}", 
-                                        address: "${a.address}", tel: "${a.tel}", fax: "${a.fax}"});
+                            invoiceSup = [];
                         </script>
-                    </c:forEach>
+                        <c:forEach var="table" items="${invoiceSupList}">
+                            <tr>
+                                <td class="invoice-id hidden">${table.id}</td>
+                                <td class="invoice-code">${table.code}</td>
+                                <td class="invoice-name">${table.name}</td>
+                                <td class="invoice-apcode hidden">${table.apcode}</td>
+                            </tr>
+                            <script>
+                                invoiceSup.push({id: "${table.id}", code: "${table.code}", name: "${table.name}", apcode: "${table.apcode}"});
+                            </script>
+                        </c:forEach>
+                        
+
                     </tbody>
                 </table>
             </div>
             <div class="modal-footer">
                 <div class="text-right">
-                    <button id="AgentModalClose" type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                    <button id="InvoiceSupClose" type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->
@@ -416,23 +438,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <script>
-                        agent = [];
-                    </script>
-                    <c:forEach var="a" items="${agent}">
-                        <tr>
-                            <td class="agent-id hidden">${a.id}</td>
-                            <td class="agent-user">${a.code}</td>
-                            <td class="agent-name">${a.name}</td>
-                            <td class="agent-addr hidden">${a.address}</td>
-                            <td class="agent-tel hidden">${a.tel}</td>
-                            <td class="agent-fax hidden">${a.fax}</td>
-                        </tr>
-                        <script>
-                            agent.push({id: "${a.id}", code: "${a.code}", name: "${a.name}", 
-                                        address: "${a.address}", tel: "${a.tel}", fax: "${a.fax}"});
-                        </script>
-                    </c:forEach>
+                    
                     </tbody>
                 </table>
             </div>
@@ -459,7 +465,7 @@
             "iDisplayLength": 10
         });
         
-        var AgentTable = $('#AgentTable').dataTable({bJQueryUI: true,
+        $('#InvoiceSupTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
             "bFilter": true,
@@ -468,7 +474,90 @@
             "bLengthChange": false,
             "iDisplayLength": 10
         });
+
+        $('#InvoiceSupTable tbody').on('click', 'tr', function () {
+            $(this).addClass('row_selected').siblings().removeClass('row_selected');
+        });
         
+        $("#InvoiceSupTable tr").on('click', function () {
+            var invoice_id = $(this).find(".invoice-id").text();
+            var invoice_code = $(this).find(".invoice-code").text();
+            var invoice_name = $(this).find(".invoice-name").text();
+            var invoice_apcode = $(this).find(".invoice-apcode").text();
+            $("#invoiceSupId").val(invoice_id);
+            $("#invoiceSupCode").val(invoice_code);
+            $("#invoiceSupName").val(invoice_name);
+            $("#apCode").val(invoice_apcode);
+            $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'invoiceSupCode');
+            $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'apCode');
+            $("#InvoiceSupModal").modal('hide');
+        });
+        
+        
+        var invoiceSupCode = [];
+        $.each(invoiceSup, function (key, value) {
+            console.log("invoiceCount=="+invoiceSup.length);
+            invoiceSupCode.push(value.code);
+            invoiceSupCode.push(value.name);
+        });
+
+        $("#invoiceSupCode").autocomplete({
+            source: invoiceSupCode,
+            close:function( event, ui ) {
+               $("#invoiceSupCode").trigger('keyup');
+            }
+        });
+        
+        $("#invoiceSupCode").on('keyup',function(){
+            var position = $(this).offset();
+            $(".ui-widget").css("top", position.top + 30);
+            $(".ui-widget").css("left", position.left);
+            var code = this.value.toUpperCase();
+            var name = this.value.toUpperCase();
+            $("#invoiceSupId,#invoiceSupName,#apCode").val(null);
+            $.each(invoiceSup, function (key, value) {
+                
+                if (value.code.toUpperCase() === code ) {  
+                    $("#invoiceSupId").val(value.id);
+                    $("#invoiceSupName").val(value.name);
+                    $("#apCode").val(value.apcode);
+                }
+                else if(value.name.toUpperCase() === name){
+                    $("#invoiceSupCode").val(value.code);
+                    $("#invoiceSupId").val(value.id);
+                    $("#invoiceSupName").val(value.name);
+                    $("#apCode").val(value.apcode);
+                }
+            }); 
+            
+        });
+        
+        $('#PaymentAirlineForm').bootstrapValidator({
+            container: 'tooltip',
+            excluded: [':disabled', ':hidden', ':not(:visible)'],
+            feedbackIcons: {
+                valid: 'uk-icon-check',
+                invalid: 'uk-icon-times',
+                validating: 'uk-icon-refresh'
+            },
+            fields: {
+                invoiceSupCode: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Invoice Sup is required'
+                        }
+                    }
+                },
+                apCode: {
+                    validators: {
+                        notEmpty: {
+                            message: 'A/P Code is required'
+                        }
+                    }
+                }      
+            }
+        });
+
     });
 
 </script>

@@ -39,7 +39,9 @@ import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.Place;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.view.dao.CustomerAgentInfoDao;
+import com.smi.travel.datalayer.view.dao.InvoiceSuppilerDao;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
+import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
@@ -60,6 +62,8 @@ public class UtilityService {
     private MCityDao citydao;
     private MBankDao mbankdao;
     private CustomerAgentInfoDao customeragentinfodao;
+    private InvoiceSuppilerDao invoicesuppilerdao;
+    
     public int[] getCountItemFromBooking(String refno) {
         int[] Booking_size = new int[7];
         try {
@@ -206,9 +210,12 @@ public class UtilityService {
     }
     
     public List<CustomerAgentInfo> getListCustomerAgentInfo() {
-        return getCustomeragentinfodao().getListCustomerAgentInfo();
+        return customeragentinfodao.getListCustomerAgentInfo();
     }
     
+    public List<InvoiceSupplier> getListInvoiceSuppiler() {
+        return invoicesuppilerdao.getListInvoiceSupplier();
+    }
     public MasterDao getMasterdao() {
         return masterdao;
     }
@@ -295,6 +302,14 @@ public class UtilityService {
 
     public void setCustomeragentinfodao(CustomerAgentInfoDao customeragentinfodao) {
         this.customeragentinfodao = customeragentinfodao;
+    }
+
+    public InvoiceSuppilerDao getInvoicesuppilerdao() {
+        return invoicesuppilerdao;
+    }
+
+    public void setInvoicesuppilerdao(InvoiceSuppilerDao invoicesuppilerdao) {
+        this.invoicesuppilerdao = invoicesuppilerdao;
     }
     
     
