@@ -30,13 +30,14 @@ public class PaymentWendy   {
      private String createBy;
      private Date createDate;
      private Integer isExport;
+     private String currency;
      private List paymentDetailWendies = new LinkedList<PaymentDetailWendy>();
 
     public PaymentWendy() {
     }
 
 
-    public PaymentWendy( MPaymentDoctype MPaymentDoctype, MAccpay MAccpay, MItemstatus MItemstatus, String payNo, Date payDate, Integer account, String invoiceSup, String apCode, String detail, String remark, String chqNo, BigDecimal cash, BigDecimal chqAmount, String createBy, Date createDate, List paymentDetailWendies,Integer isExport) {
+    public PaymentWendy( MPaymentDoctype MPaymentDoctype, MAccpay MAccpay, MItemstatus MItemstatus, String payNo, Date payDate, Integer account, String invoiceSup, String apCode, String detail, String remark, String chqNo, BigDecimal cash, BigDecimal chqAmount, String createBy, Date createDate, List paymentDetailWendies,Integer isExport,String currency) {
        this.MPaymentDoctype = MPaymentDoctype;
        this.MAccpay = MAccpay;
        this.MItemstatus = MItemstatus;
@@ -54,6 +55,7 @@ public class PaymentWendy   {
        this.createDate = createDate;
        this.paymentDetailWendies = paymentDetailWendies;
        this.isExport =isExport;
+       this.currency = currency;
     }
    
     public String getId() {
@@ -183,6 +185,14 @@ public class PaymentWendy   {
 
     public void setIsExport(Integer isExport) {
         this.isExport = isExport;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
 
