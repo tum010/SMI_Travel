@@ -15,6 +15,14 @@ function  CheckCharecter(checkString) {
     return true;
 }
 
+function setNumberFormat(arg){
+    var id = arg.getAttribute('id');
+    var value =  $('#'+id).val();
+    if(!isNaN(value)){
+         $('#'+id).val(parseInt(value));
+    }
+}
+
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
