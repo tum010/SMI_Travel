@@ -64,7 +64,16 @@
         <property name="department" type="string">
             <column name="department" length="20"/>
         </property>
-        
+        <property name="TotalAmount" type="big_decimal">
+            <column name="total_amount" precision="10"/>
+        </property>
+        <property name="DebitAmount" type="big_decimal">
+            <column name="debit_amount" precision="10"/>
+        </property>
+        <property name="CreditAmount" type="big_decimal">
+            <column name="credit_amount" precision="10"/>
+        </property>
+
         <bag name="paymentAirticketRefunds" table="payment_airticket_refund" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="paymane_air_id" />
