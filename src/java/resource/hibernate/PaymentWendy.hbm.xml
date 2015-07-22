@@ -37,6 +37,9 @@
         <property name="remark" type="string">
             <column name="remark" />
         </property>
+        <property name="currency" type="string">
+            <column name="currency"  length="3"/>
+        </property>
 
         <property name="chqNo" type="string">
             <column name="chq_no" length="20" />
