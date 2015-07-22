@@ -62,7 +62,7 @@ public class PaymentTourHotelController extends SMITravelController {
         List<MCurrency> mCurrencyList = utilservice.getListMCurrency();
         request.setAttribute(CURRENCYLIST, mCurrencyList);
         request.setAttribute(PAYMENHOTELTCOUNT, "0");
-        request.setAttribute("btnSave", "save");
+        //request.setAttribute("btnSave", "save");
         
         
         String action = request.getParameter("action");
@@ -77,85 +77,140 @@ public class PaymentTourHotelController extends SMITravelController {
         String InputAPCode = request.getParameter("InputAPCode");
         String Detail = request.getParameter("Detail");
         String itemPayment = request.getParameter("itemPayment");   
-        String InputRemark = request.getParameter("InputRemark");  
-        String InputCash = request.getParameter("InputCash");
-        String InputChqNo = request.getParameter("InputChqNo");
-        String InputChqAmount = request.getParameter("InputChqAmount");
+        String InputRemark = request.getParameter("InputRemark"); 
+        String InputCurrency = request.getParameter("InputCurrency");
+        String InputCash = "";
+        String InputChqNo = "";
+        String InputChqAmount = "";
         String counter = request.getParameter("counter");
         String crateDate = request.getParameter("crateDate");
         String paymentId = request.getParameter("paymentId");
-        
-        if(paymentId != "" && paymentId != null){
-            action = "update";
-        }
-        
+
         if ("add".equalsIgnoreCase(action)) {
-            UtilityFunction utilfunction = new UtilityFunction();
-            PaymentWendy paymentWendy = new PaymentWendy();
-            paymentWendy.setAccount(utilfunction.convertStringToInteger(account));
-            paymentWendy.setPayDate(utilfunction.convertStringToDate(InputPayDate));
             
-            MItemstatus mitemStatus = new MItemstatus();
-            mitemStatus.setId(itemStatus);
-            paymentWendy.setMItemstatus(mitemStatus);
-            paymentWendy.setInvoiceSup(InputInvoiceSupCode);
-            paymentWendy.setApCode(InputAPCode);
-            paymentWendy.setDetail(Detail);
-                 
-            paymentWendy.setRemark(InputRemark);
-            paymentWendy.setChqNo(InputChqNo);
-            Date date = Calendar.getInstance().getTime();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String createDate = sdf.format(date);
-            paymentWendy.setCreateDate(utilfunction.convertStringToDate(createDate));
-            
-            MPaymentDoctype mpaymentDoctype = new MPaymentDoctype();
-            if(itemPvType==""){               
-                paymentWendy.setMPaymentDoctype(null);
+            if(paymentId == "" || paymentId == null){
+                UtilityFunction utilfunction = new UtilityFunction();
+                PaymentWendy paymentWendy = new PaymentWendy();
+                paymentWendy.setAccount(utilfunction.convertStringToInteger(account));
+                paymentWendy.setPayDate(utilfunction.convertStringToDate(InputPayDate));
+
+                MItemstatus mitemStatus = new MItemstatus();
+                mitemStatus.setId(itemStatus);
+                paymentWendy.setMItemstatus(mitemStatus);
+                paymentWendy.setInvoiceSup(InputInvoiceSupCode);
+                paymentWendy.setApCode(InputAPCode);
+                paymentWendy.setDetail(Detail);                
+                paymentWendy.setRemark(InputRemark);
+                paymentWendy.setCurrency(InputCurrency);           
+                paymentWendy.setChqNo(InputChqNo);
+                Date date = Calendar.getInstance().getTime();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                String createDate = sdf.format(date);
+                paymentWendy.setCreateDate(utilfunction.convertStringToDate(createDate));
+
+                MPaymentDoctype mpaymentDoctype = new MPaymentDoctype();
+                if(itemPvType==""){               
+                    paymentWendy.setMPaymentDoctype(null);
+                } else {
+                    mpaymentDoctype.setId(itemPvType);
+                    paymentWendy.setMPaymentDoctype(mpaymentDoctype);
+                }
+
+                MAccpay maccpay = new MAccpay();
+                if(itemPayment==""){                        
+                    paymentWendy.setMAccpay(null);
+                } else {
+                    maccpay.setId(itemPayment);          
+                    paymentWendy.setMAccpay(maccpay);
+                }
+
+                if(InputCash!=""){
+                    BigDecimal cash = new BigDecimal(InputCash.replaceAll(",",""));
+                    paymentWendy.setCash(cash);                           
+                }
+                if(InputChqAmount!=""){
+                    BigDecimal chqAmount = new BigDecimal(InputChqAmount.replaceAll(",",""));
+                    paymentWendy.setChqAmount(chqAmount); 
+                }                     
+                if(utilfunction.convertStringToInteger(counter) != 0){
+                    setPaymentDetailWendy(request, counter, paymentWendy);
+                }
+
+                SystemUser user = (SystemUser) session.getAttribute("USER");
+                paymentWendy.setCreateBy(user.getUsername());
+
+                String result = paymentTourHotelService.InsertPaymentWendy(paymentWendy);
+                System.out.println("result : " + result);
+
+                if(result == "fail"){
+                    request.setAttribute("resultText", result);
+                } else {
+                    request.setAttribute("resultText", "success");
+                }
+
+                getPaymentDetailWendy(request, result);
+
+                PaymentWendy paymentWendyId = paymentTourHotelService.getPaymentWendyFromID(result);
+                paymentId = paymentWendyId.getId();
+                request.setAttribute("paymentId", paymentId);
+                
             } else {
-                mpaymentDoctype.setId(itemPvType);
-                paymentWendy.setMPaymentDoctype(mpaymentDoctype);
-            }
-            
-            MAccpay maccpay = new MAccpay();
-            if(itemPayment==""){                        
-                paymentWendy.setMAccpay(null);
-            } else {
-                maccpay.setId(itemPayment);          
-                paymentWendy.setMAccpay(maccpay);
-            }
-             
-            if(InputCash!=""){
-                BigDecimal cash = new BigDecimal(InputCash.replaceAll(",",""));
-                paymentWendy.setCash(cash);                           
-            }
-            if(InputChqAmount!=""){
-                BigDecimal chqAmount = new BigDecimal(InputChqAmount.replaceAll(",",""));
-                paymentWendy.setChqAmount(chqAmount); 
-            }                     
-            if(utilfunction.convertStringToInteger(counter) != 0){
-                setPaymentDetailWendy(request, counter, paymentWendy);
-            }
-            
-            SystemUser user = (SystemUser) session.getAttribute("USER");
-            paymentWendy.setCreateBy(user.getUsername());
-            
-            String result = paymentTourHotelService.InsertPaymentWendy(paymentWendy);
-            System.out.println("result : " + result);
-            
-            if(result == "fail"){
+                InputPayNo = request.getParameter("InputPayNo");
+                crateDate = request.getParameter("crateDate");
+                UtilityFunction utilfunction = new UtilityFunction();
+                PaymentWendy paymentWendy = new PaymentWendy();
+                paymentWendy.setId(paymentId);
+                paymentWendy.setPayNo(InputPayNo);
+                paymentWendy.setAccount(utilfunction.convertStringToInteger(account));
+                paymentWendy.setPayDate(utilfunction.convertStringToDate(InputPayDate));
+                MItemstatus mitemStatus = new MItemstatus();
+                mitemStatus.setId(itemStatus);
+                paymentWendy.setMItemstatus(mitemStatus);
+                paymentWendy.setInvoiceSup(InputInvoiceSupCode);
+                paymentWendy.setApCode(InputAPCode);
+                paymentWendy.setDetail(Detail);
+                paymentWendy.setCurrency(InputCurrency);        
+                paymentWendy.setRemark(InputRemark);
+                paymentWendy.setChqNo(InputChqNo);
+                paymentWendy.setCreateDate(utilfunction.convertStringToDate(crateDate));
+
+                MPaymentDoctype mpaymentDoctype = new MPaymentDoctype();
+                if(itemPvType==""){               
+                    paymentWendy.setMPaymentDoctype(null);
+                } else {
+                    mpaymentDoctype.setId(itemPvType);
+                    paymentWendy.setMPaymentDoctype(mpaymentDoctype);
+                }
+
+                MAccpay maccpay = new MAccpay();
+                if(itemPayment==""){                        
+                    paymentWendy.setMAccpay(null);
+                } else {
+                    maccpay.setId(itemPayment);          
+                    paymentWendy.setMAccpay(maccpay);
+                }            
+
+                if(InputCash!=""){
+                    BigDecimal cash = new BigDecimal(InputCash.replaceAll(",",""));
+                    paymentWendy.setCash(cash);                           
+                }
+                if(InputChqAmount!=""){
+                    BigDecimal chqAmount = new BigDecimal(InputChqAmount.replaceAll(",",""));
+                    paymentWendy.setChqAmount(chqAmount); 
+                }                     
+                if(utilfunction.convertStringToInteger(counter) != 0){
+                    setPaymentDetailWendy(request, counter, paymentWendy);
+                }
+
+                SystemUser user = (SystemUser) session.getAttribute("USER");
+                paymentWendy.setCreateBy(user.getUsername());
+                String result = paymentTourHotelService.UpdatePaymentWendy(paymentWendy);
+                request.setAttribute("paymentId", paymentId);
                 request.setAttribute("resultText", result);
-            } else {
-                request.setAttribute("resultText", "success");
+                request.setAttribute("crateDate", crateDate);
+                getPaymentDetailWendy(request, InputPayNo);
             }
-            
-            getPaymentDetailWendy(request, result);
-            
-            PaymentWendy paymentWendyId = paymentTourHotelService.getPaymentWendyFromID(result);
-            paymentId = paymentWendyId.getId();
-            request.setAttribute("paymentId", paymentId);
-            
-            
+          
         } else if("edit".equalsIgnoreCase(action)) {
             InputPayNo = request.getParameter("InputPayNo");
             System.out.println("InputPayNo : " + InputPayNo);
@@ -174,6 +229,7 @@ public class PaymentTourHotelController extends SMITravelController {
             InputPayDate = String.valueOf(paymentWendy.getPayDate());                       
             InputInvoiceSupCode = paymentWendy.getInvoiceSup();
             Detail = paymentWendy.getDetail();
+            InputCurrency = paymentWendy.getCurrency();
             InputRemark = paymentWendy.getRemark();
             InputCash = String.valueOf(paymentWendy.getCash());
             InputChqNo = paymentWendy.getChqNo();
@@ -211,6 +267,7 @@ public class PaymentTourHotelController extends SMITravelController {
             request.setAttribute("InputAPCode", InputAPCode);
             request.setAttribute("Detail", Detail);
             request.setAttribute("itemPayment", itemPayment);
+            request.setAttribute("InputCurrency", InputCurrency);        
             request.setAttribute("InputRemark", InputRemark);
             request.setAttribute("InputCash", InputCash);
             request.setAttribute("InputChqNo", InputChqNo);
@@ -218,63 +275,8 @@ public class PaymentTourHotelController extends SMITravelController {
             request.setAttribute("crateDate", crateDate);
             request.setAttribute(PRODUCTDETAILLIST, paymentDetailWendyList);
             request.setAttribute(PAYMENHOTELTCOUNT, size);
-            request.setAttribute("btnSave", "update");
-        
-        }else if("update".equalsIgnoreCase(action)) {
-            InputPayNo = request.getParameter("InputPayNo");
-            crateDate = request.getParameter("crateDate");
-            UtilityFunction utilfunction = new UtilityFunction();
-            PaymentWendy paymentWendy = new PaymentWendy();
-            paymentWendy.setId(paymentId);
-            paymentWendy.setPayNo(InputPayNo);
-            paymentWendy.setAccount(utilfunction.convertStringToInteger(account));
-            paymentWendy.setPayDate(utilfunction.convertStringToDate(InputPayDate));
-            MItemstatus mitemStatus = new MItemstatus();
-            mitemStatus.setId(itemStatus);
-            paymentWendy.setMItemstatus(mitemStatus);
-            paymentWendy.setInvoiceSup(InputInvoiceSupCode);
-            paymentWendy.setApCode(InputAPCode);
-            paymentWendy.setDetail(Detail);
-            paymentWendy.setRemark(InputRemark);
-            paymentWendy.setChqNo(InputChqNo);
-            paymentWendy.setCreateDate(utilfunction.convertStringToDate(crateDate));
-            
-            MPaymentDoctype mpaymentDoctype = new MPaymentDoctype();
-            if(itemPvType==""){               
-                paymentWendy.setMPaymentDoctype(null);
-            } else {
-                mpaymentDoctype.setId(itemPvType);
-                paymentWendy.setMPaymentDoctype(mpaymentDoctype);
-            }
-            
-            MAccpay maccpay = new MAccpay();
-            if(itemPayment==""){                        
-                paymentWendy.setMAccpay(null);
-            } else {
-                maccpay.setId(itemPayment);          
-                paymentWendy.setMAccpay(maccpay);
-            }            
-             
-            if(InputCash!=""){
-                BigDecimal cash = new BigDecimal(InputCash.replaceAll(",",""));
-                paymentWendy.setCash(cash);                           
-            }
-            if(InputChqAmount!=""){
-                BigDecimal chqAmount = new BigDecimal(InputChqAmount.replaceAll(",",""));
-                paymentWendy.setChqAmount(chqAmount); 
-            }                     
-            if(utilfunction.convertStringToInteger(counter) != 0){
-                setPaymentDetailWendy(request, counter, paymentWendy);
-            }
-            
-            SystemUser user = (SystemUser) session.getAttribute("USER");
-            paymentWendy.setCreateBy(user.getUsername());
-            String result = paymentTourHotelService.UpdatePaymentWendy(paymentWendy);
-            request.setAttribute("paymentId", paymentId);
-            request.setAttribute("resultText", result);
-            request.setAttribute("crateDate", crateDate);
-            getPaymentDetailWendy(request, InputPayNo);
-            
+            //request.setAttribute("btnSave", "update");
+           
         }else if("deleteProductDetail".equalsIgnoreCase(action)) {
             System.out.println("deleteProductDetail");
             String ProductDetail = request.getParameter("ProductDetail");
@@ -283,9 +285,6 @@ public class PaymentTourHotelController extends SMITravelController {
             String result = paymentTourHotelService.DeletePaymentWendyDetail(paymentDetailWendy);
             System.out.println(result);
         }
-        
-       
-        
         
         return PaymentTourHotel;
     }
@@ -334,11 +333,10 @@ public class PaymentTourHotelController extends SMITravelController {
             String code = request.getParameter("code" + i);
             String type = request.getParameter("type" + i);
             String amount = request.getParameter("amount" + i);           
-            String selectCurrency = request.getParameter("select-currency" + i);
             String description = request.getParameter("description" + i);
-            String ac = request.getParameter("ac" + i);
+            //String ac = request.getParameter("ac" + i);
             
-            if((product!="" && product!=null) || (refNo!="" && refNo!=null) || (invNo!="" && invNo!=null) || (code!="" && code!=null) || (type!="" && type!=null) || (amount!="" && amount!=null) || (selectCurrency!="" && selectCurrency!=null) || (description!="" && description!=null) || (ac!="" && ac!=null)){
+            if((product!="" && product!=null) || (refNo!="" && refNo!=null) || (invNo!="" && invNo!=null) || (code!="" && code!=null) || (type!="" && type!=null) || (amount!="" && amount!=null) || (description!="" && description!=null)){
                 if(amount!="" && amount!=null){
                     BigDecimal amountRe = new BigDecimal(amount.replaceAll(",",""));
                     System.out.println("amount" + i + ":" + amountRe);
@@ -347,9 +345,8 @@ public class PaymentTourHotelController extends SMITravelController {
                 
                 if(paymentDetailWendyId!=null && paymentDetailWendyId!=""){
                     paymentDetailWendy.setId(paymentDetailWendyId);
-                    paymentDetailWendy.setAccCode(ac);           
+                               
                     paymentDetailWendy.setAmountType(type);
-                    paymentDetailWendy.setCurrency(selectCurrency);
                     paymentDetailWendy.setDescription(description);
                     paymentDetailWendy.setInvoiceCreditor(invNo);
                     paymentDetailWendy.setPaymentWendy(paymentWendy);
@@ -360,6 +357,8 @@ public class PaymentTourHotelController extends SMITravelController {
                     } else {
                         mpayType.setId(product);
                         paymentDetailWendy.setMPaytype(mpayType);
+                        String acc_code = paymentTourHotelService.getAccountCode(product);
+                        paymentDetailWendy.setAccCode(acc_code);
                     }
                   
                     Master master = paymentTourHotelService.getMasterFromRefno(refNo);
@@ -371,10 +370,8 @@ public class PaymentTourHotelController extends SMITravelController {
                     
                     paymentWendy.getPaymentDetailWendies().add(paymentDetailWendy);
                     
-                } else {
-                    paymentDetailWendy.setAccCode(ac);           
+                } else {         
                     paymentDetailWendy.setAmountType(type);
-                    paymentDetailWendy.setCurrency(selectCurrency);
                     paymentDetailWendy.setDescription(description);
                     paymentDetailWendy.setInvoiceCreditor(invNo);
                     paymentDetailWendy.setPaymentWendy(paymentWendy);
@@ -385,6 +382,8 @@ public class PaymentTourHotelController extends SMITravelController {
                     } else {
                         mpayType.setId(product);
                         paymentDetailWendy.setMPaytype(mpayType);
+                        String acc_code = paymentTourHotelService.getAccountCode(product);
+                        paymentDetailWendy.setAccCode(acc_code);
                     }                                     
                     
                     Master master = paymentTourHotelService.getMasterFromRefno(refNo);
@@ -415,9 +414,10 @@ public class PaymentTourHotelController extends SMITravelController {
         String InputInvoiceSupCode = paymentWendy.getInvoiceSup();
         String Detail = paymentWendy.getDetail();
         String InputRemark = paymentWendy.getRemark();
-        String InputCash = String.valueOf(paymentWendy.getCash());
-        String InputChqNo = paymentWendy.getChqNo();
-        String InputChqAmount = String.valueOf(paymentWendy.getChqAmount());
+        String InputCurrency = paymentWendy.getCurrency();
+//        String InputCash = String.valueOf(paymentWendy.getCash());
+//        String InputChqNo = paymentWendy.getChqNo();
+//        String InputChqAmount = String.valueOf(paymentWendy.getChqAmount());
         
         String itemPvType;
         if(paymentWendy.getMPaymentDoctype()==null){               
@@ -452,14 +452,15 @@ public class PaymentTourHotelController extends SMITravelController {
         request.setAttribute("InputInvoiceSupName", InputInvoiceSupName);
         request.setAttribute("InputAPCode", InputAPCode);
         request.setAttribute("Detail", Detail);
+        request.setAttribute("InputCurrency", InputCurrency);
         request.setAttribute("itemPayment", itemPayment);
         request.setAttribute("InputRemark", InputRemark);
-        request.setAttribute("InputCash", InputCash);
-        request.setAttribute("InputChqNo", InputChqNo);
-        request.setAttribute("InputChqAmount", InputChqAmount);
+//        request.setAttribute("InputCash", InputCash);
+//        request.setAttribute("InputChqNo", InputChqNo);
+//        request.setAttribute("InputChqAmount", InputChqAmount);
         request.setAttribute(PRODUCTDETAILLIST, paymentDetailWendyList);
         request.setAttribute(PAYMENHOTELTCOUNT, size);
-        request.setAttribute("btnSave", "update");
+        //request.setAttribute("btnSave", "update");
     }
 
 }
