@@ -44,13 +44,14 @@ public class TicketFareAirline {
      private Date agentPayDate;
      private Date agentReceiveDate;
      private String department;
+     private Master Master;
      private List paymentAirticketFares = new LinkedList<PaymentAirticketFare>();
      private List refundAirticketDetails = new LinkedList<RefundAirticketDetail>();
 
     public TicketFareAirline() {
     }
 
-    public TicketFareAirline(MAirlineAgent MAirlineAgent, String ticketNo, String ticketType, String ticketBuy, String ticketRouting, String passenger, Date issueDate, Date ticketDate, BigDecimal ticketFare, BigDecimal ticketTax, BigDecimal ticketIns, BigDecimal ticketCommission, BigDecimal agentCommission, BigDecimal salePrice, Integer agentId, String remark, BigDecimal overCommission, BigDecimal litterCommission, BigDecimal decPay, BigDecimal addPay, BigDecimal agentComPay, BigDecimal agentComReceive, Date overDate, Date litterDate, Date decPayDate, Date addPayDate, Date agentPayDate, Date agentReceiveDate, List paymentAirticketFares, List refundAirticketDetails,BigDecimal diffVat,String department) {
+    public TicketFareAirline(MAirlineAgent MAirlineAgent, String ticketNo, String ticketType, String ticketBuy, String ticketRouting, String passenger, Date issueDate, Date ticketDate, BigDecimal ticketFare, BigDecimal ticketTax, BigDecimal ticketIns, BigDecimal ticketCommission, BigDecimal agentCommission, BigDecimal salePrice, Integer agentId, String remark, BigDecimal overCommission, BigDecimal litterCommission, BigDecimal decPay, BigDecimal addPay, BigDecimal agentComPay, BigDecimal agentComReceive, Date overDate, Date litterDate, Date decPayDate, Date addPayDate, Date agentPayDate, Date agentReceiveDate, List paymentAirticketFares, List refundAirticketDetails,BigDecimal diffVat,String department,Master master) {
        this.MAirlineAgent = MAirlineAgent;
        this.ticketNo = ticketNo;
        this.ticketType = ticketType;
@@ -81,6 +82,7 @@ public class TicketFareAirline {
        this.agentReceiveDate = agentReceiveDate;
        this.diffVat = diffVat;
        this.department = department;
+       this.Master = master;
        this.paymentAirticketFares = paymentAirticketFares;
        this.refundAirticketDetails = refundAirticketDetails;
     }
@@ -324,6 +326,16 @@ public class TicketFareAirline {
         this.diffVat = diffVat;
     }
 
+    public Master getMaster() {
+        return Master;
+    }
+
+    public void setMaster(Master master) {
+        this.Master = master;
+    }
+
+    
+    
     
 }
 
