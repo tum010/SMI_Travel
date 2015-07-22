@@ -28,6 +28,15 @@
         <property name="accCode" type="string">
             <column name="acc_code" length="10" />
         </property>
+        <property name="vat" type="double">
+            <column name="vat" precision="10" />
+        </property>
+        <property name="gross" type="big_decimal">
+            <column name="gross" precision="10" />
+        </property>
+        <property name="isVat" type="java.lang.Integer">
+            <column name="is_vat" precision="10" />
+        </property>
         <property name="description" type="string">
             <column name="description" />
         </property>
