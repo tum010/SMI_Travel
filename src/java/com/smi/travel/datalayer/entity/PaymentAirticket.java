@@ -34,13 +34,16 @@ public class PaymentAirticket  {
      private String department;
      private Date createDate;
      private Integer isExport;
+     private BigDecimal TotalAmount;
+     private BigDecimal DebitAmount;
+     private BigDecimal CreditAmount;
      private List paymentAirticketRefunds = new LinkedList<PaymentAirticketRefund>();
      private List paymentAirticketFares = new LinkedList<PaymentAirticketFare>();
-
+     
     public PaymentAirticket() {
     }
 
-    public PaymentAirticket(MAccpay MAccpay, String payNo, Date payDate, Date dueDate, Integer invoiceSup, Integer apCode, String detail, BigDecimal agentAmount, BigDecimal cash, BigDecimal witholdingTax, String chqNo, BigDecimal chqAmount, BigDecimal ticketInsurance, String creditNote, String debitNote, String createBy, Date createDate, List paymentAirticketRefunds, List paymentAirticketFares,Integer isExport,String department) {
+    public PaymentAirticket(MAccpay MAccpay, String payNo, Date payDate, Date dueDate, Integer invoiceSup, Integer apCode, String detail, BigDecimal agentAmount, BigDecimal cash, BigDecimal witholdingTax, String chqNo, BigDecimal chqAmount, BigDecimal ticketInsurance, String creditNote, String debitNote, String createBy, Date createDate, List paymentAirticketRefunds, List paymentAirticketFares,Integer isExport,String department,BigDecimal TotalAmount,BigDecimal DebitAmount,BigDecimal CreditAmount) {
        this.MAccpay = MAccpay;
        this.payNo = payNo;
        this.payDate = payDate;
@@ -62,6 +65,9 @@ public class PaymentAirticket  {
        this.paymentAirticketFares = paymentAirticketFares;
        this.isExport = isExport;
        this.department = department;
+       this.TotalAmount = TotalAmount; 
+       this.DebitAmount = DebitAmount;
+       this.CreditAmount = CreditAmount;
     }
    
     public String getId() {
@@ -222,6 +228,30 @@ public class PaymentAirticket  {
 
     public void setDepartment(String department) {
         this.department = department;
+    }
+
+    public BigDecimal getTotalAmount() {
+        return TotalAmount;
+    }
+
+    public void setTotalAmount(BigDecimal TotalAmount) {
+        this.TotalAmount = TotalAmount;
+    }
+
+    public BigDecimal getDebitAmount() {
+        return DebitAmount;
+    }
+
+    public void setDebitAmount(BigDecimal DebitAmount) {
+        this.DebitAmount = DebitAmount;
+    }
+
+    public BigDecimal getCreditAmount() {
+        return CreditAmount;
+    }
+
+    public void setCreditAmount(BigDecimal CreditAmount) {
+        this.CreditAmount = CreditAmount;
     }
     
     
