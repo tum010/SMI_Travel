@@ -206,7 +206,22 @@
                     </select>         
                 </div>
             </div>
-        </div>
+            <div class="col-xs-1 text-right" style="padding-left:10px;padding-right:0px;width:155px;">
+                <label class="control-label">Currency</lable>
+            </div>    
+            <div class="col-xs-1 form-group text-left" style="padding-left:25px;width:175px;">
+                <select class="form-control" name="InputCurrency" id="InputCurrency">
+                    <option  value="">---------</option>
+                    <c:forEach var="currency" items="${currency_list}" varStatus="status">
+                        <c:set var="select" value="" />
+                        <c:if test="${currency.code == requestScope['InputCurrency']}">
+                            <c:set var="select" value="selected" />
+                        </c:if>
+                        <option value="<c:out value="${currency.code}" />" ${select}><c:out value="${currency.code}" /></option>       
+                    </c:forEach>
+                </select>
+            </div>     
+        </div> 
        
         <!-- Table -->
         <div class="row" >
@@ -214,17 +229,16 @@
                 <table class="display" id="PaymentHotelTable">
                     <thead class="datatable-header">
                         <tr>
-                            <th class="hidden" style="width: 13%">Id</th>
-                            <th style="width: 13%">Product</th>
-                            <th style="width: 8%">Ref No</th>
+                            <th class="hidden" style="width: 1%">Id</th>
+                            <th style="width: 15%">Product</th>
+                            <th style="width: 10%">Ref No</th>
                             <th style="width: 10%">Inv No</th>
-                            <th style="width: 8%">Code</th>
-                            <th style="width: 9%">Type</th>
-                            <th style="width: 10%">Amount</th>
-                            <th style="width: 9%">Cur</th>
-                            <th style="width: 20%">Description</th>
+                            <th style="width: 10%">Code</th>
+                            <th style="width: 8%">Type</th>
+                            <th style="width: 15%">Amount</th>
+                            <th style="width: 15%">Description</th>
                             <th style="width: 8%">A/C</th>
-                            <th style="width: 7%">Action</th>
+                            <th style="width: 1%">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -233,7 +247,7 @@
                                 <td class="hidden"><input id="tableId${i.count}" name="tableId${i.count}"  type="hidden" value="${pl.id}"></td>
                                 <td>                                   
                                     <select class="form-control" name="select-product${i.count}" id="select-product${i.count}">
-                                        <option  value="" >- - Product - -</option>
+                                        <option  value="" >---------</option>
                                     <c:forEach var="product" items="${product_list}" varStatus="status">                                       
                                         <c:set var="select" value="" />
                                         <c:if test="${product.id == pl.MPaytype.id}">
@@ -258,21 +272,9 @@
                                     </c:if>  
                                     <input type="radio" name="type${i.count}" id="typeC${i.count}" value="C" ${type2}> C
                                 </td>
-                                <td> <input style="width: ${Amount}" id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control money" onfocusout="CalculateGrandTotal('${pl.id}','${i.count}')" value="${pl.amount}"> </td>
-                                <td> 
-                                    <select class="form-control" id="select-currency${i.count}" name="select-currency${i.count}">
-                                        <option  value="" >- - Currency - -</option>
-                                        <c:forEach var="currency" items="${currency_list}" varStatus="status">
-                                            <c:set var="select" value="" />
-                                            <c:if test="${currency.id == pl.currency}">
-                                                <c:set var="select" value="selected" />
-                                            </c:if>
-                                            <option  value="${currency.id}" ${select}>${currency.code}</option>
-                                        </c:forEach>
-                                    </select>                                 
-                                </td>
+                                <td> <input style="width: ${Amount}" id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control money" onfocusout="CalculateGrandTotal('${pl.id}','${i.count}')" value="${pl.amount}"> </td>                               
                                 <td> <input style="width: ${Description}" id="description${i.count}" name="description${i.count}" maxlength ="255"  type="text" class="form-control" value="${pl.description}"> </td>
-                                <td> <input style="width: ${AC}" id="ac${i.count}" name="ac${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.accCode}"> </td>
+                                <td> <input style="width: ${AC}" id="ac${i.count}" name="ac${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.accCode}" readonly=""> </td>
                                 <td class="text-center">
                                     
                                         <a class="remCF"><span id="SpanRemove${i.count}" onclick="deletelist('${pl.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
@@ -308,8 +310,8 @@
                     <div class="col-xs-1 text-right">
                         <label class="control-label">Remark</lable>
                     </div>
-                    <div class="col-md-3 form-group text-left">
-                        <input name="InputRemark" id="InputRemark" type="text" class="form-control" value="${requestScope['InputRemark']}" />           
+                    <div class="col-md-6 form-group text-left">
+                        <textarea rows="3" cols="255" class="form-control" id="InputRemark" name="InputRemark">${requestScope['InputRemark']}</textarea>        
                     </div>
                     <div class="col-xs-2 text-right">
                         <label class="control-label">Grand Total</lable>
@@ -320,25 +322,25 @@
                 </div>
                 <!--Row 1.2 -->
                 <div class="row" style="padding-left: 25px;">
-                    <div class="col-xs-1 text-right">
+                    <div class="col-xs-1 text-right hidden">
                         <label class="control-label">Cash</lable>
                     </div>
-                    <div class="col-md-2 form-group text-left">
+                    <div class="col-md-2 form-group text-left hidden">
                         <input name="InputCash" id="InputCash" type="text" class="form-control money number" value="${requestScope['InputCash']}" />           
                     </div>
                 </div>
                 <!--Row 1.3 -->
                 <div class="row" style="padding-left: 25px;">
-                    <div class="col-xs-1 text-right">
+                    <div class="col-xs-1 text-right hidden">
                         <label class="control-label">Chq No</lable>
                     </div>
-                    <div class="col-md-2 form-group text-left">
+                    <div class="col-md-2 form-group text-left hidden">
                         <input maxlength="20" name="InputChqNo" id="InputChqNo" type="text" class="form-control" value="${requestScope['InputChqNo']}" />             
                     </div>
-                    <div class="col-xs-3 text-right">
+                    <div class="col-xs-3 text-right hidden">
                         <label class="control-label">Chq Amount</lable>
                     </div>
-                    <div class="col-md-2 form-group text-left">
+                    <div class="col-md-2 form-group text-left hidden">
                         <input name="InputChqAmount" id="InputChqAmount" type="text" class="form-control money number" value="${requestScope['InputChqAmount']}" />           
                     </div>
                     
@@ -370,12 +372,6 @@
 <select class="hidden" name="select_product_list" id="select_product_list">
     <c:forEach var="product" items="${product_list}" varStatus="status">                                
         <option  value="${product.id}">${product.name}</option>
-    </c:forEach>
-</select> 
-
-<select class="hidden" name="select_currency_list" id="select_currency_list">
-    <c:forEach var="currency" items="${currency_list}" varStatus="status">                                
-        <option  value="${currency.id}">${currency.code}</option>
     </c:forEach>
 </select> 
                
@@ -601,6 +597,7 @@
         
         $("#InputPayNo").keyup(function (event) {
             if (event.keyCode === 13) {
+                $('#textAlertDivSave').modal('hide');
                 searchPaymentTour();
             }
         });
@@ -690,28 +687,24 @@
                 '<tr style="higth 100px">' +
                 '<td class="hidden"> <input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >  </td>' +
                 '<td>' + 
-                '<select class="form-control" name="select-product' + row + '" id="select-product' + row + '" ><option value="">- - Product - -</option></select>' +                          
+                '<select class="form-control" name="select-product' + row + '" id="select-product' + row + '" ><option value="">---------</option></select>' +                          
                 '</td>' +
                 '<td><input maxlength ="10" id="refNo' + row + '" name="refNo' + row + '"   type="text" class="form-control "></td>' +
                 '<td><input maxlength ="15" id="invNo' + row + '" name="invNo' + row + '"   type="text" class="form-control "></td>' +
                 '<td><input maxlength ="15" id="code' + row + '" name="code' + row + '"   type="text" class="form-control "></td>' +
-                '<td>' +
-                '<input type="radio" name="type' + row + '" id="typeT' + row + '" value="T"> T&nbsp;&nbsp;' +
+                '<td align="center">' +
+                '<input type="radio" name="type' + row + '" id="typeT' + row + '" value="T"> T&nbsp;' +
                 '<input type="radio" name="type' + row + '" id="typeC' +row + '" value="C" > C' +
                 '</td>' +
-                '<td><input class="money" id="amount' + row + '" name="amount' + row + '" type="text" onfocusout="CalculateGrandTotal(\'\', \''+row+'\')"></td>' +
-                '<td>' + 
-                '<select class="form-control" id="select-currency' + row + '" name="select-currency' + row + '"><option value="">- - Currency - -</option></select>' +                                 
-                '</td>' +
+                '<td><input class="money form-control" id="amount' + row + '" name="amount' + row + '" type="text" onfocusout="CalculateGrandTotal(\'\', \''+row+'\')"></td>' +
                 '<td><input class="form-control" maxlength="255" style="width: ${DescriptionSize}" id="description' + row + '" name="description' + row + '" rows="2" ></td>' +
-                '<td><input id="ac' + row + '" name="ac' + row + '"   type="text" class="form-control "></td>' +
+                '<td><input id="ac' + row + '" name="ac' + row + '"   type="text" class="form-control" readonly=""></td>' +
                 '<td class="text-center">' +
                 '<a class="remCF" onclick="deletelist(\'\', \''+row+'\')">  '+
                 '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
                 '</tr>'
         );
         $("#select_product_list option").clone().appendTo("#select-product" + row);
-        $("#select_currency_list option").clone().appendTo("#select-currency" + row);
         var tempCount = parseInt($("#counter").val()) + 1;
         $("#counter").val(tempCount);
       
@@ -801,9 +794,10 @@
     function clearScreen(){
         //this.form.reset();
         //location.reload();
-        $('#paymentId, #InputPayNo, #InputPayDate, #itemPvType, #itemStatus, #InputInvoiceSupId, #InputInvoiceSupCode, #InputInvoiceSupName, #InputAPCode, #Detail, #itemPayment, #InputRemark, #InputGrandTotal, #InputCash, #InputChqNo, #InputChqAmount').val('');
+        $('#paymentId, #InputPayNo, #InputPayDate, #itemPvType, #itemStatus, #InputInvoiceSupId, #InputInvoiceSupCode, #InputInvoiceSupName, #InputAPCode, #Detail, #itemPayment, #InputRemark, #InputGrandTotal, #InputCash, #InputChqNo, #InputChqAmount, #InputCurrency').val('');
         document.getElementById("account1").checked = false;
         document.getElementById("account2").checked = false;
+        document.getElementById("InputGrandTotal").value = "0.00";
         var count = document.getElementById("counter").value;
         var i ;
         for(i=0;i<=count;i++){
