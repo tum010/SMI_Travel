@@ -19,12 +19,14 @@ public class PaymentDetailWendy   {
      private String amountType;
      private String description;
      private String accCode;
-
+     private double vat;
+     private BigDecimal gross;
+     private Integer isVat;
 
     public PaymentDetailWendy() {
     }
 
-    public PaymentDetailWendy(Master master, MPaytype MPaytype, PaymentWendy paymentWendy, String invoiceCreditor, BigDecimal amount, String amountType, String description ,String accCode) {
+    public PaymentDetailWendy(Master master, MPaytype MPaytype, PaymentWendy paymentWendy, String invoiceCreditor, BigDecimal amount, String amountType, String description ,String accCode,double vat,BigDecimal gross,Integer isvat) {
        this.master = master;
        this.MPaytype = MPaytype;
        this.paymentWendy = paymentWendy;
@@ -32,7 +34,9 @@ public class PaymentDetailWendy   {
        this.amount = amount;
        this.amountType = amountType;
        this.description = description;
-
+       this.vat = vat;
+       this.gross = gross;
+       this.isVat = isVat;
        this.accCode = accCode;
     }
    
@@ -99,6 +103,30 @@ public class PaymentDetailWendy   {
 
     public void setAccCode(String accCode) {
         this.accCode = accCode;
+    }
+
+    public double getVat() {
+        return vat;
+    }
+
+    public void setVat(double vat) {
+        this.vat = vat;
+    }
+
+    public BigDecimal getGross() {
+        return gross;
+    }
+
+    public void setGross(BigDecimal gross) {
+        this.gross = gross;
+    }
+
+    public Integer getIsVat() {
+        return isVat;
+    }
+
+    public void setIsVat(Integer isVat) {
+        this.isVat = isVat;
     }
 
 
