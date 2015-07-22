@@ -110,16 +110,15 @@
                 <table class="display" id="SearchPaymentHotelTable">
                     <thead class="datatable-header">
                         <tr>
-                            <th style="width: 8%" class="hidden">Id</th>
+                            <th style="width: 1%" class="hidden">Id</th>
                             <th style="width: 8%">PV No</th>
-                            <th style="width: 10%">Pay Date</th>
-                            <th style="width: 20%">PV Type</th>
-                            <th style="width: 20%">Invoice Sup</th>
-                            <th style="width: 5%">Acc</th>
-                            
-                            <th style="width: 8%">Total</th>
-                            <th style="width: 8%">Status</th>
-                            <th style="width: 10%">Action</th>
+                            <th style="width: 8%">Pay Date</th>
+                            <th style="width: 10%">PV Type</th>
+                            <th style="width: 30%">Invoice Sup</th>
+                            <th style="width: 1%">Acc</th>                            
+                            <th style="width: 15%">Total</th>
+                            <th style="width: 5%">Status</th>
+                            <th style="width: 1%">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -142,14 +141,14 @@
                         </tr>-->
                     <c:forEach var="payment" items="${dataList}">
                         <tr>
-                            <td class="hidden">${payment.id}</td>
-                            <td>${payment.payNo}</td>
-                            <td>${payment.payDate}</td>
-                            <td>${payment.payType}</td>
+                            <td class="hidden" align="center">${payment.id}</td>
+                            <td align="center">${payment.payNo}</td>
+                            <td align="center">${payment.payDate}</td>
+                            <td align="center">${payment.payType}</td>
                             <td>${payment.invoiceSup}</td>
-                            <td>${payment.accNo}</td>
-                            <td>${payment.total}</td>
-                            <td>${payment.status}</td>
+                            <td align="center">${payment.accNo}</td>
+                            <td align="right">${payment.total}</td>
+                            <td align="center">${payment.status}</td>
                             <td class="text-center">
                                 <span id="RefPaymentHotelEdit" name="RefPaymentHotelEdit" class="glyphicon glyphicon-edit editicon" onclick="location.href='PaymentTourHotel.smi?action=edit&InputPayNo=${payment.payNo}'"></span>
                                 <a href="#" onclick=""  data-toggle="modal" data-target="">
