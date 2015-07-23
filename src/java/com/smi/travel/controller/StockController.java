@@ -166,7 +166,7 @@ public class StockController extends SMITravelController {
         if (driverRows == 1) {
             return null;
         }
-        driverRows = driverRows - 1;
+//        driverRows = driverRows - 1;
         for (int i = 1; i <= driverRows; i++) {
             StockDetail stockDetail = new StockDetail();
             MStockStatus mStockStatus = new MStockStatus();
