@@ -229,6 +229,10 @@ public class UtilityService {
     public List<InvoiceSupplier> getListInvoiceSuppiler() {
         return invoicesuppilerdao.getListInvoiceSupplier();
     }
+    
+    public InvoiceSupplier getDataInvoiceSuppiler(String InputInvoiceSupCode) {
+        return invoicesuppilerdao.getDataInvoiceSuppiler(InputInvoiceSupCode);
+    }
     public MasterDao getMasterdao() {
         return masterdao;
     }
