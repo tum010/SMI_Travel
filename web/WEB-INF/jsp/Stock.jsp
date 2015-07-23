@@ -154,17 +154,23 @@
             <div class="panel-body">
                 <div class="row" >
                     <div class="col-xs-12 ">
-                        <div class="col-xs-1 text-right" style="width: 130px;">
+                        <div class="col-xs-1 text-right" style="width: 50px;">
                             <label class="control-label">Prefix</lable>
                         </div>
-                        <div class="col-md-2 form-group text-left" style="width: 163px;"> 
+                        <div class="col-md-1 form-group text-left" style="width: 130px;"> 
                             <input name="InputPrefix" id="InputPrefix" type="text" class="form-control" value="" />
                         </div>
                         <div class="col-xs-1 text-right"  style="width: 60px;">
                             <label class="control-label">Start</lable>
                         </div>
-                        <div class="col-md-2 form-group text-left" style="width: 163px;">  
-                            <input name="InputStart" id="InputStart"  maxlength="10" type="text" class="form-control money" value="" />
+                        <div class="col-md-1 form-group text-left" style="width: 120px;">  
+                            <input name="InputStart" id="InputStart"  maxlength="10" type="text" class="form-control number" value="" onkeyup="setNumberFormat(this);" />
+                        </div>
+                        <div class="col-xs-1 text-right"  style="width: 60px;">
+                            <label class="control-label">Digit</lable>
+                        </div>
+                        <div class="col-md-1 form-group text-left" style="width: 90px;">  
+                            <input name="InputDigit" id="InputDigit"  maxlength="10" type="text" class="form-control money" value="" />
                         </div>
                         <div class="col-xs-2 text-right" style="width: 140px;">
                             <label class="control-label">Number Of Item</lable>
@@ -216,10 +222,17 @@
                                 </thead>
                                 <tbody>
                                     <input type="text" class="hidden" id="counter" name="counter" value="1" />
-                                    <input type="text" class="hidden" id="counterTable" name="counterTable" value="1" />
+                                    <input type="text" class="" id="counterTable" name="counterTable" value="0" />
                                     <input type="text" class="hidden" id="counterAdd" name="counterAdd" value="1" />
                                     <c:set var="count" value="1"></c:set>                                          
-                                    <c:forEach var="std" items="${listStockDetail}" varStatus="taxdesc">                                    
+                                    <c:forEach var="std" items="${listStockDetail}" varStatus="taxdesc">
+                                        <c:set var="pay" value="" />
+                                        <c:if test="${std.payStatus == 0}">
+                                            <c:set var="pay" value="No Paid" />
+                                        </c:if> 
+                                        <c:if test="${std.payStatus == 1}">
+                                            <c:set var="pay" value="Pay" />
+                                        </c:if>
                                     <tr>
                                         <td class="hidden"><input type="text" class="hidden" id="stockDetailId${taxdesc.count}" name="stockDetailId${taxdesc.count}" value="${std.id}" /></td>
                                         <td>${taxdesc.count}</td>
@@ -236,7 +249,7 @@
                                                 </c:forEach>
                                             </select>                                             
                                         </td>                                
-                                        <td>${std.payStatus}</td>
+                                        <td>${pay}</td>
                                         <td>NEW</td>
                                         <td class="text-center">                                          
                                             <a href="#" onclick="deleteItemListRow('${taxdesc.count}','${std.code}')"  data-toggle="modal" data-target="" class="remCF" id="ButtonRemove${taxdesc.count}">
