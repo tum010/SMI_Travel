@@ -17,6 +17,7 @@
 <c:set var="currency_list" value="${requestScope['currency_list']}" />
 <c:set var="detail" value="${requestScope['BookDetail']}" />
 <c:set var="resultText" value="${requestScope['resultText']}" />
+<c:set var="idRole" value="${requestScope['idRole']}" />
 
 <section class="content-header" >
     <h1>
@@ -73,25 +74,51 @@
                     </div>
                 </div>
                 <div class="col-xs-4 text-left" style="padding-left:10px;padding-right:0px;"></div>
-                <div class="col-xs-1 text-left" style="padding-left:10px;padding-right:0px;">
-                    <label class="control-label">Account<font style="color: red">*</font></lable>
-                </div>
-                <div class="col-md-3  text-left" style="padding-top : 5px;padding-left:0px;padding-right:0px;">
-                    <div class="col-sm-6" text-left> 
-                        <c:set var="check1" value="" />
-                        <c:if test="${1 == requestScope['account']}">
-                            <c:set var="check1" value="checked" />
-                        </c:if>  
-                        <input type="radio" name="account"  id="account1" value="1" ${check1}/> &nbsp;account(1)
+                
+                <c:choose>
+                    <c:when test="${idRole  == 22}">       
+                    <div class="col-xs-1 text-left" style="padding-left:10px;padding-right:0px;">
+                        <label class="control-label">Account<font style="color: red">*</font></lable>
                     </div>
-                    <div class="col-sm-6" text-left>
-                        <c:set var="check2" value="" />
-                        <c:if test="${2 == requestScope['account']}">
-                            <c:set var="check2" value="checked" />
-                        </c:if>  
-                        <input type="radio" name="account"  id="account2" value="2" ${check2}/>&nbsp;account(2)
+                    <div class="col-md-3  text-left" style="padding-top : 5px;padding-left:0px;padding-right:0px;">
+                        <div class="col-sm-6" text-left> 
+                            <c:set var="check1" value="" />
+                            <c:if test="${1 == requestScope['account']}">
+                                <c:set var="check1" value="checked" />
+                            </c:if>  
+                            <input type="radio" name="account"  id="account1" value="1" ${check1}/> &nbsp;account(1)
+                        </div>
+                        <div class="col-sm-6" text-left>
+                            <c:set var="check2" value="" />
+                            <c:if test="${2 == requestScope['account']}">
+                                <c:set var="check2" value="checked" />
+                            </c:if>  
+                            <input type="radio" name="account"  id="account2" value="2" ${check2}/>&nbsp;account(2)
+                        </div>
                     </div>
-                </div>
+                    </c:when>
+                    <c:when test="${idRole  == 19}">       
+                    <div class="col-xs-1 text-left hidden" style="padding-left:10px;padding-right:0px;">
+                        <label class="control-label">Account<font style="color: red">*</font></lable>
+                    </div>
+                    <div class="col-md-3  text-left hidden" style="padding-top : 5px;padding-left:0px;padding-right:0px;">
+                        <div class="col-sm-6" text-left> 
+                            <c:set var="check1" value="" />
+                            <c:if test="${1 == requestScope['account']}">
+                                <c:set var="check1" value="checked" />
+                            </c:if>  
+                            <input type="radio" name="account"  id="account1" value="1" ${check1}/> &nbsp;account(1)
+                        </div>
+                        <div class="col-sm-6" text-left>
+                            <c:set var="check2" value="" />
+                            <c:if test="${2 == requestScope['account']}">
+                                <c:set var="check2" value="checked" />
+                            </c:if>  
+                            <input type="radio" name="account"  id="account2" value="2" ${check2}/>&nbsp;account(2)
+                        </div>
+                    </div>
+                    </c:when>     
+                </c:choose>        
             </div>
         </div>
         <!--Row 2 -->
@@ -221,87 +248,200 @@
                     </c:forEach>
                 </select>
             </div>     
-        </div> 
-       
-        <!-- Table -->
-        <div class="row" >
-            <div class="col-12" style="width:1035px;padding-left:15px;">
-                <table class="display" id="PaymentHotelTable">
-                    <thead class="datatable-header">
-                        <tr>
-                            <th class="hidden" style="width: 1%">Id</th>
-                            <th style="width: 15%">Product</th>
-                            <th style="width: 10%">Ref No</th>
-                            <th style="width: 10%">Inv No</th>
-                            <th style="width: 10%">Code</th>
-                            <th style="width: 8%">Type</th>
-                            <th style="width: 15%">Amount</th>
-                            <th style="width: 15%">Description</th>
-                            <th style="width: 8%">A/C</th>
-                            <th style="width: 1%">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach var="pl" items="${productDetail_list}" varStatus="i">
+        </div>
+   
+        <c:choose>
+            <c:when test="${idRole  == 22}">        
+            <!-- Table Role Checking-->
+            <div class="row" >
+                <div class="col-12" style="width:1035px;padding-left:15px;">
+                    <table class="display" id="PaymentHotelTable">
+                        <thead class="datatable-header">
                             <tr>
-                                <td class="hidden"><input id="tableId${i.count}" name="tableId${i.count}"  type="hidden" value="${pl.id}"></td>
-                                <td>                                   
-                                    <select class="form-control" name="select-product${i.count}" id="select-product${i.count}">
-                                        <option  value="" >---------</option>
-                                    <c:forEach var="product" items="${product_list}" varStatus="status">                                       
-                                        <c:set var="select" value="" />
-                                        <c:if test="${product.id == pl.MPaytype.id}">
-                                            <c:set var="select" value="selected" />
+                                <th class="hidden" style="width: 1%">Id</th>
+                                <th style="width: 15%">Product</th>
+                                <th style="width: 10%">Ref No</th>
+                                <th style="width: 10%">Inv No</th>
+                                <th style="width: 10%">Code</th>
+                                <th style="width: 8%">Type</th>
+                                <th style="width: 15%">Amount</th>
+                                <th style="width: 15%">Description</th>
+                                <th style="width: 8%">A/C</th>
+                                <th style="width: 1%">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="pl" items="${productDetail_list}" varStatus="i">
+                                <tr>
+                                    <td class="hidden"><input id="tableId${i.count}" name="tableId${i.count}"  type="hidden" value="${pl.id}"></td>
+                                    <td>                                   
+                                        <select class="form-control" name="select-product${i.count}" id="select-product${i.count}">
+                                            <option  value="" >---------</option>
+                                        <c:forEach var="product" items="${product_list}" varStatus="status">                                       
+                                            <c:set var="select" value="" />
+                                            <c:if test="${product.id == pl.MPaytype.id}">
+                                                <c:set var="select" value="selected" />
+                                            </c:if>
+                                            <option  value="${product.id}" ${select}>${product.name}</option>
+                                        </c:forEach>
+                                        </select>                                                                  
+                                    </td>
+                                    <td> <input style="width: ${RefNo}" id="refNo${i.count}" name="refNo${i.count}" maxlength ="10"  type="text" class="form-control" value="${pl.master.referenceNo}"> </td>
+                                    <td> <input style="width: ${InvNo}" id="invNo${i.count}" name="invNo${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.invoiceCreditor}">  </td>
+                                    <td> <input style="width: ${Code}" id="code${i.count}" name="code${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.refCode}">  </td>
+                                    <td>
+                                        <c:set var="type1" value="" />
+                                        <c:if test="${'T' == pl.amountType}">
+                                            <c:set var="type1" value="checked" />
+                                        </c:if>  
+                                        <input type="radio" name="type${i.count}" id="typeT${i.count}" value="T" ${type1}> T&nbsp;
+                                        <c:set var="type2" value="" />
+                                        <c:if test="${'C' == pl.amountType}">
+                                            <c:set var="type2" value="checked" />
+                                        </c:if>  
+                                        <input type="radio" name="type${i.count}" id="typeC${i.count}" value="C" ${type2}> C
+                                    </td>
+                                    <td class="hidden" align="center">
+                                        <c:set var="vatChk" value="" />
+                                        <c:if test="${'1' == pl.isVat}">
+                                            <c:set var="vatChk" value="checked" />
+                                        </c:if>  
+                                        <input type="checkbox" id="isVat${i.count}" name="isVat${i.count}" value="check" onclick="calculateGross('${i.count}')" ${vatChk}>
+                                    </td>
+                                    <td class="hidden">
+                                        <input class="form-control" type="text" id="vat${i.count}" name="vat${i.count}" value="${pl.vat}" readonly="">
+                                    </td>
+                                    <td class="hidden">
+                                        <input class="form-control money" type="text" id="gross${i.count}" name="gross${i.count}" value="${pl.gross}" readonly="">
+                                    </td>
+                                    <td> <input style="width: ${Amount}" id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control money" onfocusout="CalculateGrandTotal('${pl.id}','${i.count}')" value="${pl.amount}"> </td>                               
+                                    <td> <input style="width: ${Description}" id="description${i.count}" name="description${i.count}" maxlength ="255"  type="text" class="form-control" value="${pl.description}"> </td>
+                                    <td> <input style="width: ${AC}" id="ac${i.count}" name="ac${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.accCode}" readonly=""> </td>
+                                    <td class="text-center">
+
+                                            <a class="remCF"><span id="SpanRemove${i.count}" onclick="deletelist('${pl.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
+
+                                        <c:if test="${lockUnlockBooking == 1}">
+                                            <span class="glyphicon glyphicon-remove deleteicon" ></span>
                                         </c:if>
-                                        <option  value="${product.id}" ${select}>${product.name}</option>
-                                    </c:forEach>
-                                    </select>                                                                  
-                                </td>
-                                <td> <input style="width: ${RefNo}" id="refNo${i.count}" name="refNo${i.count}" maxlength ="10"  type="text" class="form-control" value="${pl.master.referenceNo}"> </td>
-                                <td> <input style="width: ${InvNo}" id="invNo${i.count}" name="invNo${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.invoiceCreditor}">  </td>
-                                <td> <input style="width: ${Code}" id="code${i.count}" name="code${i.count}" maxlength ="15"  type="text" class="form-control" value="">  </td>
-                                <td>
-                                    <c:set var="type1" value="" />
-                                    <c:if test="${'T' == pl.amountType}">
-                                        <c:set var="type1" value="checked" />
-                                    </c:if>  
-                                    <input type="radio" name="type${i.count}" id="typeT${i.count}" value="T" ${type1}> T&nbsp;
-                                    <c:set var="type2" value="" />
-                                    <c:if test="${'C' == pl.amountType}">
-                                        <c:set var="type2" value="checked" />
-                                    </c:if>  
-                                    <input type="radio" name="type${i.count}" id="typeC${i.count}" value="C" ${type2}> C
-                                </td>
-                                <td> <input style="width: ${Amount}" id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control money" onfocusout="CalculateGrandTotal('${pl.id}','${i.count}')" value="${pl.amount}"> </td>                               
-                                <td> <input style="width: ${Description}" id="description${i.count}" name="description${i.count}" maxlength ="255"  type="text" class="form-control" value="${pl.description}"> </td>
-                                <td> <input style="width: ${AC}" id="ac${i.count}" name="ac${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.accCode}" readonly=""> </td>
-                                <td class="text-center">
-                                    
-                                        <a class="remCF"><span id="SpanRemove${i.count}" onclick="deletelist('${pl.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
-                                   
-                                    <c:if test="${lockUnlockBooking == 1}">
-                                        <span class="glyphicon glyphicon-remove deleteicon" ></span>
-                                    </c:if>
-                                </td>
-                            </tr>                       
-                        </c:forEach> 
-                    </tbody>
-                </table>
-                <div id="tr_ProductDetailAddRow" class="text-center hide" style="padding-top: 10px">
-                    <a class="btn btn-success" onclick="AddRow()">
-                        <i class="glyphicon glyphicon-plus"></i> Add
-                    </a>
+                                    </td>
+                                </tr>                       
+                            </c:forEach> 
+                        </tbody>
+                    </table>
+                    <div id="tr_ProductDetailAddRow" class="text-center hide" style="padding-top: 10px">
+                        <a class="btn btn-success" onclick="AddRow()">
+                            <i class="glyphicon glyphicon-plus"></i> Add
+                        </a>
+                    </div>
                 </div>
-                <input type="hidden" class="form-control" id="paymentId" name="paymentId" value="${requestScope['paymentId']}" />
-                <input type="hidden" class="form-control" id="counter" name="counter" value="${requestScope['paymenthotelcount']}" />
-                <input type="hidden" class="form-control" id="crateDate" name="crateDate" value="${requestScope['crateDate']}" />
-                <input type="hidden" class="form-control" id="ProductTourHotel" name="ProductTourHotel">  
-                <input type="hidden" class="form-control" id="productList_id" name="productList_id" />
-                <input type="hidden" name="productCountDel" id="productCountDel">
-                <input type="hidden" name="plTableId" id="plTableId">
-                <input type="hidden" value="${detail.createBy}" id="master-createBy">
-            </div>
-        </div><!--End Table --><br>
+            </div><!--End Table --><br>
+            </c:when>
+            <c:when test="${idRole  == 19}">
+            <input type="hidden" id="vatDefaultData" name="vatDefaultData" value="${requestScope['vatDefaultData']}">    
+            <!-- Table Role Account-->
+            <div class="row" >
+                <div class="col-12" style="width:1035px;padding-left:15px;">
+                    <table class="display" id="PaymentHotelTable">
+                        <thead class="datatable-header">
+                            <tr>
+                                <th class="hidden" style="width: 1%">Id</th>
+                                <th style="width: 8%">Product</th>
+                                <th style="width: 5%">Ref No</th>
+                                <th style="width: 5%">Inv No</th>
+                                <th style="width: 5%">Code</th>
+                                <th style="width: 2%">Type</th>
+                                <th style="width: 4%">Is vat</th>
+                                <th style="width: 8%">Vat</th>
+                                <th style="width: 12%">Gross</th>
+                                <th style="width: 10%">Amount</th>
+                                <th style="width: 12%">Description</th>
+                                <th style="width: 4%">A/C</th>
+                                <th style="width: 1%">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="pl" items="${productDetail_list}" varStatus="i">
+                                <tr>
+                                    <td class="hidden"><input id="tableId${i.count}" name="tableId${i.count}"  type="hidden" value="${pl.id}"></td>                                                                                                                                                                           
+                                    <td align="center">${pl.MPaytype.name}</td>
+                                    <td class="hidden">                                   
+                                        <select class="form-control" name="select-product${i.count}" id="select-product${i.count}">
+                                            <option  value="" >---------</option>
+                                        <c:forEach var="product" items="${product_list}" varStatus="status">                                       
+                                            <c:set var="select" value="" />
+                                            <c:if test="${product.id == pl.MPaytype.id}">
+                                                <c:set var="select" value="selected" />
+                                            </c:if>
+                                            <option  value="${product.id}" ${select}>${product.name}</option>
+                                        </c:forEach>
+                                        </select>                                                                  
+                                    </td>
+                                    <td align="center">${pl.master.referenceNo}</td>
+                                    <td class="hidden"> <input style="width: ${RefNo}" id="refNo${i.count}" name="refNo${i.count}" maxlength ="10"  type="text" class="form-control" value="${pl.master.referenceNo}"> </td>
+                                    <td align="center">${pl.invoiceCreditor}</td>
+                                    <td class="hidden"> <input style="width: ${InvNo}" id="invNo${i.count}" name="invNo${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.invoiceCreditor}">  </td>
+                                    <td align="center">${pl.refCode}</td>
+                                    <td class="hidden"> <input style="width: ${Code}" id="code${i.count}" name="code${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.refCode}">  </td>
+                                    <td align="center">${pl.amountType}</td>
+                                    <td class="hidden">
+                                        <c:set var="type1" value="" />
+                                        <c:if test="${'T' == pl.amountType}">
+                                            <c:set var="type1" value="checked" />
+                                        </c:if>  
+                                        <input type="radio" name="type${i.count}" id="typeT${i.count}" value="T" ${type1}> T&nbsp;
+                                        <c:set var="type2" value="" />
+                                        <c:if test="${'C' == pl.amountType}">
+                                            <c:set var="type2" value="checked" />
+                                        </c:if>  
+                                        <input type="radio" name="type${i.count}" id="typeC${i.count}" value="C" ${type2}> C
+                                    </td>
+                                    <td align="center">
+                                        <c:set var="vatChk" value="" />
+                                        <c:if test="${'1' == pl.isVat}">
+                                            <c:set var="vatChk" value="checked" />
+                                        </c:if>  
+                                        <input type="checkbox" id="isVat${i.count}" name="isVat${i.count}" value="check" onclick="calculateGross('${i.count}')" ${vatChk}>
+                                    </td>
+                                    <td>
+                                        <input class="form-control" type="text" id="vat${i.count}" name="vat${i.count}" value="${pl.vat}" readonly="">
+                                    </td>
+                                    <td>
+                                        <input class="form-control money" type="text" id="gross${i.count}" name="gross${i.count}" value="${pl.gross}" readonly="">
+                                    </td>
+                                    <td class="hidden">
+                                        <input class="form-control money" type="text" id="amountCal${i.count}" name="amountCal$${i.count}" value="${pl.amount}">
+                                    </td>
+                                    <td> <input style="width: ${Amount}" id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control money" value="${pl.amount}" readonly=""> </td>                               
+                                    <td>${pl.description}</td>
+                                    <td class="hidden"> <input style="width: ${Description}" id="description${i.count}" name="description${i.count}" maxlength ="255"  type="text" class="form-control" value="${pl.description}"> </td>                                   
+                                    <td align="center">${pl.accCode}</td>
+                                    <td class="hidden"> <input style="width: ${AC}" id="ac${i.count}" name="ac${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.accCode}" readonly=""> </td>
+                                    <td align="center">-</td>
+                                </tr>                       
+                            </c:forEach> 
+                        </tbody>
+                    </table>
+                    <div id="tr_ProductDetailAddRow" class="text-center hide" style="padding-top: 10px">
+                        <a class="btn btn-success" onclick="AddRow()">
+                            <i class="glyphicon glyphicon-plus"></i> Add
+                        </a>
+                    </div>
+                </div>
+            </div><!--End Table --><br>    
+            </c:when>
+        </c:choose>
+        
+        <input type="hidden" class="form-control" id="paymentId" name="paymentId" value="${requestScope['paymentId']}" />
+        <input type="hidden" class="form-control" id="counter" name="counter" value="${requestScope['paymenthotelcount']}" />
+        <input type="hidden" class="form-control" id="crateDate" name="crateDate" value="${requestScope['crateDate']}" />
+        <input type="hidden" class="form-control" id="payNo" name="payNo" value="${requestScope['payNo']}" />
+        <input type="hidden" class="form-control" id="ProductTourHotel" name="ProductTourHotel">  
+        <input type="hidden" class="form-control" id="productList_id" name="productList_id" />
+        <input type="hidden" name="productCountDel" id="productCountDel">
+        <input type="hidden" name="plTableId" id="plTableId">
+        <input type="hidden" value="${detail.createBy}" id="master-createBy">
+        
         <!-- Table Content -->
         <div class="panel panel-default">                    
             <div class="panel-body">
@@ -359,9 +499,13 @@
                
             </div>
             <div class="col-xs-6 text-left">
-                <button type="button" id="btnNew" name="btnNew" onclick="clearScreen()" class="btn btn-primary">
-                    <i class="glyphicon glyphicon-plus"></i> New
-                </button>
+                <c:choose>
+                    <c:when test="${idRole  == 22}">
+                    <button type="button" id="btnNew" name="btnNew" onclick="clearScreen()" class="btn btn-primary">
+                        <i class="glyphicon glyphicon-plus"></i> New
+                    </button>
+                    </c:when>
+                </c:choose>
             </div>                         
         </div><!--End Button -->
     </div>
@@ -683,7 +827,9 @@
     AddRow(parseInt($("#counter").val()));
                   
     function AddRow(row) {
-        $("#PaymentHotelTable tbody").append(
+        var idRole = '${idRole}';
+        if(idRole === '22'){                  
+            $("#PaymentHotelTable tbody").append(
                 '<tr style="higth 100px">' +
                 '<td class="hidden"> <input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >  </td>' +
                 '<td>' + 
@@ -703,10 +849,11 @@
                 '<a class="remCF" onclick="deletelist(\'\', \''+row+'\')">  '+
                 '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
                 '</tr>'
-        );
-        $("#select_product_list option").clone().appendTo("#select-product" + row);
-        var tempCount = parseInt($("#counter").val()) + 1;
-        $("#counter").val(tempCount);
+            );
+            $("#select_product_list option").clone().appendTo("#select-product" + row);
+            var tempCount = parseInt($("#counter").val()) + 1;
+            $("#counter").val(tempCount);
+        }
       
     }
     
@@ -855,5 +1002,24 @@
         }            
         document.getElementById('PaymentTourHotelForm').submit();
     }
+    
+    function calculateGross(row){
+        var amount = document.getElementById('amountCal'+row).value;
+        var gross = document.getElementById('gross'+row).value;
+        var vat = document.getElementById('vat'+row).value;
+        var vatDefaultData = parseFloat(document.getElementById('vatDefaultData').value);
+        
+        amount = amount.replace(/,/g,"");
+        var grossTotal = parseFloat(amount);
+        
+        if((gross === '')){
+            grossTotal = (amount*100)/(100+vatDefaultData);
+            document.getElementById('gross'+row).value = formatNumber(grossTotal);
+            document.getElementById('vat'+row).value = vatDefaultData;
+        } else {
+            document.getElementById('gross'+row).value = '';
+            document.getElementById('vat'+row).value = ''
+        }    
+    }    
    
 </script>
