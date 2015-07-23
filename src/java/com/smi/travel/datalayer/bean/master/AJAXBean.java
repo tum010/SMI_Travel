@@ -16,6 +16,7 @@ import com.smi.travel.datalayer.dao.MAirportDao;
 import com.smi.travel.datalayer.dao.MasterDao;
 import com.smi.travel.datalayer.dao.OtherBookingDao;
 import com.smi.travel.datalayer.dao.PackageTourDao;
+import com.smi.travel.datalayer.dao.PaymentAirTicketDao;
 import com.smi.travel.datalayer.dao.ProductDetailDao;
 import com.smi.travel.datalayer.dao.TicketFareAirlineDao;
 import com.smi.travel.datalayer.dao.TransferJobDao;
@@ -77,7 +78,7 @@ public class AJAXBean extends AbstractBean implements
     private static final String MAIL = "MailServlet";
     private static final String BOOKINGSTATUS = "BookingStatusServlet";
     private static final String TICKETFAREAIRLINE = "TicketFareAirlineServlet";
-    
+    private static final String PAYMENTAIRTICKET = "PaymentAirTicketServlet";
     private CustomerDao customerdao;
     private ProductDetailDao productDetailDao;
     private BookingSummaryDao bookingsummarydao;
@@ -92,6 +93,7 @@ public class AJAXBean extends AbstractBean implements
     private MasterDao masterdao;
     private OtherBookingDao otherBookingDao;
     private TicketFareAirlineDao ticketFareAirlineDao; 
+    private PaymentAirTicketDao paymentairticketdao; 
     public AJAXBean(List queryList) {
         super(queryList);
         if (queryList != null && queryList.size() > 0) {
@@ -126,7 +128,9 @@ public class AJAXBean extends AbstractBean implements
                     otherBookingDao = (OtherBookingDao) obj;
                 } else if (obj instanceof TicketFareAirlineDao) {
                     ticketFareAirlineDao = (TicketFareAirlineDao) obj;
-                } 
+                } else if (obj instanceof PaymentAirTicketDao){
+                    paymentairticketdao = (PaymentAirTicketDao) obj;
+                }
             }
         }
     }
@@ -570,7 +574,12 @@ public class AJAXBean extends AbstractBean implements
                 System.out.println("referNo"+referNo);
                 result = ticketFareAirlineDao.getListTicketFareFromRefno(referNo);
             }
-        } 
+        } else if (PAYMENTAIRTICKET.equalsIgnoreCase(servletName)) {
+            if ("addRefund".equalsIgnoreCase(type)) {
+                String refundNo = map.get("refundNo").toString();
+                result = paymentairticketdao.addRefundAirTicket(refundNo);
+            }
+        }  
         return result;
     }
     
@@ -977,6 +986,14 @@ public class AJAXBean extends AbstractBean implements
     
     public void setSendMail(Mail sendMail) {
         this.sendMail = sendMail;
+    }
+
+    public PaymentAirTicketDao getPaymentairticketdao() {
+        return paymentairticketdao;
+    }
+
+    public void setPaymentairticketdao(PaymentAirTicketDao paymentairticketdao) {
+        this.paymentairticketdao = paymentairticketdao;
     }
 
  
