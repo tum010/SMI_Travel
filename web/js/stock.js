@@ -8,6 +8,7 @@ $(document).ready(function () {
     $(".datemask").mask('0000-00-00', {reverse: true});
     $(".money").mask('000,000,000,000,000,000', {reverse: true});
     
+    $(".number").mask('000000000000000000', {reverse: true});
     var currentDate = new Date();  
     $("#InputStockDate").datepicker("setDate",currentDate);
     
@@ -129,32 +130,26 @@ function validFrom(){
                     validating: 'uk-icon-refresh'
                 },
                 fields: {
-//                    InputEffectiveFromDate: {
-//                        trigger: 'focus keyup change',
-//                        validators: {
-//                            notEmpty: {
-//                                message: 'The Date From is required'
-//                            },
-//                            date: {
-//                                format: 'YYYY-MM-DD',
-//                                max: 'InputInputEffectiveToDate',
-//                                message: 'The Date From is not a valid'
-//                            }
-//                        }
-//                    },
-//                    InputInputEffectiveToDate: {
-//                        trigger: 'focus keyup change',
-//                        validators: {
-//                            notEmpty: {
-//                                message: 'The Date To is required'
-//                            },
-//                            date: {
-//                                format: 'YYYY-MM-DD',
-//                                min: 'InputEffectiveFromDate',
-//                                message: 'The Date To is not a valid'
-//                            }
-//                        }
-//                    },
+                    InputEffectiveFromDate: {
+                        trigger: 'focus keyup change',
+                        validators: {
+                            date: {
+                                format: 'YYYY-MM-DD',
+                                max: 'InputInputEffectiveToDate',
+                                message: 'The Date From is not a valid'
+                            }
+                        }
+                    },
+                    InputInputEffectiveToDate: {
+                        trigger: 'focus keyup change',
+                        validators: {
+                            date: {
+                                format: 'YYYY-MM-DD',
+                                min: 'InputEffectiveFromDate',
+                                message: 'The Date To is not a valid'
+                            }
+                        }
+                    },
                     InputProduct : {
                         validators: {
                             notEmpty: {
@@ -191,9 +186,7 @@ function validFrom(){
             });
             $('#DateTo').datetimepicker().on('dp.change', function (e) {
                 $('#StockForm').bootstrapValidator('revalidateField', 'InputInputEffectiveToDate');
-            });
-            
-//            $('#StockForm').submit();
+            });          
 }
 
 function AddRow(row) {
@@ -203,14 +196,14 @@ function AddRow(row) {
             '<td>' + row + '</td>' +
             '<td><input type="text"  class="form-control" name="codeItemList' + row + '" id="codeItemList' + row + '" value=""/></td>' +
             '<td><select id="SeleteTypeItemList' + row + '" name="SeleteTypeItemList' + row + '" class="form-control"><option></option>'+ select +'</select></td>' +
-            '<td>0</td>' +
+            '<td>No Paid</td>' +
             '<td>NEW</td>' +
             '<td class="text-center"><a href="#" onclick="deleteItemListRow('+row+')"  data-toggle="modal" data-target="" class="remCF" id="ButtonRemove' + row + '"><span id="Spanremove' + row + '" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal" data-target="#delStockModal"></span></a></td>' +
             '</tr>'
             );
     var tempCount = parseInt($("#counter").val()) + 1;
     var count = document.getElementById('counterTable');
-    count.value++;
+    count.value = row;
     $("#counter").val(tempCount);
 }
 
@@ -219,17 +212,25 @@ function searchAction() {
     action.value = 'save';
     document.getElementById('StockForm').submit();
 }
+function zeroPad(num, places) {
+  var zero = places - num.toString().length + 1;
+  return Array(+(zero > 0 && zero)).join("0") + num;
+}
+
 var isCheckLength = 0;
+var isCheckDuplicate = 0;
+
 function addItemList(){
     var prefix  = document.getElementById('InputPrefix');
     var start  = document.getElementById('InputStart');
     var number  = document.getElementById('InputNumberOfItem');
+    var digit = document.getElementById("InputDigit");
     var type  = document.getElementById('Selecttype');
     var count = document.getElementById('counterTable');
     var countAdd = document.getElementById('counterAdd');
+    
     //check length code 
-    checklength(prefix.value,start.value);
-//    alert("Is Check : " + isCheckLength);
+    checklength(prefix.value,digit.value);
     if(isCheckLength === 0){      
         var st = start.value;
         if(countAdd.value === 1){
@@ -238,40 +239,50 @@ function addItemList(){
             $("#StockTable tr:last").remove();
         }
         var res = select.replace("value='"+ type.value+"'", "selected value='"+ type.value+"'");
-        for (var i = 1 ; i <= number.value; i++){
-            $("#StockTable tbody").append(
-                '<tr>' +
-                '<td class="hidden"><input type="hidden"  id="stockDetailId' + count.value + '" name="stockDetailId' + count.value + '" value="" /></td>' +
-                '<td>'+ count.value +'</td>' +
-                '<td><input type="text"  class="form-control" name="codeItemList' + count.value + '" id="codeItemList' + count.value + '" value="'+prefix.value+'-'+start.value+'"/></td>' +
-                '<td><select id="SeleteTypeItemList' + count.value + '" name="SeleteTypeItemList' + count.value + '" class="form-control">' + res + '</select></td>' +
-                '<td>0</td>' +
-                '<td>NEW</td>' +
-                '<td class="text-center"><a href="#"  class="remCF" id="ButtonRemove' + count.value + '" onclick="deleteItemListRow('+count.value+",'"+ prefix.value+"-"+start.value+"'"+')" data-toggle="modal" data-target="#delStockModal"><span id="Spanremove' + count.value + '" class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
-                '</tr>'
-                );
-                start.value++;
-                count.value++;          
-        }
+        checkDuplicate(prefix.value,digit.value,start.value,number.value);
+        if(isCheckDuplicate === 0){
+            for (var i = 1 ; i <= number.value; i++){          
+                // Concat prefix + start + digit
+                var code = zeroPad(start.value, digit.value);
+                $("#StockTable tbody").append(
+                    '<tr>' +
+                    '<td class="hidden"><input type="hidden"  id="stockDetailId' + count.value + '" name="stockDetailId' + count.value + '" value="" /></td>' +
+                    '<td>'+ count.value +'</td>' +
+                    '<td><input type="text"  class="form-control" name="codeItemList' + count.value + '" id="codeItemList' + count.value + '" value="'+prefix.value+'-'+code+'"/></td>' +
+                    '<td><select id="SeleteTypeItemList' + count.value + '" name="SeleteTypeItemList' + count.value + '" class="form-control">' + res + '</select></td>' +
+                    '<td>No Paid</td>' +
+                    '<td>NEW</td>' +
+                    '<td class="text-center"><a href="#"  class="remCF" id="ButtonRemove' + count.value + '" onclick="deleteItemListRow('+count.value+",'"+ prefix.value+"-"+code+"'"+')" data-toggle="modal" data-target="#delStockModal"><span id="Spanremove' + count.value + '" class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
+                    '</tr>'
+                    );
+                    start.value++;
+                    count.value++; 
+            }
+        
         start.value = st;
         countAdd.value++;
         AddRow(count.value);
         resetNumberItemList();
+        }else{
+            alert("Duplicate Code in Table!!!");
+        }
     }
 }
 
-function checklength(prefix,start){
+function checklength(prefix,digit){
     var code = "";
     var  len = 0;
-    code = prefix + "-" + start;
+    var text = "";
+    for(var i = 0 ; i < digit ; i++){
+        text += 0;
+    }
+    
+    code = prefix + "-" + text;
     len = code.length;
-//    alert("Length : "+len);
     if(len > 50){
-//        $('#checklengthCode').show();
         alert("Max length More 50");
         isCheckLength = 1;
     }else{
-//        $('#checklengthCode').hide();
         isCheckLength = 0;
     }
 }
@@ -287,16 +298,20 @@ function deleteItemListRow(rowId,code){
 
 function deleteStock(){
     // ID In Modal Delete
+    var count = document.getElementById('counterTable');
     var rowId  = document.getElementById('idStockDelete');
     var stockDetailId  = $("#stockDetailId"+rowId.value).val();   
     if(stockDetailId !== ""){
         rowId.value = stockDetailId ;
         var action = document.getElementById('action');
         action.value = 'delete';
+        resetNumberItemList();
         document.getElementById('StockForm').submit();
+        
     }else{
         document.getElementById("StockTable").deleteRow(rowId.value);
-        alert("Row Delete : " + rowId.value);
+//        alert("Row Delete : " + rowId.value);
+        count.value = count.value -1 ;
         resetNumberItemList();
     }
     resetNumberItemList();
@@ -305,6 +320,32 @@ function resetNumberItemList(){
     var rows = document.getElementById("StockTable").getElementsByTagName("tr").length;
     var countRow = document.getElementById('StockTable').rows; 
     for (var i = 1 ; i <= (rows-1); i++){  
-        countRow[i].cells[1].innerHTML = i; 
+        var code = document.getElementById("codeItemList"+i); 
+        countRow[i].cells[1].innerHTML = i;
+        countRow[i].cells[2].getElementsByTagName("input")[0].name = "codeItemList" + i;
+//        countRow[i].cells[6].innerHTML = "<a href='#'  class='remCF' id='ButtonRemove"+ i +"'  onclick='deleteItemListRow"+"('"+i+"','"+code+"')'  data-toggle='modal' data-target='#delStockModal'><span id='Spanremove"+ i +"'  class='glyphicon glyphicon-remove deleteicon'></span></a>";
+    }  
+}
+
+function checkDuplicate(prefix,digit,start,number){
+    var codeNew = [];
+    var text = "";
+    for(var j = 1 ; j <= number ; j++){
+        text = prefix + "-"+zeroPad(start, digit);
+        codeNew.push(text);
+        start++;
+    }
+    var rows = document.getElementById("StockTable").getElementsByTagName("tr").length;
+    for (var i = 1 ; i <= (rows-1); i++){  
+        var codeOld = document.getElementById("codeItemList"+i);
+        var k = 0;       
+        for(k = 0 ; k < codeNew.length ; k++){
+            alert("Old : " + codeOld.value + " New : " + codeNew[k]);
+            if(codeNew[k] === codeOld.value){           
+                isCheckDuplicate = 1;
+            }else{
+                isCheckDuplicate = 0;
+            }
+        }      
     }  
 }
