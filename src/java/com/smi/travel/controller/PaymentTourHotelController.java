@@ -43,6 +43,7 @@ public class PaymentTourHotelController extends SMITravelController {
     private static final String PRODUCTLIST ="product_list";
     private static final String CURRENCYLIST ="currency_list";
     private static final String PRODUCTDETAILLIST ="productDetail_list";
+    private static final String REFNOLIST ="refNo_list";
     private UtilityService utilservice;
     UtilityFunction util;
     private PaymentTourHotelService paymentTourHotelService;
@@ -96,6 +97,9 @@ public class PaymentTourHotelController extends SMITravelController {
         String nameDefaultData = mDefaultData.getName();
         BigDecimal vatDefaultData = new BigDecimal(mDefaultData.getValue());
         request.setAttribute("vatDefaultData", vatDefaultData);
+        
+        List<String> RefNoList =  paymentTourHotelService.getMasterAll();       
+        request.setAttribute(REFNOLIST, RefNoList);
 
         if ("add".equalsIgnoreCase(action)) {
             
