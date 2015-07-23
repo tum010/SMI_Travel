@@ -9,6 +9,7 @@ import com.smi.travel.datalayer.dao.AgentDao;
 import com.smi.travel.datalayer.dao.AirticketBookingDao;
 import com.smi.travel.datalayer.dao.CustomerDao;
 import com.smi.travel.datalayer.dao.DaytourDao;
+import com.smi.travel.datalayer.dao.DefineVarDao;
 import com.smi.travel.datalayer.dao.MBankDao;
 import com.smi.travel.datalayer.dao.MCityDao;
 import com.smi.travel.datalayer.dao.MListItemDao;
@@ -26,6 +27,7 @@ import com.smi.travel.datalayer.entity.MBilltype;
 import com.smi.travel.datalayer.entity.MBookingstatus;
 import com.smi.travel.datalayer.entity.MCity;
 import com.smi.travel.datalayer.entity.MCurrency;
+import com.smi.travel.datalayer.entity.MDefaultData;
 import com.smi.travel.datalayer.entity.MFlight;
 import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.entity.MItemstatus;
@@ -63,6 +65,7 @@ public class UtilityService {
     private MBankDao mbankdao;
     private CustomerAgentInfoDao customeragentinfodao;
     private InvoiceSuppilerDao invoicesuppilerdao;
+     private DefineVarDao defineVardao;
     
     public int[] getCountItemFromBooking(String refno) {
         int[] Booking_size = new int[7];
@@ -112,6 +115,16 @@ public class UtilityService {
 
     public MInitialname getMInitialnameFromId(String id) {
         return listitemdao.getMInitialnameFromId(id);
+    }
+    
+    public MDefaultData getListMDefaultData(String type){   
+        List<MDefaultData> data = defineVardao.getListDefaultData();
+        for(int i=0;i<data.size();i++){
+            if(data.get(i).getType().equalsIgnoreCase(type)){
+                return data.get(i);
+            }
+        }
+        return null; 
     }
     
     public List<MCity> getListMCity(){
