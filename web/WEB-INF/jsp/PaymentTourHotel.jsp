@@ -18,6 +18,7 @@
 <c:set var="detail" value="${requestScope['BookDetail']}" />
 <c:set var="resultText" value="${requestScope['resultText']}" />
 <c:set var="idRole" value="${requestScope['idRole']}" />
+<c:set var="refNo_list" value="${requestScope['refNo_list']}" />
 
 <section class="content-header" >
     <h1>
@@ -286,7 +287,7 @@
                                         </c:forEach>
                                         </select>                                                                  
                                     </td>
-                                    <td> <input style="width: ${RefNo}" id="refNo${i.count}" name="refNo${i.count}" maxlength ="10"  type="text" class="form-control" value="${pl.master.referenceNo}"> </td>
+                                    <td> <input style="width: ${RefNo}" id="refNo${i.count}" name="refNo${i.count}" maxlength ="10"  type="text" class="form-control" value="${pl.master.referenceNo}" onfocusout="checkRefNo('${i.count}')"> </td>
                                     <td> <input style="width: ${InvNo}" id="invNo${i.count}" name="invNo${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.invoiceCreditor}">  </td>
                                     <td> <input style="width: ${Code}" id="code${i.count}" name="code${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.refCode}">  </td>
                                     <td>
@@ -306,7 +307,7 @@
                                         <c:if test="${'1' == pl.isVat}">
                                             <c:set var="vatChk" value="checked" />
                                         </c:if>  
-                                        <input type="checkbox" id="isVat${i.count}" name="isVat${i.count}" value="check" onclick="calculateGross('${i.count}')" ${vatChk}>
+                                        <input type="checkbox" id="isVat${i.count}" name="isVat${i.count}" value="check" ${vatChk}>
                                     </td>
                                     <td class="hidden">
                                         <input class="form-control" type="text" id="vat${i.count}" name="vat${i.count}" value="${pl.vat}" readonly="">
@@ -679,6 +680,26 @@
    
         $(".money").mask('000,000,000,000,000,000.00', {reverse: true});
         
+        
+         $('#PaymentHotelTable tbody').bootstrapValidator({
+            container: 'tooltip',
+            excluded: [':disabled', ':hidden', ':not(:visible)'],
+            feedbackIcons: {
+                valid: 'uk-icon-check',
+                invalid: 'uk-icon-times',
+                validating: 'uk-icon-refresh'
+            },
+            fields: {
+                'refNo[]': {
+                    validators: {
+                        notEmpty: {
+                            message: 'Ref no is required'
+                        }
+                    }
+                }           
+            }
+        });
+        
         $('#PaymentTourHotelForm').bootstrapValidator({
             container: 'tooltip',
             excluded: [':disabled', ':hidden', ':not(:visible)'],
@@ -715,9 +736,10 @@
                             message: 'Account is required'
                         }
                     }
-                }           
-        }
+                }               
+            }
         });
+        
         
         $("#PaymentHotelTable").on("keyup", "select:last", function () {
             var row = parseInt($("#counter").val());
@@ -835,7 +857,7 @@
                 '<td>' + 
                 '<select class="form-control" name="select-product' + row + '" id="select-product' + row + '" ><option value="">---------</option></select>' +                          
                 '</td>' +
-                '<td><input maxlength ="10" id="refNo' + row + '" name="refNo' + row + '"   type="text" class="form-control "></td>' +
+                '<td><input maxlength ="10" id="refNo' + row + '" name="refNo' + row + '"   type="text" class="form-control " onfocusout="checkRefNo(\''+row+'\')"></td>' +
                 '<td><input maxlength ="15" id="invNo' + row + '" name="invNo' + row + '"   type="text" class="form-control "></td>' +
                 '<td><input maxlength ="15" id="code' + row + '" name="code' + row + '"   type="text" class="form-control "></td>' +
                 '<td align="center">' +
@@ -1020,6 +1042,23 @@
             document.getElementById('gross'+row).value = '';
             document.getElementById('vat'+row).value = ''
         }    
-    }    
+    }  
+    
+    function checkRefNo(row){
+        var list = '${refNo_list}';
+        var refNo = document.getElementById('refNo'+row).value;
+        list = list.replace("[","");
+        list = list.replace("]","");
+        list = list.replace(/ /g,"");
+        alert(list);
+        var refNo_list = list.split(',');
+        for(var i = 0;i<=refNo_list.length;i++){
+           if(String(refNo) === String(refNo_list[i])){
+                alert('true');
+                return;
+           }
+        }
+        alert('false');
+    }
    
 </script>
