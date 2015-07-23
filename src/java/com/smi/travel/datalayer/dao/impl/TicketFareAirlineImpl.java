@@ -327,7 +327,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                 ticketFareView.setTicketNo(String.valueOf(listAirline.get(i).getTicketNo()));
                 ticketFareView.setIssueDate(listAirline.get(i).getIssueDate());
 //                ticketFareView.setInvoiceNo(listAirline.get(i).get);
-//                ticketFareView.setDepartment(listAirline.get(i).get);
+                ticketFareView.setDepartment(listAirline.get(i).getDepartment());
                 ticketFareView.setFare(listAirline.get(i).getTicketFare());
                 ticketFareView.setTax(listAirline.get(i).getTicketTax());
                 ticketFareView.setTicketCommission(listAirline.get(i).getTicketCommission());

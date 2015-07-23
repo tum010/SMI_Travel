@@ -19,11 +19,11 @@
         <property name="dueDate" type="date">
             <column name="due_date" length="10" />
         </property>
-        <property name="invoiceSup" type="java.lang.Integer">
-            <column name="invoice_sup" />
+        <property name="invoiceSup" type="string">
+            <column name="invoice_sup" length="11" />
         </property>
-        <property name="apCode" type="java.lang.Integer">
-            <column name="ap_code" />
+        <property name="apCode" type="string">
+            <column name="ap_code" length="11" />
         </property>
         <property name="detail" type="string">
             <column name="detail" />

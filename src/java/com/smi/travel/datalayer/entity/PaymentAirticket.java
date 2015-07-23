@@ -19,8 +19,8 @@ public class PaymentAirticket  {
      private String payNo;
      private Date payDate;
      private Date dueDate;
-     private Integer invoiceSup;
-     private Integer apCode;
+     private String invoiceSup;
+     private String apCode;
      private String detail;
      private BigDecimal agentAmount;
      private BigDecimal cash;
@@ -34,16 +34,16 @@ public class PaymentAirticket  {
      private String department;
      private Date createDate;
      private Integer isExport;
-     private BigDecimal TotalAmount;
-     private BigDecimal DebitAmount;
-     private BigDecimal CreditAmount;
+     private BigDecimal totalAmount;
+     private BigDecimal debitAmount;
+     private BigDecimal creditAmount;
      private List paymentAirticketRefunds = new LinkedList<PaymentAirticketRefund>();
      private List paymentAirticketFares = new LinkedList<PaymentAirticketFare>();
      
     public PaymentAirticket() {
     }
 
-    public PaymentAirticket(MAccpay MAccpay, String payNo, Date payDate, Date dueDate, Integer invoiceSup, Integer apCode, String detail, BigDecimal agentAmount, BigDecimal cash, BigDecimal witholdingTax, String chqNo, BigDecimal chqAmount, BigDecimal ticketInsurance, String creditNote, String debitNote, String createBy, Date createDate, List paymentAirticketRefunds, List paymentAirticketFares,Integer isExport,String department,BigDecimal TotalAmount,BigDecimal DebitAmount,BigDecimal CreditAmount) {
+    public PaymentAirticket(MAccpay MAccpay, String payNo, Date payDate, Date dueDate, String invoiceSup, String apCode, String detail, BigDecimal agentAmount, BigDecimal cash, BigDecimal witholdingTax, String chqNo, BigDecimal chqAmount, BigDecimal ticketInsurance, String creditNote, String debitNote, String createBy, Date createDate, List paymentAirticketRefunds, List paymentAirticketFares,Integer isExport,String department,BigDecimal totalAmount,BigDecimal debitAmount,BigDecimal creditAmount) {
        this.MAccpay = MAccpay;
        this.payNo = payNo;
        this.payDate = payDate;
@@ -65,9 +65,9 @@ public class PaymentAirticket  {
        this.paymentAirticketFares = paymentAirticketFares;
        this.isExport = isExport;
        this.department = department;
-       this.TotalAmount = TotalAmount; 
-       this.DebitAmount = DebitAmount;
-       this.CreditAmount = CreditAmount;
+       this.totalAmount = totalAmount; 
+       this.debitAmount = debitAmount;
+       this.creditAmount = creditAmount;
     }
    
     public String getId() {
@@ -106,20 +106,23 @@ public class PaymentAirticket  {
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
     }
-    public Integer getInvoiceSup() {
-        return this.invoiceSup;
+
+    public String getInvoiceSup() {
+        return invoiceSup;
     }
-    
-    public void setInvoiceSup(Integer invoiceSup) {
+
+    public void setInvoiceSup(String invoiceSup) {
         this.invoiceSup = invoiceSup;
     }
-    public Integer getApCode() {
-        return this.apCode;
+
+    public String getApCode() {
+        return apCode;
     }
-    
-    public void setApCode(Integer apCode) {
+
+    public void setApCode(String apCode) {
         this.apCode = apCode;
     }
+    
     public String getDetail() {
         return this.detail;
     }
@@ -231,28 +234,30 @@ public class PaymentAirticket  {
     }
 
     public BigDecimal getTotalAmount() {
-        return TotalAmount;
+        return totalAmount;
     }
 
-    public void setTotalAmount(BigDecimal TotalAmount) {
-        this.TotalAmount = TotalAmount;
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     public BigDecimal getDebitAmount() {
-        return DebitAmount;
+        return debitAmount;
     }
 
-    public void setDebitAmount(BigDecimal DebitAmount) {
-        this.DebitAmount = DebitAmount;
+    public void setDebitAmount(BigDecimal debitAmount) {
+        this.debitAmount = debitAmount;
     }
 
     public BigDecimal getCreditAmount() {
-        return CreditAmount;
+        return creditAmount;
     }
 
-    public void setCreditAmount(BigDecimal CreditAmount) {
-        this.CreditAmount = CreditAmount;
+    public void setCreditAmount(BigDecimal creditAmount) {
+        this.creditAmount = creditAmount;
     }
+
+
     
     
 

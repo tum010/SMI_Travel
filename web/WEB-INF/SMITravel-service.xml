@@ -263,6 +263,8 @@
         <property name="ticketFareAirlineDao" ref="TicketFareAirlineDao" />
     </bean>
     
-    
+    <bean id="PaymentAirTicketService" class="com.smi.travel.datalayer.service.PaymentAirTicketService">
+        <property name="paymentairticketdao" ref="PaymentAirTicketDao" />
+    </bean>
     <!--<add data>-->
 </beans>

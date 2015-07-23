@@ -461,7 +461,8 @@
 	</bean>
 	<bean id="PaymentAirlineController" class="com.smi.travel.controller.PaymentAirlineController">
 		<property name="utilityService" ref="UtilityService" />
-	</bean>
+            <property name="paymentAirTicketService" ref="PaymentAirTicketService" />
+	</bean> 
 	<bean id="PaymentOutboundController" class="com.smi.travel.controller.PaymentOutboundController">
 
 	</bean>

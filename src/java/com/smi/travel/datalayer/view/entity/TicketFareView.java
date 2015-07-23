@@ -28,6 +28,9 @@ public class TicketFareView {
     private BigDecimal ticketCommission;
     private BigDecimal agentCommission;
     private BigDecimal diffVat;
+    private BigDecimal ticketIns;
+    private BigDecimal salePrice;
+    private String referenceNo;
     
     public TicketFareView(){
         
@@ -143,6 +146,30 @@ public class TicketFareView {
 
     public void setDiffVat(BigDecimal diffVat) {
         this.diffVat = diffVat;
+    }
+
+    public BigDecimal getTicketIns() {
+        return ticketIns;
+    }
+
+    public void setTicketIns(BigDecimal ticketIns) {
+        this.ticketIns = ticketIns;
+    }
+
+    public BigDecimal getSalePrice() {
+        return salePrice;
+    }
+
+    public void setSalePrice(BigDecimal salePrice) {
+        this.salePrice = salePrice;
+    }
+
+    public String getReferenceNo() {
+        return referenceNo;
+    }
+
+    public void setReferenceNo(String referenceNo) {
+        this.referenceNo = referenceNo;
     }
 
 
