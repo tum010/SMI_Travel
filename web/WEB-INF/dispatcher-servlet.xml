@@ -108,9 +108,9 @@
 				<prop key="Stock.smi">StockController</prop>
 				<prop key="SearchStock.smi">SearchStockController</prop>
 				<prop key="DefineVar.smi">DefineVarController</prop>
-                                <prop key="CreditNote.smi">CreditNoteController</prop>
-                                <prop key="SearchCreditNote.smi">SearchCreditNoteController</prop>
-                <prop key="MAccountCode.smi">MAccountCodeController</prop>
+				<prop key="CreditNote.smi">CreditNoteController</prop>
+				<prop key="SearchCreditNote.smi">SearchCreditNoteController</prop>
+
 				<!-- add mapping url -->
 			</props>
 		</property>
@@ -460,7 +460,7 @@
 
 	</bean>
 	<bean id="PaymentAirlineController" class="com.smi.travel.controller.PaymentAirlineController">
-            <property name="utilityService" ref="UtilityService" />
+		<property name="utilityService" ref="UtilityService" />
 	</bean>
 	<bean id="PaymentOutboundController" class="com.smi.travel.controller.PaymentOutboundController">
 
@@ -486,7 +486,7 @@
 
 	</bean>
 	<bean id="ReceiptController" class="com.smi.travel.controller.ReceiptController">
-            <property name="utilityService" ref="UtilityService" />
+		<property name="utilityService" ref="UtilityService" />
 	</bean>
 	<bean id="SearchReceiptController" class="com.smi.travel.controller.SearchReceiptController">
 
@@ -516,16 +516,17 @@
 		class="com.smi.travel.masterdata.controller.DefineVarController">
 		<property name="defineVarService" ref="DefineVarService"></property>
 	</bean>
-        
-        <bean id="CreditNoteController" class="com.smi.travel.controller.CreditNoteController">
-        </bean>
-    
-        <bean id="SearchCreditNoteController" class="com.smi.travel.controller.SearchCreditNoteController">
-        </bean>
-        
-    <bean id="MAccountCodeController" class="com.smi.travel.masterdata.controller.MAccountCodeController">
-      
-    </bean>
+
+	<bean id="CreditNoteController" class="com.smi.travel.controller.CreditNoteController">
+	</bean>
+
+	<bean id="SearchCreditNoteController" class="com.smi.travel.controller.SearchCreditNoteController">
+	</bean>
+
+	<bean id="MAccountCodeController"
+		class="com.smi.travel.masterdata.controller.MAccountCodeController">
+
+	</bean>
 	<!-- add bean id controller -->
 
 	<bean id="monitorGalileo" class="com.smi.travel.monitor.MonitorGalileo"
@@ -606,11 +607,6 @@
 		<property name="lockUnlockBookingService" ref="LockUnlockBookingService" />
 	</bean>
 
-<!--
-	<mvc:annotation-driven />
-	<context:annotation-config />
-	
-	<context:component-scan base-package="com.smi.travel.controller" />
-        
-        -->
+	<!-- <mvc:annotation-driven /> <context:annotation-config /> <context:component-scan 
+		base-package="com.smi.travel.controller" /> -->
 </beans>
