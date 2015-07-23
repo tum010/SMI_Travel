@@ -284,6 +284,24 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
         }
         return list.get(0);   
     }
+    
+    public List<String> getMasterAll(){
+        String query = "from Master M";
+        Session session = this.sessionFactory.openSession();
+        List<Master> list = session.createQuery(query).list();
+        
+        if (list.isEmpty()) {
+            return null;
+        }
+        
+        List<String> RefNoList = new ArrayList<String>();
+        for (int i = 0;i<list.size();i++) {
+            RefNoList.add(list.get(i).getReferenceNo());
+        }
+       
+        
+        return RefNoList;   
+    }
 
 
     public SessionFactory getSessionFactory() {
