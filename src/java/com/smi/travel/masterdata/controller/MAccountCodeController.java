@@ -1,18 +1,47 @@
 package com.smi.travel.masterdata.controller;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
-import com.smi.travel.master.controller.SMITravelController;
 
-public class MAccountCodeController extends SMITravelController {
-    private static final ModelAndView MAccountCode = new ModelAndView("MAccountCode");
-    private static final ModelAndView MAccountCode_REFRESH = new ModelAndView(new RedirectView("MAccountCode.smi", true));
-    
-    @Override
-    protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-        return MAccountCode;
-    }
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.smi.travel.controller.form.MAccountCodeForm;
+import com.smi.travel.datalayer.service.MAccountCodeService;
+
+
+
+@Controller
+@RequestMapping("/MAccountCode.smi")
+public class MAccountCodeController {
+	
+	
+	private Logger logger = LoggerFactory.getLogger(getClass());
+	private static String default_view = "MAccountCode";
+	
+	@Autowired
+	private MAccountCodeService mAccountCodeService;
+
+	@RequestMapping
+	public String initial(@ModelAttribute("form") MAccountCodeForm form,Model model,HttpServletRequest request) {
+		logger.debug("MAccountCodeController : initial request");
+		
+		
+		
+		return default_view;
+	}
+	/*
+	@RequestMapping("MapCode.smi")
+	public String mapcode(Model model){
+		return default_view;
+	}
+	
+	@RequestMapping("MarCode.smi")
+	public String marCode(Model model){
+		return default_view;	
+	}*/
 }

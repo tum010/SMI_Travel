@@ -25,7 +25,7 @@
 ">
      <context:annotation-config/>
     <!-- [Scan settings of the service class] -->
-    <context:component-scan base-package="com.smi.travel.datalayer.service.impl" />
+    <context:component-scan base-package="com.smi.travel.datalayer.service.impl" name-generator="com.smi.travel.common.SMIBeanNameGenerator"/>
     
     
   

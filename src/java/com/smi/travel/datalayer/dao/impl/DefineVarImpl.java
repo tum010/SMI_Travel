@@ -61,4 +61,37 @@ public class DefineVarImpl extends HibernateDaoSupport implements DefineVarDao {
 		session.close();
 		return dataList;
 	}
+	/*
+	private static final String DEFINEVAR_QUERY = "FROM MDefaultData m where m.id in ('2','3','4')";
+
+	
+
+	@Override
+	public String saveVariable(List<MDefaultData> datas) {
+		Session session = sessionFactory.openSession();
+		transaction = session.beginTransaction();
+		for (MDefaultData data : datas) {
+			session.update(data);
+		}
+		transaction.commit();
+		session.close();
+		sessionFactory.close();
+		return "1";
+	}
+	
+	
+/*
+	@Override
+	public List<MDefaultData> getListDefaultData() {
+		UtilityFunction util = new UtilityFunction();
+        Session session = sessionFactory.openSession();
+        List<MDefaultData> list = session.createQuery(DEFINEVAR_QUERY).list();
+        if (list.isEmpty()) {
+            return null;
+        } else {
+            return list;
+        }
+		
+	}
+	*/
 }

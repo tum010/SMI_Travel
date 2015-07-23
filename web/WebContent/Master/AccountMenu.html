@@ -1,16 +1,43 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+<ul id="AccountMenu" class="nav nav-list" style="top: 0px;  background-color: #FAFEFA;border: solid 1px #0063DC">
+     <li class="" >
+                <a href="MAccountCode.smi">
+                        <i class="menu-icon fa fa-plane"></i>
+                        <span class="menu-text"> Account Code </span>
+                    </a>
+   
+                    <b class="arrow"></b>
+                </li>
+                 <li class="">
+                    <a href="MapCode.smi">
+                        <i class="menu-icon fa fa-paper-plane"></i>
+                        <span class="menu-text">  A/P Code </span>
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                <li class="">
+                    <a href="MarCode.smi">
+                        <i class="menu-icon fa fa-credit-card"></i>
+                        <span class="menu-text"> A/R Code </span>
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+               
+               
+</ul>
+
+
+<script>
+    $(document).ready(function () {
+        var path = location.pathname;
+        var name = path.split("/");
+        console.log(name[2]);
+        str = name[2].split(".");
+        console.log(str[0]);
+        sub = str[0].substr(0,5);
+        console.log(sub);
+        var $select = $('a[href*="' + sub + '"]');
+        $("#AccountMenu").find($select).css('background-color', '#ccc');
+    });
+
+</script>
