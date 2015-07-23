@@ -40,5 +40,8 @@
         <property name="description" type="string">
             <column name="description" />
         </property>
+        <property name="refCode" type="string">
+            <column name="ref_code" />
+        </property>
     </class>
 </hibernate-mapping>
