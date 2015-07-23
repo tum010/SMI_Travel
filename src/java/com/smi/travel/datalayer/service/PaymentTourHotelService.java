@@ -74,7 +74,11 @@ public class PaymentTourHotelService {
        
     public Master getMasterFromRefno(String refno) {
         return this.paymentWendytourDao.getMasterFromRefno(refno);
-    }         
+    }
+    
+    public List<String> getMasterAll(){
+        return this.paymentWendytourDao.getMasterAll();
+    }
 
     public List<PaymentDetailWendy> getPaymentDetailWendyList(String paymentId) {
         return this.paymentWendytourDao.getPaymentDetailWendyList(paymentId);
