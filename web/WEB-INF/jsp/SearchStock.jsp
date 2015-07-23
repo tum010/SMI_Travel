@@ -132,10 +132,10 @@
                         <tr>
                             <th class="hidden" >id</th>
                             <th style="width: 15%">Product</th>                                   
-                            <th style="width: 15%">Staff</th>
-                            <th style="width: 20%">Add Date</th>
-                            <th style="width: 20%">Effective From</th>
-                            <th style="width: 20%">Effective To</th>
+                            <th style="width: 20%">Staff</th>
+                            <th style="width: 15%">Add Date</th>
+                            <th style="width: 15%">Effective From</th>
+                            <th style="width: 15%">Effective To</th>
                             <th style="width: 10%">Action</th>
                         </tr>
                     </thead>
@@ -199,14 +199,24 @@
                     </thead>
                     <tbody>
                         <c:forEach var="stockDetail" items="${stockSum.itemList}" varStatus="num1">
+                            
                         <tr>
                             <td>${num1.count}</td>
                             <td>${stockDetail.code}</td>
-                            <td>${stockDetail.typeId}</td>
+                            <td>${stockDetail.TypeId}</td>
                             <td>${stockDetail.refNo}</td>                                
                             <td>${stockDetail.pickup}</td>
                             <td>${stockDetail.pickupDate}</td>
-                            <td>${stockDetail.payStatusName}</td>
+                            <td>
+                                <c:set var="pay" value="" />
+                                <c:if test="${stockDetail.payStatusName == 0}">
+                                    <c:set var="pay" value="No Paid" />
+                                </c:if> 
+                                <c:if test="${stockDetail.payStatusName == 1}">
+                                    <c:set var="pay" value="Pay" />
+                                </c:if>
+                                ${pay}
+                            </td>
                             <td>${stockDetail.itemStatus}</td>                            
                         </tr>
                         </c:forEach>
