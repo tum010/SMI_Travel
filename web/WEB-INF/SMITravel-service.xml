@@ -198,6 +198,7 @@
         <property name="placedao" ref="PlaceDao" />
         <property name="citydao" ref="MCityDao" />
         <property name="mbankdao" ref="MBankDao" />
+        <property name="defineVardao" ref="DefineVarDao" />
         <property name="customeragentinfodao" ref="CustomerAgentInfoDao" />
         <property name="invoicesuppilerdao" ref="InvoiceSuppilerDao" />
     </bean> 
