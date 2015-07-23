@@ -117,10 +117,10 @@ public class UtilityService {
         return listitemdao.getMInitialnameFromId(id);
     }
     
-    public MDefaultData getListMDefaultData(String type){   
+    public MDefaultData getMDefaultDataFromType(String name){   
         List<MDefaultData> data = defineVardao.getListDefaultData();
         for(int i=0;i<data.size();i++){
-            if(data.get(i).getType().equalsIgnoreCase(type)){
+            if(data.get(i).getName().equalsIgnoreCase(name)){
                 return data.get(i);
             }
         }
@@ -323,6 +323,14 @@ public class UtilityService {
 
     public void setInvoicesuppilerdao(InvoiceSuppilerDao invoicesuppilerdao) {
         this.invoicesuppilerdao = invoicesuppilerdao;
+    }
+
+    public DefineVarDao getDefineVardao() {
+        return defineVardao;
+    }
+
+    public void setDefineVardao(DefineVarDao defineVardao) {
+        this.defineVardao = defineVardao;
     }
     
     
