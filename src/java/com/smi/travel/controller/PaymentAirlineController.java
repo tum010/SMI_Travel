@@ -1,12 +1,12 @@
 package com.smi.travel.controller;
 import com.smi.travel.datalayer.entity.MAccpay;
 import com.smi.travel.datalayer.entity.MAirlineAgent;
+import com.smi.travel.datalayer.entity.MDefaultData;
 import com.smi.travel.datalayer.entity.PaymentAirticket;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.service.PaymentAirTicketService;
 import com.smi.travel.datalayer.service.UtilityService;
-import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
 import com.smi.travel.master.controller.SMITravelController;
@@ -38,6 +38,7 @@ public class PaymentAirlineController extends SMITravelController {
     private static final String PAYDATE = "payDate";
     private static final String DUEDATE = "dueDate";
     private static final String PAYNO = "payNo";
+    private static final String VAT = "vat";
     private UtilityService utilityService;
     private PaymentAirTicketService paymentAirTicketService;
     UtilityFunction util;
@@ -219,6 +220,8 @@ public class PaymentAirlineController extends SMITravelController {
         request.setAttribute(PAYBYLIST,mAccpayList);
         List<InvoiceSupplier> invoiceSupplierList = utilityService.getListInvoiceSuppiler();
         request.setAttribute(INVOICESUPLIST,invoiceSupplierList);
+        MDefaultData mDefaultData = utilityService.getMDefaultDataFromType("vat");
+        request.setAttribute(VAT,mDefaultData.getValue());
     }
 
     public UtilityService getUtilityService() {
