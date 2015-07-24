@@ -65,7 +65,7 @@ public class UtilityService {
     private MBankDao mbankdao;
     private CustomerAgentInfoDao customeragentinfodao;
     private InvoiceSuppilerDao invoicesuppilerdao;
-     private DefineVarDao defineVardao;
+    private DefineVarDao defineVardao;
     
     public int[] getCountItemFromBooking(String refno) {
         int[] Booking_size = new int[7];
