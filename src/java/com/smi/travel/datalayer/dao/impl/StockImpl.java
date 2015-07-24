@@ -235,7 +235,7 @@ public class StockImpl implements StockDao{
             if(detail.getTypeId() != null){
                 System.out.println("type : "+detail.getTypeId().getId());
                 stock.setTypeId(detail.getTypeId().getId());
-              //  stock.setTypeName(GET_STOCK);
+                stock.setTypeName(detail.getTypeId().getName());
             }
             stock.setItemStatus(detail.getMStockStatus().getName());          
             stock.setPickupDate(util.convertDateToString(detail.getPickupDate()));
