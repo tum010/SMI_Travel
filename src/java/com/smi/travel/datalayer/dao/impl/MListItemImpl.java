@@ -361,11 +361,11 @@ public class MListItemImpl implements MListItemDao {
     }
 
     @Override
-    public List<MPaymentDoctype> getListMpaymentDocType() {
-        String query = "from MPaymentDoctype";
+    public List<MPaymentDoctype> getListMpaymentDocType(String department) {
+        String query = "from MPaymentDoctype doc  where doc.department = :department";
         Session session = this.sessionFactory.openSession();
 
-        List<MPaymentDoctype> MPayDocList = session.createQuery(query).list();
+        List<MPaymentDoctype> MPayDocList = session.createQuery(query).setParameter("department", department).list();
 
         if (MPayDocList.isEmpty()) {
             return null;

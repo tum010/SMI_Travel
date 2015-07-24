@@ -194,8 +194,8 @@ public class UtilityService {
         return listitemdao.getMBilltypeFromName(name);
     }
     
-    public List<MPaymentDoctype> getListMpaymentDocType(){
-        return listitemdao.getListMpaymentDocType();
+    public List<MPaymentDoctype> getListMpaymentDocType(String department){
+        return listitemdao.getListMpaymentDocType(department);
     }
     
     public List<MAirlineAgent> getListMAirLineAgent() {
