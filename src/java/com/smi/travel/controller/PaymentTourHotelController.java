@@ -54,7 +54,7 @@ public class PaymentTourHotelController extends SMITravelController {
     
         List<MItemstatus> mItemstatusList = utilservice.getListMItemstatus();
         request.setAttribute(STATUS, mItemstatusList);
-        List<MPaymentDoctype> mPaymentList = utilservice.getListMpaymentDocType();
+        List<MPaymentDoctype> mPaymentList = utilservice.getListMpaymentDocType("tourhotel");
         request.setAttribute(PVTYPE, mPaymentList);
         List<MAccpay> mAccpayList = utilservice.getListMAccpay();
         request.setAttribute(PAYMENTLIST, mAccpayList);
