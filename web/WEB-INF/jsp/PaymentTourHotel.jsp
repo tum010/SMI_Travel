@@ -352,7 +352,7 @@
                                 <th style="width: 5%">Inv No</th>
                                 <th style="width: 5%">Code</th>
                                 <th style="width: 2%">Type</th>
-                                <th style="width: 4%">Is vat</th>
+                                <th style="width: 4%" onclick="checkVatAll()">Is vat</th>
                                 <th style="width: 8%">Vat</th>
                                 <th style="width: 12%">Gross</th>
                                 <th style="width: 10%">Amount</th>
@@ -1121,6 +1121,145 @@
                     return false;
                 }   
             }
+        }
+    }
+    
+    function checkVatAll(){
+        var idRole = '${idRole}';
+        if(idRole === '19'){ 
+            var row = document.getElementById('counter').value;
+            var check = 0;
+            var unCheck = 0;
+            for(var i=0;i<=row;i++){          
+                var isVatCheck = document.getElementById("isVat"+i);
+                if(isVatCheck !== null && isVatCheck !== ''){
+                    if(document.getElementById("isVat"+i).checked){
+                       check++;
+                    } else {
+                       unCheck++;
+                    }
+                }   
+            }
+
+            if(check > unCheck){
+                for(var i=0;i<=row;i++){
+                    var isVatCheck = document.getElementById("isVat"+i);
+                    if(isVatCheck !== null && isVatCheck !== ''){
+                        if(document.getElementById("isVat"+i).checked){
+                        
+                        } else { 
+                            document.getElementById("isVat"+i).checked = true;
+                            var amountChk = document.getElementById('amountCal'+i);
+                            if(amountChk !== null && amountChk !== ''){
+                                var amount = document.getElementById('amountCal'+i).value;
+                                var gross = document.getElementById('gross'+i).value;
+                                var vat = document.getElementById('vat'+i).value;
+                                var vatDefaultData = parseFloat(document.getElementById('vatDefaultData').value);
+
+                                amount = amount.replace(/,/g,"");
+                                var grossTotal = parseFloat(amount);
+
+                                if((gross === '')){
+                                    grossTotal = (amount*100)/(100+vatDefaultData);
+                                    document.getElementById('gross'+i).value = formatNumber(grossTotal);
+                                    document.getElementById('vat'+i).value = vatDefaultData;
+                                } else {
+                                    document.getElementById('gross'+i).value = '';
+                                    document.getElementById('vat'+i).value = ''
+                                }
+                            }
+                        }    
+                    }   
+                }
+            }
+            
+            if(check < unCheck){
+                for(var i=0;i<=row;i++){
+                    var isVatCheck = document.getElementById("isVat"+i);
+                    if(isVatCheck !== null && isVatCheck !== ''){
+                        document.getElementById("isVat"+i).checked = false;
+                        document.getElementById("vat"+i).value = '';
+                        document.getElementById("gross"+i).value = '';
+                    }   
+                }
+            }
+         
+            if(check === 0 && unCheck !== 0){
+                for(var i=0;i<=row;i++){
+                    var isVatCheck = document.getElementById("isVat"+i);
+                    if(isVatCheck !== null && isVatCheck !== ''){
+                        if(document.getElementById("isVat"+i).checked){
+                        
+                        } else { 
+                            document.getElementById("isVat"+i).checked = true;
+                            var amountChk = document.getElementById('amountCal'+i);
+                            if(amountChk !== null && amountChk !== ''){
+                                var amount = document.getElementById('amountCal'+i).value;
+                                var gross = document.getElementById('gross'+i).value;
+                                var vat = document.getElementById('vat'+i).value;
+                                var vatDefaultData = parseFloat(document.getElementById('vatDefaultData').value);
+
+                                amount = amount.replace(/,/g,"");
+                                var grossTotal = parseFloat(amount);
+
+                                if((gross === '')){
+                                    grossTotal = (amount*100)/(100+vatDefaultData);
+                                    document.getElementById('gross'+i).value = formatNumber(grossTotal);
+                                    document.getElementById('vat'+i).value = vatDefaultData;
+                                } else {
+                                    document.getElementById('gross'+i).value = '';
+                                    document.getElementById('vat'+i).value = ''
+                                }
+                            }
+                        }    
+                    }    
+                }
+            } 
+            
+            if(check !== 0 && unCheck === 0){
+                for(var i=0;i<=row;i++){
+                    var isVatCheck = document.getElementById("isVat"+i);
+                    if(isVatCheck !== null && isVatCheck !== ''){
+                        document.getElementById("isVat"+i).checked = false;
+                        document.getElementById("vat"+i).value = '';
+                        document.getElementById("gross"+i).value = '';
+                    }   
+                }
+            }
+            
+            if(check === unCheck){
+                for(var i=0;i<=row;i++){
+                    var isVatCheck = document.getElementById("isVat"+i);
+                    if(isVatCheck !== null && isVatCheck !== ''){
+                        if(document.getElementById("isVat"+i).checked){
+                        
+                        } else { 
+                            document.getElementById("isVat"+i).checked = true;
+                            var amountChk = document.getElementById('amountCal'+i);
+                            if(amountChk !== null && amountChk !== ''){
+                                var amount = document.getElementById('amountCal'+i).value;
+                                var gross = document.getElementById('gross'+i).value;
+                                var vat = document.getElementById('vat'+i).value;
+                                var vatDefaultData = parseFloat(document.getElementById('vatDefaultData').value);
+
+                                amount = amount.replace(/,/g,"");
+                                var grossTotal = parseFloat(amount);
+
+                                if((gross === '')){
+                                    grossTotal = (amount*100)/(100+vatDefaultData);
+                                    document.getElementById('gross'+i).value = formatNumber(grossTotal);
+                                    document.getElementById('vat'+i).value = vatDefaultData;
+                                } else {
+                                    document.getElementById('gross'+i).value = '';
+                                    document.getElementById('vat'+i).value = ''
+                                }
+                            }
+                        }    
+                    }    
+                }             
+            }
+            
+            CalculateGrossTotal('',$("#counter").val());   
         }
     }
    
