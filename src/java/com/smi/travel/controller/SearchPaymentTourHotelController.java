@@ -50,7 +50,7 @@ public class SearchPaymentTourHotelController extends SMITravelController {
         }
         
         request.setAttribute(DATALIST,paymentList);
-        request.setAttribute(TYPELIST,getUtilityService().getListMpaymentDocType());
+        request.setAttribute(TYPELIST,getUtilityService().getListMpaymentDocType("tourhotel"));
         request.setAttribute("InputFromDate", InputFromDate);
         request.setAttribute("InputToDate", InputToDate);
         request.setAttribute("selectPvType", selectPvType);
