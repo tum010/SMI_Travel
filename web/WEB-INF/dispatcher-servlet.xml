@@ -185,9 +185,7 @@
 
 	</bean>
         
-        <bean id="MAccountCodeController" class="com.smi.travel.masterdata.controller.MAccountCodeController">
-
-	</bean>
+     
         
 
 	<bean id="reportController" class="com.smi.travel.controller.report.ReportController">
