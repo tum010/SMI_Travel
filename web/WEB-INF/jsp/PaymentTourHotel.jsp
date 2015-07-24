@@ -908,33 +908,36 @@
     }
     
     function CalculateGrossTotal(id,row){
-        var i;
-        var grossTotal = 0;
-        var vatTotal = 0;
-        if((id!==null) || (id!=='') ){
-            for(i=0;i<row+1;i++){
-                var gross = document.getElementById("gross" + i);
-                var vat = document.getElementById("vat" + i);
-                var amount = document.getElementById("amount" + i);
+        var idRole = '${idRole}';
+        if(idRole === '19'){ 
+            var i;
+            var grossTotal = 0;
+            var vatTotal = 0;
+            if((id!==null) || (id!=='') ){
+                for(i=0;i<row+1;i++){
+                    var gross = document.getElementById("gross" + i);
+                    var vat = document.getElementById("vat" + i);
+                    var amount = document.getElementById("amount" + i);
 
-                if (gross !== null){
-                    var grossValue = gross.value;
-                    var amountValue = amount.value;
-                    
-                    if(grossValue !== ''){
-                        grossValue = grossValue.replace(/,/g,"");
-                        var total = parseFloat(grossValue);
-                        grossTotal += total;
-                        
-                        amountValue = amountValue.replace(/,/g,"");
-                        var vatCal = amountValue - total;
-                        vatTotal += vatCal;
-                    }
-                }    
-            }           
-            document.getElementById('InputGrossTotal').value = formatNumber(grossTotal);
-            document.getElementById('InputVatTotal').value = formatNumber(vatTotal);
-        }
+                    if (gross !== null){
+                        var grossValue = gross.value;
+                        var amountValue = amount.value;
+
+                        if(grossValue !== ''){
+                            grossValue = grossValue.replace(/,/g,"");
+                            var total = parseFloat(grossValue);
+                            grossTotal += total;
+
+                            amountValue = amountValue.replace(/,/g,"");
+                            var vatCal = amountValue - total;
+                            vatTotal += vatCal;
+                        }
+                    }    
+                }           
+                document.getElementById('InputGrossTotal').value = formatNumber(grossTotal);
+                document.getElementById('InputVatTotal').value = formatNumber(vatTotal);
+            }
+        }    
     }
     
     function formatNumber(num) {
