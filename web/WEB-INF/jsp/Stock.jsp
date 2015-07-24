@@ -200,8 +200,8 @@
                             </button>-->
                         </div>
                         <div class="col-md-2 text-right">
-                            <button type="button"  id="ButtonAdd"  name="ButtonAdd" onclick=" return addItemList()" class="btn btn-primary btn-primary " style="width: 100px;">
-                                <span id="SpanAdd" class="glyphicon glyphicon-print fa fa-plus-circle"></span> Add
+                            <button type="button"  id="ButtonAdd"  name="ButtonAdd" onclick=" return addItemList()" class="btn btn-primary btn-primary " style="width: 130px;">
+                                <span id="SpanAdd" class="glyphicon glyphicon-print fa fa-plus-circle"></span> Generate Item
                             </button>                                          
                         </div>
                     </div>   
@@ -261,7 +261,12 @@
                                     </tr>                                                                                       
                                     </c:forEach>
                                 </tbody>
-                            </table>                                            
+                            </table>
+                            <div id="tr_FormulaAddRow" class="text-center" style="padding-top: 10px;display: none;">
+                                <a class="btn btn-success" onclick="AddRow()">
+                                    <i class="glyphicon glyphicon-plus"></i> Add
+                                </a>
+                            </div>
                             <c:forEach var="std" items="${listStockDetail}" varStatus="taxdesc"> 
                                  <c:if test="${taxdesc.last}">
                                 <script>
