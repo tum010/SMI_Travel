@@ -327,6 +327,9 @@ function validFrom(){
 }
 
 function AddRow(row) {
+    if (!row) {
+        row = 1;
+    }
     $("#StockTable tbody").append(
             '<tr>' +
             '<td class="hidden"><input type="hidden"  id="stockDetailId' + row + '" name="stockDetailId' + row + '" value="" /></td>' +
@@ -357,9 +360,10 @@ function zeroPad(num, places) {
 var isCheckLength = 0;
 var isCheckDuplicate = 0;
 var isEmpty = 0;
+var valueEmpty = "";
 
 function addItemList(){
-//    alert(zeroPad(100, 5)); // "05"
+  valueEmpty ="";
     var prefix  = document.getElementById('InputPrefix');
     var start  = document.getElementById('InputStart');
     var number  = document.getElementById('InputNumberOfItem');
@@ -408,11 +412,15 @@ function addItemList(){
                         
                 }else if(isCheckDuplicate !== 0){
                     alert("Duplicate Code in Table!!!");
+                    prefix.value = "";
+                    start.value = "";
+                    number.value = "";
+                    digit.value = "";
                     AddRow(count.value);
                 }
             }
         }else if(isEmpty === 1){
-            alert("Please Input Prefix, Start, Digit, Number Of Item!!");
+            alert("Please Input  : " + valueEmpty);
         }
         resetNumberItemList();
 }
@@ -452,7 +460,8 @@ function deleteStock(){
     var count = document.getElementById('counterTable');
     var rowId  = document.getElementById('idStockDelete');
     var stockDetailId  = $("#stockDetailId"+rowId.value).val();   
- 
+    var rowAll = $("#StockTable tr").length;
+    
     if((stockDetailId !== "")&&(stockDetailId !== undefined)){
         rowId.value = stockDetailId ;
         var action = document.getElementById('action');
@@ -462,8 +471,11 @@ function deleteStock(){
         
     }else{
         document.getElementById("StockTable").deleteRow(rowId.value);
-     
-//        alert("Row Delete : " + rowId.value);
+        console.log("Row 0  : " + count.value );
+        if (count.value <= 1) {
+            console.log("show button tr_FormulaAddRow : " );
+            $("#tr_FormulaAddRow").css("display","block");
+        }
         count.value = count.value -1 ;
        // resetNumberItemList();
     }
@@ -490,23 +502,22 @@ function resetNumberItemList(){
         }
         count+= 1;
     });
-    
-    
-    
-    
 }
 
 function checkDuplicate(prefix,digit,start,number){
     var codeNew = [];
     for(var j = 1 ; j <= number ; j++){
-        codeNew.push(prefix + "-"+zeroPad(start, digit));
+        var text = prefix + "-" + zeroPad(start, digit);
+        codeNew.push(text);
         start++;
     }
+    console.log("Code [] : " + codeNew);
     var rows = document.getElementById("StockTable").getElementsByTagName("tr").length;
     for (var i = 1 ; i <= (rows-1); i++){  
         var codeOld = document.getElementById("codeItemList"+i);
         var k = 0;
         for(k = 0 ; k < codeNew.length ; k++){
+            console.log("Code New : " + codeNew[k] + " / Coded Old : "+ codeOld.value);
             if(codeNew[k] === codeOld.value){
                 isCheckDuplicate++;
             }
@@ -515,10 +526,77 @@ function checkDuplicate(prefix,digit,start,number){
 }
 
 function checkEmptyValueBeforeAddItem(prefix,start,number,digit){
-    if(prefix === "" || start === "" ||  number ===  "" ||  digit === ""){
+    if(prefix === ""){
+        valueEmpty += "Prefix";
+        if(start === ""){
+            valueEmpty += ", Start";
+            if(number ===  ""){
+                valueEmpty += ", Number Of Item";
+                if(digit === ""){
+                    isEmpty = 1;
+                    valueEmpty += ", Digit";
+                }
+                isEmpty = 1;
+            }else{
+                if(digit === ""){
+                    isEmpty = 1;
+                    valueEmpty += ", Digit";
+                }
+                isEmpty = 1;
+            }
+            isEmpty = 1;
+        }else{
+            if(number ===  ""){
+                valueEmpty += ", Number Of Item";
+                if(digit === ""){
+                    isEmpty = 1;
+                    valueEmpty += ", Digit";
+                }
+                isEmpty = 1;
+            }else{
+                if(digit === ""){
+                    isEmpty = 1;
+                    valueEmpty += ", Digit";
+                }
+                isEmpty = 1;
+            }
+        }
         isEmpty = 1;
-    }else{
-        isEmpty = 0;
+    }else {
+        if(start === ""){
+            valueEmpty += " Start";
+            if(number ===  ""){
+                valueEmpty += ", Number Of Item";
+                if(digit === ""){
+                    isEmpty = 1;
+                    valueEmpty += ", Digit";
+                }
+                isEmpty = 1;
+            }else {
+                if(digit === ""){
+                    isEmpty = 1;
+                    valueEmpty += ", Digit";
+                }
+                isEmpty = 1;
+            }
+            isEmpty = 1;
+        }else{
+            if(number ===  ""){
+                valueEmpty += "Number Of Item";
+                if(digit === ""){
+                    isEmpty = 1;
+                    valueEmpty += ", Digit";
+                }
+                isEmpty = 1;
+            }else {
+                if(digit === ""){
+                    isEmpty = 1;
+                    valueEmpty += "Digit";
+                }else{
+                    isEmpty = 0;
+                }
+            }
+        }
     }
 //    alert(isEmpty);
 }
