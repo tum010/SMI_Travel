@@ -454,12 +454,36 @@
                     <div class="col-md-6 form-group text-left">
                         <textarea rows="3" cols="255" class="form-control" id="InputRemark" name="InputRemark">${requestScope['InputRemark']}</textarea>        
                     </div>
-                    <div class="col-xs-2 text-right">
-                        <label class="control-label">Grand Total</lable>
-                    </div>
-                    <div class="col-md-2 form-group text-left">
-                        <input name="InputGrandTotal" id="InputGrandTotal" type="text" class="form-control money" value="" readonly=""/>            
-                    </div>
+                    <c:choose>
+                        <c:when test="${idRole  == 22}">
+                            <div class="col-xs-2 text-right">
+                                <label class="control-label">Grand Total</lable>
+                            </div>
+                            <div class="col-md-2 form-group text-left">
+                                <input name="InputGrandTotal" id="InputGrandTotal" type="text" class="form-control money" value="" readonly=""/>            
+                            </div>         
+                        </c:when>
+                        <c:when test="${idRole  == 19}">
+                            <div class="col-xs-2 text-right">
+                                <label class="control-label">Vat Total</lable>
+                            </div>
+                            <div class="col-md-2 form-group text-left">
+                                <input name="InputVatTotal" id="InputVatTotal" type="text" class="form-control money" value="" readonly=""/>            
+                            </div>
+                            <div class="col-xs-2 text-right">
+                                <label class="control-label">Gross Total</lable>
+                            </div>
+                            <div class="col-md-2 form-group text-left">
+                                <input name="InputGrossTotal" id="InputGrossTotal" type="text" class="form-control money" value="" readonly=""/>            
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <label class="control-label">Grand Total</lable>
+                            </div>
+                            <div class="col-md-2 form-group text-left">
+                                <input name="InputGrandTotal" id="InputGrandTotal" type="text" class="form-control money" value="" readonly=""/>            
+                            </div>  
+                        </c:when>
+                    </c:choose>                                 
                 </div>
                 <!--Row 1.2 -->
                 <div class="row" style="padding-left: 25px;">
@@ -751,6 +775,10 @@
             CalculateGrandTotal('',$("#counter").val());
         });
         
+        $('#InputGrossTotal').ready(function () {
+            CalculateGrossTotal('',$("#counter").val());
+        });
+        
         var codeInvoiceSup = [];
         $.each(invoiceSup, function (key, value) {
             codeInvoiceSup.push(value.code);
@@ -860,7 +888,7 @@
     
     function CalculateGrandTotal(id,row){
         var i;
-        var result = 0;
+        var grandTotal = 0;
         if((id!==null) || (id!=='') ){
             for(i=0;i<row+1;i++){
                 var amount = document.getElementById("amount" + i);
@@ -871,11 +899,41 @@
                     if(value !== ''){
                         value = value.replace(/,/g,"");
                         var total = parseFloat(value);
-                        result += total;
+                        grandTotal += total;
                     }
                 }    
             }
-            document.getElementById('InputGrandTotal').value = formatNumber(result);
+            document.getElementById('InputGrandTotal').value = formatNumber(grandTotal);
+        }
+    }
+    
+    function CalculateGrossTotal(id,row){
+        var i;
+        var grossTotal = 0;
+        var vatTotal = 0;
+        if((id!==null) || (id!=='') ){
+            for(i=0;i<row+1;i++){
+                var gross = document.getElementById("gross" + i);
+                var vat = document.getElementById("vat" + i);
+                var amount = document.getElementById("amount" + i);
+
+                if (gross !== null){
+                    var grossValue = gross.value;
+                    var amountValue = amount.value;
+                    
+                    if(grossValue !== ''){
+                        grossValue = grossValue.replace(/,/g,"");
+                        var total = parseFloat(grossValue);
+                        grossTotal += total;
+                        
+                        amountValue = amountValue.replace(/,/g,"");
+                        var vatCal = amountValue - total;
+                        vatTotal += vatCal;
+                    }
+                }    
+            }           
+            document.getElementById('InputGrossTotal').value = formatNumber(grossTotal);
+            document.getElementById('InputVatTotal').value = formatNumber(vatTotal);
         }
     }
     
@@ -928,7 +986,6 @@
     }
    
    function getInvoiceSup(){
-
         $.each(invoiceSup, function (key, value) {
 
             if($("#InputInvoiceSupCode").val() == value.code){
@@ -1002,18 +1059,6 @@
         }    
     }
     
-    function saveORupdateData(){
-        var action = document.getElementById('action');
-        var paymentId = document.getElementById('paymentId').value;
-        
-        if(paymentId === ''){
-            action.value = 'add';
-        } else {
-            action.value = 'update';
-        }            
-        document.getElementById('PaymentTourHotelForm').submit();
-    }
-    
     function calculateGross(row){
         var amount = document.getElementById('amountCal'+row).value;
         var gross = document.getElementById('gross'+row).value;
@@ -1030,7 +1075,8 @@
         } else {
             document.getElementById('gross'+row).value = '';
             document.getElementById('vat'+row).value = ''
-        }    
+        }
+        CalculateGrossTotal('',row);
     }  
     
     function checkRefNo(row){
