@@ -386,9 +386,10 @@ function addItemList(){
                         for (var i = 1 ; i <= number.value; i++){
                             // Concat prefix + start + digit
                             var code = zeroPad(start.value, digit.value);
+  
                             $("#StockTable tbody").append(
                                 '<tr>' +
-                                '<td class="hidden"><input type="hidden"  id="stockDetailId' + count.value + '" name="stockDetailId' + count.value + '" value="" /></td>' +
+                                '<td class="hidden"><input type="text"  id="stockDetailId' + count.value + '" name="stockDetailId' + count.value + '" value="" /></td>' +
                                 '<td>'+ count.value +'</td>' +
                                 '<td><input type="text"  class="form-control" name="codeItemList' + count.value + '" id="codeItemList' + count.value + '" value="'+prefix.value+'-'+code+'"/></td>' +
                                 '<td><select id="SeleteTypeItemList' + count.value + '" name="SeleteTypeItemList' + count.value + '" class="form-control">' + res + '</select></td>' +
@@ -399,6 +400,7 @@ function addItemList(){
                                 );
                                 start.value++;
                                 count.value++; 
+                              
                         }        
                         start.value = st;
                         countAdd.value++;
@@ -440,7 +442,7 @@ function deleteItemListRow(rowId,code){
     // Click Action Delete
     console.log("Code : " + code + "Row Id : " +rowId);
     $("#idStockDelete").val(rowId);
-    $("#delCodeStock").text(' Are you sure to delete Item code : ' + code + ' in Row : ' + rowId +' ??');
+    $("#delCodeStock").text(' Are you sure to delete Item code : ' + code +'?');
     
     resetNumberItemList();
 }
@@ -450,7 +452,8 @@ function deleteStock(){
     var count = document.getElementById('counterTable');
     var rowId  = document.getElementById('idStockDelete');
     var stockDetailId  = $("#stockDetailId"+rowId.value).val();   
-    if(stockDetailId !== ""){
+ 
+    if((stockDetailId !== "")&&(stockDetailId !== undefined)){
         rowId.value = stockDetailId ;
         var action = document.getElementById('action');
         action.value = 'delete';
@@ -459,9 +462,10 @@ function deleteStock(){
         
     }else{
         document.getElementById("StockTable").deleteRow(rowId.value);
+     
 //        alert("Row Delete : " + rowId.value);
         count.value = count.value -1 ;
-        resetNumberItemList();
+       // resetNumberItemList();
     }
     resetNumberItemList();
 }
@@ -471,10 +475,25 @@ function resetNumberItemList(){
     for (var i = 1 ; i <= rows; i++){ 
 //        alert("Row :"+row);
         var code = $("#codeItemList"+i).val();
+      //  alert(code);
 //        $("#StockTable").children().children()[i].children[1].innerHTML = i;
-        countRow[i].cells[1].innerHTML = i;
-        countRow[i].cells[6].innerHTML = "<a href='#'  class='remCF' id='ButtonRemove"+ i +"'  onclick=\"deleteItemListRow("+ i +",'"+ code +"')\"  data-toggle='modal' data-target='#delStockModal'><span id='Spanremove"+ i +"'  class='glyphicon glyphicon-remove deleteicon'></span></a>";
+    //    countRow[i].cells[1].innerHTML = i;
+     //   countRow[i].cells[6].innerHTML = "<a href='#'  class='remCF' id='ButtonRemove"+ i +"'  onclick=\"deleteItemListRow("+ i +",'"+ code +"')\"  data-toggle='modal' data-target='#delStockModal'><span id='Spanremove"+ i +"'  class='glyphicon glyphicon-remove deleteicon'></span></a>";
     }  
+    
+    var count =1;
+    $('#StockTable > tbody  > tr').each(function() {
+        var codea = $(this).find("td").eq(2).find("input").val();
+        $(this).find("td").eq(1).html(count);
+        if(codea !== undefined ){
+            $(this).find("td").eq(6).html("<a href='#'  class='remCF' id='ButtonRemove"+ count +"'  onclick=\"deleteItemListRow("+ count +",'"+ codea +"')\"  data-toggle='modal' data-target='#delStockModal'><span id='Spanremove"+ count +"'  class='glyphicon glyphicon-remove deleteicon'></span></a>");      
+        }
+        count+= 1;
+    });
+    
+    
+    
+    
 }
 
 function checkDuplicate(prefix,digit,start,number){
