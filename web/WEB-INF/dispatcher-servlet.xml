@@ -609,9 +609,9 @@
 	<bean id="LockUnlockBookingController" class="com.smi.travel.controller.LockUnlockBookingController">
 		<property name="lockUnlockBookingService" ref="LockUnlockBookingService" />
 	</bean>
-<!--
+
 	<mvc:annotation-driven />
 	<context:annotation-config />
-	<context:component-scan base-package="com.smi.travel.controller,com.smi.travel.masterdata.controller" />
-        -->
+	<context:component-scan base-package="com.smi.travel.controller,com.smi.travel.**.controller" />
+   
 </beans>
