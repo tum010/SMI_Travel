@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.AccountCode" table="account_code" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="accCode" type="string">
+            <column name="acc_code" length="5" />
+        </property>
+        <property name="detail" type="string">
+            <column name="detail" />
+        </property>
+        <property name="accType" type="string">
+            <column name="acc_type" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>
