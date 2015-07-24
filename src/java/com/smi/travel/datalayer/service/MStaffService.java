@@ -47,6 +47,10 @@ public class MStaffService {
         return ListItemDao.getListDepartment();
     }
     
+    public List<SystemUser> getListStaff(){
+        return systemUserDao.getUserList();
+    }
+    
     public int insertSystemUser(SystemUser user) {
         Date creteDate = new Date();
         user.setCreateDate(creteDate);
