@@ -374,11 +374,12 @@ function addItemList(){
 //    alert("Is Check : " + isCheckLength);
             if(isCheckLength === 0){      
                 var st = start.value;
-                if(countAdd.value === 1){
-                    document.getElementById("StockTable").deleteRow(1);
-                }else{
-                    $("#StockTable tr:last").remove();
-                }
+                $("#StockTable tr:last").remove();
+//                if(countAdd.value === 1){
+//                    document.getElementById("StockTable").deleteRow(1);
+//                }else{
+//                    
+//                }
                 var res = select.replace("value='"+ type.value+"'", "selected value='"+ type.value+"'");
                 checkDuplicate(prefix.value,digit.value,start.value,number.value);
                     if(isCheckDuplicate === 0){
@@ -393,7 +394,7 @@ function addItemList(){
                                 '<td><select id="SeleteTypeItemList' + count.value + '" name="SeleteTypeItemList' + count.value + '" class="form-control">' + res + '</select></td>' +
                                 '<td>No Paid</td>' +
                                 '<td>NEW</td>' +
-                                '<td class="text-center"><a href="#"  class="remCF" id="ButtonRemove' + count.value + '" onclick="deleteItemListRow('+count.value+",'"+ prefix.value+"-"+start.value+"'"+')" data-toggle="modal" data-target="#delStockModal"><span id="Spanremove' + count.value + '" class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
+                                '<td class="text-center"><a href="#"  class="remCF" id="ButtonRemove' + count.value + '" onclick="deleteItemListRow('+count.value+",'"+ prefix.value+"-"+code+"'"+')" data-toggle="modal" data-target="#delStockModal"><span id="Spanremove' + count.value + '" class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
                                 '</tr>'
                                 );
                                 start.value++;
@@ -405,6 +406,7 @@ function addItemList(){
                         
                 }else if(isCheckDuplicate !== 0){
                     alert("Duplicate Code in Table!!!");
+                    AddRow(count.value);
                 }
             }
         }else if(isEmpty === 1){
@@ -466,11 +468,12 @@ function deleteStock(){
 function resetNumberItemList(){
     var rows = document.getElementById("StockTable").getElementsByTagName("tr").length;
     var countRow = document.getElementById('StockTable').rows; 
-    for (var i = 1 ; i <= (rows-1); i++){  
-        var code = document.getElementById("codeItemList"+i); 
+    for (var i = 1 ; i <= rows; i++){ 
+//        alert("Row :"+row);
+        var code = $("#codeItemList"+i).val();
+//        $("#StockTable").children().children()[i].children[1].innerHTML = i;
         countRow[i].cells[1].innerHTML = i;
-//        countRow[i].cells[2].getElementsByTagName("input")[0].name = "codeItemList" + i;
-//        countRow[i].cells[6].innerHTML = "<a href='#'  class='remCF' id='ButtonRemove"+ i +"'  onclick=\"deleteItemListRow("+ i +",'"+code.value+"')\"  data-toggle='modal' data-target='#delStockModal'><span id='Spanremove"+ i +"'  class='glyphicon glyphicon-remove deleteicon'></span></a>";
+        countRow[i].cells[6].innerHTML = "<a href='#'  class='remCF' id='ButtonRemove"+ i +"'  onclick=\"deleteItemListRow("+ i +",'"+ code +"')\"  data-toggle='modal' data-target='#delStockModal'><span id='Spanremove"+ i +"'  class='glyphicon glyphicon-remove deleteicon'></span></a>";
     }  
 }
 
@@ -495,6 +498,8 @@ function checkDuplicate(prefix,digit,start,number){
 function checkEmptyValueBeforeAddItem(prefix,start,number,digit){
     if(prefix === "" || start === "" ||  number ===  "" ||  digit === ""){
         isEmpty = 1;
+    }else{
+        isEmpty = 0;
     }
-    alert(isEmpty);
+//    alert(isEmpty);
 }
