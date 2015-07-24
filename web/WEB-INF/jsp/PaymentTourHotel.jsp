@@ -1038,7 +1038,9 @@
         var refNo = document.getElementById('refNo'+row).value;
         
         if(refNo===''){
-            return false;
+            var refNoField = document.getElementById('refNo'+row);
+            refNoField.style.borderColor = "";
+            return;
         }        
 
         list = list.replace("[","");
