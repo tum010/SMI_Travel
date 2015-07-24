@@ -979,6 +979,9 @@
            var ac = document.getElementById("ac"+i);
            var typeT = document.getElementById("typeT"+i);
            var typeC = document.getElementById("typeC"+i);
+           var isVat = document.getElementById("isVat"+i);
+           var vat = document.getElementById("vat"+i);
+           var gross = document.getElementById("gross"+i);
            
            if(select_product !== null){
                document.getElementById("select-product"+i).value = '';
@@ -1007,6 +1010,15 @@
            if((typeT !== null) && (typeC !== null)){
                document.getElementById("typeT"+i).checked = false;
                document.getElementById("typeC"+i).checked = false;
+           }
+           if((isVat !== null) && (isVat !== null)){
+               document.getElementById("isVat"+i).checked = false;
+           }
+           if(vat !== null){
+               document.getElementById("vat"+i).value = '';
+           }
+           if(gross !== null){
+               document.getElementById("gross"+i).value = '';
            }
              
         }    
