@@ -664,7 +664,7 @@
             $("td").keyup(function() {
                 if ($(this).find("input").val() != '') {
                     var colIndex = $(this).parent().children().index($(this));
-                    var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 1;
+                    var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
                     rowAll = $("#PaymentHotelTable tr").length;
                     //console.log('Row: ' + rowIndex + ', Column: ' + colIndex + ', All Row ' + rowAll);
                     if (rowIndex == rowAll) {
@@ -679,26 +679,6 @@
         });
    
         $(".money").mask('000,000,000,000,000,000.00', {reverse: true});
-        
-        
-         $('#PaymentHotelTable tbody').bootstrapValidator({
-            container: 'tooltip',
-            excluded: [':disabled', ':hidden', ':not(:visible)'],
-            feedbackIcons: {
-                valid: 'uk-icon-check',
-                invalid: 'uk-icon-times',
-                validating: 'uk-icon-refresh'
-            },
-            fields: {
-                'refNo[]': {
-                    validators: {
-                        notEmpty: {
-                            message: 'Ref no is required'
-                        }
-                    }
-                }           
-            }
-        });
         
         $('#PaymentTourHotelForm').bootstrapValidator({
             container: 'tooltip',
@@ -740,7 +720,7 @@
             }
         });
               
-        $("#PaymentHotelTable").on("keyup", "select:last", function () {
+        $("#PaymentHotelTable").on("change", function () {
             var row = parseInt($("#counter").val());
             AddRow(row);
         });
