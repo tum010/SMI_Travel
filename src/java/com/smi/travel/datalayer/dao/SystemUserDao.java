@@ -20,4 +20,5 @@ public interface SystemUserDao {
     public List<SystemUser> searchSystemUser(SystemUser user,int option);
     public List<SystemUser> getGuildeList();
     public List<SystemUser> getDriverList();
+    public List<SystemUser> getUserList();
 }
