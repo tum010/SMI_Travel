@@ -203,7 +203,7 @@
                         <tr>
                             <td>${num1.count}</td>
                             <td>${stockDetail.code}</td>
-                            <td>${stockDetail.typeId}</td>
+                            <td>${stockDetail.typeName}</td>
                             <td>${stockDetail.refNo}</td>                                
                             <td>${stockDetail.pickup}</td>
                             <td>${stockDetail.pickupDate}</td>
