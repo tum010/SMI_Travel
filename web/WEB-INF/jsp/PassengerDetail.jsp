@@ -13,6 +13,7 @@
 <c:set var="action" value="${requestScope['action']}" />
 <c:set var="initialList" value="${requestScope['initialList']}" />
 <c:set var="customerList" value="${requestScope['customerList']}" />
+<c:set var="EXISTCODE" value="${requestScope['EXISTCODE']}" />
 <script type="text/javascript" src="js/PassengerDetail.js"></script> 
 <link href="css/jquery-ui.css" rel="stylesheet">
 
@@ -65,6 +66,38 @@
                 </div>
             </div>
             <hr/>
+            <script>
+                $(document).ready(function(){
+                    $("#passengerIdVal").keyup(function(){
+                        var code = $("#existCode").val();
+                        var subcode  = code.split("||");
+                        for(var i = 0 ;i< subcode.length ; i++){
+                            console.log("subcode["+i+"]="+subcode[i]);
+                            if($(this).val() == subcode[i] && $(this).val() !="" ){
+                                alert("Profile Code  นี้ ถูกใช้ไปแล้ว");
+                                $(this).val("");
+                                $("#passengerId").val("");
+                                $("#customerId").val("");
+                                $("#MInitialname").val("");
+                                $("#firstName").val("");
+                                $("#lastName").val("");
+                                $("input[name=sex]").prop('checked', false);
+                                $("#address").val("");
+                                $("#tel").val("");
+                                $("#phone").val("");
+                                $("#email").val("");
+                                $("#remark").val("");
+                                $("#Passport").val("");
+                                $("#firstNameJapan").val("");
+                                $("#lastNameJapan").val("");
+                            }else if($(this).val() == ""){
+                                return ;
+                            }
+                        }
+                    });
+
+                });
+            </script>
             <!--form-->
             <form id="PassengerForm" action="PassengerDetail.smi" method="post">
                 <div class="panel panel-default">
@@ -72,6 +105,7 @@
                         <div class="row-fluid"> 
                             <div class="padding5">
                                 <div class="form-group">
+                                    <input type="hidden" id="existCode" value="${EXISTCODE}" placeholder="code_Exist" />
                                     <input type="hidden" class="form-control" id="customerId" placeholder="id" name="customerId" value="${passenger.getCustomer().getId()}" />
                                     <label for="Order" class="col-sm-2 text-right">Order</label>
                                     <div class="col-sm-3">

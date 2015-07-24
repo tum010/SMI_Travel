@@ -68,7 +68,7 @@
                 </div>
                 <div class="col-md-6 text-right">
                     <c:if test="${lockUnlockBooking == 0}">
-                        <a id="ButtonAdd" href="PassengerDetail.smi?referenceNo=${param.referenceNo}&action=add" class="btn btn-success">
+                        <a id="ButtonAdd" href="" class="btn btn-success">
                             <span id="SpanAdd" class="glyphicon glyphicon-plus"></span> Add
                         </a>
                     </c:if>
@@ -82,7 +82,17 @@
 
             </div>
             <hr/>
-
+            
+            <script type="text/javascript">
+                $(document).ready(function(){
+                    var keepcode = "";
+                    $("#Passenger .codeCustomer").each(function(){
+                        keepcode += "||"+$(this).html();
+                    });
+                    $("#ButtonAdd").prop('href',"PassengerDetail.smi?referenceNo=${param.referenceNo}&existcode="+keepcode+"&action=add");
+                });
+               
+            </script>
 
             <table class="display" id="Passenger" >
                 <thead class="datatable-header">
@@ -100,7 +110,7 @@
                     <c:forEach var="passenger" items="${passengerList}" varStatus="varPassenger">
                         <tr>
                             <td>${passenger.orderNo}</td>
-                            <td>${passenger.getCustomer().getCode()}</td>
+                            <td class="codeCustomer">${passenger.getCustomer().getCode()}</td>
                             <td>${passenger.getCustomer().getLastName()}    
                                 ${passenger.getCustomer().getFirstName()}</td>
                     <script>

@@ -49,10 +49,10 @@ public class PassengerDetailController extends SMITravelController {
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 
         System.out.println("PassengerDetailController");
-
+        
         String refNo = request.getParameter("referenceNo");
         String action = request.getParameter("action");
-
+        String existCode = request.getParameter("existcode");
         // passenger
         String id = request.getParameter("id");
         String isLeader = request.getParameter("isLeader");
@@ -120,6 +120,7 @@ public class PassengerDetailController extends SMITravelController {
         if ("add".equalsIgnoreCase(action)) {
             System.out.println("action add");
             request.setAttribute(ACTION, "insert");
+            request.setAttribute("EXISTCODE", existCode);
             this.setResponseAttribute(request, refNo);
         } else if ("insert".equalsIgnoreCase(action)) {
             Customer customer = null;
