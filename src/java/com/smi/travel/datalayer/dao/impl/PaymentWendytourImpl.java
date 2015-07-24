@@ -341,13 +341,23 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
     @Override
     public String getAccountCode(String PayType) {
         String acc_code = "";
-        switch(PayType){
-            case("1"): acc_code = "51010"; break;
-            case("2"): acc_code = "51040"; break;
-            case("3"): acc_code = "51020"; break;
-            case("4"): acc_code = "51023"; break;
-            case("5"): acc_code = "51030"; break;
-            case("6"): acc_code = "51035"; break;
+        if("1".equalsIgnoreCase(PayType)){
+            acc_code = "51010";
+            
+        } else if ("2".equalsIgnoreCase(PayType)){
+            acc_code = "51040";
+                    
+        } else if ("3".equalsIgnoreCase(PayType)){
+            acc_code = "51020";
+            
+        } else if ("4".equalsIgnoreCase(PayType)){
+            acc_code = "51023";
+            
+        } else if ("5".equalsIgnoreCase(PayType)){
+            acc_code = "51030";
+            
+        } else if ("6".equalsIgnoreCase(PayType)){
+            acc_code = "51035";
         }
         
         return acc_code;
