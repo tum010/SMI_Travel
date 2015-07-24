@@ -36,7 +36,7 @@
     </div>
     <!--Content -->
    
-    <form action="PaymentTourHotel.smi" method="post" id="PaymentTourHotelForm" autocomplete="off" role="form">
+    <form action="PaymentTourHotel.smi" method="post" id="PaymentTourHotelForm" autocomplete="off" role="form" onsubmit="return validateForm()">
     <div class="col-sm-10">
         <c:if test="${requestScope['resultText'] =='success'}">                                            
             <div id="textAlertDivSave"  style="" class="alert alert-success alert-dismissible" role="alert">
@@ -739,8 +739,7 @@
                 }               
             }
         });
-        
-        
+              
         $("#PaymentHotelTable").on("keyup", "select:last", function () {
             var row = parseInt($("#counter").val());
             AddRow(row);
@@ -1047,18 +1046,51 @@
     function checkRefNo(row){
         var list = '${refNo_list}';
         var refNo = document.getElementById('refNo'+row).value;
+        
+        if(refNo===''){
+            return false;
+        }    
+     
+        var result = list.indexOf(refNo);
+
+//        if(result !== -1){
+//            alert('true');
+//            $('#PaymentHotelTable tbody').bootstrapValidator('revalidateField', 'refNo[]');
+//        } else {
+//            alert('false');
+//            $('#PaymentHotelTable tbody').bootstrapValidator('revalidateField', 'refNo[]');
+//        }
+        
         list = list.replace("[","");
         list = list.replace("]","");
         list = list.replace(/ /g,"");
-        alert(list);
+
         var refNo_list = list.split(',');
         for(var i = 0;i<=refNo_list.length;i++){
            if(String(refNo) === String(refNo_list[i])){
-                alert('true');
+                var refNoField = document.getElementById('refNo'+row);
+                refNoField.style.borderColor = "Green";
                 return;
+           } else {
+                var refNoField = document.getElementById('refNo'+row);
+                refNoField.style.borderColor = "Red";
            }
         }
-        alert('false');
+    }
+    
+    function validateForm(){
+        var count = document.getElementById('counter').value;
+        
+        for(var i=0;i<=count;i++){
+            var refNoField = document.getElementById('refNo'+i);
+            
+            if(refNoField !== null){
+                var color = document.getElementById('refNo'+i).style.borderColor;
+                if(color === "red"){
+                    return false;
+                }   
+            }
+        }
     }
    
 </script>
