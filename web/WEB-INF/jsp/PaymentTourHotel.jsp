@@ -435,8 +435,8 @@
         
         <input type="hidden" class="form-control" id="paymentId" name="paymentId" value="${requestScope['paymentId']}" />
         <input type="hidden" class="form-control" id="counter" name="counter" value="${requestScope['paymenthotelcount']}" />
-        <input type="hidden" class="form-control" id="crateDate" name="crateDate" value="${requestScope['crateDate']}" />
         <input type="hidden" class="form-control" id="payNo" name="payNo" value="${requestScope['payNo']}" />
+        <input type="hidden" class="form-control" id="crateDate" name="crateDate" value="${requestScope['crateDate']}" />
         <input type="hidden" class="form-control" id="ProductTourHotel" name="ProductTourHotel">  
         <input type="hidden" class="form-control" id="productList_id" name="productList_id" />
         <input type="hidden" name="productCountDel" id="productCountDel">
