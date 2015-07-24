@@ -35,7 +35,7 @@ public class StockController extends SMITravelController {
             request.setAttribute("ListProductStock", listProductStock);
 
             // Serach Staff
-            List<SystemUser> listStaffStock = mStaffService.searchSystemUser(new SystemUser(), 1);
+            List<SystemUser> listStaffStock = mStaffService.getListStaff();
             request.setAttribute("ListStaffStock", listStaffStock);
 
             // Search Item List
