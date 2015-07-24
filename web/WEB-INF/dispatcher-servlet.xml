@@ -108,8 +108,9 @@
 				<prop key="Stock.smi">StockController</prop>
 				<prop key="SearchStock.smi">SearchStockController</prop>
 				<prop key="DefineVar.smi">DefineVarController</prop>
-				<prop key="CreditNote.smi">CreditNoteController</prop>
-				<prop key="SearchCreditNote.smi">SearchCreditNoteController</prop>
+				 <prop key="CreditNote.smi">CreditNoteController</prop>
+                                <prop key="SearchCreditNote.smi">SearchCreditNoteController</prop>
+                                <prop key="MAccountCode.smi">MAccountCodeController</prop>
 
 				<!-- add mapping url -->
 			</props>
