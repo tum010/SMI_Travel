@@ -10,7 +10,7 @@
 <c:set var="invoiceSupList" value="${requestScope['invoiceSupList']}" />
 <c:set var="paymentAirticket" value="${requestScope['paymentAirticket']}" />
 <c:set var="SelectedInvoice" value="${requestScope['SelectedInvoice']}" />
-
+<c:set var="vat" value="${requestScope['vat']}" />
 <c:set var="ticketFareList" value="${requestScope['ticketFareList']}" /> 
 <section class="content-header" >
     <h1>
@@ -48,6 +48,7 @@
             
             <form action="PaymentAirline.smi" method="post" id="PaymentAirlineForm" name="PaymentAirlineForm" role="form">
                 <input type="hidden" name="action" id="action" value="">
+                <input type="hidden" name="vat" id="vat" value="">
                 <div class="panel panel-default">
                     <div class="panel-body"  style="padding-right: 0px;" style="width: 100%">
                         <div class="col-xs-12 form-group">
@@ -315,7 +316,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 170px">
                                 <div class="input-group">                                    
-                                    <input type="text" class="form-control money" id="totalAmountRefund" name="totalAmountRefund" readonly="" value="" />
+                                    <input type="text" class="form-control money" id="totalAmountRefund" name="totalAmountRefund"  value="" />
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 250px">
@@ -563,6 +564,7 @@
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
         $(".money").mask('000,000,000.00', {reverse: true});
+        $("#vat").val(${vat});
         var ApCodeTable = $('#ApCodeTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
@@ -702,21 +704,28 @@
         });
         
         //calculate TotalPayment
-        $("#totalCommissionTicketFare").focusout(function(){
-            calculateTotalPayment();
-        });
-        $("#totalAmountTicketFare").focusout(function(){
-            calculateTotalPayment();
-        });
-        $("#totalAmountRefund").focusout(function(){
-            calculateTotalPayment();
-        });
-        $("#totalAmountRefundVat").focusout(function(){
-            calculateTotalPayment();
-        });
+//        $("#totalCommissionTicketFare").focusout(function(){
+//            calculateTotalPayment();
+//        });
+//        $("#totalAmountTicketFare").focusout(function(){
+//            calculateTotalPayment();
+//        });
+//        $("#totalAmountRefund").focusout(function(){
+//            calculateTotalPayment();
+//        });
+//        $("#totalAmountRefundVat").focusout(function(){
+//            calculateTotalPayment();
+//        });
         $("#creditAmount").focusout(function(){
             calculateTotalPayment();
         });
+        
+        $("#totalAmountRefund").focusout(function(){
+            calculateTotalRefundVat();
+        });
+        
+        calculateTotalCommission();
+        calculateTotalAmount();
     });
     
 function searchPaymentNo() {
@@ -775,6 +784,7 @@ function CallAjaxAdd(param) {
                         "bLengthChange": false,
                         "iDisplayLength": 10
                     });
+                     calculateTotalAmountRefund();
                      $("#ajaxload").addClass("hidden");
                 } catch (e) {
                     alert(e);
@@ -922,6 +932,81 @@ function calculateTotalPayment() {
     var totalPayment = amountTotal - comTotal - refundTotal + refundVat - creditAmount;
     document.getElementById("totalPayment").value = formatNumber(totalPayment);
 }
+
+function calculateTotalRefundVat() {
+//  Total Amount Refund  vat = vat * Total Amount Refund / 100
+    var vatValue = replaceAll(",","",$('#vat').val()); 
+    if (vatValue == ""){
+        vatValue = 0;
+    }
+    
+    var totalRefund = replaceAll(",","",$('#totalAmountRefund').val()); 
+    if (totalRefund == ""){
+        totalRefund = 0;
+    }
+
+    var vat = parseFloat(vatValue); 
+    var refundTotal = parseFloat(totalRefund);
+    
+    
+    var totalRefundVat = refundTotal * (vat / 100);
+    document.getElementById("totalAmountRefundVat").value = formatNumber(totalRefundVat);
+}
+
+function calculateTotalCommission() {
+    var temp = 0;
+    var commissionTemp = parseFloat(0);
+    var tableTicket = document.getElementById('TicketFareTable');
+    for (var r = 1, n = tableTicket.rows.length; r < n; r++) {
+        temp = tableTicket.rows[r].cells[6].innerHTML;
+        temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
+        if(temp == '') {
+            temp = 0;
+        }
+        var valueCom = parseFloat(temp) ;
+        var commission = commissionTemp + valueCom ;
+        commissionTemp = commission;
+
+    }
+    document.getElementById("totalCommissionTicketFare").value = formatNumber(commission);
+}
+
+function calculateTotalAmount(){
+    var temp = 0;
+    var amountTemp = parseFloat(0);
+    var tableTicket = document.getElementById('TicketFareTable');
+    for (var r = 1, n = tableTicket.rows.length; r < n; r++) {
+        temp = tableTicket.rows[r].cells[7].innerHTML;
+        temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
+        if(temp == '') {
+            temp = 0;
+        }
+        var value = parseFloat(temp) ;
+        var amount = amountTemp + value ;
+        amountTemp = amount;
+
+    }
+    document.getElementById("totalAmountTicketFare").value = formatNumber(amount);
+}
+
+function calculateTotalAmountRefund(){
+    var temp = 0;
+    var refundTemp = parseFloat(0);
+    var table = document.getElementById('RefundTicketTable');
+    for (var r = 1, n = table.rows.length; r < n; r++) {
+        temp = table.rows[r].cells[5].innerHTML;
+        temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
+        if(temp == '') {
+            temp = 0;
+        }
+        var value = parseFloat(temp) ;
+        var refund = refundTemp + value ;
+        refundTemp = refund;
+
+    }
+    document.getElementById("totalAmountRefund").value = formatNumber(refund);
+}
+
 
 function replaceAll(find, replace, str) {
   return str.replace(new RegExp(find, 'g'), replace);
