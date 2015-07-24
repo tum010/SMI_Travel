@@ -25,6 +25,8 @@ public class SystemUserImpl implements SystemUserDao {
     private static final String authenquery = "select u from SystemUser u   WHERE (u.username=:user) and (u.password=:pass) ";
     private static final String GUIDEQUERY = "select u from SystemUser u   WHERE u.position= 'GUIDE' and u.status = 'active'";
     private static final String DRIVERQUERY = "select u from SystemUser u   WHERE u.position= 'DRIVER' and u.status = 'active'";
+    private static final String STAFFQUERY = "select u from SystemUser u   WHERE  u.status = 'active'";
+    
     @Override
     public SystemUser getSystemUser(SystemUser user) {
         SystemUser myUser = new SystemUser();
@@ -178,6 +180,18 @@ public class SystemUserImpl implements SystemUserDao {
 
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
+    }
+
+    @Override
+    public List<SystemUser> getUserList() {
+       Session session = this.sessionFactory.openSession();
+        List<SystemUser> list = session.createQuery(STAFFQUERY).list();
+        if (list.isEmpty()) {
+            return null;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return list;
     }
 
 
