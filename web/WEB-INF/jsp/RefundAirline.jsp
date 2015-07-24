@@ -108,49 +108,57 @@
                     <table id="RefundAirlineTable" class="display" cellspacing="0" width="100%">
                         <thead>
                             <tr class="datatable-header" >
-                                
                                 <th style="width:10%;">Ticket No</th>
-                                <th style="width:8%;">Ticket Date</th>
-                                <th style="width:5%;">Dept.</th>
-                                <th style="width:10%;">Passenger</th>
-                                <th style="width:10%;">Sector Issue</th>
-                                <th style="width:10%;">Sector Refund</th>
-                                <th style="width:5%;">Total</th>
-                                <th style="width:7%;">Receive</th>
-                                <th style="width:7%;">Pay</th>
-                                <th style="width:7%;">Profit</th>
-                                <th style="width:7%;">Com</th>
-                                <th style="width:8%;">Date</th>
-                                <th style="width:5%;">Action</th>
+                                <th style="width:35%;">Sector Refund</th>
+                                <th style="width:10%;" >Receive</th>
+                                <th style="width:10%;" >Pay</th>
+                                <th style="width:10%;" >Profit</th>
+                                <th style="width:10%;" >Com</th>
+                                <th style="width:10%;" >Date</th>
+                                <th style="width:5%;" rowspan="2" >Action</th>
+                            </tr>
+                            <tr class="datatable-header" >
+                                <th>Ticket Date</th>
+                                <th>Sector issue</th>
+                                <th>Total</th>
+                                <th>Department</th>
+                                <th colspan="3">Passenger</th>
                             </tr>
                         </thead>
                         <tbody>
                               <%--<c:forEach var="refundAirline" items="${refundAirlineList}" varStatus="varRefundAirline">--%>
                             <tr>
                                 
-                                <td style="text-align:center">12345678321</td>
-                                <td style="text-align:center">2015-01-01</td>
-                                <td style="text-align:center">W</td>
-                                <td style="text-align:center">Jittima S.</td>
-                                <td style="text-align:center">BKK-ARM-BKK</td>
-                                <td style="text-align:center">ARM-BKK</td>
-                                <td style="text-align:center">2500</td>
-                                <td style="text-align:center">2300</td>
-                                <td style="text-align:center">100</td>
-                                <td style="text-align:center">500</td>
-                                <td style="text-align:center">300</td>
-                                <td style="text-align:center">2015-01-01</td>
-                                <td class="text-center">
+                                <td style="text-align:center"> <input id="ticketno" name="ticketno" type="text" class="form-control" value="1234214324"></td>
+                                <td style="text-align:center"> <input id="refund" name="refund" type="text" class="form-control" value="BKK-HGH"></td>
+                                <td style="text-align:center"> <input id="Receive" name="Receive" type="text" class="form-control" value=""></td>
+                                <td style="text-align:center"> <input id="Pay" name="Pay" type="text" class="form-control" value=""></td>
+                                <td style="text-align:center"> <input id="Profit" name="Profit" type="text" class="form-control" value=""></td>
+                                <td style="text-align:center"> <input id="Com" name="Com" type="text" class="form-control" value=""></td>
+                                <td style="text-align:center"> <input id="date" name="ticketno" type="text" class="form-control" value=""></td>
+                                <td rowspan='2' class="text-center">
                                     <a id="ButtonRemove${varRefundAirline.count}" data-toggle="modal" data-target="#DeleteRefundAirline" onclick="">
                                         <i id="IRemove${varRefundAirline.count}" class="glyphicon glyphicon-remove deleteicon"></i>
                                     </a>
                                 </td>
                             </tr>
+                            <tr>
+                                <td style="text-align:center">2015-01-01</td>
+                                <td >BKK-ARM-BKK</td>
+                                <td style="text-align:center">2500</td>
+                                <td >Outbound</td>       
+                                <td colspan='3'>MR PRASASOMMOON  WASIN</td>                         
+                            </tr>
                             <%--</c:forEach>--%>
                         </tbody>
                     </table>      
                 </div>
-            </div>                
+            </div>        
+                        
+            <div class="col-xs-12 text-center" style="padding-top: 10px">
+                    <button type="submit" id="ButtonSave" name="ButtonSave" onclick="saveAction()" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+                    <button type="submit" id="ButtonSaveAndNew" name="ButtonSaveAndNew" class="btn btn-success"><i class="fa fa-save"></i> Save &amp; New</button>
+            </div>            
 
         </div>
     </div>
@@ -240,7 +248,7 @@
         });
         
         var rowRefund = $("#RefundAirlineTable tr").length;
-        RefundAirlineTableAddRow(rowRefund);
+     //   RefundAirlineTableAddRow(rowRefund);
         
         $("#RefundAirlineTable").on("keyup", function () {
             var rowAll = $("#RefundAirlineTable tr").length;
