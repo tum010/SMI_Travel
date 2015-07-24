@@ -356,15 +356,23 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             route = "3333";
             commission = "44444";
             amount = "55555";
-//            List<RefundAirticketDetail> refundAirticketDetailList = new ArrayList<RefundAirticketDetail>(refundAirticketList.get(i).getRefundAirticketDetails());
-//            
-//            if(refundAirticketDetailList.get(i).getTicketFareAirline() != null){
-//                ticketNo =  refundAirticketDetailList.get(i).getTicketFareAirline().getTicketNo();
-//                department = refundAirticketDetailList.get(i).getTicketFareAirline().getDepartment();
-//                commission = String.valueOf(refundAirticketDetailList.get(i).getTicketFareAirline().getTicketCommission());
-//                amount =  String.valueOf(refundAirticketDetailList.get(i).getTicketFareAirline().getSalePrice());
-//            }
             route = "TEST";
+            
+//            List<RefundAirticketDetail> refundAirticketDetailList = new ArrayList<RefundAirticketDetail>(refundAirticketList.get(i).getRefundAirticketDetails());
+//            if(refundAirticketDetailList.size() != 0){
+//                commission = String.valueOf(refundAirticketDetailList.get(i).getCommission());
+//                route = refundAirticketDetailList.get(i).getSectorRefund();
+//                
+//                if(refundAirticketDetailList.get(i).getTicketFareAirline() != null){
+//                    ticketNo =  refundAirticketDetailList.get(i).getTicketFareAirline().getTicketNo();
+//                    department = refundAirticketDetailList.get(i).getTicketFareAirline().getDepartment();
+//                    commission = String.valueOf(refundAirticketDetailList.get(i).getTicketFareAirline().getTicketCommission());
+//                    amount =  String.valueOf(refundAirticketDetailList.get(i).getTicketFareAirline().getSalePrice());
+//                }
+//            }
+            
+            
+
 
             String newrow
                     = "<tr>"
