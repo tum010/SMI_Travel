@@ -720,7 +720,7 @@
             }
         });
               
-        $("#PaymentHotelTable").on("change", function () {
+        $("#PaymentHotelTable").on("change", "select:last", function () {
             var row = parseInt($("#counter").val());
             AddRow(row);
         });
