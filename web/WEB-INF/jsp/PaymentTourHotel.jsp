@@ -664,7 +664,7 @@
             $("td").keyup(function() {
                 if ($(this).find("input").val() != '') {
                     var colIndex = $(this).parent().children().index($(this));
-                    var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
+                    var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 1;
                     rowAll = $("#PaymentHotelTable tr").length;
                     //console.log('Row: ' + rowIndex + ', Column: ' + colIndex + ', All Row ' + rowAll);
                     if (rowIndex == rowAll) {
@@ -960,8 +960,6 @@
     }
     
     function clearScreen(){
-        //this.form.reset();
-        //location.reload();
         $('#paymentId, #InputPayNo, #InputPayDate, #itemPvType, #itemStatus, #InputInvoiceSupId, #InputInvoiceSupCode, #InputInvoiceSupName, #InputAPCode, #Detail, #itemPayment, #InputRemark, #InputGrandTotal, #InputCash, #InputChqNo, #InputChqAmount, #InputCurrency').val('');
         document.getElementById("account1").checked = false;
         document.getElementById("account2").checked = false;
@@ -1061,18 +1059,8 @@
         
         if(refNo===''){
             return false;
-        }    
-     
-        var result = list.indexOf(refNo);
+        }        
 
-//        if(result !== -1){
-//            alert('true');
-//            $('#PaymentHotelTable tbody').bootstrapValidator('revalidateField', 'refNo[]');
-//        } else {
-//            alert('false');
-//            $('#PaymentHotelTable tbody').bootstrapValidator('revalidateField', 'refNo[]');
-//        }
-        
         list = list.replace("[","");
         list = list.replace("]","");
         list = list.replace(/ /g,"");
