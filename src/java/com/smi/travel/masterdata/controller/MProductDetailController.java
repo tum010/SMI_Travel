@@ -38,6 +38,7 @@ public class MProductDetailController extends SMITravelController {
         String description = request.getParameter("description");
         String remark = request.getParameter("remark");
         String ProductID = request.getParameter("ProductID");
+        String isStock = request.getParameter("isStock");
         UtilityFunction util = new UtilityFunction();
         String operation = "";
         
@@ -67,6 +68,11 @@ public class MProductDetailController extends SMITravelController {
         }
         if(description != null){
             description = description.trim();
+        }
+        if(isStock != null){
+            product.setIsStock(1);
+        } else {
+            product.setIsStock(0);
         }
         product.setRemark(remark);
         product.setDescription(description);
@@ -162,6 +168,7 @@ public class MProductDetailController extends SMITravelController {
             }
             description = productDetail.getDescription();
             remark = productDetail.getRemark();
+            isStock = String.valueOf(productDetail.getIsStock());
             if(remark != null){
                 remark = remark.trim();
             }
@@ -192,6 +199,7 @@ public class MProductDetailController extends SMITravelController {
             name = (String.valueOf(productDetail.getCode())).toUpperCase();
             description = productDetail.getDescription();
             remark = productDetail.getRemark();
+            isStock = String.valueOf(productDetail.getIsStock());
             ProductID = request.getParameter("ProductID").toString();
             if (productDetail.getMProductType() != null) {
                 ProductTypeID = productDetail.getMProductType().getId();
@@ -211,6 +219,7 @@ public class MProductDetailController extends SMITravelController {
         request.setAttribute("producttype", ProductTypeID);
         request.setAttribute("description", description);
         request.setAttribute("remark", remark);
+        request.setAttribute("isStock", isStock);
         request.setAttribute("ProductID", ProductID);
 
         return MProductDetail;
