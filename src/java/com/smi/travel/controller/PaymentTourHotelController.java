@@ -106,7 +106,13 @@ public class PaymentTourHotelController extends SMITravelController {
             if(paymentId == "" || paymentId == null){
                 UtilityFunction utilfunction = new UtilityFunction();
                 PaymentWendy paymentWendy = new PaymentWendy();
-                paymentWendy.setAccount(utilfunction.convertStringToInteger(account));
+                
+                if(account != null){
+                    paymentWendy.setAccount(utilfunction.convertStringToInteger(account));
+                } else {
+                    paymentWendy.setAccount(null);
+                }
+                
                 paymentWendy.setPayDate(utilfunction.convertStringToDate(InputPayDate));
 
                 MItemstatus mitemStatus = new MItemstatus();
