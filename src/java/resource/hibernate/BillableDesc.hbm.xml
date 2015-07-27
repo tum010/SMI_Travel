@@ -13,9 +13,6 @@
         <many-to-one name="MBilltype" class="com.smi.travel.datalayer.entity.MBilltype" fetch="select">
             <column name="bill_type" />
         </many-to-one>
-         <many-to-one name="airticketAirline" class="com.smi.travel.datalayer.entity.AirticketAirline" fetch="select">
-            <column name="airline_id" />
-        </many-to-one>
         <property name="cost" type="int">
             <column name="cost" not-null="true" />
         </property>
@@ -36,6 +33,9 @@
         </property>
         <property name="billDate" type="date">
             <column name="bill_date" length="10" />
+        </property>
+        <property name="refItemId" type="string">
+            <column name="ref_item_id" length="50" />
         </property>
     </class>
 </hibernate-mapping>

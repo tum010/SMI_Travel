@@ -17,6 +17,7 @@ public class BillableView {
     private int price;
     private String refno;
     private String detail;
+    private String id;
 
     public String getBillID() {
         return billID;
@@ -64,6 +65,14 @@ public class BillableView {
 
     public void setDetail(String detail) {
         this.detail = detail;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
    

@@ -132,6 +132,7 @@ http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
            <value>resource/hibernate/Receipt.hbm.xml</value>
            <value>resource/hibernate/ReceiptCredit.hbm.xml</value>
            <value>resource/hibernate/ReceiptDetail.hbm.xml</value>
+
 	</list>
       </property>	
  

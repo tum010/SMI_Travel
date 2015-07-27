@@ -135,6 +135,8 @@ public class BillableController extends SMITravelController {
                 if (StringUtils.isNotEmpty(billDescId)) {
                     String remark = request.getParameter("remark-" + i);
                     String billdate = request.getParameter("billDate-"+i);
+                    String refId = request.getParameter("billRefId-"+i);
+                    
                     Date billDate = convertStringToDate(billdate);
                     System.out.println("remark insert: " + remark);
                     System.out.println("billDate insert: " + billDate);
@@ -322,12 +324,15 @@ public class BillableController extends SMITravelController {
         if (input == null) {
             return null;
         }
+        if("".equalsIgnoreCase(input)){
+            return null;
+        }
         Date date = null;
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try {
             date = formatter.parse(input);
         } catch (ParseException e) {
-            e.printStackTrace();
+           // e.printStackTrace();
             return null;
 
         }
@@ -393,6 +398,8 @@ public class BillableController extends SMITravelController {
         String remark = request.getParameter("remark-" + index);
         String detail = request.getParameter("detail-"+index);
         String billdate = request.getParameter("billDate-"+index);
+        String refId = request.getParameter("billRefId-"+index);
+        
         Date billDate =    convertStringToDate(billdate);
         System.out.println("remark[" + index + "] : " + remark);
         int price = Integer.parseInt(priceS);
@@ -404,6 +411,7 @@ public class BillableController extends SMITravelController {
         bd.setRemark(remark);
         bd.setDetail(detail);
         bd.setBillDate(billDate);
+        bd.setRefItemId(refId);
         billable.getBillableDescs().add(bd);
     }
 
@@ -447,6 +455,7 @@ public class BillableController extends SMITravelController {
                 System.out.println("updateRemarkByBillDescId remark : " + remark);
                 System.out.println("updateRemarkByBillDescId billDate : " + billDate);
                 bd.setRemark(remark);
+                
                 bd.setBillDate(billDate);
                 return;
             }

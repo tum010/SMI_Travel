@@ -22,6 +22,7 @@ public class BillableDesc  {
      private String remark;
      private String detail;
      private String currency;
+     private String refItemId;
      private Date billDate;
 
      
@@ -35,7 +36,7 @@ public class BillableDesc  {
         this.price = price;
         this.isBill = isBill;
     }
-    public BillableDesc(Billable billable, MBilltype MBilltype, AirticketAirline airticketAirline, int cost, int price, int isBill, String remark,String detail,String currency,Date billDate) {
+    public BillableDesc(Billable billable, MBilltype MBilltype, AirticketAirline airticketAirline, int cost, int price, int isBill, String remark,String detail,String currency,Date billDate,String refItemId) {
        this.billable = billable;
        this.MBilltype = MBilltype;
        this.airticketAirline = airticketAirline;
@@ -46,6 +47,7 @@ public class BillableDesc  {
        this.detail = detail;
        this.currency = currency;
        this.billDate = billDate;
+       this.refItemId = refItemId;
     }
    
     public String getId() {
@@ -127,6 +129,14 @@ public class BillableDesc  {
 
     public void setBillDate(Date billDate) {
         this.billDate = billDate;
+    }
+
+    public String getRefItemId() {
+        return refItemId;
+    }
+
+    public void setRefItemId(String refItemId) {
+        this.refItemId = refItemId;
     }
 
 

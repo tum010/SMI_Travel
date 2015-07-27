@@ -7,6 +7,7 @@
 package com.smi.travel.datalayer.view.dao.impl;
 
 import com.smi.travel.datalayer.entity.BillableDesc;
+import com.smi.travel.datalayer.entity.HotelBooking;
 import com.smi.travel.datalayer.entity.MBilltype;
 import com.smi.travel.datalayer.view.dao.BillableViewDao;
 import com.smi.travel.datalayer.view.entity.BillableView;
@@ -37,6 +38,7 @@ private SessionFactory sessionFactory;
                 .addScalar("price",Hibernate.BIG_INTEGER)
                 .addScalar("ref_no",Hibernate.STRING)
                 .addScalar("detail",Hibernate.STRING)
+                .addScalar("id",Hibernate.STRING)
                 .list();
                
         List<BillableView> BillableList =  new LinkedList<BillableView>();
@@ -48,6 +50,7 @@ private SessionFactory sessionFactory;
             bill.setPrice(util.convertObjectToInteger(B[3]));
             bill.setRefno(B[4].toString());
             bill.setDetail(B[5].toString());
+            bill.setId(B[6].toString());       
             BillableList.add(bill);  
         }
        
@@ -67,6 +70,13 @@ private SessionFactory sessionFactory;
         for(BillableView B : ListBill){
             BillableDesc Billdata = new BillableDesc();
             MBilltype billtype = new MBilltype();
+            if(B.getBilltype().equalsIgnoreCase("Air Ticket")){
+              //  System.out.println("set Airline id : "+ B.getId());
+               // Billdata.setRefItemId(B.getId());
+            }else{
+                System.out.println("set  id : "+ B.getId());
+                Billdata.setRefItemId(B.getId());
+            }
             billtype.setName(B.getBilltype());
             billtype.setId(B.getBillID());
             Billdata.setMBilltype(billtype);

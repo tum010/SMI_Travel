@@ -286,6 +286,7 @@
                         <tr style="width:100%">
                             <th style="width:4%">No</th>
                             <th class="hidden">Id</th>
+                            <th class="hidden">RefId</th>
                             <th style="width:10%">Type</th>
                             <th style="width:20%">Detail</th>
                             <th style="width:7%">Cost</th>
@@ -305,6 +306,7 @@
                         <tr>
                             <td>${Counter.count}</td>
                             <td class="hidden"><input type="hidden" id="billDescId-${Counter.count}" name="billDescId-${Counter.count}" value="${b.id}" /></td>
+                            <td class="hidden"><input type="hidden" id="billRefId-${Counter.count}" name="billRefId-${Counter.count}" value="${b.refItemId}" /></td>
                             <td><input type="hidden" id="billtype-${Counter.count}" name="billtype-${Counter.count}" value="${b.MBilltype.getName()}" />${b.MBilltype.getName()}</td>
                             <td><input type="hidden" id="detail-${Counter.count}" name="detail-${Counter.count}" value="${b.detail}" />${b.detail}</td>
                             <td class="text-right"><input type="hidden" id="cost-${Counter.count}" name="cost-${Counter.count}" value="${b.cost}" />
