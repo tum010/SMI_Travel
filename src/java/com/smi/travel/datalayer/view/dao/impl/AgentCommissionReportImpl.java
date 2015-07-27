@@ -28,14 +28,14 @@ import org.hibernate.SessionFactory;
 public class AgentCommissionReportImpl implements AgentCommissionReportDao {
 
     private SessionFactory sessionFactory;
-    private static final String AGENTCOM_SUMMARY_QUERY = "select agt.`code` as `code`,"
-            + "agt.`name` as `name`,"
-            + "count(DISTINCT(mt.id)) as count_booking,"
-            + "sum(db.agent_comission) as comission "
-            + "from daytour_booking db "
-            + "inner JOIN agent agt on db.agent_id = agt.id "
-            + "INNER JOIN daytour_booking_price dp on dp.daytour_booking_id = db.id "
-            + "INNER JOIN `master` mt on mt.id = db.master_id ";
+    private static final String AGENTCOM_SUMMARY_QUERY = "SELECT agt.`code` AS `code`,"
+            + "agt.`name` AS `name`,"
+            + "count((mt.id)) AS count_booking,"
+            + "SUM(db.agent_comission) AS comission "
+            + "FROM daytour_booking db "
+            + "INNER JOIN agent agt ON db.agent_id = agt.id "
+//            + "INNER JOIN daytour_booking_price dp ON dp.daytour_booking_id = db.id "
+            + "INNER JOIN `master` mt ON mt.id = db.master_id ";
 
     
     @Override
@@ -57,7 +57,7 @@ public class AgentCommissionReportImpl implements AgentCommissionReportDao {
         if((agentid != null)&&(!"".equalsIgnoreCase(agentid))){
             sql += " and agt.id ="+agentid;
         }
-        sql += " GROUP BY agt.`code`,agt.`name` HAVING  sum(`db`.`agent_comission`) <> 0 ORDER BY `agt`.`name`";
+        sql += " GROUP BY agt.`code`,agt.`name` HAVING  comission <> 0 ORDER BY `agt`.`name`";
         System.out.println("sql :" +sql);
         List<Object[]> QueryAgentComSummaryList = session.createSQLQuery(sql)
                 .addScalar("code", Hibernate.STRING)
