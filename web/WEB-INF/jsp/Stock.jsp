@@ -51,7 +51,7 @@
         </div>
         <div id="textAlertMoreOne"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Duplicate !!</strong> 
+                <strong>Duplicate Data in table !!</strong> 
         </div>
         <div id="checklengthCode"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -157,25 +157,25 @@
                         <div class="col-xs-1 text-right" style="width: 50px;">
                             <label class="control-label">Prefix</lable>
                         </div>
-                        <div class="col-md-1 form-group text-left" style="width: 130px;"> 
+                        <div class="col-md-1 form-group text-left" style="width: 130px;" id="PrefixInput"> 
                             <input name="InputPrefix" id="InputPrefix" type="text" class="form-control" value="" />
                         </div>
                         <div class="col-xs-1 text-right"  style="width: 60px;">
                             <label class="control-label">Start</lable>
                         </div>
-                        <div class="col-md-1 form-group text-left" style="width: 120px;">  
+                        <div class="col-md-1 form-group text-left" style="width: 120px;" id="StartInput">  
                             <input name="InputStart" id="InputStart"  maxlength="10" type="text" class="form-control number" value="" onkeyup="setNumberFormat(this);" />
                         </div>
                         <div class="col-xs-1 text-right"  style="width: 60px;">
                             <label class="control-label">Digit</lable>
                         </div>
-                        <div class="col-md-1 form-group text-left" style="width: 90px;">  
+                        <div class="col-md-1 form-group text-left" style="width: 90px;" id="DigitInput">  
                             <input name="InputDigit" id="InputDigit"  maxlength="10" type="text" class="form-control money" value="" />
                         </div>
                         <div class="col-xs-2 text-right" style="width: 140px;">
                             <label class="control-label">Number Of Item</lable>
                         </div>
-                        <div class="col-md-1 form-group text-left" > 
+                        <div class="col-md-1 form-group text-left" id="NumberOfItemInput"> 
                             <input name="InputNumberOfItem" id="InputNumberOfItem" type="text" class="form-control money" value="" placeholder="123"/>
                         </div>
                         <div class="col-xs-1 text-right"  >
@@ -213,16 +213,16 @@
                                     <tr>
                                         <th class="hidden">id</th>
                                         <th style="width: 5%">No</th>                                   
-                                        <th style="width: 10%">Code</th>
-                                        <th style="width: 15%">Type</th>
-                                        <th style="width: 20%">Pay Status</th>
+                                        <th style="width: 20%">Code</th>
+                                        <th style="width: 10%">Type</th>
+                                        <th style="width: 15%">Pay Status</th>
                                         <th style="width: 15%">Item Status</th>
                                         <th style="width: 8%">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <input type="text" class="hidden" id="counter" name="counter" value="1" />
-                                    <input type="text" class="" id="counterTable" name="counterTable" value="0" />
+                                    <input type="text" class="hidden" id="counterTable" name="counterTable" value="0" />
                                     <input type="text" class="hidden" id="counterAdd" name="counterAdd" value="1" />
                                     <c:set var="count" value="1"></c:set>                                          
                                     <c:forEach var="std" items="${listStockDetail}" varStatus="taxdesc">
