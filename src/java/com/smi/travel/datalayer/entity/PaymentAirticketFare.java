@@ -14,6 +14,7 @@ public class PaymentAirticketFare {
      private TicketFareAirline ticketFareAirline;
 
     public PaymentAirticketFare() {
+        this.paymentAirticket = new PaymentAirticket();
     }
 
     public PaymentAirticketFare(PaymentAirticket paymentAirticket, TicketFareAirline ticketFareAirline) {

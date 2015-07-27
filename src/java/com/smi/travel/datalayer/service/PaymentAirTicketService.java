@@ -7,6 +7,8 @@ package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.dao.PaymentAirTicketDao;
 import com.smi.travel.datalayer.entity.PaymentAirticket;
+import com.smi.travel.datalayer.entity.PaymentAirticketFare;
+import com.smi.travel.datalayer.entity.PaymentAirticketRefund;
 import com.smi.travel.datalayer.entity.RefundAirticket;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
@@ -32,12 +34,12 @@ public class PaymentAirTicketService {
         return paymentairticketdao.DeletePaymentAir(payAir);
     }
     
-    public String DeletePaymentAirFare(String airfareId){
-        return paymentairticketdao.DeletePaymentAirFare(airfareId);
+    public String DeletePaymentAirFare(String paymentAirId,String ticketFareId , int option){
+        return paymentairticketdao.DeletePaymentAirFare(paymentAirId,ticketFareId,option);
     }
     
-    public String DeletePaymentAirRefund(String airRefundId){
-        return paymentairticketdao.DeletePaymentAirRefund(airRefundId);
+    public String DeletePaymentAirRefund(String paymentAirId,String refundDetailId , int option){
+        return paymentairticketdao.DeletePaymentAirRefund(paymentAirId,refundDetailId,option);
     }
     
     public PaymentAirticket getPaymentAirTicketFromPayno(String payNo){
@@ -56,8 +58,11 @@ public class PaymentAirTicketService {
         return paymentairticketdao.validateSavePaymentAir(payAir);
     }
     
-    
-    
+    public List<TicketFareView> getTicketFareViewsByPaymentAirId(String paymentAirId){
+        return paymentairticketdao.getTicketFareViewsByPaymentAirId(paymentAirId);
+    }
+   
+
     
     public PaymentAirTicketDao getPaymentairticketdao() {
         return paymentairticketdao;

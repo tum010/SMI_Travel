@@ -7,6 +7,8 @@
 package com.smi.travel.datalayer.dao;
 
 import com.smi.travel.datalayer.entity.PaymentAirticket;
+import com.smi.travel.datalayer.entity.PaymentAirticketFare;
+import com.smi.travel.datalayer.entity.PaymentAirticketRefund;
 import com.smi.travel.datalayer.entity.RefundAirticket;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
 import java.util.List;
@@ -20,9 +22,10 @@ public interface PaymentAirTicketDao {
     public String UpdatePaymentAir(PaymentAirticket payAir);
     public String DeletePaymentAir(PaymentAirticket payAir);
     //not delete if isExport == 1 or have data in PaymentAirticketFare and PaymentAirticketRefund
-    public String DeletePaymentAirFare(String airfareId);
+    public String DeletePaymentAirFare(String paymentAirId , String ticketFareId , int option); //1 = delete ajax , 2 = delete all when cf search
+    
     //delete from PaymentAirticketFare payair where payair.id = AirfareId
-    public String DeletePaymentAirRefund(String airRefundId);
+    public String DeletePaymentAirRefund(String paymentAirId,String refundDetailId , int option);
     //delete from PaymentAirticketRefund payrefund where payrefund.id = AirRefundId
     public PaymentAirticket getPaymentAirTicketFromPayno(String payNo);
     public List<TicketFareView> getListTicketFare(String from,String to,String by,String airAgentId);
@@ -34,4 +37,5 @@ public interface PaymentAirTicketDao {
     //from RefundAirticket
     //RefundID = id
     public String validateSavePaymentAir(PaymentAirticket payAir);
+    public List<TicketFareView> getTicketFareViewsByPaymentAirId(String paymentAirId);
 }

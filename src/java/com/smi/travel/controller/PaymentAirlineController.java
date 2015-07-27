@@ -3,6 +3,9 @@ import com.smi.travel.datalayer.entity.MAccpay;
 import com.smi.travel.datalayer.entity.MAirlineAgent;
 import com.smi.travel.datalayer.entity.MDefaultData;
 import com.smi.travel.datalayer.entity.PaymentAirticket;
+import com.smi.travel.datalayer.entity.PaymentAirticketFare;
+import com.smi.travel.datalayer.entity.PaymentAirticketRefund;
+import com.smi.travel.datalayer.entity.RefundAirticketDetail;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.service.PaymentAirTicketService;
@@ -39,6 +42,11 @@ public class PaymentAirlineController extends SMITravelController {
     private static final String DUEDATE = "dueDate";
     private static final String PAYNO = "payNo";
     private static final String VAT = "vat";
+    private static final String PAYMENTAIRFARE = "paymentAirFare";
+    private static final String PAYMENTAIRREFUND = "paymentAirRefund";
+    private static final String TICKETFARECOUNT ="ticketFareCount";
+    private static final String FLAGSEARCG ="flagSearch";
+    private static final String DELETERESULT = "deleteresult";
     private UtilityService utilityService;
     private PaymentAirTicketService paymentAirTicketService;
     UtilityFunction util;
@@ -75,28 +83,32 @@ public class PaymentAirlineController extends SMITravelController {
         String totalAmountRefund = request.getParameter("totalAmountRefund");
         String totalAmountRefundVat = request.getParameter("totalAmountRefundVat");
         
-        String delRefundId = request.getParameter("delRefundId");
-        String delRefundNo = request.getParameter("delRefundNo");
+
+        request.setAttribute(TICKETFARECOUNT,"0");
+        request.setAttribute(FLAGSEARCG,"0");
 //        System.out.println("typeAirline " + typeAirline + "////");
 //        System.out.println("dateTo " + dateTo + "////");
 //        System.out.println("dateFrom " + dateFrom + "////");
-        
         PaymentAirticket paymentAirticket = new PaymentAirticket();
         List<TicketFareAirline> ticketFareAirlines = new ArrayList<TicketFareAirline>();
         List<TicketFareView> ticketFareViews = new ArrayList<TicketFareView>();
         InvoiceSupplier invoiceSupplier = new InvoiceSupplier();
         MAccpay mAccpay = new MAccpay();
+
         util = new UtilityFunction();
         String result = "";
         SystemUser user = (SystemUser) session.getAttribute("USER");
+        
+        if (StringUtils.isNotEmpty(paymentId)){
+            paymentAirticket.setId(paymentId);
+        }
+        
         if ("search".equalsIgnoreCase(action)){
             if(paymentNo == null){
                 System.out.print("Payment No is null");
             }else{
                 paymentAirticket = paymentAirTicketService.getPaymentAirTicketFromPayno(paymentNo);
-                if(paymentAirticket == null){
-                    
-                }else{
+                if(paymentAirticket != null){
                     if (StringUtils.isNotEmpty(paymentAirticket.getInvoiceSup())){
                         invoiceSupplier = utilityService.getDataInvoiceSuppiler(paymentAirticket.getInvoiceSup());
                         request.setAttribute(SELECTEDINVOICE, invoiceSupplier);
@@ -109,17 +121,194 @@ public class PaymentAirlineController extends SMITravelController {
                     request.setAttribute(PAYDATE, paymentAirticket.getPayDate());
                     request.setAttribute(DUEDATE, paymentAirticket.getDueDate());
                     request.setAttribute(PAYMENTAIRTICKET,paymentAirticket);
+                    System.out.println("paymentId"+paymentId);
+                    
+                    ticketFareViews = paymentAirTicketService.getTicketFareViewsByPaymentAirId(paymentAirticket.getId());
+                    if(ticketFareViews != null){
+                        request.setAttribute(FLAGSEARCG,"1");
+                        request.setAttribute(TICKETFARELIST,ticketFareViews);
+                    }
                 }
-                request.setAttribute(PAYNO,paymentNo);
             }
-        }else if("searchTicketFare".equalsIgnoreCase(action)){
-            ticketFareViews = paymentAirTicketService.getListTicketFare(dateFrom,dateTo,ticketFrom,typeAirline);
-            request.setAttribute(TICKETFARELIST,ticketFareViews);
+            request.setAttribute(PAYNO,paymentNo);
             
-        }else if("save".equalsIgnoreCase(action)){
+        }else if("searchTicketFare".equalsIgnoreCase(action)){
             if (StringUtils.isNotEmpty(paymentId)){
                 paymentAirticket.setId(paymentId);
             }
+            paymentAirticket.setPayNo(paymentNo);
+            if (StringUtils.isNotEmpty(paymentDate)){
+                paymentAirticket.setPayDate(util.convertStringToDate(paymentDate));
+                request.setAttribute(PAYDATE, paymentDate);
+            }
+            if (StringUtils.isNotEmpty(duePaymentDate)){
+                paymentAirticket.setDueDate(util.convertStringToDate(duePaymentDate));
+                request.setAttribute(DUEDATE, duePaymentDate);
+            }
+            paymentAirticket.setInvoiceSup(invoiceSupCode);
+            paymentAirticket.setApCode(apCode);
+            paymentAirticket.setDetail(detail);
+            paymentAirticket.setCreditNote(creditNote);
+            paymentAirticket.setDebitNote(debitNote);
+            paymentAirticket.setChqNo(chqNo); 
+            paymentAirticket.setCreateBy(user.getUsername());
+            paymentAirticket.setCreateDate(new Date());
+            paymentAirticket.setIsExport(0);
+            
+            if(StringUtils.isNotEmpty(payBy)){
+                mAccpay.setId(payBy);
+                paymentAirticket.setMAccpay(mAccpay);
+            }
+            
+            if(StringUtils.isNotEmpty(agentAmount)){
+                paymentAirticket.setAgentAmount(new BigDecimal(String.valueOf(agentAmount.replaceAll(",","")))); 
+            }else{
+                paymentAirticket.setAgentAmount(new BigDecimal(0)); 
+            }
+            
+            if(StringUtils.isNotEmpty(creditAmount)){
+                paymentAirticket.setCreditAmount(new BigDecimal(String.valueOf(creditAmount.replaceAll(",","")))); 
+            }else{
+                paymentAirticket.setCreditAmount(new BigDecimal(0)); 
+            }
+            
+            if(StringUtils.isNotEmpty(debitAmount)){
+                paymentAirticket.setDebitAmount(new BigDecimal(String.valueOf(debitAmount.replaceAll(",","")))); 
+            }else{
+                paymentAirticket.setDebitAmount(new BigDecimal(0)); 
+            }            
+            
+            if(StringUtils.isNotEmpty(cash)){
+                paymentAirticket.setCash(new BigDecimal(String.valueOf(cash.replaceAll(",","")))); 
+            }else{
+                paymentAirticket.setCash(new BigDecimal(0)); 
+            }            
+            if(StringUtils.isNotEmpty(withholdingTax)){
+                paymentAirticket.setWitholdingTax(new BigDecimal(String.valueOf(withholdingTax.replaceAll(",","")))); 
+            }else{
+                paymentAirticket.setWitholdingTax(new BigDecimal(0)); 
+            }
+       
+            if(StringUtils.isNotEmpty(amount)){
+                paymentAirticket.setChqAmount(new BigDecimal(String.valueOf(amount.replaceAll(",","")))); 
+            }else{
+                paymentAirticket.setChqAmount(new BigDecimal(0)); 
+            }
+            
+            if(StringUtils.isNotEmpty(totalPayment)){
+                paymentAirticket.setTotalAmount(new BigDecimal(String.valueOf(totalPayment.replaceAll(",","")))); 
+            }else{
+                paymentAirticket.setTotalAmount(new BigDecimal(0)); 
+            }            
+    
+            if(StringUtils.isNotEmpty(invoiceSupCode)){
+                invoiceSupplier = utilityService.getDataInvoiceSuppiler(invoiceSupCode);
+                request.setAttribute(SELECTEDINVOICE, invoiceSupplier);
+            }
+            List<TicketFareView> ticketFareViewTemp = new ArrayList<TicketFareView>();
+            ticketFareViewTemp = paymentAirTicketService.getTicketFareViewsByPaymentAirId(paymentId);
+            if(ticketFareViewTemp != null){
+                paymentAirTicketService.DeletePaymentAirFare(paymentId,null,2);
+            }
+            ticketFareViews = paymentAirTicketService.getListTicketFare(dateFrom,dateTo,ticketFrom,typeAirline);
+            
+            request.setAttribute(TICKETFARELIST,ticketFareViews);
+            
+            request.setAttribute(TICKETFARECOUNT,ticketFareViews.size()+1);
+        }else if("save".equalsIgnoreCase(action)){
+            
+            String counter = request.getParameter("counter");
+            int Rows = Integer.parseInt(counter);
+            int RowRefund = Integer.parseInt(counter);
+            if (StringUtils.isNotEmpty(paymentId)){
+                paymentAirticket.setId(paymentId);
+                
+                //save payment air ticket fare
+                if(paymentAirticket.getPaymentAirticketFares() == null){
+                    paymentAirticket.setPaymentAirticketFares(new ArrayList<PaymentAirticketFare>());
+                }
+                for (int i = 1; i < Rows  ; i++) {
+                    String paymentAirFareId = request.getParameter("tableId" + i);
+                    if(paymentAirFareId != null){
+                        System.out.println("tableId "+i+"::::"+ paymentAirFareId);
+
+                        PaymentAirticketFare paymentAirticketFare = new PaymentAirticketFare();
+                        TicketFareAirline ticketFareAirline = new TicketFareAirline();
+                        //payment air id
+                        paymentAirticketFare.setPaymentAirticket(paymentAirticket);
+                        //ticket fare id
+                        ticketFareAirline.setId(paymentAirFareId);
+                        paymentAirticketFare.setTicketFareAirline(ticketFareAirline);
+                        paymentAirticket.getPaymentAirticketFares().add(paymentAirticketFare);
+                        request.setAttribute(FLAGSEARCG,"1");
+                    }
+                }
+                //save payment air ticket refund
+                if(paymentAirticket.getPaymentAirticketRefunds() == null){
+                    paymentAirticket.setPaymentAirticketRefunds(new ArrayList<PaymentAirticketRefund>());
+                }
+                
+                for (int i = 1; i < RowRefund  ; i++) {
+                    String refundDetailId = request.getParameter("refundDetailId" + i);
+                    if(refundDetailId != null){
+                        System.out.println("refundDetailId "+i+"::::"+ refundDetailId);
+                        PaymentAirticketRefund paymentAirticketRefund = new PaymentAirticketRefund();
+                        RefundAirticketDetail refundAirticketDetail = new RefundAirticketDetail();
+                        //payment air id
+                        paymentAirticketRefund.setPaymentAirticket(paymentAirticket);
+                        //ticket fare id
+                        refundAirticketDetail.setId(refundDetailId);
+                        paymentAirticketRefund.setRefundAirticketDetail(refundAirticketDetail);
+                        paymentAirticket.getPaymentAirticketRefunds().add(paymentAirticketRefund);
+                    }
+                }
+               
+            }else{
+                if(paymentAirticket.getPaymentAirticketFares() == null){
+                    paymentAirticket.setPaymentAirticketFares(new ArrayList<PaymentAirticketFare>());
+                }
+                for (int i = 1; i < Rows  ; i++) {
+                    String paymentAirFareId = request.getParameter("tableId" + i);
+                    System.out.println("tableId "+i+"::::"+ paymentAirFareId);
+                    if(paymentAirFareId != null){
+                        PaymentAirticketFare paymentAirticketFare = new PaymentAirticketFare();
+                        TicketFareAirline ticketFareAirline = new TicketFareAirline();
+                        paymentAirticketFare.setPaymentAirticket(paymentAirticket);
+                        ticketFareAirline.setId(paymentAirFareId);
+                        ticketFareAirline.setAgentId(null);
+                        ticketFareAirline.setMAirlineAgent(null);
+                        ticketFareAirline.setMPaymentDoctype(null);
+                        ticketFareAirline.setMaster(null);
+                        paymentAirticketFare.setTicketFareAirline(ticketFareAirline);
+                        paymentAirticket.getPaymentAirticketFares().add(paymentAirticketFare);
+                        request.setAttribute(FLAGSEARCG,"1");
+                    }
+                }
+                
+                
+                //save payment air ticket refund
+                if(paymentAirticket.getPaymentAirticketRefunds() == null){
+                    paymentAirticket.setPaymentAirticketRefunds(new ArrayList<PaymentAirticketRefund>());
+                }
+                
+                for (int i = 1; i < RowRefund  ; i++) {
+                    String refundDetailId = request.getParameter("refundDetailId" + i);
+                    if(refundDetailId != null){
+                        System.out.println("refundDetailId "+i+"::::"+ refundDetailId);
+                       
+                        PaymentAirticketRefund paymentAirticketRefund = new PaymentAirticketRefund();
+                        RefundAirticketDetail refundAirticketDetail = new RefundAirticketDetail();
+                        //payment air id
+                        paymentAirticketRefund.setPaymentAirticket(paymentAirticket);
+                        //ticket fare id
+                        refundAirticketDetail.setId(refundDetailId);
+                        paymentAirticketRefund.setRefundAirticketDetail(refundAirticketDetail);
+                        paymentAirticket.getPaymentAirticketRefunds().add(paymentAirticketRefund);
+                    }
+                }
+            }
+            
+
             paymentAirticket.setPayNo(paymentNo);
             
             if (StringUtils.isNotEmpty(paymentDate)){
@@ -201,8 +390,35 @@ public class PaymentAirlineController extends SMITravelController {
                 request.setAttribute(PAYNO,result);
                 request.setAttribute(SAVERESULT, "save successful");
             }
+            
+            System.out.println("paymentAirticket.getId()"+paymentAirticket.getId());
+            ticketFareViews = paymentAirTicketService.getTicketFareViewsByPaymentAirId(paymentAirticket.getId());
+            request.setAttribute(TICKETFARELIST,ticketFareViews);
+        }else if("deleteTicket".equalsIgnoreCase(action)) {
+            System.out.println("deleteTicket");
+            String deleteTicketId = request.getParameter("deleteTicketId");
+            System.out.println("deleteTicketId"+deleteTicketId);
+            System.out.println("paymentId"+paymentId);
+            result = paymentAirTicketService.DeletePaymentAirFare(paymentId,deleteTicketId,1);
+            if (result == "success"){
+                request.setAttribute(DELETERESULT, "delete successful");
+            } else {
+                request.setAttribute(DELETERESULT, "delete unsuccessful");
+            }
+        }else if("deleteRefund".equalsIgnoreCase(action)) {
+            String delRefundId = request.getParameter("delRefundId");
+            String delRefundNo = request.getParameter("delRefundNo");
+            System.out.println("deleteTicketId"+delRefundId);
+            System.out.println("delRefundNo"+delRefundNo);
+            System.out.println("paymentId"+paymentId);
+            result = paymentAirTicketService.DeletePaymentAirRefund(paymentId,delRefundId,1);
+            if (result == "success"){
+                request.setAttribute(DELETERESULT, "delete successful");
+            } else {
+                request.setAttribute(DELETERESULT, "delete unsuccessful");
+            }
         }
-        
+
         request.setAttribute(PAYNO,paymentNo);
         request.setAttribute(DATEFROM,dateFrom);
         request.setAttribute(DATETO,dateTo);

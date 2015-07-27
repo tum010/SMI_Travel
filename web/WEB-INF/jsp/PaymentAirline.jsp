@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript" src="js/PaymentAirline.js"></script> 
+<!--<script type="text/javascript" src="js/PaymentAirline.js"></script> -->
 <script type="text/javascript" src="js/workspace.js"></script> 
 <script type="text/javascript" src="js/jquery-ui.js"></script>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -11,7 +11,10 @@
 <c:set var="paymentAirticket" value="${requestScope['paymentAirticket']}" />
 <c:set var="SelectedInvoice" value="${requestScope['SelectedInvoice']}" />
 <c:set var="vat" value="${requestScope['vat']}" />
-<c:set var="ticketFareList" value="${requestScope['ticketFareList']}" /> 
+<c:set var="ticketFareList" value="${requestScope['ticketFareList']}" />
+<c:set var="paymentAirFare" value="${requestScope['paymentAirFare']}" /> 
+<c:set var="paymentAirRefund" value="${requestScope['paymentAirRefund']}" />
+<c:set var="flagSearch" value="${requestScope['flagSearch']}" /> 
 <section class="content-header" >
     <h1>
         Checking - Air Ticket
@@ -33,6 +36,14 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>Save Unsuccess!</strong> 
         </div>
+        <div id="textAlertDivDelete"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Delete Success!</strong> 
+        </div>
+        <div id="textAlertDivNotDelete"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Delete Unsuccess!</strong> 
+        </div>       
         
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
             <div ng-include="'WebContent/Checking/CheckingAirTicketMenu.html'"></div>
@@ -47,8 +58,11 @@
             <hr/>
             
             <form action="PaymentAirline.smi" method="post" id="PaymentAirlineForm" name="PaymentAirlineForm" role="form">
+                <input id="paymentAirFareId" name="paymentAirFareId" type="hidden" class="form-control" maxlength="11" value="${paymentAirFare.id}">
+                <input id="paymentAirRefundId" name="paymentAirRefundId" type="hidden" class="form-control" maxlength="11" value="${paymentAirRefund.id}">
                 <input type="hidden" name="action" id="action" value="">
                 <input type="hidden" name="vat" id="vat" value="">
+                <input type="hidden" name="flagSearch" id="flagSearch" value="${flagSearch}">
                 <div class="panel panel-default">
                     <div class="panel-body"  style="padding-right: 0px;" style="width: 100%">
                         <div class="col-xs-12 form-group">
@@ -189,7 +203,7 @@
                             </div>
                             <div class="col-xs-1  text-right" style="width: 8px"><i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i></div>
                             <div class="col-xs-1 text-right" style="width: 80px">
-                                <button style="height:34px" type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="searchTicketFare();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
+                                <button style="height:34px" type="button"  id="ButtonSearch"  name="ButtonSearch" onclick="searchTicketFare();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
                             </div>
                         </div>
                         <div class="col-xs-12 form-group">
@@ -219,6 +233,7 @@
                         <table class="display" id="TicketFareTable">
                             <thead class="datatable-header">
                                 <tr>
+                                    <!--<th style="width:5%;">Id</th>-->
                                     <th style="width:5%;">Ref No</th>
                                     <th style="width:15%;">Ticket No</th>
                                     <th style="width:10%;">Department</th>
@@ -233,6 +248,8 @@
                             <tbody>
                                 <c:forEach var="table" items="${ticketFareList}" varStatus="dataStatus">
                                     <tr>
+                                        <input type="hidden" name="count${dataStatus.count}" id="count${dataStatus.count}" value="${dataStatus.count}">
+                                        <input type="hidden" name="tableId${dataStatus.count}" id="tableId${dataStatus.count}" value="${table.id}">
                                         <td align="center"> <c:out value="${table.referenceNo}" /></td>
                                         <td align="center"> <c:out value="${table.ticketNo}" /></td>
                                         <td align="center"> <c:out value="${table.department}" /></td>
@@ -243,16 +260,17 @@
                                         <td align="center"> <c:out value="${table.salePrice}" /></td>
                                         <td> 
                                             <center> 
-                                            <span  class="glyphicon glyphicon-remove deleteicon"  onclick="deleteTicket('${table.id}','${table.ticketNo}')" 
-                                                   data-toggle="modal" data-target="#DelTicket" >  </span>
+                                                <a class="remCF"><span id="SpanRemove${dataStatus.count}" onclick="deleteTicket('${table.id}','${table.ticketNo}','${dataStatus.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
                                             </center>
-                                            <input type="hidden" name="deleteTicketNo" id="deleteTicketNo" value="${table.ticketNo}">
-                                            <input type="hidden" name="deleteTicketId" id="deleteTicketId" value="${table.id}">
+                                            <input type="hidden" name="deleteTicketNo" id="deleteTicketNo">
+                                            <input type="hidden" name="deleteTicketId" id="deleteTicketId">
+                                            <input type="hidden" name="deleteTicketCount" id="deleteTicketCount">
                                         </td>                                    
                                     </tr>
                                 </c:forEach>
                             </tbody>
                         </table>
+                        <input type="hidden" class="form-control" id="counter" name="counter" value="${requestScope['ticketFareCount']}" />
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right"  style="width: 400px">
                                 <label class="control-label text-right">Total Commission</label>
@@ -316,7 +334,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 170px">
                                 <div class="input-group">                                    
-                                    <input type="text" class="form-control money" id="totalAmountRefund" name="totalAmountRefund"  value="" />
+                                    <input type="text" class="form-control money" id="totalAmountRefund" name="totalAmountRefund" readonly="" value="" />
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 250px">
@@ -440,9 +458,7 @@
                     <div class="col-xs-12">
                         <div class="col-xs-12 text-right" >
                             <button type="submit" id="ButtonSave" name="ButtonSave" onclick="saveAction()" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
-                  
                             <button type="submit" id="ButtonSaveAndNew" name="ButtonSaveAndNew" class="btn btn-success"><i class="fa fa-save"></i> Save & New</button>
-          
                         </div>
                     </div>
                 </div>           
@@ -473,7 +489,7 @@
                             invoiceSup = [];
                         </script>
                         <c:forEach var="table" items="${invoiceSupList}">
-                            <tr>
+                            <tr onclick ="setupInvSupValue()">
                                 <td class="invoice-id hidden">${table.id}</td>
                                 <td class="invoice-code">${table.code}</td>
                                 <td class="invoice-name">${table.name}</td>
@@ -529,24 +545,60 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
-
-<!--Delete Refund Modal-->
+<!--DELETE MODAL-->
 <div class="modal fade" id="DelRefund" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title"> Delete Refund </h4>
+                <h4 class="modal-title"  id="Titlemodel">Delete Refund</h4>
             </div>
-            <div class="modal-body" id="delRefundNoAlert"></div>
-            <div class="modal-footer" id="delfooter">
-                <button id="btnDelete" type="button" onclick="Delete()" class="btn btn-danger">Delete</button>
-                <button id="btnDeleteClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <div class="modal-body" id="delRefundAlert">
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" onclick="DeleteRowRefund()" class="btn btn-danger">Delete</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>               
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->   
+</div>
+<!--DELETE MODAL-->
+<div class="modal fade" id="DeleteTicket" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Delete Ticket Fare</h4>
+            </div>
+            <div class="modal-body" id="delTicket">
 
+            </div>
+            <div class="modal-footer">
+                <button type="submit" onclick="DeleteRowTicket()" class="btn btn-danger">Delete</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>               
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!--DELETE MODAL-->
+<div class="modal fade" id="ConfirmSearchTicket" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Search Ticket Fare</h4>
+            </div>
+            <div class="modal-body" id="searchTicketFare">
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" onclick="searchTicketFareCF()" class="btn btn-danger">Search</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>               
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 <c:if test="${! empty requestScope['saveresult']}">
     <c:if test="${requestScope['saveresult'] =='save successful'}">        
         <script language="javascript">
@@ -559,21 +611,34 @@
         </script>
     </c:if>
 </c:if>
-
+<c:if test="${! empty requestScope['deleteresult']}">
+    <c:if test="${requestScope['deleteresult'] =='delete successful'}">        
+        <script language="javascript">
+            $('#textAlertDivDelete').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['deleteresult'] =='delete unsuccessful'}">        
+        <script language="javascript">
+           $('#textAlertDivNotDelete').show();
+        </script>
+    </c:if>
+</c:if>
 <!--Script-->       
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
+        $('.date').datetimepicker();
         $(".money").mask('000,000,000.00', {reverse: true});
         $("#vat").val(${vat});
-        var ApCodeTable = $('#ApCodeTable').dataTable({bJQueryUI: true,
-            "sPaginationType": "full_numbers",
-            "bAutoWidth": false,
-            "bFilter": true,
-            "bPaginate": true,
-            "bInfo": false,
-            "bLengthChange": false,
-            "iDisplayLength": 10
-        });
+        
+//        var ApCodeTable = $('#ApCodeTable').dataTable({bJQueryUI: true,
+//            "sPaginationType": "full_numbers",
+//            "bAutoWidth": false,
+//            "bFilter": true,
+//            "bPaginate": true,
+//            "bInfo": false,
+//            "bLengthChange": false,
+//            "iDisplayLength": 10
+//        });
 
         $('#InvoiceSupTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
@@ -590,6 +655,7 @@
         });
         
         $("#InvoiceSupTable tr").on('click', function () {
+            
             var invoice_id = $(this).find(".invoice-id").text();
             var invoice_code = $(this).find(".invoice-code").text();
             var invoice_name = $(this).find(".invoice-name").text();
@@ -606,7 +672,7 @@
         
         var invoiceSupCode = [];
         $.each(invoiceSup, function (key, value) {
-            console.log("invoiceCount=="+invoiceSup.length);
+//            console.log("invoiceCount=="+invoiceSup.length);
             invoiceSupCode.push(value.code);
             invoiceSupCode.push(value.name);
         });
@@ -641,7 +707,6 @@
             }); 
             
         });
-        
 //        $('#PaymentAirlineForm').bootstrapValidator({
 //            container: 'tooltip',
 //            excluded: [':disabled', ':hidden', ':not(:visible)'],
@@ -681,7 +746,7 @@
             "bFilter": false,
             "aaSorting": [[ 0, "desc" ]]
         });
-        
+
         $('.dataTables_length label').remove();
 
         $('#TicketFareTable tbody').on('click', 'tr', function() {
@@ -695,6 +760,7 @@
                 $('#hdGridSelected').val($('#TicketFareTable tbody tr.row_selected').attr("id"));
             }
         });
+        
         //calculate Amount
         $("#withholdingTax").focusout(function(){
             calculateAmount();
@@ -723,11 +789,16 @@
         $("#totalAmountRefund").focusout(function(){
             calculateTotalRefundVat();
         });
-        
+       
         calculateTotalCommission();
+
         calculateTotalAmount();
     });
     
+function setupInvSupValue(){    
+    $("#InvoiceSupModal").modal('hide');
+}
+
 function searchPaymentNo() {
     var action = document.getElementById('action');
     action.value = 'search';
@@ -735,7 +806,18 @@ function searchPaymentNo() {
     paymentNo.value = $("#paymentNo").val();
     document.getElementById('PaymentAirlineForm').submit();
 }
+
 function searchTicketFare() {
+    var flagSearch = $("#flagSearch").val();
+    if(flagSearch == "1"){
+        $("#searchTicketFare").text('Are you sure to sarch ticket fare');
+        $('#ConfirmSearchTicket').modal('show');
+    }else{
+        searchTicketFareCF();
+    }
+}
+
+function searchTicketFareCF() {
     var action = document.getElementById('action');
     action.value = 'searchTicketFare';
     var ticketFrom = document.getElementById('ticketFrom');
@@ -746,6 +828,63 @@ function searchTicketFare() {
     dateFrom.value = $("#dateFrom").val();
     var dateTo = document.getElementById('dateTo');
     dateTo.value = $("#dateTo").val();
+    
+    var paymentNo = document.getElementById('paymentNo');
+    paymentNo.value = $("#paymentNo").val();
+    var paymentDate = document.getElementById('paymentDate');
+    paymentDate.value = $("#paymentDate").val();
+    var duePaymentDate = document.getElementById('duePaymentDate');
+    duePaymentDate.value = $("#duePaymentDate").val();
+    var invoiceSupCode = document.getElementById('invoiceSupCode');
+    invoiceSupCode.value = $("#invoiceSupCode").val();
+    var apCode = document.getElementById('apCode');
+    apCode.value = $("#apCode").val(); 
+    var detail = document.getElementById('detail');
+    detail.value = $("#detail").val();
+    var payBy = document.getElementById('payBy');
+    payBy.value = $("#payBy").val();
+    var agentAmount = document.getElementById('agentAmount');
+    agentAmount.value = $("#agentAmount").val();
+    var creditNote = document.getElementById('creditNote'); 
+    creditNote.value = $("#creditNote").val();
+    var creditAmount = document.getElementById('creditAmount');
+    creditAmount.value = $("#creditAmount").val();
+    var commissionVat = document.getElementById('commissionVat');
+    commissionVat.value = $("#commissionVat").val();
+    var debitNote = document.getElementById('debitNote');
+    debitNote.value = $("#debitNote").val();
+    var cash = document.getElementById('cash');
+    cash.value = $("#cash").val();
+    var withholdingTax = document.getElementById('withholdingTax');
+    withholdingTax.value = $("#withholdingTax").val();
+    var chqNo = document.getElementById('chqNo');
+    chqNo.value = $("#chqNo").val();
+    var amount = document.getElementById('amount');
+    amount.value = $("#amount").val();
+    var totalPayment = document.getElementById('totalPayment');
+    totalPayment.value = $("#totalPayment").val();
+    var debitAmount = document.getElementById('debitAmount');
+    debitAmount.value = $("#debitAmount").val();
+    
+    var ticketFrom = document.getElementById('ticketFrom');
+    ticketFrom.value = $("#ticketFrom").val();
+    var typeAirline = document.getElementById('typeAirline');
+    typeAirline.value = $("#typeAirline").val();
+    var dateFrom = document.getElementById('dateFrom');
+    dateFrom.value = $("#dateFrom").val();
+    var dateTo = document.getElementById('dateTo');
+    dateTo.value = $("#dateTo").val();
+    
+
+    var totalCommissionTicketFare = document.getElementById('totalCommissionTicketFare');
+    totalCommissionTicketFare.value = $("#totalCommissionTicketFare").val();
+    var totalAmountTicketFare = document.getElementById('totalAmountTicketFare');
+    totalAmountTicketFare.value = $("#totalAmountTicketFare").val();
+    var totalAmountRefund = document.getElementById('totalAmountRefund');
+    totalAmountRefund.value = $("#totalAmountRefund").val();
+    var totalAmountRefundVat = document.getElementById('totalAmountRefundVat');
+    totalAmountRefundVat.value = $("#totalAmountRefundVat").val();
+    
     document.getElementById('PaymentAirlineForm').submit();
 }
 
@@ -772,19 +911,18 @@ function CallAjaxAdd(param) {
             success: function (msg) {
             //RefundTicketTable
                 try {
-                    $('#RefundTicketTable').dataTable().fnClearTable();
-                    $('#RefundTicketTable').dataTable().fnDestroy();
-                    $("#RefundTicketTable tbody").empty().append(msg);
-                    $('#RefundTicketTable').dataTable({bJQueryUI: true,
-                        "sPaginationType": "full_numbers",
-                        "bAutoWidth": false,
-                        "bFilter": false,
-                        "bPaginate": true,
-                        "bInfo": false,
-                        "bLengthChange": false,
-                        "iDisplayLength": 10
-                    });
+                    $("#RefundTicketTable tbody").append(msg);
+//                    $('#RefundTicketTable').dataTable({bJQueryUI: true,
+//                        "sPaginationType": "full_numbers",
+//                        "bAutoWidth": false,
+//                        "bFilter": false,
+//                        "bPaginate": true,
+//                        "bInfo": false,
+//                        "bLengthChange": false,
+//                        "iDisplayLength": 10
+//                    });
                      calculateTotalAmountRefund();
+                     calculateTotalRefundVat();
                      $("#ajaxload").addClass("hidden");
                 } catch (e) {
                     alert(e);
@@ -860,22 +998,68 @@ function saveAction(){
     document.getElementById('PaymentAirlineForm').submit();
 }
 
-function deleteRefund(id,refundNo){
-    var delRefundId = document.getElementById('delRefundId');
-    delRefundId.value = id;
-    var delRefundNo = document.getElementById('delRefundNo');
-    delRefundNo.value = refundNo;
-    document.getElementById('delRefundNoAlert').innerHTML = "Are you sure to delete Refund No : " + refundNo + " ?";
+function deleteTicket(id,ticketNo,count){
+    document.getElementById('deleteTicketNo').value = ticketNo;
+    document.getElementById('deleteTicketId').value = id;
+    document.getElementById('deleteTicketCount').value = count;
+    $("#delTicket").text('Are you sure to delete Ticket No : '+ticketNo + " ?");
+    $('#DeleteTicket').modal('show');
 }
 
-function Delete() {
-    var action = document.getElementById('action');
-    action.value = 'delete';
-    var delRefundId = document.getElementById('delRefundId');
-    delRefundId.value = $("#delRefundId").val();
-    var delRefundNo = document.getElementById('delRefundNo');
-    delRefundNo.value = $("#delRefundNo").val();
-    document.getElementById('PaymentAirlineForm').submit();
+function DeleteRowTicket(){
+    var no = document.getElementById('deleteTicketNo').value;
+    var ticketid = document.getElementById('deleteTicketId').value;
+    var count = document.getElementById('deleteTicketCount').value;
+    var paymentId = document.getElementById('paymentId').value;
+    
+    $("#tableId" + count).parent().remove();
+    $.ajax({
+        url: 'PaymentAirline.smi?action=deleteTicket',
+        type: 'get',
+        data: {deleteTicketId: ticketid , paymentId:paymentId},
+        success: function () {
+
+
+
+        },
+        error: function () {
+            console.log("error");
+            result =0;
+        }
+    }); 
+    $('#DeleteTicket').modal('hide');
+}
+function deleteRefund(id,refundNo){
+    document.getElementById('delRefundId').value = id;
+    document.getElementById('delRefundNo').value = refundNo;
+    $("#delRefundAlert").text('Are you sure to delete Refund No : '+refundNo + " ?");
+    $('#DelRefund').modal('show');
+}
+
+function DeleteRowRefund(){
+
+    var refundno = document.getElementById('delRefundNo').value;
+    var refundid = document.getElementById('delRefundId').value;
+    var paymentId = document.getElementById('paymentId').value;
+    $.ajax({
+        url: 'PaymentAirline.smi?action=deleteRefund',
+        type: 'get',
+        data: {delRefundNo: refundno , delRefundId:refundid ,paymentId:paymentId },
+        success: function () {
+        },
+        error: function () {
+            console.log("error");
+            result =0;
+        }
+    }); 
+    $('#DelRefund').modal('hide');
+//    var action = document.getElementById('action');
+//    action.value = 'deleteRefund';
+//    var delRefundNo = document.getElementById('delRefundNo');
+//    delRefundNo.value = $("#delRefundNo").val();
+//    var delRefundId = document.getElementById('delRefundId');
+//    delRefundId.value = $("#delRefundId").val();
+//    document.getElementById('PaymentAirlineForm').submit();
 }
 
 function calculateAmount() {
@@ -967,7 +1151,8 @@ function calculateTotalCommission() {
         var commission = commissionTemp + valueCom ;
         commissionTemp = commission;
 
-    }
+        }
+        
     document.getElementById("totalCommissionTicketFare").value = formatNumber(commission);
 }
 
@@ -1015,4 +1200,5 @@ function replaceAll(find, replace, str) {
 function formatNumber(num) {
     return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
 }
+
 </script>
