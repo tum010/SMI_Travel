@@ -7,6 +7,7 @@
 package com.smi.travel.datalayer.dao;
 
 import com.smi.travel.datalayer.entity.RefundAirticket;
+import java.util.HashMap;
 
 /**
  *
@@ -18,5 +19,6 @@ public interface RefundAirticketDao {
     public String DeleteRefundAirticket(RefundAirticket refund);
     public String DeleteRefundAirticketDetail(String refundDetailID); 
     public RefundAirticket getRefundAirTicketFromRefundNo(String RefundNo);
+   
     
 }

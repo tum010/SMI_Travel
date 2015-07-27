@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.RefundAirticketDao;
 import com.smi.travel.datalayer.entity.RefundAirticket;
+import java.util.HashMap;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
@@ -51,7 +52,7 @@ public class RefundAirticketImpl implements RefundAirticketDao{
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-    
+
     
     
     
