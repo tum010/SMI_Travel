@@ -77,7 +77,7 @@
                 <div class="col-xs-4 text-left" style="padding-left:10px;padding-right:0px;"></div>
                 
                 <c:choose>
-                    <c:when test="${idRole  == 22}">       
+                    <c:when test="${(idRole  == 22) || (idRole == 1)}">       
                     <div class="col-xs-1 text-left" style="padding-left:10px;padding-right:0px;">
                         <label class="control-label">Account<font style="color: red">*</font></lable>
                     </div>
@@ -252,7 +252,7 @@
         </div>
    
         <c:choose>
-            <c:when test="${idRole  == 22}">        
+            <c:when test="${(idRole  == 22) || (idRole == 1)}">        
             <!-- Table Role Checking-->
             <div class="row" >
                 <div class="col-12" style="width:1035px;padding-left:15px;">
@@ -455,7 +455,7 @@
                         <textarea rows="3" cols="255" class="form-control" id="InputRemark" name="InputRemark">${requestScope['InputRemark']}</textarea>        
                     </div>
                     <c:choose>
-                        <c:when test="${idRole  == 22}">
+                        <c:when test="${(idRole  == 22) || (idRole == 1)}">
                             <div class="col-xs-2 text-right">
                                 <label class="control-label">Grand Total</lable>
                             </div>
@@ -525,7 +525,7 @@
             </div>
             <div class="col-xs-6 text-left">
                 <c:choose>
-                    <c:when test="${idRole  == 22}">
+                    <c:when test="${(idRole  == 22) || (idRole == 1)}">
                     <button type="button" id="btnNew" name="btnNew" onclick="clearScreen()" class="btn btn-primary">
                         <i class="glyphicon glyphicon-plus"></i> New
                     </button>
@@ -857,7 +857,7 @@
                   
     function AddRow(row) {
         var idRole = '${idRole}';
-        if(idRole === '22'){                  
+        if((idRole === '22') || (idRole === '1')){                  
             $("#PaymentHotelTable tbody").append(
                 '<tr style="higth 100px">' +
                 '<td class="hidden"> <input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >  </td>' +
@@ -1063,50 +1063,56 @@
     }
     
     function calculateGross(row){
-        var amount = document.getElementById('amountCal'+row).value;
-        var gross = document.getElementById('gross'+row).value;
-        var vat = document.getElementById('vat'+row).value;
-        var vatDefaultData = parseFloat(document.getElementById('vatDefaultData').value);
-        
-        amount = amount.replace(/,/g,"");
-        var grossTotal = parseFloat(amount);
-        
-        if((gross === '')){
-            grossTotal = (amount*100)/(100+vatDefaultData);
-            document.getElementById('gross'+row).value = formatNumber(grossTotal);
-            document.getElementById('vat'+row).value = vatDefaultData;
-        } else {
-            document.getElementById('gross'+row).value = '';
-            document.getElementById('vat'+row).value = ''
-        }
-        CalculateGrossTotal('',row);
+        var idRole = '${idRole}';
+        if(idRole === '19'){ 
+            var amount = document.getElementById('amountCal'+row).value;
+            var gross = document.getElementById('gross'+row).value;
+            var vat = document.getElementById('vat'+row).value;
+            var vatDefaultData = parseFloat(document.getElementById('vatDefaultData').value);
+
+            amount = amount.replace(/,/g,"");
+            var grossTotal = parseFloat(amount);
+
+            if((gross === '')){
+                grossTotal = (amount*100)/(100+vatDefaultData);
+                document.getElementById('gross'+row).value = formatNumber(grossTotal);
+                document.getElementById('vat'+row).value = vatDefaultData;
+            } else {
+                document.getElementById('gross'+row).value = '';
+                document.getElementById('vat'+row).value = ''
+            }
+            CalculateGrossTotal('',row);
+        }    
     }  
     
     function checkRefNo(row){
-        var list = '${refNo_list}';
-        var refNo = document.getElementById('refNo'+row).value;
-        
-        if(refNo===''){
-            var refNoField = document.getElementById('refNo'+row);
-            refNoField.style.borderColor = "";
-            return;
-        }        
+        var idRole = '${idRole}';
+        if((idRole === '22') || (idRole === '1')){ 
+            var list = '${refNo_list}';
+            var refNo = document.getElementById('refNo'+row).value;
 
-        list = list.replace("[","");
-        list = list.replace("]","");
-        list = list.replace(/ /g,"");
-
-        var refNo_list = list.split(',');
-        for(var i = 0;i<=refNo_list.length;i++){
-           if(String(refNo) === String(refNo_list[i])){
+            if(refNo===''){
                 var refNoField = document.getElementById('refNo'+row);
-                refNoField.style.borderColor = "Green";
+                refNoField.style.borderColor = "";
                 return;
-           } else {
-                var refNoField = document.getElementById('refNo'+row);
-                refNoField.style.borderColor = "Red";
-           }
-        }
+            }        
+
+            list = list.replace("[","");
+            list = list.replace("]","");
+            list = list.replace(/ /g,"");
+
+            var refNo_list = list.split(',');
+            for(var i = 0;i<=refNo_list.length;i++){
+               if(String(refNo) === String(refNo_list[i])){
+                    var refNoField = document.getElementById('refNo'+row);
+                    refNoField.style.borderColor = "Green";
+                    return;
+               } else {
+                    var refNoField = document.getElementById('refNo'+row);
+                    refNoField.style.borderColor = "Red";
+               }
+            }
+        }    
     }
     
     function validateForm(){
