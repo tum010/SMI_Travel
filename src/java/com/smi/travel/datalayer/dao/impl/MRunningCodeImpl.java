@@ -46,5 +46,15 @@ public class MRunningCodeImpl implements MRunningCodeDao{
         this.sessionFactory.close();
         return code;
     }
+
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+    
+    
     
 }
