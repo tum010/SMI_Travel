@@ -364,6 +364,9 @@ var valueEmpty = "";
 
 function addItemList(){
   valueEmpty ="";
+  isCheckDuplicate = 0;
+  isCheckLength = 0;
+  isEmpty = 0;
     var prefix  = document.getElementById('InputPrefix');
     var start  = document.getElementById('InputStart');
     var number  = document.getElementById('InputNumberOfItem');
@@ -379,19 +382,16 @@ function addItemList(){
             if(isCheckLength === 0){      
                 var st = start.value;
                 $("#StockTable tr:last").remove();
-//                if(countAdd.value === 1){
-//                    document.getElementById("StockTable").deleteRow(1);
-//                }else{
-//                    
-//                }
                 var res = select.replace("value='"+ type.value+"'", "selected value='"+ type.value+"'");
                 checkDuplicate(prefix.value,digit.value,start.value,number.value);
                     if(isCheckDuplicate === 0){
+                         $("#textAlertMoreOne").hide();
                         for (var i = 1 ; i <= number.value; i++){
                             // Concat prefix + start + digit
                             var code = zeroPad(start.value, digit.value);
-  
-                            $("#StockTable tbody").append(
+                            alert("Prefix:"+prefix.value+":" );
+                            if(prefix.value !== "" ){
+                                $("#StockTable tbody").append(
                                 '<tr>' +
                                 '<td class="hidden"><input type="text"  id="stockDetailId' + count.value + '" name="stockDetailId' + count.value + '" value="" /></td>' +
                                 '<td>'+ count.value +'</td>' +
@@ -404,23 +404,38 @@ function addItemList(){
                                 );
                                 start.value++;
                                 count.value++; 
-                              
+                            }else if(prefix.value === ""){
+                                alert("Prefix !!!!" );
+                                $("#StockTable tbody").append(
+                                '<tr>' +
+                                '<td class="hidden"><input type="text"  id="stockDetailId' + count.value + '" name="stockDetailId' + count.value + '" value="" /></td>' +
+                                '<td>'+ count.value +'</td>' +
+                                '<td><input type="text"  class="form-control" name="codeItemList' + count.value + '" id="codeItemList' + count.value + '" value="'+code+'"/></td>' +
+                                '<td><select id="SeleteTypeItemList' + count.value + '" name="SeleteTypeItemList' + count.value + '" class="form-control">' + res + '</select></td>' +
+                                '<td>No Paid</td>' +
+                                '<td>NEW</td>' +
+                                '<td class="text-center"><a href="#"  class="remCF" id="ButtonRemove' + count.value + '" onclick="deleteItemListRow('+count.value+",'"+code+"'"+')" data-toggle="modal" data-target="#delStockModal"><span id="Spanremove' + count.value + '" class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
+                                '</tr>'
+                                );
+                                start.value++;
+                                count.value++; 
+                            }                                 
                         }        
                         start.value = st;
                         countAdd.value++;
                         AddRow(count.value);
                         
                 }else if(isCheckDuplicate !== 0){
-                    alert("Duplicate Code in Table!!!");
-                    prefix.value = "";
-                    start.value = "";
-                    number.value = "";
-                    digit.value = "";
+                    $("#textAlertMoreOne").show();
+//                    alert("Duplicate Code in Table!!!");
+                    $("#InputStart").focus();
                     AddRow(count.value);
                 }
             }
         }else if(isEmpty === 1){
-            alert("Please Input  : " + valueEmpty);
+            checkFocusAddItem(valueEmpty);
+//            alert("Please Input  : " + valueEmpty);
+            
         }
         resetNumberItemList();
 }
@@ -522,81 +537,95 @@ function checkDuplicate(prefix,digit,start,number){
                 isCheckDuplicate++;
             }
         }      
-    }  
+    }
 }
 
 function checkEmptyValueBeforeAddItem(prefix,start,number,digit){
-    if(prefix === ""){
-        valueEmpty += "Prefix";
+//    if(prefix === ""){
+//        valueEmpty += "Prefix";
         if(start === ""){
-            valueEmpty += ", Start";
+            valueEmpty += "Start";
             if(number ===  ""){
-                valueEmpty += ", Number Of Item";
+                valueEmpty += ",NumberOfItem";
                 if(digit === ""){
                     isEmpty = 1;
-                    valueEmpty += ", Digit";
+                    valueEmpty += ",Digit";
                 }
                 isEmpty = 1;
             }else{
                 if(digit === ""){
                     isEmpty = 1;
-                    valueEmpty += ", Digit";
+                    valueEmpty += ",Digit";
                 }
                 isEmpty = 1;
             }
             isEmpty = 1;
         }else{
             if(number ===  ""){
-                valueEmpty += ", Number Of Item";
+                valueEmpty += "NumberOfItem";
                 if(digit === ""){
                     isEmpty = 1;
-                    valueEmpty += ", Digit";
+                    valueEmpty += ",Digit";
                 }
                 isEmpty = 1;
             }else{
                 if(digit === ""){
                     isEmpty = 1;
-                    valueEmpty += ", Digit";
-                }
-                isEmpty = 1;
-            }
-        }
-        isEmpty = 1;
-    }else {
-        if(start === ""){
-            valueEmpty += " Start";
-            if(number ===  ""){
-                valueEmpty += ", Number Of Item";
-                if(digit === ""){
-                    isEmpty = 1;
-                    valueEmpty += ", Digit";
-                }
-                isEmpty = 1;
-            }else {
-                if(digit === ""){
-                    isEmpty = 1;
-                    valueEmpty += ", Digit";
-                }
-                isEmpty = 1;
-            }
-            isEmpty = 1;
-        }else{
-            if(number ===  ""){
-                valueEmpty += "Number Of Item";
-                if(digit === ""){
-                    isEmpty = 1;
-                    valueEmpty += ", Digit";
-                }
-                isEmpty = 1;
-            }else {
-                if(digit === ""){
-                    isEmpty = 1;
-                    valueEmpty += "Digit";
+                    valueEmpty += ",Digit";
                 }else{
                     isEmpty = 0;
                 }
             }
         }
-    }
+//        isEmpty = 1;
+//    }else {
+//        if(start === ""){
+//            valueEmpty += "Start";
+//            if(number ===  ""){
+//                valueEmpty += ",NumberOfItem";
+//                if(digit === ""){
+//                    isEmpty = 1;
+//                    valueEmpty += ",Digit";
+//                }
+//                isEmpty = 1;
+//            }else {
+//                if(digit === ""){
+//                    isEmpty = 1;
+//                    valueEmpty += ",Digit";
+//                }
+//                isEmpty = 1;
+//            }
+//            isEmpty = 1;
+//        }else{
+//            if(number ===  ""){
+//                valueEmpty += "NumberOfItem";
+//                if(digit === ""){
+//                    isEmpty = 1;
+//                    valueEmpty += ",Digit";
+//                }
+//                isEmpty = 1;
+//            }else {
+//                if(digit === ""){
+//                    isEmpty = 1;
+//                    valueEmpty += "Digit";
+//                }else{
+//                    isEmpty = 0;
+//                }
+//            }
+//        }
+//    }
 //    alert(isEmpty);
+}
+
+function checkFocusAddItem(stringEmpty){
+    var strx   = stringEmpty.split(',');
+    var array  = [];
+    array = array.concat(strx);
+
+    for (i = 0; i < array.length; ++i) {
+//            alert(array[i]);
+            $('#Input'+array[0]).focus();
+            $('#'+array[i]+'Input').removeClass('has-success');
+            $('#'+array[i]+'Input').addClass('has-error');  
+    }
 }
