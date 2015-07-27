@@ -48,6 +48,14 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                 }
             }
             
+            List<PaymentAirticketRefund> paymentAirticketRefunds = payAir.getPaymentAirticketRefunds();
+            
+            if(paymentAirticketRefunds != null){
+                for(int i = 0; i < paymentAirticketRefunds.size(); i++){
+                   session.save(paymentAirticketRefunds.get(i));
+                }
+            }
+            
             transaction.commit();
             session.close();
             this.sessionFactory.close();
@@ -77,6 +85,19 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                     }             
                 }
             }
+            
+            List<PaymentAirticketRefund> paymentAirticketRefunds = payAir.getPaymentAirticketRefunds();
+            
+            if(paymentAirticketRefunds != null){
+                for(int i = 0; i < paymentAirticketRefunds.size(); i++){
+                    if(paymentAirticketRefunds.get(i).getId() == null){
+                        session.save(paymentAirticketRefunds.get(i));
+                    } else {
+                        session.update(paymentAirticketRefunds.get(i));
+                    }             
+                }
+            }
+            
             transaction.commit();
             session.close();
             this.sessionFactory.close();
