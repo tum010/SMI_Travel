@@ -78,10 +78,10 @@
                 
                 <c:choose>
                     <c:when test="${(idRole  == 22) || (idRole == 1)}">       
-                    <div class="col-xs-1 text-left" style="padding-left:10px;padding-right:0px;">
+                    <div class="col-xs-1 text-left hidden" style="padding-left:10px;padding-right:0px;">
                         <label class="control-label">Account<font style="color: red">*</font></lable>
                     </div>
-                    <div class="col-md-3  text-left" style="padding-top : 5px;padding-left:0px;padding-right:0px;">
+                    <div class="col-md-3  text-left hidden" style="padding-top : 5px;padding-left:0px;padding-right:0px;">
                         <div class="col-sm-6" text-left> 
                             <c:set var="check1" value="" />
                             <c:if test="${1 == requestScope['account']}">
@@ -99,10 +99,10 @@
                     </div>
                     </c:when>
                     <c:when test="${idRole  == 19}">       
-                    <div class="col-xs-1 text-left hidden" style="padding-left:10px;padding-right:0px;">
+                    <div class="col-xs-1 text-left" style="padding-left:10px;padding-right:0px;">
                         <label class="control-label">Account<font style="color: red">*</font></lable>
                     </div>
-                    <div class="col-md-3  text-left hidden" style="padding-top : 5px;padding-left:0px;padding-right:0px;">
+                    <div class="col-md-3  text-left" style="padding-top : 5px;padding-left:0px;padding-right:0px;">
                         <div class="col-sm-6" text-left> 
                             <c:set var="check1" value="" />
                             <c:if test="${1 == requestScope['account']}">
@@ -348,17 +348,17 @@
                             <tr>
                                 <th class="hidden" style="width: 1%">Id</th>
                                 <th style="width: 8%">Product</th>
-                                <th style="width: 5%">Ref No</th>
-                                <th style="width: 5%">Inv No</th>
-                                <th style="width: 5%">Code</th>
+                                <th style="width: 6%">Ref No</th>
+                                <th style="width: 6%">Inv No</th>
+                                <th style="width: 6%">Code</th>
                                 <th style="width: 2%">Type</th>
-                                <th style="width: 4%" onclick="checkVatAll()">Is vat</th>
-                                <th style="width: 8%">Vat</th>
-                                <th style="width: 12%">Gross</th>
-                                <th style="width: 10%">Amount</th>
-                                <th style="width: 12%">Description</th>
+                                <th style="width: 4%" onclick="checkVatAll()"><u>Is vat</u></th>
+                                <th style="width: 4%">Vat</th>
+                                <th style="width: 11%">Gross</th>
+                                <th style="width: 11%">Amount</th>
+                                <th style="width: 16%">Description</th>
                                 <th style="width: 4%">A/C</th>
-                                <th style="width: 1%">Action</th>
+                                <th style="width: 1%" class="hidden">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -418,7 +418,7 @@
                                     <td class="hidden"> <input style="width: ${Description}" id="description${i.count}" name="description${i.count}" maxlength ="255"  type="text" class="form-control" value="${pl.description}"> </td>                                   
                                     <td align="center">${pl.accCode}</td>
                                     <td class="hidden"> <input style="width: ${AC}" id="ac${i.count}" name="ac${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.accCode}" readonly=""> </td>
-                                    <td align="center">-</td>
+                                    <td align="center" class="hidden">-</td>
                                 </tr>                       
                             </c:forEach> 
                         </tbody>
