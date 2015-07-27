@@ -195,12 +195,11 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
 
              BigDecimal sum = new BigDecimal(0);
              if(payment.getPaymentDetailWendies() != null){
-                List<PaymentDetailWendy> detail = payment.getPaymentDetailWendies();         
+                List<PaymentDetailWendy> detail = payment.getPaymentDetailWendies();
                 for(int j=0;j<detail.size();j++){
                     if(detail.get(j).getAmount() != null){
                         sum.add(detail.get(j).getAmount());
-                    }
-                    
+                    } 
                 }                
              }
 
@@ -365,6 +364,11 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
 
     @Override
     public String getPaymentRefernenceCode(String from, String to, List<String> tour) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getTourListFromDate(String from, String to) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

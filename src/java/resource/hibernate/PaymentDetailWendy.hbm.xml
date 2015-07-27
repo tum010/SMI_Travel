@@ -28,7 +28,7 @@
         <property name="accCode" type="string">
             <column name="acc_code" length="10" />
         </property>
-        <property name="vat" type="double">
+        <property name="vat" type="java.lang.Double">
             <column name="vat" precision="10" />
         </property>
         <property name="gross" type="big_decimal">
