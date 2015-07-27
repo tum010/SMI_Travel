@@ -131,9 +131,21 @@
                                             <option value="<c:out value="${table.id}" />" ${select}><c:out value="${table.name}" /></option>   
                                         </c:forEach>
                                     </select>
-                                </div>
+                                </div>                               
                             </div>
-                        </div>                       
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="nameProduct">Stock</label>
+                                <div class="col-sm-10" style="padding-top: 7px">
+                                    <c:set var="check" value="" />
+                                        <c:if test="${requestScope['isStock'] == '1'}">
+                                            <c:set var="check" value="checked" />
+                                        </c:if>
+                                    <input type="checkbox" id="isStock" name="isStock" value="1" ${check}>
+                                </div>            
+                            </div>
+                        </div>    
                     </div>
 
                     <div class="row">
