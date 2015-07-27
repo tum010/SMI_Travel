@@ -318,7 +318,9 @@
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
     
-    
+    <bean id="RefundAirticketDao" class="com.smi.travel.datalayer.dao.impl.RefundAirticketImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
     
     <!-- Component Bean -->
     <bean id="AJAXBean" class="com.smi.travel.datalayer.bean.master.AJAXBean">
