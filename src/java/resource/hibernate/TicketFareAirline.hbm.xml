@@ -104,9 +104,6 @@
         <property name="PVCode" type="string">
             <column name="pv_code" length="10" />
         </property>
-        <many-to-one name="MPaymentDoctype" class="com.smi.travel.datalayer.entity.MPaymentDoctype" fetch="select">
-            <column name="m_payment_doctype" />
-        </many-to-one>
         <bag name="paymentAirticketFares" table="payment_airticket_fare" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="ticket_fare_id" />
