@@ -1267,6 +1267,5 @@
             
             CalculateGrossTotal('',$("#counter").val());   
         }
-    }
-   
+    }  
 </script>
