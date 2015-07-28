@@ -254,11 +254,11 @@
                                         <td align="center"> <c:out value="${table.referenceNo}" /></td>
                                         <td align="left"> <c:out value="${table.ticketNo}" /></td>
                                         <td align="left"> <c:out value="${table.department}" /></td>
-                                        <td align="right"> <c:out value="${table.fare}" /></td>
-                                        <td align="right"> <c:out value="${table.tax}" /></td>
-                                        <td align="right"> <c:out value="${table.ticketIns}" /></td>
-                                        <td align="right"> <c:out value="${table.ticketCommission}" /></td>
-                                        <td align="right"> <c:out value="${table.salePrice}" /></td>
+                                        <td class="form-control money">${table.fare}</td>
+                                        <td class="form-control money">${table.tax}</td>
+                                        <td class="form-control money">${table.ticketIns}</td>
+                                        <td class="form-control money">${table.ticketCommission}</td>
+                                        <td class="form-control money">${table.salePrice}</td>
                                         <td> 
                                             <center> 
                                                 <a class="remCF"><span id="SpanRemove${dataStatus.count}" onclick="deleteTicket('${table.id}','${table.ticketNo}','${dataStatus.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
@@ -319,9 +319,9 @@
                                     <th style="width:5%;">Refund</th>
                                     <th style="width:15%;">Ticket No</th>
                                     <th style="width:10%;">Department</th>
-                                    <th style="width:20%;">Route</th>
-                                    <th style="width:10%;">Commission</th>
-                                    <th style="width:10%;">Amount</th>
+                                    <th style="width:10%;">Route</th>
+                                    <th style="width:15%;">Commission</th>
+                                    <th style="width:15%;">Amount</th>
                                     <th style="width:10%;">Action</th>
                                 </tr>
                             </thead>
@@ -334,8 +334,8 @@
                                         <td align="left"> <c:out value="${table.ticketNo}" /></td>
                                         <td align="left"> <c:out value="${table.department}" /></td>
                                         <td align="center"> <c:out value="${table.route}" /></td>
-                                        <td align="right"> <c:out value="${table.commisssion}" /></td>
-                                        <td align="right"> <c:out value="${table.amount}" /></td>
+                                        <td align="right" class="form-control moneyformat">${table.commisssion}</td>
+                                        <td class="form-control money">${table.amount}</td>
                                         <td> 
                                             <center> 
                                                 <a class="remCF"><span id="SpanRemove${dataStatus.count}" onclick="deleteRefund('${table.id}','${table.refundNo}','${dataStatus.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
@@ -666,6 +666,8 @@
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
         $('.date').datetimepicker();
+
+        $(".moneyformat").mask('000,000,000', {reverse: true});
         $(".money").mask('000,000,000.00', {reverse: true});
         $("#vat").val(${vat});
         $("#countRow").val("0");
@@ -746,31 +748,32 @@
             }); 
             
         });
-//        $('#PaymentAirlineForm').bootstrapValidator({
-//            container: 'tooltip',
-//            excluded: [':disabled', ':hidden', ':not(:visible)'],
-//            feedbackIcons: {
-//                valid: 'uk-icon-check',
-//                invalid: 'uk-icon-times',
-//                validating: 'uk-icon-refresh'
-//            },
-//            fields: {
-//                invoiceSupCode: {
-//                    validators: {
-//                        notEmpty: {
-//                            message: 'Invoice Sup is required'
-//                        }
-//                    }
-//                },
-//                apCode: {
-//                    validators: {
-//                        notEmpty: {
-//                            message: 'A/P Code is required'
-//                        }
-//                    }
-//                }      
-//            }
-//        });
+        
+        $('#PaymentAirlineForm').bootstrapValidator({
+            container: 'tooltip',
+            excluded: [':disabled', ':hidden', ':not(:visible)'],
+            feedbackIcons: {
+                valid: 'uk-icon-check',
+                invalid: 'uk-icon-times',
+                validating: 'uk-icon-refresh'
+            },
+            fields: {
+                invoiceSupCode: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Invoice Sup is required'
+                        }
+                    }
+                },
+                apCode: {
+                    validators: {
+                        notEmpty: {
+                            message: 'A/P Code is required'
+                        }
+                    }
+                }      
+            }
+        });
         
         $("#paymentNo").keyup(function (event) {
             if(event.keyCode === 13){
@@ -1131,6 +1134,7 @@ function calculateAmount() {
     var amount = pay+tax;
     document.getElementById("amount").value = formatNumber(amount);
 }
+
 function calculateTotalPayment() {
 //    Total Payment = Total Amount - TotalComission - Total Refund + Total Amount Refund Vat - Credit Amount
     var totalAmount = replaceAll(",","",$('#totalAmountTicketFare').val()); 
