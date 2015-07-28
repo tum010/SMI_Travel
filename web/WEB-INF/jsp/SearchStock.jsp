@@ -127,6 +127,7 @@
         </div><!-- End Row 3--><br>
         <div class="row" >
             <div class="col-xs-12" >
+                 <input type="hidden" value="" id="stockIdView" name="stockIdView">
                 <table class="display" id="StockTable">
                     <thead class="datatable-header">
                         <tr>
@@ -139,8 +140,7 @@
                             <th style="width: 10%">Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-                    <input type="hidden" value="" id="stockIdView" name="stockIdView">
+                    <tbody>                  
                     <c:forEach var="stock" items="${listStock}" varStatus="stockCount">    
                         <tr>
                             <td class="hidden">${stock.id}</td>
@@ -431,5 +431,6 @@ $(document).ready(function () {
         "iDisplayLength": 10
     });
 });
+
 </script>
 <script type="text/javascript" src="js/searchStock.js"></script>
