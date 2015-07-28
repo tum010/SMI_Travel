@@ -168,7 +168,7 @@
                             <td>${payment.invoiceSup}</td>
                             <td align="center">${payment.accNo}</td>
 <!--                            <td> <input id="total" name="total" maxlength ="15"  type="text" class="form-control numerical" value="${payment.total}" readonly=""> </td>-->
-                            <td align="right">${payment.total}</td>
+                            <td align="right" class="money">${payment.total}</td>
                             <td align="center">${payment.status}</td>
                             <td class="text-center">
                                 <span id="RefPaymentHotelEdit" name="RefPaymentHotelEdit" class="glyphicon glyphicon-edit editicon" onclick="location.href='PaymentTourHotel.smi?action=edit&InputPayNo=${payment.payNo}'"></span>
@@ -246,6 +246,8 @@
 </div><!-- /.modal -->
 <script type="text/javascript">
     $(document).ready(function () {
+        $(".money").mask('000,000,000,000.00', {reverse: true});
+        
         $('#SearchInvoicSupTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": true,
