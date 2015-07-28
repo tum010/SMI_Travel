@@ -267,6 +267,7 @@ public class PaymentAirlineController extends SMITravelController {
                         refundAirticketDetail.setId(refundDetailId);
                         paymentAirticketRefund.setRefundAirticketDetail(refundAirticketDetail);
                         paymentAirticket.getPaymentAirticketRefunds().add(paymentAirticketRefund);
+                        request.setAttribute(SETCALCULATE,1);
                     }
                 }
             }else{ //save
@@ -309,6 +310,7 @@ public class PaymentAirlineController extends SMITravelController {
                         refundAirticketDetail.setId(refundDetailId);
                         paymentAirticketRefund.setRefundAirticketDetail(refundAirticketDetail);
                         paymentAirticket.getPaymentAirticketRefunds().add(paymentAirticketRefund);
+                        request.setAttribute(SETCALCULATE,1);
                     }
                 }
             }
