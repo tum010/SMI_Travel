@@ -333,7 +333,7 @@
                 });               
             </script>
             <div class="modal-footer">
-                <button id="" type="button" onclick="" class="btn btn-success">OK</button>
+                <button id="" type="button" onclick="" class="btn btn-success" data-dismiss="modal">OK</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
