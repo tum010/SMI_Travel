@@ -18,8 +18,11 @@ function  CheckCharecter(checkString) {
 function setNumberFormat(arg){
     var id = arg.getAttribute('id');
     var value =  $('#'+id).val();
+
     if(!isNaN(value)){
-         $('#'+id).val(parseInt(value));
+        if(value !== ""){
+            $('#'+id).val(parseInt(value));
+        }
     }
 }
 
