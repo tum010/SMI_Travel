@@ -488,7 +488,7 @@
 
 	</bean>
 	<bean id="InvoiceController" class="com.smi.travel.controller.InvoiceController">
-
+                <property name="utilityService" ref="UtilityService" />
 	</bean>
 	<bean id="ReceiptController" class="com.smi.travel.controller.ReceiptController">
 		<property name="utilityService" ref="UtilityService" />
