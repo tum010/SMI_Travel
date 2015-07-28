@@ -13,6 +13,9 @@
         <many-to-one name="Master" class="com.smi.travel.datalayer.entity.Master" fetch="select">
             <column name="master_id" />
         </many-to-one>
+         <many-to-one name="MPaymentDoctype" class="com.smi.travel.datalayer.entity.MPaymentDoctype" fetch="select">
+            <column name="pv_type" />
+        </many-to-one>
         <property name="ticketNo" type="string">
             <column name="ticket_no" length="20" />
         </property>
