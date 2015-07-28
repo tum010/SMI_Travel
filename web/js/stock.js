@@ -558,7 +558,7 @@ function checkFocusAddItem(stringEmpty){
     var strx   = stringEmpty.split(',');
     var array  = [];
     array = array.concat(strx);
-    alert(array);
+//    alert(array);
     for (i = 0; i < array.length; ++i) {
             $('#Input'+array[0]).focus();
             $('#'+array[i]+'Input').removeClass('has-success');
