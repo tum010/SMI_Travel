@@ -118,6 +118,9 @@
 
 							var reportMenuString = getActiveMenuString(
 									reportMenuList, reportMenu);
+                                                         if(reportMenuString === null){
+                                                             reportMenuString = '';
+                                                        }
 							document.getElementById("reportMenu").innerHTML = reportMenuString;
 
 							var checkingMenuString = getActiveMenuString(
