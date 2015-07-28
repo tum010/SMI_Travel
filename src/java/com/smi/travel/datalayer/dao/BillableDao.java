@@ -18,4 +18,5 @@ public interface BillableDao {
     public int insertBillableBooking(Billable bill);
     public int updateBillableBooking(Billable bill);
     public int updateBillStatusBooking(String refno,Billable bill);
+    public Billable getBillableDetailFromRefno(String Refno);
 }
