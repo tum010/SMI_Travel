@@ -99,5 +99,6 @@
            <mapping resource="resource/hibernate/RefundAirticket.hbm.xml"/>
            <mapping resource="resource/hibernate/RefundAirticketDetail.hbm.xml"/>
            <mapping resource="resource/hibernate/TicketFareAirline.hbm.xml"/>
+           <mapping resource="resource/hibernate/AccountCode.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

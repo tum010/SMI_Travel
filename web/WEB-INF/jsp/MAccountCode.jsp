@@ -8,6 +8,7 @@
 
 <c:set var="accCode" value="${requestScope['form'].accCode}"/>
 <c:set var="accType" value="${requestScope['form'].accType}"/>
+<c:set var="dataTable" value="${requestScope['dataTable']}"/>
 
 <section class="content-header">
 	<h1>Master Account - Account</h1>
@@ -72,7 +73,7 @@
 
 			<!--  -->
 			<div class="row">
-			<form action='<c:url value="/MAccountCode.smi/search"/>' method="post" id="frm"  role="form">
+			<form action='<c:url value="/MAccountCode.smi"/>' method="post" id="frm"  role="form">
 				<div class="col-md-4">
 					<div class="form-group">
 						<label for="accCode">Code</label> 
@@ -125,7 +126,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="accountCode" items="${requestScope['form'].dataTable}" varStatus="status">
+							<c:forEach var="accountCode" items="${dataTable}" varStatus="status">
 							<tr>
 								<td class="hidden">
 									<c:out value="${accountCode.id}" />
