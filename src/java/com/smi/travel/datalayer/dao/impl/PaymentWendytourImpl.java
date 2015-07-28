@@ -213,7 +213,9 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
              String InvoiceSupName = getInvoiceSupName(payment.getInvoiceSup());
              paymentview.setInvoiceSup(InvoiceSupName);
              if(payment.getAccount() != null){
-                 paymentview.setAccNo(payment.getAccount());
+                paymentview.setAccNo(payment.getAccount());
+             } else {
+                paymentview.setAccNo(null);
              }
              
              paymentview.setTotal(sum);
@@ -221,6 +223,17 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
              if(payment.getMItemstatus() != null){
                  paymentview.setStatus(payment.getMItemstatus().getName());
              }
+            
+            BigDecimal total = new BigDecimal(0);
+            List<PaymentDetailWendy> paymentDetailWendyList = new ArrayList<PaymentDetailWendy>(payment.getPaymentDetailWendies()); 
+            for(int j=0; j< paymentDetailWendyList.size(); j++){
+                PaymentDetailWendy paymentDetailWendy = new PaymentDetailWendy();
+                if(paymentDetailWendyList.get(j).getAmount() != null){
+                    BigDecimal amount = paymentDetailWendyList.get(j).getAmount();
+                    total = total.add(amount);
+                }                                         
+            }
+            paymentview.setTotal(total);
              
              paymentviewList.add(paymentview);
          }
