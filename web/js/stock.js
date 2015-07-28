@@ -526,33 +526,33 @@ function checkDuplicate(prefix,digit,start,number){
 function checkEmptyValueBeforeAddItem(prefix,start,number,digit){
         if(start === ""){
             valueEmpty += "Start";
-            if(number ===  ""){
-                valueEmpty += ",NumberOfItem";
-                if(digit === ""){
+            if(digit ===  ""){
+                valueEmpty += ",Digit";
+                if(number === ""){
                     isEmpty = 1;
-                    valueEmpty += ",Digit";
+                    valueEmpty += ",NumberOfItem";
                 }
                 isEmpty = 1;
             }else{
-                if(digit === ""){
+                if(number === ""){
                     isEmpty = 1;
-                    valueEmpty += ",Digit";
+                    valueEmpty += ",NumberOfItem";
                 }
                 isEmpty = 1;
             }
             isEmpty = 1;
         }else{
-            if(number ===  ""){
-                valueEmpty += "NumberOfItem";
-                if(digit === ""){
+            if( digit ===  ""){
+                valueEmpty += "Digit";
+                if(number === ""){
                     isEmpty = 1;
-                    valueEmpty += ",Digit";
+                    valueEmpty += ",NumberOfItem";
                 }
                 isEmpty = 1;
             }else{
-                if(digit === ""){
+                if(number === ""){
                     isEmpty = 1;
-                    valueEmpty += ",Digit";
+                    valueEmpty += "NumberOfItem";
                 }else{
                     isEmpty = 0;
                 }
@@ -564,7 +564,7 @@ function checkFocusAddItem(stringEmpty){
     var strx   = stringEmpty.split(',');
     var array  = [];
     array = array.concat(strx);
-
+    alert(array);
     for (i = 0; i < array.length; ++i) {
             $('#Input'+array[0]).focus();
             $('#'+array[i]+'Input').removeClass('has-success');
