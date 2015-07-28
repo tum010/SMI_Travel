@@ -11,10 +11,12 @@ import com.smi.travel.datalayer.entity.MRunningCode;
 import com.smi.travel.datalayer.entity.PaymentAirticket;
 import com.smi.travel.datalayer.entity.PaymentAirticketFare;
 import com.smi.travel.datalayer.entity.PaymentAirticketRefund;
-import com.smi.travel.datalayer.entity.RefundAirticket;
 import com.smi.travel.datalayer.entity.RefundAirticketDetail;
+import com.smi.travel.datalayer.entity.RefundAirticketDetailView;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Query;
@@ -91,6 +93,8 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             if(paymentAirticketRefunds != null){
                 for(int i = 0; i < paymentAirticketRefunds.size(); i++){
                     if(paymentAirticketRefunds.get(i).getId() == null){
+                        System.out.println("paymentAirticketRefunds.get(i).getPaymentAirticket().getId() === "+paymentAirticketRefunds.get(i).getPaymentAirticket().getId());
+                        System.out.println("paymentAirticketRefunds.get(i).getRefundAirticketDetail().getId() === "+paymentAirticketRefunds.get(i).getRefundAirticketDetail().getId());
                         session.save(paymentAirticketRefunds.get(i));
                     } else {
                         session.update(paymentAirticketRefunds.get(i));
@@ -426,25 +430,25 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
 //        return refundAirticket;        
 //    }
     @Override
-    public String addRefundAirTicket(String refundNo) {
+    public String addRefundAirTicket(String refundNo,String rowCount) {
         String result ="";
-        String query = "from RefundAirticket r where r.refundNo = :refundNo";
+        String query = "from RefundAirticketDetail r where r.refundAirticket.refundNo = :refundNo";
         Session session = this.sessionFactory.openSession();
-        List<RefundAirticket> refundAirticketList = session.createQuery(query).setParameter("refundNo", refundNo).list();
-        session.close();
-        if (refundAirticketList.isEmpty()) {
+        List<RefundAirticketDetail> refundAirticketDetails = session.createQuery(query).setParameter("refundNo", refundNo).list();
+        
+        if (refundAirticketDetails.isEmpty()) {
             return null;
         }else{
-            result =  buildRefundTicketHTML(refundAirticketList);
+            result =  buildRefundTicketHTML(refundAirticketDetails , rowCount);
         }
+        session.close();
+        this.sessionFactory.close();
         return result;        
     }
     
-    public String buildRefundTicketHTML(List<RefundAirticket> refundAirticketList) {
+    public String buildRefundTicketHTML(List<RefundAirticketDetail> refundAirticketDetails ,String rowCount) {
         StringBuffer html = new StringBuffer();
-        if (refundAirticketList == null || refundAirticketList.size() == 0) {
-            return html.toString();
-        } 
+        List<StringBuffer> htmlList = new ArrayList<StringBuffer>();
         String id = "" ;
         String refund = "";
         String ticketNo = "";
@@ -452,46 +456,78 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
         String route = "";
         String commission = "";
         String amount = "";
-        int count = 0;
-        for(int i = 0 ; i < refundAirticketList.size() ; i++ ){
-            id = refundAirticketList.get(i).getId();
-            refund = refundAirticketList.get(i).getRefundNo();
-            ticketNo = "12345678";
-            department = "1000.00";
-            route = "1000.00";
-            commission = "1000.00";
-            amount = "1000.01";
-            route = "TEST";
-            count = i;
-//            List<RefundAirticketDetail> refundAirticketDetailList = new ArrayList<RefundAirticketDetail>(refundAirticketList.get(i).getRefundAirticketDetails());
-//            if(refundAirticketDetailList.size() != 0){
-//                commission = String.valueOf(refundAirticketDetailList.get(i).getCommission());
-//                route = refundAirticketDetailList.get(i).getSectorRefund();
-//                
-//                if(refundAirticketDetailList.get(i).getTicketFareAirline() != null){
-//                    ticketNo =  refundAirticketDetailList.get(i).getTicketFareAirline().getTicketNo();
-//                    department = refundAirticketDetailList.get(i).getTicketFareAirline().getDepartment();
-//                    commission = String.valueOf(refundAirticketDetailList.get(i).getTicketFareAirline().getTicketCommission());
-//                    amount =  String.valueOf(refundAirticketDetailList.get(i).getTicketFareAirline().getSalePrice());
-//                }
-//            }
-
-            String newrow
-                    = "<tr>"
-                    + "<td>" + refund + "</td>"
-                    + "<td>" + ticketNo + "</td>"
-                    + "<td>" + department + "</td>"
-                    + "<td>" + route + "</td>"
-                    + "<td>" + commission + "</td>"
-                    + "<td>" + amount + "</td>"
-                    + "<td><center><a class=\"remCF\"><span onclick=\"deleteRefund('"+id+"','"+refund+"')\" class=\"glyphicon glyphicon-remove deleteicon \"></span></center></td>"
-                    + "</tr>";
-            System.out.println("newrow [[[[[[[ "+newrow +" ]]]]");
-            html.append(newrow);
+        
+        if (refundAirticketDetails == null || refundAirticketDetails.size() == 0) {
+            return html.toString();
         }
+        System.out.println("refundAirticketDetails.size() "+refundAirticketDetails.size());
+        for(int i = 0 ; i < refundAirticketDetails.size() ; i++ ){
+            if(String.valueOf(refundAirticketDetails.get(i).getId()) != null){
+                id = String.valueOf(refundAirticketDetails.get(i).getId());
+            }
+            if(String.valueOf(refundAirticketDetails.get(i).getCommission()) != null){
+                commission = String.valueOf(refundAirticketDetails.get(i).getCommission()) ;
+            }
+            if(String.valueOf(refundAirticketDetails.get(i).getSectorRefund()) != null){
+                route = String.valueOf(refundAirticketDetails.get(i).getSectorRefund());
+            }
+            if(refundAirticketDetails.get(i).getRefundAirticket() != null){
+                if(String.valueOf(refundAirticketDetails.get(i).getRefundAirticket().getRefundNo()) != null){
+                    refund = String.valueOf(refundAirticketDetails.get(i).getRefundAirticket().getRefundNo());
+                }
+            }
+            if(refundAirticketDetails.get(i).getTicketFareAirline() != null){
+                if(String.valueOf(refundAirticketDetails.get(i).getTicketFareAirline().getTicketNo()) != null){
+                    ticketNo =  String.valueOf(refundAirticketDetails.get(i).getTicketFareAirline().getTicketNo());
+                }
+                if(String.valueOf(refundAirticketDetails.get(i).getTicketFareAirline().getDepartment()) != null){
+                    department = String.valueOf(refundAirticketDetails.get(i).getTicketFareAirline().getDepartment());
+                }
+                if(String.valueOf(refundAirticketDetails.get(i).getTicketFareAirline().getSalePrice()) != null){
+                    amount = String.valueOf(refundAirticketDetails.get(i).getTicketFareAirline().getSalePrice());
+                }
+            }
 
-        return html.toString();
-    }    public SessionFactory getSessionFactory() {
+            if(refundAirticketDetails.size() > 1){
+            int countrow = i+1;
+                String newrow 
+                        = "<tr>"
+                        + "<input type='hidden' name='count"+countrow+"' id='count"+countrow+"' value='"+countrow+"'>"
+                        + "<input type='hidden' name='tableRefundId"+countrow+"' id='tableRefundId"+countrow+"' value='"+id+"'>"
+    //                    + "<td>" + (id  == null ? "" : id )+ "</td>"
+                        + "<td>" + (refund  == "null" ? "" : refund )+ "</td>"
+                        + "<td>" + (ticketNo == "null" ? "": ticketNo )+  "</td>"
+                        + "<td>" + (department == "null" ? "": department )+ "</td>"
+                        + "<td>" + (route == "null" ? "" : route )+  "</td>"
+                        + "<td>" + (commission == "null" ? "": commission )+  "</td>"
+                        + "<td>" + (amount == "null" ? "" : amount )+  "</td>"
+                        + "<td><center><a class=\"remCF\"><span onclick=\"deleteRefund('"+id+"','"+refund+"','"+countrow+"')\" class=\"glyphicon glyphicon-remove deleteicon \"></span></center></td>"
+                        + "</tr>";
+                System.out.println("newrow [[[[[[[ "+newrow +" ]]]]");
+                html.append(newrow);
+            }else{
+                String newrow
+                        = "<tr>"
+                        + "<input type='hidden' name='count"+rowCount+"' id='count"+rowCount+"' value='"+rowCount+"'>"
+                        + "<input type='hidden' name='tableRefundId"+rowCount+"' id='tableRefundId"+rowCount+"' value='"+id+"'>"
+    //                    + "<td>" + (id  == null ? "" : id )+ "</td>"
+                        + "<td>" + (refund  == "null" ?  "" : refund )+ "</td>"
+                        + "<td>" + (ticketNo == "null" ? "" : ticketNo )+  "</td>"
+                        + "<td>" + (department == "null" ? "": department )+ "</td>"
+                        + "<td>" + (route == "null" ? "" : route )+  "</td>"
+                        + "<td>" + (commission == "null" ? "" : commission )+  "</td>"
+                        + "<td>" + (amount == "null" ? "" : amount )+  "</td>"
+                        + "<td><center><a class=\"remCF\"><span onclick=\"deleteRefund('"+id+"','"+refund+"','"+rowCount+"')\" class=\"glyphicon glyphicon-remove deleteicon \"></span></center></td>"
+                        + "</tr>";
+                System.out.println("newrow [[[[[[[ "+newrow +" ]]]]");
+                html.append(newrow);
+            }
+        }
+        htmlList.add(html);
+        return htmlList.toString();
+    }    
+    
+    public SessionFactory getSessionFactory() {
         return sessionFactory;
     }
 
@@ -545,6 +581,42 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                 ticketFareView.setSalePrice(PaymentAirticketFareList.get(i).getTicketFareAirline().getSalePrice());
                 ticketFareView.setReferenceNo(PaymentAirticketFareList.get(i).getTicketFareAirline().getMaster().getReferenceNo());
                 listView.add(ticketFareView);
+            }
+        }
+        session.close();
+        this.sessionFactory.close();
+        return listView;
+    }
+
+    @Override
+    public List<RefundAirticketDetailView> getRefundDetailByPaymentAirId(String paymentAirId) {
+        String query = "from PaymentAirticketRefund pay where pay.paymentAirticket.id = :paymentAirId";
+        Session session = this.sessionFactory.openSession();
+        System.out.println(" paymentAirId " +paymentAirId);
+        List<RefundAirticketDetailView> listView = new ArrayList<RefundAirticketDetailView>();
+        List<PaymentAirticketRefund> PaymentAirticketRefundList = session.createQuery(query).setParameter("paymentAirId", paymentAirId).list();
+        System.out.println(" PaymentAirticketRefundList size "+PaymentAirticketRefundList.size());
+        if (PaymentAirticketRefundList.isEmpty()){
+            return null;
+        }else{
+            for(int i=0;i<PaymentAirticketRefundList.size();i++){
+                RefundAirticketDetailView refundView = new RefundAirticketDetailView();
+                if(PaymentAirticketRefundList.get(i).getRefundAirticketDetail() != null){
+                    refundView.setId(PaymentAirticketRefundList.get(i).getRefundAirticketDetail().getId());
+                    refundView.setRoute(PaymentAirticketRefundList.get(i).getRefundAirticketDetail().getSectorRefund());
+                    refundView.setCommisssion(PaymentAirticketRefundList.get(i).getRefundAirticketDetail().getCommission());
+                    
+                    if(PaymentAirticketRefundList.get(i).getRefundAirticketDetail().getRefundAirticket() != null){
+                        refundView.setRefundNo(PaymentAirticketRefundList.get(i).getRefundAirticketDetail().getRefundAirticket().getRefundNo());
+                    }
+                    if(PaymentAirticketRefundList.get(i).getRefundAirticketDetail().getTicketFareAirline() != null){
+                        refundView.setTicketNo(PaymentAirticketRefundList.get(i).getRefundAirticketDetail().getTicketFareAirline().getTicketNo());
+                        refundView.setDepartment(PaymentAirticketRefundList.get(i).getRefundAirticketDetail().getTicketFareAirline().getDepartment());
+                        refundView.setAmount(PaymentAirticketRefundList.get(i).getRefundAirticketDetail().getTicketFareAirline().getSalePrice());
+                    }
+
+                }
+                listView.add(refundView);
             }
         }
         session.close();

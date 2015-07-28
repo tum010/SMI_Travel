@@ -7,9 +7,7 @@
 package com.smi.travel.datalayer.dao;
 
 import com.smi.travel.datalayer.entity.PaymentAirticket;
-import com.smi.travel.datalayer.entity.PaymentAirticketFare;
-import com.smi.travel.datalayer.entity.PaymentAirticketRefund;
-import com.smi.travel.datalayer.entity.RefundAirticket;
+import com.smi.travel.datalayer.entity.RefundAirticketDetailView;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
 import java.util.List;
 
@@ -33,9 +31,10 @@ public interface PaymentAirTicketDao {
     //By = ticketBuy 
     //From , to  = issueDate
     //AirAgentId = MAirlineAgent.id
-    public String addRefundAirTicket(String refundNo);
+    public String addRefundAirTicket(String refundNo,String rowCount);
     //from RefundAirticket
     //RefundID = id
     public String validateSavePaymentAir(PaymentAirticket payAir);
     public List<TicketFareView> getTicketFareViewsByPaymentAirId(String paymentAirId);
+    public List<RefundAirticketDetailView> getRefundDetailByPaymentAirId(String paymentAirId);
 }

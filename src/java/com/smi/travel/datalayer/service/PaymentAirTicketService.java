@@ -10,6 +10,7 @@ import com.smi.travel.datalayer.entity.PaymentAirticket;
 import com.smi.travel.datalayer.entity.PaymentAirticketFare;
 import com.smi.travel.datalayer.entity.PaymentAirticketRefund;
 import com.smi.travel.datalayer.entity.RefundAirticket;
+import com.smi.travel.datalayer.entity.RefundAirticketDetailView;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
 import java.util.List;
@@ -50,8 +51,8 @@ public class PaymentAirTicketService {
         return paymentairticketdao.getListTicketFare(from,to,by,airAgentId);
     }
 
-    public String addRefundAirTicket(String refundNo){
-        return paymentairticketdao.addRefundAirTicket(refundNo);
+    public String addRefundAirTicket(String refundNo,String rowCount){
+        return paymentairticketdao.addRefundAirTicket(refundNo,rowCount);
     }
     
     public String validateSavePaymentAir(PaymentAirticket payAir){
@@ -61,8 +62,11 @@ public class PaymentAirTicketService {
     public List<TicketFareView> getTicketFareViewsByPaymentAirId(String paymentAirId){
         return paymentairticketdao.getTicketFareViewsByPaymentAirId(paymentAirId);
     }
-   
-
+    
+    public List<RefundAirticketDetailView> getRefundDetailByPaymentAirId(String paymentAirId){
+        return paymentairticketdao.getRefundDetailByPaymentAirId(paymentAirId);
+    }
+    
     
     public PaymentAirTicketDao getPaymentairticketdao() {
         return paymentairticketdao;

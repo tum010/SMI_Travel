@@ -577,7 +577,10 @@ public class AJAXBean extends AbstractBean implements
         } else if (PAYMENTAIRTICKET.equalsIgnoreCase(servletName)) {
             if ("addRefund".equalsIgnoreCase(type)) {
                 String refundNo = map.get("refundNo").toString();
-                result = paymentairticketdao.addRefundAirTicket(refundNo);
+                String rowCount = map.get("rowCount").toString();
+                System.out.println("rowCount ::: "+rowCount);
+                result = paymentairticketdao.addRefundAirTicket(refundNo,rowCount);
+                 
             }
         }  
         return result;

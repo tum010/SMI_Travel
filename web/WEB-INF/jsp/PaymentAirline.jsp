@@ -15,6 +15,7 @@
 <c:set var="paymentAirFare" value="${requestScope['paymentAirFare']}" /> 
 <c:set var="paymentAirRefund" value="${requestScope['paymentAirRefund']}" />
 <c:set var="flagSearch" value="${requestScope['flagSearch']}" /> 
+<c:set var="addRefundList" value="${requestScope['addRefundList']}" />
 <section class="content-header" >
     <h1>
         Checking - Air Ticket
@@ -271,6 +272,7 @@
                             </tbody>
                         </table>
                         <input type="hidden" class="form-control" id="counter" name="counter" value="${requestScope['ticketFareCount']}" />
+                        
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right"  style="width: 400px">
                                 <label class="control-label text-right">Total Commission</label>
@@ -324,8 +326,28 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <c:forEach var="table" items="${addRefundList}" varStatus="dataStatus">
+                                    <tr>
+                                        <input type="hidden" name="count${dataStatus.count}" id="count${dataStatus.count}" value="${dataStatus.count}">
+                                        <input type="hidden" name="tableId${dataStatus.count}" id="tableId${dataStatus.count}" value="${table.id}">
+                                        <td align="center"> <c:out value="${table.refundNo}" /></td>
+                                        <td align="center"> <c:out value="${table.ticketNo}" /></td>
+                                        <td align="center"> <c:out value="${table.department}" /></td>
+                                        <td align="center"> <c:out value="${table.route}" /></td>
+                                        <td align="center"> <c:out value="${table.commisssion}" /></td>
+                                        <td align="center"> <c:out value="${table.amount}" /></td>
+                                        <td> 
+                                            <center> 
+                                                <a class="remCF"><span id="SpanRemove${dataStatus.count}" onclick="deleteRefund('${table.id}','${table.refundNo}','${dataStatus.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
+                                            </center>
+                                        </td>                                    
+                                    </tr>
+                                </c:forEach>
                                 <input type="hidden" id="delRefundNo" name="delRefundNo" >
                                 <input type="hidden" id="delRefundId" name="delRefundId" >
+                                <input type="hidden" id="deleteRefundCount" name="deleteRefundCount"/>
+                                <input type="hidden" id="rowRefundCount" name="rowRefundCount"/>
+                                <input type="hidden" name="tableRefundId" id="tableRefundId" value="">
                             </tbody>
                         </table>
                         <div class="col-xs-12 form-group" style="padding-top: 15px">
@@ -629,7 +651,7 @@
         $('.date').datetimepicker();
         $(".money").mask('000,000,000.00', {reverse: true});
         $("#vat").val(${vat});
-        
+        $("#countRow").val("0");
 //        var ApCodeTable = $('#ApCodeTable').dataTable({bJQueryUI: true,
 //            "sPaginationType": "full_numbers",
 //            "bAutoWidth": false,
@@ -890,15 +912,18 @@ function searchTicketFareCF() {
 
 function addAction(){
     var refundNo = $("#refundNo").val();
+    var rowCount = $('#RefundTicketTable tr').length;
     var servletName = 'PaymentAirTicketServlet';
     var servicesName = 'AJAXBean';
     var param = 'action=' + 'text' +
             '&servletName=' + servletName +
             '&servicesName=' + servicesName +
             '&refundNo=' + refundNo +
+            '&rowCount=' + rowCount +
             '&type=' + 'addRefund';
     CallAjaxAdd(param);
 }
+
 function CallAjaxAdd(param) {
     var url = 'AJAXServlet';
     $("#ajaxload").removeClass("hidden");
@@ -912,15 +937,7 @@ function CallAjaxAdd(param) {
             //RefundTicketTable
                 try {
                     $("#RefundTicketTable tbody").append(msg);
-//                    $('#RefundTicketTable').dataTable({bJQueryUI: true,
-//                        "sPaginationType": "full_numbers",
-//                        "bAutoWidth": false,
-//                        "bFilter": false,
-//                        "bPaginate": true,
-//                        "bInfo": false,
-//                        "bLengthChange": false,
-//                        "iDisplayLength": 10
-//                    });
+                    
                      calculateTotalAmountRefund();
                      calculateTotalRefundVat();
                      $("#ajaxload").addClass("hidden");
@@ -930,6 +947,7 @@ function CallAjaxAdd(param) {
             }, error: function (msg) {
                  $("#ajaxload").addClass("hidden");
             }
+
         });
     } catch (e) {
         alert(e);
@@ -995,6 +1013,9 @@ function saveAction(){
     var totalAmountRefundVat = document.getElementById('totalAmountRefundVat');
     totalAmountRefundVat.value = $("#totalAmountRefundVat").val();
     
+    var rowRefundCount = document.getElementById('rowRefundCount');
+    rowRefundCount.value = $('#RefundTicketTable tr').length;
+    
     document.getElementById('PaymentAirlineForm').submit();
 }
 
@@ -1029,22 +1050,26 @@ function DeleteRowTicket(){
     }); 
     $('#DeleteTicket').modal('hide');
 }
-function deleteRefund(id,refundNo){
+function deleteRefund(id,refundNo,rowCount){
+    document.getElementById('deleteRefundCount').value = rowCount;
     document.getElementById('delRefundId').value = id;
     document.getElementById('delRefundNo').value = refundNo;
     $("#delRefundAlert").text('Are you sure to delete Refund No : '+refundNo + " ?");
     $('#DelRefund').modal('show');
+    
 }
 
 function DeleteRowRefund(){
-
+    var rowCount = document.getElementById('deleteRefundCount').value;
     var refundno = document.getElementById('delRefundNo').value;
     var refundid = document.getElementById('delRefundId').value;
     var paymentId = document.getElementById('paymentId').value;
+
+    $("#tableRefundId" + rowCount).parent().remove();
     $.ajax({
         url: 'PaymentAirline.smi?action=deleteRefund',
         type: 'get',
-        data: {delRefundNo: refundno , delRefundId:refundid ,paymentId:paymentId },
+        data: {delRefundId:refundid ,paymentId:paymentId },
         success: function () {
         },
         error: function () {
@@ -1053,13 +1078,6 @@ function DeleteRowRefund(){
         }
     }); 
     $('#DelRefund').modal('hide');
-//    var action = document.getElementById('action');
-//    action.value = 'deleteRefund';
-//    var delRefundNo = document.getElementById('delRefundNo');
-//    delRefundNo.value = $("#delRefundNo").val();
-//    var delRefundId = document.getElementById('delRefundId');
-//    delRefundId.value = $("#delRefundId").val();
-//    document.getElementById('PaymentAirlineForm').submit();
 }
 
 function calculateAmount() {
