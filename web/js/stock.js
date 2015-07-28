@@ -389,7 +389,7 @@ function addItemList(){
                         for (var i = 1 ; i <= number.value; i++){
                             // Concat prefix + start + digit
                             var code = zeroPad(start.value, digit.value);
-                            alert("Prefix:"+prefix.value+":" );
+//                            alert("Prefix:"+prefix.value+":" );
                             if(prefix.value !== "" ){
                                 $("#StockTable tbody").append(
                                 '<tr>' +
@@ -405,7 +405,7 @@ function addItemList(){
                                 start.value++;
                                 count.value++; 
                             }else if(prefix.value === ""){
-                                alert("Prefix !!!!" );
+//                                alert("Prefix !!!!" );
                                 $("#StockTable tbody").append(
                                 '<tr>' +
                                 '<td class="hidden"><input type="text"  id="stockDetailId' + count.value + '" name="stockDetailId' + count.value + '" value="" /></td>' +
@@ -433,9 +433,7 @@ function addItemList(){
                 }
             }
         }else if(isEmpty === 1){
-            checkFocusAddItem(valueEmpty);
-//            alert("Please Input  : " + valueEmpty);
-            
+            checkFocusAddItem(valueEmpty);         
         }
         resetNumberItemList();
 }
@@ -452,11 +450,11 @@ function checklength(prefix,digit){
     len = code.length;
 //    alert("Length : "+len);
     if(len > 50){
-//        $('#checklengthCode').show();
-        alert("Max length More 50");
+        $('#checklengthCode').show();
+//        alert("Max length More 50");
         isCheckLength = 1;
     }else{
-//        $('#checklengthCode').hide();
+        $('#checklengthCode').hide();
         isCheckLength = 0;
     }
 }
