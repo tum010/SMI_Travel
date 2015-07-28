@@ -181,7 +181,6 @@ public class PaymentTourHotelController extends SMITravelController {
                 PaymentWendy paymentWendy = new PaymentWendy();
                 paymentWendy.setId(paymentId);
                 paymentWendy.setPayNo(InputPayNo);
-                paymentWendy.setAccount(utilfunction.convertStringToInteger(account));
                 paymentWendy.setPayDate(utilfunction.convertStringToDate(InputPayDate));
                 MItemstatus mitemStatus = new MItemstatus();
                 mitemStatus.setId(itemStatus);
@@ -193,6 +192,12 @@ public class PaymentTourHotelController extends SMITravelController {
                 paymentWendy.setRemark(InputRemark);
                 paymentWendy.setChqNo(InputChqNo);
                 paymentWendy.setCreateDate(utilfunction.convertStringToDate(crateDate));
+                
+                if(account != null){
+                    paymentWendy.setAccount(utilfunction.convertStringToInteger(account));
+                } else {
+                    paymentWendy.setAccount(null);
+                }
 
                 MPaymentDoctype mpaymentDoctype = new MPaymentDoctype();
                 if(itemPvType==""){               
@@ -458,7 +463,6 @@ public class PaymentTourHotelController extends SMITravelController {
             
         PaymentWendy paymentWendy = paymentTourHotelService.getPaymentWendyFromID(payNo);
         InputPayNo = paymentWendy.getPayNo();
-        String account = String.valueOf(paymentWendy.getAccount());
         String InputPayDate = String.valueOf(paymentWendy.getPayDate());                   
         String itemStatus = paymentWendy.getMItemstatus().getId();
 //        String InputInvoiceSupId = paymentWendy.getInvoiceSup();
@@ -469,6 +473,13 @@ public class PaymentTourHotelController extends SMITravelController {
 //        String InputCash = String.valueOf(paymentWendy.getCash());
 //        String InputChqNo = paymentWendy.getChqNo();
 //        String InputChqAmount = String.valueOf(paymentWendy.getChqAmount());
+        String account = "";
+        if(paymentWendy.getAccount() != null){
+            account = String.valueOf(paymentWendy.getAccount());
+        } else {
+            account = "";
+        }
+        
         
         String itemPvType;
         if(paymentWendy.getMPaymentDoctype()==null){               
