@@ -252,13 +252,13 @@
                                         <input type="hidden" name="count${dataStatus.count}" id="count${dataStatus.count}" value="${dataStatus.count}">
                                         <input type="hidden" name="tableId${dataStatus.count}" id="tableId${dataStatus.count}" value="${table.id}">
                                         <td align="center"> <c:out value="${table.referenceNo}" /></td>
-                                        <td align="center"> <c:out value="${table.ticketNo}" /></td>
-                                        <td align="center"> <c:out value="${table.department}" /></td>
-                                        <td align="center"> <c:out value="${table.fare}" /></td>
-                                        <td align="center"> <c:out value="${table.tax}" /></td>
-                                        <td align="center"> <c:out value="${table.ticketIns}" /></td>
-                                        <td align="center"> <c:out value="${table.ticketCommission}" /></td>
-                                        <td align="center"> <c:out value="${table.salePrice}" /></td>
+                                        <td align="left"> <c:out value="${table.ticketNo}" /></td>
+                                        <td align="left"> <c:out value="${table.department}" /></td>
+                                        <td align="right"> <c:out value="${table.fare}" /></td>
+                                        <td align="right"> <c:out value="${table.tax}" /></td>
+                                        <td align="right"> <c:out value="${table.ticketIns}" /></td>
+                                        <td align="right"> <c:out value="${table.ticketCommission}" /></td>
+                                        <td align="right"> <c:out value="${table.salePrice}" /></td>
                                         <td> 
                                             <center> 
                                                 <a class="remCF"><span id="SpanRemove${dataStatus.count}" onclick="deleteTicket('${table.id}','${table.ticketNo}','${dataStatus.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
@@ -329,13 +329,13 @@
                                 <c:forEach var="table" items="${addRefundList}" varStatus="dataStatus">
                                     <tr>
                                         <input type="hidden" name="count${dataStatus.count}" id="count${dataStatus.count}" value="${dataStatus.count}">
-                                        <input type="hidden" name="tableId${dataStatus.count}" id="tableId${dataStatus.count}" value="${table.id}">
+                                        <input type="hidden" name="tableRefundId${dataStatus.count}" id="tableRefundId${dataStatus.count}" value="${table.id}">
                                         <td align="center"> <c:out value="${table.refundNo}" /></td>
-                                        <td align="center"> <c:out value="${table.ticketNo}" /></td>
-                                        <td align="center"> <c:out value="${table.department}" /></td>
+                                        <td align="left"> <c:out value="${table.ticketNo}" /></td>
+                                        <td align="left"> <c:out value="${table.department}" /></td>
                                         <td align="center"> <c:out value="${table.route}" /></td>
-                                        <td align="center"> <c:out value="${table.commisssion}" /></td>
-                                        <td align="center"> <c:out value="${table.amount}" /></td>
+                                        <td align="right"> <c:out value="${table.commisssion}" /></td>
+                                        <td align="right"> <c:out value="${table.amount}" /></td>
                                         <td> 
                                             <center> 
                                                 <a class="remCF"><span id="SpanRemove${dataStatus.count}" onclick="deleteRefund('${table.id}','${table.refundNo}','${dataStatus.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
@@ -645,6 +645,23 @@
         </script>
     </c:if>
 </c:if>
+<c:if test="${! empty requestScope['setCalculate']}">
+    <c:if test="${requestScope['setCalculate'] == 1 }">        
+        <script language="javascript">
+            $(document).ready(function() {
+                $("#vat").val(${vat});
+                calculateTotalAmount();
+                calculateTotalCommission();
+                calculateTotalAmountRefund();
+                calculateTotalRefundVat();
+                calculateTotalPayment();
+                calculateAmount();
+            });
+        </script>
+    </c:if>
+</c:if>        
+        
+        
 <!--Script-->       
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
@@ -787,11 +804,18 @@
         $("#withholdingTax").focusout(function(){
             calculateAmount();
         });
-        $("#totalPayment").focusout(function(){
-            calculateAmount();
-        });
         
         //calculate TotalPayment
+        $("#creditAmount").focusout(function(){
+            calculateTotalPayment();
+            calculateAmount();
+        });
+
+        calculateTotalAmount();
+        calculateTotalCommission();
+        calculateTotalPayment();
+        calculateAmount();
+
 //        $("#totalCommissionTicketFare").focusout(function(){
 //            calculateTotalPayment();
 //        });
@@ -804,17 +828,10 @@
 //        $("#totalAmountRefundVat").focusout(function(){
 //            calculateTotalPayment();
 //        });
-        $("#creditAmount").focusout(function(){
-            calculateTotalPayment();
-        });
-        
-        $("#totalAmountRefund").focusout(function(){
-            calculateTotalRefundVat();
-        });
-       
-        calculateTotalCommission();
+//        $("#totalAmountRefund").focusout(function(){
+//            calculateTotalRefundVat();
+//        });
 
-        calculateTotalAmount();
     });
     
 function setupInvSupValue(){    
@@ -906,8 +923,8 @@ function searchTicketFareCF() {
     totalAmountRefund.value = $("#totalAmountRefund").val();
     var totalAmountRefundVat = document.getElementById('totalAmountRefundVat');
     totalAmountRefundVat.value = $("#totalAmountRefundVat").val();
-    
     document.getElementById('PaymentAirlineForm').submit();
+    
 }
 
 function addAction(){
@@ -938,9 +955,12 @@ function CallAjaxAdd(param) {
                 try {
                     $("#RefundTicketTable tbody").append(msg);
                     
-                     calculateTotalAmountRefund();
-                     calculateTotalRefundVat();
-                     $("#ajaxload").addClass("hidden");
+                    calculateTotalAmountRefund();
+                    calculateTotalRefundVat();
+                    calculateTotalPayment();
+                    calculateAmount();
+                    
+                    $("#ajaxload").addClass("hidden");
                 } catch (e) {
                     alert(e);
                 }
@@ -1034,13 +1054,20 @@ function DeleteRowTicket(){
     var paymentId = document.getElementById('paymentId').value;
     
     $("#tableId" + count).parent().remove();
+    calculateTotalAmount();
+    calculateTotalCommission();
+    calculateTotalPayment();
+    calculateAmount();
     $.ajax({
         url: 'PaymentAirline.smi?action=deleteTicket',
         type: 'get',
         data: {deleteTicketId: ticketid , paymentId:paymentId},
         success: function () {
-
-
+            
+        calculateTotalAmount();
+        calculateTotalCommission();
+        calculateTotalPayment();
+        calculateAmount();
 
         },
         error: function () {
@@ -1060,17 +1087,25 @@ function deleteRefund(id,refundNo,rowCount){
 }
 
 function DeleteRowRefund(){
+    
     var rowCount = document.getElementById('deleteRefundCount').value;
     var refundno = document.getElementById('delRefundNo').value;
     var refundid = document.getElementById('delRefundId').value;
     var paymentId = document.getElementById('paymentId').value;
-
     $("#tableRefundId" + rowCount).parent().remove();
+    calculateTotalAmountRefund();
+    calculateTotalRefundVat();
+    calculateTotalPayment();
+    calculateAmount();
     $.ajax({
         url: 'PaymentAirline.smi?action=deleteRefund',
         type: 'get',
         data: {delRefundId:refundid ,paymentId:paymentId },
         success: function () {
+            calculateTotalAmountRefund();
+            calculateTotalRefundVat();
+            calculateTotalPayment();
+            calculateAmount();
         },
         error: function () {
             console.log("error");
@@ -1141,7 +1176,6 @@ function calculateTotalRefundVat() {
     if (vatValue == ""){
         vatValue = 0;
     }
-    
     var totalRefund = replaceAll(",","",$('#totalAmountRefund').val()); 
     if (totalRefund == ""){
         totalRefund = 0;
@@ -1216,7 +1250,7 @@ function replaceAll(find, replace, str) {
 }
 
 function formatNumber(num) {
-    return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+    return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g,"$1,")
 }
 
 </script>

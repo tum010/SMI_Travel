@@ -93,8 +93,6 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             if(paymentAirticketRefunds != null){
                 for(int i = 0; i < paymentAirticketRefunds.size(); i++){
                     if(paymentAirticketRefunds.get(i).getId() == null){
-                        System.out.println("paymentAirticketRefunds.get(i).getPaymentAirticket().getId() === "+paymentAirticketRefunds.get(i).getPaymentAirticket().getId());
-                        System.out.println("paymentAirticketRefunds.get(i).getRefundAirticketDetail().getId() === "+paymentAirticketRefunds.get(i).getRefundAirticketDetail().getId());
                         session.save(paymentAirticketRefunds.get(i));
                     } else {
                         session.update(paymentAirticketRefunds.get(i));
@@ -110,6 +108,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             ex.printStackTrace();
             result = "fail";
         }
+        System.out.println("result::"+result);
         return result;  
     }
 
@@ -139,6 +138,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             transaction.rollback();
             result = "fail";
         }
+        System.out.println("result::"+result);
         return result;
     }
 
@@ -370,7 +370,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
     private boolean IsExistPaymentAirticketFare(String paymentAirId) {
         boolean result;
         Session session = this.sessionFactory.openSession();
-        List<PaymentAirticketFare> list = session.createQuery("from PaymentAirticketFare p WHERE p.paymentAirticket = :paymentAirId").setParameter("paymentAirId", paymentAirId).list();
+        List<PaymentAirticketFare> list = session.createQuery("from PaymentAirticketFare p WHERE p.paymentAirticket.id = :paymentAirId").setParameter("paymentAirId", paymentAirId).list();
         if (list.isEmpty()) {
             result = false;
         } else {
@@ -384,7 +384,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
     private boolean IsExistPaymentAirticketRefund(String paymentAirId) {
         boolean result;
         Session session = this.sessionFactory.openSession();
-        List<PaymentAirticketRefund> list = session.createQuery("from PaymentAirticketRefund p WHERE p.paymentAirticket = :paymentAirId").setParameter("paymentAirId", paymentAirId).list();
+        List<PaymentAirticketRefund> list = session.createQuery("from PaymentAirticketRefund p WHERE p.paymentAirticket.id = :paymentAirId").setParameter("paymentAirId", paymentAirId).list();
         if(list.isEmpty()){
             result = false;
         }else{
@@ -414,21 +414,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
         this.sessionFactory.close();
         return result;
     }
-    
-//    @Override
-//    public RefundAirticket addRefundAirTicket(String refundNo) {
-//        RefundAirticket refundAirticket = new RefundAirticket();
-//        String query = "from RefundAirticket r where r.refundNo = :refundNo";
-//        Session session = this.sessionFactory.openSession();
-//        List<RefundAirticket> refundAirticketList = session.createQuery(query).setParameter("refundNo", refundNo).list();
-//        session.close();
-//        if (refundAirticketList.isEmpty()) {
-//            return null;
-//        }else{
-//            refundAirticket =  refundAirticketList.get(0);
-//        }
-//        return refundAirticket;        
-//    }
+
     @Override
     public String addRefundAirTicket(String refundNo,String rowCount) {
         String result ="";
@@ -494,13 +480,12 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                         = "<tr>"
                         + "<input type='hidden' name='count"+countrow+"' id='count"+countrow+"' value='"+countrow+"'>"
                         + "<input type='hidden' name='tableRefundId"+countrow+"' id='tableRefundId"+countrow+"' value='"+id+"'>"
-    //                    + "<td>" + (id  == null ? "" : id )+ "</td>"
-                        + "<td>" + (refund  == "null" ? "" : refund )+ "</td>"
-                        + "<td>" + (ticketNo == "null" ? "": ticketNo )+  "</td>"
-                        + "<td>" + (department == "null" ? "": department )+ "</td>"
-                        + "<td>" + (route == "null" ? "" : route )+  "</td>"
-                        + "<td>" + (commission == "null" ? "": commission )+  "</td>"
-                        + "<td>" + (amount == "null" ? "" : amount )+  "</td>"
+                        + "<td align='center'>" + (refund  == "null" ? "" : refund )+ "</td>"
+                        + "<td align='left'>" + (ticketNo == "null" ? "": ticketNo )+  "</td>"
+                        + "<td align='left'>" + (department == "null" ? "": department )+ "</td>"
+                        + "<td align='center'>" + (route == "null" ? "" : route )+  "</td>"
+                        + "<td align='right'>" + (commission == "null" ? "": commission )+  "</td>"
+                        + "<td align='right'>" + (amount == "null" ? "" : amount )+  "</td>"
                         + "<td><center><a class=\"remCF\"><span onclick=\"deleteRefund('"+id+"','"+refund+"','"+countrow+"')\" class=\"glyphicon glyphicon-remove deleteicon \"></span></center></td>"
                         + "</tr>";
                 System.out.println("newrow [[[[[[[ "+newrow +" ]]]]");
@@ -510,13 +495,12 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                         = "<tr>"
                         + "<input type='hidden' name='count"+rowCount+"' id='count"+rowCount+"' value='"+rowCount+"'>"
                         + "<input type='hidden' name='tableRefundId"+rowCount+"' id='tableRefundId"+rowCount+"' value='"+id+"'>"
-    //                    + "<td>" + (id  == null ? "" : id )+ "</td>"
-                        + "<td>" + (refund  == "null" ?  "" : refund )+ "</td>"
-                        + "<td>" + (ticketNo == "null" ? "" : ticketNo )+  "</td>"
-                        + "<td>" + (department == "null" ? "": department )+ "</td>"
-                        + "<td>" + (route == "null" ? "" : route )+  "</td>"
-                        + "<td>" + (commission == "null" ? "" : commission )+  "</td>"
-                        + "<td>" + (amount == "null" ? "" : amount )+  "</td>"
+                        + "<td align='center'>" + (refund  == "null" ?  "" : refund )+ "</td>"
+                        + "<td align='left'>" + (ticketNo == "null" ? "" : ticketNo )+  "</td>"
+                        + "<td align='left'>" + (department == "null" ? "": department )+ "</td>"
+                        + "<td align='center'>" + (route == "null" ? "" : route )+  "</td>"
+                        + "<td align='right'>" + (commission == "null" ? "" : commission )+  "</td>"
+                        + "<td align='right'>" + (amount == "null" ? "" : amount )+  "</td>"
                         + "<td><center><a class=\"remCF\"><span onclick=\"deleteRefund('"+id+"','"+refund+"','"+rowCount+"')\" class=\"glyphicon glyphicon-remove deleteicon \"></span></center></td>"
                         + "</tr>";
                 System.out.println("newrow [[[[[[[ "+newrow +" ]]]]");
@@ -526,23 +510,6 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
         htmlList.add(html);
         return htmlList.toString();
     }    
-    
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    public Transaction getTransaction() {
-        return transaction;
-    }
-
-    public void setTransaction(Transaction transaction) {
-        this.transaction = transaction;
-    }
-
 
     @Override
     public List<TicketFareView> getTicketFareViewsByPaymentAirId(String paymentAirId) {
@@ -623,8 +590,21 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
         this.sessionFactory.close();
         return listView;
     }
+    
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
 
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
+    public Transaction getTransaction() {
+        return transaction;
+    }
 
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
+    }
 
 }
