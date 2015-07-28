@@ -45,5 +45,10 @@ public class InvoiceImpl implements InvoiceDao{
         
         return code;
     }
+
+    @Override
+    public Invoice getInvoiceFromInvoiceNumber(String InvoiceNumber) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
