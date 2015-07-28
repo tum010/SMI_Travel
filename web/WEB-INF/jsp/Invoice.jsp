@@ -1,5 +1,4 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript" src="js/Invoice.js"></script> 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -9,6 +8,8 @@
 <link href="css/jquery-ui.css" rel="stylesheet">
 
 <c:set var="type" value="${requestScope['typeInvoice']}" />
+<c:set var="listCurrency" value="${requestScope['listCurrency']}" />
+<c:set var="defaultData" value="${requestScope['defaultData']}" />
 <input type="hidden" id="type" name="type" value="${param.type}">
 
 
@@ -29,8 +30,9 @@
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
             <div ng-include="'WebContent/FinanceAndCashier/InvoiceMenu.html'"></div>
         </div>
-        
+    
         <div class="col-sm-10">
+            <form action="Invoice.smi" method="post" id="InvoiceForm" role="form">
             <div class="row" style="padding-left: 15px">  
                 <div class="col-sm-6 " style="padding-right: 15px">
                     <c:choose>
@@ -121,10 +123,8 @@
                         </div>
                     </div>
                 </div>                                      
-            <div class="col-xs-12 form-group"></div>
-                
+            <div class="col-xs-12 form-group"></div>   
                 <!--Search-->  
-                <form action="" method="post" id="" name="" role="form">
                     <div class="col-xs-12 ">
                         <div class="col-xs-1 text-right">
                             <label class="control-label" for="">INV no</lable>
@@ -256,11 +256,9 @@
                                 </span>
                             </div>
                         </div>
-                    </div>    
-                </form>                
+                    </div>                  
             </div>
-            
-            <form action="Invoice.smi" method="post" id="DetailBillableForm">
+        
                 <div role="tabpanel">
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane  active" id="infoDetailBillable">
@@ -269,54 +267,55 @@
                                     <h4 class="panel-title">Detail Billable</h4>
                                 </div>
                                 <div class="panel-body">
+                                    <input type="text" class="hidden" id="counterTable" name="counterTable" value="1" >
+                                    <input type="text" class="hidden" id="idDeleteDetailBillable" name="idDeleteDetailBillable" value="0" >
+                                    <input type="text" class="hidden" id="action" name="action" value="" >
                                     <table class="display" id="DetailBillableTable">
                                         <thead class="datatable-header">
                                             <tr>
-                                                <th style="width:10%;">Product</th>
-                                                <th style="width:16%;">Description</th>
-                                                <th style="width: 1%">T/C</th>
-                                                <th style="width: 5%">Cost</th>
-                                                <th style="width: 2%">Cur</th>
-                                                <th style="width: 5%">Cost Local</th>
-                                                <th style="width: 5%">Amount</th>
-                                                <th style="width: 2%">Cur</th>
-                                                <th style="width: 5%">Amount Local</th>
-                                                <th style="width: 1%" >Vat</th> 
-                                                <th style="width: 1%">Use</th> 
-                                                <th style="width: 5%">Net</th>
-                                                <th style="width: 2%">Action</th>    
+                                                <th class="hidden">Detail Id</th>
+                                                <th style="width:8%;">Product</th>
+                                                <th style="width:15%;">Description</th>
+                                                <th style="width: 10%">Cost</th>
+                                                <th style="width: 10%">Cur</th>
+                                                <th style="width: 10%">Cost Local</th>
+                                                <th style="width: 10%">Amount</th>
+                                                <th style="width: 10%">Cur</th>
+                                                <th style="width: 10%">Amount Local</th>
+                                                <th style="width: 5%">Vat</th> 
+                                                <th style="width: 5%">Use</th> 
+                                                <th style="width: 10%">Net</th>
+                                                <th style="width: 5%">Action</th>    
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>TEST</td>
-                                                <td>Hello World</td>
-                                                <td align="center">[T][C]</td>
-                                                <td>1000000</td>
-                                                <td>THB</td>
+                                            <!--<tr>-->
+<!--                                            <td class="hidden"><input type="text" class="form-control" id="DetailBillId" name="DetailBillId" value="" ></td>
+                                                <td>Product</td>
+                                                <td> <input type="text" class="form-control" id="BillDescription" name="BillDescription" value="" > </td>
+                                                <td> <input type="text" class="form-control" id="InputCost" name="InputCost" value="" ></td>
+                                                <td><select id="SelectCurrencyCost" name="SelectCurrencyCost" class="form-control"> <option value="">--currency cost--</option></select></td>
                                                 <td>100000</td>
+                                                <td> <input type="text" class="form-control" id="InputAmount" name="InputAmount" value="" ></td>
+                                                <td><select id="SelectCurrencyAmount" name="SelectCurrencyAmount" class="form-control"><option value="">--currency amount--</option></select></td>
                                                 <td>100000</td>
-                                                <td>THB</td>
+                                                <td><input type="text" class="form-control" id="InputVat" name="InputVat" value="" ></td>
+                                                <td><input type="checkbox" value="checkUse" id="checkUse" name="checkUse" class="form-control"></td>
                                                 <td>100000</td>
-                                                <td>7</td>
-                                                <td>[]</td>
-                                                <td>100000</td>
-                                                <td align="center" > 
-                                                <center> 
-                                                  
-                                                    <span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('', '')" data-toggle="modal" data-target="#DelDetailBill" >  
-                                                    </span>
-                                                </center>
-                                                </td>
-                                            </tr>
+                                                <td align="center" ><center><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('', '')" data-toggle="modal" data-target="#DelDetailBill" >  </span></center></td>-->
+                                            <!--</tr>-->
                                         </tbody>
                                     </table>
+                                    <div id="tr_FormulaAddRow" class="text-center" style="padding-top: 10px;display: none;">
+                                        <a class="btn btn-success" onclick="AddRowDetailBillAble()">
+                                            <i class="glyphicon glyphicon-plus"></i> Add
+                                        </a>
+                                    </div>       
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            
+                </div>          
                 <div role="tabpanel">
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane  active" id="infoRemark">
@@ -395,8 +394,8 @@
                             </div>
                         </div>
                     </div>
-                </div>    
-            </form>    
+                </div> 
+            </form>
         </div>
     </div>
 </div>        
@@ -409,7 +408,7 @@
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-title"  id="Titlemodel">Finance & Cashier - Invoice</h4>
             </div>
-            <div class="modal-body" id="disableVoid">
+            <div class="modal-body" id="disableVoidModal">
                 
             </div>
             <div class="modal-footer">
@@ -445,13 +444,13 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title"  id="Titlemodel">Finance & Cashier - Invoice </h4>
+                <h4 class="modal-title"  id="Titlemodel">Delete Detail Billable </h4>
             </div>
-            <div class="modal-body" id="enableCode">
+            <div class="modal-body" id="DeleteDetailBillable">
                 
             </div>
             <div class="modal-footer">  
-                <button type="button" onclick="DeleteDetailBill()" class="btn btn-danger">Delete</button>
+                <button type="button" onclick="DeleteBill()" class="btn btn-danger">Delete</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
@@ -614,18 +613,18 @@
                 $('#hdGridSelected').val($('#MasterReservation tbody tr.row_selected').attr("id"));
             }
         });
-        
-        $('#DetailBillableTable tbody').on('click', 'tr', function () {
-            if ($(this).hasClass('row_selected')) {
-                $(this).removeClass('row_selected');
-                $('#hdGridSelected').val('');
-            }
-            else {
-                table.$('tr.row_selected').removeClass('row_selected');
-                $(this).addClass('row_selected');
-                $('#hdGridSelected').val($('#DetailBillableTable tbody tr.row_selected').attr("id"));
-            }
-        });
+    
+//        $('#DetailBillableTable tbody').on('click', 'tr', function () {
+//            if ($(this).hasClass('row_selected')) {
+//                $(this).removeClass('row_selected');
+//                $('#hdGridSelected').val('');
+//            }
+//            else {
+//                table.$('tr.row_selected').removeClass('row_selected');
+//                $(this).addClass('row_selected');
+//                $('#hdGridSelected').val($('#DetailBillableTable tbody tr.row_selected').attr("id"));
+//            }
+//        });
         
         $('#collapseExample${advanced.search}').on('shown.bs.collapse', function () {
             $(".arrowReservstion").removeClass("glyphicon glyphicon-chevron-down").addClass("glyphicon glyphicon-chevron-up");
@@ -636,3 +635,18 @@
         });
     });   
 </script>
+<script type="text/javascript" charset="utf-8">
+    var select = "";
+    var defaultD = "";
+    $(document).ready(function () {
+        <c:forEach var="cur" items="${listCurrency}">
+            select += "<option value='${cur.id}' ><c:out value='${cur.code}' /></option>";
+        </c:forEach>
+    }); 
+</script>
+<c:if test="${defaultData != null}">        
+        <script language="javascript">
+           defaultD = ${defaultData.value};
+        </script>
+</c:if>
+<script type="text/javascript" src="js/Invoice.js"></script>
