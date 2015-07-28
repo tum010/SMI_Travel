@@ -425,6 +425,16 @@
         <c:forEach var="type" items="${getType}">
             select += "<option value='${type.id}' ><c:out value='${type.name}' /></option>";
         </c:forEach>
+            
+//        $('#StockTable').dataTable({bJQueryUI: true,
+//            "sPaginationType": "full_numbers",
+//            "bAutoWidth": true,
+//            "bFilter": false,
+//            "bPaginate": true,
+//            "bInfo": false,
+//            "bLengthChange": true,
+//            "iDisplayLength": 50
+//        });
     });
 </script>
 <script type="text/javascript" src="js/stock.js"></script>
