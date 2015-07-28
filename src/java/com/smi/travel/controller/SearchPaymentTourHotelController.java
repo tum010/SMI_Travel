@@ -1,4 +1,5 @@
 package com.smi.travel.controller;
+import com.smi.travel.datalayer.entity.PaymentDetailWendy;
 import com.smi.travel.datalayer.entity.PaymentWendy;
 import com.smi.travel.datalayer.service.PaymentTourHotelService;
 import com.smi.travel.datalayer.service.UtilityService;
@@ -36,6 +37,7 @@ public class SearchPaymentTourHotelController extends SMITravelController {
         String InputInvoiceSupName = request.getParameter("InputInvoiceSupName");
         String InputAPCode = request.getParameter("InputAPCode");
         String InputPayNo = request.getParameter("InputPayNo");
+        String result = "";
                 
         List<PaymentWendytourView> paymentList = new ArrayList<PaymentWendytourView>();
         
@@ -45,10 +47,24 @@ public class SearchPaymentTourHotelController extends SMITravelController {
             PaymentWendy paymentWendy = new PaymentWendy();
             paymentWendy.setId(paymentID);
             paymentWendy.setPayNo(InputPayNo);
-            String result = getPaymentTourHotelService().deletePaymentWendy(paymentWendy);
-            if ("success".equals(result)) {
+            
+            PaymentWendy paymentWendyCheck = paymentTourHotelService.getPaymentWendyFromID(InputPayNo);
+            List<PaymentDetailWendy> paymentDetailWendy = paymentWendyCheck.getPaymentDetailWendies();
+            
+            if((paymentDetailWendy.size() != 0) || (paymentWendyCheck.getIsExport() != null)){
+                if(paymentWendyCheck.getIsExport() != null){
+                    result = "fail isExport";
+                } else {
+                    result = "fail already used";
+                }
                 paymentList = getPaymentTourHotelService().getListPayment(InputFromDate, InputToDate, selectPvType, InputInvoiceSupCode);
+            } else {
+                result = getPaymentTourHotelService().deletePaymentWendy(paymentWendy);
+                if ("success".equals(result)) {
+                    paymentList = getPaymentTourHotelService().getListPayment(InputFromDate, InputToDate, selectPvType, InputInvoiceSupCode);
+                }              
             }
+                      
         }
         
         request.setAttribute(DATALIST,paymentList);
@@ -59,6 +75,7 @@ public class SearchPaymentTourHotelController extends SMITravelController {
         request.setAttribute("InputInvoiceSupCode", InputInvoiceSupCode);
         request.setAttribute("InputInvoiceSupName", InputInvoiceSupName);
         request.setAttribute("InputAPCode", InputAPCode);
+        request.setAttribute("result", result);
         return SearchPaymentTourHotel;
     }
 
