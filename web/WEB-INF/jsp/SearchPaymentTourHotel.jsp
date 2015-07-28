@@ -28,6 +28,25 @@
     </div>
     <!--Content -->
     <div class="col-sm-10">
+    <c:if test="${requestScope['result'] =='success'}">                                            
+        <div id="textAlertDivSave"  style="" class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Delete Success!</strong> 
+        </div>
+    </c:if>
+    <c:if test="${requestScope['result'] =='fail isExport'}">                                            
+        <div id="textAlertDivSave"  style="" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Data is already export!</strong> 
+        </div>
+    </c:if>
+    <c:if test="${requestScope['result'] =='fail already used'}">                                            
+        <div id="textAlertDivSave"  style="" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Data is already used!!</strong> 
+        </div>
+    </c:if>        
+        
         <div class="row" style="padding-left: 15px">  
             <div class="col-sm-6" style="padding-right: 15px">
                 <h4><b>Search Payment Tour / Hotel</b></h4>
@@ -148,8 +167,8 @@
                             <td align="center">${payment.payType}</td>
                             <td>${payment.invoiceSup}</td>
                             <td align="center">${payment.accNo}</td>
-                            <td> <input id="total" name="total" maxlength ="15"  type="text" class="form-control numerical" value="${payment.total}" readonly=""> </td>
-<!--                            <td align="right">${payment.total}</td>-->
+<!--                            <td> <input id="total" name="total" maxlength ="15"  type="text" class="form-control numerical" value="${payment.total}" readonly=""> </td>-->
+                            <td align="right">${payment.total}</td>
                             <td align="center">${payment.status}</td>
                             <td class="text-center">
                                 <span id="RefPaymentHotelEdit" name="RefPaymentHotelEdit" class="glyphicon glyphicon-edit editicon" onclick="location.href='PaymentTourHotel.smi?action=edit&InputPayNo=${payment.payNo}'"></span>
