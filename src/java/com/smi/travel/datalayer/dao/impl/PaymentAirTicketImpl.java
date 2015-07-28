@@ -484,8 +484,8 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                         + "<td align='left'>" + (ticketNo == "null" ? "": ticketNo )+  "</td>"
                         + "<td align='left'>" + (department == "null" ? "": department )+ "</td>"
                         + "<td align='center'>" + (route == "null" ? "" : route )+  "</td>"
-                        + "<td align='right'>" + (commission == "null" ? "": commission )+  "</td>"
-                        + "<td align='right'>" + (amount == "null" ? "" : amount )+  "</td>"
+                        + "<td align='right' class='form-control moneyformat'>" + (commission == "null" ? "": commission )+  "</td>"
+                        + "<td class='form-control money'>" + (amount == "null" ? "" : amount )+  "</td>"
                         + "<td><center><a class=\"remCF\"><span onclick=\"deleteRefund('"+id+"','"+refund+"','"+countrow+"')\" class=\"glyphicon glyphicon-remove deleteicon \"></span></center></td>"
                         + "</tr>";
                 System.out.println("newrow [[[[[[[ "+newrow +" ]]]]");
@@ -499,8 +499,8 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                         + "<td align='left'>" + (ticketNo == "null" ? "" : ticketNo )+  "</td>"
                         + "<td align='left'>" + (department == "null" ? "": department )+ "</td>"
                         + "<td align='center'>" + (route == "null" ? "" : route )+  "</td>"
-                        + "<td align='right'>" + (commission == "null" ? "" : commission )+  "</td>"
-                        + "<td align='right'>" + (amount == "null" ? "" : amount )+  "</td>"
+                        + "<td align='right' class='form-control moneyformat'>" + (commission == "null" ? "" : commission )+  "</td>"
+                        + "<td class='form-control money'>" + (amount == "null" ? "" : amount )+  "</td>"
                         + "<td><center><a class=\"remCF\"><span onclick=\"deleteRefund('"+id+"','"+refund+"','"+rowCount+"')\" class=\"glyphicon glyphicon-remove deleteicon \"></span></center></td>"
                         + "</tr>";
                 System.out.println("newrow [[[[[[[ "+newrow +" ]]]]");
