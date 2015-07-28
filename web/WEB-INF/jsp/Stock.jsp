@@ -17,8 +17,7 @@
         <c:set var="create" value="${requestScope['CreateDate']}" />
     </c:when>
     <c:otherwise>
-       <c:set var="create" value="${requestScope['thisdate']}" />
-       
+       <c:set var="create" value="${requestScope['thisdate']}" />    
     </c:otherwise>
 </c:choose>
 <c:set var="listStockDetail" value="${requestScope['listStockDetail']}" />
@@ -194,10 +193,7 @@
                     <div class="col-xs-12" style="padding-right: 17px;">
                         <div class="col-md-8 text-right" >                                          
                         </div> 
-                        <div class="col-md-2 text-right"  >
-                        <!--<button type="button" onclick="" class="btn btn-danger" id="SpanClearStock" name="SpanClearStock" style="width: 160px;">
-                                <span  class="glyphicon glyphicon-refresh"></span> Clear Expire Stock
-                            </button>-->
+                        <div class="col-md-2 text-right"  >                 
                         </div>
                         <div class="col-md-2 text-right">
                             <button type="button"  id="ButtonAdd"  name="ButtonAdd" onclick=" return addItemList()" class="btn btn-primary btn-primary " style="width: 130px;">
@@ -326,12 +322,6 @@
                     </tbody>
                 </table>
             </div>
-            <!-- Script Product List table-->
-            <script>
-                $(document).ready(function () {
-//                    alert("<%=new java.util.Date()%>");
-                });               
-            </script>
             <div class="modal-footer">
                 <button id="" type="button" onclick="" class="btn btn-success" data-dismiss="modal">OK</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -339,7 +329,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
-
 <!--Search Staff-->
 <div class="modal fade" id="SearchStaff" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -424,17 +413,7 @@
         var type  = document.getElementById('Selecttype');
         <c:forEach var="type" items="${getType}">
             select += "<option value='${type.id}' ><c:out value='${type.name}' /></option>";
-        </c:forEach>
-            
-//        $('#StockTable').dataTable({bJQueryUI: true,
-//            "sPaginationType": "full_numbers",
-//            "bAutoWidth": true,
-//            "bFilter": false,
-//            "bPaginate": true,
-//            "bInfo": false,
-//            "bLengthChange": true,
-//            "iDisplayLength": 50
-//        });
+        </c:forEach>         
     });
 </script>
 <script type="text/javascript" src="js/stock.js"></script>
