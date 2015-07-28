@@ -403,7 +403,7 @@ $(document).ready(function () {
         "bLengthChange": false,
         "iDisplayLength": 10
     });
-    $('#ItemListTable').dataTable({bJQueryUI: true,
+    $('#StockTable').dataTable({bJQueryUI: true,
         "sPaginationType": "full_numbers",
         "bAutoWidth": true,
         "bFilter": false,
@@ -411,6 +411,15 @@ $(document).ready(function () {
         "bInfo": false,
         "bLengthChange": true,
         "iDisplayLength": 10
+    });
+    $('#ItemListTable').dataTable({bJQueryUI: true,
+        "sPaginationType": "full_numbers",
+        "bAutoWidth": true,
+        "bFilter": false,
+        "bPaginate": true,
+        "bInfo": false,
+        "bLengthChange": true,
+        "iDisplayLength": 50
     });
     $('#StockSummary').dataTable({bJQueryUI: true,
         "sPaginationType": "full_numbers",
