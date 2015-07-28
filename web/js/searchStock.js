@@ -9,6 +9,7 @@ function searchAction() {
     action.value = 'search';
     document.getElementById('SearchStockForm').submit();
 }
+ 
  function viewStockDetailAction(id){
     var action = document.getElementById('action');
     var stockIdView = document.getElementById('stockIdView');
