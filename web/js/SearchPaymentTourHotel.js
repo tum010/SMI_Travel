@@ -87,7 +87,9 @@ function searchAction(){
 
 function DeletePayment(id, no) {
     var paymentID = document.getElementById('paymentID');
+    var InputPayNo = document.getElementById('InputPayNo');
     paymentID.value = id;
+    InputPayNo.value = no;
     document.getElementById('delCode').innerHTML = "Are you sure to delete payment no : " + no + " ?";
 }
 
