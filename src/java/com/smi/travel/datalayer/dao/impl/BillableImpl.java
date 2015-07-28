@@ -327,4 +327,9 @@ public class BillableImpl implements BillableDao {
         return result;
     }
 
+    @Override
+    public Billable getBillableDetailFromRefno(String Refno) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
