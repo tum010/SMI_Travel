@@ -106,15 +106,8 @@ public class PaymentTourHotelController extends SMITravelController {
             if(paymentId == "" || paymentId == null){
                 UtilityFunction utilfunction = new UtilityFunction();
                 PaymentWendy paymentWendy = new PaymentWendy();
-                
-                if(account != null){
-                    paymentWendy.setAccount(utilfunction.convertStringToInteger(account));
-                } else {
-                    paymentWendy.setAccount(null);
-                }
-                
+                               
                 paymentWendy.setPayDate(utilfunction.convertStringToDate(InputPayDate));
-
                 MItemstatus mitemStatus = new MItemstatus();
                 mitemStatus.setId(itemStatus);
                 paymentWendy.setMItemstatus(mitemStatus);
@@ -128,6 +121,12 @@ public class PaymentTourHotelController extends SMITravelController {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 String createDate = sdf.format(date);
                 paymentWendy.setCreateDate(utilfunction.convertStringToDate(createDate));
+                
+                if(account != null){
+                    paymentWendy.setAccount(utilfunction.convertStringToInteger(account));
+                } else {
+                    paymentWendy.setAccount(null);
+                }
 
                 MPaymentDoctype mpaymentDoctype = new MPaymentDoctype();
                 if(itemPvType==""){               
