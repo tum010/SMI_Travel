@@ -38,8 +38,8 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
-//            result = gennaratePaymentRunning();
-            payAir.setPayNo(gennaratePaymentRunning());
+            result = gennaratePaymentRunning();
+            payAir.setPayNo(result);
             session.save(payAir);
             
             List<PaymentAirticketFare> paymentAirticketFares = payAir.getPaymentAirticketFares();

@@ -924,7 +924,6 @@ function searchTicketFareCF() {
     var totalAmountRefundVat = document.getElementById('totalAmountRefundVat');
     totalAmountRefundVat.value = $("#totalAmountRefundVat").val();
     document.getElementById('PaymentAirlineForm').submit();
-    
 }
 
 function addAction(){
