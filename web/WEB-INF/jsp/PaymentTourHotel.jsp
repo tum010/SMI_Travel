@@ -71,7 +71,7 @@
                 </div>
                 <div class="col-md-3 form-group text-left">
                     <div class="col-sm-12">
-                        <input name="InputPayNo" id="InputPayNo" type="text" class="form-control" value="${requestScope['InputPayNo']}"/>
+                        <input name="InputPayNo" id="InputPayNo" type="text" class="form-control" value="${requestScope['InputPayNo']}" maxlength="20"/>
                     </div>
                 </div>
                 <div class="col-xs-4 text-left" style="padding-left:10px;padding-right:0px;"></div>
@@ -190,7 +190,7 @@
             </div>
             <div class="col-md-4 form-group text-left" style="width:360px;">
                 <div class="col-sm-12">
-                    <input name="InputInvoiceSupName" id="InputInvoiceSupName" type="text" class="form-control" value="${requestScope['InputInvoiceSupName']}" />           
+                    <input name="InputInvoiceSupName" id="InputInvoiceSupName" type="text" class="form-control" value="${requestScope['InputInvoiceSupName']}" readonly=""/>           
                 </div>
             </div>
             <div class="col-xs-2 text-right" style="padding-left:10px;padding-right:0px;width:140px;">
@@ -199,7 +199,7 @@
             <div class="col-md-2 form-group text-left" style="padding-left:9px;width:190px;">
                 <div class="col-sm-12">
                     <div class="input-group" id="CodeValidate">
-                        <input name="InputAPCode" id="InputAPCode" type="text" class="form-control" value="${requestScope['InputAPCode']}" />
+                        <input name="InputAPCode" id="InputAPCode" type="text" class="form-control" value="${requestScope['InputAPCode']}" readonly=""/>
                         <span class="input-group-addon hidden" data-toggle="modal" data-target="#SearchAPCode">
                             <span class="glyphicon-search glyphicon"></span>
                         </span>    
@@ -214,7 +214,7 @@
             </div>
             <div class="col-md-6 form-group text-left" style="padding-left:30px;padding-right:0px;width:520px;">
                 <div class="col-sm-12">
-                    <textarea rows="3" cols="255" class="form-control" id="Detail" name="Detail">${requestScope['Detail']}</textarea>
+                    <textarea rows="3" cols="255" class="form-control" id="Detail" name="Detail" maxlength="255">${requestScope['Detail']}</textarea>
                 </div>   
             </div>
             <div class="col-xs-2 text-right" style="padding-left:10px;padding-right:0px;width:155px;">
@@ -313,9 +313,9 @@
                                         <input class="form-control" type="text" id="vat${i.count}" name="vat${i.count}" value="${pl.vat}" readonly="">
                                     </td>
                                     <td class="hidden">
-                                        <input class="form-control money" type="text" id="gross${i.count}" name="gross${i.count}" value="${pl.gross}" readonly="">
+                                        <input class="form-control" type="text" id="gross${i.count}" name="gross${i.count}" value="${pl.gross}" readonly="">
                                     </td>
-                                    <td> <input style="width: ${Amount}" id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control money" onfocusout="CalculateGrandTotal('${pl.id}','${i.count}')" value="${pl.amount}"> </td>                               
+                                    <td> <input style="width: ${Amount}" id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control numerical" onfocusout="CalculateGrandTotal('${pl.id}')" value="${pl.amount}"> </td>                               
                                     <td> <input style="width: ${Description}" id="description${i.count}" name="description${i.count}" maxlength ="255"  type="text" class="form-control" value="${pl.description}"> </td>
                                     <td> <input style="width: ${AC}" id="ac${i.count}" name="ac${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.accCode}" readonly=""> </td>
                                     <td class="text-center">
@@ -408,12 +408,12 @@
                                         <input class="form-control" type="text" id="vat${i.count}" name="vat${i.count}" value="${pl.vat}" readonly="">
                                     </td>
                                     <td>
-                                        <input class="form-control money" type="text" id="gross${i.count}" name="gross${i.count}" value="${pl.gross}" readonly="">
+                                        <input class="form-control" type="text" id="gross${i.count}" name="gross${i.count}" value="${pl.gross}" readonly="">
                                     </td>
                                     <td class="hidden">
-                                        <input class="form-control money" type="text" id="amountCal${i.count}" name="amountCal$${i.count}" value="${pl.amount}">
+                                        <input class="form-control" type="text" id="amountCal${i.count}" name="amountCal$${i.count}" value="${pl.amount}">
                                     </td>
-                                    <td> <input style="width: ${Amount}" id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control money" value="${pl.amount}" readonly=""> </td>                               
+                                    <td> <input style="width: ${Amount}" id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control numerical" value="${pl.amount}" readonly=""> </td>                               
                                     <td>${pl.description}</td>
                                     <td class="hidden"> <input style="width: ${Description}" id="description${i.count}" name="description${i.count}" maxlength ="255"  type="text" class="form-control" value="${pl.description}"> </td>                                   
                                     <td align="center">${pl.accCode}</td>
@@ -452,7 +452,7 @@
                         <label class="control-label">Remark</lable>
                     </div>
                     <div class="col-md-6 form-group text-left">
-                        <textarea rows="3" cols="255" class="form-control" id="InputRemark" name="InputRemark">${requestScope['InputRemark']}</textarea>        
+                        <textarea rows="3" cols="255" class="form-control" id="InputRemark" name="InputRemark"  maxlength="255">${requestScope['InputRemark']}</textarea>        
                     </div>
                     <c:choose>
                         <c:when test="${(idRole  == 22) || (idRole == 1)}">
@@ -460,7 +460,7 @@
                                 <label class="control-label">Grand Total</lable>
                             </div>
                             <div class="col-md-2 form-group text-left">
-                                <input name="InputGrandTotal" id="InputGrandTotal" type="text" class="form-control money" value="" readonly=""/>            
+                                <input name="InputGrandTotal" id="InputGrandTotal" type="text" class="form-control " value="" readonly=""/>            
                             </div>         
                         </c:when>
                         <c:when test="${idRole  == 19}">
@@ -468,19 +468,19 @@
                                 <label class="control-label">Vat Total</lable>
                             </div>
                             <div class="col-md-2 form-group text-left">
-                                <input name="InputVatTotal" id="InputVatTotal" type="text" class="form-control money" value="" readonly=""/>            
+                                <input name="InputVatTotal" id="InputVatTotal" type="text" class="form-control " value="" readonly=""/>            
                             </div>
                             <div class="col-xs-2 text-right">
                                 <label class="control-label">Gross Total</lable>
                             </div>
                             <div class="col-md-2 form-group text-left">
-                                <input name="InputGrossTotal" id="InputGrossTotal" type="text" class="form-control money" value="" readonly=""/>            
+                                <input name="InputGrossTotal" id="InputGrossTotal" type="text" class="form-control " value="" readonly=""/>            
                             </div>
                             <div class="col-xs-9 text-right">
                                 <label class="control-label">Grand Total</lable>
                             </div>
                             <div class="col-md-2 form-group text-left">
-                                <input name="InputGrandTotal" id="InputGrandTotal" type="text" class="form-control money" value="" readonly=""/>            
+                                <input name="InputGrandTotal" id="InputGrandTotal" type="text" class="form-control " value="" readonly=""/>            
                             </div>  
                         </c:when>
                     </c:choose>                                 
@@ -702,7 +702,17 @@
             });
         });
    
-        $(".money").mask('000,000,000,000,000,000.00', {reverse: true});
+        $(".money").mask('0000000000', {reverse: true});
+        
+        $( ".numerical" ).on('input', function() { 
+            var value=$(this).val().replace(/[^0-9.,]*/g, '');
+            value=value.replace(/\.{2,}/g, '.');
+            value=value.replace(/\.,/g, ',');
+            value=value.replace(/\,\./g, ',');
+            value=value.replace(/\,{2,}/g, ',');
+            value=value.replace(/\.[0-9]+\./g, '.');
+            $(this).val(value)
+        });
         
         $('#PaymentTourHotelForm').bootstrapValidator({
             container: 'tooltip',
@@ -772,7 +782,7 @@
         });
         
         $('#InputGrandTotal').ready(function () {
-            CalculateGrandTotal('',$("#counter").val());
+            CalculateGrandTotal('');
         });
         
         $('#InputGrossTotal').ready(function () {
@@ -871,7 +881,7 @@
                 '<input type="radio" name="type' + row + '" id="typeT' + row + '" value="T"> T&nbsp;' +
                 '<input type="radio" name="type' + row + '" id="typeC' +row + '" value="C" > C' +
                 '</td>' +
-                '<td><input class="money form-control" id="amount' + row + '" name="amount' + row + '" type="text" onfocusout="CalculateGrandTotal(\'\', \''+row+'\')"></td>' +
+                '<td><input maxlength ="15" class="form-control numerical" id="amount' + row + '" name="amount' + row + '" type="text" onfocusout="CalculateGrandTotal(\'\')"></td>' +
                 '<td><input class="form-control" maxlength="255" style="width: ${DescriptionSize}" id="description' + row + '" name="description' + row + '" rows="2" ></td>' +
                 '<td><input id="ac' + row + '" name="ac' + row + '"   type="text" class="form-control" readonly=""></td>' +
                 '<td class="text-center">' +
@@ -886,11 +896,12 @@
       
     }
     
-    function CalculateGrandTotal(id,row){
+    function CalculateGrandTotal(id){
+        var count = parseInt(document.getElementById('counter').value);
         var i;
         var grandTotal = 0;
         if((id!==null) || (id!=='') ){
-            for(i=0;i<row+1;i++){
+            for(i=0;i<count+1;i++){
                 var amount = document.getElementById("amount" + i);
 
                 if (amount !== null){
@@ -900,6 +911,7 @@
                         value = value.replace(/,/g,"");
                         var total = parseFloat(value);
                         grandTotal += total;
+                        document.getElementById('amount' + i).value = formatNumber(total);
                     }
                 }    
             }
@@ -927,6 +939,7 @@
                             grossValue = grossValue.replace(/,/g,"");
                             var total = parseFloat(grossValue);
                             grossTotal += total;
+                            document.getElementById("gross" + i).value = formatNumber(total);
 
                             amountValue = amountValue.replace(/,/g,"");
                             var vatCal = amountValue - total;
@@ -985,7 +998,7 @@
             }); 
         }    
         $('#DeleteProduct').modal('hide');
-        CalculateGrandTotal('',cCount);
+        CalculateGrandTotal('');
     }
    
    function getInvoiceSup(){
