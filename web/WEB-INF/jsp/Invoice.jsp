@@ -10,9 +10,11 @@
 <c:set var="type" value="${requestScope['typeInvoice']}" />
 <c:set var="listCurrency" value="${requestScope['listCurrency']}" />
 <c:set var="defaultData" value="${requestScope['defaultData']}" />
+<c:set var="listCustomerAgentInfo" value="${requestScope['listCustomerAgentInfo']}" />
+<c:set var="listStaff" value="${requestScope['listStaff']}" />
+<c:set var="listTermPay" value="${requestScope['listTermPay']}" />
+
 <input type="hidden" id="type" name="type" value="${param.type}">
-
-
 <section class="content-header" >
     <h1>
         Finance & Cashier - Invoice
@@ -65,7 +67,8 @@
                                             <span id="arrowReservstion" class="arrowReservstion glyphicon glyphicon-chevron-up"></span> 
                                         </a>
                                     </h2>               
-                                </div>
+                                </div>  
+                                <div class="col-xs-1  text-right" style="width: 8px"><i id="ajaxloadsearch"  class="fa fa-spinner fa-spin hidden"></i></div>           
                                 <div class="panel-body">               
                                     <div class=" accordion-body collapse in" id="collapseExample${advanced.search}" aria-expanded="false">
                                         <div class="col-md-12">
@@ -73,18 +76,17 @@
                                                 <label class="control-label" for="">Ref no </lable>
                                             </div>
                                             <div class="col-md-2 form-group">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="SearchRefNo" name="SearchRefNo" value="" >                                 
-                                                </div>
+                                                <input type="text" class="form-control" id="SearchRefNo" name="SearchRefNo" value="" >                                 
                                             </div>
                                             <div class="col-md-1 text-right">
-                                                <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="" class="btn btn-primary btn-sm">
+                                                <button type="button"  id="ButtonSearch"  name="ButtonSearch" onclick="searchAction();" class="btn btn-primary btn-sm">
                                                     <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
                                                 </button>                                          
                                             </div>      
                                         </div>
                                         <div class="col-xs-12 form-group"></div>
-                                        <div class="row" style="padding-left:35px">    
+                                        <div class="row" style="padding-left:35px">
+                                            <input type="text" class="hidden" id="counter" name="counter" value="1">
                                             <div class="col-md-12">
                                                 <table id="MasterReservation" class="display" cellspacing="0" width="100%">
                                                     <thead>
@@ -99,19 +101,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>               
-                                                        <tr>
-                                                            <td align="center">1</td>
-                                                            <td>TEST</td>
-                                                            <td>Hello World</td>
-                                                            <td align="center">100000</td>
-                                                            <td align="center">100000</td>
-                                                            <td align="center">THB</td>
-                                                            <td align="center" > 
-                                                                <center> 
-                                                                    <a href=""><span class="glyphicon glyphicon-plus"></span></a>
-                                                                </center>
-                                                            </td>
-                                                        </tr>
+                                                        
                                                    </tbody>
                                                 </table>    
                                             </div>
@@ -123,8 +113,8 @@
                         </div>
                     </div>
                 </div>                                      
-            <div class="col-xs-12 form-group"></div>   
-                <!--Search-->  
+                <div class="col-xs-12 form-group"></div>   
+                    <!--Search-->  
                     <div class="col-xs-12 ">
                         <div class="col-xs-1 text-right">
                             <label class="control-label" for="">INV no</lable>
@@ -171,7 +161,7 @@
                     </div>
                     <div class="col-xs-12 ">
                         <div class="col-sm-1 text-right">
-                            <label class="control-label" for="">Inv To</lable>
+                            <label class="control-label" for="">Inv To<font style="color: red">*</font></lable>
                         </div>
                         <div class="col-md-6 form-group">
                             <div class="input-group">
@@ -185,20 +175,24 @@
                         <div class="col-xs-2 text-right">
                             <label class="control-label" for="">Term pay</lable>
                         </div>
-                        <div class="col-md-2 form-group">
-                            <input type="text"  class="form-control" id="TermPay" name="TermPay"  value="" >
+                        <div class="col-md-2 form-group">                      
+                            <select class="form-control" id="TermPay" name="TermPay">
+                                <c:forEach var="item" items="${listTermPay}" >
+                                    <option value="${item.id}">${item.name}</option>
+                                </c:forEach>
+                            </select>
                         </div>
                     </div>
                     <div class="col-xs-12 ">
                         <div class="col-sm-1 text-right">
-                            <label class="control-label" for="">Name </lable>
+                            <label class="control-label" for="">Name<font style="color: red">*</font></lable>
                         </div>    
                         <div class="col-md-6 form-group">
                             <input  type="text" id="InvToName" name="InvToName" class="form-control" value="" >
                         </div>
                         <div class="form-group">
                             <div class="col-sm-2" style="padding-left: 53px">
-                            <label for="Department" class="col-sm-3 control-label" >Department</label>
+                            <label for="Department" class="col-sm-3 control-label" >Department<font style="color: red">*</font></label>
                             </div>
                             <div class="radio col-sm-2">   
                                 <label><input value="WendyAirTicket" id="DepartmentAirTicket" name="Department" type="radio" >Wendy Air Ticket</label>
@@ -231,33 +225,28 @@
                         </div>                       
                         <div class="col-md-2 form-group">
                             <div class="input-group">
-                            <input type="hidden" class="form-control" id="" name="" value=""/>
-                            <input type="text" class="form-control" id="SaleStaffName" name="SaleStaffName" value="" style="background-color: #ffffff">
+                            <input type="hidden" class="form-control" id="SaleStaffId" name="SaleStaffId" value=""/>
+                            <input type="text" class="form-control" id="SaleStaffCode" name="SaleStaffCode" value="" style="background-color: #ffffff">
                             <span class="input-group-addon" id="SaleStaff_Modal"  data-toggle="modal" data-target="#SaleStaffModal">
                                 <span class="glyphicon-search glyphicon"></span>
                             </span>
                             </div>
                         </div>
                         <div class="col-md-3 form-group">
-                            <input type="text"  class="form-control" id="" name=""  value="" readonly="">
+                            <input type="text"  class="form-control" id="SaleStaffName" name="SaleStaffName"  value="" readonly="">
                         </div>
                         <div class="col-md-2 form-group">
                              <label class="control-label"><input onclick='' type="checkbox" id="Grpup" name="Grpup" ${enableGrpup} ${checkGrpup}>  Group Yes/No</label>
                         </div>
                         <div class="col-xs-1 text-right">
-                            <label class="control-label" for="" >A/R&nbsp;Code</label>
+                            <label class="control-label" for="" >A/R&nbsp;Code<font style="color: red">*</font></label>
                         </div>  
                         <div class="col-md-2 form-group">
-                            <div class="input-group">
-                                <input type="hidden" class="form-control" id="" name="" value=""/>
-                                <input type="text" class="form-control" id="ARCode" name="ARCode" value="" style="background-color: #ffffff">
-                                <span class="input-group-addon" id="ARCode_Modal"  data-toggle="modal" data-target="#ARCodeModal">
-                                   <span class="glyphicon-search glyphicon"></span>
-                                </span>
-                            </div>
+                            <input type="hidden" class="form-control" id="ARCodeId" name="ARCodeId" value=""/>
+                            <input type="text" class="form-control" id="ARCode" name="ARCode" value="" style="background-color: #ffffff">                    
                         </div>
                     </div>                  
-            </div>
+                </div>
         
                 <div role="tabpanel">
                     <div class="tab-content">
@@ -279,12 +268,12 @@
                                                 <th style="width: 10%">Cost</th>
                                                 <th style="width: 10%">Cur</th>
                                                 <th style="width: 10%">Cost Local</th>
+                                                <th style="width: 8%">In vat</th> 
+                                                <th style="width: 5%">Vat</th> 
+                                                <th style="width: 10%">Gross</th>
                                                 <th style="width: 10%">Amount</th>
                                                 <th style="width: 10%">Cur</th>
                                                 <th style="width: 10%">Amount Local</th>
-                                                <th style="width: 5%">Vat</th> 
-                                                <th style="width: 5%">Use</th> 
-                                                <th style="width: 10%">Net</th>
                                                 <th style="width: 5%">Action</th>    
                                             </tr>
                                         </thead>
@@ -380,7 +369,7 @@
                                             </button>
                                         </div>
                                         <div class="col-md-1 text-right ">
-                                            <button type="button" onclick="" class="btn btn-success">
+                                            <button type="submit" onsubmit="" class="btn btn-success">
                                                 <span id="SpanSave" class="fa fa-save"></span> Save 
                                             </button>
                                         </div>
@@ -463,32 +452,28 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">Inv To</h4>
+                <h4 class="modal-title">Invoice To</h4>
             </div>
             <div class="modal-body">
                 <!--Bill To List Table-->
-
+                <div style="text-align: right"> <i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i> Search : <input type="text" style="width: 175px" id="searchInvoiceFrom" name="searchInvoiceFrom"/> </div> 
                 <table class="display" id="InvToTable">
-                    <thead>    
-                        <script>
-                            var inv_to = [];
-                        </script>
+                    <thead>                        
                         <tr class="datatable-header">
-                            <th class="hidden">ID</th>
-                            <th class="">Code</th>
-                            <th class="">Name</th>
-                        </tr>                      
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th class="hidden">Address</th>
+                            <th class="hidden">Tel</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="table" items="${agent_list}">
-                            <tr onclick ="setupagentvalue('${table.id}', '${table.code}', '${table.name}')" >
-                                <td class="hidden">${table.id}</td>
-                                <td>${table.code} </td>
-                                <td>${table.name} </td>
-                            </tr>    
-                            <script>
-                                inv_to.push({id: "${table.id}", code: "${table.code}", name: "${table.name}"});
-                            </script>
+                        <c:forEach var="item" items="${listCustomerAgentInfo}">
+                            <tr onclick="setBillValue('${item.billTo}', '${item.billName}', '${item.address}', '${item.term}', '${item.pay}');">                                
+                                <td class="item-billto">${item.billTo}</td>
+                                <td class="item-name">${item.billName}</td>                                
+                                <td class="item-address hidden">${item.address}</td>
+                                <td class="item-tel hidden">${item.tel}</td>
+                            </tr>
                         </c:forEach>
                     </tbody>
                 </table>
@@ -511,32 +496,30 @@
                 <h4 class="modal-title">Sale Staff</h4>
             </div>
             <div class="modal-body">
-                <!--Bill To List Table-->
-
+                <script>
+                    staff = [];
+                </script>
                 <table class="display" id="SaleStaffTable">
-                    <thead>    
-                        <script>
-                            var sale_staff = [];
-                        </script>
-                        <tr class="datatable-header">
+                    <thead class="datatable-header">
+                        <tr>
                             <th class="hidden">ID</th>
-                            <th class="">Code</th>
-                            <th class="">Name</th>
-                        </tr>                      
-                    </thead>
-                    <tbody>
-                        <c:forEach var="table" items="${agent_list}">
-                            <tr onclick ="setupagentvalue('${table.id}', '${table.code}', '${table.name}')" >
-                                <td class="hidden">${table.id}</td>
-                                <td>${table.code} </td>
-                                <td>${table.name} </td>
-                            </tr>    
+                            <th>Code</th>
+                            <th>staff Name</th>
+                        </tr>
+                    </thead>                  
+                    <tbody>                  
+                        <c:forEach var="item" items="${listStaff}" varStatus="loop">
+                            <tr class="packet">
+                                <td class="staff-id hidden"><c:out value="${item.id}" /></td>
+                                <td class="staff-code"><c:out value="${item.username}" /></td>
+                                <td class="staff-name"><c:out value="${item.name}" /></td>                            
+                            </tr>
                             <script>
-                                sale_staff.push({id: "${table.id}", code: "${table.code}", name: "${table.name}"});
+                                staff.push({id: "${item.id}", code: "${item.username}", name: "${item.name}"});
                             </script>
                         </c:forEach>
                     </tbody>
-                </table>
+                </table>             
             </div>
             <div class="modal-footer">
                 <div  class="text-right">
@@ -545,52 +528,7 @@
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div>
-
-<!--A/R Code Modal-->
-<div class="modal fade" id="ARCodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">A/R Code</h4>
-            </div>
-            <div class="modal-body">
-                <!--Bill To List Table-->
-
-                <table class="display" id="ARCodeTable">
-                    <thead>    
-                        <script>
-                            var arcode = [];
-                        </script>
-                        <tr class="datatable-header">
-                            <th class="hidden">ID</th>
-                            <th class="">Code</th>
-                        </tr>                      
-                    </thead>
-                    <tbody>
-                        <c:forEach var="table" items="${agent_list}">
-                            <tr onclick ="setupagentvalue('${table.id}', '${table.code}', '${table.name}')" >
-                                <td class="hidden">${table.id}</td>
-                                <td>${table.code} </td>
-                                <td>${table.name} </td>
-                            </tr>    
-                            <script>
-                                arcode.push({id: "${table.id}", code: "${table.code}", name: "${table.name}"});
-                            </script>
-                        </c:forEach>
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <div  class="text-right">
-                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>  
-                                                    
+</div>                                                
 <!--Script-->
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {

@@ -6,16 +6,11 @@
 package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.BillableDao;
-import com.smi.travel.datalayer.entity.AirticketAirline;
-import com.smi.travel.datalayer.entity.AirticketBooking;
 import com.smi.travel.datalayer.entity.AirticketFlight;
 import com.smi.travel.datalayer.entity.Billable;
 import com.smi.travel.datalayer.entity.BillableDesc;
-import com.smi.travel.datalayer.entity.Master;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -326,10 +321,4 @@ public class BillableImpl implements BillableDao {
         }
         return result;
     }
-
-    @Override
-    public Billable getBillableDetailFromRefno(String Refno) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }

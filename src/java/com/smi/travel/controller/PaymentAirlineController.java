@@ -286,7 +286,7 @@ public class PaymentAirlineController extends SMITravelController {
                         ticketFareAirline.setId(paymentAirFareId);
                         ticketFareAirline.setAgentId(null);
                         ticketFareAirline.setMAirlineAgent(null);
-                        ticketFareAirline.setMPaymentDoctype(null);
+//                        ticketFareAirline.setMPaymentDoctype(null);
                         ticketFareAirline.setMaster(null);
                         paymentAirticketFare.setTicketFareAirline(ticketFareAirline);
                         paymentAirticket.getPaymentAirticketFares().add(paymentAirticketFare);

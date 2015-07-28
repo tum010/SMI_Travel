@@ -325,6 +325,7 @@
     <bean id="MRunningCodeDao" class="com.smi.travel.datalayer.dao.impl.MRunningCodeImpl">
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
+
     
     <!-- Component Bean -->
     <bean id="AJAXBean" class="com.smi.travel.datalayer.bean.master.AJAXBean">
@@ -344,7 +345,9 @@
                 <ref local="PassengerDao" />
                 <ref local="MasterDao" />
                 <ref local="TicketFareAirlineDao" />  
-                <ref local="PaymentAirTicketDao" />  
+                <ref local="PaymentAirTicketDao" />
+                <ref local="BillableDao" />   
+                
             </list>
         </constructor-arg>
     </bean>
@@ -366,6 +369,7 @@
     <bean id="BookingStatusServlet" class="com.smi.travel.servlet.BookingStatusServlet" />
     <bean id="TicketFareAirlineServlet" class="com.smi.travel.servlet.TicketFareAirlineServlet" />
     <bean id="PaymentAirTicketServlet" class="com.smi.travel.servlet.PaymentAirTicketServlet" />
+    <bean id="InvoiceServlet" class="com.smi.travel.servlet.InvoiceServlet" />
 	<!--<add data>-->
 	
 </beans>

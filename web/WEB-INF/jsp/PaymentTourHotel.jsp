@@ -1333,7 +1333,7 @@
                                     document.getElementById('vat'+i).value = vatDefaultData;
                                 } else {
                                     document.getElementById('gross'+i).value = '';
-                                    document.getElementById('vat'+i).value = ''
+                                    document.getElementById('vat'+i).value = '';
                                 }
                             }
                         }    

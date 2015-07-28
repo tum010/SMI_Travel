@@ -1,7 +1,10 @@
 package com.smi.travel.controller;
+import com.smi.travel.datalayer.entity.MAccterm;
 import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MDefaultData;
+import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.UtilityService;
+import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.master.controller.SMITravelController;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,14 +42,43 @@ public class InvoiceController extends SMITravelController {
         listCurrency = utilityService.getListMCurrency();
         if(listCurrency != null){
             request.setAttribute("listCurrency", listCurrency);
+        }else{
+            request.setAttribute("listCurrency", null);
         }
         //List Default Data
         MDefaultData defaultData = new MDefaultData();
         defaultData = utilityService.getMDefaultDataFromType("vat");
         if(defaultData != null){
             request.setAttribute("defaultData", defaultData);
-        }
-    
+        }else{
+            request.setAttribute("defaultData", null);
+        }     
+        // List Agent feild Invoice To
+        List<CustomerAgentInfo> listCustomerAgentInfo = new ArrayList<CustomerAgentInfo>();
+        listCustomerAgentInfo = utilityService.getListCustomerAgentInfo();
+        if(listCustomerAgentInfo != null){
+            request.setAttribute("listCustomerAgentInfo", listCustomerAgentInfo);
+        }else{
+            request.setAttribute("listCustomerAgentInfo", null);
+        } 
+        
+        //List Staff
+        List<SystemUser> listStaff = new ArrayList<SystemUser>();
+        listStaff = utilityService.getUserList();
+        if(listStaff != null){
+            request.setAttribute("listStaff", listStaff);
+        }else{
+            request.setAttribute("listStaff", null);
+        } 
+        //List Term Pay
+        List<MAccterm> listTermPay = new ArrayList<MAccterm>();
+        listTermPay = utilityService.getListMAccterm();
+        if(listTermPay != null){
+            request.setAttribute("listTermPay", listTermPay);
+        }else{
+            request.setAttribute("listTermPay", null);
+        } 
+        
         return Invoice;
     }
 

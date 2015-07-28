@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.bean.master;
 import com.smi.travel.common.bean.AbstractBean;
 import com.smi.travel.controller.LockUnlockBookingController;
 import com.smi.travel.datalayer.ajax.service.AbstractAJAXServices;
+import com.smi.travel.datalayer.dao.BillableDao;
 import com.smi.travel.datalayer.dao.CustomerDao;
 import com.smi.travel.datalayer.dao.DaytourBookingDao;
 import com.smi.travel.datalayer.dao.DaytourComissionDao;
@@ -22,6 +23,8 @@ import com.smi.travel.datalayer.dao.TicketFareAirlineDao;
 import com.smi.travel.datalayer.dao.TransferJobDao;
 import com.smi.travel.datalayer.entity.AirticketFlight;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
+import com.smi.travel.datalayer.entity.Billable;
+import com.smi.travel.datalayer.entity.BillableDesc;
 import com.smi.travel.datalayer.entity.Customer;
 import com.smi.travel.datalayer.entity.Daytour;
 import com.smi.travel.datalayer.entity.DaytourBooking;
@@ -79,6 +82,7 @@ public class AJAXBean extends AbstractBean implements
     private static final String BOOKINGSTATUS = "BookingStatusServlet";
     private static final String TICKETFAREAIRLINE = "TicketFareAirlineServlet";
     private static final String PAYMENTAIRTICKET = "PaymentAirTicketServlet";
+    private static final String INVOICE = "InvoiceServlet";
     private CustomerDao customerdao;
     private ProductDetailDao productDetailDao;
     private BookingSummaryDao bookingsummarydao;
@@ -94,6 +98,7 @@ public class AJAXBean extends AbstractBean implements
     private OtherBookingDao otherBookingDao;
     private TicketFareAirlineDao ticketFareAirlineDao; 
     private PaymentAirTicketDao paymentairticketdao; 
+    private BillableDao billableDao;
     public AJAXBean(List queryList) {
         super(queryList);
         if (queryList != null && queryList.size() > 0) {
@@ -130,6 +135,8 @@ public class AJAXBean extends AbstractBean implements
                     ticketFareAirlineDao = (TicketFareAirlineDao) obj;
                 } else if (obj instanceof PaymentAirTicketDao){
                     paymentairticketdao = (PaymentAirTicketDao) obj;
+                }else if (obj instanceof BillableDao){
+                    billableDao = (BillableDao) obj;
                 }
             }
         }
@@ -581,7 +588,13 @@ public class AJAXBean extends AbstractBean implements
                 System.out.println("rowCount ::: "+rowCount);
                 result = paymentairticketdao.addRefundAirTicket(refundNo,rowCount);
             }
-        }  
+        } else if (INVOICE.equalsIgnoreCase(servletName)){
+            if("searchInvoice".equalsIgnoreCase(type)){
+                String searchRefNo = map.get("refNo").toString();
+                Billable bill = billableDao.getBillableBooking(searchRefNo);
+                result = getListInvoice(bill);
+            }
+        }
         return result;
     }
     
@@ -980,7 +993,32 @@ public class AJAXBean extends AbstractBean implements
         return data;
     }
     
-    
+    public String getListInvoice(Billable bill) {
+        String result = "";
+        result +=  bill.getBillTo() +","+ bill.getBillName() +"," + bill.getBillAddress()+"," + bill.getMAccterm().getId()
+                +","+bill.getMaster().getStaff().getId()+","+bill.getMaster().getStaff().getName() + ","+ bill.getMaster().getStaff().getUsername()+"||";
+        List<BillableDesc> billdeescList = bill.getBillableDescs();
+        
+        for (int i = 0; i < billdeescList.size(); i++) {
+            if(billdeescList.get(i).getCurrency() == null){
+                billdeescList.get(i).setCurrency("");
+            }
+            if(billdeescList.get(i).getDetail() == null){
+                billdeescList.get(i).setDetail("");
+            }
+            result += "<tr>"
+                    + "<td align=\"center\">" + (i+1) + "</td>"
+                    + "<td>" + billdeescList.get(i).getMBilltype().getName() + "</td>"
+                    + "<td>" +  billdeescList.get(i).getDetail() + "</td>"
+                    + "<td align=\"center\">" + billdeescList.get(i).getCost() + "</td>"
+                    + "<td align=\"center\">" + billdeescList.get(i).getPrice() + "</td>"
+                    + "<td align=\"center\">" + billdeescList.get(i).getCurrency() + "</td>"
+                    + "<td align=\"center\"><center><a href=\"\" onclick=\"addInvoiceDetail("+(i+1)+")\"><span class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                    + "</tr>";
+
+        }
+        return result;
+    }
     
     public Mail getSendMail() {
         return sendMail;

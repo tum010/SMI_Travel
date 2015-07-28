@@ -6,9 +6,6 @@
 
 package com.smi.travel.datalayer.dao;
 import com.smi.travel.datalayer.entity.Billable;
-import com.smi.travel.datalayer.entity.BillableDesc;
-import com.smi.travel.datalayer.entity.Master;
-import java.util.List;
 /**
  *
  * @author Surachai
@@ -18,5 +15,4 @@ public interface BillableDao {
     public int insertBillableBooking(Billable bill);
     public int updateBillableBooking(Billable bill);
     public int updateBillStatusBooking(String refno,Billable bill);
-    public Billable getBillableDetailFromRefno(String Refno);
 }
