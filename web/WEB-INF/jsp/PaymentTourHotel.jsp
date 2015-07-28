@@ -123,6 +123,14 @@
             </div>
         </div>
         <!--Row 2 -->
+        <c:set var="readonly" value="" />
+        <c:if test="${idRole  == 19}">
+            <c:set var="readonly" value="readonly=\"\"" />
+        </c:if>  
+        <c:set var="disabled" value="" />
+        <c:if test="${idRole  == 19}">
+            <c:set var="disabled" value="disabled=\"\"" />
+        </c:if>
         <div class="row" style="padding-left: 0px">
             <div class="col-xs-12 ">
                 <div class="col-xs-2 text-right" style="padding-left:0px;padding-right:0px;width:85px;">
@@ -131,7 +139,7 @@
                 <div class="col-md-2 form-group text-left" style="padding-left:28px">
                     <div class="col-sm-12">
                         <div class='input-group date' style="width:140px;">
-                            <input name="InputPayDate" id="InputPayDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['InputPayDate']}" />
+                            <input name="InputPayDate" id="InputPayDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['InputPayDate']}" ${readonly}/>
                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                     </div>
@@ -141,7 +149,7 @@
                 </div>
                 <div class="col-md-2 form-group text-left" style="padding-left:5px;padding-right:0px;">
                     <div class="col-sm-12">
-                        <select name="itemPvType" id="itemPvType" class="form-control">
+                        <select name="itemPvType" id="itemPvType" class="form-control" ${disabled}>
                             <option id="" value="">---------</option>  
                             <c:forEach var="PVType" items="${pvType_list}">
                                 <c:set var="select" value="" />
@@ -181,10 +189,19 @@
                 <div class="col-sm-12">
                     <div class="input-group" id="CodeValidate">
                         <input name="InputInvoiceSupId" id="InputInvoiceSupId" type="hidden" class="form-control" value="${requestScope['InputInvoiceSupId']}" />
-                        <input name="InputInvoiceSupCode" id="InputInvoiceSupCode" type="text" class="form-control" value="${requestScope['InputInvoiceSupCode']}" onkeypress="getInvoiceSup()" style="text-transform:uppercase"/>
-                        <span class="input-group-addon" data-toggle="modal" data-target="#SearchInvoiceSup">
-                            <span class="glyphicon-search glyphicon"></span>
-                        </span>    
+                        <input name="InputInvoiceSupCode" id="InputInvoiceSupCode" type="text" class="form-control" value="${requestScope['InputInvoiceSupCode']}" onkeypress="getInvoiceSup()" style="text-transform:uppercase" ${readonly}/>                       
+                        <c:choose>
+                            <c:when test="${(idRole  == 22) || (idRole == 1)}">       
+                                <span class="input-group-addon" data-toggle="modal" data-target="#SearchInvoiceSup">
+                                    <span class="glyphicon-search glyphicon"></span>
+                                </span>
+                            </c:when>
+                            <c:when test="${(idRole  == 19)}">
+                                <span class="input-group-addon" data-toggle="modal">
+                                    <span class="glyphicon-search glyphicon"></span>
+                                </span>
+                            </c:when>
+                        </c:choose>
                     </div>    
                 </div>   
             </div>
@@ -214,7 +231,7 @@
             </div>
             <div class="col-md-6 form-group text-left" style="padding-left:30px;padding-right:0px;width:520px;">
                 <div class="col-sm-12">
-                    <textarea rows="3" cols="255" class="form-control" id="Detail" name="Detail" maxlength="255">${requestScope['Detail']}</textarea>
+                    <textarea rows="3" cols="255" class="form-control" id="Detail" name="Detail" maxlength="255" ${readonly}>${requestScope['Detail']}</textarea>
                 </div>   
             </div>
             <div class="col-xs-2 text-right" style="padding-left:10px;padding-right:0px;width:155px;">
@@ -222,7 +239,7 @@
             </div>
             <div class="col-md-2 form-group text-left" style="padding-left:9px;width:190px;">
                 <div class="col-sm-12">
-                    <select class="form-control" id="itemPayment" name="itemPayment">
+                    <select class="form-control" id="itemPayment" name="itemPayment" ${disabled}>
                             <option id="" value="">---------</option>  
                             <c:forEach var="payment" items="${payment_list}">
                                 <c:set var="select" value="" />
@@ -238,7 +255,7 @@
                 <label class="control-label">Currency</lable>
             </div>    
             <div class="col-xs-1 form-group text-left" style="padding-left:25px;width:175px;">
-                <select class="form-control" name="InputCurrency" id="InputCurrency">
+                <select class="form-control" name="InputCurrency" id="InputCurrency" ${disabled}>
                     <option  value="">---------</option>
                     <c:forEach var="currency" items="${currency_list}" varStatus="status">
                         <c:set var="select" value="" />
@@ -916,6 +933,15 @@
                 }    
             }
             document.getElementById('InputGrandTotal').value = formatNumber(grandTotal);
+            $( ".numerical" ).on('input', function() { 
+                var value=$(this).val().replace(/[^0-9.,]*/g, '');
+                value=value.replace(/\.{2,}/g, '.');
+                value=value.replace(/\.,/g, ',');
+                value=value.replace(/\,\./g, ',');
+                value=value.replace(/\,{2,}/g, ',');
+                value=value.replace(/\.[0-9]+\./g, '.');
+                $(this).val(value)
+            });
         }
     }
     
