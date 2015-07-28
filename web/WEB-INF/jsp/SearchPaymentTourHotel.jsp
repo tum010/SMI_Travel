@@ -77,6 +77,7 @@
                         <button type="submit" id="ButtonSearch" name="ButtonSearch" onclick="" class="btn btn-primary btn-sm">Search</button>
                         <input type="hidden" name="action" id="action" value="search">
                         <input type="hidden" id="paymentID" name="paymentID" >
+                        <input type="hidden" id="InputPayNo" name="InputPayNo" >
                     </div>
                     <div class="col-xs-1 text-right" style="padding-left:15px;width:60px;">
                         <button type="submit" id="ButtonPrint" name="ButtonPrint" class="btn btn-default btn-sm">
@@ -99,7 +100,7 @@
                         </div>     
                 </div>
                 <div class="col-xs-1 text-left" style="width:475px;">
-                        <input name="InputInvoiceSupName" id="InputInvoiceSupName" type="text" class="form-control" value="${requestScope['InputInvoiceSupName']}" />           
+                    <input name="InputInvoiceSupName" id="InputInvoiceSupName" type="text" class="form-control" value="${requestScope['InputInvoiceSupName']}" readonly=""/>           
                 </div>               
             </div>            
         </form><!--End Search -->
@@ -147,7 +148,8 @@
                             <td align="center">${payment.payType}</td>
                             <td>${payment.invoiceSup}</td>
                             <td align="center">${payment.accNo}</td>
-                            <td align="right">${payment.total}</td>
+                            <td> <input id="total" name="total" maxlength ="15"  type="text" class="form-control numerical" value="${payment.total}" readonly=""> </td>
+<!--                            <td align="right">${payment.total}</td>-->
                             <td align="center">${payment.status}</td>
                             <td class="text-center">
                                 <span id="RefPaymentHotelEdit" name="RefPaymentHotelEdit" class="glyphicon glyphicon-edit editicon" onclick="location.href='PaymentTourHotel.smi?action=edit&InputPayNo=${payment.payNo}'"></span>
@@ -289,6 +291,17 @@
             },delay); 
 
         });
+        
+        $( ".numerical" ).on('input', function() { 
+            var value=$(this).val().replace(/[^0-9.,]*/g, '');
+            value=value.replace(/\.{2,}/g, '.');
+            value=value.replace(/\.,/g, ',');
+            value=value.replace(/\,\./g, ',');
+            value=value.replace(/\,{2,}/g, ',');
+            value=value.replace(/\.[0-9]+\./g, '.');
+            $(this).val(value)
+        });
+        
     });
     
     function setupInvSupValue(id,code,name,apcode){
