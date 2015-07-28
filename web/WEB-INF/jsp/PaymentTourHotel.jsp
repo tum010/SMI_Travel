@@ -94,7 +94,7 @@
                             <c:if test="${2 == requestScope['account']}">
                                 <c:set var="check2" value="checked" />
                             </c:if>  
-                            <input type="radio" name="account"  id="account2" value="2" ${check2}/>&nbsp;account(2)
+                            <input type="radio" name="account"  id="account2" value="2" ${check2}/>&nbsp;temp
                         </div>
                     </div>
                     </c:when>
@@ -115,7 +115,7 @@
                             <c:if test="${2 == requestScope['account']}">
                                 <c:set var="check2" value="checked" />
                             </c:if>  
-                            <input type="radio" name="account"  id="account2" value="2" ${check2}/>&nbsp;account(2)
+                            <input type="radio" name="account"  id="account2" value="2" ${check2}/>&nbsp;temp
                         </div>
                     </div>
                     </c:when>     
@@ -350,6 +350,8 @@
             </div>     
         </div>
    
+                
+                
         <c:choose>
             <c:when test="${(idRole  == 22) || (idRole == 1)}">        
             <!-- Table Role Checking-->
@@ -414,7 +416,7 @@
                                     <td class="hidden">
                                         <input class="form-control" type="text" id="gross${i.count}" name="gross${i.count}" value="${pl.gross}" readonly="">
                                     </td>
-                                    <td> <input style="width: ${Amount}" id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control numerical" onfocusout="CalculateGrandTotal('${pl.id}')" value="${pl.amount}"> </td>                               
+                                    <td> <input style="width: ${Amount};text-align:right;"  id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control numerical" onfocusout="CalculateGrandTotal('${pl.id}')" value="${pl.amount}"> </td>                               
                                     <td> <input style="width: ${Description}" id="description${i.count}" name="description${i.count}" maxlength ="255"  type="text" class="form-control" value="${pl.description}"> </td>
                                     <td> <input style="width: ${AC}" id="ac${i.count}" name="ac${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.accCode}" readonly=""> </td>
                                     <td class="text-center">
@@ -506,12 +508,12 @@
                                         <input class="form-control" type="text" id="vat${i.count}" name="vat${i.count}" value="${pl.vat}" readonly="">
                                     </td>
                                     <td>
-                                        <input class="form-control" type="text" id="gross${i.count}" name="gross${i.count}" value="${pl.gross}" readonly="">
+                                        <input class="form-control" style="text-align:right;"  type="text" id="gross${i.count}" name="gross${i.count}" value="${pl.gross}" readonly="">
                                     </td>
                                     <td class="hidden">
                                         <input class="form-control" type="text" id="amountCal${i.count}" name="amountCal$${i.count}" value="${pl.amount}">
                                     </td>
-                                    <td> <input style="width: ${Amount}" id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control numerical" value="${pl.amount}" readonly=""> </td>                               
+                                    <td> <input style="width: ${Amount};text-align:right;" id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control numerical" value="${pl.amount}" readonly=""> </td>                               
                                     <td>${pl.description}</td>
                                     <td class="hidden"> <input style="width: ${Description}" id="description${i.count}" name="description${i.count}" maxlength ="255"  type="text" class="form-control" value="${pl.description}"> </td>                                   
                                     <td align="center">${pl.accCode}</td>
@@ -557,27 +559,27 @@
                                 <label class="control-label">Grand Total</lable>
                             </div>
                             <div class="col-md-2 form-group text-left">
-                                <input name="InputGrandTotal" id="InputGrandTotal" type="text" class="form-control " value="" readonly=""/>            
+                                <input name="InputGrandTotal" style="text-align: right;" id="InputGrandTotal" type="text" class="form-control " value="" readonly=""/>            
                             </div>         
                         </c:when>
                         <c:when test="${idRole  == 19}">
                             <div class="col-xs-2 text-right">
                                 <label class="control-label">Vat Total</lable>
                             </div>
-                            <div class="col-md-2 form-group text-left">
-                                <input name="InputVatTotal" id="InputVatTotal" type="text" class="form-control " value="" readonly=""/>            
+                            <div class="col-md-2 form-group ">
+                                <input name="InputVatTotal" style="text-align: right;" id="InputVatTotal" type="text" class="form-control " value="" readonly=""/>            
                             </div>
                             <div class="col-xs-2 text-right">
-                                <label class="control-label">Gross Total</lable>
+                                <label class="control-label" >Gross Total</lable>
                             </div>
                             <div class="col-md-2 form-group text-left">
-                                <input name="InputGrossTotal" id="InputGrossTotal" type="text" class="form-control " value="" readonly=""/>            
+                                <input name="InputGrossTotal" style="text-align: right;"  id="InputGrossTotal" type="text" class="form-control " value="" readonly=""/>            
                             </div>
                             <div class="col-xs-9 text-right">
                                 <label class="control-label">Grand Total</lable>
                             </div>
                             <div class="col-md-2 form-group text-left">
-                                <input name="InputGrandTotal" id="InputGrandTotal" type="text" class="form-control " value="" readonly=""/>            
+                                <input name="InputGrandTotal" style="text-align: right;"  id="InputGrandTotal" type="text" class="form-control " value="" readonly=""/>            
                             </div>  
                         </c:when>
                     </c:choose>                                 
@@ -801,6 +803,8 @@
    
         $(".money").mask('0000000000', {reverse: true});
         
+        
+        
         $( ".numerical" ).on('input', function() { 
             var value=$(this).val().replace(/[^0-9.,]*/g, '');
             value=value.replace(/\.{2,}/g, '.');
@@ -978,7 +982,7 @@
                 '<input type="radio" name="type' + row + '" id="typeT' + row + '" value="T"> T&nbsp;' +
                 '<input type="radio" name="type' + row + '" id="typeC' +row + '" value="C" > C' +
                 '</td>' +
-                '<td><input maxlength ="15" class="form-control numerical" id="amount' + row + '" name="amount' + row + '" type="text" onfocusout="CalculateGrandTotal(\'\')"></td>' +
+                '<td><input maxlength ="15" class="form-control numerical"  style="text-align:right;" id="amount' + row + '" name="amount' + row + '"  align="right" type="text" onfocusout="CalculateGrandTotal(\'\')"></td>' +
                 '<td><input class="form-control" maxlength="255" style="width: ${DescriptionSize}" id="description' + row + '" name="description' + row + '" rows="2" ></td>' +
                 '<td><input id="ac' + row + '" name="ac' + row + '"   type="text" class="form-control" readonly=""></td>' +
                 '<td class="text-center">' +
@@ -1088,14 +1092,12 @@
                 type: 'get',
                 data: {ProductDetail: id},
                 success: function () {
-
                     $("#select-product" + cCount).parent().parent().remove();
                     var rowAll = $("#PaymentHotelTable tr").length;
                     if (rowAll <= 1) {
                         $("#tr_ProductDetailAddRow").removeClass("hide");
                         $("#tr_ProductDetailAddRow").addClass("show");
                     }
-
                 },
                 error: function () {
                     console.log("error");
