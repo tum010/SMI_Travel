@@ -148,8 +148,10 @@
                     <label class="control-label">PV Type</lable>
                 </div>
                 <div class="col-md-2 form-group text-left" style="padding-left:5px;padding-right:0px;">
+                <c:choose>
+                    <c:when test="${(idRole  == 22) || (idRole == 1)}">    
                     <div class="col-sm-12">
-                        <select name="itemPvType" id="itemPvType" class="form-control" ${disabled}>
+                        <select name="itemPvType" id="itemPvType" class="form-control">
                             <option id="" value="">---------</option>  
                             <c:forEach var="PVType" items="${pvType_list}">
                                 <c:set var="select" value="" />
@@ -160,6 +162,34 @@
                             </c:forEach>
                         </select>
                     </div>
+                    </c:when>
+                    <c:when test="${(idRole  == 19)}">
+                    <div class="col-sm-12">
+                        <select name="itemPvTypeShow" id="itemPvTypeShow" class="form-control" disabled="">
+                            <option id="" value="">---------</option>  
+                            <c:forEach var="PVType" items="${pvType_list}">
+                                <c:set var="select" value="" />
+                                <c:if test="${PVType.id == requestScope['itemPvType']}">
+                                    <c:set var="select" value="selected" />
+                                </c:if>
+                                <option value="<c:out value="${PVType.id}" />" ${select}><c:out value="${PVType.name}" /></option>                                         
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <div class="hidden">
+                        <select name="itemPvType" id="itemPvType" class="form-control">
+                            <option id="" value="">---------</option>  
+                            <c:forEach var="PVType" items="${pvType_list}">
+                                <c:set var="select" value="" />
+                                <c:if test="${PVType.id == requestScope['itemPvType']}">
+                                    <c:set var="select" value="selected" />
+                                </c:if>
+                                <option value="<c:out value="${PVType.id}" />" ${select}><c:out value="${PVType.name}" /></option>                                         
+                            </c:forEach>
+                        </select>
+                    </div>
+                    </c:when>
+                </c:choose>    
                 </div>
                 <div class="col-xs-2 text-right" style="padding-left:5px;padding-right: 10px;">
                     <label class="control-label">Status<font style="color: red">*</font></lable>
@@ -239,7 +269,9 @@
             </div>
             <div class="col-md-2 form-group text-left" style="padding-left:9px;width:190px;">
                 <div class="col-sm-12">
-                    <select class="form-control" id="itemPayment" name="itemPayment" ${disabled}>
+                <c:choose>
+                    <c:when test="${(idRole  == 22) || (idRole == 1)}">    
+                    <select class="form-control" id="itemPayment" name="itemPayment">
                             <option id="" value="">---------</option>  
                             <c:forEach var="payment" items="${payment_list}">
                                 <c:set var="select" value="" />
@@ -248,14 +280,40 @@
                                 </c:if>
                                 <option value="<c:out value="${payment.id}" />" ${select}><c:out value="${payment.name}" /></option>                                         
                             </c:forEach>
-                    </select>         
+                    </select>
+                    </c:when>
+                    <c:when test="${(idRole  == 19)}">
+                    <select class="form-control" id="itemPaymentShow" name="itemPaymentShow" disabled="">
+                            <option id="" value="">---------</option>  
+                            <c:forEach var="payment" items="${payment_list}">
+                                <c:set var="select" value="" />
+                                <c:if test="${payment.id == requestScope['itemPayment']}">
+                                    <c:set var="select" value="selected" />
+                                </c:if>
+                                <option value="<c:out value="${payment.id}" />" ${select}><c:out value="${payment.name}" /></option>                                         
+                            </c:forEach>
+                    </select>    
+                    <select class="form-control hidden" id="itemPayment" name="itemPayment">
+                            <option id="" value="">---------</option>  
+                            <c:forEach var="payment" items="${payment_list}">
+                                <c:set var="select" value="" />
+                                <c:if test="${payment.id == requestScope['itemPayment']}">
+                                    <c:set var="select" value="selected" />
+                                </c:if>
+                                <option value="<c:out value="${payment.id}" />" ${select}><c:out value="${payment.name}" /></option>                                         
+                            </c:forEach>
+                    </select>
+                    </c:when>
+                </c:choose>    
                 </div>
             </div>
             <div class="col-xs-1 text-right" style="padding-left:10px;padding-right:0px;width:155px;">
                 <label class="control-label">Currency</lable>
             </div>    
             <div class="col-xs-1 form-group text-left" style="padding-left:25px;width:175px;">
-                <select class="form-control" name="InputCurrency" id="InputCurrency" ${disabled}>
+            <c:choose>
+                <c:when test="${(idRole  == 22) || (idRole == 1)}">
+                <select class="form-control" name="InputCurrency" id="InputCurrency">
                     <option  value="">---------</option>
                     <c:forEach var="currency" items="${currency_list}" varStatus="status">
                         <c:set var="select" value="" />
@@ -265,6 +323,30 @@
                         <option value="<c:out value="${currency.code}" />" ${select}><c:out value="${currency.code}" /></option>       
                     </c:forEach>
                 </select>
+                </c:when>
+                <c:when test="${(idRole  == 19)}">
+                <select class="form-control" name="InputCurrencyShow" id="InputCurrencyShow" disabled="">
+                    <option  value="">---------</option>
+                    <c:forEach var="currency" items="${currency_list}" varStatus="status">
+                        <c:set var="select" value="" />
+                        <c:if test="${currency.code == requestScope['InputCurrency']}">
+                            <c:set var="select" value="selected" />
+                        </c:if>
+                        <option value="<c:out value="${currency.code}" />" ${select}><c:out value="${currency.code}" /></option>       
+                    </c:forEach>
+                </select>    
+                <select class="form-control hidden" name="InputCurrency" id="InputCurrency">
+                    <option  value="">---------</option>
+                    <c:forEach var="currency" items="${currency_list}" varStatus="status">
+                        <c:set var="select" value="" />
+                        <c:if test="${currency.code == requestScope['InputCurrency']}">
+                            <c:set var="select" value="selected" />
+                        </c:if>
+                        <option value="<c:out value="${currency.code}" />" ${select}><c:out value="${currency.code}" /></option>       
+                    </c:forEach>
+                </select>    
+                </c:when>
+            </c:choose>    
             </div>     
         </div>
    
@@ -375,7 +457,6 @@
                                 <th style="width: 11%">Amount</th>
                                 <th style="width: 16%">Description</th>
                                 <th style="width: 4%">A/C</th>
-                                <th style="width: 1%" class="hidden">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -435,7 +516,6 @@
                                     <td class="hidden"> <input style="width: ${Description}" id="description${i.count}" name="description${i.count}" maxlength ="255"  type="text" class="form-control" value="${pl.description}"> </td>                                   
                                     <td align="center">${pl.accCode}</td>
                                     <td class="hidden"> <input style="width: ${AC}" id="ac${i.count}" name="ac${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.accCode}" readonly=""> </td>
-                                    <td align="center" class="hidden">-</td>
                                 </tr>                       
                             </c:forEach> 
                         </tbody>
