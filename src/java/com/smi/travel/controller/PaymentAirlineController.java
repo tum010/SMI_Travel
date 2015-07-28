@@ -386,9 +386,10 @@ public class PaymentAirlineController extends SMITravelController {
             result = paymentAirTicketService.validateSavePaymentAir(paymentAirticket);
             System.out.println("result :::" +result);
             if (result == "success"){
-                request.setAttribute(PAYNO,result);
+                request.setAttribute(PAYNO,paymentAirticket.getPayNo());
                 request.setAttribute(SAVERESULT, "save successful");
             } else if (result == null || result == "fail") {
+                request.setAttribute(PAYNO,paymentAirticket.getPayNo());
                 request.setAttribute(SAVERESULT, "save unsuccessful");
             } else {
                 request.setAttribute(PAYNO,result);
