@@ -26,7 +26,7 @@ $(document).ready(function () {
     var count  = document.getElementById('counter');
     AddRow(count.value);
     
-    
+    // Product Table
     $("#productTable tr").on('click', function () {//winit
         $("#SearchProduct").modal('hide');
             var tour_id = $(this).find(".product-id").html();
@@ -36,8 +36,6 @@ $(document).ready(function () {
             $("#InputProduct").val(tour_code);
             $("#InputProductName").val(tour_name);
         });
-
-        // productTable
         var tourTable = $('#productTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
@@ -57,7 +55,6 @@ $(document).ready(function () {
                 $(this).addClass('row_selected');
             }
         });
-        // ON KEY INPUT AUTO SELECT PRODUCTCODE
         $(function () {
             var availableTags = [];
             $.each(productCode, function (key, value) {
@@ -90,10 +87,11 @@ $(document).ready(function () {
                         $("#InputProductId").val(value.id);
                         $("#InputProductName").val(value.name);
                     }
-                }); //end each productCode
-            }); // end InputproductCode keyup
-        }); // end AutoComplete productCode
+                }); 
+            }); 
+        }); 
     
+        // Staff Table
         var staffCode = [];       
         $("#StaffTable tr").on('click', function () {//winit
             $("#SearchStaff").modal('hide');
@@ -105,7 +103,6 @@ $(document).ready(function () {
             $("#InputStaffName").val(staff_name);
         });
 
-        // tourTable
         var staffTable = $('#StaffTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
@@ -125,7 +122,6 @@ $(document).ready(function () {
                 $(this).addClass('row_selected');
             }
         });
-        // ON KEY INPUT AUTO SELECT PRODUCTCODE
         $(function () {
             var availableTags = [];
             $.each(staff, function (key, value) {
@@ -154,16 +150,15 @@ $(document).ready(function () {
                         $("#InputStaffId").val(value.id);
                         $("#InputStaff").val(value.code);
                         $("#InputStaffName").val(value.name);
-//                        code = $("#InputStaff").val().toUpperCase();
                     }
                     if (value.code.toUpperCase() === code) {
                         $("#InputStaffId").val(value.id);
                         $("#InputStaff").val(value.code);
                         $("#InputStaffName").val(value.name);
                     }
-                }); //end each productCode
-            }); // end InputproductCode keyup
-        }); // end AutoComplete productCode
+                }); 
+            }); 
+        }); 
      
     $("#StockTable").on("keyup", function () {
         var rowAll = $("#StockTable tr").length;
@@ -172,7 +167,6 @@ $(document).ready(function () {
                 var colIndex = $(this).parent().children().index($(this));
                 var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
                 rowAll = $("#StockTable tr").length;
-//                alert("Goo : " + colIndex + " " + rowIndex +"Row All :  " + rowAll);
                 if (rowIndex == rowAll) {
                     console.log("rowAll : " + rowAll + " Row Index : " + rowIndex);
                     AddRow(rowAll);
