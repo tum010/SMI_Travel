@@ -35,6 +35,7 @@ public class SearchPaymentTourHotelController extends SMITravelController {
         String InputInvoiceSupCode = request.getParameter("InputInvoiceSupCode");
         String InputInvoiceSupName = request.getParameter("InputInvoiceSupName");
         String InputAPCode = request.getParameter("InputAPCode");
+        String InputPayNo = request.getParameter("InputPayNo");
                 
         List<PaymentWendytourView> paymentList = new ArrayList<PaymentWendytourView>();
         
@@ -43,6 +44,7 @@ public class SearchPaymentTourHotelController extends SMITravelController {
         } else if ("delete".equalsIgnoreCase(action)) {
             PaymentWendy paymentWendy = new PaymentWendy();
             paymentWendy.setId(paymentID);
+            paymentWendy.setPayNo(InputPayNo);
             String result = getPaymentTourHotelService().deletePaymentWendy(paymentWendy);
             if ("success".equals(result)) {
                 paymentList = getPaymentTourHotelService().getListPayment(InputFromDate, InputToDate, selectPvType, InputInvoiceSupCode);
