@@ -339,8 +339,8 @@
             </div>
             <div class="modal-body">
                 <script>
-                        staff = [];
-                    </script>
+                    staff = [];
+                </script>
                 <table class="display" id="StaffTable">
                     <thead class="datatable-header">
                         <tr>
