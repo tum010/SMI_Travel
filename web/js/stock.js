@@ -103,7 +103,6 @@ $(document).ready(function () {
             $("#InputStaffId").val(staff_id);
             $("#InputStaff").val(staff_code);
             $("#InputStaffName").val(staff_name);
-
         });
 
         // tourTable
@@ -378,7 +377,6 @@ function addItemList(){
     if(isEmpty === 0){
     //check length code 
     checklength(prefix.value,digit.value);
-//    alert("Is Check : " + isCheckLength);
             if(isCheckLength === 0){      
                 var st = start.value;
                 $("#StockTable tr:last").remove();
@@ -389,7 +387,6 @@ function addItemList(){
                         for (var i = 1 ; i <= number.value; i++){
                             // Concat prefix + start + digit
                             var code = zeroPad(start.value, digit.value);
-//                            alert("Prefix:"+prefix.value+":" );
                             if(prefix.value !== "" ){
                                 $("#StockTable tbody").append(
                                 '<tr>' +
@@ -405,7 +402,6 @@ function addItemList(){
                                 start.value++;
                                 count.value++; 
                             }else if(prefix.value === ""){
-//                                alert("Prefix !!!!" );
                                 $("#StockTable tbody").append(
                                 '<tr>' +
                                 '<td class="hidden"><input type="text"  id="stockDetailId' + count.value + '" name="stockDetailId' + count.value + '" value="" /></td>' +
@@ -427,7 +423,6 @@ function addItemList(){
                         
                 }else if(isCheckDuplicate !== 0){
                     $("#textAlertMoreOne").show();
-//                    alert("Duplicate Code in Table!!!");
                     $("#InputStart").focus();
                     AddRow(count.value);
                 }
@@ -448,10 +443,8 @@ function checklength(prefix,digit){
     
     code = prefix + "-" + text;
     len = code.length;
-//    alert("Length : "+len);
     if(len > 50){
         $('#checklengthCode').show();
-//        alert("Max length More 50");
         isCheckLength = 1;
     }else{
         $('#checklengthCode').hide();
@@ -460,9 +453,6 @@ function checklength(prefix,digit){
 }
 
 function deleteItemListRow(rowId,code){
-    // Click Action Delete
-//    console.log("Code : " + code + "Row Id : " +rowId);
-//    $("#idStockDelete").val(rowId);
     $("#delCodeStock").text(' Are you sure to delete Item code : ' + code +'?');
     resetNumberItemList();    
 
@@ -498,12 +488,7 @@ function resetNumberItemList(){
     var rows = document.getElementById("StockTable").getElementsByTagName("tr").length;
     var countRow = document.getElementById('StockTable').rows; 
     for (var i = 1 ; i <= rows; i++){ 
-//        alert("Row :"+row);
         var code = $("#codeItemList"+i).val();
-      //  alert(code);
-//        $("#StockTable").children().children()[i].children[1].innerHTML = i;
-    //    countRow[i].cells[1].innerHTML = i;
-     //   countRow[i].cells[6].innerHTML = "<a href='#'  class='remCF' id='ButtonRemove"+ i +"'  onclick=\"deleteItemListRow("+ i +",'"+ code +"')\"  data-toggle='modal' data-target='#delStockModal'><span id='Spanremove"+ i +"'  class='glyphicon glyphicon-remove deleteicon'></span></a>";
     }  
     
     var count =1;
@@ -539,8 +524,6 @@ function checkDuplicate(prefix,digit,start,number){
 }
 
 function checkEmptyValueBeforeAddItem(prefix,start,number,digit){
-//    if(prefix === ""){
-//        valueEmpty += "Prefix";
         if(start === ""){
             valueEmpty += "Start";
             if(number ===  ""){
@@ -575,44 +558,6 @@ function checkEmptyValueBeforeAddItem(prefix,start,number,digit){
                 }
             }
         }
-//        isEmpty = 1;
-//    }else {
-//        if(start === ""){
-//            valueEmpty += "Start";
-//            if(number ===  ""){
-//                valueEmpty += ",NumberOfItem";
-//                if(digit === ""){
-//                    isEmpty = 1;
-//                    valueEmpty += ",Digit";
-//                }
-//                isEmpty = 1;
-//            }else {
-//                if(digit === ""){
-//                    isEmpty = 1;
-//                    valueEmpty += ",Digit";
-//                }
-//                isEmpty = 1;
-//            }
-//            isEmpty = 1;
-//        }else{
-//            if(number ===  ""){
-//                valueEmpty += "NumberOfItem";
-//                if(digit === ""){
-//                    isEmpty = 1;
-//                    valueEmpty += ",Digit";
-//                }
-//                isEmpty = 1;
-//            }else {
-//                if(digit === ""){
-//                    isEmpty = 1;
-//                    valueEmpty += "Digit";
-//                }else{
-//                    isEmpty = 0;
-//                }
-//            }
-//        }
-//    }
-//    alert(isEmpty);
 }
 
 function checkFocusAddItem(stringEmpty){
@@ -621,7 +566,6 @@ function checkFocusAddItem(stringEmpty){
     array = array.concat(strx);
 
     for (i = 0; i < array.length; ++i) {
-//            alert(array[i]);
             $('#Input'+array[0]).focus();
             $('#'+array[i]+'Input').removeClass('has-success');
             $('#'+array[i]+'Input').addClass('has-error');  
