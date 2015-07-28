@@ -340,7 +340,7 @@ function AddRow(row) {
             '<td>NEW</td>' +
             '<td class="text-center"><a href="#" onclick="deleteItemListRow('+row+')"  data-toggle="modal" data-target="" class="remCF" id="ButtonRemove' + row + '"><span id="Spanremove' + row + '" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal" data-target="#delStockModal"></span></a></td>' +
             '</tr>'
-            );
+    );
     var tempCount = parseInt($("#counter").val()) + 1;
     var count = document.getElementById('counterTable');
     count.value = row;
@@ -463,11 +463,11 @@ function checklength(prefix,digit){
 
 function deleteItemListRow(rowId,code){
     // Click Action Delete
-    console.log("Code : " + code + "Row Id : " +rowId);
-    $("#idStockDelete").val(rowId);
+//    console.log("Code : " + code + "Row Id : " +rowId);
+//    $("#idStockDelete").val(rowId);
     $("#delCodeStock").text(' Are you sure to delete Item code : ' + code +'?');
-    
-    resetNumberItemList();
+    resetNumberItemList();    
+
 }
 
 function deleteStock(){
