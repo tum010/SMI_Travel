@@ -416,7 +416,7 @@
                                     <td class="hidden">
                                         <input class="form-control" type="text" id="gross${i.count}" name="gross${i.count}" value="${pl.gross}" readonly="">
                                     </td>
-                                    <td> <input style="width: ${Amount};text-align:right;"  id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control numerical" onfocusout="CalculateGrandTotal('${pl.id}')" value="${pl.amount}"> </td>                               
+                                    <td> <input style="width: ${Amount};text-align:right;"  id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control numerical" onfocusout="CalculateGrandTotal('${pl.id}')" onkeyup="insertCommas(this)" value="${pl.amount}"> </td>                               
                                     <td> <input style="width: ${Description}" id="description${i.count}" name="description${i.count}" maxlength ="255"  type="text" class="form-control" value="${pl.description}"> </td>
                                     <td> <input style="width: ${AC}" id="ac${i.count}" name="ac${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.accCode}" readonly=""> </td>
                                     <td class="text-center">
@@ -1065,6 +1065,26 @@
     
     function formatNumber(num) {
         return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+    }
+    
+    function insertCommas(nField){
+
+        if (/^0/.test(nField.value)){
+            nField.value = nField.value.substring(0,1);
+        }
+        if (Number(nField.value.replace(/,/g,""))){
+            var tmp = nField.value.replace(/,/g,"");
+            tmp = tmp.toString().split('').reverse().join('').replace(/(\d{3})/g,'$1,').split('').reverse().join('').replace(/^,/,'');
+            if (/\./g.test(tmp)){
+                tmp = tmp.split(".");
+                tmp[1] = tmp[1].replace(/\,/g,"").replace(/ /,"");
+                nField.value = tmp[0]+"."+tmp[1]
+            } else {
+                nField.value = tmp.replace(/ /,"");
+            } 
+        } else {
+            nField.value = nField.value.replace(/[^\d\,\.]/g,"").replace(/ /,"");
+        }
     }
      
     function deletelist(id,Ccount) {
