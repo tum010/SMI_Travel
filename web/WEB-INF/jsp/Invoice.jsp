@@ -114,7 +114,7 @@
                     </div>
                 </div>                                      
                 <div class="col-xs-12 form-group"></div>   
-                    <!--Search-->  
+                    <input type="text"  class="form-control" id="InvoiceId" name="InvoiceId"  value="" >
                     <div class="col-xs-12 ">
                         <div class="col-xs-1 text-right">
                             <label class="control-label" for="">INV no</lable>
@@ -128,8 +128,7 @@
                         <div class="col-md-2 form-group">
                             <div class='input-group date' id='InputDatePicker'>
                             <c:if test='${dayTourOperation.tourDate != null}'>
-                                <input id="InputInvDate" name="InputInvDate"  type="text" 
-                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                <input id="InputInvDate" name="InputInvDate"  type="text"   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 
                             </c:if>
@@ -263,18 +262,19 @@
                                         <thead class="datatable-header">
                                             <tr>
                                                 <th class="hidden">Detail Id</th>
-                                                <th style="width:8%;">Product</th>
-                                                <th style="width:15%;">Description</th>
-                                                <th style="width: 10%">Cost</th>
-                                                <th style="width: 10%">Cur</th>
-                                                <th style="width: 10%">Cost Local</th>
-                                                <th style="width: 8%">In vat</th> 
-                                                <th style="width: 5%">Vat</th> 
-                                                <th style="width: 10%">Gross</th>
-                                                <th style="width: 10%">Amount</th>
-                                                <th style="width: 10%">Cur</th>
-                                                <th style="width: 10%">Amount Local</th>
-                                                <th style="width: 5%">Action</th>    
+                                                <th style="width:8%;" align="center">Product</th>
+                                                <th style="width:15%;" align="center">Description</th>
+                                                <th style="width: 10%" align="center">Cost</th>
+                                                <th style="width: 10%" align="center">Cur</th>
+                                                <th style="width: 10%" align="center">Cost Local</th>
+                                                <th style="width: 7%" onclick="checkVatInvoiceAll()" align="center"><u>Is vat</u></th> 
+                                                <th style="width: 5%" align="center">Vat</th>
+                                                <th class="hidden" align="center">Vat Temp</th>
+                                                <th style="width: 10%" align="center">Gross</th>
+                                                <th style="width: 10%" align="center">Amount</th>
+                                                <th style="width: 10%" align="center">Cur</th>
+                                                <th style="width: 10%" align="center">Amount Local</th>
+                                                <th style="width: 5%" align="center">Action</th>    
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -345,21 +345,23 @@
                                 <div class="panel-body">
                                     <div class="col-xs-12 ">
                                         <div class="col-md-2 text-right ">
-                                            <button type="button" onclick="" class="btn btn-default">
-                                                <span id="SpanPrintPackage" class="glyphicon glyphicon-print"></span> Print Package
-                                            </button>
+                                            <select id="SelectTypePrint" name="SelectTypePrint" class="form-control">
+                                                <option value="Invoice">Invoice</option>
+                                                <option value="InvoiceEmail">Invoice Email</option>
+                                                <option value="Package">Package</option>
+                                            </select>          
                                         </div>
-                                        <div class="col-md-2 text-left " style="padding-left: 0px">
+                                        <div class="col-md-1 text-left " style="padding-left: 0px">
                                             <button type="button" onclick="printInvoiceNew('')" class="btn btn-default">
-                                                <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Print Invoice New
+                                                <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Print
                                             </button>
                                         </div>
-                                        <div class="col-md-4 text-right "></div>
-                                        <div class="col-md-1 text-right ">
-                                            <button type="button" onclick="printInvoice('');" class="btn btn-default">
-                                                <span id="SpanPrint" class="glyphicon glyphicon-print"></span> Print 
+                                        <div class="col-md-5 text-left ">
+                                            <button type="button" onclick="" class="btn btn-default">
+                                                <span id="SpanPrint" class="glyphicon glyphicon-user"></span> Customer Invoice 
                                             </button>
                                         </div>
+                                        <div class="col-md-1 text-right "></div>
                                         <div class="col-md-1 text-right ">
                                             <button type="button" class="btn btn-primary hidden" onclick="EnableVoid();" data-toggle="modal" data-target="#EnableVoid">
                                                 <span id="SpanEnableVoid" class="glyphicon glyphicon-ok" ></span> Void
@@ -374,7 +376,7 @@
                                             </button>
                                         </div>
                                         <div class="col-md-1 text-right ">
-                                            <button type="button" onclick="" class="btn btn-success">
+                                            <button type="button" onclick="clearScreenInvoice()" class="btn btn-success"  >
                                                 <span id="SpanNew" class="fa fa-plus-circle"></span> New 
                                             </button>
                                         </div>
@@ -395,10 +397,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title"  id="Titlemodel">Finance & Cashier - Invoice</h4>
+                <h4 class="modal-title"  id="Titlemodel">Disable Void Invoice</h4>
             </div>
             <div class="modal-body" id="disableVoidModal">
-                
+                Are you confirm to void invoice ...........?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" onclick='window.top.location.href="Invoice.smi?type=${param.type}&action=edit"'>Delete</button>               
