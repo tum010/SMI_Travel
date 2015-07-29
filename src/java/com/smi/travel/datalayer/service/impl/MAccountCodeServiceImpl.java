@@ -20,5 +20,14 @@ public class MAccountCodeServiceImpl implements MAccountCodeService {
 	public List<AccountCode> search(String accCode, String accType) {
 		return mAccountCodeDao.search(accCode, accType);
 	}
+	
+	public int save(AccountCode accountCode){
+		return mAccountCodeDao.save(accountCode);
+	}
+
+	@Override
+	public int update(AccountCode accountCode) {
+		return mAccountCodeDao.update(accountCode);
+	}
 
 }

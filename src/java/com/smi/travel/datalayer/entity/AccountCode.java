@@ -16,6 +16,11 @@ public class AccountCode {
 
     public AccountCode() {
     }
+    
+    public AccountCode(String id,String accCode, String detail, String accType) {
+        this(accCode,detail,accType);
+    	this.id=id;
+     }
 
     public AccountCode(String accCode, String detail, String accType) {
        this.accCode = accCode;

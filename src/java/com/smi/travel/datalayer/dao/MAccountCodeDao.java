@@ -7,5 +7,7 @@ import com.smi.travel.datalayer.entity.AccountCode;
 public interface MAccountCodeDao {
 	
 	public List<AccountCode> search(String accCode,String accType);
+	public int save(AccountCode accountcode);
+	public int update(AccountCode accountcode);
 
 }
