@@ -192,35 +192,35 @@
                             <thead>
                                 <tr class="datatable-header" >
                                     <th style="width:5%;">Type</th>
-                                    <th style="width:7%;">Buy</th>
-                                    <th style="width:7%;">Airline</th>
-                                    <th style="width:10%;">Ticket No</th>
-                                    <th style="width:10%;">Issue Date</th>
-                                    <th style="width:10%;">Inv No</th>
+                                    <th style="width:5%;">Buy</th>
+                                    <th style="width:5%;">Airline</th>
+                                    <th style="width:15%;">Ticket No</th>
+                                    <th style="width:15%;">Issue Date</th>
+                                    <th style="width:15%;">Inv No</th>
                                     <th style="width:10%;">Department</th>
-                                    <th style="width:7%;">Fare</th>
-                                    <th style="width:7%;">Tax</th>
-                                    <th style="width:7%;">T Com</th>
-                                    <th style="width:7%;">A Com</th>
-                                    <th style="width:7%;">Diff Vat</th>
+                                    <th style="width:10%;">Fare</th>
+                                    <th style="width:10%;">Tax</th>
+                                    <th style="width:10%;">T Com</th>
+                                    <th style="width:10%;">A Com</th>
+                                    <th style="width:10%;">Diff Vat</th>
                                     <th style="width:10%;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="table" items="${dataList}" varStatus="dataStatus">
                                     <tr>
-                                        <td align="center"> <c:out value="${table.type}" /></td>
-                                        <td align="center"> <c:out value="${table.buy}" /></td>
-                                        <td align="center"> <c:out value="${table.airline}" /></td>
-                                        <td align="center"> <c:out value="${table.ticketNo}" /></td>
-                                        <td align="center"> <c:out value="${table.issueDate}" /></td>
-                                        <td align="center"> <c:out value="${table.invoiceNo}" /></td>
-                                        <td align="center"> <c:out value="${table.department}" /></td>
-                                        <td align="center"> <c:out value="${table.fare}" /></td>
-                                        <td align="center"> <c:out value="${table.tax}" /></td>
-                                        <td align="center"> <c:out value="${table.ticketCommission}" /></td>
-                                        <td align="center"> <c:out value="${table.agentCommission}" /></td>
-                                        <td align="center"> <c:out value="${table.diffVat}" /></td>
+                                        <td align="center">${table.type}</td>
+                                        <td align="center">${table.buy}</td>
+                                        <td align="center">${table.airline}</td>
+                                        <td align="center">${table.ticketNo}</td>
+                                        <td align="center">${table.issueDate}</td>
+                                        <td align="center">${table.invoiceNo}</td>
+                                        <td align="center">${table.department}</td>
+                                        <td class="money">${table.fare}</td>
+                                        <td class="money">${table.tax}</td>
+                                        <td class="money">${table.ticketCommission}</td>
+                                        <td class="money">${table.agentCommission}</td>
+                                        <td align="right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.diffVat}" /></td>
                                         <td> 
                                             <center> 
                                             <a  href="AddTicketFare.smi?ticketId=${table.id}&action=edit">
@@ -301,12 +301,25 @@
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
         $('.date').datetimepicker();
+        
+        $(".money").mask('000,000,000.00', {reverse: true});
+        
         var table = $('#TicketFareList').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
             "bFilter": false
         });
-
+        
+        $( ".numerical" ).on('input', function() { 
+            var value=$(this).val().replace(/[^0-9.,]*/g, '');
+            value=value.replace(/\.{2,}/g, '.');
+            value=value.replace(/\.,/g, ',');
+            value=value.replace(/\,\./g, ',');
+            value=value.replace(/\,{2,}/g, ',');
+            value=value.replace(/\.[0-9]+\./g, '.');
+            $(this).val(value)
+        });
+        
         $('#TicketFareList tbody').on('click', 'tr', function() {
             if ($(this).hasClass('row_selected')) {
                 $(this).removeClass('row_selected');
@@ -320,9 +333,9 @@
         });
         
         $('.date').datetimepicker();
-    
-    });
 
+    });
+    
 function searchAction() {
     var action = document.getElementById('action');
     action.value = 'search';

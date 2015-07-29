@@ -225,7 +225,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="ticketFare" name="ticketFare" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketFare}">
+                                    <input id="ticketFare" name="ticketFare" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketFare}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
@@ -233,7 +233,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="ticketTax" name="ticketTax" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketTax}">
+                                    <input id="ticketTax" name="ticketTax" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketTax}">
                                 </div>
                             </div>
                         </div>
@@ -244,7 +244,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="ticketIns" name="ticketIns" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketIns}">
+                                    <input id="ticketIns" name="ticketIns" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketIns}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -252,7 +252,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="ticketCommission" name="ticketCommission" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketCommission}">
+                                    <input id="ticketCommission" name="ticketCommission" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketCommission}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
@@ -260,7 +260,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="agentCommission" name="agentCommission" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.agentCommission}">
+                                    <input id="agentCommission" name="agentCommission" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.agentCommission}">
                                 </div>
                             </div>
                         </div>
@@ -270,7 +270,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">
-                                    <input id="invoiceAmount" name="invoiceAmount" type="text" class="form-control money" maxlength="10" value="" readonly="">
+                                    <input id="invoiceAmount" name="invoiceAmount" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" value="" readonly="">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -278,7 +278,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="salePrice" name="salePrice" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.salePrice}">
+                                    <input id="salePrice" name="salePrice" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.salePrice}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
@@ -286,7 +286,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="diffVat" name="diffVat" type="text" class="form-control money" onkeypress="return isNumberKey(event)" value="${ticketFare.diffVat}">
+                                    <input id="diffVat" name="diffVat" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" onkeypress="return isNumberKey(event)" value="${ticketFare.diffVat}">
                                 </div>
                             </div>
 
@@ -335,7 +335,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class='input-group date'>
-                                    <input id="overCommission" name="overCommission" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.overCommission}">
+                                    <input id="overCommission" name="overCommission" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.overCommission}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -343,7 +343,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="addPay" name="addPay" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.addPay}">
+                                    <input id="addPay" name="addPay" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.addPay}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
@@ -351,7 +351,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="agentComPay" name="agentComPay" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.agentComPay}">
+                                    <input id="agentComPay" name="agentComPay" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.agentComPay}">
                                 </div>
                             </div>
                         </div>
@@ -393,7 +393,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class='input-group date'>
-                                    <input id="litterCommission" name="litterCommission" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.litterCommission}">
+                                    <input id="litterCommission" name="litterCommission" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.litterCommission}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -401,7 +401,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="decPay" name="decPay" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.decPay}">
+                                    <input id="decPay" name="decPay" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.decPay}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
@@ -409,7 +409,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="agentComReceive" name="agentComReceive" type="text" class="form-control money" maxlength="10" onkeypress="return isNumberKey(event)" value="${ticketFare.agentComReceive}">
+                                    <input id="agentComReceive" name="agentComReceive" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.agentComReceive}">
                                 </div>
                             </div>
                         </div>
@@ -658,6 +658,16 @@
             }
         });
 
+        $( ".numerical" ).on('input', function() { 
+            var value=$(this).val().replace(/[^0-9.,]*/g, '');
+            value=value.replace(/\.{2,}/g, '.');
+            value=value.replace(/\.,/g, ',');
+            value=value.replace(/\,\./g, ',');
+            value=value.replace(/\,{2,}/g, ',');
+            value=value.replace(/\.[0-9]+\./g, '.');
+            $(this).val(value)
+        });
+        
         //on modal List Ticket
         $("#filtercus").keyup(function (event) {
             if (event.keyCode === 13) {
@@ -725,9 +735,101 @@
         $("#ticketIns").focusout(function(){
             calculateVat();
         });
- 
+        setFormatCurrency();
    });
-
+   
+function setFormatCurrency(){    
+    var ticketFare = replaceAll(",","",$('#ticketFare').val()); 
+    if (ticketFare == ""){
+        ticketFare = 0;
+    }
+    ticketFare = parseFloat(ticketFare); 
+    document.getElementById("ticketFare").value = formatNumber(ticketFare);
+    
+    var ticketTax = replaceAll(",","",$('#ticketTax').val()); 
+    if (ticketTax == ""){
+        ticketTax = 0;
+    }
+    ticketTax = parseFloat(ticketTax); 
+    document.getElementById("ticketTax").value = formatNumber(ticketTax);
+    
+    var ticketIns = replaceAll(",","",$('#ticketIns').val()); 
+    if (ticketIns == ""){
+        ticketIns = 0;
+    }
+    ticketIns = parseFloat(ticketIns); 
+    document.getElementById("ticketIns").value = formatNumber(ticketIns);    
+    
+    var ticketCommission = replaceAll(",","",$('#ticketCommission').val()); 
+    if (ticketCommission == ""){
+        ticketCommission = 0;
+    }
+    ticketCommission = parseFloat(ticketCommission); 
+    document.getElementById("ticketCommission").value = formatNumber(ticketCommission);
+    
+    var agentCommission = replaceAll(",","",$('#agentCommission').val()); 
+    if (agentCommission == ""){
+        agentCommission = 0;
+    }
+    agentCommission = parseFloat(agentCommission); 
+    document.getElementById("agentCommission").value = formatNumber(agentCommission);
+    
+    var salePrice = replaceAll(",","",$('#salePrice').val()); 
+    if (salePrice == ""){
+        salePrice = 0;
+    }
+    salePrice = parseFloat(salePrice); 
+    document.getElementById("salePrice").value = formatNumber(salePrice);    
+    
+    var diffVat = replaceAll(",","",$('#diffVat').val()); 
+    if (diffVat == ""){
+        diffVat = 0;
+    }
+    diffVat = parseFloat(diffVat); 
+    document.getElementById("diffVat").value = formatNumber(diffVat);
+    
+    var overCommission = replaceAll(",","",$('#overCommission').val()); 
+    if (overCommission == ""){
+        overCommission = 0;
+    }
+    overCommission = parseFloat(overCommission); 
+    document.getElementById("overCommission").value = formatNumber(overCommission);    
+    
+    var litterCommission = replaceAll(",","",$('#litterCommission').val()); 
+    if (litterCommission == ""){
+        litterCommission = 0;
+    }
+    litterCommission = parseFloat(litterCommission); 
+    document.getElementById("litterCommission").value = formatNumber(litterCommission);
+    
+    var decPay = replaceAll(",","",$('#decPay').val()); 
+    if (decPay == ""){
+        decPay = 0;
+    }
+    decPay = parseFloat(decPay); 
+    document.getElementById("decPay").value = formatNumber(decPay);    
+    
+    var addPay = replaceAll(",","",$('#addPay').val()); 
+    if (addPay == ""){
+        addPay = 0;
+    }
+    addPay = parseFloat(addPay); 
+    document.getElementById("addPay").value = formatNumber(addPay);    
+    
+    var agentComPay = replaceAll(",","",$('#agentComPay').val()); 
+    if (agentComPay == ""){
+        agentComPay = 0;
+    }
+    agentComPay = parseFloat(agentComPay); 
+    document.getElementById("agentComPay").value = formatNumber(agentComPay);
+    
+    var agentComReceive = replaceAll(",","",$('#agentComReceive').val()); 
+    if (agentComReceive == ""){
+        agentComReceive = 0;
+    }
+    agentComReceive = parseFloat(agentComReceive); 
+    document.getElementById("agentComReceive").value = formatNumber(agentComReceive);    
+}
 function isNumberKey(evt){
     var charCode = (evt.which) ? evt.which : evt.keyCode;
 
@@ -919,4 +1021,22 @@ function formatNumber(num) {
     return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
 }
 
+function insertCommas(nField){
+    if (/^0/.test(nField.value)){
+        nField.value = nField.value.substring(0,1);
+    }
+    if (Number(nField.value.replace(/,/g,""))){
+        var tmp = nField.value.replace(/,/g,"");
+        tmp = tmp.toString().split('').reverse().join('').replace(/(\d{3})/g,'$1,').split('').reverse().join('').replace(/^,/,'');
+        if (/\./g.test(tmp)){
+            tmp = tmp.split(".");
+            tmp[1] = tmp[1].replace(/\,/g,"").replace(/ /,"");
+            nField.value = tmp[0]+"."+tmp[1]
+        }else{
+            nField.value = tmp.replace(/ /,"");
+        } 
+    }else{
+        nField.value = nField.value.replace(/[^\d\,\.]/g,"").replace(/ /,"");
+    }
+}
 </script>

@@ -254,11 +254,11 @@
                                         <td align="center"> <c:out value="${table.referenceNo}" /></td>
                                         <td align="left"> <c:out value="${table.ticketNo}" /></td>
                                         <td align="left"> <c:out value="${table.department}" /></td>
-                                        <td class="form-control money">${table.fare}</td>
-                                        <td class="form-control money">${table.tax}</td>
-                                        <td class="form-control money">${table.ticketIns}</td>
-                                        <td class="form-control money">${table.ticketCommission}</td>
-                                        <td class="form-control money">${table.salePrice}</td>
+                                        <td class="money">${table.fare}</td>
+                                        <td class="money">${table.tax}</td>
+                                        <td class="money">${table.ticketIns}</td>
+                                        <td class="money">${table.ticketCommission}</td>
+                                        <td class="money">${table.salePrice}</td>
                                         <td> 
                                             <center> 
                                                 <a class="remCF"><span id="SpanRemove${dataStatus.count}" onclick="deleteTicket('${table.id}','${table.ticketNo}','${dataStatus.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
@@ -334,8 +334,8 @@
                                         <td align="left"> <c:out value="${table.ticketNo}" /></td>
                                         <td align="left"> <c:out value="${table.department}" /></td>
                                         <td align="center"> <c:out value="${table.route}" /></td>
-                                        <td align="right" class="form-control moneyformat">${table.commisssion}</td>
-                                        <td class="form-control money">${table.amount}</td>
+                                        <td align="right" class="moneyformat">${table.commisssion}</td>
+                                        <td class="money">${table.amount}</td>
                                         <td> 
                                             <center> 
                                                 <a class="remCF"><span id="SpanRemove${dataStatus.count}" onclick="deleteRefund('${table.id}','${table.refundNo}','${dataStatus.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
@@ -814,31 +814,50 @@
             calculateTotalPayment();
             calculateAmount();
         });
-
+        setFormatCurrency();
         calculateTotalAmount();
         calculateTotalCommission();
         calculateTotalPayment();
         calculateAmount();
-
-
-//        $("#totalCommissionTicketFare").focusout(function(){
-//            calculateTotalPayment();
-//        });
-//        $("#totalAmountTicketFare").focusout(function(){
-//            calculateTotalPayment();
-//        });
-//        $("#totalAmountRefund").focusout(function(){
-//            calculateTotalPayment();
-//        });
-//        $("#totalAmountRefundVat").focusout(function(){
-//            calculateTotalPayment();
-//        });
-//        $("#totalAmountRefund").focusout(function(){
-//            calculateTotalRefundVat();
-//        });
-
+        
     });
+function setFormatCurrency(){    
+    var withholdingTax = replaceAll(",","",$('#withholdingTax').val()); 
+    if (withholdingTax == ""){
+        withholdingTax = 0;
+    }
+    withholdingTax = parseFloat(withholdingTax); 
+    document.getElementById("withholdingTax").value = formatNumber(withholdingTax);
     
+    var cash = replaceAll(",","",$('#cash').val()); 
+    if (cash == ""){
+        cash = 0;
+    }
+    cash = parseFloat(cash); 
+    document.getElementById("cash").value = formatNumber(cash);
+    
+    var agentAmount = replaceAll(",","",$('#agentAmount').val()); 
+    if (agentAmount == ""){
+        agentAmount = 0;
+    }
+    var agentAmount = parseFloat(agentAmount); 
+    document.getElementById("agentAmount").value = formatNumber(agentAmount);
+    
+    var creditAmount = replaceAll(",","",$('#creditAmount').val()); 
+    if (creditAmount == ""){
+        creditAmount = 0;
+    }
+    var creditAmount = parseFloat(creditAmount); 
+    document.getElementById("creditAmount").value = formatNumber(creditAmount);
+    
+    var debitAmount = replaceAll(",","",$('#debitAmount').val()); 
+    if (debitAmount == ""){
+        debitAmount = 0;
+    }
+    var debitAmount = parseFloat(debitAmount); 
+    document.getElementById("debitAmount").value = formatNumber(debitAmount);
+}
+   
 function setupInvSupValue(){    
     $("#InvoiceSupModal").modal('hide');
 }
@@ -1265,22 +1284,18 @@ function insertCommas(nField){
     if (/^0/.test(nField.value)){
         nField.value = nField.value.substring(0,1);
     }
-    if (Number(nField.value.replace(/,/g,"")))
-                {
-                 var tmp = nField.value.replace(/,/g,"");
-                 tmp = tmp.toString().split('').reverse().join('').replace(/(\d{3})/g,'$1,').split('').reverse().join('').replace(/^,/,'');
-                 if (/\./g.test(tmp))
-                        {
-                         tmp = tmp.split(".");
-                         tmp[1] = tmp[1].replace(/\,/g,"").replace(/ /,"");
-                         nField.value = tmp[0]+"."+tmp[1]
-                        }
-                 else 	{
-                         nField.value = tmp.replace(/ /,"");
-                        } 
-                }
-        else	{
-                 nField.value = nField.value.replace(/[^\d\,\.]/g,"").replace(/ /,"");
-                }
+    if (Number(nField.value.replace(/,/g,""))){
+        var tmp = nField.value.replace(/,/g,"");
+        tmp = tmp.toString().split('').reverse().join('').replace(/(\d{3})/g,'$1,').split('').reverse().join('').replace(/^,/,'');
+        if (/\./g.test(tmp)){
+            tmp = tmp.split(".");
+            tmp[1] = tmp[1].replace(/\,/g,"").replace(/ /,"");
+            nField.value = tmp[0]+"."+tmp[1]
+        }else{
+            nField.value = tmp.replace(/ /,"");
+        } 
+    }else{
+        nField.value = nField.value.replace(/[^\d\,\.]/g,"").replace(/ /,"");
+    }
 }
 </script>
