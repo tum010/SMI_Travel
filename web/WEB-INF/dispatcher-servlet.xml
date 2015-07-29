@@ -267,7 +267,7 @@
 		<property name="utilservice" ref="UtilityService" />
 		<property name="daytourOperationService" ref="DaytourOperationService" />
 		<property name="bookingDaytourService" ref="BookingDaytourService" />
-
+                <property name="paymentTourHotelService" ref="PaymentTourHotelService" />
 	</bean>
 
 	<bean id="DaytourTransferController" class="com.smi.travel.controller.DaytourTransferController">
