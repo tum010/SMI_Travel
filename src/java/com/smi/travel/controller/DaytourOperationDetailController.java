@@ -3,8 +3,12 @@ package com.smi.travel.controller;
 import com.smi.travel.datalayer.entity.Daytour;
 import com.smi.travel.datalayer.entity.DaytourBooking;
 import com.smi.travel.datalayer.entity.DaytourBookingPrice;
+import com.smi.travel.datalayer.entity.MAccpay;
 import com.smi.travel.datalayer.entity.MCurrency;
+import com.smi.travel.datalayer.entity.MItemstatus;
+import com.smi.travel.datalayer.entity.MPaymentDoctype;
 import com.smi.travel.datalayer.entity.Master;
+import com.smi.travel.datalayer.entity.PaymentWendy;
 import com.smi.travel.datalayer.entity.Place;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.entity.TourOperationDesc;
@@ -13,10 +17,16 @@ import com.smi.travel.datalayer.entity.TourOperationExpense;
 import com.smi.travel.datalayer.service.BookingAirticketService;
 import com.smi.travel.datalayer.service.BookingDaytourService;
 import com.smi.travel.datalayer.service.DaytourOperationService;
+import com.smi.travel.datalayer.service.PaymentTourHotelService;
 import com.smi.travel.datalayer.service.UtilityService;
+import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -39,6 +49,7 @@ public class DaytourOperationDetailController extends SMITravelController {
     private UtilityService utilservice;
     private DaytourOperationService daytourOperationService;
     private BookingDaytourService bookingDaytourService;
+    private PaymentTourHotelService paymentTourHotelService;
     private static final String Bookiing_Size = "BookingSize";
     private static final String Master = "Master";
     private static final String DayTourList = "DayTourList";
@@ -57,6 +68,8 @@ public class DaytourOperationDetailController extends SMITravelController {
     private static final String MCurrency = "MCurrency";
     private static final String DaytourList = "DaytourList";
     private static final String TourList = "TourList";
+    private static final String StatusList = "StatusList";
+    private static final String InvoiceSupList = "InvoiceSupList";
 
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -119,8 +132,36 @@ public class DaytourOperationDetailController extends SMITravelController {
         } else if ("deleteBookingExpense".equalsIgnoreCase(action)) {
             String expenId = request.getParameter("refBookId");
             result = daytourOperationService.deleteBookExpen(expenId);
-        } else {
+        } else if ("confirmGuideBill".equalsIgnoreCase(action)){
+            String invSupCode = request.getParameter("invSupCode");
+            String status = request.getParameter("status");
+            String amount = request.getParameter("amount");
+            SystemUser user = (SystemUser) session.getAttribute("USER");
+            
+            UtilityFunction utilfunction = new UtilityFunction();
+            PaymentWendy paymentWendy = new PaymentWendy();
+                               
+            paymentWendy.setPayDate(null);
+            paymentWendy.setMItemstatus(null);
+            paymentWendy.setInvoiceSup(invSupCode);
+            paymentWendy.setApCode(invSupCode);
+            paymentWendy.setDetail(amount);                
+            paymentWendy.setRemark(null);
+            paymentWendy.setCurrency(null);           
+            paymentWendy.setChqNo(null);
+            Date date = Calendar.getInstance().getTime();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String createDate = sdf.format(date);
+            paymentWendy.setCreateDate(utilfunction.convertStringToDate(createDate));
+            paymentWendy.setAccount(null);
+            paymentWendy.setMPaymentDoctype(null);                    
+            paymentWendy.setMAccpay(null);
+            paymentWendy.setCash(null);                           
+            paymentWendy.setChqAmount(null);                  
+            paymentWendy.setCreateBy(user.getUsername());
 
+            result = paymentTourHotelService.InsertPaymentWendy(paymentWendy);
+            System.out.println("result : " + result);
         }
         
         request.setAttribute("tourDate", tourDate);
@@ -138,10 +179,13 @@ public class DaytourOperationDetailController extends SMITravelController {
         List<Place> pickupList = utilservice.getPickupList();
         request.setAttribute(PickupList, pickupList);
         Master master = utilservice.getMasterdao().getBookingFromRefno(refNo);
-        request.setAttribute(Master, master);
-        
+        request.setAttribute(Master, master);      
         List<Daytour> tourList = bookingDaytourService.getTourList();
         request.setAttribute(TourList, tourList);
+        List<MItemstatus> statusList = utilservice.getListMItemstatus();
+        request.setAttribute(StatusList, statusList);
+        List<InvoiceSupplier> invoiceSupplierList = getPaymentTourHotelService().getListInvoiceSuppiler();
+        request.setAttribute(InvoiceSupList, invoiceSupplierList);
 
     }
 
@@ -356,4 +400,19 @@ public class DaytourOperationDetailController extends SMITravelController {
         this.bookingDaytourService = bookingDaytourService;
     }
 
+    /**
+     * @return the paymentTourHotelService
+     */
+    public PaymentTourHotelService getPaymentTourHotelService() {
+        return paymentTourHotelService;
+    }
+
+    /**
+     * @param paymentTourHotelService the paymentTourHotelService to set
+     */
+    public void setPaymentTourHotelService(PaymentTourHotelService paymentTourHotelService) {
+        this.paymentTourHotelService = paymentTourHotelService;
+    }
+
+   
 }
