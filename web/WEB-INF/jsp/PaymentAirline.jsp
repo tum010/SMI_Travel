@@ -382,7 +382,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="agentAmount" name="agentAmount" type="text" class="form-control money" value="${paymentAirticket.agentAmount}">
+                                    <input id="agentAmount" name="agentAmount" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.agentAmount}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 155px">
@@ -398,7 +398,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="creditAmount" name="creditAmount" type="text" class="form-control money" value="${paymentAirticket.creditAmount}">
+                                    <input id="creditAmount" name="creditAmount" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.creditAmount}">
                                 </div>
                             </div>
                         </div>
@@ -409,7 +409,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="commissionVat" name="commissionVat" type="text" class="form-control money" value="">
+                                    <input id="commissionVat" name="commissionVat" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 155px">
@@ -425,7 +425,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="debitAmount" name="debitAmount" type="text" class="form-control money" value="${paymentAirticket.debitAmount}">
+                                    <input id="debitAmount" name="debitAmount" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.debitAmount}">
                                 </div>
                             </div>
                         </div>
@@ -435,7 +435,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="cash" name="cash" type="text" class="form-control money" value="${paymentAirticket.cash}">
+                                    <input id="cash" name="cash" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.cash}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 155px">
@@ -443,7 +443,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="withholdingTax" name="withholdingTax" type="text" class="form-control money" value="${paymentAirticket.witholdingTax}">
+                                    <input id="withholdingTax" name="withholdingTax" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.witholdingTax}" >
                                 </div>
                             </div>
                         </div>
@@ -462,7 +462,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="amount" name="amount" type="text" class="form-control money" value="${paymentAirticket.chqAmount}">
+                                    <input id="amount" name="amount" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.chqAmount}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 140px">
@@ -470,7 +470,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="totalPayment" name="totalPayment" type="text" class="form-control money" readonly="" value="${paymentAirticket.totalAmount}">
+                                    <input id="totalPayment" name="totalPayment" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" readonly="" value="${paymentAirticket.totalAmount}">
                                 </div>
                             </div>
                         </div>
@@ -671,16 +671,17 @@
         $(".money").mask('000,000,000.00', {reverse: true});
         $("#vat").val(${vat});
         $("#countRow").val("0");
-//        var ApCodeTable = $('#ApCodeTable').dataTable({bJQueryUI: true,
-//            "sPaginationType": "full_numbers",
-//            "bAutoWidth": false,
-//            "bFilter": true,
-//            "bPaginate": true,
-//            "bInfo": false,
-//            "bLengthChange": false,
-//            "iDisplayLength": 10
-//        });
-
+        
+        $( ".numerical" ).on('input', function() { 
+            var value=$(this).val().replace(/[^0-9.,]*/g, '');
+            value=value.replace(/\.{2,}/g, '.');
+            value=value.replace(/\.,/g, ',');
+            value=value.replace(/\,\./g, ',');
+            value=value.replace(/\,{2,}/g, ',');
+            value=value.replace(/\.[0-9]+\./g, '.');
+            $(this).val(value)
+        });
+        
         $('#InvoiceSupTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
@@ -818,6 +819,7 @@
         calculateTotalCommission();
         calculateTotalPayment();
         calculateAmount();
+
 
 //        $("#totalCommissionTicketFare").focusout(function(){
 //            calculateTotalPayment();
@@ -1259,4 +1261,26 @@ function formatNumber(num) {
     return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g,"$1,")
 }
 
+function insertCommas(nField){
+    if (/^0/.test(nField.value)){
+        nField.value = nField.value.substring(0,1);
+    }
+    if (Number(nField.value.replace(/,/g,"")))
+                {
+                 var tmp = nField.value.replace(/,/g,"");
+                 tmp = tmp.toString().split('').reverse().join('').replace(/(\d{3})/g,'$1,').split('').reverse().join('').replace(/^,/,'');
+                 if (/\./g.test(tmp))
+                        {
+                         tmp = tmp.split(".");
+                         tmp[1] = tmp[1].replace(/\,/g,"").replace(/ /,"");
+                         nField.value = tmp[0]+"."+tmp[1]
+                        }
+                 else 	{
+                         nField.value = tmp.replace(/ /,"");
+                        } 
+                }
+        else	{
+                 nField.value = nField.value.replace(/[^\d\,\.]/g,"").replace(/ /,"");
+                }
+}
 </script>
