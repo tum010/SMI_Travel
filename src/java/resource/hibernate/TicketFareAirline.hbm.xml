@@ -104,7 +104,7 @@
         <property name="agentReceiveDate" type="date">
             <column name="agent_receive_date" length="10" />
         </property>
-        <property name="PVCode" type="string">
+        <property name="pvCode" type="string">
             <column name="pv_code" length="10" />
         </property>
         <bag name="paymentAirticketFares" table="payment_airticket_fare" inverse="true" lazy="true" fetch="select">

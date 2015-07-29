@@ -12,13 +12,19 @@ import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.BookingFlight;
 import com.smi.travel.datalayer.entity.BookingPassenger;
 import com.smi.travel.datalayer.entity.MAirlineAgent;
+import com.smi.travel.datalayer.entity.MPaymentDoctype;
+import com.smi.travel.datalayer.entity.MRunningCode;
 import com.smi.travel.datalayer.entity.PaymentAirticketFare;
 import com.smi.travel.datalayer.entity.RefundAirticketDetail;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -33,41 +39,93 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
     private Transaction transaction;
 
     @Override
-    public int InsertTicketFare(TicketFareAirline ticket) {
-        int result = 0;
+    public String InsertTicketFare(TicketFareAirline ticket) {
+        String result = "success";
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
+            if((ticket.getPvCode() == null)||("".equalsIgnoreCase(ticket.getPvCode()))){
+                result = generatePVCode();
+                ticket.setPvCode(result);
+            }
             session.save(ticket);
             transaction.commit();
             session.close();
             this.sessionFactory.close();
-            result = 1;
         } catch (Exception ex) {
             ex.printStackTrace();
-            result = 0;
+            result = "fail";
         }
         return result;    
     }
-
+   
     @Override
-    public int UpdateTicketFare(TicketFareAirline ticket) {
-        int result = 0;
+    public String UpdateTicketFare(TicketFareAirline ticket) {
+        String result = "success";
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
+            if((ticket.getPvCode() == null)||("".equalsIgnoreCase(ticket.getPvCode()))){
+                result = generatePVCode();
+                ticket.setPvCode(result);
+            }
             session.update(ticket);
             transaction.commit();
             session.close();
             this.sessionFactory.close();
-            result = 1;
         } catch (Exception ex) {
             ex.printStackTrace();
-            result = 0;
+            result = "fail";
         }
         return result;    
     }
-
+    
+    public String generatePVCode() {
+        String PVCode = "";
+        Session session = this.sessionFactory.openSession();
+        List<MRunningCode> list = new LinkedList<MRunningCode>();
+        Date thisdate = new Date();
+        SimpleDateFormat df = new SimpleDateFormat();
+        SimpleDateFormat date = new SimpleDateFormat();
+        date.applyPattern("dd");
+        if("01".equals(String.valueOf(date.format(thisdate)))){
+            Query queryup = session.createQuery("update MRunningCode run set run.running = :running" +
+    				" where run.type = :type");
+            queryup.setParameter("running",0);
+            queryup.setParameter("type", "IB");
+            int result = queryup.executeUpdate();
+        }
+        df.applyPattern("yyMM"); 
+        Query query = session.createQuery("from MRunningCode run where run.type =:type ");
+        query.setParameter("type","IB");
+        query.setMaxResults(1);
+        list = query.list();
+        if (list.isEmpty()) {
+            PVCode = "IB"+ df.format(thisdate)+"-"+"0001";
+        }else{
+            PVCode = String.valueOf(list.get(0).getRunning());
+            if (!PVCode.equalsIgnoreCase("")){
+                System.out.println("PVCode " +PVCode);
+                int running = Integer.parseInt(PVCode.split("-")[0]) + 1;
+                String temp = String.valueOf(running);
+                System.out.println("temp.length() " +temp.length());
+                for (int i = temp.length(); i < 4; i++) {
+                    temp = "0" + temp;
+                }
+                PVCode = "IB"+df.format(thisdate) + "-" + temp;
+            
+            Query queryup = session.createQuery("update MRunningCode run set run.running = :running" +
+    				" where run.type = :type");
+            queryup.setParameter("running", list.get(0).getRunning()+1);
+            queryup.setParameter("type", "IB");
+            int result = queryup.executeUpdate();
+            }
+        }
+        session.close();
+        this.sessionFactory.close();
+        return PVCode.replace("-","");
+    }
+        
     @Override
     public int DeleteTicketFare(TicketFareAirline ticket) {
         int result = 0;
@@ -235,8 +293,8 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
     }
 
     @Override
-    public int validateSaveTicket(TicketFareAirline ticket) {
-        int result = 0;
+    public String validateSaveTicket(TicketFareAirline ticket) {
+        String result = "";
         String query = "from TicketFareAirline t where t.ticketNo = :TicketNo";
         Session session = this.sessionFactory.openSession();
         List<TicketFareAirline> ticketFareList = session.createQuery(query).setParameter("TicketNo",ticket.getTicketNo()).list();

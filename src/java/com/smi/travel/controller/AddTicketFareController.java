@@ -4,6 +4,7 @@ import com.smi.travel.datalayer.entity.AirticketFlight;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.BookingFlight;
 import com.smi.travel.datalayer.entity.MAirlineAgent;
+import com.smi.travel.datalayer.entity.MPaymentDoctype;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.service.AgentService;
 import com.smi.travel.datalayer.service.TicketFareAirlineService;
@@ -43,7 +44,7 @@ public class AddTicketFareController extends SMITravelController {
     private static final String TICKETLIST = "ticketList";
     private static final String DEPARTMENT = "department";
     private static final String FLIGHTDETAIL = "Flight_Detail";
-
+    private static final String PVTYPELIST = "pvTypeList";
     private UtilityService utilityService;
     private TicketFareAirlineService ticketFareAirlineService;
     private AgentService agentService;
@@ -83,13 +84,17 @@ public class AddTicketFareController extends SMITravelController {
         String ticketId = request.getParameter("ticketId");
         String invoiceAmount = request.getParameter("invoiceAmount");
         String department = request.getParameter("department");
-        System.out.println("department +++ "+ department);
+        String pvType = request.getParameter("pvType");
+        String pvCode = request.getParameter("pvCode");
         
-        int result = 0;
+        String result = "";
         List<MAirlineAgent> mAirlineAgentsList = utilityService.getListMAirLineAgent();
         request.setAttribute(AIRLINELIST,mAirlineAgentsList);
         List<Agent> agent = utilityService.getListAgent();
         request.setAttribute(Agent, agent);
+        List<MPaymentDoctype> mPaymentDoctypeList = utilityService.getListMpaymentDocType("airticket");
+        request.setAttribute(PVTYPELIST, mPaymentDoctypeList);
+        
         Agent agents = new Agent();
 
         util = new UtilityFunction();
@@ -97,13 +102,22 @@ public class AddTicketFareController extends SMITravelController {
         TicketFareAirline ticketFareAirline = new TicketFareAirline();
         AirticketPassenger airticketPassenger = new AirticketPassenger();
         MAirlineAgent mAirlineAgent = new MAirlineAgent();
+        MPaymentDoctype mPaymentDoctype = new MPaymentDoctype();
         if ("save".equalsIgnoreCase(action)){
             System.out.println("ticketId : "+ ticketId);
             mAirlineAgent.setId(ticketAirline);
-           
             if(StringUtils.isNotEmpty(ticketAirline)){
                 ticketFareAirline.setMAirlineAgent(mAirlineAgent);
             }
+            mPaymentDoctype.setId(pvType);
+            if(StringUtils.isNotEmpty(pvType)){
+                ticketFareAirline.setMPaymentDoctype(mPaymentDoctype);
+            }
+            
+            if(StringUtils.isNotEmpty(pvCode)){
+                ticketFareAirline.setPvCode(pvCode);
+            }
+            
             if(StringUtils.isNotEmpty(ticketId)){
                 ticketFareAirline.setId(ticketId);
             }
@@ -225,11 +239,15 @@ public class AddTicketFareController extends SMITravelController {
             }
             result = ticketFareAirlineService.validateSaveTicket(ticketFareAirline);
             System.out.print("result :" + result + " =================== ");
-            if (result == 1) {
-                request.setAttribute(SAVERESULT, "save successful");
-            } else {
+            if (result == "fail") {
                 request.setAttribute(SAVERESULT, "save unsuccessful");
-            } 
+            } else if (result == "success"){
+                request.setAttribute(SAVERESULT, "save successful");
+            } else{
+                ticketFareAirline.setPvCode(result);
+                request.setAttribute(SAVERESULT, "save successful");
+            }
+           
             request.setAttribute(TICKETFARE,ticketFareAirline); 
             
         } else if ("edit".equalsIgnoreCase(action)) {

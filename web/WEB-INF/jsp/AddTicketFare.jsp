@@ -202,7 +202,32 @@
                         </div>    
                     </div>
                 </div>
-                
+                <div class="row">
+                    <div class="col-xs-12 form-group">
+                        <div class="col-xs-1 text-right" style="width: 150px">
+                            <label class="control-label text-right">PV Type</label>
+                        </div>
+                        <div class="col-xs-1" style="width: 200px">
+                            <select name="pvType" id="pvType" class="form-control">
+                                <option value="">--- PV Type ---</option> 
+                                <c:forEach var="table" items="${pvTypeList}" >
+                                    <c:set var="select" value="" />
+                                    <c:set var="selectedId" value="${ticketFare.MPaymentDoctype.id}" />
+                                    <c:if test="${table.id == selectedId}">
+                                        <c:set var="select" value="selected" />
+                                    </c:if>
+                                    <option value="${table.id}" ${select}>${table.department} : ${table.name}</option>  
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <div class="col-xs-1 text-right" style="width: 150px">
+                            <label class="control-label text-right">PV Code</label>
+                        </div>
+                        <div class="col-xs-1" style="width: 200px">
+                            <input id="pvCode" name="pvCode" type="text" class="form-control" maxlength="20" value="${ticketFare.pvCode}" readonly="">
+                        </div>
+                    </div>
+                </div>
                 <!----- Ticket Detail ----->
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -237,7 +262,6 @@
                                 </div>
                             </div>
                         </div>
-                        
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right"  style="width: 121px">
                                 <label class="control-label text-right">Ticket Ins </label>
@@ -901,6 +925,10 @@ function saveAction() {
     agentPayDate.value = $("#agentPayDate").val();
     var agentReceiveDate = document.getElementById('agentReceiveDate');
     agentReceiveDate.value = $("#agentReceiveDate").val();
+    var pvCode = document.getElementById('pvCode');
+    pvCode.value = $("#pvCode").val(); 
+    var pvType = document.getElementById('pvType');
+    pvType.value = $("#pvType").val(); 
     document.getElementById('AddTicketFareForm').submit();
 }
 function searchTicketNo() {

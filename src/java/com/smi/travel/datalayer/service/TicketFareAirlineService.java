@@ -19,11 +19,11 @@ import java.util.List;
 public class TicketFareAirlineService {
     private TicketFareAirlineDao ticketFareAirlineDao;
 
-    public int InsertTicketFare(TicketFareAirline ticket){
+    public String InsertTicketFare(TicketFareAirline ticket){
         return ticketFareAirlineDao.InsertTicketFare(ticket);
     }
     
-    public int UpdateTicketFare(TicketFareAirline ticket){
+    public String UpdateTicketFare(TicketFareAirline ticket){
         return ticketFareAirlineDao.UpdateTicketFare(ticket);
     }
     
@@ -43,7 +43,7 @@ public class TicketFareAirlineService {
         return ticketFareAirlineDao.getTicketFareFromId(id);
     }
     
-    public int validateSaveTicket(TicketFareAirline ticket){
+    public String validateSaveTicket(TicketFareAirline ticket){
         return ticketFareAirlineDao.validateSaveTicket(ticket);
     }
     
