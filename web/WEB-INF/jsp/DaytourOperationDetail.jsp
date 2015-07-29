@@ -27,6 +27,8 @@
 <c:set var="mCurrency" value="${requestScope['MCurrency']}" />
 <c:set var="daytour" value="${requestScope['DaytourList']}" />
 <c:set var="tourList" value="${requestScope['TourList']}" />
+<c:set var="statusList" value="${requestScope['StatusList']}" />
+<c:set var="invoiceSupList" value="${requestScope['InvoiceSupList']}" />
 <input type="hidden" value="${param.referenceNo}" id="getUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
@@ -548,7 +550,7 @@
                                     </c:forEach>
                                 </tbody>
                             </table>
-                            <div class="col-xs-12 form-group" style="padding-top: 10px">
+                            <div class="col-xs-12 form-group hidden" style="padding-top: 10px">
                                 <div class="col-xs-1">
                                     <label class="control-label">Guide&nbsp;bill</label>
                                 </div>
@@ -562,6 +564,70 @@
                                     <input id="InputTotal" name="InputTotal" class="form-control money" readonly="" value="${total}">
                                 </div>
                             </div>
+                            <div class="col-xs-12 form-group"><hr/></div>                           
+                            <div class="col-xs-12 form-group">
+                                <div class="col-sm-6">
+                                    <h4>Guide Bill</h4>
+                                </div>
+                            </div>    
+                            <div class="col-xs-12 form-group">
+                                <div class="col-xs-1">
+                                    <label class="control-label">Payno</label>
+                                </div>
+                                <div class="col-xs-1" style="width: 250px">
+                                    <input class="form-control" type="text" id="PayNoGuideBill" name="PayNoGuideBill" value="">
+                                </div>
+                                <div class="col-xs-1 text-right" style="width: 120px">
+                                    <label class="control-label">Invoice&nbsp;Sup</label>
+                                </div>
+                                <div class="col-xs-1" style="width: 150px">                                   
+                                    <select id="InvoiceSupGuideBill" name="InvoiceSupGuideBill"  onchange="$('#InvoiceSupNameGuideBill').val($('#InvoiceSupGuideBill option:selected').text());" class="form-control">
+                                        <option></option>
+                                        <c:forEach var="invoiceSup" items="${invoiceSupList}" >
+                                            <c:set var="select" value="" />
+                                            <c:set var="selectedPlaceId1" value="${dayTourOperation.staffByGuide1.id}" />
+                                            <c:if test="${invoiceSup.id == selectedPlaceId1}">
+                                                <c:set var="select1" value="selected" />
+                                            </c:if>
+                                            <option value="<c:out value="${invoiceSup.code}" />" ${select}><c:out value="${invoiceSup.code}" /></option>   
+                                        </c:forEach>
+
+                                    </select>
+                                </div>                               
+                                <div class="col-xs-1" style="width: 275px">
+                                    <input class="form-control" type="text" id="InvoiceSupNameGuideBill" name="InvoiceSupNameGuideBill" value="" readonly="">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 form-group">
+                                <div class="col-xs-1">
+                                    <label class="control-label">Status</label>
+                                </div>
+                                <div class="col-xs-1" style="width: 250px">
+                                    <select class="form-control" id="StatusGuideBill" name="StatusGuideBill">
+                                        <option id="" value="">---------</option>  
+                                        <c:forEach var="status" items="${statusList}">
+                                            <c:set var="select" value="" />
+                                            <c:if test="${status.id == requestScope['itemStatus']}">
+                                                <c:set var="select" value="selected" />
+                                            </c:if>
+                                            <option value="<c:out value="${status.id}" />" ${select}><c:out value="${status.name}" /></option>                                         
+                                        </c:forEach>
+                                    </select>    
+                                </div>
+                                <div class="col-xs-1 text-right" style="width: 120px">
+                                    <label class="control-label">Amount</label>
+                                </div>
+                                <div class="col-xs-1" style="width: 250px">
+                                    <input class="form-control" type="text" id="AmountGuideBill" name="AmountGuideBill" value="">
+                                </div>
+                                <div class="col-xs-1" style="padding: 5px 0px 0px 75px">
+                                    <input type="checkbox" id="ConfirmGuideBill" name="ConfirmGuideBill" value="1" onclick="confirmGuideBill()">
+                                </div>
+                                <div class="col-xs-1 text-left" style="width: 10px">
+                                    <label class="control-label">Confirm</label>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 form-group"><hr/></div>  
                             <div class="text-center" style="padding-top: 10px">
                                 <a id="ButtonPrint" name="ButtonPrint" onclick="printGuideJob();" class="btn btn-primary"><i class="fa fa-print"></i> Print</a>
                                 <input type="hidden" name="action" value="update" />
@@ -955,6 +1021,24 @@
                     tourDate.value = $("#InputTourDetailTourDate").val();
 
                     document.getElementById('DaytourOperationForm').submit();
+                }
+                
+                function confirmGuideBill(){
+                    var invSupCode = document.getElementById('InvoiceSupGuideBill').value;
+                    var status = document.getElementById('StatusGuideBill').value;
+                    var amount = document.getElementById('AmountGuideBill').value;
+                    $.ajax({
+                        url: 'DaytourOperationDetail.smi?action=confirmGuideBill',
+                        type: 'get',
+                        data: {invSupCode: invSupCode, status: status, amount: amount},
+                        success: function () {
+                            return true;
+                        },
+                        error: function () {
+                            console.log("error");
+                            result =0;
+                        }
+                    }); 
                 }
 
             </script>
