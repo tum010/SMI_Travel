@@ -1183,7 +1183,7 @@ function calculateTotalRefundVat() {
     if (totalRefund == ""){
         totalRefund = 0;
     }
-
+    
     var vat = parseFloat(vatValue); 
     var refundTotal = parseFloat(totalRefund);
     
@@ -1202,6 +1202,7 @@ function calculateTotalCommission() {
         if(temp == '') {
             temp = 0;
         }
+        temp = replaceAll(",","",temp.toString()); 
         var valueCom = parseFloat(temp) ;
         var commission = commissionTemp + valueCom ;
         commissionTemp = commission;
@@ -1221,6 +1222,7 @@ function calculateTotalAmount(){
         if(temp == '') {
             temp = 0;
         }
+        temp = replaceAll(",","",temp.toString()); 
         var value = parseFloat(temp) ;
         var amount = amountTemp + value ;
         amountTemp = amount;
@@ -1239,6 +1241,7 @@ function calculateTotalAmountRefund(){
         if(temp == '') {
             temp = 0;
         }
+        temp = replaceAll(",","",temp.toString());
         var value = parseFloat(temp) ;
         var refund = refundTemp + value ;
         refundTemp = refund;
