@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AirlineVolumn" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isFloatColumnFooter="true" uuid="36591689-e817-40b9-bb01-c68bf69d6b71">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="169"/>
 	<property name="ireport.y" value="0"/>
 	<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 	<queryString>
@@ -20,6 +20,12 @@
 	<field name="sell" class="java.lang.Integer"/>
 	<variable name="totalpax" class="java.lang.Integer" resetType="Group" resetGroup="agentGroup" calculation="Sum">
 		<variableExpression><![CDATA[$F{pax}]]></variableExpression>
+	</variable>
+	<variable name="totalcom" class="java.lang.Integer" resetType="Group" resetGroup="agentGroup" calculation="Sum">
+		<variableExpression><![CDATA[$F{commission}]]></variableExpression>
+	</variable>
+	<variable name="totalselling" class="java.lang.Integer" resetType="Group" resetGroup="agentGroup" calculation="Sum">
+		<variableExpression><![CDATA[$F{sell}]]></variableExpression>
 	</variable>
 	<group name="agentGroup" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{agent}]]></groupExpression>
@@ -162,6 +168,32 @@
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalpax}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement mode="Transparent" x="310" y="0" width="75" height="14" forecolor="#CCCCCC" uuid="572c27d5-021b-4852-956d-51f886272317"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Transparent" x="385" y="0" width="59" height="14" forecolor="#CCCCCC" uuid="01704c87-7779-49bc-86cc-3e557480c1df"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</rectangle>
+				<textField pattern="#,##0">
+					<reportElement x="310" y="0" width="74" height="14" uuid="7ac1e3b5-3f75-456f-8887-f1be4cff3209"/>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalcom}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement x="385" y="0" width="59" height="14" uuid="5d6edff3-a94d-4ec5-882a-fdc85d479340"/>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalselling}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
