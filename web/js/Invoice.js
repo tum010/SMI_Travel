@@ -148,6 +148,10 @@
    // Add Row Detail Bill Able
     var countertable = $("#counterTable").val();
     AddRowDetailBillAble(countertable);
+    
+    $('#TotalNet').ready(function () {
+        CalculateGrandTotal('');
+    });
  }); 
  
 function validFrom(){
@@ -217,10 +221,11 @@ function AddRowDetailBillAble(row,prod,des,cos){
         '<td><input type="text" class="form-control" id="InputCost' + row + '" name="InputCost' + row + '" value="'+ cos +'" ></td>' +
         '<td><select id="SelectCurrencyCost' + row + '" name="SelectCurrencyCost' + row + '" class="form-control">'+ select +'</select></td>' +
         '<td>'+cos +' </td>' +
-        '<td><input type="checkbox" value="" id="checkUse' + row + '" name="checkUse' + row + '" class="form-control"></td>'+
-        '<td>'+ defaultD +'</td>'+   
-        '<td> </td>'+
-        '<td><input type="text" class="form-control" id="InputAmount' + row + '" name="InputAmount' + row + '" value="" ></td>'+
+        '<td><input type="checkbox" value="" id="checkUse' + row + '" name="checkUse' + row + '"  onclick="calculateGross('+row+')"></td>'+
+        '<td>'+ defaultD +'</td>'+ 
+        '<td class="hidden"><input type="text" class="form-control" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '" value="'+ defaultD +'" ></td>'+
+        '<td><input type="text" class="form-control" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>'+
+        '<td><input type="text" class="form-control" id="InputAmount' + row + '" name="InputAmount' + row + '" value="" onfocusout="CalculateGrandTotal(' + row + ')"></td>'+
         '<td><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control">'+ select +'</select></td>'+
         '<td>100000</td>'+
         '<td align="center" ><center><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('+row+',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span></center>'+
@@ -496,18 +501,310 @@ function addInvoiceDetail(rowId){
     var count = 1;
     $('#MasterReservation > tbody  > tr').each(function() {
         if(count === rowId){
-            alert("Row : " + rowId);
+//            alert("Row : " + rowId);
             var prod = $(this).find("td").eq(1).html();
             var des = $(this).find("td").eq(2).html();
             var cos = $(this).find("td").eq(3).html();
             var cur = $(this).find("td").eq(5).html();
-            alert(prod + " " + des + " " + cos + " " + cur);
+//            alert(prod + " " + des + " " + cos + " " + cur);
             $("#DetailBillableTable tr:last").remove();
             AddRowDetailBillAble(countTable,prod,des,cos);
             
         }
-        count+= 1;       
+        count++;       
     });
-    countTable +=1;
+    countTable++;
+    $("#counter").val(countTable);
     AddRowDetailBillAble(countTable);
 }
+
+function formatNumber(num) {
+    return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+}
+
+function ThaiBaht(Number){
+    for (var i = 0; i < Number.length; i++){
+            Number = Number.replace (",", ""); //ไม่ต้องการเครื่องหมายคอมมาร์
+            Number = Number.replace (" ", ""); //ไม่ต้องการช่องว่าง
+            Number = Number.replace ("บาท", ""); //ไม่ต้องการตัวหนังสือ บาท
+            Number = Number.replace ("฿", ""); //ไม่ต้องการสัญลักษณ์สกุลเงินบาท
+    }
+    var TxtNumArr = new Array ("ศูนย์", "หนึ่ง", "สอง", "สาม", "สี่", "ห้า", "หก", "เจ็ด", "แปด", "เก้า", "สิบ");
+    var TxtDigitArr = new Array ("", "สิบ", "ร้อย", "พัน", "หมื่น", "แสน", "ล้าน");
+    var BahtText = "";
+    //ตรวจสอบตัวเลข isNaN == true ถ้าเป็นข้อความ == false ถ้าเป็นตัวเลข
+    if (isNaN(Number)){
+            return "ข้อมูลนำเข้าไม่ถูกต้อง";
+    }else{
+        //ตรวสอบอีกสักครั้งว่าตัวเลขมากเกินความต้องการหรือเปล่า
+        if ((Number - 0) > 9999999999.9999){
+            return "ข้อมูลนำเข้าเกินขอบเขตที่ตั้งไว้";
+        }else{
+            Number = Number.split (".");
+            if (Number[1].length > 0) {
+                Number[1] = Number[1].substring(0, 2);
+            }
+            var NumberLen = Number[0].length - 0;
+            for(var i = 0; i < NumberLen; i++){
+                var tmp = Number[0].substring(i, i + 1) - 0;
+                if (tmp != 0){
+                    if ((i == (NumberLen - 1)) && (tmp == 1)){
+                        BahtText += "เอ็ด";
+                    }else if ((i == (NumberLen - 2)) && (tmp == 2)){
+                        BahtText += "ยี่";
+                    }else if ((i == (NumberLen - 2)) && (tmp == 1)) {
+                        BahtText += "";
+                    }else {
+                        BahtText += TxtNumArr[tmp];
+                    }
+                    BahtText += TxtDigitArr[NumberLen - i - 1];
+                }
+            }
+            BahtText += "บาท";
+            if ((Number[1] == "0") || (Number[1] == "00")) {
+                BahtText += "ถ้วน";
+            } else {
+                DecimalLen = Number[1].length - 0;
+                for (var i = 0; i < DecimalLen; i++) {
+                    var tmp = Number[1].substring(i, i + 1) - 0;
+                    if (tmp != 0) {
+                        if ((i == (DecimalLen - 1)) && (tmp == 1)) {
+                            BahtText += "เอ็ด";
+                        } else if ((i == (DecimalLen - 2)) && (tmp == 2)) {
+                            BahtText += "ยี่";
+                        } else if ((i == (DecimalLen - 2)) && (tmp == 1)) {
+                            BahtText += "";
+                        } else {
+                            BahtText += TxtNumArr[tmp];
+                        }
+                        BahtText += TxtDigitArr[DecimalLen - i - 1];
+                    }
+                }
+                BahtText += "สตางค์";
+            }
+            return BahtText;
+        }
+    }
+}
+
+function calculateGross(row){
+    var amount = document.getElementById('InputAmount'+row).value;
+    var gross = document.getElementById('InputGross'+row).value;
+//    var vatData = document.getElementById("DetailBillableTable").rows[row].cells[7].innerHTML;
+    var varTemp = document.getElementById('InputVatTemp'+row).value;
+    var vatDefaultData = parseFloat(varTemp);
+
+    amount = amount.replace(/,/g,"");
+    var grossTotal = parseFloat(amount);
+
+    if((gross === '')){
+        grossTotal = (amount*100)/(100+vatDefaultData);
+        document.getElementById('InputGross'+row).value = formatNumber(grossTotal);
+        document.getElementById("DetailBillableTable").rows[row].cells[7].innerHTML = vatDefaultData;
+    } else {
+        document.getElementById('InputGross'+row).value = '';
+        document.getElementById("DetailBillableTable").rows[row].cells[7].innerHTML = '';
+    }
+//    CalculateGrossTotal('',row);   
+}
+
+function CalculateGrandTotal(id){
+    var count = parseInt(document.getElementById('counterTable').value);
+    var i;
+    var grandTotal = 0;
+    if((id!==null) || (id!=='') ){
+        for(i=0;i<count+1;i++){
+            var amount = document.getElementById("InputAmount" + i);
+
+            if (amount !== null){
+                var value = amount.value;
+
+                if(value !== ''){
+                    value = value.replace(/,/g,"");
+                    var total = parseFloat(value);
+                    grandTotal += total;
+                    document.getElementById('InputAmount' + i).value = formatNumber(total);
+                }
+            }    
+        }
+        document.getElementById('TotalNet').value = formatNumber(grandTotal);
+        var bathString = ThaiBaht(formatNumber(grandTotal));
+//            alert("Thai Text :" + bathString);
+        document.getElementById('TextAmount').value = bathString;
+        $( ".numerical" ).on('input', function() { 
+            var value=$(this).val().replace(/[^0-9.,]*/g, '');
+            value=value.replace(/\.{2,}/g, '.');
+            value=value.replace(/\.,/g, ',');
+            value=value.replace(/\,\./g, ',');
+            value=value.replace(/\,{2,}/g, ',');
+            value=value.replace(/\.[0-9]+\./g, '.');
+            $(this).val(value);
+        });
+    }
+}
+
+function clearScreenInvoice(){
+    $('#SearchRefNo, #InvNo, #InputInvDate, #InputDueDate, #InvTo, #InvToName, #InvToAddress, #SaleStaffId, #SaleStaffCode, #SaleStaffName, #ARCode, #Remark, #TextAmount, #TotalNet ').val('');
+    $('#Grpup').attr('checked', false);
+    $('input[name="Department"]')[0].checked = false;
+    $('input[name="Department"]')[1].checked = false;
+    $('input[name="Department"]')[2].checked = false;
+    $('#MasterReservation > tbody  > tr').each(function() {
+        $(this).remove();
+    });
+    $('#DetailBillableTable > tbody  > tr').each(function() {
+        $(this).remove();
+    });
+    $('#counterTable').val('1');
+    AddRowDetailBillAble();
+}
+
+function checkVatInvoiceAll(){
+    var row = document.getElementById('counterTable').value;
+    var check = 0;
+    var unCheck = 0;
+    for(var i=1 ; i<= row;i++){          
+        var isVatCheck = document.getElementById("checkUse"+i);
+        if(isVatCheck !== null && isVatCheck !== ''){
+            if(document.getElementById("checkUse"+i).checked){
+               check++;
+            } else {
+               unCheck++;
+            }
+        }   
+    }
+
+    if(check > unCheck){
+        if(unCheck !== 0){
+            for(var i=0;i<=row;i++){
+                var isVatCheck = document.getElementById("checkUse"+i);
+                if(isVatCheck !== null && isVatCheck !== ''){
+                    if(document.getElementById("checkUse"+i).checked){
+
+                    } else { 
+                        document.getElementById("checkUse"+i).checked = true;
+                        var amountChk = document.getElementById('InputAmount'+i);
+                        if(amountChk !== null && amountChk !== ''){
+                            var amount = document.getElementById('InputAmount'+i).value;
+                            var gross = document.getElementById('InputGross'+i).value;
+//                            var vatData = document.getElementById("DetailBillableTable").rows[i].cells[7].innerHTML;
+
+                            var vatTemp = document.getElementById('InputVatTemp'+i).value;
+                            var vatDefaultData = parseFloat(vatTemp);
+                            console.log("Vat : " + vatDefaultData);
+                            amount = amount.replace(/,/g,"");
+                            var grossTotal = parseFloat(amount);
+
+                            if((gross === '')){
+                                grossTotal = (amount*100)/(100+vatDefaultData);
+                                document.getElementById('InputGross'+i).value = formatNumber(grossTotal);
+    //                            document.getElementById('InputVat'+i).value = vatDefaultData;
+                                document.getElementById("DetailBillableTable").rows[i].cells[7].innerHTML = vatDefaultData;
+                            } else {
+                                document.getElementById('InputGross'+i).value = '';
+    //                            document.getElementById('InputVat'+i).value = '';
+                            document.getElementById("DetailBillableTable").rows[i].cells[7].innerHTML = '';
+                            }
+                        }
+                    }    
+                }   
+            }
+        }
+    }
+
+    if(check < unCheck){
+        for(var i=0;i<=row;i++){
+            var isVatCheck = document.getElementById("checkUse"+i);
+            if(isVatCheck !== null && isVatCheck !== ''){
+                document.getElementById("checkUse"+i).checked = false;
+//                document.getElementById("InputVat"+i).value = '';
+                document.getElementById("DetailBillableTable").rows[i].cells[7].innerHTML = "";
+                document.getElementById("InputGross"+i).value = '';
+            }   
+        }
+    }
+
+    if(check === 0 && unCheck !== 0){
+        for(var i=0;i<=row;i++){
+            var isVatCheck = document.getElementById("checkUse"+i);
+            if(isVatCheck !== null && isVatCheck !== ''){
+                if(document.getElementById("checkUse"+i).checked){
+
+                } else { 
+                    document.getElementById("checkUse"+i).checked = true;
+                    var amountChk = document.getElementById('InputAmount'+i);                                     
+                    if(amountChk !== null && amountChk !== ''){
+                        var amount = document.getElementById('InputAmount'+i).value;
+                        var gross = document.getElementById('InputGross'+i).value;
+//                        var vatData = document.getElementById("DetailBillableTable").rows[i].columns[7].innerHTML;
+//                        var vatDefaultData = parseFloat(document.getElementById('InputVat'+i).value);
+//                        var vatData = document.getElementById("DetailBillableTable").rows[i].cells[7].innerHTML;
+                        var vatTemp = document.getElementById('InputVatTemp'+i).value;
+                        var vatDefaultData = parseFloat(vatTemp);
+                        amount = amount.replace(/,/g,"");
+                        var grossTotal = parseFloat(amount);
+                        if((gross === '')){
+                            grossTotal = (amount*100)/(100+vatDefaultData);
+                            document.getElementById('InputGross'+i).value = formatNumber(grossTotal);
+//                            document.getElementById('InputVat'+i).value = vatDefaultData;
+                            document.getElementById("DetailBillableTable").rows[i].cells[7].innerHTML = vatDefaultData;
+                        } else {
+                            document.getElementById('InputGross'+i).value = '';
+//                            document.getElementById('InputVat'+i).value = '';
+                            document.getElementById("DetailBillableTable").rows[i].cells[7].innerHTML = '';
+                        }
+                    }
+                }    
+            }    
+        }
+    } 
+
+    if(check !== 0 && unCheck === 0){
+        for(var i=0;i<=row;i++){
+            var isVatCheck = document.getElementById("checkUse"+i);
+            if(isVatCheck !== null && isVatCheck !== ''){
+                document.getElementById("checkUse"+i).checked = false;
+//                document.getElementById("InputVat"+i).value = '';
+                document.getElementById("DetailBillableTable").rows[i].cells[7].innerHTML = '';
+                document.getElementById("InputGross"+i).value = '';
+            }   
+        }
+    }
+
+    if(check === unCheck){
+        for(var i=0;i<=row;i++){
+            var isVatCheck = document.getElementById("checkUse"+i);
+            if(isVatCheck !== null && isVatCheck !== ''){
+                if(document.getElementById("checkUse"+i).checked){
+
+                } else { 
+                    document.getElementById("checkUse"+i).checked = true;
+                    var amountChk = document.getElementById('InputAmount'+i).value;
+                    if(amountChk !== null && amountChk !== ''){
+                        var amount = document.getElementById('InputAmount'+i).value;
+                        var gross = document.getElementById('InputGross'+i).value;
+//                        var vat = document.getElementById('InputVat'+i).value;
+//                        var vatDefaultData = parseFloat(document.getElementById('InputVat'+i).value);
+//                        var vatData = document.getElementById("DetailBillableTable").rows[i].cells[7].innerHTML;
+                        var vatTemp = document.getElementById('InputVatTemp'+i).value;
+                        var vatDefaultData = parseFloat(vatTemp);
+                        amount = amount.replace(/,/g,"");
+                        var grossTotal = parseFloat(amount);
+
+                        if((gross === '')){
+                            grossTotal = (amount*100)/(100+vatDefaultData);
+                            document.getElementById('InputGross'+i).value = formatNumber(grossTotal);
+//                            document.getElementById('InputVat'+i).value = vatDefaultData;
+                            document.getElementById("DetailBillableTable").rows[i].cells[7].innerHTML = vatDefaultData;
+                        } else {
+                            document.getElementById('InputGross'+i).value = '';
+//                            document.getElementById('InputVat'+i).value = '';
+                            document.getElementById("DetailBillableTable").rows[i].cells[7].innerHTML = vatDefaultData;
+                        }
+                    }
+                }    
+            }    
+        }             
+    }
+    CalculateGrandTotal(''); 
+}  
