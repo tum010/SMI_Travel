@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.smi.travel.datalayer.service.impl.PratzServiceImpl;
 
 @Controller
+@RequestMapping("/Test")
 public class PratzController {
 	
 	@Autowired
@@ -15,6 +16,12 @@ public class PratzController {
 	
 	@RequestMapping("/Pratz.smi")
 	public String initial(Model model){
+		model.addAttribute("data-model", pratzService.getData());
+		return "Pratz";
+	}
+	
+	@RequestMapping("/Pratz2.smi")
+	public String initial2(Model model){
 		model.addAttribute("data-model", pratzService.getData());
 		return "Pratz";
 	}
