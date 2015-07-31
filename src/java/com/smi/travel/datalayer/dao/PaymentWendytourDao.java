@@ -30,5 +30,6 @@ public interface PaymentWendytourDao {
     public String getAccountCode(String PayType);
     public String getPaymentRefernenceCode(String from,String to,List<String> tour);
     public String getTourListFromDate(String from,String to);
+    public String getInvoiceSupCodeByGuideName(String guideName);
     
 }
