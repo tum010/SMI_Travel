@@ -1,7 +1,8 @@
 //  Booking Expense
 //      auto add row where input value in row
 
-$(document).ready(function () {
+var guideList = [];
+$(document).ready(function () {  
     checkExpenseTour();
     $(".money").mask('000,000,000,000,000,000', {reverse: true});
     $("a").click(function () {
@@ -176,9 +177,9 @@ function BookingDriverTableAddRow(row) {
             '<td><div class="col-sm-7"><input id="InfoTableGasFee' + row + '" name="InfoTableGasFee' + row + '" type="text" class="form-control " maxlength="252"></div>' +
             '<div class="col-sm-5"><input id="InfoTableGasValue' + row + '" name="InfoTableGasValue' + row + '" type="text" class="form-control money" maxlength="252"></div></td>' +
             '<td><div class="col-sm-7"><input id="InfoTableTipFee' + row + '" name="InfoTableTipFee' + row + '" type="text" class="form-control " maxlength="252"></div>' +
-            '<div class="col-sm-5"><input id="InfoTableTipValue' + row + '" name="InfoTableTipValue' + row + '" type="text" class="form-control money" maxlength="252"></td></div>' +
+            '<div class="col-sm-5"><input id="InfoTableTipValue' + row + '" name="InfoTableTipValue' + row + '" type="text" class="form-control money" maxlength="252" onfocusout="calculateGuideBill()"></td></div>' +
             '<td class="text-center">' +
-            '<a id="expenButtonRemove' + row + '" name="expenButtonRemove' + row + '" class="RemoveRow">' +
+            '<a id="expenButtonRemove' + row + '" name="expenButtonRemove' + row + '" class="RemoveRow" onclick="calculateGuideBill()">' +
             '<span  id="expenSpanEdit' + row + '" name="expenSpanEdit' + row + '" class="glyphicon glyphicon-remove deleteicon"></span>' +
             '</a></td>' +
             '</tr>'
@@ -239,13 +240,13 @@ function BookingExpenseTableAddRow(row) {
             '<td class="hidden"><input id="expenId' + row + '" name="expenId' + row + '"  type="text">' +
             '<td class="hidden"><input id="countExpen' + row + '" name="countExpen"  type="text" value="' + row + '">' +
             '<td><input id="expenDescription' + row + '" name="expenDescription' + row + '"  type="text" class="form-control" maxlength="50"></td>' +
-            '<td style="width:80px"><input id="expenQty' + row + '" name="expenQty' + row + '" type="text" class="form-control money" maxlength="50"></td>' +
-            '<td style="width: 100px"><input id="expenAmount' + row + '" name="expenAmount' + row + '" type="text" class="form-control money" maxlength="50"></td>' +       
+            '<td style="width:80px"><input id="expenQty' + row + '" name="expenQty' + row + '" type="text" class="form-control money" maxlength="50" onfocusout="calculateGuideBill()"></td>' +
+            '<td style="width: 100px"><input id="expenAmount' + row + '" name="expenAmount' + row + '" type="text" class="form-control money" maxlength="50" onfocusout="calculateGuideBill()"></td>' +       
             '<td><select name="expenSelectCur' + row + '" id="expenSelectCur' + row + '" class=""><option value=""></option></select></td>' +
-            '<td class="text-center"><input id="expenTypeS' + row + '" name="expenPriceType' + row + '" type="radio" value="S" checked="checked">&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;&nbsp;' +
-            '<input id="expenTypeG' + row + '" name="expenPriceType' + row + '" type="radio" value="G">&nbsp;&nbsp;G</td>' +
+            '<td class="text-center"><input id="expenTypeS' + row + '" name="expenPriceType' + row + '" type="radio" value="S" checked="checked" onclick="calculateGuideBill()">&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;&nbsp;' +
+            '<input id="expenTypeG' + row + '" name="expenPriceType' + row + '" type="radio" value="G" onclick="calculateGuideBill()">&nbsp;&nbsp;G</td>' +
             '<td class="text-center">' +
-            '<a id="expenButtonRemove' + row + '" name="expenButtonRemove' + row + '" class="RemoveRow">' +
+            '<a id="expenButtonRemove' + row + '" name="expenButtonRemove' + row + '" class="RemoveRow" onclick="calculateGuideBill()">' +
             '<span  id="expenSpanEdit' + row + '" name="expenSpanEdit' + row + '" class="glyphicon glyphicon-remove deleteicon"></span>' +
             '</a></td>' +
             '</tr>'
@@ -302,12 +303,12 @@ function addImportExpen(arrExpen) {
                 '<td class="hidden"><input id="countExpen' + row + '" name="countExpen"  type="text" value="' + row + '">' +
                 '<td><input id="expenDescription' + row + '" name="expenDescription' + row + '"  type="text" class="form-control text-left" maxlength="50" value="' + item.desciption + '"></td>' +
                 '<td style="width: 80px"><input id="expenQty' + row + '" name="expenQty' + row + '" type="text" class="form-control money" maxlength="50"></td>' +
-                '<td style="width: 100px"><input id="expenAmount' + row + '" name="expenAmount' + row + '" type="text" class="form-control money" maxlength="50" value="' + item.amount + '"></td>' +
+                '<td style="width: 100px"><input id="expenAmount' + row + '" name="expenAmount' + row + '" type="text" class="form-control money" maxlength="50" value="' + item.amount + '" onfocusout="calculateGuideBill()"></td>' +
                 '<td><select name="expenSelectCur' + row + '" id="expenSelectCur' + row + '" class="form-control"><option value="' + item.cur + '">' + item.cur + '</option></select></td>' +
                 '<td class="text-center"><input id="expenTypeS' + row + '" name="expenPriceType' + row + '" type="radio" value="S" '+(item.priceType==="S"?"checked":"")+ ' >&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;&nbsp;' +
                 '<input id="expenTypeG' + row + '" name="expenPriceType' + row + '" type="radio" value="G" '+(item.priceType==="G"?"checked":"")+ ' >&nbsp;&nbsp;G</td>' +
                 '<td class="text-center">' +
-                '<a id="expenButtonRemove' + row + '" idExpen="'+item.id+'" name="expenButtonRemove' + row + '" class="RemoveRow">' +
+                '<a id="expenButtonRemove' + row + '" idExpen="'+item.id+'" name="expenButtonRemove' + row + '" class="RemoveRow" onclick="calculateGuideBill()">' +
                 '<span  id="expenSpanEdit' + row + '" name="expenSpanEdit' + row + '" class="glyphicon glyphicon-remove deleteicon"></span>' +
                 '</a></td>' +
                 '</tr>'
@@ -322,7 +323,14 @@ function addImportExpen(arrExpen) {
 //      remove row
 $(document).ready(function () {
     $("#BookingDriverTable").on('click', '.RemoveRow', function () {
-        $(this).parent().parent().remove();
+//        $(this).parent().parent().remove
+        var lentable =  $("#BookingDriverTable tbody").find("tr").length;
+        if(lentable === 1){
+            alert("this row for add data");
+        }else{
+            $(this).parent().parent().remove(); 
+        }
+        calculateGuideBill();
     });
     $("#BookingExpenseTable").on('click', '.RemoveRow', function () {
        var lentable =  $("#BookingExpenseTable tbody").find("tr").length;
@@ -336,19 +344,44 @@ $(document).ready(function () {
                 }               
             });
         }else{
-            if(lentable == 1){
+            if(lentable === 1){
                 alert("this row for add data");
             }else{
                 $(this).parent().parent().remove(); 
             }
                 
         }
-        
+        calculateGuideBill();
 
+    });   
+   
+    $("#SelectGuideCode1").on("change", function () {
+        setGuideName($('#SelectGuideCode1 option:selected').text(),'name1');
+    });
+    
+    $("#SelectGuideCode2").on("change", function () {
+        setGuideName($('#SelectGuideCode2 option:selected').text(),'name2');
     });
 
 });
 
+function setGuideName(name,no){
+    if(no === 'name1'){
+        guideList = [];
+        guideList.push({name: name});
+        var name2 = document.getElementById('InputGuideName2').value;
+        guideList.push({name: name2});
+    }
+//    var name2 = document.getElementById('InputGuideName2');
+    if(no === 'name2'){
+        guideList = [];
+        var name1 = document.getElementById('InputGuideName1').value;
+        guideList.push({name: name1});
+        guideList.push({name: name});
+    }
+    document.getElementById('GuideNo1').innerHTML = guideList[0].name;
+    document.getElementById('GuideNo2').innerHTML = guideList[1].name;
+}
 
 
 function  setDriverId(id, name) {
@@ -386,6 +419,7 @@ function  deleteBookExpen() {
             console.log('success');
             alert('Delete Booking Expense successful');
             location.reload();
+            calculateGuideBill();
         },
         error: function () {
             console.log("error");
@@ -414,3 +448,98 @@ function checkExpenseTour(){
         });  
     }
 }
+
+// Calculte Money
+$(document).ready(function () {
+    var guideList = [];
+    $( ".numerical" ).on('input', function() { 
+        var value=$(this).val().replace(/[^0-9.,]*/g, '');
+        value=value.replace(/\.{2,}/g, '.');
+        value=value.replace(/\.,/g, ',');
+        value=value.replace(/\,\./g, ',');
+        value=value.replace(/\,{2,}/g, ',');
+        value=value.replace(/\.[0-9]+\./g, '.');
+        $(this).val(value)
+    });
+    
+    $('#InputGuideBill').ready(function () {
+        calculateGuideBill();
+    });
+        
+    $('#InputTotal').ready(function () {
+        calculateTotal();
+    });
+});
+
+
+function calculateGuideBill(){
+    var guideBillTotal = 0;
+    
+    var rowDriver = $("#BookingDriverTable tr").length;
+    for(var i=0;i<rowDriver;i++){
+        var tipValue = document.getElementById('InfoTableTipValue'+i);
+        if(tipValue !== null){
+            if(tipValue.value !== ''){
+                var tipValueReplace = document.getElementById('InfoTableTipValue'+i).value;
+                tipValueReplace = tipValueReplace.replace(/,/g,"");
+                var tipValue = parseFloat(tipValueReplace);
+                guideBillTotal += tipValue;
+            }
+        }
+    }
+    
+    var total = 0;
+    var rowExpen = $("#BookingExpenseTable tr").length;
+    for(var i=0;i<rowExpen;i++){
+        var expenAmount = document.getElementById('expenAmount'+i);
+        var expenQty = document.getElementById('expenQty'+i);
+        if((expenAmount !== null) && (expenQty !== null)){
+            if((expenAmount.value !== '') && (expenQty.value !== '')){
+                var expenAmountReplace = document.getElementById('expenAmount'+i).value;
+                var expenQtyReplace = document.getElementById('expenQty'+i).value;
+                var checkbox = document.getElementById('expenTypeG'+i);
+                if(checkbox !== null){            
+                    if(document.getElementById('expenTypeG'+i).checked){
+                        expenAmountReplace = expenAmountReplace.replace(/,/g,"");
+                        expenQtyReplace = expenQtyReplace.replace(/,/g,"");
+                        var expenAmountValue = parseFloat(expenAmountReplace);
+                        var expenQtyValue = parseFloat(expenQtyReplace);
+                        guideBillTotal += (expenAmountValue*expenQtyValue);
+                        total += (expenAmountValue*expenQtyValue);
+                    } 
+                }
+            }    
+        }
+    }
+    document.getElementById('InputGuideBill').value = formatNumber(guideBillTotal);
+    document.getElementById('AmountGuideBill').value = formatNumber(guideBillTotal);
+    document.getElementById('InputTotal').value = formatNumber(total);
+}
+
+function calculateTotal(){
+    
+}
+
+function formatNumber(num) {
+    return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+}
+
+function insertCommas(nField){
+    if (/^0/.test(nField.value)){
+        nField.value = nField.value.substring(0,1);
+    }
+    if (Number(nField.value.replace(/,/g,""))){
+        var tmp = nField.value.replace(/,/g,"");
+        tmp = tmp.toString().split('').reverse().join('').replace(/(\d{3})/g,'$1,').split('').reverse().join('').replace(/^,/,'');
+        if (/\./g.test(tmp)){
+            tmp = tmp.split(".");
+            tmp[1] = tmp[1].replace(/\,/g,"").replace(/ /,"");
+            nField.value = tmp[0]+"."+tmp[1]
+        } else {
+            nField.value = tmp.replace(/ /,"");
+        } 
+    } else {
+        nField.value = nField.value.replace(/[^\d\,\.]/g,"").replace(/ /,"");
+    }
+}
+
