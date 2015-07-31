@@ -150,7 +150,7 @@
         <property name="receiptEmailDao" ref="ReceiptEmailDao" />
         <property name="receiptDao" ref="ReceiptDao" />
         <property name="invoiceEmaildao" ref="InvoiceEmailDao" />
-        <property name="invoicedao" ref="InvoiceDao" />
+        <!--property name="invoicedao" ref="InvoiceDao" /-->
     </bean> 
     
     
@@ -185,8 +185,6 @@
     <bean id="DaytourCommissionService" class="com.smi.travel.datalayer.service.DaytourCommissionService">
         <property name="daytourComissiondao" ref="DaytourComissionDao" />
     </bean> 
-    
-    
     
     <bean id="UtilityService" class="com.smi.travel.datalayer.service.UtilityService">
         <property name="masterdao" ref="MasterDao" />
@@ -272,7 +270,8 @@
         <property name="ticketFareAirlineDao" ref="TicketFareAirlineDao" />
     </bean>
     
-    
-    
+    <bean id="InvoiceService" class="com.smi.travel.datalayer.service.InvoiceService">
+        <property name="invoiceDao" ref="InvoiceDao" />
+    </bean>
     <!--<add data>-->
 </beans>

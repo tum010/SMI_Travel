@@ -41,6 +41,7 @@
         $(".ui-widget").css("top", position.top + 30);
         $(".ui-widget").css("left", position.left); 
         if($(this).val() === ""){
+            $("#InvToId").val("");
             $("#InvToName").val("");
             $("#InvToAddress").val("");
         }else{

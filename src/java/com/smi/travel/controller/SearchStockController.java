@@ -53,13 +53,17 @@ public class SearchStockController extends SMITravelController {
             String iStatus =  request.getParameter("SelectItemStatus");
             Stock stock = new Stock();
             Product product = new Product();
-            if(productId != null){
-                product.setId(productId);           
+            
+            if(productCode != null && !"".equals(productCode)){
+                product.setCode(productCode); 
+                if(productId != null){
+                    product.setId(productId);           
+                }
+            }else{
+                product.setId(null);
+                productId = "";
             }
-            if(productCode != null){
-                product.setCode(productCode);           
-            }
-            if(productName != null){
+            if((productName != null) && (!"".equals(productName))){
                 product.setName(productName);           
             }
             stock.setProduct(product);

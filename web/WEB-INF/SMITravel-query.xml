@@ -294,7 +294,7 @@
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
     
-    <bean id="InvoiceDao" class="com.smi.travel.datalayer.view.dao.impl.InvoiceImpl">
+    <bean id="InvoiceDao" class="com.smi.travel.datalayer.dao.impl.InvoiceImpl">
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
     

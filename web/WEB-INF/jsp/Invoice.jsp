@@ -13,6 +13,8 @@
 <c:set var="listCustomerAgentInfo" value="${requestScope['listCustomerAgentInfo']}" />
 <c:set var="listStaff" value="${requestScope['listStaff']}" />
 <c:set var="listTermPay" value="${requestScope['listTermPay']}" />
+<c:set var="invoice" value="${requestScope['invoice']}" />
+<c:set var="listInvoiceDetail" value="${requestScope['listInvoiceDetail']}" />
 
 <input type="hidden" id="type" name="type" value="${param.type}">
 <section class="content-header" >
@@ -114,25 +116,25 @@
                     </div>
                 </div>                                      
                 <div class="col-xs-12 form-group"></div>   
-                    <input type="text"  class="form-control" id="InvoiceId" name="InvoiceId"  value="" >
+                <input type="hidden"  class="form-control" id="InvoiceId" name="InvoiceId"  value="${invoice.id}" >
                     <div class="col-xs-12 ">
                         <div class="col-xs-1 text-right">
                             <label class="control-label" for="">INV no</lable>
                         </div>
                         <div class="col-md-2 form-group">
-                            <input type="text"  class="form-control" id="InvNo" name="InvNo"  value="" >
+                            <input type="text"  class="form-control" id="InvNo" name="InvNo"  value="${invoice.invNo}" >
                         </div>
                         <div class="col-xs-2 text-right">
                             <label class="control-label" for="">Invoice date</lable>
                         </div>
                         <div class="col-md-2 form-group">
                             <div class='input-group date' id='InputDatePicker'>
-                            <c:if test='${dayTourOperation.tourDate != null}'>
-                                <input id="InputInvDate" name="InputInvDate"  type="text"   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                            <c:if test='${invoice.createDate != null}'>
+                                <input id="InputInvDate" name="InputInvDate"  type="text"   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${invoice.createDate}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 
                             </c:if>
-                            <c:if test='${dayTourOperation.tourDate == null}'>
+                            <c:if test='${invoice.createDate == null}'>
                                 <input id="InputInvDate" name="InputInvDate"  type="text" 
                                    class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['']}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -145,12 +147,12 @@
                         </div>
                         <div class="col-md-2 form-group">
                             <div class='input-group date' id='InputDatePicker'>
-                            <c:if test='${dayTourOperation.tourDate != null}'>
+                            <c:if test='${invoice.dueDate != null}'>
                                 <input id="InputDueDate" name="InputDueDate"  type="text" 
-                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${invoice.dueDate}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                         
                             </c:if>
-                            <c:if test='${dayTourOperation.tourDate == null}'>
+                            <c:if test='${invoice.dueDate == null}'>
                                 <input id="InputDueDate" name="InputDueDate"  type="text" 
                                    class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['']}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                              
@@ -164,8 +166,8 @@
                         </div>
                         <div class="col-md-6 form-group">
                             <div class="input-group">
-                            <input type="hidden" class="form-control" id="InvTo_Id" name="InvToId" value=""/>
-                            <input type="text" class="form-control" id="InvTo" name="InvTo" value="" style="background-color: #ffffff">
+                            <input type="hidden" class="form-control" id="InvToId" name="InvToId" value="${invoice.invTo}"/>
+                            <input type="text" class="form-control" id="InvTo" name="InvTo" value="${invoice.invTo}" style="background-color: #ffffff">
                             <span class="input-group-addon" id="InvTo_Modal"  data-toggle="modal" data-target="#InvToModal">
                                 <span class="glyphicon-search glyphicon"></span>
                             </span>
@@ -187,14 +189,18 @@
                             <label class="control-label" for="">Name<font style="color: red">*</font></lable>
                         </div>    
                         <div class="col-md-6 form-group">
-                            <input  type="text" id="InvToName" name="InvToName" class="form-control" value="" >
+                            <input  type="text" id="InvToName" name="InvToName" class="form-control" value="${invoice.invName}" >
                         </div>
                         <div class="form-group">
                             <div class="col-sm-2" style="padding-left: 53px">
                             <label for="Department" class="col-sm-3 control-label" >Department<font style="color: red">*</font></label>
                             </div>
-                            <div class="radio col-sm-2">   
-                                <label><input value="WendyAirTicket" id="DepartmentAirTicket" name="Department" type="radio" >Wendy Air Ticket</label>
+                            <div class="radio col-sm-2">
+                                <c:set var="select" value="" />
+                                <c:if test="${invoice.deparement == 'WendyAirTicket'}">
+                                    <c:set var="select" value="checked" />
+                                </c:if>
+                                <label><input value="WendyAirTicket" id="DepartmentAirTicket" name="Department" type="radio" ${select}>Wendy Air Ticket</label>
                             </div>
                         </div>
                     </div>
@@ -203,18 +209,26 @@
                             <label class="control-label" for="">Address </lable>
                         </div>
                         <div class="col-md-6 form-group">
-                            <textarea  rows="3" cols="100" id="InvToAddress" name="InvToAddress" class="form-control" value="" ></textarea>
+                            <textarea  rows="3" cols="100" id="InvToAddress" name="InvToAddress" class="form-control" value="${invoice.invAddress}" ></textarea>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-2"></div>
-                            <div class="radio col-sm-2">   
-                                <label><input value="WendyPackage" id="DepartmentPackage" name="Department" type="radio" >Wendy Package</label>
+                            <div class="radio col-sm-2"> 
+                                <c:set var="select" value="" />
+                                <c:if test="${invoice.deparement == 'WendyPackage'}">
+                                    <c:set var="select" value="checked" />
+                                </c:if>
+                                <label><input value="WendyPackage" id="DepartmentPackage" name="Department" type="radio" ${select}>Wendy Package</label>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-2"></div>
-                            <div class="radio col-sm-2">   
-                                <label><input value="Outbound" id="DepartmentOutbound" name="Department" type="radio" >Outbound</label>
+                            <div class="radio col-sm-2">
+                                <c:set var="select" value="" />
+                                <c:if test="${invoice.deparement == 'Outbound'}">
+                                    <c:set var="select" value="checked" />
+                                </c:if>
+                                <label><input value="Outbound" id="DepartmentOutbound" name="Department" type="radio" ${select}>Outbound</label>
                             </div>
                         </div>
                     </div>
@@ -224,15 +238,15 @@
                         </div>                       
                         <div class="col-md-2 form-group">
                             <div class="input-group">
-                            <input type="hidden" class="form-control" id="SaleStaffId" name="SaleStaffId" value=""/>
-                            <input type="text" class="form-control" id="SaleStaffCode" name="SaleStaffCode" value="" style="background-color: #ffffff">
+                            <input type="hidden" class="form-control" id="SaleStaffId" name="SaleStaffId" value="${invoice.staff.id}"/>
+                            <input type="text" class="form-control" id="SaleStaffCode" name="SaleStaffCode" value="${invoice.staff.username}" style="background-color: #ffffff">
                             <span class="input-group-addon" id="SaleStaff_Modal"  data-toggle="modal" data-target="#SaleStaffModal">
                                 <span class="glyphicon-search glyphicon"></span>
                             </span>
                             </div>
                         </div>
                         <div class="col-md-3 form-group">
-                            <input type="text"  class="form-control" id="SaleStaffName" name="SaleStaffName"  value="" readonly="">
+                            <input type="text"  class="form-control" id="SaleStaffName" name="SaleStaffName"  value="${invoice.staff.name}" readonly="">
                         </div>
                         <div class="col-md-2 form-group">
                              <label class="control-label"><input onclick='' type="checkbox" id="Grpup" name="Grpup" ${enableGrpup} ${checkGrpup}>  Group Yes/No</label>
@@ -241,8 +255,8 @@
                             <label class="control-label" for="" >A/R&nbsp;Code<font style="color: red">*</font></label>
                         </div>  
                         <div class="col-md-2 form-group">
-                            <input type="hidden" class="form-control" id="ARCodeId" name="ARCodeId" value=""/>
-                            <input type="text" class="form-control" id="ARCode" name="ARCode" value="" style="background-color: #ffffff">                    
+                            <input type="hidden" class="form-control" id="ARCodeId" name="ARCodeId" value="${invoice.arcode}"/>
+                            <input type="text" class="form-control" id="ARCode" name="ARCode" value="${invoice.arcode}" style="background-color: #ffffff">                    
                         </div>
                     </div>                  
                 </div>
@@ -257,7 +271,7 @@
                                 <div class="panel-body">
                                     <input type="text" class="hidden" id="counterTable" name="counterTable" value="1" >
                                     <input type="text" class="hidden" id="idDeleteDetailBillable" name="idDeleteDetailBillable" value="0" >
-                                    <input type="text" class="hidden" id="action" name="action" value="" >
+                                    <input type="text" class="hidden" id="action" name="action" value="save" >
                                     <table class="display" id="DetailBillableTable">
                                         <thead class="datatable-header">
                                             <tr>
@@ -278,21 +292,34 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <!--<tr>-->
-<!--                                            <td class="hidden"><input type="text" class="form-control" id="DetailBillId" name="DetailBillId" value="" ></td>
-                                                <td>Product</td>
-                                                <td> <input type="text" class="form-control" id="BillDescription" name="BillDescription" value="" > </td>
-                                                <td> <input type="text" class="form-control" id="InputCost" name="InputCost" value="" ></td>
-                                                <td><select id="SelectCurrencyCost" name="SelectCurrencyCost" class="form-control"> <option value="">--currency cost--</option></select></td>
+                                            <c:forEach var="ind" items="${listInvoiceDetail}" varStatus="taxdesc">
+                                            <tr> 
+                                                <td class="hidden"><input type="text" class="form-control" id="DetailBillId${taxdesc.count}" name="DetailBillId${taxdesc.count}" value="${ind.id}" > </td>' 
+                                                <td>  </td>
+                                                <td><input type="text" class="form-control" id="BillDescription${taxdesc.count}" name="BillDescription${taxdesc.count}" value="${ind.description}" > </td>
+                                                <td><input type="text" class="form-control" id="InputCost${taxdesc.count}" name="InputCost${taxdesc.count}" value="${ind.cost}" ></td>
+                                                <td>
+                                                    <select id="SelectCurrencyCost${taxdesc.count}" name="SelectCurrencyCost${taxdesc.count}" class="form-control">
+                                                        
+                                                    </select>
+                                                </td>
+                                                <td> </td>
+                                                <td>
+                                                    <input type="checkbox" value="" id="checkUse${taxdesc.count}" name="checkUse${taxdesc.count}"  onclick="calculateGross('${taxdesc.count}')">
+                                                </td>
+                                                <td></td>
+                                                <td class="hidden"><input type="text" class="form-control" id="InputVatTemp${taxdesc.count}" name="InputVatTemp${taxdesc.count}" value="${ind.vat}" ></td>
+                                                <td><input type="text" class="form-control" id="InputGross${taxdesc.count}" name="InputGross${taxdesc.count}" value="" ></td>
+                                                <td><input type="text" class="form-control" id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" value="${ind.amount}" onfocusout="CalculateGrandTotal('${taxdesc.count}')"></td>
+                                                <td>
+                                                    <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control">
+                                                        
+                                                    </select>
+                                                </td>
                                                 <td>100000</td>
-                                                <td> <input type="text" class="form-control" id="InputAmount" name="InputAmount" value="" ></td>
-                                                <td><select id="SelectCurrencyAmount" name="SelectCurrencyAmount" class="form-control"><option value="">--currency amount--</option></select></td>
-                                                <td>100000</td>
-                                                <td><input type="text" class="form-control" id="InputVat" name="InputVat" value="" ></td>
-                                                <td><input type="checkbox" value="checkUse" id="checkUse" name="checkUse" class="form-control"></td>
-                                                <td>100000</td>
-                                                <td align="center" ><center><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('', '')" data-toggle="modal" data-target="#DelDetailBill" >  </span></center></td>-->
-                                            <!--</tr>-->
+                                                <td align="center" ><center><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('${taxdesc.count}')" data-toggle="modal" data-target="#DelDetailBill" >  </span></center></td>
+                                            </tr>
+                                            </c:forEach>
                                         </tbody>
                                     </table>
                                     <div id="tr_FormulaAddRow" class="text-center" style="padding-top: 10px;display: none;">

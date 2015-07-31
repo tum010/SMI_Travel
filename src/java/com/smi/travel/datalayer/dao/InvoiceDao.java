@@ -19,5 +19,5 @@ public interface InvoiceDao {
     public String UpdateInvoiceStatus(int StatusId);
     public String DeleteInvoiceDetail(String InvoiceDetailId);
     public Invoice getInvoiceFromInvoiceNumber(String InvoiceNumber);
-    
+    public String getInvoiceNumber(Invoice invoice);
 }

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 function searchAction() {
-    //alert("OK");
+//    alert(document.getElementById('InputProductId').value);
     var action = document.getElementById('action');
     action.value = 'search';
     document.getElementById('SearchStockForm').submit();

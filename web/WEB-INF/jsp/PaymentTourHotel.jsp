@@ -1024,7 +1024,7 @@
                 value=value.replace(/\,\./g, ',');
                 value=value.replace(/\,{2,}/g, ',');
                 value=value.replace(/\.[0-9]+\./g, '.');
-                $(this).val(value)
+                $(this).val(value);
             });
         }
     }
@@ -1064,7 +1064,7 @@
     }
     
     function formatNumber(num) {
-        return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+        return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
     }
     
     function insertCommas(nField){
@@ -1312,7 +1312,7 @@
                                     document.getElementById('vat'+i).value = vatDefaultData;
                                 } else {
                                     document.getElementById('gross'+i).value = '';
-                                    document.getElementById('vat'+i).value = ''
+                                    document.getElementById('vat'+i).value = '';
                                 }
                             }
                         }    

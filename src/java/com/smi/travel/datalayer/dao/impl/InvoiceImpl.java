@@ -9,7 +9,6 @@ package com.smi.travel.datalayer.dao.impl;
 import com.smi.travel.datalayer.dao.InvoiceDao;
 import com.smi.travel.datalayer.entity.Invoice;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
-import com.smi.travel.datalayer.entity.StockDetail;
 import java.util.LinkedList;
 import java.util.List;
 import org.hibernate.Query;
@@ -161,5 +160,26 @@ public class InvoiceImpl implements InvoiceDao{
     public Invoice getInvoiceFromInvoiceNumber(String InvoiceNumber) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
+    }
+
+    public Transaction getTransaction() {
+        return transaction;
+    }
+
+    @Override
+    public String getInvoiceNumber(Invoice invoice) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+   
 }
