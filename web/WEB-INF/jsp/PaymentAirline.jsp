@@ -152,7 +152,7 @@
                                         <c:if test="${table.id == selectedId}">
                                             <c:set var="select" value="selected" />
                                         </c:if>
-                                        <option value="${table.id}" ${select}>${table.code}</option>  
+                                        <option value="${table.id}" ${select}>${table.name}</option>  
                                     </c:forEach>
                                 </select>
                             </div>
@@ -330,6 +330,7 @@
                                     <tr>
                                         <input type="hidden" name="count${dataStatus.count}" id="count${dataStatus.count}" value="${dataStatus.count}">
                                         <input type="hidden" name="tableRefundId${dataStatus.count}" id="tableRefundId${dataStatus.count}" value="${table.id}">
+                                        <input type="hidden" name="refundNoRow${dataStatus.count}" id="refundNoRow${dataStatus.count}" value="${table.refundNo}">
                                         <td align="center"> <c:out value="${table.refundNo}" /></td>
                                         <td align="left"> <c:out value="${table.ticketNo}" /></td>
                                         <td align="left"> <c:out value="${table.department}" /></td>
@@ -603,7 +604,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
-<!--DELETE MODAL-->
+<!--ConfirmSearchTicket MODAL-->
 <div class="modal fade" id="ConfirmSearchTicket" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -616,6 +617,24 @@
             </div>
             <div class="modal-footer">
                 <button type="submit" onclick="searchTicketFareCF()" class="btn btn-danger">Search</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>               
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!--Add Refund MODAL-->
+<div class="modal fade" id="AddRefundNoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Add Refund No</h4>
+            </div>
+            <div class="modal-body" id="addRefundNoAlert">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="addRefundNo()" class="btn btn-danger">Add</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>               
             </div>
         </div><!-- /.modal-content -->
@@ -772,7 +791,14 @@
                             message: 'A/P Code is required'
                         }
                     }
-                }      
+                },
+                refundNo: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Refund No. is required'
+                        }
+                    }
+                }
             }
         });
         
@@ -819,6 +845,14 @@
         calculateTotalCommission();
         calculateTotalPayment();
         calculateAmount();
+        
+                            $('#RefundTicketTable').dataTable({bJQueryUI: true,
+                        "sPaginationType": "full_numbers",
+                        "bAutoWidth": false,
+                        "bFilter": false,
+                        "aaSorting": [[ 0, "desc" ]]
+                    });
+                    $('.dataTables_length label').remove();
         
     });
 function setFormatCurrency(){    
@@ -952,16 +986,51 @@ function searchTicketFareCF() {
 
 function addAction(){
     var refundNo = $("#refundNo").val();
-    var rowCount = $('#RefundTicketTable tr').length;
-    var servletName = 'PaymentAirTicketServlet';
-    var servicesName = 'AJAXBean';
-    var param = 'action=' + 'text' +
-            '&servletName=' + servletName +
-            '&servicesName=' + servicesName +
-            '&refundNo=' + refundNo +
-            '&rowCount=' + rowCount +
-            '&type=' + 'addRefund';
-    CallAjaxAdd(param);
+    var tablelength = $('#RefundTicketTable tr').length;
+    var duplicate = 0;
+    
+    if(tablelength == 1){
+        duplicate = 1;
+    }
+    
+    var i = 1;
+    for (i = 1; i < tablelength; i++) { 
+        var refund = $("#refundNoRow"+i).val();
+        var refundNumber = refund.toString();
+        if(refundNumber != ""){
+            if(refundNo == refundNumber){
+                duplicate = 2;
+            }
+        }
+    }
+    
+    if(duplicate == 0 || duplicate == 1){
+        addRefundNo();
+    }else if(duplicate == 2){
+        $("#addRefundNoAlert").text('Are you sure to add duplicate Refund No. : '+refundNo + " ?");
+        $('#AddRefundNoModal').modal('show');
+    }
+    
+    duplicate = 0;
+}
+
+function addRefundNo(){
+    $('#AddRefundNoModal').modal('hide');
+    var refundNo = $("#refundNo").val();
+    if(refundNo == ""){
+        $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'refundNo');
+    }else{
+        var rowCount = $('#RefundTicketTable tr').length;
+        var servletName = 'PaymentAirTicketServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&refundNo=' + refundNo +
+                '&rowCount=' + rowCount +
+                '&type=' + 'addRefund';
+        CallAjaxAdd(param);
+    }
 }
 
 function CallAjaxAdd(param) {
@@ -977,7 +1046,7 @@ function CallAjaxAdd(param) {
             //RefundTicketTable
                 try {
                     $("#RefundTicketTable tbody").append(msg);
-                    
+
                     calculateTotalAmountRefund();
                     calculateTotalRefundVat();
                     calculateTotalPayment();

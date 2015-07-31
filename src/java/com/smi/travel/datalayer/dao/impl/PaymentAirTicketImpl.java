@@ -333,7 +333,9 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                 
                 ticketFareView.setTicketIns(listAirline.get(i).getTicketIns());
                 ticketFareView.setSalePrice(listAirline.get(i).getSalePrice());
-                ticketFareView.setReferenceNo(listAirline.get(i).getMaster().getReferenceNo());
+                if(listAirline.get(i).getMaster() != null){
+                    ticketFareView.setReferenceNo(listAirline.get(i).getMaster().getReferenceNo());
+                }
                 listView.add(ticketFareView);
             }
         }
@@ -475,17 +477,18 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             }
 
             if(refundAirticketDetails.size() > 1){
-            int countrow = i+1;
+            int countrow = Integer.parseInt(rowCount)+i; 
                 String newrow 
                         = "<tr>"
                         + "<input type='hidden' name='count"+countrow+"' id='count"+countrow+"' value='"+countrow+"'>"
                         + "<input type='hidden' name='tableRefundId"+countrow+"' id='tableRefundId"+countrow+"' value='"+id+"'>"
-                        + "<td align='center'>" + (refund  == "null" ? "" : refund )+ "</td>"
+                        + "<input type='hidden' name='refundNoRow"+countrow+"' id='refundNoRow"+countrow+"' value='"+refund+"'>"
+                        + "<td align='center'>"+ (refund  == "null" ? "" : refund )+ "</td>"
                         + "<td align='left'>" + (ticketNo == "null" ? "": ticketNo )+  "</td>"
                         + "<td align='left'>" + (department == "null" ? "": department )+ "</td>"
                         + "<td align='center'>" + (route == "null" ? "" : route )+  "</td>"
-                        + "<td align='right' class='form-control moneyformat'>" + (commission == "null" ? "": commission )+  "</td>"
-                        + "<td class='form-control money'>" + (amount == "null" ? "" : amount )+  "</td>"
+                        + "<td align='right' class='moneyformat'>" + (commission == "null" ? "": commission )+  "</td>"
+                        + "<td class='money'>" + (amount == "null" ? "" : amount )+  "</td>"
                         + "<td><center><a class=\"remCF\"><span onclick=\"deleteRefund('"+id+"','"+refund+"','"+countrow+"')\" class=\"glyphicon glyphicon-remove deleteicon \"></span></center></td>"
                         + "</tr>";
                 System.out.println("newrow [[[[[[[ "+newrow +" ]]]]");
@@ -495,12 +498,13 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                         = "<tr>"
                         + "<input type='hidden' name='count"+rowCount+"' id='count"+rowCount+"' value='"+rowCount+"'>"
                         + "<input type='hidden' name='tableRefundId"+rowCount+"' id='tableRefundId"+rowCount+"' value='"+id+"'>"
+                        + "<input type='hidden' name='refundNoRow"+rowCount+"' id='refundNoRow"+rowCount+"' value='"+refund+"'>"
                         + "<td align='center'>" + (refund  == "null" ?  "" : refund )+ "</td>"
                         + "<td align='left'>" + (ticketNo == "null" ? "" : ticketNo )+  "</td>"
                         + "<td align='left'>" + (department == "null" ? "": department )+ "</td>"
                         + "<td align='center'>" + (route == "null" ? "" : route )+  "</td>"
-                        + "<td align='right' class='form-control moneyformat'>" + (commission == "null" ? "" : commission )+  "</td>"
-                        + "<td class='form-control money'>" + (amount == "null" ? "" : amount )+  "</td>"
+                        + "<td align='right' class='moneyformat'>" + (commission == "null" ? "" : commission )+  "</td>"
+                        + "<td class='money'>" + (amount == "null" ? "" : amount )+  "</td>"
                         + "<td><center><a class=\"remCF\"><span onclick=\"deleteRefund('"+id+"','"+refund+"','"+rowCount+"')\" class=\"glyphicon glyphicon-remove deleteicon \"></span></center></td>"
                         + "</tr>";
                 System.out.println("newrow [[[[[[[ "+newrow +" ]]]]");

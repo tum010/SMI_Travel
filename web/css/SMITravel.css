@@ -52,6 +52,14 @@ body{
     min-height: 180px;
 }
 
+#TicketFareTable_wrapper{
+    min-height: 100px;
+}
+
+#RefundTicketTable_wrapper{
+    min-height: 0px;
+}
+
 table.display , table.display th , table.display th tr, table.display  tr td{
     border: solid 1px #AAA; 
 }

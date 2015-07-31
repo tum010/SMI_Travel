@@ -89,10 +89,10 @@
                                     <option value="I" ${selectedI}>INTER</option>
                                     <c:choose>
                                         <c:when test="${requestScope['TicketRouting'] == 'D'}">
-                                            <c:set var="selectedD" value="selected" />
+                                            <c:set var="selectedDomestic" value="selected" />
                                         </c:when>
                                     </c:choose>
-                                    <option value="D" ${selectedD}>DOMESTIC</option>
+                                    <option value="D" ${selectedDomestic}>DOMESTIC</option>
                                     <c:choose>
                                         <c:when test="${requestScope['TicketRouting'] == 'C'}">
                                             <c:set var="selectedC" value="selected" />
@@ -155,22 +155,22 @@
                                     <option value="">--- Department ---</option> 
                                      <c:choose>
                                         <c:when test="${requestScope['department'] == 'wendy'}">
-                                            <c:set var="selected1" value="selected" />
+                                            <c:set var="selectedWendy" value="selected" />
                                         </c:when>
                                     </c:choose>
-                                    <option value="wendy" ${selected1}>wendy</option>
+                                    <option value="wendy" ${selectedWendy}>wendy</option>
                                     <c:choose>
                                         <c:when test="${requestScope['department'] == 'inbound'}">
-                                            <c:set var="selected2" value="selected" />
+                                            <c:set var="selectedInbound" value="selected" />
                                         </c:when>
                                     </c:choose>
-                                    <option value="inbound" ${selected2}>inbound</option>
+                                    <option value="inbound" ${selectedInbound}>inbound</option>
                                     <c:choose>
                                         <c:when test="${requestScope['department'] == 'outbound'}">
-                                            <c:set var="selected3" value="selected" />
+                                            <c:set var="selectedOutbound" value="selected" />
                                         </c:when>
                                     </c:choose>
-                                    <option value="outbound" ${selected3}>outbound</option>
+                                    <option value="outbound" ${selectedOutbound}>outbound</option>
 
                                 </select>
                             </div>
@@ -294,12 +294,13 @@
                alert("TicketNo "+TicketAlreadyUse+" is already use in refund airline.");
            });
         </script>
-    </c:if>   
+    </c:if>
 </c:if>  
         
 <!--Script-->       
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
+        
         $('.date').datetimepicker();
         
         $(".money").mask('000,000,000.00', {reverse: true});
