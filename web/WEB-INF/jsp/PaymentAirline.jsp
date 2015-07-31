@@ -78,7 +78,7 @@
                             </div>
                             <div class="col-xs-1 text-right" style="width: 8px"></div>
                             <div class="col-xs-1 text-right" style="width: 80px">
-                                <button style="height:34px" type="button"  id="ButtonSearch"  name="ButtonSearch" onclick="searchPaymentNo();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
+                                <button style="height:34px" type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="searchPaymentNo();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 140px">
                                 <label class="control-label text-right">Payment Date </label>
@@ -664,13 +664,24 @@
         </script>
     </c:if>
 </c:if>
-<c:if test="${! empty requestScope['setCalculate']}">
-    <c:if test="${requestScope['setCalculate'] == 1 }">        
+<c:if test="${! empty requestScope['setCalculateTicket']}">
+    <c:if test="${requestScope['setCalculateTicket'] == 1 }">        
         <script language="javascript">
             $(document).ready(function() {
                 $("#vat").val(${vat});
                 calculateTotalAmount();
                 calculateTotalCommission();
+                calculateTotalPayment();
+                calculateAmount();
+            });
+        </script>
+    </c:if>
+</c:if>        
+<c:if test="${! empty requestScope['setCalculateRefund']}">
+    <c:if test="${requestScope['setCalculateRefund'] == 1 }">        
+        <script language="javascript">
+            $(document).ready(function() {
+                $("#vat").val(${vat});
                 calculateTotalAmountRefund();
                 calculateTotalRefundVat();
                 calculateTotalPayment();
@@ -678,14 +689,12 @@
             });
         </script>
     </c:if>
-</c:if>        
-        
+</c:if>             
         
 <!--Script-->       
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
         $('.date').datetimepicker();
-
         $(".moneyformat").mask('000,000,000', {reverse: true});
         $(".money").mask('000,000,000.00', {reverse: true});
         $("#vat").val(${vat});
@@ -862,8 +871,8 @@
         });
         setFormatCurrency();
         setDataCurrency();
-        calculateTotalAmount();
-        calculateTotalCommission();
+//        calculateTotalAmount();
+//        calculateTotalCommission();
         calculateTotalPayment();
         calculateAmount();
         
@@ -915,7 +924,6 @@ function setFormatCurrency(){
 }
 
 function setDataCurrency(){
-    
     var withholdingTax = replaceAll(",","",$('#withholdingTax').val()); 
     if (withholdingTax == "" || withholdingTax == 0){
         document.getElementById("withholdingTax").value = "";
@@ -954,23 +962,11 @@ function setupInvSupValue(){
 }
 
 function searchPaymentNo() {
-//    var paymentNo = $("#paymentNo").val();
-//    var paymentnopanel = $("#paymentnopanel").val();
-//    if(paymentNo == ""){
-//        if(!$('#paymentnopanel').hasClass('has-feedback')) {
-//            $('#paymentnopanel').addClass('has-feedback');
-//        }
-//        $('#paymentnopanel').removeClass('has-success');
-//        $('#paymentnopanel').addClass('has-error');
-//    }
-//    else{
-//        $('#paymentNo').focus();
-        var action = document.getElementById('action');
-        action.value = 'search';
-        var paymentNo = document.getElementById('paymentNo');
-        paymentNo.value = $("#paymentNo").val();
-        document.getElementById('PaymentAirlineForm').submit();
-//    }
+    var action = document.getElementById('action');
+    action.value = 'search';
+    var paymentNo = document.getElementById('paymentNo');
+    paymentNo.value = $("#paymentNo").val();
+    document.getElementById('PaymentAirlineForm').submit();
 }
 
 function searchTicketFare() {
@@ -1239,12 +1235,12 @@ function DeleteRowTicket(){
     $('#DeleteTicket').modal('hide');
 }
 function deleteRefund(id,refundNo,rowCount){
+
     document.getElementById('deleteRefundCount').value = rowCount;
     document.getElementById('delRefundId').value = id;
     document.getElementById('delRefundNo').value = refundNo;
     $("#delRefundAlert").text('Are you sure to delete Refund No : '+refundNo + " ?");
     $('#DelRefund').modal('show');
-    
 }
 
 function DeleteRowRefund(){
