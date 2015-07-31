@@ -377,6 +377,51 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
         
         return acc_code;
     }
+    
+    @Override
+    public String getInvoiceSupCodeByGuideName(String guideName) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List<Object[]> guideList = session.createSQLQuery(" SELECT * FROM `invoice_supplier` WHERE `invoice_supplier`.name = '" + guideName + "'")
+                .addScalar("id", Hibernate.STRING)
+                .addScalar("code", Hibernate.STRING)
+                .addScalar("name", Hibernate.STRING)
+                .addScalar("apcode", Hibernate.STRING)
+                .list();
+        
+        String guideId = "";
+        List<InvoiceSupplier> resultGuideName = new ArrayList<InvoiceSupplier>();
+        for (Object[] A : guideList) {
+            InvoiceSupplier invoiceSupplier = new InvoiceSupplier();
+            invoiceSupplier.setId(util.ConvertString(A[0]));
+            invoiceSupplier.setCode(util.ConvertString(A[1]));
+            invoiceSupplier.setName(util.ConvertString(A[2]));
+            invoiceSupplier.setApcode(util.ConvertString(A[3]));
+            guideId = invoiceSupplier.getId();
+        }
+        
+        List<Object[]> invoiceSupplierList = session.createSQLQuery(" SELECT * FROM `invoice_supplier` WHERE `invoice_supplier`.id = '" + guideId + "'")
+                .addScalar("id", Hibernate.STRING)
+                .addScalar("code", Hibernate.STRING)
+                .addScalar("name", Hibernate.STRING)
+                .addScalar("apcode", Hibernate.STRING)
+                .list();
+        
+        String invoiceSupCode = "";
+        List<InvoiceSupplier> resultInvSupCode = new ArrayList<InvoiceSupplier>();
+        for (Object[] B : invoiceSupplierList) {
+            InvoiceSupplier invoiceSupplier = new InvoiceSupplier();
+            invoiceSupplier.setId(util.ConvertString(B[0]));
+            invoiceSupplier.setCode(util.ConvertString(B[1]));
+            invoiceSupplier.setName(util.ConvertString(B[2]));
+            invoiceSupplier.setApcode(util.ConvertString(B[3]));
+            invoiceSupCode = invoiceSupplier.getCode();
+            return invoiceSupCode;
+        }
+        
+        return invoiceSupCode;
+    }
+
 
     @Override
     public String getPaymentRefernenceCode(String from, String to, List<String> tour) {
@@ -388,6 +433,7 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    
     
 
     
