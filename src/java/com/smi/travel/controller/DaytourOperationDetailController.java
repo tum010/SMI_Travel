@@ -7,7 +7,9 @@ import com.smi.travel.datalayer.entity.MAccpay;
 import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MItemstatus;
 import com.smi.travel.datalayer.entity.MPaymentDoctype;
+import com.smi.travel.datalayer.entity.MPaytype;
 import com.smi.travel.datalayer.entity.Master;
+import com.smi.travel.datalayer.entity.PaymentDetailWendy;
 import com.smi.travel.datalayer.entity.PaymentWendy;
 import com.smi.travel.datalayer.entity.Place;
 import com.smi.travel.datalayer.entity.SystemUser;
@@ -23,6 +25,7 @@ import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -133,19 +136,23 @@ public class DaytourOperationDetailController extends SMITravelController {
             String expenId = request.getParameter("refBookId");
             result = daytourOperationService.deleteBookExpen(expenId);
         } else if ("confirmGuideBill".equalsIgnoreCase(action)){
-            String invSupCode = request.getParameter("invSupCode");
             String status = request.getParameter("status");
             String amount = request.getParameter("amount");
             SystemUser user = (SystemUser) session.getAttribute("USER");
             
+            String InputDetailTourCode = request.getParameter("tourCode");
+            String InputTourDetailTourDate = request.getParameter("tourDate");
+            
+            String guideName = request.getParameter("guideName");
+            String InvoiceSupCode = paymentTourHotelService.getInvoiceSupCodeByGuideName(guideName);
+                       
             UtilityFunction utilfunction = new UtilityFunction();
             PaymentWendy paymentWendy = new PaymentWendy();
-                               
+
+            paymentWendy.setInvoiceSup(InvoiceSupCode);
             paymentWendy.setPayDate(null);
-            paymentWendy.setMItemstatus(null);
-            paymentWendy.setInvoiceSup(invSupCode);
-            paymentWendy.setApCode(invSupCode);
-            paymentWendy.setDetail(amount);                
+            paymentWendy.setApCode(null);
+            paymentWendy.setDetail(InputDetailTourCode+":"+InputTourDetailTourDate);                
             paymentWendy.setRemark(null);
             paymentWendy.setCurrency(null);           
             paymentWendy.setChqNo(null);
@@ -157,11 +164,41 @@ public class DaytourOperationDetailController extends SMITravelController {
             paymentWendy.setMPaymentDoctype(null);                    
             paymentWendy.setMAccpay(null);
             paymentWendy.setCash(null);                           
-            paymentWendy.setChqAmount(null);                  
+            paymentWendy.setChqAmount(null);
+            paymentWendy.setIsExport(0);
             paymentWendy.setCreateBy(user.getUsername());
+            
+            MItemstatus mitemStatus = new MItemstatus();
+            if(status != ""){
+                mitemStatus.setId(status);
+                paymentWendy.setMItemstatus(mitemStatus);
+            } else {
+                paymentWendy.setMItemstatus(null);
+            }
+            
+            PaymentDetailWendy paymentDetailWendy = new PaymentDetailWendy();
+            
+            MPaytype mpayType = new MPaytype();                   
+            mpayType.setId("6");
+            paymentDetailWendy.setMPaytype(mpayType);
+            String acc_code = paymentTourHotelService.getAccountCode("6");
+            paymentDetailWendy.setAccCode(acc_code);           
+            paymentDetailWendy.setAmountType("T");
+            paymentDetailWendy.setMaster(null);
+            
+            BigDecimal amountRe = new BigDecimal(amount.replaceAll(",",""));
+            paymentDetailWendy.setAmount(amountRe);
+            
+            paymentWendy.getPaymentDetailWendies().add(paymentDetailWendy);
 
             result = paymentTourHotelService.InsertPaymentWendy(paymentWendy);
             System.out.println("result : " + result);
+            if("fail".equalsIgnoreCase(result)){
+                request.setAttribute("resultText", "fail");
+            } else {
+                request.setAttribute("resultText", "success");
+                request.setAttribute("PayNoGuideBill", result);
+            }
         }
         
         request.setAttribute("tourDate", tourDate);
