@@ -875,14 +875,14 @@
 //        calculateTotalCommission();
         calculateTotalPayment();
         calculateAmount();
-        
-        $('#RefundTicketTable').dataTable({bJQueryUI: true,
-            "sPaginationType": "full_numbers",
-            "bAutoWidth": false,
-            "bFilter": false,
-            "aaSorting": [[ 0, "desc" ]]
-        });
-        $('.dataTables_length label').remove();
+      
+//        $('#RefundTicketTable').dataTable({bJQueryUI: true,
+//            "sPaginationType": "full_numbers",
+//            "bAutoWidth": false,
+//            "bFilter": false,
+//            "aaSorting": [[ 0, "desc" ]]
+//        });
+//        $('.dataTables_length label').remove();
         
 
     });
@@ -1235,16 +1235,14 @@ function DeleteRowTicket(){
     $('#DeleteTicket').modal('hide');
 }
 function deleteRefund(id,refundNo,rowCount){
-
-    document.getElementById('deleteRefundCount').value = rowCount;
-    document.getElementById('delRefundId').value = id;
-    document.getElementById('delRefundNo').value = refundNo;
+    $("#deleteRefundCount").val(rowCount);
+    $("#delRefundId").val(id);
+    $("#delRefundNo").val(refundNo);
     $("#delRefundAlert").text('Are you sure to delete Refund No : '+refundNo + " ?");
     $('#DelRefund').modal('show');
 }
 
 function DeleteRowRefund(){
-    
     var rowCount = document.getElementById('deleteRefundCount').value;
     var refundno = document.getElementById('delRefundNo').value;
     var refundid = document.getElementById('delRefundId').value;
