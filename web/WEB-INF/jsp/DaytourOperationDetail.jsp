@@ -181,9 +181,8 @@
                                             <c:if test="${item1.id == selectedPlaceId1}">
                                                 <c:set var="select1" value="selected" />
                                             </c:if>
-                                            <option value="<c:out value="${item1.id}" />" ${select1}><c:out value="${item1.name}" /></option>   
+                                            <option id="GuideName1" value="<c:out value="${item1.id}" />" ${select1}><c:out value="${item1.name}" /></option>   
                                         </c:forEach>
-
                                     </select>
                                 </div>
                                 <div class="col-xs-4">
@@ -320,7 +319,7 @@
                                                                     <input id="InfoTableTipFee${status.count}" name="InfoTableTipFee${status.count}" class="form-control" value="${driver.tipFee}">
                                                                 </div>
                                                                 <div class="col-xs-5">
-                                                                    <input id="InfoTableTipValue${status.count}" name="InfoTableTipValue${status.count}" class="form-control money" value="${driver.tipValue}">
+                                                                    <input id="InfoTableTipValue${status.count}" name="InfoTableTipValue${status.count}" class="form-control money" value="${driver.tipValue}" onfocusout="calculateGuideBill()">
                                                                 </div>
                                                             </td>
                                                             <td class="text-center">
@@ -488,11 +487,11 @@
                                             <td><input id="expenDescription${i.count}" name="expenDescription${i.count}" class="form-control" value="${expen.description}"></td>
                                             <td style="width: 80px">
                                                 <input id="expenQty${i.count}" name="expenQty${i.count}" 
-                                                       class="form-control money" value="${expen.qty}">
+                                                       class="form-control money" value="${expen.qty}" onfocusout="calculateGuideBill()">
                                             </td>
                                             <td style="width: 100px">
                                                 <input id="expenAmount${i.count}" name="expenAmount${i.count}" 
-                                                       class="form-control money" value="${expen.amount}">
+                                                       class="form-control money" value="${expen.amount}" onfocusout="calculateGuideBill()" onkeyup="insertCommas(this)">
                                             </td>
 <!--                                            <td>                            
                                                 <select name="expenSelectCur${i.count}" id="expenSelectCur${i.count}" class="form-control">
@@ -525,10 +524,10 @@
                                            </td>
                                             <td class="text-center">
                                                 <input type="hidden" value="${expen.priceType}" id="expenPriceTypeHiden${i.count}">
-                                                <input  type="radio" value="S" 
-                                                         name="expenPriceType${i.count}" ${expen.priceType.equals("S") ? 'checked' : ''}>&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;
-                                                <input  type="radio" value="G" 
-                                                         name="expenPriceType${i.count}" ${expen.priceType.equals("G") ? 'checked' : ''}>&nbsp;&nbsp;G
+                                                <input  type="radio" value="S" id="expenTypeS${i.count}" 
+                                                       name="expenPriceType${i.count}" ${expen.priceType.equals("S") ? 'checked' : ''} onclick="calculateGuideBill()">&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;
+                                                <input  type="radio" value="G" id="expenTypeG${i.count}"
+                                                        name="expenPriceType${i.count}" ${expen.priceType.equals("G") ? 'checked' : ''} onclick="calculateGuideBill()" >&nbsp;&nbsp;G
                                                 <script>
                                                     $(document).ready(function () {  
                                                         var status = $("#expenPriceTypeHiden${i.count}").val();
@@ -550,7 +549,7 @@
                                     </c:forEach>
                                 </tbody>
                             </table>
-                            <div class="col-xs-12 form-group hidden" style="padding-top: 10px">
+                            <div class="col-xs-12 form-group" style="padding-top: 10px">
                                 <div class="col-xs-1">
                                     <label class="control-label">Guide&nbsp;bill</label>
                                 </div>
@@ -564,7 +563,19 @@
                                     <input id="InputTotal" name="InputTotal" class="form-control money" readonly="" value="${total}">
                                 </div>
                             </div>
-                            <div class="col-xs-12 form-group"><hr/></div>                           
+                            <div class="col-xs-12 form-group"><hr/></div>
+                            <c:if test="${requestScope['resultText'] =='success'}">                                            
+                                <div id="textAlertDivSave"  style="" class="alert alert-success alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <strong>Save Success!</strong> 
+                                </div>
+                            </c:if>
+                            <c:if test="${requestScope['resultText'] =='fail'}">
+                            <div id="textAlertDivNotSave"  style="" class="alert alert-danger alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                               <strong>Save Unsuccess!</strong> 
+                            </div>
+                            </c:if>
                             <div class="col-xs-12 form-group">
                                 <div class="col-sm-6">
                                     <h4>Guide Bill</h4>
@@ -575,28 +586,19 @@
                                     <label class="control-label">Payno</label>
                                 </div>
                                 <div class="col-xs-1" style="width: 250px">
-                                    <input class="form-control" type="text" id="PayNoGuideBill" name="PayNoGuideBill" value="">
+                                    <input class="form-control" type="text" id="PayNoGuideBill" name="PayNoGuideBill" value="${requestScope['PayNoGuideBill']}" readonly="">
                                 </div>
                                 <div class="col-xs-1 text-right" style="width: 120px">
                                     <label class="control-label">Invoice&nbsp;Sup</label>
                                 </div>
-                                <div class="col-xs-1" style="width: 150px">                                   
-                                    <select id="InvoiceSupGuideBill" name="InvoiceSupGuideBill"  onchange="$('#InvoiceSupNameGuideBill').val($('#InvoiceSupGuideBill option:selected').text());" class="form-control">
+                                <div class="col-xs-1" style="width: 250px">                                   
+                                    <select id="InvoiceSupGuideBill" name="InvoiceSupGuideBill" class="form-control" onchange="$('#GuideName').val($('#InvoiceSupGuideBill option:selected').text());">
                                         <option></option>
-                                        <c:forEach var="invoiceSup" items="${invoiceSupList}" >
-                                            <c:set var="select" value="" />
-                                            <c:set var="selectedPlaceId1" value="${dayTourOperation.staffByGuide1.id}" />
-                                            <c:if test="${invoiceSup.id == selectedPlaceId1}">
-                                                <c:set var="select1" value="selected" />
-                                            </c:if>
-                                            <option value="<c:out value="${invoiceSup.code}" />" ${select}><c:out value="${invoiceSup.code}" /></option>   
-                                        </c:forEach>
-
+                                        <option id="GuideNo1"></option>
+                                        <option id="GuideNo2"></option>
                                     </select>
-                                </div>                               
-                                <div class="col-xs-1" style="width: 275px">
-                                    <input class="form-control" type="text" id="InvoiceSupNameGuideBill" name="InvoiceSupNameGuideBill" value="" readonly="">
                                 </div>
+                                <input id="GuideName" name="GuideName"  type="hidden" class="form-control" readonly="" value="">
                             </div>
                             <div class="col-xs-12 form-group">
                                 <div class="col-xs-1">
@@ -618,7 +620,7 @@
                                     <label class="control-label">Amount</label>
                                 </div>
                                 <div class="col-xs-1" style="width: 250px">
-                                    <input class="form-control" type="text" id="AmountGuideBill" name="AmountGuideBill" value="">
+                                    <input class="form-control" type="text" id="AmountGuideBill" name="AmountGuideBill" value="" readonly="">
                                 </div>
                                 <div class="col-xs-1" style="padding: 5px 0px 0px 75px">
                                     <input type="checkbox" id="ConfirmGuideBill" name="ConfirmGuideBill" value="1" onclick="confirmGuideBill()">
@@ -906,6 +908,7 @@
                     </thead>
                     <script>
                         tourCode = [];
+                        
                     </script>
                     <tbody>
                         <c:forEach var="tour" items="${tourList}">
@@ -1024,17 +1027,23 @@
                 }
                 
                 function confirmGuideBill(){
-                    var invSupCode = document.getElementById('InvoiceSupGuideBill').value;
                     var status = document.getElementById('StatusGuideBill').value;
                     var amount = document.getElementById('AmountGuideBill').value;
+                    var tourCode = document.getElementById('InputDetailTourCode').value;
+                    var tourDate = document.getElementById('InputTourDetailTourDate').value;
+                    var guideName = document.getElementById('GuideName').value;
+                    var resultText = "";
+                    var PayNoGuideBill = "";
                     $.ajax({
                         url: 'DaytourOperationDetail.smi?action=confirmGuideBill',
                         type: 'get',
-                        data: {invSupCode: invSupCode, status: status, amount: amount},
+                        data: {status: status, amount: amount,tourCode: tourCode, tourDate: tourDate, guideName: guideName, resultText: resultText, PayNoGuideBill: PayNoGuideBill},
                         success: function () {
+                            alert('Confirm Guide Bill Successful!!');
                             return true;
                         },
                         error: function () {
+                            alert('Confirm Guide Bill Unsuccessful!!');
                             console.log("error");
                             result =0;
                         }
