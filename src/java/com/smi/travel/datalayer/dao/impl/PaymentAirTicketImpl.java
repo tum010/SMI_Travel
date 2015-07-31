@@ -529,29 +529,34 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
         }else{
             for(int i=0;i<PaymentAirticketFareList.size();i++){
                 TicketFareView ticketFareView = new TicketFareView();
-                
-                ticketFareView.setId(String.valueOf(PaymentAirticketFareList.get(i).getTicketFareAirline().getId()));
-                ticketFareView.setType(String.valueOf(PaymentAirticketFareList.get(i).getTicketFareAirline().getTicketType()));
-                ticketFareView.setBuy(String.valueOf(PaymentAirticketFareList.get(i).getTicketFareAirline().getTicketBuy()));
-                ticketFareView.setRouting(String.valueOf(PaymentAirticketFareList.get(i).getTicketFareAirline().getTicketRouting()));
-                MAirlineAgent mAirlineAgent = new MAirlineAgent();
-                if(PaymentAirticketFareList.get(i).getTicketFareAirline().getMAirlineAgent() != null){
-                    mAirlineAgent.setId(PaymentAirticketFareList.get(i).getTicketFareAirline().getMAirlineAgent().getId());
-                    mAirlineAgent.setCode(PaymentAirticketFareList.get(i).getTicketFareAirline().getMAirlineAgent().getCode());
-                    ticketFareView.setAirline(String.valueOf(mAirlineAgent.getCode()));
-                }
-                ticketFareView.setTicketNo(String.valueOf(PaymentAirticketFareList.get(i).getTicketFareAirline().getTicketNo()));
-                ticketFareView.setIssueDate(PaymentAirticketFareList.get(i).getTicketFareAirline().getIssueDate());
-                ticketFareView.setDepartment(PaymentAirticketFareList.get(i).getTicketFareAirline().getDepartment());
-                ticketFareView.setFare(PaymentAirticketFareList.get(i).getTicketFareAirline().getTicketFare());
-                ticketFareView.setTax(PaymentAirticketFareList.get(i).getTicketFareAirline().getTicketTax());
-                ticketFareView.setTicketCommission(PaymentAirticketFareList.get(i).getTicketFareAirline().getTicketCommission());
-                ticketFareView.setAgentCommission(PaymentAirticketFareList.get(i).getTicketFareAirline().getAgentCommission());
-                ticketFareView.setDiffVat(PaymentAirticketFareList.get(i).getTicketFareAirline().getDiffVat());
-                ticketFareView.setTicketIns(PaymentAirticketFareList.get(i).getTicketFareAirline().getTicketIns());
-                ticketFareView.setSalePrice(PaymentAirticketFareList.get(i).getTicketFareAirline().getSalePrice());
-                ticketFareView.setReferenceNo(PaymentAirticketFareList.get(i).getTicketFareAirline().getMaster().getReferenceNo());
+                TicketFareAirline ticketFareAirline = PaymentAirticketFareList.get(i).getTicketFareAirline() ;
+                if(ticketFareAirline != null){
+                    ticketFareView.setId(String.valueOf(ticketFareAirline.getId()));
+                    ticketFareView.setType(String.valueOf(ticketFareAirline.getTicketType()));
+                    ticketFareView.setBuy(String.valueOf(ticketFareAirline.getTicketBuy()));
+                    ticketFareView.setRouting(String.valueOf(ticketFareAirline.getTicketRouting()));
+                    MAirlineAgent mAirlineAgent = new MAirlineAgent();
+                    
+                    if(ticketFareAirline.getMAirlineAgent() != null){
+                        mAirlineAgent.setId(ticketFareAirline.getMAirlineAgent().getId());
+                        mAirlineAgent.setCode(ticketFareAirline.getMAirlineAgent().getCode());
+                        ticketFareView.setAirline(String.valueOf(mAirlineAgent.getCode()));
+                    }
+                    ticketFareView.setTicketNo(String.valueOf(ticketFareAirline.getTicketNo()));
+                    ticketFareView.setIssueDate(ticketFareAirline.getIssueDate());
+                    ticketFareView.setDepartment(ticketFareAirline.getDepartment());
+                    ticketFareView.setFare(ticketFareAirline.getTicketFare());
+                    ticketFareView.setTax(ticketFareAirline.getTicketTax());
+                    ticketFareView.setTicketCommission(ticketFareAirline.getTicketCommission());
+                    ticketFareView.setAgentCommission(ticketFareAirline.getAgentCommission());
+                    ticketFareView.setDiffVat(ticketFareAirline.getDiffVat());
+                    ticketFareView.setTicketIns(ticketFareAirline.getTicketIns());
+                    ticketFareView.setSalePrice(ticketFareAirline.getSalePrice());
+                    if(ticketFareAirline.getMaster() != null){
+                        ticketFareView.setReferenceNo(ticketFareAirline.getMaster().getReferenceNo());
+                    }
                 listView.add(ticketFareView);
+                }
             }
         }
         session.close();
@@ -572,18 +577,19 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
         }else{
             for(int i=0;i<PaymentAirticketRefundList.size();i++){
                 RefundAirticketDetailView refundView = new RefundAirticketDetailView();
-                if(PaymentAirticketRefundList.get(i).getRefundAirticketDetail() != null){
-                    refundView.setId(PaymentAirticketRefundList.get(i).getRefundAirticketDetail().getId());
-                    refundView.setRoute(PaymentAirticketRefundList.get(i).getRefundAirticketDetail().getSectorRefund());
-                    refundView.setCommisssion(PaymentAirticketRefundList.get(i).getRefundAirticketDetail().getCommission());
+                RefundAirticketDetail refundAirticketDetail = PaymentAirticketRefundList.get(i).getRefundAirticketDetail();
+                if(refundAirticketDetail != null){
+                    refundView.setId(refundAirticketDetail.getId());
+                    refundView.setRoute(refundAirticketDetail.getSectorRefund());
+                    refundView.setCommisssion(refundAirticketDetail.getCommission());
                     
-                    if(PaymentAirticketRefundList.get(i).getRefundAirticketDetail().getRefundAirticket() != null){
-                        refundView.setRefundNo(PaymentAirticketRefundList.get(i).getRefundAirticketDetail().getRefundAirticket().getRefundNo());
+                    if(refundAirticketDetail.getRefundAirticket() != null){
+                        refundView.setRefundNo(refundAirticketDetail.getRefundAirticket().getRefundNo());
                     }
-                    if(PaymentAirticketRefundList.get(i).getRefundAirticketDetail().getTicketFareAirline() != null){
-                        refundView.setTicketNo(PaymentAirticketRefundList.get(i).getRefundAirticketDetail().getTicketFareAirline().getTicketNo());
-                        refundView.setDepartment(PaymentAirticketRefundList.get(i).getRefundAirticketDetail().getTicketFareAirline().getDepartment());
-                        refundView.setAmount(PaymentAirticketRefundList.get(i).getRefundAirticketDetail().getTicketFareAirline().getSalePrice());
+                    if(refundAirticketDetail.getTicketFareAirline() != null){
+                        refundView.setTicketNo(refundAirticketDetail.getTicketFareAirline().getTicketNo());
+                        refundView.setDepartment(refundAirticketDetail.getTicketFareAirline().getDepartment());
+                        refundView.setAmount(refundAirticketDetail.getTicketFareAirline().getSalePrice());
                     }
 
                 }

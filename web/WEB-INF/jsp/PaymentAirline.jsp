@@ -70,15 +70,15 @@
                             <div class="col-xs-1 text-right"  style="width: 128px">
                                 <label class="control-label text-right">Payment No </label>
                             </div>
-                            <div class="col-xs-1" style="width:180px">
-                                <div class='input-group'>
+                            <div class="col-xs-1" style="width:180px" id="paymentnopanel">
+                                <div class='input-group' id='paymentnumber'>
                                     <input id="paymentId" name="paymentId" type="hidden" class="form-control" maxlength="11" value="${paymentAirticket.id}">
                                     <input id="paymentNo" name="paymentNo" type="text" style="width: 180px" class="form-control" value="${requestScope['payNo']}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right" style="width: 8px"></div>
                             <div class="col-xs-1 text-right" style="width: 80px">
-                                <button style="height:34px" type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="searchPaymentNo();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
+                                <button style="height:34px" type="button"  id="ButtonSearch"  name="ButtonSearch" onclick="searchPaymentNo();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 140px">
                                 <label class="control-label text-right">Payment Date </label>
@@ -830,32 +830,54 @@
             }
         });
         
+        $("#cash").focusout(function(){
+            setFormatCurrency();
+            setDataCurrency();    
+        });
+        $("#agentAmount").focusout(function(){
+            setFormatCurrency();
+            setDataCurrency();    
+        });    
+        $("#debitAmount").focusout(function(){
+            setFormatCurrency();
+            setDataCurrency();        
+        });
+        $("#amount").focusout(function(){
+            setFormatCurrency();
+            setDataCurrency();
+        });    
         //calculate Amount
         $("#withholdingTax").focusout(function(){
+            setFormatCurrency();
+            setDataCurrency();
             calculateAmount();
         });
         
         //calculate TotalPayment
         $("#creditAmount").focusout(function(){
+            setFormatCurrency();
+            setDataCurrency();
             calculateTotalPayment();
             calculateAmount();
         });
         setFormatCurrency();
+        setDataCurrency();
         calculateTotalAmount();
         calculateTotalCommission();
         calculateTotalPayment();
         calculateAmount();
         
-                            $('#RefundTicketTable').dataTable({bJQueryUI: true,
-                        "sPaginationType": "full_numbers",
-                        "bAutoWidth": false,
-                        "bFilter": false,
-                        "aaSorting": [[ 0, "desc" ]]
-                    });
-                    $('.dataTables_length label').remove();
+        $('#RefundTicketTable').dataTable({bJQueryUI: true,
+            "sPaginationType": "full_numbers",
+            "bAutoWidth": false,
+            "bFilter": false,
+            "aaSorting": [[ 0, "desc" ]]
+        });
+        $('.dataTables_length label').remove();
         
+
     });
-function setFormatCurrency(){    
+function setFormatCurrency(){  
     var withholdingTax = replaceAll(",","",$('#withholdingTax').val()); 
     if (withholdingTax == ""){
         withholdingTax = 0;
@@ -891,17 +913,64 @@ function setFormatCurrency(){
     var debitAmount = parseFloat(debitAmount); 
     document.getElementById("debitAmount").value = formatNumber(debitAmount);
 }
-   
+
+function setDataCurrency(){
+    
+    var withholdingTax = replaceAll(",","",$('#withholdingTax').val()); 
+    if (withholdingTax == "" || withholdingTax == 0){
+        document.getElementById("withholdingTax").value = "";
+    }
+    
+    var cash = replaceAll(",","",$('#cash').val()); 
+    if (cash == "" || cash == 0){
+        document.getElementById("cash").value = "";
+    }
+    
+    var agentAmount = replaceAll(",","",$('#agentAmount').val()); 
+    if (agentAmount == "" || agentAmount == 0){
+        document.getElementById("agentAmount").value = "";  
+    }
+            
+    
+    var debitAmount = replaceAll(",","",$('#debitAmount').val()); 
+    if (debitAmount == "" || debitAmount == 0){
+        document.getElementById("debitAmount").value = ""; 
+    }
+    
+    
+    var creditAmount = replaceAll(",","",$('#creditAmount').val()); 
+    if (creditAmount == "" || creditAmount == 0){
+        document.getElementById("creditAmount").value = ""; 
+    }
+    
+    var amount = replaceAll(",","",$('#amount').val()); 
+    if (amount == "" || amount == 0){
+        document.getElementById("amount").value = "";  
+    }
+}   
+
 function setupInvSupValue(){    
     $("#InvoiceSupModal").modal('hide');
 }
 
 function searchPaymentNo() {
-    var action = document.getElementById('action');
-    action.value = 'search';
-    var paymentNo = document.getElementById('paymentNo');
-    paymentNo.value = $("#paymentNo").val();
-    document.getElementById('PaymentAirlineForm').submit();
+//    var paymentNo = $("#paymentNo").val();
+//    var paymentnopanel = $("#paymentnopanel").val();
+//    if(paymentNo == ""){
+//        if(!$('#paymentnopanel').hasClass('has-feedback')) {
+//            $('#paymentnopanel').addClass('has-feedback');
+//        }
+//        $('#paymentnopanel').removeClass('has-success');
+//        $('#paymentnopanel').addClass('has-error');
+//    }
+//    else{
+//        $('#paymentNo').focus();
+        var action = document.getElementById('action');
+        action.value = 'search';
+        var paymentNo = document.getElementById('paymentNo');
+        paymentNo.value = $("#paymentNo").val();
+        document.getElementById('PaymentAirlineForm').submit();
+//    }
 }
 
 function searchTicketFare() {

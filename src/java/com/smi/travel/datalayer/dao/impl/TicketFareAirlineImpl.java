@@ -7,11 +7,13 @@
 package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.TicketFareAirlineDao;
+import com.smi.travel.datalayer.entity.AirticketAirline;
 import com.smi.travel.datalayer.entity.AirticketFlight;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.BookingFlight;
 import com.smi.travel.datalayer.entity.BookingPassenger;
 import com.smi.travel.datalayer.entity.MAirlineAgent;
+import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.entity.MPaymentDoctype;
 import com.smi.travel.datalayer.entity.MRunningCode;
 import com.smi.travel.datalayer.entity.PaymentAirticketFare;
@@ -167,22 +169,37 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         String query = "from AirticketPassenger pass where pass.series1||pass.series2||pass.series3 = :ticketNo";
         Session session = this.sessionFactory.openSession();
         List<AirticketPassenger> ticketPassList = session.createQuery(query).setParameter("ticketNo", TicketNo).list();
+        String ticketAirline = "";
+        String initialname = "";
+        String department = "";
+        String masterId = "";
         if (ticketPassList.isEmpty()) {
             return null;
         }else{ 
-             for(int i = 0 ; i < ticketPassList.size() ; i++ ){
-                 System.out.println("airline" + ticketPassList.get(i).getAirticketAirline().getMAirline().getCode());
-                 String ticketAirline = getMAirlineAgentIdFromCode(ticketPassList.get(i).getAirticketAirline().getMAirline().getCode());
-                 result = ticketPassList.get(i).getTicketFare() + "," 
-                         + ticketPassList.get(i).getTicketTax() + "," 
-                         + ticketPassList.get(i).getAirticketAirline().getTicketDate() + "," 
-                         + ticketPassList.get(i).getTicketType() + "," 
-                         + ticketAirline + "," 
-                         + ticketPassList.get(i).getTicketFrom() + "," 
-                         + ticketPassList.get(i).getMInitialname().getName()+ticketPassList.get(i).getLastName()+ " "+ticketPassList.get(i).getFirstName()+ ","   
-                         + ticketPassList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType() //department 
-                         ;
-                 System.err.println("getTicketFareBookingFromTicketNo " + i + " result ::: "+result);
+            for(int i = 0 ; i < ticketPassList.size() ; i++ ){
+                AirticketAirline airticketAirline = ticketPassList.get(i).getAirticketAirline();
+                MInitialname mInitialname = ticketPassList.get(i).getMInitialname();
+                if(airticketAirline.getMAirline() != null){
+                    ticketAirline = getMAirlineAgentIdFromCode(ticketPassList.get(i).getAirticketAirline().getMAirline().getCode());
+                }
+                if(mInitialname != null){
+                    initialname = mInitialname.getName();
+                }
+                if(airticketAirline.getAirticketPnr().getAirticketBooking().getMaster() != null){
+                    department = airticketAirline.getAirticketPnr().getAirticketBooking().getMaster().getBookingType();
+                    masterId = airticketAirline.getAirticketPnr().getAirticketBooking().getMaster().getId();
+                }
+                result = ticketPassList.get(i).getTicketFare() + "," 
+                        + ticketPassList.get(i).getTicketTax() + "," 
+                        + airticketAirline.getTicketDate() + "," 
+                        + ticketPassList.get(i).getTicketType() + "," 
+                        + ticketAirline + "," 
+                        + ticketPassList.get(i).getTicketFrom() + "," 
+                        + initialname + ticketPassList.get(i).getLastName()+ " "+ticketPassList.get(i).getFirstName()+ ","   
+                        + department + ","//department 
+                        + masterId
+                        ;
+                System.err.println("getTicketFareBookingFromTicketNo " + i + " result ::: "+result);
              }
         }
         session.close();
@@ -225,6 +242,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         String airline = "";
         String ticketBy = "";
         String department = "";
+        String masterId = "";
         for(int i = 0 ; i < airPassengerList.size() ; i++ ){
             id = airPassengerList.get(i).getId();
             ticket = airPassengerList.get(i).getSeries1() 
@@ -251,6 +269,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                 }
                 if(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster() != null){
                     department = String.valueOf(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType());
+                    masterId = String.valueOf(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId());
                 }
             }
 
@@ -262,7 +281,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                     + "<td>" + departDate + "</td>"
                     + "<td>" + ticketFare + "</td>"
                     + "<td>" + ticketTax + "</td>"
-                    + "<td class=\"text-center\" onclick=\"setTicketDetail('" + ticket + "','" + ticketFare + "','" + ticketTax + "','" + issueDate + "','" + ticketRouting + "','" + airline + "','" + ticketBy + "','" + name + "','" + department + "')\">"
+                    + "<td class=\"text-center\" onclick=\"setTicketDetail('" + ticket + "','" + ticketFare + "','" + ticketTax + "','" + issueDate + "','" + ticketRouting + "','" + airline + "','" + ticketBy + "','" + name + "','" + department + "','" + masterId + "')\">"
                     + "<a href=\"\"><span class=\"glyphicon glyphicon-check\"></span></a>" + "</td>"
                     + "</tr>";
             System.out.println("newrow [[[[[[[ "+newrow +" ]]]]");
@@ -494,8 +513,11 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
             Initialname = ticketFare.getMInitialname().getName();
         }
         //AirticketPassenger.airticketAirline.airticketPnr.airticketBooking.master.bookingType
-        String BookingType = ticketFare.getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType();
-        List<AirticketFlight> FlightList =   new ArrayList<AirticketFlight>(ticketFare.getAirticketAirline().getAirticketFlights());
+        String BookingType = "";
+        if(ticketFare.getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster() != null){
+            BookingType = ticketFare.getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType();
+        }
+        List<AirticketFlight> FlightList = new ArrayList<AirticketFlight>(ticketFare.getAirticketAirline().getAirticketFlights());
         String rounting = "";
         for(int i =0;i<FlightList.size();i++){
             System.out.println(FlightList.get(i).getSourceCode()+"-"+FlightList.get(i).getDesCode());

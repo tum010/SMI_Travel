@@ -5,6 +5,7 @@ import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.BookingFlight;
 import com.smi.travel.datalayer.entity.MAirlineAgent;
 import com.smi.travel.datalayer.entity.MPaymentDoctype;
+import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.service.AgentService;
 import com.smi.travel.datalayer.service.TicketFareAirlineService;
@@ -86,6 +87,7 @@ public class AddTicketFareController extends SMITravelController {
         String department = request.getParameter("department");
         String pvType = request.getParameter("pvType");
         String pvCode = request.getParameter("pvCode");
+        String masterId = request.getParameter("masterId");
         
         String result = "";
         List<MAirlineAgent> mAirlineAgentsList = utilityService.getListMAirLineAgent();
@@ -105,6 +107,7 @@ public class AddTicketFareController extends SMITravelController {
         MPaymentDoctype mPaymentDoctype = new MPaymentDoctype();
         if ("save".equalsIgnoreCase(action)){
             System.out.println("ticketId : "+ ticketId);
+            System.out.println("masterId : "+ masterId);
             mAirlineAgent.setId(ticketAirline);
             if(StringUtils.isNotEmpty(ticketAirline)){
                 ticketFareAirline.setMAirlineAgent(mAirlineAgent);
@@ -121,6 +124,13 @@ public class AddTicketFareController extends SMITravelController {
             if(StringUtils.isNotEmpty(ticketId)){
                 ticketFareAirline.setId(ticketId);
             }
+            
+            Master master = new Master();
+            if(StringUtils.isNotEmpty(masterId)){
+                master.setId(masterId);
+                ticketFareAirline.setMaster(master);
+            }
+            
             ticketFareAirline.setTicketNo(ticketNo);
             ticketFareAirline.setTicketType(ticketType);
             request.setAttribute(TICKETTYPE, ticketType);
@@ -289,7 +299,7 @@ public class AddTicketFareController extends SMITravelController {
                         String TicketBy = parts[5].trim(); 
                         String Passenger = parts[6].trim(); 
                         String Department = parts[7].trim(); 
-
+                        String MasterId = parts[8].trim(); 
                         ticketFareAirlines.setTicketNo(ticketNo);
                         if(StringUtils.isNotEmpty(TicketFare)){
                             ticketFareAirlines.setTicketFare(new BigDecimal(TicketFare));
@@ -311,6 +321,12 @@ public class AddTicketFareController extends SMITravelController {
                         if(StringUtils.isNotEmpty(Airline)){
                             ticketFareAirlines.setMAirlineAgent(mAirlineAgent);
                         }
+                        Master master = new Master();
+                        if(StringUtils.isNotEmpty(MasterId)){
+                            master.setId(MasterId);
+                            ticketFareAirlines.setMaster(master);
+                        }
+                        
                         ticketFareAirlines.setPassenger(Passenger);
                         request.setAttribute(TICKETBUY, TicketBy);
                         request.setAttribute(TICKETROUTING, TicketRouting);

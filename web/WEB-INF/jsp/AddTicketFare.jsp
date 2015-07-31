@@ -46,13 +46,24 @@
             <hr/>
             
             <form action="AddTicketFare.smi" method="post" id="AddTicketFareForm" name="AddTicketFareForm" role="form">
+                <input type="hidden" name="masterId" id="masterId" value="${ticketFare.master.id}">
+                <input type="hidden" name="ticketTemp" id="ticketTemp" value="">
+                <input type="hidden" name="ticketFareTemp" id="ticketFareTemp" value="">
+                <input type="hidden" name="ticketTaxTemp" id="ticketTaxTemp" value="">
+                <input type="hidden" name="issueDateTemp" id="issueDateTemp" value="">
+                <input type="hidden" name="ticketRoutingTemp" id="ticketRoutingTemp" value="">
+                <input type="hidden" name="airlineTemp" id="airlineTemp" value="">
+                <input type="hidden" name="ticketByTemp" id="ticketByTemp" value="">
+                <input type="hidden" name="passengerTemp" id="passengerTemp" value="">
+                <input type="hidden" name="departmentTemp" id="departmentTemp" value="">
+                <input type="hidden" name="masterIdTemp" id="masterIdTemp" value="">
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="col-xs-1 text-right" style="width: 150px">
                             <label class="control-label text-right">Ticket&nbsp;No&nbsp;<font style="color: red">*</font></label>
                         </div>
-                        <div class="col-xs-1 form-group" style="width: 200px">
-                            <div class="input-group">
+                        <div class="col-xs-1 form-group" style="width: 200px" id="ticketnopanel">
+                            <div class="input-group"  id='ticketnumber'>
                                 <input id="ticketId" name="ticketId" type="hidden" class="form-control" maxlength="11" value="${ticketFare.id}">
                                 <input id="ticketNo" name="ticketNo" type="text" class="form-control" maxlength="20" value="${ticketFare.ticketNo}">
                             </div>
@@ -60,7 +71,7 @@
                         </div>
                         <div class="col-xs-1  text-right" style="width: 8px"><i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i></div>
                         <div class="col-xs-1 text-right" style="width: 100px">
-                            <button style="height:34px" type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="searchTicketNo();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
+                            <button style="height:34px" type="button"  id="ButtonSearch"  name="ButtonSearch" onclick="searchTicketNo();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
 
                         </div>
                         
@@ -216,7 +227,7 @@
                                     <c:if test="${table.id == selectedId}">
                                         <c:set var="select" value="selected" />
                                     </c:if>
-                                    <option value="${table.id}" ${select}>${table.department} : ${table.name}</option>  
+                                    <option value="${table.id}" ${select}>${table.name}</option>  
                                 </c:forEach>
                             </select>
                         </div>
@@ -657,7 +668,24 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
+<!-- MODAL-->
+<div class="modal fade" id="AddTicketByRefModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Ticket No</h4>
+            </div>
+            <div class="modal-body" id="ticketNoAlert">
 
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="selectTicketNo()" class="btn btn-danger">OK</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>               
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 <c:if test="${! empty requestScope['saveresult']}">
     <c:if test="${requestScope['saveresult'] =='save successful'}">        
         <script language="javascript">
@@ -673,6 +701,7 @@
          
        
 <script type="text/javascript">
+    setTicketDetailTemp = [];
     $(document).ready(function () {
         $(".money").mask('000,000,000.00', {reverse: true});
         $('.date').datetimepicker();
@@ -681,7 +710,9 @@
                searchTicketNo();
             }
         });
-
+        
+        setFormatCurrency();
+        
         $( ".numerical" ).on('input', function() { 
             var value=$(this).val().replace(/[^0-9.,]*/g, '');
             value=value.replace(/\.{2,}/g, '.');
@@ -744,22 +775,71 @@
                     }
                 }
             });
+            
         $("#invoiceAmount").focusout(function(){
             calculateVat();
+            setDataCurrency();
         });
         
         $("#ticketFare").focusout(function(){
+            setFormatCurrency();
+            setDataCurrency();
             calculateVat();
         });
         
        $("#ticketTax").focusout(function(){
+            setFormatCurrency();
+            setDataCurrency();
             calculateVat();
         });
         
         $("#ticketIns").focusout(function(){
+            setFormatCurrency();
+            setDataCurrency();
             calculateVat();
         });
-        setFormatCurrency();
+        
+        $("#agentComReceive").focusout(function(){
+            setFormatCurrency();
+            setDataCurrency();
+        });
+        $("#agentComPay").focusout(function(){
+            setFormatCurrency();
+            setDataCurrency();
+        });
+        $("#addPay").focusout(function(){
+            setFormatCurrency();
+            setDataCurrency();
+        });
+        $("#decPay").focusout(function(){
+            setFormatCurrency();
+            setDataCurrency();
+        });
+        $("#litterCommission").focusout(function(){
+            setFormatCurrency();
+            setDataCurrency();
+        });
+        $("#overCommission").focusout(function(){
+            setFormatCurrency();
+            setDataCurrency();
+        });
+        $("#diffVat").focusout(function(){
+            setFormatCurrency();
+            setDataCurrency();
+        });
+        $("#salePrice").focusout(function(){
+            setFormatCurrency();
+            setDataCurrency();
+        });
+        $("#agentCommission").focusout(function(){
+            setFormatCurrency();
+            setDataCurrency();
+        });
+        $("#ticketCommission").focusout(function(){
+            setFormatCurrency();
+            setDataCurrency();
+        });
+        setDataCurrency();
    });
    
 function setFormatCurrency(){    
@@ -854,6 +934,75 @@ function setFormatCurrency(){
     agentComReceive = parseFloat(agentComReceive); 
     document.getElementById("agentComReceive").value = formatNumber(agentComReceive);    
 }
+
+function setDataCurrency(){    
+    var ticketFare = replaceAll(",","",$('#ticketFare').val()); 
+    if (ticketFare == "" || ticketFare == 0){
+        document.getElementById("ticketFare").value = "";
+    }
+    
+    var ticketTax = replaceAll(",","",$('#ticketTax').val()); 
+    if (ticketTax == "" || ticketTax == 0){
+        document.getElementById("ticketTax").value = "";
+    }
+    
+    var ticketIns = replaceAll(",","",$('#ticketIns').val()); 
+    if (ticketIns == "" || ticketIns == 0){
+        document.getElementById("ticketIns").value = "";  
+    }
+            
+    
+    var ticketCommission = replaceAll(",","",$('#ticketCommission').val()); 
+    if (ticketCommission == "" || ticketCommission == 0){
+        document.getElementById("ticketCommission").value = ""; 
+    }
+    
+    
+    var agentCommission = replaceAll(",","",$('#agentCommission').val()); 
+    if (agentCommission == "" || agentCommission == 0){
+        document.getElementById("agentCommission").value = ""; 
+    }
+    
+    var salePrice = replaceAll(",","",$('#salePrice').val()); 
+    if (salePrice == "" || salePrice == 0){
+        document.getElementById("salePrice").value = "";  
+    }
+    
+    var diffVat = replaceAll(",","",$('#diffVat').val()); 
+    if (diffVat == "" || diffVat == 0){
+        document.getElementById("diffVat").value =""; 
+    }
+    
+    var overCommission = replaceAll(",","",$('#overCommission').val()); 
+    if (overCommission == "" || overCommission == 0){
+        document.getElementById("overCommission").value = "";    
+    }
+    
+    var litterCommission = replaceAll(",","",$('#litterCommission').val()); 
+    if (litterCommission == "" || litterCommission == 0){
+        document.getElementById("litterCommission").value = ""; 
+    }
+    
+    var decPay = replaceAll(",","",$('#decPay').val()); 
+    if (decPay == "" || decPay == 0){
+        document.getElementById("decPay").value = ""; 
+    }
+    
+    var addPay = replaceAll(",","",$('#addPay').val()); 
+    if (addPay == "" || addPay == 0){
+        document.getElementById("addPay").value = ""; 
+    }
+    
+    var agentComPay = replaceAll(",","",$('#agentComPay').val()); 
+    if (agentComPay == "" || agentComPay == 0){
+        document.getElementById("agentComPay").value = ""; 
+    }
+    
+    var agentComReceive = replaceAll(",","",$('#agentComReceive').val()); 
+    if (agentComReceive == "" || agentComReceive == 0){
+        document.getElementById("agentComReceive").value = ""; 
+    }
+}
 function isNumberKey(evt){
     var charCode = (evt.which) ? evt.which : evt.keyCode;
 
@@ -897,8 +1046,8 @@ function saveAction() {
     salePrice.value = $("#salePrice").val();
     var diffVat = document.getElementById('diffVat');
     diffVat.value = $("#diffVat").val();
-    var agentId = document.getElementById('agentId');
-    agentId.value = $("#agentId").val();
+    var agentId = document.getElementById('agent_id');
+    agentId.value = $("#agent_id").val();
     var remark = document.getElementById('remark');
     remark.value = $("#remark").val();
     var overCommission = document.getElementById('overCommission');
@@ -932,11 +1081,24 @@ function saveAction() {
     document.getElementById('AddTicketFareForm').submit();
 }
 function searchTicketNo() {
-    var action = document.getElementById('action');
-    action.value = 'search';
-    var ticketNo = document.getElementById('ticketNo');
-    ticketNo.value = $("#ticketNo").val();
-    document.getElementById('AddTicketFareForm').submit();
+    var ticketNo = $("#ticketNo").val();
+    var ticketnopanel = $("#ticketnopanel").val();
+    if(ticketNo == ""){
+        if(!$('#ticketnopanel').hasClass('has-feedback')) {
+            $('#ticketnopanel').addClass('has-feedback');
+        }
+        $('#ticketnopanel').removeClass('has-success');
+        $('#ticketnopanel').addClass('has-error');
+    }
+    else{
+        $('#ticketNo').focus();
+        var action = document.getElementById('action');
+        action.value = 'search';
+        var ticketNo = document.getElementById('ticketNo');
+        ticketNo.value = $("#ticketNo").val();
+        document.getElementById('AddTicketFareForm').submit();
+    }
+    
 }
 function FilterTicketList(referNo) {
     var servletName = 'TicketFareAirlineServlet';
@@ -985,29 +1147,103 @@ function CallFilterAjax(param) {
         alert(e);
     }
 }   
-function setTicketDetail(ticket,ticketFare,ticketTax,issueDate,ticketRouting,airline,ticketBy,passenger,department) {
-    $("#ticketNo").val(ticket);
-    $("#ticketFare").val(ticketFare);
-    $("#ticketTax").val(ticketTax);
+function setTicketDetail(ticket,ticketFare,ticketTax,issueDate,ticketRouting,airline,ticketBy,passenger,department,masterId) {
+    setTicketDetailTemp.push({no:ticket,fare:ticketFare, tax:ticketTax, date:issueDate , routing:ticketRouting ,airline : airline, by:ticketBy, passenger:passenger,department:department ,masterId:masterId});
+    var ticketNo = $("#ticketNo").val();
+    if(ticketNo != ""){
+        $("#ticketNoAlert").text('Are you sure to edit Ticket No. ?');
+        $('#AddTicketByRefModal').modal('show');
+    }else{
+        $("#ticketNo").val(ticket);
+        $("#ticketFare").val(ticketFare);
+        $("#ticketTax").val(ticketTax);
 
-    $("#issueDate").val(issueDate);
-    $("#ticketRouting").val(ticketRouting);
-    $("#ticketBuy").val(ticketBy);
-    $("#passenger").val(passenger);
-    if(airline == 'Other'){
-        document.getElementById('ticketAirline').value = "1";
-    }else if(airline == 'TG'){
-        document.getElementById('ticketAirline').value = "2";
+        $("#issueDate").val(issueDate);
+        $("#ticketRouting").val(ticketRouting);
+        $("#ticketBuy").val(ticketBy);
+        $("#passenger").val(passenger);
+        $("#masterId").val(masterId);
+        if(airline == 'Other'){
+            document.getElementById('ticketAirline').value = "1";
+        }else if(airline == 'TG'){
+            document.getElementById('ticketAirline').value = "2";
+        }
+
+        if(department == 'I'){
+            document.getElementById('department').value = "wendy";
+        }else if(department == 'O'){
+            document.getElementById('department').value = "outbound";
+        }
+        $("#ListRefnoModal").modal('hide');
     }
-    
-    if(department == 'I'){
-        document.getElementById('department').value = "wendy";
-    }else if(department == 'O'){
-        document.getElementById('department').value = "outbound";
-    }
-    $("#ListRefnoModal").modal('hide');
 }
+function selectTicketNo(){
+    clearData();
+    $('#AddTicketByRefModal').modal('hide');
+    
+    $.each(setTicketDetailTemp, function (key, value) {
+        $("#ticketNo").val(value.no);
+        $("#ticketFare").val(value.fare);
+        $("#ticketTax").val(value.tax);
 
+        $("#issueDate").val(value.date);
+        $("#ticketRouting").val(value.routing);
+        $("#ticketBuy").val(value.by);
+        $("#passenger").val(value.passenger);
+        $("#masterId").val(value.masterId);
+        if(value.airline == 'Other'){
+            document.getElementById('ticketAirline').value = "1";
+        }else if(value.airline == 'TG'){
+            document.getElementById('ticketAirline').value = "2";
+        }
+
+        if(value.department == 'I'){
+            document.getElementById('department').value = "wendy";
+        }else if(value.department == 'O'){
+            document.getElementById('department').value = "outbound";
+        }
+        $("#ListRefnoModal").modal('hide');
+
+    });
+}
+function clearData(){
+    $("#ticketNo").val("");
+    $("#ticketType").val("");
+    $("#ticketRouting").val("");
+    $("#ticketAirline").val("");
+    $("#passenger").val("");
+    $("#ticketBuy").val("");
+    $("#department").val("");
+    $("#pvType").val("");
+    $("#pvCode").val("");
+    $("#issueDate").val("");
+    $("#ticketFare").val(""); 
+    $("#ticketTax").val("");
+    $("#ticketIns").val("");
+    $("#ticketCommission").val("");
+    $("#agentCommission").val("");
+    $("#invoiceAmount").val("");
+    $("#salePrice").val("");
+    $("#diffVat").val("");
+    $("#agent_id").val("");
+    $("#agent_user").val("");
+    $("#agent_name").val("");
+    $("#remark").val("");
+    
+    $("#overCommission").val("");
+    $("#litterCommission").val("");
+    $("#decPay").val("");
+    $("#addPay").val("");
+    $("#agentComPay").val("");
+    $("#agentComReceive").val("");
+    $("#overDate").val("");
+    $("#litterDate").val("");
+    $("#decPayDate").val("");
+    $("#addPayDate").val("");
+    $("#agentPayDate").val("");
+    $("#agentReceiveDate").val("");
+
+}
 function calculateVat() {
 
     //Diff Vat = Inv Amount - Fare - Tax - Ins (ค่า Diff vat สามารถติดลบได้)
