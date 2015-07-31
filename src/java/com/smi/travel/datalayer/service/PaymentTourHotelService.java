@@ -91,4 +91,8 @@ public class PaymentTourHotelService {
     public String getAccountCode(String PayType) {
         return this.paymentWendytourDao.getAccountCode(PayType);
     }
+
+    public String getInvoiceSupCodeByGuideName(String guideName) {
+        return this.paymentWendytourDao.getInvoiceSupCodeByGuideName(guideName);
+    }
 }
