@@ -1176,6 +1176,8 @@ function setTicketDetail(ticket,ticketFare,ticketTax,issueDate,ticketRouting,air
         }
         $("#ListRefnoModal").modal('hide');
     }
+    setFormatCurrency();
+    setDataCurrency();
 }
 function selectTicketNo(){
     clearData();
@@ -1205,6 +1207,8 @@ function selectTicketNo(){
         $("#ListRefnoModal").modal('hide');
 
     });
+    setFormatCurrency();
+    setDataCurrency();
 }
 function clearData(){
     $("#ticketNo").val("");
