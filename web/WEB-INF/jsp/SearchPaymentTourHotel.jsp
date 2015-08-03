@@ -54,30 +54,42 @@
         </div>
         <hr/><br>
         <!--Input Search -->
-        <form action="SearchPaymentTourHotel.smi" method="post" id="PaymentSearchForm" role="form">
+        <form action="SearchPaymentTourHotel.smi" method="post" id="PaymentSearchForm" name="PaymentSearchForm" role="form">
             <div class="col-xs-12" >
                 <div class="col-xs-1 text-left" style="width:120px;">
                     <label class="control-label">From<font style="color: red">*</font></lable>
                 </div>
-                <div class="col-xs-1 text-left" style="width:150px;">
-                        <div class='input-group date' style="width:140px;">
-                            <input name="InputFromDate" id="InputFromDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${InputFromDate}" />
-                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                        </div>
+                <div class="col-xs-1 text-left form-group" style="width:170px;">
+                    <div class=" form-group">     
+                        <div class="input-group date" id="DateFrom">
+                            <input  id="InputFromDate" name="InputFromDate" type="text" 
+                                    data-date-format="YYYY-MM-DD" class="form-control datemask" 
+                                    placeholder="YYYY-MM-DD" value="${InputFromDate}">
+                            <span class="input-group-addon spandate">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div> 
+                    </div>         
                 </div>
-                <div class="col-xs-1 text-right" style="width:90px;">
+                <div class="col-xs-1 text-right" style="width:70px;">
                     <label class="control-label">To <font style="color: red">*</font></lable>
                 </div>
-                <div class="col-xs-1 form-group text-left" style="width:150px;">
-                        <div class='input-group date' style="width:140px;">
-                            <input name="InputToDate" id="InputToDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${InputToDate}" />
-                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                        </div>
+                <div class="col-xs-1 form-group text-left" style="width:170px;">
+                    <div class=" form-group">     
+                        <div class="input-group date" id="DateTo">
+                            <input  id="InputToDate" name="InputToDate" type="text" 
+                                    data-date-format="YYYY-MM-DD" class="form-control datemask" 
+                                    placeholder="YYYY-MM-DD" value="${InputToDate}">
+                            <span class="input-group-addon spandate">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div> 
+                    </div>     
                 </div>
-                <div class="col-xs-1 text-right" style="width:110px;">
+                <div class="col-xs-1 text-right" style="width:100px;">
                     <label class="control-label">PV Type</lable>
                 </div>
-                <div class="col-xs-1 form-group text-left" style="width:170px;">
+                <div class="col-xs-1 form-group text-left" style="width:160px;">
                     <div class="col-sm-12">
                         <select name="selectPvType" id="SelectPvType" class="form-control" value="${requestScope['selectPvType']}">
                             <option id="" value="">---type--</option>
@@ -247,7 +259,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $(".money").mask('000,000,000,000.00', {reverse: true});
-        
         $('#SearchInvoicSupTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": true,
