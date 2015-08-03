@@ -1220,7 +1220,7 @@
                 document.getElementById('vat'+row).value = vatDefaultData;
             } else {
                 document.getElementById('gross'+row).value = '';
-                document.getElementById('vat'+row).value = ''
+                document.getElementById('vat'+row).value = '';
             }
             CalculateGrossTotal('',row);
         }    
