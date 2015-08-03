@@ -28,7 +28,7 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>Save Success!</strong> 
         </div>
-        <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+        <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>Save Unsuccess!</strong> 
         </div>
@@ -487,8 +487,9 @@
                         <div class="col-xs-12 text-center" >
                             <input type="hidden" name="action" id="action" value="">
                             <input type="hidden" name="temp" id="temp" value="">
-                            <button type="submit" id="ButtonSave" name="ButtonSave" onclick="saveAction()" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
-                            <button type="submit" id="ButtonSaveAndNew" name="ButtonSaveAndNew" class="btn btn-success"><i class="fa fa-save"></i> Save & New</button>
+                            <input type="hidden" name="optionSave" id="optionSave" value="${requestScope['optionSave']}">
+                            <button type="submit" id="ButtonSave" name="ButtonSave" onclick="saveAction(0)" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+                            <button type="submit" id="ButtonSaveAndNew" name="ButtonSaveAndNew" onclick="saveAction(1)" class="btn btn-success"><i class="fa fa-save"></i> Save & New</button>
                         </div>
                     </div>
                 </div>
@@ -698,11 +699,14 @@
         </script>
     </c:if>
 </c:if>
-         
        
 <script type="text/javascript">
     setTicketDetailTemp = [];
     $(document).ready(function () {
+//        $("#ButtonSave").attr("disabled", "disabled");
+//        $("#ButtonSaveAndNew").attr("disabled", "disabled");
+
+        
         $(".money").mask('000,000,000.00', {reverse: true});
         $('.date').datetimepicker();
         $("#ticketNo").keyup(function (event) {
@@ -742,6 +746,47 @@
             $("#agent_tel").val(agent_tel);
             $("#AgentModal").modal('hide');
         });
+        
+        var agentCode = [];
+        $.each(agent, function (key, value) {
+            console.log("agentCount=="+agent.length);
+            agentCode.push(value.code);
+            agentCode.push(value.name);
+        });
+
+        $("#agent_user").autocomplete({
+            source: agentCode,
+            close:function( event, ui ) {
+               $("#agent_user").trigger('keyup');
+            }
+        });
+        
+        $("#agent_user").on('keyup',function(){
+            var position = $(this).offset();
+            $(".ui-widget").css("top", position.top + 30);
+            $(".ui-widget").css("left", position.left);
+            var code = this.value.toUpperCase();
+            var name = this.value.toUpperCase();
+            console.log("Name :"+ name);
+            $("#agent_id,#agent_name,#agent_addr,#agent_tel").val(null);
+            $.each(agent, function (key, value) {
+                if (value.code.toUpperCase() === code ) {  
+                    $("#agent_id").val(value.id);
+                    $("#agent_name").val(value.name);
+                    $("#agent_addr").val(value.address);
+                    $("#agent_tel").val(value.tel);
+                    $("#agent_user").val(value.code);
+                }
+                else if(value.name.toUpperCase() === name){
+                    $("#agent_user").val(value.code);
+                    $("#agent_id").val(value.id);
+                    $("#agent_name").val(value.name);
+                    $("#agent_addr").val(value.address);
+                    $("#agent_tel").val(value.tel);
+                }
+            }); 
+        }); 
+
         // AGENT TABLE
         $('#AgentTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
@@ -840,6 +885,10 @@
             setDataCurrency();
         });
         setDataCurrency();
+        
+        if($('#optionSave').val() == "1"){
+            clearData();
+        }
    });
    
 function setFormatCurrency(){    
@@ -1013,7 +1062,8 @@ function isNumberKey(evt){
     return true;
 }
 
-function saveAction() {
+function saveAction(optionsave){
+    $("#optionSave").val(optionsave); 
     var action = document.getElementById('action');
     action.value = 'save';
     var ticketNo = document.getElementById('ticketNo');
@@ -1078,8 +1128,12 @@ function saveAction() {
     pvCode.value = $("#pvCode").val(); 
     var pvType = document.getElementById('pvType');
     pvType.value = $("#pvType").val(); 
+    var optionSave = document.getElementById('optionSave');
+    optionSave.value = $("#optionSave").val(); 
+    
     document.getElementById('AddTicketFareForm').submit();
 }
+
 function searchTicketNo() {
     var ticketNo = $("#ticketNo").val();
     var ticketnopanel = $("#ticketnopanel").val();
