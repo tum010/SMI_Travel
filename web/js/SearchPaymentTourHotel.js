@@ -24,10 +24,10 @@ $(document).ready(function () {
         "iDisplayLength": 10
     });
     //validate date
-    $('#InputFromDate').datetimepicker().on('dp.change', function (e) {
+    $('#DateFrom').datetimepicker().on('dp.change', function (e) {
         $('#PaymentSearchForm').bootstrapValidator('revalidateField', 'InputFromDate');
     });
-    $('#InputToDate').datetimepicker().on('dp.change', function (e) {
+    $('#DateTo').datetimepicker().on('dp.change', function (e) {
         $('#PaymentSearchForm').bootstrapValidator('revalidateField', 'InputToDate');
     });
 
@@ -43,9 +43,6 @@ $(document).ready(function () {
                     InputFromDate: {
                         trigger: 'focus keyup change',
                         validators: {
-                            notEmpty: {
-                                message: 'The Date From is required'
-                            },
                             date: {
                                 format: 'YYYY-MM-DD',
                                 max: 'InputToDate',
@@ -56,9 +53,6 @@ $(document).ready(function () {
                     InputToDate: {
                         trigger: 'focus keyup change',
                         validators: {
-                            notEmpty: {
-                                message: 'The Date To is required'
-                            },
                             date: {
                                 format: 'YYYY-MM-DD',
                                 min: 'InputFromDate',
