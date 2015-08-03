@@ -19,7 +19,6 @@ public class InvoiceDetail {
      private Invoice invoice;
      private MPaytype MPaytype;
      private String description;
-     private String valueType;
      private BigDecimal cost;
      private BigDecimal costLocal;
      private String curCost;
@@ -27,7 +26,8 @@ public class InvoiceDetail {
      private BigDecimal amountLocal;
      private String curAmount;
      private BigDecimal vat;
-     private Integer isCalVat;
+     private BigDecimal gross;
+     private Integer isVat;
      private List invoiceDocuments = new LinkedList<InvoiceDocument>();
 
     public InvoiceDetail() {
@@ -37,12 +37,11 @@ public class InvoiceDetail {
     public InvoiceDetail(Invoice invoice) {
         this.invoice = invoice;
     }
-    public InvoiceDetail(BillableDesc billableDesc, Invoice invoice, MPaytype MPaytype, String description, String valueType, BigDecimal cost, BigDecimal costLocal, String curCost, BigDecimal amount, BigDecimal amountLocal, String curAmount, BigDecimal vat, Integer isCalVat, List invoiceDocuments) {
+    public InvoiceDetail(BillableDesc billableDesc, Invoice invoice, MPaytype MPaytype, String description, BigDecimal cost, BigDecimal costLocal, String curCost, BigDecimal amount, BigDecimal amountLocal, String curAmount, BigDecimal vat, Integer isVat, List invoiceDocuments,BigDecimal gross) {
        this.billableDesc = billableDesc;
        this.invoice = invoice;
        this.MPaytype = MPaytype;
        this.description = description;
-       this.valueType = valueType;
        this.cost = cost;
        this.costLocal = costLocal;
        this.curCost = curCost;
@@ -50,7 +49,7 @@ public class InvoiceDetail {
        this.amountLocal = amountLocal;
        this.curAmount = curAmount;
        this.vat = vat;
-       this.isCalVat = isCalVat;
+       this.isVat = isVat;
        this.invoiceDocuments = invoiceDocuments;
     }
    
@@ -90,13 +89,7 @@ public class InvoiceDetail {
     public void setDescription(String description) {
         this.description = description;
     }
-    public String getValueType() {
-        return this.valueType;
-    }
-    
-    public void setValueType(String valueType) {
-        this.valueType = valueType;
-    }
+
     public BigDecimal getCost() {
         return this.cost;
     }
@@ -146,13 +139,23 @@ public class InvoiceDetail {
     public void setVat(BigDecimal vat) {
         this.vat = vat;
     }
-    public Integer getIsCalVat() {
-        return this.isCalVat;
+
+    public BigDecimal getGross() {
+        return gross;
     }
-    
-    public void setIsCalVat(Integer isCalVat) {
-        this.isCalVat = isCalVat;
+
+    public void setGross(BigDecimal gross) {
+        this.gross = gross;
     }
+
+    public Integer getIsVat() {
+        return isVat;
+    }
+
+    public void setIsVat(Integer isVat) {
+        this.isVat = isVat;
+    }
+     
 
     public List getInvoiceDocuments() {
         return invoiceDocuments;

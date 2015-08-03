@@ -19,9 +19,6 @@
         <property name="description" type="string">
             <column name="description" />
         </property>
-        <property name="valueType" type="string">
-            <column name="value_type" length="1" />
-        </property>
         <property name="cost" type="big_decimal">
             <column name="cost" precision="10" />
         </property>
@@ -43,8 +40,11 @@
         <property name="vat" type="big_decimal">
             <column name="vat" precision="10" />
         </property>
-        <property name="isCalVat" type="java.lang.Integer">
-            <column name="is_cal_vat" />
+        <property name="gross" type="big_decimal">
+            <column name="gross" precision="10" />
+        </property>
+        <property name="isVat" type="java.lang.Integer">
+            <column name="is_vat" />
         </property>
         <bag name="invoiceDocuments" table="invoice_document" inverse="true" lazy="true" fetch="select">
             <key>
