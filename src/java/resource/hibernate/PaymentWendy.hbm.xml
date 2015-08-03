@@ -13,6 +13,9 @@
         <many-to-one name="MAccpay" class="com.smi.travel.datalayer.entity.MAccpay" fetch="select">
             <column name="payment" />
         </many-to-one>
+        <many-to-one name="tourOperationDesc" class="com.smi.travel.datalayer.entity.TourOperationDesc" fetch="select">
+            <column name="tour_desc_id" />
+        </many-to-one>
         <many-to-one name="MItemstatus" class="com.smi.travel.datalayer.entity.MItemstatus" fetch="select">
             <column name="status" />
         </many-to-one>
