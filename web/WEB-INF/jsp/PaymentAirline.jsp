@@ -33,7 +33,7 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>Save Success!</strong> 
         </div>
-        <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+        <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>Save Unsuccess!</strong> 
         </div>
@@ -41,7 +41,7 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>Delete Success!</strong> 
         </div>
-        <div id="textAlertDivNotDelete"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+        <div id="textAlertDivNotDelete"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>Delete Unsuccess!</strong> 
         </div>       
@@ -480,8 +480,9 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="col-xs-12 text-right" >
-                            <button type="submit" id="ButtonSave" name="ButtonSave" onclick="saveAction()" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
-                            <button type="submit" id="ButtonSaveAndNew" name="ButtonSaveAndNew" class="btn btn-success"><i class="fa fa-save"></i> Save & New</button>
+                            <input type="hidden" name="optionSave" id="optionSave" value="${requestScope['optionSave']}">
+                            <button type="submit" id="ButtonSave" name="ButtonSave" onclick="saveAction(0)" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+                            <button type="submit" id="ButtonSaveAndNew" name="ButtonSaveAndNew" onclick="saveAction(1)"class="btn btn-success"><i class="fa fa-save"></i> Save & New</button>
                         </div>
                     </div>
                 </div>           
@@ -694,6 +695,9 @@
 <!--Script-->       
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
+//        $("#ButtonSave").attr("disabled", "disabled");
+//        $("#ButtonSaveAndNew").attr("disabled", "disabled");
+        
         $('.date').datetimepicker();
         $(".moneyformat").mask('000,000,000', {reverse: true});
         $(".money").mask('000,000,000.00', {reverse: true});
@@ -884,7 +888,9 @@
 //        });
 //        $('.dataTables_length label').remove();
         
-
+        if($('#optionSave').val() == "1"){
+            clearData();
+        }
     });
 function setFormatCurrency(){  
     var withholdingTax = replaceAll(",","",$('#withholdingTax').val()); 
@@ -1131,7 +1137,8 @@ function CallAjaxAdd(param) {
     }
 }     
 
-function saveAction(){
+function saveAction(optionsave){
+    $("#optionSave").val(optionsave); 
     var action = document.getElementById('action');
     action.value = 'save';
     var paymentNo = document.getElementById('paymentNo');
@@ -1192,7 +1199,8 @@ function saveAction(){
     
     var rowRefundCount = document.getElementById('rowRefundCount');
     rowRefundCount.value = $('#RefundTicketTable tr').length;
-    
+    var optionSave = document.getElementById('optionSave');
+    optionSave.value = $("#optionSave").val(); 
     document.getElementById('PaymentAirlineForm').submit();
 }
 
@@ -1430,4 +1438,35 @@ function insertCommas(nField){
         nField.value = nField.value.replace(/[^\d\,\.]/g,"").replace(/ /,"");
     }
 }
+
+function clearData(){
+    $("#paymentNo").val("");
+    $("#paymentDate").val("");
+    $("#duePaymentDate").val("");
+    $("#invoiceSupCode").val("");
+    $("#apCode").val(""); 
+    $("#detail").val("");
+    $("#payBy").val("");
+    $("#agentAmount").val("");
+    $("#creditNote").val("");
+    $("#creditAmount").val("");
+    $("#commissionVat").val("");
+    $("#debitNote").val("");
+    $("#cash").val("");
+    $("#withholdingTax").val("");
+    $("#chqNo").val("");
+    $("#debitAmount").val("");
+    $("#ticketFrom").val("");
+    $("#typeAirline").val("");
+    $("#dateFrom").val("");
+    $("#dateTo").val("");
+    $("#totalCommissionTicketFare").val("");
+    $("#totalAmountTicketFare").val("");
+    $("#totalAmountRefund").val("");
+    $("#totalAmountRefundVat").val("");
+    $("#amount").val("");
+    $("#totalPayment").val("");
+    $("#invoiceSupName").val("");
+}
+
 </script>
