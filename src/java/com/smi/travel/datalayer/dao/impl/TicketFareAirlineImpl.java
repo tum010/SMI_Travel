@@ -19,7 +19,13 @@ import com.smi.travel.datalayer.entity.MRunningCode;
 import com.smi.travel.datalayer.entity.PaymentAirticketFare;
 import com.smi.travel.datalayer.entity.RefundAirticketDetail;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
+import com.smi.travel.datalayer.view.entity.ArCode;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,9 +52,12 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
-            if((ticket.getPvCode() == null)||("".equalsIgnoreCase(ticket.getPvCode()))){
-                result = generatePVCode();
-                ticket.setPvCode(result);
+            if(ticket.getMPaymentDoctype() != null){
+                if((ticket.getMPaymentDoctype().getId() != null || !"".equals(ticket.getMPaymentDoctype().getId())) 
+                    && ((ticket.getPvCode() == null)||("".equalsIgnoreCase(ticket.getPvCode())))){
+                    result = generatePVCode();
+                    ticket.setPvCode(result);
+                }
             }
             session.save(ticket);
             transaction.commit();
@@ -67,9 +76,12 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
-            if((ticket.getPvCode() == null)||("".equalsIgnoreCase(ticket.getPvCode()))){
-                result = generatePVCode();
-                ticket.setPvCode(result);
+            if(ticket.getMPaymentDoctype() != null){
+                if((ticket.getMPaymentDoctype().getId() != null || !"".equals(ticket.getMPaymentDoctype().getId())) 
+                    && ((ticket.getPvCode() == null)||("".equalsIgnoreCase(ticket.getPvCode())))){
+                    result = generatePVCode();
+                    ticket.setPvCode(result);
+                }
             }
             session.update(ticket);
             transaction.commit();
@@ -186,8 +198,16 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                     initialname = mInitialname.getName();
                 }
                 if(airticketAirline.getAirticketPnr().getAirticketBooking().getMaster() != null){
-                    department = airticketAirline.getAirticketPnr().getAirticketBooking().getMaster().getBookingType();
-                    masterId = airticketAirline.getAirticketPnr().getAirticketBooking().getMaster().getId();
+                    if(! "null".equals(airticketAirline.getAirticketPnr().getAirticketBooking().getMaster().getBookingType())
+                    || airticketAirline.getAirticketPnr().getAirticketBooking().getMaster().getBookingType() != null){
+                        department = airticketAirline.getAirticketPnr().getAirticketBooking().getMaster().getBookingType();
+                    }
+                    if(!"null".equals(airticketAirline.getAirticketPnr().getAirticketBooking().getMaster().getId())
+                    || airticketAirline.getAirticketPnr().getAirticketBooking().getMaster().getId() != null){
+                        masterId = airticketAirline.getAirticketPnr().getAirticketBooking().getMaster().getId();
+                    }
+//                    department = airticketAirline.getAirticketPnr().getAirticketBooking().getMaster().getBookingType();
+//                    masterId = airticketAirline.getAirticketPnr().getAirticketBooking().getMaster().getId();
                 }
                 result = ticketPassList.get(i).getTicketFare() + "," 
                         + ticketPassList.get(i).getTicketTax() + "," 
@@ -268,8 +288,16 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                     airline = String.valueOf(airPassengerList.get(i).getAirticketAirline().getMAirline().getCode());
                 }
                 if(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster() != null){
-                    department = String.valueOf(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType());
-                    masterId = String.valueOf(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId());
+                    if(!"null".equals(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType())
+                    || airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType() != null){
+                        department = String.valueOf(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType());
+                    }
+                    if(!"null".equals(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId())
+                    || airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId() != null){
+                        masterId = String.valueOf(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId());
+                    }
+//                    department = String.valueOf(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType());
+//                    masterId = String.valueOf(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId());
                 }
             }
 
@@ -515,7 +543,10 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         //AirticketPassenger.airticketAirline.airticketPnr.airticketBooking.master.bookingType
         String BookingType = "";
         if(ticketFare.getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster() != null){
-            BookingType = ticketFare.getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType();
+            if(! "null".equals(ticketFare.getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType())
+               || ticketFare.getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType() != null){
+                BookingType = ticketFare.getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType();
+            }
         }
         List<AirticketFlight> FlightList = new ArrayList<AirticketFlight>(ticketFare.getAirticketAirline().getAirticketFlights());
         String rounting = "";
@@ -544,9 +575,5 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         this.sessionFactory.close();
         return result;
     }
-    
-   
 
-   
-    
 }
