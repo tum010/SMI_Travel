@@ -55,7 +55,7 @@ public interface MListItemDao {
     public MInitialname getMInitialnameFromId(String id);
     public MInitialname getMInitialnameFromName(String name);
     public MBilltype getMBilltypeFromName(String name);
-    public MBilltype getListMBilltype();
+    public List<MBilltype> getListMBilltype();
     public List<MPaymentDoctype>  getListMpaymentDocType(String department);
     public List<MAirlineAgent> getListMAirLineAgent();
     public List<MPaytype> getListMPayType();
