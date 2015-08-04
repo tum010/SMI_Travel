@@ -359,6 +359,19 @@ public class MListItemImpl implements MListItemDao {
         this.sessionFactory.close();
         return List.get(0);
     }
+    
+    @Override
+    public MBilltype getListMBilltype(){
+        String query = "from MBilltype m where m.name";
+        Session session = this.sessionFactory.openSession();
+        List<MBilltype> List = session.createQuery(query).list();
+        if (List.isEmpty()) {
+            return null;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return List.get(0);
+    }
 
     @Override
     public List<MPaymentDoctype> getListMpaymentDocType(String department) {
