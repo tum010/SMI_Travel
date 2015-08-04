@@ -156,9 +156,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="col-xs-1 text-right" style="width: 150px">
-                            <label class="control-label">
-                                <input type="checkbox" id="passengerCheckbox" name="passengerCheckbox" data-label="passengerCheckbox" value=""/>&nbsp;Passenger&nbsp; 
-                            </label>
+                            <label class="control-label text-right">Passenger</label>
                         </div>
                         <div class="col-xs-1 form-group" style="width: 200px">
                             <div class="input-group">
@@ -484,9 +482,11 @@
                 </div>
                 <div class="row" style="padding-bottom: 20px">
                     <div class="col-xs-12">
-                        <div class="col-xs-12 text-center" >
+                        <div class="col-xs-12 text-center" > 
                             <input type="hidden" name="action" id="action" value="">
                             <input type="hidden" name="temp" id="temp" value="">
+                            <input type="hidden" name="ticketFareFlag" id="ticketFareFlag" value="${requestScope['ticketFareFlag']}">
+                            <input type="hidden" name="flightDetailFlag" id="flightDetailFlag" value="${requestScope['flightDetailFlag']}">
                             <input type="hidden" name="optionSave" id="optionSave" value="${requestScope['optionSave']}">
                             <button type="submit" id="ButtonSave" name="ButtonSave" onclick="saveAction(0)" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
                             <button type="submit" id="ButtonSaveAndNew" name="ButtonSaveAndNew" onclick="saveAction(1)" class="btn btn-success"><i class="fa fa-save"></i> Save & New</button>
@@ -541,7 +541,7 @@
                     </div>
                 </div>  
                 <!----- Flight Detail ----->
-                <div class="panel panel-default">
+                <div id="flightPanel" class="panel panel-default hidden">
                     <div class="panel-heading">
                         <h4 class="panel-title">Flight Detail</h4>
                     </div> 
@@ -700,15 +700,28 @@
     </c:if>
 </c:if>
        
+        
+       
 <script type="text/javascript">
     setTicketDetailTemp = [];
     $(document).ready(function () {
 //        $("#ButtonSave").attr("disabled", "disabled");
 //        $("#ButtonSaveAndNew").attr("disabled", "disabled");
-
+        
+        $("#flightPanel").addClass('hidden');
+        
+        if($('#flightDetailFlag').val() == "notdummy"){
+            $("#flightPanel").removeClass('hidden');  
+        }
+        
+        if($('#ticketFareFlag').val() == "dummy"){
+            alert('Ticket no. not available');
+        }
         
         $(".money").mask('000,000,000.00', {reverse: true});
         $('.date').datetimepicker();
+        $('span').click(function () {
+        });
         $("#ticketNo").keyup(function (event) {
             if(event.keyCode === 13){
                searchTicketNo();
@@ -1175,19 +1188,34 @@ function CallFilterAjax(param) {
             cache: false,
             data: param,
             success: function (msg) {
-                try {
-                    $('#ListRefnoTable').dataTable().fnClearTable();
-                    $('#ListRefnoTable').dataTable().fnDestroy();
-                    $("#ListRefnoTable tbody").empty().append(msg);
-                    $('#ListRefnoTable').dataTable({bJQueryUI: true,
-                        "sPaginationType": "full_numbers",
-                        "bAutoWidth": false,
-                        "bFilter": false,
-                        "bPaginate": true,
-                        "bInfo": false,
-                        "bLengthChange": false,
-                        "iDisplayLength": 10
-                    });
+                try { 
+                    if(msg == "null"){
+                        $('#ListRefnoTable').dataTable().fnClearTable();
+                        $('#ListRefnoTable').dataTable().fnDestroy();
+                        $('#ListRefnoTable').dataTable({bJQueryUI: true,
+                            "sPaginationType": "full_numbers",
+                            "bAutoWidth": false,
+                            "bFilter": false,
+                            "bPaginate": true,
+                            "bInfo": false,
+                            "bLengthChange": false,
+                            "iDisplayLength": 10
+                        });
+                    }else{
+                        $('#ListRefnoTable').dataTable().fnClearTable();
+                        $('#ListRefnoTable').dataTable().fnDestroy();
+                        $("#ListRefnoTable tbody").empty().append(msg);
+                        $('#ListRefnoTable').dataTable({bJQueryUI: true,
+                            "sPaginationType": "full_numbers",
+                            "bAutoWidth": false,
+                            "bFilter": false,
+                            "bPaginate": true,
+                            "bInfo": false,
+                            "bLengthChange": false,
+                            "iDisplayLength": 10
+                        });
+                    }
+
                      $("#ajaxload").addClass("hidden");
                 } catch (e) {
                     alert(e);
@@ -1232,6 +1260,7 @@ function setTicketDetail(ticket,ticketFare,ticketTax,issueDate,ticketRouting,air
     }
     setFormatCurrency();
     setDataCurrency();
+    $("#flightPanel").addClass('hidden');
 }
 function selectTicketNo(){
     clearData();

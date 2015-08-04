@@ -46,6 +46,9 @@ public class AddTicketFareController extends SMITravelController {
     private static final String DEPARTMENT = "department";
     private static final String FLIGHTDETAIL = "Flight_Detail";
     private static final String PVTYPELIST = "pvTypeList";
+    private static final String OPTIONSAVE = "optionSave";
+    private static final String FLIGHTDETAILFLAG = "flightDetailFlag";
+    private static final String TICKETFAREFLAG = "ticketFareFlag";
     private UtilityService utilityService;
     private TicketFareAirlineService ticketFareAirlineService;
     private AgentService agentService;
@@ -88,7 +91,7 @@ public class AddTicketFareController extends SMITravelController {
         String pvType = request.getParameter("pvType");
         String pvCode = request.getParameter("pvCode");
         String masterId = request.getParameter("masterId");
-        
+        String optionSave = request.getParameter("optionSave");
         String result = "";
         List<MAirlineAgent> mAirlineAgentsList = utilityService.getListMAirLineAgent();
         request.setAttribute(AIRLINELIST,mAirlineAgentsList);
@@ -96,6 +99,7 @@ public class AddTicketFareController extends SMITravelController {
         request.setAttribute(Agent, agent);
         List<MPaymentDoctype> mPaymentDoctypeList = utilityService.getListMpaymentDocType("airticket");
         request.setAttribute(PVTYPELIST, mPaymentDoctypeList);
+        request.setAttribute(FLIGHTDETAILFLAG,"dummy");
         
         Agent agents = new Agent();
 
@@ -257,9 +261,8 @@ public class AddTicketFareController extends SMITravelController {
                 ticketFareAirline.setPvCode(result);
                 request.setAttribute(SAVERESULT, "save successful");
             }
-           
+            request.setAttribute(OPTIONSAVE,optionSave); 
             request.setAttribute(TICKETFARE,ticketFareAirline); 
-            
         } else if ("edit".equalsIgnoreCase(action)) {
             System.out.print("ticketId : " +ticketId);
             ticketFareAirline = ticketFareAirlineService.getTicketFareFromId(ticketId);
@@ -286,9 +289,15 @@ public class AddTicketFareController extends SMITravelController {
                 List<BookingFlight> bookingFlights = new ArrayList<BookingFlight>();
                 bookingFlights = ticketFareAirlineService.getListFlightFromTicketNo(ticketNo);
                 request.setAttribute(FLIGHTDETAIL, bookingFlights);
+                if(bookingFlights == null){
+                    request.setAttribute(FLIGHTDETAILFLAG,"dummy");
+                }else{
+                    request.setAttribute(FLIGHTDETAILFLAG,"notdummy");
+                }
                 if(ticketFareAirline == null){
                     String airticketPass = ticketFareAirlineService.getTicketFareBookingFromTicketNo(ticketNo);
                     TicketFareAirline ticketFareAirlines = new TicketFareAirline();
+                    request.setAttribute(TICKETFAREFLAG,"dummy");
                     if(StringUtils.isNotEmpty(airticketPass)){
                         String[] parts = airticketPass.split(",");
                         String TicketFare = parts[0].trim(); 
@@ -332,7 +341,9 @@ public class AddTicketFareController extends SMITravelController {
                         request.setAttribute(TICKETROUTING, TicketRouting);
                         request.setAttribute(ISSUEDATE, IssueDate);
                         request.setAttribute(DEPARTMENT, Department);
+                        request.setAttribute(TICKETFAREFLAG,"notdummy");
                     }
+                    
                     ticketFareAirlines.setTicketNo(ticketNo);
                     request.setAttribute(TICKETFARE,ticketFareAirlines);
                 }else{
@@ -390,6 +401,7 @@ public class AddTicketFareController extends SMITravelController {
                     request.setAttribute(AGENTPAYDATE, ticketFareAirline.getAgentPayDate());
                     request.setAttribute(AGENTRECEIVEDATE, ticketFareAirline.getAgentReceiveDate());
                     request.setAttribute(DEPARTMENT, ticketFareAirline.getDepartment());
+                    request.setAttribute(TICKETFAREFLAG,"notdummy");
                 }	
             }
         }

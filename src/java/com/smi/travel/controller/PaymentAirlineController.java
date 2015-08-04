@@ -48,7 +48,8 @@ public class PaymentAirlineController extends SMITravelController {
     private static final String DELETERESULT = "deleteresult";
     private static final String ADDREFUNDLIST = "addRefundList"; 
     private static final String SETCALCULATETICKET = "setCalculateTicket"; 
-    private static final String SETCALCULATEREFUND = "setCalculateRefund"; 
+    private static final String SETCALCULATEREFUND = "setCalculateRefund";
+    private static final String OPTIONSAVE = "optionSave";
     private UtilityService utilityService;
     private PaymentAirTicketService paymentAirTicketService;
     UtilityFunction util;
@@ -82,7 +83,7 @@ public class PaymentAirlineController extends SMITravelController {
         String totalAmountTicketFare = request.getParameter("totalAmountTicketFare");
         String totalAmountRefund = request.getParameter("totalAmountRefund");
         String totalAmountRefundVat = request.getParameter("totalAmountRefundVat");
-
+        String optionSave = request.getParameter("optionSave");
         request.setAttribute(TICKETFARECOUNT,"0");
         request.setAttribute(FLAGSEARCG,"0");
         request.setAttribute(SETCALCULATETICKET,0);
@@ -408,19 +409,24 @@ public class PaymentAirlineController extends SMITravelController {
                 request.setAttribute(PAYNO,result);
                 request.setAttribute(SAVERESULT, "save successful");
             }
-            
-            ticketFareViews = paymentAirTicketService.getTicketFareViewsByPaymentAirId(paymentAirticket.getId());
-            if(ticketFareViews != null){
-                request.setAttribute(SETCALCULATETICKET,1);
-            }
-            request.setAttribute(TICKETFARELIST,ticketFareViews);
+            if("0".equals(optionSave)){
+                ticketFareViews = paymentAirTicketService.getTicketFareViewsByPaymentAirId(paymentAirticket.getId());
+                if(ticketFareViews != null){
+                    request.setAttribute(SETCALCULATETICKET,1);
+                }
+                request.setAttribute(TICKETFARELIST,ticketFareViews);
 
-            refundAirticketDetailViews = paymentAirTicketService.getRefundDetailByPaymentAirId(paymentAirticket.getId());
-            if(refundAirticketDetailViews != null){
-                request.setAttribute(SETCALCULATEREFUND,1);
-            }  
-            request.setAttribute(ADDREFUNDLIST,refundAirticketDetailViews);
-            
+                refundAirticketDetailViews = paymentAirTicketService.getRefundDetailByPaymentAirId(paymentAirticket.getId());
+                if(refundAirticketDetailViews != null){
+                    request.setAttribute(SETCALCULATEREFUND,1);
+                }  
+                request.setAttribute(ADDREFUNDLIST,refundAirticketDetailViews);
+            }
+            if("1".equals(optionSave)){
+                request.setAttribute(SETCALCULATETICKET,0);
+                request.setAttribute(SETCALCULATEREFUND,0);
+            }
+            request.setAttribute(OPTIONSAVE,optionSave); 
         }else if("deleteTicket".equalsIgnoreCase(action)) {
             String deleteTicketId = request.getParameter("deleteTicketId");
             result = paymentAirTicketService.DeletePaymentAirFare(paymentId,deleteTicketId,1);

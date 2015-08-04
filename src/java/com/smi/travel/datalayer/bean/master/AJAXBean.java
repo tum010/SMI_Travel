@@ -580,6 +580,9 @@ public class AJAXBean extends AbstractBean implements
                 String referNo = map.get("referNo").toString();
                 System.out.println("referNo"+referNo);
                 result = ticketFareAirlineDao.getListTicketFareFromRefno(referNo);
+                if(result == null){
+                    result = "null";
+                }
             }
         } else if (PAYMENTAIRTICKET.equalsIgnoreCase(servletName)) {
             if ("addRefund".equalsIgnoreCase(type)) {

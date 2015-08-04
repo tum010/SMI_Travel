@@ -6,7 +6,6 @@
 package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.dao.TicketFareAirlineDao;
-import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.BookingFlight;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
