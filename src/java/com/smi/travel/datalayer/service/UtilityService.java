@@ -194,6 +194,10 @@ public class UtilityService {
         return listitemdao.getMBilltypeFromName(name);
     }
     
+    public MBilltype getListMBilltype() {
+        return listitemdao.getListMBilltype();
+    }
+    
     public List<MPaymentDoctype> getListMpaymentDocType(String department){
         return listitemdao.getListMpaymentDocType(department);
     }
