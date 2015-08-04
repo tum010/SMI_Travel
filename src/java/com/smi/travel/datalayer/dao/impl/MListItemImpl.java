@@ -361,7 +361,7 @@ public class MListItemImpl implements MListItemDao {
     }
     
     @Override
-    public MBilltype getListMBilltype(){
+    public List<MBilltype> getListMBilltype(){
         String query = "from MBilltype m where m.name";
         Session session = this.sessionFactory.openSession();
         List<MBilltype> List = session.createQuery(query).list();
@@ -370,7 +370,7 @@ public class MListItemImpl implements MListItemDao {
         }
         session.close();
         this.sessionFactory.close();
-        return List.get(0);
+        return List;
     }
 
     @Override
