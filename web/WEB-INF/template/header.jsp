@@ -77,6 +77,7 @@
 									"<li><a id='menu-mcommission' href='MCommission.smi'>Commission</a></li>",
 									"<li><a id='menu-mbank' href='MBank.smi'>Bank</a></li>",
 									"<li><a id='menu-maccountcode' href='MAccountCode.smi'>Account Code</a></li>",
+                                                                        "<li><a id='menu-maparcode' href='APARCode.smi'>AP/AR Code</a></li>",         
 									"<li><a id='menu-stock' href='SearchStock.smi'>Stock</a></li>",
 									"<li><a id='menu-DefineVar' href='DefineVar.smi'>Define Variable</a></li>",
 									"<li><a id='menu-maccount' href='MAccountCode.smi'>Account</a></li>",
@@ -118,9 +119,6 @@
 
 							var reportMenuString = getActiveMenuString(
 									reportMenuList, reportMenu);
-                                                         if(reportMenuString === null){
-                                                             reportMenuString = '';
-                                                        }
 							document.getElementById("reportMenu").innerHTML = reportMenuString;
 
 							var checkingMenuString = getActiveMenuString(
