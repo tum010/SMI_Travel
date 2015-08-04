@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,8 +26,7 @@ public class MAccountCodeController extends AbstractController {
 	private static final Map<String, String> accTypeList = new LinkedHashMap<String, String>();
 	
 	private static final String SEARCH_ACTION = "search";
-	private static final String ADD_ACTION = "add";
-	private static final String EDIT_ACTION = "edit";
+	private static final String SAVE_ACTION = "save";
 
 	static {
 		accTypeList.put(null, null);
@@ -49,30 +49,28 @@ public class MAccountCodeController extends AbstractController {
 	@RequestMapping
 	public String initial(@ModelAttribute("form") MAccountCodeForm form, Model model,@RequestParam(value="action",required=false) String action) {
 		logger.debug("MAccountCodeController : initial request");
-		
+
 		
 		if(SEARCH_ACTION.equals(action)){
 			String accCode = form.getAccCode();
 			String accType = form.getAccType();
 			List<AccountCode> accountCodeList = mAccountCodeService.search(accCode, accType);
 			form.setDataTable(accountCodeList);
-		}else if(ADD_ACTION.equals(action)){
-			AccountCode accountCode = new AccountCode(form.getId(),form.getAccCodeModal(),form.getDetailModal(),form.getAccTypeModal());
-			int result = mAccountCodeService.save(accountCode);
-			if(result==1){
-				form.setAccCodeModal("");
-				form.setAccCodeModal2("");
-				form.setAccTypeModal("");
-				form.setDetailModal("");
-				form.setIdModal("");
-				model.addAttribute("resultSave", "textAlertDivSave");
+		}else if(SAVE_ACTION.equals(action)){
+			int result =0;
+			AccountCode accountCode = new AccountCode(form.getId(),form.getAccCodeModal(),form.getDetailModal().toUpperCase(),form.getAccTypeModal());
+			if(StringUtils.isEmpty(form.getId())){
+				result = mAccountCodeService.save(accountCode);
 			}else{
-				model.addAttribute("resultSave", "textAlertDivNotSave");
+				result = mAccountCodeService.update(accountCode);
 			}
-		}else if(EDIT_ACTION.equals(action)){
-			AccountCode accountCode = new AccountCode(form.getId(),form.getAccCodeModal(),form.getDetailModal(),form.getAccTypeModal());
-			int result = mAccountCodeService.update(accountCode);
 			if(result==1){
+				List<AccountCode> accountCodeList = mAccountCodeService.search(form.getAccCodeModal(), form.getAccTypeModal());
+				form.setDataTable(accountCodeList);
+				form.setAccCode(form.getAccCodeModal());
+				form.setAccCode2(form.getAccCodeModal().substring(1));
+				form.setAccType(form.getAccTypeModal());
+				
 				form.setAccCodeModal("");
 				form.setAccCodeModal2("");
 				form.setAccTypeModal("");

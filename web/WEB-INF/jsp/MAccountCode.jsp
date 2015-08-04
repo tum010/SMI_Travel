@@ -9,7 +9,6 @@
 <!-- Initial -->
 <c:set var="dataTable" value="${requestScope['form'].dataTable}" />
 <c:set var="accTypeList" value="${requestScope['accTypeList']}" />
-
 <c:url var="baseURL" value="/MAccountCode.smi"></c:url>
 
 <section class="content-header">
@@ -76,7 +75,13 @@
 
 				<!-- Main Form -->
 				<div class="row">
-
+					
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="accType">Account Type</label>
+							<form:select path="accType" items="${accTypeList}" cssClass="form-control" onchange="onChangeAccType('accType','accCodeAddOn');"/>
+						</div>
+					</div>
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="accCode">Code</label>
@@ -87,18 +92,9 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-3">
-						<div class="form-group">
-							<!-- 
-							<label for="accType">Account Type</label>
-							<input type="text" class="form-control" id="accType" name="accType" maxlength="1" style="text-transform: uppercase" value="${accType}"/> -->
-							<label for="accType">Account Type</label>
-							<form:select path="accType" items="${accTypeList}" cssClass="form-control" onchange="onChangeAccType('accType','accCodeAddOn');"/>
-						</div>
-					</div>
 					<div class="col-md-6">
 						<div style="padding-top: 25px;padding-left:160px">
-							<button type="submit" id="acs" class="btn btn-primary">
+							<button id="btnSearch" type="submit"  class="btn btn-primary">
 								<span class="fa fa-search">Search</span>
 							</button>
 						</div>
@@ -187,6 +183,13 @@
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
+						<label for="accTypeModal" class="col-sm-3 control-label">Acc Type <font style="color: red">*</font></label>
+						<div class="col-sm-8">
+							<!-- <input type="text" class="form-control" maxlength="50" id="accType" name="accType" style="text-transform: uppercase" required> -->
+							<form:select path="accTypeModal" items="${accTypeList}" cssClass="form-control" onchange="onChangeAccType('accTypeModal','accCodeModalAddOn');"/>
+						</div>
+					</div>
+					<div class="form-group">
 						<label for="accCodeModal" class="col-sm-3 control-label">Code <font style="color: red">*</font></label>
 						<div class="col-sm-8">
 							<div class="input-group">
@@ -194,15 +197,7 @@
 								<form:input path="accCodeModal2" cssClass="form-control" cssStyle="text-transform: uppercase" maxlength="4" aria-describedby="accCodeModal2"/>
 								<form:hidden id="accCodeModal" path="accCodeModal"/>
 							</div>
-							
 						<!-- <input type="text" class="form-control" maxlength="3" id="accCodeModal" name="accCodeModal" style="text-transform: uppercase" required> -->	
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="accTypeModal" class="col-sm-3 control-label">Acc Type <font style="color: red">*</font></label>
-						<div class="col-sm-8">
-							<!-- <input type="text" class="form-control" maxlength="50" id="accType" name="accType" style="text-transform: uppercase" required> -->
-							<form:select path="accTypeModal" items="${accTypeList}" cssClass="form-control" onchange="onChangeAccType('accTypeModal','accCodeModalAddOn');"/>
 						</div>
 					</div>
 					<div class="form-group">
@@ -290,22 +285,19 @@
 		$('#accTypeModal').val(accType);
 		$('#detailModal').val(detail);
 		onChangeAccType('accTypeModal','accCodeModalAddOn');
-		$('#action').val('edit');
+		
 	}
 
 	$(function() {
-		$('#acs').click(function(e) {
+		$('#btnSearch').click(function(e) {
 			e.preventDefault();
+			$('#action').val('search');
 			$('#frmMAccountCode').submit();
 		});
 		
-		$('#btnAdd').click(function(){
-			$('#action').val('add');
-		});
-		
-		
 		$('#btnSave').click(function(e){
 			e.preventDefault();
+			$('#action').val('save');
 			var accCodeModalAddOn = $('#accCodeModalAddOn').html();
 	 		var accCodeModal2 = $('#accCodeModal2').val();
 	 		$('#accCodeModal').val(accCodeModalAddOn+accCodeModal2);
@@ -321,6 +313,10 @@
 			console.log(appendStr);
 			$('#frmMAccountCode').prepend(appendStr);
 			$('#frmMAccountCode').submit();
+		});
+		
+		$('#btnClose').click(function(e){
+			e.preventDefault();
 		});
 		
 		onChangeAccType('accTypeModal','accCodeModalAddOn');
