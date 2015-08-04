@@ -242,7 +242,7 @@ function BookingExpenseTableAddRow(row) {
             '<td><input id="expenDescription' + row + '" name="expenDescription' + row + '"  type="text" class="form-control" maxlength="50"></td>' +
             '<td style="width:80px"><input id="expenQty' + row + '" name="expenQty' + row + '" type="text" class="form-control money" maxlength="50" onfocusout="calculateGuideBill()"></td>' +
             '<td style="width: 100px"><input id="expenAmount' + row + '" name="expenAmount' + row + '" type="text" class="form-control money" maxlength="50" onfocusout="calculateGuideBill()"></td>' +       
-            '<td><select name="expenSelectCur' + row + '" id="expenSelectCur' + row + '" class=""><option value=""></option></select></td>' +
+//            '<td><select name="expenSelectCur' + row + '" id="expenSelectCur' + row + '" class=""><option value=""></option></select></td>' +
             '<td class="text-center"><input id="expenTypeS' + row + '" name="expenPriceType' + row + '" type="radio" value="S" checked="checked" onclick="calculateGuideBill()">&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;&nbsp;' +
             '<input id="expenTypeG' + row + '" name="expenPriceType' + row + '" type="radio" value="G" onclick="calculateGuideBill()">&nbsp;&nbsp;G</td>' +
             '<td class="text-center">' +
@@ -253,15 +253,15 @@ function BookingExpenseTableAddRow(row) {
             );
     $("input[name=countExpen]").val(row);
 
-    $.each(currency,function(i,item){
-        $('#expenSelectCur' + row).append($('<option>', {
-            value: item.code,
-            text: item.code
-        }));
-    });
-    $('#expenSelectCur' + row).selectize({
-        sortField: 'text'
-    });
+//    $.each(currency,function(i,item){
+//        $('#expenSelectCur' + row).append($('<option>', {
+//            value: item.code,
+//            text: item.code
+//        }));
+//    });
+//    $('#expenSelectCur' + row).selectize({
+//        sortField: 'text'
+//    });
 }
 
 
@@ -304,7 +304,7 @@ function addImportExpen(arrExpen) {
                 '<td><input id="expenDescription' + row + '" name="expenDescription' + row + '"  type="text" class="form-control text-left" maxlength="50" value="' + item.desciption + '"></td>' +
                 '<td style="width: 80px"><input id="expenQty' + row + '" name="expenQty' + row + '" type="text" class="form-control money" maxlength="50"></td>' +
                 '<td style="width: 100px"><input id="expenAmount' + row + '" name="expenAmount' + row + '" type="text" class="form-control money" maxlength="50" value="' + item.amount + '" onfocusout="calculateGuideBill()"></td>' +
-                '<td><select name="expenSelectCur' + row + '" id="expenSelectCur' + row + '" class="form-control"><option value="' + item.cur + '">' + item.cur + '</option></select></td>' +
+//                '<td><select name="expenSelectCur' + row + '" id="expenSelectCur' + row + '" class="form-control"><option value="' + item.cur + '">' + item.cur + '</option></select></td>' +
                 '<td class="text-center"><input id="expenTypeS' + row + '" name="expenPriceType' + row + '" type="radio" value="S" '+(item.priceType==="S"?"checked":"")+ ' >&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;&nbsp;' +
                 '<input id="expenTypeG' + row + '" name="expenPriceType' + row + '" type="radio" value="G" '+(item.priceType==="G"?"checked":"")+ ' >&nbsp;&nbsp;G</td>' +
                 '<td class="text-center">' +
@@ -361,6 +361,10 @@ $(document).ready(function () {
     
     $("#SelectGuideCode2").on("change", function () {
         setGuideName($('#SelectGuideCode2 option:selected').text(),'name2');
+    });    
+    
+    $('#InvoiceSupGuideBill').ready(function () {
+        setGuideName('','ready');
     });
 
 });
@@ -372,15 +376,35 @@ function setGuideName(name,no){
         var name2 = document.getElementById('InputGuideName2').value;
         guideList.push({name: name2});
     }
-//    var name2 = document.getElementById('InputGuideName2');
+
     if(no === 'name2'){
         guideList = [];
         var name1 = document.getElementById('InputGuideName1').value;
         guideList.push({name: name1});
         guideList.push({name: name});
     }
+    
+    if(no === 'ready'){
+        var name1 = document.getElementById('InputGuideName1').value;
+        var name2 = document.getElementById('InputGuideName2').value;       
+        guideList.push({name: name1});
+        guideList.push({name: name2});
+        
+        var guideName = document.getElementById('guideName').value;
+        if(guideName !== ''){
+            if(name1 === guideName){
+                document.getElementById("InvoiceSupGuideBill").selectedIndex = 1;
+            } else {
+                document.getElementById("InvoiceSupGuideBill").selectedIndex = 2;
+            }           
+        }
+    }
+    
     document.getElementById('GuideNo1').innerHTML = guideList[0].name;
+    document.getElementById('GuideNo1').value = guideList[0].name;
     document.getElementById('GuideNo2').innerHTML = guideList[1].name;
+    document.getElementById('GuideNo2').value = guideList[1].name;
+    
 }
 
 
@@ -465,10 +489,11 @@ $(document).ready(function () {
     $('#InputGuideBill').ready(function () {
         calculateGuideBill();
     });
-        
-    $('#InputTotal').ready(function () {
-        calculateTotal();
+    
+    $('#AmountGuideBill').ready(function () {
+        confirmCheckboxGuideBill();
     });
+   
 });
 
 
@@ -489,6 +514,7 @@ function calculateGuideBill(){
     }
     
     var total = 0;
+    var countCheckbox = 0;
     var rowExpen = $("#BookingExpenseTable tr").length;
     for(var i=0;i<rowExpen;i++){
         var expenAmount = document.getElementById('expenAmount'+i);
@@ -506,18 +532,43 @@ function calculateGuideBill(){
                         var expenQtyValue = parseFloat(expenQtyReplace);
                         guideBillTotal += (expenAmountValue*expenQtyValue);
                         total += (expenAmountValue*expenQtyValue);
+                        countCheckbox++;
                     } 
                 }
             }    
         }
     }
-    document.getElementById('InputGuideBill').value = formatNumber(guideBillTotal);
-    document.getElementById('AmountGuideBill').value = formatNumber(guideBillTotal);
+    
+    if(countCheckbox === 0){
+        var nodes = document.getElementById("GuideBillForm").getElementsByTagName('*');
+        for(var i = 0; i < nodes.length; i++){
+            nodes[i].disabled = true;
+        }       
+        document.getElementById('ConfirmGuideBill').checked = false;
+        document.getElementById('AmountGuideBill').value = '';
+        
+    } else {
+        var nodes = document.getElementById("GuideBillForm").getElementsByTagName('*');
+        for(var i = 0; i < nodes.length; i++){
+            nodes[i].disabled = false;
+        }
+     
+    }
+    
+    document.getElementById('InputGuideBill').value = formatNumber(guideBillTotal);  
     document.getElementById('InputTotal').value = formatNumber(total);
+    
 }
 
-function calculateTotal(){
-    
+function confirmCheckboxGuideBill(){
+    var check = document.getElementById('ConfirmGuideBill').checked;
+    if(check){
+        var InputGuideBill = document.getElementById('InputGuideBill').value;
+        document.getElementById('AmountGuideBill').value = InputGuideBill;
+    } else {
+        var amountDefault = parseFloat(document.getElementById('AmountGuideBillDefault').value);
+        document.getElementById('AmountGuideBill').value = formatNumber(amountDefault);
+    }   
 }
 
 function formatNumber(num) {
