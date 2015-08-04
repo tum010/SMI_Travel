@@ -11,6 +11,7 @@ import com.smi.travel.datalayer.entity.MRunningCode;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.PaymentDetailWendy;
 import com.smi.travel.datalayer.entity.PaymentWendy;
+import com.smi.travel.datalayer.entity.TourOperationDesc;
 import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
 import com.smi.travel.datalayer.view.entity.PaymentWendytourView;
 import com.smi.travel.util.UtilityFunction;
@@ -379,7 +380,7 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
     }
     
     @Override
-    public String getInvoiceSupCodeByGuideName(String guideName) {
+    public PaymentWendy getInvoiceSupCodeByGuideName(String guideName) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List<Object[]> guideList = session.createSQLQuery(" SELECT * FROM `invoice_supplier` WHERE `invoice_supplier`.name = '" + guideName + "'")
@@ -389,37 +390,43 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
                 .addScalar("apcode", Hibernate.STRING)
                 .list();
         
-        String guideId = "";
-        List<InvoiceSupplier> resultGuideName = new ArrayList<InvoiceSupplier>();
+        PaymentWendy code = new PaymentWendy();
         for (Object[] A : guideList) {
             InvoiceSupplier invoiceSupplier = new InvoiceSupplier();
             invoiceSupplier.setId(util.ConvertString(A[0]));
             invoiceSupplier.setCode(util.ConvertString(A[1]));
             invoiceSupplier.setName(util.ConvertString(A[2]));
             invoiceSupplier.setApcode(util.ConvertString(A[3]));
-            guideId = invoiceSupplier.getId();
+            code.setInvoiceSup(invoiceSupplier.getCode());
+            code.setApCode(invoiceSupplier.getApcode());
         }
-        
-        List<Object[]> invoiceSupplierList = session.createSQLQuery(" SELECT * FROM `invoice_supplier` WHERE `invoice_supplier`.id = '" + guideId + "'")
+               
+        return code;
+    }
+    
+    @Override
+    public String getGuideName(PaymentWendy paymentWendy) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        String invoiceSupCode = paymentWendy.getInvoiceSup();
+        List<Object[]> guideList = session.createSQLQuery(" SELECT * FROM `invoice_supplier` WHERE `invoice_supplier`.code = '" + invoiceSupCode + "'")
                 .addScalar("id", Hibernate.STRING)
                 .addScalar("code", Hibernate.STRING)
                 .addScalar("name", Hibernate.STRING)
                 .addScalar("apcode", Hibernate.STRING)
                 .list();
         
-        String invoiceSupCode = "";
-        List<InvoiceSupplier> resultInvSupCode = new ArrayList<InvoiceSupplier>();
-        for (Object[] B : invoiceSupplierList) {
+        String guideName = "";
+        for (Object[] A : guideList) {
             InvoiceSupplier invoiceSupplier = new InvoiceSupplier();
-            invoiceSupplier.setId(util.ConvertString(B[0]));
-            invoiceSupplier.setCode(util.ConvertString(B[1]));
-            invoiceSupplier.setName(util.ConvertString(B[2]));
-            invoiceSupplier.setApcode(util.ConvertString(B[3]));
-            invoiceSupCode = invoiceSupplier.getCode();
-            return invoiceSupCode;
+            invoiceSupplier.setId(util.ConvertString(A[0]));
+            invoiceSupplier.setCode(util.ConvertString(A[1]));
+            invoiceSupplier.setName(util.ConvertString(A[2]));
+            invoiceSupplier.setApcode(util.ConvertString(A[3]));
+            guideName = invoiceSupplier.getName();
         }
-        
-        return invoiceSupCode;
+               
+        return guideName;
     }
 
 
@@ -433,8 +440,19 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
-    
+    @Override
+    public PaymentWendy getPaymentWendyFromDayTourOperation(TourOperationDesc tourOperationDesc) {
+        String id = tourOperationDesc.getId();
+        String query = "from PaymentWendy p where p.tourOperationDesc.id = :id";
+        Session session = this.sessionFactory.openSession();
+        PaymentWendy result = new PaymentWendy();
+        List<PaymentWendy> List = session.createQuery(query).setParameter("id", id).list();
+        if (List.isEmpty()) {
+            return null;
+        }
 
+        result = List.get(0);
+        return result;
+    }
     
 }
