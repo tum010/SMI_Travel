@@ -24,8 +24,10 @@ public class InvoiceImpl implements InvoiceDao{
     private SessionFactory sessionFactory;
     private Transaction transaction;
     private static final String DELETEALL_INVOICE_QUERY ="DELETE FROM Invoice in where in.id = :invouceID";
+    private static final String GET_INVOICE = "FROM Invoice inv where inv.invNo = :invoiceNo";
     private static final String SELECT_INVOICE_DETAIL = "FROM InvoiceDetail ind where ind.invoice.id = :invoiceID";
     private static final String DELETE_INVOICEDETAIL_QUERY ="DELETE FROM InvoiceDetail ind where ind.id = :invoiceDetailID";
+    private static final String SEARCH_INVOICE_TYPE = "FROM Invoice inv where inv.deparement = :invoiceDepartment and inv.invType = :invoiceType ORDER BY inv.invNo DESC LIMIT 1";
     
     @Override
     public String insertInvoice(Invoice invoice) {
@@ -158,7 +160,34 @@ public class InvoiceImpl implements InvoiceDao{
 
     @Override
     public Invoice getInvoiceFromInvoiceNumber(String InvoiceNumber) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Session session = this.sessionFactory.openSession();
+        Invoice invoice = new Invoice();
+        List<Invoice> invoiceList = session.createQuery(GET_INVOICE)
+                .setParameter("invoiceNo", InvoiceNumber)
+                .list();
+        if(!invoiceList.isEmpty()){
+            invoice.setId(invoiceList.get(0).getId());
+            invoice.setInvNo(invoiceList.get(0).getInvNo());
+            invoice.setInvTo(invoiceList.get(0).getInvTo());
+            invoice.setInvName(invoiceList.get(0).getInvName());
+            invoice.setInvType(invoiceList.get(0).getInvType());
+            invoice.setInvAddress(invoiceList.get(0).getInvAddress());
+            invoice.setInvoiceDetails(invoiceList.get(0).getInvoiceDetails());
+            invoice.setArcode(invoiceList.get(0).getArcode());
+            invoice.setCreateBy(invoiceList.get(0).getCreateBy());
+            invoice.setCreateDate(invoiceList.get(0).getCreateDate());
+            invoice.setDeparement(invoiceList.get(0).getDeparement());
+            invoice.setDueDate(invoiceList.get(0).getDueDate());
+            invoice.setIsGroup(invoiceList.get(0).getIsGroup());
+            invoice.setIsLock(invoiceList.get(0).getIsLock());
+            invoice.setMAccpay(invoiceList.get(0).getMAccpay());
+            invoice.setMFinanceItemstatus(invoiceList.get(0).getMFinanceItemstatus());
+            invoice.setRemark(invoiceList.get(0).getRemark());
+            invoice.setStaff(invoiceList.get(0).getStaff());
+            invoice.setSubDepartment(invoiceList.get(0).getSubDepartment());
+        }
+        
+        return invoice;
     }
 
     public void setSessionFactory(SessionFactory sessionFactory) {
@@ -178,8 +207,20 @@ public class InvoiceImpl implements InvoiceDao{
     }
 
     @Override
-    public String getInvoiceNumber(Invoice invoice) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String searchInvoiceNo(String department,String invoiceType) {
+        String invoiceNoLast = "";
+        Session session = this.sessionFactory.openSession();
+        List<Invoice> invoiceList = session.createQuery(SEARCH_INVOICE_TYPE)
+                .setParameter("invoiceDepartment", department)
+                .setParameter("invoiceType", invoiceType)
+                .list();
+        if (invoiceList.isEmpty()) {
+            return null;
+        }
+        for(int i=0;i<invoiceList.size();i++){
+           invoiceNoLast = invoiceList.get(0).getInvNo();
+        }    
+        return invoiceNoLast;
     }
    
 }

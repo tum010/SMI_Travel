@@ -1011,6 +1011,8 @@ public class AJAXBean extends AbstractBean implements
             }
             result += "<tr>"
                     + "<td align=\"center\">" + (i+1) + "</td>"
+                    + "<td class=\"hidden\"><input type=\"hidden\" id=\"invoiceIdSearch"+(i+1)+"\" name=\"invoiceIdSearch"+(i+1)+"\" value=" + billdeescList.get(i).getId() + "></td>"
+                    + "<td class=\"hidden\"><input type=\"hidden\" id=\"invoiceIdType"+(i+1)+"\" name=\"invoiceIdType"+(i+1)+"\" value=" + billdeescList.get(i).getMBilltype().getId() + "></td>"
                     + "<td>" + billdeescList.get(i).getMBilltype().getName() + "</td>"
                     + "<td>" +  billdeescList.get(i).getDetail() + "</td>"
                     + "<td align=\"center\">" + billdeescList.get(i).getCost() + "</td>"

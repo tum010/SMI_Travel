@@ -25,7 +25,7 @@ public class Invoice {
      private String invAddress;
      private Date dueDate;
      private String deparement;
-     private Integer arcode;
+     private String arcode;
      private String remark;
      private String invType;
      private Integer isGroup;
@@ -38,7 +38,7 @@ public class Invoice {
     public Invoice() {
     }
 
-    public Invoice(MAccpay MAccpay, MFinanceItemstatus MFinanceItemstatus, SystemUser staff, String invNo, String invTo, String invName, String invAddress, Date dueDate, String deparement, Integer arcode, String remark, String invType, Integer isGroup, Integer isLock, String createBy, Date createDate, String subDepartment, List invoiceDetails) {
+    public Invoice(MAccpay MAccpay, MFinanceItemstatus MFinanceItemstatus, SystemUser staff, String invNo, String invTo, String invName, String invAddress, Date dueDate, String deparement, String arcode, String remark, String invType, Integer isGroup, Integer isLock, String createBy, Date createDate, String subDepartment, List invoiceDetails) {
        this.MAccpay = MAccpay;
        this.MFinanceItemstatus = MFinanceItemstatus;
        this.staff = staff;
@@ -132,13 +132,15 @@ public class Invoice {
     public void setDeparement(String deparement) {
         this.deparement = deparement;
     }
-    public Integer getArcode() {
-        return this.arcode;
-    }
-    
-    public void setArcode(Integer arcode) {
+
+    public void setArcode(String arcode) {
         this.arcode = arcode;
     }
+
+    public String getArcode() {
+        return arcode;
+    }
+   
     public String getRemark() {
         return this.remark;
     }

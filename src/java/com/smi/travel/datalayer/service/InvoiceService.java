@@ -35,10 +35,6 @@ public class InvoiceService {
         return  invoiceDao.DeleteInvoiceDetail(InvoiceDetailId);
     }
     
-    public String getInvoiceNumber(Invoice invoice){
-        return invoiceDao.getInvoiceNumber(invoice);
-    }
-    
     public Invoice getInvoiceFromInvoiceNumber(String InvoiceNumber){
         return  invoiceDao.getInvoiceFromInvoiceNumber(InvoiceNumber);
     }
@@ -49,6 +45,10 @@ public class InvoiceService {
 
     public InvoiceDao getInvoiceDao() {
         return invoiceDao;
+    }
+    
+    public String searchInvoiceNo(String department ,String invoiceType){
+        return  invoiceDao.searchInvoiceNo(department, invoiceType);
     }
     
 }

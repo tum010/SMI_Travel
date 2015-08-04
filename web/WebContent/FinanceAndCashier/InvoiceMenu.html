@@ -10,14 +10,14 @@
     
     <li>
         <a href="#">
-            <span class="menu-text"><b>Wendy/Outbound</b></span>
+            <span class="menu-text"><b>Wendy</b></span>
         </a>    
             
         <b class="arrow"></b>
     </li>
 
     <li>
-        <a href="Invoice.smi?type=temp" id="menu-invoicetemp">
+        <a href="Invoice.smi?type=tempWendy" id="menu-invoicetemp">
             <i class="fa fa-file-o"></i>
             <span class="menu-text">Invoice temp <strong></strong> </span>
 
@@ -26,7 +26,40 @@
     </li>
 
     <li>
-        <a href="Invoice.smi?type=vat" id="menu-invoicevat">
+        <a href="Invoice.smi?type=vatWendy" id="menu-invoicevat">
+            <i class="fa fa-file-text-o"></i>
+            <span class="menu-text">Invoice vat<strong></strong> </span>
+        </a>
+        <b class="arrow"></b>
+    </li>
+    
+    <li>
+        <a href="Invoice.smi?type=NoVatWendy" id="menu-invoicenovatWendy">
+            <i class="fa fa-times"></i>
+            <span class="menu-text">Invoice no vat<strong></strong> </span>
+        </a>
+        <b class="arrow"></b>
+    </li>
+    
+    <li>
+        <a href="#">
+            <span class="menu-text"><b>Outbound</b></span>
+        </a>    
+            
+        <b class="arrow"></b>
+    </li>
+
+    <li>
+        <a href="Invoice.smi?type=tempOutbound" id="menu-invoicetempOutbound">
+            <i class="fa fa-file-o"></i>
+            <span class="menu-text">Invoice temp <strong></strong> </span>
+
+        </a>
+
+    </li>
+
+    <li>
+        <a href="Invoice.smi?type=vatOutbound" id="menu-invoicevatOutbound">
             <i class="fa fa-file-text-o"></i>
             <span class="menu-text">Invoice vat<strong></strong> </span>
         </a>
@@ -34,7 +67,7 @@
     </li>
 	
     <li>
-        <a href="Invoice.smi?type=NoVat" id="menu-invoicenovat">
+        <a href="Invoice.smi?type=NoVatOutbound" id="menu-invoicenovatOutbound">
             <i class="fa fa-times"></i>
             <span class="menu-text">Invoice no vat<strong></strong> </span>
         </a>
@@ -61,12 +94,39 @@
         var name = path.split("/");
         var listpara = location.search;
         
-        if(listpara.indexOf('temp') != -1){
-            $("#menu-invoicetemp").css('background-color', '#ccc');
-        }else if(listpara.indexOf('vat') != -1){
-            $("#menu-invoicevat").css('background-color', '#ccc');
-        }else if(listpara.indexOf('NoVat') != -1){
-            $("#menu-invoicenovat").css('background-color', '#ccc');
+        if(listpara.indexOf('tempWendy') != -1){
+//            alert(listpara.indexOf('tempWendy'));
+            if(listpara.indexOf('tempWendy') === 6){
+                $("#menu-invoicetemp").css('background-color', '#ccc');
+            }
+            
+        }else if(listpara.indexOf('vatWendy') != -1){
+//            alert(listpara.indexOf('vatWendy'));
+            if(listpara.indexOf('vatWendy') === 6){
+                $("#menu-invoicevat").css('background-color', '#ccc');
+            }
+        }
+        else if(listpara.indexOf('tempOutbound') != -1){
+//            alert(listpara.indexOf('tempOutbound'));
+            if(listpara.indexOf('tempOutbound') === 6){
+                $("#menu-invoicetempOutbound").css('background-color', '#ccc');
+            }
+            
+        }else if(listpara.indexOf('vatOutbound') != -1){
+//            alert(listpara.indexOf('vatOutbound'));
+            if(listpara.indexOf('vatOutbound') === 6){
+                $("#menu-invoicevatOutbound").css('background-color', '#ccc');
+            }
+        }
+        else if(listpara.indexOf('NoVatOutbound') != -1){
+            if(listpara.indexOf('NoVatOutbound') === 6){
+                $("#menu-invoicenovatOutbound").css('background-color', '#ccc');
+            }          
+        }
+        else if(listpara.indexOf('NoVatWendy') != -1){
+            if(listpara.indexOf('NoVatWendy') === 6){
+                $("#menu-invoicenovatWendy").css('background-color', '#ccc');
+            }          
         }else{
             //console.log(name[2]);
             str = name[2].split(".");
