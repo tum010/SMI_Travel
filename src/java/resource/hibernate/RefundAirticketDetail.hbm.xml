@@ -16,14 +16,20 @@
         <property name="sectorRefund" type="string">
             <column name="sector_refund" />
         </property>
-        <property name="receiveAirline" type="java.lang.Long">
-            <column name="receive_airline" precision="10" scale="0" />
+        <property name="receiveAirline" type="big_decimal">
+            <column name="receive_airline" precision="10" />
         </property>
-        <property name="payCustomer" type="java.lang.Long">
-            <column name="pay_customer" precision="10" scale="0" />
+        <property name="payCustomer" type="big_decimal">
+            <column name="pay_customer" precision="10"  />
         </property>
-        <property name="commission" type="java.lang.Long">
-            <column name="commission" precision="10" scale="0" />
+        <property name="commission" type="big_decimal">
+            <column name="commission" precision="10"  />
+        </property>
+        <property name="profit" type="big_decimal">
+            <column name="profit" precision="10"  />
+        </property>
+        <property name="expenseDate" type="date">
+            <column name="expense_date"  />
         </property>
         <bag name="paymentAirticketRefunds" table="payment_airticket_refund" inverse="true" lazy="true" fetch="select">
             <key>
