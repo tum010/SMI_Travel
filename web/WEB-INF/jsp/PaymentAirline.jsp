@@ -124,7 +124,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 170px">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="apCode" name="apCode" value="${SelectedInvoice.apcode}" />
+                                    <input type="text" class="form-control" id="apCode" name="apCode" value="${SelectedInvoice.apcode}" readonly="" />
 <!--                                    <span class="input-group-addon" id="ap_modal"  data-toggle="modal" data-target="#ApModal">
                                         <span class="glyphicon-search glyphicon"></span>
                                     </span>-->
@@ -209,7 +209,7 @@
                         </div>
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right" style="width: 128px">
-                                <label class="control-label text-right">Form </label>
+                                <label class="control-label text-right">From </label>
                             </div>
                             <div class="col-xs-1" style="width: 170px">
                                 <div class='input-group date'>
@@ -303,9 +303,9 @@
                             <div class="col-xs-1 text-right" style="width: 128px">
                                 <label class="control-label text-right">Refund </label>
                             </div>
-                            <div class="col-xs-1" style="width: 280px">
+                            <div class="col-xs-1" style="width: 280px" id="refundnopanel">
                                 <div class='input-group'>
-                                    <input id="refundNo" name="refundNo" type="text" style="width: 260px" class="form-control" value="">
+                                    <input id="refundNo" name="refundNo" type="text" style="width: 260px" class="form-control" value="" onkeydown="refundnoValidate()">
                                 </div>
                             </div>
                             <div class="col-xs-1  text-right" style="width: 8px"><i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i></div>
@@ -804,13 +804,6 @@
                             message: 'A/P Code is required'
                         }
                     }
-                },
-                refundNo: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Refund No. is required'
-                        }
-                    }
                 }
             }
         });
@@ -875,23 +868,21 @@
         });
         setFormatCurrency();
         setDataCurrency();
-//        calculateTotalAmount();
-//        calculateTotalCommission();
+
         calculateTotalPayment();
         calculateAmount();
-      
-//        $('#RefundTicketTable').dataTable({bJQueryUI: true,
-//            "sPaginationType": "full_numbers",
-//            "bAutoWidth": false,
-//            "bFilter": false,
-//            "aaSorting": [[ 0, "desc" ]]
-//        });
-//        $('.dataTables_length label').remove();
         
         if($('#optionSave').val() == "1"){
             clearData();
         }
     });
+    
+function refundnoValidate(){
+    $('#refundnopanel').removeClass('has-feedback');
+    $('#refundnopanel').addClass('has-success');
+    $('#refundnopanel').removeClass('has-error');
+}
+
 function setFormatCurrency(){  
     var withholdingTax = replaceAll(",","",$('#withholdingTax').val()); 
     if (withholdingTax == ""){
@@ -972,6 +963,7 @@ function searchPaymentNo() {
     action.value = 'search';
     var paymentNo = document.getElementById('paymentNo');
     paymentNo.value = $("#paymentNo").val();
+    document.getElementById('PaymentAirlineForm').submit();
 }
 
 function searchTicketFare() {
@@ -1051,6 +1043,7 @@ function searchTicketFareCF() {
     totalAmountRefund.value = $("#totalAmountRefund").val();
     var totalAmountRefundVat = document.getElementById('totalAmountRefundVat');
     totalAmountRefundVat.value = $("#totalAmountRefundVat").val();
+    document.getElementById('PaymentAirlineForm').submit();
 }
 
 function addAction(){
@@ -1087,7 +1080,11 @@ function addRefundNo(){
     $('#AddRefundNoModal').modal('hide');
     var refundNo = $("#refundNo").val();
     if(refundNo == ""){
-        $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'refundNo');
+        if(!$('#refundnopanel').hasClass('has-feedback')) {
+            $('#refundnopanel').addClass('has-feedback');
+        }
+        $('#refundnopanel').removeClass('has-success');
+        $('#refundnopanel').addClass('has-error');
     }else{
         var rowCount = $('#RefundTicketTable tr').length;
         var servletName = 'PaymentAirTicketServlet';
