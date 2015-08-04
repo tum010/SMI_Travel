@@ -273,7 +273,7 @@ public class InvoiceController extends SMITravelController {
              }
              Integer vatCost = Integer.parseInt(vat);
              if(isVat != null){
-                 invoiceDetail.setIsCalVat(vatCost);
+//                 invoiceDetail.setIsCalVat(vatCost);
              }
              invoiceDetail.setInvoice(invoice);
              listInvoiceDetail.add(invoiceDetail);
