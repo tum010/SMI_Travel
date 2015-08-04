@@ -362,7 +362,7 @@ public class MListItemImpl implements MListItemDao {
     
     @Override
     public List<MBilltype> getListMBilltype(){
-        String query = "from MBilltype m where m.name";
+        String query = "from MBilltype m";
         Session session = this.sessionFactory.openSession();
         List<MBilltype> List = session.createQuery(query).list();
         if (List.isEmpty()) {
