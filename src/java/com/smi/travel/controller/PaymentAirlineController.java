@@ -114,7 +114,7 @@ public class PaymentAirlineController extends SMITravelController {
                         invoiceSupplier = utilityService.getDataInvoiceSuppiler(paymentAirticket.getInvoiceSup());
                         request.setAttribute(SELECTEDINVOICE, invoiceSupplier);
                     }
-                    if(StringUtils.isNotEmpty(paymentAirticket.getMAccpay().getId())){
+                    if(paymentAirticket.getMAccpay() != null){
                         mAccpay.setId(paymentAirticket.getMAccpay().getId());
                         paymentAirticket.setMAccpay(mAccpay);
                     }
