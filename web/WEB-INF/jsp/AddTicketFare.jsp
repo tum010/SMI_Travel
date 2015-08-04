@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript" src="js/AddTicketFare.js"></script> 
+<!--<script type="text/javascript" src="js/AddTicketFare.js"></script>--> 
 <script type="text/javascript" src="js/workspace.js"></script> 
 <script type="text/javascript" src="js/jquery-ui.js"></script>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -461,7 +461,7 @@
                                 <label class="control-label text-right">Date </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
-                                <div class='input-group date'>
+                                <div class='input-group date' id='date1'>
                                     <input id="decPayDate" name="decPayDate"  type="text" 
                                        class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['decPayDate']}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -471,7 +471,7 @@
                                 <label class="control-label text-right">Date </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
-                                <div class='input-group date'>
+                                <div class='input-group date' id='date2'>
                                     <input id="agentReceiveDate" name="agentReceiveDate"  type="text" 
                                        class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['agentReceiveDate']}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -690,11 +690,13 @@
         <script language="javascript">
             $('#textAlertDivSave').show();
         </script>
+        <!--<META HTTP-EQUIV="Refresh" CONTENT="0;URL=http://localhost:8080/SMITravel/AddTicketFare.smi">-->
     </c:if>
     <c:if test="${requestScope['saveresult'] =='save unsuccessful'}">        
         <script language="javascript">
            $('#textAlertDivNotSave').show();
         </script>
+        <!--<META HTTP-EQUIV="Refresh" CONTENT="0;URL=http://localhost:8080/SMITravel/AddTicketFare.smi">-->
     </c:if>
 </c:if>
        
@@ -706,11 +708,10 @@
 //        $("#ButtonSave").attr("disabled", "disabled");
 //        $("#ButtonSaveAndNew").attr("disabled", "disabled");
         $("#flightPanel").addClass('hidden');
-        
         if($('#flightDetailFlag').val() == "notdummy"){
             $("#flightPanel").removeClass('hidden');  
         }
-        
+
         if($('#ticketFareFlag').val() == "dummy"){
             alert('Ticket no. not available');
         }
@@ -722,8 +723,11 @@
         
         $(".money").mask('000,000,000.00', {reverse: true});
         $('.date').datetimepicker();
+
         $('span').click(function () {
+            
         });
+
         $("#ticketNo").keyup(function (event) {
             if(event.keyCode === 13){
                searchTicketNo();
@@ -764,7 +768,6 @@
         
         var agentCode = [];
         $.each(agent, function (key, value) {
-            console.log("agentCount=="+agent.length);
             agentCode.push(value.code);
             agentCode.push(value.name);
         });
@@ -828,7 +831,7 @@
                 fields: {
                     ticketNo: {
                         validators: {
-                            notEmpty: {trigger: 'change',
+                            notEmpty: {
                                 message: ' Ticket No is required'
                             }
                         }
@@ -1146,8 +1149,6 @@ function saveAction(optionsave){
     pvType.value = $("#pvType").val(); 
     var optionSave = document.getElementById('optionSave');
     optionSave.value = $("#optionSave").val(); 
-    
-    document.getElementById('AddTicketFareForm').submit();
 }
 
 function searchTicketNo() {
@@ -1166,9 +1167,7 @@ function searchTicketNo() {
         action.value = 'search';
         var ticketNo = document.getElementById('ticketNo');
         ticketNo.value = $("#ticketNo").val();
-        document.getElementById('AddTicketFareForm').submit();
     }
-    
 }
 function FilterTicketList(referNo) {
     var servletName = 'TicketFareAirlineServlet';

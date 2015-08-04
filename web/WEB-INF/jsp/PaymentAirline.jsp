@@ -972,7 +972,6 @@ function searchPaymentNo() {
     action.value = 'search';
     var paymentNo = document.getElementById('paymentNo');
     paymentNo.value = $("#paymentNo").val();
-    document.getElementById('PaymentAirlineForm').submit();
 }
 
 function searchTicketFare() {
@@ -1052,7 +1051,6 @@ function searchTicketFareCF() {
     totalAmountRefund.value = $("#totalAmountRefund").val();
     var totalAmountRefundVat = document.getElementById('totalAmountRefundVat');
     totalAmountRefundVat.value = $("#totalAmountRefundVat").val();
-    document.getElementById('PaymentAirlineForm').submit();
 }
 
 function addAction(){
@@ -1201,7 +1199,6 @@ function saveAction(optionsave){
     rowRefundCount.value = $('#RefundTicketTable tr').length;
     var optionSave = document.getElementById('optionSave');
     optionSave.value = $("#optionSave").val(); 
-    document.getElementById('PaymentAirlineForm').submit();
 }
 
 function deleteTicket(id,ticketNo,count){
