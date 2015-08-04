@@ -12,6 +12,7 @@
 <c:set var="InputFromDate" value="${requestScope['InputFromDate']}" />
 <c:set var="InputToDate" value="${requestScope['InputToDate']}" />
 <c:set var="invoiceSup_list" value="${requestScope['invoiceSup_list']}" />
+<c:set var="status_list" value="${requestScope['status_list']}" />
 <section class="content-header" >
     <h1>
         Checking - Search Payment Tour / Hotel
@@ -71,7 +72,7 @@
                         </div> 
                     </div>         
                 </div>
-                <div class="col-xs-1 text-right" style="width:70px;">
+                <div class="col-xs-1 text-right" style="width:50px;">
                     <label class="control-label">To</lable>
                 </div>
                 <div class="col-xs-1 form-group text-left" style="width:170px;">
@@ -86,42 +87,38 @@
                         </div> 
                     </div>     
                 </div>
-                <div class="col-xs-1 text-right" style="width:100px;">
+                <div class="col-xs-1 text-right" style="width:90px;">
                     <label class="control-label">PV Type</lable>
                 </div>
                 <div class="col-xs-1 form-group text-left" style="width:160px;">
                     <div class="col-sm-12">
                         <select name="selectPvType" id="SelectPvType" class="form-control" value="${requestScope['selectPvType']}">
-                            <option id="" value="">---type--</option>
+                            <option id="" value="">---type---</option>
                             <c:forEach var="type" items="${PaymentTypeList}">
                                 <option value='${type.id}'  ${type.id == requestScope['selectPvType'] ? 'selected="selected"' : ''}> ${type.name}</option>
                             </c:forEach>
                         </select>
                     </div>
                 </div>
-                <!--Button Print and Search -->
-                <div class="col-xs-1 text-left" style="width:190px;">
-                    <div class="col-xs-1 text-left" style="padding-left:0px;width:60px;">
-<!--                    <a id="ButtonSearch" name="ButtonSearch" type="submit" class="btn btn-primary">
-                            <i class="fa fa-search"></i> Search
-                        </a>-->
-                        <button type="submit" id="ButtonSearch" name="ButtonSearch" onclick="" class="btn btn-primary btn-sm">Search</button>
-                        <input type="hidden" name="action" id="action" value="search">
-                        <input type="hidden" id="paymentID" name="paymentID" >
-                        <input type="hidden" id="InputPayNo" name="InputPayNo" >
+                <div class="col-xs-1 text-right" style="width:70px;">
+                    <label class="control-label">Status</lable>
+                </div>
+                <div class="col-xs-1 form-group text-left" style="width:160px;">
+                    <div class="col-sm-12">
+                        <select name="selectStatus" id="SelectStatus" class="form-control" value="${requestScope['selectStatus']}">
+                            <option id="" value="">---status---</option>
+                            <c:forEach var="status" items="${status_list}">
+                                <option value='${status.id}'  ${status.id == requestScope['selectStatus'] ? 'selected="selected"' : ''}> ${status.name}</option>
+                            </c:forEach>
+                        </select>
                     </div>
-                    <div class="col-xs-1 text-right" style="padding-left:15px;width:60px;">
-                        <button type="submit" id="ButtonPrint" name="ButtonPrint" class="btn btn-default btn-sm">
-                            <i class="fa fa-print"></i> Print             
-                        </button>
-                    </div>                        
                 </div>
             </div>
             <div class="col-xs-12" >                
                 <div class="col-xs-1 text-left" style="width:120px;">
                     <label class="control-label">Invoice Sup</lable>
                 </div>
-                <div class="col-xs-1 text-left" style="width:180px;"> 
+                <div class="col-xs-1 text-left" style="width:175px;"> 
                         <div class="input-group" id="CodeValidate" style="width:140px;">
                             <input name="InputInvoiceSupId" id="InputInvoiceSupId" type="hidden" class="form-control" value="${requestScope['InputInvoiceSupId']}" />
                             <input name="InputInvoiceSupCode" id="InputInvoiceSupCode" type="text" class="form-control" value="${requestScope['InputInvoiceSupCode']}" onkeypress="getInvoiceSup()" style="text-transform:uppercase"/>
@@ -130,9 +127,24 @@
                             </span>    
                         </div>     
                 </div>
-                <div class="col-xs-1 text-left" style="width:475px;">
+                <div class="col-xs-1 text-left" style="width:450px;">
                     <input name="InputInvoiceSupName" id="InputInvoiceSupName" type="text" class="form-control" value="${requestScope['InputInvoiceSupName']}" readonly=""/>           
-                </div>               
+                </div> 
+                <!--Button Print and Search -->            
+                <div class="col-xs-1 text-right" style="padding-left:0px;width:155px;">
+<!--                <a id="ButtonSearch" name="ButtonSearch" type="submit" class="btn btn-primary">
+                        <i class="fa fa-search"></i> Search
+                    </a>-->
+                    <button type="submit" id="ButtonSearch" name="ButtonSearch" onclick="" class="btn btn-primary btn-sm">Search</button>
+                    <input type="hidden" name="action" id="action" value="search">
+                    <input type="hidden" id="paymentID" name="paymentID" >
+                    <input type="hidden" id="InputPayNo" name="InputPayNo" >
+                </div>
+                <div class="col-xs-1 text-right" style="padding-left:0px;width:60px;">
+                    <button type="submit" id="ButtonPrint" name="ButtonPrint" class="btn btn-default btn-sm">
+                        <i class="fa fa-print"></i> Print             
+                    </button>
+                </div>                                       
             </div>            
         </form><!--End Search -->
                 
