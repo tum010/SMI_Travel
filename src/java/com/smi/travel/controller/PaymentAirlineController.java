@@ -218,9 +218,10 @@ public class PaymentAirlineController extends SMITravelController {
             ticketFareViews = paymentAirTicketService.getListTicketFare(dateFrom,dateTo,ticketFrom,typeAirline);
             if(ticketFareViews != null){
                  request.setAttribute(SETCALCULATETICKET,1);
+                 request.setAttribute(TICKETFARECOUNT,ticketFareViews.size()+1);
             }
             request.setAttribute(TICKETFARELIST,ticketFareViews);
-            request.setAttribute(TICKETFARECOUNT,ticketFareViews.size()+1);
+            
             
             refundAirticketDetailViews = paymentAirTicketService.getRefundDetailByPaymentAirId(paymentId);
             if(refundAirticketDetailViews != null){
