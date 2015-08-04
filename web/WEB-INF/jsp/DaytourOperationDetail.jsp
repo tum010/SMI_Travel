@@ -29,6 +29,8 @@
 <c:set var="tourList" value="${requestScope['TourList']}" />
 <c:set var="statusList" value="${requestScope['StatusList']}" />
 <c:set var="invoiceSupList" value="${requestScope['InvoiceSupList']}" />
+<c:set var="paymentWendyList" value="${requestScope['PaymentWendyList']}" />
+<c:set var="paymentWendyDetailList" value="${requestScope['PaymentWendyDetailList']}" />
 <input type="hidden" value="${param.referenceNo}" id="getUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
@@ -469,7 +471,7 @@
                                         <th>Description</th>
                                         <th>Qty</th>
                                         <th>Amount</th>
-                                        <th>Cur</th>
+                                        <th class="hidden">Cur</th>
                                         <th>Type</th>
                                         <th>Action</th>
                                     </tr>
@@ -503,7 +505,7 @@
                                                     </c:forEach>
                                                 </select>
                                             </td>-->
-                                            <td>
+                                            <td class="hidden">
                                                <select id="expenSelectCur${i.count}" name="expenSelectCur${i.count}" class="">
                                                    <option></option>
                                                    <c:forEach var="price" items="${mCurrency}" >
@@ -564,77 +566,95 @@
                                 </div>
                             </div>
                             <div class="col-xs-12 form-group"><hr/></div>
-                            <c:if test="${requestScope['resultText'] =='success'}">                                            
-                                <div id="textAlertDivSave"  style="" class="alert alert-success alert-dismissible" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <strong>Save Success!</strong> 
-                                </div>
-                            </c:if>
-                            <c:if test="${requestScope['resultText'] =='fail'}">
-                            <div id="textAlertDivNotSave"  style="" class="alert alert-danger alert-dismissible" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                               <strong>Save Unsuccess!</strong> 
-                            </div>
-                            </c:if>
                             <div class="col-xs-12 form-group">
                                 <div class="col-sm-6">
                                     <h4>Guide Bill</h4>
                                 </div>
-                            </div>    
-                            <div class="col-xs-12 form-group">
-                                <div class="col-xs-1">
-                                    <label class="control-label">Payno</label>
-                                </div>
-                                <div class="col-xs-1" style="width: 250px">
-                                    <input class="form-control" type="text" id="PayNoGuideBill" name="PayNoGuideBill" value="${requestScope['PayNoGuideBill']}" readonly="">
-                                </div>
-                                <div class="col-xs-1 text-right" style="width: 120px">
-                                    <label class="control-label">Invoice&nbsp;Sup</label>
-                                </div>
-                                <div class="col-xs-1" style="width: 250px">                                   
-                                    <select id="InvoiceSupGuideBill" name="InvoiceSupGuideBill" class="form-control" onchange="$('#GuideName').val($('#InvoiceSupGuideBill option:selected').text());">
-                                        <option></option>
-                                        <option id="GuideNo1"></option>
-                                        <option id="GuideNo2"></option>
-                                    </select>
-                                </div>
-                                <input id="GuideName" name="GuideName"  type="hidden" class="form-control" readonly="" value="">
                             </div>
-                            <div class="col-xs-12 form-group">
-                                <div class="col-xs-1">
-                                    <label class="control-label">Status</label>
+                            <div id="GuideBillForm">
+                                <div class="col-xs-12 form-group">
+                                    <div class="col-xs-1">
+                                        <label class="control-label">Payno</label>
+                                    </div>
+                                    <input class="form-control" type="hidden" id="PayNoGuideBillId" name="PayNoGuideBillId" value="${paymentWendyList.id}" readonly="">
+                                    <input class="form-control" type="hidden" id="PaymentWendyDetailId" name="PaymentWendyDetailId" value="${paymentWendyDetailList.id}" readonly="">
+                                    <input class="form-control" type="hidden" id="createBy" name="createBy" value="${paymentWendyList.createBy}" readonly="">
+                                    <input class="form-control" type="hidden" id="createDate" name="createDate" value="${paymentWendyList.createDate}" readonly="">
+                                    <div class="col-xs-1" style="width: 250px">                                       
+                                        <input class="form-control" type="text" id="PayNoGuideBill" name="PayNoGuideBill" value="${paymentWendyList.payNo}" readonly="">
+                                    </div>
+                                    <div class="col-xs-1 text-right" style="width: 120px">
+                                        <label class="control-label">Invoice&nbsp;Sup</label>
+                                    </div>
+                                    <div class="col-xs-1" style="width: 250px">
+                                        <input class="form-control" type="hidden" id="guideName" name="guideName" value="${requestScope['guideName']}" readonly="">
+                                        <select id="InvoiceSupGuideBill" name="InvoiceSupGuideBill" class="form-control" onchange="$('#GuideName').val($('#InvoiceSupGuideBill option:selected').text());">
+                                            <option id="" value="">---------</option>
+                                            <option id="GuideNo1" value="" ></option>
+                                            <option id="GuideNo2" value="" ></option>
+                                        </select>
+                                    </div>
+                                    <input id="GuideName" name="GuideName"  type="hidden" class="form-control" readonly="" value="">
+                                    <div class="col-xs-1 text-right" style="width: 120px">
+                                        <label class="control-label">Currency</label>
+                                    </div>
+                                    <div class="col-xs-1" style="width: 150px">
+                                        <select id="SelectCur" name="SelectCur" class="form-control">
+                                            <option id="" value="">---------</option>
+                                            <c:forEach var="price" items="${mCurrency}" >
+                                                <c:set var="select1" value="" />
+                                                    <c:if test="${paymentWendyList.currency == price.code}">
+                                                        <c:set var="select1" value="selected" />
+                                                    </c:if>
+                                                <option value="<c:out value="${price.code}" />" ${select1}><c:out value="${price.code}" /></option>   
+                                            </c:forEach>
+                                        </select>
+                                        <script>
+                                            $("#expenSelectCur${i.count}").selectize({
+                                                sortField: 'text'
+
+                                            });
+                                        </script>
+                                    </div>
                                 </div>
-                                <div class="col-xs-1" style="width: 250px">
-                                    <select class="form-control" id="StatusGuideBill" name="StatusGuideBill">
-                                        <option id="" value="">---------</option>  
-                                        <c:forEach var="status" items="${statusList}">
-                                            <c:set var="select" value="" />
-                                            <c:if test="${status.id == requestScope['itemStatus']}">
-                                                <c:set var="select" value="selected" />
-                                            </c:if>
-                                            <option value="<c:out value="${status.id}" />" ${select}><c:out value="${status.name}" /></option>                                         
-                                        </c:forEach>
-                                    </select>    
+                                <div class="col-xs-12 form-group">
+                                    <div class="col-xs-1">
+                                        <label class="control-label">Status</label>
+                                    </div>
+                                    <div class="col-xs-1" style="width: 250px">
+                                        <select class="form-control" id="StatusGuideBill" name="StatusGuideBill">
+                                            <option id="" value="">---------</option>  
+                                            <c:forEach var="status" items="${statusList}">
+                                                <c:set var="select2" value="" />
+                                                <c:if test="${status.id == paymentWendyList.MItemstatus.id}">
+                                                    <c:set var="select2" value="selected" />
+                                                </c:if>
+                                                <option value="<c:out value="${status.id}" />" ${select2}><c:out value="${status.name}" /></option>                                         
+                                            </c:forEach>
+                                        </select>    
+                                    </div>
+                                    <div class="col-xs-1 text-right" style="width: 120px">
+                                        <label class="control-label">Amount</label>
+                                    </div>
+                                    <div class="col-xs-1" style="width: 250px">
+                                        <input class="form-control money" type="text" id="AmountGuideBill" name="AmountGuideBill" value="${paymentWendyDetailList.amount}" readonly="">
+                                        <input class="form-control numerical" type="hidden" id="AmountGuideBillDefault" name="AmountGuideBillDefault" value="${paymentWendyDetailList.amount}" readonly="">
+                                    </div>
+                                    <div class="col-xs-1" style="padding: 0px 0px 20px 30px">
+                                        <input class="form-control" type="checkbox" id="ConfirmGuideBill" name="ConfirmGuideBill" value="1" onclick="confirmCheckboxGuideBill()">
+                                    </div>
+                                    <div class="col-xs-1 text-right" style="width: 15px">
+                                        <label class="control-label">Confirm</label>
+                                    </div>
                                 </div>
-                                <div class="col-xs-1 text-right" style="width: 120px">
-                                    <label class="control-label">Amount</label>
-                                </div>
-                                <div class="col-xs-1" style="width: 250px">
-                                    <input class="form-control" type="text" id="AmountGuideBill" name="AmountGuideBill" value="" readonly="">
-                                </div>
-                                <div class="col-xs-1" style="padding: 5px 0px 0px 75px">
-                                    <input type="checkbox" id="ConfirmGuideBill" name="ConfirmGuideBill" value="1" onclick="confirmGuideBill()">
-                                </div>
-                                <div class="col-xs-1 text-left" style="width: 10px">
-                                    <label class="control-label">Confirm</label>
-                                </div>
-                            </div>
+                            </div>                
                             <div class="col-xs-12 form-group"><hr/></div>  
                             <div class="text-center" style="padding-top: 10px">
                                 <a id="ButtonPrint" name="ButtonPrint" onclick="printGuideJob();" class="btn btn-primary"><i class="fa fa-print"></i> Print</a>
                                 <input type="hidden" name="action" value="update" />
                                 <input type="hidden" name="tourID" value="${param.tourID}" />
                                 <input type="hidden" name="tourDate" value="${param.tourDate}" />
+                                <input type="hidden" name="tourCode" value="${daytour.code}" />
                                 <button type="submit" id="ButtonSave" name="ButtonSave" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
                             </div>
                         </div>
@@ -1025,31 +1045,7 @@
 
                     document.getElementById('DaytourOperationForm').submit();
                 }
-                
-                function confirmGuideBill(){
-                    var status = document.getElementById('StatusGuideBill').value;
-                    var amount = document.getElementById('AmountGuideBill').value;
-                    var tourCode = document.getElementById('InputDetailTourCode').value;
-                    var tourDate = document.getElementById('InputTourDetailTourDate').value;
-                    var guideName = document.getElementById('GuideName').value;
-                    var resultText = "";
-                    var PayNoGuideBill = "";
-                    $.ajax({
-                        url: 'DaytourOperationDetail.smi?action=confirmGuideBill',
-                        type: 'get',
-                        data: {status: status, amount: amount,tourCode: tourCode, tourDate: tourDate, guideName: guideName, resultText: resultText, PayNoGuideBill: PayNoGuideBill},
-                        success: function () {
-                            alert('Confirm Guide Bill Successful!!');
-                            return true;
-                        },
-                        error: function () {
-                            alert('Confirm Guide Bill Unsuccessful!!');
-                            console.log("error");
-                            result =0;
-                        }
-                    }); 
-                }
-
+                              
             </script>
             <div class="modal-footer">
                 <button id="" type="button" onclick="" class="btn btn-success">OK</button>
