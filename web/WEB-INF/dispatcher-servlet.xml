@@ -110,7 +110,6 @@
 				<prop key="DefineVar.smi">DefineVarController</prop>
 				<prop key="CreditNote.smi">CreditNoteController</prop>
                                 <prop key="SearchCreditNote.smi">SearchCreditNoteController</prop>
-                                <prop key="APARCode.smi">APARCodeController</prop>
 				<!-- add mapping url -->
 			</props>
 		</property>
