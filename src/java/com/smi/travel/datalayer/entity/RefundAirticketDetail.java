@@ -2,6 +2,8 @@ package com.smi.travel.datalayer.entity;
 // Generated Jul 9, 2015 9:38:50 AM by Hibernate Tools 4.3.1
 
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,21 +18,25 @@ public class RefundAirticketDetail {
      private RefundAirticket refundAirticket;
      private TicketFareAirline ticketFareAirline;
      private String sectorRefund;
-     private Long receiveAirline;
-     private Long payCustomer;
-     private Long commission;
+     private BigDecimal receiveAirline;
+     private BigDecimal payCustomer;
+     private BigDecimal commission;
+     private BigDecimal profit;
+     private Date expenseDate;
      private List paymentAirticketRefunds = new LinkedList<PaymentAirticketRefund>();
 
     public RefundAirticketDetail() {
     }
 
-    public RefundAirticketDetail(RefundAirticket refundAirticket, TicketFareAirline ticketFareAirline, String sectorRefund, Long receiveAirline, Long payCustomer, Long commission, List paymentAirticketRefunds) {
+    public RefundAirticketDetail(RefundAirticket refundAirticket, TicketFareAirline ticketFareAirline, String sectorRefund, BigDecimal receiveAirline, BigDecimal payCustomer, BigDecimal commission,BigDecimal profit,Date refundDate, List paymentAirticketRefunds) {
        this.refundAirticket = refundAirticket;
        this.ticketFareAirline = ticketFareAirline;
        this.sectorRefund = sectorRefund;
        this.receiveAirline = receiveAirline;
        this.payCustomer = payCustomer;
        this.commission = commission;
+       this.profit = profit;
+       this.expenseDate = expenseDate;
        this.paymentAirticketRefunds = paymentAirticketRefunds;
     }
    
@@ -62,27 +68,47 @@ public class RefundAirticketDetail {
     public void setSectorRefund(String sectorRefund) {
         this.sectorRefund = sectorRefund;
     }
-    public Long getReceiveAirline() {
-        return this.receiveAirline;
+
+    public BigDecimal getReceiveAirline() {
+        return receiveAirline;
     }
-    
-    public void setReceiveAirline(Long receiveAirline) {
+
+    public void setReceiveAirline(BigDecimal receiveAirline) {
         this.receiveAirline = receiveAirline;
     }
-    public Long getPayCustomer() {
-        return this.payCustomer;
+
+    public BigDecimal getPayCustomer() {
+        return payCustomer;
     }
-    
-    public void setPayCustomer(Long payCustomer) {
+
+    public void setPayCustomer(BigDecimal payCustomer) {
         this.payCustomer = payCustomer;
     }
-    public Long getCommission() {
-        return this.commission;
+
+    public BigDecimal getCommission() {
+        return commission;
     }
-    
-    public void setCommission(Long commission) {
+
+    public void setCommission(BigDecimal commission) {
         this.commission = commission;
     }
+
+    public BigDecimal getProfit() {
+        return profit;
+    }
+
+    public void setProfit(BigDecimal profit) {
+        this.profit = profit;
+    }
+
+    public Date getExpenseDate() {
+        return expenseDate;
+    }
+
+    public void setExpenseDate(Date expenseDate) {
+        this.expenseDate = expenseDate;
+    }
+
 
     public List getPaymentAirticketRefunds() {
         return paymentAirticketRefunds;
