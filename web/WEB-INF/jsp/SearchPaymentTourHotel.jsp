@@ -57,7 +57,7 @@
         <form action="SearchPaymentTourHotel.smi" method="post" id="PaymentSearchForm" name="PaymentSearchForm" role="form">
             <div class="col-xs-12" >
                 <div class="col-xs-1 text-left" style="width:120px;">
-                    <label class="control-label">From<font style="color: red">*</font></lable>
+                    <label class="control-label">From</lable>
                 </div>
                 <div class="col-xs-1 text-left form-group" style="width:170px;">
                     <div class=" form-group">     
@@ -72,7 +72,7 @@
                     </div>         
                 </div>
                 <div class="col-xs-1 text-right" style="width:70px;">
-                    <label class="control-label">To <font style="color: red">*</font></lable>
+                    <label class="control-label">To</lable>
                 </div>
                 <div class="col-xs-1 form-group text-left" style="width:170px;">
                     <div class=" form-group">     
