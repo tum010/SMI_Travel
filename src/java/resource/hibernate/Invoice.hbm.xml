@@ -33,7 +33,7 @@
         </property>
         <property name="deparement" type="string">
             <column name="deparement" length="20" />
-        </property>
+        </property> 
         <property name="arcode" type="string">
             <column name="arcode" length="20" />
         </property>
