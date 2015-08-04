@@ -17,7 +17,7 @@ public class RefundAirticketDetailView {
     private String ticketNo;
     private String department;
     private String route;
-    private Long commisssion;
+    private BigDecimal commisssion;
     private BigDecimal amount;
 
     public String getId() {
@@ -60,11 +60,11 @@ public class RefundAirticketDetailView {
         this.route = route;
     }
 
-    public Long getCommisssion() {
+    public BigDecimal getCommisssion() {
         return commisssion;
     }
 
-    public void setCommisssion(Long commisssion) {
+    public void setCommisssion(BigDecimal commisssion) {
         this.commisssion = commisssion;
     }
 
