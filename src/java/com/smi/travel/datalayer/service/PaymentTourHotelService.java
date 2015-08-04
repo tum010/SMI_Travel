@@ -9,8 +9,9 @@ import com.smi.travel.datalayer.dao.PaymentWendytourDao;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.PaymentDetailWendy;
 import com.smi.travel.datalayer.entity.PaymentWendy;
-import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
+import com.smi.travel.datalayer.entity.TourOperationDesc;
 import com.smi.travel.datalayer.view.dao.InvoiceSuppilerDao;
+import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
 import com.smi.travel.datalayer.view.entity.PaymentWendytourView;
 import java.util.List;
 /**
@@ -92,7 +93,15 @@ public class PaymentTourHotelService {
         return this.paymentWendytourDao.getAccountCode(PayType);
     }
 
-    public String getInvoiceSupCodeByGuideName(String guideName) {
+    public PaymentWendy getInvoiceSupCodeByGuideName(String guideName) {
         return this.paymentWendytourDao.getInvoiceSupCodeByGuideName(guideName);
     }
+
+    public String getGuideName(PaymentWendy paymentWendy) {
+        return this.paymentWendytourDao.getGuideName(paymentWendy);
+    }
+            
+    public PaymentWendy getPaymentWendyFromDayTourOperation(TourOperationDesc paymentWendy) {
+        return this.paymentWendytourDao.getPaymentWendyFromDayTourOperation(paymentWendy);
+    }        
 }
