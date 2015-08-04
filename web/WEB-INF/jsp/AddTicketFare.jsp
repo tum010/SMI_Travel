@@ -724,8 +724,14 @@
         $(".money").mask('000,000,000.00', {reverse: true});
         $('.date').datetimepicker();
 
-        $('span').click(function () {
-            
+        $('#ListRefnoTable').dataTable({bJQueryUI: true,
+            "sPaginationType": "full_numbers",
+            "bAutoWidth": false,
+            "bFilter": false,
+            "bPaginate": true,
+            "bInfo": false,
+            "bLengthChange": false,
+            "iDisplayLength": 10
         });
 
         $("#ticketNo").keyup(function (event) {
@@ -1167,6 +1173,7 @@ function searchTicketNo() {
         action.value = 'search';
         var ticketNo = document.getElementById('ticketNo');
         ticketNo.value = $("#ticketNo").val();
+        document.getElementById('AddTicketFareForm').submit();
     }
 }
 function FilterTicketList(referNo) {
