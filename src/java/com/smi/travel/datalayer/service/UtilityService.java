@@ -194,7 +194,7 @@ public class UtilityService {
         return listitemdao.getMBilltypeFromName(name);
     }
     
-    public MBilltype getListMBilltype() {
+    public List<MBilltype> getListMBilltype() {
         return listitemdao.getListMBilltype();
     }
     
