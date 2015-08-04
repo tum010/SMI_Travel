@@ -430,6 +430,13 @@
         <put-attribute name="title" value="Master: Account Code" />
         <put-attribute name="body" value="/WEB-INF/jsp/MAccountCode.jsp" />
     </definition>
+    
+    <definition name="APARCode" extends="baseLayout">
+        <put-attribute name="title" value="Master: AP/AR Code" />
+        <put-attribute name="body" value="/WEB-INF/jsp/APARCode.jsp" />
+    </definition>
+    
+
     <!--<add data>-->
     
     <definition name="SendMail" extends="baseLayout">
