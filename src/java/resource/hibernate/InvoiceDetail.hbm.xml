@@ -13,7 +13,7 @@
         <many-to-one name="invoice" class="com.smi.travel.datalayer.entity.Invoice" fetch="select">
             <column name="invoice_id" not-null="true" />
         </many-to-one>
-        <many-to-one name="MPaytype" class="com.smi.travel.datalayer.entity.MPaytype" fetch="select">
+        <many-to-one name="mbillType" class="com.smi.travel.datalayer.entity.MBilltype" fetch="select">
             <column name="item_type_id" />
         </many-to-one>
         <property name="description" type="string">
