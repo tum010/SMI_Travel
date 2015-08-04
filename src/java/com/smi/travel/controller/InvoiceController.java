@@ -178,7 +178,7 @@ public class InvoiceController extends SMITravelController {
                 }
             }
             if(termPay != null && !termPay.equals("")){
-                type.setId(arCode);
+                type.setId(termPay);
                 invoice.setMAccpay(type);
             }
             Date due = utilty.convertStringToDate(dueDate);
