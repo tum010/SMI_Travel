@@ -1,4 +1,5 @@
 package com.smi.travel.controller;
+import com.smi.travel.datalayer.entity.MItemstatus;
 import com.smi.travel.datalayer.entity.PaymentDetailWendy;
 import com.smi.travel.datalayer.entity.PaymentWendy;
 import com.smi.travel.datalayer.service.PaymentTourHotelService;
@@ -22,16 +23,20 @@ public class SearchPaymentTourHotelController extends SMITravelController {
     private static final String TYPELIST = "payment_type";
     private static final String DATALIST = "payment_list";
     private static final String INVOICESUPLIST = "invoiceSup_list";
+    private static final String STATUS = "status_list";
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         List<InvoiceSupplier> invoiceSupplierList = paymentTourHotelService.getListInvoiceSuppiler();
         request.setAttribute(INVOICESUPLIST, invoiceSupplierList);
+        List<MItemstatus> mItemstatusList = utilityService.getListMItemstatus();
+        request.setAttribute(STATUS, mItemstatusList);
         
         String action = request.getParameter("action");
         String InputFromDate = request.getParameter("InputFromDate");
         String InputToDate = request.getParameter("InputToDate");
         String selectPvType = request.getParameter("selectPvType");
+        String selectStatus = request.getParameter("selectStatus");
         String paymentID = request.getParameter("paymentID");
         String InputInvoiceSupCode = request.getParameter("InputInvoiceSupCode");
         String InputInvoiceSupName = request.getParameter("InputInvoiceSupName");
@@ -42,7 +47,7 @@ public class SearchPaymentTourHotelController extends SMITravelController {
         List<PaymentWendytourView> paymentList = new ArrayList<PaymentWendytourView>();
         
         if("search".equalsIgnoreCase(action)){
-            paymentList = getPaymentTourHotelService().getListPayment(InputFromDate, InputToDate, selectPvType, InputInvoiceSupCode);    
+            paymentList = getPaymentTourHotelService().getListPayment(InputFromDate, InputToDate, selectPvType, InputInvoiceSupCode, selectStatus);    
         } else if ("delete".equalsIgnoreCase(action)) {
             PaymentWendy paymentWendy = new PaymentWendy();
             paymentWendy.setId(paymentID);
@@ -57,11 +62,11 @@ public class SearchPaymentTourHotelController extends SMITravelController {
                 } else {
                     result = "fail already used";
                 }
-                paymentList = getPaymentTourHotelService().getListPayment(InputFromDate, InputToDate, selectPvType, InputInvoiceSupCode);
+                paymentList = getPaymentTourHotelService().getListPayment(InputFromDate, InputToDate, selectPvType, InputInvoiceSupCode, selectStatus);
             } else {
                 result = getPaymentTourHotelService().deletePaymentWendy(paymentWendy);
                 if ("success".equals(result)) {
-                    paymentList = getPaymentTourHotelService().getListPayment(InputFromDate, InputToDate, selectPvType, InputInvoiceSupCode);
+                    paymentList = getPaymentTourHotelService().getListPayment(InputFromDate, InputToDate, selectPvType, InputInvoiceSupCode, selectStatus);
                 }              
             }
                       
@@ -72,6 +77,7 @@ public class SearchPaymentTourHotelController extends SMITravelController {
         request.setAttribute("InputFromDate", InputFromDate);
         request.setAttribute("InputToDate", InputToDate);
         request.setAttribute("selectPvType", selectPvType);
+        request.setAttribute("selectStatus", selectStatus);
         request.setAttribute("InputInvoiceSupCode", InputInvoiceSupCode);
         request.setAttribute("InputInvoiceSupName", InputInvoiceSupName);
         request.setAttribute("InputAPCode", InputAPCode);
