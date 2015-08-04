@@ -145,7 +145,7 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
     }
 
     @Override
-    public List<PaymentWendytourView> SearchPaymentFromFilter(String dateFrom ,String dateTo,String payType ,String InvoiceSupCode) {
+    public List<PaymentWendytourView> SearchPaymentFromFilter(String dateFrom, String dateTo, String payType , String InvoiceSupCode, String selectStatus) {
         StringBuffer query = new StringBuffer("from PaymentWendy payment ");
         boolean haveCondition = false;
         if ((dateFrom != null) && (!"".equalsIgnoreCase(dateFrom))) {
@@ -166,6 +166,11 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
         if ((InvoiceSupCode != null) && (!"".equalsIgnoreCase(InvoiceSupCode))) {
             query.append(haveCondition ? " and" : " where");
             query.append(" payment.invoiceSup = '" + InvoiceSupCode + "'");
+            haveCondition = true;
+        }
+        if ((selectStatus != null) && (!"".equalsIgnoreCase(selectStatus))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" payment.MItemstatus.id = '" + selectStatus + "'");
             haveCondition = true;
         }
         
