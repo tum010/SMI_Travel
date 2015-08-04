@@ -22,6 +22,7 @@ public class Hotel  {
      private String web;
      private String address;
      private String remark;
+     private String apCode;
      private Set hotelBookings = new HashSet(0);
 
     public Hotel() {
@@ -32,7 +33,7 @@ public class Hotel  {
         this.code = code;
         this.name = name;
     }
-    public Hotel(MCountry MCountry, MCity MCity, String code, String name, String telNo, String fax, String email, String web, String address, String remark, Set hotelBookings) {
+    public Hotel(MCountry MCountry, MCity MCity, String code, String name, String telNo, String fax, String email, String web, String address, String remark, Set hotelBookings,String apCode) {
        this.MCountry = MCountry;
        this.MCity = MCity;
        this.code = code;
@@ -43,6 +44,7 @@ public class Hotel  {
        this.web = web;
        this.address = address;
        this.remark = remark;
+       this.apCode = apCode;
        this.hotelBookings = hotelBookings;
     }
    
@@ -130,6 +132,16 @@ public class Hotel  {
     public void setHotelBookings(Set hotelBookings) {
         this.hotelBookings = hotelBookings;
     }
+
+    public String getApCode() {
+        return apCode;
+    }
+
+    public void setApCode(String apCode) {
+        this.apCode = apCode;
+    }
+    
+    
 
 }
 

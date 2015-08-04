@@ -13,6 +13,12 @@
         <many-to-one name="role" class="com.smi.travel.datalayer.entity.Role" fetch="select">
             <column name="role_id" />
         </many-to-one>
+         <property name="apCode" type="string">
+            <column name="ap_code" length="20"  />
+        </property>
+         <property name="arCode" type="string">
+            <column name="ar_code" length="20"  />
+        </property>
         <property name="name" type="string">
             <column name="name" length="100" not-null="true" />
         </property>

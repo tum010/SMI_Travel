@@ -22,6 +22,8 @@ public class SystemUser {
      private String status;
      private String createBy;
      private Date createDate;
+     private String apCode;
+     private String arCode;
      private Set tourOperationDrivers = new HashSet(0);
      private Set masters = new HashSet(0);
      private Set tourOperationDescsForGuide2 = new HashSet(0);
@@ -41,7 +43,7 @@ public class SystemUser {
         this.username = username;
         this.password = password;
     }
-    public SystemUser(MDepartment MDepartment, Role role, String name, String username, String password, String position, String tel, String car, String status, String createBy, Date createDate, Set tourOperationDrivers, Set masters, Set tourOperationDescsForGuide2, Set transferJobsForDriverId, Set transferJobsForGuildeId, Set tourOperationDescsForGuide1, Set daytourBookings, Set airticketBookingsForIssueBy, Set airticketBookingsForOwnerBy) {
+    public SystemUser(MDepartment MDepartment, Role role, String name, String username, String password, String position, String tel, String car,String apCode,String arCode, String status, String createBy, Date createDate, Set tourOperationDrivers, Set masters, Set tourOperationDescsForGuide2, Set transferJobsForDriverId, Set transferJobsForGuildeId, Set tourOperationDescsForGuide1, Set daytourBookings, Set airticketBookingsForIssueBy, Set airticketBookingsForOwnerBy) {
        this.MDepartment = MDepartment;
        this.role = role;
        this.name = name;
@@ -55,6 +57,8 @@ public class SystemUser {
        this.createDate = createDate;
        this.tourOperationDrivers = tourOperationDrivers;
        this.masters = masters;
+       this.apCode = apCode;
+       this.arCode = arCode;
        this.tourOperationDescsForGuide2 = tourOperationDescsForGuide2;
        this.transferJobsForDriverId = transferJobsForDriverId;
        this.transferJobsForGuildeId = transferJobsForGuildeId;
@@ -88,6 +92,24 @@ public class SystemUser {
     public String getName() {
         return this.name;
     }
+
+    public String getApCode() {
+        return apCode;
+    }
+
+    public void setApCode(String apCode) {
+        this.apCode = apCode;
+    }
+
+    public String getArCode() {
+        return arCode;
+    }
+
+    public void setArCode(String arCode) {
+        this.arCode = arCode;
+    }
+    
+    
     
     public void setName(String name) {
         this.name = name;

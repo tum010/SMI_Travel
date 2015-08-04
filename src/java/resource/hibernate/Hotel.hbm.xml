@@ -37,6 +37,9 @@
         <property name="remark" type="string">
             <column name="remark" length="255" />
         </property>
+       <property name="apCode" type="string">
+            <column name="ap_code" length="20"  />
+        </property>
        
     </class>
 </hibernate-mapping>

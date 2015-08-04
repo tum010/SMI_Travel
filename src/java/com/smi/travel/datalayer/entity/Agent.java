@@ -26,6 +26,8 @@ public class Agent   {
      private String branchNo;
      private String web;
      private String Detail;
+     private String apCode;
+     private String arCode;
      private Set masters = new HashSet(0);
 
     public Agent() {
@@ -36,7 +38,7 @@ public class Agent   {
         this.code = code;
         this.name = name;
     }
-    public Agent(MAccterm MAccterm,MAccpay MAccpay, MBranch MBranch, String code, String name, String address, String tel, String fax, String taxNo, String email, String remark, String warning, String branchNo, String web , Set masters,String Detail) {
+    public Agent(MAccterm MAccterm,MAccpay MAccpay, MBranch MBranch, String code, String name, String address, String tel, String fax, String taxNo, String email, String remark, String warning, String branchNo, String web , Set masters,String Detail,String apCode,String arCode) {
        this.MAccterm = MAccterm;
        this.MAccpay = MAccpay;
        this.MBranch = MBranch;
@@ -53,6 +55,8 @@ public class Agent   {
        this.web = web;
        this.masters = masters;
        this.Detail = Detail;
+       this.apCode = apCode;
+       this.arCode = arCode;
     }
    
     public String getId() {
@@ -62,6 +66,24 @@ public class Agent   {
     public MAccpay getMAccpay() {
         return MAccpay;
     }
+
+    public String getApCode() {
+        return apCode;
+    }
+
+    public void setApCode(String apCode) {
+        this.apCode = apCode;
+    }
+
+    public String getArCode() {
+        return arCode;
+    }
+
+    public void setArCode(String arCode) {
+        this.arCode = arCode;
+    }
+    
+    
 
     public void setMAccpay(MAccpay MAccpay) {
         this.MAccpay = MAccpay;
