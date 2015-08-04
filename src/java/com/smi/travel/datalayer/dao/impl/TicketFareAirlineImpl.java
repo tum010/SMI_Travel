@@ -19,7 +19,7 @@ import com.smi.travel.datalayer.entity.MRunningCode;
 import com.smi.travel.datalayer.entity.PaymentAirticketFare;
 import com.smi.travel.datalayer.entity.RefundAirticketDetail;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
-import com.smi.travel.datalayer.view.entity.ArCode;
+//import com.smi.travel.datalayer.view.entity.ArCode;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
 import java.sql.Connection;
 import java.sql.DriverManager;
