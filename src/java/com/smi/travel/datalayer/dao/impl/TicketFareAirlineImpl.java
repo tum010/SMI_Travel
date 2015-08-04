@@ -19,12 +19,14 @@ import com.smi.travel.datalayer.entity.PaymentAirticketFare;
 import com.smi.travel.datalayer.entity.RefundAirticketDetail;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -158,12 +160,13 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         String query = "from TicketFareAirline t where t.ticketNo = :ticketNo";
         Session session = this.sessionFactory.openSession();
         List<TicketFareAirline> ticketFareList = session.createQuery(query).setParameter("ticketNo", TicketNo).list();
-        session.close();
         if (ticketFareList.isEmpty()) {
             return null;
         }else{
             ticketFare =  ticketFareList.get(0);
         }
+        session.close();
+        this.sessionFactory.close();
         return ticketFare;
     }
 
@@ -228,22 +231,22 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         Session session = this.sessionFactory.openSession();
         List<AirticketPassenger> ticketPassList = session.createQuery(query).setParameter("refno", Refno).list();
         
-        if (ticketPassList.isEmpty()) {
+        if (ticketPassList.isEmpty()){
             return null;
         }else{
-            result =  buildTicketListHTML(ticketPassList);
+            result =  buildTicketListHTML(ticketPassList,Refno);
         }
         session.close();
         this.sessionFactory.close();
         return result;
     }
     
-    public String buildTicketListHTML(List<AirticketPassenger> airPassengerList) {
+    public String buildTicketListHTML(List<AirticketPassenger> airPassengerList,String refno){
         StringBuffer html = new StringBuffer();
         if (airPassengerList == null || airPassengerList.size() == 0) {
             return html.toString();
         } 
-        String id = "" ;
+        String ticketId = "" ;
         String name = "";
         String ticket = "";
         String ticketClass = "";
@@ -257,58 +260,79 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         String department = "";
         String masterId = "";
         for(int i = 0 ; i < airPassengerList.size() ; i++ ){
-            id = airPassengerList.get(i).getId();
             ticket = airPassengerList.get(i).getSeries1() 
                             + airPassengerList.get(i).getSeries2() 
                             + airPassengerList.get(i).getSeries3();
-            ticketFare = String.valueOf(airPassengerList.get(i).getTicketFare());
-            ticketTax = String.valueOf(airPassengerList.get(i).getTicketTax());
-            ticketRouting = String.valueOf(airPassengerList.get(i).getTicketType());
-            ticketBy = String.valueOf(airPassengerList.get(i).getTicketFrom());
-            if(airPassengerList.get(i).getMInitialname() != null){
-                name = airPassengerList.get(i).getMInitialname().getName() 
-                                + airPassengerList.get(i).getLastName() + " "  
-                                + airPassengerList.get(i).getFirstName();
-            }
+
             List<AirticketFlight> airlines = new ArrayList<AirticketFlight>(airPassengerList.get(i).getAirticketAirline().getAirticketFlights());
             departDate = String.valueOf(airlines.get(i).getDepartDate());
             if(airlines.get(i).getMFlight() != null){
                 ticketClass = airlines.get(i).getMFlight().getName();
             }
-            if(airPassengerList.get(i).getAirticketAirline() != null){
-                issueDate = String.valueOf(airPassengerList.get(i).getAirticketAirline().getTicketDate());
-                if(airPassengerList.get(i).getAirticketAirline().getMAirline() != null){
-                    airline = String.valueOf(airPassengerList.get(i).getAirticketAirline().getMAirline().getCode());
-                }
-                if(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster() != null){
-                    if(!"null".equals(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType())
-                    || airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType() != null){
-                        department = String.valueOf(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType());
-                    }
-                    if(!"null".equals(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId())
-                    || airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId() != null){
-                        masterId = String.valueOf(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId());
-                    }
-//                    department = String.valueOf(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType());
-//                    masterId = String.valueOf(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId());
-                }
+            TicketFareAirline ticketFareAirline = new TicketFareAirline();
+            String query = "from TicketFareAirline t where t.ticketNo = :ticketNo";
+            Session session = this.sessionFactory.openSession();
+            List<TicketFareAirline> ticketFareList = session.createQuery(query).setParameter("ticketNo", ticket).list();
+            if (! ticketFareList.isEmpty()){
+                System.out.println("ticketFareList.is not Empty");
+                ticketFareAirline =  ticketFareList.get(0);
             }
-
+            if("".equals(String.valueOf(ticketFareAirline.getId())) || "null".equals(String.valueOf(ticketFareAirline.getId()))){
+                ticketFare = String.valueOf(airPassengerList.get(i).getTicketFare());
+                ticketTax = String.valueOf(airPassengerList.get(i).getTicketTax());
+                ticketRouting = String.valueOf(airPassengerList.get(i).getTicketType());
+                ticketBy = String.valueOf(airPassengerList.get(i).getTicketFrom());
+                if(airPassengerList.get(i).getMInitialname() != null){
+                    name = airPassengerList.get(i).getMInitialname().getName() 
+                            + airPassengerList.get(i).getLastName() + " "  
+                            + airPassengerList.get(i).getFirstName();
+                }
+                if(airPassengerList.get(i).getAirticketAirline() != null){
+                    issueDate = String.valueOf(airPassengerList.get(i).getAirticketAirline().getTicketDate());
+                    if(airPassengerList.get(i).getAirticketAirline().getMAirline() != null){
+                        airline = String.valueOf(airPassengerList.get(i).getAirticketAirline().getMAirline().getCode());
+                    }
+                    if(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster() != null){
+                        if(!"null".equals(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType())
+                        || airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType() != null){
+                            department = String.valueOf(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType());
+                        }
+                        if(!"null".equals(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId())
+                        || airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId() != null){
+                            masterId = String.valueOf(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId());
+                        }
+    //                    department = String.valueOf(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType());
+    //                    masterId = String.valueOf(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId());
+                    }
+                }
+            }else{
+                ticketId = ticketFareAirline.getId();
+                name = ticketFareAirline.getPassenger();
+                ticketFare = String.valueOf(ticketFareAirline.getTicketFare());
+                ticketTax = String.valueOf(ticketFareAirline.getTicketTax());
+                issueDate = String.valueOf(ticketFareAirline.getIssueDate());
+                ticketRouting = ticketFareAirline.getTicketRouting();
+                airline = ticketFareAirline.getMAirlineAgent().getCode();
+                ticketBy = ticketFareAirline.getTicketBuy();
+                department = ticketFareAirline.getDepartment();
+                masterId =  ticketFareAirline.getMaster().getId();
+            }   
+            
             String newrow
-                    = "<tr>"
-                    + "<td>" + ticket + "</td>"
-                    + "<td>" + name + "</td>"
-                    + "<td>" + ticketClass + "</td>"
-                    + "<td>" + departDate + "</td>"
-                    + "<td>" + ticketFare + "</td>"
-                    + "<td>" + ticketTax + "</td>"
-                    + "<td class=\"text-center\" onclick=\"setTicketDetail('" + ticket + "','" + ticketFare + "','" + ticketTax + "','" + issueDate + "','" + ticketRouting + "','" + airline + "','" + ticketBy + "','" + name + "','" + department + "','" + masterId + "')\">"
-                    + "<a href=\"\"><span class=\"glyphicon glyphicon-check\"></span></a>" + "</td>"
-                    + "</tr>";
+                = "<tr>"
+                + "<td>" + (ticket == "null" ? "" : ticket ) + "</td>"
+                + "<td>" + (name == "null" ? "" : name ) + "</td>"
+                + "<td>" + (ticketClass == "null" ? "" : ticketClass ) + "</td>"
+                + "<td>" + (departDate == "null" ? "" : departDate ) + "</td>"
+                + "<td class='money'>" + (ticketFare == "null" ? "" : ticketFare ) + "</td>" 
+                + "<td class='money'>" + (ticketTax == "null" ? "" : ticketTax ) + "</td>"
+//                    + "<td class=\"text-center\" onclick=\"setTicketDetail('" + ticket + "','" + ticketFare + "','" + ticketTax + "','" + issueDate + "','" + ticketRouting + "','" + airline + "','" + ticketBy + "','" + name + "','" + department + "','" + masterId + "','" + ticketId + "')\">"
+                + "<td class=\"text-center\" onclick=\"setTicketFareDetail('" + ticket + "','" + refno + "')\">"
+                + "<a href=\"\"><span class=\"glyphicon glyphicon-check\"></span></a>" + "</td>"
+                + "</tr>";
             System.out.println("newrow [[[[[[[ "+newrow +" ]]]]");
             html.append(newrow);
         }
-
         return html.toString();
     }
 

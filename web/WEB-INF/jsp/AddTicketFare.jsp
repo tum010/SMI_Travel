@@ -482,9 +482,10 @@
                 </div>
                 <div class="row" style="padding-bottom: 20px">
                     <div class="col-xs-12">
-                        <div class="col-xs-12 text-center" > 
+                        <div class="col-xs-12 text-center" >  
                             <input type="hidden" name="action" id="action" value="">
                             <input type="hidden" name="temp" id="temp" value="">
+                            <input type="hidden" name="refno" id="refno" value="${requestScope['refNo']}"> 
                             <input type="hidden" name="ticketFareFlag" id="ticketFareFlag" value="${requestScope['ticketFareFlag']}">
                             <input type="hidden" name="flightDetailFlag" id="flightDetailFlag" value="${requestScope['flightDetailFlag']}">
                             <input type="hidden" name="optionSave" id="optionSave" value="${requestScope['optionSave']}">
@@ -595,19 +596,16 @@
                 <table class="display" id="ListRefnoTable">
                     <thead class="datatable-header">
                         <tr>
-                            <th>Ticket</th>
-                            <th>Name</th>
-                            <th>Class</th>
-                            <th>Depart Date</th>
-                            <th>Fare</th>
-                            <th>Tax</th>
-                            <th>Action</th>
+                            <th style="width:5%;">Ticket</th>
+                            <th style="width:15%;">Name</th>
+                            <th style="width:15%;">Class</th>
+                            <th style="width:15%;">Depart Date</th>
+                            <th style="width:15%;">Fare</th>
+                            <th style="width:15%;">Tax</th>
+                            <th style="width:5%;">Action</th>
                         </tr>
                     </thead>
-                    <script>
-                    </script>
                     <tbody>
-                        
                     </tbody>
                 </table>
             </div>
@@ -707,7 +705,6 @@
     $(document).ready(function () {
 //        $("#ButtonSave").attr("disabled", "disabled");
 //        $("#ButtonSaveAndNew").attr("disabled", "disabled");
-        
         $("#flightPanel").addClass('hidden');
         
         if($('#flightDetailFlag').val() == "notdummy"){
@@ -716,6 +713,11 @@
         
         if($('#ticketFareFlag').val() == "dummy"){
             alert('Ticket no. not available');
+        }
+        if($('#refno').val() != ""){
+            var refNo = $('#refno').val();
+            $("#filtercus").val(refNo);
+            FilterTicketList($("#filtercus").val());
         }
         
         $(".money").mask('000,000,000.00', {reverse: true});
@@ -901,6 +903,7 @@
         
         if($('#optionSave').val() == "1"){
             clearData();
+            $("#ticketNo").val("");
         }
    });
    
@@ -1212,7 +1215,7 @@ function CallFilterAjax(param) {
                             "bPaginate": true,
                             "bInfo": false,
                             "bLengthChange": false,
-                            "iDisplayLength": 10
+                            "iDisplayLength":10
                         });
                     }
 
@@ -1229,72 +1232,37 @@ function CallFilterAjax(param) {
         alert(e);
     }
 }   
-function setTicketDetail(ticket,ticketFare,ticketTax,issueDate,ticketRouting,airline,ticketBy,passenger,department,masterId) {
-    setTicketDetailTemp.push({no:ticket,fare:ticketFare, tax:ticketTax, date:issueDate , routing:ticketRouting ,airline : airline, by:ticketBy, passenger:passenger,department:department ,masterId:masterId});
-    var ticketNo = $("#ticketNo").val();
-    if(ticketNo != ""){
-        $("#ticketNoAlert").text('Are you sure to edit Ticket No. ?');
-        $('#AddTicketByRefModal').modal('show');
-    }else{
-        $("#ticketNo").val(ticket);
-        $("#ticketFare").val(ticketFare);
-        $("#ticketTax").val(ticketTax);
-
-        $("#issueDate").val(issueDate);
-        $("#ticketRouting").val(ticketRouting);
-        $("#ticketBuy").val(ticketBy);
-        $("#passenger").val(passenger);
-        $("#masterId").val(masterId);
-        if(airline == 'Other'){
-            document.getElementById('ticketAirline').value = "1";
-        }else if(airline == 'TG'){
-            document.getElementById('ticketAirline').value = "2";
-        }
-
-        if(department == 'I'){
-            document.getElementById('department').value = "wendy";
-        }else if(department == 'O'){
-            document.getElementById('department').value = "outbound";
-        }
-        $("#ListRefnoModal").modal('hide');
-    }
-    setFormatCurrency();
-    setDataCurrency();
-    $("#flightPanel").addClass('hidden');
-}
 function selectTicketNo(){
     clearData();
     $('#AddTicketByRefModal').modal('hide');
     
     $.each(setTicketDetailTemp, function (key, value) {
         $("#ticketNo").val(value.no);
-        $("#ticketFare").val(value.fare);
-        $("#ticketTax").val(value.tax);
-
-        $("#issueDate").val(value.date);
-        $("#ticketRouting").val(value.routing);
-        $("#ticketBuy").val(value.by);
-        $("#passenger").val(value.passenger);
-        $("#masterId").val(value.masterId);
-        if(value.airline == 'Other'){
-            document.getElementById('ticketAirline').value = "1";
-        }else if(value.airline == 'TG'){
-            document.getElementById('ticketAirline').value = "2";
-        }
-
-        if(value.department == 'I'){
-            document.getElementById('department').value = "wendy";
-        }else if(value.department == 'O'){
-            document.getElementById('department').value = "outbound";
-        }
-        $("#ListRefnoModal").modal('hide');
-
+        $('#AddTicketFareForm').bootstrapValidator('revalidateField', 'ticketNo');
+        searchTicketNo();
     });
     setFormatCurrency();
     setDataCurrency();
+    $("#ListRefnoModal").modal('hide');
+}
+
+function setTicketFareDetail(ticket,refno){
+    setTicketDetailTemp.push({no:ticket,refno:refno});
+    var ticketNo = $("#ticketNo").val();
+    if(ticketNo != ""){
+        $("#ticketNoAlert").text('Are you sure to edit Ticket No. ?');
+        $('#AddTicketByRefModal').modal('show');
+    }else{
+        $("#ticketNo").val(ticket);
+        $("#refno").val(refno);
+        searchTicketNo();
+    }
+    setFormatCurrency();
+    setDataCurrency();
+    $("#ListRefnoModal").modal('hide');
 }
 function clearData(){
-    $("#ticketNo").val("");
+//    $("#ticketNo").val("");
     $("#ticketType").val("");
     $("#ticketRouting").val("");
     $("#ticketAirline").val("");
@@ -1316,7 +1284,6 @@ function clearData(){
     $("#agent_user").val("");
     $("#agent_name").val("");
     $("#remark").val("");
-    
     $("#overCommission").val("");
     $("#litterCommission").val("");
     $("#decPay").val("");
