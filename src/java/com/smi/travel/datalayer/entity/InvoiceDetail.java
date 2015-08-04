@@ -17,7 +17,7 @@ public class InvoiceDetail {
      private String id;
      private BillableDesc billableDesc;
      private Invoice invoice;
-     private MPaytype MPaytype;
+     private MBilltype mbillType;
      private String description;
      private BigDecimal cost;
      private BigDecimal costLocal;
@@ -37,10 +37,10 @@ public class InvoiceDetail {
     public InvoiceDetail(Invoice invoice) {
         this.invoice = invoice;
     }
-    public InvoiceDetail(BillableDesc billableDesc, Invoice invoice, MPaytype MPaytype, String description, BigDecimal cost, BigDecimal costLocal, String curCost, BigDecimal amount, BigDecimal amountLocal, String curAmount, BigDecimal vat, Integer isVat, List invoiceDocuments,BigDecimal gross) {
+    public InvoiceDetail(BillableDesc billableDesc, Invoice invoice, MBilltype mbillType, String description, BigDecimal cost, BigDecimal costLocal, String curCost, BigDecimal amount, BigDecimal amountLocal, String curAmount, BigDecimal vat, Integer isVat, List invoiceDocuments,BigDecimal gross) {
        this.billableDesc = billableDesc;
        this.invoice = invoice;
-       this.MPaytype = MPaytype;
+       this.mbillType = mbillType;
        this.description = description;
        this.cost = cost;
        this.costLocal = costLocal;
@@ -75,13 +75,17 @@ public class InvoiceDetail {
     public void setInvoice(Invoice invoice) {
         this.invoice = invoice;
     }
-    public MPaytype getMPaytype() {
-        return this.MPaytype;
+
+    public MBilltype getMbillType() {
+        return mbillType;
     }
+
+    public void setMbillType(MBilltype mbillType) {
+        this.mbillType = mbillType;
+    }
+   
     
-    public void setMPaytype(MPaytype MPaytype) {
-        this.MPaytype = MPaytype;
-    }
+    
     public String getDescription() {
         return this.description;
     }
