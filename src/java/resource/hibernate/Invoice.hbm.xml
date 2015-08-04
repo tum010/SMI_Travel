@@ -34,8 +34,8 @@
         <property name="deparement" type="string">
             <column name="deparement" length="20" />
         </property>
-        <property name="arcode" type="java.lang.Integer">
-            <column name="arcode" />
+        <property name="arcode" type="string">
+            <column name="arcode" length="20" />
         </property>
         <property name="remark" type="string">
             <column name="remark" />
