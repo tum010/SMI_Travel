@@ -19,6 +19,7 @@ public class PaymentAirticket  {
      private String payNo;
      private Date payDate;
      private Date dueDate;
+     private String payTo;
      private String invoiceSup;
      private String apCode;
      private String detail;
@@ -43,10 +44,11 @@ public class PaymentAirticket  {
     public PaymentAirticket() {
     }
 
-    public PaymentAirticket(MAccpay MAccpay, String payNo, Date payDate, Date dueDate, String invoiceSup, String apCode, String detail, BigDecimal agentAmount, BigDecimal cash, BigDecimal witholdingTax, String chqNo, BigDecimal chqAmount, BigDecimal ticketInsurance, String creditNote, String debitNote, String createBy, Date createDate, List paymentAirticketRefunds, List paymentAirticketFares,Integer isExport,String department,BigDecimal totalAmount,BigDecimal debitAmount,BigDecimal creditAmount) {
+    public PaymentAirticket(MAccpay MAccpay,String payTo ,String payNo, Date payDate, Date dueDate, String invoiceSup, String apCode, String detail, BigDecimal agentAmount, BigDecimal cash, BigDecimal witholdingTax, String chqNo, BigDecimal chqAmount, BigDecimal ticketInsurance, String creditNote, String debitNote, String createBy, Date createDate, List paymentAirticketRefunds, List paymentAirticketFares,Integer isExport,String department,BigDecimal totalAmount,BigDecimal debitAmount,BigDecimal creditAmount) {
        this.MAccpay = MAccpay;
        this.payNo = payNo;
        this.payDate = payDate;
+       this.payTo = payTo;
        this.dueDate = dueDate;
        this.invoiceSup = invoiceSup;
        this.apCode = apCode;
@@ -99,6 +101,16 @@ public class PaymentAirticket  {
     public void setPayDate(Date payDate) {
         this.payDate = payDate;
     }
+
+    public String getPayTo() {
+        return payTo;
+    }
+
+    public void setPayTo(String payTo) {
+        this.payTo = payTo;
+    }
+    
+    
     public Date getDueDate() {
         return this.dueDate;
     }
