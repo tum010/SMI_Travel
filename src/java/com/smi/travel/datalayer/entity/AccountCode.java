@@ -8,7 +8,7 @@ package com.smi.travel.datalayer.entity;
  */
 public class AccountCode {
 
-
+ 
      private String id;
      private String accCode;
      private String detail;
