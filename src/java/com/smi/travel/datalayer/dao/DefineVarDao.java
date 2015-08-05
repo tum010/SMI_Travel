@@ -8,7 +8,7 @@ package com.smi.travel.datalayer.dao;
 
 import com.smi.travel.datalayer.entity.MDefaultData;
 import java.util.List;
-
+ 
 /**
  *
  * @author Surachai
