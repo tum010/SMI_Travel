@@ -107,7 +107,7 @@
 				<div class="row" style="padding-left: 15px">
 					<div class="col-md-6">
 						<h4>
-							<b>Acoount</b>
+							<b>Account</b>
 						</h4>
 					</div>
 					<div class="col-md-6 " style="padding-left: 180px">
