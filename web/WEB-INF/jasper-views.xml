@@ -118,7 +118,7 @@
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/ReceiptEmail.jrxml"/>
         </bean>
-        
+        <!--<tet data>-->
         <bean id="ReceiptReport"
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/ReceiptReport.jrxml"/>
