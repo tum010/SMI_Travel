@@ -579,7 +579,7 @@ function confirmCheckboxGuideBill(){
 function formatNumber(num) {
     return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
 }
-
+   
 function insertCommas(nField){
     if (/^0/.test(nField.value)){
         nField.value = nField.value.substring(0,1);
