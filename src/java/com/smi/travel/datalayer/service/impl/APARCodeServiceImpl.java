@@ -3,11 +3,13 @@ package com.smi.travel.datalayer.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.smi.travel.datalayer.service.APARCodeService;
 import com.smi.travel.datalayer.view.dao.APARCodeDao;
 import com.smi.travel.datalayer.view.entity.APARCode;
 
+@Service
 public class APARCodeServiceImpl implements APARCodeService {
 	
 	@Autowired
