@@ -9,6 +9,7 @@ package com.smi.travel.datalayer.dao.impl;
 import com.smi.travel.datalayer.dao.InvoiceDao;
 import com.smi.travel.datalayer.entity.Invoice;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
+import com.smi.travel.datalayer.entity.StockDetail;
 import java.util.LinkedList;
 import java.util.List;
 import org.hibernate.Query;
@@ -59,16 +60,19 @@ public class InvoiceImpl implements InvoiceDao{
     @Override
     public String updateInvoice(Invoice invoice) {
         String result = "";
-        Session session = this.sessionFactory.openSession();
-        try { 
+        try {
+            Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
-            session.save(invoice);
+            
             List<InvoiceDetail> invoiceDetail = invoice.getInvoiceDetails();
-            if(invoiceDetail != null){
-                for (int i = 0; i < invoiceDetail.size(); i++) {
+            for (int i = 0; i < invoiceDetail.size(); i++) {
+                if (invoiceDetail.get(i).getId() == null) {
                     session.save(invoiceDetail.get(i));
+                } else {
+                    session.update(invoiceDetail.get(i));
                 }
             }
+
             transaction.commit();
             session.close();
             this.sessionFactory.close();
@@ -76,11 +80,9 @@ public class InvoiceImpl implements InvoiceDao{
         } catch (Exception ex) {
             transaction.rollback();
             ex.printStackTrace();
-            session.close();
-            this.sessionFactory.close();
             result = "update fail";
         }
-        return result;
+        return  result;
     }
 
     @Override
