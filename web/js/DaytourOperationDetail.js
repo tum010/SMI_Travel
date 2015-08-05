@@ -558,6 +558,11 @@ function calculateGuideBill(){
     document.getElementById('InputGuideBill').value = formatNumber(guideBillTotal);  
     document.getElementById('InputTotal').value = formatNumber(total);
     
+    var check = document.getElementById('ConfirmGuideBill').checked;
+    if(check){
+        document.getElementById('AmountGuideBill').value = formatNumber(guideBillTotal);
+    }
+    
 }
 
 function confirmCheckboxGuideBill(){
