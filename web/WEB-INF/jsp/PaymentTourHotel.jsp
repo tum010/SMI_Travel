@@ -5,7 +5,7 @@
 <script type="text/javascript" src="js/workspace.js"></script> 
 <script type="text/javascript" src="js/jquery-ui.js"></script>
 <link href="css/jquery-ui.css" rel="stylesheet">
-
+//test
 <c:set var="agent_list" value="${requestScope['agent_list']}" />
 <c:set var="pvType_list" value="${requestScope['pvType_list']}" />
 <c:set var="status_list" value="${requestScope['status_list']}" />
