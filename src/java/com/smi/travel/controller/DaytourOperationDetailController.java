@@ -122,8 +122,9 @@ public class DaytourOperationDetailController extends SMITravelController {
                         request.setAttribute("guideName", guideName);
                         request.setAttribute(PAYMENTWENDYLIST, paymentWendy);
                         List<PaymentDetailWendy> paymentWendyDetail =  paymentWendy.getPaymentDetailWendies();
-                        request.setAttribute(PAYMENTWENDYDETAILLIST, paymentWendyDetail.get(0));
-                                              
+                        if(paymentWendyDetail.size()>0){
+                            request.setAttribute(PAYMENTWENDYDETAILLIST, paymentWendyDetail.get(0));
+                        }            
                     }
                     request.setAttribute(DayTourOperation, daytourOperation);
                     request.setAttribute(MasterPrice, daytourPrice);
@@ -409,7 +410,6 @@ public class DaytourOperationDetailController extends SMITravelController {
         String PayNoGuideBill = request.getParameter("PayNoGuideBill");
         String PaymentWendyDetailId = request.getParameter("PaymentWendyDetailId");
         
-        String tourID = request.getParameter("tourID");
         String status = request.getParameter("StatusGuideBill");
         String amount = request.getParameter("AmountGuideBill");
         String currency = request.getParameter("SelectCur");
@@ -473,7 +473,7 @@ public class DaytourOperationDetailController extends SMITravelController {
         paymentDetailWendy.setAmount(amountRe);       
         
         String result = "";
-        if("".equalsIgnoreCase(PayNoGuideBillId)){
+        if(("".equalsIgnoreCase(PayNoGuideBillId)) && ("".equalsIgnoreCase(PaymentWendyDetailId))){
             Date date = Calendar.getInstance().getTime();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String createDate = sdf.format(date);
@@ -482,14 +482,20 @@ public class DaytourOperationDetailController extends SMITravelController {
             paymentWendy.getPaymentDetailWendies().add(paymentDetailWendy);
             result = paymentTourHotelService.InsertPaymentWendy(paymentWendy);
             
-        } else if(!"".equalsIgnoreCase(PayNoGuideBillId)){
+        } else {
             String createDate = request.getParameter("createDate");
             String createBy = request.getParameter("createBy");
             paymentWendy.setId(PayNoGuideBillId);
             paymentWendy.setPayNo(PayNoGuideBill);
             paymentWendy.setCreateDate(utilfunction.convertStringToDate(createDate));
             paymentWendy.setCreateBy(createBy);
-            paymentDetailWendy.setId(PaymentWendyDetailId);
+            
+            if("".equalsIgnoreCase(PaymentWendyDetailId)){
+                paymentDetailWendy.setId(null);
+            } else {
+                paymentDetailWendy.setId(PaymentWendyDetailId);
+            }
+            
             paymentWendy.getPaymentDetailWendies().add(paymentDetailWendy);
             result = paymentTourHotelService.UpdatePaymentWendy(paymentWendy);
             if("success".equalsIgnoreCase(result)){
