@@ -5,7 +5,7 @@
  */
 
 package com.smi.travel.datalayer.view.dao;
-
+   
 import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
 import java.util.List;
 /**
