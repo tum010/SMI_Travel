@@ -564,17 +564,17 @@
                         </c:when>
                         <c:when test="${idRole  == 19}">
                             <div class="col-xs-2 text-right">
-                                <label class="control-label">Vat Total</lable>
-                            </div>
-                            <div class="col-md-2 form-group ">
-                                <input name="InputVatTotal" style="text-align: right;" id="InputVatTotal" type="text" class="form-control " value="" readonly=""/>            
-                            </div>
-                            <div class="col-xs-2 text-right">
                                 <label class="control-label" >Gross Total</lable>
                             </div>
                             <div class="col-md-2 form-group text-left">
                                 <input name="InputGrossTotal" style="text-align: right;"  id="InputGrossTotal" type="text" class="form-control " value="" readonly=""/>            
                             </div>
+                            <div class="col-xs-2 text-right">
+                                <label class="control-label">Vat Total</lable>
+                            </div>
+                            <div class="col-md-2 form-group ">
+                                <input name="InputVatTotal" style="text-align: right;" id="InputVatTotal" type="text" class="form-control " value="" readonly=""/>            
+                            </div>                           
                             <div class="col-xs-9 text-right">
                                 <label class="control-label">Grand Total</lable>
                             </div>
