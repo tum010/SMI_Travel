@@ -6,7 +6,7 @@
 <script type="text/javascript" src="js/selectize.js"></script>
 <link href="css/selectize.bootstrap3.css" rel="stylesheet">
 <link href="css/jquery-ui.css" rel="stylesheet">
-
+//test
 <script type="text/javascript" src="js/DaytourOperationDetail.js"></script> 
 
 <c:set var="booking_size" value="${requestScope['BookingSize']}" />
