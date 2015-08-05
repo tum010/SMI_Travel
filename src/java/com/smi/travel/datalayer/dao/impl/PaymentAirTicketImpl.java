@@ -444,7 +444,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
         String route = "";
         String commission = "";
         String amount = "";
-        
+        String payCustomer = "";
         if (refundAirticketDetails == null || refundAirticketDetails.size() == 0) {
             return html.toString();
         }
@@ -464,15 +464,18 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                     refund = String.valueOf(refundAirticketDetails.get(i).getRefundAirticket().getRefundNo());
                 }
             }
-            if(refundAirticketDetails.get(i).getTicketFareAirline() != null){
-                if(String.valueOf(refundAirticketDetails.get(i).getTicketFareAirline().getTicketNo()) != null){
-                    ticketNo =  String.valueOf(refundAirticketDetails.get(i).getTicketFareAirline().getTicketNo());
-                }
-                if(String.valueOf(refundAirticketDetails.get(i).getTicketFareAirline().getDepartment()) != null){
-                    department = String.valueOf(refundAirticketDetails.get(i).getTicketFareAirline().getDepartment());
-                }
-                if(String.valueOf(refundAirticketDetails.get(i).getTicketFareAirline().getSalePrice()) != null){
-                    amount = String.valueOf(refundAirticketDetails.get(i).getTicketFareAirline().getSalePrice());
+            if(refundAirticketDetails.get(i).getAirticketPassenger() != null){
+                ticketNo =  String.valueOf(refundAirticketDetails.get(i).getAirticketPassenger().getSeries1())
+                            + String.valueOf(refundAirticketDetails.get(i).getAirticketPassenger().getSeries2())
+                            + String.valueOf(refundAirticketDetails.get(i).getAirticketPassenger().getSeries3());
+                amount = String.valueOf(refundAirticketDetails.get(i).getReceiveAirline());
+                payCustomer = String.valueOf(refundAirticketDetails.get(i).getPayCustomer());
+                if(String.valueOf(refundAirticketDetails.get(i).getAirticketPassenger().getAirticketAirline()) != null
+                    && refundAirticketDetails.get(i).getAirticketPassenger().getAirticketAirline().getAirticketPnr() != null
+                    && refundAirticketDetails.get(i).getAirticketPassenger().getAirticketAirline().getAirticketPnr().getAirticketBooking() != null
+                    && refundAirticketDetails.get(i).getAirticketPassenger().getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster() != null
+                    ){
+                    department = String.valueOf(refundAirticketDetails.get(i).getAirticketPassenger().getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType());
                 }
             }
 
@@ -483,6 +486,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                         + "<input type='hidden' name='count"+countrow+"' id='count"+countrow+"' value='"+countrow+"'>"
                         + "<input type='hidden' name='tableRefundId"+countrow+"' id='tableRefundId"+countrow+"' value='"+id+"'>"
                         + "<input type='hidden' name='refundNoRow"+countrow+"' id='refundNoRow"+countrow+"' value='"+refund+"'>"
+                        + "<input type='hidden' name='payCustomer"+countrow+"' id='payCustomer"+countrow+"' value='"+payCustomer+"'>"
                         + "<td align='center'>"+ (refund  == "null" ? "" : refund )+ "</td>"
                         + "<td align='left'>" + (ticketNo == "null" ? "": ticketNo )+  "</td>"
                         + "<td align='left'>" + (department == "null" ? "": department )+ "</td>"
@@ -499,6 +503,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                         + "<input type='hidden' name='count"+rowCount+"' id='count"+rowCount+"' value='"+rowCount+"'>"
                         + "<input type='hidden' name='tableRefundId"+rowCount+"' id='tableRefundId"+rowCount+"' value='"+id+"'>"
                         + "<input type='hidden' name='refundNoRow"+rowCount+"' id='refundNoRow"+rowCount+"' value='"+refund+"'>"
+                        + "<input type='hidden' name='payCustomer"+rowCount+"' id='payCustomer"+rowCount+"' value='"+payCustomer+"'>"
                         + "<td align='center'>" + (refund  == "null" ?  "" : refund )+ "</td>"
                         + "<td align='left'>" + (ticketNo == "null" ? "" : ticketNo )+  "</td>"
                         + "<td align='left'>" + (department == "null" ? "": department )+ "</td>"
@@ -586,10 +591,16 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                     if(refundAirticketDetail.getRefundAirticket() != null){
                         refundView.setRefundNo(refundAirticketDetail.getRefundAirticket().getRefundNo());
                     }
-                    if(refundAirticketDetail.getTicketFareAirline() != null){
-                        refundView.setTicketNo(refundAirticketDetail.getTicketFareAirline().getTicketNo());
-                        refundView.setDepartment(refundAirticketDetail.getTicketFareAirline().getDepartment());
-                        refundView.setAmount(refundAirticketDetail.getTicketFareAirline().getSalePrice());
+                    if(refundAirticketDetail.getAirticketPassenger() != null){
+                        refundView.setTicketNo(refundAirticketDetail.getAirticketPassenger().getSeries1()+refundAirticketDetail.getAirticketPassenger().getSeries2()+refundAirticketDetail.getAirticketPassenger().getSeries3());
+                        refundView.setAmount(refundAirticketDetail.getReceiveAirline());
+                        if(refundAirticketDetail.getAirticketPassenger().getAirticketAirline() != null
+                            && refundAirticketDetail.getAirticketPassenger().getAirticketAirline().getAirticketPnr() != null
+                            && refundAirticketDetail.getAirticketPassenger().getAirticketAirline().getAirticketPnr().getAirticketBooking() != null
+                            && refundAirticketDetail.getAirticketPassenger().getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster() != null
+                            ){
+                            refundView.setDepartment(refundAirticketDetail.getAirticketPassenger().getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType());
+                        }                        
                     }
 
                 }
