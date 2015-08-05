@@ -10,8 +10,8 @@
         <many-to-one name="refundAirticket" class="com.smi.travel.datalayer.entity.RefundAirticket" fetch="select">
             <column name="refund_id" />
         </many-to-one>
-        <many-to-one name="ticketFareAirline" class="com.smi.travel.datalayer.entity.TicketFareAirline" fetch="select">
-            <column name="ticket_fare_id" />
+        <many-to-one name="airticketPassenger" class="com.smi.travel.datalayer.entity.AirticketPassenger" fetch="select">
+            <column name="ticket_passenger_id" />
         </many-to-one>
         <property name="sectorRefund" type="string">
             <column name="sector_refund" />

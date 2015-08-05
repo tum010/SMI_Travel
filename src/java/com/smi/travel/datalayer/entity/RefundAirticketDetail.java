@@ -16,7 +16,7 @@ public class RefundAirticketDetail {
 
      private String id;
      private RefundAirticket refundAirticket;
-     private TicketFareAirline ticketFareAirline;
+     private AirticketPassenger airticketPassenger;
      private String sectorRefund;
      private BigDecimal receiveAirline;
      private BigDecimal payCustomer;
@@ -28,9 +28,9 @@ public class RefundAirticketDetail {
     public RefundAirticketDetail() {
     }
 
-    public RefundAirticketDetail(RefundAirticket refundAirticket, TicketFareAirline ticketFareAirline, String sectorRefund, BigDecimal receiveAirline, BigDecimal payCustomer, BigDecimal commission,BigDecimal profit,Date refundDate, List paymentAirticketRefunds) {
+    public RefundAirticketDetail(RefundAirticket refundAirticket,AirticketPassenger airticketPassenger, String sectorRefund, BigDecimal receiveAirline, BigDecimal payCustomer, BigDecimal commission,BigDecimal profit,Date refundDate, List paymentAirticketRefunds) {
        this.refundAirticket = refundAirticket;
-       this.ticketFareAirline = ticketFareAirline;
+       this.airticketPassenger = airticketPassenger;
        this.sectorRefund = sectorRefund;
        this.receiveAirline = receiveAirline;
        this.payCustomer = payCustomer;
@@ -54,13 +54,17 @@ public class RefundAirticketDetail {
     public void setRefundAirticket(RefundAirticket refundAirticket) {
         this.refundAirticket = refundAirticket;
     }
-    public TicketFareAirline getTicketFareAirline() {
-        return this.ticketFareAirline;
+
+    public AirticketPassenger getAirticketPassenger() {
+        return airticketPassenger;
+    }
+
+    public void setAirticketPassenger(AirticketPassenger airticketPassenger) {
+        this.airticketPassenger = airticketPassenger;
     }
     
-    public void setTicketFareAirline(TicketFareAirline ticketFareAirline) {
-        this.ticketFareAirline = ticketFareAirline;
-    }
+    
+    
     public String getSectorRefund() {
         return this.sectorRefund;
     }
