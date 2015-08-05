@@ -13,6 +13,9 @@
         <property name="payNo" type="string">
             <column name="pay_no" length="20" />
         </property>
+        <property name="payTo" type="string">
+            <column name="pay_to" length="1" />
+        </property>
         <property name="payDate" type="date">
             <column name="pay_date" length="10" />
         </property>
