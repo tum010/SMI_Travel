@@ -6,5 +6,5 @@
           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
      
      <context:annotation-config/>
-     <context:component-scan base-package="com.smi.travel.datalayer.dao.impl"  name-generator="com.smi.travel.common.SMIBeanNameGenerator"/>
+     <context:component-scan base-package="com.smi.travel.**.dao.impl"  name-generator="com.smi.travel.common.SMIBeanNameGenerator"/>
 </beans>
