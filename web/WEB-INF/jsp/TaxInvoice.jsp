@@ -214,7 +214,7 @@
                                                     <th style="width: 10%" >Product</th>
                                                     <th style="width: 5%" >Ref No</th>
                                                     <th style="width: 50%">Description</th>
-                                                    <th style="width: 5%" >T/C</th>
+
                                                     <th style="width: 15%" >Cost</th>
                                                     <th style="width: 15%">Amount</th>
                                                     <th style="width: 10%">Vat</th>
@@ -228,7 +228,7 @@
                                                     <td>TEST</td>
                                                     <td>2500001</td>
                                                     <td>Hello World</td>
-                                                    <td align="center">T</td>
+
                                                     <td align="center">100000</td>
                                                     <td align="center">1000000</td>
                                                     <td align="center">7</td>

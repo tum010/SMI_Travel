@@ -170,7 +170,7 @@
                     <thead class="datatable-header">
                         <tr>
                             <th style="width: 15%">Number Of Item</th>                                   
-                            <th style="width: 10%">Normal</th>
+                            <th style="width: 10%">New</th>
                             <th style="width: 15%">Cancel</th>
                             <th style="width: 20%">Bill</th>
                             <th style="width: 15%">In Use</th>
