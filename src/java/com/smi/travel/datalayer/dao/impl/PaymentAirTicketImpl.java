@@ -453,8 +453,8 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             if(String.valueOf(refundAirticketDetails.get(i).getId()) != null){
                 id = String.valueOf(refundAirticketDetails.get(i).getId());
             }
-            if(String.valueOf(refundAirticketDetails.get(i).getCommission()) != null){
-                commission = String.valueOf(refundAirticketDetails.get(i).getCommission()) ;
+            if(String.valueOf(refundAirticketDetails.get(i).getAirComission()) != null){
+                commission = String.valueOf(refundAirticketDetails.get(i).getAirComission()) ;
             }
             if(String.valueOf(refundAirticketDetails.get(i).getSectorRefund()) != null){
                 route = String.valueOf(refundAirticketDetails.get(i).getSectorRefund());
@@ -586,7 +586,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                 if(refundAirticketDetail != null){
                     refundView.setId(refundAirticketDetail.getId());
                     refundView.setRoute(refundAirticketDetail.getSectorRefund());
-                    refundView.setCommisssion(refundAirticketDetail.getCommission());
+                    refundView.setCommisssion(refundAirticketDetail.getAirComission());
                     
                     if(refundAirticketDetail.getRefundAirticket() != null){
                         refundView.setRefundNo(refundAirticketDetail.getRefundAirticket().getRefundNo());
