@@ -269,8 +269,27 @@ public class InvoiceController extends SMITravelController {
                 request.setAttribute("result", result);
                 request.setAttribute("invoice", null);
                 request.setAttribute("listInvoiceDetail", null);
+            }  
+        }else if("searchInvoice".equals(action)){
+            String result = "";
+            String invoiceNo = request.getParameter("InvNo");
+            Invoice invoice = new Invoice();
+            List<InvoiceDetail> listInvoiceDetail = new LinkedList<InvoiceDetail>();
+            invoice = invoiceService.getInvoiceFromInvoiceNumber(invoiceNo);
+            listInvoiceDetail = invoice.getInvoiceDetails();
+            if(invoice != null){
+                request.setAttribute("invoice", invoice);
+                result = "success";
+            }else{
+                request.setAttribute("invoice", null);
             }
-            
+            if(listInvoiceDetail != null){
+                request.setAttribute("listInvoiceDetail", listInvoiceDetail);
+                result = "success";
+            }else{
+                request.setAttribute("listInvoiceDetail", null);
+            }
+            request.setAttribute("result", result);   
         }
         
         return Invoice;
@@ -331,7 +350,7 @@ public class InvoiceController extends SMITravelController {
              String isVat = request.getParameter("checkUse"+i);
              String gross = request.getParameter("InputGross"+i);
              request.getParameterMap();
-             
+             System.out.println("isvat : ["+i+"]"+isVat);
              if(idDetail != null && !idDetail.equals("")){
                   invoiceDetail.setId(idDetail);
              }
@@ -386,14 +405,20 @@ public class InvoiceController extends SMITravelController {
                  BigDecimal vatInt =  new BigDecimal(vat);
                  invoiceDetail.setVat(vatInt);
              }
-             
+             /*
              if( isVat != null && !"".equals(isVat) ){
                 if(isVat.equals("on")){
                     invoiceDetail.setIsVat(1);
                 }else{
                     invoiceDetail.setIsVat(0);
                 }
-            }
+            }*/
+              if( isVat == null){
+                  invoiceDetail.setIsVat(0);
+              }else{
+                  invoiceDetail.setIsVat(1);
+              }
+             
              if(description != null && !description.equals("")){
                  invoiceDetail.setDescription(description);
                  invoiceDetail.setInvoice(invoice);

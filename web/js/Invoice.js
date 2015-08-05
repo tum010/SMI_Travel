@@ -148,17 +148,31 @@
     });
    // Add Row Detail Bill Able
     var countertable = $("#counterTable").val();
-    AddRowDetailBillAble(countertable);
+    
     // get row in table now
     var rowCount = $('#DetailBillableTable tr').length;
     $("#counterTable").val(rowCount);
+    AddRowDetailBillAble(rowCount++);
 //    alert("R : "+rowCount);
    
     $('#TotalNet').ready(function () {
         CalculateGrandTotal('');
     });
     validFromInvoice();
+    
+    // Invoice No Key Up
+    $("#InvNo").keyup(function(event){   
+        if(event.keyCode === 13){
+            searchInvoiceFromInvoiceNo(); 
+        }
+    });
  }); 
+ 
+ function searchInvoiceFromInvoiceNo(){
+    var action = document.getElementById('action');
+    action.value = 'searchInvoice';
+    document.getElementById('InvoiceForm').submit();
+ }
  
 function validFromInvoice(){
     // Validator Date From and To
@@ -234,7 +248,7 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price){
         '<td><select id="SelectCurrencyCost' + row + '" name="SelectCurrencyCost' + row + '" class="form-control">'+ select +'</select></td>' +
         '<td>'+cos +' </td>' +
         '<td class="hidden"><input type="text" value="'+cos +'" id="InputCostLocalTemp' + row + '" name="InputCostLocalTemp' + row + '"></td>'+
-        '<td><input type="checkbox" value="" id="checkUse' + row + '" name="checkUse' + row + '"  onclick="calculateGross('+row+')"></td>'+
+        '<td><input type="checkbox"  id="checkUse' + row + '" name="checkUse' + row + '"  onclick="calculateGross('+row+')"></td>'+
         '<td>'+ defaultD +'</td>'+ 
         '<td class="hidden"><input type="text" class="form-control" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '" value="'+ defaultD +'" ></td>'+
         '<td><input type="text" class="form-control" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>'+
@@ -293,20 +307,23 @@ function EnableVoid(){
 }
 
 function Enable() {
-    $("#disableVoidButton").prop("disabled",false);
+    $("#disableVoidButton").css("display", "block");
     $("#saveInvoice").prop("disabled",false);
-    $('#enableVoidButton').prop("disabled",true);
+    $('#enableVoidButton').css("display", "none");
     $('#textAlertDisable').hide();
+//    var action = document.getElementById('action');
+//    action.value = 'enableVoid';
+//    document.getElementById('InvoiceForm').submit();
 }
 
 function Disable() {
-    $("#disableVoidButton").prop("disabled",true);
+    $("#disableVoidButton").css("display", "none");
     $("#saveInvoice").prop("disabled",true);
-    $('#enableVoidButton').prop("disabled",false);
+    $('#enableVoidButton').css("display", "block");
     $('#textAlertDisable').show();
 //    var action = document.getElementById('action');
-//    action.value = 'delete';
-//    document.getElementById('OtherForm').submit();
+//    action.value = 'disableVoid';
+//    document.getElementById('InvoiceForm').submit();
 }
 
 function printInvoice(){  

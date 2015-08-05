@@ -63,6 +63,7 @@ public class InvoiceImpl implements InvoiceDao{
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
+            session.update(invoice);
             
             List<InvoiceDetail> invoiceDetail = invoice.getInvoiceDetails();
             for (int i = 0; i < invoiceDetail.size(); i++) {

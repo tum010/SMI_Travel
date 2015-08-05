@@ -15,9 +15,11 @@
 <c:set var="listTermPay" value="${requestScope['listTermPay']}" />
 <c:set var="invoice" value="${requestScope['invoice']}" />
 <c:set var="listInvoiceDetail" value="${requestScope['listInvoiceDetail']}" />
-<c:set var="listType" value="${requestScope['listType']}" />
+<c:set var="listType" value="${requestScope['listType']}" />result
+<c:set var="result" value="${requestScope['result']}" />
 
 <input type="hidden" id="type" name="type" value="${param.type}">
+<input type="hidden" id="resultAction" name="resultAction" value="${result}">
 <section class="content-header" >
     <h1>
         Finance & Cashier - Invoice
@@ -151,10 +153,15 @@
                         <div class="col-xs-1 text-right">
                             <label class="control-label" for="">INV no</lable>
                         </div>
-                        <div class="col-md-2 form-group">
+                        <div class="col-md-1 form-group" style="width: 125px;">
                             <input type="text"  class="form-control" id="InvNo" name="InvNo"  value="${invoice.invNo}" >
                         </div>
-                        <div class="col-xs-2 text-right">
+                        <div class="col-md-1 form-group" style="width: 120px;">
+                            <button type="button"  id="ButtonSearchInvoiceNo"  name="ButtonSearchInvoiceNo" onclick="searchInvoiceFromInvoiceNo();" class="btn btn-primary btn-sm">
+                                <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
+                            </button>
+                        </div>
+                        <div class="col-xs-1 text-right" style="width: 100px;padding-left: 0px;">
                             <label class="control-label" for="">Invoice date</lable>
                         </div>
                         <div class="col-md-2 form-group">
@@ -293,6 +300,7 @@
                                 <c:set var="checkGroup" value="checked" />
                             </c:if>
                              <label class="control-label"><input onclick='' type="checkbox" id="Grpup" name="Grpup"  ${checkGroup}>  Group Yes/No</label>
+                             <input class="hidden" type="text" value="${invoice.isGroup}"  >
                         </div>
                         <div class="col-xs-1 text-right">
                             <label class="control-label" for="" >A/R&nbsp;Code<font style="color: red">*</font></label>
@@ -375,7 +383,7 @@
                                                     <c:if test="${ind.isVat == 1}">
                                                         <c:set var="checkIsVat" value="checked" />
                                                     </c:if> 
-                                                    <input type="checkbox" value="1" id="checkUse${taxdesc.count}" name="checkUse${taxdesc.count}"  onclick="calculateGross('${taxdesc.count}')"  ${checkIsVat}>
+                                                    <input type="checkbox" id="checkUse${taxdesc.count}" name="checkUse${taxdesc.count}"  onclick="calculateGross('${taxdesc.count}')"  ${checkIsVat}>
                                                 </td>
                                                 <td>${ind.vat}</td>
                                                 <td class="hidden"><input type="text" class="form-control" id="InputVatTemp${taxdesc.count}" name="InputVatTemp${taxdesc.count}" value="${ind.vat}" ></td>
@@ -465,14 +473,18 @@
                                                 <span id="SpanPrint" class="glyphicon glyphicon-user"></span> Customer Invoice 
                                             </button>
                                         </div>
-                                        <div class="col-md-2 text-right " style="width: 140px;">
-                                            <button type="button" class="btn btn-primary " onclick="EnableVoid();" data-toggle="modal" data-target="#EnableVoid" id="enableVoidButton" name="enableVoidButton" disabled="true">
+                                        <div class="col-md-1 text-right " >
+                                            
+                                        </div>
+                                        <div class="col-md-2 text-right ">
+                                            <button type="button" class="btn btn-primary" onclick="EnableVoid();" data-toggle="modal" data-target="#EnableVoid" id="enableVoidButton" name="enableVoidButton"  style="display: none;" >
                                                 <span id="SpanEnableVoid" class="glyphicon glyphicon-ok" ></span> Cancel Void
                                             </button>
-                                        </div>
-                                        <div class="col-md-1 text-right ">
-                                            
-                                            <button type="button" class="btn btn-danger" onclick="DisableVoid();" data-toggle="modal" data-target="#DisableVoid" id="disableVoidButton" name="disableVoidButton">
+                                            <c:set var="isDisableVoid" value="disabled='true'" />
+                                            <c:if test="${result =='success'}">        
+                                                <c:set var="isDisableVoid" value="" />
+                                            </c:if>
+                                            <button type="button" class="btn btn-danger" onclick="DisableVoid();" data-toggle="modal" data-target="#DisableVoid" id="disableVoidButton" name="disableVoidButton" ${isDisableVoid} style="display: block;">
                                                 <span id="SpanDisableVoid" class="glyphicon glyphicon-remove" ></span> Void
                                             </button>
                                         </div>
