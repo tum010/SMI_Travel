@@ -561,7 +561,7 @@
                 </div>
             </div>
         </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
+    </div><!-- /.modal-dialog --> <!-- /.modal-dialog -->
 </div>
 
 <!--Sale Staff To Modal-->
