@@ -8,10 +8,12 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.smi.travel.datalayer.view.dao.APARCodeDao;
 import com.smi.travel.datalayer.view.entity.APARCode;
 
+@Repository
 public class APARCodeDaoImpl implements APARCodeDao {
 	@Autowired
 	private SessionFactory sessionFactory;
