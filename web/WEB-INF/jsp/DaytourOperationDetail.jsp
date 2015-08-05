@@ -550,7 +550,7 @@
                                         <c:set var="total" value="${total +(expen.qty * expen.amount)}"/>
                                     </c:forEach>
                                 </tbody>
-                            </table>
+                            </table>                           
                             <div class="col-xs-12 form-group" style="padding-top: 10px">
                                 <div class="col-xs-1">
                                     <label class="control-label">Guide&nbsp;bill</label>
@@ -566,6 +566,11 @@
                                 </div>
                             </div>
                             <div class="col-xs-12 form-group"><hr/></div>
+                            <div class="col-xs-12 form-group" style="padding-top: 10px">                               
+                                <div id="textAlertDivGuideName" style="display:none; color: red">
+                                    
+                                </div>
+                            </div>                               
                             <div class="col-xs-12 form-group">
                                 <div class="col-sm-6">
                                     <h4>Guide Bill</h4>
@@ -588,13 +593,12 @@
                                     </div>
                                     <div class="col-xs-1" style="width: 250px">
                                         <input class="form-control" type="hidden" id="guideName" name="guideName" value="${requestScope['guideName']}" readonly="">
-                                        <select id="InvoiceSupGuideBill" name="InvoiceSupGuideBill" class="form-control" onchange="$('#GuideName').val($('#InvoiceSupGuideBill option:selected').text());">
+                                        <select id="InvoiceSupGuideBill" name="InvoiceSupGuideBill" class="form-control" onchange="setGuideName('','check')">
                                             <option id="" value="">---------</option>
                                             <option id="GuideNo1" value="" ></option>
                                             <option id="GuideNo2" value="" ></option>
                                         </select>
                                     </div>
-                                    <input id="GuideName" name="GuideName"  type="hidden" class="form-control" readonly="" value="">
                                     <div class="col-xs-1 text-right" style="width: 120px">
                                         <label class="control-label">Currency</label>
                                     </div>
