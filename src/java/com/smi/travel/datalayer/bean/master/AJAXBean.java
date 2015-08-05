@@ -590,6 +590,9 @@ public class AJAXBean extends AbstractBean implements
                 String rowCount = map.get("rowCount").toString();
                 System.out.println("rowCount ::: "+rowCount);
                 result = paymentairticketdao.addRefundAirTicket(refundNo,rowCount);
+                if(result == null){
+                    result = "null";
+                }
             }
         } else if (INVOICE.equalsIgnoreCase(servletName)){
             if("searchInvoice".equalsIgnoreCase(type)){

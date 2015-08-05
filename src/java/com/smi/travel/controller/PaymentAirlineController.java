@@ -50,7 +50,8 @@ public class PaymentAirlineController extends SMITravelController {
     private static final String SETCALCULATETICKET = "setCalculateTicket"; 
     private static final String SETCALCULATEREFUND = "setCalculateRefund";
     private static final String OPTIONSAVE = "optionSave";
-    private UtilityService utilityService;
+    private static final String SEARCHPAYMENTNOFLAG = "searchPaymentNoFlag";
+    private UtilityService utilityService; 
     private PaymentAirTicketService paymentAirTicketService;
     UtilityFunction util;
     @Override
@@ -88,7 +89,7 @@ public class PaymentAirlineController extends SMITravelController {
         request.setAttribute(FLAGSEARCG,"0");
         request.setAttribute(SETCALCULATETICKET,0);
         request.setAttribute(SETCALCULATEREFUND,0);
-
+        request.setAttribute(SEARCHPAYMENTNOFLAG,"notdummy");
         PaymentAirticket paymentAirticket = new PaymentAirticket();
         InvoiceSupplier invoiceSupplier = new InvoiceSupplier();
         MAccpay mAccpay = new MAccpay();
@@ -133,6 +134,9 @@ public class PaymentAirlineController extends SMITravelController {
                         request.setAttribute(SETCALCULATEREFUND,1);
                     }
                     request.setAttribute(ADDREFUNDLIST,refundAirticketDetailViews);
+                    request.setAttribute(SEARCHPAYMENTNOFLAG,"notdummy");
+                }else{
+                    request.setAttribute(SEARCHPAYMENTNOFLAG,"dummy");
                 }
             }
             request.setAttribute(PAYNO,paymentNo);

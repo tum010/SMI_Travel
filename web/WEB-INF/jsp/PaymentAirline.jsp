@@ -66,14 +66,14 @@
                 <input type="hidden" name="flagSearch" id="flagSearch" value="${flagSearch}">
                 <div class="panel panel-default">
                     <div class="panel-body"  style="padding-right: 0px;" style="width: 100%">
-                        <div class="col-xs-12 form-group">
+                        <div class="col-xs-12">
                             <div class="col-xs-1 text-right"  style="width: 128px">
                                 <label class="control-label text-right">Payment No </label>
                             </div>
                             <div class="col-xs-1" style="width:180px" id="paymentnopanel">
                                 <div class='input-group' id='paymentnumber'>
                                     <input id="paymentId" name="paymentId" type="hidden" class="form-control" maxlength="11" value="${paymentAirticket.id}">
-                                    <input id="paymentNo" name="paymentNo" type="text" style="width: 180px" class="form-control" value="${requestScope['payNo']}">
+                                    <input id="paymentNo" name="paymentNo" type="text" style="width: 180px" maxlength="20" class="form-control" value="${requestScope['payNo']}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right" style="width: 8px"></div>
@@ -101,15 +101,14 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="col-xs-12 form-group">
+                        <div class="col-xs-12" style="padding-top: 15px">
                             <div class="col-xs-1 text-right"  style="width: 128px">
                                 <label class="control-label text-right">Invoice Sup<font style="color: red">*</font></label>
                             </div>
-                            <div class="col-xs-1"  style="width: 155px">
+                            <div class="form-group col-xs-1"  style="width: 155px">
                                 <div class="input-group">
                                     <input type="hidden" class="form-control" id="invoiceSupId" name="invoiceSupId" value="${SelectedInvoice.id}"/>
-                                    <input type="text" class="form-control" id="invoiceSupCode" name="invoiceSupCode" value="${SelectedInvoice.code}" style="text-transform:uppercase"/>
+                                    <input type="text" class="form-control" id="invoiceSupCode" maxlength="11" name="invoiceSupCode" value="${SelectedInvoice.code}" style="text-transform:uppercase"/>
                                     <span class="input-group-addon" id="invoiceSup_modal"  data-toggle="modal" data-target="#InvoiceSupModal">
                                         <span class="glyphicon-search glyphicon"></span>
                                     </span>
@@ -122,22 +121,22 @@
                             <div class="col-xs-1 text-right"  style="width: 115px">
                                 <label class="control-label text-right">A/P Code<font style="color: red">*</font></label>
                             </div>
-                            <div class="col-xs-1"  style="width: 170px">
+                            <div class="form-group col-xs-1"  style="width: 170px">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="apCode" name="apCode" value="${SelectedInvoice.apcode}" readonly="" />
+                                    <input type="text" class="form-control" id="apCode" name="apCode" maxlength="11" value="${SelectedInvoice.apcode}" readonly="" />
 <!--                                    <span class="input-group-addon" id="ap_modal"  data-toggle="modal" data-target="#ApModal">
                                         <span class="glyphicon-search glyphicon"></span>
                                     </span>-->
                                 </div>
                             </div>
                         </div> 
-                        <div class="col-xs-12 form-group">
+                        <div class="col-xs-12" style="padding-top: 5px">
                             <div class="col-xs-1 text-right"  style="width: 128px">
                                 <label class="control-label text-right">Detail </label>
                             </div>
                             <div class="col-xs-1"  style="width: 310px">
                                 <div class="input-group">                                    
-                                    <textarea rows="3" class="form-control" id="detail" name="detail" style="width: 175%">${paymentAirticket.detail}</textarea>  
+                                    <textarea rows="3" class="form-control" id="detail" name="detail" maxlength="255" style="width: 175%">${paymentAirticket.detail}</textarea>  
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 120px">
@@ -165,7 +164,7 @@
                         <h4 class="panel-title">Ticket Fare</h4>
                     </div> 
                     <div class="panel-body" style="width: 100%">
-                        <div class="col-xs-12 form-group">
+                        <div class="col-xs-12"  style="padding-top: 5px">
                             <div class="col-xs-1 text-right" style="width: 128px">
                                 <label class="control-label text-right">Ticket From </label>
                             </div>
@@ -204,15 +203,15 @@
                             </div>
                             <div class="col-xs-1  text-right" style="width: 8px"><i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i></div>
                             <div class="col-xs-1 text-right" style="width: 80px">
-                                <button style="height:34px" type="button"  id="ButtonSearch"  name="ButtonSearch" onclick="searchTicketFare();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
+                                <button style="height:34px" type="button"  id="ButtonSearchTicket"  name="ButtonSearchTicket" onclick="searchTicketFare();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
                             </div>
                         </div>
-                        <div class="col-xs-12 form-group">
+                        <div class="col-xs-12" style="padding-top: 15px">
                             <div class="col-xs-1 text-right" style="width: 128px">
                                 <label class="control-label text-right">From </label>
                             </div>
-                            <div class="col-xs-1" style="width: 170px">
-                                <div class='input-group date'>
+                            <div class="col-xs-1 form-group text-left" style="width: 170px" id="datefrompanel">
+                                <div class='input-group date' id="inputDateFrom">
                                     <input id="dateFrom" name="dateFrom"  type="text" 
                                        class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['dateFrom']}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -223,8 +222,8 @@
                             <div class="col-xs-1 text-right" style="width: 122px">
                                 <label class="control-label text-right">To </label>
                             </div>
-                            <div class="col-xs-1" style="width: 170px">
-                                <div class='input-group date'>
+                            <div class="col-xs-1 form-group text-left" style="width: 170px" id="datetopanel">
+                                <div class='input-group date' id="inputDateTo">
                                     <input id="dateTo" name="dateTo"  type="text" 
                                        class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['dateTo']}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -349,6 +348,7 @@
                                 <input type="hidden" id="deleteRefundCount" name="deleteRefundCount"/>
                                 <input type="hidden" id="rowRefundCount" name="rowRefundCount"/>
                                 <input type="hidden" name="tableRefundId" id="tableRefundId" value="">
+                                <input type="hidden" name="searchPaymentNoFlag" id="searchPaymentNoFlag" value="${requestScope['searchPaymentNoFlag']}">
                             </tbody>
                         </table>
                         <div class="col-xs-12 form-group" style="padding-top: 15px">
@@ -377,13 +377,13 @@
                         <h4 class="panel-title">Ticket Detail</h4>
                     </div> -->
                     <div class="panel-body" style="width: 100%">
-                        <div class="col-xs-12 form-group">
+                        <div class="col-xs-12" style="padding-top: 5px">
                             <div class="col-xs-1 text-right"  style="width: 150px">
                                 <label class="control-label text-right">Agent Amount </label>
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="agentAmount" name="agentAmount" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.agentAmount}">
+                                    <input id="agentAmount" name="agentAmount" type="text" class="form-control numerical" style="text-align: right" maxlength="12" onkeyup="insertCommas(this)" value="${paymentAirticket.agentAmount}" >
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 155px">
@@ -391,7 +391,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="creditNote" name="creditNote" type="text" class="form-control" value="${paymentAirticket.creditNote}">
+                                    <input id="creditNote" name="creditNote" type="text" class="form-control" maxlength="50" value="${paymentAirticket.creditNote}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 140px">
@@ -399,18 +399,18 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="creditAmount" name="creditAmount" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.creditAmount}">
+                                    <input id="creditAmount" name="creditAmount" type="text" class="form-control numerical" maxlength="12" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.creditAmount}">
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="col-xs-12 form-group">
+                        <div class="col-xs-12" style="padding-top: 15px">
                             <div class="col-xs-1 text-right"  style="width: 150px">
                                 <label class="control-label text-right">Commission Vat </label>
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="commissionVat" name="commissionVat" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="">
+                                    <input id="commissionVat" name="commissionVat" type="text" maxlength="12" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 155px">
@@ -418,7 +418,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="debitNote" name="debitNote" type="text" class="form-control" value="${paymentAirticket.debitNote}">
+                                    <input id="debitNote" name="debitNote" type="text" cmaxlength="50" lass="form-control" value="${paymentAirticket.debitNote}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 140px">
@@ -426,17 +426,17 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="debitAmount" name="debitAmount" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.debitAmount}">
+                                    <input id="debitAmount" name="debitAmount" type="text" maxlength="8" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.debitAmount}">
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12 form-group">
+                        <div class="col-xs-12" style="padding-top: 15px">
                             <div class="col-xs-1 text-right"  style="width: 150px">
                                 <label class="control-label text-right">Cash </label>
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="cash" name="cash" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.cash}">
+                                    <input id="cash" name="cash" type="text" class="form-control numerical" maxlength="12" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.cash}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 155px">
@@ -444,18 +444,18 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="withholdingTax" name="withholdingTax" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.witholdingTax}" >
+                                    <input id="withholdingTax" name="withholdingTax" type="text" maxlength="12" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.witholdingTax}" >
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="col-xs-12 form-group">
+                        <div class="col-xs-12" style="padding-top: 15px">
                             <div class="col-xs-1 text-right"  style="width: 150px">
                                 <label class="control-label text-right">Chq No </label>
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="chqNo" name="chqNo" type="text" class="form-control" value="${paymentAirticket.chqNo}">
+                                    <input id="chqNo" name="chqNo" type="text" class="form-control" maxlength="255" value="${paymentAirticket.chqNo}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 155px">
@@ -463,7 +463,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="amount" name="amount" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.chqAmount}">
+                                    <input id="amount" name="amount" type="text" maxlength="14" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.chqAmount}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 140px">
@@ -471,7 +471,7 @@
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="totalPayment" name="totalPayment" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" readonly="" value="${paymentAirticket.totalAmount}">
+                                    <input id="totalPayment" name="totalPayment" type="text" maxlength="14" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" readonly="" value="${paymentAirticket.totalAmount}">
                                 </div>
                             </div>
                         </div>
@@ -695,15 +695,85 @@
 <!--Script-->       
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
-//        $("#ButtonSave").attr("disabled", "disabled");
-//        $("#ButtonSaveAndNew").attr("disabled", "disabled");
-        
+        $('.datemask').mask('0000-00-00');
         $('.date').datetimepicker();
         $(".moneyformat").mask('000,000,000', {reverse: true});
         $(".money").mask('000,000,000.00', {reverse: true});
         $("#vat").val(${vat});
         $("#countRow").val("0");
         
+        if($('#searchPaymentNoFlag').val() == "dummy"){
+            alert('Payment no. not available');
+        }     
+        
+        $('#inputDateFrom').datetimepicker().on('dp.change', function (e) {
+            $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'dateFrom');
+            var dateTo = $('#dateTo').val();
+            var dateFrom = $('#dateFrom').val();
+            if(dateTo!="" && dateFrom!="" && dateTo < dateFrom){
+                $("#ButtonSearchTicket").attr("disabled", "disabled");
+            }else{
+                $("#ButtonSearchTicket").removeAttr("disabled");
+            }
+        });
+        
+        $('#inputDateTo').datetimepicker().on('dp.change', function (e) {
+            $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'dateTo');
+            var dateTo = $('#dateTo').val();
+            var dateFrom = $('#dateFrom').val();
+            if(dateTo!="" && dateFrom!="" && dateTo < dateFrom){
+                $("#ButtonSearchTicket").attr("disabled", "disabled");
+            }else{
+                $("#ButtonSearchTicket").removeAttr("disabled");
+            }
+        });
+        
+        $('#PaymentAirlineForm').bootstrapValidator({
+            container: 'tooltip',
+            excluded: [':disabled', ':hidden', ':not(:visible)'],
+            feedbackIcons: {
+                valid: 'uk-icon-check',
+                invalid: 'uk-icon-times',
+                validating: 'uk-icon-refresh'
+            },
+            fields: {
+                invoiceSupCode: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Invoice Sup is required'
+                        }
+                    }
+                },
+                apCode: {
+                    validators: {
+                        notEmpty: {
+                            message: 'A/P Code is required'
+                        }
+                    }
+                },                    
+                dateFrom: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        date: {
+                            format: 'YYYY-MM-DD',
+                            max: 'dateTo',
+                            message: 'The Date From is not a valid'
+                        }
+                    }
+                },
+                dateTo: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        date: {
+                            format: 'YYYY-MM-DD',
+                            min: 'dateFrom',
+                            message: 'The Date To is not a valid'
+                        }
+                    }
+                }
+            }
+        });
+
         $( ".numerical" ).on('input', function() { 
             var value=$(this).val().replace(/[^0-9.,]*/g, '');
             value=value.replace(/\.{2,}/g, '.');
@@ -729,7 +799,6 @@
         });
         
         $("#InvoiceSupTable tr").on('click', function () {
-            
             var invoice_id = $(this).find(".invoice-id").text();
             var invoice_code = $(this).find(".invoice-code").text();
             var invoice_name = $(this).find(".invoice-name").text();
@@ -779,34 +848,11 @@
                     $("#apCode").val(value.apcode);
                 }
             }); 
-            
+            $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'invoiceSupCode');
+            $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'apCode');
         });
-        
-        $('#PaymentAirlineForm').bootstrapValidator({
-            container: 'tooltip',
-            excluded: [':disabled', ':hidden', ':not(:visible)'],
-            feedbackIcons: {
-                valid: 'uk-icon-check',
-                invalid: 'uk-icon-times',
-                validating: 'uk-icon-refresh'
-            },
-            fields: {
-                invoiceSupCode: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Invoice Sup is required'
-                        }
-                    }
-                },
-                apCode: {
-                    validators: {
-                        notEmpty: {
-                            message: 'A/P Code is required'
-                        }
-                    }
-                }
-            }
-        });
+
+
         
         $("#paymentNo").keyup(function (event) {
             if(event.keyCode === 13){
@@ -966,7 +1012,7 @@ function searchPaymentNo() {
     document.getElementById('PaymentAirlineForm').submit();
 }
 
-function searchTicketFare() {
+function searchTicketFare(){
     var flagSearch = $("#flagSearch").val();
     if(flagSearch == "1"){
         $("#searchTicketFare").text('Are you sure to sarch ticket fare');
@@ -1033,8 +1079,6 @@ function searchTicketFareCF() {
     dateFrom.value = $("#dateFrom").val();
     var dateTo = document.getElementById('dateTo');
     dateTo.value = $("#dateTo").val();
-    
-
     var totalCommissionTicketFare = document.getElementById('totalCommissionTicketFare');
     totalCommissionTicketFare.value = $("#totalCommissionTicketFare").val();
     var totalAmountTicketFare = document.getElementById('totalAmountTicketFare');
@@ -1111,13 +1155,15 @@ function CallAjaxAdd(param) {
             success: function (msg) {
             //RefundTicketTable
                 try {
-                    $("#RefundTicketTable tbody").append(msg);
-
-                    calculateTotalAmountRefund();
-                    calculateTotalRefundVat();
-                    calculateTotalPayment();
-                    calculateAmount();
-                    
+                    if(msg == "null"){
+                        alert('Refund no. not available');
+                    }else{
+                        $("#RefundTicketTable tbody").append(msg);
+                        calculateTotalAmountRefund();
+                        calculateTotalRefundVat();
+                        calculateTotalPayment();
+                        calculateAmount();
+                    }
                     $("#ajaxload").addClass("hidden");
                 } catch (e) {
                     alert(e);

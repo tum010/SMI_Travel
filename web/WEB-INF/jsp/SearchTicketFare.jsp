@@ -302,7 +302,7 @@
     $(document).ready(function() {
         
         $('.date').datetimepicker();
-        
+        $('.datemask').mask('0000-00-00');
         $(".money").mask('000,000,000.00', {reverse: true});
         
         var table = $('#TicketFareList').dataTable({bJQueryUI: true,

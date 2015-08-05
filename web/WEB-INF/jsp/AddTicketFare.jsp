@@ -250,7 +250,7 @@
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class='input-group date' id='InputDatePicker'>
                                     <input id="issueDate" name="issueDate"  type="text" 
-                                       class="form-control" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['issueDate']}">
+                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['issueDate']}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
@@ -705,8 +705,8 @@
 <script type="text/javascript">
     setTicketDetailTemp = [];
     $(document).ready(function () {
-//        $("#ButtonSave").attr("disabled", "disabled");
-//        $("#ButtonSaveAndNew").attr("disabled", "disabled");
+        $('.datemask').mask('0000-00-00');
+        
         $("#flightPanel").addClass('hidden');
         if($('#flightDetailFlag').val() == "notdummy"){
             $("#flightPanel").removeClass('hidden');  
