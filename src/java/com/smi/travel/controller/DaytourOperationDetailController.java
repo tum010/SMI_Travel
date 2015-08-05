@@ -1,5 +1,5 @@
 package com.smi.travel.controller;
-
+//test
 import com.smi.travel.datalayer.entity.Daytour;
 import com.smi.travel.datalayer.entity.DaytourBooking;
 import com.smi.travel.datalayer.entity.DaytourBookingPrice;
