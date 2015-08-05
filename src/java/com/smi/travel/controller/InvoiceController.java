@@ -37,7 +37,7 @@ public class InvoiceController extends SMITravelController {
     private static final ModelAndView Invoice_REFRESH = new ModelAndView(new RedirectView("Invoice.smi", true));
     private UtilityService utilityService;
     private InvoiceService invoiceService;
-//    private UtilityFunction utilty;
+//    private UtilityFunction utilty; test
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
