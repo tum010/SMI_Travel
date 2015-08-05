@@ -59,7 +59,7 @@ public class MAccountCodeController extends AbstractController {
 		}else if(SAVE_ACTION.equals(action)){
 			int result =0;
 			AccountCode accountCode = new AccountCode(form.getId(),form.getAccCodeModal(),form.getDetailModal().toUpperCase(),form.getAccTypeModal());
-			if(StringUtils.isEmpty(form.getId())){
+			if(StringUtils.isEmpty(form.getIdModal())){
 				result = mAccountCodeService.save(accountCode);
 			}else{
 				result = mAccountCodeService.update(accountCode);
