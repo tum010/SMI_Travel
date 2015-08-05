@@ -11,6 +11,7 @@ import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.PaymentDetailWendy;
 import com.smi.travel.datalayer.entity.PaymentWendy;
 import com.smi.travel.datalayer.entity.SystemUser;
+import com.smi.travel.datalayer.entity.TourOperationDesc;
 import com.smi.travel.datalayer.service.PaymentTourHotelService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
@@ -87,6 +88,7 @@ public class PaymentTourHotelController extends SMITravelController {
         String counter = request.getParameter("counter");
         String crateDate = request.getParameter("crateDate");
         String paymentId = request.getParameter("paymentId");
+        String tourDescId = request.getParameter("tourDescId");
         
         SystemUser user = (SystemUser) session.getAttribute("USER");
         String idRole = user.getRole().getId();
@@ -157,6 +159,7 @@ public class PaymentTourHotelController extends SMITravelController {
                 }
      
                 paymentWendy.setCreateBy(user.getUsername());
+                paymentWendy.setIsExport(0);
 
                 String result = paymentTourHotelService.InsertPaymentWendy(paymentWendy);
                 System.out.println("result : " + result);
@@ -173,6 +176,7 @@ public class PaymentTourHotelController extends SMITravelController {
                 request.setAttribute("paymentId", paymentWendyId.getId());
                 request.setAttribute("payNo", paymentWendyId.getPayNo());
                 request.setAttribute("crateDate", paymentWendyId.getCreateDate());
+                request.setAttribute("tourDescId", paymentWendyId.getTourOperationDesc().getId());
                 
             } else {
                 InputPayNo = request.getParameter("payNo");
@@ -226,13 +230,20 @@ public class PaymentTourHotelController extends SMITravelController {
                 if(utilfunction.convertStringToInteger(counter) != 0){
                     setPaymentDetailWendy(request, counter, paymentWendy);
                 }
-                                
-                paymentWendy.setCreateBy(user.getUsername());
+                
+                TourOperationDesc tourOperationDesc = new TourOperationDesc();
+                tourOperationDesc.setId(tourDescId);
+                paymentWendy.setTourOperationDesc(tourOperationDesc);
+                
+                paymentWendy.setCreateBy(user.getUsername());                              
+                paymentWendy.setIsExport(0);
+                
                 String result = paymentTourHotelService.UpdatePaymentWendy(paymentWendy);
                 request.setAttribute("paymentId", paymentId);
                 request.setAttribute("payNo", InputPayNo);
                 request.setAttribute("resultText", result);
                 request.setAttribute("crateDate", crateDate);
+                request.setAttribute("tourDescId", tourDescId);
                 getPaymentDetailWendy(request, InputPayNo);
             }
           
@@ -259,6 +270,7 @@ public class PaymentTourHotelController extends SMITravelController {
             InputChqNo = paymentWendy.getChqNo();
             InputChqAmount = String.valueOf(paymentWendy.getChqAmount());
             crateDate = String.valueOf(paymentWendy.getCreateDate());
+            tourDescId = String.valueOf(paymentWendy.getTourOperationDesc().getId());
             
             if(paymentWendy.getAccount() != null){
                 account = String.valueOf(paymentWendy.getAccount()); 
@@ -304,6 +316,7 @@ public class PaymentTourHotelController extends SMITravelController {
             request.setAttribute("InputChqNo", InputChqNo);
             request.setAttribute("InputChqAmount", InputChqAmount);
             request.setAttribute("crateDate", crateDate);
+            request.setAttribute("tourDescId", tourDescId);
             request.setAttribute(PRODUCTDETAILLIST, paymentDetailWendyList);
             request.setAttribute(PAYMENHOTELTCOUNT, size);
             //request.setAttribute("btnSave", "update");
