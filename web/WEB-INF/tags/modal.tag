@@ -5,6 +5,8 @@
 <%@ attribute name="title" required="true"%>
 <%@ attribute name="enableOKButton" required="false" rtexprvalue="true"%>
 <%@ attribute name="enableSaveButton" required="false" rtexprvalue="true"%>
+<%@ attribute name="enableCloseButton" required="false" rtexprvalue="true"%>
+<%@ attribute name="enableCancelButton" required="false" rtexprvalue="true"%>
 
 
 <div class="modal fade" id="${id}" tabindex="-1" role="dialog" aria-labelledby="${id}Label">
@@ -27,7 +29,12 @@
 					<c:if test="${enableSaveButton}">
 						<button id="${id}BtnSave" type="button" class="btn btn-primary">Save</button>
 					</c:if>
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<c:if test="${enableCloseButton}">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</c:if>
+					<c:if test="${enableCancelButton}">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					</c:if>
 				</div>
 			</div>
 		</div>

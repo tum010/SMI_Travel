@@ -20,4 +20,9 @@ public class APARCodeServiceImpl implements APARCodeService {
 		return aPARCodeDao.search(code, name, type);
 	}
 
+	@Override
+	public int update(APARCode aparCode) {
+		return aPARCodeDao.update(aparCode);
+	}
+
 }

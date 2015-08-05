@@ -7,6 +7,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -34,16 +35,32 @@ public class APARCodeDaoImpl implements APARCodeDao {
                 .addScalar("arcode", Hibernate.STRING);
         		List<Object[]> QueryList =  q.list();        
         for (Object[] B : QueryList) {
-        	APARCode   a = new  APARCode(); 
-        	a.setId(Integer.parseInt(B[0].toString()));
-            a.setCode(B[1].toString()); 
-            a.setName(B[2].toString());
-            a.setType(B[3].toString());
-            a.setApcode(B[4].toString());
-            a.setArcode(B[5].toString());
+        	APARCode   a = new  APARCode();
+        	a.setId(Integer.parseInt(String.valueOf(B[0])));
+            a.setCode(B[1]==null?"":String.valueOf(B[1])); 
+            a.setName(B[2]==null?"":String.valueOf(B[2]));
+            a.setType(B[3]==null?"":String.valueOf(B[3]));
+            a.setApcode(B[4]==null?"":String.valueOf(B[4]));
+            a.setArcode(B[5]==null?"":String.valueOf(B[5]));
              data.add(a);
         }               
         return data;
+	}
+	
+	public int update(APARCode aparCode){
+		int result = 0;
+        try {
+            Session session = this.sessionFactory.openSession();
+            Transaction tx = session.beginTransaction();
+            session.save(aparCode);
+            tx.commit();
+            session.close();
+            result = 1;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            result = 0;
+        }
+        return result;
 	}
 
 }

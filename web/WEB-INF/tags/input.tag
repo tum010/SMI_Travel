@@ -6,6 +6,10 @@
 <%@ attribute name="type" required="true"%>
 <%@ attribute name="label" required="false"%>
 <%@ attribute name="optionitems" required="false" type="java.util.Map"%>
+<%@ attribute name="isReadonly" required="false"%>
+
+
+
 
 <div class="form-group">
 	<c:if test="${not empty label}">
@@ -19,15 +23,25 @@
 			<form:input path="${name}" id="${id}" class="form-control" />
 		</c:when>
 		<c:when test="${type=='hidden'}">
-			<form:hidden path="${name}" id="${id}"/>
+			<form:hidden path="${name}" id="${id}" />
 		</c:when>
 		<c:when test="${type=='select'}">
-			<form:select path="${name}" id="${id}" class="form-control" items="${optionitems}"></form:select>
+			<form:select path="${name}" id="${id}" class="form-control" items="${optionitems}" />
 		</c:when>
 		<c:otherwise>
 			<c:out value="Unknow input type?"></c:out>
 		</c:otherwise>
 	</c:choose>
 </div>
+
+<c:if test="${isReadonly}">
+	<script>
+		$(function(){
+			
+			$('#${id}').attr('readonly','readonly');
+			
+		});
+	</script>
+</c:if>
 
 

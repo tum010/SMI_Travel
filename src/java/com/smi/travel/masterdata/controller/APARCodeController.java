@@ -16,7 +16,6 @@ import com.smi.travel.datalayer.service.APARCodeService;
 import com.smi.travel.datalayer.view.entity.APARCode;
 import com.smi.travel.master.controller.AbstractController;
 
-
 @Controller
 @RequestMapping("/APARCode.smi")
 public class APARCodeController extends AbstractController {
@@ -37,7 +36,6 @@ public class APARCodeController extends AbstractController {
 		typeList.put("Hotel", "Hotel");
 		typeList.put("Agent", "Agent");
 		typeList.put("Staff", "Staff");
-		
 	}
 	
 	@ModelAttribute
@@ -46,21 +44,32 @@ public class APARCodeController extends AbstractController {
 		model.addAttribute("typeList", typeList);
 	}
 	
-	
 	@RequestMapping
 	public String initial(@ModelAttribute("form") APARCodeForm form, Model model,@RequestParam(value="action",required=false) String action) {
 		logger.debug(" APARCodeController : initial request");
 		if(SEARCH_ACTION.equals(action)){
-			List<APARCode> dataTable = aPARCodeService.search(form.getCode(), form.getName(), form.getType());
-			if(dataTable==null){
-				dataTable = new ArrayList<APARCode>();
-			}
-			form.setDataTable(dataTable);
+			search(form);
 		}else if(EDIT_ACTION.equals(action)){
-			
-			
+			int result = aPARCodeService.update(form.getAparCode());
+			if(result==1){
+				form.setCode(form.getAparCode().getCode());
+				form.setName(form.getAparCode().getName());
+				form.setType(form.getAparCode().getType());
+				search(form);
+				form.setAparCode(new APARCode());
+				model.addAttribute("resultSave", "textAlertDivSave");
+			}else{
+				model.addAttribute("resultSave", "textAlertDivNotSave");
+			}
 		}
 		return DEFAULT_VIEW;
 	}
-
+	
+	private void search(APARCodeForm form){
+		List<APARCode> dataTable = aPARCodeService.search(form.getCode(), form.getName(), form.getType());
+		if(dataTable==null){
+			dataTable = new ArrayList<APARCode>();
+		}
+		form.setDataTable(dataTable);
+	}
 }

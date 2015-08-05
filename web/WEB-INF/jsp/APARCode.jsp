@@ -97,11 +97,12 @@
 							<thead>
 								<tr class="datatable-header">
 									<th class="hidden"></th>
-									<th style="width: 30px">Code</th>
-									<th style="width: 50px">Name</th>
-									<th style="width: 210px">Type</th>
+									<th style="width: 190px">Code</th>
+									<th style="width: 500px">Name</th>
+									<th style="width: 90px">Type</th>
 									<th style="width: 70px">APCode</th>
 									<th style="width: 70px">ARCode</th>
+									<th style="width: 70px">Action</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -127,22 +128,24 @@
 			</div>
 	</div>
 </div>
-<smi:modal title="AP/AR Code" id="formModal" enableOKButton="true">
-	<smi:input name="aparCode.id" type="hidden" id="aparCode.id"/>
-	<smi:input label="Code" name="aparCode.code" type="text" id="aparCode.code"/>
-	<smi:input label="Name" name="aparCode.name" type="text" id="aparCode.name"/>
-	<smi:input label="APCode" name="aparCode.apcode" type="text" id="aparCode.apcode"/>
-	<smi:input label="ARCode" name="aparCode.arcode" type="text" id="aparCode.arcode"/>
+<smi:modal title="AP/AR Code" id="formModal" enableOKButton="true" enableCancelButton="true">
+	<smi:input name="aparCode.id" type="hidden" id="frmModalId"/>
+	<smi:input label="Code" name="aparCode.code" type="text" id="frmModalCode" isReadonly="true"/>
+	<smi:input label="Name" name="aparCode.name" type="text" id="frmModalName" isReadonly="true"/>
+	<smi:input label="APCode" name="aparCode.apcode" type="text" id="frmModalApcode"/>
+	<smi:input label="ARCode" name="aparCode.arcode" type="text" id="frmModalArcode"/>
 </smi:modal>
 </form:form>
 <script>
 function editAPARCode(id,code,name,type,apcode,arcode){
-	alert(type);
-	$('#aparCode.id').val(id);
-	$('#aparCode.code').val(code);
-	$('#aparCode.name').val(name);
-	$('#aparCode.apcode').val(apcode);
-	$('#aparCode.arcode').val(arcode);
+	if(type=='hotel'){
+		$('#frmModalApcode').attr('readonly','readonly');
+	}
+	$('#frmModalId').val(id);
+	$('#frmModalCode').val(code);
+	$('#frmModalName').val(name);
+	$('#frmModalApcode').val(apcode);
+	$('#frmModalArcode').val(arcode);
 }
 
 $(function(){
@@ -150,11 +153,13 @@ $(function(){
 	$('#btnSearch').click(function(e){
 		e.preventDefault();
 		$('#action').val('search');
+		$('#frmAPARCode').submit();
 	});
 	
 	$('#formModalBtnOK').click(function(e){
 		e.preventDefault();
 		$('#action').val('edit');
+		$('#frmAPARCode').submit();
 	});
 	
 });
