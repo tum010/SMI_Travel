@@ -11,9 +11,12 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd ">
-	<bean
-		class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" />
+	
+	
+	<bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" />
 
+	<!-- <mvc:resources mapping="/*" location="/" /> -->
+		
 
 
 	<!-- Most controllers will use the ControllerClassNameHandlerMapping above, 
@@ -109,21 +112,18 @@
 				<prop key="SearchStock.smi">SearchStockController</prop>
 				<prop key="DefineVar.smi">DefineVarController</prop>
 				<prop key="CreditNote.smi">CreditNoteController</prop>
-                                <prop key="SearchCreditNote.smi">SearchCreditNoteController</prop>
+                <prop key="SearchCreditNote.smi">SearchCreditNoteController</prop>
 				<!-- add mapping url -->
 			</props>
 		</property>
 	</bean>
 
 	<!-- Tiles configuration -->
-	<bean id="viewResolver"
-		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<!-- p:prefix="/WEB-INF/jsp/"> -->
-		<property name="viewClass"
-			value="org.springframework.web.servlet.view.tiles3.TilesView" />
+		<property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
 	</bean>
-	<bean id="tilesConfigurer"
-		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 		<property name="definitions">
 			<list>
 				<value>/WEB-INF/tiles/tiles-definitions.xml</value>
@@ -527,9 +527,7 @@
 	<bean id="SearchCreditNoteController" class="com.smi.travel.controller.SearchCreditNoteController">
 	</bean>
         
-        <bean id="APARCodeController" class="com.smi.travel.masterdata.controller.APARCodeController">
-
-        </bean>
+     
 
 	<!-- add bean id controller -->
 
@@ -577,9 +575,9 @@
 		<property name="bookingAirticketService" ref="BookingAirticket" />
 	</bean>
 
-	 <task:scheduled-tasks> <task:scheduled ref="monitorAmadeus" method="run" 
-		fixed-delay="5000" /> <task:scheduled ref="monitorGalileo" method="run" fixed-delay="5000" 
-		/> </task:scheduled-tasks> 
+<!-- 	 <task:scheduled-tasks> <task:scheduled ref="monitorAmadeus" method="run"  -->
+<!-- 		fixed-delay="5000" /> <task:scheduled ref="monitorGalileo" method="run" fixed-delay="5000"  -->
+<!-- 		/> </task:scheduled-tasks>  -->
 
 	<bean id="MProductTypeController"
 		class="com.smi.travel.masterdata.controller.MProductTypeController">
