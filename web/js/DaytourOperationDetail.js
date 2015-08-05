@@ -1,6 +1,6 @@
 //  Booking Expense
 //      auto add row where input value in row
-//test
+
 var guideList = [];
 $(document).ready(function () {  
     checkExpenseTour();
@@ -394,9 +394,25 @@ function setGuideName(name,no){
         if(guideName !== ''){
             if(name1 === guideName){
                 document.getElementById("InvoiceSupGuideBill").selectedIndex = 1;
-            } else {
+            } else if(name2 === guideName){
                 document.getElementById("InvoiceSupGuideBill").selectedIndex = 2;
-            }           
+            } else {
+                document.getElementById("InvoiceSupGuideBill").selectedIndex = 0;
+                document.getElementById('textAlertDivGuideName').style.display = 'block';
+                document.getElementById('textAlertDivGuideName').innerHTML = 'Guide Bill is not match. Invoice sup is "' +guideName+ '".!!!';
+            }          
+        }        
+    }
+    
+    if(no === 'check'){
+        var InvoiceSupGuideBill = document.getElementById("InvoiceSupGuideBill").value;
+        var guideName = document.getElementById('guideName').value;
+        if(InvoiceSupGuideBill !== guideName){
+            document.getElementById('textAlertDivGuideName').style.display = 'none';
+        }
+        if(InvoiceSupGuideBill === ''){
+            document.getElementById('textAlertDivGuideName').style.display = 'block';
+            document.getElementById('textAlertDivGuideName').innerHTML = 'Guide Bill is not match. Invoice sup is "' +guideName+ '".!!!';
         }
     }
     
@@ -571,15 +587,20 @@ function confirmCheckboxGuideBill(){
         var InputGuideBill = document.getElementById('InputGuideBill').value;
         document.getElementById('AmountGuideBill').value = InputGuideBill;
     } else {
-        var amountDefault = parseFloat(document.getElementById('AmountGuideBillDefault').value);
-        document.getElementById('AmountGuideBill').value = formatNumber(amountDefault);
+        var checkAmount = document.getElementById('AmountGuideBillDefault');
+        if(checkAmount.value !== ''){
+            var amountDefault = parseFloat(document.getElementById('AmountGuideBillDefault').value);
+            document.getElementById('AmountGuideBill').value = formatNumber(amountDefault);
+        } else {
+            document.getElementById('AmountGuideBill').value = '';
+        }       
     }   
 }
 
 function formatNumber(num) {
     return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
 }
-   
+
 function insertCommas(nField){
     if (/^0/.test(nField.value)){
         nField.value = nField.value.substring(0,1);
