@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.view.dao.impl;
 
+import com.smi.travel.datalayer.report.model.GuideCommissionInfo;
 import com.smi.travel.datalayer.report.model.GuideCommissionSummary;
 import com.smi.travel.datalayer.view.dao.GuideCommissionReportDao;
 import com.smi.travel.util.UtilityFunction;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -25,7 +27,15 @@ import org.hibernate.SessionFactory;
 public class GuideCommissionReportImpl implements GuideCommissionReportDao{
     
      private SessionFactory sessionFactory;
-
+     
+    @Override
+    public GuideCommissionInfo getGuideCommissionInfoReport(String datefrom, String dateto, String username, String guideid) {
+        GuideCommissionInfo guideCommissionInfo = new GuideCommissionInfo();
+        guideCommissionInfo.setGuideCommissionDataSource(new JRBeanCollectionDataSource(getGuideComissionReport(datefrom, dateto, username, guideid)));
+//        guideCommissionInfo.setGuideCommissionSummaryDataSource(new JRBeanCollectionDataSource(getAgentReportInfo(datefrom, dateto, username, guideid)));
+        return guideCommissionInfo;
+    }
+    
     @Override
     public List getGuideComissionReport(String datefrom, String dateto, String username,String guideid) {
        Session session = this.sessionFactory.openSession();
@@ -79,7 +89,8 @@ public class GuideCommissionReportImpl implements GuideCommissionReportDao{
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-    
+
+
     
     
 }

@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.view.dao;
 
+import com.smi.travel.datalayer.report.model.GuideCommissionInfo;
 import java.util.List;
 
 /**
@@ -14,5 +15,5 @@ import java.util.List;
  */
 public interface GuideCommissionReportDao {
     public List getGuideComissionReport(String datefrom,String dateto,String username,String guideid);
-    
+    public GuideCommissionInfo getGuideCommissionInfoReport(String datefrom,String dateto,String username,String guideid);
 }
