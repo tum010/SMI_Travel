@@ -187,17 +187,21 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <select id="flight-${i.count}-classCom" name="flight-${i.count}-classCom" class="form-control">          
-                                            <option value=""></option>
-                                            <c:forEach var="mflight" items="${mFlightList}" >
-                                                <c:set var="select" value=""  />
-                                                <c:if test="${mflight.id == flight.MFlight.id}">
-                                                    <c:set var="select" value="selected" />
-                                                </c:if>
-                                                <option value="${mflight.id}" ${select}>${mflight.name}</option>
-                                            </c:forEach>
-                                        </select>
-                                        <input type="text" id="flight-${i.count}-subClassCom" name="flight-${i.count}-subClassCom" value="${flight.subFlightClass}" class="form-control" maxlength="1"/>    
+                                        <div class="col-xs-8">
+                                            <select id="flight-${i.count}-classCom" name="flight-${i.count}-classCom" class="form-control">          
+                                                <option value=""></option>
+                                                <c:forEach var="mflight" items="${mFlightList}" >
+                                                    <c:set var="select" value=""  />
+                                                    <c:if test="${mflight.id == flight.MFlight.id}">
+                                                        <c:set var="select" value="selected" />
+                                                    </c:if>
+                                                    <option value="${mflight.id}" ${select}>${mflight.name}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <input type="text" id="flight-${i.count}-subClassCom" name="flight-${i.count}-subClassCom" value="${flight.subFlightClass}" class="form-control" maxlength="1"/>    
+                                        </div>
                                     </td>
                                     <td class="text-right moneyformat">${flight.totalCost}</td>
                                     <td class="text-right moneyformat">${flight.totalPrice}</td>
