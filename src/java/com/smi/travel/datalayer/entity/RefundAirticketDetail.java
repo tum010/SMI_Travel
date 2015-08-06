@@ -20,21 +20,26 @@ public class RefundAirticketDetail {
      private String sectorRefund;
      private BigDecimal receiveAirline;
      private BigDecimal payCustomer;
-     private BigDecimal commission;
+     private BigDecimal agentComission;
+     private BigDecimal airComission;
      private BigDecimal profit;
+     private Date receiveDate;
      private Date expenseDate;
+     
      private List paymentAirticketRefunds = new LinkedList<PaymentAirticketRefund>();
 
     public RefundAirticketDetail() {
     }
 
-    public RefundAirticketDetail(RefundAirticket refundAirticket,AirticketPassenger airticketPassenger, String sectorRefund, BigDecimal receiveAirline, BigDecimal payCustomer, BigDecimal commission,BigDecimal profit,Date refundDate, List paymentAirticketRefunds) {
+    public RefundAirticketDetail(RefundAirticket refundAirticket,AirticketPassenger airticketPassenger, String sectorRefund, BigDecimal receiveAirline, BigDecimal payCustomer, BigDecimal agentComission,BigDecimal airComission,BigDecimal profit,Date expenseDate,Date receiveDate, List paymentAirticketRefunds) {
        this.refundAirticket = refundAirticket;
        this.airticketPassenger = airticketPassenger;
        this.sectorRefund = sectorRefund;
        this.receiveAirline = receiveAirline;
        this.payCustomer = payCustomer;
-       this.commission = commission;
+       this.agentComission = agentComission;
+       this.airComission = airComission;
+       this.receiveDate = receiveDate;
        this.profit = profit;
        this.expenseDate = expenseDate;
        this.paymentAirticketRefunds = paymentAirticketRefunds;
@@ -89,13 +94,31 @@ public class RefundAirticketDetail {
         this.payCustomer = payCustomer;
     }
 
-    public BigDecimal getCommission() {
-        return commission;
+    public BigDecimal getAgentComission() {
+        return agentComission;
     }
 
-    public void setCommission(BigDecimal commission) {
-        this.commission = commission;
+    public void setAgentComission(BigDecimal agentComission) {
+        this.agentComission = agentComission;
     }
+
+    public BigDecimal getAirComission() {
+        return airComission;
+    }
+
+    public void setAirComission(BigDecimal airComission) {
+        this.airComission = airComission;
+    }
+
+    public Date getReceiveDate() {
+        return receiveDate;
+    }
+
+    public void setReceiveDate(Date receiveDate) {
+        this.receiveDate = receiveDate;
+    }
+
+    
 
     public BigDecimal getProfit() {
         return profit;
