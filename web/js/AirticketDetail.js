@@ -77,6 +77,10 @@ $(document).ready(function () {
         $("#flight-"+i+"-classCom").change(function(){          
              $("#flight-"+i+"-class  > option[value="+this.value+"]").prop('selected',true);
         });
+        
+        $("#flight-"+i+"-subClassCom").change(function(){   
+             document.getElementById("flight-"+i+"-subClass").value = (this.value);
+        });
     });
     
     $("#passenger_table tbody tr").each(function(i){
@@ -309,10 +313,14 @@ function addFight(rowId) {
             + '</select> '
             + '</div>'
             + '<label class="col-sm-1 control-label text-right">Class</label>'
-            + '<div class="col-sm-4">  '
+            + '<div class="col-sm-2">  '
             + '<select class="form-control" id="flight-' + rowId + '-class" name="flight-' + rowId + '-class">'
             + '<option value=""></option>'
             + '</select> '
+            + '</div>'
+            + '<label class="col-sm-1 control-label text-right">Sub</label>'
+            + '<div class="col-sm-1">'
+            + '<input type="text" class="form-control" name="flight-' + rowId + '-subClass" id="flight-' + rowId + '-subClass" maxlength="1">'
             + '</div>'
             + '</div>'
             + '<div class="row"  style="margin-bottom: 10px">'
@@ -420,7 +428,6 @@ function addFight(rowId) {
     $("#flight-0-status option").clone().appendTo("#flight-" + rowId + "-status");
     $("#flight-0-ticketType option").clone().appendTo("#flight-" + rowId + "-ticketType");
     $("#flight-0-class option").clone().appendTo("#flight-" + rowId + "-class");
-
 //     $.each(tickettype, function(key, value) { 
 //     $("#flight-"+rowId+"-ticketTypeCom")
 //         .append($("<option></option>")
@@ -828,7 +835,7 @@ function addRowTable() {//winit
 //            '<option value=""></option>'+
 //        '</select>',
         $("#flight-"+counter+"-ticketType option:selected").text(),
-        $("#flight-"+counter+"-class option:selected").text(),
+        $("#flight-"+counter+"-class option:selected").text()+" "+$("#flight-" + counter + "-subClass").val(),
         $("#adCost-" + counter).val(),
         $("#adPrice-" + counter).val(),
         $("#flight-" + counter + "-status").val(),

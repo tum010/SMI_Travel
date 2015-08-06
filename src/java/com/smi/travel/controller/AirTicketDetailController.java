@@ -367,6 +367,7 @@ public class AirTicketDetailController extends SMITravelController {
             String arrivalTime = request.getParameter("flight-" + i + "-arriveTime");
             String ticketType = request.getParameter("flight-" + i + "-ticketType");
             String flightClass = request.getParameter("flight-" + i + "-class");
+            String subFlightClass = request.getParameter("flight-" + i + "-subClass");
             String adCost = request.getParameter("adCost-" + i);
             String chCost = request.getParameter("chCost-" + i);
             String inCost = request.getParameter("inCost-" + i);
@@ -431,7 +432,9 @@ public class AirTicketDetailController extends SMITravelController {
             if (StringUtils.isNotEmpty(inTax)) {
                 airFlight.setInTax(Integer.valueOf(inTax));
             }
-
+            if (StringUtils.isNotEmpty(subFlightClass)) {
+                airFlight.setSubFlightClass(subFlightClass);
+            }
             if (StringUtils.isNotEmpty(airFlight.getSourceCode())) {
                 if (airFlight.getId() == null) {
                     airline.getAirticketFlights().add(airFlight);
@@ -480,6 +483,7 @@ public class AirTicketDetailController extends SMITravelController {
         arrivalTime = arrivalTime.replace(":", "");
         String ticketType = request.getParameter("flight-" + i + "-ticketType");
         String flightClass = request.getParameter("flight-" + i + "-class");
+        String subFlightClass = request.getParameter("flight-" + i + "-subClass");
         String adCost = request.getParameter("adCost-" + i);
         String chCost = request.getParameter("chCost-" + i);
         String inCost = request.getParameter("inCost-" + i);
@@ -520,11 +524,15 @@ public class AirTicketDetailController extends SMITravelController {
         airFlight.setSourceCode(departureCode);
         airFlight.setDesCode(arrivalCode);
         airFlight.setArriveTime(arrivalTime);
-
+        System.out.println("flightClass " + flightClass);
+        System.out.println("subFlightClass " + subFlightClass);
         MFlight mFlight = new MFlight();
         mFlight.setId(flightClass);
         if(flightClass != null){
             airFlight.setMFlight(mFlight);
+        }
+        if (StringUtils.isNotEmpty(subFlightClass)) {
+            airFlight.setSubFlightClass(subFlightClass);
         }
         if("".equalsIgnoreCase(flightClass)){
             airFlight.setMFlight(null);

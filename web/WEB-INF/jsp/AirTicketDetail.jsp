@@ -197,6 +197,7 @@
                                                 <option value="${mflight.id}" ${select}>${mflight.name}</option>
                                             </c:forEach>
                                         </select>
+                                        <input type="text" id="flight-${i.count}-subClassCom" name="flight-${i.count}-subClassCom" value="${flight.subFlightClass}" class="form-control" maxlength="1"/>    
                                     </td>
                                     <td class="text-right moneyformat">${flight.totalCost}</td>
                                     <td class="text-right moneyformat">${flight.totalPrice}</td>
@@ -385,7 +386,7 @@
                                         </select> 
                                     </div>
                                     <label class="col-sm-1 control-label text-right">Class</label>
-                                    <div class="col-sm-4">  
+                                    <div class="col-sm-2">  
                                         <select class="form-control" id="flight-${fStatus.count}-class" 
                                                 name="flight-${fStatus.count}-class" value="${flight.MFlight.id}" >
                                             <option value=""></option>
@@ -393,6 +394,10 @@
                                                 <option value="${m.id}" ${select}>${m.name}</option>
                                             </c:forEach>
                                         </select> 
+                                    </div>
+                                    <label class="col-sm-1 control-label text-right">Sub</label>
+                                    <div class="col-sm-1">  
+                                        <input type="text" class="form-control" name="flight-${fStatus.count}-subClass" id="flight-${fStatus.count}-subClass" value="${flight.subFlightClass}" maxlength="1">
                                     </div>
                                 </div>
                                 <div class="row"  style="margin-bottom: 10px">
@@ -626,7 +631,6 @@
                                        $("#departure-" + count + "-id").val(depid);
                                        $("#departure-" + count + "-code").val(depcode);
                                        $("#departure-" + count + "-name").val(depname);
-
                                        $("#departure-" + count + "-codeVal").autocomplete({
                                            source: depArray,
                                            close: function(){
@@ -1462,6 +1466,7 @@
                             $("#departure-" + flight_id.toString() + "-id").val(departure_id);
                             $("#departure-" + flight_id.toString() + "-code").val(departure_code);
                             $("#departure-" + flight_id.toString() + "-name").val(departure_name);
+                            $("#departure-" + flight_id.toString() + "-codeVal").val(departure_code);
                             console.log(flight_id.toString());
                             $("#DepartureModal").modal('hide');
                         });
@@ -1603,6 +1608,7 @@
                             $("#arrival-" + flight_id.toString() + "-id").val(arrival_id);
                             $("#arrival-" + flight_id.toString() + "-code").val(arrival_code);
                             $("#arrival-" + flight_id.toString() + "-name").val(arrival_name);
+                            $("#arrival-" + flight_id.toString() + "-codeVal").val(arrival_code);
                             console.log(flight_id.toString());
                             $("#ArrivalModal").modal('hide');
                         });
