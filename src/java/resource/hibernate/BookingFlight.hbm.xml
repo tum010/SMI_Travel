@@ -26,7 +26,7 @@
             <column name="arrival_date" length="10"  />
         </property>
         <property name="flightClass" type="string">
-            <column name="flight_class" length="10"  />
+            <column name="flight_class" length="3"  />
         </property>
 
         
