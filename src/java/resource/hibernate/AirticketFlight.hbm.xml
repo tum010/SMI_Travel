@@ -43,6 +43,10 @@
         <property name="isBill" type="string">
             <column name="is_bill" length="1" />
         </property>
+        <property name="subFlightClass" type="string">
+            <column name="sub_flight_class" length="1" />
+        </property>
+
         <property name="adCost" type="java.lang.Integer">
             <column name="ad_cost" />
         </property>
