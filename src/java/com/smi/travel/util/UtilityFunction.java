@@ -5,17 +5,19 @@
  */
 package com.smi.travel.util;
 
+import com.smi.travel.datalayer.entity.AirticketFlight;
 import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
  * @author Surachai
  */
 public class UtilityFunction {
-     
+
     private static final String[] tensNames = {
         "",
         " ten",
@@ -347,4 +349,25 @@ public class UtilityFunction {
       // remove extra spaces!
       return result.replaceAll("^\\s+", "").replaceAll("\\b\\s{2,}\\b", " ");
     }
+    
+    public String GetRounting( List<AirticketFlight> FlightList){
+        String rounting = "";
+        for(int i =0;i<FlightList.size();i++){
+            System.out.println(FlightList.get(i).getSourceCode()+"-"+FlightList.get(i).getDesCode());
+            String source = FlightList.get(i).getSourceCode();
+            String des = FlightList.get(i).getDesCode();
+            if(i == 0){
+                rounting += source + "-" + des;
+            }else{
+                if (!rounting.substring(rounting.lastIndexOf("-") + 1).equalsIgnoreCase(source)) {
+                    rounting += "," + source + "-" + des;
+                } else {
+                    rounting += "-" + des;
+                }
+            }
+            
+        }
+        return rounting;
+    }
+    
 }
