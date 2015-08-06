@@ -19,6 +19,7 @@ import com.smi.travel.datalayer.entity.AirticketBooking;
 import com.smi.travel.datalayer.entity.AirticketPnr;
 import com.smi.travel.datalayer.entity.BookingPnr;
 import com.smi.travel.datalayer.entity.MFlight;
+import com.smi.travel.datalayer.entity.MFlightservice;
 import com.smi.travel.datalayer.entity.MPricecategory;
 import com.smi.travel.datalayer.entity.MTicketType;
 import java.util.List;
@@ -198,8 +199,11 @@ public class BookingAirticketService {
         return mAirportDao.getAirportName(AirportCode);
     }
     
-    public MFlight MappingFlightClass(String Flight){
-        return airticketPnrDao.MappingFlightClass(Flight);
+//    public MFlight MappingFlightClass(String Flight){
+//        return airticketPnrDao.MappingFlightClass(Flight);
+//    }
+    public MFlight MappingFlightClass(String flightClass){
+        return airticketPnrDao.MappingFlightClass(flightClass);
     }
     
     public String MappingTicketType(String TicketType) {

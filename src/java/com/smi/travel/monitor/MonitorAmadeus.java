@@ -302,8 +302,8 @@ public class MonitorAmadeus extends MonitorScheduler {
 
             String deptTime = getField("departure time", line);
             String arrvTime = getField("arrive time", line);
-
-            bf = new BookingFlight(flightNo, sourceCode, desCode, deptDate, arrvDate, null);
+            String flightClass = getField("flight class" , line);
+            bf = new BookingFlight(flightNo, sourceCode, desCode, deptDate, arrvDate, flightClass);
             bf.setDepartTime(deptTime);
             bf.setArriveTime(arrvTime);
 

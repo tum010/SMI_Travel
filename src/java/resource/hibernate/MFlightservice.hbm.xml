@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 6, 2015 3:13:51 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.MFlightservice" table="m_flightservice" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="MFlight" class="com.smi.travel.datalayer.entity.MFlight" fetch="select">
+            <column name="flight_id" />
+        </many-to-one>
+        <property name="classCode" type="string">
+            <column name="class_code" length="1" />
+        </property>
+        <property name="className" type="string">
+            <column name="class_name" />
+        </property>
+    </class>
+</hibernate-mapping>

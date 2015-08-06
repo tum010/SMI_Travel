@@ -14,7 +14,9 @@ import com.smi.travel.datalayer.entity.AirticketPnr;
 import com.smi.travel.datalayer.entity.BookingAirline;
 import com.smi.travel.datalayer.entity.BookingPnr;
 import com.smi.travel.datalayer.entity.MFlight;
+import com.smi.travel.datalayer.entity.MFlightservice;
 import com.smi.travel.datalayer.entity.MTicketType;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -313,27 +315,46 @@ public class AirticketPnrImpl implements AirticketPnrDao {
         return result;
     }
 
+//    @Override
+//    public MFlight MappingFlightClass(String Flight) {
+//        MFlight mFlight = null;
+//        String query = "from MFlight Flight ";
+//        Session session = this.sessionFactory.openSession();
+//        List<MFlight> List = session.createQuery(query).list();
+//        if (List.isEmpty()) {
+//            return null;
+//        }
+//        if ("ECO".equalsIgnoreCase(Flight)) {
+//            for (MFlight F : List) {
+//                if (F.getName().equalsIgnoreCase("Economy Class")) {
+//                    mFlight = F;
+//                }
+//            }
+//        }
+//        session.close();
+//        this.sessionFactory.close();
+//        return mFlight;
+//    }
     @Override
-    public MFlight MappingFlightClass(String Flight) {
-        MFlight mFlight = null;
-        String query = "from MFlight Flight ";
-        Session session = this.sessionFactory.openSession();
-        List<MFlight> List = session.createQuery(query).list();
-        if (List.isEmpty()) {
+    public MFlight MappingFlightClass(String flightClass) {
+        MFlightservice mFlightservice = new MFlightservice();
+        MFlight mFlight = new MFlight();
+        List<MFlightservice> mFlightserviceList = new ArrayList<MFlightservice>();
+        Session session = this.sessionFactory.openSession(); 
+        String query = "from MFlightservice f where f.classCode = :classCode";
+        mFlightserviceList = session.createQuery(query).setParameter("classCode", flightClass).list();
+        if (mFlightserviceList.isEmpty()) {
             return null;
         }
-        if ("ECO".equalsIgnoreCase(Flight)) {
-            for (MFlight F : List) {
-                if (F.getName().equalsIgnoreCase("Economy Class")) {
-                    mFlight = F;
-                }
-            }
+        else{
+            mFlightservice = mFlightserviceList.get(0);
+            mFlight.setId(mFlightservice.getMFlight().getId());
         }
         session.close();
         this.sessionFactory.close();
         return mFlight;
     }
-
+    
     @Override
     public MTicketType MappintTicketLife(String TicketLife) {
         MTicketType Ticket = null;

@@ -716,7 +716,6 @@ public class AirTicketDetailController extends SMITravelController {
             BookingFlight bFlight = iteratorFlight.next();
             AirticketFlight airFlight = new AirticketFlight();
             airFlight.setAirticketAirline(airAirline);
-
             airFlight.setFlightNo(bFlight.getFlightNo());
             airFlight.setDepartDate(bFlight.getDepartureDate());
             airFlight.setDepartTime(bFlight.getDepartTime());
@@ -733,6 +732,7 @@ public class AirTicketDetailController extends SMITravelController {
             airFlight.setInCost(bFlight.getInCost());
             airFlight.setInPrice(bFlight.getInPrice());
             airFlight.setInTax(bFlight.getInTax());
+            airFlight.setSubFlightClass(bFlight.getFlightClass());
             MFlight flightClass = null;
             flightClass = this.bookingAirticketService.MappingFlightClass(bFlight.getFlightClass());
             airFlight.setMFlight(flightClass);

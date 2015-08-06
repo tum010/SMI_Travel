@@ -9,6 +9,7 @@ package com.smi.travel.datalayer.dao;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.AirticketPnr;
 import com.smi.travel.datalayer.entity.MFlight;
+import com.smi.travel.datalayer.entity.MFlightservice;
 import com.smi.travel.datalayer.entity.MTicketType;
 import java.util.List;
 
@@ -26,8 +27,9 @@ public interface AirticketPnrDao {
     public int cancelBookAirticketFlight(String FlightID);
     public int enableBookAirticketFlight(String FlightID);
     public int deletePassenger(String airPassenger);
-    public MFlight MappingFlightClass(String Flight);
+//    public MFlight MappingFlightClass(String Flight);
     public MTicketType MappintTicketLife(String TicketLife);
     public String MappingTicketType(String TicketType);
     public List<String> getListPnrFromRefno(String Refno);
+    public MFlight MappingFlightClass(String flightClass);
 }

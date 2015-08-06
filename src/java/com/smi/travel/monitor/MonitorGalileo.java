@@ -281,7 +281,7 @@ public class MonitorGalileo extends MonitorScheduler {
             Date deptDate = convertStringToDate(deptDateS + year);
             Date arrvDate = convertStringToDate(deptDateS + year, Integer.parseInt(arrivalDateS));
 
-            String flightClass = getField("flight class");
+            String flightClass = getField("flight class" , line);
             bf = new BookingFlight(flightNo, sourceCode, desCode, deptDate, arrvDate, flightClass);
             bf.setDepartTime(deptTimeS);
             bf.setArriveTime(arrvTimeS);
