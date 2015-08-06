@@ -34,6 +34,7 @@ public class AirticketFlight {
      private Integer costRefund;
      private Integer TotalPrice;
      private Integer TotalCost;
+     private String subFlightClass;
 
     public AirticketFlight() {
     }
@@ -47,8 +48,9 @@ public class AirticketFlight {
         this.arriveDate = arriveDate;
         this.departTime = departTime;
         this.arriveTime = arriveTime;
+        
     }
-    public AirticketFlight(MTicketType MTicketType, AirticketAirline airticketAirline, MFlight MFlight, MItemstatus MItemstatus, String flightNo, String sourceCode, String desCode, Date departDate, Date arriveDate, String departTime, String arriveTime, String isBill, Integer adCost, Integer adPrice, Integer adTax, Integer chCost, Integer chPrice, Integer chTax, Integer inCost, Integer inPrice, Integer inTax, Integer costRefund,Integer TotalPrice,Integer TotalCost) {
+    public AirticketFlight(MTicketType MTicketType, AirticketAirline airticketAirline, MFlight MFlight, MItemstatus MItemstatus, String flightNo, String sourceCode, String desCode, Date departDate, Date arriveDate, String departTime, String arriveTime, String isBill, Integer adCost, Integer adPrice, Integer adTax, Integer chCost, Integer chPrice, Integer chTax, Integer inCost, Integer inPrice, Integer inTax, Integer costRefund,Integer TotalPrice,Integer TotalCost,String subFlightClass) {
        this.MTicketType = MTicketType;
        this.airticketAirline = airticketAirline;
        this.MFlight = MFlight;
@@ -73,6 +75,7 @@ public class AirticketFlight {
        this.costRefund = costRefund;
        this.TotalPrice = TotalPrice;
        this.TotalCost = TotalCost;
+       this.subFlightClass = subFlightClass;
     }
    
     public String getId() {
@@ -255,6 +258,14 @@ public class AirticketFlight {
 
     public void setTotalCost(Integer TotalCost) {
         this.TotalCost = TotalCost;
+    }
+
+    public String getSubFlightClass() {
+        return subFlightClass;
+    }
+
+    public void setSubFlightClass(String subFlightClass) {
+        this.subFlightClass = subFlightClass;
     }
 
 
