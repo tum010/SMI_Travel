@@ -9,10 +9,18 @@ package com.smi.travel.datalayer.dao.impl;
 import com.mysql.jdbc.StringUtils;
 import com.smi.travel.datalayer.dao.OtherBookingDao;
 import com.smi.travel.datalayer.entity.Customer;
+import com.smi.travel.datalayer.entity.MStockStatus;
 import com.smi.travel.datalayer.entity.OtherBooking;
+import com.smi.travel.datalayer.entity.Product;
+import com.smi.travel.datalayer.entity.Stock;
+import com.smi.travel.datalayer.entity.StockDetail;
+import com.smi.travel.datalayer.entity.SystemUser;
+import com.smi.travel.datalayer.view.entity.OtherTicketView;
 import com.smi.travel.util.UtilityFunction;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -25,6 +33,7 @@ public class OtherBookingImpl implements OtherBookingDao{
     
     private SessionFactory sessionFactory;
     private Transaction transaction;
+    private UtilityFunction util;
     private static final String GET_BOOKOTHER_QUERY = "from OtherBooking ot where ot.otherDate >= :startdate and ot.otherDate <= :enddate ";
     
     @Override
@@ -53,7 +62,7 @@ public class OtherBookingImpl implements OtherBookingDao{
     }
 
     @Override
-    public int insertBookDetailOther(OtherBooking otherbook) {
+    public int insertBookDetailOther(OtherBooking otherbook, SystemUser user) {
         int result = 0;
         try {
             Session session = this.sessionFactory.openSession();
@@ -66,7 +75,189 @@ public class OtherBookingImpl implements OtherBookingDao{
             ex.printStackTrace();
             result = 0;
         }
+
         return result;
+    }
+    
+    @Override
+    public String saveStockDetailOther(OtherBooking otherbook, SystemUser user) {
+        util = new UtilityFunction();
+        String result = "";
+        try {       
+            Session session = this.sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            String date = util.convertDateToString(otherbook.getOtherDate());
+            String productId = otherbook.getProduct().getId();
+            List<StockDetail> stockDetailList = getStockByDate(productId, date, session);
+            if(stockDetailList.isEmpty()){
+                result = "notStock";
+                return result;
+            }
+            int adultQty = otherbook.getAdQty();
+            int childQty = otherbook.getChQty();
+            int infantQty = otherbook.getInQty();
+            int adultCount = 0;
+            int childCount = 0;
+            int infantCount = 0;
+            int noneCount = 0;
+            for(int i=0;i<stockDetailList.size();i++){
+                String typeName = stockDetailList.get(i).getTypeId().getName();
+                if("ADULT".equalsIgnoreCase(typeName)){
+                    adultCount++;
+                } else if("CHILD".equalsIgnoreCase(typeName)){
+                    childCount++;
+                } else if("INFANT".equalsIgnoreCase(typeName)){
+                    infantCount++;
+                } else if("NONE".equalsIgnoreCase(typeName)){
+                    noneCount++;
+                }
+            }
+            
+            int ad = 0;
+            int ch = 0;
+            int inf = 0;
+            OtherBooking otherBooking = new OtherBooking();
+            String otherbookId = otherbook.getId();
+            otherBooking.setId(otherbookId);
+            
+            MStockStatus mstockStatus = new MStockStatus();
+            mstockStatus.setId("2");
+            
+            String pickupDate = util.convertDateToString(otherbook.getCreateDate());
+            for (int i = 0; i < stockDetailList.size(); i++){
+                StockDetail stockDetail = stockDetailList.get(i);
+                String typeName = stockDetail.getTypeId().getName();
+                if("ADULT".equalsIgnoreCase(typeName)){
+                    if(ad < adultQty){
+                        stockDetail.setPickupDate(util.convertStringToDate(pickupDate));
+                        stockDetail.setOtherBooking(otherbook);                   
+                        stockDetail.setMStockStatus(mstockStatus);
+                        stockDetail.setStaff(user);
+                        session.update(stockDetailList.get(i));
+                        ad++;
+                    }
+                    
+                } else if("CHILD".equalsIgnoreCase(typeName)){
+                    if(ch < childQty){
+                        stockDetail.setPickupDate(util.convertStringToDate(pickupDate));
+                        stockDetail.setOtherBooking(otherbook);                   
+                        stockDetail.setMStockStatus(mstockStatus);
+                        stockDetail.setStaff(user);
+                        session.update(stockDetailList.get(i));
+                        ch++;
+                    }
+                    
+                } else if("INFANT".equalsIgnoreCase(typeName)){
+                    if(inf < infantQty){
+                        stockDetail.setPickupDate(util.convertStringToDate(pickupDate));
+                        stockDetail.setOtherBooking(otherbook);                   
+                        stockDetail.setMStockStatus(mstockStatus);
+                        stockDetail.setStaff(user);
+                        session.update(stockDetailList.get(i));
+                        inf++;
+                    }
+                } 
+            }
+                            
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+            result = stockDetailList.get(0).getStock().getId();
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            result = "fail";
+        }
+        
+        return result;
+    }
+    
+    private List<StockDetail> getStockByDate(String Id, String date, Session session) {
+        List<StockDetail> fail = new ArrayList<StockDetail>();
+        try {       
+            String queryDate = "from Stock s where s.effectiveFrom <= '" + date + "' and s.effectiveTo >= '" + date + "' and s.product.id = " + Id;
+            List<Stock> stockList =  session.createQuery(queryDate).list();
+            if(stockList.isEmpty()){                
+                return fail;
+            }
+            
+            for(int i=0;i<=stockList.size();i++){
+                String productId = stockList.get(i).getProduct().getId();
+                int result = getIsStock(productId, session);
+                if(result == 1){
+                    String stockDetailId = stockList.get(i).getId();
+                    List<StockDetail> stockDetailList = getStockDetail(stockDetailId, session);
+                    return stockDetailList;
+                }
+            }
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return fail;
+    }
+    
+    private int getIsStock(String id, Session session) {
+        int result = 0;
+        try {
+            String query = "from Product p where p.id = " + id + " and p.isStock = 1";
+            List<Product> productList = session.createQuery(query).list();
+            if(productList.isEmpty()){
+                result = 0;
+                return result;  
+            } else {
+                result = 1;
+                return result;
+            }         
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return result;
+    }
+    
+    private List<StockDetail> getStockDetail(String stockId, Session session) {
+        List<StockDetail> fail = new ArrayList<StockDetail>();
+        try {
+            String query = "from StockDetail s where s.stock.id = " + stockId + " and s.MStockStatus.id = 1";
+            List<StockDetail> stockDetailList = session.createQuery(query).list();
+            if(stockDetailList.isEmpty()){
+                return fail;  
+            }
+            return stockDetailList;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return fail;
+    }
+    
+    @Override
+    public List<OtherTicketView> getListStockDetail(String stockId) {
+        List<OtherTicketView> ticketList = new ArrayList<OtherTicketView>();
+        try{
+            Session session = this.sessionFactory.openSession();
+            String query = "from StockDetail s where s.stock.id = " + stockId + " and s.MStockStatus.id = 2";
+            List<StockDetail> stockDetailList = session.createQuery(query).list();            
+            if(stockDetailList.isEmpty()){
+                return ticketList;  
+            }
+            
+            for(int i=0;i<stockDetailList.size();i++){
+                StockDetail stockDetail = stockDetailList.get(i);
+                OtherTicketView otherTicketView = new OtherTicketView();
+                otherTicketView.setAddDate(stockDetail.getPickupDate());
+                otherTicketView.setTicketCode(stockDetail.getCode());
+                otherTicketView.setTypeName(stockDetail.getTypeId().getName());
+                ticketList.add(otherTicketView);
+            }
+           
+            session.close();
+            this.sessionFactory.close();
+            return ticketList;
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+        
+        return ticketList;
     }
     
     @Override
@@ -315,5 +506,5 @@ public class OtherBookingImpl implements OtherBookingDao{
 
         return list;
 
-    }
+    }     
 }
