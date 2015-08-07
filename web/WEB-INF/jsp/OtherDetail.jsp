@@ -20,6 +20,7 @@
 <c:set var="agent_list" value="${requestScope['agent_list']}" />
 <c:set var="currency_list" value="${requestScope['currency_list']}" />
 <c:set var="booktype" value="${requestScope['BOOKING_TYPE']}" />
+<c:set var="ticketList" value="${requestScope['ticketList']}" />
 <c:set var="enableVat" value="" />
 <c:set var="checkVat" value="checked" />
 <c:if test="${booktype == 'i'}">
@@ -59,9 +60,20 @@
             <div ng-include="'WebContent/Book/BookNavbar.html'"></div>
             <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
             <input type="hidden" id="bookingtype" name="bookingtype" value="${booktype}">
-            <input type="hidden" id="callpage" name="callpage" value="${param.callpage}">
-            
-            
+            <input type="hidden" id="callpage" name="callpage" value="${param.callpage}">            
+            <!--Alert Save -->
+            <c:if test="${requestScope['resultText'] == 'success'}">      
+            <div id="textAlertDivSave"  style="" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Success!</strong> 
+            </div>
+            </c:if>
+            <c:if test="${requestScope['resultText'] == 'unsuccess'}">
+            <div id="textAlertDivNotSave"  style="" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Not Success!</strong> 
+            </div>
+            </c:if>
             <div class="row">
                 <div class="col-sm-3">
                     <h4>Booking Other Detail</h4>
@@ -75,6 +87,9 @@
                         <c:when test="${fn:containsIgnoreCase(callpage , 'FromDayTour')}">
                             <a class="btn btn-primary" href="Daytour.smi?referenceNo=${param.referenceNo}"><i class="glyphicon glyphicon-chevron-left"></i> Back</a>
                         </c:when>
+                        <c:otherwise>
+                            <a class="btn btn-primary" href="Other.smi?referenceNo=${param.referenceNo}"><i class="glyphicon glyphicon-chevron-left"></i> Back</a>
+                        </c:otherwise>
                     </c:choose>                                                                       
                 </div>
             </div>
@@ -304,18 +319,44 @@
                                         <button class="btn btn-success disabled"><span class="fa fa-save"></span> Save</button>
                                     </c:if>   
                                 </c:otherwise>
-                            </c:choose>
-                                 
+                            </c:choose>                               
                         </div>
-
-
+                        <input type="hidden" id="callPageFrom" name="callPageFrom" value="${callpage}">
                     </form>   
                 </div>
             </div>
-        </div>
-    </div>    
-
-</div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Ticket</div>
+                <div class="panel-body">
+                    <div class="row" style="margin-left: 10px;margin-right: 10px;"> 
+                        <table id="Ticket" class="display" cellspacing="0"  >
+                            <thead>
+                                <tr class="datatable-header">
+                                    <th class="hidden" rowspan="2">id</th>
+                                    <th style="width: 10%">No</th>
+                                    <th style="width: 30%">Add Date</th>
+                                    <th style="width: 30%">Ticket</th>
+                                    <th style="width: 30%">Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="table" items="${ticketList}" varStatus="status">                                   
+                                    <tr>
+                                        <td class="hidden"> </td> 
+                                        <td>${status.count} </td>
+                                        <td>${table.addDate}</td>
+                                        <td>${table.ticketCode}</td>
+                                        <td>${table.typeName}</td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>        
+                    </div>
+                </div>
+            </div>
+        </div>       
+    </div>
+</div>                        
 
 <div class="modal fade" id="Confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
