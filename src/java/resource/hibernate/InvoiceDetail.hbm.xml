@@ -19,6 +19,9 @@
         <property name="description" type="string">
             <column name="description" />
         </property>
+        <property name="displayDescription" type="string">
+            <column name="display_description" />
+        </property>
         <property name="cost" type="big_decimal">
             <column name="cost" precision="10" />
         </property>
