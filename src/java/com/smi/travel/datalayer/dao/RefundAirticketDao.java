@@ -17,8 +17,9 @@ public interface RefundAirticketDao {
     public String InsertRefundAirticket(RefundAirticket refund);
     public String UpdateRefundAirticket(RefundAirticket refund);
     public String DeleteRefundAirticket(RefundAirticket refund);
-    public String DeleteRefundAirticketDetail(String refundDetailID); 
-    public RefundAirticket getRefundAirTicketFromRefundNo(String RefundNo);
+    public Boolean DeleteRefundAirticketDetail(String refundDetailID); 
+    public RefundAirticket getRefundAirTicketFromRefundNo(String refundNo);
+    public Boolean checkPaymentAirticketRefund(String refundDetailId);
    
     
 }

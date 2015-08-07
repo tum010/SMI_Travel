@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -27,6 +28,7 @@ public class RefundAirticketDetail {
      private Date expenseDate;
      
      private List paymentAirticketRefunds = new LinkedList<PaymentAirticketRefund>();
+     private Map<String, Object> ticketFareAirline;
 
     public RefundAirticketDetail() {
     }
@@ -143,6 +145,20 @@ public class RefundAirticketDetail {
 
     public void setPaymentAirticketRefunds(List paymentAirticketRefunds) {
         this.paymentAirticketRefunds = paymentAirticketRefunds;
+    }
+
+    /**
+     * @return the ticketFareAirline
+     */
+    public Map<String, Object> getTicketFareAirline() {
+        return ticketFareAirline;
+    }
+
+    /**
+     * @param ticketFareAirline the ticketFareAirline to set
+     */
+    public void setTicketFareAirline(Map<String, Object> ticketFareAirline) {
+        this.ticketFareAirline = ticketFareAirline;
     }
 
 }

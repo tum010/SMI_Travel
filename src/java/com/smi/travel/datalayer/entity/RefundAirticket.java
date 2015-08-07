@@ -18,8 +18,8 @@ public class RefundAirticket {
      private String refundNo;
      private Date refundDate;
      private String refundBy;
-     private String renark;
-     private List refundAirticketDetails = new LinkedList<RefundAirticketDetail>();
+     private String remark;
+     private List<RefundAirticketDetail> refundAirticketDetails = new LinkedList<RefundAirticketDetail>();
 
     public RefundAirticket() {
     }
@@ -29,7 +29,7 @@ public class RefundAirticket {
        this.refundNo = refundNo;
        this.refundDate = refundDate;
        this.refundBy = refundBy;
-       this.renark = renark;
+       this.remark = renark;
        this.refundAirticketDetails = refundAirticketDetails;
     }
    
@@ -68,12 +68,12 @@ public class RefundAirticket {
     public void setRefundBy(String refundBy) {
         this.refundBy = refundBy;
     }
-    public String getRenark() {
-        return this.renark;
+    public String getRemark() {
+        return this.remark;
     }
     
-    public void setRenark(String renark) {
-        this.renark = renark;
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public List getRefundAirticketDetails() {

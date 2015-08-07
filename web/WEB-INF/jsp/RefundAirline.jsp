@@ -4,7 +4,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script type="text/javascript" src="js/workspace.js"></script> 
 <script type="text/javascript" src="js/jquery-ui.js"></script>
-<script type="text/javascript" src="js/RefundAirline.js"></script> 
+<script type="text/javascript" src="js/refundAirline.js"></script> 
+<script type="text/javascript" src="js/jquery.mask.min.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.numeric.extensions.js"></script>
 <link href="css/jquery-ui.css" rel="stylesheet">
 
 <section class="content-header" >
@@ -33,21 +36,33 @@
             <hr/>
             
             <form action="RefundAirline.smi" method="post" id="RefundAirlineForm" name="RefundAirlineForm" role="form">
-               <div class="row">
+                                                        
+                <div id="alertSuccess"  style="" class="alert alert-success alert-dismissible" role="alert" <c:if test="${successStatus != true}">hidden="true"</c:if> >
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong id="alertTextSuccess">Save Success!</strong> 
+                </div>
+                <div id="alertFail"  style="" class="alert alert-danger alert-dismissible" role="alert" hidden="true">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong id="alertTextFail">Save Unsuccess!</strong> 
+                </div>
+                <input type="hidden" name="action" id="action" value="search">
+               <input type="hidden" name="counter" id="counter" >
+                <input type="hidden" name="refundId" id="refundId" value="${refundAirline.id}">
+                <div class="row">
                     <div class="col-xs-12 form-group">
                         <div class="col-xs-1 text-right" style="width: 140px">
                             <label class="control-label text-right">Refund No </label>
                         </div>
                         <div class="col-xs-1" style="width: 400px">
-                            <input id="refundNo" name="refundNo" type="text" class="form-control" value="">
+                            <input id="refundNo" name="refundNo" type="text" class="form-control" value="${refundAirline.refundNo}">
                         </div>
                         <div class="col-xs-1 text-right"  style="width: 140px">
                             <label class="control-label text-right">Refund Date </label>
                         </div>
                         <div class="col-xs-1"  style="width: 200px">
                             <div class='input-group date'>
-                                <input id="inputRefundDate" name="inputRefundDate"  type="text" 
-                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                <input id="inputRefundDate" name="refundDate"  type="text" 
+                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${refundAirline.refundDate}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
@@ -60,15 +75,15 @@
                         </div>
                         <div class="col-xs-1"  style="width: 150px">
                             <div class="input-group" id="refundAgentCodeValidate">
-                                <input type="hidden" class="form-control" id="refundAgentId" name="refundAgentId" value="${SelectedAgent.id}" />
-                                <input type="text" class="form-control" id="refundAgentUser" name="refundAgentUser" value="${SelectedAgent.code}" />
+                                <input type="hidden" class="form-control" id="refundAgentId" name="agentId" value="${refundAirline.agent.id}" />
+                                <input type="text" class="form-control" id="refundAgentCode" name="agentCode" value="${refundAirline.agent.code}" />
                                 <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#RefundAgentModal">
                                     <span class="glyphicon-search glyphicon"></span>
                                 </span>
                             </div>
                         </div>
                         <div class="col-xs-1 text-left" style="width: 250px">
-                            <input type="text" class="form-control" id="refundAgentName" name="refundAgentName" value="${SelectedAgent.name}" readonly=""
+                            <input type="text" class="form-control" id="refundAgentName" name="agentName" value="${refundAirline.agent.name}" readonly=""
                                 data-bv-notempty="true" data-bv-notempty-message="agent empty !">                           
                         </div>
                         <div class="col-xs-1 text-right" style="width: 140px">
@@ -76,7 +91,7 @@
                         </div>
                         <div class="col-xs-1" style="width: 200px">
                             <div class="input-group">
-                                <input id="refundBy" name="refundBy" type="text" class="form-control" value="">
+                                <input id="refundBy" name="refundBy" type="text" class="form-control" value="${refundAirline.refundBy}">
                             </div>
                         </div>
                     </div>
@@ -88,19 +103,11 @@
                         </div>
                         <div class="col-xs-1" style="width: 200px">
                             <div class="input-group">                                    
-                                <textarea rows="3" class="form-control" id="remark" name="remark" style="width: 228%"></textarea>  
+                                <textarea rows="3" class="form-control" id="remark" name="remark" style="width: 228%">${refundAirline.remark}</textarea>  
                             </div>
                         </div>
                     </div>
                 </div>
-<!--                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="col-xs-12 text-right" >
-                            <button style="height:30px" type="submit"  id="ButtonAdd"  name="ButtonAdd" onclick="addAction();" class="btn btn-primary btn-sm">&nbsp;&nbsp;Add&nbsp;&nbsp;</button>
-                        </div>
-                    </div>
-                </div>-->
-            </form>
                                 
             <!--Table-->
             <div class="row">
@@ -109,12 +116,13 @@
                         <thead>
                             <tr class="datatable-header" >
                                 <th style="width:10%;">Ticket No</th>
-                                <th style="width:35%;">Sector Refund</th>
+                                <th style="width:25%;">Sector Refund</th>
                                 <th style="width:10%;" >Receive</th>
-                                <th style="width:10%;" >Pay</th>
-                                <th style="width:10%;" >Profit</th>
-                                <th style="width:10%;" >Com</th>
-                                <th style="width:10%;" >Date</th>
+                                <th style="width:9%;" >Pay</th>
+                                <th style="width:9%;" >Profit</th>
+                                <th style="width:9%;" >Air Com</th>
+                                <th style="width:9%;" >Agent Com</th>
+                                <th style="width:14%;" >Pay Date</th>
                                 <th style="width:5%;" rowspan="2" >Action</th>
                             </tr>
                             <tr class="datatable-header" >
@@ -123,43 +131,60 @@
                                 <th>Total</th>
                                 <th>Department</th>
                                 <th colspan="3">Passenger</th>
+                                <th >Receive Date</th>
                             </tr>
                         </thead>
                         <tbody>
-                              <%--<c:forEach var="refundAirline" items="${refundAirlineList}" varStatus="varRefundAirline">--%>
-                            <tr>
-                                
-                                <td style="text-align:center"> <input id="ticketno" name="ticketno" type="text" class="form-control" value="1234214324"></td>
-                                <td style="text-align:center"> <input id="refund" name="refund" type="text" class="form-control" value="BKK-HGH"></td>
-                                <td style="text-align:center"> <input id="Receive" name="Receive" type="text" class="form-control" value=""></td>
-                                <td style="text-align:center"> <input id="Pay" name="Pay" type="text" class="form-control" value=""></td>
-                                <td style="text-align:center"> <input id="Profit" name="Profit" type="text" class="form-control" value=""></td>
-                                <td style="text-align:center"> <input id="Com" name="Com" type="text" class="form-control" value=""></td>
-                                <td style="text-align:center"> <input id="date" name="ticketno" type="text" class="form-control" value=""></td>
-                                <td rowspan='2' class="text-center">
-                                    <a id="ButtonRemove${varRefundAirline.count}" data-toggle="modal" data-target="#DeleteRefundAirline" onclick="">
-                                        <i id="IRemove${varRefundAirline.count}" class="glyphicon glyphicon-remove deleteicon"></i>
-                                    </a>
-                                </td>
+                            <c:forEach var="detail" items="${refundAirline.refundAirticketDetails}" varStatus="varRefundAirline">
+                                <c:set var="index" value="${varRefundAirline.index + 1}"></c:set>
+                                <tr row="${index}">
+                            <input type="hidden" name="detailId${index}" id="detailId${index}" colName="detailId" value="${detail.id}">
+                            <input type="hidden" id="ticketId${index}" name="ticketId${index}" colName="ticketId" value="${detail.airticketPassenger.id}">
+                            <td style="text-align:center"> <input id="ticketNo${index}" name="ticketNo${index}" colName="ticketNo" type="text" class="form-control" value="${detail.ticketFareAirline["TicketNo"]}"></td>
+                            <td style="text-align:center"> <input id="refund${index}" name="refund${index}" colName="refund" type="text" class="form-control" value="${detail.sectorRefund}"></td>
+                            <td style="text-align:center"> <input id="Receive${index}" name="receive${index}" colName="receive" type="text" class="form-control" value="${detail.receiveAirline}"></td>
+                            <td style="text-align:center"> <input id="Pay${index}" name="pay${index}" colName="pay" type="text" class="form-control" value="${detail.payCustomer}"></td>
+                            <td style="text-align:center"> <input id="Profit${index}" name="profit${index}" colName="profit" type="text" class="form-control" value="${detail.profit}"></td>
+                            <td style="text-align:center"> <input id="AirCom${index}" name="airCom${index}" colName="airCom" type="text" class="form-control" value="${detail.airComission}"></td>
+                            <td style="text-align:center"> <input id="AgentCom${index}" name="agentCom${index}" colName="agentCom" type="text" class="form-control" value="${detail.agentComission}"></td>
+                            <td> 
+                                <div class="input-group daydatepicker" id="daydatepicker-0" style="padding-left: 0px">
+                                    <input style="width: 100%" type="text" class="form-control" id="paydate${index}" name="paydate${index}" colName="paydate" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${detail.expenseDate}">
+                                    <span class="input-group-addon" style="padding : 1px 10px;"><span class="glyphicon-calendar glyphicon"></span></span>
+                                </div>
+                            </td>       
+
+                            <td rowspan='2' class="text-center">
+                                <a id="ButtonRemove${varRefundAirline.count}" data-toggle="modal" data-target="#DeleteRefundAirline" onclick="setDeletRow(this)">
+                                    <i id="IRemove${varRefundAirline.count}" class="glyphicon glyphicon-remove deleteicon"></i>
+                                </a>
+                            </td>
                             </tr>
-                            <tr>
-                                <td style="text-align:center">2015-01-01</td>
-                                <td >BKK-ARM-BKK</td>
-                                <td style="text-align:center">2500</td>
-                                <td >Outbound</td>       
-                                <td colspan='3'>MR PRASASOMMOON  WASIN</td>                         
+                            <tr row="${varRefundAirline.index + 1}">
+                                <td  style="text-align:center"><span id="ticketDate" name="ticketDate">${detail.ticketFareAirline["TicketDate"]}</span></td>
+                                <td ><span id="sectorIssue">${detail.ticketFareAirline["Sector"]}</span></td>
+                                <td style="text-align:center"><span id="total">${detail.ticketFareAirline["Total"]}</span></td>
+                                <td ><span id="department">${detail.ticketFareAirline["Dept"]}</span></td>       
+                                <td colspan='3'><span id="passsenger" name="passsenger">${detail.ticketFareAirline["Passenger"]}</span></td>
+                                <td> 
+                                    <div class="input-group daydatepicker" id="daydatepicker-0" style="padding-left: 0px">
+                                        <input style="width: 100%" type="text" class="form-control" id="receivedate${index}" name="receivedate${index}"  colName="receivedate" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${detail.receiveDate}">
+                                        <span class="input-group-addon" style="padding : 1px 10px;"><span class="glyphicon-calendar glyphicon"></span></span>
+                                    </div>
+                                </td>     
+
                             </tr>
-                            <%--</c:forEach>--%>
+                        </c:forEach>
                         </tbody>
                     </table>      
                 </div>
             </div>        
                         
             <div class="col-xs-12 text-center" style="padding-top: 10px">
-                    <button type="submit" id="ButtonSave" name="ButtonSave" onclick="saveAction()" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+                    <button  id="buttonSave" name="ButtonSave" class="btn btn-success" value="save"><i class="fa fa-save"></i> Save</button>
                     <button type="submit" id="ButtonSaveAndNew" name="ButtonSaveAndNew" class="btn btn-success"><i class="fa fa-save"></i> Save &amp; New</button>
             </div>            
-
+            </form>
         </div>
     </div>
 </div>
@@ -222,12 +247,54 @@
             <div class="modal-body" id="delCode">
             </div>
             <div class="modal-footer">
-                <button type="button" onclick="deleteRow()" class="btn btn-danger">Delete</button>
+                <button type="button" onclick="deleteRowRefundAirlineList()" class="btn btn-danger">Delete</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /Delete Hotel modal -->
+
+<div  class="hide" id="">
+    <table id="tempRow" class="display" cellspacing="0" width="100%">
+        <tbody>
+            <tr>
+        <input type="hidden" name="detailId" id="detailId" colName="detailId" value="">
+        <input type="hidden" id="ticketId" name="ticketId" colName="ticketId" value="">
+        <td style="text-align:center"> <input id="ticketNo" name="ticketNo" colName="ticketNo" type="text" class="form-control" value=""></td>
+        <td style="text-align:center"> <input id="refund" name="refund" colName="refund" type="text" class="form-control" value=""></td>
+        <td style="text-align:center"> <input id="receive" name="receive" colName="receive" type="text" class="form-control" value=""></td>
+        <td style="text-align:center"> <input id="pay" name="pay" type="text" colName="pay" class="form-control" value=""></td>
+        <td style="text-align:center"> <input id="profit" name="profit" colName="profit" type="text" class="form-control" value=""></td>
+        <td style="text-align:center"> <input id="airCom" name="airCom" colName="airCom" type="text" class="form-control" value=""></td>
+        <td style="text-align:center"> <input id="agentCom" name="agentCom" colName="agentCom" type="text" class="form-control" value=""></td>
+        <td> 
+            <div class="input-group daydatepicker" id="daydatepicker-0" style="padding-left: 0px">
+                <input style="width: 100%" type="text" class="form-control" id="paydate" name="paydate" colName="paydate" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD">
+                <span class="input-group-addon" style="padding : 1px 10px;"><span class="glyphicon-calendar glyphicon"></span></span>
+            </div>
+        </td>
+        <td rowspan='2' class="text-center">
+            <a id="ButtonRemove${varRefundAirline.count}" data-toggle="modal" data-target="#DeleteRefundAirline" onclick="setDeletRow(this)">
+                <i id="IRemove${varRefundAirline.count}" class="glyphicon glyphicon-remove deleteicon"></i>
+            </a>
+        </td>
+        </tr>
+        <tr>
+            <td  style="text-align:center"><span id="ticketDate" colName="ticketDate"></span></td>
+            <td ><span id="sectorIssue" colName="sectorIssue"></span></td>
+            <td style="text-align:center"><span id="total" colName="total"></span></td>
+            <td ><span id="department" colName="department"></span></td>       
+            <td colspan='3'><span id="passsenger" colName="passsenger"></span></td>
+            <td> 
+                <div class="input-group daydatepicker" id="daydatepicker-0" style="padding-left: 0px">
+                    <input style="width: 100%" type="text" class="form-control" id="receivedate" name="receivedate" colName="receivedate" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD">
+                    <span class="input-group-addon" style="padding : 1px 10px;"><span class="glyphicon-calendar glyphicon"></span></span>
+                </div>
+            </td>                              
+        </tr>
+        </tbody>
+    </table>
+</div>
 <!--Script-->       
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
@@ -250,19 +317,19 @@
         var rowRefund = $("#RefundAirlineTable tr").length;
      //   RefundAirlineTableAddRow(rowRefund);
         
-        $("#RefundAirlineTable").on("keyup", function () {
-            var rowAll = $("#RefundAirlineTable tr").length;
-            $("td").keyup(function () {
-                if ($(this).find("input").val() !== '') {
-                    var colIndex = $(this).parent().children().index($(this));
-                    var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
-                    rowAll = $("#RefundAirlineTable tr").length;
-                    if (rowIndex == rowAll) {
-                        RefundAirlineTableAddRow(rowAll);
-                    }
-                }
-            });
-        });
+//        $("#RefundAirlineTable").on("keyup", function () {
+//            var rowAll = $("#RefundAirlineTable tr").length;
+//            $("td").keyup(function () {
+//                if ($(this).find("input").val() !== '') {
+//                    var colIndex = $(this).parent().children().index($(this));
+//                    var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
+//                    rowAll = $("#RefundAirlineTable tr").length;
+//                    if (rowIndex == rowAll) {
+//                        RefundAirlineTableAddRow(rowAll);
+//                    }
+//                }
+//            });
+//        });
         
  
     });
