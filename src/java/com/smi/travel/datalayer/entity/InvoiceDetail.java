@@ -28,6 +28,7 @@ public class InvoiceDetail {
      private BigDecimal vat;
      private BigDecimal gross;
      private Integer isVat;
+     private String displayDescription;
      private List invoiceDocuments = new LinkedList<InvoiceDocument>();
 
     public InvoiceDetail() {
@@ -37,7 +38,7 @@ public class InvoiceDetail {
     public InvoiceDetail(Invoice invoice) {
         this.invoice = invoice;
     }
-    public InvoiceDetail(BillableDesc billableDesc, Invoice invoice, MBilltype mbillType, String description, BigDecimal cost, BigDecimal costLocal, String curCost, BigDecimal amount, BigDecimal amountLocal, String curAmount, BigDecimal vat, Integer isVat, List invoiceDocuments,BigDecimal gross) {
+    public InvoiceDetail(BillableDesc billableDesc, Invoice invoice, MBilltype mbillType, String description, BigDecimal cost, BigDecimal costLocal, String curCost, BigDecimal amount, BigDecimal amountLocal, String curAmount, BigDecimal vat, Integer isVat, List invoiceDocuments,BigDecimal gross,String displayDescription) {
        this.billableDesc = billableDesc;
        this.invoice = invoice;
        this.mbillType = mbillType;
@@ -50,6 +51,7 @@ public class InvoiceDetail {
        this.curAmount = curAmount;
        this.vat = vat;
        this.isVat = isVat;
+       this.displayDescription = displayDescription;
        this.invoiceDocuments = invoiceDocuments;
     }
    
@@ -60,6 +62,16 @@ public class InvoiceDetail {
     public void setId(String id) {
         this.id = id;
     }
+
+    public String getDisplayDescription() {
+        return displayDescription;
+    }
+
+    public void setDisplayDescription(String displayDescription) {
+        this.displayDescription = displayDescription;
+    }
+    
+    
     
     public BillableDesc getBillableDesc() {
         return this.billableDesc;
