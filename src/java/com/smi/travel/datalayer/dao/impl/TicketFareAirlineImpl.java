@@ -5,7 +5,6 @@
  */
 
 package com.smi.travel.datalayer.dao.impl;
-//test
 import com.smi.travel.datalayer.dao.TicketFareAirlineDao;
 import com.smi.travel.datalayer.entity.AirticketAirline;
 import com.smi.travel.datalayer.entity.AirticketFlight;
@@ -16,6 +15,7 @@ import com.smi.travel.datalayer.entity.MAirlineAgent;
 import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.entity.MRunningCode;
 import com.smi.travel.datalayer.entity.PaymentAirticketFare;
+import com.smi.travel.datalayer.entity.PaymentAirticketRefund;
 import com.smi.travel.datalayer.entity.RefundAirticketDetail;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
@@ -582,6 +582,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
             }
             
         }
+        result.put("Id",ticketFare.getId()); 
         result.put("TicketNo",TicketNo); 
         result.put("TicketDate", ticketFare.getAirticketAirline().getTicketDate());
         result.put("Dept", BookingType.equalsIgnoreCase("O")? "O":"W");
@@ -592,5 +593,5 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         this.sessionFactory.close();
         return result;
     }
-
+    
 }
