@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AirlineVolumn" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isFloatColumnFooter="true" uuid="36591689-e817-40b9-bb01-c68bf69d6b71">
 	<property name="ireport.zoom" value="1.6500000000000004"/>
-	<property name="ireport.x" value="133"/>
+	<property name="ireport.x" value="135"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[]]>
@@ -164,7 +164,7 @@
 			<textField>
 				<reportElement x="342" y="1" width="107" height="15" uuid="cb5565c0-7352-45c0-a366-10a1e68a7517"/>
 				<textElement textAlignment="Center">
-					<font size="8"/>
+					<font fontName="TH SarabunPSK" size="13" isItalic="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pax}]]></textFieldExpression>
 			</textField>
@@ -177,7 +177,7 @@
 			<textField pattern="#,##0">
 				<reportElement x="449" y="1" width="105" height="15" uuid="d93d87d5-e5da-4dd5-bdc2-761a3caf5837"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{commission}]]></textFieldExpression>
 			</textField>
