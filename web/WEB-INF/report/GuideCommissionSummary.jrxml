@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AirlineVolumn" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isFloatColumnFooter="true" uuid="36591689-e817-40b9-bb01-c68bf69d6b71">
 	<property name="ireport.zoom" value="1.6500000000000004"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="133"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[]]>
@@ -16,10 +16,10 @@
 	<field name="sumpax" class="java.lang.String"/>
 	<field name="sumcommission" class="java.lang.String"/>
 	<variable name="sumcommission" class="java.lang.Integer" calculation="Sum">
-		<variableExpression><![CDATA[$F{countbook}]]></variableExpression>
+		<variableExpression><![CDATA[$F{commission}]]></variableExpression>
 	</variable>
 	<variable name="sumpax" class="java.lang.Integer" calculation="Sum">
-		<variableExpression><![CDATA[$F{commission}]]></variableExpression>
+		<variableExpression><![CDATA[$F{pax}]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
