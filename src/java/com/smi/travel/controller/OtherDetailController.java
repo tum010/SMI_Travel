@@ -1,14 +1,16 @@
 package com.smi.travel.controller;
 
 import com.smi.travel.datalayer.entity.Agent;
+import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MItemstatus;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.OtherBooking;
 import com.smi.travel.datalayer.entity.Product;
+import com.smi.travel.datalayer.entity.StockDetail;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.BookingOtherService;
-import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.service.UtilityService;
+import com.smi.travel.datalayer.view.entity.OtherTicketView;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.util.List;
@@ -144,14 +146,30 @@ public class OtherDetailController extends SMITravelController {
             if(!"".equalsIgnoreCase(canceldate)){
                 Other.setCancelDate(util.convertStringToTime(canceldate));
             }
-
+            
             int result = OtherService.saveBookingOther(Other,user);
             if((result==1) && (callpageSubmit==null || !callpageSubmit.equalsIgnoreCase("FromDayTour"))){
-                ModelAndView OTHER = new ModelAndView(new RedirectView("Other.smi?referenceNo="+refno+"&result=1", true));
-                return OTHER;
+                String stock = OtherService.saveStockDetailOther(Other, user);
+                if("notStock".equalsIgnoreCase(stock)){
+                    ModelAndView OTHER = new ModelAndView(new RedirectView("Other.smi?referenceNo="+refno+"&result=1", true));
+                    return OTHER;
+                }else if("fail".equalsIgnoreCase(stock)){
+                    request.setAttribute("resultText", "unsuccess");
+                }else {
+                    getTicket(request, stock);
+                    request.setAttribute("resultText", "success");
+                }
             }else if((result==1) && (callpageSubmit!=null) && (callpageSubmit.equalsIgnoreCase("FromDayTour"))){
-                ModelAndView DAYTOUR = new ModelAndView(new RedirectView("Daytour.smi?referenceNo="+refno+"&result=success", true));
-                return DAYTOUR;
+                String stock = OtherService.saveStockDetailOther(Other, user);
+                if("notStock".equalsIgnoreCase(stock)){
+                    ModelAndView DAYTOUR = new ModelAndView(new RedirectView("Daytour.smi?referenceNo="+refno+"&result=success", true));
+                    return DAYTOUR;
+                }else if("fail".equalsIgnoreCase(stock)){
+                    request.setAttribute("resultText", "unsuccess");
+                }else{
+                    getTicket(request, stock);
+                    request.setAttribute("resultText", "success");
+                }    
             }else{
                 request.setAttribute(TransectionResult, "save unsuccessful");
             }
@@ -244,6 +262,14 @@ public class OtherDetailController extends SMITravelController {
             request.setAttribute(LockUnlockBooking,0);
         }
         return OtherDetail;
+    }
+    
+    private void getTicket(HttpServletRequest request, String stockId) {
+        List<OtherTicketView> ticketList = OtherService.getListStockDetail(stockId);
+//        List<StockDetail> stockDetailList = OtherService.getListStockDetail(stockId);
+//        String a = stockDetailList.get(0).getTypeId().getName();
+        request.setAttribute("ticketList",ticketList);
+        return;
     }
 
     public UtilityService getUtilservice() {
