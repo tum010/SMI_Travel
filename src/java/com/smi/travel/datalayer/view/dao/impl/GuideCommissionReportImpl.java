@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.view.dao.impl;
 
 import com.smi.travel.datalayer.report.model.GuideCommissionInfo;
 import com.smi.travel.datalayer.report.model.GuideCommissionSummary;
+import com.smi.travel.datalayer.report.model.GuideCommissionSummaryHeader;
 import com.smi.travel.datalayer.view.dao.GuideCommissionReportDao;
 import com.smi.travel.util.UtilityFunction;
 import java.text.SimpleDateFormat;
@@ -26,13 +27,23 @@ import org.hibernate.SessionFactory;
  */
 public class GuideCommissionReportImpl implements GuideCommissionReportDao{
     
-     private SessionFactory sessionFactory;
-     
+    private SessionFactory sessionFactory;
+    private final  String GUIDECOM_SUMMARY_QUERY = "SELECT" +
+                                                    "`st`.`name` AS `guide`," +
+                                                    "sum(`dp`.`qty`) AS `pax`," +
+                                                    "sum(`db`.`guide_commission`) AS `comission`," +
+                                                    "`st`.`id` AS `guideid`" +
+                                                    "FROM  `daytour_booking` `db`  " +
+                                                    "JOIN `master` `mt` ON (`mt`.`id` = `db`.`master_id`) " +
+                                                    "JOIN `daytour_booking_price` `dp` ON (`dp`.`daytour_booking_id` = `db`.`id`) " +
+                                                    "JOIN `staff` `st` ON (`db`.`guide_id` = `st`.`id`) " +
+                                                    "WHERE  (`db`.`guide_commission` <> 0) ";
+    
     @Override
     public GuideCommissionInfo getGuideCommissionInfoReport(String datefrom, String dateto, String username, String guideid) {
         GuideCommissionInfo guideCommissionInfo = new GuideCommissionInfo();
         guideCommissionInfo.setGuideCommissionDataSource(new JRBeanCollectionDataSource(getGuideComissionReport(datefrom, dateto, username, guideid)));
-//        guideCommissionInfo.setGuideCommissionSummaryDataSource(new JRBeanCollectionDataSource(getAgentReportInfo(datefrom, dateto, username, guideid)));
+        guideCommissionInfo.setGuideCommissionSummaryDataSource(new JRBeanCollectionDataSource(getGuideComissionSummaryReport(datefrom, dateto, username, guideid)));
         return guideCommissionInfo;
     }
     
@@ -75,6 +86,41 @@ public class GuideCommissionReportImpl implements GuideCommissionReportDao{
              data.add(guidecom);
              
            
+        }
+        
+        this.sessionFactory.close();
+        session.close();
+        return data;
+    }
+    
+    public List getGuideComissionSummaryReport(String datefrom, String dateto, String username,String guideid) {
+       Session session = this.sessionFactory.openSession();
+        List data = new ArrayList();
+        Date thisdate = new Date();
+        UtilityFunction util = new UtilityFunction();
+        String query = GUIDECOM_SUMMARY_QUERY + "and db.tour_date >= '"+datefrom+"' and  db.tour_date <= '"+dateto+"'";
+        if((guideid != null)&&(!"".equalsIgnoreCase(guideid))){
+            query += " and  st.id = "+guideid;
+        }
+        query = "GROUP BY  `st`.`id`";
+        query += " ORDER BY `st`.name ";
+        List<Object[]> QueryGuideComList = session.createSQLQuery(query)
+                .addScalar("guide", Hibernate.STRING)
+                .addScalar("pax", Hibernate.INTEGER)
+                .addScalar("comission", Hibernate.INTEGER)
+
+                .list();
+        
+        for (Object[] B : QueryGuideComList) {
+             GuideCommissionSummaryHeader guidecom = new GuideCommissionSummaryHeader();
+             guidecom.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(thisdate));
+             guidecom.setUser(username);
+             guidecom.setDatefrom(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)));
+             guidecom.setDateto(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)));
+             guidecom.setGuidename(util.ConvertString(B[1]));
+             guidecom.setPax(B[2]== null ? 0:(Integer)B[2]);
+             guidecom.setCommission(B[3]== null ? 0:(Integer)B[3]);
+             data.add(guidecom);
         }
         
         this.sessionFactory.close();
