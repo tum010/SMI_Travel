@@ -3,6 +3,9 @@
 	<property name="ireport.zoom" value="1.8150000000000024"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -163,25 +166,16 @@
 					<text><![CDATA[Grand Total :]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="228" y="0" width="55" height="14" uuid="30a68085-79b5-4f8b-9a8d-d804e549388e"/>
-					<textElement textAlignment="Center">
-						<font size="8"/>
-					</textElement>
-					<textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0").format($V{totalpax})]]></textFieldExpression>
+					<reportElement x="228" y="1" width="55" height="13" uuid="374f9534-ef0e-42b1-87e5-77d49a51b873"/>
+					<textFieldExpression><![CDATA[$V{totalpax}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="283" y="1" width="85" height="13" uuid="df3a387e-29f1-470a-ac09-df52ee618497"/>
-					<textElement textAlignment="Right">
-						<font size="8"/>
-					</textElement>
-					<textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0").format($V{totalcommission})]]></textFieldExpression>
+					<reportElement x="283" y="1" width="85" height="13" uuid="bf14c0d4-0b29-4729-8384-b28c949b6de0"/>
+					<textFieldExpression><![CDATA[$V{totalcommission}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="368" y="1" width="83" height="13" uuid="1e3a720d-b266-41b4-bb81-09b73aa1d0df"/>
-					<textElement textAlignment="Right">
-						<font size="8"/>
-					</textElement>
-					<textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0").format($V{totalselling})]]></textFieldExpression>
+					<reportElement x="368" y="1" width="83" height="13" uuid="f9c24808-1632-44a2-aea0-1f85ebed922a"/>
+					<textFieldExpression><![CDATA[$V{totalselling}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>

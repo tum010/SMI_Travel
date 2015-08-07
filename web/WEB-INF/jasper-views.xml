@@ -103,7 +103,7 @@
          
          <bean id="GuideCommission"
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
-	   <property name="url" value="/WEB-INF/report/GuideCommission.jrxml"/>
+	   <property name="url" value="/WEB-INF/report/GuideCommissionInfo.jrxml"/>
          </bean>
          
          <bean id="AgentCommission"
