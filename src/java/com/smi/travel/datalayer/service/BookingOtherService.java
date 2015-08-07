@@ -11,7 +11,9 @@ import com.smi.travel.datalayer.dao.ProductDao;
 import com.smi.travel.datalayer.entity.MItemstatus;
 import com.smi.travel.datalayer.entity.OtherBooking;
 import com.smi.travel.datalayer.entity.Product;
+import com.smi.travel.datalayer.entity.StockDetail;
 import com.smi.travel.datalayer.entity.SystemUser;
+import com.smi.travel.datalayer.view.entity.OtherTicketView;
 import java.util.Date;
 import java.util.List;
 
@@ -56,7 +58,7 @@ public class BookingOtherService {
             other.setCreateBy(user.getUsername());
             other.setCreateDate(thisdate);
             
-            result = otherBookDao.insertBookDetailOther(other);
+            result = otherBookDao.insertBookDetailOther(other, user);
         }
         return result;
     }
@@ -87,6 +89,14 @@ public class BookingOtherService {
 
     public void setOtherBookDao(OtherBookingDao otherBookDao) {
         this.otherBookDao = otherBookDao;
+    }
+
+    public String saveStockDetailOther(OtherBooking Other, SystemUser user) {
+        return otherBookDao.saveStockDetailOther(Other, user);
+    }
+
+    public List<OtherTicketView> getListStockDetail(String stockId) {
+        return otherBookDao.getListStockDetail(stockId);
     }
     
     
