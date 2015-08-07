@@ -49,7 +49,7 @@ public class GuideCommissionReportImpl implements GuideCommissionReportDao{
     
     @Override
     public List getGuideComissionReport(String datefrom, String dateto, String username,String guideid) {
-       Session session = this.sessionFactory.openSession();
+        Session session = this.sessionFactory.openSession();
         List data = new ArrayList();
         Date thisdate = new Date();
         UtilityFunction util = new UtilityFunction();
@@ -102,8 +102,9 @@ public class GuideCommissionReportImpl implements GuideCommissionReportDao{
         if((guideid != null)&&(!"".equalsIgnoreCase(guideid))){
             query += " and  st.id = "+guideid;
         }
-        query = "GROUP BY  `st`.`id`";
+        query += "GROUP BY  `st`.`id`";
         query += " ORDER BY `st`.name ";
+        System.out.println("query : "+ query);
         List<Object[]> QueryGuideComList = session.createSQLQuery(query)
                 .addScalar("guide", Hibernate.STRING)
                 .addScalar("pax", Hibernate.INTEGER)
@@ -117,9 +118,9 @@ public class GuideCommissionReportImpl implements GuideCommissionReportDao{
              guidecom.setUser(username);
              guidecom.setDatefrom(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)));
              guidecom.setDateto(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)));
-             guidecom.setGuidename(util.ConvertString(B[1]));
-             guidecom.setPax(B[2]== null ? 0:(Integer)B[2]);
-             guidecom.setCommission(B[3]== null ? 0:(Integer)B[3]);
+             guidecom.setGuidename(util.ConvertString(B[0]));
+             guidecom.setPax(B[1]== null ? 0:(Integer)B[1]);
+             guidecom.setCommission(B[2]== null ? 0:(Integer)B[2]);
              data.add(guidecom);
         }
         
