@@ -459,7 +459,8 @@
 		<property name="ticketFareAirlineService" ref="TicketFareAirlineService" />
 	</bean>
 	<bean id="RefundAirlineController" class="com.smi.travel.controller.RefundAirlineController">
-
+                <property name="refundAirlineService" ref="RefundAirlineService" />
+                <property name="utilityService" ref="UtilityService" />
 	</bean>
 	<bean id="PaymentAirlineController" class="com.smi.travel.controller.PaymentAirlineController">
 		<property name="utilityService" ref="UtilityService" />

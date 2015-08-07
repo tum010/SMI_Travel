@@ -19,6 +19,7 @@ import com.smi.travel.datalayer.dao.OtherBookingDao;
 import com.smi.travel.datalayer.dao.PackageTourDao;
 import com.smi.travel.datalayer.dao.PaymentAirTicketDao;
 import com.smi.travel.datalayer.dao.ProductDetailDao;
+import com.smi.travel.datalayer.dao.RefundAirticketDao;
 import com.smi.travel.datalayer.dao.TicketFareAirlineDao;
 import com.smi.travel.datalayer.dao.TransferJobDao;
 import com.smi.travel.datalayer.entity.AirticketFlight;
@@ -49,7 +50,9 @@ import com.smi.travel.util.Mail;
 import com.smi.travel.util.UtilityFunction;
 import java.net.MalformedURLException;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -83,6 +86,7 @@ public class AJAXBean extends AbstractBean implements
     private static final String TICKETFAREAIRLINE = "TicketFareAirlineServlet";
     private static final String PAYMENTAIRTICKET = "PaymentAirTicketServlet";
     private static final String INVOICE = "InvoiceServlet";
+    private static final String REFUNDAIRLINE = "RefundAirlineServlet";
     private CustomerDao customerdao;
     private ProductDetailDao productDetailDao;
     private BookingSummaryDao bookingsummarydao;
@@ -99,6 +103,7 @@ public class AJAXBean extends AbstractBean implements
     private TicketFareAirlineDao ticketFareAirlineDao; 
     private PaymentAirTicketDao paymentairticketdao; 
     private BillableDao billableDao;
+    private RefundAirticketDao refundAirticketDao;
     public AJAXBean(List queryList) {
         super(queryList);
         if (queryList != null && queryList.size() > 0) {
@@ -137,6 +142,8 @@ public class AJAXBean extends AbstractBean implements
                     paymentairticketdao = (PaymentAirTicketDao) obj;
                 }else if (obj instanceof BillableDao){
                     billableDao = (BillableDao) obj;
+                }else if (obj instanceof RefundAirticketDao){
+                    refundAirticketDao = (RefundAirticketDao) obj;
                 }
             }
         }
@@ -600,7 +607,22 @@ public class AJAXBean extends AbstractBean implements
                 Billable bill = billableDao.getBillableBooking(searchRefNo);
                 result = getListInvoice(bill);
             }
-        }
+        } else if (REFUNDAIRLINE.equalsIgnoreCase(servletName)) {
+            if("getTicketFare".equalsIgnoreCase(type)){
+                String ticketNo = map.get("ticketNo").toString();
+                HashMap<String, Object> ticketFare = ticketFareAirlineDao.getDetailTicketFareAirline(ticketNo);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                ticketFare.put("TicketDate", sdf.format(ticketFare.get("TicketDate")));
+                JSONObject obj =new JSONObject(ticketFare);
+                result = obj.toJSONString();
+            }else if("delete".equalsIgnoreCase(type)){
+                result = false;
+                String detailId = map.get("detailId").toString();
+                if(refundAirticketDao.checkPaymentAirticketRefund(detailId)){
+                    result = refundAirticketDao.DeleteRefundAirticketDetail(detailId);
+                }
+            }
+        } 
         return result;
     }
     
