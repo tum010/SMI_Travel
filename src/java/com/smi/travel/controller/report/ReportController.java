@@ -7,6 +7,7 @@ package com.smi.travel.controller.report;
 
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.report.model.AgentCommission;
+import com.smi.travel.datalayer.report.model.GuideCommissionInfo;
 import com.smi.travel.datalayer.report.model.TicketOrder;
 import com.smi.travel.datalayer.service.ReportService;
 import com.smi.travel.master.controller.SMITravelController;
@@ -60,7 +61,7 @@ public class ReportController extends SMITravelController {
     private static final String ReceiveList = "ReceiveList";
     private static final String InvoiceEmail = "InvoiceEmail";
     private static final String InvoiceReport = "InvoiceReport";
-
+    
     private DataSource datasource;
     private static final Logger LOG = Logger.getLogger(ReportController.class.getName());
     private ReportService reportservice;
@@ -143,7 +144,9 @@ public class ReportController extends SMITravelController {
             data = reportservice.getTransferJobReport(docno);
         }else if (GuideCommission.equalsIgnoreCase(name)) {
             PrintMethod = 0;
-            data = reportservice.getGuideComissionReport(startdate, enddate, user.getName(),guideID);
+            data = reportservice.getGuideCommissionInfoReport(startdate, enddate, user.getName(),guideID);
+            // set path for loading sub-report file
+            ((GuideCommissionInfo) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
         }else if (AgentCommissionSummary.equalsIgnoreCase(name)) {
             PrintMethod = 0;
             data = reportservice.getAgentCommissionReportSummary(startdate, enddate, user.getName(),agentid);

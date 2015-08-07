@@ -106,8 +106,10 @@ public class ReportService {
         return transferJobReportdao.getTransferJobReport(docno);
     }
     
-    public List getGuideComissionReport(String datefrom,String dateto,String username,String guideid){
-        return guideComissiondao.getGuideComissionReport(datefrom, dateto, username,guideid);
+    public List getGuideCommissionInfoReport(String datefrom,String dateto,String username,String guideid){
+        List data  = new ArrayList();
+        data.add(guideComissiondao.getGuideCommissionInfoReport(datefrom, dateto, username,guideid));
+        return data;
     }
     
     public List getDaytourOtherReport(String refno,String status){
