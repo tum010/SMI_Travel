@@ -348,6 +348,7 @@
                 <ref local="TicketFareAirlineDao" />  
                 <ref local="PaymentAirTicketDao" />
                 <ref local="BillableDao" />   
+                <ref local="RefundAirticketDao" />   
                 
             </list>
         </constructor-arg>
@@ -370,6 +371,7 @@
     <bean id="BookingStatusServlet" class="com.smi.travel.servlet.BookingStatusServlet" />
     <bean id="TicketFareAirlineServlet" class="com.smi.travel.servlet.TicketFareAirlineServlet" />
     <bean id="PaymentAirTicketServlet" class="com.smi.travel.servlet.PaymentAirTicketServlet" />
+    <bean id="RefundAirlineServlet" class="com.smi.travel.servlet.RefundAirlineServlet" />
     <bean id="InvoiceServlet" class="com.smi.travel.servlet.InvoiceServlet" />
 	<!--<add data>-->
 	

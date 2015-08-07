@@ -269,6 +269,7 @@
     <bean id="RefundAirlineService" class="com.smi.travel.datalayer.service.RefundAirlineService">
         <property name="refundAirticketDao" ref="RefundAirticketDao" />
         <property name="ticketFareAirlineDao" ref="TicketFareAirlineDao" />
+        <property name="mRunningCodeDao" ref="MRunningCodeDao" />
     </bean>
     
     <bean id="InvoiceService" class="com.smi.travel.datalayer.service.InvoiceService">
