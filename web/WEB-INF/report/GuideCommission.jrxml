@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AirlineVolumn" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isFloatColumnFooter="true" uuid="36591689-e817-40b9-bb01-c68bf69d6b71">
 	<property name="ireport.zoom" value="1.8150000000000024"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="377"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
@@ -30,8 +30,8 @@
 	<variable name="totalselling" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{selling}]]></variableExpression>
 	</variable>
-	<group name="Guide">
-		<groupExpression><![CDATA[$F{systemdate}]]></groupExpression>
+	<group name="Guide" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{guide}]]></groupExpression>
 		<groupHeader>
 			<band height="38">
 				<rectangle>
@@ -166,15 +166,24 @@
 					<text><![CDATA[Grand Total :]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="228" y="1" width="55" height="13" uuid="374f9534-ef0e-42b1-87e5-77d49a51b873"/>
+					<reportElement x="228" y="1" width="55" height="13" uuid="d073ce8c-d4f1-4afa-aa3c-9b6b4b497adc"/>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$V{totalpax}]]></textFieldExpression>
 				</textField>
-				<textField>
-					<reportElement x="283" y="1" width="85" height="13" uuid="bf14c0d4-0b29-4729-8384-b28c949b6de0"/>
+				<textField pattern="#,##0">
+					<reportElement x="283" y="1" width="85" height="13" uuid="d2b7be8f-5b90-45f9-9180-c7c27e091aae"/>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$V{totalcommission}]]></textFieldExpression>
 				</textField>
-				<textField>
-					<reportElement x="368" y="1" width="83" height="13" uuid="f9c24808-1632-44a2-aea0-1f85ebed922a"/>
+				<textField pattern="#,##0">
+					<reportElement x="368" y="1" width="83" height="13" uuid="6cb76dd4-e779-4984-a3e6-82e2283b92f6"/>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$V{totalselling}]]></textFieldExpression>
 				</textField>
 			</band>
@@ -207,7 +216,7 @@
 				<text><![CDATA[to]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="0" width="283" height="16" uuid="a446b14a-b304-43e1-b062-958696b8b692"/>
+				<reportElement x="0" y="5" width="283" height="24" uuid="a446b14a-b304-43e1-b062-958696b8b692"/>
 				<textElement>
 					<font size="13"/>
 				</textElement>
@@ -292,14 +301,14 @@
 			<textField>
 				<reportElement x="0" y="0" width="51" height="15" uuid="a4f24270-df4f-4c7b-8df4-0ee12e6d39f9"/>
 				<textElement textAlignment="Center">
-					<font size="8"/>
+					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tourdate}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="51" y="0" width="59" height="15" uuid="df202b5f-8e73-4cb1-bbd2-82beeef93ae0"/>
 				<textElement textAlignment="Center">
-					<font size="8"/>
+					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
 			</textField>
@@ -311,14 +320,14 @@
 				<textFieldExpression><![CDATA[$F{customer}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="451" y="0" width="104" height="15" uuid="8cd94d09-c089-4221-9a08-8c316f289d05"/>
-				<textElement>
+				<reportElement x="452" y="0" width="103" height="15" uuid="8cd94d09-c089-4221-9a08-8c316f289d05"/>
+				<textElement textAlignment="Left">
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf&gt;" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{remark}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
-				<reportElement x="368" y="0" width="83" height="15" uuid="e2cb5d48-6ed1-415c-b388-f384d201cfe2"/>
+				<reportElement x="368" y="3" width="83" height="15" uuid="e2cb5d48-6ed1-415c-b388-f384d201cfe2"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
@@ -327,20 +336,20 @@
 			<textField pattern="#,##0">
 				<reportElement x="283" y="0" width="85" height="15" uuid="8ab2dc6f-0a00-428f-b17f-e989c5500bd4"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{comission}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="228" y="0" width="55" height="15" uuid="d7802a6c-ce3f-4082-9411-db9235210ddf"/>
 				<box>
-					<topPen lineWidth="0.1" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center">
-					<font size="8"/>
+					<font fontName="TH SarabunPSK" size="13" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pax}]]></textFieldExpression>
 			</textField>
