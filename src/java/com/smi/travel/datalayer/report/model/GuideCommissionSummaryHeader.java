@@ -16,8 +16,8 @@ public class GuideCommissionSummaryHeader {
     private String datefrom;
     private String dateto;
     private String guidename;
-    private Integer pax;
-    private Integer commission;
+    private int pax;
+    private int commission;
 
     public String getSystemdate() {
         return systemdate;
@@ -59,19 +59,19 @@ public class GuideCommissionSummaryHeader {
         this.guidename = guidename;
     }
 
-    public Integer getPax() {
+    public int getPax() {
         return pax;
     }
 
-    public void setPax(Integer pax) {
+    public void setPax(int pax) {
         this.pax = pax;
     }
 
-    public Integer getCommission() {
+    public int getCommission() {
         return commission;
     }
 
-    public void setCommission(Integer commission) {
+    public void setCommission(int commission) {
         this.commission = commission;
     }
 

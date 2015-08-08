@@ -19,8 +19,8 @@
         <property name="refundBy" type="string">
             <column name="refund_by" length="5" />
         </property>
-        <property name="renark" type="string">
-            <column name="renark" />
+        <property name="remark" type="string">
+            <column name="remark" />
         </property>
         <bag name="refundAirticketDetails" table="refund_airticket_detail" inverse="true" lazy="true" fetch="select">
             <key>

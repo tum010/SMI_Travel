@@ -42,8 +42,8 @@ public class GuideCommissionReportImpl implements GuideCommissionReportDao{
     @Override
     public GuideCommissionInfo getGuideCommissionInfoReport(String datefrom, String dateto, String username, String guideid) {
         GuideCommissionInfo guideCommissionInfo = new GuideCommissionInfo();
-        guideCommissionInfo.setGuideCommissionDataSource(new JRBeanCollectionDataSource(getGuideComissionReport(datefrom, dateto, username, guideid)));
         guideCommissionInfo.setGuideCommissionSummaryDataSource(new JRBeanCollectionDataSource(getGuideComissionSummaryReport(datefrom, dateto, username, guideid)));
+        guideCommissionInfo.setGuideCommissionDataSource(new JRBeanCollectionDataSource(getGuideComissionReport(datefrom, dateto, username, guideid)));
         return guideCommissionInfo;
     }
     
@@ -57,7 +57,7 @@ public class GuideCommissionReportImpl implements GuideCommissionReportDao{
         if((guideid != null)&&(!"".equalsIgnoreCase(guideid))){
             query += " and gc.guideid = "+guideid;
         }
-        query += " ORDER BY gc.tourdate , gc.tourcode";
+        query += " ORDER BY gc.guide , gc.tourdate , gc.tourcode";
         List<Object[]> QueryGuideComList = session.createSQLQuery(query)
                 .addScalar("tourdate", Hibernate.DATE)
                 .addScalar("tourcode", Hibernate.STRING)
