@@ -213,6 +213,9 @@ public class BillableImpl implements BillableDao {
         } else if (billtype.equalsIgnoreCase("6")) {
             System.out.println("update daytour");
             hql = DaytourBookingUpdate;
+        } else if (billtype.equalsIgnoreCase("7")) {
+            System.out.println("update Air ticket additional");
+            hql = AirBookingDescUpdate;
         }
         Query query = session.createQuery(hql);
         if (!billtype.equalsIgnoreCase("1")) {
