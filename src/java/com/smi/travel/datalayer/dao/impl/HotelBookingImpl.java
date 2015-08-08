@@ -34,7 +34,7 @@ public class HotelBookingImpl implements HotelBookingDao {
         Session session = this.sessionFactory.openSession();
         System.out.println("query : " + query);
         List<HotelBooking> HotelList = session.createQuery(query).list();
-
+        
         if (HotelList.isEmpty()) {
             return null;
         }
