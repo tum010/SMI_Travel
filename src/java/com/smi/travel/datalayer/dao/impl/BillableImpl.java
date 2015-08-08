@@ -38,7 +38,7 @@ public class BillableImpl implements BillableDao {
     private static final String HotelBookingUpdate = "UPDATE HotelBooking hotel set  hotel.isBill = 1 "
             + "WHERE hotel.id = :Keyid";
     private static final String AirBookingDescUpdate = "UPDATE AirticketDesc AD set  AD.isBill = 1 "
-            + "WHERE AD.airticketBooking.id =  ";
+            + "WHERE AD.airticketBooking.id = :Keyid ";
     private static final String SelectAirBookId = "FROM AirticketBooking AB where AB.master.id = :masterid )";
 //    private static final String DaytourBookingUpdate = "UPDATE DaytourBooking DB set  DB.isBill = 1 "
 //            + "WHERE DB.master.id = :masterid";
@@ -78,9 +78,9 @@ public class BillableImpl implements BillableDao {
     public int insertBillableBooking(Billable bill) {
         int result = 0;
         HashSet<String> ListBill = new HashSet<String>();
-
+        Session session = this.sessionFactory.openSession();
         try {
-            Session session = this.sessionFactory.openSession();
+            
             transaction = session.beginTransaction();
             session.save(bill);
             if (bill.getBillableDescs() != null) {
@@ -159,6 +159,9 @@ public class BillableImpl implements BillableDao {
             this.sessionFactory.close();
             result = 1;
         } catch (Exception ex) {
+            transaction.rollback();
+            session.close();
+            this.sessionFactory.close();
             ex.printStackTrace();
             result = 0;
         }
