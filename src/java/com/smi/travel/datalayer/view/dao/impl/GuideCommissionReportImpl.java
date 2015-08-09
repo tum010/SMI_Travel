@@ -102,7 +102,7 @@ public class GuideCommissionReportImpl implements GuideCommissionReportDao{
         if((guideid != null)&&(!"".equalsIgnoreCase(guideid))){
             query += " and  st.id = "+guideid;
         }
-        query += "GROUP BY  `st`.`id`";
+        query += " GROUP BY  `st`.`id`";
         query += " ORDER BY `st`.name ";
         System.out.println("query : "+ query);
         List<Object[]> QueryGuideComList = session.createSQLQuery(query)
