@@ -17,8 +17,7 @@ public class InvoiceView {
     private String InvoiceNo;
     private String Department;
     private String Type;
-    private String DateFrom;
-    private String DateTo;
+    private String InvoiceDate;
     private String Name;
     private String Address;
     private String TermPayName;
@@ -58,21 +57,15 @@ public class InvoiceView {
         this.Type = Type;
     }
 
-    public String getDateFrom() {
-        return DateFrom;
+    public String getInvoiceDate() {
+        return InvoiceDate;
     }
 
-    public void setDateFrom(String DateFrom) {
-        this.DateFrom = DateFrom;
+    public void setInvoiceDate(String InvoiceDate) {
+        this.InvoiceDate = InvoiceDate;
     }
 
-    public String getDateTo() {
-        return DateTo;
-    }
-
-    public void setDateTo(String DateTo) {
-        this.DateTo = DateTo;
-    }
+    
 
     public String getName() {
         return Name;
