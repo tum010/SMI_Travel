@@ -122,8 +122,8 @@ public class OtherBookingImpl implements OtherBookingDao{
             
             MStockStatus mstockStatus = new MStockStatus();
             mstockStatus.setId("2");
-            
-            String pickupDate = util.convertDateToString(otherbook.getCreateDate());
+            // pickupDate must use thisdate
+            String pickupDate = util.convertDateToString(new Date());
             for (int i = 0; i < stockDetailList.size(); i++){
                 StockDetail stockDetail = stockDetailList.get(i);
                 String typeName = stockDetail.getTypeId().getName();
