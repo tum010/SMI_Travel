@@ -15,8 +15,16 @@ import java.util.List;
  * @author Surachai
  */
 public interface ReceiptDao {
-    public List<HashMap<String,Object>> getInvoiceFromInvoiceNumber(String InvoiceNumber);
+    
+    public List<HashMap<String,Object>> getAirlineComFromPaymentNo(String InvoiceNumber);
     public Receipt getReceiptfromReceiptNo(String ReceiptNo);
     public String UpdateFinanceStatusReceipt(String ReceiptId,int status);
     // from Receipt rec where rec.MFinanceItemstatus.id = :status and rec.id = :ReceiptId
+    public String insertReceipt(Receipt receipt);
+    public String updateReceipt(Receipt receipt);
+    public String deleteReceipt(Receipt receipt);
+    public String DeleteReceiptDetail(String ReceiptDetailId);
+    public String DeleteReceiptBank(String ReceiptBankId);
+    public String DeleteReceiptChq(String ReceiptId);
+    
 }

@@ -18,18 +18,6 @@ import java.util.List;
  */
 public class ReceiptDaoImpl implements ReceiptDao{
 
-    @Override
-    public List<HashMap<String,Object>> getInvoiceFromInvoiceNumber(String InvoiceNumber) {
-        List<HashMap<String,Object>> List = new LinkedList<HashMap<String, Object>>();
-        HashMap<String, Object> result = new HashMap<String, Object>();
-        
-        result.put("invoiceId", null);
-        result.put("product", null);
-        result.put("Invoiceno", null);
-        result.put("description", null);
-        result.put("price", null);
-        return List;
-    }
 
     @Override
     public Receipt getReceiptfromReceiptNo(String ReceiptNo) {
@@ -39,6 +27,41 @@ public class ReceiptDaoImpl implements ReceiptDao{
 
     @Override
     public String UpdateFinanceStatusReceipt(String ReceiptNo, int status) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<HashMap<String, Object>> getAirlineComFromPaymentNo(String InvoiceNumber) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String insertReceipt(Receipt receipt) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String updateReceipt(Receipt receipt) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String deleteReceipt(Receipt receipt) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String DeleteReceiptDetail(String ReceiptDetailId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String DeleteReceiptBank(String ReceiptBankId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String DeleteReceiptChq(String ReceiptId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
