@@ -10,6 +10,7 @@ import com.smi.travel.datalayer.dao.InvoiceDao;
 import com.smi.travel.datalayer.entity.Invoice;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.view.entity.InvoiceView;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import org.hibernate.Query;
@@ -230,4 +231,19 @@ public class InvoiceImpl implements InvoiceDao{
     public InvoiceView SearchInvoiceView(String DateFrom, String DateTo, String Department, String Type) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public List<HashMap<String,Object>> getInvoiceDetailFromInvoiceNumber(String InvoiceNumber) {
+        List<HashMap<String,Object>> List = new LinkedList<HashMap<String, Object>>();
+        HashMap<String, Object> result = new HashMap<String, Object>();
+        
+        result.put("invoiceId", null);
+        result.put("product", null);
+        result.put("Invoiceno", null);
+        result.put("description", null);
+        result.put("price", null);
+        return List;
+    }
+    
+    
 }
