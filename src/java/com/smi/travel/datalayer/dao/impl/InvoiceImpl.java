@@ -237,11 +237,15 @@ public class InvoiceImpl implements InvoiceDao{
         List<HashMap<String,Object>> List = new LinkedList<HashMap<String, Object>>();
         HashMap<String, Object> result = new HashMap<String, Object>();
         
-        result.put("invoiceId", null);
+        result.put("rec_from", null);//inv_to
+        result.put("rec_name", null);//inv_name
+        result.put("rec_address", null);//inv_address
+        result.put("invoiceDetailId", null);
         result.put("product", null);
-        result.put("Invoiceno", null);
         result.put("description", null);
-        result.put("price", null);
+        result.put("amount", null);//amount
+        result.put("cur", null);//cur amount
+        List.add(result);
         return List;
     }
     
