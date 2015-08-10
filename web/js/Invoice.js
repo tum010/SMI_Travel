@@ -4,6 +4,18 @@
  * and open the template in the editor. test
  */
  $(document).ready(function () {
+    $(".money").mask('0000000000', {reverse: true});
+     
+    $(".numerical").on('input', function() { 
+        var value=$(this).val().replace(/[^0-9.,]*/g, '');
+        value=value.replace(/\.{2,}/g, '.');
+        value=value.replace(/\.,/g, ',');
+        value=value.replace(/\,\./g, ',');
+        value=value.replace(/\,{2,}/g, ',');
+        value=value.replace(/\.[0-9]+\./g, '.');
+        $(this).val(value);
+    });
+    
    // Invoice To Modal
    var showflag = 1;
     var ReceiveFromTable = $('#InvToTable').dataTable({bJQueryUI: true,
@@ -153,11 +165,7 @@
     var rowCount = $('#DetailBillableTable tr').length;
     $("#counterTable").val(rowCount);
     AddRowDetailBillAble(rowCount++);
-//    alert("R : "+rowCount);
    
-    $('#TotalNet').ready(function () {
-        CalculateGrandTotal('');
-    });
     validFromInvoice();
     
     // Invoice No Key Up
@@ -166,6 +174,7 @@
             searchInvoiceFromInvoiceNo(); 
         }
     });
+    CalculateGrandTotal('');
  }); 
  
  function searchInvoiceFromInvoiceNo(){
@@ -212,7 +221,9 @@ function validFromInvoice(){
             });     
 }
 var isDuplicateInvoiceDetail = 0;
-function AddRowDetailBillAble(row,prod,des,cos,id,price){
+var description ="";
+function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo){
+
     var selectT="";
     if(prod === undefined){
         prod = "";
@@ -226,6 +237,10 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price){
     if(id === undefined){
         id = "";
     }
+    if(RefNo === undefined ){
+        RefNo = "";
+    }
+   
     if(price === undefined){
         price = "";
     }
@@ -243,24 +258,63 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price){
         '<td class="hidden"><input type="text" class="form-control" id="detailId' + row + '" name="detailId' + row + '" value="" > </td>' +
         '<td class="hidden"><input type="text" class="form-control" id="DetailBillId' + row + '" name="DetailBillId' + row + '" value="'+id+'" > </td>' +
         '<td><select id="SelectProductType' + row + '" name="SelectProductType' + row + '" class="form-control">'+ selectT +'</select> </td>' +
-        '<td><input type="text" class="form-control" id="BillDescription' + row + '" name="BillDescription' + row + '" value="'+des +'" > </td>' +
-        '<td><input type="text" class="form-control" id="InputCost' + row + '" name="InputCost' + row + '" value="'+ cos +'" ></td>' +
+        '<td><a href="" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail('+row+')">'+ des + ' : ' + RefNo +'</a> </td>' +
+        '<td class="hidden"><input type="text" class="form-control" id="BillDescription' + row + '" name="BillDescription' + row + '" value="'+des +'" > </td>' +
+        '<td><input  maxlength ="15" type="text" onfocusout="changeFormatCostNumber(' + row + ')" class="form-control numerical" id="InputCost' + row + '" name="InputCost' + row + '" value="'+ cos +'" ></td>' +
         '<td><select id="SelectCurrencyCost' + row + '" name="SelectCurrencyCost' + row + '" class="form-control">'+ select +'</select></td>' +
         '<td>'+cos +' </td>' +
         '<td class="hidden"><input type="text" value="'+cos +'" id="InputCostLocalTemp' + row + '" name="InputCostLocalTemp' + row + '"></td>'+
         '<td><input type="checkbox"  id="checkUse' + row + '" name="checkUse' + row + '"  onclick="calculateGross('+row+')"></td>'+
         '<td>'+ defaultD +'</td>'+ 
         '<td class="hidden"><input type="text" class="form-control" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '" value="'+ defaultD +'" ></td>'+
-        '<td><input type="text" class="form-control" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>'+
-        '<td><input type="text" class="form-control" id="InputAmount' + row + '" name="InputAmount' + row + '" value="" onfocusout="CalculateGrandTotal(' + row + ')"></td>'+
+        '<td><input type="text" maxlength ="15" onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control numerical" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>'+
+        '<td><input type="text" maxlength ="15"  class="form-control numerical" id="InputAmount' + row + '" name="InputAmount' + row + '" value="" onfocusout="CalculateGrandTotal(' + row + ')"></td>'+
         '<td><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control">'+ select +'</select></td>'+
         '<td>'+price +'</td>'+
         '<td class="hidden"><input type="text" value="'+price +'" id="InputAmountLocalTemp' + row + '" name="InputAmountLocalTemp' + row + '"  ></td>'+
         '<td align="center" ><center><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('+row+',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span></center>'+
+        '<td class="hidden"><textarea id="DescriptionInvoiceDetail' + row + '" name="DescriptionInvoiceDetail' + row + '"> '+ description +'</textarea> </td>'+
         '</tr>'
     );
+    
     var count = document.getElementById('counterTable');
     count.value = row++;
+}
+
+function getDescriptionDetail(row){
+    var description = $('#DescriptionInvoiceDetail'+row).val();
+    $('#InputDescriptionDetailId').text(row);
+    $('#InputDescriptionDetail').html(description);
+}
+
+function saveDescriptionDetail(){
+    var row = $('#InputDescriptionDetailId').text();
+    $('#InputDescriptionDetail').change(function(){
+       var descriptionDetail = $('#InputDescriptionDetail').html();
+        alert(row + " : " + descriptionDetail);
+        $('#DescriptionInvoiceDetail'+row).html(descriptionDetail);
+    });
+}
+
+function changeFormatCostNumber(id){
+    var count  = parseFloat(document.getElementById('InputCost'+id).value);
+    
+    if(isNaN(count)){
+        document.getElementById('InputCost' + id).value = "";
+    }else{
+        count = parseFloat(document.getElementById('InputCost'+id).value);
+        document.getElementById('InputCost' + id).value = formatNumber(count);
+    }
+    
+}
+function changeFormatGrossNumber(id){
+    var count = parseFloat(document.getElementById('InputGross'+id).value);
+    if(isNaN(count)){
+        document.getElementById('InputGross' + id).value = "";
+    }else{
+        count = parseFloat(document.getElementById('InputGross'+id).value);
+        document.getElementById('InputGross' + id).value = formatNumber(count);
+    }
 }
 
 function DeleteDetailBill(rowID,code){
@@ -295,35 +349,39 @@ function DeleteBill() {
 }
 
 function DisableVoid(){
-    var OtherID = document.getElementById('OtherID');
-    OtherID.value = id;
-    document.getElementById('disableVoid').innerHTML = "Are you sure to delete booking other : " +  + " ?";
+    var InvNo = document.getElementById('InvNo');
+    document.getElementById('disableVoid').innerHTML = "Are you sure to delete booking other : " + InvNo.value + " ?";
 }
 
 function EnableVoid(){
-    var OtherID = document.getElementById('OtherID');
-    OtherID.value = id;
-    document.getElementById('enableVoid').innerHTML = "Are you sure to enable booking other : " + code + " ?";
+    var InvNo = document.getElementById('InvNo');
+    document.getElementById('enableVoid').innerHTML = "Are you sure to enable booking other : " + InvNo.value + " ?";
 }
 
 function Enable() {
-    $("#disableVoidButton").css("display", "block");
-    $("#saveInvoice").prop("disabled",false);
-    $('#enableVoidButton').css("display", "none");
-    $('#textAlertDisable').hide();
-//    var action = document.getElementById('action');
-//    action.value = 'enableVoid';
-//    document.getElementById('InvoiceForm').submit();
+//    $("#disableVoidButton").css("display", "block");
+//    $("#saveInvoice").prop("disabled",false);
+//    $('#enableVoidButton').css("display", "none");
+//    $('#textAlertDisable').hide();
+    var action = document.getElementById('action');
+    action.value = 'enableVoid';
+    document.getElementById('InvoiceForm').submit();
 }
 
-function Disable() {
-    $("#disableVoidButton").css("display", "none");
-    $("#saveInvoice").prop("disabled",true);
-    $('#enableVoidButton').css("display", "block");
-    $('#textAlertDisable').show();
-//    var action = document.getElementById('action');
-//    action.value = 'disableVoid';
-//    document.getElementById('InvoiceForm').submit();
+function DisableInvoice() {
+//    var roleName = $('#roleName').val();
+//    $("#disableVoidButton").css("display", "none");
+//    $("#saveInvoice").prop("disabled",true);
+//    if(roleName === 'YES'){
+//        $('#enableVoidButton').css("display", "block");
+//    }else if(roleName === 'NO'){
+//        $("#enableVoidButton").prop("disabled",true);
+//    }
+//    
+//    $('#textAlertDisable').show();
+    var action = document.getElementById('action');
+    action.value = 'disableVoid';
+    document.getElementById('InvoiceForm').submit();
 }
 
 function printInvoice(){  
@@ -547,20 +605,34 @@ function setBillableInvoice(data){
 function addInvoiceDetail(rowId){
     isDuplicateInvoiceDetail = 0;
     var countTable = $("#counter").val();
+    var RefNo = $("#SearchRefNo").val();
     var count = 1;
     $('#MasterReservation > tbody  > tr').each(function() {
         if(count === rowId){
             var id = $('#invoiceIdSearch'+rowId).val();
             var prod = $('#invoiceIdType'+rowId).val();
+            var refItemId = $('#RefItemId'+rowId).val();
             var pro = $(this).find("td").eq(3).html();
             var des = $(this).find("td").eq(4).html();
             var cos = $(this).find("td").eq(5).html();
             var price = $(this).find("td").eq(6).html(); 
             var cur = $(this).find("td").eq(7).html();
-            checkDuplicateInvoiceDetail(pro,rowId);
+            checkDuplicateInvoiceDetail(id,rowId);
             if(isDuplicateInvoiceDetail === 0){
                 $("#DetailBillableTable tr:last").remove(); 
-                AddRowDetailBillAble(countTable,prod,des,cos,id,price);
+                // Search Description
+                var servletName = 'InvoiceServlet';
+                var servicesName = 'AJAXBean';
+                var param = 'action=' + 'text' +
+                        '&servletName=' + servletName +
+                        '&servicesName=' + servicesName +
+                        '&refNo=' + refItemId +
+                        '&typeId=' + prod +
+                        '&type=' + 'searchInvoiceDescription';
+                   CallAjaxSearchDescription(param,countTable);
+                // Send Add Row
+                AddRowDetailBillAble(countTable,prod,des,cos,id,price,RefNo);
+              
             }else if (isDuplicateInvoiceDetail !== 0){
                 alert("Duplicate");
             }
@@ -574,9 +646,131 @@ function addInvoiceDetail(rowId){
     }    
 }
 
+function CallAjaxSearchDescription(param,rowId) {
+    var url = 'AJAXServlet';
+    $("#ajaxloadsearch").removeClass("hidden");
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function (msg) {
+                var strx   = msg.split('|');
+                var array  = [];
+                array = array.concat(strx);
+                if(array[1] === 'Others'){
+                    setDescriptionOther(array,rowId);
+                }else if(array[1] === 'Land'){
+                    setDescriptionLand(array,rowId);
+                }else if(array[1] === 'Hotel'){
+                    setDescriptionHotel(array,rowId);
+                }else if(array[1] === 'Day Tour'){
+                    setDescriptionDaytour(array,rowId);
+                }else if(array[1] === 'Air Ticket'){
+                    setDescriptionAirticket(array,rowId);
+                }
+                
+//                alert("DES :"+array[1]);
+                //MasterReservation Table
+                try {
+//                    alert(array[1]);
+//                    $("#DescriptionInvoiceDetail").html( msg );
+                    
+                     $("#ajaxloadsearch").addClass("hidden");
+                } catch (e) {
+                    alert(e);
+                }
+            }, error: function (msg) {
+                 $("#ajaxloadsearch").addClass("hidden");
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
+}    
+
+function setDescriptionDaytour(des,row){
+//    var strx   = des.split(',');
+    var array  = [];
+    array = des;
+    var arrayNew ="";
+    var i = 0;
+    for (i = 1 ; i <= (array.length-1) ; i++){
+        arrayNew += array[i] +",";
+    };
+//    alert(arrayNew + " R : " + row );
+    var text = "";
+//    text += "<div class='row'> <div class='col-md-2 text-right' ><b>Description</b> </div> <div class='col-md-10 text-left'><textarea class='form-control' rows='5'>";
+    text += "Ref No. "+ array[2] +" : " + array[3] + " " + array[4] + " " + array[5] + "\n";
+    text += "" + array[1] + " " + array[6] + " : " + array[7]+ "\n";
+    text += "\t(" + array[8] + " " + array[9]+ ")\n";
+//    text += "</textarea> </div> </div>";
+    $('#DescriptionInvoiceDetail'+row).html(text);
+    $("#DescriptionInvoiceDetailTextArea"+row).html(text);
+}
+function setDescriptionOther(data,row){
+     //    var strx   = des.split(',');
+    var array  = [];
+    array = data;
+    var arrayNew ="";
+    var i = 0;
+    for (i = 1 ; i <= (array.length-1) ; i++){
+        arrayNew += array[i] +",";
+    };
+    var text = "";
+//    text += "<div class='row'> <div class='col-md-2 text-right' ><b>Description</b> </div> <div class='col-md-10 text-left'><textarea class='form-control' rows='5'>";
+    text += "Ref No. "+array[2] +" : " + array[3] + " " + array[4] + " " + array[5] + "\n";
+    text += "" + array[1] + " (" + array[6] + ")  " + array[7]+ " \n";
+    text += "\t " + array[8] + " "+ array[9] +  " "+ array[10] + " \n";
+//    text += "</textarea> </div> </div>";
+    $('#DescriptionInvoiceDetail'+row).html(text);
+    $("#DescriptionInvoiceDetailTextArea"+row).html(text);
+}
+function setDescriptionLand(data,row){
+    //    var strx   = des.split(',');
+    var array  = [];
+    array = data;
+    var arrayNew ="";
+    var i = 0;
+    for (i = 1 ; i <= (array.length-1) ; i++){
+        arrayNew += array[i] +",";
+    };
+    var text = "";
+//    text += "<div class='row'> <div class='col-md-2 text-right' ><b>Description</b> </div> <div class='col-md-10 text-left'><textarea class='form-control' rows='5'>";
+    text += "Ref No. "+ array[2] +" : " + array[3] + " " + array[4] + " " + array[5] + "\n";
+    text += "" + array[1] + " (" + array[6] + ")  " + array[7]+ " NTS \n";
+    text += "\t " + array[8] + " PAX \n";
+//    text += "</textarea> </div> </div>";
+    $('#DescriptionInvoiceDetail'+row).html(text);
+    $("#DescriptionInvoiceDetailTextArea"+row).html(text);
+}
+function setDescriptionHotel(data,row){
+    //    var strx   = des.split(',');
+    var array  = [];
+    array = data;
+    var arrayNew ="";
+    var i = 0;
+    for (i = 1 ; i <= (array.length-1) ; i++){
+        arrayNew += array[i] +",";
+    };
+    var text = "";
+//    text += "<div class='row'> <div class='col-md-2 text-right' ><b>Description</b> </div> <div class='col-md-10 text-left'><textarea class='form-control' rows='5'>";
+    text += "Ref No. "+ array[2] +" : " + array[3] + " " + array[4] + " " + array[5] + "\n";
+    text += "" + array[1] + "  " + array[6] + " \n";
+    text += "\t" + array[7] + " - " + array[8]+ " \n";
+    text += "\t" + array[9] + "  " + array[10]+ "  " + array[11] + "  " + array[12] + " : "+  array[13] + "  NTS  \n";
+//    text += "</textarea> </div> </div>";
+    $('#DescriptionInvoiceDetail'+row).html(text);
+    $("#DescriptionInvoiceDetailTextArea"+row).html(text);
+}
+function setDescriptionAirticket(data,row){
+    
+}
+
 function checkDuplicateInvoiceDetail(product,rowId){
     $('#DetailBillableTable > tbody  > tr').each(function() {
-        var prod = $(this).find('input[type="text"]').eq(2).val();
+        var prod = $(this).find('input[type="text"]').eq(1).val();
 //        alert("Pro :" + $.trim(prod) + ":Product Input:" + product+":");
         if($.trim(prod) === product){
 //            alert("Product Old :" + prod + "Product New:" + product);
@@ -613,14 +807,42 @@ function calculateGross(row){
     var grossTotal = parseFloat(amount);
 
     if((gross === '')){
+//        alert("1: " + gross);
         grossTotal = (amount*100)/(100+vatDefaultData);
         document.getElementById('InputGross'+row).value = formatNumber(grossTotal);
-        document.getElementById("DetailBillableTable").rows[row].cells[9].innerHTML = vatDefaultData;
-    } else {
+        document.getElementById("DetailBillableTable").rows[row].cells[10].innerHTML = vatDefaultData;
+    }else if((gross === '0.00')){
+//        alert("3: " + gross);
+        grossTotal = (amount*100)/(100+vatDefaultData);
+        document.getElementById('InputGross'+row).value = formatNumber(grossTotal);
+        document.getElementById("DetailBillableTable").rows[row].cells[10].innerHTML = vatDefaultData;
+    }else {
+//        alert("2 : " + gross)
         document.getElementById('InputGross'+row).value = '';
-        document.getElementById("DetailBillableTable").rows[row].cells[9].innerHTML = '';
-    }
-//    CalculateGrossTotal('',row);   
+        document.getElementById("DetailBillableTable").rows[row].cells[10].innerHTML = '';
+    } 
+}
+
+function calculateGrossTemp(row){
+    var amount = document.getElementById('InputAmount'+row).value;
+    var gross = document.getElementById('InputGross'+row).value;
+    var varTemp = document.getElementById('InputVatTemp'+row).value;
+    var vatDefaultData = parseFloat(varTemp);
+
+    amount = amount.replace(/,/g,"");
+    var grossTotal = parseFloat(amount);
+
+    if((gross === '')){
+        grossTotal = (amount*100)/(100+vatDefaultData);
+        document.getElementById("DetailBillableTable").rows[row].cells[10].innerHTML = vatDefaultData;
+    }else if((gross === '0.00')){
+        grossTotal = (amount*100)/(100+vatDefaultData);
+        document.getElementById('InputGross'+row).value = formatNumber(grossTotal);
+        document.getElementById("DetailBillableTable").rows[row].cells[10].innerHTML = vatDefaultData;
+    }else {
+        document.getElementById('InputGross'+row).value = '';
+        document.getElementById("DetailBillableTable").rows[row].cells[10].innerHTML = '';
+    }  
 }
 
 function CalculateGrandTotal(id){
@@ -630,10 +852,8 @@ function CalculateGrandTotal(id){
     if((id!==null) || (id!=='') ){
         for(i=0;i<count+1;i++){
             var amount = document.getElementById("InputAmount" + i);
-
             if (amount !== null){
                 var value = amount.value;
-
                 if(value !== ''){
                     value = value.replace(/,/g,"");
                     var total = parseFloat(value);
@@ -642,9 +862,12 @@ function CalculateGrandTotal(id){
                 }
             }    
         }
+        if(id !== ''){
+            calculateGrossTemp(id);
+        }
+        
         document.getElementById('TotalNet').value = formatNumber(grandTotal);
         var bathString = toWords(formatNumber(grandTotal));
-//            alert("Thai Text :" + bathString);
         document.getElementById('TextAmount').value = bathString;
         $( ".numerical" ).on('input', function() { 
             var value=$(this).val().replace(/[^0-9.,]*/g, '');
@@ -714,11 +937,11 @@ function checkVatInvoiceAll(){
                                 grossTotal = (amount*100)/(100+vatDefaultData);
                                 document.getElementById('InputGross'+i).value = formatNumber(grossTotal);
     //                            document.getElementById('InputVat'+i).value = vatDefaultData;
-                                document.getElementById("DetailBillableTable").rows[i].cells[9].innerHTML = vatDefaultData;
+                                document.getElementById("DetailBillableTable").rows[i].cells[10].innerHTML = vatDefaultData;
                             } else {
                                 document.getElementById('InputGross'+i).value = '';
     //                            document.getElementById('InputVat'+i).value = '';
-                                document.getElementById("DetailBillableTable").rows[i].cells[9].innerHTML = '';
+                                document.getElementById("DetailBillableTable").rows[i].cells[10].innerHTML = '';
                             }
                         }
                     }    
@@ -733,7 +956,7 @@ function checkVatInvoiceAll(){
             if(isVatCheck !== null && isVatCheck !== ''){
                 document.getElementById("checkUse"+i).checked = false;
 //                document.getElementById("InputVat"+i).value = '';
-                document.getElementById("DetailBillableTable").rows[i].cells[9].innerHTML = "";
+                document.getElementById("DetailBillableTable").rows[i].cells[10].innerHTML = "";
                 document.getElementById("InputGross"+i).value = '';
             }   
         }
@@ -765,11 +988,11 @@ function checkVatInvoiceAll(){
                             grossTotal = (amount*100)/(100+vatDefaultData);
                             document.getElementById('InputGross'+i).value = formatNumber(grossTotal);
 //                            document.getElementById('InputVat'+i).value = vatDefaultData;
-                            document.getElementById("DetailBillableTable").rows[i].cells[9].innerHTML = vatDefaultData;
+                            document.getElementById("DetailBillableTable").rows[i].cells[10].innerHTML = vatDefaultData;
                         } else {
                             document.getElementById('InputGross'+i).value = '';
 //                            document.getElementById('InputVat'+i).value = '';
-                            document.getElementById("DetailBillableTable").rows[i].cells[9].innerHTML = '';
+                            document.getElementById("DetailBillableTable").rows[i].cells[10].innerHTML = '';
                         }
                     }
                 }    
@@ -783,7 +1006,7 @@ function checkVatInvoiceAll(){
             if(isVatCheck !== null && isVatCheck !== ''){
                 document.getElementById("checkUse"+i).checked = false;
 //                document.getElementById("InputVat"+i).value = '';
-                document.getElementById("DetailBillableTable").rows[i].cells[9].innerHTML = '';
+                document.getElementById("DetailBillableTable").rows[i].cells[10].innerHTML = '';
                 document.getElementById("InputGross"+i).value = '';
             }   
         }
@@ -813,11 +1036,11 @@ function checkVatInvoiceAll(){
                             grossTotal = (amount*100)/(100+vatDefaultData);
                             document.getElementById('InputGross'+i).value = formatNumber(grossTotal);
 //                            document.getElementById('InputVat'+i).value = vatDefaultData;
-                            document.getElementById("DetailBillableTable").rows[i].cells[9].innerHTML = vatDefaultData;
+                            document.getElementById("DetailBillableTable").rows[i].cells[10].innerHTML = vatDefaultData;
                         } else {
                             document.getElementById('InputGross'+i).value = '';
 //                            document.getElementById('InputVat'+i).value = '';
-                            document.getElementById("DetailBillableTable").rows[i].cells[9].innerHTML = vatDefaultData;
+                            document.getElementById("DetailBillableTable").rows[i].cells[10].innerHTML = vatDefaultData;
                         }
                     }
                 }    
