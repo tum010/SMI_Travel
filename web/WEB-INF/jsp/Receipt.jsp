@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript" src="js/Receipt.js"></script> 
+<!--<script type="text/javascript" src="js/Receipt.js"></script>--> 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -8,7 +8,14 @@
 <c:set var="Type" value="${requestScope['typeInvoice']}" />
 <input type="hidden" id="Type" name="Type" value="${param.Type}">
 <c:set var="customerAgentList" value="${requestScope['customerAgent']}" />
+<c:set var="productListTable" value="${requestScope['Product_List']}" />
+<c:set var="billTypeList" value="${requestScope['billTypeList']}" /> 
+<c:set var="currencyList" value="${requestScope['currencyList']}" />
+<c:set var="creditBankList" value="${requestScope['creditBankList']}" />
+<c:set var="statusList" value="${requestScope['statusList']}" />
 
+
+<%--<c:set var="vat" value="${requestScope['vat']}" />--%>
 <section class="content-header" >
     <h1>
         Finance & Cashier - Receipt
@@ -30,11 +37,17 @@
             <div class="row" style="padding-left: 15px">  
                 <div class="col-sm-6 " style="padding-right: 15px">
                     <c:choose>
+                        <c:when test="${fn:contains(Type , 'wendytemp')}">
+                            <h4><b>Receipt Temp Wendy</b></h4>
+                        </c:when>
+                        <c:when test="${fn:contains(Type , 'wendyvat')}">
+                            <h4><b>Receipt Vat Wendy</b></h4>
+                        </c:when>    
                         <c:when test="${fn:contains(Type , 'outtemp')}">
-                            <h4><b>Receipt Temp Wendy/Outbound</b></h4>
+                            <h4><b>Receipt Temp Outbound</b></h4>
                         </c:when>
                         <c:when test="${fn:contains(Type , 'outvat')}">
-                            <h4><b>Receipt Vat Wendy/Outbound</b></h4>
+                            <h4><b>Receipt Vat Outbound</b></h4>
                         </c:when>    
                         <c:when test="${fn:contains(Type , 'intemp')}">
                             <h4><b>Receipt Temp Inbound</b></h4>
@@ -225,114 +238,97 @@
                     
                     <div class="panel panel-default">
                         <div class="panel-body"  style="padding-right: 0px;">
-                            <div class="col-xs-8 form-group" style="padding-top: 0px;">
-                                <div class="row">
-                                    <div class="col-xs-1 text-right" style="width: 140px">
-                                        <label class="control-label text-right">Receive No </label>                                    
-                                    </div>
-                                    <div class="col-xs-1 form-group" style="width: 140px">
-                                        <input id="receiveNo" name="receiveNo" type="text" class="form-control" value="">
-                                    </div>
-                                    <div class="col-xs-1 text-left" style="width: 200px">
-                                        <label class="control-label">
-                                            <input type="checkbox" id="groupCheck" name="groupCheck"/>&nbsp;Group Yes/No&nbsp;  
-                                        </label>
-                                        <input type="hidden" id="groupCheckbox" value=""/>
-                                    </div>
-                                    <div class="col-xs-1 text-left" style="width: 70px">
-                                        <label class="control-label text-right">Date </label>
-                                    </div>
-                                    <div class="col-xs-1 form-group" style="width: 170px">
-                                        <div class='input-group date'>
-                                            <input id="inputDate" name="inputDate"  type="text" 
-                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
-                                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                                        </div>
+                            <div class="col-xs-8" style="padding-top: 0px;">
+                                <div class="col-xs-1 text-right" style="width: 135px">
+                                    <label class="control-label text-right">Receive No </label>                                    
+                                </div>
+                                <div class="col-xs-1" style="width: 180px" id='receivenumber'>
+                                    <input id="receiveId" name="receiveId" type="hidden" class="form-control" maxlength="11" value="">
+                                    <input id="receiveNo" name="receiveNo" type="text" style="width: 180px" class="form-control" maxlength="20" value="">
+                                </div>
+                                <div class="col-xs-1 text-right" style="width:10px"></div>
+                                <div class="col-xs-1 text-right" style="width: 80px">
+                                    <button style="height:34px" type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="searchReceiveNo();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
+                                </div>
+                                <div class="col-xs-1 text-right" style="width:10px"></div>
+                                <div class="col-xs-1 text-left" style="width: 70px">
+                                    <label class="control-label text-right">Date </label>
+                                </div>
+                                <div class="col-xs-1 form-group" style="width: 170px">
+                                    <div class='input-group date'>
+                                        <input id="inputDate" name="inputDate"  type="text" 
+                                           class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-xs-1 text-right" style="width: 140px">
-                                        <label class="control-label text-right" for="codeBillto">Receive From <font style="color: red">*</font></label> 
-                                    </div>
-                                    <div class="col-xs-1 text-right" style="width: 580px">
-                                        <div class="input-group" id="receiveFromValidate">
-                                            <input type="hidden" class="form-control" id="receiveFromId" name="receiveFromId" value="">                           
-                                            <input type="text" id="receiveFromCode"  name="receiveFromCode"                                              class="form-control" value="" 
-                                               data-bv-notempty="true" data-bv-notempty-message="Receive From is required" > 
-                                            <span class="input-group-addon" id="receive_modal"  data-toggle="modal" data-target="#ReceiveFromModal">
-                                            <i id="dataload" class="fa fa-spinner fa-spin hidden"></i>
+                                <div class="col-xs-1 text-right" style="width: 135px">
+                                    <label class="control-label text-right" for="codeBillto">Receive From <font style="color: red">*</font></label> 
+                                </div>
+                                <div class="form-group col-xs-1 text-right" style="width: 560px">
+                                    <div class="input-group">
+                                        <input type="hidden" class="form-control" id="receiveFromId" name="receiveFromId" value="${SelectedReceive.id}"/>
+                                        <input type="text" class="form-control" id="receiveFromCode" name="receiveFromCode" maxlength="11" value="${SelectedReceive.code}" style="text-transform:uppercase"/>
+                                        <span class="input-group-addon" id="receive_modal"  data-toggle="modal" data-target="#ReceiveFromModal">
                                             <span class="glyphicon-search glyphicon"></span>
-                                            </span>
-                                        </div>
+                                        </span>
                                     </div>
-                                </div>  
-                                <div class="row" style="padding-top: 16px;">
-                                    <div class="col-xs-1 text-right" style="width: 140px">
-                                         <label class="control-label text-right">Name </label> 
-                                    </div>
-                                    <div class="col-xs-1 text-right" style="width: 580px">
-                                        <input type="text" class="form-control" id="receiveFromName" name="receiveFromName" value="${Selected.name}">                           
-                                    </div>
-                                </div>  
-                                <div class="row" style="padding-top: 16px;">
-                                    <div class="col-xs-1 text-right" style="width: 140px">
-                                         <label class="control-label text-right">Address </label> 
-                                    </div>
-                                    <div class="col-xs-1 text-right" style="width: 580px">
-                                        <div class="input-group">                                    
-                                            <textarea rows="3" class="form-control" id="receiveFromAddress" name="receiveFromAddress" style="width: 339%"></textarea>  
-                                        </div>                               
-                                    </div>
-                                </div>  
-                                <div class="row" style="padding-top: 16px;">
-                                    <div class="col-xs-1 text-right" style="width: 140px">
-                                         <label class="control-label text-right">Remark </label> 
-                                    </div>
-                                    <div class="col-xs-1 text-right" style="width: 580px">
-                                        <input type="text" class="form-control" id="remark" name="remark" value="">                           
-                                    </div>
-                                </div>  
+                                </div>
+                                <div class="col-xs-1 text-right" style="width: 135px">
+                                     <label class="control-label text-right">Name </label> 
+                                </div>
+                                <div class="form-group col-xs-1 text-right" style="width: 560px">
+                                    <input type="text" class="form-control" id="receiveFromName" name="receiveFromName" value="${SelectedReceive.name}">                           
+                                </div>
+                                <div class="col-xs-1 text-right" style="width: 135px">
+                                     <label class="control-label text-right">Address </label> 
+                                </div>
+                                <div class="form-group col-xs-1 text-right" style="width: 560px">
+                                    <div class="input-group">                                    
+                                        <textarea rows="3" class="form-control" id="receiveFromAddress" name="receiveFromAddress" style="width: 327%"></textarea>  
+                                    </div>                               
+                                </div>
+                                <div class="col-xs-1 text-right" style="width: 135px">
+                                     <label class="control-label text-right">Remark </label> 
+                                </div>
+                                <div class="form-group col-xs-1 text-right" style="width: 560px">
+                                    <input type="text" class="form-control" id="remark" name="remark" value="">                           
+                                </div>
                             </div>
-                            <div class="col-xs-4 form-group" style="padding-top: 0px;">
-                                <div class="row">
-                                    <div class="col-xs-1 text-right" style="width: 130px">
-                                        <label class="control-label text-right">Receive Date </label>
-                                    </div>
-                                    <div class="col-xs-1 form-group" style="width: 170px">
-                                        <div class='input-group date'>
-                                            <input id="inputReceiveDate" name="inputReceiveDate"  type="text" 
-                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
-                                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                                        </div>  
+                            <div class="col-xs-4" style="padding-top: 0px;">
+                                <div class="col-xs-1 text-right" style="width: 130px">
+                                    <label class="control-label text-right">Receive Date </label>
+                                </div>
+                                <div class="col-xs-1 form-group" style="width: 170px">
+                                    <div class='input-group date'>
+                                        <input id="receiveFromDate" name="receiveFromDate"  type="text" 
+                                           class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>  
+                                </div>
+                                <div class="col-xs-1 text-right" style="width: 130px">
+                                    <label class="control-label text-right">Status </label>
+                                </div>
+                                <div class="form-group col-xs-1" style="width: 170px">
+                                    <select name="inputStatus" id="inputStatus" class="form-control">
+                                        <option value="">--- Status ---</option> 
+                                        <c:forEach var="table" items="${statusList}" >
+                                            <c:set var="select" value="" />
+                                            <c:set var="selectedId" value="${requestScope['ItemStatus']}" />
+                                            <c:if test="${table.id == selectedId}">
+                                                <c:set var="select" value="selected" />
+                                            </c:if>
+                                            <option value="${table.id}" ${select}>${table.name}</option>  
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <div class="col-xs-1 text-right" style="width: 130px">
+                                    <label class="control-label text-right">A/R Code <font style="color: red">*</font></label>                                    
+                                </div>
+                                <div class="form-group col-xs-1" style="width: 170px">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="arCode" name="arCode" maxlength="11" value="${SelectedReceive.arCode}" readonly="" />
                                     </div>
                                 </div>
-                                
-                                <div class="row">
-                                    <div class="col-xs-1 text-right" style="width: 130px">
-                                        <label class="control-label text-right">Status </label>
-                                    </div>
-                                    <div class="col-xs-1" style="width: 170px">
-                                        <select id="inputStatus" name="inputStatus" class="form-control selectize">
-                                            <option value="">---Status---</option>
-
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row" style="padding-top: 15px;">
-                                    <div class="col-xs-1 text-right" style="width: 130px">
-                                        <label class="control-label text-right">A/R Code </label>                                    
-                                    </div>
-                                    <div class="col-xs-1" style="width: 170px">
-                                        <div class="input-group" id="arCodeValidate">
-                                            <input type="text" class="form-control" id="arCode" name="arCode" value="${Selected.code}" />
-                                            <span class="input-group-addon" id="arcode_modal"  data-toggle="modal" data-target="#ARCodeModal">
-                                                <span class="glyphicon-search glyphicon"></span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                            
                             </div>
                         </div>
                         
@@ -341,37 +337,71 @@
                             <div class="col-md-12 ">
                                 <table id="ReceiptListTable" class="display" cellspacing="0" width="100%">
                                     <thead>
-                                        <tr class="datatable-header" >
-                                            <th style="width:5%;"></th>
+                                        <tr class="datatable-header">
+                                            <th style="width:5%;">Product</th>
                                             <th style="width:7%;">Description</th>
-                                            <th style="width:7%;">T/C</th>
-                                            <th style="width:10%;">Cost</th>
+                                            <th style="width:7%;">Is Vat</th>
                                             <th style="width:10%;">Vat</th>
+                                            <th style="width:10%;">Gross</th>
                                             <th style="width:10%;">Amount</th>
-                                            <th style="width:7%;">Total Amount</th>
-                                            <th style="width:7%;">Remarks</th>
+                                            <th style="width:7%;">Cur</th>
                                             <th style="width:5%;">Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><center>111111</center></td>
-                                            <td><center>222222</center></td>
-                                            <td><center>333333</center></td>
-                                            <td><center>444444</center></td>
-                                            <td><center>555555</center></td>
-                                            <td><center>666666</center></td>
-                                            <td><center>777777</center></td>
-                                            <td><center>888888</center></td>
-                                            <td>
-                                                <center>
-                                                    <span id="removeSpan${dataStatus.count}" class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteAir('${table.id}', '${table.code}')" data-toggle="modal" data-target="#delReceiptModal"></span>
-                                                </center>
-                                            </td>
-                                        </tr>
+                                    <tbody> 
+                                        <%--<c:forEach var="table" items="${productListTable}" varStatus="dataStatus">--%>
+<!--                                            <tr>
+                                                <input type="hidden" name="count${dataStatus.count}" id="count${dataStatus.count}" value="${dataStatus.count}">
+                                                <input type="hidden" name="tableId${dataStatus.count}" id="tableId${dataStatus.count}" value="${table.id}">
+                                                <td align="center"> <c:out value="${table.referenceNo}" /></td>
+                                                <td align="left"> <c:out value="${table.ticketNo}" /></td>
+                                                <td align="left"> <c:out value="${table.department}" /></td>
+                                                <td class="money">${table.fare}</td>
+                                                <td class="money">${table.tax}</td>
+                                                <td class="money">${table.ticketIns}</td>
+                                                <td class="money">${table.ticketCommission}</td>
+                                                <td class="money">${table.salePrice}</td>
+                                                <td> 
+                                                    <center> 
+                                                        <a class="remCF"><span id="SpanRemove${dataStatus.count}" onclick="DeleteAir('${table.id}','${table.ticketNo}','${dataStatus.count}');" class="glyphicon glyphicon-remove deleteicon " data-toggle="modal" data-target="#delReceiptModal"></span></a>
+                                                    </center>
+                                                    <input type="hidden" name="deleteTicketNo" id="deleteTicketNo">
+                                                    <input type="hidden" name="deleteTicketId" id="deleteTicketId">
+                                                    <input type="hidden" name="deleteTicketCount" id="deleteTicketCount">
+                                                </td>                                    
+                                            </tr>-->
+                                        <%--</c:forEach>--%>
                                     </tbody>
                                 </table>      
                             </div>
+                        </div> 
+                        <input type="hidden" class="form-control" id="countRowCredit" name="countRowCredit" value="${requestScope['productRowCount']}" />
+                        <input type="hidden" class="form-control" id="counter" name="counter" value="${requestScope['productRowCount']}" />
+                        <input type="hidden" name="vatValue" id="vatValue" value="${requestScope['vat']}">
+                        <select class="hidden" name="billTypeList" id="billTypeList">
+                            <c:forEach var="product" items="${billTypeList}" varStatus="status">                                
+                                <option  value="${product.id}">${product.name}</option>
+                            </c:forEach>
+                        </select>
+                        <select class="hidden" name="currencyList" id="currencyList">
+                            <c:forEach var="cur" items="${currencyList}" varStatus="status">                                
+                                <option  value="${cur.id}">${cur.code}</option>
+                            </c:forEach>
+                        </select>
+                        <select class="hidden" name="creditBankList" id="creditBankList">
+                            <c:forEach var="bank" items="${creditBankList}" varStatus="status">                                
+                                <option  value="${bank.id}">${bank.name}</option>
+                            </c:forEach>
+                        </select>
+                        <div id="tr_ProductDetailAddRow" class="text-center hide" style="padding-top: 10px">
+                            <a class="btn btn-success" onclick="AddRowProduct()">
+                                <i class="glyphicon glyphicon-plus"></i> Add
+                            </a>
+                        </div>
+                        <div id="tr_CreditDetailAddRow" class="text-center hide" style="padding-top: 10px">
+                            <a class="btn btn-success" onclick="AddRowCredit()">
+                                <i class="glyphicon glyphicon-plus"></i> Add
+                            </a>
                         </div>
                         <div class="row" style="padding-top: 15px;padding-bottom:  15px; padding-left:  650px;">
                             <div class="col-xs-1 text-right" style="width: 130px">
@@ -487,107 +517,58 @@
                                     </div>
                                 </div>
                                 <hr/>
-                                <div class="row">
-                                    <div class="col-xs-1 text-right" style="width: 140px">
-                                        <label class="control-label text-right">Credit Bank </label>                                    
-                                    </div>
-                                    <div class="col-xs-1" style="width: 130px">
-                                        <select style="width: 130px" id="creditBank" name="creditBank" class="form-control selectize">
-                                                    <option value=""> Credit Bank </option>
-                                        </select>
-                                    </div>
-                                    <div class="col-xs-1 text-right" style="width: 110px">
-                                        <label class="control-label text-right">Credit No </label>                                    
-                                    </div>
-                                    <div class="col-xs-1" style="width: 120px">
-                                        <input style="width: 115px" id="creditNo" name="creditNo" type="text" class="form-control" value="">
-                                    </div>
-                                    <div class="col-xs-1 text-right" style="width: 130px">
-                                        <label class="control-label text-right">Credit Expire </label>                                    
-                                    </div>
-                                    <div class="col-xs-1" style="width: 170px">
-                                        <div class='input-group date'>
-                                            <input id="creditExpire" name="creditExpire"  type="text" 
-                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
-                                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-1 text-right" style="width: 100px">
-                                        <label class="control-label text-right">Amount </label>                                    
-                                    </div>
-                                    <div class="col-xs-1" style="width: 120px">
-                                        <input id="creditAmount" name="creditAmount" type="text" class="form-control" value="">
-                                    </div>
-                                    <div class="col-xs-1 text-left" style="width: 50px ;">
-                                        <h4><a class="col-xs-1">
-                                        <span class="glyphicon glyphicon-plus-sign" id="addCreditButton"></span>
-                                        </a></h4>                                        
-                                    </div>
-                                </div>
-                                <div class="row hidden active" id="addCredit" style="padding-top: 8px ">
-                                    <div class="col-xs-1 text-right" style="width: 140px">
-                                        <label class="control-label text-right">Credit Bank </label>                                    
-                                    </div>
-                                    <div class="col-xs-1" style="width: 130px">
-                                        <select style="width: 130px" id="creditBank2" name="creditBank2" class="form-control selectize">
-                                                    <option value=""> Credit Bank </option>
-                                        </select>
-                                    </div>
-                                    <div class="col-xs-1 text-right" style="width: 110px">
-                                        <label class="control-label text-right">Credit No </label>                                    
-                                    </div>
-                                    <div class="col-xs-1" style="width: 120px">
-                                        <input style="width: 115px" id="creditNo2" name="creditNo2" type="text" class="form-control" value="">
-                                    </div>
-                                    <div class="col-xs-1 text-right" style="width: 130px">
-                                        <label class="control-label text-right">Credit Expire </label>                                    
-                                    </div>
-                                    <div class="col-xs-1" style="width: 170px">
-                                        <div class='input-group date'>
-                                            <input id="creditExpire2" name="creditExpire2"  type="text" 
-                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
-                                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-1 text-right" style="width: 100px">
-                                        <label class="control-label text-right">Amount </label>                                    
-                                    </div>
-                                    <div class="col-xs-1" style="width: 120px">
-                                        <input id="creditAmount2" name="creditAmount2" type="text" class="form-control" value="">
-                                    </div>
-                                    <div class="col-xs-1" style="width: 50px ;">
-                                        <h4><a class="col-xs-1">
-                                        <span class="glyphicon glyphicon-remove deleteicon" id="deleteCreditButton"></span>
-                                        </a></h4>                                        
-                                    </div>
-                                </div>
+                                <!----- Credit Detail ----->
+            
+                                <table class="display" id="CreditDetailTable">
+                                    <thead class="datatable-header">
+                                        <tr>
+                                            <th style="width:22%;">Bank</th>
+                                            <th style="width:22%;">No</th>
+                                            <th style="width:22%;">Expired</th>
+                                            <th style="width:22%;">Amount</th>
+                                            <th style="width:20%;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                          
                             </div>
                         </div>
                     </div>
                     <div class="panel panel-default">
                         <div class="panel-body"  style="padding-right: 0px;">
-                            <div class="col-xs-12 form-group">
-                                <div class="col-md-1 text-left" style="width: 150px">
-                                    <button type="button" class="btn btn-default">
-                                        <span id="buttonPrintReceipt" class="glyphicon glyphicon-print"></span> Print Receipt
-                                    </button>
+                            <div class="col-xs-12">
+                                <div class="col-md-1 text-left" style="width: 200px" >
+                                    <select name="selectPrint" id="selectPrint" class="form-control" style="height:34px">
+                                        <option value="">--- Select Print ---</option> 
+                                         <c:choose>
+                                            <c:when test="${requestScope['SelectPrint'] == 'C'}">
+                                                <c:set var="selectedC" value="selected" />
+                                            </c:when>
+                                        </c:choose>
+                                        <option value="1" ${selected1}>Receipt</option>
+                                        <c:choose>
+                                            <c:when test="${requestScope['SelectPrint'] == 'O'}">
+                                                <c:set var="selected2" value="selected" />
+                                            </c:when>
+                                        </c:choose>
+                                        <option value="2" ${selected2}>Receipt Email</option>
+                                        <c:choose>
+                                            <c:when test="${requestScope['SelectPrint'] == '3'}">
+                                                <c:set var="selected3" value="selected" />
+                                            </c:when>
+                                        </c:choose>
+                                        <option value="3" ${selected3}>Invoice</option>
+                                    </select>
                                 </div>
                                 <div class="col-md-1 text-left " style="width: 150px">
-                                    <button type="button" class="btn btn-default">
-                                        <span id="buttonPrintInvoice" class="glyphicon glyphicon-print"></span> Print Invoice
+                                    <button type="button" class="btn btn-default" onclick="print('')">
+                                        <span id="buttonPrint" class="glyphicon glyphicon-print" ></span> Print 
                                     </button>
                                 </div>
-                                <div class="col-md-1 text-left " style="width: 150px">
-                                    <button type="button" class="btn btn-default" onclick="printReceiptNew('')">
-                                        <span id="buttonPrintReceiptNew" class="glyphicon glyphicon-print"></span> Print Receipt New
-                                    </button>
-                                </div>
-                                <div class="col-md-2 text-right "></div>
-                                <div class="col-md-1 text-right " style="width: 100px">
-                                    <button type="button" class="btn btn-default" onclick="printReceipt('')">
-                                        <span id="buttonPrint" class="glyphicon glyphicon-print"></span> Print 
-                                    </button>
-                                </div>
+                                <div class="col-md-4 text-right " style="width: 400px"></div>
                                 <div class="col-md-1 text-right " style="width: 100px">
                                     <button type="button" class="btn btn-primary hidden" onclick="EnableVoid();" data-toggle="modal" data-target="#EnableVoid">
                                         <span id="buttonEnableVoid" class="glyphicon glyphicon-ok" ></span> Void
@@ -602,7 +583,7 @@
                                     </button>
                                 </div>
                                 <div class="col-md-1 text-right " style="width: 100px">
-                                    <button type="button" onclick="" class="btn btn-success">
+                                    <button type="button" onclick="clearNew();" class="btn btn-success">
                                         <span id="buttonNew" class="fa fa-plus-circle"></span> New 
                                     </button>
                                 </div>
@@ -661,6 +642,7 @@
                             "bLengthChange": false,
                             "iDisplayLength": 10
                         });
+                        
                         $('#ReceiveFromTable tbody').on('click', 'tr', function () {
                             $('.collapse').collapse('show');
                             if ($(this).hasClass('row_selected')) {
@@ -680,8 +662,8 @@
                                 searchCustomerAgentList($("#searchReceiveFrom").val());
                             }
                         });
-                        
-                        //autocomplete
+
+//                        autocomplete
                         $("#receiveFromCode").keyup(function(event){   
                             var position = $(this).offset();
                             $(".ui-widget").css("top", position.top + 30);
@@ -689,33 +671,39 @@
                             if($(this).val() === ""){
                                 $("#receiveFromName").val("");
                                 $("#receiveFromAddress").val("");
+                                $("#arCode").val("");
                             }else{
-                                if(event.keyCode === 13){
+//                                if(event.keyCode === 13){
                                     searchCustomerAutoList(this.value); 
-                                }
+//                                }
                             }
+                            $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
+                            $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
                         });
                         $("#receiveFromCode").keydown(function(){
-
-                                var position = $(this).offset();
-                                $(".ui-widget").css("top", position.top + 30);
-                                $(".ui-widget").css("left", position.left); 
-                                if(showflag == 0){
-                                    $(".ui-widget").css("top", -1000);
-                                    showflag=1;
-                                }
-
+                            var position = $(this).offset();
+                            $(".ui-widget").css("top", position.top + 30);
+                            $(".ui-widget").css("left", position.left); 
+                            if(showflag == 0){
+                                $(".ui-widget").css("top", -1000);
+                                showflag=1;
+                            }
+                            $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
+                            $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
                         });
                     });
                     
                     function setBillValue(billto, billname, address, term, pay) {
                         $("#receiveFromCode").val(billto);
+                        $("#arCode").val(billto);
                         $("#receiveFromName").val(billname);
                         if (address == 'null') {
                             $("#receiveFromAddress").val("");
                         } else {
                             $("#receiveFromAddress").val(address);
                         }
+                        $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
+                        $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
                         $("#ReceiveFromModal").modal('hide');
                     }
                     
@@ -732,7 +720,6 @@
 
                     function CallAjax(param) {
                         var url = 'AJAXServlet';
-
                         $("#ajaxload").removeClass("hidden");
                         try {
                             $.ajax({
@@ -794,8 +781,7 @@
                                 beforeSend: function() {
                                    $("#dataload").removeClass("hidden");    
                                 },
-                                success: function(msg) {     
-                                 //   console.log("getAutoListBillto =="+msg);
+                                success: function(msg) {
                                     var billJson =  JSON.parse(msg);
                                     for (var i in billJson){
                                         if (billJson.hasOwnProperty(i)){
@@ -813,18 +799,24 @@
                                     $("#receiveFromId").val(billid);
                                     $("#receiveFromName").val(billname);
                                     $("#receiveFromAddress").val(billaddr);
-
-
+                                    
+                                    $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
+                                    $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
+                                    
                                     $("#receiveFromCode").autocomplete({
                                         source: billArray,
                                         close: function(){
-                                             $("#receiveFromCode").trigger("keyup");
-                                             var billselect = $("#receiveFromCode").val();
+                                            $("#receiveFromCode").trigger("keyup");
+                                            var billselect = $("#receiveFromCode").val();
                                             for(var i =0;i<billListId.length;i++){
                                                 if((billselect==billListName[i])||(billselect==billListId[i])){      
                                                     $("#receiveFromCode").val(billListId[i]);
+                                                    $("#arCode").val(billListId[i]);
                                                     $("#receiveFromName").val(billListName[i]);
                                                     $("#receiveFromAddress").val(billListAddress[i]);
+                                                    
+                                                    $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
+                                                    $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
                                                 }                 
                                             }   
                                         }
@@ -834,11 +826,17 @@
                                     for(var i =0;i<billListId.length;i++){
                                         if(billval==billListName[i]){
                                             $("#receiveFromCode").val(billListId[i]);
+                                            $("#arCode").val(billListId[i]);
+                                            $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
+                                            $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
                                         }
                                     }
                                     if(billListId.length == 1){
                                         showflag = 0;
                                         $("#receiveFromCode").val(billListId[0]);
+                                        $("#arCode").val(billListId[0]);
+                                        $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
+                                        $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
                                     }
                                     var event = jQuery.Event('keydown');
                                     event.keyCode = 40;
@@ -956,29 +954,33 @@
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
         $("#bl,#com").removeClass('hidden');
-        
-//        $('#ReceiptForm').bootstrapValidator({
-//            container: 'tooltip',
-//            excluded: [':disabled'],
-//            feedbackIcons: {
-//                valid: 'uk-icon-check',
-//                invalid: 'uk-icon-times',
-//                validating: 'uk-icon-refresh'
-//            },
-//            fields: {
-//                receiveFromCode: {
-//                    validators: {
-//                        notEmpty: {
-//                            message: 'The Code is required'
-//                        }
-//                    }
-//                }       
-//            }
-//        }).on('success.field.bv', function (e, data) {
-//            if (data.bv.isValid()) {
-//                data.bv.disableSubmitButtons(false);
-//            }
-//        });
+        $('.datemask').mask('0000-00-00');
+        $('.date').datetimepicker();
+        $('#ReceiptForm').bootstrapValidator({
+            container: 'tooltip',
+            excluded: [':disabled'],
+            feedbackIcons: {
+                valid: 'uk-icon-check',
+                invalid: 'uk-icon-times',
+                validating: 'uk-icon-refresh'
+            },
+            fields: {
+                receiveFromCode: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The Receive From Code is required'
+                        }
+                    }
+                },
+                arCode: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The A/R Code is required'
+                        }
+                    }
+                }
+            }
+        });
             
         $('#addChqButton').on('click', function() {
             $("#addChq").removeClass('hidden');
@@ -1026,8 +1028,143 @@
             "iDisplayLength": 10
         });
 
+        $( ".numerical" ).on('input', function() { 
+            var value=$(this).val().replace(/[^0-9.,]*/g, '');
+            value=value.replace(/\.{2,}/g, '.');
+            value=value.replace(/\.,/g, ',');
+            value=value.replace(/\,\./g, ',');
+            value=value.replace(/\,{2,}/g, ',');
+            value=value.replace(/\.[0-9]+\./g, '.');
+            $(this).val(value)
+        });
+        
+        // +++++++++++++++++++++ Product Table +++++++++++++++++++++ //
+        AddRowProduct(parseInt($("#counter").val()));
+        
+        $('#ReceiptListTable tbody tr:last td .input-group-addon').click(function() {  
+            AddRowProduct(parseInt($("#counter").val()));
+        });
+        
+        $("#ReceiptListTable").on("keyup", function() {
+            var rowAll = $("#ReceiptListTable tr").length;
+            $("td").keyup(function() {
+                if ($(this).find("input").val() != '') {
+                    var colIndex = $(this).parent().children().index($(this));
+                    var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
+                    rowAll = $("#ReceiptListTable tr").length;
+                    //console.log('Row: ' + rowIndex + ', Column: ' + colIndex + ', All Row ' + rowAll);
+                    if (rowIndex == rowAll) {
+                        AddRowProduct(parseInt($("#counter").val()));
+                    }
+                    if (rowAll < 2) {
+                        $("#tr_ProductDetailAddRow").removeClass("hide");
+                        $("#tr_ProductDetailAddRow").addClass("show");
+                    }
+                 }
+            });
+        });
+        $("#ReceiptListTable").on("change", "select:last", function () {
+            var row = parseInt($("#counter").val());
+            AddRowProduct(row);
+        });
+        $("#ReceiptListTable").on('click', '.newRemCF', function () {
+            $(this).parent().parent().remove();
+                var rowAll = $("#ReceiptListTable tr").length;
+                if (rowAll < 2) {
+                    $("#tr_ProductDetailAddRow").removeClass("hide");
+                    $("#tr_ProductDetailAddRow").addClass("show");
+            }
+        });
+        $("#tr_ProductDetailAddRow a").click(function () {
+            $(this).parent().removeClass("show");
+            $(this).parent().addClass("hide");
+        });
+        
+        // +++++++++++++++++++++ Credit Detail Table +++++++++++++++++++++ //
+        AddRowCredit(parseInt($("#countRowCredit").val()));
+//        $('#CreditDetailTable tbody tr:last td .input-group-addon').click(function() {  
+//            AddRowCredit(parseInt($("#countRowCredit").val()));
+//        });
+        $("#CreditDetailTable").on("keyup", function() {
+            var rowAll = $("#CreditDetailTable tr").length;
+            $("td").keyup(function() {
+                if ($(this).find("input").val() != '') {
+                    var colIndex = $(this).parent().children().index($(this));
+                    var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
+                    rowAll = $("#CreditDetailTable tr").length;
+                    //console.log('Row: ' + rowIndex + ', Column: ' + colIndex + ', All Row ' + rowAll);
+                    if (rowIndex == rowAll) {
+                        AddRowCredit(parseInt($("#countRowCredit").val()));
+                    }
+                    if (rowAll < 2) {
+                        $("#tr_CreditDetailAddRow").removeClass("hide");
+                        $("#tr_CreditDetailAddRow").addClass("show");
+                    }
+                 }
+            });
+        });
+        
+        $("#CreditDetailTable").on("change", "select:last", function () {
+            var row = parseInt($("#countRowCredit").val());
+            AddRowCredit(row);
+        });
+        
+        $("#CreditDetailTable").on('click', '.newRemCF', function () {
+            $(this).parent().parent().remove();
+                var rowAll = $("#CreditDetailTable tr").length;
+                if (rowAll < 2) {
+                    $("#tr_CreditDetailAddRow").removeClass("hide");
+                    $("#tr_CreditDetailAddRow").addClass("show");
+            }
+        });
+        
+        $("#tr_CreditDetailAddRow a").click(function () {
+            $(this).parent().removeClass("show");
+            $(this).parent().addClass("hide");
+        });
     });
     
+    function deletelist(id,Ccount) {
+        document.getElementById('plTableId').value = id;
+        document.getElementById('productCountDel').value = Ccount;
+        $("#delProduct").text('Are you sure delete this product ?');
+        $('#DeleteProduct').modal('show');
+    }
+    
+//    function DeleteRowProduct(){
+//        var cCount = document.getElementById('productCountDel').value;
+//        var id = document.getElementById('plTableId').value;
+//        
+//        if(id === ''){
+//            $("#receiveProduct" + cCount).parent().parent().remove();
+//            var rowAll = $("#ReceiptListTable tr").length;
+//            if (rowAll <= 1) {
+//                $("#tr_ProductDetailAddRow").removeClass("hide");
+//                $("#tr_ProductDetailAddRow").addClass("show");
+//            }
+//            
+//        } else {
+//            $.ajax({
+//                url: 'PaymentTourHotel.smi?action=deleteProductDetail',
+//                type: 'get',
+//                data: {ProductDetail: id},
+//                success: function () {
+//                    $("#receiveProduct" + cCount).parent().parent().remove();
+//                    var rowAll = $("#ReceiptListTable tr").length;
+//                    if (rowAll <= 1) {
+//                        $("#tr_ProductDetailAddRow").removeClass("hide");
+//                        $("#tr_ProductDetailAddRow").addClass("show");
+//                    }
+//                },
+//                error: function () {
+//                    console.log("error");
+//                    result =0;
+//                }
+//            }); 
+//        }    
+//        $('#DeleteProduct').modal('hide');
+//        CalculateGrandTotal('');
+//    }
     function printReceiptNew() {
         window.open("report.smi?name=ReceiptEmail");
     }
@@ -1035,5 +1172,210 @@
     function printReceipt() {
         window.open("report.smi?name=ReceiptReport");
     }
+    
+    function AddRowProduct(row) {
+//        var idRole = '${idRole}';
+//        if((idRole === '22') || (idRole === '1')){                  
+            $("#ReceiptListTable tbody").append(
+                '<tr style="higth 100px">' +
+                '<input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >' +
+                '<td>' + 
+                '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="">---------</option></select>' +                          
+                '</td>' +
+                '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" ></td>' +
+                '<td align="center">' +
+                '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" onclick="handleClick(this,'+row+')" value="">' +
+                '</td>' +
+                '<td><input id="receiveVat' + row + '" name="receiveVat' + row + '" type="text" class="form-control text-right"></td>' +
+                '<td><input id="receiveGross' + row + '" name="receiveGross' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)"></td>' +
+                '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)"></td>' +
+                '<td>' + 
+                '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="">---------</option></select>' +                          
+                '</td>' +
+                '<td class="text-center">' +
+                '<a class="remCF" onclick="deletelist(\'\', \''+row+'\')">  '+
+                '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
+                '</tr>'
+            );
+            $("#billTypeList option").clone().appendTo("#receiveProduct" + row);
+            $("#currencyList option").clone().appendTo("#receiveCurrency" + row);
+            
+            $("#receiveAmount"+row).focusout(function(){
+                calculatGross(row);
+                setFormatCurrency(row);
+            }); 
+            $("#receiveGross"+row).focusout(function(){
+                setFormatCurrency(row);
+            }); 
+            var tempCount = parseInt($("#counter").val()) + 1;
+            $("#counter").val(tempCount);
+//        }
+      
+    }
+function handleClick(cb,row) {
+  if(cb.checked){
+    $("#receiveVat" + row).val($("#vatValue").val());
+  }else{
+    $("#receiveVat" + row).val("");
+  }
+}
+function calculatGross(row) {
+//  Total Amount Refund  vat = vat * Total Amount Refund / 100
+    var receiveAmount = replaceAll(",","",$("#receiveAmount"+row).val()); 
+    if (receiveAmount == ""){
+        receiveAmount = 0;
+    }
+    
+    var receiveVat = replaceAll(",","",$("#receiveVat"+row).val());
+    if (receiveVat == ""){
+        receiveVat = 0;
+    }
+    
+    var amount = parseFloat(receiveAmount); 
+    var vat = parseFloat(receiveVat);
+    var beforevat = parseFloat(100/(100+vat)).toFixed(2);
+    var receiveGross = amount * beforevat;
+    document.getElementById("receiveGross"+row).value = formatNumber(receiveGross);
+}
+
+function replaceAll(find, replace, str) {
+  return str.replace(new RegExp(find, 'g'), replace);
+}
+
+function formatNumber(num) {
+    return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g,"$1,")
+}
+
+function insertCommas(nField){
+    if (/^0/.test(nField.value)){
+        nField.value = nField.value.substring(0,1);
+    }
+    if (Number(nField.value.replace(/,/g,""))){
+        var tmp = nField.value.replace(/,/g,"");
+        tmp = tmp.toString().split('').reverse().join('').replace(/(\d{3})/g,'$1,').split('').reverse().join('').replace(/^,/,'');
+        if (/\./g.test(tmp)){
+            tmp = tmp.split(".");
+            tmp[1] = tmp[1].replace(/\,/g,"").replace(/ /,"");
+            nField.value = tmp[0]+"."+tmp[1]
+        }else{
+            nField.value = tmp.replace(/ /,"");
+        } 
+    }else{
+        nField.value = nField.value.replace(/[^\d\,\.]/g,"").replace(/ /,"");
+    }
+}
+
+function setFormatCurrency(row){  
+    var receiveAmount = replaceAll(",","",$('#receiveAmount'+row).val()); 
+    if (receiveAmount == ""){
+        receiveAmount = 0;
+    }
+    receiveAmount = parseFloat(receiveAmount); 
+    document.getElementById("receiveAmount"+row).value = formatNumber(receiveAmount);
+    
+    var receiveGross = replaceAll(",","",$('#receiveGross'+row).val()); 
+    if (receiveGross == ""){
+        receiveGross = 0;
+    }
+    receiveGross = parseFloat(receiveGross); 
+    document.getElementById("receiveGross"+row).value = formatNumber(receiveGross);
+
+    if (receiveAmount == "" || receiveAmount == 0){
+        document.getElementById("receiveAmount"+row).value = "";
+    }
+    
+    if (receiveGross == "" || receiveGross == 0){
+        document.getElementById("receiveGross"+row).value = "";
+    }
+}
+
+function AddRowCredit(row) {
+//        var idRole = '${idRole}';
+//        if((idRole === '22') || (idRole === '1')){                  
+        $("#CreditDetailTable tbody").append(
+            '<tr style="higth 100px">' +
+            '<input id="tableCreditId' + row + '" name="tableCreditId' + row + '"  type="hidden" >' +
+            '<td>' + 
+            '<select class="form-control" name="creditBank' + row + '" id="creditBank' + row + '" ><option value="">---------</option></select>' +                          
+            '</td>' +
+            '<td><input maxlength="20" id="creditNo' + row + '" name="creditNo' + row + '" type="text" class="form-control" ></td>' +
+            '<td><div class="input-group date"><input id="creditExpired'+row+'" name="creditExpired'+row+'"  type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value=""><span class="input-group-addon spandate" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span></div></td>' +
+            '<td><input id="creditAmount' + row + '" name="creditAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)"></td>' +
+            '<td class="text-center">' +
+            '<a class="remCF" onclick="deletelist(\'\', \''+row+'\')">  '+
+            '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
+            '</tr>'
+        );
+        $("#creditBankList option").clone().appendTo("#creditBank" + row);
+                    
+        $("#creditAmount"+row).focusout(function(){
+            var creditAmount = replaceAll(",","",$('#creditAmount'+row).val()); 
+            if (creditAmount == ""){
+                creditAmount = 0;
+            }
+            creditAmount = parseFloat(creditAmount); 
+            document.getElementById("creditAmount"+row).value = formatNumber(creditAmount);
+            
+            if (creditAmount == "" || creditAmount == 0){
+                document.getElementById("creditAmount"+row).value = "";
+            }
+        }); 
+        
+        var tempCount = parseInt($("#countRowCredit").val()) + 1;
+        $("#countRowCredit").val(tempCount);
+        reloadDatePicker();
+} 
+
+function reloadDatePicker(){
+    try{
+       $(".date").datetimepicker({
+            pickTime: false   
+       });  
+       $('span').click(function() {
+            var position = $(this).offset();
+            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+       });
+    }catch(e){
+
+    }  
+}
+
+function clearNew(){
+    $("#receiveId").val("");
+    $("#receiveNo").val("");
+    $("#inputDate").val("");
+    $("#receiveFromId").val("");
+    $("#receiveFromCode").val("");
+    $("#receiveFromName").val("");
+    $("#receiveFromAddress").val("");
+    $("#remark").val("");
+    $("#receiveFromDate").val("");
+    $("#inputStatus").val("");
+    $("#arCode").val("");
+    $("#grandTotal").val("");
+    $("#inputWt").val("");
+    $("#cashAmount").val("");
+    $("#cashMAmount").val("");
+    $("#bankTransfer").val("");
+    $("#chqBank").val("");
+    $("#chqNo").val("");
+    $("#chqDate").val("");
+    $("#chqAmount").val("");
+    $("#chqBank2").val("");
+    $("#chqNo2").val("");
+    $("#chqDate2").val("");
+    $("#chqAmount2").val("");
+
+    $('#ReceiptListTable').dataTable().fnClearTable();
+    $('#ReceiptListTable').dataTable().fnDestroy();
+    $("#ReceiptListTable tbody").empty();
+
+    $('#CreditDetailTable').dataTable().fnClearTable();
+    $('#CreditDetailTable').dataTable().fnDestroy();
+    $("#CreditDetailTable tbody").empty();
+    AddRowProduct(0);
+    AddRowCredit(0);
+}
+
 
 </script>
