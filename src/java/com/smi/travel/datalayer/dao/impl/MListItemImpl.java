@@ -1,6 +1,6 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates หห
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package com.smi.travel.datalayer.dao.impl;
@@ -13,6 +13,7 @@ import com.smi.travel.datalayer.entity.MAirlineAgent;
 import com.smi.travel.datalayer.entity.MBilltype;
 import com.smi.travel.datalayer.entity.MBookingstatus;
 import com.smi.travel.datalayer.entity.MBranch;
+import com.smi.travel.datalayer.entity.MCreditBank;
 import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MDepartment;
 import com.smi.travel.datalayer.entity.MFlight;
@@ -431,6 +432,20 @@ public class MListItemImpl implements MListItemDao {
         session.close();
         this.sessionFactory.close();
         return MStockStatusList; 
+    }
+
+    @Override
+    public List<MCreditBank> getListCreditBank() {
+        String query = "from MCreditBank";
+        Session session = this.sessionFactory.openSession();
+        List<MCreditBank> MCreditBankList = session.createQuery(query).list();
+        System.out.print("MCreditBankList " + MCreditBankList.size());
+        if (MCreditBankList.isEmpty()) {
+            return null;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return MCreditBankList; 
     }
 
   
