@@ -266,8 +266,8 @@ public class OtherDetailController extends SMITravelController {
     
     private void getTicket(HttpServletRequest request, String stockId) {
         List<OtherTicketView> ticketList = OtherService.getListStockDetail(stockId);
-//        List<StockDetail> stockDetailList = OtherService.getListStockDetail(stockId);
-//        String a = stockDetailList.get(0).getTypeId().getName();
+//      List<StockDetail> stockDetailList = OtherService.getListStockDetail(stockId);
+//      String a = stockDetailList.get(0).getTypeId().getName();
         request.setAttribute("ticketList",ticketList);
         return;
     }
