@@ -274,11 +274,11 @@ public class OtherBookingImpl implements OtherBookingDao{
     }
     
     @Override
-    public List<OtherTicketView> getListStockDetail(String stockId) {
+    public List<OtherTicketView> getListStockDetail(String otherBookingId) {
         List<OtherTicketView> ticketList = new ArrayList<OtherTicketView>();
         try{
             Session session = this.sessionFactory.openSession();
-            String query = "from StockDetail s where s.stock.id = " + stockId + " and s.MStockStatus.id = 2";
+            String query = "from StockDetail s where s.otherBooking.id = " + otherBookingId + " and s.MStockStatus.id = 2";
             List<StockDetail> stockDetailList = session.createQuery(query).list();            
             if(stockDetailList.isEmpty()){
                 return ticketList;  
