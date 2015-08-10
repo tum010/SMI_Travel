@@ -3,6 +3,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ attribute name="id" required="true"%>
 <%@ attribute name="title" required="true"%>
+<%@ attribute name="labelColSize" required="false"%>
+<%@ attribute name="inputColSize" required="false"%>
 <%@ attribute name="enableOKButton" required="false" rtexprvalue="true"%>
 <%@ attribute name="enableSaveButton" required="false" rtexprvalue="true"%>
 <%@ attribute name="enableCloseButton" required="false" rtexprvalue="true"%>
@@ -20,7 +22,7 @@
 						<h4 class="modal-title" id="${id}Label">${title}</h4>
 					</div>
 					<div class="modal-body">
-						
+							
 							<jsp:doBody></jsp:doBody>
 						
 					</div>

@@ -7,8 +7,7 @@
 <c:set var="financemenu" value="${sessionScope['financemenu']}" />
 <c:set var="reportmenu" value="${sessionScope['reportmenu']}" />
 <c:set var="checkingmenu" value="${sessionScope['checkingMenu']}" />
-<nav class="navbar " style="margin-bottom: 5px; height: 25px;"
-	role="navigation">
+<nav class="navbar " style="margin-bottom: 5px; height: 25px;" role="navigation">
 	<div class="navbar-header">
 		<a class="navbar-brand" style="padding: 0px" href="#"> <img
 			src="${pageContext.request.contextPath}/img/smilogo.jpg" />
@@ -80,7 +79,7 @@
                                                                         "<li><a id='menu-maparcode' href='APARCode.smi'>AP/AR Code</a></li>",         
 									"<li><a id='menu-stock' href='SearchStock.smi'>Stock</a></li>",
 									"<li><a id='menu-DefineVar' href='DefineVar.smi'>Define Variable</a></li>",
-									"<li><a id='menu-maccount' href='MAccountCode.smi'>Account</a></li>",
+								//	"<li><a id='menu-maccount' href='MAccountCode.smi'>Account</a></li>",
 									"<li><a id='menu-mpackage' href='MPackage.smi'>Package</a></li>" ];
 
 							var bookingMenu = [ "<li><a href='Book.smi'> Booking</a></li>" ];
