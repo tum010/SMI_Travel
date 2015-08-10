@@ -9,7 +9,6 @@ package com.smi.travel.datalayer.dao.impl;
 import com.smi.travel.datalayer.dao.InvoiceDao;
 import com.smi.travel.datalayer.entity.Invoice;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
-import com.smi.travel.datalayer.entity.StockDetail;
 import java.util.LinkedList;
 import java.util.List;
 import org.hibernate.Query;
@@ -225,5 +224,4 @@ public class InvoiceImpl implements InvoiceDao{
         }    
         return invoiceNoLast;
     }
-   
 }
