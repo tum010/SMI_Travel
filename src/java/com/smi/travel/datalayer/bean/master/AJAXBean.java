@@ -606,6 +606,28 @@ public class AJAXBean extends AbstractBean implements
                 String searchRefNo = map.get("refNo").toString();
                 Billable bill = billableDao.getBillableBooking(searchRefNo);
                 result = getListInvoice(bill);
+            }else if("searchInvoiceDescription".equalsIgnoreCase(type)){
+                String searchRefNo = map.get("refNo").toString();
+                String typeId = map.get("typeId").toString();
+                String typeName = billableDao.getMBillTypeName(typeId);
+                if(typeName != null){
+                    if("Air Ticket".equals(typeName)){
+                        result += "|Air Ticket|";
+                        result += billableDao.getDescriptionInvoiceAirTicket(searchRefNo);
+                    }else if("Others".equals(typeName)){
+                        result += "|Others|";
+                        result += billableDao.getDescriptionInvoiceOthers(searchRefNo);
+                    }else if("Land".equals(typeName)){
+                        result += "|Land|";
+                        result += billableDao.getDescriptionInvoiceLand(searchRefNo);
+                    }else if("Hotel".equals(typeName)){
+                        result += "|Hotel|";
+                        result += billableDao.getDescriptionInvoiceHotel(searchRefNo);
+                    }else if("Day Tour".equals(typeName)){
+                        result += "|Day Tour|";
+                        result += billableDao.getDescriptionInvoiceDayTour(searchRefNo);
+                    }
+                }
             }
         } else if (REFUNDAIRLINE.equalsIgnoreCase(servletName)) {
             if("getTicketFare".equalsIgnoreCase(type)){
@@ -1044,6 +1066,7 @@ public class AJAXBean extends AbstractBean implements
                     + "<td align=\"center\">" + billdeescList.get(i).getPrice() + "</td>"
                     + "<td align=\"center\">" + billdeescList.get(i).getCurrency() + "</td>"
                     + "<td align=\"center\"><center><a href=\"\" onclick=\"addInvoiceDetail("+(i+1)+")\"><span class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                    + "<td class=\"hidden\"><input type=\"hidden\" id=\"RefItemId"+(i+1)+"\" name=\"RefItemId"+(i+1)+"\" value=" + billdeescList.get(i).getRefItemId() + "></td>"
                     + "</tr>";
 
         }
