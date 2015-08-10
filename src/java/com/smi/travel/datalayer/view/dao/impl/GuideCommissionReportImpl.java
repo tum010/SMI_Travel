@@ -30,12 +30,11 @@ public class GuideCommissionReportImpl implements GuideCommissionReportDao{
     private SessionFactory sessionFactory;
     private final  String GUIDECOM_SUMMARY_QUERY = "SELECT" +
                                                     "`st`.`name` AS `guide`," +
-                                                    "sum(`dp`.`qty`) AS `pax`," +
+                                                    "GET_SUM_PAX_DAYTOUR(st.id,'datefrom','dateto')  AS `pax`," +
                                                     "sum(`db`.`guide_commission`) AS `comission`," +
                                                     "`st`.`id` AS `guideid`" +
                                                     "FROM  `daytour_booking` `db`  " +
                                                     "JOIN `master` `mt` ON (`mt`.`id` = `db`.`master_id`) " +
-                                                    "JOIN `daytour_booking_price` `dp` ON (`dp`.`daytour_booking_id` = `db`.`id`) " +
                                                     "JOIN `staff` `st` ON (`db`.`guide_id` = `st`.`id`) " +
                                                     "WHERE  (`db`.`guide_commission` <> 0) ";
     
@@ -98,7 +97,10 @@ public class GuideCommissionReportImpl implements GuideCommissionReportDao{
         List data = new ArrayList();
         Date thisdate = new Date();
         UtilityFunction util = new UtilityFunction();
+        
         String query = GUIDECOM_SUMMARY_QUERY + "and db.tour_date >= '"+datefrom+"' and  db.tour_date <= '"+dateto+"'";
+        query = query.replaceFirst("datefrom", datefrom.replaceAll(" ", ""));
+        query = query.replaceFirst("dateto", dateto.replaceAll(" ", ""));
         if((guideid != null)&&(!"".equalsIgnoreCase(guideid))){
             query += " and  st.id = "+guideid;
         }
