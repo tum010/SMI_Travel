@@ -118,10 +118,17 @@ public class DaytourOperationDetailController extends SMITravelController {
                         request.setAttribute(TourDescExpenseList, daytourOperationService.SortExpense(ExpenseList));
                                                
                         PaymentWendy paymentWendy = paymentTourHotelService.getPaymentWendyFromDayTourOperation(daytourOperation);
-                        String guideName = paymentTourHotelService.getGuideName(paymentWendy);
+                        String guideName = "";
+                        if(paymentWendy != null){
+                            guideName = paymentTourHotelService.getGuideName(paymentWendy);
+                        }
+                        
                         request.setAttribute("guideName", guideName);
                         request.setAttribute(PAYMENTWENDYLIST, paymentWendy);
-                        List<PaymentDetailWendy> paymentWendyDetail =  paymentWendy.getPaymentDetailWendies();
+                        List<PaymentDetailWendy> paymentWendyDetail = new LinkedList<PaymentDetailWendy>();
+                        if(paymentWendy != null){
+                            paymentWendyDetail =  paymentWendy.getPaymentDetailWendies();
+                        }
                         if(paymentWendyDetail.size()>0){
                             request.setAttribute(PAYMENTWENDYDETAILLIST, paymentWendyDetail.get(0));
                         }            
