@@ -9,6 +9,7 @@ package com.smi.travel.datalayer.dao.impl;
 import com.smi.travel.datalayer.dao.InvoiceDao;
 import com.smi.travel.datalayer.entity.Invoice;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
+import com.smi.travel.datalayer.view.entity.InvoiceView;
 import java.util.LinkedList;
 import java.util.List;
 import org.hibernate.Query;
@@ -223,5 +224,10 @@ public class InvoiceImpl implements InvoiceDao{
            invoiceNoLast = invoiceList.get(0).getInvNo();
         }    
         return invoiceNoLast;
+    }
+
+    @Override
+    public InvoiceView SearchInvoiceView(String DateFrom, String DateTo, String Department, String Type) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
