@@ -26,6 +26,7 @@ import com.smi.travel.datalayer.entity.MBank;
 import com.smi.travel.datalayer.entity.MBilltype;
 import com.smi.travel.datalayer.entity.MBookingstatus;
 import com.smi.travel.datalayer.entity.MCity;
+import com.smi.travel.datalayer.entity.MCreditBank;
 import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MDefaultData;
 import com.smi.travel.datalayer.entity.MFlight;
@@ -238,9 +239,14 @@ public class UtilityService {
         return invoicesuppilerdao.getDataInvoiceSuppiler(InputInvoiceSupCode);
     }
     
-     public List<SystemUser> getUserList() {
-        return systemUserdao.getUserList();
-     }
+    public List<SystemUser> getUserList() {
+       return systemUserdao.getUserList();
+    }
+     
+    public List<MCreditBank> getListCreditBank(){
+        return listitemdao.getListCreditBank();
+    }
+             
     
     public MasterDao getMasterdao() {
         return masterdao;
