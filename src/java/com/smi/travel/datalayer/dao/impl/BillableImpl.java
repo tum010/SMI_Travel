@@ -6,11 +6,23 @@
 package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.BillableDao;
+import com.smi.travel.datalayer.entity.AirticketAirline;
 import com.smi.travel.datalayer.entity.AirticketFlight;
+import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.Billable;
 import com.smi.travel.datalayer.entity.BillableDesc;
+import com.smi.travel.datalayer.entity.DaytourBooking;
+import com.smi.travel.datalayer.entity.HotelBooking;
+import com.smi.travel.datalayer.entity.HotelRoom;
+import com.smi.travel.datalayer.entity.LandBooking;
+import com.smi.travel.datalayer.entity.LandItinerary;
+import com.smi.travel.datalayer.entity.MBilltype;
+import com.smi.travel.datalayer.entity.OtherBooking;
+import com.smi.travel.util.UtilityFunction;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -26,6 +38,12 @@ public class BillableImpl implements BillableDao {
     private SessionFactory sessionFactory;
     private Transaction transaction;
     private static final String BillQuery = "from Billable B where B.master.referenceNo =:refno ";
+    private static final String QUERY_AIRTICKET = "from Billable B where B.master.referenceNo =:refno ";
+    private static final String QUERY_OTHERS = "from OtherBooking ot where ot.id = :refitemid";
+    private static final String QUERY_LAND = "from LandBooking lb where lb.id =   :refitemid";
+    private static final String QUERY_HOTEL = "from HotelBooking hb where hb.id = :refitemid";
+    private static final String QUERY_DAYTOUR = "from DaytourBooking db where db.id = :refitemid";
+    private static final String SEARCH_MBILL_NAME = "from MBilltype mb where mb.id =:typeId ";
     private static final String OtherBookingUpdate = "UPDATE OtherBooking other set  other.isBill = 1 "
             + "WHERE other.id = :Keyid";
     private static final String LandBookingUpdate = "UPDATE LandBooking land set  land.isBill = 1 "
@@ -326,5 +344,396 @@ public class BillableImpl implements BillableDao {
             result = 0;
         }
         return result;
+    }
+
+    @Override
+    public String getMBillTypeName(String typeId) {
+        String typeName = "";
+        Session session = this.sessionFactory.openSession();
+        List<MBilltype> list = session.createQuery(SEARCH_MBILL_NAME).setParameter("typeId", typeId).list();
+
+        if (list.isEmpty()) {
+            return null;
+        }else{
+            typeName = list.get(0).getName();
+        }
+
+        return typeName;
+    }
+
+    @Override
+    public String getDescriptionInvoiceAirTicket(String refno) {
+        String description = "";
+        Session session = this.sessionFactory.openSession();
+        List<AirticketAirline> list = session.createQuery(QUERY_AIRTICKET).setParameter("refitemid", refno).list();
+
+        if (list.isEmpty()) {
+            return null;
+        }else{
+            UtilityFunction utility = new UtilityFunction();
+            for(int i = 0; i < list.size(); i++){
+                if(list.get(i).getAirticketFlights() != null){ // flight
+                    description += ""+list.get(i).getAirticketFlights() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getAirticketPassengers() != null){ // passengers
+                    description += ""+ list.get(i).getAirticketPassengers() +"|";
+                }else{
+                     description += " |";
+                }
+                List<AirticketFlight> listFight = new LinkedList<AirticketFlight>(list.get(i).getAirticketFlights());
+                if(utility.GetRounting(listFight) != null){ // flight
+                    description += ""+ utility.GetRounting(listFight) +"|";
+                }else{
+                     description += " |";
+                }
+                if(listFight.get(i).getMTicketType().getName() != null){ // name flight
+                    description += ""+listFight.get(i).getMTicketType().getName() +"|";
+                }else{
+                     description += " |";
+                }
+                if(listFight.get(i).getDepartDate() != null){ // depart date
+                    description += ""+listFight.get(i).getDepartDate() +"|";
+                }else{
+                     description += " |";
+                }
+                if(listFight.get(i).getFlightNo() != null){ // flight no
+                    description += ""+listFight.get(i).getFlightNo() +"|";
+                }else{
+                     description += " |";
+                }
+                List<AirticketPassenger> listPassenger = new LinkedList<AirticketPassenger>(list.get(i).getAirticketPassengers());
+                if(listPassenger.get(i).getMInitialname().getName() != null){// prename
+                    description += ""+listPassenger.get(i).getMInitialname().getName() +"|";
+                }else{
+                     description += " |";
+                }
+                if(listPassenger.get(i).getLastName() != null){// lastname
+                    description += ""+listPassenger.get(i).getLastName() +"|";
+                }else{
+                     description += " |";
+                }
+                if(listPassenger.get(i).getFirstName() != null){// firstname
+                    description += ""+listPassenger.get(i).getFirstName() +"|";
+                }else{
+                     description += " |";
+                }
+            }
+        }
+
+        return description;
+    }
+
+    @Override
+    public String getDescriptionInvoiceOthers(String refno) {
+        String description = "";
+        Session session = this.sessionFactory.openSession();
+        List<OtherBooking> list = session.createQuery(QUERY_OTHERS).setParameter("refitemid", refno).list();
+
+        if (list.isEmpty()) {
+            return null;
+        }else{
+            for(int i = 0; i < list.size(); i++){
+                if(list.get(i).getMaster().getReferenceNo() != null){ // Ref no
+                    description += ""+list.get(i).getMaster().getReferenceNo() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getMaster().getCustomer().getMInitialname().getName() != null){ // prename
+                    description += ""+list.get(i).getMaster().getCustomer().getMInitialname().getName() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getMaster().getCustomer().getLastName() != null){ //last name
+                    description += ""+list.get(i).getMaster().getCustomer().getLastName() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getMaster().getCustomer().getFirstName() != null){// firstname
+                    description += ""+list.get(i).getMaster().getCustomer().getFirstName() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getProduct().getName() != null){ // Product Name
+                    description += ""+list.get(i).getProduct().getName() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getOtherDate() != null){ // Other Date
+                    description += ""+list.get(i).getOtherDate() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getAdCost() != null){ // Adult Cost
+                    description += "("+list.get(i).getAdCost() +" x ";
+                    if(list.get(i).getAdQty() != null){ // Adult Qty
+                        description += ""+list.get(i).getAdQty() +")|";
+                    }else{
+                        description += "0)|";
+                    }
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getChCost() != null){ // Children Cost
+                    description += "("+list.get(i).getChCost() +" x ";
+                    if(list.get(i).getChQty()!= null){ // Children Qty
+                        description += ""+list.get(i).getChQty() +")|";
+                    }else{
+                        description += "0)|";
+                    }
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getInCost() != null){ // Infant Cost
+                    description += "("+list.get(i).getInCost() +" x ";
+                    if(list.get(i).getInQty()!= null){ // Infant Qty
+                        description += ""+list.get(i).getInQty() +")|";
+                    }else{
+                        description += "0)|";
+                    }
+                }else{
+                     description += " |";
+                }
+            }
+        }
+
+        return description;
+    }
+
+    @Override
+    public String getDescriptionInvoiceLand(String refno) {
+        String description = "";
+        Session session = this.sessionFactory.openSession();
+        List<LandBooking> list = session.createQuery(QUERY_LAND).setParameter("refitemid", refno).list();
+
+        if (list.isEmpty()) {
+            return null;
+        }else{
+            for(int i = 0; i < list.size(); i++){
+                if(list.get(i).getMaster().getReferenceNo() != null){ // Ref no
+                    description += ""+list.get(i).getMaster().getReferenceNo() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getMaster().getCustomer().getMInitialname().getName() != null){ // prename
+                    description += ""+list.get(i).getMaster().getCustomer().getMInitialname().getName() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getMaster().getCustomer().getLastName() != null){ //last name
+                    description += ""+list.get(i).getMaster().getCustomer().getLastName() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getMaster().getCustomer().getFirstName() != null){// firstname
+                    description += ""+list.get(i).getMaster().getCustomer().getFirstName() +"|";
+                }else{
+                     description += " |";
+                }
+                List<LandItinerary> listLand = new LinkedList<LandItinerary>();
+                listLand = list.get(i).getLandItineraries();
+                for (int j = 0; j < listLand.size(); j++) {
+                    if(listLand.get(j).getDayDate() != null){ //day date
+                        description += ""+listLand.get(j).getDayDate() +"|";
+                    }else{
+                         description += " |";
+                    }
+                    if(listLand.get(j).getDescription() != null){ // description
+                        description += ""+listLand.get(j).getDescription() +"|";
+                    }else{
+                         description += " |";
+                    }
+                }
+                
+                if(list.get(i).getMaster().getBookingType() != null){ // Qty
+                    if("I".equals(list.get(i).getMaster().getBookingType())){
+                        int sum = 0;
+                        int adult = list.get(i).getInboundQty();
+                        int child = list.get(i).getInboundChQty();
+                        int infant = list.get(i).getInboundInQty();
+                        sum = adult + child + infant;
+                        if(sum != 0){
+                            description += ""+ sum +"|";
+                        }else{
+                            description += "0|";
+                        } 
+                    }else if ("O".equals(list.get(i).getMaster().getBookingType())){
+                        int sum = 0;
+                        int adult = list.get(i).getOutboundAdQty();
+                        int child = list.get(i).getOutboundChQty();
+                        int infant = list.get(i).getOutboundInQty();
+                        sum = adult + child + infant;
+                        if(sum != 0){
+                            description += ""+ sum +"|";
+                        }else{
+                            description += "0|";
+                        } 
+                    }else{
+                        description += "0|";
+                    }
+                }else{
+                     description += " |";
+                }        
+            }
+        }
+
+        return description;
+    }
+
+    @Override
+    public String getDescriptionInvoiceHotel(String refno) {
+        String description = "";
+        Session session = this.sessionFactory.openSession();
+        List<HotelBooking> list = session.createQuery(QUERY_HOTEL).setParameter("refitemid", refno).list();
+
+        if (list.isEmpty()) {
+            return null;
+        }else{
+            for(int i = 0; i < list.size(); i++){
+                if(list.get(i).getMaster().getReferenceNo() != null){ // Ref no
+                    description += ""+list.get(i).getMaster().getReferenceNo() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getMaster().getCustomer().getMInitialname().getName() != null){ // prename
+                    description += ""+list.get(i).getMaster().getCustomer().getMInitialname().getName() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getMaster().getCustomer().getLastName() != null){ //last name
+                    description += ""+list.get(i).getMaster().getCustomer().getLastName() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getMaster().getCustomer().getFirstName() != null){// firstname
+                    description += ""+list.get(i).getMaster().getCustomer().getFirstName() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getHotel().getName() != null){ // Hotel Name
+                    description += ""+list.get(i).getHotel().getName() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getCheckin() != null){ // check in
+                    description += ""+list.get(i).getCheckin() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getCheckout() != null){ // check out
+                    description += ""+list.get(i).getCheckout() +"|";
+                }else{
+                     description += " |";
+                }
+                List<HotelRoom> listRoom = new LinkedList<HotelRoom>();
+                listRoom = list.get(i).getHotelRooms();
+                for (int j = 0; j < listRoom.size(); j++) {
+                    if( listRoom.get(j).getPrice() != 0){ // room price
+                        description += ""+listRoom.get(j).getPrice() +"|";
+                    }else{
+                         description += " |";
+                    }
+                    if(listRoom.get(j).getQty() != 0){ // room qty
+                        description += ""+listRoom.get(j).getQty() +"|";
+                    }else{
+                         description += " |";
+                    }
+                    if(listRoom.get(j).getRoom() != null){ // room number
+                        description += ""+listRoom.get(j).getRoom() +"|";
+                    }else{
+                         description += " |";
+                    }
+                    if(listRoom.get(j).getCategory() != null){ // room catagory
+                        description += ""+listRoom.get(j).getCategory() +"|";
+                    }else{
+                         description += " |";
+                    }
+                }
+                
+                int day = getDifferenceDays(list.get(i).getCheckin(), list.get(i).getCheckout()); // Day 
+                if( day != 0){
+                   description += ""+day +"|";
+                }else{
+                     description += " |";
+                }  
+            }
+        }
+
+        return description;
+    }
+
+    @Override
+    public String getDescriptionInvoiceDayTour(String refno) {
+        String description = "";
+        Session session = this.sessionFactory.openSession();
+        List<DaytourBooking> list = session.createQuery(QUERY_DAYTOUR).setParameter("refitemid", refno).list();
+
+        if (list.isEmpty()) {
+            return null;
+        }else{
+            for(int i = 0; i < list.size(); i++){
+                if(list.get(i).getMaster().getReferenceNo() != null){ // Ref no
+                    description += ""+list.get(i).getMaster().getReferenceNo() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getMaster().getCustomer().getMInitialname().getName() != null){ // prename
+                    description += ""+ list.get(i).getMaster().getCustomer().getMInitialname().getName() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getMaster().getCustomer().getLastName() != null){ //last name
+                    description += ""+list.get(i).getMaster().getCustomer().getLastName() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getMaster().getCustomer().getFirstName() != null){// firstname
+                    description += ""+list.get(i).getMaster().getCustomer().getFirstName() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getDaytour().getCode() != null){ // code
+                    description += ""+list.get(i).getDaytour().getCode() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getDaytour().getName()!= null){ // name
+                    description += ""+list.get(i).getDaytour().getName() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getTourDate() != null){ // date
+                    description += ""+list.get(i).getTourDate() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getAdult() != 0){ // adult
+                    description += " Adult "+ list.get(i).getAdult() +" Pax |";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getChild() != 0){ // child
+                    description += " Child "+ list.get(i).getChild() +" Pax |";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getInfant() != 0){ // infant
+                    description += " Infant "+ list.get(i).getInfant() +" Pax |)";
+                }else{
+                     description += " |";
+                }
+            }
+        }
+        System.out.println("DEscription : " + description);
+        return description;
+    }
+    
+    private  int getDifferenceDays(Date d1, Date d2) {
+        int daysdiff = 0;
+        long diff = d2.getTime() - d1.getTime();
+        long diffDays = diff / (24 * 60 * 60 * 1000) + 1;
+        daysdiff = (int) diffDays;
+        return daysdiff;
     }
 }
