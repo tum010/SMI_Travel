@@ -31,5 +31,5 @@ public interface OtherBookingDao {
     public Boolean CheckUsabilityCoupon(String CouponId);
     public  List<OtherBooking> searchOtherBooking(Customer customer, int filter);
     public String saveStockDetailOther(OtherBooking Other, SystemUser user);
-    public List<OtherTicketView> getListStockDetail(String stockId);
+    public List<OtherTicketView> getListStockDetail(String otherBookingId);
 }
