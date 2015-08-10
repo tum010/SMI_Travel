@@ -69,7 +69,7 @@ public class StockImpl implements StockDao{
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
-            
+            session.update(ItemLot);
             List<StockDetail> stockDetail = ItemLot.getStockDetails();
             for (int i = 0; i < stockDetail.size(); i++) {
                 if (stockDetail.get(i).getId() == null) {
