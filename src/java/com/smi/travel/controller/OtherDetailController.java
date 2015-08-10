@@ -156,7 +156,7 @@ public class OtherDetailController extends SMITravelController {
                 }else if("fail".equalsIgnoreCase(stock)){
                     request.setAttribute("resultText", "unsuccess");
                 }else {
-                    getTicket(request, stock);
+                    getTicket(request, Other.getId());
                     request.setAttribute("resultText", "success");
                 }
             }else if((result==1) && (callpageSubmit!=null) && (callpageSubmit.equalsIgnoreCase("FromDayTour"))){
@@ -167,7 +167,7 @@ public class OtherDetailController extends SMITravelController {
                 }else if("fail".equalsIgnoreCase(stock)){
                     request.setAttribute("resultText", "unsuccess");
                 }else{
-                    getTicket(request, stock);
+                    getTicket(request, Other.getId());
                     request.setAttribute("resultText", "success");
                 }    
             }else{
@@ -223,6 +223,7 @@ public class OtherDetailController extends SMITravelController {
             remark = Other.getRemark();
             currency = Other.getCurrency();
             request.setAttribute("currency", currency);
+            getTicket(request, Other.getId());
         }
 
         request.setAttribute("isbill", isbill);
@@ -264,8 +265,8 @@ public class OtherDetailController extends SMITravelController {
         return OtherDetail;
     }
     
-    private void getTicket(HttpServletRequest request, String stockId) {
-        List<OtherTicketView> ticketList = OtherService.getListStockDetail(stockId);
+    private void getTicket(HttpServletRequest request, String otherBookingId) {
+        List<OtherTicketView> ticketList = OtherService.getListStockDetail(otherBookingId);
 //      List<StockDetail> stockDetailList = OtherService.getListStockDetail(stockId);
 //      String a = stockDetailList.get(0).getTypeId().getName();
         request.setAttribute("ticketList",ticketList);
