@@ -56,7 +56,7 @@ public class BillableImpl implements BillableDao {
     private static final String HotelBookingUpdate = "UPDATE HotelBooking hotel set  hotel.isBill = 1 "
             + "WHERE hotel.id = :Keyid";
     private static final String AirBookingDescUpdate = "UPDATE AirticketDesc AD set  AD.isBill = 1 "
-            + "WHERE AD.airticketBooking.id = :Keyid ";
+            + "WHERE AD.id = :Keyid ";
     private static final String SelectAirBookId = "FROM AirticketBooking AB where AB.master.id = :masterid )";
 //    private static final String DaytourBookingUpdate = "UPDATE DaytourBooking DB set  DB.isBill = 1 "
 //            + "WHERE DB.master.id = :masterid";
