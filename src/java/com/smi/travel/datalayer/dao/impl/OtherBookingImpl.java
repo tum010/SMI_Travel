@@ -93,6 +93,7 @@ public class OtherBookingImpl implements OtherBookingDao{
                 result = "notStock";
                 return result;
             }
+            
             int adultQty = otherbook.getAdQty();
             int childQty = otherbook.getChQty();
             int infantQty = otherbook.getInQty();
@@ -116,13 +117,23 @@ public class OtherBookingImpl implements OtherBookingDao{
             int ad = 0;
             int ch = 0;
             int inf = 0;
+            List<Integer> stockNum = getStockNumFromOtherBookID(otherbook.getId(),session);
+            if(stockNum != null){
+                ad = stockNum.get(0);
+                ch = stockNum.get(1);
+                inf = stockNum.get(2);
+                
+            }
+            System.out.println("adult : "+ ad );
+            System.out.println("child : "+ ch );
+            System.out.println("infant : "+ inf );
             OtherBooking otherBooking = new OtherBooking();
             String otherbookId = otherbook.getId();
             otherBooking.setId(otherbookId);
-            
+           
             MStockStatus mstockStatus = new MStockStatus();
             mstockStatus.setId("2");
-            // pickupDate must use thisdate
+            // pickupDate must use current date
             String pickupDate = util.convertDateToString(new Date());
             for (int i = 0; i < stockDetailList.size(); i++){
                 StockDetail stockDetail = stockDetailList.get(i);
@@ -195,6 +206,38 @@ public class OtherBookingImpl implements OtherBookingDao{
             ex.printStackTrace();
         }
         return fail;
+    }
+    
+    private List<Integer> getStockNumFromOtherBookID(String Id , Session session) {
+        List<Integer> stockNum = new ArrayList<Integer>();
+        int ad = 0;
+        int ch  = 0;
+        int inf = 0;
+        try {       
+            String queryDate = "from StockDetail s where s.otherBooking.id = :BookId";
+            List<StockDetail> stockList =  session.createQuery(queryDate).setParameter("BookId", Id).list();
+            if(stockList.isEmpty()){
+                return null;
+            }else{
+                for(int i=0;i<stockList.size();i++){
+                     if(stockList.get(i).getTypeId() == null){
+                        
+                     }else if(stockList.get(i).getTypeId().getName().equalsIgnoreCase("ADULT")){
+                        ad += 1;
+                     }else if(stockList.get(i).getTypeId().getName().equalsIgnoreCase("CHILD")){
+                        ch += 1;
+                     }else if(stockList.get(i).getTypeId().getName().equalsIgnoreCase("INFANT")){
+                        inf += 1;
+                     }
+                }
+            }
+            stockNum.add(ad);
+            stockNum.add(ch);
+            stockNum.add(inf);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return stockNum;
     }
     
     private int getIsStock(String id, Session session) {
