@@ -391,7 +391,7 @@ function setGuideName(name,no){
         guideList.push({name: name2});
         
         var guideName = document.getElementById('guideName').value;
-        if(guideName !== ''){
+        if(guideName !== ""){
             if(name1 === guideName){
                 document.getElementById("InvoiceSupGuideBill").selectedIndex = 1;
             } else if(name2 === guideName){
@@ -407,12 +407,15 @@ function setGuideName(name,no){
     if(no === 'check'){
         var InvoiceSupGuideBill = document.getElementById("InvoiceSupGuideBill").value;
         var guideName = document.getElementById('guideName').value;
-        if(InvoiceSupGuideBill !== guideName){
+        if((InvoiceSupGuideBill !== guideName) || (InvoiceSupGuideBill === guideName)){
+            alert('aaaa');
             document.getElementById('textAlertDivGuideName').style.display = 'none';
         }
         if(InvoiceSupGuideBill === ''){
-            document.getElementById('textAlertDivGuideName').style.display = 'block';
-            document.getElementById('textAlertDivGuideName').innerHTML = 'Guide Bill is not match. Invoice sup is "' +guideName+ '".!!!';
+            if(guideName !== ''){
+                document.getElementById('textAlertDivGuideName').style.display = 'block';
+                document.getElementById('textAlertDivGuideName').innerHTML = 'Guide Bill is not match. Invoice sup is "' +guideName+ '".!!!';
+            }    
         }
     }
     
