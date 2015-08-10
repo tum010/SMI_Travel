@@ -15,11 +15,13 @@
 <c:set var="listTermPay" value="${requestScope['listTermPay']}" />
 <c:set var="invoice" value="${requestScope['invoice']}" />
 <c:set var="listInvoiceDetail" value="${requestScope['listInvoiceDetail']}" />
-<c:set var="listType" value="${requestScope['listType']}" />result
+<c:set var="listType" value="${requestScope['listType']}" />
 <c:set var="result" value="${requestScope['result']}" />
+<c:set var="roleName" value="${requestScope['roleName']}" />
 
 <input type="hidden" id="type" name="type" value="${param.type}">
 <input type="hidden" id="resultAction" name="resultAction" value="${result}">
+<input type="hidden" id="roleName" name="roleName" value="${roleName}">
 <section class="content-header" >
     <h1>
         Finance & Cashier - Invoice
@@ -132,6 +134,7 @@
                                                             <th style="width: 10%">Price</th>
                                                             <th style="width: 1%">Currency</th>
                                                             <th style="width: 1%">Action</th>
+                                                            <th class="hidden" >Ref Item Id</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>               
@@ -154,7 +157,7 @@
                             <label class="control-label" for="">INV no</lable>
                         </div>
                         <div class="col-md-1 form-group" style="width: 125px;">
-                            <input type="text"  class="form-control" id="InvNo" name="InvNo"  value="${invoice.invNo}" >
+                            <input type="text"  class="form-control" id="InvNo" name="InvNo"  value="${invoice.invNo}" readonly>
                         </div>
                         <div class="col-md-1 form-group" style="width: 120px;">
                             <button type="button"  id="ButtonSearchInvoiceNo"  name="ButtonSearchInvoiceNo" onclick="searchInvoiceFromInvoiceNo();" class="btn btn-primary btn-sm">
@@ -237,16 +240,24 @@
                             <div class="col-sm-2" style="padding-left: 53px">
                             <label for="Department" class="col-sm-3 control-label" >Department</label>
                             </div>
-                            <div class="radio col-sm-2">
-                                <c:set var="chekcDepartAir" value="" />
-                                <c:if test="${invoice.subDepartment == 'Air Ticket'}">
-                                    <c:set var="chekcDepartAir" value="checked" />
-                                </c:if>
-                                <c:set var="isHidden" value="" />
-                                <c:if test="${typeInvoiceSub == 'Wendy'}">
-                                    <c:set var="isHidden" value="hidden" />
-                                </c:if>
-                                <label><input value="WendyAirTicket" id="DepartmentAirTicket" name="Department" type="radio" ${chekcDepartAir} >Wendy Air Ticket</label>
+                            <c:set var="chekcDepartAir" value="" />
+                            <c:if test="${invoice.subDepartment == 'Air Ticket'}">
+                                <c:set var="chekcDepartAir" value="checked" />
+                            </c:if>
+                            <c:set var="isHidden" value="" />
+                            <c:set var="isHiddenOut" value="" />
+                            <c:set var="isHiddenOutNew" value="hidden='true'" />
+                            <c:if test="${typeInvoiceSub == 'Outbound'}">
+                                <c:set var="isHidden" value="hidden" />
+                                <c:set var="isHiddenOut" value="hidden" />
+                                <c:set var="isHiddenOutNew" value="" />
+                            </c:if>
+                            <c:if test="${typeInvoiceSub == 'Wendy'}">
+                                <c:set var="isHiddenOut" value="hidden" />
+                            </c:if>
+                            <div class="radio col-sm-2 "  >
+                                <label ${isHiddenOutNew}><input value="Outbound" id="DepartmentOutbound" name="Department" type="radio" >Outbound</label>
+                               <label ${isHidden}><input value="WendyAirTicket" id="DepartmentAirTicket" name="Department" type="radio" ${chekcDepartAir} >Air Ticket</label>
                             </div>
                         </div>
                     </div>
@@ -259,22 +270,22 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-2"></div>
-                            <div class="radio col-sm-2"> 
+                            <div class="radio col-sm-2 ${isHidden}" > 
                                 <c:set var="checkDepartPackage" value="" />
                                 <c:if test="${invoice.subDepartment == 'Package'}">
                                     <c:set var="checkDepartPackage" value="checked" />
                                 </c:if>
-                                <label><input value="WendyPackage" id="DepartmentPackage" name="Department" type="radio" ${checkDepartPackage}>Wendy Package</label>
+                                <label><input value="WendyPackage" id="DepartmentPackage" name="Department" type="radio" ${checkDepartPackage}>Package</label>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-2"></div>
-                            <div class="radio col-sm-2">
+                            <div class="radio col-sm-2 ${isHiddenOut}" >
                                 <c:set var="checkDepartOut" value="" />
                                 <c:if test="${invoice.deparement == 'Outbound'}">
                                     <c:set var="checkDepartOut" value="checked" />
                                 </c:if>
-                                <label><input value="Outbound" id="DepartmentOutbound" name="Department" type="radio" ${checkDepartOut}>Outbound</label>
+                                <label ${checkDepartOut}><input value="Outbound" id="DepartmentOutbound" name="Department" type="radio" >Outbound</label>
                             </div>
                         </div>
                     </div>
@@ -330,6 +341,7 @@
                                                 <th class="hidden">Detail Id</th>
                                                 <th style="width:8%;" align="center">Product</th>
                                                 <th style="width:15%;" align="center">Description</th>
+                                                <th class="hidden">Description Temp</th>
                                                 <th style="width: 10%" align="center">Cost</th>
                                                 <th style="width: 10%" align="center">Cur</th>
                                                 <th style="width: 10%" align="center">Cost Local</th>
@@ -342,7 +354,8 @@
                                                 <th style="width: 10%" align="center">Cur</th>
                                                 <th style="width: 10%" align="center">Amount Local</th>
                                                 <th class="hidden">Amount Local Input</th>
-                                                <th style="width: 5%" align="center">Action</th>    
+                                                <th style="width: 5%" align="center">Action</th>
+                                                <th class="hidden">Description Temp Type</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -362,8 +375,11 @@
                                                         </c:forEach>
                                                     </select>
                                                 </td>
-                                                <td><input type="text" class="form-control" id="BillDescription${taxdesc.count}" name="BillDescription${taxdesc.count}" value="${ind.description}" > </td>
-                                                <td><input type="text" class="form-control" id="InputCost${taxdesc.count}" name="InputCost${taxdesc.count}" value="${ind.cost}" ></td>
+                                                <td> 
+                                                    <a href="" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal">${ind.description}</a>                                           
+                                                </td>
+                                                <td class="hidden"><input type="text" class="form-control" id="BillDescription${taxdesc.count}" name="BillDescription${taxdesc.count}" value="${ind.description}" > </td>
+                                                <td><input type="text" maxlength ="15" class="form-control numerical" id="InputCost${taxdesc.count}" name="InputCost${taxdesc.count}" value="${ind.cost}" ></td>
                                                 <td>
                                                     <select id="SelectCurrencyCost${taxdesc.count}" name="SelectCurrencyCost${taxdesc.count}" class="form-control">
                                                         <c:forEach var="cur" items="${listCurrency}">
@@ -387,8 +403,8 @@
                                                 </td>
                                                 <td>${ind.vat}</td>
                                                 <td class="hidden"><input type="text" class="form-control" id="InputVatTemp${taxdesc.count}" name="InputVatTemp${taxdesc.count}" value="${ind.vat}" ></td>
-                                                <td><input type="text" class="form-control" id="InputGross${taxdesc.count}" name="InputGross${taxdesc.count}" value="${ind.gross}" ></td>
-                                                <td><input type="text" class="form-control" id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" value="${ind.amount}" onfocusout="CalculateGrandTotal('${taxdesc.count}')"></td>
+                                                <td><input type="text" maxlength ="15"  class="form-control numerical" id="InputGross${taxdesc.count}" name="InputGross${taxdesc.count}" value="${ind.gross}" ></td>
+                                                <td><input type="text" maxlength ="15" class="form-control numerical" id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" value="${ind.amount}" onfocusout="CalculateGrandTotal('${taxdesc.count}')"></td>
                                                 <td>
                                                     <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control">
                                                         <c:forEach var="cur" items="${listCurrency}">
@@ -403,6 +419,11 @@
                                                 <td>${ind.amount}</td>
                                                 <td class="hidden"><input type="text" value="${ind.amount}" id="InputAmountLocalTemp${taxdesc.count}" name="InputAmountLocalTemp${taxdesc.count}"  ></td>
                                                 <td align="center" ><center><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('${taxdesc.count}')" data-toggle="modal" data-target="#DelDetailBill" >  </span></center></td>
+                                                <td class="hidden">
+                                                    <textarea id="DescriptionInvoiceDetail${taxdesc.count}" name="DescriptionInvoiceDetail${taxdesc.count}">
+                                                        ${ind.displayDescription}
+                                                    </textarea>
+                                                </td>
                                             </tr>
                                             </c:forEach>
                                         </tbody>
@@ -477,19 +498,50 @@
                                             
                                         </div>
                                         <div class="col-md-2 text-right ">
-                                            <button type="button" class="btn btn-primary" onclick="EnableVoid();" data-toggle="modal" data-target="#EnableVoid" id="enableVoidButton" name="enableVoidButton"  style="display: none;" >
-                                                <span id="SpanEnableVoid" class="glyphicon glyphicon-ok" ></span> Cancel Void
-                                            </button>
                                             <c:set var="isDisableVoid" value="disabled='true'" />
+                                            <c:set var="isEnableVoid" value="style='display: none;'" />
+                                            <c:set var="isSaveVoid" value="" />
                                             <c:if test="${result =='success'}">        
                                                 <c:set var="isDisableVoid" value="" />
                                             </c:if>
-                                            <button type="button" class="btn btn-danger" onclick="DisableVoid();" data-toggle="modal" data-target="#DisableVoid" id="disableVoidButton" name="disableVoidButton" ${isDisableVoid} style="display: block;">
+                                            <c:if test="${result =='void'}">        
+                                                <c:set var="isDisableVoid" value="style='display: none;'" />
+                                                <c:if test="${roleName =='YES'}">        
+                                                    <c:set var="isEnableVoid" value="" />
+                                                    <c:set var="isSaveVoid" value="disabled='true'" />
+                                                </c:if>
+                                                <c:if test="${roleName =='NO'}">        
+                                                    <c:set var="isEnableVoid" value="disabled='true'" />
+                                                    <c:set var="isSaveVoid" value="disabled='true'" />
+                                                </c:if>
+                                            </c:if>
+                                            <c:if test="${invoice.MFinanceItemstatus.id == '2'}">        
+                                                <c:set var="isDisableVoid" value="style='display: none;'" />
+                                                <c:if test="${roleName =='YES'}">        
+                                                    <c:set var="isEnableVoid" value="" />
+                                                    <c:set var="isSaveVoid" value="disabled='true'" />
+                                                </c:if>
+                                                <c:if test="${roleName =='NO'}">        
+                                                    <c:set var="isEnableVoid" value="disabled='true'" />
+                                                    <c:set var="isSaveVoid" value="disabled='true'" />
+                                                </c:if>
+                                            </c:if>
+                                            <c:if test="${result =='cancelvoid'}">        
+                                                <c:set var="isDisableVoid" value="" />
+                                            </c:if>
+                                            <c:if test="${invoice.MFinanceItemstatus.id == '1'}">        
+                                                <c:set var="isDisableVoid" value="" />
+                                            </c:if>
+                                            <button type="button" class="btn btn-primary" onclick="EnableVoid();" data-toggle="modal" data-target="#EnableVoid" id="enableVoidButton" name="enableVoidButton"  ${isEnableVoid} >
+                                                <span id="SpanEnableVoid" class="glyphicon glyphicon-ok" ></span> Cancel Void
+                                            </button>
+                                            
+                                            <button type="button" class="btn btn-danger" onclick="DisableVoid();" data-toggle="modal" data-target="#DisableVoid" id="disableVoidButton" name="disableVoidButton" ${isDisableVoid} >
                                                 <span id="SpanDisableVoid" class="glyphicon glyphicon-remove" ></span> Void
                                             </button>
                                         </div>
                                         <div class="col-md-1 text-right ">
-                                            <button type="submit" onsubmit="validFromInvoice()" id="saveInvoice" name="saveInvoice" class="btn btn-success">
+                                            <button type="submit" onsubmit="validFromInvoice()" id="saveInvoice" name="saveInvoice" class="btn btn-success" ${isSaveVoid}>
                                                 <span id="SpanSave" class="fa fa-save"></span> Save 
                                             </button>
                                         </div>
@@ -521,7 +573,7 @@
                 Are you confirm to void invoice ${invoice.invNo}?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" onclick='Disable()' data-dismiss="modal">Cancel Void</button>               
+                <button type="button" class="btn btn-danger" onclick='DisableInvoice()' data-dismiss="modal">Cancel Void</button>               
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
@@ -564,7 +616,37 @@
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->  
+</div><!-- /.modal -->
+<div class="modal fade" id="DescriptionInvoiceDetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Description</h4>
+                <div id="InputDescriptionDetailId" name="InputDescriptionDetailId" class="hidden"></div>
+            </div>
+            
+            <div class="modal-body" >
+                <div class="row">
+                    <div class="col-md-3">
+                        <h5>Description</h5>
+                    </div>
+                    <div class="col-md-9">
+                        <textarea id="InputDescriptionDetail" rows="5" cols="50" class="form-control" onclick="saveDescriptionDetail();">
+                   
+                        </textarea>
+<!--<input type="text" id="InputDescriptionDetail" value="" style="width: 400px;height: 200px;">-->
+                    </div>
+                </div>
+                
+            </div>
+            <div class="modal-footer">  
+                <button type="button" onclick="saveDescriptionDetail()" class="btn btn-success" data-dismiss="modal">OK</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <!--Inv To Modal-->
 <div class="modal fade" id="InvToModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
