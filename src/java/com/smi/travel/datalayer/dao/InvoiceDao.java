@@ -7,6 +7,9 @@
 package com.smi.travel.datalayer.dao;
 
 import com.smi.travel.datalayer.entity.Invoice;
+import com.smi.travel.datalayer.view.entity.InvoiceView;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  *
@@ -20,4 +23,8 @@ public interface InvoiceDao {
     public String DeleteInvoiceDetail(String InvoiceDetailId);
     public Invoice getInvoiceFromInvoiceNumber(String InvoiceNumber);
     public String searchInvoiceNo(String department,String invoiceType);
+    public InvoiceView SearchInvoiceView(String DateFrom,String DateTo,String Department,String Type);
+    public List<HashMap<String,Object>> getInvoiceDetailFromInvoiceNumber(String InvoiceNumber);
+    
+
 }
