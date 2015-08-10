@@ -93,7 +93,7 @@
         var path = location.pathname;
         var name = path.split("/");
         var listpara = location.search;
-        
+//                    alert(listpara.indexOf('tempWendy'));
         if(listpara.indexOf('tempWendy') != -1){
 //            alert(listpara.indexOf('tempWendy'));
             if(listpara.indexOf('tempWendy') === 6){
@@ -102,31 +102,31 @@
             
         }else if(listpara.indexOf('vatWendy') != -1){
 //            alert(listpara.indexOf('vatWendy'));
-            if(listpara.indexOf('vatWendy') === 6){
+//            if(listpara.indexOf('vatWendy') === 6){
                 $("#menu-invoicevat").css('background-color', '#ccc');
-            }
+//            }
         }
         else if(listpara.indexOf('tempOutbound') != -1){
 //            alert(listpara.indexOf('tempOutbound'));
-            if(listpara.indexOf('tempOutbound') === 6){
+//            if(listpara.indexOf('tempOutbound') === 6){
                 $("#menu-invoicetempOutbound").css('background-color', '#ccc');
-            }
+//            }
             
         }else if(listpara.indexOf('vatOutbound') != -1){
 //            alert(listpara.indexOf('vatOutbound'));
-            if(listpara.indexOf('vatOutbound') === 6){
+//            if(listpara.indexOf('vatOutbound') === 6){
                 $("#menu-invoicevatOutbound").css('background-color', '#ccc');
-            }
+//            }
         }
         else if(listpara.indexOf('NoVatOutbound') != -1){
-            if(listpara.indexOf('NoVatOutbound') === 6){
+//            if(listpara.indexOf('NoVatOutbound') === 6){
                 $("#menu-invoicenovatOutbound").css('background-color', '#ccc');
-            }          
+//            }          
         }
         else if(listpara.indexOf('NoVatWendy') != -1){
-            if(listpara.indexOf('NoVatWendy') === 6){
+//            if(listpara.indexOf('NoVatWendy') === 6){
                 $("#menu-invoicenovatWendy").css('background-color', '#ccc');
-            }          
+//            }          
         }else{
             //console.log(name[2]);
             str = name[2].split(".");
