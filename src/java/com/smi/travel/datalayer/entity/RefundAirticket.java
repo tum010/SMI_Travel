@@ -24,12 +24,12 @@ public class RefundAirticket {
     public RefundAirticket() {
     }
 
-    public RefundAirticket(Agent agent, String refundNo, Date refundDate, String refundBy, String renark, List refundAirticketDetails) {
+    public RefundAirticket(Agent agent, String refundNo, Date refundDate, String refundBy, String remark, List refundAirticketDetails) {
        this.agent = agent;
        this.refundNo = refundNo;
        this.refundDate = refundDate;
        this.refundBy = refundBy;
-       this.remark = renark;
+       this.remark = remark;
        this.refundAirticketDetails = refundAirticketDetails;
     }
    
