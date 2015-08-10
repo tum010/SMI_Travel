@@ -1,6 +1,6 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates หห
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
@@ -13,6 +13,7 @@ import com.smi.travel.datalayer.entity.MAirlineAgent;
 import com.smi.travel.datalayer.entity.MBilltype;
 import com.smi.travel.datalayer.entity.MBookingstatus;
 import com.smi.travel.datalayer.entity.MBranch;
+import com.smi.travel.datalayer.entity.MCreditBank;
 import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MDepartment;
 import com.smi.travel.datalayer.entity.MFlight;
@@ -60,6 +61,6 @@ public interface MListItemDao {
     public List<MAirlineAgent> getListMAirLineAgent();
     public List<MPaytype> getListMPayType();
     public List<MStockStatus> getListMStockStatus();
-    
+    public List<MCreditBank> getListCreditBank();
     
 }
