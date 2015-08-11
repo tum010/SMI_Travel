@@ -371,33 +371,92 @@ $(document).ready(function () {
 
 function setGuideName(name,no){
     if(no === 'name1'){
-        guideList = [];
-        guideList.push({name: name});
+//        guideList = [];
+//        guideList.push({name: name});
         var name2 = document.getElementById('InputGuideName2').value;
-        guideList.push({name: name2});
+//        guideList.push({name: name2});
+        
+        $('#InvoiceSupGuideBill')
+            .find('option')
+            .remove()
+            .end()
+            .append('<option value="">---------</option>')
+            .val('')
+        ;
+        
+        $('#InvoiceSupGuideBill').append($('<option>', {
+            value: name,
+            text: name
+        }));
+        $('#InvoiceSupGuideBill').append($('<option>', {
+            value: name2,
+            text: name2
+        }));
     }
 
     if(no === 'name2'){
-        guideList = [];
+//        guideList = [];
         var name1 = document.getElementById('InputGuideName1').value;
-        guideList.push({name: name1});
-        guideList.push({name: name});
+//        guideList.push({name: name1});
+//        guideList.push({name: name});
+        $('#InvoiceSupGuideBill')
+            .find('option')
+            .remove()
+            .end()
+            .append('<option value="">---------</option>')
+            .val('')
+        ;
+        
+        $('#InvoiceSupGuideBill').append($('<option>', {
+            value: name1,
+            text: name1
+        }));
+        $('#InvoiceSupGuideBill').append($('<option>', {
+            value: name,
+            text: name
+        }));
     }
     
     if(no === 'ready'){
         var name1 = document.getElementById('InputGuideName1').value;
         var name2 = document.getElementById('InputGuideName2').value;       
-        guideList.push({name: name1});
-        guideList.push({name: name2});
+//        guideList.push({name: name1});
+//        guideList.push({name: name2});
         
         var guideName = document.getElementById('guideName').value;
-        if(guideName !== ""){
+        $('#InvoiceSupGuideBill')
+                .find('option')
+                .remove()
+                .end()
+                .append('<option value="">---------</option>')
+                .val('')
+            ;
+
+            $('#InvoiceSupGuideBill').append($('<option>', {
+                value: name1,
+                text: name1
+            }));
+            $('#InvoiceSupGuideBill').append($('<option>', {
+                value: name2,
+                text: name2
+            }));    
+        if(guideName !== ""){           
             if(name1 === guideName){
-                document.getElementById("InvoiceSupGuideBill").selectedIndex = 1;
+//                document.getElementById("InvoiceSupGuideBill").selectedIndex = 1;
+//                $('#InvoiceSupGuideBill option[value='+name1+']').prop('selected', true);
+                $('[name=InvoiceSupGuideBill] option').filter(function() { 
+                    return ($(this).text() === name1); //To select Blue
+                }).prop('selected', true);
             } else if(name2 === guideName){
-                document.getElementById("InvoiceSupGuideBill").selectedIndex = 2;
+//                document.getElementById("InvoiceSupGuideBill").selectedIndex = 2;
+                $('[name=InvoiceSupGuideBill] option').filter(function() { 
+                    return ($(this).text() === name2); //To select Blue
+                }).prop('selected', true);
             } else {
-                document.getElementById("InvoiceSupGuideBill").selectedIndex = 0;
+//                document.getElementById("InvoiceSupGuideBill").selectedIndex = 0;
+                $('[name=InvoiceSupGuideBill] option').filter(function() { 
+                    return ($(this).text() === ''); //To select Blue
+                }).prop('selected', true);
                 document.getElementById('textAlertDivGuideName').style.display = 'block';
                 document.getElementById('textAlertDivGuideName').innerHTML = 'Guide Bill is not match. Invoice sup is "' +guideName+ '".!!!';
             }          
@@ -427,10 +486,10 @@ function setGuideName(name,no){
         }
     }
     
-    document.getElementById('GuideNo1').innerHTML = guideList[0].name;
-    document.getElementById('GuideNo1').value = guideList[0].name;
-    document.getElementById('GuideNo2').innerHTML = guideList[1].name;
-    document.getElementById('GuideNo2').value = guideList[1].name;
+//    document.getElementById('GuideNo1').innerHTML = guideList[0].name;
+//    document.getElementById('GuideNo1').value = guideList[0].name;
+//    document.getElementById('GuideNo2').innerHTML = guideList[1].name;
+//    document.getElementById('GuideNo2').value = guideList[1].name;
     
 }
 
