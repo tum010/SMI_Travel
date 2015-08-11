@@ -53,6 +53,8 @@ public class UtilityFunction {
       " eighteen",
       " nineteen"
     };
+    
+    private static final String URL = ".smi";
 
     public Date convertStringToDate(String day) {
         Date resultDate = new Date();
@@ -368,6 +370,10 @@ public class UtilityFunction {
             
         }
         return rounting;
+    }
+
+    public String getAddressUrl(String requestUrl){
+        return requestUrl.substring(requestUrl.lastIndexOf("/")+1).replaceAll(URL, "");
     }
     
 }
