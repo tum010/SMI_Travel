@@ -5,8 +5,10 @@
  */
 package com.smi.travel.monitor;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
 import java.nio.file.FileSystems;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -21,7 +23,8 @@ import java.util.Map;
 import java.nio.file.attribute.*;
 import org.apache.log4j.Logger;
 import static java.nio.file.StandardWatchEventKinds.*;
-import static java.nio.file.LinkOption.*;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardWatchEventKinds;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -79,7 +82,7 @@ public class DirectoryWatch {
      * Creates a WatchService and registers the given directory
      *
      */
-    public DirectoryWatch(String dirpath, String recursive) throws IOException {
+    public DirectoryWatch(String dirpath, String recursive, String swapDir) throws IOException {
         log.info("*** Inside DirectoryWatch Constructor");
         Path dir = Paths.get(dirpath);
         this.watcher = FileSystems.getDefault().newWatchService();
@@ -97,6 +100,8 @@ public class DirectoryWatch {
         } else {
             register(dir);
         }
+        //Swap existing file for trigger Watchservice
+        swapExisting(dir, swapDir);
         // enable trace after initial registration  
         this.trace = true;
 //        processEvents();
@@ -113,7 +118,7 @@ public class DirectoryWatch {
         // wait for key to be signalled  
         WatchKey key;
         try {
-            key = watcher.poll(10, TimeUnit.MILLISECONDS);//take();
+            key = watcher.poll(100, TimeUnit.MILLISECONDS);//take();
         } catch (InterruptedException x) {
             return null;
         }
@@ -125,9 +130,19 @@ public class DirectoryWatch {
         }
         for (WatchEvent<?> event : key.pollEvents()) {
             WatchEvent.Kind kind = event.kind();
+            System.out.println("kind : " + kind);
             // TBD - provide example of how OVERFLOW event is handled  
             if (kind == OVERFLOW) {
+                System.out.println("--------------------------File Overflow:" + event.context());
                 continue;
+            }
+            if (kind == StandardWatchEventKinds.ENTRY_CREATE) {
+                System.out.println("--------------------------File Created:" + event.context());
+            } else if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
+                // and modify it
+                System.out.println("--------------------------File Modified:" + event.context());
+            } else if (kind == StandardWatchEventKinds.ENTRY_DELETE) {
+                System.out.println("--------------------------File deleted:" + event.context());
             }
             // Context for directory entry event is the file name of entry  
             WatchEvent<Path> ev = cast(event);
@@ -150,5 +165,27 @@ public class DirectoryWatch {
             }
         }
         return fileFound.toString();
+    }
+
+    private void swapExisting(Path dir, String swapDir) {
+        
+            try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(dir)) {
+                for (Path path : directoryStream) {
+                    
+                    String srcPath = path.toString();
+                    Path swapDirPath = FileSystems.getDefault().getPath(swapDir);
+                    srcPath = srcPath.replace(dir.toString(), swapDirPath.toString());
+                    Path swapFile = FileSystems.getDefault().getPath(srcPath);
+                    if(Files.notExists(swapFile.getParent())){
+                        new File(swapFile.getParent().toString()).mkdir();
+                    }
+                    System.out.println("##############copying " + path.toString());
+                    System.out.println("##############destination File=" + swapFile.toString());
+                    Files.move(path, swapFile, StandardCopyOption.REPLACE_EXISTING);
+                    Files.move(swapFile, path, StandardCopyOption.REPLACE_EXISTING);
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+    }
     }
 }

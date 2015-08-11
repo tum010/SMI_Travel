@@ -53,6 +53,7 @@ public class MonitorGalileo extends MonitorScheduler {
     private String monitorDirectory = null;
     private String archivedDirectory = null;
     private String errorDirectory = null;
+    private String swapDirectory = null;
     Map retrievedList = null;
     private final static String GDS = "GALILEO";
     private final static String SECTION_PATTERN = "^[A]\\d\\d.*";
@@ -65,10 +66,11 @@ public class MonitorGalileo extends MonitorScheduler {
         this.monitorDirectory = monitorDirectory;
     }
 
-    MonitorGalileo(String inDir, String archDir, String errDir) {
+    MonitorGalileo(String inDir, String archDir, String errDir, String swapDir) {
         this.monitorDirectory = inDir;
         this.archivedDirectory = archDir;
         this.errorDirectory = errDir;
+        this.swapDirectory = swapDir;
     }
 
     public void run() {
@@ -115,7 +117,7 @@ public class MonitorGalileo extends MonitorScheduler {
             initFlag = true;
             System.out.println("Init " + MonitorGalileo.class.getName() + " , service directory is" + this.monitorDirectory);
             try {
-                directoryWatch = new DirectoryWatch(this.monitorDirectory, "1");
+                directoryWatch = new DirectoryWatch(this.monitorDirectory, "1", this.swapDirectory);
             } catch (IOException ex) {
                 Logger.getLogger(MonitorGalileo.class.getName()).log(Level.SEVERE, "Service directory must be gone.", ex);
             }

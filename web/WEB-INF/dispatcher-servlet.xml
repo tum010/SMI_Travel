@@ -536,18 +536,21 @@
 		init-method="init">
 		<constructor-arg index="0" type="java.lang.String">
 			<!--<value>C:/Users/Administrator/Desktop/PNR/galileo/</value> -->
-			<!-- <value>D:/PNR/gali/</value> -->
-			 <value>S:/BackupPNR/</value> 
+			 <value>D:/iCONEXT/SMI/PNR/gali/</value> 
+			 <!--<value>S:/BackupPNR/</value>--> 
 		</constructor-arg>
 		<constructor-arg index="1" type="java.lang.String">
 			<!--<value>C:/Users/Administrator/Desktop/PNR/galileo/archived/</value> -->
-			<!-- <value>D:/PNR/archived/</value> -->
-			 <value>S:/BackupPNR/archived/</value>
+			 <value>D:/iCONEXT/SMI/PNR/archived/</value> 
+			 <!--<value>S:/BackupPNR/archived/</value>-->
 		</constructor-arg>
 		<constructor-arg index="2" type="java.lang.String">
 			<!--<value>C:/Users/Administrator/Desktop/PNR/galileo/error/</value>-->
-			<!-- <value>D:/PNR/error/</value> -->
-			 <value>S:/BackupPNR/error/</value> 
+			 <value>D:/iCONEXT/SMI/PNR/error/</value> 
+			 <!--<value>S:/BackupPNR/error/</value>--> 
+		</constructor-arg>
+		<constructor-arg index="3" type="java.lang.String">
+			 <value>D:/iCONEXT/SMI/PNR/swap/</value> 
 		</constructor-arg>
 		<property name="mGalileoService" ref="MGalileoService" />
 		<property name="mAirticketService" ref="MAirticketService" />
@@ -558,27 +561,31 @@
 		init-method="init">
 		<constructor-arg index="0" type="java.lang.String">
 			<!--<value>C:/Users/Administrator/Desktop/PNR/amadeus/</value>-->
-			<!-- <value>D:/PNR/ama/</value> -->
-			 <value>T:/BackupPNR/</value> 
+			 <value>D:/iCONEXT/SMI/PNR/ama/</value> 
+			 <!--<value>T:/BackupPNR/</value>--> 
 		</constructor-arg>
 		<constructor-arg index="1" type="java.lang.String">
 		<!--	<value>C:/Users/Administrator/Desktop/PNR/amadeus/archived/</value> -->
-			<!-- <value>D:/PNR/archived/</value> -->
-			 <value>T:/BackupPNR/archived/</value> 
+			 <value>D:/iCONEXT/SMI/PNR/archived/</value> 
+			 <!--<value>T:/BackupPNR/archived/</value>--> 
 		</constructor-arg>
 		<constructor-arg index="2" type="java.lang.String">
 			<!--<value>C:/Users/Administrator/Desktop/PNR/amadeus/error/</value>-->
-			<!-- <value>D:/PNR/error/</value> -->
-			 <value>T:/BackupPNR/error/</value> 
+			 <value>D:/iCONEXT/SMI/PNR/error/</value> 
+			 <!--<value>T:/BackupPNR/error/</value>--> 
+		</constructor-arg>
+		<constructor-arg index="3" type="java.lang.String">
+			 <value>D:/iCONEXT/SMI/PNR/swap/</value> 
 		</constructor-arg>
 		<property name="mAmadeusService" ref="MAmadeusService" />
 		<property name="mAirticketService" ref="MAirticketService" />
 		<property name="bookingAirticketService" ref="BookingAirticket" />
 	</bean>
 
-<!-- 	 <task:scheduled-tasks> <task:scheduled ref="monitorAmadeus" method="run"  -->
-<!-- 		fixed-delay="5000" /> <task:scheduled ref="monitorGalileo" method="run" fixed-delay="5000"  -->
-<!-- 		/> </task:scheduled-tasks>  -->
+        <task:scheduled-tasks> 
+            <task:scheduled ref="monitorAmadeus" method="run" fixed-delay="5000" /> 
+            <task:scheduled ref="monitorGalileo" method="run" fixed-delay="5000" /> 
+        </task:scheduled-tasks>  
 
 	<bean id="MProductTypeController"
 		class="com.smi.travel.masterdata.controller.MProductTypeController">

@@ -31,7 +31,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -55,6 +54,7 @@ public class MonitorAmadeus extends MonitorScheduler {
     private String monitorDirectory = null;
     private String archivedDirectory = null;
     private String errorDirectory = null;
+    private String swapDirectory = null;
     Map retrievedList = null;
     private final static String GDS = "AMADEUS";
     private final static String NODE_SEPARATOR = ";";
@@ -67,12 +67,14 @@ public class MonitorAmadeus extends MonitorScheduler {
         this.monitorDirectory = monitorDirectory;
         this.archivedDirectory = monitorDirectory + "../archived/";
         this.errorDirectory = monitorDirectory + "../error/";
+        this.swapDirectory = monitorDirectory + "../swap/";
     }
 
-    MonitorAmadeus(String inDir, String archDir, String errDir) {
+    MonitorAmadeus(String inDir, String archDir, String errDir, String swapDir) {
         this.monitorDirectory = inDir;
         this.archivedDirectory = archDir;
         this.errorDirectory = errDir;
+        this.swapDirectory = swapDir;
     }
 
     public void run() {
@@ -86,7 +88,7 @@ public class MonitorAmadeus extends MonitorScheduler {
         try {
             System.out.println(MonitorAmadeus.class.getName() + " - Directory(" + this.monitorDirectory + ")");
             fileList = directoryWatch.processEvents();
-//            System.out.println("file found " + fileList);
+            System.out.println("------------------------file found " + fileList);
             if (fileList != null) {
                 buildMap();
                 String list[] = fileList.split(",");
@@ -120,7 +122,7 @@ public class MonitorAmadeus extends MonitorScheduler {
                     .getName() + " started  " + this.monitorDirectory);
 
             try {
-                directoryWatch = new DirectoryWatch(this.monitorDirectory, "1");
+                directoryWatch = new DirectoryWatch(this.monitorDirectory, "1", this.swapDirectory);
             } catch (IOException ex) {
                 Logger.getLogger(MonitorAmadeus.class.getName()).log(Level.SEVERE, null, ex);
             }
