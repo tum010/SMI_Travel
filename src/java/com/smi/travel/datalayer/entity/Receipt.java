@@ -16,6 +16,7 @@ public class Receipt {
 
      private String id;
      private MFinanceItemstatus MFinanceItemstatus;
+     private MItemstatus MItemStatus;
      private String recNo;
      private String recFrom;
      private String recName;
@@ -30,6 +31,8 @@ public class Receipt {
      private BigDecimal bankTransfer;
      private String chqBank1;
      private String chqBank2;
+     private String chqNo1;
+     private String chqNo2;
      private Date chqDate1;
      private Date chqDate2;
      private BigDecimal chqAmount1;
@@ -40,8 +43,9 @@ public class Receipt {
     public Receipt() {
     }
 
-    public Receipt(MFinanceItemstatus MFinanceItemstatus, String recNo, String recFrom, String recName, String recAddress, String arCode, Date recDate, Integer payType, String remark, BigDecimal withTax, BigDecimal cashAmount, BigDecimal cashMinusAmount, BigDecimal bankTransfer, String chqBank1, String chqBank2, Date chqDate1, Date chqDate2, BigDecimal chqAmount1, BigDecimal chqAmount2, List receiptDetails, List receiptCredits) {
+    public Receipt(MFinanceItemstatus MFinanceItemstatus, String recNo, String recFrom, String recName, String recAddress, String arCode, Date recDate, Integer payType, String remark, BigDecimal withTax, BigDecimal cashAmount, BigDecimal cashMinusAmount, BigDecimal bankTransfer, String chqBank1, String chqBank2, Date chqDate1, Date chqDate2, BigDecimal chqAmount1, BigDecimal chqAmount2, List receiptDetails, List receiptCredits,String chqNo1,String chqNo2,MItemstatus MItemStatus) {
        this.MFinanceItemstatus = MFinanceItemstatus;
+       this.MItemStatus =  MItemStatus;
        this.recNo = recNo;
        this.recFrom = recFrom;
        this.recName = recName;
@@ -60,6 +64,8 @@ public class Receipt {
        this.chqDate2 = chqDate2;
        this.chqAmount1 = chqAmount1;
        this.chqAmount2 = chqAmount2;
+       this.chqNo1 = chqNo1;
+       this.chqNo2 = chqNo2;
        this.receiptDetails = receiptDetails;
        this.receiptCredits = receiptCredits;
     }
@@ -142,6 +148,33 @@ public class Receipt {
     public void setWithTax(BigDecimal withTax) {
         this.withTax = withTax;
     }
+
+    public MItemstatus getMItemStatus() {
+        return MItemStatus;
+    }
+
+    public void setMItemStatus(MItemstatus MItemStatus) {
+        this.MItemStatus = MItemStatus;
+    }
+
+    public String getChqNo1() {
+        return chqNo1;
+    }
+
+    public void setChqNo1(String chqNo1) {
+        this.chqNo1 = chqNo1;
+    }
+
+    public String getChqNo2() {
+        return chqNo2;
+    }
+
+    public void setChqNo2(String chqNo2) {
+        this.chqNo2 = chqNo2;
+    }
+    
+    
+    
     public BigDecimal getCashAmount() {
         return this.cashAmount;
     }
