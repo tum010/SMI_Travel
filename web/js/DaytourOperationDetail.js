@@ -407,12 +407,20 @@ function setGuideName(name,no){
     if(no === 'check'){
         var InvoiceSupGuideBill = document.getElementById("InvoiceSupGuideBill").value;
         var guideName = document.getElementById('guideName').value;
-        if((InvoiceSupGuideBill !== guideName) || (InvoiceSupGuideBill === guideName)){
-            alert('aaaa');
+        if((InvoiceSupGuideBill !== guideName)){
             document.getElementById('textAlertDivGuideName').style.display = 'none';
         }
-        if(InvoiceSupGuideBill === ''){
+        if((InvoiceSupGuideBill === '') && (guideName !== '')){
+            var check = 0;
             if(guideName !== ''){
+                for(var i=0;i<guideChk.length;i++){
+                    var nameChk = guideChk[i].name;
+                    if(guideName === nameChk){
+                        check++;
+                    }
+                }
+            }
+            if((check === 0)){
                 document.getElementById('textAlertDivGuideName').style.display = 'block';
                 document.getElementById('textAlertDivGuideName').innerHTML = 'Guide Bill is not match. Invoice sup is "' +guideName+ '".!!!';
             }    
