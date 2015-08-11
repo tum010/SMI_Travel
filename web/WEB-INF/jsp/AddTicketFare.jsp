@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!--<script type="text/javascript" src="js/AddTicketFare.js"></script> ฟฟ--> 
+<!--<script type="text/javascript" src="js/AddTicketFare.js"></script>--> 
 <script type="text/javascript" src="js/workspace.js"></script> 
 <script type="text/javascript" src="js/jquery-ui.js"></script>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -32,7 +32,10 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>Save Unsuccess!</strong> 
         </div>
-        
+        <div id="textAlertTicketNo"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Ticket no. not available !</strong> 
+        </div>
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
             <div ng-include="'WebContent/Checking/CheckingAirTicketMenu.html'"></div>
         </div>
@@ -355,127 +358,120 @@
                         </div>
                     </div>
                 </div>
-
                 <!----- Detail ----->
                 <div class="panel panel-default">
 <!--                    <div class="panel-heading">
                         <h4 class="panel-title"></h4>
                     </div> -->
                     <div class="panel-body"  style="padding-right: 0px;" style="width: 100%">
-                        <div class="col-xs-12 form-group">
-                            <div class="col-xs-1 text-right"  style="width: 121px">
-                                <label class="control-label text-right">Over Comm </label>
-                            </div>
-                            <div class="col-xs-1"  style="width: 200px">
-                                <div class='input-group date'>
-                                    <input id="overCommission" name="overCommission" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.overCommission}">
+                        <div div class="col-sm-4"  style="border-right:solid 1px #D9D9D9">
+                            <div class="row form-group">
+                                <label class="col-lg-4 control-label text-right">Over Comm </label>
+                                <div class="col-sm-6">
+                                    <input id="overCommission" name="overCommission" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.overCommission}" tabindex="1"/>
                                 </div>
                             </div>
-                            <div class="col-xs-1 text-right"  style="width: 128px">
-                                <label class="control-label text-right">Add Pay </label>
+                            <div class="row form-group">
+                                <label class="col-lg-4 control-label text-right">Date </label>
+                                    <div class="col-sm-6">
+                                    <div class='input-group date'>
+                                        <input id="overDate" name="overDate"  type="text" 
+                                           class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['overDate']}" tabindex="2"/>
+                                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>
+                                </div>
+                            </div>         
+                            <div class="row form-group">
+                                <label class="col-lg-4 control-label text-right">Little Comm </label>
+                                <div class="col-sm-6">
+                                    <input id="litterCommission" name="litterCommission" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.litterCommission}" tabindex="3"/>
+                                </div>
+                            </div>    
+                            <div class="row form-group">
+                                <label class="col-lg-4 control-label text-right">Date </label>
+                                <div class="col-sm-6">                             
+                                    <div class='input-group date'>
+                                        <input id="litterDate" name="litterDate"  type="text" 
+                                           class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['litterDate']}" tabindex="4"/>
+                                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>
+                                </div>                            
                             </div>
-                            <div class="col-xs-1" style="width: 200px">
-                                <div class="input-group">                                    
-                                    <input id="addPay" name="addPay" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.addPay}">
+                        </div>                
+                        <div div class="col-sm-4" style="border-right:solid 1px #D9D9D9">
+                            <div class="row form-group">
+                                <label class="col-lg-4 control-label text-right">Add Pay </label>
+                                <div class="col-sm-6">
+                                    <div class="input-group">                                    
+                                        <input id="addPay" name="addPay" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.addPay}" tabindex="5"/>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-xs-1 text-right"  style="width: 185px">
-                                <label class="control-label text-right">Agent Comm Pay </label>
-                            </div>
-                            <div class="col-xs-1" style="width: 200px">
-                                <div class="input-group">                                    
-                                    <input id="agentComPay" name="agentComPay" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.agentComPay}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 form-group">
-                            <div class="col-xs-1 text-right"  style="width: 121px">
-                                <label class="control-label text-right">Date </label>
-                            </div>
-                            <div class="col-xs-1"  style="width: 200px">
-                                <div class='input-group date'>
-                                    <input id="overDate" name="overDate"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['overDate']}">
-                                    <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                                </div>
-                            </div>
-                            <div class="col-xs-1 text-right"  style="width: 128px">
-                                <label class="control-label text-right">Date </label>
-                            </div>
-                            <div class="col-xs-1" style="width: 200px">
+                            <div class="row form-group">
+                                <label class="col-lg-4 control-label text-right">Date </label>
+                                <div class="col-sm-6"> 
                                 <div class='input-group date'>
                                     <input id="addPayDate" name="addPayDate"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['addPayDate']}">
+                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['addPayDate']}" tabindex="6"/>
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
+                                </div>
                             </div>
-                            <div class="col-xs-1 text-right"  style="width: 185px">
-                                <label class="control-label text-right">Date </label>
+                            <div class="row form-group">
+                                <label class="col-lg-4 control-label text-right">Dec Pay </label>
+                                <div class="col-sm-6"> 
+                                    <div class="input-group">                                    
+                                        <input id="decPay" name="decPay" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.decPay}" tabindex="7"/>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-xs-1" style="width: 200px">
-                                <div class='input-group date'>
-                                    <input id="agentPayDate" name="agentPayDate"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['agentPayDate']}">
-                                    <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                            <div class="row form-group">
+                                <label class="col-lg-4 control-label text-right">Date </label>
+                                <div class="col-sm-6"> 
+                                    <div class='input-group date' id='date1'>
+                                        <input id="decPayDate" name="decPayDate"  type="text" 
+                                           class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['decPayDate']}" tabindex="8"/>
+                                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12 form-group">
-                            <div class="col-xs-1 text-right"  style="width: 121px">
-                                <label class="control-label text-right">Little Comm </label>
-                            </div>
-                            <div class="col-xs-1"  style="width: 200px">
-                                <div class='input-group date'>
-                                    <input id="litterCommission" name="litterCommission" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.litterCommission}">
+                        <div div class="col-sm-4" >
+                            <div class="row form-group">
+                                <label class="col-lg-6 control-label text-right">Agent Comm Pay </label>
+                                <div class="col-sm-6"> 
+                                    <div class="input-group">                                    
+                                        <input id="agentComPay" name="agentComPay" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.agentComPay}" tabindex="9"/>
+                                    </div>
+                                </div>
+                            </div>                            
+                            <div class="row form-group">
+                                <label class="col-lg-6 control-label text-right">Date </label>
+                                <div class="col-sm-6"> 
+                                    <div class='input-group date'>
+                                        <input id="agentPayDate" name="agentPayDate"  type="text" 
+                                           class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['agentPayDate']}" tabindex="10"/>
+                                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-xs-1 text-right"  style="width: 128px">
-                                <label class="control-label text-right">Dec Pay </label>
-                            </div>
-                            <div class="col-xs-1" style="width: 200px">
-                                <div class="input-group">                                    
-                                    <input id="decPay" name="decPay" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.decPay}">
+                            <div class="row form-group">
+                                <label class="col-lg-6 control-label text-right">Agent Comm Receive </label>
+                                <div class="col-sm-6"> 
+                                    <div class="input-group">                                    
+                                        <input id="agentComReceive" name="agentComReceive" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.agentComReceive}" tabindex="11"/>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-xs-1 text-right"  style="width: 185px">
-                                <label class="control-label text-right">Agent Comm Receive </label>
-                            </div>
-                            <div class="col-xs-1" style="width: 200px">
-                                <div class="input-group">                                    
-                                    <input id="agentComReceive" name="agentComReceive" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.agentComReceive}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 form-group">
-                            <div class="col-xs-1 text-right"  style="width: 121px">
-                                <label class="control-label text-right">Date </label>
-                            </div>
-                            <div class="col-xs-1"  style="width: 200px">
-                                <div class='input-group date'>
-                                    <input id="litterDate" name="litterDate"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['litterDate']}">
-                                    <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                                </div>
-                            </div>
-                            <div class="col-xs-1 text-right"  style="width: 128px">
-                                <label class="control-label text-right">Date </label>
-                            </div>
-                            <div class="col-xs-1" style="width: 200px">
-                                <div class='input-group date' id='date1'>
-                                    <input id="decPayDate" name="decPayDate"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['decPayDate']}">
-                                    <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                                </div>
-                            </div>
-                            <div class="col-xs-1 text-right"  style="width: 185px">
-                                <label class="control-label text-right">Date </label>
-                            </div>
-                            <div class="col-xs-1" style="width: 200px">
-                                <div class='input-group date' id='date2'>
-                                    <input id="agentReceiveDate" name="agentReceiveDate"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['agentReceiveDate']}">
-                                    <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                                </div>
+                            <div class="row form-group">
+                                <label class="col-lg-6 control-label text-right">Date </label>
+                                <div class="col-sm-6"> 
+                                    <div class='input-group date' id='date2'>
+                                        <input id="agentReceiveDate" name="agentReceiveDate"  type="text" 
+                                           class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['agentReceiveDate']}" tabindex="12"/>
+                                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>
+                                </div>   
                             </div>
                         </div>
                     </div>
@@ -713,8 +709,9 @@
         }
 
         if($('#ticketFareFlag').val() == "dummy"){
-            alert('Ticket no. not available');
+            $('#textAlertTicketNo').show();
         }
+        
         if($('#refno').val() != ""){
             var refNo = $('#refno').val();
             $("#filtercus").val(refNo);
@@ -1363,4 +1360,5 @@ function insertCommas(nField){
         nField.value = nField.value.replace(/[^\d\,\.]/g,"").replace(/ /,"");
     }
 }
+
 </script>
