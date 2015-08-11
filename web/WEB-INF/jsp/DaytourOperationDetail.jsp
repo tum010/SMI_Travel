@@ -607,8 +607,6 @@
                                         <input class="form-control" type="hidden" id="guideName" name="guideName" value="${requestScope['guideName']}" readonly="">
                                         <select id="InvoiceSupGuideBill" name="InvoiceSupGuideBill" class="form-control" onchange="setGuideName('','check')">
                                             <option id="" value="">---------</option>
-                                            <option id="GuideNo1" value="" ></option>
-                                            <option id="GuideNo2" value="" ></option>
                                         </select>
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 120px">
