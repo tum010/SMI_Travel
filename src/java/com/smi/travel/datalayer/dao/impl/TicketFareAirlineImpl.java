@@ -93,42 +93,26 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
     public String generatePVCode() {
         String PVCode = "";
         Session session = this.sessionFactory.openSession();
-        List<MRunningCode> list = new LinkedList<MRunningCode>();
+        List<TicketFareAirline> list = new LinkedList<TicketFareAirline>();
         Date thisdate = new Date();
         SimpleDateFormat df = new SimpleDateFormat();
-        SimpleDateFormat date = new SimpleDateFormat();
-        date.applyPattern("dd");
-        if("01".equals(String.valueOf(date.format(thisdate)))){
-            Query queryup = session.createQuery("update MRunningCode run set run.running = :running" +
-    				" where run.type = :type");
-            queryup.setParameter("running",0);
-            queryup.setParameter("type", "IB");
-            int result = queryup.executeUpdate();
-        }
-        df.applyPattern("yyMM"); 
-        Query query = session.createQuery("from MRunningCode run where run.type =:type ");
-        query.setParameter("type","IB");
+        df.applyPattern("yyMM");
+        Query query = session.createQuery("from TicketFareAirline tr where tr.pvCode Like :pvCode Order by tr.pvCode desc");
+        query.setParameter("pvCode", "%"+ df.format(thisdate) + "%");
         query.setMaxResults(1);
         list = query.list();
         if (list.isEmpty()) {
-            PVCode = "IB"+ df.format(thisdate)+"-"+"0001";
-        }else{
-            PVCode = String.valueOf(list.get(0).getRunning());
-            if (!PVCode.equalsIgnoreCase("")){
-                System.out.println("PVCode " +PVCode);
-                int running = Integer.parseInt(PVCode.split("-")[0]) + 1;
+            PVCode = "IB"+ df.format(thisdate) + "-" + "0001";
+        } else {
+            PVCode = String.valueOf(list.get(0).getPvCode());
+            if (!PVCode.equalsIgnoreCase("")) {
+                System.out.println("PVCode.substring(6,10) " + PVCode.substring(6,10) + "/////");
+                int running = Integer.parseInt(PVCode.substring(6,10)) + 1;
                 String temp = String.valueOf(running);
-                System.out.println("temp.length() " +temp.length());
                 for (int i = temp.length(); i < 4; i++) {
                     temp = "0" + temp;
                 }
-                PVCode = "IB"+df.format(thisdate) + "-" + temp;
-            
-            Query queryup = session.createQuery("update MRunningCode run set run.running = :running" +
-    				" where run.type = :type");
-            queryup.setParameter("running", list.get(0).getRunning()+1);
-            queryup.setParameter("type", "IB");
-            int result = queryup.executeUpdate();
+                PVCode = "IB"+ df.format(thisdate) + "-" + temp;
             }
         }
         session.close();
