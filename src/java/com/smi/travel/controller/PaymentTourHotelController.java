@@ -176,7 +176,10 @@ public class PaymentTourHotelController extends SMITravelController {
                 request.setAttribute("paymentId", paymentWendyId.getId());
                 request.setAttribute("payNo", paymentWendyId.getPayNo());
                 request.setAttribute("crateDate", paymentWendyId.getCreateDate());
-                request.setAttribute("tourDescId", paymentWendyId.getTourOperationDesc().getId());
+                if(paymentWendyId.getTourOperationDesc() != null){
+                    request.setAttribute("tourDescId", paymentWendyId.getTourOperationDesc().getId());
+                }
+                
                 
             } else {
                 InputPayNo = request.getParameter("payNo");
