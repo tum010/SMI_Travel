@@ -6,8 +6,7 @@
 
 package com.smi.travel.datalayer.dao;
 
-import com.smi.travel.datalayer.entity.AirticketFlight;
-import com.smi.travel.datalayer.entity.AirticketPassenger;
+import com.smi.travel.datalayer.entity.AirticketFlightView;
 import com.smi.travel.datalayer.entity.BookingFlight;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
@@ -26,7 +25,7 @@ public interface TicketFareAirlineDao {
     public String getTicketFareBookingFromTicketNo(String ticketNo);
     public String getListTicketFareFromRefno(String Refno);
     public List<BookingFlight> getListFlightFromTicketNo(String ticketNo);
-    public List<AirticketFlight> getListAirticketFlightFromTicketNo(String ticketNo);
+    public List<AirticketFlightView> getListAirticketFlightFromTicketNo(String ticketNo);
     public String validateSaveTicket(TicketFareAirline ticket);
     public List<TicketFareView> getListTicketFare(TicketFareView ticket,int option);
     public TicketFareAirline getTicketFareFromId(String id);

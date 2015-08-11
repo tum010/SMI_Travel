@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.dao.impl;
 import com.smi.travel.datalayer.dao.TicketFareAirlineDao;
 import com.smi.travel.datalayer.entity.AirticketAirline;
 import com.smi.travel.datalayer.entity.AirticketFlight;
+import com.smi.travel.datalayer.entity.AirticketFlightView;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.BookingFlight;
 import com.smi.travel.datalayer.entity.BookingPassenger;
@@ -338,7 +339,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
 
     @Override
     public List<BookingFlight> getListFlightFromTicketNo(String ticketNo) {
-       
+       List<BookingFlight> FlightList = new ArrayList<BookingFlight>();
         String Ticketquery = " from BookingPassenger  pass where pass.ticketnoS1||pass.ticketnoS2||pass.ticketnoS3 = :ticketNo";
         String Flightquery = " from BookingFlight  flight where  flight.bookingAirline.id = :airlineid";
 
@@ -348,7 +349,9 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         if (ticketPassList.isEmpty()) {
             return null;
         }
-        List<BookingFlight> FlightList = session.createQuery(Flightquery).setParameter("airlineid", ticketPassList.get(0).getBookingAirline().getId()).list();
+        if(ticketPassList.get(0).getBookingAirline() != null) {
+            FlightList = session.createQuery(Flightquery).setParameter("airlineid", ticketPassList.get(0).getBookingAirline().getId()).list();
+        }
         if (FlightList.isEmpty()) {
             return null;
         }
@@ -594,10 +597,9 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
     }
 
     @Override
-    public List<AirticketFlight> getListAirticketFlightFromTicketNo(String ticketNo) {
-        // ถ้า ticketPassList เป็นค่าว่างก็ให้คิวรี่จากตัว AirticketPassenger  กับ AirticketFlight แทน
-        // from AirticketPassenger pass where pass.series1||pass.series2||pass.series3 = :ticketNo
-        // from AirticketFlight flight where flight.airticketAirline.id = :airlineid";       
+    public List<AirticketFlightView> getListAirticketFlightFromTicketNo(String ticketNo) {
+        List<AirticketFlight> flightList = new ArrayList<AirticketFlight>();
+        List<AirticketFlightView> flightViews = new ArrayList<AirticketFlightView>(); 
         String AirticketPassengerQuery  = "from AirticketPassenger pass where pass.series1||pass.series2||pass.series3 = :ticketNo";
         String AirticketFlightQuery  = "from AirticketFlight flight where flight.airticketAirline.id = :airlineid";
         Session session = this.sessionFactory.openSession();
@@ -606,13 +608,27 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         if (ticketPassList.isEmpty()) {
             return null;
         }
-        List<AirticketFlight> flightList = session.createQuery(AirticketFlightQuery).setParameter("airlineid", ticketPassList.get(0).getAirticketAirline().getId()).list();
+        if(ticketPassList.get(0).getAirticketAirline() != null) {
+            flightList = session.createQuery(AirticketFlightQuery).setParameter("airlineid", ticketPassList.get(0).getAirticketAirline().getId()).list();
+        }
         if (flightList.isEmpty()) {
             return null;
+        }else{
+            for(int i = 0 ; i < flightList.size() ; i++ ){
+                AirticketFlightView airView = new AirticketFlightView();
+                airView.setAirlineCode(flightList.get(i).getAirticketAirline().getMAirline().getCode());
+                airView.setFlightNo(flightList.get(i).getFlightNo());
+                airView.setFlightClass(flightList.get(i).getMFlight().getName());
+                airView.setSourceCode(flightList.get(i).getSourceCode());
+                airView.setDesCode(flightList.get(i).getDesCode());
+                airView.setDepartDate(flightList.get(i).getDepartDate());
+                airView.setArriveDate(flightList.get(i).getArriveDate());
+                flightViews.add(airView);
+            }
         }
         session.close();
         this.sessionFactory.close();
-        return flightList;
+        return flightViews;
     }
     
 }

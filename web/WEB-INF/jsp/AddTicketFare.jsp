@@ -10,7 +10,8 @@
 <c:set var="agent" value="${requestScope['Agent']}" />
 <c:set var="SelectedAgent" value="${requestScope['SelectedAgent']}" />
 <c:set var="ticketList" value="${requestScope['ticketList']}" />
-<c:set var="flightDetail" value="${requestScope['Flight_Detail']}" /> 
+<c:set var="flightDetail" value="${requestScope['Flight_Detail']}" />
+<c:set var="flightDetailFromAirticket" value="${requestScope['Flight_Detail_Airticket']}" /> 
 <section class="content-header" >
     <h1>
         Checking - Air Ticket
@@ -568,6 +569,17 @@
                                         <td align="center"> <c:out value="${table.departureDate}" /></td>
                                         <td align="center"> <c:out value="${table.arrivalDate}" /></td>
                                 </c:forEach>
+                                <c:forEach var="table" items="${flightDetailFromAirticket}" varStatus="dataStatus">
+                                    <tr>
+                                        <td align="center"> <c:out value="${dataStatus.count}" /></td>
+                                        <td align="center"> <c:out value="${table.airlineCode}" /></td>
+                                        <td align="center"> <c:out value="${table.flightNo}" /></td>
+                                        <td align="center"> <c:out value="${table.flightClass}" /></td>
+                                        <td align="center"> <c:out value="${table.sourceCode}" /></td>
+                                        <td align="center"> <c:out value="${table.desCode}" /></td>
+                                        <td align="center"> <c:out value="${table.departDate}" /></td>
+                                        <td align="center"> <c:out value="${table.arriveDate}" /></td>
+                                </c:forEach>        
                             </tbody>
                         </table>
                     </div>
