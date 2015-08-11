@@ -1311,7 +1311,11 @@ function clearData(){
     $("#addPayDate").val("");
     $("#agentPayDate").val("");
     $("#agentReceiveDate").val("");
-
+    
+    $('#FlightDeailTable').dataTable().fnClearTable();
+    $('#FlightDeailTable').dataTable().fnDestroy();
+    $("#FlightDeailTable tbody").empty();
+    $("#flightPanel").addClass('hidden');
 }
 function calculateVat() {
 
