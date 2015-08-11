@@ -1,6 +1,6 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates ss
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
@@ -338,11 +338,10 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
 
     @Override
     public List<BookingFlight> getListFlightFromTicketNo(String ticketNo) {
-        String result ="";
-        System.out.println(" ticketNo ::: "+ticketNo);
-        
+       
         String Ticketquery = " from BookingPassenger  pass where pass.ticketnoS1||pass.ticketnoS2||pass.ticketnoS3 = :ticketNo";
         String Flightquery = " from BookingFlight  flight where  flight.bookingAirline.id = :airlineid";
+
         Session session = this.sessionFactory.openSession();
         List<BookingPassenger> ticketPassList = session.createQuery(Ticketquery).setParameter("ticketNo", ticketNo).list();
         
@@ -592,6 +591,28 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         session.close();
         this.sessionFactory.close();
         return result;
+    }
+
+    @Override
+    public List<AirticketFlight> getListAirticketFlightFromTicketNo(String ticketNo) {
+        // ถ้า ticketPassList เป็นค่าว่างก็ให้คิวรี่จากตัว AirticketPassenger  กับ AirticketFlight แทน
+        // from AirticketPassenger pass where pass.series1||pass.series2||pass.series3 = :ticketNo
+        // from AirticketFlight flight where flight.airticketAirline.id = :airlineid";       
+        String AirticketPassengerQuery  = "from AirticketPassenger pass where pass.series1||pass.series2||pass.series3 = :ticketNo";
+        String AirticketFlightQuery  = "from AirticketFlight flight where flight.airticketAirline.id = :airlineid";
+        Session session = this.sessionFactory.openSession();
+        List<AirticketPassenger> ticketPassList = session.createQuery(AirticketPassengerQuery).setParameter("ticketNo", ticketNo).list();
+        
+        if (ticketPassList.isEmpty()) {
+            return null;
+        }
+        List<AirticketFlight> flightList = session.createQuery(AirticketFlightQuery).setParameter("airlineid", ticketPassList.get(0).getAirticketAirline().getId()).list();
+        if (flightList.isEmpty()) {
+            return null;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return flightList;
     }
     
 }
