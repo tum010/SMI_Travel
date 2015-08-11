@@ -600,9 +600,15 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         }else{
             for(int i = 0 ; i < flightList.size() ; i++ ){
                 AirticketFlightView airView = new AirticketFlightView();
-                airView.setAirlineCode(flightList.get(i).getAirticketAirline().getMAirline().getCode());
+                if(flightList.get(i).getAirticketAirline().getMAirline() != null){
+                    airView.setAirlineCode(flightList.get(i).getAirticketAirline().getMAirline().getCode());
+                }
+                
                 airView.setFlightNo(flightList.get(i).getFlightNo());
-                airView.setFlightClass(flightList.get(i).getMFlight().getName());
+                if(flightList.get(i).getMFlight() != null){
+                    airView.setFlightClass(flightList.get(i).getMFlight().getName());
+                }
+                
                 airView.setSourceCode(flightList.get(i).getSourceCode());
                 airView.setDesCode(flightList.get(i).getDesCode());
                 airView.setDepartDate(flightList.get(i).getDepartDate());
