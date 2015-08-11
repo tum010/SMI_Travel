@@ -169,7 +169,8 @@ public class DirectoryWatch {
 
     private void swapExisting(Path dir, String swapDir) {
         
-            try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(dir)) {
+            try {
+                DirectoryStream<Path> directoryStream = Files.newDirectoryStream(dir);
                 for (Path path : directoryStream) {
                     
                     String srcPath = path.toString();
