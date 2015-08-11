@@ -60,7 +60,7 @@ public class AddTicketFareController extends SMITravelController {
         String ticketAirline = request.getParameter("ticketAirline");
         String passenger = request.getParameter("passenger");
         String issueDate = request.getParameter("issueDate");
-//        String ticketDate = request.getParameter("ticketDate");
+//        String ticketDate = request.getParameter("ticketDate"); ss
         String ticketFare = request.getParameter("ticketFare");
         String ticketTax = request.getParameter("ticketTax");
         String ticketIns = request.getParameter("ticketIns");
