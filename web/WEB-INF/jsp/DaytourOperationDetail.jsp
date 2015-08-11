@@ -34,6 +34,19 @@
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
 <input type="hidden" value="${param.tourID}" id="tourID">
+<script>
+    var guideChk = [];
+//    var guildeNameList = '${guildeList[0].name}';
+//    var guildeNameList = '${guildeList}';
+//    for(var i=0;i<guildeNameList.length;i++){
+//        guideChk.push({name: '${guildeList[i].name}'});
+//    }
+</script>
+<c:forEach var="table" items="${guildeList}">
+                            <script>
+                                guideChk.push({name: "${table.name}"});
+                            </script>
+                        </c:forEach>
 
 <section class="content-header" >
     <h1>
