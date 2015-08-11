@@ -1,5 +1,6 @@
 package com.smi.travel.controller;
 import com.smi.travel.datalayer.entity.Agent;
+import com.smi.travel.datalayer.entity.AirticketFlight;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.BookingFlight;
 import com.smi.travel.datalayer.entity.MAirlineAgent;
@@ -60,7 +61,7 @@ public class AddTicketFareController extends SMITravelController {
         String ticketAirline = request.getParameter("ticketAirline");
         String passenger = request.getParameter("passenger");
         String issueDate = request.getParameter("issueDate");
-//        String ticketDate = request.getParameter("ticketDate"); ss
+//        String ticketDate = request.getParameter("ticketDate");
         String ticketFare = request.getParameter("ticketFare");
         String ticketTax = request.getParameter("ticketTax");
         String ticketIns = request.getParameter("ticketIns");
@@ -272,10 +273,15 @@ public class AddTicketFareController extends SMITravelController {
             request.setAttribute(TICKETFARE,ticketFareAirline);
                 
             List<BookingFlight> bookingFlights = new ArrayList<BookingFlight>();
+            List<AirticketFlight> airticketFlights = new ArrayList<AirticketFlight>();
             bookingFlights = ticketFareAirlineService.getListFlightFromTicketNo(ticketNo);
             request.setAttribute(FLIGHTDETAIL, bookingFlights);
             if(bookingFlights == null){
-                request.setAttribute(FLIGHTDETAILFLAG,"dummy");
+                airticketFlights = ticketFareAirlineService.getListAirticketFlightFromTicketNo(ticketNo);
+                request.setAttribute(FLIGHTDETAIL, airticketFlights);
+                if(airticketFlights != null){
+                    request.setAttribute(FLIGHTDETAILFLAG,"notdummy");
+                }
             }else{
                 request.setAttribute(FLIGHTDETAILFLAG,"notdummy");
             }
@@ -284,13 +290,19 @@ public class AddTicketFareController extends SMITravelController {
             System.out.print("ticketId : " +ticketId);
             ticketFareAirline = ticketFareAirlineService.getTicketFareFromId(ticketId);
             List<BookingFlight> bookingFlights = new ArrayList<BookingFlight>();
+            List<AirticketFlight> airticketFlights = new ArrayList<AirticketFlight>();
             bookingFlights = ticketFareAirlineService.getListFlightFromTicketNo(ticketFareAirline.getTicketNo());
             request.setAttribute(FLIGHTDETAIL, bookingFlights);
             if(bookingFlights == null){
-                request.setAttribute(FLIGHTDETAILFLAG,"dummy");
+                airticketFlights = ticketFareAirlineService.getListAirticketFlightFromTicketNo(ticketFareAirline.getTicketNo());
+                request.setAttribute(FLIGHTDETAIL, airticketFlights);
+                if(airticketFlights != null){
+                    request.setAttribute(FLIGHTDETAILFLAG,"notdummy");
+                }
             }else{
                 request.setAttribute(FLIGHTDETAILFLAG,"notdummy");
             }
+            
             request.setAttribute(TICKETFARE,ticketFareAirline);
             request.setAttribute(TICKETTYPE, ticketFareAirline.getTicketType());
             request.setAttribute(TICKETBUY, ticketFareAirline.getTicketBuy());
@@ -312,10 +324,15 @@ public class AddTicketFareController extends SMITravelController {
             }else{
                 ticketFareAirline = ticketFareAirlineService.getTicketFareFromTicketNo(ticketNo);
                 List<BookingFlight> bookingFlights = new ArrayList<BookingFlight>();
+                List<AirticketFlight> airticketFlights = new ArrayList<AirticketFlight>();
                 bookingFlights = ticketFareAirlineService.getListFlightFromTicketNo(ticketNo);
                 request.setAttribute(FLIGHTDETAIL, bookingFlights);
                 if(bookingFlights == null){
-                    request.setAttribute(FLIGHTDETAILFLAG,"dummy");
+                    airticketFlights = ticketFareAirlineService.getListAirticketFlightFromTicketNo(ticketNo);
+                    request.setAttribute(FLIGHTDETAIL, airticketFlights);
+                    if(airticketFlights != null){
+                        request.setAttribute(FLIGHTDETAILFLAG,"notdummy");
+                    }
                 }else{
                     request.setAttribute(FLIGHTDETAILFLAG,"notdummy");
                 }
