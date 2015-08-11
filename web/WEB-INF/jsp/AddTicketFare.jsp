@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!--<script type="text/javascript" src="js/AddTicketFare.js"></script>--> 
+<!--<script type="text/javascript" src="js/AddTicketFare.js"></script> ฟฟ--> 
 <script type="text/javascript" src="js/workspace.js"></script> 
 <script type="text/javascript" src="js/jquery-ui.js"></script>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
