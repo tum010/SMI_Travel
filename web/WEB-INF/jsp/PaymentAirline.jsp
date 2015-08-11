@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!--<script type="text/javascript" src="js/PaymentAirline.js"></script> หห-->
+<!--<script type="text/javascript" src="js/PaymentAirline.js"></script>-->
 <script type="text/javascript" src="js/workspace.js"></script> 
 <script type="text/javascript" src="js/jquery-ui.js"></script>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -45,7 +45,10 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>Delete Unsuccess!</strong> 
         </div>       
-        
+        <div id="textAlertPaymentNo"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Payment no. not available !</strong> 
+        </div>
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
             <div ng-include="'WebContent/Checking/CheckingAirTicketMenu.html'"></div>
         </div>
@@ -701,9 +704,9 @@
         $(".money").mask('000,000,000.00', {reverse: true});
         $("#vat").val(${vat});
         $("#countRow").val("0");
-        
+
         if($('#searchPaymentNoFlag').val() == "dummy"){
-            alert('Payment no. not available');
+            $('#textAlertPaymentNo').show();
         }     
         
         $('#inputDateFrom').datetimepicker().on('dp.change', function (e) {
