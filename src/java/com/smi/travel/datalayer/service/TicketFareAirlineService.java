@@ -1,11 +1,12 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates หห
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.dao.TicketFareAirlineDao;
+import com.smi.travel.datalayer.entity.AirticketFlight;
 import com.smi.travel.datalayer.entity.BookingFlight;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
@@ -63,6 +64,11 @@ public class TicketFareAirlineService {
     public List<BookingFlight> getListFlightFromTicketNo(String ticketNo){
         return ticketFareAirlineDao.getListFlightFromTicketNo(ticketNo);
     }
+    
+    public List<AirticketFlight> getListAirticketFlightFromTicketNo(String ticketNo){
+        return ticketFareAirlineDao.getListAirticketFlightFromTicketNo(ticketNo);
+    }
+    
     public TicketFareAirlineDao getTicketFareAirlineDao() {
         return ticketFareAirlineDao;
     }
