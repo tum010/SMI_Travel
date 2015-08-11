@@ -224,12 +224,12 @@ public class DaytourOperationDetailController extends SMITravelController {
         
         setTourOperationExpenses(request, tourOperationDesc);
         tourOperationDesc.setTransferInfo(info);
-        List<DaytourBooking> daytourBookings = setDaytourBookings(request, tourOperationDesc, tourID, tourDate);
+        List<DaytourBooking> daytourBookings = setDaytourBookings(request, tourOperationDesc, tourID, tourDate);        
+        result = daytourOperationService.saveTourOperation(tourOperationDesc, daytourBookings,setTourOperationDrivers(request, tourOperationDesc));
         String confirmGuideBill = request.getParameter("ConfirmGuideBill");           
         if("1".equalsIgnoreCase(confirmGuideBill)){
             setGuideBill(request, session, tourOperationDesc); 
-        }        
-        result = daytourOperationService.saveTourOperation(tourOperationDesc, daytourBookings,setTourOperationDrivers(request, tourOperationDesc));
+        }      
         return result;
     }
 
