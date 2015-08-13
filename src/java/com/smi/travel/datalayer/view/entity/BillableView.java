@@ -17,6 +17,7 @@ public class BillableView {
     private int price;
     private String refno;
     private String detail;
+    private String currency;
     private String id;
 
     public String getBillID() {
@@ -51,6 +52,16 @@ public class BillableView {
         this.price = price;
     }
 
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    
+    
     public String getRefno() {
         return refno;
     }

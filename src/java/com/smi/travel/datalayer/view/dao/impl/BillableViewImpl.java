@@ -38,6 +38,7 @@ private SessionFactory sessionFactory;
                 .addScalar("price",Hibernate.BIG_INTEGER)
                 .addScalar("ref_no",Hibernate.STRING)
                 .addScalar("detail",Hibernate.STRING)
+                .addScalar("currency",Hibernate.STRING)
                 .addScalar("id",Hibernate.STRING)
                 .list();
                
@@ -50,7 +51,8 @@ private SessionFactory sessionFactory;
             bill.setPrice(util.convertObjectToInteger(B[3]));
             bill.setRefno(B[4].toString());
             bill.setDetail(B[5].toString());
-            bill.setId(B[6].toString());       
+            bill.setCurrency(B[6].toString());  
+            bill.setId(B[7].toString());       
             BillableList.add(bill);  
         }
        
@@ -83,6 +85,7 @@ private SessionFactory sessionFactory;
             Billdata.setCost(B.getCost());
             Billdata.setPrice(B.getPrice());
             Billdata.setDetail(B.getDetail());
+            Billdata.setCurrency(B.getCurrency());
             BillDesc.add(Billdata);
         }
         return BillDesc;
