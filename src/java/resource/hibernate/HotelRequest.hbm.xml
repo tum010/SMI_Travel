@@ -22,8 +22,5 @@
         <property name="price" type="int">
             <column name="price" not-null="true" />
         </property>
-        <property name="currency" type="string">
-            <column name="currency" length="3" />
-        </property>
     </class>
 </hibernate-mapping>

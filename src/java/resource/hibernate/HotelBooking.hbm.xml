@@ -55,6 +55,9 @@
          <property name="deadline" type="date">
             <column name="deadline" length="10"  />
         </property>
+        <property name="currency" type="string">
+            <column name="currency" length="3" />
+        </property>
         
 
         <bag name="hotelPassengers" table="hotel_passenger" cascade="save-update" inverse="true" lazy="true" fetch="select">
