@@ -11,41 +11,75 @@ public class ReceiptDetail {
 
 
      private String id;
+     private PaymentAirticket paymentAirticket;
      private Receipt receipt;
+     private InvoiceDetail invoiceDetail;
+     private MBilltype MBilltype;
      private String description;
-     private String valueType;
+     private String displayDescription;
      private BigDecimal cost;
-     private BigDecimal amount;
+     private String curCost;
+     private Integer isVat;
      private BigDecimal vat;
+     private BigDecimal amount;
+     private String curAmount;
+     private String airlineCode;
      private String remark;
 
     public ReceiptDetail() {
     }
 
-    public ReceiptDetail(Receipt receipt, String description, String valueType, BigDecimal cost, BigDecimal amount, BigDecimal vat, String remark) {
+    public ReceiptDetail(PaymentAirticket paymentAirticket, Receipt receipt, InvoiceDetail invoiceDetail, MBilltype MBilltype, String description, String displayDescription, BigDecimal cost, String curCost, Integer isVat, BigDecimal vat, BigDecimal amount, String curAmount, String airlineCode, String remark) {
+       this.paymentAirticket = paymentAirticket;
        this.receipt = receipt;
+       this.invoiceDetail = invoiceDetail;
+       this.MBilltype = MBilltype;
        this.description = description;
-       this.valueType = valueType;
+       this.displayDescription = displayDescription;
        this.cost = cost;
-       this.amount = amount;
+       this.curCost = curCost;
+       this.isVat = isVat;
        this.vat = vat;
+       this.amount = amount;
+       this.curAmount = curAmount;
+       this.airlineCode = airlineCode;
        this.remark = remark;
     }
    
     public String getId() {
-        return id;
+        return this.id;
     }
-
+    
     public void setId(String id) {
         this.id = id;
     }
+    public PaymentAirticket getPaymentAirticket() {
+        return this.paymentAirticket;
+    }
     
+    public void setPaymentAirticket(PaymentAirticket paymentAirticket) {
+        this.paymentAirticket = paymentAirticket;
+    }
     public Receipt getReceipt() {
         return this.receipt;
     }
     
     public void setReceipt(Receipt receipt) {
         this.receipt = receipt;
+    }
+    public InvoiceDetail getInvoiceDetail() {
+        return this.invoiceDetail;
+    }
+    
+    public void setInvoiceDetail(InvoiceDetail invoiceDetail) {
+        this.invoiceDetail = invoiceDetail;
+    }
+    public MBilltype getMBilltype() {
+        return this.MBilltype;
+    }
+    
+    public void setMBilltype(MBilltype MBilltype) {
+        this.MBilltype = MBilltype;
     }
     public String getDescription() {
         return this.description;
@@ -54,12 +88,12 @@ public class ReceiptDetail {
     public void setDescription(String description) {
         this.description = description;
     }
-    public String getValueType() {
-        return this.valueType;
+    public String getDisplayDescription() {
+        return this.displayDescription;
     }
     
-    public void setValueType(String valueType) {
-        this.valueType = valueType;
+    public void setDisplayDescription(String displayDescription) {
+        this.displayDescription = displayDescription;
     }
     public BigDecimal getCost() {
         return this.cost;
@@ -68,12 +102,19 @@ public class ReceiptDetail {
     public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
-    public BigDecimal getAmount() {
-        return this.amount;
+    public String getCurCost() {
+        return this.curCost;
     }
     
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
+    public void setCurCost(String curCost) {
+        this.curCost = curCost;
+    }
+    public Integer getIsVat() {
+        return this.isVat;
+    }
+    
+    public void setIsVat(Integer isVat) {
+        this.isVat = isVat;
     }
     public BigDecimal getVat() {
         return this.vat;
@@ -81,6 +122,27 @@ public class ReceiptDetail {
     
     public void setVat(BigDecimal vat) {
         this.vat = vat;
+    }
+    public BigDecimal getAmount() {
+        return this.amount;
+    }
+    
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+    public String getCurAmount() {
+        return this.curAmount;
+    }
+    
+    public void setCurAmount(String curAmount) {
+        this.curAmount = curAmount;
+    }
+    public String getAirlineCode() {
+        return this.airlineCode;
+    }
+    
+    public void setAirlineCode(String airlineCode) {
+        this.airlineCode = airlineCode;
     }
     public String getRemark() {
         return this.remark;
