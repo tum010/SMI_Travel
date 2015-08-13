@@ -358,4 +358,9 @@ public class InvoiceImpl implements InvoiceDao{
     public List<HashMap<String, Object>> getInvoiceDetailFromInvoiceNumber(String InvoiceNumber) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public String LockAndUnLockInvoice(String InvoiceId, int LockStatus) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
