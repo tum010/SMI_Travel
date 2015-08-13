@@ -115,8 +115,11 @@ public class OtherBookingImpl implements OtherBookingDao{
             }
             
             int ad = 0;
+            int adCancel = 0;
             int ch = 0;
+            int chCancel = 0;
             int inf = 0;
+            int infCancel = 0;
             List<Integer> stockNum = getStockNumFromOtherBookID(otherbook.getId(),session);
             if(stockNum != null){
                 ad = stockNum.get(0);
@@ -173,7 +176,23 @@ public class OtherBookingImpl implements OtherBookingDao{
             transaction.commit();
             session.close();
             this.sessionFactory.close();
-            result = stockDetailList.get(0).getStock().getId();
+            
+            if(ad != adultQty){
+                adCancel = adultQty - ad;
+            }
+            if(ch != childQty){
+                chCancel = childQty - ch;
+            }
+            if(inf != infantQty){
+                infCancel = infantQty - inf;
+            }
+            
+            String adStr = String.valueOf(adCancel);
+            String chStr = String.valueOf(chCancel);
+            String infStr = String.valueOf(infCancel);
+            result = adStr+"||"+chStr+"||"+infStr;
+            
+            //result = stockDetailList.get(0).getStock().getId();
             
         } catch (Exception ex) {
             ex.printStackTrace();
