@@ -24,6 +24,7 @@ public class Invoice {
      private String invName;
      private String invAddress;
      private Date dueDate;
+     private Date invDate;
      private String deparement;
      private String arcode;
      private String remark;
@@ -38,7 +39,7 @@ public class Invoice {
     public Invoice() {
     }
 
-    public Invoice(MAccpay MAccpay, MFinanceItemstatus MFinanceItemstatus, SystemUser staff, String invNo, String invTo, String invName, String invAddress, Date dueDate, String deparement, String arcode, String remark, String invType, Integer isGroup, Integer isLock, String createBy, Date createDate, String subDepartment, List invoiceDetails) {
+    public Invoice(MAccpay MAccpay, MFinanceItemstatus MFinanceItemstatus, SystemUser staff, String invNo, String invTo, String invName, String invAddress, Date dueDate, String deparement, String arcode, String remark, String invType, Integer isGroup, Integer isLock, String createBy, Date createDate, String subDepartment,Date invDate, List invoiceDetails) {
        this.MAccpay = MAccpay;
        this.MFinanceItemstatus = MFinanceItemstatus;
        this.staff = staff;
@@ -53,6 +54,7 @@ public class Invoice {
        this.invType = invType;
        this.isGroup = isGroup;
        this.isLock = isLock;
+       this.invDate = invDate;
        this.createBy = createBy;
        this.createDate = createDate;
        this.subDepartment = subDepartment;
@@ -89,6 +91,16 @@ public class Invoice {
     public void setStaff(SystemUser staff) {
         this.staff = staff;
     }
+
+    public Date getInvDate() {
+        return invDate;
+    }
+
+    public void setInvDate(Date invDate) {
+        this.invDate = invDate;
+    }
+    
+    
     
     public String getInvNo() {
         return this.invNo;

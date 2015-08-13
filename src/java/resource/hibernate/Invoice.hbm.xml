@@ -43,6 +43,9 @@
         <property name="invType" type="string">
             <column name="inv_type" length="11" />
         </property>
+        <property name="invDate" type="date">
+            <column name="inv_date" length="10"  />
+        </property>
         <property name="isGroup" type="java.lang.Integer">
             <column name="is_group" />
         </property>
