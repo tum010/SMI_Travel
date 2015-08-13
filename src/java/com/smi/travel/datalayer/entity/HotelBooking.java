@@ -12,7 +12,6 @@ import java.util.List;
  */
 public class HotelBooking  {
 
-
      private String id;
      private MItemstatus MItemstatus;
      private Master master;
