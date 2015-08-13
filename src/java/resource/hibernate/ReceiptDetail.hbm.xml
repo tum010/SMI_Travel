@@ -7,23 +7,44 @@
             <column name="id" />
             <generator class="identity" />
         </id>
+        <many-to-one name="paymentAirticket" class="com.smi.travel.datalayer.entity.PaymentAirticket" fetch="select">
+            <column name="payment_air_id" />
+        </many-to-one>
         <many-to-one name="receipt" class="com.smi.travel.datalayer.entity.Receipt" fetch="select">
             <column name="rec_id" />
+        </many-to-one>
+        <many-to-one name="invoiceDetail" class="com.smi.travel.datalayer.entity.InvoiceDetail" fetch="select">
+            <column name="inv_detail_id" />
+        </many-to-one>
+        <many-to-one name="MBilltype" class="com.smi.travel.datalayer.entity.MBilltype" fetch="select">
+            <column name="item_type_id" />
         </many-to-one>
         <property name="description" type="string">
             <column name="description" />
         </property>
-        <property name="valueType" type="string">
-            <column name="value_type" length="1" />
+        <property name="displayDescription" type="string">
+            <column name="display_description" />
         </property>
         <property name="cost" type="big_decimal">
             <column name="cost" precision="10" />
         </property>
-        <property name="amount" type="big_decimal">
-            <column name="amount" precision="10" />
+        <property name="curCost" type="string">
+            <column name="cur_cost" length="3" />
+        </property>
+        <property name="isVat" type="java.lang.Integer">
+            <column name="is_vat" />
         </property>
         <property name="vat" type="big_decimal">
             <column name="vat" precision="10" />
+        </property>
+        <property name="amount" type="big_decimal">
+            <column name="amount" precision="10" />
+        </property>
+        <property name="curAmount" type="string">
+            <column name="cur_amount" length="3" />
+        </property>
+        <property name="airlineCode" type="string">
+            <column name="airline_code" length="3" />
         </property>
         <property name="remark" type="string">
             <column name="remark" />
