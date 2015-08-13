@@ -352,12 +352,12 @@ function DeleteBill() {
     }
 }
 
-function DisableVoid(){
+function DisableVoidInvoice(){
     var InvNo = document.getElementById('InvNo');
     document.getElementById('disableVoid').innerHTML = "Are you sure to delete booking other : " + InvNo.value + " ?";
 }
 
-function EnableVoid(){
+function EnableVoidInvoice(){
     var InvNo = document.getElementById('InvNo');
     document.getElementById('enableVoid').innerHTML = "Are you sure to enable booking other : " + InvNo.value + " ?";
 }

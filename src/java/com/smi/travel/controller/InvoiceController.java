@@ -713,6 +713,7 @@ public class InvoiceController extends SMITravelController {
                   invoiceDetail.setIsVat(1);
               }
               if(displayDescription != null){
+                  displayDescription = displayDescription.trim();
                   invoiceDetail.setDisplayDescription(displayDescription);
               }
              

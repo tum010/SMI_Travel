@@ -452,8 +452,9 @@
                                                 <td class="hidden"><input type="text" value="${ind.amount}" id="InputAmountLocalTemp${taxdesc.count}" name="InputAmountLocalTemp${taxdesc.count}"  ></td>
                                                 <td align="center" ><center><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('${taxdesc.count}')" data-toggle="modal" data-target="#DelDetailBill" >  </span></center></td>
                                                 <td class="hidden">
+                                                    <c:set var="displayDescriptionTemp" value="${fn:trim(ind.displayDescription)}" />
                                                     <textarea id="DescriptionInvoiceDetail${taxdesc.count}" name="DescriptionInvoiceDetail${taxdesc.count}" >
-                                                        ${ind.displayDescription}
+                                                        ${displayDescriptionTemp}
                                                     </textarea>
                                                 </td>
                                             </tr>
@@ -564,11 +565,11 @@
                                             <c:if test="${invoice.MFinanceItemstatus.id == '1'}">        
                                                 <c:set var="isDisableVoid" value="" />
                                             </c:if>
-                                            <button type="button" class="btn btn-primary" onclick="EnableVoid();" data-toggle="modal" data-target="#EnableVoid" id="enableVoidButton" name="enableVoidButton"  ${isEnableVoid} >
+                                            <button type="button" class="btn btn-primary" onclick="EnableVoidInvoice();" data-toggle="modal" data-target="#EnableVoid" id="enableVoidButton" name="enableVoidButton"  ${isEnableVoid} >
                                                 <span id="SpanEnableVoid" class="glyphicon glyphicon-ok" ></span> Cancel Void
                                             </button>
                                             
-                                            <button type="button" class="btn btn-danger" onclick="DisableVoid();" data-toggle="modal" data-target="#DisableVoid" id="disableVoidButton" name="disableVoidButton" ${isDisableVoid} >
+                                            <button type="button" class="btn btn-danger" onclick="DisableVoidInvoice();" data-toggle="modal" data-target="#DisableVoid" id="disableVoidButton" name="disableVoidButton" ${isDisableVoid} >
                                                 <span id="SpanDisableVoid" class="glyphicon glyphicon-remove" ></span> Void
                                             </button>
                                         </div>
