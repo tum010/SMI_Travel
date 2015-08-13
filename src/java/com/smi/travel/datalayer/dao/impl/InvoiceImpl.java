@@ -9,7 +9,10 @@ package com.smi.travel.datalayer.dao.impl;
 import com.smi.travel.datalayer.dao.InvoiceDao;
 import com.smi.travel.datalayer.entity.Invoice;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
+import com.smi.travel.datalayer.entity.Stock;
 import com.smi.travel.datalayer.view.entity.InvoiceView;
+import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,6 +30,8 @@ public class InvoiceImpl implements InvoiceDao{
     private Transaction transaction;
     private static final String DELETEALL_INVOICE_QUERY ="DELETE FROM Invoice in where in.id = :invouceID";
     private static final String GET_INVOICE = "FROM Invoice inv where inv.invNo = :invoiceNo";
+    private static final String GET_INVOICE_FROMID = "FROM Invoice inv where inv.id = :invoiceId";
+    private static final String SEARCH_INVOICE = "FROM Invoice inv where inv.id = :invoiceId and inv.invType = :invoiceType and inv.deparement = :invoiceDepartment";
     private static final String SELECT_INVOICE_DETAIL = "FROM InvoiceDetail ind where ind.invoice.id = :invoiceID";
     private static final String DELETE_INVOICEDETAIL_QUERY ="DELETE FROM InvoiceDetail ind where ind.id = :invoiceDetailID";
     private static final String SEARCH_INVOICE_TYPE = "FROM Invoice inv where inv.deparement = :invoiceDepartment and inv.invType = :invoiceType ORDER BY inv.invNo DESC LIMIT 1";
@@ -155,13 +160,7 @@ public class InvoiceImpl implements InvoiceDao{
         }
         return result;
     }
-    
-    private String GenerateInvoiceCode(){
-        String code = "";
-        
-        return code;
-    }
-
+   
     @Override
     public Invoice getInvoiceFromInvoiceNumber(String InvoiceNumber) {
         Session session = this.sessionFactory.openSession();
@@ -228,26 +227,135 @@ public class InvoiceImpl implements InvoiceDao{
     }
 
     @Override
-    public InvoiceView SearchInvoiceView(String DateFrom, String DateTo, String Department, String Type) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Invoice getInvoiceFromId(String invoiceId) {
+       Session session = this.sessionFactory.openSession();
+        Invoice invoice = new Invoice();
+        List<Invoice> invoiceList = session.createQuery(GET_INVOICE_FROMID)
+                .setParameter("invoiceId", invoiceId)
+                .list();
+        if(!invoiceList.isEmpty()){
+            invoice.setId(invoiceList.get(0).getId());
+            invoice.setInvNo(invoiceList.get(0).getInvNo());
+            invoice.setInvTo(invoiceList.get(0).getInvTo());
+            invoice.setInvName(invoiceList.get(0).getInvName());
+            invoice.setInvType(invoiceList.get(0).getInvType());
+            invoice.setInvAddress(invoiceList.get(0).getInvAddress());
+            invoice.setInvoiceDetails(invoiceList.get(0).getInvoiceDetails());
+            invoice.setArcode(invoiceList.get(0).getArcode());
+            invoice.setCreateBy(invoiceList.get(0).getCreateBy());
+            invoice.setCreateDate(invoiceList.get(0).getCreateDate());
+            invoice.setDeparement(invoiceList.get(0).getDeparement());
+            invoice.setDueDate(invoiceList.get(0).getDueDate());
+            invoice.setIsGroup(invoiceList.get(0).getIsGroup());
+            invoice.setIsLock(invoiceList.get(0).getIsLock());
+            invoice.setMAccpay(invoiceList.get(0).getMAccpay());
+            invoice.setMFinanceItemstatus(invoiceList.get(0).getMFinanceItemstatus());
+            invoice.setRemark(invoiceList.get(0).getRemark());
+            invoice.setStaff(invoiceList.get(0).getStaff());
+            invoice.setSubDepartment(invoiceList.get(0).getSubDepartment());
+        }
+        
+        return invoice;
     }
 
     @Override
-    public List<HashMap<String,Object>> getInvoiceDetailFromInvoiceNumber(String InvoiceNumber) {
-        List<HashMap<String,Object>> List = new LinkedList<HashMap<String, Object>>();
-        HashMap<String, Object> result = new HashMap<String, Object>();
+    public List<Invoice> getSearchInvoice(String fromData, String toDate, String department, String type) {
+        Session session = this.sessionFactory.openSession();
+        String query = "";
+        if("".equals(department) && department == null && "".equals(type) && type == null && fromData == null &&  toDate == null){
+            query = "FROM Invoice st " ;
+        }else{
+            query = "FROM Invoice st where" ;
+        }
         
-        result.put("rec_from", null);//inv_to
-        result.put("rec_name", null);//inv_name
-        result.put("rec_address", null);//inv_address
-        result.put("invoiceDetailId", null);
-        result.put("product", null);
-        result.put("description", null);
-        result.put("amount", null);//amount
-        result.put("cur", null);//cur amount
-        List.add(result);
-        return List;
+        if ( department != null && (!"".equalsIgnoreCase(department)) ) {
+            query += " st.deparement = '" + department + "'";
+        }
+       
+        if (type != null && (!"".equalsIgnoreCase(type)) ) {
+            query += " and st.invType = '" + type + "'";
+        }
+        
+        if (fromData != null ) {
+            if (toDate != null ) {
+                query += " and st.createDate  BETWEEN  '" + fromData + "' AND '" + toDate + "' ";
+            }
+        }
+        
+        System.out.println("query : " + query);
+        List<Invoice> list = session.createQuery(query).list();
+        return list;
     }
     
-    
+    @Override
+    public List<InvoiceView> setSearchInvoiceView(List<Invoice> listInvoice){
+        List<InvoiceView> list = new LinkedList<InvoiceView>();
+        UtilityFunction utility = new UtilityFunction();
+        if(list != null){
+            
+            for (int i = 0; i < listInvoice.size(); i++) {
+                InvoiceView invoiceView = new InvoiceView();
+                BigDecimal sumAmount = new BigDecimal(0.0);
+                List<InvoiceDetail> invoiceDetail = listInvoice.get(i).getInvoiceDetails();
+                    invoiceView.setInvoiceId(listInvoice.get(i).getId());
+                    invoiceView.setInvoiceNo(listInvoice.get(i).getInvNo());
+                    invoiceView.setDepartment(listInvoice.get(i).getDeparement());
+                    invoiceView.setType(listInvoice.get(i).getInvType());
+                    String invoiceDate = utility.convertDateToString(listInvoice.get(i).getCreateDate());
+                    invoiceView.setInvoiceDate(invoiceDate);
+                    invoiceView.setName(listInvoice.get(i).getInvName());
+                    invoiceView.setAddress(listInvoice.get(i).getInvAddress());
+                    invoiceView.setTermPayName(listInvoice.get(i).getMAccpay().getName());                
+                
+                    for (int j = 0; j < invoiceDetail.size(); j++) {
+                        invoiceView.setCurrency(invoiceDetail.get(0).getCurAmount());
+                        sumAmount =  sumAmount.add(invoiceDetail.get(j).getAmount()) ;
+                    }
+                    
+                    invoiceView.setTotalPrice(sumAmount);
+                    list.add(invoiceView);
+            }
+        }
+        
+        return  list;
+    }
+
+    @Override
+    public Invoice searchInvoiceNo(String invoiceId, String department, String invoiceType) {
+        Session session = this.sessionFactory.openSession();
+        Invoice invoice = new Invoice();
+        List<Invoice> invoiceList = session.createQuery(SEARCH_INVOICE)
+                .setParameter("invoiceId", invoiceId)
+                .setParameter("invoiceType", invoiceType)
+                .setParameter("invoiceDepartment", department)
+                .list();
+        if(!invoiceList.isEmpty()){
+            invoice.setId(invoiceList.get(0).getId());
+            invoice.setInvNo(invoiceList.get(0).getInvNo());
+            invoice.setInvTo(invoiceList.get(0).getInvTo());
+            invoice.setInvName(invoiceList.get(0).getInvName());
+            invoice.setInvType(invoiceList.get(0).getInvType());
+            invoice.setInvAddress(invoiceList.get(0).getInvAddress());
+            invoice.setInvoiceDetails(invoiceList.get(0).getInvoiceDetails());
+            invoice.setArcode(invoiceList.get(0).getArcode());
+            invoice.setCreateBy(invoiceList.get(0).getCreateBy());
+            invoice.setCreateDate(invoiceList.get(0).getCreateDate());
+            invoice.setDeparement(invoiceList.get(0).getDeparement());
+            invoice.setDueDate(invoiceList.get(0).getDueDate());
+            invoice.setIsGroup(invoiceList.get(0).getIsGroup());
+            invoice.setIsLock(invoiceList.get(0).getIsLock());
+            invoice.setMAccpay(invoiceList.get(0).getMAccpay());
+            invoice.setMFinanceItemstatus(invoiceList.get(0).getMFinanceItemstatus());
+            invoice.setRemark(invoiceList.get(0).getRemark());
+            invoice.setStaff(invoiceList.get(0).getStaff());
+            invoice.setSubDepartment(invoiceList.get(0).getSubDepartment());
+        }
+        
+        return invoice;
+    }
+
+    @Override
+    public List<HashMap<String, Object>> getInvoiceDetailFromInvoiceNumber(String InvoiceNumber) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
