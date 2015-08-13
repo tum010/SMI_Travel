@@ -156,6 +156,7 @@ public class OtherDetailController extends SMITravelController {
                 }else if("fail".equalsIgnoreCase(stock)){
                     request.setAttribute("resultText", "unsuccess");
                 }else {
+                    String[] ticketData = stock.split("\\|\\|", 3);//Adult||Child||Infant
                     getTicket(request, Other.getId());
                     request.setAttribute("resultText", "success");
                 }
@@ -167,6 +168,7 @@ public class OtherDetailController extends SMITravelController {
                 }else if("fail".equalsIgnoreCase(stock)){
                     request.setAttribute("resultText", "unsuccess");
                 }else{
+                    String[] ticketData = stock.split("\\|\\|", 3);//Adult||Child||Infant
                     getTicket(request, Other.getId());
                     request.setAttribute("resultText", "success");
                 }    
