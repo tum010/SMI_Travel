@@ -7,6 +7,8 @@ package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.dao.InvoiceDao;
 import com.smi.travel.datalayer.entity.Invoice;
+import com.smi.travel.datalayer.view.entity.InvoiceView;
+import java.util.List;
 
 /**
  *
@@ -21,6 +23,18 @@ public class InvoiceService {
         }else{
             return invoiceDao.insertInvoice(invoice);
         }
+    }
+    
+    public List<Invoice> SearchInvoice(String fromData,String toDate ,String department,String type){
+       return  invoiceDao.getSearchInvoice(fromData, toDate , department,type);
+    }
+            
+    public Invoice searchInvoiceNo(String invoiceId,String department,String invoiceType){
+        return  invoiceDao.searchInvoiceNo(invoiceId, department, invoiceType);
+    }
+    
+    public List<InvoiceView> SearchInvoiceView(List<Invoice> listInvoice){
+       return  invoiceDao.setSearchInvoiceView(listInvoice);
     }
     
     public String deleteInvoice(Invoice invoice){
