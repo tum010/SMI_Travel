@@ -1073,6 +1073,19 @@ public class AJAXBean extends AbstractBean implements
         return result;
     }
     
+    public Integer[] checkBillDescInuse(String billdesc){
+        Integer[] value = new Integer[2];
+        Integer amount = new Integer(0);
+        Integer cost = new Integer(0);
+        
+        //from InvoiceDetail inv where inv.billableDesc.id = :billdesc
+        //get amount and cost from InvoiceDetail
+        
+        value[0] = cost;
+        value[1] = amount;
+        return value;
+    }
+    
     public Mail getSendMail() {
         return sendMail;
     }
