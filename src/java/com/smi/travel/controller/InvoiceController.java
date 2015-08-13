@@ -58,7 +58,6 @@ public class InvoiceController extends SMITravelController {
             String arCode = request.getParameter("ARCode");
             String remark = request.getParameter("Remark");
             String isGroup[] = request.getParameterValues("Grpup");
-
         
         if(callPageFrom != null){
            String[] type = callPageFrom.split("\\?");
@@ -204,6 +203,8 @@ public class InvoiceController extends SMITravelController {
                     invoice.setSubDepartment("");
                     department = "Outbound";
                 }
+            }else if(department == null){
+                invoice.setDeparement(invoiceTypeSub);
             }
             if(staffCode != null){
                 staff.setUsername(staffCode);
@@ -217,7 +218,6 @@ public class InvoiceController extends SMITravelController {
             }
             
             if(arCode != null && !arCode.equals("")){
-//                Integer arC = Integer.parseInt(arCode);
                 invoice.setArcode(arCode);
             }
             if(remark != null){
@@ -380,6 +380,8 @@ public class InvoiceController extends SMITravelController {
                     invoice.setSubDepartment("");
                     department = "Outbound";
                 }
+            }else if(department == null){
+                invoice.setDeparement(invoiceTypeSub);
             }
             if(staffCode != null){
                 staff.setUsername(staffCode);
@@ -516,6 +518,8 @@ public class InvoiceController extends SMITravelController {
                     invoice.setSubDepartment("");
                     department = "Outbound";
                 }
+            }else if(department == null){
+                invoice.setDeparement(invoiceTypeSub);
             }
             if(staffCode != null){
                 staff.setUsername(staffCode);
@@ -574,6 +578,25 @@ public class InvoiceController extends SMITravelController {
                    request.setAttribute("result", result);
                    
             }
+        }else if("edit".equals(action)){// Edit Invoice From Search invoice page
+            Invoice invoice = new Invoice();
+             List<InvoiceDetail> listInvoiceDetail = new LinkedList<InvoiceDetail>();
+            String typeInvoice = request.getParameter("typeInvoice"); // type Invoice
+            String departmentInvoice = request.getParameter("departmentInvoice"); // department invoice
+            String invoiceIdSearch = request.getParameter("idInvoice"); // invoice id from search invoice page
+            invoice = invoiceService.searchInvoiceNo(invoiceIdSearch, departmentInvoice, typeInvoice);
+            listInvoiceDetail = invoice.getInvoiceDetails();
+            if(invoice != null){
+                request.setAttribute("invoice", invoice);
+                if(listInvoiceDetail != null){
+                    request.setAttribute("listInvoiceDetail", listInvoiceDetail);
+                }else{
+                    request.setAttribute("listInvoiceDetail", null);
+                }
+            }else{
+                request.setAttribute("invoice",null);
+            }
+            
         }
         
         return Invoice;
