@@ -263,8 +263,15 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                 ticketFareAirline =  ticketFareList.get(0);
             }
             if("".equals(String.valueOf(ticketFareAirline.getId())) || "null".equals(String.valueOf(ticketFareAirline.getId()))){
-                ticketFare = String.valueOf(airPassengerList.get(i).getTicketFare());
-                ticketTax = String.valueOf(airPassengerList.get(i).getTicketTax());
+                
+                BigDecimal fare = new BigDecimal(airPassengerList.get(i).getTicketFare());
+                fare = fare.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                ticketFare = String.valueOf(fare);
+                
+                BigDecimal tax = new BigDecimal(airPassengerList.get(i).getTicketTax());
+                tax = tax.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                ticketTax = String.valueOf(tax);
+                
                 ticketRouting = String.valueOf(airPassengerList.get(i).getTicketType());
                 ticketBy = String.valueOf(airPassengerList.get(i).getTicketFrom());
                 if(airPassengerList.get(i).getMInitialname() != null){
@@ -302,15 +309,14 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                 department = ticketFareAirline.getDepartment();
                 masterId =  ticketFareAirline.getMaster().getId();
             }   
-            
             String newrow
                 = "<tr>"
                 + "<td>" + (ticket == "null" ? "" : ticket ) + "</td>"
                 + "<td>" + (name == "null" ? "" : name ) + "</td>"
                 + "<td>" + (ticketClass == "null" ? "" : ticketClass ) + "</td>"
                 + "<td>" + (departDate == "null" ? "" : departDate ) + "</td>"
-                + "<td class='money'>" + (ticketFare == "null" ? "" : ticketFare ) + "</td>" 
-                + "<td class='money'>" + (ticketTax == "null" ? "" : ticketTax ) + "</td>"
+                + "<td class='money'>"+ (ticketFare == "null" ? "" : ticketFare )+"</td>" 
+                + "<td class='money'>" + (ticketTax == "null" ? "" : ticketTax ) +"</td>" 
 //                    + "<td class=\"text-center\" onclick=\"setTicketDetail('" + ticket + "','" + ticketFare + "','" + ticketTax + "','" + issueDate + "','" + ticketRouting + "','" + airline + "','" + ticketBy + "','" + name + "','" + department + "','" + masterId + "','" + ticketId + "')\">"
                 + "<td class=\"text-center\" onclick=\"setTicketFareDetail('" + ticket + "','" + refno + "')\">"
                 + "<a href=\"\"><span class=\"glyphicon glyphicon-check\"></span></a>" + "</td>"
