@@ -464,12 +464,13 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                     refund = String.valueOf(refundAirticketDetails.get(i).getRefundAirticket().getRefundNo());
                 }
             }
+            amount = String.valueOf(refundAirticketDetails.get(i).getReceiveAirline());
+            payCustomer = String.valueOf(refundAirticketDetails.get(i).getPayCustomer());
             if(refundAirticketDetails.get(i).getAirticketPassenger() != null){
                 ticketNo =  String.valueOf(refundAirticketDetails.get(i).getAirticketPassenger().getSeries1())
                             + String.valueOf(refundAirticketDetails.get(i).getAirticketPassenger().getSeries2())
                             + String.valueOf(refundAirticketDetails.get(i).getAirticketPassenger().getSeries3());
-                amount = String.valueOf(refundAirticketDetails.get(i).getReceiveAirline());
-                payCustomer = String.valueOf(refundAirticketDetails.get(i).getPayCustomer());
+                
                 if(String.valueOf(refundAirticketDetails.get(i).getAirticketPassenger().getAirticketAirline()) != null
                     && refundAirticketDetails.get(i).getAirticketPassenger().getAirticketAirline().getAirticketPnr() != null
                     && refundAirticketDetails.get(i).getAirticketPassenger().getAirticketAirline().getAirticketPnr().getAirticketBooking() != null
@@ -491,7 +492,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                         + "<td align='left'>" + (ticketNo == "null" ? "": ticketNo )+  "</td>"
                         + "<td align='left'>" + (department == "null" ? "": department )+ "</td>"
                         + "<td align='center'>" + (route == "null" ? "" : route )+  "</td>"
-                        + "<td align='right' class='moneyformat'>" + (commission == "null" ? "": commission )+  "</td>"
+                        + "<td align='right' class='money'>" + (commission == "null" ? "": commission )+  "</td>"
                         + "<td class='money'>" + (amount == "null" ? "" : amount )+  "</td>"
                         + "<td><center><a class=\"remCF\"><span onclick=\"deleteRefund('"+id+"','"+refund+"','"+countrow+"')\" class=\"glyphicon glyphicon-remove deleteicon \"></span></center></td>"
                         + "</tr>";
@@ -508,7 +509,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                         + "<td align='left'>" + (ticketNo == "null" ? "" : ticketNo )+  "</td>"
                         + "<td align='left'>" + (department == "null" ? "": department )+ "</td>"
                         + "<td align='center'>" + (route == "null" ? "" : route )+  "</td>"
-                        + "<td align='right' class='moneyformat'>" + (commission == "null" ? "" : commission )+  "</td>"
+                        + "<td align='right' class='money'>" + (commission == "null" ? "" : commission )+  "</td>"
                         + "<td class='money'>" + (amount == "null" ? "" : amount )+  "</td>"
                         + "<td><center><a class=\"remCF\"><span onclick=\"deleteRefund('"+id+"','"+refund+"','"+rowCount+"')\" class=\"glyphicon glyphicon-remove deleteicon \"></span></center></td>"
                         + "</tr>";
