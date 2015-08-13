@@ -1,5 +1,4 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript" src="js/SearchInvoice.js"></script> 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -7,6 +6,12 @@
 <script type="text/javascript" src="js/selectize.js"></script>
 <link href="css/selectize.bootstrap3.css" rel="stylesheet">
 <link href="css/jquery-ui.css" rel="stylesheet">
+<c:set var="listInvoice" value="${requestScope['listInvoice']}" />
+<c:set var="fromdate" value="${requestScope['fromdate']}" />
+<c:set var="todate" value="${requestScope['todate']}" />
+<c:set var="department" value="${requestScope['department']}" />
+<c:set var="type" value="${requestScope['type']}" />
+
 <section class="content-header" >
     <h1>
         Finance & Cashier - Invoice
@@ -29,20 +34,21 @@
                     <h4><b>Search Invoice</b></h4>
                 </div>            
             </div>
-            <form action="" method="post" id="" name="" role="form">
+            <form action="SearchInvoice.smi" method="post" id="SearchInvoiceForm" name="SearchInvoiceForm" role="form">
+                <input type="text" class="hidden" id="action" name="action" value="">
                 <div class="col-xs-12 ">
                     <div class="col-xs-1 text-right">
                         <label class="control-label" for="">From<font style="color: red">*</font>&nbsp;</lable>
                     </div>
                     <div class="col-md-2 form-group"> 
-                        <div class='input-group date' id='InputDatePicker'>
-                            <c:if test='${dayTourOperation.tourDate != null}'>
+                        <div class='input-group date' >
+                            <c:if test='${fromdate != null}'>
                                 <input id="FromDate" name="FromDate"  type="text" 
-                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${fromdate}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 
                             </c:if>
-                            <c:if test='${dayTourOperation.tourDate == null}'>
+                            <c:if test='${fromdate == null}'>
                                 <input id="FromDate" name="FromDate"  type="text" 
                                    class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['']}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -54,14 +60,14 @@
                         <label class="control-label" for="">To<font style="color: red">*</font>&nbsp;</lable>
                     </div>
                     <div class="col-md-2 form-group"> 
-                        <div class='input-group date' id='InputDatePicker'>
-                            <c:if test='${dayTourOperation.tourDate != null}'>
+                        <div class='input-group date' >
+                            <c:if test='${todate != null}'>
                                 <input id="ToDate" name="ToDate"  type="text" 
-                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${todate}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 
                             </c:if>
-                            <c:if test='${dayTourOperation.tourDate == null}'>
+                            <c:if test='${todate == null}'>
                                 <input id="ToDate" name="ToDate"  type="text" 
                                    class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['']}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -74,19 +80,28 @@
                     </div>
                     <div class="col-md-2 form-group" style="padding: 0px 0px 0px 30px">
                         <select class="form-control" id="Department" name="Department">
-                            <option value="">Choose</option>
+                            <option value="">--select--</option>
+                                <c:set var="selectDepartW" value="" />
+                                <c:set var="selectDepartO" value="" />
+                                <c:set var="selectDepartI" value="" />
                                 <c:choose>
-                                    <c:when test="${requestScope['BankAccountType'] == '1'}">
-                                    <c:set var="accountOneSelected" value="selected" />
+                                    <c:when test="${department == 'Wendy'}">
+                                        <c:set var="selectDepartW" value="selected" />
                                     </c:when>
                                 </c:choose>
-                            <option value="1" ${accountOneSelected}>Account 1</option>
                                 <c:choose>
-                                    <c:when test="${requestScope['BankAccountType'] == '2'}">
-                                        <c:set var="accountTwoSelected" value="selected" />
+                                    <c:when test="${department == 'Outbound'}">
+                                        <c:set var="selectDepartO" value="selected" />
                                     </c:when>
                                 </c:choose>
-                            <option value="2" ${accountTwoSelected}>Account 2</option>
+                                <c:choose>
+                                    <c:when test="${department == 'Inbound'}">
+                                        <c:set var="selectDepartI" value="selected" />
+                                    </c:when>
+                                </c:choose>
+                            <option value="Wendy" ${selectDepartW}>Wendy</option>
+                            <option value="Outbound" ${selectDepartO}>Outbound</option>
+                            <option value="Inbound" ${selectDepartI}>Inbound</option>
                         </select>    
                     </div>
                     <div class="col-xs-1 text-right" style="padding: 0px 0px 0px 20px">
@@ -94,19 +109,25 @@
                     </div>
                     <div class="col-md-2 form-group" style="padding: 0px 0px 0px 30px">
                         <select class="form-control" id="Type" name="Type">
-                            <option value="">Choose</option>
+                            <option value="">--select--</option>
                                 <c:choose>
-                                    <c:when test="${requestScope['BankAccountType'] == '1'}">
-                                    <c:set var="accountOneSelected" value="selected" />
+                                    <c:when test="${type == 'V'}">
+                                    <c:set var="accountSelectedV" value="selected" />
+                                    </c:when>
+                                </c:choose>         
+                                <c:choose>
+                                    <c:when test="${type == 'N'}">
+                                        <c:set var="accountSelectedN" value="selected" />
                                     </c:when>
                                 </c:choose>
-                            <option value="1" ${accountOneSelected}>Account 1</option>
                                 <c:choose>
-                                    <c:when test="${requestScope['BankAccountType'] == '2'}">
-                                        <c:set var="accountTwoSelected" value="selected" />
+                                    <c:when test="${type == 'T'}">
+                                        <c:set var="accountSelectedT" value="selected" />
                                     </c:when>
                                 </c:choose>
-                            <option value="2" ${accountTwoSelected}>Account 2</option>
+                            <option value="V" ${accountSelectedV}>Vat</option>
+                            <option value="N" ${accountSelectedN}>No Vat</option>
+                            <option value="T" ${accountSelectedT}>Temp</option>
                         </select>    
                     </div>
                 </div>
@@ -115,7 +136,7 @@
                     <div class="col-xs-10 text-right">                        
                     </div>
                     <div class="col-md-1 text-right " style="padding: 0px 20px 0px 0px">
-                        <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="" class="btn btn-primary btn-primary ">
+                        <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="search()" class="btn btn-primary btn-primary ">
                             <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
                         </button>                                          
                     </div>                   
@@ -132,37 +153,57 @@
                     <table id="MasterInvoice" class="display" cellspacing="0" width="100%">
                         <thead>
                             <tr class="datatable-header">
-                                <th style="width: 5%" >Invoice No</th>
-                                <th style="width: 20%" >Department</th>
-                                <th style="width: 15%">Date</th>
-                                <th style="width: 15%">To</th>
-                                <th style="width: 40%">Name</th>
-                                <th style="width: 1%">Sum Cost</th>
-                                <th style="width: 1%">Sum Amount</th>
-                                <th style="width: 1%">Receive Amount</th>
-                                <th style="width: 1%">Term Pay</th>
-                                <th style="width: 1%">Action</th>
+                                <th class="hidden" >Invoice Id</th>
+                                <th style="width: 8%" >Invoice No</th>
+                                <th style="width: 10%" >Invoice Date</th>
+                                <th style="width: 20%" >Name</th>         
+                                <th style="width: 20%">Address</th>
+                                <th style="width: 10%">Total Price</th>
+                                <th style="width: 5%">Currency</th>
+                                <th style="width: 5%">Department</th>
+                                <th style="width: 5%">Type</th>
+                                <th style="width: 15%">Term Pay</th>
+                                <th style="width: 2%">Action</th>
                             </tr>
                         </thead>
-                        <tbody>               
+                        <tbody> 
+                            <c:forEach var="inv" items="${listInvoice}" varStatus="taxdesc">
                                 <tr>
-                                    <td align="center">111111</td>
-                                    <td>ABC</td>
-                                    <td align="center">2015-01-01</td>
-                                    <td align="center">2015-09-30</td>
-                                    <td>Mr.Test Testman</td>
-                                    <td align="center">100000</td>
-                                    <td align="center">100000</td>
-                                    <td align="center">100000</td>
-                                    <td align="center">100000</td>
+                                    <td class="hidden"><input type="text"  id="inputInvoiceId${taxdesc.count}" name="inputInvoiceId" value="${inv.invoiceId}"></td>
+                                    <td align="center">${inv.invoiceNo}</td>
+                                    <td >${inv.invoiceDate}</td>
+                                    <td >${inv.name}</td>
+                                    <td >${inv.address}</td>
+                                    <td align="center">${inv.totalPrice}</td>
+                                    <td align="center">${inv.currency}</td>
+                                    <td>${inv.department}</td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${inv.type == 'N'}">
+                                                <c:set var="typeName" value="No Vat" />
+                                            </c:when>
+                                        </c:choose>
+                                        <c:choose>
+                                            <c:when test="${inv.type == 'V'}">
+                                                <c:set var="typeName" value="Vat" />
+                                            </c:when>
+                                        </c:choose>
+                                        <c:choose>
+                                            <c:when test="${inv.type == 'T'}">
+                                                <c:set var="typeName" value="Temp" />
+                                            </c:when>
+                                        </c:choose>
+                                        ${typeName}
+                                    </td>
+                                    <td>${inv.termPayName}</td>
                                     <td align="center" > 
                                         <center> 
-                                        <span id="spanEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon"      
-                                          onclick="EditBank('${table.id}', '${table.code}', '${table.name}', '${table.branch}', '${table.accNo}', '${table.accType}')" data-toggle="modal" data-target="#BankModal" >
+                                        <span id="spanEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon" onclick="window.open('/SMITravel/Invoice.smi?typeInvoice=${inv.type}&departmentInvoice=${inv.department}&idInvoice=${inv.invoiceId}&action=edit');">
                                         </span>
                                         </center>
                                     </td>
                                 </tr>
+                            </c:forEach>
                         </tbody>
                     </table>    
                 </div>
@@ -195,3 +236,4 @@
                
     });   
 </script>
+<script type="text/javascript" src="js/SearchInvoice.js"></script> 
