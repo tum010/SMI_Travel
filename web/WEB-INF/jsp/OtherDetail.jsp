@@ -329,10 +329,10 @@
                 <div class="panel-heading">Ticket</div>
                 <div class="panel-body">
                     <div class="row" style="margin-left: 10px;margin-right: 10px;"> 
-                        <table id="Ticket" class="display" cellspacing="0"  >
+                        <table id="TicketTable" class="display" cellspacing="0"  >
                             <thead>
                                 <tr class="datatable-header">
-                                    <th class="hidden" rowspan="2">id</th>
+                                    <th class="hidden">id</th>
                                     <th style="width: 10%">No</th>
                                     <th style="width: 30%">Add Date</th>
                                     <th style="width: 30%">Ticket</th>
@@ -350,7 +350,31 @@
                                     </tr>
                                 </c:forEach>
                             </tbody>
-                        </table>        
+                        </table>
+                        <script type="text/javascript" charset="utf-8">
+                        $(document).ready(function() {
+                            var table = $('#TicketTable').dataTable({bJQueryUI: true,
+                                "bJQueryUI": true,
+                                "sPaginationType": "full_numbers",
+                                "bAutoWidth": false,
+                                "bFilter": false,
+                                "bInfo": true,
+                                "bSort": false
+
+                            });
+                            $('#TicketTable tbody').on('click', 'tr', function() {
+                                if ($(this).hasClass('row_selected')) {
+                                    $(this).removeClass('row_selected');
+                                    $('#hdGridSelected').val('');
+                                }
+                                else {
+                                    table.$('tr.row_selected').removeClass('row_selected');
+                                    $(this).addClass('row_selected');
+                                    $('#hdGridSelected').val($('#TicketTable tbody tr.row_selected').attr("id"));
+                                }
+                            });                           
+                        });
+                    </script>
                     </div>
                 </div>
             </div>
