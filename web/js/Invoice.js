@@ -183,6 +183,10 @@
     document.getElementById('InvoiceForm').submit();
  }
  
+ function searchInvoice(){
+     
+ }
+ 
 function validFromInvoice(){
     // Validator Date From and To
     $("#InvoiceForm")

@@ -80,6 +80,38 @@
                             <h4><b>Invoice No Vat Outbound</b></h4>
                         </c:when> 
                     </c:choose> 
+                    <c:choose>
+                        <c:when test="${ invoice.deparement == 'Outbound' && invoice.invType == 'T'}">
+                                <c:set var="typeInvoice" value="T" />
+                                <c:set var="typeInvoiceSub" value="Outbound" />
+                                <h4><b>Invoice Temp Outbound</b></h4>
+                        </c:when>
+                        <c:when test="${invoice.deparement == 'Outbound' && invoice.invType == 'V'}">
+                                <c:set var="typeInvoice" value="V" />
+                                <c:set var="typeInvoiceSub" value="Outbound" />
+                                <h4><b>Invoice Vat Outbound</b></h4>
+                        </c:when>
+                        <c:when test="${invoice.deparement == 'Wendy' && invoice.invType == 'T'}">
+                                <c:set var="typeInvoice" value="T" />
+                                <c:set var="typeInvoiceSub" value="Wendy" />
+                                <h4><b>Invoice Temp Wendy</b></h4>
+                        </c:when>
+                        <c:when test="${invoice.deparement == 'Wendy' && invoice.invType == 'V'}">
+                                <c:set var="typeInvoice" value="V" />
+                                <c:set var="typeInvoiceSub" value="Wendy" />
+                                <h4><b>Invoice Vat Wendy</b></h4>
+                        </c:when>
+                        <c:when test="${invoice.deparement == 'Wendy' && invoice.invType == 'N'}">
+                                <c:set var="typeInvoice" value="N" />
+                                <c:set var="typeInvoiceSub" value="Wendy" />
+                                <h4><b>Invoice No Vat Wendy</b></h4>     
+                        </c:when> 
+                        <c:when test="${invoice.deparement == 'Outbound' && invoice.invType == 'N'}">
+                                <c:set var="typeInvoice" value="N" />
+                                <c:set var="typeInvoiceSub" value="Outbound" />
+                                <h4><b>Invoice No Vat Outbound</b></h4>              
+                        </c:when> 
+                    </c:choose> 
                             <input type="text" class="hidden" value="${typeInvoice}" id="InputInvoiceType" name="InputInvoiceType">
                             <input type="text" class="hidden" value="${typeInvoiceSub}" id="InputInvoiceSubType" name="InputInvoiceSubType">
                 </div>
@@ -157,7 +189,7 @@
                             <label class="control-label" for="">INV no</lable>
                         </div>
                         <div class="col-md-1 form-group" style="width: 125px;">
-                            <input type="text"  class="form-control" id="InvNo" name="InvNo"  value="${invoice.invNo}" readonly>
+                            <input type="text"  class="form-control" id="InvNo" name="InvNo"  value="${invoice.invNo}" >
                         </div>
                         <div class="col-md-1 form-group" style="width: 120px;">
                             <button type="button"  id="ButtonSearchInvoiceNo"  name="ButtonSearchInvoiceNo" onclick="searchInvoiceFromInvoiceNo();" class="btn btn-primary btn-sm">
@@ -376,7 +408,7 @@
                                                     </select>
                                                 </td>
                                                 <td> 
-                                                    <a href="" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal">${ind.description}</a>                                           
+                                                    <a href="" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail('${taxdesc.count}')">${ind.description}</a>                                           
                                                 </td>
                                                 <td class="hidden"><input type="text" class="form-control" id="BillDescription${taxdesc.count}" name="BillDescription${taxdesc.count}" value="${ind.description}" > </td>
                                                 <td><input type="text" maxlength ="15" class="form-control numerical" id="InputCost${taxdesc.count}" name="InputCost${taxdesc.count}" value="${ind.cost}" ></td>
@@ -420,7 +452,7 @@
                                                 <td class="hidden"><input type="text" value="${ind.amount}" id="InputAmountLocalTemp${taxdesc.count}" name="InputAmountLocalTemp${taxdesc.count}"  ></td>
                                                 <td align="center" ><center><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('${taxdesc.count}')" data-toggle="modal" data-target="#DelDetailBill" >  </span></center></td>
                                                 <td class="hidden">
-                                                    <textarea id="DescriptionInvoiceDetail${taxdesc.count}" name="DescriptionInvoiceDetail${taxdesc.count}">
+                                                    <textarea id="DescriptionInvoiceDetail${taxdesc.count}" name="DescriptionInvoiceDetail${taxdesc.count}" >
                                                         ${ind.displayDescription}
                                                     </textarea>
                                                 </td>
@@ -633,7 +665,6 @@
                     </div>
                     <div class="col-md-9">
                         <textarea id="InputDescriptionDetail" rows="5" cols="50" class="form-control" onclick="saveDescriptionDetail();">
-                   
                         </textarea>
 <!--<input type="text" id="InputDescriptionDetail" value="" style="width: 400px;height: 200px;">-->
                     </div>

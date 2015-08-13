@@ -21,8 +21,8 @@ public class InvoiceView {
     private String Name;
     private String Address;
     private String TermPayName;
-    private BigDecimal TotalCost;
-    private BigDecimal TotalPrice;
+//    private BigDecimal TotalCost;
+    private BigDecimal TotalPrice; // Amount
     private String Currency;
 
     public String getInvoiceId() {
@@ -90,14 +90,14 @@ public class InvoiceView {
     public void setTermPayName(String TermPayName) {
         this.TermPayName = TermPayName;
     }
-
-    public BigDecimal getTotalCost() {
-        return TotalCost;
-    }
-
-    public void setTotalCost(BigDecimal TotalCost) {
-        this.TotalCost = TotalCost;
-    }
+//
+//    public BigDecimal getTotalCost() {
+//        return TotalCost;
+//    }
+//
+//    public void setTotalCost(BigDecimal TotalCost) {
+//        this.TotalCost = TotalCost;
+//    }
 
     public BigDecimal getTotalPrice() {
         return TotalPrice;
