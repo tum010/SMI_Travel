@@ -169,7 +169,7 @@
                     <td class="moneyformat text-right">${b.adult}</td>
                     <td class="moneyformat text-right">${b.child}</td>
                     <td class="moneyformat text-right">${b.adult + b.child}</td>
-                    <td class="tdcenter">${currency}</td>
+                    <td class="tdcenter">${b.currency}</td>
                     <td class="text-center">
                         
                         <a href="HotelDetail.smi?referenceNo=${param.referenceNo}&id=${b.id}&action=edit"><span class="glyphicon glyphicon-edit editicon" id="EditHotel-${loopCounter.count}" ></span></a>
