@@ -206,6 +206,9 @@ public class BillableImpl implements BillableDao {
         String AirlineId = "";
         String billtype = bill.getMBilltype().getId();
         if (billtype.equalsIgnoreCase("1")) {
+            System.out.println("bill.getBillable()"+bill.getBillable());
+            System.out.println("bill.master()"+bill.getBillable().getMaster());
+            System.out.println("bill.masterid()"+bill.getBillable().getMaster().getId());
             List<AirticketFlight> listAirFlight = session.createQuery(SelectAirLineId).setParameter("Keyid", bill.getBillable().getMaster().getId()).list();
              for(int i=0;i<listAirFlight.size();i++){
                  String airlineId = listAirFlight.get(i).getAirticketAirline().getId();
@@ -222,7 +225,7 @@ public class BillableImpl implements BillableDao {
              }
              System.out.println(AirlineId);
              hql = AirBookingUpdate + " "+AirlineId;
-        } else if (billtype.equalsIgnoreCase("2")) {
+        } else if ((billtype.equalsIgnoreCase("2")) || (billtype.equalsIgnoreCase("8"))) {
             System.out.println("update other");
             hql = OtherBookingUpdate;
         } else if (billtype.equalsIgnoreCase("3")) {
