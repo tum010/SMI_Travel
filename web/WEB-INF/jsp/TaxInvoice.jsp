@@ -194,9 +194,7 @@
                             <div class="input-group">
                                 <input type="hidden" class="form-control" id="ARCodeId" name="ARCodeId" value=""/>
                                 <input type="text" class="form-control" id="ARCode" name="ARCode" value="" style="background-color: #ffffff">
-                                <span class="input-group-addon" id="ARCode_Modal"  data-toggle="modal" data-target="#ARCodeModal">
-                                   <span class="glyphicon-search glyphicon"></span>
-                                </span>
+                               
                             </div>
                         </div>
                     </div>    
@@ -275,7 +273,7 @@
                                             <input  rows="3" cols="200" id="TextAmount" name="TextAmount" class="form-control" value="" readonly="">
                                         </div>
                                         <div class="col-sm-1">
-                                            <label class="control-label" for="">Total&nbsp;Net&nbsp;:</lable>                                         
+                                            <label class="control-label" for="">Total&nbsp;Amount&nbsp;:</lable>                                         
                                         </div>
                                         <div class="col-sm-3" >
                                             <input  rows="3" cols="200" id="TotalNet" name="TotalNet" class="form-control" value="" readonly="">
