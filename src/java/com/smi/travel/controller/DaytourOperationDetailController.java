@@ -80,6 +80,7 @@ public class DaytourOperationDetailController extends SMITravelController {
         
         String action = request.getParameter("action");
         String refNo = request.getParameter("referenceNo");
+        String tourCode = request.getParameter("InputDetailTourCode");
         String tourID = request.getParameter("tourID");
         String tourDate = request.getParameter("tourDate");
         String PayNoGuideBill = request.getParameter("PayNoGuideBill");
@@ -150,7 +151,7 @@ public class DaytourOperationDetailController extends SMITravelController {
             List<DaytourBooking> daytourBooking = daytourOperationService.getTourJob();
             request.setAttribute(DayTourList, daytourBooking);
             setGeneralResponseAttribute(request, refNo);
-        } else if ("update".equalsIgnoreCase(action)) {              
+        } else if ("update".equalsIgnoreCase(action)) {
             result = updatetourOperationDesc(request, tourID, tourDate, session);
 //            request.setAttribute(TransactionResult, "Save successful");
 //            request.setAttribute("redirectUrl" , "DaytourOperationDetail.smi?action=edit&tourID=" + tourID + "&tourDate=" + tourDate);
@@ -230,7 +231,10 @@ public class DaytourOperationDetailController extends SMITravelController {
         
         setTourOperationExpenses(request, tourOperationDesc);
         tourOperationDesc.setTransferInfo(info);
-        List<DaytourBooking> daytourBookings = setDaytourBookings(request, tourOperationDesc, tourID, tourDate);        
+        List<DaytourBooking> daytourBookings = setDaytourBookings(request, tourOperationDesc, tourID, tourDate);
+        if(daytourBookings == null){
+            return result = "false";
+        }
         result = daytourOperationService.saveTourOperation(tourOperationDesc, daytourBookings,setTourOperationDrivers(request, tourOperationDesc));
 //        String confirmGuideBill = request.getParameter("ConfirmGuideBill");           
 //        if("1".equalsIgnoreCase(confirmGuideBill)){
@@ -366,6 +370,9 @@ public class DaytourOperationDetailController extends SMITravelController {
     private List<DaytourBooking> setDaytourBookings(HttpServletRequest request, TourOperationDesc tourOperationDesc, String tourID, String tourDate) {
         UtilityFunction util = new UtilityFunction();
         List<DaytourBooking> daytourBookingDetail = daytourOperationService.getTourDetail(tourID, tourDate);
+        if(daytourBookingDetail == null){
+            return null;
+        }
         int row = daytourBookingDetail.size();
         for (int i = 0; i < row; i++) {
             String id = request.getParameter("refBookId" + (i + 1));
