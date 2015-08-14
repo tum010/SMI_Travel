@@ -370,6 +370,48 @@
         <put-attribute name="body" value="/WEB-INF/jsp/Invoice.jsp" />
     </definition>
     
+    <definition name="InvoiceWT" extends="baseLayout">
+        <put-attribute name="title" value="Finance:Invoice Temp Wendy" />
+        <put-attribute name="body" value="/WEB-INF/jsp/Invoice.jsp" />
+    </definition>
+    
+    <definition name="InvoiceWV" extends="baseLayout">
+        <put-attribute name="title" value="Finance:Invoice Vat Wendy" />
+        <put-attribute name="body" value="/WEB-INF/jsp/Invoice.jsp" />
+    </definition>
+    
+    <definition name="InvoiceWN" extends="baseLayout">
+        <put-attribute name="title" value="Finance:Invoice No Vat Wendy" />
+        <put-attribute name="body" value="/WEB-INF/jsp/Invoice.jsp" />
+    </definition>
+    
+    <definition name="InvoiceWA" extends="baseLayout">
+        <put-attribute name="title" value="Finance:Invoice Ticket Wendy" />
+        <put-attribute name="body" value="/WEB-INF/jsp/Invoice.jsp" />
+    </definition>
+    
+    
+    <definition name="InvoiceOA" extends="baseLayout">
+        <put-attribute name="title" value="Finance:Invoice Ticket Outbound" />
+        <put-attribute name="body" value="/WEB-INF/jsp/Invoice.jsp" />
+    </definition>
+    
+    <definition name="InvoiceOT" extends="baseLayout">
+        <put-attribute name="title" value="Finance:Invoice Temp Outbound" />
+        <put-attribute name="body" value="/WEB-INF/jsp/Invoice.jsp" />
+    </definition>
+    
+    <definition name="InvoiceOV" extends="baseLayout">
+        <put-attribute name="title" value="Finance:Invoice Vat Outbound" />
+        <put-attribute name="body" value="/WEB-INF/jsp/Invoice.jsp" />
+    </definition>
+    
+    <definition name="InvoiceON" extends="baseLayout">
+        <put-attribute name="title" value="Finance:Invoice No Vat Outbound" />
+        <put-attribute name="body" value="/WEB-INF/jsp/Invoice.jsp" />
+    </definition>
+    
+    
     <definition name="Receipt" extends="baseLayout">
         <put-attribute name="title" value="Finance And Cashier: Receipt " />
         <put-attribute name="body" value="/WEB-INF/jsp/Receipt.jsp" />
