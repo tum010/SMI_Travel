@@ -3,6 +3,7 @@
 	<tlib-version>1.0</tlib-version>
 	<short-name>smi</short-name>
 	<uri>/WEB-INF/tlds/smi</uri>
+
 	<tag-file>
 		<name>input</name>
 		<path>/WEB-INF/tags/input.tag</path>
@@ -11,5 +12,6 @@
 		<name>modal</name>
 		<path>/WEB-INF/tags/modal.tag</path>
 	</tag-file>
+	
 </taglib>
   

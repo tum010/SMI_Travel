@@ -3,13 +3,12 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ attribute name="id" required="true"%>
 <%@ attribute name="title" required="true"%>
-<%@ attribute name="labelColSize" required="false"%>
-<%@ attribute name="inputColSize" required="false"%>
-<%@ attribute name="enableOKButton" required="false" rtexprvalue="true"%>
-<%@ attribute name="enableSaveButton" required="false" rtexprvalue="true"%>
-<%@ attribute name="enableCloseButton" required="false" rtexprvalue="true"%>
-<%@ attribute name="enableCancelButton" required="false" rtexprvalue="true"%>
-
+<%@ attribute name="enableOKButton" required="false"%>
+<%@ attribute name="enableSaveButton" required="false"%>
+<%@ attribute name="enableCloseButton" required="false"%>
+<%@ attribute name="enableCancelButton" required="false"%>
+<%@ variable name-given="isModal" scope="NESTED"%>
+<c:set var="isModal" value="true"/>
 
 <div class="modal fade" id="${id}" tabindex="-1" role="dialog" aria-labelledby="${id}Label">
 		<div class="modal-dialog" role="document">
@@ -27,7 +26,6 @@
 						
 					</div>
 					<div class="modal-footer">
-						
 						<c:if test="${enableOKButton}">
 							<button id="${id}BtnOK" type="button" class="btn btn-primary">OK</button>
 						</c:if>
