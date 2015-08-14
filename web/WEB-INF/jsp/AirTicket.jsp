@@ -25,6 +25,7 @@
 <c:set var="result" value="${requestScope['Result']}" />
 <c:set var="booking_size" value="${requestScope['BookingSize']}" />
 <c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
+<c:set var="mCurrency" value="${requestScope['MCurrency']}" />
 
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
@@ -275,6 +276,7 @@
                                     <th>Qty</th>
                                     <th>Cost</th>
                                     <th>Amount</th>
+                                    <th>Currency</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -287,6 +289,18 @@
                                     <td><input  type="text" class="form-control money" id="row-${airdesc.count}-qty" name="row-${airdesc.count}-qty" value="${detail.qty}" maxlength="11"/></td>
                                     <td><input  type="text" class="form-control money" id="row-${airdesc.count}-cost" name="row-${airdesc.count}-cost" value="${detail.cost}" maxlength="11"/></td>
                                     <td><input  type="text" class="form-control money" id="row-${airdesc.count}-amount" name="row-${airdesc.count}-amount" value="${detail.amount}" maxlength="11"/></td>
+                                    <td>
+                                        <select id="row-${airdesc.count}-currency" name="row-${airdesc.count}-currency" class="form-control">
+                                            <option id="" value="">---------</option>
+                                            <c:forEach var="price" items="${mCurrency}" >
+                                                <c:set var="select1" value="" />
+                                                <c:if test="${detail.currency == price.code}">
+                                                    <c:set var="select1" value="selected" />
+                                                </c:if>
+                                                <option value="<c:out value="${price.code}" />" ${select1}><c:out value="${price.code}" /></option>   
+                                            </c:forEach>
+                                        </select>                                       
+                                    </td>
                                     <td class="text-center">
                                         <c:if test="${lockUnlockBooking == 0}">
                                             <a id="ButtonRemove${airdesc.count}" class="remCF" onclick="deleteDesc(${param.referenceNo},${detail.id})">
@@ -454,6 +468,16 @@
     <input type="hidden" class="form-control" id="action"   name="action"  value="enablePnr">     
     <input type="hidden" class="form-control" id="referenceNo"   name="referenceNo"  value="${param.referenceNo}" >     
 </form>
+
+<select id="select-currency" name="select-currency" class="form-control hidden">
+    <c:forEach var="price" items="${mCurrency}" >
+        <c:set var="select1" value="" />
+        <c:if test="${paymentWendyList.currency == price.code}">
+            <c:set var="select1" value="selected" />
+        </c:if>
+        <option value="<c:out value="${price.code}" />" ${select1}><c:out value="${price.code}" /></option>   
+    </c:forEach>
+</select>
 
 <div class="modal fade" id="EnablePnr" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
