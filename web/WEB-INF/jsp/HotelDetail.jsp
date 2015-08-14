@@ -29,6 +29,7 @@
 <c:set var="refno1" value="${fn:substring(param.referenceNo, 0, 2)}" />
 <c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
 <c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
+<c:set var="mCurrency" value="${requestScope['MCurrency']}" />
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
@@ -251,12 +252,24 @@
                             </div>
                         </div>
                         <div class="row form-group">
-
                             <div class="col-sm-12">
                                 <label class="col-sm-1 control-label text-right"  style="margin-left: 45px;">Remarks</label>
-                                <div class="col-sm-10" style="width: 87%;">
+                                <div class="col-sm-4" style="width: 56.5%;">
                                     <input id="remark" name="remark" class="form-control" value="${hotelBooking.remark}" maxlength="100">
                                 </div>
+                                <label class="col-sm-1 control-label text-right"  style="margin-left: 15px;">Currency</label>
+                                <div class="col-sm-1" style="width: 120px">
+                                    <select id="select-currency" name="select-currency" class="form-control">
+                                        <option id="" value="">---------</option>
+                                        <c:forEach var="price" items="${mCurrency}" >
+                                            <c:set var="select1" value="" />
+                                            <c:if test="${hotelBooking.currency == price.code}">
+                                                <c:set var="select1" value="selected" />
+                                            </c:if>
+                                            <option value="<c:out value="${price.code}" />" ${select1}><c:out value="${price.code}" /></option>   
+                                        </c:forEach>
+                                    </select>
+                                </div>        
                             </div>
                         </div>
                     </div>
