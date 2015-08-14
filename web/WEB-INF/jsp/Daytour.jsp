@@ -12,6 +12,7 @@
 <c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
 <c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
 <c:set var="lockUnlockBookingOther" value="${requestScope['lockUnlockBookingOther']}" />
+ <c:set var="cur" value="" />
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
@@ -79,11 +80,12 @@
             <table class="display" id="HotelTable">
                 <thead class="datatable-header">
                     <tr>
-                        <th style="width:20%">Tour Code</th>
+                        <th style="width:15%">Tour Code</th>
                         <th style="width:15%">Date</th>
                         <th style="width:30%">Pick Up</th>
                         <th style="width:12%">Qty</th>
                         <th style="width:15%">Price</th>
+                        <th style="width: 5%">Currency</th>
                         <th style="width:8%">Action</th>
                     </tr>
                 </thead>
@@ -110,11 +112,11 @@
                             <c:forEach var="price" items="${item.daytourBookingPrices}">
                                 <c:set var="sumPrice" value="${sumPrice + (price.price * price.qty)}" />
                                 <c:set var="sumQty" value="${sumQty + price.qty}" />
-
+                                 <c:set var="cur" value="${price.currency}" />
                             </c:forEach>
                             <td class="text-center money"><c:out value="${sumQty}"/></td>
                             <td class="text-right money"><c:out value="${sumPrice}" /></td>
-
+                            <td class="text-center">${cur}</td>
                             <td class="text-center">
                                 <a href="DaytourDetail.smi?referenceNo=${param.referenceNo}&action=edit&daytourBooking=${item.id}"><span class="glyphicon glyphicon-edit editicon"></span></a>
                                     <c:if test="${item.MItemstatus.id == 2}">
