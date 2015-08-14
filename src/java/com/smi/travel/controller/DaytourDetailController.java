@@ -4,6 +4,7 @@ import com.smi.travel.datalayer.entity.Coupon;
 import com.smi.travel.datalayer.entity.Daytour;
 import com.smi.travel.datalayer.entity.DaytourBooking;
 import com.smi.travel.datalayer.entity.DaytourBookingPrice;
+import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MItemstatus;
 import com.smi.travel.datalayer.entity.MPricecategory;
 import com.smi.travel.datalayer.entity.Master;
@@ -49,6 +50,7 @@ public class DaytourDetailController extends SMITravelController {
     private static final String DAYTOURBOOKPRICES = "DAYTOURBOOKPRICES";
     private static final String GuideList = "GuideList";
     private static final String LockUnlockBooking = "LockUnlockBooking";
+    private static final String MCurrency = "MCurrency";
 
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -222,6 +224,9 @@ public class DaytourDetailController extends SMITravelController {
         }else{
             request.setAttribute(LockUnlockBooking,0);
         }
+        
+        List<MCurrency> mCurrency = utilservice.getListMCurrency();
+        request.setAttribute(MCurrency, mCurrency);
     }
 
     //price
