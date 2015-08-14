@@ -102,6 +102,14 @@
 				<prop key="SearchPaymentOutbound.smi">SearchPaymentOutboundController</prop>
 				<prop key="SearchInvoice.smi">SearchInvoiceController</prop>
 				<prop key="Invoice.smi">InvoiceController</prop>
+                                <prop key="InvoiceWT.smi">InvoiceController</prop>
+                                <prop key="InvoiceWV.smi">InvoiceController</prop>
+                                <prop key="InvoiceWN.smi">InvoiceController</prop>
+                                <prop key="InvoiceWA.smi">InvoiceController</prop>
+                                <prop key="InvoiceOT.smi">InvoiceController</prop>
+                                <prop key="InvoiceOV.smi">InvoiceController</prop>
+                                <prop key="InvoiceON.smi">InvoiceController</prop>
+                                <prop key="InvoiceOA.smi">InvoiceController</prop>
 				<prop key="Receipt.smi">ReceiptController</prop>
 				<prop key="SearchReceipt.smi">SearchReceiptController</prop>
 				<prop key="TaxInvoice.smi">TaxInvoiceController</prop>

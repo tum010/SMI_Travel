@@ -18,6 +18,14 @@
 <c:set var="listType" value="${requestScope['listType']}" />
 <c:set var="result" value="${requestScope['result']}" />
 <c:set var="roleName" value="${requestScope['roleName']}" />
+<c:set var="page" value="${requestScope['page']}" />
+
+<c:set var="req" value="${pageContext.request}" />
+<c:set var="url">${req.requestURL}</c:set>
+<c:set var="uri" value="${req.requestURI}" />
+
+
+    <base href="${fn:substring(url, 0, fn:length(url) - fn:length(uri))}${req.contextPath}/" />
 
 <input type="hidden" id="type" name="type" value="${param.type}">
 <input type="hidden" id="resultAction" name="resultAction" value="${result}">
@@ -41,7 +49,7 @@
         </div>
     
         <div class="col-sm-10">
-            <form action="Invoice.smi" method="post" id="InvoiceForm" role="form" >
+            <form action="Invoice${page}.smi" method="post" id="InvoiceForm" role="form" >
             <div id="textAlertDisable"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Void Success </strong> 

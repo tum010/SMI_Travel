@@ -29,6 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 public class InvoiceController extends SMITravelController {
     private static final ModelAndView Invoice = new ModelAndView("Invoice");
+    private static final String LINKNAME = "Invoice";
     private static final ModelAndView Invoice_REFRESH = new ModelAndView(new RedirectView("Invoice.smi", true));
     private UtilityService utilityService;
     private InvoiceService invoiceService;
@@ -37,10 +38,13 @@ public class InvoiceController extends SMITravelController {
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         UtilityFunction utilty = new UtilityFunction();
-        String callPageFrom = request.getParameter("type");
+        System.out.println("request.getRequestURI() :"+request.getRequestURI());
+        String callPageFrom = utilty.getAddressUrl(request.getRequestURI()).replaceAll(LINKNAME, "");//request.getParameter("type");
         String buttonVoid = request.getParameter("buttonVoid");
         String action = request.getParameter("action");
         //Attribute Invoice
+        System.out.println("callPageFrom : "+callPageFrom);
+       
         String invoiceType = request.getParameter("InputInvoiceType");
             String invoiceTypeSub = request.getParameter("InputInvoiceSubType");
             String invoiceId = request.getParameter("InvoiceId");
@@ -60,10 +64,13 @@ public class InvoiceController extends SMITravelController {
             String isGroup[] = request.getParameterValues("Grpup");
         
         if(callPageFrom != null){
-           String[] type = callPageFrom.split("\\?");
-           request.setAttribute("typeInvoice", type[0]);  
+           //String[] type = callPageFrom.split("\\?");
+           request.setAttribute("typeInvoice", callPageFrom.substring(1));  
+           department =  callPageFrom.substring(0,1);
+           invoiceType   =  callPageFrom.substring(1);
         }
-        
+        System.out.println("invoiceType : "+invoiceType);
+        System.out.println("department : "+department);
         //Role User
         SystemUser  user = (SystemUser) session.getAttribute("USER");
         String roleName = user.getRole().getName();
@@ -188,21 +195,14 @@ public class InvoiceController extends SMITravelController {
             }
 
             if(department != null){
-                if(department.equals("WendyAirTicket")){
+                if(department.equals("W")){
                     invoice.setDeparement("Wendy");
-                    invoice.setSubDepartment("Air Ticket");
-                    department = "Wendy";
-                }
-                if(department.equals("WendyPackage")){
-                    invoice.setDeparement("Wendy");
-                    invoice.setSubDepartment("Package");
-                    department = "Wendy";
-                }
-                if(department.equals("Outbound")){
+                    //invoice.setSubDepartment("Air Ticket");
+                } else if(department.equals("O")){
                     invoice.setDeparement("Outbound");
-                    invoice.setSubDepartment("");
-                    department = "Outbound";
+                    //invoice.setSubDepartment("Package");
                 }
+                
             }else if(department == null){
                 invoice.setDeparement(invoiceTypeSub);
             }
@@ -233,14 +233,14 @@ public class InvoiceController extends SMITravelController {
                 year = year.substring(2);
                 String lastInvoiceType = invoiceService.searchInvoiceNo(invoiceTypeSub, invoiceType);
                 if(lastInvoiceType != null && !lastInvoiceType.equals("")){
-                   invoiceNo = generateInvoiceNo(invoiceTypeSub, invoiceType, month, year,lastInvoiceType);
+                   invoiceNo = generateInvoiceNo(department, invoiceType, month, year,lastInvoiceType);
                    if(invoiceNo != null && !invoiceNo.equals("")){
                         invoice.setInvNo(invoiceNo);
                    }else{
                         invoice.setInvNo("");
                    }
                 }else{
-                    invoiceNo = generateInvoiceNo(invoiceTypeSub, invoiceType, month, year,null);
+                    invoiceNo = generateInvoiceNo(department, invoiceType, month, year,null);
                     if(invoiceNo != null && !invoiceNo.equals("")){
                          invoice.setInvNo(invoiceNo);
                     }else{
@@ -365,24 +365,21 @@ public class InvoiceController extends SMITravelController {
             }
 
             if(department != null){
-                if(department.equals("WendyAirTicket")){
+                if(department.equals("W")){
                     invoice.setDeparement("Wendy");
-                    invoice.setSubDepartment("Air Ticket");
-                    department = "Wendy";
-                }
-                if(department.equals("WendyPackage")){
-                    invoice.setDeparement("Wendy");
-                    invoice.setSubDepartment("Package");
-                    department = "Wendy";
-                }
-                if(department.equals("Outbound")){
+                    //invoice.setSubDepartment("Air Ticket");
+                  
+                    
+                } else if(department.equals("O")){
                     invoice.setDeparement("Outbound");
-                    invoice.setSubDepartment("");
-                    department = "Outbound";
+                    //invoice.setSubDepartment("Package");
+                  
                 }
+                invoiceTypeSub = department;
             }else if(department == null){
                 invoice.setDeparement(invoiceTypeSub);
             }
+            
             if(staffCode != null){
                 staff.setUsername(staffCode);
             }
@@ -409,16 +406,16 @@ public class InvoiceController extends SMITravelController {
                 String month = day[1];
                 String year = day[0];
                 year = year.substring(2);
-                String lastInvoiceType = invoiceService.searchInvoiceNo(invoiceTypeSub, invoiceType);
+                String lastInvoiceType = invoiceService.searchInvoiceNo(department, invoiceType);
                 if(lastInvoiceType != null && !lastInvoiceType.equals("")){
-                   invoiceNo = generateInvoiceNo(invoiceTypeSub, invoiceType, month, year,lastInvoiceType);
+                   invoiceNo = generateInvoiceNo(department, invoiceType, month, year,lastInvoiceType);
                    if(invoiceNo != null && !invoiceNo.equals("")){
                         invoice.setInvNo(invoiceNo);
                    }else{
                         invoice.setInvNo("");
                    }
                 }else{
-                    invoiceNo = generateInvoiceNo(invoiceTypeSub, invoiceType, month, year,null);
+                    invoiceNo = generateInvoiceNo(department, invoiceType, month, year,null);
                     if(invoiceNo != null && !invoiceNo.equals("")){
                          invoice.setInvNo(invoiceNo);
                     }else{
@@ -503,24 +500,18 @@ public class InvoiceController extends SMITravelController {
             }
 
             if(department != null){
-                if(department.equals("WendyAirTicket")){
+                if(department.equals("W")){
                     invoice.setDeparement("Wendy");
-                    invoice.setSubDepartment("Air Ticket");
-                    department = "Wendy";
-                }
-                if(department.equals("WendyPackage")){
-                    invoice.setDeparement("Wendy");
-                    invoice.setSubDepartment("Package");
-                    department = "Wendy";
-                }
-                if(department.equals("Outbound")){
+                    //invoice.setSubDepartment("Air Ticket");        
+                } else if(department.equals("O")){
                     invoice.setDeparement("Outbound");
-                    invoice.setSubDepartment("");
-                    department = "Outbound";
+                    //invoice.setSubDepartment("Package");
                 }
+                
             }else if(department == null){
                 invoice.setDeparement(invoiceTypeSub);
             }
+            
             if(staffCode != null){
                 staff.setUsername(staffCode);
             }
@@ -547,16 +538,16 @@ public class InvoiceController extends SMITravelController {
                 String month = day[1];
                 String year = day[0];
                 year = year.substring(2);
-                String lastInvoiceType = invoiceService.searchInvoiceNo(invoiceTypeSub, invoiceType);
+                String lastInvoiceType = invoiceService.searchInvoiceNo(department, invoiceType);
                 if(lastInvoiceType != null && !lastInvoiceType.equals("")){
-                   invoiceNo = generateInvoiceNo(invoiceTypeSub, invoiceType, month, year,lastInvoiceType);
+                   invoiceNo = generateInvoiceNo(department, invoiceType, month, year,lastInvoiceType);
                    if(invoiceNo != null && !invoiceNo.equals("")){
                         invoice.setInvNo(invoiceNo);
                    }else{
                         invoice.setInvNo("");
                    }
                 }else{
-                    invoiceNo = generateInvoiceNo(invoiceTypeSub, invoiceType, month, year,null);
+                    invoiceNo = generateInvoiceNo(department, invoiceType, month, year,null);
                     if(invoiceNo != null && !invoiceNo.equals("")){
                          invoice.setInvNo(invoiceNo);
                     }else{
@@ -598,8 +589,8 @@ public class InvoiceController extends SMITravelController {
             }
             
         }
-        
-        return Invoice;
+        request.setAttribute("page", callPageFrom);
+        return new ModelAndView(LINKNAME+callPageFrom);
     }
     
     public String generateInvoiceNo(String department,String invoiceType,String month ,String year,String lastInvoiceType){
@@ -614,7 +605,7 @@ public class InvoiceController extends SMITravelController {
         }
         
         String numberAsString = String.format ("%04d", (count+1));
-        if(department.equals("Wendy")){
+        if(department.equals("W")){
             if(invoiceType.equals("T")){
                 invoiceNo = "W"+month+""+year+""+numberAsString;
             }else if(invoiceType.equals("V")){
@@ -622,9 +613,10 @@ public class InvoiceController extends SMITravelController {
             }else if(invoiceType.equals("N")){
                 invoiceNo = "WN"+month+""+year+""+numberAsString;
             }
-        }else if (department.equals("Outbound")){
+        }else if (department.equals("O")){
             invoiceNo = "O"+month+""+year+""+numberAsString;
         }
+
         return invoiceNo;
     }
     
