@@ -24,6 +24,7 @@
 <c:set var="refno1" value="${fn:substring(param.referenceNo, 0, 2)}" />
 <c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
 <c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
+<c:set var="mCurrency" value="${requestScope['MCurrency']}" />
 
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
@@ -80,7 +81,7 @@
                 </div>
             </div>
             <hr/>
-            <form action="DaytourDetail.smi" method="post" id="DaytourDetailForm" name="DaytourDetailForm" role="form">
+            <form action="DaytourDetail.smi" method="post" id="DaytourDetailForm" name="DaytourDetailForm" role="form" onsubmit="return validateForm()">
                 <input type="hidden" id="requestLock" name="requestLock" value="${lockUnlockBooking}"/>
                 <input type="hidden" class="form-control" id="referenceNo"   name="referenceNo"  value="${param.referenceNo}" > 
                 <input name="action" value="save"type="hidden">
@@ -270,6 +271,11 @@
                     </div>
                     <!--</div>-->
                 </div>
+                        
+                <div id="textAlertCurrency"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Currency is not match!!! </strong> 
+                </div>
 
                 <!-- PriceTable-->
                 <div class="row form-group" style="margin-top: 20px; ">
@@ -285,7 +291,7 @@
                                     <th style="width:8%">Other Price</th>
                                     <th style="width:8%">Qty</th>
                                     <th style="width:8%">Total</th>
-                                    <th style="width:8%">Cur</th>
+                                    <th style="width:8%" class="priceCurrency">Cur</th>
                                     <th style="width:8%">Action</th>
                                 </tr>
                             </thead>
@@ -301,8 +307,19 @@
                                         <td class="priceAmountDefault money">${item.price}</td>
                                         <td class="priceAmount"><input type="text" class="form-control money otherprice" id="row-${loop.count}-priceamount" name="row-${loop.count}-priceamount" value="${item.price}" ></td>
                                         <td class="priceQty"><input type=text class="form-control text-right numbermask qty" id="row-${loop.count}-priceqty" name="row-${loop.count}-priceqty"  value="${item.qty}" maxlength="3"></td>
-                                        <td class="priceTotal money"><input  type=hidden class="form-control money" id="row-${loop.count}-pricetotal" name="row-${loop.count}-pricetotal" value="${item.qty * item.price}" readonly="">${item.qty * item.price}</td>
-                                        <td class="priceCurrency text-center"><input  type=hidden id="row-${loop.count}-pricecurrency" name="row-${loop.count}-pricecurrency" value="${item.currency}" >${item.currency}</td>
+                                        <td class="priceTotal money"><input  type=hidden class="form-control money" id="row-${loop.count}-pricetotal" name="row-${loop.count}-pricetotal" value="${item.qty * item.price}" readonly="">${item.qty * item.price}</td>                                      
+                                        <td class="priceCurrency text-center">
+                                            <select id="row-${loop.count}-pricecurrency" name="row-${loop.count}-pricecurrency" class="form-control">
+                                                <option id="" value="">---------</option>
+                                                <c:forEach var="price" items="${mCurrency}" >
+                                                    <c:set var="select1" value="" />
+                                                    <c:if test="${item.currency == price.code}">
+                                                        <c:set var="select1" value="selected" />
+                                                    </c:if>
+                                                    <option value="<c:out value="${price.code}" />" ${select1}><c:out value="${price.code}" /></option>   
+                                                </c:forEach>
+                                            </select>
+                                        </td>                                       
                                         <td class="text-center">
                                         <c:if test="${lockUnlockBooking == 0}">
                                             <a id="RowPriceButtonRemove-${loop.count}"  name="RowPriceButtonRemove-${loop.count}"  ParentTrPriceId=""  class="RemovePriceRow">
@@ -403,6 +420,17 @@
         </div>
     </div>
 </div>
+                
+<select id="select-currency-list" name="select-currency-list" class="form-control hidden">
+    <option id="" value="">---------</option>
+    <c:forEach var="price" items="${mCurrency}" >
+        <c:set var="select1" value="" />
+        <c:if test="${item.currency == price.code}">
+            <c:set var="select1" value="selected" />
+        </c:if>
+        <option value="<c:out value="${price.code}" />" ${select1}><c:out value="${price.code}" /></option>   
+    </c:forEach>
+</select>
 
 <!--Tour Modal-->
 <div class="modal fade" id="TourModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -1079,7 +1107,9 @@
                             '<td class="priceAmount"><input class="form-control money otherprice text-right" type="text" id="row-' + row + '-priceamount" name="row-' + row + '-priceamount" value="' + priceAmount + '" ></td>' +
                             '<td class="priceQty"><input type=text class="form-control text-right numbermask qty" id="row-' + row + '-priceqty" name="row-' + row + '-priceqty"  value="' + priceQty + '" maxlength="3"></td>' +
                             '<td class="priceTotal money"><input type=hidden class="form-control" id="row-' + row + '-pricetotal" name="row-' + row + '-pricetotal" value="' + priceTotal + '" >' + priceTotal + '</td>' +
-                            '<td class="priceCurrency text-center"><input  type=hidden id="row-' + row + '-pricecurrency" name="row-' + row + '-pricecurrency" value="' + priceCurrency + '" >' + priceCurrency + '</td>' +
+                            '<td class="priceCurrency text-center">' +
+                                '<select id="row-' + row + '-pricecurrency" name="row-' + row + '-pricecurrency" class="form-control"></select>' +
+                            '</td>' +
                             '<td class="text-center">' +
                             '<a id="RowPriceButtonRemove-' + row + '"  name="RowPriceButtonRemove-' + row + '"  ParentTrPriceId="' + ParentTrPriceId + '"  class="RemovePriceRow">' +
                             '<span id="RowPriceSpanRemove-' + row + '"  name="RowPriceSpanRemove-' + row + '"  class="glyphicon glyphicon-remove deleteicon"' +
@@ -1087,7 +1117,12 @@
                             'data-toggle="modal" data-target="#DelPrice"></span>' +
                             '</a></td>' +
                             '</tr>'
+                            
                             );
+                    $("#select-currency-list option").clone().appendTo("#row-" + row + "-pricecurrency");
+                    $('[name=row-' + row + '-pricecurrency] option').filter(function() { 
+                        return ($(this).text() === priceCurrency);
+                    }).prop('selected', true);
                     row++; //loop id 1,2,3....
                     $("#counterPrice").val(row);  //set value id to counter
                     $(eachCheckbox).removeAttr('checked');
@@ -1150,6 +1185,42 @@
 
     }
     
+    function validateForm(){
+//        var counter = ($("#counterPrice").val());
+        var counter = $('#bookingTourPriceTable tbody tr').length;
+        var different = 0;
+        for(var i=1;i<=counter;i++){
+            var currency1 = $('#row-' +i+ '-pricecurrency').find(":selected").text();
+            for(var j=2;j<=counter;j++){
+                var currency2 = $('#row-' +j+ '-pricecurrency').find(":selected").text();
+                if(currency1 !== currency2){
+                    different++;
+                }
+            }
+        }
+        if(different>0){          
+            $('#bookingTourPriceTable').find('tr').each(function () { 
+                $(this).find('td').each(function () { 
+                    if ($(this).hasClass('priceCurrency')) {
+                        $(this).addClass("alert-danger");
+                    }
+                });
+            });    
+            $('#textAlertCurrency').show();
+            $('#DaytourDetailForm').bootstrapValidator('revalidateField', 'InputTourCode');
+            return false;
+        } else {
+             $('#bookingTourPriceTable').find('tr').each(function () { 
+                $(this).find('td').each(function () { 
+                    if ($(this).hasClass('priceCurrency')) {
+                        $(this).removeClass("alert-danger");
+                    }
+                });
+            });
+            $('#textAlertCurrency').hide();
+            return true;
+        }    
+    }
    
 </script>
 
