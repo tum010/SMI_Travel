@@ -124,6 +124,9 @@
                                 
 				<prop key="SearchReceipt.smi">SearchReceiptController</prop>
 				<prop key="TaxInvoice.smi">TaxInvoiceController</prop>
+                                <prop key="TaxInvoiceW.smi">TaxInvoiceController</prop>
+                                <prop key="TaxInvoiceI.smi">TaxInvoiceController</prop>
+                                <prop key="TaxInvoiceO.smi">TaxInvoiceController</prop>
 				<prop key="SearchTaxInvoice.smi">SearchTaxInvoiceController</prop>
 				<prop key="ReceiveTable.smi">ReceiveTableController</prop>
 				<prop key="LockUnlockBooking.smi">LockUnlockBookingController</prop>

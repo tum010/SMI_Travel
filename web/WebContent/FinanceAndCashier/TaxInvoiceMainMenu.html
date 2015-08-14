@@ -7,15 +7,27 @@
         <b class="arrow"></b>
     </li>   
     <li>
-        <a href="#" >
-            <span class="menu-text"><b>Wendy/Outbound</b></span>
+        <a href="#" > 
+            <span class="menu-text"><b>Wendy</b></span>
         </a>               
         <b class="arrow"></b>
     </li>
     <li>
-        <a href="TaxInvoice.smi?Department=WO&" id="menu-wendyoutbound">
+        <a href="TaxInvoiceW.smi" id="menu-wendyoutbound">
             <i class="menu-icon fa fa-file-text-o"></i>
-            <span class="menu-text"><b>Tax Invoice</b></span>
+            <span class="menu-text">Tax Invoice</span>
+        </a>
+    </li>
+    <li>
+        <a href="#" >
+            <span class="menu-text"><b>Outbound</b></span>
+        </a>               
+        <b class="arrow"></b>
+    </li>
+    <li>
+        <a href="TaxInvoiceO.smi" id="menu-wendyoutbound">
+            <i class="menu-icon fa fa-file-text-o"></i>
+            <span class="menu-text">Tax Invoice</span>
         </a>
     </li>
     <li>
@@ -24,9 +36,9 @@
         </a>
     </li>
     <li>
-        <a href="TaxInvoice.smi?Department=INB&" id="menu-invoicetemp">
+        <a href="TaxInvoiceI.smi" id="menu-invoicetemp">
             <i class="menu-icon fa fa-file-text-o"></i>
-            <span class="menu-text"><b>Tax Invoice</b></span>
+            <span class="menu-text">Tax Invoice</span>
         </a>
     </li>
 </ul>
@@ -50,19 +62,15 @@
         var name = path.split("/");
         var listpara = location.search;
         
-        if(listpara.indexOf('WO') != -1){
-            $("#menu-wendyoutbound").css('background-color', '#ccc');
-        }else if(listpara.indexOf('INB') != -1){
-            $("#menu-invoicetemp").css('background-color', '#ccc');
-        }else{
+        
             //console.log(name[2]);
             str = name[2].split(".");
             //console.log(str[0]);
-            sub = str[0].substr(0, 9);
+            sub = str[0].substr(0, 11);
             //console.log(sub);
             var $select = $('a[href*="' + sub + '"]');
             $("#TaxInvoiceMenuLeft").find($select).css('background-color', '#ccc');           
-        }
+        
  
         $("#TaxInvoiceMenuLeft a").one('mouseover', function () {
 

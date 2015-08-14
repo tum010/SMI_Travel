@@ -4,6 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="Type" value="${requestScope['Department']}" />
+<c:set var="page" value="${requestScope['page']}" />
 <input type="hidden" id="Type" name="Type" value="${param.Department}">
 <section class="content-header" >
     <h1>
@@ -17,17 +18,20 @@
 <div class ="container"  style="padding-top: 15px;padding-left: 5px;" ng-app=""> 
     <!-- side bar -->
     <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
-        <div ng-include="'WebContent/FinanceAndCashier/TaxInvoiceMenu.html'"></div>
+        <div ng-include="'WebContent/FinanceAndCashier/TaxInvoiceMainMenu.html'"></div>
     </div>
     <!--Content -->
     <div class="col-sm-10">
         <div class="row" style="padding-left: 15px">  
             <div class="col-sm-6 " style="padding-right: 15px">
 		<c:choose>
-                    <c:when test="${param.Department=='WO'}">
-                        <h4><b>Tax Invoice Wendy/Outbound</b></h4>
+                    <c:when test="${fn:contains(page , 'W')}">
+                        <h4><b>Tax Invoice Wendy</b></h4>
                     </c:when>
-                    <c:when test="${param.Department=='INB'}">
+                    <c:when test="${fn:contains(page , 'O')}">
+                        <h4><b>Tax Invoice Outbound</b></h4>
+                    </c:when> 
+                    <c:when test="${fn:contains(page , 'I')}">
                         <h4><b>Tax Invoice Inbound</b></h4>
                     </c:when> 
 		</c:choose> 
@@ -37,7 +41,7 @@
         
         <!--Search Invoice-->
         <div class="row" style="padding-left: 15px">  
-            <form action="" method="post" id="ReservationTravox">
+            <form action="TaxInvoice${page}.smi" method="post" id="ReservationTravox">
                 <div role="tabpanel">
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane  active" id="infoSearchInvoice">
