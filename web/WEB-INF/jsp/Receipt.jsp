@@ -13,12 +13,11 @@
 <c:set var="currencyList" value="${requestScope['currencyList']}" />
 <c:set var="creditBankList" value="${requestScope['creditBankList']}" />
 <c:set var="statusList" value="${requestScope['statusList']}" />
-
-
-<%--<c:set var="vat" value="${requestScope['vat']}" />--%>
+<c:set var="receipt" value="${requestScope['receipt']}" />
+<c:set var="result" value="${requestScope['result']}" />
 <section class="content-header" >
     <h1>
-        Finance & Cashier - Receipt
+        Finance & Cashier - Receipt 
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-book"></i>Finance & Cashier</a></li>          
@@ -82,13 +81,14 @@
                                         <div class="col-xs-1 text-right" style="width: 120px">
                                             <label class="control-label text-right">Invoice No </label>
                                         </div>
-                                        <div class="col-xs-1 form-group" style="width: 200px">
+                                        <div class="col-xs-1 form-group" style="width: 200px" id="invoicenopanel">
                                             <div class="input-group">
-                                                <input id="invoiceNo" name="invoiceNo" type="text" class="form-control" value="">
+                                                <input id="invoiceNo" name="invoiceNo" type="text" class="form-control" value="" onkeydown="invoicenoValidate()">
                                             </div>
                                         </div>
+                                        <div class="col-xs-1  text-right" style="width: 8px"><i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i></div>
                                         <div class="col-xs-1 text-left"  style="width: 100px">
-                                            <button style="height:30px" type="submit"  id="searchInvoice"  name="searchInvoice" onclick="searchInvoice();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search </button>
+                                            <button style="height:30px" type="button"  id="ButtonSearchInvoice"  name="ButtonSearchInvoice" onclick="searchInvoice();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search </button>
                                         </div>
                                         <!--Invoice Table-->
                                         <div class="row" style="padding-left: 10px;padding-right: 10px">
@@ -102,16 +102,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td><center>111111</center></td>
-                                                        <td><center>222222</center></td>
-                                                        <td><center>333333</center></td>
-                                                        <td>
-                                                            <center>
-                                                                <a href=""><span class="glyphicon glyphicon-plus"></span></a>
-                                                            </center>
-                                                        </td>
-                                                    </tr>
+                                                    
                                                 </tbody>
                                             </table>
                                         </div>
@@ -243,12 +234,12 @@
                                     <label class="control-label text-right">Receive No </label>                                    
                                 </div>
                                 <div class="col-xs-1" style="width: 180px" id='receivenumber'>
-                                    <input id="receiveId" name="receiveId" type="hidden" class="form-control" maxlength="11" value="">
-                                    <input id="receiveNo" name="receiveNo" type="text" style="width: 180px" class="form-control" maxlength="20" value="">
+                                    <input id="receiveId" name="receiveId" type="hidden" class="form-control" maxlength="11" value="${receipt.id}">
+                                    <input id="receiveNo" name="receiveNo" type="text" style="width: 180px" class="form-control" maxlength="20" value="${receipt.recNo}">
                                 </div>
                                 <div class="col-xs-1 text-right" style="width:10px"></div>
                                 <div class="col-xs-1 text-right" style="width: 80px">
-                                    <button style="height:34px" type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="searchReceiveNo();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
+                                    <button style="height:34px" type="button"  id="ButtonSearch"  name="ButtonSearch" onclick="searchReceiveNo();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
                                 </div>
                                 <div class="col-xs-1 text-right" style="width:10px"></div>
                                 <div class="col-xs-1 text-left" style="width: 70px">
@@ -266,8 +257,8 @@
                                 </div>
                                 <div class="form-group col-xs-1 text-right" style="width: 560px">
                                     <div class="input-group">
-                                        <input type="hidden" class="form-control" id="receiveFromId" name="receiveFromId" value="${SelectedReceive.id}"/>
-                                        <input type="text" class="form-control" id="receiveFromCode" name="receiveFromCode" maxlength="11" value="${SelectedReceive.code}" style="text-transform:uppercase"/>
+                                        <input type="hidden" class="form-control" id="receiveFromId" name="receiveFromId" value=""/>
+                                        <input type="text" class="form-control" id="receiveFromCode" name="receiveFromCode" maxlength="11" value="${receipt.recFrom}" style="text-transform:uppercase"/>
                                         <span class="input-group-addon" id="receive_modal"  data-toggle="modal" data-target="#ReceiveFromModal">
                                             <span class="glyphicon-search glyphicon"></span>
                                         </span>
@@ -277,21 +268,21 @@
                                      <label class="control-label text-right">Name </label> 
                                 </div>
                                 <div class="form-group col-xs-1 text-right" style="width: 560px">
-                                    <input type="text" class="form-control" id="receiveFromName" name="receiveFromName" value="${SelectedReceive.name}">                           
+                                    <input type="text" class="form-control" id="receiveFromName" name="receiveFromName" value="${receipt.recName}">                           
                                 </div>
                                 <div class="col-xs-1 text-right" style="width: 135px">
-                                     <label class="control-label text-right">Address </label> 
+                                     <label class="control-label text-right">Address </label>  
                                 </div>
                                 <div class="form-group col-xs-1 text-right" style="width: 560px">
                                     <div class="input-group">                                    
-                                        <textarea rows="3" class="form-control" id="receiveFromAddress" name="receiveFromAddress" style="width: 327%"></textarea>  
+                                        <textarea rows="3" class="form-control" id="receiveFromAddress" name="receiveFromAddress" style="width: 327%" value="${receipt.recAddress}">${receipt.recAddress}</textarea>  
                                     </div>                               
                                 </div>
                                 <div class="col-xs-1 text-right" style="width: 135px">
                                      <label class="control-label text-right">Remark </label> 
                                 </div>
                                 <div class="form-group col-xs-1 text-right" style="width: 560px">
-                                    <input type="text" class="form-control" id="remark" name="remark" value="">                           
+                                    <input type="text" class="form-control" id="remark" name="remark" value="${receipt.remark}">                           
                                 </div>
                             </div>
                             <div class="col-xs-4" style="padding-top: 0px;">
@@ -301,7 +292,7 @@
                                 <div class="col-xs-1 form-group" style="width: 170px">
                                     <div class='input-group date'>
                                         <input id="receiveFromDate" name="receiveFromDate"  type="text" 
-                                           class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                           class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${receipt.recDate}">
                                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>  
                                 </div>
@@ -313,7 +304,7 @@
                                         <option value="">--- Status ---</option> 
                                         <c:forEach var="table" items="${statusList}" >
                                             <c:set var="select" value="" />
-                                            <c:set var="selectedId" value="${requestScope['ItemStatus']}" />
+                                            <c:set var="selectedId" value="${receipt.MItemStatus.id}" />
                                             <c:if test="${table.id == selectedId}">
                                                 <c:set var="select" value="selected" />
                                             </c:if>
@@ -326,7 +317,7 @@
                                 </div>
                                 <div class="form-group col-xs-1" style="width: 170px">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="arCode" name="arCode" maxlength="11" value="${SelectedReceive.arCode}" readonly="" />
+                                        <input type="text" class="form-control" id="arCode" name="arCode" maxlength="11" value="${receipt.arCode}" readonly="" />
                                     </div>
                                 </div>
                             </div>
@@ -340,9 +331,11 @@
                                         <tr class="datatable-header">
                                             <th style="width:5%;">Product</th>
                                             <th style="width:7%;">Description</th>
+                                            <th style="width:7%;">Cost</th>
+                                            <th style="width:7%;">Cur</th>
                                             <th style="width:7%;">Is Vat</th>
                                             <th style="width:10%;">Vat</th>
-                                            <th style="width:10%;">Gross</th>
+                                            <!--<th style="width:10%;">Gross</th>-->
                                             <th style="width:10%;">Amount</th>
                                             <th style="width:7%;">Cur</th>
                                             <th style="width:5%;">Action</th>
@@ -374,7 +367,9 @@
                                     </tbody>
                                 </table>      
                             </div>
-                        </div> 
+                        </div>
+                        <input type="hidden" name="type" id="type" value="${requestScope['typeInvoice']}">
+                        <input type="hidden" name="action" id="action" value="">
                         <input type="hidden" class="form-control" id="countRowCredit" name="countRowCredit" value="${requestScope['productRowCount']}" />
                         <input type="hidden" class="form-control" id="counter" name="counter" value="${requestScope['productRowCount']}" />
                         <input type="hidden" name="vatValue" id="vatValue" value="${requestScope['vat']}">
@@ -385,7 +380,7 @@
                         </select>
                         <select class="hidden" name="currencyList" id="currencyList">
                             <c:forEach var="cur" items="${currencyList}" varStatus="status">                                
-                                <option  value="${cur.id}">${cur.code}</option>
+                                <option  value="${cur.code}">${cur.code}</option>
                             </c:forEach>
                         </select>
                         <select class="hidden" name="creditBankList" id="creditBankList">
@@ -420,7 +415,7 @@
                                         <label class="control-label text-right">W/T </label>                                    
                                     </div>
                                     <div class="col-xs-1 " style="width: 200px">
-                                        <input id="inputWt" name="inputWt" type="text" class="form-control" value="">
+                                        <input id="withTax" name="withTax" type="text" class="form-control" value="${receipt.withTax}">
                                     </div>
                                 </div><hr/>
                                 <div class="row">
@@ -428,13 +423,13 @@
                                         <label class="control-label text-right">Cash Amount </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 200px">
-                                        <input id="cashAmount" name="cashAmount" type="text" class="form-control" value="">
+                                        <input id="cashAmount" name="cashAmount" type="text" class="form-control" value="${receipt.cashAmount}">
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 160px">
                                         <label class="control-label text-right">Cash(-) Amount</label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 200px">
-                                        <input id="cashMAmount" name="cashMAmount" type="text" class="form-control" value="">
+                                        <input id="cashMinusAmount" name="cashMinusAmount" type="text" class="form-control" value="${receipt.cashMinusAmount}">
                                     </div>
                                 </div><hr/>
                                 <div class="row">
@@ -442,7 +437,7 @@
                                         <label class="control-label text-right">Bank Transfer </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 200px">
-                                        <input id="bankTransfer" name="bankTransfer" type="text" class="form-control" value="">
+                                        <input id="bankTransfer" name="bankTransfer" type="text" class="form-control" value="${receipt.bankTransfer}">
                                     </div>
                                 </div><hr/>
                                 <div class="row">
@@ -450,21 +445,21 @@
                                         <label class="control-label text-right">Chq Bank </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 130px">
-                                        <input style="width: 130px" id="chqBank" name="chqBank" type="text" class="form-control" value="">
+                                        <input style="width: 130px" id="chqBank1" name="chqBank1" type="text" class="form-control" value="${receipt.chqBank1}">
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 110px">
                                         <label class="control-label text-right">Chq No </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 120px">
-                                        <input style="width: 115px" id="chqNo" name="chqNo" type="text" class="form-control" value="">
+                                        <input style="width: 115px" id="chqNo1" name="chqNo1" type="text" class="form-control" value="${receipt.chqNo1}">
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 130px">
                                         <label class="control-label text-right">Date </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 170px">
                                         <div class='input-group date'>
-                                            <input id="chqDate" name="chqDate"  type="text" 
-                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                            <input id="chqDate1" name="chqDate1"  type="text" 
+                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${receipt.chqDate1}">
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                         </div>
                                     </div>
@@ -472,7 +467,7 @@
                                         <label class="control-label text-right">Amount </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 120px">
-                                        <input id="chqAmount" name="chqAmount" type="text" class="form-control" value="">
+                                        <input id="chqAmount1" name="chqAmount1" type="text" class="form-control" value="${receipt.chqAmount1}">
                                         
                                     </div>
                                     <div class="col-xs-1" style="width: 50px ;">
@@ -486,13 +481,13 @@
                                         <label class="control-label text-right">Chq Bank </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 130px">
-                                        <input style="width: 130px" id="chqBank2" name="chqBank2" type="text" class="form-control" value="">
+                                        <input style="width: 130px" id="chqBank2" name="chqBank2" type="text" class="form-control" value="${receipt.chqBank2}">
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 110px">
                                         <label class="control-label text-right">Chq No </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 120px">
-                                        <input  style="width: 115px" id="chqNo2" name="chqNo2" type="text" class="form-control" value="">
+                                        <input  style="width: 115px" id="chqNo2" name="chqNo2" type="text" class="form-control" value="${receipt.chqNo2}">
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 130px">
                                         <label class="control-label text-right">Date </label>                                    
@@ -500,7 +495,7 @@
                                     <div class="col-xs-1" style="width: 170px">
                                         <div class='input-group date'>
                                             <input id="chqDate2" name="chqDate2"  type="text" 
-                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${receipt.chqDate2}">
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                         </div>
                                     </div>
@@ -508,7 +503,7 @@
                                         <label class="control-label text-right">Amount </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 120px">
-                                        <input id="chqAmount2" name="chqAmount2" type="text" class="form-control" value="">
+                                        <input id="chqAmount2" name="chqAmount2" type="text" class="form-control" value="${receipt.chqAmount2}">
                                     </div>
                                     <div class="col-xs-1" style="width: 50px ;">
                                         <h4><a class="col-xs-1">
@@ -544,13 +539,13 @@
                                     <select name="selectPrint" id="selectPrint" class="form-control" style="height:34px">
                                         <option value="">--- Select Print ---</option> 
                                          <c:choose>
-                                            <c:when test="${requestScope['SelectPrint'] == 'C'}">
+                                            <c:when test="${requestScope['SelectPrint'] == '1'}">
                                                 <c:set var="selectedC" value="selected" />
                                             </c:when>
                                         </c:choose>
                                         <option value="1" ${selected1}>Receipt</option>
                                         <c:choose>
-                                            <c:when test="${requestScope['SelectPrint'] == 'O'}">
+                                            <c:when test="${requestScope['SelectPrint'] == '2'}">
                                                 <c:set var="selected2" value="selected" />
                                             </c:when>
                                         </c:choose>
@@ -568,24 +563,56 @@
                                         <span id="buttonPrint" class="glyphicon glyphicon-print" ></span> Print 
                                     </button>
                                 </div>
+                                    
                                 <div class="col-md-4 text-right " style="width: 400px"></div>
                                 <div class="col-md-1 text-right " style="width: 100px">
-                                    <button type="button" class="btn btn-primary hidden" onclick="EnableVoid();" data-toggle="modal" data-target="#EnableVoid">
-                                        <span id="buttonEnableVoid" class="glyphicon glyphicon-ok" ></span> Void
+                                    <c:set var="isDisableVoid" value="disabled='true'" />
+                                    <c:set var="isEnableVoid" value="style='display: none;'" />
+                                    <c:set var="isSaveVoid" value="" />
+                                    <c:if test="${result =='success'}">        
+                                        <c:set var="isDisableVoid" value="" />
+                                    </c:if>
+                                    <c:if test="${result =='void'}">        
+                                        <c:set var="isDisableVoid" value="style='display: none;'" />
+                                        <c:if test="${roleName =='YES'}">        
+                                            <c:set var="isEnableVoid" value="" />
+                                            <c:set var="isSaveVoid" value="disabled='true'" />
+                                        </c:if>
+                                        <c:if test="${roleName =='NO'}">        
+                                            <c:set var="isEnableVoid" value="disabled='true'" />
+                                            <c:set var="isSaveVoid" value="disabled='true'" />
+                                        </c:if>
+                                    </c:if>
+                                    <c:if test="${receipt.MFinanceItemstatus.id == '2'}">        
+                                        <c:set var="isDisableVoid" value="style='display: none;'" />
+                                        <c:if test="${roleName =='YES'}">        
+                                            <c:set var="isEnableVoid" value="" />
+                                            <c:set var="isSaveVoid" value="disabled='true'" />
+                                        </c:if>
+                                        <c:if test="${roleName =='NO'}">        
+                                            <c:set var="isEnableVoid" value="disabled='true'" />
+                                            <c:set var="isSaveVoid" value="disabled='true'" />
+                                        </c:if>
+                                    </c:if>
+                                    <c:if test="${result =='cancelvoid'}">        
+                                        <c:set var="isDisableVoid" value="" />
+                                    </c:if>
+                                    <c:if test="${receipt.MFinanceItemstatus.id == '1'}">        
+                                        <c:set var="isDisableVoid" value="" />
+                                    </c:if>
+                                    <button type="button" class="btn btn-primary" onclick="EnableVoid();" data-toggle="modal" data-target="#EnableVoid" id="enableVoidButton" name="enableVoidButton"  ${isEnableVoid} >
+                                        <span id="SpanEnableVoid" class="glyphicon glyphicon-ok" ></span> Cancel Void
                                     </button>
-                                    <button type="button" class="btn btn-danger" onclick="DisableVoid();" data-toggle="modal" data-target="#DisableVoid">
-                                        <span id="buttonDisableVoid" class="glyphicon glyphicon-remove" ></span> Void
+
+                                    <button type="button" class="btn btn-danger" onclick="DisableVoid();" data-toggle="modal" data-target="#DisableVoid" id="disableVoidButton" name="disableVoidButton" ${isDisableVoid} >
+                                        <span id="SpanDisableVoid" class="glyphicon glyphicon-remove" ></span> Void
                                     </button>
                                 </div>
                                 <div class="col-md-1 text-right " style="width: 100px">
-                                    <button type="button" onclick="" class="btn btn-success">
-                                        <span id="buttonSave" class="fa fa-save"></span> Save 
-                                    </button>
+                                    <button type="submit" id="ButtonSave" name="ButtonSave" onclick="saveReceipt()" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
                                 </div>
                                 <div class="col-md-1 text-right " style="width: 100px">
-                                    <button type="button" onclick="clearNew();" class="btn btn-success">
-                                        <span id="buttonNew" class="fa fa-plus-circle"></span> New 
-                                    </button>
+                                    <button type="submit" id="ButtonNew" name="ButtonNew" onclick="clearNew()" class="btn btn-success"><i class="fa fa-plus-circle"></i> New</button>
                                 </div>
                             </div>
                         </div>
@@ -1183,11 +1210,13 @@
                 '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="">---------</option></select>' +                          
                 '</td>' +
                 '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" ></td>' +
+                '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control" ></td>' +
+                '<td><input maxlength="10" id="receiveCurCost' + row + '" name="receiveCurCost' + row + '" type="text" class="form-control" ></td>' +
                 '<td align="center">' +
                 '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" onclick="handleClick(this,'+row+')" value="">' +
                 '</td>' +
                 '<td><input id="receiveVat' + row + '" name="receiveVat' + row + '" type="text" class="form-control text-right"></td>' +
-                '<td><input id="receiveGross' + row + '" name="receiveGross' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)"></td>' +
+//                '<td><input id="receiveGross' + row + '" name="receiveGross' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)"></td>' +
                 '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)"></td>' +
                 '<td>' + 
                 '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="">---------</option></select>' +                          
@@ -1353,7 +1382,7 @@ function clearNew(){
     $("#inputStatus").val("");
     $("#arCode").val("");
     $("#grandTotal").val("");
-    $("#inputWt").val("");
+    $("#withTax").val("");
     $("#cashAmount").val("");
     $("#cashMAmount").val("");
     $("#bankTransfer").val("");
@@ -1377,5 +1406,84 @@ function clearNew(){
     AddRowCredit(0);
 }
 
+function searchInvoice() {
+    var invoiceNo = $("#invoiceNo").val();
+    var invoicenopanel = $("#invoicenopanel").val();
+    if(invoiceNo == ""){
+        if(!$('#invoicenopanel').hasClass('has-feedback')) {
+            $('#invoicenopanel').addClass('has-feedback');
+        }
+        $('#invoicenopanel').removeClass('has-success');
+        $('#invoicenopanel').addClass('has-error');
+    }
+    else{
+        var servletName = 'ReceiptServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&invoiceNo=' + invoiceNo +
+                '&type=' + 'searchInvoiceNo';
+        CallAjaxSearchInvoice(param);
+    }
+}
+
+function CallAjaxSearchInvoice(param) {
+    var url = 'AJAXServlet';
+    $("#ajaxload").removeClass("hidden");
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function (msg) {
+                try { 
+                    if(msg == "null"){
+                        
+                    }else{
+                        $("#InvoiceListTable tbody").append(msg);
+                    }
+                     $("#ajaxload").addClass("hidden");
+                } catch (e) {
+                    alert(e);
+                }
+
+            }, error: function (msg) {
+                 $("#ajaxload").addClass("hidden");
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
+}   
+
+function invoicenoValidate(){
+    $('#invoicenopanel').removeClass('has-feedback');
+    $('#invoicenopanel').addClass('has-success');
+    $('#invoicenopanel').removeClass('has-error');  
+}
+
+function addReceiveFrom(receiveid,receivefrom,name,address,arcode){
+   document.getElementById("receiveFromId").value = receiveid;
+   document.getElementById("receiveFromCode").value = receivefrom;
+   document.getElementById("receiveFromName").value = name;
+   document.getElementById("receiveFromAddress").value = address;
+   document.getElementById("arCode").value = arcode;
+}
+function searchReceiveNo(){
+    var action = document.getElementById('action');
+    action.value = 'searchReceiveNo';
+    var receiveNo = document.getElementById('receiveNo');
+    receiveNo.value = $("#receiveNo").val();
+    var type = document.getElementById('type');
+    type.value = $("#type").val();
+    document.getElementById('ReceiptForm').submit();
+}
+
+function saveReceipt(){
+    var action = document.getElementById('action');
+    action.value = 'saveReceipt';
+}
 
 </script>

@@ -13,12 +13,14 @@ import com.smi.travel.datalayer.dao.CustomerDao;
 import com.smi.travel.datalayer.dao.DaytourBookingDao;
 import com.smi.travel.datalayer.dao.DaytourComissionDao;
 import com.smi.travel.datalayer.dao.DaytourDao;
+import com.smi.travel.datalayer.dao.InvoiceDao;
 import com.smi.travel.datalayer.dao.MAirportDao;
 import com.smi.travel.datalayer.dao.MasterDao;
 import com.smi.travel.datalayer.dao.OtherBookingDao;
 import com.smi.travel.datalayer.dao.PackageTourDao;
 import com.smi.travel.datalayer.dao.PaymentAirTicketDao;
 import com.smi.travel.datalayer.dao.ProductDetailDao;
+import com.smi.travel.datalayer.dao.ReceiptDao;
 import com.smi.travel.datalayer.dao.RefundAirticketDao;
 import com.smi.travel.datalayer.dao.TicketFareAirlineDao;
 import com.smi.travel.datalayer.dao.TransferJobDao;
@@ -31,6 +33,7 @@ import com.smi.travel.datalayer.entity.Daytour;
 import com.smi.travel.datalayer.entity.DaytourBooking;
 import com.smi.travel.datalayer.entity.DaytourBookingPrice;
 import com.smi.travel.datalayer.entity.DaytourPrice;
+import com.smi.travel.datalayer.entity.Invoice;
 import com.smi.travel.datalayer.entity.MAirport;
 import com.smi.travel.datalayer.entity.MBookingstatus;
 import com.smi.travel.datalayer.entity.MInitialname;
@@ -87,6 +90,7 @@ public class AJAXBean extends AbstractBean implements
     private static final String PAYMENTAIRTICKET = "PaymentAirTicketServlet";
     private static final String INVOICE = "InvoiceServlet";
     private static final String REFUNDAIRLINE = "RefundAirlineServlet";
+    private static final String RECEIPT = "ReceiptServlet";
     private CustomerDao customerdao;
     private ProductDetailDao productDetailDao;
     private BookingSummaryDao bookingsummarydao;
@@ -104,6 +108,8 @@ public class AJAXBean extends AbstractBean implements
     private PaymentAirTicketDao paymentairticketdao; 
     private BillableDao billableDao;
     private RefundAirticketDao refundAirticketDao;
+    private InvoiceDao invoicedao;
+    private ReceiptDao receiptdao;
     public AJAXBean(List queryList) {
         super(queryList);
         if (queryList != null && queryList.size() > 0) {
@@ -144,6 +150,10 @@ public class AJAXBean extends AbstractBean implements
                     billableDao = (BillableDao) obj;
                 }else if (obj instanceof RefundAirticketDao){
                     refundAirticketDao = (RefundAirticketDao) obj;
+                }else if (obj instanceof InvoiceDao){
+                    invoicedao = (InvoiceDao) obj;
+                }else if (obj instanceof ReceiptDao){
+                    receiptdao = (ReceiptDao) obj;
                 }
             }
         }
@@ -644,10 +654,39 @@ public class AJAXBean extends AbstractBean implements
                     result = refundAirticketDao.DeleteRefundAirticketDetail(detailId);
                 }
             }
-        } 
+        }else if (RECEIPT.equalsIgnoreCase(servletName)) {
+            if("searchInvoiceNo".equalsIgnoreCase(type)){
+                String invoiceNo = map.get("invoiceNo").toString();
+                System.out.println("invoiceNo ::: "+invoiceNo);
+                Invoice invoice = new Invoice();
+                invoice = invoicedao.getInvoiceFromInvoiceNumber(invoiceNo);
+                
+                if("".equals(invoice.getId()) || null == invoice.getId()){
+                    result = "null";
+                }else{
+                    result = buildInvoiceListHTML(invoice);
+                }
+            }
+            else if("searchRefNo".equalsIgnoreCase(type)){
+                String searchRefNo = map.get("refNo").toString();
+                System.out.println("searchRefNo ::: "+searchRefNo);
+             
+            }
+        }  
+        
         return result;
     }
-    
+    public String buildInvoiceListHTML(Invoice invoice){
+        String newrow = "";
+        newrow +=   "<tr>"+
+                    "<td class='hidden'>"+invoice.getId()+"</td>"+
+                    "<td>"+invoice.getInvNo()+"</td>"+
+                    "<td>"+invoice.getInvName()+"</td>"+
+                    "<td>"+invoice.getInvAddress()+"</td>"+ 
+                    "<td><center><a href=\"\"><span onclick=\"addReceiveFrom('"+invoice.getId()+"','"+invoice.getInvTo()+"','"+invoice.getInvName()+"','"+invoice.getInvAddress()+"','"+invoice.getArcode()+"')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>" +
+                    "</tr>";
+        return newrow;
+    }
     
     public String buildPassengerListHTML(List<Customer> passList){
         String passenger = "";
