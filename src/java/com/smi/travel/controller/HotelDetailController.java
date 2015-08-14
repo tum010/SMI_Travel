@@ -5,20 +5,21 @@
  */
 package com.smi.travel.controller;
 
+import com.smi.travel.datalayer.entity.Hotel;
 import com.smi.travel.datalayer.entity.HotelBooking;
 import com.smi.travel.datalayer.entity.HotelPassenger;
-import com.smi.travel.datalayer.entity.HotelRoom;
 import com.smi.travel.datalayer.entity.HotelRequest;
+import com.smi.travel.datalayer.entity.HotelRoom;
+import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MItemstatus;
 import com.smi.travel.datalayer.entity.MMeal;
 import com.smi.travel.datalayer.entity.Master;
-import com.smi.travel.datalayer.entity.Hotel;
 import com.smi.travel.datalayer.entity.Passenger;
 import com.smi.travel.datalayer.service.BookingAirticketService;
 import com.smi.travel.datalayer.service.BookingHotelService;
-import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.service.HotelService;
 import com.smi.travel.datalayer.service.PassengerService;
+import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.text.ParseException;
@@ -61,6 +62,7 @@ public class HotelDetailController extends SMITravelController {
     private static final String TransectionResult = "result";
     private static final String PassengerList = "PassengerList";
     private static final String LockUnlockBooking = "LockUnlockBooking";
+    private static final String MCurrency = "MCurrency";
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -87,6 +89,7 @@ public class HotelDetailController extends SMITravelController {
         String infant = request.getParameter("infant");
         String Deadline = request.getParameter("deadline");
         String Flight = request.getParameter("Flight");
+        String currency = request.getParameter("select-currency");
 
         String hotelRoomRows = request.getParameter("roomCounter");
         String hotelRequestRows = request.getParameter("requestCounter");
@@ -114,6 +117,7 @@ public class HotelDetailController extends SMITravelController {
             hotelBooking.setDeadline(util.convertStringToDate(Deadline));
             hotelBooking.setFlight(Flight);
             hotelBooking.setIsBill(util.convertStringToInteger(isBill));
+            hotelBooking.setCurrency(currency);
             if (StringUtils.isNotEmpty(orderNo)) {
                 hotelBooking.setOrderNo(Integer.parseInt(orderNo));
             }
@@ -415,6 +419,9 @@ public class HotelDetailController extends SMITravelController {
 
         List<Hotel> hotelsList = hotelService.getListHotel(h, 1);
         request.setAttribute(HotelList, hotelsList);
+        
+        List<MCurrency> mCurrency = utilservice.getListMCurrency();
+        request.setAttribute(MCurrency, mCurrency);
 
         int[] booksize = utilservice.getCountItemFromBooking(refNo);
         request.setAttribute(Bookiing_Size, booksize);
