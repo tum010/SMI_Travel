@@ -16,15 +16,15 @@ import java.util.List;
  */
 public interface ReceiptDao {
     
-    public List<HashMap<String,Object>> getAirlineComFromPaymentNo(String InvoiceNumber);
-    public Receipt getReceiptfromReceiptNo(String ReceiptNo);
-    public String UpdateFinanceStatusReceipt(String ReceiptId,int status);
-    // from Receipt rec where rec.MFinanceItemstatus.id = :status and rec.id = :ReceiptId
-    public String insertReceipt(Receipt receipt);
-    public String updateReceipt(Receipt receipt);
-    public String deleteReceipt(Receipt receipt);
-    public String DeleteReceiptDetail(String ReceiptDetailId);
-    public String DeleteReceiptBank(String ReceiptBankId);
-    public String DeleteReceiptChq(String ReceiptId);
+    public List<HashMap<String,Object>> getAirlineComFromPaymentNo(String invoiceNumber);
+    public Receipt getReceiptfromReceiptNo(String receiptNo); // search ReceiveNo --> table Receipt
+    public String UpdateFinanceStatusReceipt(String receiptId,int status); //status 1 normal , 2 void
+    // UPDATE Receipt rec set rec.MFinanceItemstatus.id = :status  WHERE rec.id = :ReceiptId
+    public String insertReceipt(Receipt receipt); // insert table Receipt
+    public String updateReceipt(Receipt receipt); // update table Receipt
+    public String deleteReceipt(Receipt receipt); // delete table Receipt
+    public String DeleteReceiptDetail(String receiptDetailId , String receiptId); // delete table ReceiptDetail
+    public String DeleteReceiptBank(String receiptId,int index); // delete table Receipt ===> chqNo ???
+    public String DeleteReceiptChq(String receiptCreditId , String receiptId); // delete table ReceiptCredit
     
 }
