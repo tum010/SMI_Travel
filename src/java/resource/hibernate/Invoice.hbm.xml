@@ -53,7 +53,7 @@
             <column name="is_lock" />
         </property>
         <property name="createBy" type="string">
-            <column name="create_by" length="5" />
+            <column name="create_by" length="20" />
         </property>
         <property name="createDate" type="date">
             <column name="create_date" length="10" />

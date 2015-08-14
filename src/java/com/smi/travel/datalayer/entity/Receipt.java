@@ -15,6 +15,7 @@ public class Receipt {
 
 
      private String id;
+     private MAccpay MAccpay;
      private MFinanceItemstatus MFinanceItemstatus;
      private MItemstatus MItemStatus;
      private String recNo;
@@ -37,13 +38,17 @@ public class Receipt {
      private Date chqDate2;
      private BigDecimal chqAmount1;
      private BigDecimal chqAmount2;
+     private String recType;
+     private String department;
+     private Date createDate;
+     private String createBy;
      private List receiptDetails = new LinkedList<ReceiptDetail>();
      private List receiptCredits = new LinkedList<ReceiptCredit>();
 
     public Receipt() {
     }
 
-    public Receipt(MFinanceItemstatus MFinanceItemstatus, String recNo, String recFrom, String recName, String recAddress, String arCode, Date recDate, Integer payType, String remark, BigDecimal withTax, BigDecimal cashAmount, BigDecimal cashMinusAmount, BigDecimal bankTransfer, String chqBank1, String chqBank2, Date chqDate1, Date chqDate2, BigDecimal chqAmount1, BigDecimal chqAmount2, List receiptDetails, List receiptCredits,String chqNo1,String chqNo2,MItemstatus MItemStatus) {
+    public Receipt(MFinanceItemstatus MFinanceItemstatus, String recNo, String recFrom, String recName, String recAddress, String arCode, Date recDate, Integer payType, String remark, BigDecimal withTax, BigDecimal cashAmount, BigDecimal cashMinusAmount, BigDecimal bankTransfer, String chqBank1, String chqBank2, Date chqDate1, Date chqDate2, BigDecimal chqAmount1, BigDecimal chqAmount2, List receiptDetails, List receiptCredits,String chqNo1,String chqNo2,MItemstatus MItemStatus,String recType,String department,Date createDate,String createBy,MAccpay MAccpay) {
        this.MFinanceItemstatus = MFinanceItemstatus;
        this.MItemStatus =  MItemStatus;
        this.recNo = recNo;
@@ -68,6 +73,11 @@ public class Receipt {
        this.chqNo2 = chqNo2;
        this.receiptDetails = receiptDetails;
        this.receiptCredits = receiptCredits;
+       this.recType = recType;
+       this.department = department;
+       this.createDate = createDate;
+       this.createBy = createBy;
+       this.MAccpay = MAccpay;
     }
    
     public String getId() {
@@ -253,6 +263,46 @@ public class Receipt {
 
     public void setReceiptCredits(List receiptCredits) {
         this.receiptCredits = receiptCredits;
+    }
+
+    public MAccpay getMAccpay() {
+        return MAccpay;
+    }
+
+    public void setMAccpay(MAccpay MAccpay) {
+        this.MAccpay = MAccpay;
+    }
+
+    public String getRecType() {
+        return recType;
+    }
+
+    public void setRecType(String recType) {
+        this.recType = recType;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
     }
 
 

@@ -7,6 +7,9 @@
             <column name="id" />
             <generator class="identity" />
         </id>
+        <many-to-one name="MAccpay" class="com.smi.travel.datalayer.entity.MAccpay" fetch="select">
+            <column name="accpay_status" />
+        </many-to-one>
         <many-to-one name="MFinanceItemstatus" class="com.smi.travel.datalayer.entity.MFinanceItemstatus" fetch="select">
             <column name="status" />
         </many-to-one>
@@ -75,6 +78,18 @@
         </property>
         <property name="chqAmount2" type="big_decimal">
             <column name="chq_amount_2" precision="10" />
+        </property>
+         <property name="recType" type="string">
+            <column name="rec_type" length="1" />
+        </property>
+        <property name="department" type="string">
+            <column name="department" length="20" />
+        </property>
+        <property name="createDate" type="date">
+            <column name="create_date" length="10" />
+        </property>
+        <property name="createBy" type="string">
+            <column name="create_by" length="20" />
         </property>
         <bag name="receiptDetails" table="receipt_detail" inverse="true" lazy="true" fetch="select">
             <key>
