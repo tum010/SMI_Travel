@@ -376,44 +376,74 @@
     </definition>
     
     <definition name="InvoiceWV" extends="baseLayout">
-        <put-attribute name="title" value="Finance:Invoice Vat Wendy" />
+        <put-attribute name="title" value="Finance And Cashier :Invoice Vat Wendy" />
         <put-attribute name="body" value="/WEB-INF/jsp/Invoice.jsp" />
     </definition>
     
     <definition name="InvoiceWN" extends="baseLayout">
-        <put-attribute name="title" value="Finance:Invoice No Vat Wendy" />
+        <put-attribute name="title" value="Finance And Cashier :Invoice No Vat Wendy" />
         <put-attribute name="body" value="/WEB-INF/jsp/Invoice.jsp" />
     </definition>
     
     <definition name="InvoiceWA" extends="baseLayout">
-        <put-attribute name="title" value="Finance:Invoice Ticket Wendy" />
+        <put-attribute name="title" value="Finance And Cashier :Invoice Ticket Wendy" />
         <put-attribute name="body" value="/WEB-INF/jsp/Invoice.jsp" />
     </definition>
     
     
     <definition name="InvoiceOA" extends="baseLayout">
-        <put-attribute name="title" value="Finance:Invoice Ticket Outbound" />
+        <put-attribute name="title" value="Finance And Cashier :Invoice Ticket Outbound" />
         <put-attribute name="body" value="/WEB-INF/jsp/Invoice.jsp" />
     </definition>
     
     <definition name="InvoiceOT" extends="baseLayout">
-        <put-attribute name="title" value="Finance:Invoice Temp Outbound" />
+        <put-attribute name="title" value="Finance And Cashier :Invoice Temp Outbound" />
         <put-attribute name="body" value="/WEB-INF/jsp/Invoice.jsp" />
     </definition>
     
     <definition name="InvoiceOV" extends="baseLayout">
-        <put-attribute name="title" value="Finance:Invoice Vat Outbound" />
+        <put-attribute name="title" value="Finance And Cashier :Invoice Vat Outbound" />
         <put-attribute name="body" value="/WEB-INF/jsp/Invoice.jsp" />
     </definition>
     
     <definition name="InvoiceON" extends="baseLayout">
-        <put-attribute name="title" value="Finance:Invoice No Vat Outbound" />
+        <put-attribute name="title" value="Finance And Cashier :Invoice No Vat Outbound" />
         <put-attribute name="body" value="/WEB-INF/jsp/Invoice.jsp" />
     </definition>
     
     
     <definition name="Receipt" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier: Receipt " />
+        <put-attribute name="title" value="Finance And Cashier :Receipt " />
+        <put-attribute name="body" value="/WEB-INF/jsp/Receipt.jsp" />
+    </definition>
+    
+    <definition name="ReceiptWT" extends="baseLayout">
+        <put-attribute name="title" value="Finance And Cashier :Receipt Temp Wendy" />
+        <put-attribute name="body" value="/WEB-INF/jsp/Receipt.jsp" />
+    </definition>
+    
+    <definition name="ReceiptWV" extends="baseLayout">
+        <put-attribute name="title" value="Finance And Cashier :Receipt Vat Wendy" />
+        <put-attribute name="body" value="/WEB-INF/jsp/Receipt.jsp" />
+    </definition>
+    
+    <definition name="ReceiptOT" extends="baseLayout">
+        <put-attribute name="title" value="Finance And Cashier: Receipt Temp Outbound" />
+        <put-attribute name="body" value="/WEB-INF/jsp/Receipt.jsp" />
+    </definition>
+    
+    <definition name="ReceiptOV" extends="baseLayout">
+        <put-attribute name="title" value="Finance And Cashier: Receipt Vat Outbound " />
+        <put-attribute name="body" value="/WEB-INF/jsp/Receipt.jsp" />
+    </definition>
+    
+    <definition name="ReceiptIT" extends="baseLayout">
+        <put-attribute name="title" value="Finance And Cashier: Receipt Temp Inbound " />
+        <put-attribute name="body" value="/WEB-INF/jsp/Receipt.jsp" />
+    </definition>
+    
+    <definition name="ReceiptIV" extends="baseLayout">
+        <put-attribute name="title" value="Finance And Cashier: Receipt Vat Inbound " />
         <put-attribute name="body" value="/WEB-INF/jsp/Receipt.jsp" />
     </definition>
     

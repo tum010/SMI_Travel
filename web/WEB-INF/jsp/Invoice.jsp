@@ -20,13 +20,6 @@
 <c:set var="roleName" value="${requestScope['roleName']}" />
 <c:set var="page" value="${requestScope['page']}" />
 
-<c:set var="req" value="${pageContext.request}" />
-<c:set var="url">${req.requestURL}</c:set>
-<c:set var="uri" value="${req.requestURI}" />
-
-
-    <base href="${fn:substring(url, 0, fn:length(url) - fn:length(uri))}${req.contextPath}/" />
-
 <input type="hidden" id="type" name="type" value="${param.type}">
 <input type="hidden" id="resultAction" name="resultAction" value="${result}">
 <input type="hidden" id="roleName" name="roleName" value="${roleName}">
@@ -57,69 +50,48 @@
             <div class="row" style="padding-left: 15px">  
                 <div class="col-sm-6 " style="padding-right: 15px">
                     <c:choose>
-                        <c:when test="${fn:contains(type , 'tempOutbound')}">
+                        <c:when test="${fn:contains(page , 'OT')}">
                             <c:set var="typeInvoice" value="T" />
                             <c:set var="typeInvoiceSub" value="Outbound" />
                             <h4><b>Invoice Temp Outbound</b></h4>
                         </c:when>
-                        <c:when test="${fn:contains(type , 'vatOutbound')}">
+                        <c:when test="${fn:contains(page , 'OV')}">
                             <c:set var="typeInvoice" value="V" />
                             <c:set var="typeInvoiceSub" value="Outbound" />
                             <h4><b>Invoice Vat Outbound</b></h4>
                         </c:when>
-                        <c:when test="${fn:contains(type , 'tempWendy')}">
+                        <c:when test="${fn:contains(page , 'WT')}">
                             <c:set var="typeInvoice" value="T" />
                             <c:set var="typeInvoiceSub" value="Wendy" />
                             <h4><b>Invoice Temp Wendy</b></h4>
                         </c:when>
-                        <c:when test="${fn:contains(type , 'vatWendy')}">
+                        <c:when test="${fn:contains(page , 'WV')}">
                             <c:set var="typeInvoice" value="V" />
                             <c:set var="typeInvoiceSub" value="Wendy" />
                             <h4><b>Invoice Vat Wendy</b></h4>
                         </c:when>
-                        <c:when test="${fn:contains(type , 'NoVatWendy')}">
+                        <c:when test="${fn:contains(page , 'WN')}">
                             <c:set var="typeInvoice" value="N" />
                             <c:set var="typeInvoiceSub" value="Wendy" />
                             <h4><b>Invoice No Vat Wendy</b></h4>
                         </c:when> 
-                        <c:when test="${fn:contains(type , 'NoVatOutbound')}">
+                        <c:when test="${fn:contains(page , 'ON')}">
                             <c:set var="typeInvoice" value="N" />
                             <c:set var="typeInvoiceSub" value="Outbound" />
                             <h4><b>Invoice No Vat Outbound</b></h4>
                         </c:when> 
-                    </c:choose> 
-                    <c:choose>
-                        <c:when test="${ invoice.deparement == 'Outbound' && invoice.invType == 'T'}">
-                                <c:set var="typeInvoice" value="T" />
-                                <c:set var="typeInvoiceSub" value="Outbound" />
-                                <h4><b>Invoice Temp Outbound</b></h4>
-                        </c:when>
-                        <c:when test="${invoice.deparement == 'Outbound' && invoice.invType == 'V'}">
-                                <c:set var="typeInvoice" value="V" />
-                                <c:set var="typeInvoiceSub" value="Outbound" />
-                                <h4><b>Invoice Vat Outbound</b></h4>
-                        </c:when>
-                        <c:when test="${invoice.deparement == 'Wendy' && invoice.invType == 'T'}">
-                                <c:set var="typeInvoice" value="T" />
-                                <c:set var="typeInvoiceSub" value="Wendy" />
-                                <h4><b>Invoice Temp Wendy</b></h4>
-                        </c:when>
-                        <c:when test="${invoice.deparement == 'Wendy' && invoice.invType == 'V'}">
-                                <c:set var="typeInvoice" value="V" />
-                                <c:set var="typeInvoiceSub" value="Wendy" />
-                                <h4><b>Invoice Vat Wendy</b></h4>
-                        </c:when>
-                        <c:when test="${invoice.deparement == 'Wendy' && invoice.invType == 'N'}">
-                                <c:set var="typeInvoice" value="N" />
-                                <c:set var="typeInvoiceSub" value="Wendy" />
-                                <h4><b>Invoice No Vat Wendy</b></h4>     
+                        <c:when test="${fn:contains(page , 'WA')}">
+                            <c:set var="typeInvoice" value="A" />
+                            <c:set var="typeInvoiceSub" value="Wendy" />
+                            <h4><b>Invoice Air Ticket Wendy</b></h4>
                         </c:when> 
-                        <c:when test="${invoice.deparement == 'Outbound' && invoice.invType == 'N'}">
-                                <c:set var="typeInvoice" value="N" />
-                                <c:set var="typeInvoiceSub" value="Outbound" />
-                                <h4><b>Invoice No Vat Outbound</b></h4>              
+                        <c:when test="${fn:contains(page , 'OA')}">
+                            <c:set var="typeInvoice" value="A" />
+                            <c:set var="typeInvoiceSub" value="Outbound" />
+                            <h4><b>Invoice Air Ticket Outbound</b></h4>
                         </c:when> 
                     </c:choose> 
+
                             <input type="text" class="hidden" value="${typeInvoice}" id="InputInvoiceType" name="InputInvoiceType">
                             <input type="text" class="hidden" value="${typeInvoiceSub}" id="InputInvoiceSubType" name="InputInvoiceSubType">
                 </div>

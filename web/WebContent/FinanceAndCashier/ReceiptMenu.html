@@ -14,14 +14,14 @@
         </a>  
     </li>
     <li>
-        <a href="Receipt.smi?type=wendytemp" id="menu-wendytemp">
+        <a href="ReceiptWT.smi" id="menu-wendytemp">
             <i class="menu-icon fa fa-file-o"></i>
             <span class="menu-text">Receipt Temp<strong></strong> </span>
         </a>
 
     </li>
     <li>
-        <a href="Receipt.smi?type=wendyvat" id="menu-wendyvat">
+        <a href="ReceiptWV.smi" id="menu-wendyvat">
             <i class="menu-icon fa fa-file-text-o"></i>
             <span class="menu-text">Receipt Vat<strong></strong> </span>
         </a>
@@ -34,14 +34,14 @@
         </a>  
     </li>
     <li>
-        <a href="Receipt.smi?type=outtemp" id="menu-outtemp">
+        <a href="ReceiptOT.smi" id="menu-outtemp">
             <i class="menu-icon fa fa-file-o"></i>
             <span class="menu-text">Receipt Temp<strong></strong> </span>
         </a>
 
     </li>
     <li>
-        <a href="Receipt.smi?type=outvat" id="menu-outvat">
+        <a href="ReceiptOV.smi" id="menu-outvat">
             <i class="menu-icon fa fa-file-text-o"></i>
             <span class="menu-text">Receipt Vat<strong></strong> </span>
         </a>
@@ -53,14 +53,14 @@
         </a>  
     </li>
     <li>
-        <a href="Receipt.smi?type=intemp" id="menu-intemp">
+        <a href="ReceiptIT.smi" id="menu-intemp">
             <i class="menu-icon fa fa-file-o"></i>
             <span class="menu-text">Receipt Temp<strong></strong> </span>
         </a>
 
     </li>
     <li>
-        <a href="Receipt.smi?type=invat" id="menu-invat">
+        <a href="ReceiptIV.smi" id="menu-invat">
             <i class="menu-icon fa fa-file-text-o"></i>
             <span class="menu-text">Receipt Vat<strong></strong> </span>
         </a>
@@ -87,19 +87,7 @@
         var name = path.split("/");
         var listpara = location.search;
         
-        if(listpara.indexOf('outtemp') != -1){
-            $("#menu-outtemp").css('background-color', '#ccc');
-        }else if(listpara.indexOf('intemp') != -1){
-            $("#menu-intemp").css('background-color', '#ccc');
-        }else if(listpara.indexOf('wendytemp') != -1){
-            $("#menu-wendytemp").css('background-color', '#ccc');
-        }else if(listpara.indexOf('outvat') != -1){
-            $("#menu-outvat").css('background-color', '#ccc');
-        }else if(listpara.indexOf('invat') != -1){
-            $("#menu-invat").css('background-color', '#ccc');
-        }else if(listpara.indexOf('wendyvat') != -1){
-            $("#menu-wendyvat").css('background-color', '#ccc');
-        }else{
+       
             //console.log(name[2]);
             str = name[2].split(".");
             //console.log(str[0]);
@@ -107,7 +95,7 @@
             //console.log(sub);
             var $select = $('a[href*="' + sub + '"]');
             $("#ReceiptMenu").find($select).css('background-color', '#ccc');           
-        }
+        
 
         
        

@@ -110,7 +110,18 @@
                                 <prop key="InvoiceOV.smi">InvoiceController</prop>
                                 <prop key="InvoiceON.smi">InvoiceController</prop>
                                 <prop key="InvoiceOA.smi">InvoiceController</prop>
+                                
+                                
+                                
 				<prop key="Receipt.smi">ReceiptController</prop>
+                                
+                                <prop key="ReceiptWT.smi">ReceiptController</prop>
+                                <prop key="ReceiptWV.smi">ReceiptController</prop>
+                                <prop key="ReceiptOT.smi">ReceiptController</prop>
+                                <prop key="ReceiptOV.smi">ReceiptController</prop>
+                                <prop key="ReceiptIT.smi">ReceiptController</prop>
+                                <prop key="ReceiptIV.smi">ReceiptController</prop>
+                                
 				<prop key="SearchReceipt.smi">SearchReceiptController</prop>
 				<prop key="TaxInvoice.smi">TaxInvoiceController</prop>
 				<prop key="SearchTaxInvoice.smi">SearchTaxInvoiceController</prop>
