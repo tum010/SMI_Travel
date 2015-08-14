@@ -1,5 +1,6 @@
 package com.smi.travel.controller;
 
+import com.smi.travel.common.SMIFormUtil;
 import com.smi.travel.datalayer.entity.Agent;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.RefundAirticket;
@@ -7,10 +8,12 @@ import com.smi.travel.datalayer.entity.RefundAirticketDetail;
 import com.smi.travel.datalayer.service.RefundAirlineService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
+import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -90,9 +93,9 @@ public class RefundAirlineController extends SMITravelController {
     }
 
     private RefundAirticket maprequest(HttpServletRequest request) {
+        UtilityFunction uf = new UtilityFunction();
         RefundAirticket airticket = new RefundAirticket();
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String refundId = request.getParameter("refundId");
             String refundNo = request.getParameter("refundNo");
             String refundDate = request.getParameter("refundDate");
@@ -104,7 +107,7 @@ public class RefundAirlineController extends SMITravelController {
 
             airticket.setId(refundId);
             airticket.setRefundNo(refundNo);
-            airticket.setRefundDate(sdf.parse(refundDate));
+            airticket.setRefundDate(uf.convertStringToDate(refundDate));
             airticket.setRefundBy(refundBy);
             airticket.setRemark(remark);
             Agent agent = new Agent();
@@ -113,9 +116,9 @@ public class RefundAirlineController extends SMITravelController {
             agent.setName(agenName);
             airticket.setAgent(agent);
             airticket.setRefundAirticketDetails(new ArrayList<RefundAirticketDetail>());
-            try {
-                int counter = Integer.parseInt(request.getParameter("counter"));
-                for (int i = 1; i < counter; i++) {
+            int counter = Integer.parseInt(request.getParameter("counter"));
+            for (int i = 1; i < counter; i++) {
+                try {
                     RefundAirticketDetail detail = new RefundAirticketDetail();
                     String detailId = request.getParameter("detailId" + i);
                     String ticketId = request.getParameter("ticketId" + i);
@@ -137,14 +140,14 @@ public class RefundAirlineController extends SMITravelController {
                     detail.setProfit(new BigDecimal(profit));
                     detail.setAirComission(new BigDecimal(airCom));
                     detail.setAgentComission(new BigDecimal(agentCom));
-                    detail.setReceiveDate(sdf.parse(receivedate));
-                    detail.setExpenseDate(sdf.parse(paydate));
+                    detail.setReceiveDate(uf.convertStringToDate(receivedate));
+                    detail.setExpenseDate(uf.convertStringToDate(paydate));
                     airticket.getRefundAirticketDetails().add(detail);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
-        } catch (ParseException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         return airticket;

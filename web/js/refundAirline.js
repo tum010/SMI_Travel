@@ -4,6 +4,7 @@ $(document).ready(function () {
     });
 
 //    $(".datemask").mask('0000-00-00', {reverse: true});
+    addRowRefundAirlineList();
     $(".decimal").inputmask({
         alias: "decimal",
         integerDigits: 6,
@@ -12,12 +13,30 @@ $(document).ready(function () {
         digits: 2,
         allowMinus: false,
         digitsOptional: false,
-        placeholder: "0"
+        placeholder: "0.00"
+    });
+    var rr = $("[colName=refund]");
+    rr.bootstrapValidator({
+        container: 'tooltip',
+        excluded: [':disabled', ':hidden', ':not(:visible)'],
+        feedbackIcons: {
+            valid: 'uk-icon-check',
+            invalid: 'uk-icon-times',
+            validating: 'uk-icon-refresh'
+        },
+        fields: {
+            ticketNo: {
+                validators: {
+                    notEmpty: {
+                        message: ' Ticket No is required'
+                    }
+                }
+            }
+        }
     });
 
 
     //Add Blank row for user input.
-    addRowRefundAirlineList();
     /*Auto Add lastrow */
 
     $("#refundNo").on("keyup", function (e) {
@@ -28,19 +47,32 @@ $(document).ready(function () {
         }
     });
 
-    $("#buttonSave").click(function () {
+    $("#ButtonSearch").click(function () {
 
         var action = document.getElementById('action');
-        action.value = 'save';
+        action.value = 'search';
         document.getElementById('RefundAirlineForm').submit();
     });
 
-//    $(document).on('click', '#RefundAirlineTable tbody tr:nth-last-child(2) td  input ,#RefundAirlineTable tbody tr:nth-last-child(2) td .input-group-addon', function (e) { // .input-group-addon, .datemask
-//
-//
-//        /*OnEvent Add lastrow */
-//        addRowRefundAirlineList();
-//    });
+    $("#buttonSave").click(function () {
+        var valid = true;
+        for (var i = 1; i < $("#counter").val(); i++) {
+            var test = $("#refund" + i);
+            var refund = $("#refund" + i).val();
+            var sector = $("#sectorIssue" + i).html();
+            if (sector.indexOf(refund) < 0) {
+                $("#refund" + i).css('border-color', "Red");
+                valid = false;
+            }else{
+                $("#refund" + i).css('border-color', "Green");
+            }
+        }
+        if (valid) {
+            var action = document.getElementById('action');
+            action.value = 'save';
+            document.getElementById('RefundAirlineForm').submit();
+        }
+    });
 
 });
 
@@ -61,8 +93,7 @@ function addRowRefundAirlineList() {
         });
         $(".datetime").datetimepicker({
         });
-
-        $('.decimal').inputmask({
+        $(".decimal").inputmask({
             alias: "decimal",
             integerDigits: 6,
             groupSeparator: ',',
@@ -70,10 +101,9 @@ function addRowRefundAirlineList() {
             digits: 2,
             allowMinus: false,
             digitsOptional: false,
-            placeholder: "0"
+            placeholder: "0.00"
         });
         $("#counter").val(counter);
-
 
         $("#RefundAgentTable tr").on('click', function () {
             var agent_id = $(this).find(".agent-id").text();
@@ -157,6 +187,16 @@ function addRowRefundAirlineList() {
                                 var counter = $('#RefundAirlineTable tbody tr').length / 2;
                                 if (row === counter) {
                                     addRowRefundAirlineList();
+                                    $(".decimal").inputmask({
+                                        alias: "decimal",
+                                        integerDigits: 6,
+                                        groupSeparator: ',',
+                                        autoGroup: true,
+                                        digits: 2,
+                                        allowMinus: false,
+                                        digitsOptional: false,
+                                        placeholder: "0.00"
+                                    });
                                 }
 
                             }, error: function (msg) {
@@ -254,5 +294,19 @@ function removeAndRenameRow() {
     });
     $("#counter").val(i - 1);
     $('#DeleteRefundAirline').modal('hide');
+}
+
+function checkRefund(e) {
+    var refund = e.value;
+    var row = $(e).parent().parent().attr("row");
+    var issue = $("#sectorIssue" + row).html();
+    if (issue.indexOf(refund) >= 0) {
+        e.style.borderColor = "Green";
+    } else {
+        e.style.borderColor = "Red";
+        return;
+    }
+
+
 }
 
