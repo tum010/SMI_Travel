@@ -213,6 +213,10 @@ $(document).ready(function () {
 
         });
     });
+    $("#DetailTable").on("change", "select:last", function () {
+        var row = parseInt($("#counter").val());
+        AddRow(row);
+    });
 
 });
 
@@ -225,9 +229,12 @@ function AddRow(row) {
             '<td><input type="text" class="form-control money" id="row-' + row + '-qty" name="row-' + row + '-qty" maxlength="11"/></td>' +
             '<td><input type="text" class="form-control money" id="row-' + row + '-cost" name="row-' + row + '-cost" maxlength="11"/></td>' +
             '<td><input type="text" class="form-control money" id="row-' + row + '-amount" name="row-' + row + '-amount" maxlength="11"></td>' +
+            '<td><select id="row-' + row + '-currency" name="row-' + row + '-currency" class="form-control"><option value="">---------</option></select></td>' +         
             '<td class="text-center"><a class="remCF" id="ButtonRemove'+row+'"><span id="SpanRemove'+row+'" class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
             '</tr>'
             );
+    
+    $("#select-currency option").clone().appendTo("#row-" + row + "-currency");
     var tempCount = parseInt($("#counter").val()) + 1;
     $("#counter").val(tempCount);
 }
