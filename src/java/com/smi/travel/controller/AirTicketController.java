@@ -5,33 +5,28 @@
  */
 package com.smi.travel.controller;
 
-import com.smi.travel.master.controller.SMITravelController;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
-import com.smi.travel.datalayer.service.BookingAirticketService;
-import com.smi.travel.datalayer.entity.AirticketPnr;
-import com.smi.travel.datalayer.entity.AirticketDesc;
 import com.smi.travel.datalayer.entity.AirticketAirline;
 import com.smi.travel.datalayer.entity.AirticketBooking;
+import com.smi.travel.datalayer.entity.AirticketDesc;
 import com.smi.travel.datalayer.entity.AirticketFlight;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
-import com.smi.travel.datalayer.entity.MAirline;
+import com.smi.travel.datalayer.entity.AirticketPnr;
 import com.smi.travel.datalayer.entity.BookingPnr;
 import com.smi.travel.datalayer.entity.HotelBooking;
-import com.smi.travel.datalayer.service.MStaffService;
-import com.smi.travel.datalayer.entity.SystemUser;
-import com.smi.travel.datalayer.service.MAirticketService;
-import com.smi.travel.datalayer.service.BookingHotelService;
 import com.smi.travel.datalayer.entity.MAirline;
+import com.smi.travel.datalayer.entity.MAirline;
+import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.Master;
+import com.smi.travel.datalayer.entity.SystemUser;
+import com.smi.travel.datalayer.service.BookingAirticketService;
+import com.smi.travel.datalayer.service.BookingHotelService;
+import com.smi.travel.datalayer.service.MAirticketService;
+import com.smi.travel.datalayer.service.MStaffService;
 import com.smi.travel.datalayer.service.UtilityService;
+import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -39,7 +34,12 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 /**
  *
@@ -71,6 +71,7 @@ public class AirTicketController extends SMITravelController {
     private static final String Result = "Result";
     private static final String[] resultText = {"Unsuccesful save", "Save successful"};
     private static final String LockUnlockBooking = "LockUnlockBooking";
+    private static final String MCurrency = "MCurrency";
 
 
     @Override
@@ -89,6 +90,8 @@ public class AirTicketController extends SMITravelController {
             System.out.println("AirTicketController new not supported yet");
 //            request.setAttribute(ACTION, "new");
         } else if ("edit".equalsIgnoreCase(action)) {
+            List<MCurrency> mCurrency = utilservice.getListMCurrency();
+            request.setAttribute(MCurrency, mCurrency);
             System.out.println("AirTciketController edit ");
             AirticketBooking airBook = bookingAirticketService.getBookDetailAir(refNo);
 
@@ -245,6 +248,7 @@ public class AirTicketController extends SMITravelController {
             String qty = request.getParameter("row-" + i + "-qty");
             String cost = request.getParameter("row-" + i + "-cost");
             String amount = request.getParameter("row-" + i + "-amount");
+            String currency = request.getParameter("row-" + i + "-currency");
             Integer qtyInt = null;
             Integer costInt = null;
             Integer amountInt = null;
@@ -270,6 +274,7 @@ public class AirTicketController extends SMITravelController {
             airDesc.setQty(qtyInt);
             airDesc.setCost(costInt);
             airDesc.setAmount(amountInt);
+            airDesc.setCurrency(currency);
 
             if (StringUtils.isNotEmpty(airDesc.getDetail())) {
                 if (airDesc.getId() == null) {
