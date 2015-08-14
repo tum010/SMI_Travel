@@ -291,9 +291,10 @@
                             <th style="width:20%">Detail</th>
                             <th style="width:7%">Cost</th>
                             <th style="width:7%">Price</th>
+                            <th style="width:7%">Currency</th>
                             <th style="width:7%">Status</th>
-                            <th style="width:20%">Bill Date</th>
-                            <th style="width:25%">Remark</th>
+                            <th style="width:17%">Bill Date</th>
+                            <th style="width:20%">Remark</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -313,12 +314,14 @@
                                     <div class="moneyformat">${b.cost eq 0 && b.MBilltype.id eq 6 ? '-': b.cost}</div>
                             </td>
                             <td class="text-right"><input type="hidden" id="price-${Counter.count}" name="price-${Counter.count}" value="${b.price}" /><div class="moneyformat">${b.price }</div></td>
+                            <td>${b.currency}</td>
                             <td><c:if test="${b.isBill == 1}">
                                     Billed
                                 </c:if>
                                 <c:if test="${b.isBill == 0}">
                                     Open
-                                </c:if></td>
+                                </c:if>
+                            </td>
                             <td>      
                                
                                 <div class="input-group  datetime" id="billDescId-${Counter.count}" name="billDescId-${Counter.count}">
@@ -342,7 +345,7 @@
                         <c:set var="totalPrice"  value="${totalPrice + b.price}"/> 
                     </c:forEach>
 
-                    <tr>
+<!--                    <tr>
                         <td></td>
                         <td></td>
                         <td class="text-center"><strong>Total</strong></td>
@@ -350,7 +353,7 @@
                         <td class="text-right"><strong class="moneyformat">${totalPrice}</strong></td>                    
                         <td></td>
                         <td></td>
-                    </tr>
+                    </tr>-->
                     </tbody>
                 </table>
                 
