@@ -250,9 +250,11 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                             + airPassengerList.get(i).getSeries3();
 
             List<AirticketFlight> airlines = new ArrayList<AirticketFlight>(airPassengerList.get(i).getAirticketAirline().getAirticketFlights());
-            departDate = String.valueOf(airlines.get(i).getDepartDate());
-            if(airlines.get(i).getMFlight() != null){
-                ticketClass = airlines.get(i).getMFlight().getName();
+            for(int j = 0 ; j < airlines.size() ; j++ ){
+                departDate = String.valueOf(airlines.get(j).getDepartDate());
+                if(airlines.get(j).getMFlight() != null){
+                    ticketClass = airlines.get(j).getMFlight().getName();
+                }
             }
             TicketFareAirline ticketFareAirline = new TicketFareAirline();
             String query = "from TicketFareAirline t where t.ticketNo = :ticketNo";
