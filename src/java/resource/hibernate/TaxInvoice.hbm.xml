@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 15, 2015 12:01:48 AM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.TaxInvoice" table="tax_invoice" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="MFinanceItemstatus" class="com.smi.travel.datalayer.entity.MFinanceItemstatus" fetch="select">
+            <column name="status" />
+        </many-to-one>
+        <many-to-one name="passenger" class="com.smi.travel.datalayer.entity.Passenger" fetch="select">
+            <column name="passenger_id" />
+        </many-to-one>
+        <property name="taxNo" type="java.lang.Integer">
+            <column name="tax_no" />
+        </property>
+        <property name="taxInvDate" type="date">
+            <column name="tax_inv_date" length="10" />
+        </property>
+        <property name="taxInvTo" type="string">
+            <column name="tax_inv_to" length="10" />
+        </property>
+        <property name="taxInvName" type="string">
+            <column name="tax_inv_name" />
+        </property>
+        <property name="taxInvAddr" type="string">
+            <column name="tax_inv_addr" />
+        </property>
+        <property name="arCode" type="string">
+            <column name="ar_code" length="20" />
+        </property>
+        <property name="invoiceType" type="string">
+            <column name="invoice_type" length="20" />
+        </property>
+        <property name="createBy" type="string">
+            <column name="create_by" length="5" />
+        </property>
+        <property name="createDate" type="date">
+            <column name="create_date" length="10" />
+        </property>
+        <bag name="creditNoteDetails" table="credit_note_detail" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="tax_invoice_id" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.CreditNoteDetail" />
+        </bag>
+        <bag name="taxInvoiceDetails" table="tax_invoice_detail" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="tax_invoice_id" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.TaxInvoiceDetail" />
+        </bag>
+    </class>
+</hibernate-mapping>

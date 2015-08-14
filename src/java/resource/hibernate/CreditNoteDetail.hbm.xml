@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 15, 2015 12:01:48 AM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.CreditNoteDetail" table="credit_note_detail" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="taxInvoice" class="com.smi.travel.datalayer.entity.TaxInvoice" fetch="select">
+            <column name="tax_invoice_id" />
+        </many-to-one>
+        <many-to-one name="MProductType" class="com.smi.travel.datalayer.entity.MProductType" fetch="select">
+            <column name="product_type" />
+        </many-to-one>
+        <many-to-one name="creditNote" class="com.smi.travel.datalayer.entity.CreditNote" fetch="select">
+            <column name="credit_note_id" />
+        </many-to-one>
+        <property name="description" type="string">
+            <column name="description" />
+        </property>
+        <property name="amount" type="big_decimal">
+            <column name="amount" precision="10" />
+        </property>
+    </class>
+</hibernate-mapping>
