@@ -457,6 +457,21 @@
         <put-attribute name="body" value="/WEB-INF/jsp/TaxInvoice.jsp" />
     </definition>
     
+    <definition name="TaxInvoiceW" extends="baseLayout">
+        <put-attribute name="title" value="Finance And Cashier: TaxInvoice Wendy " />
+        <put-attribute name="body" value="/WEB-INF/jsp/TaxInvoice.jsp" />
+    </definition>
+    
+    <definition name="TaxInvoiceI" extends="baseLayout">
+        <put-attribute name="title" value="Finance And Cashier: TaxInvoice Inbound" />
+        <put-attribute name="body" value="/WEB-INF/jsp/TaxInvoice.jsp" />
+    </definition>
+    
+    <definition name="TaxInvoiceO" extends="baseLayout">
+        <put-attribute name="title" value="Finance And Cashier: TaxInvoice Outbound" />
+        <put-attribute name="body" value="/WEB-INF/jsp/TaxInvoice.jsp" />
+    </definition>
+    
     <definition name="SearchTaxInvoice" extends="baseLayout">
         <put-attribute name="title" value="Finance And Cashier: SearchTaxInvoice " />
         <put-attribute name="body" value="/WEB-INF/jsp/SearchTaxInvoice.jsp" />
