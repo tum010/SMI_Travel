@@ -35,7 +35,7 @@
             </div>
             <hr/>
             
-            <form action="RefundAirline.smi" method="post" id="RefundAirlineForm" name="RefundAirlineForm" role="form">
+            <form  method="post" id="RefundAirlineForm" name="RefundAirlineForm" role="form">
                                                         
                 <div id="alertSuccess"  style="" class="alert alert-success alert-dismissible" role="alert" <c:if test="${successStatus != true}">hidden="true"</c:if> >
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -53,8 +53,12 @@
                         <div class="col-xs-1 text-right" style="width: 140px">
                             <label class="control-label text-right">Refund No </label>
                         </div>
-                        <div class="col-xs-1" style="width: 400px">
+                        <div class="col-xs-1" style="width: 290px">
                             <input id="refundNo" name="refundNo" type="text" class="form-control" value="${refundAirline.refundNo}">
+                        </div>
+                        <div class="col-xs-1 text-right" style="width: 100px">
+                            <button style="height:34px" type="button" id="ButtonSearch" name="ButtonSearch" onclick="searchTicketNo();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
+
                         </div>
                         <div class="col-xs-1 text-right"  style="width: 140px">
                             <label class="control-label text-right">Refund Date </label>
@@ -141,12 +145,12 @@
                             <input type="hidden" name="detailId${index}" id="detailId${index}" colName="detailId" value="${detail.id}">
                             <input type="hidden" id="ticketId${index}" name="ticketId${index}" colName="ticketId" value="${detail.airticketPassenger.id}">
                             <td style="text-align:center"> <input id="ticketNo${index}" name="ticketNo${index}" colName="ticketNo" type="text" class="form-control" value="${detail.ticketFareAirline["TicketNo"]}"></td>
-                            <td style="text-align:center"> <input id="refund${index}" name="refund${index}" colName="refund" type="text" class="form-control" value="${detail.sectorRefund}"></td>
-                            <td style="text-align:center"> <input id="Receive${index}" name="receive${index}" colName="receive" type="text" class="form-control" value="${detail.receiveAirline}"></td>
-                            <td style="text-align:center"> <input id="Pay${index}" name="pay${index}" colName="pay" type="text" class="form-control" value="${detail.payCustomer}"></td>
-                            <td style="text-align:center"> <input id="Profit${index}" name="profit${index}" colName="profit" type="text" class="form-control" value="${detail.profit}"></td>
-                            <td style="text-align:center"> <input id="AirCom${index}" name="airCom${index}" colName="airCom" type="text" class="form-control" value="${detail.airComission}"></td>
-                            <td style="text-align:center"> <input id="AgentCom${index}" name="agentCom${index}" colName="agentCom" type="text" class="form-control" value="${detail.agentComission}"></td>
+                            <td style="text-align:center"> <input id="refund${index}" name="refund${index}" colName="refund" type="text" class="form-control" value="${detail.sectorRefund}" onfocusout="checkRefund(this)"></td>
+                            <td style="text-align:center"> <input id="Receive${index}" name="receive${index}" colName="receive" type="text" class="form-control text-right decimal" style="text-align: right" value="${detail.receiveAirline}"></td>
+                            <td style="text-align:center"> <input id="Pay${index}" name="pay${index}" colName="pay" type="text" class="form-control text-right decimal" style="text-align: right" value="${detail.payCustomer}"></td>
+                            <td style="text-align:center"> <input id="Profit${index}" name="profit${index}" colName="profit" type="text" class="form-control text-right decimal" style="text-align: right" value="${detail.profit}"></td>
+                            <td style="text-align:center"> <input id="AirCom${index}" name="airCom${index}" colName="airCom" type="text" class="form-control text-right decimal" style="text-align: right" value="${detail.airComission}"></td>
+                            <td style="text-align:center"> <input id="AgentCom${index}" name="agentCom${index}" colName="agentCom" type="text" class="form-control text-right decimal" style="text-align: right" value="${detail.agentComission}"></td>
                             <td> 
                                 <div class="input-group daydatepicker" id="daydatepicker-0" style="padding-left: 0px">
                                     <input style="width: 100%" type="text" class="form-control" id="paydate${index}" name="paydate${index}" colName="paydate" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${detail.expenseDate}">
@@ -162,7 +166,7 @@
                             </tr>
                             <tr row="${varRefundAirline.index + 1}">
                                 <td  style="text-align:center"><span id="ticketDate" name="ticketDate">${detail.ticketFareAirline["TicketDate"]}</span></td>
-                                <td ><span id="sectorIssue">${detail.ticketFareAirline["Sector"]}</span></td>
+                                <td ><span id="sectorIssue${index}">${detail.ticketFareAirline["Sector"]}</span></td>
                                 <td style="text-align:center"><span id="total">${detail.ticketFareAirline["Total"]}</span></td>
                                 <td ><span id="department">${detail.ticketFareAirline["Dept"]}</span></td>       
                                 <td colspan='3'><span id="passsenger" name="passsenger">${detail.ticketFareAirline["Passenger"]}</span></td>
@@ -261,12 +265,12 @@
         <input type="hidden" name="detailId" id="detailId" colName="detailId" value="">
         <input type="hidden" id="ticketId" name="ticketId" colName="ticketId" value="">
         <td style="text-align:center"> <input id="ticketNo" name="ticketNo" colName="ticketNo" type="text" class="form-control" value=""></td>
-        <td style="text-align:center"> <input id="refund" name="refund" colName="refund" type="text" class="form-control" value=""></td>
-        <td style="text-align:center"> <input id="receive" name="receive" colName="receive" type="text" class="form-control" value=""></td>
-        <td style="text-align:center"> <input id="pay" name="pay" type="text" colName="pay" class="form-control" value=""></td>
-        <td style="text-align:center"> <input id="profit" name="profit" colName="profit" type="text" class="form-control" value=""></td>
-        <td style="text-align:center"> <input id="airCom" name="airCom" colName="airCom" type="text" class="form-control" value=""></td>
-        <td style="text-align:center"> <input id="agentCom" name="agentCom" colName="agentCom" type="text" class="form-control" value=""></td>
+        <td style="text-align:center"> <input id="refund" name="refund" colName="refund" type="text" class="form-control" value="" onfocusout="checkRefund(this)"></td>
+        <td style="text-align:center"> <input id="receive" name="receive" colName="receive" type="text" class="form-control text-right decimal" value=""></td>
+        <td style="text-align:center"> <input id="pay" name="pay" type="text" colName="pay" class="form-control text-right decimal"></td>
+        <td style="text-align:center"> <input id="profit" name="profit" colName="profit" type="text" class="form-control text-right decimal"></td>
+        <td style="text-align:center"> <input id="airCom" name="airCom" colName="airCom" type="text" class="form-control text-right decimal"></td>
+        <td style="text-align:center"> <input id="agentCom" name="agentCom" colName="agentCom" type="text" class="form-control text-right decimal"></td>
         <td> 
             <div class="input-group daydatepicker" id="daydatepicker-0" style="padding-left: 0px">
                 <input style="width: 100%" type="text" class="form-control" id="paydate" name="paydate" colName="paydate" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD">
