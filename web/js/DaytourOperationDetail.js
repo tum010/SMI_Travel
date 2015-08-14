@@ -48,7 +48,8 @@ $(document).ready(function () {
     if((MDname === 'tour')){
         var rowDriver = $("#BookingDriverTable tr").length;
         BookingDriverTableAddRow(rowDriver);
-    } else if((MDname === 'checking wendy')){
+    } 
+    if((MDname === 'checking wendy')){
         var rowExpen = $("#BookingExpenseTable tr").length;
         BookingExpenseTableAddRow(rowExpen);
     }
@@ -60,43 +61,47 @@ $(document).ready(function () {
         sortField: 'text'
     });
 
-
-    $("#BookingDriverTable").on("keyup", function () {
-        var rowAll = $("#BookingDriverTable tr").length;
-        $("td").keyup(function () {
-            if ($(this).find("input").val() != '') {
-                var colIndex = $(this).parent().children().index($(this));
-                var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
-                rowAll = $("#BookingDriverTable tr").length;
-                //console.log('Row: ' + rowIndex + ', Column: ' + colIndex + ', All Row ' + rowAll);
-                if (rowIndex == rowAll) {
-                    //console.log("rowIndex: " + rowIndex);
-                    //console.log("rowAll : " + rowAll);
-                    //console.log("addRow");
-                    if (rowAll <= 5) {
-                        BookingDriverTableAddRow(rowAll);
+    if((MDname === 'tour')){
+        $("#BookingDriverTable").on("keyup", function () {
+            var rowAll = $("#BookingDriverTable tr").length;
+            $("td").keyup(function () {
+                if ($(this).find("input").val() != '') {
+                    var colIndex = $(this).parent().children().index($(this));
+                    var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
+                    rowAll = $("#BookingDriverTable tr").length;
+                    //console.log('Row: ' + rowIndex + ', Column: ' + colIndex + ', All Row ' + rowAll);
+                    if (rowIndex == rowAll) {
+                        //console.log("rowIndex: " + rowIndex);
+                        //console.log("rowAll : " + rowAll);
+                        //console.log("addRow");
+                        if (rowAll <= 5) {
+                            BookingDriverTableAddRow(rowAll);
+                        }
                     }
                 }
-            }
+            });
         });
-    });
-    $("#BookingExpenseTable").on("keyup", function () {
-        var rowAll = $("#BookingExpenseTable tr").length;
-        $("td").keyup(function () {
-            if ($(this).find("input").val() !== '') {
-                var colIndex = $(this).parent().children().index($(this));
-                var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
-                rowAll = $("#BookingExpenseTable tr").length;
-                //console.log('Row: ' + rowIndex + ', Column: ' + colIndex + ', All Row ' + rowAll);
-                if (rowIndex == rowAll) {
-                    //console.log("rowIndex: " + rowIndex);
-                    //console.log("rowAll : " + rowAll);
-                    //console.log("addRow");
-                    BookingExpenseTableAddRow(rowAll);
+    }
+    
+    if((MDname === 'tour')){
+        $("#BookingExpenseTable").on("keyup", function () {
+            var rowAll = $("#BookingExpenseTable tr").length;
+            $("td").keyup(function () {
+                if ($(this).find("input").val() !== '') {
+                    var colIndex = $(this).parent().children().index($(this));
+                    var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
+                    rowAll = $("#BookingExpenseTable tr").length;
+                    //console.log('Row: ' + rowIndex + ', Column: ' + colIndex + ', All Row ' + rowAll);
+                    if (rowIndex == rowAll) {
+                        //console.log("rowIndex: " + rowIndex);
+                        //console.log("rowAll : " + rowAll);
+                        //console.log("addRow");
+                        BookingExpenseTableAddRow(rowAll);
+                    }
                 }
-            }
+            });
         });
-    });
+    }    
     var tourId = $("#tourID").val();
     if (tourId != '') {
         $("#info,#master").removeClass('hidden');
@@ -419,15 +424,19 @@ function setGuideName(name,no){
             .end()
             .append('<option value="">---------</option>')
             .val('')
-        ;       
-        $('#InvoiceSupGuideBill').append($('<option>', {
-            value: name1,
-            text: name1
-        }));
-        $('#InvoiceSupGuideBill').append($('<option>', {
-            value: name2,
-            text: name2
-        }));        
+        ;
+        if(name1 !== ''){
+            $('#InvoiceSupGuideBill').append($('<option>', {
+                value: name1,
+                text: name1
+            }));
+        }
+        if(name2 !== ''){
+            $('#InvoiceSupGuideBill').append($('<option>', {
+                value: name2,
+                text: name2
+            }));
+        }    
         
         if(guideName !== ""){           
             if(name1 === guideName){
