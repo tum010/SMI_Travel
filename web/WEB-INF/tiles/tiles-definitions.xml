@@ -477,6 +477,7 @@
         <put-attribute name="body" value="/WEB-INF/jsp/SearchTaxInvoice.jsp" />
     </definition>
     
+    
     <definition name="ReceiveTable" extends="baseLayout">
         <put-attribute name="title" value="Finance And Cashier: ReceiveTable " />
         <put-attribute name="body" value="/WEB-INF/jsp/ReceiveTable.jsp" />
@@ -503,8 +504,18 @@
         <put-attribute name="body" value="/WEB-INF/jsp/DefineVar.jsp" />
     </definition>
     
-    <definition name="CreditNote" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier : Credit Note" />
+    <definition name="CreditNoteW" extends="baseLayout">
+        <put-attribute name="title" value="Finance And Cashier : Credit Note Wendy" />
+        <put-attribute name="body" value="/WEB-INF/jsp/CreditNote.jsp" />
+    </definition>
+    
+    <definition name="CreditNoteI" extends="baseLayout">
+        <put-attribute name="title" value="Finance And Cashier : Credit Note Inbound" />
+        <put-attribute name="body" value="/WEB-INF/jsp/CreditNote.jsp" />
+    </definition>
+    
+    <definition name="CreditNoteO" extends="baseLayout">
+        <put-attribute name="title" value="Finance And Cashier : Credit Note Outbound" />
         <put-attribute name="body" value="/WEB-INF/jsp/CreditNote.jsp" />
     </definition>
     

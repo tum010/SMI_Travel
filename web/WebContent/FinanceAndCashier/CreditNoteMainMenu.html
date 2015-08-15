@@ -8,14 +8,26 @@
     </li>   
     <li>
         <a href="#" >
-            <span class="menu-text"><b>Wendy/Outbound</b></span>
+            <span class="menu-text"><b>Wendy</b></span>
         </a>               
         <b class="arrow"></b>
     </li>
     <li>
-        <a href="CreditNote.smi?Department=W&" id="menu-wendyoutbound">
+        <a href="CreditNoteW.smi" id="menu-wendyoutbound">
             <i class="menu-icon fa fa-file-text-o"></i>
-            <span class="menu-text"><b>Credit Note</b></span>
+            <span class="menu-text">Credit Note</span>
+        </a>
+    </li>
+    <li>
+        <a href="#" >
+            <span class="menu-text"><b>Outbound</b></span>
+        </a>               
+        <b class="arrow"></b>
+    </li>
+    <li>
+        <a href="CreditNoteO.smi" id="menu-wendyoutbound">
+            <i class="menu-icon fa fa-file-text-o"></i>
+            <span class="menu-text">Credit Note</span>
         </a>
     </li>
     <li>
@@ -24,9 +36,9 @@
         </a>
     </li>
     <li>
-        <a href="CreditNote.smi?Department=INB&" id="menu-inbound">
+        <a href="CreditNoteI.smi" id="menu-inbound">
             <i class="menu-icon fa fa-file-text-o"></i>
-            <span class="menu-text"><b>Credit Note</b></span>
+            <span class="menu-text">Credit Note</span>
         </a>
     </li>
 </ul>
@@ -50,19 +62,15 @@
         var name = path.split("/");
         var listpara = location.search;
         
-        if(listpara.indexOf('W') != -1){
-            $("#menu-wendyoutbound").css('background-color', '#ccc');
-        }else if(listpara.indexOf('INB') != -1){
-            $("#menu-inbound").css('background-color', '#ccc');
-        }else{
+    
             //console.log(name[2]);
             str = name[2].split(".");
             //console.log(str[0]);
-            sub = str[0].substr(0, 9);
+            sub = str[0].substr(0, 11);
             //console.log(sub);
             var $select = $('a[href*="' + sub + '"]');
             $("#CreditNoteMenu").find($select).css('background-color', '#ccc');           
-        }
+        
  
         $("#CreditNoteMenu a").one('mouseover', function () {
 

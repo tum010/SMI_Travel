@@ -7,6 +7,7 @@
 <script type="text/javascript" src="js/selectize.js"></script>
 <link href="css/selectize.bootstrap3.css" rel="stylesheet">
 <link href="css/jquery-ui.css" rel="stylesheet">
+<c:set var="page" value="${requestScope['page']}" />
 <section class="content-header" >
     <h1>
         Finance & Cashier - Credit Note
@@ -20,21 +21,24 @@
     <div class="row">
         <!-- side bar -->
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
-            <div ng-include="'WebContent/FinanceAndCashier/CreditNoteMenu.html'"></div>
+            <div ng-include="'WebContent/FinanceAndCashier/CreditNoteMainMenu.html'"></div>
         </div>
         <div class="col-sm-10">
             <div class="col-sm-6 " style="padding-right: 15px">
                 <c:choose>
-                    <c:when test="${param.Department=='W'}">
-                        <h4><b>Credit Note Wendy/Outbound</b></h4>
+                     <c:when test="${fn:contains(page , 'W')}">
+                        <h4><b>Credit Note Wendy</b></h4>
                     </c:when>
-                    <c:when test="${param.Department=='INB'}">
+                    <c:when test="${fn:contains(page , 'O')}">
+                        <h4><b>Credit Note Outbound</b></h4>
+                    </c:when>     
+                    <c:when test="${fn:contains(page , 'I')}">
                         <h4><b>Credit Note Inbound</b></h4>
                     </c:when> 
                 </c:choose> 
             </div>
             <hr/>
-            <form action="CreditNote.smi" method="post" id="CreditNoteForm" name="CreditNoteForm" role="form">
+            <form action="CreditNote${page}.smi" method="post" id="CreditNoteForm" name="CreditNoteForm" role="form">
                <div class="row">
                     <div class="col-xs-12 form-group">
                         <div class="col-xs-1 text-right" style="width: 120px">
@@ -104,32 +108,6 @@
                                 <div class="panel-body">               
                                     <div class=" accordion-body collapse in" id="collapseExample${advanced.search}" aria-expanded="false">
                                         <div class="col-md-12">
-                                            <div class="col-xs-1 text-right" style="width: 150px">
-                                                <label class="control-label text-right">Invoice Type <font style="color: red">*</font></label>
-                                            </div>
-                                            <div class="col-xs-1" style="width: 170px">
-                                                <select id="invoiceType" name="invoiceType" class="form-control selectize" >
-                                                    <option value="">--- Type ---</option> 
-                                                    <c:choose>
-                                                        <c:when test="${requestScope['invoiceType'] == 'B'}">
-                                                            <c:set var="selectedB" value="selected" />
-                                                        </c:when>
-                                                    </c:choose>
-                                                    <option value="B" ${selectedB}>BSP</option>
-                                                    <c:choose>
-                                                        <c:when test="${requestScope['invoiceType'] == 'D'}">
-                                                            <c:set var="selectedD" value="selected" />
-                                                        </c:when>
-                                                    </c:choose>
-                                                    <option value="D" ${selectedD}>DOMESTIC</option>
-                                                    <c:choose>
-                                                        <c:when test="${requestScope['invoiceType'] == 'A'}">
-                                                            <c:set var="selectedA" value="selected" />
-                                                        </c:when>
-                                                    </c:choose>
-                                                    <option value="A" ${selectedA}>AGENT</option>
-                                                </select>
-                                            </div>
                                             <div class="col-xs-1 text-right" style="width: 70px">
                                                 <label class="control-label text-right">No <font style="color: red">*</font></label>
                                             </div>
@@ -156,7 +134,7 @@
                                                             <th style="width:15%;">Amount</th>
                                                             <th style="width:15%;">Real Amount</th>
                                                             <th style="width:25%;">Description</th>
-                                                            <th style="width:10%;">Action</th>
+                                                            
                                                         </tr>
                                                     </thead>
                                                     <tbody>               
@@ -167,11 +145,7 @@
                                                             <td align="center">100000</td>
                                                             <td align="center">100000</td>
                                                             <td align="center">test test test</td>
-                                                            <td align="center" > 
-                                                                <center> 
-                                                                <a href=""><span class="glyphicon glyphicon-plus"></span></a>
-                                                                </center>
-                                                            </td>
+                                                            
                                                         </tr>
                                                     </tbody>
                                                 </table>    
