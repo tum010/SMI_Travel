@@ -147,8 +147,9 @@ public class OtherDetailController extends SMITravelController {
                 Other.setCancelDate(util.convertStringToTime(canceldate));
             }
             
-            int result = OtherService.saveBookingOther(Other,user);
-            if((result==1) && (callpageSubmit==null || !callpageSubmit.equalsIgnoreCase("FromDayTour"))){
+//            int result = OtherService.saveBookingOther(Other,user);
+            List<String> result = OtherService.saveBookingOther(Other,user);
+            if(("1".equalsIgnoreCase(result.get(0))) && (callpageSubmit==null || !callpageSubmit.equalsIgnoreCase("FromDayTour"))){
                 String stock = OtherService.saveStockDetailOther(Other, user);
                 if("notStock".equalsIgnoreCase(stock)){
                     ModelAndView OTHER = new ModelAndView(new RedirectView("Other.smi?referenceNo="+refno+"&result=1", true));
@@ -158,9 +159,10 @@ public class OtherDetailController extends SMITravelController {
                 }else {
                     String[] ticketData = stock.split("\\|\\|", 3);//Adult||Child||Infant
                     getTicket(request, Other.getId());
+                    itemid = result.get(1);
                     request.setAttribute("resultText", "success");
                 }
-            }else if((result==1) && (callpageSubmit!=null) && (callpageSubmit.equalsIgnoreCase("FromDayTour"))){
+            }else if(("1".equalsIgnoreCase(result.get(0))) && (callpageSubmit!=null) && (callpageSubmit.equalsIgnoreCase("FromDayTour"))){
                 String stock = OtherService.saveStockDetailOther(Other, user);
                 if("notStock".equalsIgnoreCase(stock)){
                     ModelAndView DAYTOUR = new ModelAndView(new RedirectView("Daytour.smi?referenceNo="+refno+"&result=success", true));

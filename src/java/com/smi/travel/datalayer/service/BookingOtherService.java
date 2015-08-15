@@ -14,6 +14,7 @@ import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.datalayer.entity.StockDetail;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.view.entity.OtherTicketView;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -45,8 +46,8 @@ public class BookingOtherService {
         return otherBookDao.getBookDetailOtherFromID(OtherBookingID);
     }
     
-    public int saveBookingOther(OtherBooking other ,SystemUser user){
-        int result =0;
+    public List<String> saveBookingOther(OtherBooking other ,SystemUser user){
+        List<String> result = new ArrayList<String>();
         if(other.getId() != null){
             result = otherBookDao.updateBookDetailOther(other);
         }else{

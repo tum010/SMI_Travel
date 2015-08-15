@@ -62,18 +62,19 @@ public class OtherBookingImpl implements OtherBookingDao{
     }
 
     @Override
-    public int insertBookDetailOther(OtherBooking otherbook, SystemUser user) {
-        int result = 0;
+    public List<String> insertBookDetailOther(OtherBooking otherbook, SystemUser user) {
+        List<String> result = new ArrayList<String>();
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.save(otherbook);
             transaction.commit();
             session.close();
-            result = 1;
+            result.add("1");
+            result.add(otherbook.getId());
         } catch (Exception ex) {
             ex.printStackTrace();
-            result = 0;
+            result.add("0");
         }
 
         return result;
@@ -323,18 +324,19 @@ public class OtherBookingImpl implements OtherBookingDao{
     }
     
     @Override
-    public int updateBookDetailOther(OtherBooking otherbook) {
-        int result = 0;
+    public List<String> updateBookDetailOther(OtherBooking otherbook) {
+        List<String> result = new ArrayList<String>();
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.update(otherbook);
             transaction.commit();
             session.close();
-            result = 1;
+            result.add("1");
+            result.add(otherbook.getId());
         } catch (Exception ex) {
             ex.printStackTrace();
-            result = 0;
+            result.add("0");
         }
         return result;
     }
