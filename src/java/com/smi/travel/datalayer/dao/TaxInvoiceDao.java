@@ -21,5 +21,6 @@ public interface TaxInvoiceDao {
     public String DeleteTaxInvoiceInvoiceDetail(String TaxInvoiceDetailId);//Delete from TaxInvoiceDetail tax where tax.id = :TaxInvoiceDetailId
     public String UpdateFinanceStatusTaxInvoice(String TaxId,int status);
     // UPDATE TaxInvoice tax set tax.MFinanceItemstatus.id = :status  WHERE tax.id = :TaxId
+    public TaxInvoiceView getTaxInvoiceViewFromTaxNo(String TaxNo);
     public TaxInvoiceView SearchTaxInvoiceFromFilter(String from,String To,String Department);
 }

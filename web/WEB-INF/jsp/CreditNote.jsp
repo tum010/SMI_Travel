@@ -61,7 +61,7 @@
                             <label class="control-label text-right">AP Code </label>
                         </div>
                         <div class="col-xs-1" style="width: 200px">
-                            <input id="apCode" name="apCode" type="text" class="form-control" value="">
+                            <input id="apCode" name="apCode" type="text" class="form-control" value="" readonly="">
                         </div>
                     </div>
                 </div>
@@ -90,74 +90,7 @@
             </form>
             
             <!-- tab search invoice -->
-            <form action="" method="post" id="SearchInvoiceForm">
-                <div role="tabpanel">
-                    <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane  active" id="infoSearchInvoice">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h2 class="panel-title">
-                                        <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="">
-                                            <span id="SpanEdit${advanced.search}">Search Invoice</span>
-                                        </a>
-                                        <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" style="margin-left: 54em" onclick="">
-                                            <span id="arrowReservstion" class="arrowReservstion glyphicon glyphicon-chevron-up"></span> 
-                                        </a>
-                                    </h2>               
-                                </div>
-                                <div class="panel-body">               
-                                    <div class=" accordion-body collapse in" id="collapseExample${advanced.search}" aria-expanded="false">
-                                        <div class="col-md-12">
-                                            <div class="col-xs-1 text-right" style="width: 70px">
-                                                <label class="control-label text-right">No <font style="color: red">*</font></label>
-                                            </div>
-                                            <div class="col-xs-1" style="width: 150px">
-                                                <div class="input-group">
-                                                    <input id="invoiceNo" name="invoiceNo" type="text" class="form-control" value="">
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-1 text-right" style="width: 120px">
-                                                <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="" class="btn btn-primary btn-sm">
-                                                    <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
-                                                </button>                                          
-                                            </div>      
-                                        </div>
-                                        <div class="col-xs-12 form-group"></div>
-                                        <div class="row" style="padding-left:10px;padding-right: 10px;">    
-                                            <div class="col-md-12">
-                                                <table id="InvoiceSearchTable" class="display" cellspacing="0" width="100%">
-                                                    <thead>
-                                                        <tr class="datatable-header">
-                                                            <th style="width:7%;">No.</th>
-                                                            <th style="width:15%;">Date</th>
-                                                            <th style="width:15%;">Product Type</th>
-                                                            <th style="width:15%;">Amount</th>
-                                                            <th style="width:15%;">Real Amount</th>
-                                                            <th style="width:25%;">Description</th>
-                                                            
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>               
-                                                        <tr>
-                                                            <td align="center">1</td>
-                                                            <td align="center">2015-07-21</td>
-                                                            <td align="center">TEST!!!</td>
-                                                            <td align="center">100000</td>
-                                                            <td align="center">100000</td>
-                                                            <td align="center">test test test</td>
-                                                            
-                                                        </tr>
-                                                    </tbody>
-                                                </table>    
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>     
+         
 
             <!--Table-->
             <div class="row">
@@ -169,28 +102,33 @@
                         <thead>
                             <tr class="datatable-header" >
 
-                                <th style="width:12%;">Inv Type</th>
-                                <th style="width:8%;">No</th>
-                                <th style="width:12%;">Date</th>
-                                <th style="width:12%;">Product Type</th>
+                           
+                                <th style="width:10%;">No</th>
+                                <th style="width:10%;">Date</th>
+                                <th style="width:15%;">Product Type</th>
                                 <th style="width:12%;">Amount</th>
                                 <th style="width:12%;">Real Amount</th>
+                                <th style="width:10%;">Vat Amount</th>
                                 <th style="width:25%;">Description</th>
-                                <th style="width:10%;">Action</th>
+                                <th style="width:14%;">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                               <%--<c:forEach var="refundAirline" items="${refundAirlineList}" varStatus="varRefundAirline">--%>
                             <tr>
 
-                                <td style="text-align:center">12345678321</td>
-                                <td style="text-align:center">1</td>
+                    
+                                <td style="text-align:center">15070041</td>
                                 <td style="text-align:center">2015-01-01</td>
                                 <td style="text-align:center">W</td>
                                 <td style="text-align:center">2500</td>
                                 <td style="text-align:center">2300</td>
+                                <td style="text-align:center">45.87</td>
                                 <td style="text-align:center">TEST!!!!!</td>
                                 <td class="text-center">
+                                    <a id="ButtonRemove${varRefundAirline.count}" data-toggle="modal" data-target="#DeleteRefundAirline" onclick="">
+                                        <i id="IRemove${varRefundAirline.count}" class="glyphicon glyphicon-list "></i>
+                                    </a>
                                     <a id="ButtonRemove${varRefundAirline.count}" data-toggle="modal" data-target="#DeleteRefundAirline" onclick="">
                                         <i id="IRemove${varRefundAirline.count}" class="glyphicon glyphicon-remove deleteicon"></i>
                                     </a>
@@ -222,20 +160,16 @@
                                     <div class="col-xs-12 ">
                                         <div class="col-md-2 text-right ">
                                             <button type="button" onclick="" class="btn btn-default">
-                                                <span id="SpanPrintPackage" class="glyphicon glyphicon-print"></span> Print Package
+                                                <span id="SpanPrintPackage" class="glyphicon glyphicon-print"></span> Print
                                             </button>
                                         </div>
                                         <div class="col-md-2 text-left " style="padding-left: 0px">
                                             <button type="button" onclick="" class="btn btn-default">
-                                                <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Print Invoice New
+                                                <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Send Mail
                                             </button>
                                         </div>
                                         <div class="col-md-4 text-right "></div>
-                                        <div class="col-md-1 text-right ">
-                                            <button type="button" onclick="printVoucher('');" class="btn btn-default">
-                                                <span id="SpanPrint" class="glyphicon glyphicon-print"></span> Print 
-                                            </button>
-                                        </div>
+                                        
                                         <div class="col-md-1 text-right ">
                                             <button type="button" class="btn btn-primary hidden" onclick="EnableVoid();" data-toggle="modal" data-target="#EnableVoid">
                                                 <span id="SpanEnableVoid" class="glyphicon glyphicon-ok" ></span> Void
