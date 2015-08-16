@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 15, 2015 12:01:48 AM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.CreditNote" table="credit_note" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="createBy" type="string">
+            <column name="create_by" length="5" />
+        </property>
+        <property name="createDate" type="date">
+            <column name="create_date" length="10" />
+        </property>
+        <property name="cnNo" type="string">
+            <column name="cn_no" length="25" />
+        </property>
+        <property name="cnDate" type="date">
+            <column name="cn_date" length="10" />
+        </property>
+        <property name="cnName" type="string">
+            <column name="cn_name" />
+        </property>
+        <property name="cnAddress" type="string">
+            <column name="cn_address" />
+        </property>
+        <property name="cnRemark" type="string">
+            <column name="cn_remark" />
+        </property>
+        <property name="apCode" type="string">
+            <column name="ap_code" length="10" />
+        </property>
+        <property name="invoiceType" type="string">
+            <column name="invoice_type" length="20" />
+        </property>
+        <bag name="creditNoteDetails" table="credit_note_detail" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="credit_note_id" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.CreditNoteDetail" />
+        </bag>
+    </class>
+</hibernate-mapping>

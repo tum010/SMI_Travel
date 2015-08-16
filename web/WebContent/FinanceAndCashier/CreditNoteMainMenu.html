@@ -1,21 +1,33 @@
-<ul id="TaxInvoiceMenuLeft" class="nav nav-list" style="top: 0px;  background-color: #FAFEFA;border: solid 1px #0063DC">
+<ul id="CreditNoteMenu" class="nav nav-list" style="top: 0px;  background-color: #FAFEFA;border: solid 1px #0063DC">
     <li>
-        <a href="SearchTaxInvoice.smi" id="menu-searchtaxinvoice">
+        <a href="SearchCreditNote.smi" id="menu-searchcreditnote">
             <i class="menu-icon fa fa-search-plus"></i> 
-            <span class="menu-text">Search Tax Invoice </span>
+            <span class="menu-text">Search Credit Note</span>
         </a>
         <b class="arrow"></b>
     </li>   
     <li>
         <a href="#" >
-            <span class="menu-text"><b>Wendy/Outbound</b></span>
+            <span class="menu-text"><b>Wendy</b></span>
         </a>               
         <b class="arrow"></b>
     </li>
     <li>
-        <a href="TaxInvoice.smi?Department=WO&" id="menu-wendyoutbound">
+        <a href="CreditNoteW.smi" id="menu-wendyoutbound">
             <i class="menu-icon fa fa-file-text-o"></i>
-            <span class="menu-text"><b>Tax Invoice</b></span>
+            <span class="menu-text">Credit Note</span>
+        </a>
+    </li>
+    <li>
+        <a href="#" >
+            <span class="menu-text"><b>Outbound</b></span>
+        </a>               
+        <b class="arrow"></b>
+    </li>
+    <li>
+        <a href="CreditNoteO.smi" id="menu-wendyoutbound">
+            <i class="menu-icon fa fa-file-text-o"></i>
+            <span class="menu-text">Credit Note</span>
         </a>
     </li>
     <li>
@@ -24,9 +36,9 @@
         </a>
     </li>
     <li>
-        <a href="TaxInvoice.smi?Department=INB&" id="menu-invoicetemp">
+        <a href="CreditNoteI.smi" id="menu-inbound">
             <i class="menu-icon fa fa-file-text-o"></i>
-            <span class="menu-text"><b>Tax Invoice</b></span>
+            <span class="menu-text">Credit Note</span>
         </a>
     </li>
 </ul>
@@ -50,26 +62,22 @@
         var name = path.split("/");
         var listpara = location.search;
         
-        if(listpara.indexOf('WO') != -1){
-            $("#menu-wendyoutbound").css('background-color', '#ccc');
-        }else if(listpara.indexOf('INB') != -1){
-            $("#menu-invoicetemp").css('background-color', '#ccc');
-        }else{
+    
             //console.log(name[2]);
             str = name[2].split(".");
             //console.log(str[0]);
-            sub = str[0].substr(0, 9);
+            sub = str[0].substr(0, 11);
             //console.log(sub);
             var $select = $('a[href*="' + sub + '"]');
-            $("#TaxInvoiceMenuLeft").find($select).css('background-color', '#ccc');           
-        }
+            $("#CreditNoteMenu").find($select).css('background-color', '#ccc');           
+        
  
-        $("#TaxInvoiceMenuLeft a").one('mouseover', function () {
+        $("#CreditNoteMenu a").one('mouseover', function () {
 
             var action = '?action=edit';
             if ($("#actionIDown").val() == 'new') {
                 action = "&action=new";
-                $('#TaxInvoiceMenuLeft a').click(function (e) {
+                $('#CreditNoteMenu a').click(function (e) {
                     e.preventDefault();
                 });
             }

@@ -457,10 +457,26 @@
         <put-attribute name="body" value="/WEB-INF/jsp/TaxInvoice.jsp" />
     </definition>
     
+    <definition name="TaxInvoiceW" extends="baseLayout">
+        <put-attribute name="title" value="Finance And Cashier: TaxInvoice Wendy " />
+        <put-attribute name="body" value="/WEB-INF/jsp/TaxInvoice.jsp" />
+    </definition>
+    
+    <definition name="TaxInvoiceI" extends="baseLayout">
+        <put-attribute name="title" value="Finance And Cashier: TaxInvoice Inbound" />
+        <put-attribute name="body" value="/WEB-INF/jsp/TaxInvoice.jsp" />
+    </definition>
+    
+    <definition name="TaxInvoiceO" extends="baseLayout">
+        <put-attribute name="title" value="Finance And Cashier: TaxInvoice Outbound" />
+        <put-attribute name="body" value="/WEB-INF/jsp/TaxInvoice.jsp" />
+    </definition>
+    
     <definition name="SearchTaxInvoice" extends="baseLayout">
         <put-attribute name="title" value="Finance And Cashier: SearchTaxInvoice " />
         <put-attribute name="body" value="/WEB-INF/jsp/SearchTaxInvoice.jsp" />
     </definition>
+    
     
     <definition name="ReceiveTable" extends="baseLayout">
         <put-attribute name="title" value="Finance And Cashier: ReceiveTable " />
@@ -488,8 +504,18 @@
         <put-attribute name="body" value="/WEB-INF/jsp/DefineVar.jsp" />
     </definition>
     
-    <definition name="CreditNote" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier : Credit Note" />
+    <definition name="CreditNoteW" extends="baseLayout">
+        <put-attribute name="title" value="Finance And Cashier : Credit Note Wendy" />
+        <put-attribute name="body" value="/WEB-INF/jsp/CreditNote.jsp" />
+    </definition>
+    
+    <definition name="CreditNoteI" extends="baseLayout">
+        <put-attribute name="title" value="Finance And Cashier : Credit Note Inbound" />
+        <put-attribute name="body" value="/WEB-INF/jsp/CreditNote.jsp" />
+    </definition>
+    
+    <definition name="CreditNoteO" extends="baseLayout">
+        <put-attribute name="title" value="Finance And Cashier : Credit Note Outbound" />
         <put-attribute name="body" value="/WEB-INF/jsp/CreditNote.jsp" />
     </definition>
     

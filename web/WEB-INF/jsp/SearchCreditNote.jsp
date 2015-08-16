@@ -21,7 +21,7 @@
     <div class="row">
         <!-- side bar -->
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
-            <div ng-include="'WebContent/FinanceAndCashier/CreditNoteMenu.html'"></div>
+            <div ng-include="'WebContent/FinanceAndCashier/CreditNoteMainMenu.html'"></div>
         </div>
         <div class="col-sm-10">
             <div class="row" style="padding-left: 15px">  

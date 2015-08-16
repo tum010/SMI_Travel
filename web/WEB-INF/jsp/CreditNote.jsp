@@ -7,6 +7,7 @@
 <script type="text/javascript" src="js/selectize.js"></script>
 <link href="css/selectize.bootstrap3.css" rel="stylesheet">
 <link href="css/jquery-ui.css" rel="stylesheet">
+<c:set var="page" value="${requestScope['page']}" />
 <section class="content-header" >
     <h1>
         Finance & Cashier - Credit Note
@@ -20,21 +21,24 @@
     <div class="row">
         <!-- side bar -->
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
-            <div ng-include="'WebContent/FinanceAndCashier/CreditNoteMenu.html'"></div>
+            <div ng-include="'WebContent/FinanceAndCashier/CreditNoteMainMenu.html'"></div>
         </div>
         <div class="col-sm-10">
             <div class="col-sm-6 " style="padding-right: 15px">
                 <c:choose>
-                    <c:when test="${param.Department=='W'}">
-                        <h4><b>Credit Note Wendy/Outbound</b></h4>
+                     <c:when test="${fn:contains(page , 'W')}">
+                        <h4><b>Credit Note Wendy</b></h4>
                     </c:when>
-                    <c:when test="${param.Department=='INB'}">
+                    <c:when test="${fn:contains(page , 'O')}">
+                        <h4><b>Credit Note Outbound</b></h4>
+                    </c:when>     
+                    <c:when test="${fn:contains(page , 'I')}">
                         <h4><b>Credit Note Inbound</b></h4>
                     </c:when> 
                 </c:choose> 
             </div>
             <hr/>
-            <form action="CreditNote.smi" method="post" id="CreditNoteForm" name="CreditNoteForm" role="form">
+            <form action="CreditNote${page}.smi" method="post" id="CreditNoteForm" name="CreditNoteForm" role="form">
                <div class="row">
                     <div class="col-xs-12 form-group">
                         <div class="col-xs-1 text-right" style="width: 120px">
@@ -57,7 +61,7 @@
                             <label class="control-label text-right">AP Code </label>
                         </div>
                         <div class="col-xs-1" style="width: 200px">
-                            <input id="apCode" name="apCode" type="text" class="form-control" value="">
+                            <input id="apCode" name="apCode" type="text" class="form-control" value="" readonly="">
                         </div>
                     </div>
                 </div>
@@ -86,104 +90,7 @@
             </form>
             
             <!-- tab search invoice -->
-            <form action="" method="post" id="SearchInvoiceForm">
-                <div role="tabpanel">
-                    <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane  active" id="infoSearchInvoice">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h2 class="panel-title">
-                                        <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="">
-                                            <span id="SpanEdit${advanced.search}">Search Invoice</span>
-                                        </a>
-                                        <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" style="margin-left: 54em" onclick="">
-                                            <span id="arrowReservstion" class="arrowReservstion glyphicon glyphicon-chevron-up"></span> 
-                                        </a>
-                                    </h2>               
-                                </div>
-                                <div class="panel-body">               
-                                    <div class=" accordion-body collapse in" id="collapseExample${advanced.search}" aria-expanded="false">
-                                        <div class="col-md-12">
-                                            <div class="col-xs-1 text-right" style="width: 150px">
-                                                <label class="control-label text-right">Invoice Type <font style="color: red">*</font></label>
-                                            </div>
-                                            <div class="col-xs-1" style="width: 170px">
-                                                <select id="invoiceType" name="invoiceType" class="form-control selectize" >
-                                                    <option value="">--- Type ---</option> 
-                                                    <c:choose>
-                                                        <c:when test="${requestScope['invoiceType'] == 'B'}">
-                                                            <c:set var="selectedB" value="selected" />
-                                                        </c:when>
-                                                    </c:choose>
-                                                    <option value="B" ${selectedB}>BSP</option>
-                                                    <c:choose>
-                                                        <c:when test="${requestScope['invoiceType'] == 'D'}">
-                                                            <c:set var="selectedD" value="selected" />
-                                                        </c:when>
-                                                    </c:choose>
-                                                    <option value="D" ${selectedD}>DOMESTIC</option>
-                                                    <c:choose>
-                                                        <c:when test="${requestScope['invoiceType'] == 'A'}">
-                                                            <c:set var="selectedA" value="selected" />
-                                                        </c:when>
-                                                    </c:choose>
-                                                    <option value="A" ${selectedA}>AGENT</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-xs-1 text-right" style="width: 70px">
-                                                <label class="control-label text-right">No <font style="color: red">*</font></label>
-                                            </div>
-                                            <div class="col-xs-1" style="width: 150px">
-                                                <div class="input-group">
-                                                    <input id="invoiceNo" name="invoiceNo" type="text" class="form-control" value="">
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-1 text-right" style="width: 120px">
-                                                <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="" class="btn btn-primary btn-sm">
-                                                    <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
-                                                </button>                                          
-                                            </div>      
-                                        </div>
-                                        <div class="col-xs-12 form-group"></div>
-                                        <div class="row" style="padding-left:10px;padding-right: 10px;">    
-                                            <div class="col-md-12">
-                                                <table id="InvoiceSearchTable" class="display" cellspacing="0" width="100%">
-                                                    <thead>
-                                                        <tr class="datatable-header">
-                                                            <th style="width:7%;">No.</th>
-                                                            <th style="width:15%;">Date</th>
-                                                            <th style="width:15%;">Product Type</th>
-                                                            <th style="width:15%;">Amount</th>
-                                                            <th style="width:15%;">Real Amount</th>
-                                                            <th style="width:25%;">Description</th>
-                                                            <th style="width:10%;">Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>               
-                                                        <tr>
-                                                            <td align="center">1</td>
-                                                            <td align="center">2015-07-21</td>
-                                                            <td align="center">TEST!!!</td>
-                                                            <td align="center">100000</td>
-                                                            <td align="center">100000</td>
-                                                            <td align="center">test test test</td>
-                                                            <td align="center" > 
-                                                                <center> 
-                                                                <a href=""><span class="glyphicon glyphicon-plus"></span></a>
-                                                                </center>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>    
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>     
+         
 
             <!--Table-->
             <div class="row">
@@ -195,28 +102,33 @@
                         <thead>
                             <tr class="datatable-header" >
 
-                                <th style="width:12%;">Inv Type</th>
-                                <th style="width:8%;">No</th>
-                                <th style="width:12%;">Date</th>
-                                <th style="width:12%;">Product Type</th>
+                           
+                                <th style="width:10%;">No</th>
+                                <th style="width:10%;">Date</th>
+                                <th style="width:15%;">Product Type</th>
                                 <th style="width:12%;">Amount</th>
                                 <th style="width:12%;">Real Amount</th>
+                                <th style="width:10%;">Vat Amount</th>
                                 <th style="width:25%;">Description</th>
-                                <th style="width:10%;">Action</th>
+                                <th style="width:14%;">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                               <%--<c:forEach var="refundAirline" items="${refundAirlineList}" varStatus="varRefundAirline">--%>
                             <tr>
 
-                                <td style="text-align:center">12345678321</td>
-                                <td style="text-align:center">1</td>
+                    
+                                <td style="text-align:center">15070041</td>
                                 <td style="text-align:center">2015-01-01</td>
                                 <td style="text-align:center">W</td>
                                 <td style="text-align:center">2500</td>
                                 <td style="text-align:center">2300</td>
+                                <td style="text-align:center">45.87</td>
                                 <td style="text-align:center">TEST!!!!!</td>
                                 <td class="text-center">
+                                    <a id="ButtonRemove${varRefundAirline.count}" data-toggle="modal" data-target="#DeleteRefundAirline" onclick="">
+                                        <i id="IRemove${varRefundAirline.count}" class="glyphicon glyphicon-list "></i>
+                                    </a>
                                     <a id="ButtonRemove${varRefundAirline.count}" data-toggle="modal" data-target="#DeleteRefundAirline" onclick="">
                                         <i id="IRemove${varRefundAirline.count}" class="glyphicon glyphicon-remove deleteicon"></i>
                                     </a>
@@ -248,20 +160,16 @@
                                     <div class="col-xs-12 ">
                                         <div class="col-md-2 text-right ">
                                             <button type="button" onclick="" class="btn btn-default">
-                                                <span id="SpanPrintPackage" class="glyphicon glyphicon-print"></span> Print Package
+                                                <span id="SpanPrintPackage" class="glyphicon glyphicon-print"></span> Print
                                             </button>
                                         </div>
                                         <div class="col-md-2 text-left " style="padding-left: 0px">
                                             <button type="button" onclick="" class="btn btn-default">
-                                                <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Print Invoice New
+                                                <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Send Mail
                                             </button>
                                         </div>
                                         <div class="col-md-4 text-right "></div>
-                                        <div class="col-md-1 text-right ">
-                                            <button type="button" onclick="printVoucher('');" class="btn btn-default">
-                                                <span id="SpanPrint" class="glyphicon glyphicon-print"></span> Print 
-                                            </button>
-                                        </div>
+                                        
                                         <div class="col-md-1 text-right ">
                                             <button type="button" class="btn btn-primary hidden" onclick="EnableVoid();" data-toggle="modal" data-target="#EnableVoid">
                                                 <span id="SpanEnableVoid" class="glyphicon glyphicon-ok" ></span> Void

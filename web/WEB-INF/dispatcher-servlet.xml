@@ -101,7 +101,6 @@
 				<prop key="SearchPaymentTourHotel.smi">SearchPaymentTourHotelController</prop>
 				<prop key="SearchPaymentOutbound.smi">SearchPaymentOutboundController</prop>
 				<prop key="SearchInvoice.smi">SearchInvoiceController</prop>
-				<prop key="Invoice.smi">InvoiceController</prop>
                                 <prop key="InvoiceWT.smi">InvoiceController</prop>
                                 <prop key="InvoiceWV.smi">InvoiceController</prop>
                                 <prop key="InvoiceWN.smi">InvoiceController</prop>
@@ -110,28 +109,26 @@
                                 <prop key="InvoiceOV.smi">InvoiceController</prop>
                                 <prop key="InvoiceON.smi">InvoiceController</prop>
                                 <prop key="InvoiceOA.smi">InvoiceController</prop>
-                                
-                                
-                                
-				<prop key="Receipt.smi">ReceiptController</prop>
-                                
                                 <prop key="ReceiptWT.smi">ReceiptController</prop>
                                 <prop key="ReceiptWV.smi">ReceiptController</prop>
                                 <prop key="ReceiptOT.smi">ReceiptController</prop>
                                 <prop key="ReceiptOV.smi">ReceiptController</prop>
                                 <prop key="ReceiptIT.smi">ReceiptController</prop>
                                 <prop key="ReceiptIV.smi">ReceiptController</prop>
-                                
 				<prop key="SearchReceipt.smi">SearchReceiptController</prop>
-				<prop key="TaxInvoice.smi">TaxInvoiceController</prop>
+                                <prop key="TaxInvoiceW.smi">TaxInvoiceController</prop>
+                                <prop key="TaxInvoiceI.smi">TaxInvoiceController</prop>
+                                <prop key="TaxInvoiceO.smi">TaxInvoiceController</prop>
 				<prop key="SearchTaxInvoice.smi">SearchTaxInvoiceController</prop>
 				<prop key="ReceiveTable.smi">ReceiveTableController</prop>
 				<prop key="LockUnlockBooking.smi">LockUnlockBookingController</prop>
 				<prop key="Stock.smi">StockController</prop>
 				<prop key="SearchStock.smi">SearchStockController</prop>
 				<prop key="DefineVar.smi">DefineVarController</prop>
-				<prop key="CreditNote.smi">CreditNoteController</prop>
-                <prop key="SearchCreditNote.smi">SearchCreditNoteController</prop>
+				<prop key="CreditNoteW.smi">CreditNoteController</prop>
+                                <prop key="CreditNoteO.smi">CreditNoteController</prop>
+                                <prop key="CreditNoteI.smi">CreditNoteController</prop>
+                                <prop key="SearchCreditNote.smi">SearchCreditNoteController</prop>
 				<!-- add mapping url -->
 			</props>
 		</property>
