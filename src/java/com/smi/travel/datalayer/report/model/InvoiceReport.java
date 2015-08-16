@@ -22,13 +22,14 @@ public class InvoiceReport {
     private String vat;
     private String amount;
     private String total;
+    private String totalvat;
     private String grtotal;
     private String accname;
     private String bank;
     private String branch;
     private String accno;
     private String acctype;
-    private String user;
+    private String usercreate;
     private String textmoney;
 
     public String getInvto() {
@@ -167,14 +168,15 @@ public class InvoiceReport {
         this.acctype = acctype;
     }
 
-    public String getUser() {
-        return user;
+    public String getUsercreate() {
+        return usercreate;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUsercreate(String usercreate) {
+        this.usercreate = usercreate;
     }
 
+    
     public String getTextmoney() {
         return textmoney;
     }
@@ -182,5 +184,15 @@ public class InvoiceReport {
     public void setTextmoney(String textmoney) {
         this.textmoney = textmoney;
     }    
+
+    public String getTotalvat() {
+        return totalvat;
+    }
+
+    public void setTotalvat(String totalvat) {
+        this.totalvat = totalvat;
+    }
        
+    
+    
 }

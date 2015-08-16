@@ -45,7 +45,7 @@ public class InvoiceEmailImpl implements InvoiceEmailDao{
         invoiceEmail.setRefno("11111111");
         invoiceEmail.setStaff("Minions");
         invoiceEmail.setTotal("9999999999");
-        invoiceEmail.setUser("Mike Jr. Robert");
+       // invoiceEmail.setUser("Mike Jr. Robert");
         invoiceEmail.setVat("79999");
         invoiceEmail.setTextmoney(utilityFunction.convert(a)+" baht");
         session.close();
