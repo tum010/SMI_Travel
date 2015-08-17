@@ -514,7 +514,7 @@
 
 	</bean>
 	<bean id="TaxInvoiceController" class="com.smi.travel.controller.TaxInvoiceController">
-
+            <property name="utilservice" ref="UtilityService" />
 	</bean>
 	<bean id="SearchTaxInvoiceController" class="com.smi.travel.controller.SearchTaxInvoiceController">
 

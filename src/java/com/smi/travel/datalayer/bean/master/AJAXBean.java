@@ -91,6 +91,7 @@ public class AJAXBean extends AbstractBean implements
     private static final String INVOICE = "InvoiceServlet";
     private static final String REFUNDAIRLINE = "RefundAirlineServlet";
     private static final String RECEIPT = "ReceiptServlet";
+    private static final String TAXINVOICE = "TaxInvoiceServlet";
     private CustomerDao customerdao;
     private ProductDetailDao productDetailDao;
     private BookingSummaryDao bookingsummarydao;
@@ -672,6 +673,18 @@ public class AJAXBean extends AbstractBean implements
                 System.out.println("searchRefNo ::: "+searchRefNo);
              
             }
+        }else if (TAXINVOICE.equalsIgnoreCase(servletName)) {
+            String invoiceNo = map.get("invoiceNo").toString();
+            List<HashMap<String,Object>> invoiceNoList = invoicedao.getInvoiceDetailFromInvoiceNumber(invoiceNo);
+            Invoice invoice = new Invoice();
+            invoice = invoicedao.getInvoiceFromInvoiceNumber(invoiceNo);
+                
+            if("".equals(invoice.getId()) || null == invoice.getId()){
+                result = "null";
+            }else{
+                result = buildInvoiceListHTML(invoice);
+            }
+            
         }  
         
         return result;
