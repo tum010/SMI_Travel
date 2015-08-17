@@ -45,7 +45,7 @@ public class InvoiceImpl implements InvoiceDao{
         invoice.setRefno("11111111");
         invoice.setStaff("Minions");
         invoice.setTotal("9999999999");
-        invoice.setUser("Mike Jr. Robert");
+       // invoice.setUser("Mike Jr. Robert");
         invoice.setVat("79999");
         invoice.setTextmoney(utilityFunction.convert(a)+" baht");
         session.close();
