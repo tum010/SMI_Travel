@@ -1,4 +1,4 @@
-<!-- was: <?xml version="1.0" encoding="UTF-8"?> 111-->
+<!-- was: <?xml version="1.0" encoding="UTF-8"?> -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -331,6 +331,11 @@
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
     
+    <bean id="TicketAircommissionViewDao" class="com.smi.travel.datalayer.view.dao.impl.TicketAircommissionViewImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    
     <!-- Component Bean -->
     <bean id="AJAXBean" class="com.smi.travel.datalayer.bean.master.AJAXBean">
         <constructor-arg>
@@ -354,6 +359,7 @@
                 <ref local="RefundAirticketDao" />   
                 <ref local="ReceiptDetailDao" />
                 <ref local="InvoiceDao" /> 
+                <ref local="TicketAircommissionViewDao" />
             </list>
         </constructor-arg>
     </bean>
