@@ -358,7 +358,7 @@ public class ReceiptEmail {
      */
     public void setTextmoney(String textmoney) {
         this.textmoney = textmoney;
-    }
+    }  
 
     public String getNondescription() {
         return nondescription;
