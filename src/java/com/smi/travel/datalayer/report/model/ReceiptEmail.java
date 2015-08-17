@@ -19,6 +19,8 @@ public class ReceiptEmail {
     private String recdate;
     private String paidby;
     private String description;
+    private String nondescription;
+    private String invdesc;
     private String amount;
     private String cashflag;
     private String cash;
@@ -33,6 +35,7 @@ public class ReceiptEmail {
     private String total;
     private String chqno;
     private String chqdate;
+    private String chqvalue;
     private String textmoney;
     /**
      * @return the recto
@@ -355,6 +358,30 @@ public class ReceiptEmail {
      */
     public void setTextmoney(String textmoney) {
         this.textmoney = textmoney;
+    }
+
+    public String getNondescription() {
+        return nondescription;
+    }
+
+    public void setNondescription(String nondescription) {
+        this.nondescription = nondescription;
+    }
+
+    public String getInvdesc() {
+        return invdesc;
+    }
+
+    public void setInvdesc(String invdesc) {
+        this.invdesc = invdesc;
+    }
+
+    public String getChqvalue() {
+        return chqvalue;
+    }
+
+    public void setChqvalue(String chqvalue) {
+        this.chqvalue = chqvalue;
     }
 
 
