@@ -1,12 +1,15 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!--<script type="text/javascript" src="js/Receipt.js"></script>--> 
+<!--<script type="text/javascript" src="js/Receipt.js"></script> --> 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script type="text/javascript" src="js/workspace.js"></script> 
+<script type="text/javascript" src="js/jquery-ui.js"></script>
 
 <c:set var="dataPVList" value="${requestScope['PVList']}" />
-<c:set var="Type" value="${requestScope['typeInvoice']}" />
-<input type="hidden" id="Type" name="Type" value="${param.Type}">
+<c:set var="type" value="${requestScope['typeReceipt']}" />
+<input type="hidden" id="type" name="type" value="${param.type}">
+<c:set var="page" value="${requestScope['page']}" />
 <c:set var="customerAgentList" value="${requestScope['customerAgent']}" />
 <c:set var="productListTable" value="${requestScope['Product_List']}" />
 <c:set var="billTypeList" value="${requestScope['billTypeList']}" /> 
@@ -15,6 +18,8 @@
 <c:set var="statusList" value="${requestScope['statusList']}" />
 <c:set var="receipt" value="${requestScope['receipt']}" />
 <c:set var="result" value="${requestScope['result']}" />
+<c:set var="callPage" value="${requestScope['callPage']}" />
+
 <section class="content-header" >
     <h1>
         Finance & Cashier - Receipt 
@@ -27,7 +32,26 @@
 
 <div style="padding-top: 15px;padding-right: 0px "ng-app=""> 
     <div class="row">
-       
+        <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Save Success!</strong> 
+        </div>
+        <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Save Unsuccess!</strong> 
+        </div>
+        <div id="textAlertDivDelete"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Delete Success!</strong> 
+        </div>
+        <div id="textAlertDivNotDelete"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Delete Unsuccess!</strong> 
+        </div>       
+        <div id="textAlertReceiveNo"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Receive no. not available !</strong> 
+        </div>
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
             <div ng-include="'WebContent/FinanceAndCashier/ReceiptMenu.html'"></div>
         </div>
@@ -36,31 +60,43 @@
             <div class="row" style="padding-left: 15px">  
                 <div class="col-sm-6 " style="padding-right: 15px">
                     <c:choose>
-                        <c:when test="${fn:contains(Type , 'wendytemp')}">
+                        <c:when test="${fn:contains(page , 'WT')}">
+                            <c:set var="typeReceipt" value="T" />
+                            <c:set var="typeDepartment" value="Wendy" />
                             <h4><b>Receipt Temp Wendy</b></h4>
                         </c:when>
-                        <c:when test="${fn:contains(Type , 'wendyvat')}">
+                        <c:when test="${fn:contains(page , 'WV')}">
+                            <c:set var="typeReceipt" value="V" />
+                            <c:set var="typeDepartment" value="Wendy" />
                             <h4><b>Receipt Vat Wendy</b></h4>
                         </c:when>    
-                        <c:when test="${fn:contains(Type , 'outtemp')}">
+                        <c:when test="${fn:contains(page , 'OT')}">
+                            <c:set var="typeReceipt" value="T" />
+                            <c:set var="typeDepartment" value="Outbound" />
                             <h4><b>Receipt Temp Outbound</b></h4>
-                        </c:when>
-                        <c:when test="${fn:contains(Type , 'outvat')}">
+                        </c:when>    
+                        <c:when test="${fn:contains(page , 'OV')}">
+                            <c:set var="typeReceipt" value="V" />
+                            <c:set var="typeDepartment" value="Outbound" />
                             <h4><b>Receipt Vat Outbound</b></h4>
                         </c:when>    
-                        <c:when test="${fn:contains(Type , 'intemp')}">
+                        <c:when test="${fn:contains(page , 'IT')}">
+                            <c:set var="typeReceipt" value="T" />
+                            <c:set var="typeDepartment" value="Inbound" />
                             <h4><b>Receipt Temp Inbound</b></h4>
-                        </c:when>    
-                        <c:when test="${fn:contains(Type , 'invat')}">
+                        </c:when>   
+                        <c:when test="${fn:contains(page , 'IV')}">
+                            <c:set var="typeReceipt" value="V" />
+                            <c:set var="typeDepartment" value="Inbound" />
                             <h4><b>Receipt Vat Inbound</b></h4>
-                        </c:when> 
+                        </c:when>    
                     </c:choose>                
                 </div>
                 <div class="col-xs-12 form-group"><hr/></div>
             </div>
             <hr/>
-            
-            <form action="Receipt.smi" method="post" id="ReceiptForm" name="ReceiptForm" role="form">
+
+            <form action="${callPage}" method="post" id="ReceiptForm" name="ReceiptForm" role="form">
                 <div role="tabpanel">
                      <!-- Nav tabs -->
                      
@@ -86,7 +122,7 @@
                                                 <input id="invoiceNo" name="invoiceNo" type="text" class="form-control" value="" onkeydown="invoicenoValidate()">
                                             </div>
                                         </div>
-                                        <div class="col-xs-1  text-right" style="width: 8px"><i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i></div>
+                                        <div class="col-xs-1  text-right" style="width: 8px"><i id="ajaxload1"  class="fa fa-spinner fa-spin hidden"></i></div>
                                         <div class="col-xs-1 text-left"  style="width: 100px">
                                             <button style="height:30px" type="button"  id="ButtonSearchInvoice"  name="ButtonSearchInvoice" onclick="searchInvoice();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search </button>
                                         </div>
@@ -97,7 +133,8 @@
                                                     <tr class="datatable-header" >
                                                         <th style="width:10%;">No</th>
                                                         <th style="width:40%;">Description</th>
-                                                        <th style="width:20%;">Price</th>
+                                                        <th style="width:20%;">Amount</th>
+                                                        <th style="width:20%;">Currency</th>
                                                         <th style="width:10%;">Action</th>
                                                     </tr>
                                                 </thead>
@@ -111,13 +148,14 @@
                                         <div class="col-xs-1 text-right" style="width: 120px">
                                             <label class="control-label text-right">Ref No </label>
                                         </div>
-                                        <div class="col-xs-1 form-group" style="width: 200px">
+                                        <div class="col-xs-1 form-group" style="width: 200px" id="refnopanel">
                                             <div class="input-group">
-                                                <input id="refNo" name="refNo" type="text" class="form-control" value="">
+                                                <input id="refNo" name="refNo" type="text" class="form-control" value="" onkeydown="refnoValidate()">
                                             </div>
                                         </div>
+                                        <div class="col-xs-1  text-right" style="width: 8px"><i id="ajaxload2"  class="fa fa-spinner fa-spin hidden"></i></div>
                                         <div class="col-xs-1 text-left"  style="width: 100px">
-                                            <button style="height:30px" type="submit"  id="searchRefNo"  name="searchRefNo" onclick="searchRefNo();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search </button>
+                                            <button style="height:30px" type="button"  id="ButtonSearchRefNo"  name="ButtonSearchRefNo" onclick="searchRefNo();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search </button>
                                         </div>
                                         <!--RefNo Table-->
                                         <div class="row" style="padding-left: 10px;padding-right: 10px">
@@ -126,21 +164,13 @@
                                                     <tr class="datatable-header" >
                                                         <th style="width:10%;">No</th>
                                                         <th style="width:40%;">Description</th>
-                                                        <th style="width:20%;">Price</th>
+                                                        <th style="width:20%;">Amount</th>
+                                                        <th style="width:20%;">Currency</th>
                                                         <th style="width:10%;">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td><center>111111</center></td>
-                                                        <td><center>222222</center></td>
-                                                        <td><center>333333</center></td>
-                                                        <td>
-                                                            <center>
-                                                                <a href=""><span class="glyphicon glyphicon-plus"></span></a>
-                                                            </center>
-                                                        </td>
-                                                    </tr>
+                                                    
                                                 </tbody>
                                             </table>
                                         </div>
@@ -148,78 +178,60 @@
                                 </div>
                                 <!-- Tab COM -->
                                 <div role="tabpanel" class="tab-pane hidden" id="com">
-                                    <div class="col-xs-4 form-group" style="padding-top: 20px;">
-                                        <div class="col-xs-1 text-right" style="width: 80px">
-                                            <label class="control-label text-right">PV List </label>
+                                    <div class="col-xs-6 form-group" style="padding-top: 20px; border-right:solid 1px #D9D9D9">
+                                        <div class="col-xs-1 text-left" style="width: 200px">
+                                            <label class="control-label text-right">Air Commission </label>
                                         </div>
-                                        <div class="col-xs-1 text-right" style="width: 135px">
+                                        <div class="col-xs-1 text-right" style="width: 120px">
                                             <label class="control-label text-right">Search</label>
                                         </div>
-                                        <div class="col-xs-1 form-group">
-                                            <input style="width: 105px" id="pvList" name="pvList" type="text" class="form-control" value="">
+                                        <div class="col-xs-1 form-group" style="width: 155px" >
+                                            <input style="width: 150px" id="searchPaymentNoAir" name="searchPaymentNoAir" type="text" class="form-control" value="">
                                         </div>
+                                        <div class="col-xs-1  text-left" style="padding-top: 6px;width: 4px"><i id="ajaxload3"  class="fa fa-spinner fa-spin hidden"></i></div>
                                         <!--Invoice Table-->
                                         <div class="row" style="padding-left: 10px;padding-right: 10px">
-                                            <table id="InvoiceListTable" class="display" cellspacing="0" width="100%">
+                                            <table id="AircommissionTable" class="display" width="100%">
                                                 <thead>
                                                     <tr class="datatable-header" >
                                                         <th style="width:10%;">No</th>
-                                                        <th style="width:40%;">Payment No</th>
+                                                        <th style="width:10%;">Airline</th>
+                                                        <th style="width:10%;">Commission</th>
+                                                        <th style="width:10%;">Is Use</th>
                                                         <th style="width:10%;">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <%--<c:forEach var="table" items="${dataPVList}" varStatus="dataStatus">--%>
-                                                        <tr>
-                                                            <td> 111</td>
-                                                            <td> 222</td>
-<!--                                                            <td class="hidden" ><c:out value="${table.no}" /></td>
-                                                            <td><c:out value="${fn:toUpperCase(table.paymentNo)}"  /></td>-->
-                                                            <td>
-                                                                <center> 
-                                                                    <a href="Receipt.smi?action=edit&paymentNo=222">
-                                                                        <span class="glyphicon glyphicon-check"></span>
-                                                                    </a>
-                                                                </center>
-                                                            </td>                 
-                                                        </tr>  
-                                                    <%--</c:forEach>--%>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
-                                    <div class="col-xs-8 form-group" style="padding-top: 20px;">
-                                        <div class="row">
-                                            <div class="col-xs-1 text-right" style="width: 200px">
-                                                <label class="control-label text-right">Payment No </label>
-                                            </div>
-                                            <div class="col-xs-1 form-group" style="width: 300px">
-                                                <input id="paymentNo" name="paymentNo" type="text" class="form-control" value="">
-                                            </div>
+                                    <div class="col-xs-6 form-group" style="padding-top: 20px;">
+                                       <div class="col-xs-1 text-left" style="width: 200px">
+                                            <label class="control-label text-right">Tour Commission </label>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-xs-1 text-right" style="width: 200px">
-                                                <label class="control-label text-right">Airline </label>
-                                            </div>
-                                            <div class="col-xs-1 form-group" style="width: 300px">
-                                                <select id="inputAirline" name="inputAirline" class="form-control selectize">
-                                                    <option value=""> Code : Name </option>
+                                        <div class="col-xs-1 text-right" style="width: 135px">
+                                            <label class="control-label text-right">Search</label>
+                                        </div>
+                                        <div class="col-xs-1 form-group" style="width: 155px" >
+                                            <input style="width: 150px" id="searchPaymentNoTour" name="searchPaymentNoTour" type="text" class="form-control" value="">
+                                        </div>
+                                        <div class="col-xs-1  text-left" style="padding-top: 6px;width: 4px"><i id="ajaxload4"  class="fa fa-spinner fa-spin hidden"></i></div>
 
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-1 text-right" style="width: 200px">
-                                                <label class="control-label text-right">Commission </label>
-                                            </div>
-                                            <div class="col-xs-1 form-group" style="width: 300px">
-                                                <input id="commission" name="commission" type="text" class="form-control" value="">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-1 text-right" style="width: 500px">
-                                                <button style="height:30px" type="submit"  id="ButtonAdd"  name="ButtonAdd" onclick="addAction();" class="btn btn-primary btn-sm">&nbsp;&nbsp;Add&nbsp;&nbsp;</button>
-                                            </div>
+                                        <div class="row" style="padding-left: 10px;padding-right: 10px">
+                                            <table id="TourcommissionTable" class="display" cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr class="datatable-header" >
+                                                        <th style="width:10%;">No</th>
+                                                        <th style="width:10%;">Airline</th>
+                                                        <th style="width:10%;">Commission</th>
+                                                        <th style="width:10%;">Is Use</th>
+                                                        <th style="width:10%;">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -292,7 +304,7 @@
                                 <div class="col-xs-1 form-group" style="width: 170px">
                                     <div class='input-group date'>
                                         <input id="receiveFromDate" name="receiveFromDate"  type="text" 
-                                           class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${receipt.recDate}">
+                                           class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['receiveFromDate']}">
                                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>  
                                 </div>
@@ -304,7 +316,7 @@
                                         <option value="">--- Status ---</option> 
                                         <c:forEach var="table" items="${statusList}" >
                                             <c:set var="select" value="" />
-                                            <c:set var="selectedId" value="${receipt.MItemStatus.id}" />
+                                            <c:set var="selectedId" value="${receipt.MAccpay.id}" />
                                             <c:if test="${table.id == selectedId}">
                                                 <c:set var="select" value="selected" />
                                             </c:if>
@@ -329,12 +341,12 @@
                                 <table id="ReceiptListTable" class="display" cellspacing="0" width="100%">
                                     <thead>
                                         <tr class="datatable-header">
-                                            <th style="width:5%;">Product</th>
-                                            <th style="width:7%;">Description</th>
-                                            <th style="width:7%;">Cost</th>
+                                            <th style="width:10%;">Product</th>
+                                            <th style="width:15%;">Description</th>
+                                            <th style="width:10%;">Cost</th>
                                             <th style="width:7%;">Cur</th>
-                                            <th style="width:7%;">Is Vat</th>
-                                            <th style="width:10%;">Vat</th>
+                                            <th style="width:5%;">Is Vat</th>
+                                            <th style="width:4%;">Vat</th>
                                             <!--<th style="width:10%;">Gross</th>-->
                                             <th style="width:10%;">Amount</th>
                                             <th style="width:7%;">Cur</th>
@@ -368,7 +380,6 @@
                                 </table>      
                             </div>
                         </div>
-                        <input type="hidden" name="type" id="type" value="${requestScope['typeInvoice']}">
                         <input type="hidden" name="action" id="action" value="">
                         <input type="hidden" class="form-control" id="countRowCredit" name="countRowCredit" value="${requestScope['productRowCount']}" />
                         <input type="hidden" class="form-control" id="counter" name="counter" value="${requestScope['productRowCount']}" />
@@ -459,7 +470,7 @@
                                     <div class="col-xs-1" style="width: 170px">
                                         <div class='input-group date'>
                                             <input id="chqDate1" name="chqDate1"  type="text" 
-                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${receipt.chqDate1}">
+                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['chqDate1']}">
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                         </div>
                                     </div>
@@ -495,7 +506,7 @@
                                     <div class="col-xs-1" style="width: 170px">
                                         <div class='input-group date'>
                                             <input id="chqDate2" name="chqDate2"  type="text" 
-                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${receipt.chqDate2}">
+                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['chqDate2']}">
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                         </div>
                                     </div>
@@ -976,13 +987,50 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
+<c:if test="${! empty requestScope['saveresult']}">
+    <c:if test="${requestScope['saveresult'] =='save successful'}">        
+        <script language="javascript">
+            $('#textAlertDivSave').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['saveresult'] =='save unsuccessful'}">        
+        <script language="javascript">
+           $('#textAlertDivNotSave').show();
+        </script>
+    </c:if>
+</c:if>
+<c:if test="${! empty requestScope['deleteresult']}">
+    <c:if test="${requestScope['deleteresult'] =='delete successful'}">        
+        <script language="javascript">
+            $('#textAlertDivDelete').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['deleteresult'] =='delete unsuccessful'}">        
+        <script language="javascript">
+           $('#textAlertDivNotDelete').show();
+        </script>
+    </c:if>
+</c:if>
 <!--Script-->       
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
         $("#bl,#com").removeClass('hidden');
         $('.datemask').mask('0000-00-00');
         $('.date').datetimepicker();
+        $(".money").mask('000,000,000.00', {reverse: true});
+        
+        $("#searchPaymentNoAir").keyup(function (event) {
+            if(event.keyCode === 13){
+               searchPaymentNoAir();
+            }
+        });
+		
+	$("#searchPaymentNoTour").keyup(function (event) {
+            if(event.keyCode === 13){
+               searchPaymentNoTour();
+            }
+        });
+        
         $('#ReceiptForm').bootstrapValidator({
             container: 'tooltip',
             excluded: [':disabled'],
@@ -1064,7 +1112,7 @@
             value=value.replace(/\.[0-9]+\./g, '.');
             $(this).val(value)
         });
-        
+
         // +++++++++++++++++++++ Product Table +++++++++++++++++++++ //
         AddRowProduct(parseInt($("#counter").val()));
         
@@ -1210,8 +1258,10 @@
                 '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="">---------</option></select>' +                          
                 '</td>' +
                 '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" ></td>' +
-                '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control" ></td>' +
-                '<td><input maxlength="10" id="receiveCurCost' + row + '" name="receiveCurCost' + row + '" type="text" class="form-control" ></td>' +
+                '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control" onkeyup="insertCommas(this)"></td>' +
+                '<td>' + 
+                '<select class="form-control" name="receiveCurCost' + row + '" id="receiveCurCost' + row + '" ><option value="">---------</option></select>' +                          
+                '</td>' +
                 '<td align="center">' +
                 '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" onclick="handleClick(this,'+row+')" value="">' +
                 '</td>' +
@@ -1228,12 +1278,13 @@
             );
             $("#billTypeList option").clone().appendTo("#receiveProduct" + row);
             $("#currencyList option").clone().appendTo("#receiveCurrency" + row);
+            $("#currencyList option").clone().appendTo("#receiveCurCost" + row);
             
             $("#receiveAmount"+row).focusout(function(){
-                calculatGross(row);
+//        calculatGross(row);
                 setFormatCurrency(row);
             }); 
-            $("#receiveGross"+row).focusout(function(){
+            $("#receiveCost"+row).focusout(function(){
                 setFormatCurrency(row);
             }); 
             var tempCount = parseInt($("#counter").val()) + 1;
@@ -1243,11 +1294,14 @@
     }
 function handleClick(cb,row) {
   if(cb.checked){
+    $("#receiveIsVat" + row).val("1");  
     $("#receiveVat" + row).val($("#vatValue").val());
   }else{
+    $("#receiveIsVat" + row).val("0"); 
     $("#receiveVat" + row).val("");
   }
 }
+
 function calculatGross(row) {
 //  Total Amount Refund  vat = vat * Total Amount Refund / 100
     var receiveAmount = replaceAll(",","",$("#receiveAmount"+row).val()); 
@@ -1302,19 +1356,19 @@ function setFormatCurrency(row){
     receiveAmount = parseFloat(receiveAmount); 
     document.getElementById("receiveAmount"+row).value = formatNumber(receiveAmount);
     
-    var receiveGross = replaceAll(",","",$('#receiveGross'+row).val()); 
-    if (receiveGross == ""){
-        receiveGross = 0;
+    var receiveCost = replaceAll(",","",$('#receiveCost'+row).val()); 
+    if (receiveCost == ""){
+        receiveCost = 0;
     }
-    receiveGross = parseFloat(receiveGross); 
-    document.getElementById("receiveGross"+row).value = formatNumber(receiveGross);
+    receiveCost = parseFloat(receiveCost); 
+    document.getElementById("receiveCost"+row).value = formatNumber(receiveCost);
 
     if (receiveAmount == "" || receiveAmount == 0){
         document.getElementById("receiveAmount"+row).value = "";
     }
     
-    if (receiveGross == "" || receiveGross == 0){
-        document.getElementById("receiveGross"+row).value = "";
+    if (receiveCost == "" || receiveCost == 0){
+        document.getElementById("receiveCost"+row).value = "";
     }
 }
 
@@ -1430,7 +1484,7 @@ function searchInvoice() {
 
 function CallAjaxSearchInvoice(param) {
     var url = 'AJAXServlet';
-    $("#ajaxload").removeClass("hidden");
+    $("#ajaxload1").removeClass("hidden");
     try {
         $.ajax({
             type: "POST",
@@ -1440,17 +1494,26 @@ function CallAjaxSearchInvoice(param) {
             success: function (msg) {
                 try { 
                     if(msg == "null"){
-                        
+                        $('#InvoiceListTable').dataTable().fnClearTable();
+                        $('#InvoiceListTable').dataTable().fnDestroy();
                     }else{
+                        $('#InvoiceListTable').dataTable().fnClearTable();
+                        $('#InvoiceListTable').dataTable().fnDestroy();
                         $("#InvoiceListTable tbody").append(msg);
+                        
+                        document.getElementById("receiveFromCode").value = $("#receiveFromInvoice").val();
+                        document.getElementById("receiveFromName").value = $("#receiveNameInvoice").val();
+                        document.getElementById("receiveFromAddress").value = $("#receiveAddressInvoice").val();
+                        document.getElementById("arCode").value = $("#arcodeInvoice").val();
                     }
-                     $("#ajaxload").addClass("hidden");
+                    $("#ajaxload1").addClass("hidden");
+                     
                 } catch (e) {
                     alert(e);
                 }
 
             }, error: function (msg) {
-                 $("#ajaxload").addClass("hidden");
+                 $("#ajaxload1").addClass("hidden");
             }
         });
     } catch (e) {
@@ -1463,13 +1526,70 @@ function invoicenoValidate(){
     $('#invoicenopanel').addClass('has-success');
     $('#invoicenopanel').removeClass('has-error');  
 }
+function addProduct(product,description,cost,cur,isVat,vat,amount,currency,invId){
+    var tempCount = parseInt($("#counter").val());
+    AddDataRowProduct(tempCount,product,description,cost,cur,isVat,vat,amount,currency,invId);
 
-function addReceiveFrom(receiveid,receivefrom,name,address,arcode){
-   document.getElementById("receiveFromId").value = receiveid;
-   document.getElementById("receiveFromCode").value = receivefrom;
-   document.getElementById("receiveFromName").value = name;
-   document.getElementById("receiveFromAddress").value = address;
-   document.getElementById("arCode").value = arcode;
+}
+function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,currency,invId) {
+    $("#ReceiptListTable tbody").append(
+        '<tr style="higth 100px">' +
+        '<input id="invId' + row + '" name="invId' + row + '"  type="hidden" value="'+invId+'" >' +
+        '<input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >' +
+        '<td>' + 
+        '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="'+product+'" selected></option></select>' +                          
+        '</td>' +
+        '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" value="'+description+'"></td>' +
+        '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control" value="'+cost+'" onkeyup="insertCommas(this)"></td>' +
+        '<td>' + 
+        '<select class="form-control" name="receiveCurCost' + row + '" id="receiveCurCost' + row + '"><option value="'+cur+'"></option></select>' +                          
+        '</td>' +
+        '<td align="center">' +
+        '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" onclick="handleClick(this,'+row+')" value="'+isVat+'">' +
+        '</td>' +
+        '<td><input id="receiveVat' + row + '" name="receiveVat' + row + '" type="text" class="form-control text-right" value="'+vat+'"></td>' +
+        '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)" value="'+amount+'"></td>' +
+        '<td>' + 
+        '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="'+currency+'"></option></select>' +                           
+        '</td>' +
+        '<td class="text-center">' +
+        '<a class="remCF" onclick="deletelist(\'\', \''+row+'\')">  '+
+        '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
+        '</tr>'
+    );
+    $("#billTypeList option").clone().appendTo("#receiveProduct" + row);
+    $("#currencyList option").clone().appendTo("#receiveCurrency" + row);
+    $("#currencyList option").clone().appendTo("#receiveCurCost" + row);
+    var isvat = $('#receiveIsVat'+row).val();
+    if (isvat === '1')
+    {
+        $('#receiveIsVat'+row).prop('checked', true);
+    }
+    if (isvat === '0')
+    {
+        $('#receiveVat'+row).val("");
+    }
+    $('[name=receiveProduct'+row+'] option').filter(function() { 
+        return ($(this).val() === product);
+    }).prop('selected', true);
+    
+    $('[name=receiveCurCost'+row+'] option').filter(function() { 
+        return ($(this).val() === cur);
+    }).prop('selected', true);
+    
+    $('[name=receiveCurrency'+row+'] option').filter(function() { 
+        return ($(this).val() === currency);
+    }).prop('selected', true); 
+                
+    $("#receiveAmount"+row).focusout(function(){
+//        calculatGross(row);
+        setFormatCurrency(row);
+    }); 
+    $("#receiveCost"+row).focusout(function(){
+        setFormatCurrency(row);
+    }); 
+    var tempCount = parseInt($("#counter").val()) + 1;
+    $("#counter").val(tempCount);      
 }
 function searchReceiveNo(){
     var action = document.getElementById('action');
@@ -1484,6 +1604,205 @@ function searchReceiveNo(){
 function saveReceipt(){
     var action = document.getElementById('action');
     action.value = 'saveReceipt';
+}
+
+function searchRefNo() {
+    var refNo = $("#refNo").val();
+    if(refNo == ""){
+        if(!$('#refnopanel').hasClass('has-feedback')) {
+            $('#refnopanel').addClass('has-feedback');
+        }
+        $('#refnopanel').removeClass('has-success');
+        $('#refnopanel').addClass('has-error');
+    }
+    else{
+        var servletName = 'ReceiptServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&refNo=' + refNo +
+                '&type=' + 'searchRefNo';
+        CallAjaxSearchRef(param);
+    }
+}
+
+function CallAjaxSearchRef(param) {
+    var url = 'AJAXServlet';
+    $("#ajaxload2").removeClass("hidden");
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function (msg) {
+                try { 
+                    if(msg == "null"){
+                        $('#RefNoListTable').dataTable().fnClearTable();
+                        $('#RefNoListTable').dataTable().fnDestroy();
+                    }else{
+                        $('#RefNoListTable').dataTable().fnClearTable();
+                        $('#RefNoListTable').dataTable().fnDestroy();
+                        $("#RefNoListTable tbody").append(msg);
+                        
+                        document.getElementById("receiveFromCode").value = $("#receiveFromInvoice").val();
+                        document.getElementById("receiveFromName").value = $("#receiveNameInvoice").val();
+                        document.getElementById("receiveFromAddress").value = $("#receiveAddressInvoice").val();
+                        document.getElementById("arCode").value = $("#arcodeInvoice").val();
+                    }
+                    $("#ajaxload2").addClass("hidden");
+                     
+                } catch (e) {
+                    alert(e);
+                }
+
+            }, error: function (msg) {
+                 $("#ajaxload2").addClass("hidden");
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
+}
+
+function refnoValidate(){
+    $('#refnopanel').removeClass('has-feedback');
+    $('#refnopanel').addClass('has-success');
+    $('#refnopanel').removeClass('has-error');  
+}
+
+function searchPaymentNoAir() {
+    var paymentNoAir = $("#searchPaymentNoAir").val();
+    var servletName = 'ReceiptServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&paymentNo=' + paymentNoAir +
+            '&type=' + 'searchPaymentNoAir';
+    CallAjaxSearchPaymentNoAir(param);
+
+}
+
+function CallAjaxSearchPaymentNoAir(param) {
+    var url = 'AJAXServlet';
+    $("#ajaxload3").removeClass("hidden");
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function (msg) {
+                try { 
+                    if(msg == "null"){
+                        $('#AircommissionTable').dataTable().fnClearTable();
+                        $('#AircommissionTable').dataTable().fnDestroy();
+                        $('#AircommissionTable').dataTable({bJQueryUI: true,
+                            "sPaginationType": "full_numbers",
+                            "bAutoWidth": false,
+                            "bFilter": false,
+                            "bPaginate": true,
+                            "bInfo": false,
+                            "bLengthChange": false,
+                            "iDisplayLength": 5
+                        });
+                        $('.dataTables_length label').remove();
+                    }else{
+                        $('#AircommissionTable').dataTable().fnClearTable();
+                        $('#AircommissionTable').dataTable().fnDestroy();
+                        $("#AircommissionTable tbody").empty().append(msg);
+                        $('#AircommissionTable').dataTable({bJQueryUI: true,
+                            "sPaginationType": "full_numbers",
+                            "bAutoWidth": false,
+                            "bFilter": false,
+                            "bPaginate": true,
+                            "bInfo": false,
+                            "bLengthChange": false,
+                            "iDisplayLength": 5
+                        });
+                        $('.dataTables_length label').remove();
+                    }
+                    $("#ajaxload3").addClass("hidden");
+                     
+                } catch (e) {
+                    alert(e);
+                }
+
+            }, error: function (msg) {
+                 $("#ajaxload3").addClass("hidden");
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
+}
+function searchPaymentNoTour() {
+    var paymentNoTour = $("#searchPaymentNoTour").val();
+    var servletName = 'ReceiptServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&paymentNo=' + paymentNoTour +
+            '&type=' + 'searchPaymentNoTour';
+    CallAjaxSearchPaymentNoTour(param);
+
+}
+
+function CallAjaxSearchPaymentNoTour(param) {
+    var url = 'AJAXServlet';
+    $("#ajaxload4").removeClass("hidden");
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function (msg) {
+                try { 
+                    if(msg == "null"){
+                        $('#TourcommissionTable').dataTable().fnClearTable();
+                        $('#TourcommissionTable').dataTable().fnDestroy();
+                        $('#TourcommissionTable').dataTable({bJQueryUI: true,
+                            "sPaginationType": "full_numbers",
+                            "bAutoWidth": false,
+                            "bFilter": false,
+                            "bPaginate": true,
+                            "bInfo": false,
+                            "bLengthChange": false,
+                            "iDisplayLength": 5
+                        });
+                        $('.dataTables_length label').remove();
+                    }else{
+                        $('#TourcommissionTable').dataTable().fnClearTable();
+                        $('#TourcommissionTable').dataTable().fnDestroy();
+                        $("#TourcommissionTable tbody").empty().append(msg);
+                        $('#TourcommissionTable').dataTable({bJQueryUI: true,
+                            "sPaginationType": "full_numbers",
+                            "bAutoWidth": false,
+                            "bFilter": false,
+                            "bPaginate": true,
+                            "bInfo": false,
+                            "bLengthChange": false,
+                            "iDisplayLength": 5
+                        });
+                        $('.dataTables_length label').remove();
+                    }
+                    $("#ajaxload4").addClass("hidden");
+                     
+                } catch (e) {
+                    alert(e);
+                }
+
+            }, error: function (msg) {
+                 $("#ajaxload4").addClass("hidden");
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
 }
 
 </script>
