@@ -34,6 +34,7 @@ import com.smi.travel.datalayer.entity.DaytourBooking;
 import com.smi.travel.datalayer.entity.DaytourBookingPrice;
 import com.smi.travel.datalayer.entity.DaytourPrice;
 import com.smi.travel.datalayer.entity.Invoice;
+import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.MAirport;
 import com.smi.travel.datalayer.entity.MBookingstatus;
 import com.smi.travel.datalayer.entity.MInitialname;
@@ -44,13 +45,17 @@ import com.smi.travel.datalayer.entity.PackageTour;
 import com.smi.travel.datalayer.entity.Passenger;
 import com.smi.travel.datalayer.entity.Place;
 import com.smi.travel.datalayer.entity.ProductDetail;
+import com.smi.travel.datalayer.entity.ReceiptDetail;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.view.dao.BookingSummaryDao;
 import com.smi.travel.datalayer.view.dao.CustomerAgentInfoDao;
+import com.smi.travel.datalayer.view.dao.TicketAircommissionViewDao;
 import com.smi.travel.datalayer.view.entity.BookSummary;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
+import com.smi.travel.datalayer.view.entity.TicketAircommissionView;
 import com.smi.travel.util.Mail;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -111,6 +116,8 @@ public class AJAXBean extends AbstractBean implements
     private RefundAirticketDao refundAirticketDao;
     private InvoiceDao invoicedao;
     private ReceiptDao receiptdao;
+    private TicketAircommissionViewDao ticketAircommissionViewDao;
+    
     public AJAXBean(List queryList) {
         super(queryList);
         if (queryList != null && queryList.size() > 0) {
@@ -155,6 +162,8 @@ public class AJAXBean extends AbstractBean implements
                     invoicedao = (InvoiceDao) obj;
                 }else if (obj instanceof ReceiptDao){
                     receiptdao = (ReceiptDao) obj;
+                }else if (obj instanceof TicketAircommissionViewDao){
+                    ticketAircommissionViewDao = (TicketAircommissionViewDao) obj;
                 }
             }
         }
@@ -661,7 +670,6 @@ public class AJAXBean extends AbstractBean implements
                 System.out.println("invoiceNo ::: "+invoiceNo);
                 Invoice invoice = new Invoice();
                 invoice = invoicedao.getInvoiceFromInvoiceNumber(invoiceNo);
-                
                 if("".equals(invoice.getId()) || null == invoice.getId()){
                     result = "null";
                 }else{
@@ -670,8 +678,26 @@ public class AJAXBean extends AbstractBean implements
             }
             else if("searchRefNo".equalsIgnoreCase(type)){
                 String searchRefNo = map.get("refNo").toString();
-                System.out.println("searchRefNo ::: "+searchRefNo);
-             
+                Billable bill = billableDao.getBillableBooking(searchRefNo);
+                if("".equals(bill.getId()) || null == bill.getId()){
+                    result = "null";
+                }else{
+                    result = buildBillableListHTML(bill);
+                }
+            }else if("searchPaymentNoAir".equalsIgnoreCase(type)){
+                String paymentNoAir = map.get("paymentNo").toString();
+                System.out.println(" paymentNoAir :::  " + paymentNoAir + "::: ");
+                List<TicketAircommissionView> ticketList = ticketAircommissionViewDao.getListTicketAircommissionView(paymentNoAir);
+                System.out.println("ticketList size ::; " + ticketList.size() + " ////");
+                if(ticketList.size() == 0){
+                    result = "null";
+                }else{
+                    result = buildTicketAircommissionViewListHTML(ticketList);
+                }
+            }else if("searchPaymentNoTour".equalsIgnoreCase(type)){
+                String paymentNoTour = map.get("paymentNo").toString();
+                System.out.println(" paymentNoTour :::  " + paymentNoTour + "::: ");
+                
             }
         }else if (TAXINVOICE.equalsIgnoreCase(servletName)) {
             String invoiceNo = map.get("invoiceNo").toString();
@@ -689,18 +715,159 @@ public class AJAXBean extends AbstractBean implements
         
         return result;
     }
-    public String buildInvoiceListHTML(Invoice invoice){
-        String newrow = "";
-        newrow +=   "<tr>"+
-                    "<td class='hidden'>"+invoice.getId()+"</td>"+
-                    "<td>"+invoice.getInvNo()+"</td>"+
-                    "<td>"+invoice.getInvName()+"</td>"+
-                    "<td>"+invoice.getInvAddress()+"</td>"+ 
-                    "<td><center><a href=\"\"><span onclick=\"addReceiveFrom('"+invoice.getId()+"','"+invoice.getInvTo()+"','"+invoice.getInvName()+"','"+invoice.getInvAddress()+"','"+invoice.getArcode()+"')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>" +
-                    "</tr>";
-        return newrow;
+    
+    public String buildTicketAircommissionViewListHTML(List<TicketAircommissionView> ticketList){
+        StringBuffer html = new StringBuffer();
+        int No = 0;
+        String airline = "";
+        String commission = "";
+        String isUse = "";
+        String paymentId ="";
+        String description="";
+        for(int i = 0 ; i < ticketList.size() ; i++ ){
+            No = i+1;
+            paymentId = ticketList.get(i).getPaymentId();
+            airline = ticketList.get(i).getAirline();
+            commission = String.valueOf(ticketList.get(i).getCommision());
+            isUse = String.valueOf(ticketList.get(i).getIsUse());
+            description = String.valueOf(ticketList.get(i).getDetail());
+            String newrow = "";
+            if("Y".equals(isUse)){
+                newrow +=   "<tr>"+
+                            "<input type='hidden' name='paymentId' id='paymentId' value='"+paymentId+"'>" +
+                            "<td class='text-center'>"+No+"</td>"+
+                            "<td>"+airline+"</td>"+
+                            "<td class='money'>"+commission+"</td>"+
+                            "<td class='text-center'>"+isUse+"</td>"+ 
+                            "<td><center><span class='glyphicon glyphicon-plus disable'></span></center></td>" +
+                            "</tr>";
+            }else if("N".equals(isUse)){
+                newrow +=   "<tr>"+
+                            "<input type='hidden' name='paymentId' id='paymentId' value='"+paymentId+"'>" +
+                            "<td class='text-center'>"+No+"</td>"+
+                            "<td>"+airline+"</td>"+
+                            "<td class='money'>"+commission+"</td>"+
+                            "<td class='text-center'>"+isUse+"</td>"+ 
+                            "<td><center><a href=\"\"><span onclick=\"addProduct('','"+description+"','','','','','"+commission+"','','')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>" +
+                            "</tr>";
+            }
+            html.append(newrow);
+        }
+        
+        return html.toString();
     }
     
+    public String buildInvoiceListHTML(Invoice invoice){
+        StringBuffer html = new StringBuffer();
+        List<InvoiceDetail> invoiceDetaill = new ArrayList<InvoiceDetail>(invoice.getInvoiceDetails());
+        String invId = "";
+        String description = "";
+        BigDecimal amount = new BigDecimal(0);
+        BigDecimal cost = new BigDecimal(0);
+        BigDecimal amountinvoice = new BigDecimal(0);
+        BigDecimal costinvoice = new BigDecimal(0);
+        String currency = "";
+        String product = "";
+        String cur = "" ; 
+        String isVat = "";
+        String vat = "";
+        int No = 0;
+        String receiveFrom = invoice.getInvTo();
+        String receiveName = invoice.getInvName();
+        String receiveAddress = invoice.getInvAddress();
+        String arcode = invoice.getArcode();
+        if (invoiceDetaill == null || invoiceDetaill.size() == 0) {
+            return html.toString();
+        }
+        for(int i = 0 ; i < invoiceDetaill.size() ; i++ ){
+            No = i+1;
+            invId = invoiceDetaill.get(i).getId();
+            description = invoiceDetaill.get(i).getDescription();
+            amountinvoice = invoiceDetaill.get(i).getAmount().compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : invoiceDetaill.get(i).getAmount();
+            currency = invoiceDetaill.get(i).getCurAmount();
+            product = invoiceDetaill.get(i).getMbillType().getId();
+            costinvoice = invoiceDetaill.get(i).getCost().compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : invoiceDetaill.get(i).getCost();
+            cur = invoiceDetaill.get(i).getCurCost();
+            isVat = String.valueOf(invoiceDetaill.get(i).getIsVat());
+            vat = String.valueOf(invoiceDetaill.get(i).getVat());
+            
+            System.out.println(" invId " + invId);
+
+            BigDecimal[] value = checkReceiptDetail(invId); 
+            BigDecimal costTemp = value[0];
+            BigDecimal amountTemp = value[1];
+            amount = amountinvoice.subtract(amountTemp);
+            cost = costinvoice.subtract(costTemp);
+            System.out.println(" amount =  " + amountinvoice + "-" + amountTemp + " = "+  amount);
+            System.out.println(" cost =  " + costinvoice + "-" + costTemp + " = "+  cost);
+
+            if(amount.compareTo(BigDecimal.ZERO) != 0){
+                String newrow = "";
+                newrow +=   "<tr>"+
+                            "<input type='hidden' name='receiveFromInvoice' id='receiveFromInvoice' value='"+receiveFrom+"'>" +
+                            "<input type='hidden' name='receiveNameInvoice' id='receiveNameInvoice' value='"+receiveName+"'>" +
+                            "<input type='hidden' name='receiveAddressInvoice' id='receiveAddressInvoice' value='"+receiveAddress+"'>" +
+                            "<input type='hidden' name='arcodeInvoice' id='arcodeInvoice' value='"+arcode+"'>" +
+                            "<td class='hidden'>"+invoice.getId()+"</td>"+
+                            "<td class='text-center'>"+No+"</td>"+
+                            "<td>"+description+"</td>"+
+                            "<td class='money'>"+amount+"</td>"+
+                            "<td>"+currency+"</td>"+ 
+                            "<td><center><a href=\"\"><span onclick=\"addProduct('"+product+"','"+description+"','"+cost+"','"+cur+"','"+isVat+"','"+vat+"','"+amount+"','"+currency+"','"+invId+"')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>" +
+                            "</tr>";
+                html.append(newrow);
+            }
+        }
+        return html.toString();
+    }
+    
+    public String buildBillableListHTML(Billable billable){
+        StringBuffer html = new StringBuffer();
+        List<BillableDesc> billableDescs = new ArrayList<BillableDesc>(billable.getBillableDescs());
+        String description = "";
+        String amount = "";
+        String currency = "";
+        String product = "";
+        String cost = "" ;
+        String cur = "" ; 
+        String isVat = "";
+        String vat = "";
+        int No = 0;
+        String receiveFrom = billable.getBillTo();
+        String receiveName = billable.getBillName();
+        String receiveAddress = billable.getBillAddress();
+        String arcode = billable.getBillTo();
+        
+        if (billableDescs == null || billableDescs.size() == 0) {
+            return html.toString();
+        }
+        for(int i = 0 ; i < billableDescs.size() ; i++ ){
+            No = i+1;
+            description = billableDescs.get(i).getDetail();
+            amount = String.valueOf(billableDescs.get(i).getPrice());
+            currency = billableDescs.get(i).getCurrency();
+            if(billableDescs.get(i).getMBilltype() != null){
+                product = billableDescs.get(i).getMBilltype().getId();
+            }
+            cost = String.valueOf(billableDescs.get(i).getCost());
+            cur = billableDescs.get(i).getCurrency();
+            String newrow = "";
+            newrow +=   "<tr>"+
+                        "<input type='hidden' name='receiveFromInvoice' id='receiveFromInvoice' value='"+receiveFrom+"'>" +
+                        "<input type='hidden' name='receiveNameInvoice' id='receiveNameInvoice' value='"+receiveName+"'>" +
+                        "<input type='hidden' name='receiveAddressInvoice' id='receiveAddressInvoice' value='"+receiveAddress+"'>" +
+                        "<input type='hidden' name='arcodeInvoice' id='arcodeInvoice' value='"+arcode+"'>" +
+                        "<input type='hidden' name='billableId' id='billableId' value='"+billable.getId()+"'>" +
+                        "<td class='text-center'>"+No+"</td>"+
+                        "<td>"+description+"</td>"+
+                        "<td class='money'>"+amount+"</td>"+
+                        "<td>"+currency+"</td>"+ 
+                        "<td><center><a href=\"\"><span onclick=\"addProduct('"+product+"','"+description+"','"+cost+"','"+cur+"','','','"+amount+"','"+currency+"','')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>" +
+                        "</tr>";
+            html.append(newrow);
+        }
+        return html.toString();
+    }
     public String buildPassengerListHTML(List<Customer> passList){
         String passenger = "";
         String MInitialname = "";
@@ -827,7 +994,6 @@ public class AJAXBean extends AbstractBean implements
                     + " <td class='arrival-code'>" + airport.getCode() + "</td>"
                     + " <td class='arrival-name'>" + airport.getName() + "</td>"
                     + "</tr>";
-
         }
         return result;
     }
@@ -1138,6 +1304,28 @@ public class AJAXBean extends AbstractBean implements
         return value;
     }
     
+    public BigDecimal[] checkReceiptDetail(String invDetailId){
+        BigDecimal[] value = new BigDecimal[2];
+        BigDecimal amount = new BigDecimal(0);
+        BigDecimal cost = new BigDecimal(0);
+        BigDecimal resultAmount = new BigDecimal(0);
+        BigDecimal resultCost = new BigDecimal(0);
+        
+        List<ReceiptDetail> receiptDetailList = receiptdao.getReceiptDetailFromInvDetailId(invDetailId);
+        System.out.println("receiptDetailList size" + receiptDetailList.size());
+        for (int i = 0; i < receiptDetailList.size(); i++) {
+            cost = receiptDetailList.get(i).getCost();
+            amount = receiptDetailList.get(i).getAmount();
+            resultCost = resultCost.add(cost);
+            resultAmount = resultAmount.add(amount);
+        }
+        //from InvoiceDetail inv where inv.billableDesc.id = :billdesc
+        //get amount and cost from InvoiceDetail
+
+        value[0] = resultCost;
+        value[1] = resultAmount;
+        return value;
+    }
     public Mail getSendMail() {
         return sendMail;
     }

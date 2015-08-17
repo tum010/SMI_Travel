@@ -1,12 +1,13 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
+ * To change this template file, choose Tools | Templates 
  * and open the template in the editor.
  */
 
 package com.smi.travel.datalayer.dao;
 
 import com.smi.travel.datalayer.entity.Receipt;
+import com.smi.travel.datalayer.entity.ReceiptDetail;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,5 +27,7 @@ public interface ReceiptDao {
     public String DeleteReceiptDetail(String receiptDetailId , String receiptId); // delete table ReceiptDetail
     public String DeleteReceiptBank(String receiptId,int index); // delete table Receipt ===> chqNo ???
     public String DeleteReceiptChq(String receiptCreditId , String receiptId); // delete table ReceiptCredit
+    
+    public List<ReceiptDetail> getReceiptDetailFromInvDetailId(String invDetailId);
     
 }

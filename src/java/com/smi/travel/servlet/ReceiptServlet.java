@@ -1,6 +1,6 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
+ * To change this template file, choose Tools | Templates 
  * and open the template in the editor.
  */
 package com.smi.travel.servlet;
@@ -26,14 +26,14 @@ public class ReceiptServlet implements AbstractAJAXServlet{
         String invoiceNo = request.getParameter("invoiceNo");
         String refNo = request.getParameter("refNo");
         String type = request.getParameter("type");
-        
+        String paymentNo = request.getParameter("paymentNo");
         Map result = new HashMap();
         
         result.put("invoiceNo", invoiceNo);
         result.put("refNo", refNo);
         result.put("servletName", servletName);
         result.put("type", type);
-        
+        result.put("paymentNo", paymentNo);
                  
         return result;    
     }

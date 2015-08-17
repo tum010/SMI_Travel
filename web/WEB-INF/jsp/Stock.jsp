@@ -229,6 +229,20 @@
                                         <c:if test="${std.payStatus == 1}">
                                             <c:set var="pay" value="Pay" />
                                         </c:if>
+                                        
+                                        <c:set var="itemS" value="" />
+                                        <c:if test="${std.MStockStatus.id == 1}">
+                                            <c:set var="itemS" value="NEW" />
+                                        </c:if> 
+                                        <c:if test="${std.MStockStatus.id == 2}">
+                                            <c:set var="itemS" value="INUSE" />
+                                        </c:if>
+                                        <c:if test="${std.MStockStatus.id == 3}">
+                                            <c:set var="itemS" value="CANCEL" />
+                                        </c:if> 
+                                        <c:if test="${std.MStockStatus.id == 4}">
+                                            <c:set var="itemS" value="REFUND" />
+                                        </c:if>
                                     <tr>
                                         <td class="hidden"><input type="text" class="hidden" id="stockDetailId${taxdesc.count}" name="stockDetailId${taxdesc.count}" value="${std.id}" /></td>
                                         <td>${taxdesc.count}</td>
@@ -246,7 +260,7 @@
                                             </select>                                             
                                         </td>                                
                                         <td>${pay}</td>
-                                        <td>NEW</td>
+                                        <td>${itemS}</td>
                                         <td class="text-center">                                          
                                             <a href="#" onclick="deleteItemListRow('${taxdesc.count}','${std.code}')"  data-toggle="modal" data-target="" class="remCF" id="ButtonRemove${taxdesc.count}">
                                                 <span id="Spanremove${taxdesc.count}" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal" data-target="#delStockModal"></span>
