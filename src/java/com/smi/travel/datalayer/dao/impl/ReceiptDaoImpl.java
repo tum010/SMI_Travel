@@ -1,6 +1,6 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates sss
+ * To change this template file, choose Tools | Templates 
  * and open the template in the editor.
  */
 
@@ -265,6 +265,18 @@ import org.hibernate.Transaction;
 
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
+    }
+
+    @Override
+    public List<ReceiptDetail> getReceiptDetailFromInvDetailId(String invDetailId) {
+        Session session = this.sessionFactory.openSession();
+        List<ReceiptDetail> list = session.createQuery("from ReceiptDetail d WHERE d.invoiceDetail.id = :invDetailId").setParameter("invDetailId", invDetailId).list();
+        if(list.isEmpty()){
+            return null;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return list;
     }
     
     
