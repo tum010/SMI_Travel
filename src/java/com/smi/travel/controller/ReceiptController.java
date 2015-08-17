@@ -1,4 +1,6 @@
 package com.smi.travel.controller;
+import com.smi.travel.datalayer.entity.InvoiceDetail;
+import com.smi.travel.datalayer.entity.MAccpay;
 import com.smi.travel.datalayer.entity.MBilltype;
 import com.smi.travel.datalayer.entity.MCreditBank;
 import com.smi.travel.datalayer.entity.MCurrency;
@@ -8,6 +10,7 @@ import com.smi.travel.datalayer.entity.MItemstatus;
 import com.smi.travel.datalayer.entity.Receipt;
 import com.smi.travel.datalayer.entity.ReceiptCredit;
 import com.smi.travel.datalayer.entity.ReceiptDetail;
+import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.ReceiptService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
@@ -16,6 +19,7 @@ import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,6 +30,7 @@ import org.springframework.web.servlet.view.RedirectView;
 public class ReceiptController extends SMITravelController {
     private static final ModelAndView Receipt = new ModelAndView("Receipt");
     private static final ModelAndView Receipt_REFRESH = new ModelAndView(new RedirectView("Receipt.smi", true));
+    private static final String LINKNAME = "Receipt";
     private static final String PVList = "PVList";
     private static final String CUSTOMERAGENT = "customerAgent";
     private static final String MBILLTYPELIST = "billTypeList";
@@ -35,18 +40,25 @@ public class ReceiptController extends SMITravelController {
     private static final String MCREDITBANKLIST = "creditBankList";
     private static final String PRODUCTROWCOUNT = "productRowCount";
     private static final String RECEIPT = "receipt"; // search receive no from Receipt table
-    private static final String SELECTEDRECEIPT = "SelectedReceive"; // search receive no from Receipt table aaa
+    private static final String SELECTEDRECEIPT = "SelectedReceive"; // search receive no from Receipt table
     private static final String SAVERESULT = "saveresult"; // save result
-    
-    
+    private static final String RECEIVEDATE = "receiveFromDate";
+    private static final String CHQDATE1 = "chqDate1";
+    private static final String CHQDATE2 = "chqDate2";
     private UtilityService utilityService;
     private ReceiptService receiptService;
     UtilityFunction util;
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        UtilityFunction utilty = new UtilityFunction();
+        SystemUser user = (SystemUser) session.getAttribute("USER");
         String action = request.getParameter("action");
-        String callPageFrom = request.getParameter("type");
+        System.out.println("request.getRequestURI() " + request.getRequestURI());
+        String callPageFrom = utilty.getAddressUrl(request.getRequestURI()).replaceAll("Receipt", "");//request.getParameter("type");
+        String callPage = utilty.getAddressUrl(request.getRequestURI());//request.getParameter("type");
         String paymentNo = request.getParameter("paymentNo");
+        //Attribute Invoice
+        System.out.println("callPageFrom : "+callPageFrom);
         
         String receiveId = request.getParameter("receiveId");
         String receiveNo = request.getParameter("receiveNo");
@@ -70,12 +82,23 @@ public class ReceiptController extends SMITravelController {
         String chqNo2= request.getParameter("chqNo2");
         String chqDate2 = request.getParameter("chqDate2");        
         String chqAmount2 = request.getParameter("chqAmount2"); 
-        
-        if(callPageFrom != null){
-           String[] type = callPageFrom.split("\\?");
-           request.setAttribute("typeInvoice", type[0]);  
+        String InputReceiptType = request.getParameter("InputReceiptType");
+        String InputDepartment = request.getParameter("InputDepartment");
+        if(!"".equals(callPageFrom)){
+           //String[] type = callPageFrom.split("\\?");
+           request.setAttribute("typeReceipt", callPageFrom.substring(1));  
+           InputDepartment =  callPageFrom.substring(0,1);
+           InputReceiptType   =  callPageFrom.substring(1);
         }
-        
+        System.out.println("InputDepartment : "+InputDepartment);
+        System.out.println("InputReceiptType : "+InputReceiptType);
+        if("W".equals(InputDepartment)){
+            InputDepartment = "Wendy";
+        }else if("I".equals(InputDepartment)){
+            InputDepartment = "Inbound";
+        }else if("O".equals(InputDepartment)){
+            InputDepartment = "Outbound";
+        }
         util = new UtilityFunction();
         String result = "";
         
@@ -87,6 +110,8 @@ public class ReceiptController extends SMITravelController {
             Receipt receipt = new Receipt();
             receipt = receiptService.getReceiptfromReceiptNo(receiveNo);
             request.setAttribute(RECEIPT,receipt);
+            request.setAttribute(RECEIVEDATE,receipt.getRecDate());
+            
         }else if ("saveReceipt".equalsIgnoreCase(action)) {
             Receipt receipt = new Receipt();
             receipt.setId(receiveId);
@@ -108,11 +133,19 @@ public class ReceiptController extends SMITravelController {
                 String receiveCost = request.getParameter("receiveCost" + i);
                 String receiveCurCost = request.getParameter("receiveCurCost" + i);
                 String receiveVat = request.getParameter("receiveVat" + i);
+                String receiveIsVat = request.getParameter("receiveIsVat" + i);
 //                String receiveGross = request.getParameter("receiveGross" + i);
                 String receiveAmount = request.getParameter("receiveAmount" + i);
                 String receiveCurrency = request.getParameter("receiveCurrency" + i);
-                
+                String invId = request.getParameter("invId" + i);
+
                 ReceiptDetail receiptDetail = new ReceiptDetail();
+                
+                if(StringUtils.isNotEmpty(invId)){
+                    InvoiceDetail invoiceDetail = new InvoiceDetail();
+                    invoiceDetail.setId(invId);
+                    receiptDetail.setInvoiceDetail(invoiceDetail);
+                }
                 receiptDetail.setId(tableId);
                 receiptDetail.setReceipt(receipt);
                 if(StringUtils.isNotEmpty(receiveProduct)){
@@ -124,11 +157,22 @@ public class ReceiptController extends SMITravelController {
                 receiptDetail.setDisplayDescription(receiveDes);
                 receiptDetail.setCost(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(receiveCost) ? receiveCost.replaceAll(",","") : 0)));
                 receiptDetail.setCurCost(receiveCurCost);
-//                receiptDetail.setIsVat(i);
+                System.out.println("receiveIsVat " + i + receiveIsVat);
+                if("1".equals(receiveIsVat)){
+                    receiptDetail.setIsVat(1);
+                }else{
+                    receiptDetail.setIsVat(0);
+                }
                 receiptDetail.setVat(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(receiveVat) ? receiveVat.replaceAll(",","") : 0)));
                 receiptDetail.setAmount(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(receiveAmount) ? receiveAmount.replaceAll(",","") : 0)));
                 receiptDetail.setCurAmount(receiveCurrency);
-                receipt.getReceiptDetails().add(receiptDetail);
+
+                if(receiveProduct.isEmpty() && receiveDes.isEmpty() && receiveCost.isEmpty() && receiveCurCost.isEmpty()
+                    && receiveVat.isEmpty() && receiveAmount.isEmpty() && receiveCurrency.isEmpty()){
+                    System.out.println("not save");
+                }else{
+                    receipt.getReceiptDetails().add(receiptDetail);
+                }
             }
             
             if(receipt.getReceiptCredits() == null){
@@ -151,7 +195,11 @@ public class ReceiptController extends SMITravelController {
                 receiptCredit.setCreditNo(creditNo);
                 receiptCredit.setCreditExpire(util.convertStringToDate(creditExpired != "" ? creditExpired : ""));
                 receiptCredit.setCreditAmount(Long.valueOf(String.valueOf(StringUtils.isNotEmpty(creditAmount) ? creditAmount.replaceAll(",","") : 0)));
-                receipt.getReceiptCredits().add(receiptCredit);
+                if(creditBank.isEmpty() && creditNo.isEmpty() && creditExpired.isEmpty() && creditAmount.isEmpty()){
+                    System.out.println("not save");
+                }else{
+                    receipt.getReceiptCredits().add(receiptCredit);
+                }
             }
             
             receipt.setId(receiveId);
@@ -168,9 +216,12 @@ public class ReceiptController extends SMITravelController {
             receipt.setMFinanceItemstatus(mFinanceItemstatus);
             
             if(StringUtils.isNotEmpty(inputStatus)){
-                MItemstatus mItemstatus = new MItemstatus();
-                mItemstatus.setId(inputStatus);
-                receipt.setMItemStatus(mItemstatus);
+                MAccpay mAccpay = new MAccpay();
+                mAccpay.setId(inputStatus);
+                receipt.setMAccpay(mAccpay);
+//                MItemstatus mItemstatus = new MItemstatus();
+//                mItemstatus.setId(inputStatus);
+//                receipt.setMItemStatus(mItemstatus);
             }
             receipt.setWithTax(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(withTax) ? withTax.replaceAll(",","") : 0)));
             receipt.setCashAmount(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(cashAmount) ? cashAmount.replaceAll(",","") : 0)));
@@ -184,6 +235,10 @@ public class ReceiptController extends SMITravelController {
             receipt.setChqDate2(util.convertStringToDate(chqDate2 != "" ? chqDate2 : ""));
             receipt.setChqAmount1(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(chqAmount1) ? chqAmount1.replaceAll(",","") : 0)));
             receipt.setChqAmount2(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(chqAmount2) ? chqAmount2.replaceAll(",","") : 0)));
+            receipt.setDepartment(InputDepartment);
+            receipt.setRecType(InputReceiptType);
+            receipt.setCreateDate(new Date());
+            receipt.setCreateBy(user.getUsername());
             if(receipt.getId() == ""){
                 result = receiptService.insertReceipt(receipt);
             }else{
@@ -200,9 +255,13 @@ public class ReceiptController extends SMITravelController {
                 request.setAttribute(SAVERESULT, "save successful");
             }
             request.setAttribute(RECEIPT,receipt);
+            request.setAttribute(RECEIVEDATE,receiveFromDate);
+            request.setAttribute(CHQDATE1,chqDate1);
+            request.setAttribute(CHQDATE2,chqDate2);
         }
         
         setResponseAttribute(request);
+        request.setAttribute("page", callPageFrom);
         return Receipt;
     }
     
@@ -217,8 +276,10 @@ public class ReceiptController extends SMITravelController {
         request.setAttribute(MCURRENCYLIST, mCurrencys); //receiveCurrency
         List<MCreditBank> mCreditBanks = utilityService.getListCreditBank();
         request.setAttribute(MCREDITBANKLIST, mCreditBanks); //creditBankList
-        List<MItemstatus> mItemstatuses = utilityService.getListMItemstatus();
-        request.setAttribute(MSTATUSLIST, mItemstatuses); //statusList
+//        List<MItemstatus> mItemstatuses = utilityService.getListMItemstatus();
+//        request.setAttribute(MSTATUSLIST, mItemstatuses); //statusList
+        List<MAccpay> mAccpays = utilityService.getListMAccpay();
+        request.setAttribute(MSTATUSLIST, mAccpays); //statusList
 
         
         
