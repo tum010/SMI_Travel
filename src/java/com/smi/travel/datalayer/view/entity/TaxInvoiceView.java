@@ -13,65 +13,67 @@ import java.math.BigDecimal;
  * @author Surachai
  */
 public class TaxInvoiceView {
-    private String TaxId;
-    private String TaxNo;
-    private String TaxDate;
-    private String TaxTo;
-    private String Name;
-    private String Address;
+    private String taxId;
+    private String taxNo;
+    private String taxDate;
+    private String taxTo;
+    private String name;
+    private String address;
     private String detail;
     private String InvoiceNo;
     private String ReceiptNo;
     private BigDecimal TotalGross;
     private BigDecimal TotalAmount;
     private BigDecimal Totalvat;
+    private String status;
+    private String deparement;
 
     public String getTaxId() {
-        return TaxId;
+        return taxId;
     }
 
-    public void setTaxId(String TaxId) {
-        this.TaxId = TaxId;
+    public void setTaxId(String taxId) {
+        this.taxId = taxId;
     }
 
     public String getTaxNo() {
-        return TaxNo;
+        return taxNo;
     }
 
-    public void setTaxNo(String TaxNo) {
-        this.TaxNo = TaxNo;
+    public void setTaxNo(String taxNo) {
+        this.taxNo = taxNo;
     }
 
     public String getTaxDate() {
-        return TaxDate;
+        return taxDate;
     }
 
-    public void setTaxDate(String TaxDate) {
-        this.TaxDate = TaxDate;
+    public void setTaxDate(String taxDate) {
+        this.taxDate = taxDate;
     }
 
     public String getTaxTo() {
-        return TaxTo;
+        return taxTo;
     }
 
-    public void setTaxTo(String TaxTo) {
-        this.TaxTo = TaxTo;
+    public void setTaxTo(String taxTo) {
+        this.taxTo = taxTo;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
-    public void setName(String Name) {
-        this.Name = Name;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAddress() {
-        return Address;
+        return address;
     }
 
-    public void setAddress(String Address) {
-        this.Address = Address;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getDetail() {
@@ -121,8 +123,23 @@ public class TaxInvoiceView {
     public void setTotalvat(BigDecimal Totalvat) {
         this.Totalvat = Totalvat;
     }
-    
-    
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getDeparement() {
+        return deparement;
+    }
+
+    public void setDeparement(String deparement) {
+        this.deparement = deparement;
+    }
+
     
     
     
