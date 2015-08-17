@@ -83,7 +83,7 @@ $(document).ready(function () {
         });
     }
     
-    if((MDname === 'tour')){
+    if((MDname === 'checking wendy')){
         $("#BookingExpenseTable").on("keyup", function () {
             var rowAll = $("#BookingExpenseTable tr").length;
             $("td").keyup(function () {
