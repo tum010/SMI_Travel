@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!--<script type="text/javascript" src="js/Receipt.js"></script> 11--> 
+<!--<script type="text/javascript" src="js/Receipt.js"></script> --> 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -19,7 +19,10 @@
 <c:set var="receipt" value="${requestScope['receipt']}" />
 <c:set var="result" value="${requestScope['result']}" />
 <c:set var="callPage" value="${requestScope['callPage']}" />
+<c:set var="receiptDetailList" value="${requestScope['receiptDetailList']}" />
+<c:set var="receiptCreditList" value="${requestScope['receiptCreditList']}" />
 
+<c:set var="roleName" value="${requestScope['roleName']}" />
 <section class="content-header" >
     <h1>
         Finance & Cashier - Receipt 
@@ -354,34 +357,88 @@
                                         </tr>
                                     </thead>
                                     <tbody> 
-                                        <%--<c:forEach var="table" items="${productListTable}" varStatus="dataStatus">--%>
-<!--                                            <tr>
-                                                <input type="hidden" name="count${dataStatus.count}" id="count${dataStatus.count}" value="${dataStatus.count}">
-                                                <input type="hidden" name="tableId${dataStatus.count}" id="tableId${dataStatus.count}" value="${table.id}">
-                                                <td align="center"> <c:out value="${table.referenceNo}" /></td>
-                                                <td align="left"> <c:out value="${table.ticketNo}" /></td>
-                                                <td align="left"> <c:out value="${table.department}" /></td>
-                                                <td class="money">${table.fare}</td>
-                                                <td class="money">${table.tax}</td>
-                                                <td class="money">${table.ticketIns}</td>
-                                                <td class="money">${table.ticketCommission}</td>
-                                                <td class="money">${table.salePrice}</td>
-                                                <td> 
-                                                    <center> 
-                                                        <a class="remCF"><span id="SpanRemove${dataStatus.count}" onclick="DeleteAir('${table.id}','${table.ticketNo}','${dataStatus.count}');" class="glyphicon glyphicon-remove deleteicon " data-toggle="modal" data-target="#delReceiptModal"></span></a>
-                                                    </center>
-                                                    <input type="hidden" name="deleteTicketNo" id="deleteTicketNo">
-                                                    <input type="hidden" name="deleteTicketId" id="deleteTicketId">
-                                                    <input type="hidden" name="deleteTicketCount" id="deleteTicketCount">
-                                                </td>                                    
-                                            </tr>-->
-                                        <%--</c:forEach>--%>
+                                        <c:forEach var="table" items="${receiptDetailList}" varStatus="i">
+                                            <tr>
+                                                <input type="hidden" name="count${i.count}" id="count${i.count}" value="${i.count}">
+                                                <input id="invId${i.count}"  name="invId${i.count}"   type="hidden" value="${table.invoiceDetail.id}" >
+                                                <input type="hidden" name="tableId${i.count}" id="tableId${i.count}" value="${table.id}">
+                                                <td>                                   
+                                                    <select class="form-control" name="receiveProduct${i.count}" id="receiveProduct${i.count}">
+                                                        <option  value="" >---------</option>
+                                                        <c:forEach var="product" items="${billTypeList}" varStatus="status">                                       
+                                                            <c:set var="select" value="" />
+                                                            <c:if test="${product.id == table.MBilltype.id}">
+                                                                <c:set var="select" value="selected" />
+                                                            </c:if>
+                                                            <option  value="${product.id}" ${select}>${product.name}</option>
+                                                        </c:forEach>
+                                                    </select>                                                                  
+                                                </td>
+                                                <td><input maxlength="255" id="receiveDes${i.count}" name="receiveDes${i.count}" type="text" class="form-control" value="${table.displayDescription}"></td>
+                                                <td><input maxlength="10" id="receiveCost${i.count}"  name="receiveCost${i.count}"  type="text" class="form-control text-right"  value="${table.cost}" onkeyup="insertCommas(this)"></td>
+                                                <td>                                   
+                                                    <select class="form-control" name="receiveCurCost${i.count}" id="receiveCurCost${i.count}">
+                                                        <option  value="" >---------</option>
+                                                        <c:forEach var="curCost" items="${currencyList}" varStatus="status">                                       
+                                                            <c:set var="select" value="" />
+                                                            <c:if test="${curCost.code == table.curCost}">
+                                                                <c:set var="select" value="selected" />
+                                                            </c:if>
+                                                            <option  value="${curCost.code}" ${select}>${curCost.code}</option>
+                                                        </c:forEach>
+                                                    </select>                                                                  
+                                                </td>
+                                                <td align="center">
+                                                    <c:choose>
+                                                        <c:when test="${table.isVat == '1'}">
+                                                            <input type="checkbox" checked name="receiveIsVat${i.count}" id="receiveIsVat${i.count}" onclick="handleClick(this,${i.count})" value="${table.isVat}">
+                                                        </c:when>
+                                                        <c:when test="${table.isVat == '0'}">
+                                                            <input type="checkbox"  name="receiveIsVat${i.count}" id="receiveIsVat${i.count}" onclick="handleClick(this,${i.count})" value="${table.isVat}">
+                                                        </c:when>
+                                                    </c:choose>
+                                                </td> 
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${table.isVat == '1'}">
+                                                            <div id="receiveVat${i.count}" name="receiveVat${i.count}"  value="">${requestScope['vat']}</div>                                                        
+                                                        </c:when>
+                                                        <c:when test="${table.isVat == '0'}">
+                                                            <div id="receiveVat${i.count}" name="receiveVat${i.count}" style="display:none" ></div>
+                                                        </c:when>
+                                                    </c:choose>
+                                                </td>
+                                                <td><input id="receiveAmount${i.count}" name="receiveAmount${i.count}" type="text" class="form-control text-right" onkeyup="insertCommas(this)" value="${table.amount}"></td>
+                                                <td>                                   
+                                                    <select class="form-control" name="receiveCurrency${i.count}" id="receiveCurrency${i.count}">
+                                                        <option  value="" >---------</option>
+                                                        <c:forEach var="curAmount" items="${currencyList}" varStatus="status">                                       
+                                                            <c:set var="select" value="" />
+                                                            <c:if test="${curAmount.code == table.curAmount}">
+                                                                <c:set var="select" value="selected" />
+                                                            </c:if>
+                                                            <option  value="${curAmount.code}" ${select}>${curAmount.code}</option>
+                                                        </c:forEach>
+                                                    </select>                                                                  
+                                                </td>
+                                                <td class="text-center">
+                                                    <a class="remCF"><span id="SpanRemove${i.count}" onclick="deleteReceiptList('${table.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
+                                                </td>                                   
+                                            </tr>
+                                        </c:forEach>
                                     </tbody>
                                 </table>      
                             </div>
                         </div>
+                        <input type="hidden" name="receiptIdDelete" id="receiptIdDelete" value="">
+                        <input type="hidden" name="receiptDetailIdDelete" id="receiptDetailIdDelete" value="">
+                        <input type="hidden" name="receiptRowDelete" id="receiptRowDelete" value="">
+                        
+                        <input type="hidden" name="receiptCreditIdDelete" id="receiptCreditIdDelete" value="">
+                        <input type="hidden" name="receiptCreditRowDelete" id="receiptCreditRowDelete" value="">
+                        
                         <input type="hidden" name="action" id="action" value="">
-                        <input type="hidden" class="form-control" id="countRowCredit" name="countRowCredit" value="${requestScope['productRowCount']}" />
+                        <input type="hidden" class="form-control" id="countRowCredit" name="countRowCredit" value="${requestScope['creditRowCount']}" />
                         <input type="hidden" class="form-control" id="counter" name="counter" value="${requestScope['productRowCount']}" />
                         <input type="hidden" name="vatValue" id="vatValue" value="${requestScope['vat']}">
                         <select class="hidden" name="billTypeList" id="billTypeList">
@@ -420,13 +477,13 @@
                     </div>
                     <div class="panel panel-default">
                         <div class="panel-body"  style="padding-right: 0px;">
-                            <div class="col-xs-12 form-group">
+                            <div class="col-xs-12">
                                 <div class="row">
                                     <div class="col-xs-1 text-right" style="width: 140px">
                                         <label class="control-label text-right">W/T </label>                                    
                                     </div>
                                     <div class="col-xs-1 " style="width: 200px">
-                                        <input id="withTax" name="withTax" type="text" class="form-control" value="${receipt.withTax}">
+                                        <input id="withTax" name="withTax" type="text" class="form-control"  maxlength="12" style="text-align: right" onkeyup="insertCommas(this)" value="${receipt.withTax}">
                                     </div>
                                 </div><hr/>
                                 <div class="row">
@@ -434,13 +491,13 @@
                                         <label class="control-label text-right">Cash Amount </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 200px">
-                                        <input id="cashAmount" name="cashAmount" type="text" class="form-control" value="${receipt.cashAmount}">
+                                        <input id="cashAmount" name="cashAmount" type="text" class="form-control" maxlength="12" style="text-align: right" onkeyup="insertCommas(this)" value="${receipt.cashAmount}" >
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 160px">
                                         <label class="control-label text-right">Cash(-) Amount</label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 200px">
-                                        <input id="cashMinusAmount" name="cashMinusAmount" type="text" class="form-control" value="${receipt.cashMinusAmount}">
+                                        <input id="cashMinusAmount" name="cashMinusAmount" type="text" class="form-control" value="${receipt.cashMinusAmount}" maxlength="12" style="text-align: right" onkeyup="insertCommas(this)">
                                     </div>
                                 </div><hr/>
                                 <div class="row">
@@ -448,7 +505,7 @@
                                         <label class="control-label text-right">Bank Transfer </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 200px">
-                                        <input id="bankTransfer" name="bankTransfer" type="text" class="form-control" value="${receipt.bankTransfer}">
+                                        <input id="bankTransfer" name="bankTransfer" type="text" class="form-control" value="${receipt.bankTransfer}" maxlength="12" style="text-align: right" onkeyup="insertCommas(this)">
                                     </div>
                                 </div><hr/>
                                 <div class="row">
@@ -456,13 +513,13 @@
                                         <label class="control-label text-right">Chq Bank </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 130px">
-                                        <input style="width: 130px" id="chqBank1" name="chqBank1" type="text" class="form-control" value="${receipt.chqBank1}">
+                                        <input style="width: 130px" id="chqBank1" name="chqBank1" type="text" class="form-control" value="${receipt.chqBank1}" maxlength="100">
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 110px">
                                         <label class="control-label text-right">Chq No </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 120px">
-                                        <input style="width: 115px" id="chqNo1" name="chqNo1" type="text" class="form-control" value="${receipt.chqNo1}">
+                                        <input style="width: 115px" id="chqNo1" name="chqNo1" type="text" class="form-control" value="${receipt.chqNo1}" maxlength="100">
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 130px">
                                         <label class="control-label text-right">Date </label>                                    
@@ -478,7 +535,7 @@
                                         <label class="control-label text-right">Amount </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 120px">
-                                        <input id="chqAmount1" name="chqAmount1" type="text" class="form-control" value="${receipt.chqAmount1}">
+                                        <input id="chqAmount1" name="chqAmount1" type="text" class="form-control" value="${receipt.chqAmount1}" maxlength="12" style="text-align: right" onkeyup="insertCommas(this)">
                                         
                                     </div>
                                     <div class="col-xs-1" style="width: 50px ;">
@@ -492,13 +549,13 @@
                                         <label class="control-label text-right">Chq Bank </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 130px">
-                                        <input style="width: 130px" id="chqBank2" name="chqBank2" type="text" class="form-control" value="${receipt.chqBank2}">
+                                        <input style="width: 130px" id="chqBank2" name="chqBank2" type="text" class="form-control" value="${receipt.chqBank2}" maxlength="100">
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 110px">
                                         <label class="control-label text-right">Chq No </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 120px">
-                                        <input  style="width: 115px" id="chqNo2" name="chqNo2" type="text" class="form-control" value="${receipt.chqNo2}">
+                                        <input  style="width: 115px" id="chqNo2" name="chqNo2" type="text" class="form-control" value="${receipt.chqNo2}"  maxlength="100">
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 130px">
                                         <label class="control-label text-right">Date </label>                                    
@@ -514,7 +571,7 @@
                                         <label class="control-label text-right">Amount </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 120px">
-                                        <input id="chqAmount2" name="chqAmount2" type="text" class="form-control" value="${receipt.chqAmount2}">
+                                        <input id="chqAmount2" name="chqAmount2" type="text" class="form-control" value="${receipt.chqAmount2}" maxlength="12" style="text-align: right" onkeyup="insertCommas(this)">
                                     </div>
                                     <div class="col-xs-1" style="width: 50px ;">
                                         <h4><a class="col-xs-1">
@@ -536,7 +593,34 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-
+                                        <c:forEach var="table" items="${receiptCreditList}" varStatus="i">
+                                            <tr>
+                                                <input type="hidden" name="countCredit${i.count}" id="countCredit${i.count}" value="${i.count}">
+                                                <input type="hidden" name="tableCreditId${i.count}" id="tableCreditId${i.count}" value="${table.id}">
+                                                <td>                                   
+                                                    <select class="form-control" name="creditBank${i.count}" id="creditBank${i.count}">
+                                                        <option  value="" >---------</option>
+                                                        <c:forEach var="credit" items="${creditBankList}" varStatus="status">                                       
+                                                            <c:set var="select" value="" />
+                                                            <c:if test="${credit.id == table.MCreditBank.id}">
+                                                                <c:set var="select" value="selected" />
+                                                            </c:if>
+                                                            <option  value="${credit.id}" ${select}>${credit.name}</option>
+                                                        </c:forEach>
+                                                    </select>                                                                  
+                                                </td>
+                                                <td><input maxlength="20" id="creditNo${i.count}" name="creditNo${i.count}" type="text" class="form-control" value="${table.creditNo}"></td>
+                                                <td><div class="input-group date">
+                                                    <input id="creditExpired${i.count}" name="creditExpired${i.count}"  type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${table.creditExpire}">
+                                                    <span class="input-group-addon spandate" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                </td>
+                                                <td><input id="creditAmount${i.count}" name="creditAmount${i.count}" type="text" class="form-control text-right" onkeyup="insertCommas(this)" value="${table.creditAmount}"></td>                                                           
+                                                <td class="text-center">
+                                                    <a class="remCF"><span id="SpanRemove${i.count}" onclick="deleteCreditList('${table.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
+                                                </td>                                   
+                                            </tr>
+                                        </c:forEach>
                                     </tbody>
                                 </table>
                           
@@ -575,8 +659,8 @@
                                     </button>
                                 </div>
                                     
-                                <div class="col-md-4 text-right " style="width: 400px"></div>
-                                <div class="col-md-1 text-right " style="width: 100px">
+                                <div class="col-md-3 text-right " ></div>
+                                <div class="col-md-2 text-right ">
                                     <c:set var="isDisableVoid" value="disabled='true'" />
                                     <c:set var="isEnableVoid" value="style='display: none;'" />
                                     <c:set var="isSaveVoid" value="" />
@@ -611,18 +695,17 @@
                                     <c:if test="${receipt.MFinanceItemstatus.id == '1'}">        
                                         <c:set var="isDisableVoid" value="" />
                                     </c:if>
-                                    <button type="button" class="btn btn-primary" onclick="EnableVoid();" data-toggle="modal" data-target="#EnableVoid" id="enableVoidButton" name="enableVoidButton"  ${isEnableVoid} >
+                                    <button type="button" class="btn btn-primary" onclick="EnableVoidReceipt();" data-toggle="modal" data-target="#EnableVoid" id="enableVoidButton" name="enableVoidButton"  ${isEnableVoid} >
                                         <span id="SpanEnableVoid" class="glyphicon glyphicon-ok" ></span> Cancel Void
                                     </button>
-
-                                    <button type="button" class="btn btn-danger" onclick="DisableVoid();" data-toggle="modal" data-target="#DisableVoid" id="disableVoidButton" name="disableVoidButton" ${isDisableVoid} >
+                                    <button type="button" class="btn btn-danger" onclick="DisableVoidReceipt();" data-toggle="modal" data-target="#DisableVoid" id="disableVoidButton" name="disableVoidButton" ${isDisableVoid} >
                                         <span id="SpanDisableVoid" class="glyphicon glyphicon-remove" ></span> Void
                                     </button>
                                 </div>
-                                <div class="col-md-1 text-right " style="width: 100px">
-                                    <button type="submit" id="ButtonSave" name="ButtonSave" onclick="saveReceipt()" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+                                <div class="col-md-1 text-right ">
+                                    <button type="submit" id="ButtonSave" name="ButtonSave" onclick="saveReceipt()" class="btn btn-success" ${isSaveVoid}><i class="fa fa-save"></i> Save</button>
                                 </div>
-                                <div class="col-md-1 text-right " style="width: 100px">
+                                <div class="col-md-1 text-right ">
                                     <button type="submit" id="ButtonNew" name="ButtonNew" onclick="clearNew()" class="btn btn-success"><i class="fa fa-plus-circle"></i> New</button>
                                 </div>
                             </div>
@@ -900,72 +983,38 @@
     </div><!-- /.modal-dialog -->
 </div>
 
-<!--List ARCode Modal -->
-<div class="modal fade" id="ARCodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title"  id="Titlemodel">A/R</h4>
-            </div>
-            <div class="modal-body">
-                <table class="display" id="ListARCodeTable">
-                    <thead class="datatable-header">
-                        <tr>
-                            <th>Code</th>
-                            <th>Name</th> 
-                            <th class="hidden"></th>
-                            <th class="hidden"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-<!--                        <tr>
-                            <td><center>A10</center></td>
-                            <td><center>Test</center></td>
-                        </tr>-->
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button id="ListARCodeModalOK" name="ListARCodeModalOK" type="button"  class="btn btn-success" data-dismiss="modal">OK</button>
-                <button id="ListARCodeModalClose" name="ListARCodeModalClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal-dialog -->
-
-<!--Disable-->
+<!--Disable Modal-->
 <div class="modal fade" id="DisableVoid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title"  id="Titlemodel">Finance & Cashier - Receipt</h4>
+                <h4 class="modal-title"  id="Titlemodel">Disable Void Receipt</h4>
             </div>
-            <div class="modal-body" id="disableVoid">
-                
+            <div class="modal-body" id="disableVoidModal">
+                Are you confirm to void receipt ${receipt.recNo}?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" onclick='window.top.location.href="Receipt.smi?button=disable"'>Delete</button>               
+                <button type="button" class="btn btn-danger" onclick='DisableReceipt()' data-dismiss="modal">Cancel Void</button>               
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->      
+</div><!-- /.modal -->
 
-<!--Enable-->
+<!--Enable Modal-->
 <div class="modal fade" id="EnableVoid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title"  id="Titlemodel">Finance & Cashier - Receipt </h4>
+                <h4 class="modal-title"  id="Titlemodel">Enable Void Receipt</h4>
             </div>
-            <div class="modal-body" id="enableCode">
-                
+            <div class="modal-body" id="enableVoid">
+                Are you confirm to cancel void receipt ${receipt.recNo}?
             </div>
             <div class="modal-footer">
-                <button type="button" onclick="Enable()" class="btn btn-success">Enable</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" onclick='Enable()'>Enable</button>               
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
@@ -987,6 +1036,45 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<!--DELETE MODAL-->
+<div class="modal fade" id="DeleteProduct" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Receipt Detail</h4>
+            </div>
+            <div class="modal-body" id="delProduct">
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" onclick="DeleteRowProduct()" class="btn btn-danger">Delete</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>               
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<!--DELETE MODAL-->
+<div class="modal fade" id="DeleteReceiptCredit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Receipt Credit</h4>
+            </div>
+            <div class="modal-body" id="delCredit">
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" onclick="DeleteRowCredit()" class="btn btn-danger">Delete</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>               
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
 <c:if test="${! empty requestScope['saveresult']}">
     <c:if test="${requestScope['saveresult'] =='save successful'}">        
         <script language="javascript">
@@ -1018,7 +1106,22 @@
         $('.datemask').mask('0000-00-00');
         $('.date').datetimepicker();
         $(".money").mask('000,000,000.00', {reverse: true});
-        
+//        $(".moneyformat").mask('000,000,000', {reverse: true});
+        $("#receiveNo").keyup(function (event) {
+            if(event.keyCode === 13){
+               searchReceiveNo();
+            }
+        });
+        $("#invoiceNo").keyup(function (event) {
+            if(event.keyCode === 13){
+               searchInvoice();
+            }
+        });
+        $("#refNo").keyup(function (event) {
+            if(event.keyCode === 13){
+               searchRefNo();
+            }
+        });
         $("#searchPaymentNoAir").keyup(function (event) {
             if(event.keyCode === 13){
                searchPaymentNoAir();
@@ -1102,21 +1205,11 @@
             "bLengthChange": false,
             "iDisplayLength": 10
         });
-
-        $( ".numerical" ).on('input', function() { 
-            var value=$(this).val().replace(/[^0-9.,]*/g, '');
-            value=value.replace(/\.{2,}/g, '.');
-            value=value.replace(/\.,/g, ',');
-            value=value.replace(/\,\./g, ',');
-            value=value.replace(/\,{2,}/g, ',');
-            value=value.replace(/\.[0-9]+\./g, '.');
-            $(this).val(value)
-        });
-
+        
         // +++++++++++++++++++++ Product Table +++++++++++++++++++++ //
         AddRowProduct(parseInt($("#counter").val()));
         
-        $('#ReceiptListTable tbody tr:last td .input-group-addon').click(function() {  
+        $('#ReceiptListTable tbody tr:last td .input-group-addon').click(function(){  
             AddRowProduct(parseInt($("#counter").val()));
         });
         
@@ -1197,49 +1290,102 @@
             $(this).parent().removeClass("show");
             $(this).parent().addClass("hide");
         });
+        
+        
+        //set format money
+        $("#withTax").focusout(function(){
+            setFormatCurrencyReceipt();
+        }); 
+        $("#cashAmount").focusout(function(){
+            setFormatCurrencyReceipt();
+        }); 
+        $("#cashMinusAmount").focusout(function(){
+            setFormatCurrencyReceipt();
+        }); 
+        $("#bankTransfer").focusout(function(){
+            setFormatCurrencyReceipt();
+        }); 
+        $("#chqAmount1").focusout(function(){
+            setFormatCurrencyReceipt();
+        }); 
+        $("#chqAmount2").focusout(function(){
+            setFormatCurrencyReceipt();
+        });
+        
+        setFormatCurrencyReceipt();       
+//        var creditlength = $("#CreditDetailTable tr").length ;
+//        var detaillength = $("#ReceiptListTable tr").length ;
+        
     });
     
-    function deletelist(id,Ccount) {
-        document.getElementById('plTableId').value = id;
-        document.getElementById('productCountDel').value = Ccount;
-        $("#delProduct").text('Are you sure delete this product ?');
-        $('#DeleteProduct').modal('show');
+    function setFormatCurrencyReceipt(){
+        var withTax = replaceAll(",","",$('#withTax').val()); 
+        if (withTax == ""){
+            withTax = 0;
+        }
+        withTax = parseFloat(withTax); 
+        document.getElementById("withTax").value = formatNumber(withTax);
+
+        if (withTax == "" || withTax == 0){
+            document.getElementById("withTax").value = "";
+        }
+        
+        var cashAmount = replaceAll(",","",$('#cashAmount').val()); 
+        if (cashAmount == ""){
+            cashAmount = 0;
+        }
+        cashAmount = parseFloat(cashAmount); 
+        document.getElementById("cashAmount").value = formatNumber(cashAmount);
+
+        if (cashAmount == "" || cashAmount == 0){
+            document.getElementById("cashAmount").value = "";
+        }
+        
+        var cashMinusAmount = replaceAll(",","",$('#cashMinusAmount').val()); 
+        if (cashMinusAmount == ""){
+            cashMinusAmount = 0;
+        }
+        cashMinusAmount = parseFloat(cashMinusAmount); 
+        document.getElementById("cashMinusAmount").value = formatNumber(cashMinusAmount);
+
+        if (cashMinusAmount == "" || cashMinusAmount == 0){
+            document.getElementById("cashMinusAmount").value = "";
+        }
+        
+        var bankTransfer = replaceAll(",","",$('#bankTransfer').val()); 
+        if (bankTransfer == ""){
+            bankTransfer = 0;
+        }
+        bankTransfer = parseFloat(bankTransfer); 
+        document.getElementById("bankTransfer").value = formatNumber(bankTransfer);
+
+        if (bankTransfer == "" || bankTransfer == 0){
+            document.getElementById("bankTransfer").value = "";
+        }
+        
+        var chqAmount1 = replaceAll(",","",$('#chqAmount1').val()); 
+        if (chqAmount1 == ""){
+            chqAmount1 = 0;
+        }
+        chqAmount1 = parseFloat(chqAmount1); 
+        document.getElementById("chqAmount1").value = formatNumber(chqAmount1);
+
+        if (chqAmount1 == "" || chqAmount1 == 0){
+            document.getElementById("chqAmount1").value = "";
+        }
+        
+        var chqAmount2 = replaceAll(",","",$('#chqAmount2').val()); 
+        if (chqAmount2 == ""){
+            chqAmount2 = 0;
+        }
+        chqAmount2 = parseFloat(chqAmount2); 
+        document.getElementById("chqAmount2").value = formatNumber(chqAmount2);
+
+        if (chqAmount2 == "" || chqAmount2 == 0){
+            document.getElementById("chqAmount2").value = "";
+        }
     }
     
-//    function DeleteRowProduct(){
-//        var cCount = document.getElementById('productCountDel').value;
-//        var id = document.getElementById('plTableId').value;
-//        
-//        if(id === ''){
-//            $("#receiveProduct" + cCount).parent().parent().remove();
-//            var rowAll = $("#ReceiptListTable tr").length;
-//            if (rowAll <= 1) {
-//                $("#tr_ProductDetailAddRow").removeClass("hide");
-//                $("#tr_ProductDetailAddRow").addClass("show");
-//            }
-//            
-//        } else {
-//            $.ajax({
-//                url: 'PaymentTourHotel.smi?action=deleteProductDetail',
-//                type: 'get',
-//                data: {ProductDetail: id},
-//                success: function () {
-//                    $("#receiveProduct" + cCount).parent().parent().remove();
-//                    var rowAll = $("#ReceiptListTable tr").length;
-//                    if (rowAll <= 1) {
-//                        $("#tr_ProductDetailAddRow").removeClass("hide");
-//                        $("#tr_ProductDetailAddRow").addClass("show");
-//                    }
-//                },
-//                error: function () {
-//                    console.log("error");
-//                    result =0;
-//                }
-//            }); 
-//        }    
-//        $('#DeleteProduct').modal('hide');
-//        CalculateGrandTotal('');
-//    }
     function printReceiptNew() {
         window.open("report.smi?name=ReceiptEmail");
     }
@@ -1248,9 +1394,7 @@
         window.open("report.smi?name=ReceiptReport");
     }
     
-    function AddRowProduct(row) {
-//        var idRole = '${idRole}';
-//        if((idRole === '22') || (idRole === '1')){                  
+    function AddRowProduct(row) {           
             $("#ReceiptListTable tbody").append(
                 '<tr style="higth 100px">' +
                 '<input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >' +
@@ -1265,14 +1409,13 @@
                 '<td align="center">' +
                 '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" onclick="handleClick(this,'+row+')" value="">' +
                 '</td>' +
-                '<td><input id="receiveVat' + row + '" name="receiveVat' + row + '" type="text" class="form-control text-right"></td>' +
-//                '<td><input id="receiveGross' + row + '" name="receiveGross' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)"></td>' +
+                '<td><div id="receiveVat' + row + '" style="display:none" ></div></td>' +
                 '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)"></td>' +
                 '<td>' + 
                 '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="">---------</option></select>' +                          
                 '</td>' +
                 '<td class="text-center">' +
-                '<a class="remCF" onclick="deletelist(\'\', \''+row+'\')">  '+
+                '<a class="remCF" onclick="deleteReceiptList(\'\', \''+row+'\')">  '+
                 '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
                 '</tr>'
             );
@@ -1296,9 +1439,12 @@ function handleClick(cb,row) {
   if(cb.checked){
     $("#receiveIsVat" + row).val("1");  
     $("#receiveVat" + row).val($("#vatValue").val());
+    document.getElementById('receiveVat'+row).style.display = 'block';
+    document.getElementById('receiveVat'+row).innerHTML = $("#vatValue").val();
   }else{
     $("#receiveIsVat" + row).val("0"); 
     $("#receiveVat" + row).val("");
+    document.getElementById('receiveVat'+row).style.display = 'none';
   }
 }
 
@@ -1373,8 +1519,6 @@ function setFormatCurrency(row){
 }
 
 function AddRowCredit(row) {
-//        var idRole = '${idRole}';
-//        if((idRole === '22') || (idRole === '1')){                  
         $("#CreditDetailTable tbody").append(
             '<tr style="higth 100px">' +
             '<input id="tableCreditId' + row + '" name="tableCreditId' + row + '"  type="hidden" >' +
@@ -1385,7 +1529,7 @@ function AddRowCredit(row) {
             '<td><div class="input-group date"><input id="creditExpired'+row+'" name="creditExpired'+row+'"  type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value=""><span class="input-group-addon spandate" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span></div></td>' +
             '<td><input id="creditAmount' + row + '" name="creditAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)"></td>' +
             '<td class="text-center">' +
-            '<a class="remCF" onclick="deletelist(\'\', \''+row+'\')">  '+
+            '<a class="remCF" onclick="deleteCreditList(\'\', \''+row+'\')">  '+
             '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
             '</tr>'
         );
@@ -1499,7 +1643,7 @@ function CallAjaxSearchInvoice(param) {
                     }else{
                         $('#InvoiceListTable').dataTable().fnClearTable();
                         $('#InvoiceListTable').dataTable().fnDestroy();
-                        $("#InvoiceListTable tbody").append(msg);
+                        $("#InvoiceListTable tbody").empty().append(msg);
                         
                         document.getElementById("receiveFromCode").value = $("#receiveFromInvoice").val();
                         document.getElementById("receiveFromName").value = $("#receiveNameInvoice").val();
@@ -1547,13 +1691,13 @@ function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,cur
         '<td align="center">' +
         '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" onclick="handleClick(this,'+row+')" value="'+isVat+'">' +
         '</td>' +
-        '<td><input id="receiveVat' + row + '" name="receiveVat' + row + '" type="text" class="form-control text-right" value="'+vat+'"></td>' +
+        '<td><div id="receiveVat' + row + '" style="display:none" ></div></td>' +
         '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)" value="'+amount+'"></td>' +
         '<td>' + 
         '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="'+currency+'"></option></select>' +                           
         '</td>' +
         '<td class="text-center">' +
-        '<a class="remCF" onclick="deletelist(\'\', \''+row+'\')">  '+
+        '<a class="remCF" onclick="deleteReceiptList(\'\', \''+row+'\')">  '+
         '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
         '</tr>'
     );
@@ -1564,6 +1708,8 @@ function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,cur
     if (isvat === '1')
     {
         $('#receiveIsVat'+row).prop('checked', true);
+        document.getElementById('receiveVat'+row).style.display = 'block';
+        document.getElementById('receiveVat'+row).innerHTML = $("#vatValue").val();
     }
     if (isvat === '0')
     {
@@ -1604,6 +1750,10 @@ function searchReceiveNo(){
 function saveReceipt(){
     var action = document.getElementById('action');
     action.value = 'saveReceipt';
+    var counter = document.getElementById('counter');
+    counter.value = $("#ReceiptListTable tr").length;
+    var countRowCredit = document.getElementById('countRowCredit');
+    countRowCredit.value = $("#CreditDetailTable tr").length;
 }
 
 function searchRefNo() {
@@ -1805,4 +1955,105 @@ function CallAjaxSearchPaymentNoTour(param) {
     }
 }
 
+function deleteReceiptList(id,Ccount) {
+    document.getElementById('receiptDetailIdDelete').value = id;
+    document.getElementById('receiptRowDelete').value = Ccount;
+    $("#delProduct").text('Are you sure delete this product ?');
+    $('#DeleteProduct').modal('show');
+}
+
+function DeleteRowProduct(){
+    var cCount = document.getElementById('receiptRowDelete').value;
+    var id = document.getElementById('receiptDetailIdDelete').value;
+    if(id === ''){
+        $("#receiveProduct" + cCount).parent().parent().remove();
+        var rowAll = $("#ReceiptListTable tr").length;
+        if (rowAll <= 1) {
+            $("#tr_ProductDetailAddRow").removeClass("hide");
+            $("#tr_ProductDetailAddRow").addClass("show");
+        }
+    } 
+    else {
+        $.ajax({
+            url: '${callPage}?action=deleteReceiptDetail',
+            type: 'get',
+            data: {receiptDetailIdDelete: id},
+            success: function () {
+                $("#receiveProduct" + cCount).parent().parent().remove();
+                var rowAll = $("#ReceiptListTable tr").length;
+                if (rowAll <= 1) {
+                    $("#tr_ProductDetailAddRow").removeClass("hide");
+                    $("#tr_ProductDetailAddRow").addClass("show");
+                }
+            },
+            error: function () {
+                console.log("error");
+                result =0;
+            }
+        }); 
+    }    
+    $('#DeleteProduct').modal('hide');
+}
+
+function deleteCreditList(id,Ccount) {
+    document.getElementById('receiptCreditIdDelete').value = id;
+    document.getElementById('receiptCreditRowDelete').value = Ccount;
+    $("#delCredit").text('Are you sure delete this credit ?');
+    $('#DeleteReceiptCredit').modal('show');
+}
+
+function DeleteRowCredit(){
+    var cCount = document.getElementById('receiptCreditRowDelete').value;
+    var id = document.getElementById('receiptCreditIdDelete').value;
+    if(id === ''){
+        $("#creditBank" + cCount).parent().parent().remove();
+        var rowAll = $("#CreditDetailTable tr").length;
+        if (rowAll <= 1) {
+            $("#tr_CreditDetailAddRow").removeClass("hide");
+            $("#tr_CreditDetailAddRow").addClass("show");
+        }
+    } 
+    else {
+        $.ajax({
+            url: '${callPage}?action=deleteReceiptCredit',
+            type: 'get',
+            data: {receiptCreditIdDelete: id},
+            success: function () {
+                $("#creditBank" + cCount).parent().parent().remove();
+                var rowAll = $("#CreditDetailTable tr").length;
+                if (rowAll <= 1) {
+                    $("#tr_CreditDetailAddRow").removeClass("hide");
+                    $("#tr_CreditDetailAddRow").addClass("show");
+                }
+            },
+            error: function () {
+                console.log("error");
+                result =0;
+            }
+        }); 
+    }    
+    $('#DeleteReceiptCredit').modal('hide');
+}
+
+function DisableVoidReceipt(){
+    var receiveNo = document.getElementById('receiveNo');
+    document.getElementById('disableVoid').innerHTML = "Are you sure to delete booking other : " + receiveNo.value + " ?";
+}
+
+function EnableVoidReceipt(){
+    var receiveNo = document.getElementById('receiveNo');
+    document.getElementById('enableVoid').innerHTML = "Are you sure to enable booking other : " + receiveNo.value + " ?";
+}
+
+function Enable() {
+    var action = document.getElementById('action');
+    action.value = 'enableVoid';
+    document.getElementById('ReceiptForm').submit();
+}
+
+function DisableReceipt() {
+    var action = document.getElementById('action');
+    action.value = 'disableVoid';
+    document.getElementById('ReceiptForm').submit();
+}
 </script>

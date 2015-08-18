@@ -1,5 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties. 11
+ * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -812,7 +812,7 @@ public class AJAXBean extends AbstractBean implements
                             "<input type='hidden' name='receiveNameInvoice' id='receiveNameInvoice' value='"+receiveName+"'>" +
                             "<input type='hidden' name='receiveAddressInvoice' id='receiveAddressInvoice' value='"+receiveAddress+"'>" +
                             "<input type='hidden' name='arcodeInvoice' id='arcodeInvoice' value='"+arcode+"'>" +
-                            "<td class='hidden'>"+invoice.getId()+"</td>"+
+                            "<input type='hidden' name='invoiceId' id='invoiceId' value='"+invoice.getId()+"'>" +
                             "<td class='text-center'>"+No+"</td>"+
                             "<td>"+description+"</td>"+
                             "<td class='money'>"+amount+"</td>"+
@@ -820,6 +820,16 @@ public class AJAXBean extends AbstractBean implements
                             "<td><center><a href=\"\"><span onclick=\"addProduct('"+product+"','"+description+"','"+cost+"','"+cur+"','"+isVat+"','"+vat+"','"+amount+"','"+currency+"','"+invId+"')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>" +
                             "</tr>";
                 html.append(newrow);
+            }else{
+                String newrow = "";
+                newrow +=   "<tr>"+
+                            "<input type='hidden' name='receiveFromInvoice' id='receiveFromInvoice' value='"+receiveFrom+"'>" +
+                            "<input type='hidden' name='receiveNameInvoice' id='receiveNameInvoice' value='"+receiveName+"'>" +
+                            "<input type='hidden' name='receiveAddressInvoice' id='receiveAddressInvoice' value='"+receiveAddress+"'>" +
+                            "<input type='hidden' name='arcodeInvoice' id='arcodeInvoice' value='"+arcode+"'>" +
+                            "</tr>";
+                html.append(newrow);
+            
             }
         }
         return html.toString();
@@ -1316,7 +1326,11 @@ public class AJAXBean extends AbstractBean implements
         BigDecimal resultCost = new BigDecimal(0);
         
         List<ReceiptDetail> receiptDetailList = receiptdao.getReceiptDetailFromInvDetailId(invDetailId);
-        System.out.println("receiptDetailList size" + receiptDetailList.size());
+        if (receiptDetailList == null || receiptDetailList.size() == 0) {
+            value[0] = resultCost;
+            value[1] = resultAmount;
+            return value;
+        }
         for (int i = 0; i < receiptDetailList.size(); i++) {
             cost = receiptDetailList.get(i).getCost();
             amount = receiptDetailList.get(i).getAmount();

@@ -1,5 +1,5 @@
 package com.smi.travel.datalayer.entity;
-// Generated Jul 20, 2015 5:52:41 PM by Hibernate Tools 4.3.1 111
+// Generated Jul 20, 2015 5:52:41 PM by Hibernate Tools 4.3.1
 
 
 import java.math.BigDecimal;

@@ -6,7 +6,6 @@ import com.smi.travel.datalayer.entity.MCreditBank;
 import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MDefaultData;
 import com.smi.travel.datalayer.entity.MFinanceItemstatus;
-import com.smi.travel.datalayer.entity.MItemstatus;
 import com.smi.travel.datalayer.entity.Receipt;
 import com.smi.travel.datalayer.entity.ReceiptCredit;
 import com.smi.travel.datalayer.entity.ReceiptDetail;
@@ -17,7 +16,6 @@ import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,12 +37,15 @@ public class ReceiptController extends SMITravelController {
     private static final String MSTATUSLIST = "statusList";
     private static final String MCREDITBANKLIST = "creditBankList";
     private static final String PRODUCTROWCOUNT = "productRowCount";
+    private static final String CREDITROWCOUNT = "creditRowCount";
     private static final String RECEIPT = "receipt"; // search receive no from Receipt table
-    private static final String SELECTEDRECEIPT = "SelectedReceive"; // search receive no from Receipt table 1111
+    private static final String RECEIPTDETAILLIST = "receiptDetailList"; // search receive no from Receipt Detail table
+    private static final String RECEIPTCREDITLIST = "receiptCreditList"; // search receive no from Receipt Credit table
     private static final String SAVERESULT = "saveresult"; // save result
     private static final String RECEIVEDATE = "receiveFromDate";
     private static final String CHQDATE1 = "chqDate1";
     private static final String CHQDATE2 = "chqDate2";
+    private static final String DELETERESULT = "deleteresult";
     private UtilityService utilityService;
     private ReceiptService receiptService;
     UtilityFunction util;
@@ -57,9 +58,7 @@ public class ReceiptController extends SMITravelController {
         String callPageFrom = utilty.getAddressUrl(request.getRequestURI()).replaceAll("Receipt", "");//request.getParameter("type");
         String callPage = utilty.getAddressUrl(request.getRequestURI());//request.getParameter("type");
         String paymentNo = request.getParameter("paymentNo");
-        //Attribute Invoice
         System.out.println("callPageFrom : "+callPageFrom);
-        
         String receiveId = request.getParameter("receiveId");
         String receiveNo = request.getParameter("receiveNo");
         String inputDate = request.getParameter("inputDate");
@@ -101,6 +100,18 @@ public class ReceiptController extends SMITravelController {
         }
         util = new UtilityFunction();
         String result = "";
+        request.setAttribute(PRODUCTROWCOUNT, "0");
+        request.setAttribute(CREDITROWCOUNT, "0");
+        //Role User
+        String roleName = user.getRole().getName();
+        System.out.println("roleName"+roleName);
+        if("Finance Manager".equals(roleName)){
+            roleName = "YES";
+            request.setAttribute("roleName", roleName);
+        }else{
+            roleName = "NO";
+            request.setAttribute("roleName", roleName);
+        }
         
         if("new".equalsIgnoreCase(action)){
 
@@ -108,10 +119,26 @@ public class ReceiptController extends SMITravelController {
             
         }else if ("searchReceiveNo".equalsIgnoreCase(action)) {
             Receipt receipt = new Receipt();
-            receipt = receiptService.getReceiptfromReceiptNo(receiveNo);
-            request.setAttribute(RECEIPT,receipt);
-            request.setAttribute(RECEIVEDATE,receipt.getRecDate());
-            
+            if(receiveNo != null || !"".equals(receiveNo)){
+                receipt = receiptService.getReceiptfromReceiptNo(receiveNo);
+                if(receipt != null) {
+                    if(!receipt.getId().isEmpty()){
+                        List<ReceiptDetail> receiptDetailList = receiptService.getReceiptDetailFromReceiptId(receipt.getId());
+                        List<ReceiptCredit> receiptCreditList = receiptService.getReceiptCreditFromReceiptId(receipt.getId());
+                        request.setAttribute(RECEIPTDETAILLIST,receiptDetailList);
+                        request.setAttribute(RECEIPTCREDITLIST,receiptCreditList);
+                        if(receiptDetailList != null){
+                        request.setAttribute(PRODUCTROWCOUNT, receiptDetailList.size()+1);
+                        }
+                        if(receiptCreditList != null){
+                        request.setAttribute(CREDITROWCOUNT, receiptCreditList.size()+1);
+                        }
+                    }
+
+                    request.setAttribute(RECEIPT,receipt);
+                    request.setAttribute(RECEIVEDATE,receipt.getRecDate());
+                }
+            }
         }else if ("saveReceipt".equalsIgnoreCase(action)) {
             Receipt receipt = new Receipt();
             receipt.setId(receiveId);
@@ -122,6 +149,7 @@ public class ReceiptController extends SMITravelController {
             int rowsCredit = Integer.parseInt(countRowCredit);
             
             System.out.println("rowsProduct " + rowsProduct);
+            System.out.println("rowsCredit " + rowsCredit);
                 //save or update payment air ticket fare
             if(receipt.getReceiptDetails() == null){
                 receipt.setReceiptDetails(new ArrayList<ReceiptDetail>());
@@ -165,14 +193,18 @@ public class ReceiptController extends SMITravelController {
                 }
                 receiptDetail.setVat(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(receiveVat) ? receiveVat.replaceAll(",","") : 0)));
                 receiptDetail.setAmount(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(receiveAmount) ? receiveAmount.replaceAll(",","") : 0)));
+                
                 receiptDetail.setCurAmount(receiveCurrency);
 
-                if(receiveProduct.isEmpty() && receiveDes.isEmpty() && receiveCost.isEmpty() && receiveCurCost.isEmpty()
-                    && receiveVat.isEmpty() && receiveAmount.isEmpty() && receiveCurrency.isEmpty()){
-                    System.out.println("not save");
-                }else{
+                if( (receiveProduct!="" && receiveProduct!=null) || 
+                    (receiveDes!="" && receiveDes!=null) || 
+                    (receiveCost!="" && receiveCost!=null) || 
+                    (receiveCurCost!="" && receiveCurCost!=null) || 
+                    (receiveAmount!="" && receiveAmount!=null) || 
+                    (receiveCurrency!="" && receiveCurrency!=null)){
                     receipt.getReceiptDetails().add(receiptDetail);
                 }
+
             }
             
             if(receipt.getReceiptCredits() == null){
@@ -194,12 +226,15 @@ public class ReceiptController extends SMITravelController {
                 }
                 receiptCredit.setCreditNo(creditNo);
                 receiptCredit.setCreditExpire(util.convertStringToDate(creditExpired != "" ? creditExpired : ""));
-                receiptCredit.setCreditAmount(Long.valueOf(String.valueOf(StringUtils.isNotEmpty(creditAmount) ? creditAmount.replaceAll(",","") : 0)));
-                if(creditBank.isEmpty() && creditNo.isEmpty() && creditExpired.isEmpty() && creditAmount.isEmpty()){
-                    System.out.println("not save");
-                }else{
+                receiptCredit.setCreditAmount(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(creditAmount) ? creditAmount.replaceAll(",","") : 0)));
+                if( (creditBank!="" && creditBank!=null) || 
+                    (creditNo!="" && creditNo!=null) || 
+                    (creditExpired!="" && creditExpired!=null) || 
+                    (creditAmount!="" && creditAmount!=null)){
+                    
                     receipt.getReceiptCredits().add(receiptCredit);
                 }
+
             }
             
             receipt.setId(receiveId);
@@ -258,6 +293,89 @@ public class ReceiptController extends SMITravelController {
             request.setAttribute(RECEIVEDATE,receiveFromDate);
             request.setAttribute(CHQDATE1,chqDate1);
             request.setAttribute(CHQDATE2,chqDate2);
+            
+            List<ReceiptDetail> receiptDetailList = receiptService.getReceiptDetailFromReceiptId(receipt.getId());
+            List<ReceiptCredit> receiptCreditList = receiptService.getReceiptCreditFromReceiptId(receipt.getId());
+            request.setAttribute(RECEIPTDETAILLIST,receiptDetailList);
+            request.setAttribute(RECEIPTCREDITLIST,receiptCreditList);
+            if(receiptDetailList != null){
+                request.setAttribute(PRODUCTROWCOUNT, receiptDetailList.size());
+            }
+            if(receiptCreditList != null){
+                request.setAttribute(CREDITROWCOUNT, receiptCreditList.size());
+            }
+        }else if("deleteReceiptDetail".equalsIgnoreCase(action)) {
+            String receiptDetailIdDelete = request.getParameter("receiptDetailIdDelete");
+            System.out.println("receiptDetailIdDelete ::: "+ receiptDetailIdDelete);
+            result = receiptService.DeleteReceiptDetail(receiptDetailIdDelete, "");
+            if (result == "success"){
+                request.setAttribute(DELETERESULT, "delete successful");
+            } else {
+                request.setAttribute(DELETERESULT, "delete unsuccessful");
+            }
+        }else if("deleteReceiptCredit".equalsIgnoreCase(action)) {
+            String receiptCreditIdDelete = request.getParameter("receiptCreditIdDelete");
+            System.out.println("receiptCreditIdDelete ::: "+ receiptCreditIdDelete);
+            result = receiptService.DeleteReceiptChq(receiptCreditIdDelete, "");
+            if (result == "success"){
+                request.setAttribute(DELETERESULT, "delete successful");
+            } else {
+                request.setAttribute(DELETERESULT, "delete unsuccessful");
+            }
+        }else if("disableVoid".equals(action)){
+            result = receiptService.UpdateFinanceStatusReceipt(receiveId, 2);
+            if (result == "success"){
+                request.setAttribute("result", "void");
+            }
+            Receipt receipt = new Receipt();
+            if(receiveNo != null || !"".equals(receiveNo)){
+                receipt = receiptService.getReceiptfromReceiptNo(receiveNo);
+                if(receipt != null) {
+                    if(!receipt.getId().isEmpty()){
+                        List<ReceiptDetail> receiptDetailList = receiptService.getReceiptDetailFromReceiptId(receipt.getId());
+                        List<ReceiptCredit> receiptCreditList = receiptService.getReceiptCreditFromReceiptId(receipt.getId());
+                        request.setAttribute(RECEIPTDETAILLIST,receiptDetailList);
+                        request.setAttribute(RECEIPTCREDITLIST,receiptCreditList);
+                        if(receiptDetailList != null){
+                        request.setAttribute(PRODUCTROWCOUNT, receiptDetailList.size()+1);
+                        }
+                        if(receiptCreditList != null){
+                        request.setAttribute(CREDITROWCOUNT, receiptCreditList.size()+1);
+                        }
+                    }
+
+                    request.setAttribute(RECEIPT,receipt);
+                    request.setAttribute(RECEIVEDATE,receipt.getRecDate());
+                }
+            }
+            
+        }else if("enableVoid".equals(action)){
+            result = receiptService.UpdateFinanceStatusReceipt(receiveId, 1);
+            if (result == "success"){
+                request.setAttribute("result", "cancelvoid");
+            }
+            
+            Receipt receipt = new Receipt();
+            if(receiveNo != null || !"".equals(receiveNo)){
+                receipt = receiptService.getReceiptfromReceiptNo(receiveNo);
+                if(receipt != null) {
+                    if(!receipt.getId().isEmpty()){
+                        List<ReceiptDetail> receiptDetailList = receiptService.getReceiptDetailFromReceiptId(receipt.getId());
+                        List<ReceiptCredit> receiptCreditList = receiptService.getReceiptCreditFromReceiptId(receipt.getId());
+                        request.setAttribute(RECEIPTDETAILLIST,receiptDetailList);
+                        request.setAttribute(RECEIPTCREDITLIST,receiptCreditList);
+                        if(receiptDetailList != null){
+                        request.setAttribute(PRODUCTROWCOUNT, receiptDetailList.size()+1);
+                        }
+                        if(receiptCreditList != null){
+                        request.setAttribute(CREDITROWCOUNT, receiptCreditList.size()+1);
+                        }
+                    }
+
+                    request.setAttribute(RECEIPT,receipt);
+                    request.setAttribute(RECEIVEDATE,receipt.getRecDate());
+                }
+            }
         }
         
         setResponseAttribute(request);
@@ -280,10 +398,6 @@ public class ReceiptController extends SMITravelController {
 //        request.setAttribute(MSTATUSLIST, mItemstatuses); //statusList
         List<MAccpay> mAccpays = utilityService.getListMAccpay();
         request.setAttribute(MSTATUSLIST, mAccpays); //statusList
-
-        
-        
-        request.setAttribute(PRODUCTROWCOUNT, "0");
         
     }
 
