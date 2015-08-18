@@ -19,8 +19,8 @@
         <property name="creditExpire" type="date">
             <column name="credit_expire" length="10" />
         </property>
-        <property name="creditAmount" type="java.lang.Long">
-            <column name="credit_amount" precision="10" scale="0" />
+        <property name="creditAmount" type="big_decimal">
+            <column name="credit_amount" precision="10" />
         </property>
     </class>
 </hibernate-mapping>

@@ -16,16 +16,18 @@ public class CreditNoteDetail  {
      private CreditNote creditNote;
      private String description;
      private BigDecimal amount;
+     private BigDecimal vat;
 
     public CreditNoteDetail() {
     }
 
-    public CreditNoteDetail(TaxInvoice taxInvoice, MProductType MProductType, CreditNote creditNote, String description, BigDecimal amount) {
+    public CreditNoteDetail(TaxInvoice taxInvoice, MProductType MProductType, CreditNote creditNote, String description, BigDecimal amount,BigDecimal vat) {
        this.taxInvoice = taxInvoice;
        this.MProductType = MProductType;
        this.creditNote = creditNote;
        this.description = description;
        this.amount = amount;
+       this.vat = vat;
     }
    
     public String getId() {
@@ -69,6 +71,14 @@ public class CreditNoteDetail  {
     
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public BigDecimal getVat() {
+        return vat;
+    }
+
+    public void setVat(BigDecimal vat) {
+        this.vat = vat;
     }
 
 

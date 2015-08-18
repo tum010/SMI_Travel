@@ -7,6 +7,7 @@
 package com.smi.travel.datalayer.dao;
 
 import com.smi.travel.datalayer.entity.Receipt;
+import com.smi.travel.datalayer.entity.ReceiptCredit;
 import com.smi.travel.datalayer.entity.ReceiptDetail;
 import java.util.HashMap;
 import java.util.List;
@@ -29,5 +30,6 @@ public interface ReceiptDao {
     public String DeleteReceiptChq(String receiptCreditId , String receiptId); // delete table ReceiptCredit
     
     public List<ReceiptDetail> getReceiptDetailFromInvDetailId(String invDetailId);
-    
+    public List<ReceiptDetail> getReceiptDetailFromReceiptId(String receiptId);
+    public List<ReceiptCredit> getReceiptCreditFromReceiptId(String receiptId);
 }

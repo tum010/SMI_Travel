@@ -1,18 +1,17 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
+ * To change this license header, choose License Headers in Project Properties. 
  * To change this template file, choose Tools | Templates 
  * and open the template in the editor.
  */
 
 package com.smi.travel.datalayer.dao.impl;
 
-import com.lowagie.text.pdf.PdfName;
 import com.smi.travel.datalayer.dao.ReceiptDao;
-import com.smi.travel.datalayer.entity.MRunningCode;
 import com.smi.travel.datalayer.entity.Receipt;
 import com.smi.travel.datalayer.entity.ReceiptCredit;
 import com.smi.travel.datalayer.entity.ReceiptDetail;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -55,16 +54,23 @@ import org.hibernate.Transaction;
     @Override
     public String UpdateFinanceStatusReceipt(String receiptId, int status) {
         String result = "";
+        int resulttemp = 0 ;
         Session session = this.sessionFactory.openSession();
-        Query query = session.createQuery("UPDATE Receipt rec set rec.MFinanceItemstatus.id = :status  WHERE rec.id = :receiptId");
-        query.setParameter("receiptId", receiptId);
-        query.setParameter("status", status);
-        int results = query.executeUpdate();    
-        System.out.println("results :: " + results + " ///");
-        if(results == 1){
-            result = "";
+        
+        try {
+            Query query = session.createQuery("UPDATE Receipt rec set rec.MFinanceItemstatus.id = :status  WHERE rec.id = :receiptId");
+            query.setParameter("receiptId", receiptId);
+            query.setParameter("status", String.valueOf(status));
+            resulttemp = query.executeUpdate();    
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            resulttemp = 0;
+        }
+        System.out.println("resulttemp :: " + resulttemp + " ///");
+        if(resulttemp == 1){
+            result = "success";
         }else{
-            result = "";
+            result = "fail";
         }
         session.close();
         this.sessionFactory.close();
@@ -146,7 +152,8 @@ import org.hibernate.Transaction;
             List<ReceiptDetail> receiptDetails = receipt.getReceiptDetails();
             if(receiptDetails != null){
                 for(int i = 0; i < receiptDetails.size(); i++){
-                    if(receiptDetails.get(i).getId() == null){
+                    System.out.println(" receiptDetails.get(i).getId() " + receiptDetails.get(i).getId());
+                    if(receiptDetails.get(i).getId() == null || "".equals(receiptDetails.get(i).getId())){
                         session.save(receiptDetails.get(i));
                     } else {
                         session.update(receiptDetails.get(i));
@@ -157,9 +164,11 @@ import org.hibernate.Transaction;
             List<ReceiptCredit> receiptCredit = receipt.getReceiptCredits();
             if(receiptCredit != null){
                 for(int i = 0; i < receiptCredit.size(); i++){
-                    if(receiptCredit.get(i).getId() == null){
+                    System.out.println(" receiptCredit.get(i).getId() " + receiptCredit.get(i).getId());
+                    if(receiptCredit.get(i).getId() == null || "".equals(receiptCredit.get(i).getId())){
                         session.save(receiptCredit.get(i));
                     } else {
+                        System.out.println(" session.update(receiptCredit.get(i)) ");
                         session.update(receiptCredit.get(i));
                     }             
                 }
@@ -235,22 +244,179 @@ import org.hibernate.Transaction;
     
     @Override
     public String DeleteReceiptDetail(String receiptDetailId , String receiptId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String result = "";
+        ReceiptDetail receiptDetail = new ReceiptDetail();
+        List<ReceiptDetail> receiptDetailList = new ArrayList<ReceiptDetail>();
+        Session session = this.sessionFactory.openSession();
+        if(receiptId.isEmpty()){
+            String query = "from ReceiptDetail d where d.id = :receiptDetailId";
+            receiptDetailList = session.createQuery(query).setParameter("receiptDetailId", receiptDetailId).list();
+            System.out.println(" Delete ReceiptDetailList size (1) "+receiptDetailList.size());
+            if (receiptDetailList.isEmpty()) {
+                return null;
+            }else{
+                receiptDetail =  receiptDetailList.get(0);
+                try {
+                    transaction = session.beginTransaction();
+                    session.delete(receiptDetail);
+                    transaction.commit();
+                    result = "success";
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    result = "fail";
+                }
+            }
+        } else { 
+            String query = "from ReceiptDetail d where d.id = :receiptDetailId and d.receipt.id =:receiptId ";
+            receiptDetailList = session.createQuery(query).setParameter("receiptDetailId", receiptDetailId).setParameter("receiptId", receiptId).list();
+            System.out.println(" Delete ReceiptDetailList size "+receiptDetailList.size());
+            if (receiptDetailList.isEmpty()) {
+                return null;
+            }else{
+                for(int i = 0; i < receiptDetailList.size(); i++){
+                    receiptDetail = receiptDetailList.get(i);
+                    try {
+                        transaction = session.beginTransaction();
+                        session.delete(receiptDetail);
+                        transaction.commit();
+                        result = "success";
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        result = "fail";
+                    }
+                }
+            }
+        }
+        session.close();
+        this.sessionFactory.close();
+        return result;
     }
 
     @Override
     public String DeleteReceiptBank(String receiptId, int index) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String result = "";
+        String query = "";
+        Receipt receipt = new Receipt();
+        List<Receipt> receiptList = new ArrayList<Receipt>();
+        Session session = this.sessionFactory.openSession();
+        query = "from Receipt rec where rec.id = :receiptId";
+        receiptList = session.createQuery(query).setParameter("receiptId", receiptId).list();
+        if (receiptList.isEmpty()) {
+            return null;
+        }else{
+            receipt =  receiptList.get(0);
+            if(index == 1){
+                receipt.setChqBank1(null);
+                receipt.setChqAmount1(null);
+                receipt.setChqDate1(null);
+                receipt.setChqNo1(null);
+            }else if(index == 2){
+                receipt.setChqBank2(null);
+                receipt.setChqAmount2(null);
+                receipt.setChqDate2(null);
+                receipt.setChqNo2(null);
+            }
+            try {
+                transaction = session.beginTransaction();
+                session.update(receipt);
+                transaction.commit();
+                result = "success";
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                result = "fail";
+            }
+        }
+        session.close();
+        this.sessionFactory.close();
+        return result;
     }
 
     @Override
     public String DeleteReceiptChq(String receiptCreditId , String receiptId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String result = "";
+        ReceiptCredit receiptCredit = new ReceiptCredit();
+        List<ReceiptCredit> receiptCreditList = new ArrayList<ReceiptCredit>();
+        Session session = this.sessionFactory.openSession();
+        if(receiptId.isEmpty() || "".equals(receiptId)){
+            String query = "from ReceiptCredit c where c.id = :receiptCreditId";
+            receiptCreditList = session.createQuery(query).setParameter("receiptCreditId", receiptCreditId).list();
+            System.out.println(" Delete ReceiptDetailList size (1) "+receiptCreditList.size());
+            if (receiptCreditList.isEmpty()) {
+                return null;
+            }else{
+                receiptCredit =  receiptCreditList.get(0);
+                try {
+                    transaction = session.beginTransaction();
+                    session.delete(receiptCredit);
+                    transaction.commit();
+                    result = "success";
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    result = "fail";
+                }
+            }
+        } else { 
+            String query = "from ReceiptCredit c where c.id = :receiptCreditId and c.receipt.id =:receiptId ";
+            receiptCreditList = session.createQuery(query).setParameter("receiptCreditId", receiptCreditId).setParameter("receiptId", receiptId).list();
+            System.out.println(" Delete ReceiptDetailList size "+receiptCreditList.size());
+            if (receiptCreditList.isEmpty()) {
+                return null;
+            }else{
+                for(int i = 0; i < receiptCreditList.size(); i++){
+                    receiptCredit = receiptCreditList.get(i);
+                    try {
+                        transaction = session.beginTransaction();
+                        session.delete(receiptCredit);
+                        transaction.commit();
+                        result = "success";
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        result = "fail";
+                    }
+                }
+            }
+        }
+        session.close();
+        this.sessionFactory.close();
+        return result;
     }
 
+    @Override
+    public List<ReceiptDetail> getReceiptDetailFromInvDetailId(String invDetailId) {
+        Session session = this.sessionFactory.openSession();
+        List<ReceiptDetail> list = session.createQuery("from ReceiptDetail d WHERE d.invoiceDetail.id = :invDetailId").setParameter("invDetailId", invDetailId).list();
+        if(list.isEmpty()){
+            return null;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return list;
+    }
     
-    
-    
+    @Override
+    public List<ReceiptDetail> getReceiptDetailFromReceiptId(String receiptId) {
+        Session session = this.sessionFactory.openSession();
+        List<ReceiptDetail> list = session.createQuery("from ReceiptDetail d WHERE d.receipt.id = :receiptId").setParameter("receiptId", receiptId).list();
+        if(list.isEmpty()){
+            return null;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return list;
+    }
+
+    @Override
+    public List<ReceiptCredit> getReceiptCreditFromReceiptId(String receiptId) {
+        Session session = this.sessionFactory.openSession();
+        List<ReceiptCredit> list = session.createQuery("from ReceiptCredit c WHERE c.receipt.id = :receiptId").setParameter("receiptId", receiptId).list();
+        if(list.isEmpty()){
+            return null;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return list;
+    }
+
     public SessionFactory getSessionFactory() {
         return sessionFactory;
     }
@@ -267,17 +433,5 @@ import org.hibernate.Transaction;
         this.transaction = transaction;
     }
 
-    @Override
-    public List<ReceiptDetail> getReceiptDetailFromInvDetailId(String invDetailId) {
-        Session session = this.sessionFactory.openSession();
-        List<ReceiptDetail> list = session.createQuery("from ReceiptDetail d WHERE d.invoiceDetail.id = :invDetailId").setParameter("invDetailId", invDetailId).list();
-        if(list.isEmpty()){
-            return null;
-        }
-        session.close();
-        this.sessionFactory.close();
-        return list;
-    }
-    
     
 }

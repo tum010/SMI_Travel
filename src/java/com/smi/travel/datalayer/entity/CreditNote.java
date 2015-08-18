@@ -24,12 +24,13 @@ public class CreditNote  {
      private String cnRemark;
      private String apCode;
      private String invoiceType;
+     private String department;
      private List creditNoteDetails = new LinkedList<CreditNoteDetail>();
 
     public CreditNote() {
     }
 
-    public CreditNote(String createBy, Date createDate, String cnNo, Date cnDate, String cnName, String cnAddress, String cnRemark, String apCode, String invoiceType, List creditNoteDetails) {
+    public CreditNote(String createBy, Date createDate, String cnNo, Date cnDate, String cnName, String cnAddress, String cnRemark, String apCode, String invoiceType, List creditNoteDetails,String department) {
        this.createBy = createBy;
        this.createDate = createDate;
        this.cnNo = cnNo;
@@ -40,6 +41,7 @@ public class CreditNote  {
        this.apCode = apCode;
        this.invoiceType = invoiceType;
        this.creditNoteDetails = creditNoteDetails;
+       this.department = department;
     }
    
     public String getId() {
@@ -118,6 +120,14 @@ public class CreditNote  {
     
     public void setCreditNoteDetails(List creditNoteDetails) {
         this.creditNoteDetails = creditNoteDetails;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
     }
 
 

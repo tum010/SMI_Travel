@@ -125,8 +125,8 @@
                     <table id="RefundAirlineTable" class="display" cellspacing="0" width="100%">
                         <thead>
                             <tr class="datatable-header" >
-                                <th style="width:12%;">Ticket No</th>
-                                <th style="width:23%;">Sector Refund</th>
+                                <th style="width:13%;">Ticket No</th>
+                                <th style="width:22%;">Sector Refund</th>
                                 <th style="width:10%;" >Receive</th>
                                 <th style="width:9%;" >Pay</th>
                                 <th style="width:9%;" >Profit</th>

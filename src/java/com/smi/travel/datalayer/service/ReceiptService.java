@@ -1,5 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
+ * To change this license header, choose License Headers in Project Properties. 
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -7,6 +7,9 @@ package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.dao.ReceiptDao;
 import com.smi.travel.datalayer.entity.Receipt;
+import com.smi.travel.datalayer.entity.ReceiptCredit;
+import com.smi.travel.datalayer.entity.ReceiptDetail;
+import java.util.List;
 
 /**
  *
@@ -40,7 +43,13 @@ public class ReceiptService {
         return receiptDao.DeleteReceiptChq(receiptCreditId,receiptId);
     }
     
-    
+    public List<ReceiptDetail> getReceiptDetailFromReceiptId(String receiptId){
+        return receiptDao.getReceiptDetailFromReceiptId(receiptId);
+    }
+        
+    public List<ReceiptCredit> getReceiptCreditFromReceiptId(String receiptId){
+        return receiptDao.getReceiptCreditFromReceiptId(receiptId);
+    }
     
     public ReceiptDao getReceiptDao() {
         return receiptDao;
