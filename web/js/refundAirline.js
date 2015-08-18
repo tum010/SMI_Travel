@@ -1,13 +1,14 @@
 var deleteRowNo = 0;
 $(document).ready(function () {
+
+
     $(".datetime").datetimepicker({
     });
-
 //    $(".datemask").mask('0000-00-00', {reverse: true});
     addRowRefundAirlineList();
     $(".decimal").inputmask({
         alias: "decimal",
-        integerDigits: 6,
+        integerDigits: 8,
         groupSeparator: ',',
         autoGroup: true,
         digits: 2,
@@ -15,9 +16,9 @@ $(document).ready(function () {
         digitsOptional: false,
         placeholder: "0.00"
     });
-    var rr = $("[colName=refund]");
-    rr.bootstrapValidator({
-        container: 'tooltip',
+
+
+    $("#RefundAirlineForm").bootstrapValidator({
         excluded: [':disabled', ':hidden', ':not(:visible)'],
         feedbackIcons: {
             valid: 'uk-icon-check',
@@ -25,10 +26,10 @@ $(document).ready(function () {
             validating: 'uk-icon-refresh'
         },
         fields: {
-            ticketNo: {
+            refundAgentId: {
                 validators: {
                     notEmpty: {
-                        message: ' Ticket No is required'
+                        message: 'The last name is required'
                     }
                 }
             }
@@ -41,6 +42,7 @@ $(document).ready(function () {
 
     $("#refundNo").on("keyup", function (e) {
         if (e.which == 13) {
+
             var action = document.getElementById('action');
             action.value = 'search';
             document.getElementById('RefundAirlineForm').submit();
@@ -49,12 +51,21 @@ $(document).ready(function () {
 
     $("#ButtonSearch").click(function () {
 
+        if ($("#refundNo").val() === "") {
+            return;
+        }
         var action = document.getElementById('action');
         action.value = 'search';
         document.getElementById('RefundAirlineForm').submit();
     });
 
     $("#buttonSave").click(function () {
+
+        $('#RefundAirlineForm').bootstrapValidator('revalidateField', 'refundAgentId');
+
+        if ($("#refundAgentId").val() === "") {
+            return;
+        }
         var valid = true;
         for (var i = 1; i < $("#counter").val(); i++) {
             var test = $("#refund" + i);
@@ -63,7 +74,7 @@ $(document).ready(function () {
             if (sector.indexOf(refund) < 0) {
                 $("#refund" + i).css('border-color', "Red");
                 valid = false;
-            }else{
+            } else {
                 $("#refund" + i).css('border-color', "Green");
             }
         }
@@ -95,7 +106,7 @@ function addRowRefundAirlineList() {
         });
         $(".decimal").inputmask({
             alias: "decimal",
-            integerDigits: 6,
+            integerDigits: 8,
             groupSeparator: ',',
             autoGroup: true,
             digits: 2,
@@ -114,7 +125,6 @@ function addRowRefundAirlineList() {
             $("#refundAgentName").val(agent_name);
             $("#RefundAgentModal").modal('hide');
         });
-
         var agentCode = [];
         $.each(agent, function (key, value) {
             agentCode.push(value.code);
@@ -189,7 +199,7 @@ function addRowRefundAirlineList() {
                                     addRowRefundAirlineList();
                                     $(".decimal").inputmask({
                                         alias: "decimal",
-                                        integerDigits: 6,
+                                        integerDigits: 8,
                                         groupSeparator: ',',
                                         autoGroup: true,
                                         digits: 2,
@@ -225,6 +235,8 @@ function setDeletRow(el) {
 }
 
 function deleteRowRefundAirlineList() {
+    $("#alertSuccess").hide();
+    $("#alertFail").hide();
     var detailId = $("#detailId" + deleteRowNo).val();
     if ("" !== detailId) {
         console.log("call AJAX")
@@ -253,10 +265,12 @@ function deleteRowRefundAirlineList() {
                         removeAndRenameRow();
                         $("#alertTextSuccess").html("Delete success.");
                         $("#alertSuccess").show();
+                        $("#alertFail").hide();
                     } else {
                         var ticketNo = $("#ticketNo" + deleteRowNo).val();
                         $("#alertTextFail").html("TicketNo " + ticketNo + " is already use in payment airline.");
                         $("#alertFail").show();
+                        $("#alertSuccess").hide();
                         $('#DeleteRefundAirline').modal('hide');
                     }
 
