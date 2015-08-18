@@ -36,7 +36,6 @@
             <hr/>
             
             <form  method="post" id="RefundAirlineForm" name="RefundAirlineForm" role="form">
-                                                        
                 <div id="alertSuccess"  style="" class="alert alert-success alert-dismissible" role="alert" <c:if test="${successStatus != true}">hidden="true"</c:if> >
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong id="alertTextSuccess">Save Success!</strong> 
