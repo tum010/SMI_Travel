@@ -18,7 +18,7 @@
             <column name="branch" not-null="true" />
         </property>
         <property name="accNo" type="string">
-            <column name="acc_no" not-null="true" />
+            <column name="acc_no"  length="20" not-null="true" />
         </property>
         <property name="accType" type="java.lang.Integer">
             <column name="acc_type" />

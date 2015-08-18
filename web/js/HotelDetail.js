@@ -298,9 +298,10 @@ $(document).ready(function () {
         $("td").keyup(function () {
             if ($(this).find("input").val() != '') {
                 var colIndex = $(this).parent().children().index($(this));
-                var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
+                var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 1;
                 rowAll = $("#addition-table tr").length;
                 //console.log('Row: ' + rowIndex + ', Column: ' + colIndex + ', All Row ' + rowAll);
+            //    alert(rowAll +','+rowIndex);
                 if (rowIndex == rowAll) {
                     //console.log("rowIndex: " + rowIndex);
                     //console.log("rowAll : " + rowAll);
