@@ -279,6 +279,10 @@
     <bean id="ReceiptService" class="com.smi.travel.datalayer.service.ReceiptService">
         <property name="receiptDao" ref="ReceiptDetailDao" />
     </bean>
+    
+    <bean id="TaxInvoiceService" class="com.smi.travel.datalayer.service.TaxInvoiceService">
+        <property name="taxInvoiceDao" ref="TaxInvoiceDao" />
+    </bean>
 
     <!--<add data>-->
 </beans>
