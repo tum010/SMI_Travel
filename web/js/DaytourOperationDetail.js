@@ -425,7 +425,6 @@ function setGuideName(name,no){
             .append('<option value="">---------</option>')
             .val('')
         ;
-        //test
         if(name1 !== ''){
             $('#InvoiceSupGuideBill').append($('<option>', {
                 value: name1,
