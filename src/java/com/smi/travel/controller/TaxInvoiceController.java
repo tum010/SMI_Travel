@@ -61,8 +61,8 @@ public class TaxInvoiceController extends SMITravelController {
         request.setAttribute(CUSTOMERAGENTLIST, customerAgentList);       
         MDefaultData mDefaultData = utilservice.getMDefaultDataFromType("vat");
         String nameDefault = mDefaultData.getName();
-        BigDecimal vatDefault = new BigDecimal(mDefaultData.getValue());
-        request.setAttribute(VATDEFAULT, vatDefault);
+        BigDecimal vatData = new BigDecimal(mDefaultData.getValue());
+        request.setAttribute(VATDEFAULT, vatData);
         
         SystemUser user = (SystemUser) session.getAttribute("USER");
         String idRole = user.getRole().getId();
@@ -80,6 +80,7 @@ public class TaxInvoiceController extends SMITravelController {
         date = utilty.convertStringToDate(createDate);
         
         String action = request.getParameter("action");
+        String TaxInvNo = request.getParameter("TaxInvNo");
         String taxInvId = request.getParameter("TaxInvId");
         String taxInvTo = request.getParameter("TaxInvTo");
         String invToDate = request.getParameter("InvToDate");
@@ -88,6 +89,7 @@ public class TaxInvoiceController extends SMITravelController {
         String arCode = request.getParameter("ARCode");
         String remark = request.getParameter("Remark");
         String count = request.getParameter("countTaxInvoice");
+        String vatDefault = request.getParameter("vatDefault");
         
         if("save".equalsIgnoreCase(action)){
             TaxInvoice taxInvoice = new TaxInvoice();
@@ -117,6 +119,15 @@ public class TaxInvoiceController extends SMITravelController {
             request.setAttribute("invToDate", invToDate);
             request.setAttribute(TAXINVOICEDETAILLIST, taxInvoiceList);
             request.setAttribute(RESULTTEXT, result);
+            
+        } else if("search".equalsIgnoreCase(action)){
+            TaxInvoice taxInvoice = new TaxInvoice();
+            taxInvoice = taxInvoiceService.getTaxInvoiceFromTaxInvNo(TaxInvNo);
+            if(taxInvoice==null){
+                request.setAttribute(RESULTTEXT, "not found");
+                return new ModelAndView(LINKNAME+callPageFrom);
+            }
+            
             
         } else if("edit".equalsIgnoreCase(action)){
 

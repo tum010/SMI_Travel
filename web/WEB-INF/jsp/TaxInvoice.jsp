@@ -5,6 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="Type" value="${requestScope['Department']}" />
 <c:set var="page" value="${requestScope['page']}" />
+<c:set var="vatDefault" value="${requestScope['vatDefault']}" />
 <c:set var="product_list" value="${requestScope['productList']}" />
 <c:set var="currency_list" value="${requestScope['currencyList']}" />
 <c:set var="customer_agent_list" value="${requestScope['customerAgentList']}"/>
@@ -45,7 +46,7 @@
             </div>
             <div class="col-xs-12 form-group"><hr/></div>
         </div>
-        <form action="TaxInvoice${page}.smi" method="post" id="TaxInvoiceForm" role="form" autocomplete="off">
+        <form action="TaxInvoice${page}.smi" method="post" id="TaxInvoiceForm" role="form" autocomplete="off" onsubmit="return validateForm()">
         <!--Search Invoice-->
         <div class="row" style="padding-left: 15px">  
            <div role="tabpanel">
@@ -219,6 +220,7 @@
                             <div class="panel-body">
                                 <div class="row" style="">    
                                     <div class="col-md-12">
+                                        <input type="hidden" class="form-control" id="vatDefault" name="vatDefault" value="${vatDefault}"/>
                                         <input type="text" class="hidden" id="countTaxInvoice" name="countTaxInvoice" value="1" >
                                         <table id="TaxInvoiceTable" class="display" cellspacing="0" width="100%">
                                             <thead>
@@ -242,7 +244,7 @@
                                                 <tr>
                                                     <td class="hidden"><input class="form-control" type="text" id="taxDetailId${i.count}" name="taxDetailId${i.count}" value=""></td>
                                                     <td>
-                                                        <select class="form-control" name="product${i.count}" id="product${i.count}">
+                                                        <select class="form-control" name="product${i.count}" id="product${i.count}" onchange="AddrowBySelect()">
                                                             <option  value="" >---------</option>
                                                         <c:forEach var="product" items="${product_list}" varStatus="status">                                       
                                                             <c:set var="select" value="" />
@@ -253,11 +255,11 @@
                                                         </c:forEach>
                                                         </select>      
                                                     </td>
-                                                    <td><input class="form-control" type="text" id="refNo${i.count}" name="refNo${i.count}" value=""></td>
+                                                    <td><input class="form-control" type="text" id="refNo${i.count}" name="refNo${i.count}" value="" onfocusout="checkRefNo('${i.count}')"></td>
                                                     <td><input class="form-control" type="text" id="description${i.count}" name="description${i.count}" value=""></td>
                                                     <td align="right"><input class="form-control" type="text" id="cost${i.count}" name="cost${i.count}" value=""></td>
                                                     <td>
-                                                        <select class="form-control" name="currencyCost${i.count}" id="currencyCost${i.count}">
+                                                        <select class="form-control" name="currencyCost${i.count}" id="currencyCost${i.count}" onchange="AddrowBySelect()">
                                                             <option  value="" >---------</option>
                                                         <c:forEach var="currency" items="${currency_list}" varStatus="status">                                       
                                                             <c:set var="select" value="" />
@@ -279,7 +281,7 @@
                                                     <td align="right"><input class="form-control" type="text" id="gross" name="gross" value=""></td>
                                                     <td align="right"><input class="form-control" type="text" id="amount" name=amount value=""></td>
                                                     <td>
-                                                        <select class="form-control" name="currencyAmount${i.count}" id="currencyAmount${i.count}">
+                                                        <select class="form-control" name="currencyAmount${i.count}" id="currencyAmount${i.count}" onchange="AddrowBySelect()">
                                                             <option  value="" >---------</option>
                                                         <c:forEach var="currency" items="${currency_list}" varStatus="status">                                       
                                                             <c:set var="select" value="" />
@@ -332,8 +334,8 @@
                                         <div class="col-sm-1" style="width: 110px">
                                             <label class="control-label" for="">Total&nbsp;Amount&nbsp;:</lable>                                         
                                         </div>
-                                        <div class="col-sm-1" style="width: 280px">
-                                            <input  rows="3" cols="200" id="TotalAmount" name="TotalAmount" class="form-control" value="" readonly="">
+                                        <div class="col-sm-1" style="width: 285px">
+                                            <input style="text-align: right" id="TotalAmount" name="TotalAmount" class="form-control" value="" readonly="">
                                         </div>
                                     </div>    
                                 </div>
@@ -630,6 +632,18 @@
            $(".arrowReservstion").removeClass("glyphicon glyphicon-chevron-up").addClass("glyphicon glyphicon-chevron-down");
         });
         
+//        $("#TaxInvoiceTable").on("change", "select:last", function () {
+//            var rowCount = $('#TaxInvoiceTable tr').length;
+//            var row = parseInt($("#countTaxInvoice").val());
+//            AddRowTaxInvoiceTable(row);
+//        });
+        
+        $("#TaxInvNo").keyup(function (event) {
+            if (event.keyCode === 13) {
+                searchTaxInvoiceNo();
+            }
+        });
+        
         $("#invoiceNo").keyup(function (event) {
             if (event.keyCode === 13) {
                 searchInvoiceNo();
@@ -685,6 +699,12 @@
         
     });
     
+    function searchTaxInvoiceNo(){
+        var action = document.getElementById('action');
+        action.value = 'search';
+        document.getElementById('TaxInvoiceForm').submit();
+    }
+    
     function setupCustomerAgentValue(billTo,billName,address){
         $('#TaxInvToModal').modal('hide');
         document.getElementById('TaxInvTo').value = billTo;
@@ -698,6 +718,29 @@
         document.getElementById('InvTo').focus();
 //        $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputInvoiceSupCode');
 //        $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputAPCode');
+    }
+    
+    function formatNumber(num) {
+        return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+    }
+    
+    function insertCommas(nField){
+        if (/^0/.test(nField.value)){
+            nField.value = nField.value.substring(0,1);
+        }
+        if (Number(nField.value.replace(/,/g,""))){
+            var tmp = nField.value.replace(/,/g,"");
+            tmp = tmp.toString().split('').reverse().join('').replace(/(\d{3})/g,'$1,').split('').reverse().join('').replace(/^,/,'');
+            if (/\./g.test(tmp)){
+                tmp = tmp.split(".");
+                tmp[1] = tmp[1].replace(/\,/g,"").replace(/ /,"");
+                nField.value = tmp[0]+"."+tmp[1]
+            } else {
+                nField.value = tmp.replace(/ /,"");
+            } 
+        } else {
+            nField.value = nField.value.replace(/[^\d\,\.]/g,"").replace(/ /,"");
+        }
     }
     
     function searchCustomerAgentAutoList(billTo){
@@ -821,17 +864,17 @@
         $("#TaxInvoiceTable tbody").append(           
             '<tr>' +
             '<td class="hidden"><input class="form-control" type="text" id="taxDetailId' + row + '" name="taxDetailId' + row + '" value=""></td>' +
-            '<td><select class="form-control" name="product' + row + '" id="product' + row + '"><option  value="" >---------</option></select></td>' +
-            '<td><input class="form-control" type="text" id="refNo' + row + '" name="refNo' + row + '" value=""></td>' +
+            '<td><select class="form-control" name="product' + row + '" id="product' + row + '" onchange="AddrowBySelect()"><option  value="" >---------</option></select></td>' +
+            '<td><input class="form-control" type="text" id="refNo' + row + '" name="refNo' + row + '" value="" onfocusout="checkRefNo(\'' + row + '\')"></td>' +
             '<td><input class="form-control" type="text" id="description' + row + '" name="description' + row + '" value=""></td>' +
-            '<td align="right"><input class="form-control" type="text" id="cost' + row + '" name="cost' + row +'" value=""></td>' +
-            '<td><select class="form-control" name="currencyCost' + row + '" id="currencyCost' + row + '"><option  value="" >---------</option></select></td>' +
-            '<td align="center"><input type="checkbox" id="isVat' + row + '" name="isVat' + row + '" value="check"></td>' +
-            '<td align="right"><input class="form-control" type="text" id="vat' + row + '" name="vat' + row + '" value=""></td>' +
-            '<td align="right"><input class="form-control" type="text" id="gross' + row + '" name="gross' + row + '" value=""></td>' +
-            '<td align="right"><input class="form-control" type="text" id="amount' + row + '" name="amount' + row + '" value=""></td>' +
-            '<td><select class="form-control" name="currencyAmount' + row + '" id="currencyAmount' + row + '"><option  value="" >---------</option></select></td>' +
-            '<td align="center" >' + 
+            '<td><input class="form-control numerical" style="text-align:right;" type="text" id="cost' + row + '" name="cost' + row +'" value="" onkeyup="insertCommas(this)"></td>' +
+            '<td><select class="form-control" name="currencyCost' + row + '" id="currencyCost' + row + '" onchange="AddrowBySelect()"><option  value="" >---------</option></select></td>' +
+            '<td align="center"><input type="checkbox" id="isVat' + row + '" name="isVat' + row + '" value="check" onclick="CalculateGross(\'' + row + '\')"></td>' +
+            '<td align="right" id="vatShow' + row + '"></td>' +
+            '<td><input class="form-control numerical" style="text-align:right;" type="text" id="gross' + row + '" name="gross' + row + '" value="" readonly=""></td>' +
+            '<td><input class="form-control numerical" style="text-align:right;" type="text" id="amount' + row + '" name="amount' + row + '" value="" onfocusout="CalculateAmountTotal()" onkeyup="insertCommas(this)"></td>' +
+            '<td><select class="form-control" name="currencyAmount' + row + '" id="currencyAmount' + row + '" onchange="AddrowBySelect()"><option  value="" >---------</option></select></td>' +
+            '<td>' + 
                 '<center>' +
                 '<a id="expenButtonRemove' + row + '" name="expenButtonRemove' + row + '" class="RemoveRow" onclick="">' + 
                 '<span id="expenSpanEdit' + row + '" name="expenSpanEdit' + row + '" class="glyphicon glyphicon-remove deleteicon"></span></a>' + 
@@ -846,6 +889,140 @@
 
     }
     
+    function AddrowBySelect(){
+        var rowCount = $('#TaxInvoiceTable tr').length;
+        AddRowTaxInvoiceTable(rowCount);
+    }
     
+    function CalculateAmountTotal(){
+//        var count = parseInt(document.getElementById('counter').value);
+        var count = $('#TaxInvoiceTable tr').length;
+        
+        var i;
+        var grandTotal = 0;
+        for(i=1;i<=count+1;i++){
+            var amount = document.getElementById("amount" + i);
+
+            if (amount !== null){
+                var value = amount.value;
+                    
+                if(value !== ''){
+                    value = value.replace(/,/g,"");
+                    var total = parseFloat(value);
+                    grandTotal += total;
+                    document.getElementById('amount' + i).value = formatNumber(total);
+                }
+            }    
+        }
+        document.getElementById('TotalAmount').value = formatNumber(grandTotal);
+        document.getElementById('TextAmount').value = toWords(grandTotal);
+        $( ".numerical" ).on('input', function() { 
+            var value=$(this).val().replace(/[^0-9.,]*/g, '');
+            value=value.replace(/\.{2,}/g, '.');
+            value=value.replace(/\.,/g, ',');
+            value=value.replace(/\,\./g, ',');
+            value=value.replace(/\,{2,}/g, ',');
+            value=value.replace(/\.[0-9]+\./g, '.');
+            $(this).val(value);
+        });
+    }
+    
+    function CalculateGross(row){       
+        var amount = document.getElementById('amount'+row).value;
+        var gross = document.getElementById('gross'+row).value;
+        var vatData = parseFloat(document.getElementById('vatDefault').value);
+
+        amount = amount.replace(/,/g,"");
+        var grossTotal = parseFloat(amount);
+        var vatTotal = parseFloat(vatData);
+
+        if((gross === '')){
+            grossTotal = (amount*100)/(100+vatData);
+            document.getElementById('gross'+row).value = formatNumber(grossTotal);
+            document.getElementById('vatShow'+row).innerHTML = formatNumber(vatTotal);
+        } else {
+            document.getElementById('gross'+row).value = '';
+            document.getElementById('vatShow'+row).innerHTML = '';
+        }
+    }
+        
+    function toWords(s){
+        var th = ['','thousand','million', 'billion','trillion'];
+        var dg = ['zero','one','two','three','four', 'five','six','seven','eight','nine']; 
+        var tn = ['ten','eleven','twelve','thirteen', 'fourteen','fifteen','sixteen', 'seventeen','eighteen','nineteen']; 
+        var tw = ['twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety']; 
+        s = s.toString(); 
+        s = s.replace(/[\, ]/g,''); 
+        if (s != parseFloat(s)) return 'not a number'; 
+        var x = s.indexOf('.'); 
+        if (x == -1) x = s.length; if (x > 15) return 'too big'; 
+        var n = s.split(''); 
+        var str = ''; 
+        var sk = 0; 
+        for (var i=0; i < x; i++) {
+            if ((x-i)%3==2) {
+                if (n[i] == '1') {
+                    str += tn[Number(n[i+1])] + ' '; i++; sk=1;
+                } else if (n[i]!=0) {
+                    str += tw[n[i]-2] + ' ';sk=1;}
+            } else if (n[i]!=0) {
+                str += dg[n[i]] +' '; 
+                if ((x-i)%3==0) str += 'hundred ';sk=1;
+            }             
+            if ((x-i)%3==1) {
+                if (sk) str += th[(x-i-1)/3] + ' ';
+                sk=0;
+            }
+        } 
+        if (x != s.length) {
+            var y = s.length; str += 'point '; 
+            for (var i=x+1; i<y; i++) str += dg[n[i]] +' ';
+        }
+        str += ' baht';
+        return str.replace(/\s+/g,' ');
+    }
+    
+    function checkRefNo(row){
+        var list = '${refNo_list}';
+        var refNo = document.getElementById('refNo'+row).value;
+
+        if(refNo===''){
+            var refNoField = document.getElementById('refNo'+row);
+            refNoField.style.borderColor = "";
+            return;
+        }        
+
+        list = list.replace("[","");
+        list = list.replace("]","");
+        list = list.replace(/ /g,"");
+
+        var refNo_list = list.split(',');
+        for(var i = 0;i<=refNo_list.length;i++){
+            if(String(refNo) === String(refNo_list[i])){
+                var refNoField = document.getElementById('refNo'+row);
+                refNoField.style.borderColor = "Green";
+                return;
+            } else {
+                var refNoField = document.getElementById('refNo'+row);
+                refNoField.style.borderColor = "Red";
+            }
+        } 
+    }
+    
+    function validateForm(){
+//        var count = document.getElementById('counter').value;
+        var count = $('#TaxInvoiceTable tr').length;
+        
+        for(var i=1;i<=count;i++){
+            var refNoField = document.getElementById('refNo'+i);
+            
+            if(refNoField !== null){
+                var color = document.getElementById('refNo'+i).style.borderColor;
+                if(color === "red"){
+                    return false;
+                }   
+            }
+        }
+    }
     
 </script>

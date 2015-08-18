@@ -30,6 +30,7 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
     private SessionFactory sessionFactory;
     private Transaction transaction;
     private UtilityFunction utilityFunction;
+    private static final String GET_TAXINVOICE = "FROM TaxInvoice t where t.taxNo = :TaxInvNo";
 
     @Override
     public String insertTaxInvoice(TaxInvoice tax) {
@@ -126,7 +127,16 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
 
     @Override
     public TaxInvoice getTaxInvoiceFromTaxInvNo(String TaxInvNo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Session session = this.sessionFactory.openSession();
+        TaxInvoice taxInvoice = new TaxInvoice();
+        List<TaxInvoice> taxInvoiceList = session.createQuery(GET_TAXINVOICE).setParameter("TaxInvNo", TaxInvNo).list();
+        if(taxInvoiceList.isEmpty()){
+            return null;
+        } 
+        
+        taxInvoice = taxInvoiceList.get(0);
+               
+        return taxInvoice;
     }
 
     @Override

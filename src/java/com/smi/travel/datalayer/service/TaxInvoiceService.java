@@ -24,6 +24,10 @@ public class TaxInvoiceService {
             return getTaxInvoiceDao().insertTaxInvoice(taxInvoice);
         }
     }
+    
+    public TaxInvoice getTaxInvoiceFromTaxInvNo(String TaxInvNo) {
+        return taxInvoiceDao.getTaxInvoiceFromTaxInvNo(TaxInvNo);
+    }
 
     public TaxInvoiceDao getTaxInvoiceDao() {
         return taxInvoiceDao;
