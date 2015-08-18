@@ -135,6 +135,10 @@ http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 				<value>resource/hibernate/ReceiptDetail.hbm.xml</value>
 				<value>resource/hibernate/AccountCode.hbm.xml</value>
                                 <value>resource/hibernate/MFlightservice.hbm.xml</value>
+                                <value>resource/hibernate/TaxInvoice.hbm.xml</value>
+                                <value>resource/hibernate/TaxInvoiceDetail.hbm.xml</value>
+                                <value>resource/hibernate/CreditNote.hbm.xml</value>
+                                <value>resource/hibernate/CreditNoteDetail.hbm.xml</value>
                                 
 			</list>
 		</property>

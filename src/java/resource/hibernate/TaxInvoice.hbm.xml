@@ -14,8 +14,8 @@
         <many-to-one name="passenger" class="com.smi.travel.datalayer.entity.Passenger" fetch="select">
             <column name="passenger_id" />
         </many-to-one>
-        <property name="taxNo" type="java.lang.Integer">
-            <column name="tax_no" />
+        <property name="taxNo" type="string">
+            <column name="tax_no" length="20" />
         </property>
         <property name="taxInvDate" type="date">
             <column name="tax_inv_date" length="10" />
