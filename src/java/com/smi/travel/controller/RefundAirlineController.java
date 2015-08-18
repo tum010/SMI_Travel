@@ -143,11 +143,21 @@ public class RefundAirlineController extends SMITravelController {
                     ticket.setId(ticketId);
                     detail.setAirticketPassenger(ticket);
                     detail.setSectorRefund(refund);
-                    detail.setReceiveAirline(new BigDecimal(df.parse(receive).toString()));
-                    detail.setPayCustomer(new BigDecimal(df.parse(pay).toString()));
-                    detail.setProfit(new BigDecimal(df.parse(profit).toString()));
-                    detail.setAirComission(new BigDecimal(df.parse(airCom).toString()));
-                    detail.setAgentComission(new BigDecimal(df.parse(agentCom).toString()));
+                    if(receive != null && !"".equals(receive)){
+                        detail.setReceiveAirline(new BigDecimal(df.parse(receive).toString()));
+                    }
+                    if (pay != null && !"".equals(pay)) {
+                        detail.setPayCustomer(new BigDecimal(df.parse(pay).toString()));
+                    }
+                    if (profit != null && !"".equals(profit)) {
+                        detail.setProfit(new BigDecimal(df.parse(profit).toString()));
+                    }
+                    if (airCom != null && !"".equals(airCom)) {
+                        detail.setAirComission(new BigDecimal(df.parse(airCom).toString()));
+                    }
+                    if (agentCom != null && !"".equals(agentCom)) {
+                        detail.setAgentComission(new BigDecimal(df.parse(agentCom).toString()));
+                    }
                     detail.setReceiveDate(uf.convertStringToDate(receivedate));
                     detail.setExpenseDate(uf.convertStringToDate(paydate));
                     airticket.getRefundAirticketDetails().add(detail);

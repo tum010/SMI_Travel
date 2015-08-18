@@ -67,10 +67,9 @@ $(document).ready(function () {
         }
         var valid = true;
         for (var i = 1; i < $("#counter").val(); i++) {
-            var test = $("#refund" + i);
             var refund = $("#refund" + i).val();
             var sector = $("#sectorIssue" + i).html();
-            if (sector.indexOf(refund) < 0) {
+            if ("" === refund || sector.indexOf(refund) < 0) {
                 $("#refund" + i).css('border-color', "Red");
                 valid = false;
             } else {
@@ -94,10 +93,9 @@ $(document).ready(function () {
         }
         var valid = true;
         for (var i = 1; i < $("#counter").val(); i++) {
-            var test = $("#refund" + i);
             var refund = $("#refund" + i).val();
             var sector = $("#sectorIssue" + i).html();
-            if (sector.indexOf(refund) < 0) {
+            if ("" === refund || sector.indexOf(refund) < 0) {
                 $("#refund" + i).css('border-color', "Red");
                 valid = false;
             } else {
