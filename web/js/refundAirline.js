@@ -1,7 +1,6 @@
 var deleteRowNo = 0;
 $(document).ready(function () {
 
-
     $(".datetime").datetimepicker({
     });
 //    $(".datemask").mask('0000-00-00', {reverse: true});
@@ -68,10 +67,9 @@ $(document).ready(function () {
         }
         var valid = true;
         for (var i = 1; i < $("#counter").val(); i++) {
-            var test = $("#refund" + i);
             var refund = $("#refund" + i).val();
             var sector = $("#sectorIssue" + i).html();
-            if (sector.indexOf(refund) < 0) {
+            if ("" === refund || sector.indexOf(refund) < 0) {
                 $("#refund" + i).css('border-color', "Red");
                 valid = false;
             } else {
@@ -81,6 +79,32 @@ $(document).ready(function () {
         if (valid) {
             var action = document.getElementById('action');
             action.value = 'save';
+            document.getElementById('RefundAirlineForm').submit();
+        }
+    });
+    
+    
+    $("#ButtonSaveAndNew").click(function () {
+
+        $('#RefundAirlineForm').bootstrapValidator('revalidateField', 'refundAgentId');
+
+        if ($("#refundAgentId").val() === "") {
+            return;
+        }
+        var valid = true;
+        for (var i = 1; i < $("#counter").val(); i++) {
+            var refund = $("#refund" + i).val();
+            var sector = $("#sectorIssue" + i).html();
+            if ("" === refund || sector.indexOf(refund) < 0) {
+                $("#refund" + i).css('border-color', "Red");
+                valid = false;
+            } else {
+                $("#refund" + i).css('border-color', "Green");
+            }
+        }
+        if (valid) {
+            var action = document.getElementById('action');
+            action.value = 'saveAndNew';
             document.getElementById('RefundAirlineForm').submit();
         }
     });
