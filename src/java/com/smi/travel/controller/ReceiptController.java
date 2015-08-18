@@ -40,7 +40,7 @@ public class ReceiptController extends SMITravelController {
     private static final String MCREDITBANKLIST = "creditBankList";
     private static final String PRODUCTROWCOUNT = "productRowCount";
     private static final String RECEIPT = "receipt"; // search receive no from Receipt table
-    private static final String SELECTEDRECEIPT = "SelectedReceive"; // search receive no from Receipt table
+    private static final String SELECTEDRECEIPT = "SelectedReceive"; // search receive no from Receipt table 1111
     private static final String SAVERESULT = "saveresult"; // save result
     private static final String RECEIVEDATE = "receiveFromDate";
     private static final String CHQDATE1 = "chqDate1";
