@@ -22,5 +22,8 @@
         <property name="amount" type="big_decimal">
             <column name="amount" precision="10" />
         </property>
+        <property name="vat" type="big_decimal">
+            <column name="vat" precision="10" />
+        </property>
     </class>
 </hibernate-mapping>
