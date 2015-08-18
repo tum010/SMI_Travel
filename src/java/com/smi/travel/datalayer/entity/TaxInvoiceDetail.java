@@ -21,11 +21,17 @@ public class TaxInvoiceDetail  {
      private BigDecimal cost;
      private String createBy;
      private Date createDate;
+     private Integer isVat;
+     private String curCost;
+     private String curAmount;
+     private MBilltype mbillType;
+     private Master master;
+     private String description;
 
     public TaxInvoiceDetail() {
     }
 
-    public TaxInvoiceDetail(TaxInvoice taxInvoice, InvoiceDetail invoiceDetail, String remarks, Character vatType, BigDecimal vat, BigDecimal amount, BigDecimal cost, String createBy, Date createDate) {
+    public TaxInvoiceDetail(TaxInvoice taxInvoice, InvoiceDetail invoiceDetail, String remarks, Character vatType, BigDecimal vat, BigDecimal amount, BigDecimal cost, String createBy, Date createDate, Integer isVat, String curCost, String curAmount, MBilltype mbillType, Master master, String description) {
        this.taxInvoice = taxInvoice;
        this.invoiceDetail = invoiceDetail;
        this.remarks = remarks;
@@ -35,6 +41,12 @@ public class TaxInvoiceDetail  {
        this.cost = cost;
        this.createBy = createBy;
        this.createDate = createDate;
+       this.isVat = isVat;
+       this.curCost = curCost;
+       this.curAmount = curAmount;
+       this.mbillType = mbillType;
+       this.master = master;
+       this.description = description;
     }
    
     public String getId() {
@@ -108,8 +120,53 @@ public class TaxInvoiceDetail  {
         this.createDate = createDate;
     }
 
+    public Integer getIsVat() {
+        return isVat;
+    }
 
+    public void setIsVat(Integer isVat) {
+        this.isVat = isVat;
+    }
 
+    public String getCurCost() {
+        return curCost;
+    }
+
+    public void setCurCost(String curCost) {
+        this.curCost = curCost;
+    }
+
+    public String getCurAmount() {
+        return curAmount;
+    }
+
+    public void setCurAmount(String curAmount) {
+        this.curAmount = curAmount;
+    }
+
+    public MBilltype getMbillType() {
+        return mbillType;
+    }
+
+    public void setMbillType(MBilltype mbillType) {
+        this.mbillType = mbillType;
+    }
+
+    public Master getMaster() {
+        return master;
+    }
+
+    public void setMaster(Master master) {
+        this.master = master;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
 }
 
