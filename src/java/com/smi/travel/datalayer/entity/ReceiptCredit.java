@@ -2,6 +2,7 @@ package com.smi.travel.datalayer.entity;
 // Generated Jul 20, 2015 5:52:41 PM by Hibernate Tools 4.3.1
 
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -15,12 +16,12 @@ public class ReceiptCredit {
      private Receipt receipt;
      private String creditNo;
      private Date creditExpire;
-     private Long creditAmount;
+     private BigDecimal creditAmount;
 
     public ReceiptCredit() {
     }
 
-    public ReceiptCredit(MCreditBank MCreditBank, Receipt receipt, String creditNo, Date creditExpire, Long creditAmount) {
+    public ReceiptCredit(MCreditBank MCreditBank, Receipt receipt, String creditNo, Date creditExpire, BigDecimal creditAmount) {
        this.MCreditBank = MCreditBank;
        this.receipt = receipt;
        this.creditNo = creditNo;
@@ -64,17 +65,13 @@ public class ReceiptCredit {
     public void setCreditExpire(Date creditExpire) {
         this.creditExpire = creditExpire;
     }
-    public Long getCreditAmount() {
+    public BigDecimal getCreditAmount() {
         return this.creditAmount;
     }
     
-    public void setCreditAmount(Long creditAmount) {
+    public void setCreditAmount(BigDecimal creditAmount) {
         this.creditAmount = creditAmount;
     }
-
-
-
-
 }
 
 
