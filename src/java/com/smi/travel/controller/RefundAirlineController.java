@@ -64,7 +64,6 @@ public class RefundAirlineController extends SMITravelController {
                 e.printStackTrace();
             }
         }
-
         return RefundAirline;
     }
 
