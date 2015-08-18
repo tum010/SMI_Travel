@@ -346,7 +346,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            <input type="text" class="hidden" id="requestCounter" name="requestCounter" value="0" />
+                            <input type="hidden"  id="requestCounter" name="requestCounter" value="0" />
                             <input type="hidden" id="requestLock" name="requestLock" value="${lockUnlockBooking}"/>
                             <c:forEach var="re" items="${hotelRequestsList}" varStatus="additional">
                                 <tr>

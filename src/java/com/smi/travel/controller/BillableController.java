@@ -398,6 +398,7 @@ public class BillableController extends SMITravelController {
         String remark = request.getParameter("remark-" + index);
         String detail = request.getParameter("detail-"+index);
         String billdate = request.getParameter("billDate-"+index);
+        String currency = request.getParameter("currency-"+index);
         String refId = request.getParameter("billRefId-"+index);
         
         Date billDate =    convertStringToDate(billdate);
@@ -412,6 +413,7 @@ public class BillableController extends SMITravelController {
         bd.setDetail(detail);
         bd.setBillDate(billDate);
         bd.setRefItemId(refId);
+        bd.setCurrency(currency);
         billable.getBillableDescs().add(bd);
     }
 

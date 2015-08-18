@@ -145,7 +145,7 @@ public class HotelDetailController extends SMITravelController {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
+            System.out.println("hotelRequestRows : "+hotelRequestRows);
             setHotelRoom(request, hotelRoomRows, hotelBooking);
             setHotelRequest(request, hotelRequestRows, hotelBooking);
             setHotelPassenger(request, hotelPassengerRows, hotelBooking);
@@ -310,8 +310,9 @@ public class HotelDetailController extends SMITravelController {
         if (requestRows == 1) {
             return;
         }
-
+        System.out.println("Set hotel request 1213");
         for (int i = 1; i < requestRows; i++) {
+            System.out.println("Set hotel request");
             String id = request.getParameter("row-request-" + i + "-id");
             String catagory = request.getParameter("row-request-" + i + "-category");
             String description = request.getParameter("row-request-" + i + "-description");

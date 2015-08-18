@@ -314,7 +314,7 @@
                                     <div class="moneyformat">${b.cost eq 0 && b.MBilltype.id eq 6 ? '-': b.cost}</div>
                             </td>
                             <td class="text-right"><input type="hidden" id="price-${Counter.count}" name="price-${Counter.count}" value="${b.price}" /><div class="moneyformat">${b.price }</div></td>
-                            <td>${b.currency}</td>
+                            <td><input type="hidden" id="currency-${Counter.count}" name="currency-${Counter.count}" value="${b.currency}" />${b.currency} </td>
                             <td><c:if test="${b.isBill == 1}">
                                     Billed
                                 </c:if>
