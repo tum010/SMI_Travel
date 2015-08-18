@@ -57,6 +57,7 @@ import com.smi.travel.util.Mail;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -654,7 +655,10 @@ public class AJAXBean extends AbstractBean implements
                 String ticketNo = map.get("ticketNo").toString();
                 HashMap<String, Object> ticketFare = ticketFareAirlineDao.getDetailTicketFareAirline(ticketNo);
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                DecimalFormat df = new DecimalFormat("###,##0.00");
                 ticketFare.put("TicketDate", sdf.format(ticketFare.get("TicketDate")));
+                String total = ticketFare.get("Total").toString();
+                ticketFare.put("Total", df.format(Double.valueOf(total) * 1.00));
                 JSONObject obj =new JSONObject(ticketFare);
                 result = obj.toJSONString();
             }else if("delete".equalsIgnoreCase(type)){
