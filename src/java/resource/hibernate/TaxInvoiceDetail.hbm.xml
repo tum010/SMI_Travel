@@ -35,5 +35,23 @@
         <property name="createDate" type="date">
             <column name="create_date" length="10" />
         </property>
+        <property name="isVat" type="java.lang.Integer">
+            <column name="is_vat" />
+        </property>
+        <property name="curCost" type="string">
+            <column name="cur_cost" length="3" />
+        </property>
+        <property name="curAmount" type="string">
+            <column name="cur_amount" length="3" />
+        </property>
+        <many-to-one name="mbillType" class="com.smi.travel.datalayer.entity.MBilltype" fetch="select">
+            <column name="item_type_id" />
+        </many-to-one>
+        <many-to-one name="master" class="com.smi.travel.datalayer.entity.Master" fetch="select">
+            <column name="master_id" />
+        </many-to-one>
+        <property name="description" type="string">
+            <column name="description" length="3" />
+        </property>
     </class>
 </hibernate-mapping>

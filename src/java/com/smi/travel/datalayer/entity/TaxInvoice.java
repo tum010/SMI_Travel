@@ -25,6 +25,7 @@ public class TaxInvoice   {
      private String arCode;
      private String invoiceType;
      private String createBy;
+     private String remark;
      private Date createDate;
      private List creditNoteDetails = new LinkedList<CreditNoteDetail>();
      private List taxInvoiceDetails = new LinkedList<TaxInvoiceDetail>();
@@ -32,7 +33,7 @@ public class TaxInvoice   {
     public TaxInvoice() {
     }
 
-    public TaxInvoice(MFinanceItemstatus MFinanceItemstatus, Passenger passenger, Integer taxNo, Date taxInvDate, String taxInvTo, String taxInvName, String taxInvAddr, String arCode, String invoiceType, String createBy, Date createDate, List creditNoteDetails, List taxInvoiceDetails) {
+    public TaxInvoice(MFinanceItemstatus MFinanceItemstatus, Passenger passenger, Integer taxNo, Date taxInvDate, String taxInvTo, String taxInvName, String taxInvAddr, String arCode, String invoiceType, String createBy, Date createDate, String remark, List creditNoteDetails, List taxInvoiceDetails) {
        this.MFinanceItemstatus = MFinanceItemstatus;
        this.passenger = passenger;
        this.taxNo = taxNo;
@@ -44,6 +45,7 @@ public class TaxInvoice   {
        this.invoiceType = invoiceType;
        this.createBy = createBy;
        this.createDate = createDate;
+       this.remark = remark;
        this.creditNoteDetails = creditNoteDetails;
        this.taxInvoiceDetails = taxInvoiceDetails;
     }
@@ -147,8 +149,13 @@ public class TaxInvoice   {
         this.taxInvoiceDetails = taxInvoiceDetails;
     }
 
+    public String getRemark() {
+        return remark;
+    }
 
-
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
 }
 
