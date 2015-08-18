@@ -58,7 +58,6 @@
                         </div>
                         <div class="col-xs-1 text-right" style="width: 100px">
                             <button style="height:34px" type="button" id="ButtonSearch" name="ButtonSearch" onclick="searchTicketNo();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
-
                         </div>
                         <div class="col-xs-1 text-right"  style="width: 140px">
                             <label class="control-label text-right">Refund Date </label>
