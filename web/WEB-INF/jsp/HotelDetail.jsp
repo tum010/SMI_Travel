@@ -45,7 +45,7 @@
         <li class="active"><a href="#">Hotel</a></li>
     </ol>
 </section>
-
+<input type="hidden" id="requestLock" name="requestLock" value="${lockUnlockBooking}"/>
 <div class ="container"  style="padding-top: 15px;" ng-app=""> 
     <div class="row">
         <!-- side bar -->
@@ -347,7 +347,7 @@
                             </thead>
                             <tbody>
                             <input type="hidden"  id="requestCounter" name="requestCounter" value="0" />
-                            <input type="hidden" id="requestLock" name="requestLock" value="${lockUnlockBooking}"/>
+                            
                             <c:forEach var="re" items="${hotelRequestsList}" varStatus="additional">
                                 <tr>
                                     <td class="hidden"><input id="row-request-${additional.count}-id" name="row-request-${additional.count}-id" class="form-control" value="${re.id}"></td>
