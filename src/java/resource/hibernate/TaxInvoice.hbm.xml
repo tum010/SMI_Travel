@@ -41,7 +41,7 @@
         <property name="createDate" type="date">
             <column name="create_date" length="10" />
         </property>
-        <property name="remark" type="String">
+        <property name="remark" type="string">
             <column name="remark" />
         </property>
         <bag name="creditNoteDetails" table="credit_note_detail" inverse="true" lazy="true" fetch="select">
