@@ -45,13 +45,15 @@ public class RefundAirlineService {
 
     public RefundAirticket getRefundAirTicketFromRefundNo(String refundNo) {
         RefundAirticket refund = this.refundAirticketDao.getRefundAirTicketFromRefundNo(refundNo);
-        for (int i = 0; i < refund.getRefundAirticketDetails().size(); i++) {
-            RefundAirticketDetail detail = (RefundAirticketDetail) refund.getRefundAirticketDetails().get(i);
-            String ticketNo = detail.getAirticketPassenger().getSeries1()
-                    + detail.getAirticketPassenger().getSeries2()
-                    + detail.getAirticketPassenger().getSeries3();
-            detail.setTicketFareAirline(ticketFareAirlineDao.getDetailTicketFareAirline(ticketNo));
-            detail.getTicketFareAirline().put("TicketNo", ticketNo);
+        if (refund != null) {
+            for (int i = 0; i < refund.getRefundAirticketDetails().size(); i++) {
+                RefundAirticketDetail detail = (RefundAirticketDetail) refund.getRefundAirticketDetails().get(i);
+                String ticketNo = detail.getAirticketPassenger().getSeries1()
+                        + detail.getAirticketPassenger().getSeries2()
+                        + detail.getAirticketPassenger().getSeries3();
+                detail.setTicketFareAirline(ticketFareAirlineDao.getDetailTicketFareAirline(ticketNo));
+                detail.getTicketFareAirline().put("TicketNo", ticketNo);
+            }
         }
         return refund;
     }

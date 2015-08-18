@@ -41,17 +41,17 @@
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong id="alertTextSuccess">Save Success!</strong> 
                 </div>
-                <div id="alertFail"  style="" class="alert alert-danger alert-dismissible" role="alert" hidden="true">
+                <div id="alertFail"  style="" class="alert alert-danger alert-dismissible" role="alert"  <c:if test="${failStatus != true}">hidden="true"</c:if>>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong id="alertTextFail">Save Unsuccess!</strong> 
+                    <strong id="alertTextFail">${failMessage}</strong> 
                 </div>
                 <input type="hidden" name="action" id="action" value="search">
-               <input type="hidden" name="counter" id="counter" >
+                <input type="hidden" name="counter" id="counter" >
                 <input type="hidden" name="refundId" id="refundId" value="${refundAirline.id}">
                 <div class="row">
-                    <div class="col-xs-12 form-group">
+                    <div class="col-xs-6 form-group">
                         <div class="col-xs-1 text-right" style="width: 140px">
-                            <label class="control-label text-right">Refund No </label>
+                            <label class="control-label text-right">Refund No</label>
                         </div>
                         <div class="col-xs-1" style="width: 290px">
                             <input id="refundNo" name="refundNo" type="text" class="form-control" value="${refundAirline.refundNo}">
@@ -59,6 +59,8 @@
                         <div class="col-xs-1 text-right" style="width: 100px">
                             <button style="height:34px" type="button" id="ButtonSearch" name="ButtonSearch" onclick="searchTicketNo();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
                         </div>
+                    </div>
+                    <div class="col-xs-4 form-group">
                         <div class="col-xs-1 text-right"  style="width: 140px">
                             <label class="control-label text-right">Refund Date </label>
                         </div>
@@ -72,13 +74,13 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12 form-group">
+                    <div class="col-xs-6 form-group">
                         <div class="col-xs-1 text-right"  style="width: 140px">
-                            <label class="control-label text-right">Refund Agent </label>
+                            <label class="control-label text-right">Refund Agent <font style="color: red">*</font> </label>
                         </div>
                         <div class="col-xs-1"  style="width: 150px">
                             <div class="input-group" id="refundAgentCodeValidate">
-                                <input type="hidden" class="form-control" id="refundAgentId" name="agentId" value="${refundAirline.agent.id}" />
+                                    <input type="hidden" class="form-control" id="refundAgentId" name="agentId" value="${refundAirline.agent.id}" />
                                 <input type="text" class="form-control" id="refundAgentCode" name="agentCode" value="${refundAirline.agent.code}" />
                                 <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#RefundAgentModal">
                                     <span class="glyphicon-search glyphicon"></span>
@@ -89,12 +91,14 @@
                             <input type="text" class="form-control" id="refundAgentName" name="agentName" value="${refundAirline.agent.name}" readonly=""
                                 data-bv-notempty="true" data-bv-notempty-message="agent empty !">                           
                         </div>
+                    </div>  
+                    <div class="col-xs-4 form-group">
                         <div class="col-xs-1 text-right" style="width: 140px">
                             <label class="control-label text-right">Refund By </label>
                         </div>
                         <div class="col-xs-1" style="width: 200px">
                             <div class="input-group">
-                                <input id="refundBy" name="refundBy" type="text" class="form-control" value="${refundAirline.refundBy}">
+                                <input id="refundBy" name="refundBy" type="text" class="form-control" value="${refundAirline.refundBy}" maxlength="5">
                             </div>
                         </div>
                     </div>
@@ -106,7 +110,7 @@
                         </div>
                         <div class="col-xs-1" style="width: 200px">
                             <div class="input-group">                                    
-                                <textarea rows="3" class="form-control" id="remark" name="remark" style="width: 228%">${refundAirline.remark}</textarea>  
+                                <textarea rows="3" class="form-control" id="remark" name="remark" maxlength="255" style="width: 228%">${refundAirline.remark}</textarea>  
                             </div>
                         </div>
                     </div>
@@ -264,7 +268,7 @@
         <input type="hidden" name="detailId" id="detailId" colName="detailId" value="">
         <input type="hidden" id="ticketId" name="ticketId" colName="ticketId" value="">
         <td style="text-align:center"> <input id="ticketNo" name="ticketNo" colName="ticketNo" type="text" class="form-control" value=""></td>
-        <td style="text-align:center"> <input id="refund" name="refund" colName="refund" type="text" class="form-control" value="" onfocusout="checkRefund(this)"></td>
+        <td style="text-align:center"> <input id="refund" name="refund" colName="refund" type="text" maxlength="255" class="form-control" value="" onfocusout="checkRefund(this)"></td>
         <td style="text-align:center"> <input id="receive" name="receive" colName="receive" type="text" class="form-control text-right decimal" value=""></td>
         <td style="text-align:center"> <input id="pay" name="pay" type="text" colName="pay" class="form-control text-right decimal"></td>
         <td style="text-align:center"> <input id="profit" name="profit" colName="profit" type="text" class="form-control text-right decimal"></td>

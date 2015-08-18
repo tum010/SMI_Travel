@@ -10,6 +10,7 @@ import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,8 +42,11 @@ public class RefundAirlineController extends SMITravelController {
         if ("search".equalsIgnoreCase(action)) {
             try {
                 RefundAirticket refundAirticket = getRefundAirlineService().getRefundAirTicketFromRefundNo(refundNo);
-                refundAirticket.getId();
                 request.setAttribute("refundAirline", refundAirticket);
+                if(refundAirticket == null){
+                    request.setAttribute("failStatus", true);
+                    request.setAttribute("failMessage", "Refund no. not available !");
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -94,6 +98,7 @@ public class RefundAirlineController extends SMITravelController {
 
     private RefundAirticket maprequest(HttpServletRequest request) {
         UtilityFunction uf = new UtilityFunction();
+        DecimalFormat df = new DecimalFormat("###,##0.##");
         RefundAirticket airticket = new RefundAirticket();
         try {
             String refundId = request.getParameter("refundId");
@@ -135,11 +140,11 @@ public class RefundAirlineController extends SMITravelController {
                     ticket.setId(ticketId);
                     detail.setAirticketPassenger(ticket);
                     detail.setSectorRefund(refund);
-                    detail.setReceiveAirline(new BigDecimal(receive));
-                    detail.setPayCustomer(new BigDecimal(pay));
-                    detail.setProfit(new BigDecimal(profit));
-                    detail.setAirComission(new BigDecimal(airCom));
-                    detail.setAgentComission(new BigDecimal(agentCom));
+                    detail.setReceiveAirline(new BigDecimal(df.parse(receive).toString()));
+                    detail.setPayCustomer(new BigDecimal(df.parse(pay).toString()));
+                    detail.setProfit(new BigDecimal(df.parse(profit).toString()));
+                    detail.setAirComission(new BigDecimal(df.parse(airCom).toString()));
+                    detail.setAgentComission(new BigDecimal(df.parse(agentCom).toString()));
                     detail.setReceiveDate(uf.convertStringToDate(receivedate));
                     detail.setExpenseDate(uf.convertStringToDate(paydate));
                     airticket.getRefundAirticketDetails().add(detail);
