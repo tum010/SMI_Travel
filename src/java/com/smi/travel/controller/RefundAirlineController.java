@@ -50,14 +50,18 @@ public class RefundAirlineController extends SMITravelController {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else if ("save".equalsIgnoreCase(action)) {
+        } else if ("save".equalsIgnoreCase(action) || "saveAndNew".equalsIgnoreCase(action)) {
             try {
                 RefundAirticket refundAirticket = maprequest(request);
                 request.setAttribute("refundAirline", refundAirticket);
                 refundNo = getRefundAirlineService().saveRefundAirTicket(refundAirticket);
                 if (!"fail".equals(refundNo)) {
                     refundAirticket = getRefundAirlineService().getRefundAirTicketFromRefundNo(refundNo);
-                    request.setAttribute("refundAirline", refundAirticket);
+                    if("save".equalsIgnoreCase(action)){
+                        request.setAttribute("refundAirline", refundAirticket);
+                    }else{
+                        request.removeAttribute("refundAirline");
+                    }
                     request.setAttribute("successStatus", true);
                 }
             } catch (Exception e) {
@@ -97,7 +101,7 @@ public class RefundAirlineController extends SMITravelController {
 
     private RefundAirticket maprequest(HttpServletRequest request) {
         UtilityFunction uf = new UtilityFunction();
-        DecimalFormat df = new DecimalFormat("###,##0.##");
+        DecimalFormat df = new DecimalFormat("###,##0.00");
         RefundAirticket airticket = new RefundAirticket();
         try {
             String refundId = request.getParameter("refundId");

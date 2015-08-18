@@ -83,6 +83,33 @@ $(document).ready(function () {
             document.getElementById('RefundAirlineForm').submit();
         }
     });
+    
+    
+    $("#ButtonSaveAndNew").click(function () {
+
+        $('#RefundAirlineForm').bootstrapValidator('revalidateField', 'refundAgentId');
+
+        if ($("#refundAgentId").val() === "") {
+            return;
+        }
+        var valid = true;
+        for (var i = 1; i < $("#counter").val(); i++) {
+            var test = $("#refund" + i);
+            var refund = $("#refund" + i).val();
+            var sector = $("#sectorIssue" + i).html();
+            if (sector.indexOf(refund) < 0) {
+                $("#refund" + i).css('border-color', "Red");
+                valid = false;
+            } else {
+                $("#refund" + i).css('border-color', "Green");
+            }
+        }
+        if (valid) {
+            var action = document.getElementById('action');
+            action.value = 'saveAndNew';
+            document.getElementById('RefundAirlineForm').submit();
+        }
+    });
 
 });
 

@@ -9,7 +9,11 @@
 <script type="text/javascript" src="js/jquery.inputmask.js"></script>
 <script type="text/javascript" src="js/jquery.inputmask.numeric.extensions.js"></script>
 <link href="css/jquery-ui.css" rel="stylesheet">
+<style type="text/css">
+   table tr:nth-child(4n) {background: #EEE}
+   table tr:nth-child(4n+3) {background: #EEE}
 
+  </style>
 <section class="content-header" >
     <h1>
         Checking - Air Ticket
@@ -121,8 +125,8 @@
                     <table id="RefundAirlineTable" class="display" cellspacing="0" width="100%">
                         <thead>
                             <tr class="datatable-header" >
-                                <th style="width:10%;">Ticket No</th>
-                                <th style="width:25%;">Sector Refund</th>
+                                <th style="width:12%;">Ticket No</th>
+                                <th style="width:23%;">Sector Refund</th>
                                 <th style="width:10%;" >Receive</th>
                                 <th style="width:9%;" >Pay</th>
                                 <th style="width:9%;" >Profit</th>
@@ -169,7 +173,8 @@
                             <tr row="${varRefundAirline.index + 1}">
                                 <td  style="text-align:center"><span id="ticketDate" name="ticketDate">${detail.ticketFareAirline["TicketDate"]}</span></td>
                                 <td ><span id="sectorIssue${index}">${detail.ticketFareAirline["Sector"]}</span></td>
-                                <td style="text-align:center"><span id="total">${detail.ticketFareAirline["Total"]}</span></td>
+                                <!--<td style="text-align:center"><span id="total">${detail.ticketFareAirline["Total"]}</span></td>-->
+                                <td style="text-align:center"><fmt:formatNumber type="number" maxFractionDigits="3" minFractionDigits="2" value="${detail.ticketFareAirline['Total']}"/></td>
                                 <td ><span id="department">${detail.ticketFareAirline["Dept"]}</span></td>       
                                 <td colspan='3'><span id="passsenger" name="passsenger">${detail.ticketFareAirline["Passenger"]}</span></td>
                                 <td> 
@@ -188,7 +193,7 @@
                         
             <div class="col-xs-12 text-center" style="padding-top: 10px">
                     <button  id="buttonSave" name="ButtonSave" class="btn btn-success" value="save"><i class="fa fa-save"></i> Save</button>
-                    <button type="submit" id="ButtonSaveAndNew" name="ButtonSaveAndNew" class="btn btn-success"><i class="fa fa-save"></i> Save &amp; New</button>
+                    <button id="ButtonSaveAndNew" name="ButtonSaveAndNew" class="btn btn-success"><i class="fa fa-save"></i> Save &amp; New</button>
             </div>            
             </form>
         </div>
