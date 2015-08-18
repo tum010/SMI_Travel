@@ -3,7 +3,7 @@
 <!-- Generated Dec 4, 2014 5:36:02 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="com.smi.travel.datalayer.entity.TaxInvoiceDetail" table="tax_invoice_detail" catalog="smitravel">
-        <id name="id" type="java.lang.Integer">
+        <id name="id" type="string">
             <column name="id" />
             <generator class="identity" />
         </id>
@@ -12,10 +12,7 @@
         </many-to-one>
         <many-to-one name="invoiceDetail" class="com.smi.travel.datalayer.entity.InvoiceDetail" fetch="select">
             <column name="invoice_detail_id" />
-        </many-to-one>
-        <property name="remarks" type="string">
-            <column name="remarks" length="100" />
-        </property>
+        </many-to-one>       
         <property name="vatType" type="java.lang.Character">
             <column name="vat_type" length="1" />
         </property>
@@ -50,7 +47,7 @@
             <column name="master_id" />
         </many-to-one>
         <property name="description" type="string">
-            <column name="description" length="3" />
+            <column name="description"/>
         </property>
     </class>
 </hibernate-mapping>

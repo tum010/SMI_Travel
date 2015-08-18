@@ -12,6 +12,8 @@ import com.smi.travel.datalayer.entity.TaxInvoiceDetail;
 import com.smi.travel.datalayer.view.entity.TaxInvoiceView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -35,6 +37,8 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
         Session session = this.getSessionFactory().openSession();
         try { 
             setTransaction(session.beginTransaction());
+            String taxNo = gennarateTaxInvoiceNo();
+            tax.setTaxNo(taxNo);
             session.save(tax);
             List<TaxInvoiceDetail> taxInvoiceDetail = tax.getTaxInvoiceDetails();
             if(taxInvoiceDetail != null){
@@ -54,6 +58,36 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
             result = "fail";
         }
         return result;
+    }
+    
+    private String gennarateTaxInvoiceNo(){
+        String taxNo = "";
+        Session session = this.sessionFactory.openSession();
+        List<TaxInvoice> list = new LinkedList<TaxInvoice>();
+        Date thisdate = new Date();
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("MMyy");
+        Query query = session.createQuery("from TaxInvoice t where t.taxNo Like :taxNo Order by t.taxNo desc");
+        query.setParameter("taxNo", "%"+ df.format(thisdate) + "%");
+        query.setMaxResults(1);
+        list = query.list();
+        if (list.isEmpty()) {
+            taxNo = df.format(thisdate) + "-" + "0001";
+        } else {
+            taxNo = String.valueOf(list.get(0).getTaxNo());
+            if (!taxNo.equalsIgnoreCase("")) {
+                System.out.println("taxNo" + taxNo.substring(4,8) + "/////");
+                int running = Integer.parseInt(taxNo.substring(4,8)) + 1;
+                String temp = String.valueOf(running);
+                for (int i = temp.length(); i < 4; i++) {
+                    temp = "0" + temp;
+                }
+                taxNo = df.format(thisdate) + "-" + temp;
+            }
+        }
+        session.close();
+        this.sessionFactory.close();
+        return taxNo.replace("-","");
     }
 
     @Override

@@ -9,6 +9,9 @@
 <c:set var="currency_list" value="${requestScope['currencyList']}" />
 <c:set var="customer_agent_list" value="${requestScope['customerAgentList']}"/>
 <c:set var="refNo_list" value="${requestScope['refNo_list']}" />
+<c:set var="taxInvoice" value="${requestScope['taxInvoice']}" />
+<c:set var="taxInvoiceDetail" value="${requestScope['taxInvoiceDetail_list']}" />
+<c:set var="resultText" value="${requestScope['result_text']}" />
 <input type="hidden" id="Type" name="Type" value="${param.Department}">
 <section class="content-header" >
     <h1>
@@ -121,7 +124,8 @@
                             <label class="control-label" for="">Tax Invoice No</lable>
                         </div>
                         <div class="col-md-2 form-group">
-                            <input type="text"  class="form-control" id="TaxInvNo" name="TaxInvNo"  value="" >
+                            <input type="hidden" class="form-control" id="TaxInvId" name="TaxInvId" value="${taxInvoice.id}"/>
+                            <input type="text"  class="form-control" id="TaxInvNo" name="TaxInvNo"  value="${taxInvoice.taxNo}" >
                         </div>
                         <div class="col-md-1" >
                             <button type="button"  id="btnSearchInvoiceNo"  name="btnSearchInvoiceNo" onclick="searchInvoiceNo()" class="btn btn-primary btn-sm">
@@ -133,15 +137,15 @@
                         </div>
                         <div class="col-md-2 form-group">
                             <div class='input-group date' id='InputDatePicker'>
-                            <c:if test='${dayTourOperation.tourDate != null}'>
+                            <c:if test='${taxInvoice.taxInvDate != null}'>
                                 <input id="InvToDate" name="InvToDate"  type="text" 
-                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['invToDate']}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 
                             </c:if>
-                            <c:if test='${dayTourOperation.tourDate == null}'>
+                            <c:if test='${taxInvoice.taxInvDate == null}'>
                                 <input id="InvToDate" name="InvToDate"  type="text" 
-                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['']}">
+                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 
                             </c:if>                             
@@ -153,9 +157,8 @@
                             <label class="control-label" for="">Tax Inv To</lable>
                         </div>
                         <div class="col-md-1 form-group" style="width: 585px">
-                            <div class="input-group">
-                                <input type="hidden" class="form-control" id="TaxInvId" name="TaxInvId" value=""/>
-                                <input type="text" class="form-control" id="TaxInvTo" name="TaxInvTo" value="" style="background-color: #ffffff">
+                            <div class="input-group">                               
+                                <input type="text" class="form-control" id="TaxInvTo" name="TaxInvTo" value="${taxInvoice.taxInvTo}" style="background-color: #ffffff">
                                 <span class="input-group-addon" id="TaxInvTo_Modal"  data-toggle="modal" data-target="#TaxInvToModal">
                                     <span class="glyphicon-search glyphicon"></span>
                                 </span>
@@ -167,7 +170,7 @@
                             <label class="control-label" for="">Name </lable>
                         </div>    
                         <div class="col-md-1 form-group" style="width: 585px">
-                            <input  type="text" id="InvToName" name="InvToName" class="form-control" value="">
+                            <input  type="text" id="InvToName" name="InvToName" class="form-control" value="${taxInvoice.taxInvName}">
                         </div>  
                     </div>
                     <div class="col-xs-12 ">
@@ -175,7 +178,7 @@
                             <label class="control-label" for="">Address </lable>
                         </div>
                         <div class="col-md-1 form-group" style="width: 585px">
-                            <textarea  rows="3" cols="100" id="InvToAddress" name="InvToAddress" class="form-control" value="" ></textarea>
+                            <textarea  rows="3" cols="100" id="InvToAddress" name="InvToAddress" class="form-control" value="" >${taxInvoice.taxInvAddr}</textarea>
                         </div>
                     </div>
                     <div class="col-xs-12 ">
@@ -200,7 +203,7 @@
                         <div class="col-md-2 form-group">
                             <div class="input-group">
                                 <input type="hidden" class="form-control" id="ARCodeId" name="ARCodeId" value=""/>
-                                <input type="text" class="form-control" id="ARCode" name="ARCode" value="" style="background-color: #ffffff">
+                                <input type="text" class="form-control" id="ARCode" name="ARCode" value="${taxInvoice.arCode}" style="background-color: #ffffff">
                                
                             </div>
                         </div>
@@ -314,7 +317,7 @@
                                             <label class="control-label" for="">Remark&nbsp;</lable>                                         
                                         </div>
                                         <div class="col-sm-6" style="padding-left: 50px">
-                                            <textarea  rows="3" cols="200" id="Remark" name="Remark" class="form-control" value=""></textarea>
+                                            <textarea  rows="3" cols="200" id="Remark" name="Remark" class="form-control" value="">${taxInvoice.remark}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-xs-12 form-group"></div>

@@ -36,6 +36,9 @@ public class TaxInvoiceController extends SMITravelController {
     private static final String CUSTOMERAGENTLIST = "customerAgentList";
     private static final String REFNOLIST ="refNo_list";
     private static final String VATDEFAULT ="vatDefault";
+    private static final String TAXINVOICE ="taxInvoice";
+    private static final String TAXINVOICEDETAILLIST ="taxInvoiceDetail_list";
+    private static final String RESULTTEXT ="result_text";
     private PaymentTourHotelService paymentTourHotelService;
     private TaxInvoiceService taxInvoiceService;
     
@@ -108,6 +111,12 @@ public class TaxInvoiceController extends SMITravelController {
             }
             
             String result = taxInvoiceService.saveInvoice(taxInvoice);
+            List<TaxInvoiceDetail> taxInvoiceList = new ArrayList<TaxInvoiceDetail>();
+            taxInvoiceList = taxInvoice.getTaxInvoiceDetails();
+            request.setAttribute(TAXINVOICE, taxInvoice);
+            request.setAttribute("invToDate", invToDate);
+            request.setAttribute(TAXINVOICEDETAILLIST, taxInvoiceList);
+            request.setAttribute(RESULTTEXT, result);
             
         } else if("edit".equalsIgnoreCase(action)){
 
@@ -136,7 +145,7 @@ public class TaxInvoiceController extends SMITravelController {
             String currencyAmount = request.getParameter("currencyAmount" + i);
             
             TaxInvoiceDetail taxInvoiceDetail = new TaxInvoiceDetail();
-            MBilltype type = new MBilltype();
+            MBilltype mBillType = new MBilltype();
             
             if((product!="" && product!=null) || (refNo!="" && refNo!=null) || (description!="" && description!=null) || (cost!="" && cost!=null) || (currencyCost!="" && currencyCost!=null) || (isVat!="" && isVat!=null) || (vat!="" && vat!=null) || (amount!="" && amount!=null) || (currencyAmount!="" && currencyAmount!=null)){                               
                 
@@ -148,8 +157,10 @@ public class TaxInvoiceController extends SMITravelController {
                 }
                 
                 if(product!="" && product!=null){
-                    type.setId(product);
-                    taxInvoiceDetail.setMbillType(type);
+                    mBillType.setId(product);
+                    taxInvoiceDetail.setMbillType(mBillType);
+                } else {
+                    taxInvoiceDetail.setMbillType(null);
                 }
                 
                 Master master = paymentTourHotelService.getMasterFromRefno(refNo);
@@ -191,6 +202,8 @@ public class TaxInvoiceController extends SMITravelController {
                 if(currencyAmount!="" && currencyAmount!=null){
                     taxInvoiceDetail.setCurAmount(currencyAmount);
                 }
+                
+                taxInvoiceDetail.setInvoiceDetail(null);
                 
                 taxInvoiceDetail.setTaxInvoice(taxInvoice);
                 taxInvoice.getTaxInvoiceDetails().add(taxInvoiceDetail);

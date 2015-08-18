@@ -17,7 +17,7 @@ public class TaxInvoice   {
      private String id;
      private MFinanceItemstatus MFinanceItemstatus;
      private Passenger passenger;
-     private Integer taxNo;
+     private String taxNo;
      private Date taxInvDate;
      private String taxInvTo;
      private String taxInvName;
@@ -33,7 +33,7 @@ public class TaxInvoice   {
     public TaxInvoice() {
     }
 
-    public TaxInvoice(MFinanceItemstatus MFinanceItemstatus, Passenger passenger, Integer taxNo, Date taxInvDate, String taxInvTo, String taxInvName, String taxInvAddr, String arCode, String invoiceType, String createBy, Date createDate, String remark, List creditNoteDetails, List taxInvoiceDetails) {
+    public TaxInvoice(MFinanceItemstatus MFinanceItemstatus, Passenger passenger, String taxNo, Date taxInvDate, String taxInvTo, String taxInvName, String taxInvAddr, String arCode, String invoiceType, String createBy, Date createDate, String remark, List creditNoteDetails, List taxInvoiceDetails) {
        this.MFinanceItemstatus = MFinanceItemstatus;
        this.passenger = passenger;
        this.taxNo = taxNo;
@@ -71,11 +71,11 @@ public class TaxInvoice   {
     public void setPassenger(Passenger passenger) {
         this.passenger = passenger;
     }
-    public Integer getTaxNo() {
+    public String getTaxNo() {
         return this.taxNo;
     }
     
-    public void setTaxNo(Integer taxNo) {
+    public void setTaxNo(String taxNo) {
         this.taxNo = taxNo;
     }
     public Date getTaxInvDate() {

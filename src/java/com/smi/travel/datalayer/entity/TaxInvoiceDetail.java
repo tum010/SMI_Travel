@@ -14,7 +14,6 @@ public class TaxInvoiceDetail  {
      private String id;
      private TaxInvoice taxInvoice;
      private InvoiceDetail invoiceDetail;
-     private String remarks;
      private Character vatType;
      private BigDecimal vat;
      private BigDecimal amount;
@@ -31,10 +30,9 @@ public class TaxInvoiceDetail  {
     public TaxInvoiceDetail() {
     }
 
-    public TaxInvoiceDetail(TaxInvoice taxInvoice, InvoiceDetail invoiceDetail, String remarks, Character vatType, BigDecimal vat, BigDecimal amount, BigDecimal cost, String createBy, Date createDate, Integer isVat, String curCost, String curAmount, MBilltype mbillType, Master master, String description) {
+    public TaxInvoiceDetail(TaxInvoice taxInvoice, InvoiceDetail invoiceDetail, Character vatType, BigDecimal vat, BigDecimal amount, BigDecimal cost, String createBy, Date createDate, Integer isVat, String curCost, String curAmount, MBilltype mbillType, Master master, String description) {
        this.taxInvoice = taxInvoice;
        this.invoiceDetail = invoiceDetail;
-       this.remarks = remarks;
        this.vatType = vatType;
        this.vat = vat;
        this.amount = amount;
@@ -70,13 +68,7 @@ public class TaxInvoiceDetail  {
     public void setInvoiceDetail(InvoiceDetail invoiceDetail) {
         this.invoiceDetail = invoiceDetail;
     }
-    public String getRemarks() {
-        return this.remarks;
-    }
-    
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
-    }
+   
     public Character getVatType() {
         return this.vatType;
     }
