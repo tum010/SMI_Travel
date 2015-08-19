@@ -509,6 +509,7 @@
 	<bean id="ReceiptController" class="com.smi.travel.controller.ReceiptController">
             <property name="utilityService" ref="UtilityService" />
             <property name="receiptService" ref="ReceiptService" />
+            <property name="invoiceService" ref="InvoiceService" />
 	</bean>
 	<bean id="SearchReceiptController" class="com.smi.travel.controller.SearchReceiptController">
 

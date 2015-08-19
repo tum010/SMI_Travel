@@ -16,20 +16,22 @@ import com.smi.travel.datalayer.view.dao.GuideCommissionReportDao;
 import com.smi.travel.datalayer.view.dao.GuideJobDao;
 import com.smi.travel.datalayer.view.dao.HotelInboundDao;
 import com.smi.travel.datalayer.view.dao.HotelVoucherDao;
+import com.smi.travel.datalayer.view.dao.InvoiceEmailDao;
+import com.smi.travel.datalayer.view.dao.InvoiceReportDao;
 import com.smi.travel.datalayer.view.dao.InvoiceSummaryDao;
 import com.smi.travel.datalayer.view.dao.LandVoucherDao;
-import com.smi.travel.datalayer.view.dao.ReceiptEmailDao;
 import com.smi.travel.datalayer.view.dao.ReceiptDao;
+import com.smi.travel.datalayer.view.dao.ReceiptEmailDao;
 import com.smi.travel.datalayer.view.dao.ReceiveListDao;
 import com.smi.travel.datalayer.view.dao.StaffSummaryDao;
 import com.smi.travel.datalayer.view.dao.TicketOrderDao;
 import com.smi.travel.datalayer.view.dao.TicketSaleProfitVolumnDao;
 import com.smi.travel.datalayer.view.dao.TicketSummaryDao;
 import com.smi.travel.datalayer.view.dao.TransferJobReportDao;
-import com.smi.travel.datalayer.view.dao.InvoiceEmailDao;
-import com.smi.travel.datalayer.view.dao.InvoiceDao;
+import com.smi.travel.report.GenerateReport;
 import java.util.ArrayList;
 import java.util.List;
+import net.sf.jasperreports.engine.JRDataSource;
 
 /**
  *
@@ -55,12 +57,18 @@ public class ReportService {
     private ReceiptDao receiptDao;
     private ReceiveListDao  receiveListDao;
     private InvoiceEmailDao invoiceEmaildao;
-    private InvoiceDao invoicedao;
+    private InvoiceReportDao invoicedao;
+    private GenerateReport genreport;
     
     public List getHotelVoucher(String hotelID,String name) {
         List data  = new ArrayList();
         data.add(hotelVoucherdao.getHotelVoucher(hotelID,name));
         return data;
+    }
+    
+    public void printreport(String filename,String outputname,JRDataSource datasource){
+        System.out.println("run report : "+ filename);
+        genreport.printReport(filename, outputname, datasource);
     }
     
     public List getTicketSaleVolumn(String ticketFrom,String ticketType,String startDate,String endDate){
@@ -353,12 +361,22 @@ public class ReportService {
         return invoiceEmaildao;
     }
 
-    public void setInvoicedao(InvoiceDao invoicedao) {
+    public void setInvoicedao(InvoiceReportDao invoicedao) {
         this.invoicedao = invoicedao;
     }
 
-    public InvoiceDao getInvoicedao() {
+    public InvoiceReportDao getInvoicedao() {
         return invoicedao;
     }
+
+    public GenerateReport getGenreport() {
+        return genreport;
+    }
+
+    public void setGenreport(GenerateReport genreport) {
+        this.genreport = genreport;
+    }
    
+    
+    
 }

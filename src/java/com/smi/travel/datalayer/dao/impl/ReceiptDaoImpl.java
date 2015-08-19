@@ -1,5 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties. 
+ * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates 
  * and open the template in the editor.
  */
@@ -117,7 +117,7 @@ import org.hibernate.Transaction;
         List<Receipt> list = new LinkedList<Receipt>();
         Date thisdate = new Date();
         SimpleDateFormat df = new SimpleDateFormat();
-        df.applyPattern("MMyy");
+        df.applyPattern("yyMM");
         Query query = session.createQuery("from Receipt r where r.recNo Like :recNo Order by r.recNo desc");
         query.setParameter("recNo", "%"+ df.format(thisdate) + "%");
         query.setMaxResults(1);
