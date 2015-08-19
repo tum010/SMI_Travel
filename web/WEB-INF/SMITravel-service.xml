@@ -152,6 +152,8 @@
         <property name="receiptDao" ref="ReceiptDao" />
         <property name="invoiceEmaildao" ref="InvoiceEmailDao" />
         <property name="invoicedao" ref="InvoiceReportDao" />
+        <property name="genreport" ref="GenerateReport" />
+         
     </bean> 
     
     

@@ -344,6 +344,12 @@
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
     
+    <bean id="GenerateReport" class="com.smi.travel.report.GenerateReport">
+          <property name="reportpath" value="C:\\Users\\Surachai\\Documents\\NetBeansProjects\\SMI_Travel_nokey\\web\\WEB-INF\\report\\"></property>
+          <property name="exportpath" value="C:\\Users\\Surachai\\Documents\\report\\"></property>
+    </bean>
+    
+    
     
     <!-- Component Bean -->
     <bean id="AJAXBean" class="com.smi.travel.datalayer.bean.master.AJAXBean">

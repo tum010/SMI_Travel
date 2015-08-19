@@ -61,7 +61,7 @@ public class ReportController extends SMITravelController {
     private static final String ReceiveList = "ReceiveList";
     private static final String InvoiceEmail = "InvoiceEmail";
     private static final String InvoiceReport = "InvoiceReport";
-    
+
     private DataSource datasource;
     private static final Logger LOG = Logger.getLogger(ReportController.class.getName());
     private ReportService reportservice;
@@ -76,8 +76,8 @@ public class ReportController extends SMITravelController {
         String pnrID = request.getParameter("pnrID");
         String ticketfrom = request.getParameter("ticketfrom");
         String tickettype = request.getParameter("tickettype");
-        String startdate  = request.getParameter("startdate");
-        String enddate    = request.getParameter("enddate");
+        String startdate = request.getParameter("startdate");
+        String enddate = request.getParameter("enddate");
         String billto = request.getParameter("billto");
         String passenger = request.getParameter("passenger");
         String docno = request.getParameter("docno");
@@ -88,109 +88,114 @@ public class ReportController extends SMITravelController {
         String landId = request.getParameter("landId");
         SystemUser user = (SystemUser) session.getAttribute("USER");
         String status = request.getParameter("comfirm");
-              
+
         Map model = new HashMap();
         List data = new ArrayList();
         int PrintMethod = 0; // 0 = bean 1 = pass parameter
         if (HotelVoucher.equalsIgnoreCase(name)) {
             PrintMethod = 0;
-            data = reportservice.getHotelVoucher(hotelID,user.getName());
+            data = reportservice.getHotelVoucher(hotelID, user.getName());
         } else if (HotelInboundVoucher.equalsIgnoreCase(name)) {
             PrintMethod = 0;
             data = reportservice.getHotelInboundVoucher(hotelID);
         } else if (HotelVoucherEmail.equalsIgnoreCase(name)) {
             PrintMethod = 0;
-            data = reportservice.getHotelVoucher(hotelID,user.getName());
-        }else if (HotelVoucherEmailAgent.equalsIgnoreCase(name)) {
+            data = reportservice.getHotelVoucher(hotelID, user.getName());
+        } else if (HotelVoucherEmailAgent.equalsIgnoreCase(name)) {
             PrintMethod = 0;
-            data = reportservice.getHotelVoucher(hotelID,user.getName());
-        }else if (LandVoucher.equalsIgnoreCase(name)) {
+            data = reportservice.getHotelVoucher(hotelID, user.getName());
+        } else if (LandVoucher.equalsIgnoreCase(name)) {
             PrintMethod = 0;
-            data = reportservice.getLandVoucher(refno,user.getName(),landId);
+            data = reportservice.getLandVoucher(refno, user.getName(), landId);
         } else if (LandVoucherEmailAgent.equalsIgnoreCase(name)) {
             PrintMethod = 0;
-            data = reportservice.getLandVoucher(refno,user.getName(),landId);
+            data = reportservice.getLandVoucher(refno, user.getName(), landId);
         } else if (LandVoucherEmail.equalsIgnoreCase(name)) {
             PrintMethod = 0;
-            data = reportservice.getLandVoucher(refno,user.getName(),landId);
+            data = reportservice.getLandVoucher(refno, user.getName(), landId);
         } else if (TicketOrder.equalsIgnoreCase(name)) {
             PrintMethod = 0;
-            data = reportservice.getTicketOrde(refno,pnrID);
+            data = reportservice.getTicketOrde(refno, pnrID);
             // set path for loading sub-report file
             ((TicketOrder) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
         } else if (TicketSummary.equalsIgnoreCase(name)) {
             PrintMethod = 0;
             data = reportservice.getTicketSummary(ticketfrom, tickettype, startdate, enddate, billto, passenger, user.getName());
-        }else if (AirlineSummary.equalsIgnoreCase(name)) {
+        } else if (AirlineSummary.equalsIgnoreCase(name)) {
             PrintMethod = 0;
             data = reportservice.getAirlineSummary(ticketfrom, tickettype, startdate, enddate, user.getName());
-        }else if (StaffSummary.equalsIgnoreCase(name)) {
+        } else if (StaffSummary.equalsIgnoreCase(name)) {
             PrintMethod = 0;
             data = reportservice.getStaffSummary(ticketfrom, tickettype, startdate, enddate, user.getName());
-        }else if (TicketSaleSummary.equalsIgnoreCase(name)) {
+        } else if (TicketSaleSummary.equalsIgnoreCase(name)) {
             PrintMethod = 0;
             data = reportservice.getTicketSaleVolumn(ticketfrom, tickettype, startdate, enddate);
-        }else if (TicketProfitSummary.equalsIgnoreCase(name)) {
+        } else if (TicketProfitSummary.equalsIgnoreCase(name)) {
             PrintMethod = 0;
             data = reportservice.getTicketProfitVolumn(ticketfrom, tickettype, startdate, enddate);
-        }else if (InvoiceSummary.equalsIgnoreCase(name)) {
+        } else if (InvoiceSummary.equalsIgnoreCase(name)) {
             PrintMethod = 0;
             data = reportservice.getInvoiceSummary(ticketfrom, tickettype, startdate, enddate);
-        }else if (GuideJob.equalsIgnoreCase(name)) {
+        } else if (GuideJob.equalsIgnoreCase(name)) {
             PrintMethod = 0;
             data = reportservice.getGuildJobReport(tourDate, tourCode, user.getName());
-        }else if (TransferJob.equalsIgnoreCase(name)) {
+        } else if (TransferJob.equalsIgnoreCase(name)) {
             PrintMethod = 0;
             data = reportservice.getTransferJobReport(docno);
-        }else if (GuideCommission.equalsIgnoreCase(name)) {
+        } else if (GuideCommission.equalsIgnoreCase(name)) {
             PrintMethod = 0;
-            data = reportservice.getGuideCommissionInfoReport(startdate, enddate, user.getName(),guideID);
+            data = reportservice.getGuideCommissionInfoReport(startdate, enddate, user.getName(), guideID);
             // set path for loading sub-report file
             ((GuideCommissionInfo) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
-        }else if (AgentCommissionSummary.equalsIgnoreCase(name)) {
+        } else if (AgentCommissionSummary.equalsIgnoreCase(name)) {
             PrintMethod = 0;
-            data = reportservice.getAgentCommissionReportSummary(startdate, enddate, user.getName(),agentid);
-        }else if (AgentCommission.equalsIgnoreCase(name)) {
+            data = reportservice.getAgentCommissionReportSummary(startdate, enddate, user.getName(), agentid);
+        } else if (AgentCommission.equalsIgnoreCase(name)) {
             PrintMethod = 0;
-            data = reportservice.getAgentCommissionReport(startdate, enddate, user.getName(),agentid);
+            data = reportservice.getAgentCommissionReport(startdate, enddate, user.getName(), agentid);
             // set path for loading sub-report file
             ((AgentCommission) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
-        }else if (AgentCommissionInfo.equalsIgnoreCase(name)) {
+        } else if (AgentCommissionInfo.equalsIgnoreCase(name)) {
             PrintMethod = 0;
-            data = reportservice.getAgentCommissionReportInfo(startdate, enddate, user.getName(),agentid);
-        }else if (DaytourOther.equalsIgnoreCase(name)){
+            data = reportservice.getAgentCommissionReportInfo(startdate, enddate, user.getName(), agentid);
+        } else if (DaytourOther.equalsIgnoreCase(name)) {
             PrintMethod = 0;
-            data = reportservice.getDaytourOtherReport(refno,status);
-        }else if (OtherVouncherEmail.equalsIgnoreCase(name)){
+            data = reportservice.getDaytourOtherReport(refno, status);
+        } else if (OtherVouncherEmail.equalsIgnoreCase(name)) {
             PrintMethod = 0;
-            data = reportservice.getDaytourOtherReport(refno,status);
-        }else if (ReceiptEmail.equalsIgnoreCase(name)){
+            data = reportservice.getDaytourOtherReport(refno, status);
+        } else if (ReceiptEmail.equalsIgnoreCase(name)) {
             PrintMethod = 0;
             data = reportservice.getReceiptEmail();
-        }else if (ReceiptReport.equalsIgnoreCase(name)){
+        } else if (ReceiptReport.equalsIgnoreCase(name)) {
             PrintMethod = 0;
             data = reportservice.getReceipt();
-        }else if (ReceiveList.equalsIgnoreCase(name)){
+        } else if (ReceiveList.equalsIgnoreCase(name)) {
             PrintMethod = 0;
-            data = reportservice.getDaytourOtherReport(refno,status);
-        }else if (InvoiceEmail.equalsIgnoreCase(name)){
+            data = reportservice.getDaytourOtherReport(refno, status);
+        } else if (InvoiceEmail.equalsIgnoreCase(name)) {
             PrintMethod = 0;
             data = reportservice.getInvoiceEmail();
-        }else if (InvoiceReport.equalsIgnoreCase(name)){
-            PrintMethod = 0;
+        } else if (InvoiceReport.equalsIgnoreCase(name)) {
+            PrintMethod = 1;
             data = reportservice.getInvoice();
-        }  
-               
+        }
+
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);
 
         if (PrintMethod == 0) { // user bean method
             model.put("JRDataSource", dataSource);
-        } else  if (PrintMethod == 1) { // user pass parameter method
+        } else if (PrintMethod == 1) { // user pass parameter method
             try {
                 model.put("REPORT_CONNECTION", datasource.getConnection());
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
+            String jasperFileName = "InvoiceReport.jasper";
+            String pdfFileName = "C1_report.pdf";
+            reportservice.printreport(jasperFileName, pdfFileName, dataSource);
+           
+
         }
 
         return new ModelAndView(name, model);
