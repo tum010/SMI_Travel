@@ -6,7 +6,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="dataList" value="${requestScope['agent_list']}" />
 <section class="content-header" >
-    <h1>
+    <h1>    
         Master - Agent
     </h1>
     <ol class="breadcrumb">
