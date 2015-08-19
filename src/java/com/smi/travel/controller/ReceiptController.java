@@ -39,7 +39,7 @@ public class ReceiptController extends SMITravelController {
     private static final String PRODUCTROWCOUNT = "productRowCount";
     private static final String CREDITROWCOUNT = "creditRowCount";
     private static final String RECEIPT = "receipt"; // search receive no from Receipt table
-    private static final String RECEIPTDETAILLIST = "receiptDetailList"; // search receive no from Receipt Detail table
+    private static final String RECEIPTDETAILLIST = "receiptDetailList"; // search receive no from Receipt Detail table sss
     private static final String RECEIPTCREDITLIST = "receiptCreditList"; // search receive no from Receipt Credit table
     private static final String SAVERESULT = "saveresult"; // save result
     private static final String RECEIVEDATE = "receiveFromDate";
