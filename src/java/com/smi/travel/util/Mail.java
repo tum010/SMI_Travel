@@ -12,6 +12,7 @@ import java.sql.Statement;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
@@ -68,7 +69,11 @@ public class Mail extends SMITravelController {
             email.setSSLOnConnect(true);
             email.setFrom(mail.getUsername());
             email.setSubject(subject);
-            email.setHtmlMsg(content);
+            if(StringUtils.isNotEmpty(content)){
+                email.setHtmlMsg(content);
+            }else{
+                email.setHtmlMsg("  ");
+            }
             String[] toSplit = sendTo.split("\\,");
             for(int i=0;i<toSplit.length;i++){
                 System.out.println("Print toSplit" + toSplit[i]);
