@@ -111,11 +111,11 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
             getTransaction().commit();
             session.close();
             this.getSessionFactory().close();
-            result = "update success";
+            result = "success";
         } catch (Exception ex) {
             getTransaction().rollback();
             ex.printStackTrace();
-            result = "update fail";
+            result = "fail";
         }
         return  result;
     }
@@ -140,8 +140,21 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
     }
 
     @Override
-    public String DeleteTaxInvoiceInvoiceDetail(String TaxInvoiceDetailId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String DeleteTaxInvoiceInvoiceDetail(TaxInvoiceDetail taxInvoiceDetail) {
+        String result = "fail";
+        try {
+            Session session = this.sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            session.delete(taxInvoiceDetail);
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+            result = "success";
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            result = "fail";
+        }
+        return result;
     }
 
     @Override

@@ -12,7 +12,6 @@
 <c:set var="refNo_list" value="${requestScope['refNo_list']}" />
 <c:set var="taxInvoice" value="${requestScope['taxInvoice']}" />
 <c:set var="taxInvoiceDetail" value="${requestScope['taxInvoiceDetail_list']}" />
-<c:set var="resultText" value="${requestScope['result_text']}" />
 <input type="hidden" id="Type" name="Type" value="${param.Department}">
 <section class="content-header" >
     <h1>
@@ -30,6 +29,24 @@
     </div>
     <!--Content -->
     <div class="col-sm-10">
+        <c:if test="${requestScope['result_text'] =='success'}">                                            
+            <div id="textAlertDivSave"  style="" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Save Success!.</strong> 
+            </div>
+        </c:if>
+        <c:if test="${requestScope['result_text'] =='fail'}">
+        <div id="textAlertDivNotSave"  style="" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+           <strong>Save Unsuccess!.</strong> 
+        </div>
+        </c:if>
+        <c:if test="${requestScope['result_text'] =='not found'}">
+        <div id="textAlertDivFindNotFound"  style="" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+           <strong>Tax invoice no not found!.</strong> 
+        </div>
+        </c:if>
         <div class="row" style="padding-left: 15px">  
             <div class="col-sm-6 " style="padding-right: 15px">
 		<c:choose>
@@ -69,7 +86,7 @@
                                         <div class="col-xs-1 text-right">
                                             <label class="control-label">Inv No </lable>
                                         </div>
-                                        <div class="col-md-2 form-group">
+                                        <div class="col-md-2 form-group" id="invoicenopanel">
                                             <div class="input-group">
                                                 <input type="text" class="form-control" id="invoiceNo" name="invoiceNo" value="" onkeydown="invoiceNoValidate()">
                                             </div>
@@ -129,7 +146,7 @@
                             <input type="text"  class="form-control" id="TaxInvNo" name="TaxInvNo"  value="${taxInvoice.taxNo}" >
                         </div>
                         <div class="col-md-1" >
-                            <button type="button"  id="btnSearchInvoiceNo"  name="btnSearchInvoiceNo" onclick="searchInvoiceNo()" class="btn btn-primary btn-sm">
+                            <button type="button"  id="btnSearchTaxInvoiceNo"  name="btnSearchTaxInvoiceNo" onclick="searchTaxInvoiceNo()" class="btn btn-primary btn-sm">
                                 <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
                             </button>
                         </div>
@@ -240,30 +257,30 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <c:forEach var="expen" items="${dayTourOperationExpense}" varStatus="i">
+                                                <c:forEach var="taxDetail" items="${taxInvoiceDetail}" varStatus="i">
                                                 <tr>
-                                                    <td class="hidden"><input class="form-control" type="text" id="taxDetailId${i.count}" name="taxDetailId${i.count}" value=""></td>
+                                                    <td class="hidden"><input class="form-control" type="text" id="taxDetailId${i.count}" name="taxDetailId${i.count}" value="${taxDetail.id}"></td>
                                                     <td>
-                                                        <select class="form-control" name="product${i.count}" id="product${i.count}" onchange="AddrowBySelect()">
+                                                        <select class="form-control" name="product${i.count}" id="product${i.count}" onchange="AddrowBySelect('${i.count}')">
                                                             <option  value="" >---------</option>
                                                         <c:forEach var="product" items="${product_list}" varStatus="status">                                       
                                                             <c:set var="select" value="" />
-                                                            <c:if test="${product.id == pl.MPaytype.id}">
+                                                            <c:if test="${product.id == taxDetail.mbillType.id}">
                                                                 <c:set var="select" value="selected" />
                                                             </c:if>
                                                             <option  value="${product.id}" ${select}>${product.name}</option>
                                                         </c:forEach>
                                                         </select>      
                                                     </td>
-                                                    <td><input class="form-control" type="text" id="refNo${i.count}" name="refNo${i.count}" value="" onfocusout="checkRefNo('${i.count}')"></td>
-                                                    <td><input class="form-control" type="text" id="description${i.count}" name="description${i.count}" value=""></td>
-                                                    <td align="right"><input class="form-control" type="text" id="cost${i.count}" name="cost${i.count}" value=""></td>
+                                                    <td><input class="form-control" type="text" id="refNo${i.count}" name="refNo${i.count}" value="${taxDetail.master.referenceNo}" onfocusout="checkRefNo('${i.count}')"></td>
+                                                    <td><input class="form-control" type="text" id="description${i.count}" name="description${i.count}" value="${taxDetail.description}"></td>
+                                                    <td align="right"><input class="form-control numerical" style="text-align:right;" type="text" id="cost${i.count}" name="cost${i.count}" value="${taxDetail.cost}" onfocusout="CalculateAmountTotal()" onkeyup="insertCommas(this)"></td>
                                                     <td>
-                                                        <select class="form-control" name="currencyCost${i.count}" id="currencyCost${i.count}" onchange="AddrowBySelect()">
+                                                        <select class="form-control" name="currencyCost${i.count}" id="currencyCost${i.count}" onchange="AddrowBySelect(${i.count})">
                                                             <option  value="" >---------</option>
                                                         <c:forEach var="currency" items="${currency_list}" varStatus="status">                                       
                                                             <c:set var="select" value="" />
-                                                            <c:if test="${currency.code == pl.MPaytype.id}">
+                                                            <c:if test="${currency.code == taxDetail.curCost}">
                                                                 <c:set var="select" value="selected" />
                                                             </c:if>
                                                             <option  value="${currency.code}" ${select}>${currency.code}</option>
@@ -272,20 +289,20 @@
                                                     </td>
                                                     <td align="center">
                                                         <c:set var="vatChk" value="" />
-                                                        <c:if test="${'1' == pl.isVat}">
+                                                        <c:if test="${'1' == taxDetail.isVat}">
                                                             <c:set var="vatChk" value="checked" />
                                                         </c:if>  
-                                                        <input type="checkbox" id="isVat${i.count}" name="isVat${i.count}" value="1" ${vatChk}>
+                                                        <input type="checkbox" id="isVat${i.count}" name="isVat${i.count}" value="1" ${vatChk} onclick="CalculateGross('${i.count}')">
                                                     </td>
-                                                    <td align="right"><input class="form-control" type="text" id="vat" name="vat" value=""></td>
-                                                    <td align="right"><input class="form-control" type="text" id="gross" name="gross" value=""></td>
-                                                    <td align="right"><input class="form-control" type="text" id="amount" name=amount value=""></td>
+                                                    <td align="right" id="vatShow${i.count}">${taxDetail.vat}</td>
+                                                    <td align="right"><input class="form-control numerical" style="text-align:right;" type="text" id="gross${i.count}" name="gross${i.count}" value="" readonly=""></td>
+                                                    <td align="right"><input class="form-control numerical" style="text-align:right;" type="text" id="amount${i.count}" name="amount${i.count}" value="${taxDetail.amount}" onfocusout="CalculateAmountTotal()" onkeyup="insertCommas(this)"></td>
                                                     <td>
-                                                        <select class="form-control" name="currencyAmount${i.count}" id="currencyAmount${i.count}" onchange="AddrowBySelect()">
+                                                        <select class="form-control" name="currencyAmount${i.count}" id="currencyAmount${i.count}" onchange="AddrowBySelect(${i.count})">
                                                             <option  value="" >---------</option>
                                                         <c:forEach var="currency" items="${currency_list}" varStatus="status">                                       
                                                             <c:set var="select" value="" />
-                                                            <c:if test="${currency.code == pl.MPaytype.id}">
+                                                            <c:if test="${currency.code == taxDetail.curAmount}">
                                                                 <c:set var="select" value="selected" />
                                                             </c:if>
                                                             <option  value="${currency.code}" ${select}>${currency.code}</option>
@@ -293,14 +310,19 @@
                                                         </select>        
                                                     </td>
                                                     <td class="text-center">
-                                                        <a id="expenButtonRemove${i.count}" name="expenButtonRemove${i.count}" onclick="setExpenId(${expen.id})"  data-toggle="modal" data-target="#DeleteExpenModal">
+                                                        <a id="expenButtonRemove${i.count}" name="expenButtonRemove${i.count}" onclick="deleteTaxList('${taxDetail.id}','${i.count}')"  data-toggle="modal" data-target="#DeleteExpenModal">
                                                             <span id="expenSpanRemove${i.count}" name="expenSpanRemove${i.count}"  class="glyphicon glyphicon-remove deleteicon"></span>
                                                         </a>
                                                     </td>
                                                 </tr>
                                                 </c:forEach>    
                                             </tbody>
-                                        </table>    
+                                        </table>
+                                        <div id="tr_TaxInvoiceDetailAddRow" class="text-center hide" style="padding-top: 10px">
+                                            <a class="btn btn-success" onclick="AddRowTaxInvoiceTable()">
+                                                <i class="glyphicon glyphicon-plus"></i> Add
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -535,24 +557,30 @@
 </div>  
 
 <!--Delete Tax Invoice Modal-->
-<div class="modal fade" id="delTaxInvoiceModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
+<div class="modal fade" id="delTaxInvoiceDetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog ">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <c:choose>
-                    <c:when test="${param.Department=='WO'}">
-                        <h4 class="modal-title">Delete Tax Invoice Wendy/Outbound</h4>
+                    <c:when test="${fn:contains(page , 'W')}">
+                        <h4 class="modal-title">Delete Tax Invoice Wendy</h4>
                     </c:when>
-                    <c:when test="${param.Department=='INB'}">
+                    <c:when test="${fn:contains(page , 'O')}">
+                        <h4 class="modal-title">Delete Tax Invoice Outbound</h4>
+                    </c:when> 
+                    <c:when test="${fn:contains(page , 'I')}">
                         <h4 class="modal-title">Delete Tax Invoice Inbound</h4>
                     </c:when> 
-                </c:choose>
-                <!--<h4 class="modal-title">Delete Tax Invoice </h4>-->
+		</c:choose>                
             </div>
-            <div class="modal-body" id="delCode"></div>
+            <div class="modal-body" id="delCode">
+                
+            </div>
+            <input class="hidden" id="delTaxDetailId" name="delTaxDetailId" value="">
+            <input class="hidden" id="delTaxDetailRow" name="delTaxDetailRow" value="">
             <div class="modal-footer">
-                <button id="btnDelete" type="button" onclick="Delete()" class="btn btn-danger">Delete</button>
+                <button id="btnDelete" type="button" onclick="deleteTaxInvoiceDetailList()" class="btn btn-danger">Delete</button>
                 <button id="btnDeleteClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
@@ -666,6 +694,10 @@
                         console.log("rowAll : " + rowAll + " Row Index : " + rowIndex);
                         AddRowTaxInvoiceTable(rowAll);
                     }
+                    if (rowAll < 2) {
+                        $("#tr_TaxInvoiceDetailAddRow").removeClass("hide");
+                        $("#tr_TaxInvoiceDetailAddRow").addClass("show");
+                    }
                 }
             });
         });
@@ -697,6 +729,10 @@
             }
         });
         
+        $('#TotalAmount').ready(function () {
+            CalculateAmountTotal();
+            setGross();
+        });
     });
     
     function searchTaxInvoiceNo(){
@@ -833,12 +869,13 @@
     
     function searchInvoiceNo(){
         var invoiceNo = $("#invoiceNo").val();
+        var invoicenopanel = $("#invoicenopanel").val();
         if(invoiceNo === ""){
-            if(!$('#invoiceNoInput').hasClass('has-feedback')) {
-                $('#invoiceNoInput').addClass('has-feedback');
+            if(!$('#invoicenopanel').hasClass('has-feedback')) {
+                $('#invoicenopanel').addClass('has-feedback');
             }
-            $('#invoiceNoInput').removeClass('has-success');
-            $('#invoiceNoInput').addClass('has-error');
+            $('#invoicenopanel').removeClass('has-success');
+            $('#invoicenopanel').addClass('has-error');
         } else {
             var servletName = 'TaxInvoiceServlet';
             var servicesName = 'AJAXBean';
@@ -851,10 +888,49 @@
         }  
     }
     
+    function CallAjaxSearchInvoice(param) {
+        var url = 'AJAXServlet';
+        $("#ajaxload").removeClass("hidden");
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                success: function (msg) {
+                    try { 
+                        if(msg == "null"){
+                            $('#InvoiceListTable').dataTable().fnClearTable();
+                            $('#InvoiceListTable').dataTable().fnDestroy();
+                        }else{
+                            $('#InvoiceListTable').dataTable().fnClearTable();
+                            $('#InvoiceListTable').dataTable().fnDestroy();
+                            $("#InvoiceListTable tbody").empty().append(msg);
+
+                            document.getElementById("receiveFromCode").value = $("#receiveFromInvoice").val();
+                            document.getElementById("receiveFromName").value = $("#receiveNameInvoice").val();
+                            document.getElementById("receiveFromAddress").value = $("#receiveAddressInvoice").val();
+                            document.getElementById("arCode").value = $("#arcodeInvoice").val();
+                        }
+                        $("#ajaxload").addClass("hidden");
+
+                    } catch (e) {
+                        alert(e);
+                    }
+
+                }, error: function (msg) {
+                     $("#ajaxload").addClass("hidden");
+                }
+            });
+        } catch (e) {
+            alert(e);
+        }
+    }   
+    
     function invoiceNoValidate(){
-        $('#invoiceNoInput').removeClass('has-feedback');
-        $('#invoiceNoInput').addClass('has-success');
-        $('#invoiceNoInput').removeClass('has-error');  
+        $('#invoicenopanel').removeClass('has-feedback');
+        $('#invoicenopanel').addClass('has-success');
+        $('#invoicenopanel').removeClass('has-error');  
     }
     
     function AddRowTaxInvoiceTable(row) {
@@ -864,34 +940,40 @@
         $("#TaxInvoiceTable tbody").append(           
             '<tr>' +
             '<td class="hidden"><input class="form-control" type="text" id="taxDetailId' + row + '" name="taxDetailId' + row + '" value=""></td>' +
-            '<td><select class="form-control" name="product' + row + '" id="product' + row + '" onchange="AddrowBySelect()"><option  value="" >---------</option></select></td>' +
+            '<td><select class="form-control" name="product' + row + '" id="product' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
             '<td><input class="form-control" type="text" id="refNo' + row + '" name="refNo' + row + '" value="" onfocusout="checkRefNo(\'' + row + '\')"></td>' +
             '<td><input class="form-control" type="text" id="description' + row + '" name="description' + row + '" value=""></td>' +
-            '<td><input class="form-control numerical" style="text-align:right;" type="text" id="cost' + row + '" name="cost' + row +'" value="" onkeyup="insertCommas(this)"></td>' +
-            '<td><select class="form-control" name="currencyCost' + row + '" id="currencyCost' + row + '" onchange="AddrowBySelect()"><option  value="" >---------</option></select></td>' +
-            '<td align="center"><input type="checkbox" id="isVat' + row + '" name="isVat' + row + '" value="check" onclick="CalculateGross(\'' + row + '\')"></td>' +
+            '<td><input class="form-control numerical" style="text-align:right;" type="text" id="cost' + row + '" name="cost' + row +'" value="" onfocusout="CalculateAmountTotal()" onkeyup="insertCommas(this)"></td>' +
+            '<td><select class="form-control" name="currencyCost' + row + '" id="currencyCost' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
+            '<td align="center"><input type="checkbox" id="isVat' + row + '" name="isVat' + row + '" value="1" onclick="CalculateGross(\'' + row + '\')"></td>' +
             '<td align="right" id="vatShow' + row + '"></td>' +
             '<td><input class="form-control numerical" style="text-align:right;" type="text" id="gross' + row + '" name="gross' + row + '" value="" readonly=""></td>' +
             '<td><input class="form-control numerical" style="text-align:right;" type="text" id="amount' + row + '" name="amount' + row + '" value="" onfocusout="CalculateAmountTotal()" onkeyup="insertCommas(this)"></td>' +
-            '<td><select class="form-control" name="currencyAmount' + row + '" id="currencyAmount' + row + '" onchange="AddrowBySelect()"><option  value="" >---------</option></select></td>' +
+            '<td><select class="form-control" name="currencyAmount' + row + '" id="currencyAmount' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
             '<td>' + 
                 '<center>' +
-                '<a id="expenButtonRemove' + row + '" name="expenButtonRemove' + row + '" class="RemoveRow" onclick="">' + 
-                '<span id="expenSpanEdit' + row + '" name="expenSpanEdit' + row + '" class="glyphicon glyphicon-remove deleteicon"></span></a>' + 
+                '<a id="expenButtonRemove' + row + '" name="expenButtonRemove' + row + '" onclick="deleteTaxList(\'\',\'' + row + '\')"  data-toggle="modal" data-target="#DeleteExpenModal">' + 
+                '<span id="expenSpanEdit' + row + '" name="expenSpanEdit' + row + '" class="glyphicon glyphicon-remove deleteicon"></span>' +
+                '</a>' + 
                 '</center>' +
             '</td>' +
             '</tr>'           
         );
+        $("#tr_TaxInvoiceDetailAddRow").removeClass("show");
+        $("#tr_TaxInvoiceDetailAddRow").addClass("hide");
         $("#select_product_list option").clone().appendTo("#product" + row);
         $("#select_currency_list option").clone().appendTo("#currencyCost" + row);
         $("#select_currency_list option").clone().appendTo("#currencyAmount" + row);
         $("#countTaxInvoice").val(row);
-
+        
     }
     
-    function AddrowBySelect(){
-        var rowCount = $('#TaxInvoiceTable tr').length;
-        AddRowTaxInvoiceTable(rowCount);
+    function AddrowBySelect(row){
+        var rowTable = $('#TaxInvoiceTable tr').length;
+        row = parseInt(row) + 1;
+        if(row === rowTable){
+           AddRowTaxInvoiceTable(rowTable); 
+        }       
     }
     
     function CalculateAmountTotal(){
@@ -902,7 +984,7 @@
         var grandTotal = 0;
         for(i=1;i<=count+1;i++){
             var amount = document.getElementById("amount" + i);
-
+            var cost = document.getElementById("cost" + i);
             if (amount !== null){
                 var value = amount.value;
                     
@@ -912,7 +994,15 @@
                     grandTotal += total;
                     document.getElementById('amount' + i).value = formatNumber(total);
                 }
-            }    
+            }
+            if (cost !== null){
+                var costVal = cost.value;
+                if(costVal !== ''){
+                    costVal = costVal.replace(/,/g,"");
+                    var costTotal = parseFloat(costVal);
+                    document.getElementById('cost' + i).value = formatNumber(costTotal);
+                }
+            }
         }
         document.getElementById('TotalAmount').value = formatNumber(grandTotal);
         document.getElementById('TextAmount').value = toWords(grandTotal);
@@ -945,8 +1035,26 @@
             document.getElementById('vatShow'+row).innerHTML = '';
         }
     }
+    
+    function setGross(){
+        var row = $('#TaxInvoiceTable tr').length;
+        for(var i=1;i<=row;i++){          
+            var isVatCheck = document.getElementById("isVat"+i);
+            if(isVatCheck !== null && isVatCheck !== ''){
+                if(document.getElementById("isVat"+i).checked){
+                    CalculateGross(i);
+                } else {
+                    
+                }
+            }   
+        }
+    }   
         
     function toWords(s){
+        if(s === 0){
+            var defaultWord = 'zero point zero baht';
+            return  defaultWord;
+        }
         var th = ['','thousand','million', 'billion','trillion'];
         var dg = ['zero','one','two','three','four', 'five','six','seven','eight','nine']; 
         var tn = ['ten','eleven','twelve','thirteen', 'fourteen','fifteen','sixteen', 'seventeen','eighteen','nineteen']; 
@@ -1023,6 +1131,47 @@
                 }   
             }
         }
+    }
+    
+    function deleteTaxList(id,row) {
+        document.getElementById('delTaxDetailId').value = id;
+        document.getElementById('delTaxDetailRow').value = row;
+        $("#delCode").text('Are you sure delete this product ?');
+        $('#delTaxInvoiceDetailModal').modal('show');
+    }
+    
+    function deleteTaxInvoiceDetailList(){
+        var id = document.getElementById('delTaxDetailId').value;
+        var row = document.getElementById('delTaxDetailRow').value;
+        if(id === ''){
+            $("#product" + row).parent().parent().remove();
+            var rowAll = $("#TaxInvoiceTable tr").length;
+            if (rowAll <= 1) {
+                $("#tr_TaxInvoiceDetailAddRow").removeClass("hide");
+                $("#tr_TaxInvoiceDetailAddRow").addClass("show");
+            }
+            
+        } else {
+            $.ajax({
+                url: 'TaxInvoice'+'${page}'+'.smi?action=deleteTaxInvoiceDetail',
+                type: 'get',
+                data: {taxInvoiceDetailId: id},
+                success: function () {
+                    $("#product" + row).parent().parent().remove();
+                    var rowAll = $("#TaxInvoiceTable tr").length;
+                    if (rowAll <= 1) {
+                        $("#tr_TaxInvoiceDetailAddRow").removeClass("hide");
+                        $("#tr_TaxInvoiceDetailAddRow").addClass("show");
+                    }
+                },
+                error: function () {
+                    console.log("error");
+                    result =0;
+                }
+            }); 
+        }    
+        $('#delTaxInvoiceDetailModal').modal('hide');
+        CalculateAmountTotal();
     }
     
 </script>

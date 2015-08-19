@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.dao.TaxInvoiceDao;
 import com.smi.travel.datalayer.entity.TaxInvoice;
+import com.smi.travel.datalayer.entity.TaxInvoiceDetail;
 import java.util.List;
 
 /**
@@ -35,6 +36,10 @@ public class TaxInvoiceService {
 
     public void setTaxInvoiceDao(TaxInvoiceDao taxInvoiceDao) {
         this.taxInvoiceDao = taxInvoiceDao;
+    }
+
+    public String DeleteTaxInvoiceInvoiceDetail(TaxInvoiceDetail taxInvoiceDetail) {
+        return taxInvoiceDao.DeleteTaxInvoiceInvoiceDetail(taxInvoiceDetail);
     }
     
 }

@@ -106,10 +106,12 @@ public class TaxInvoiceController extends SMITravelController {
             if(taxInvId=="" || taxInvId==null){
                 taxInvoice.setCreateBy(username);
                 taxInvoice.setCreateDate(date);
+            } else {
+                taxInvoice.setTaxNo(TaxInvNo);
             }
             
             if(Integer.parseInt(count) > 1){
-                setTaxInvoiceDetails(request, count, taxInvoice, username, date);
+                setTaxInvoiceDetails(request, count, taxInvoice, username, date, vatDefault);
             }
             
             String result = taxInvoiceService.saveInvoice(taxInvoice);
@@ -127,7 +129,18 @@ public class TaxInvoiceController extends SMITravelController {
                 request.setAttribute(RESULTTEXT, "not found");
                 return new ModelAndView(LINKNAME+callPageFrom);
             }
+            List<TaxInvoiceDetail> taxInvoiceList = new ArrayList<TaxInvoiceDetail>();
+            taxInvoiceList = taxInvoice.getTaxInvoiceDetails();
+            request.setAttribute(TAXINVOICE, taxInvoice);
+            request.setAttribute("invToDate", taxInvoice.getTaxInvDate());
+            request.setAttribute(TAXINVOICEDETAILLIST, taxInvoiceList);
             
+        } else if("deleteTaxInvoiceDetail".equalsIgnoreCase(action)){
+            String taxInvoiceDetailId = request.getParameter("taxInvoiceDetailId");
+            TaxInvoiceDetail taxInvoiceDetail = new TaxInvoiceDetail();
+            taxInvoiceDetail.setId(taxInvoiceDetailId);
+            String result = taxInvoiceService.DeleteTaxInvoiceInvoiceDetail(taxInvoiceDetail);
+            System.out.println(result);
             
         } else if("edit".equalsIgnoreCase(action)){
 
@@ -137,7 +150,7 @@ public class TaxInvoiceController extends SMITravelController {
         return new ModelAndView(LINKNAME+callPageFrom);
     }
     
-    private void setTaxInvoiceDetails(HttpServletRequest request, String count, TaxInvoice taxInvoice, String createBy, Date createDate) {
+    private void setTaxInvoiceDetails(HttpServletRequest request, String count, TaxInvoice taxInvoice, String createBy, Date createDate, String vat) {
         util = new UtilityFunction();
         int rows = Integer.parseInt(count);
         if(taxInvoice.getTaxInvoiceDetails() == null){
@@ -151,14 +164,14 @@ public class TaxInvoiceController extends SMITravelController {
             String cost = request.getParameter("cost" + i);
             String currencyCost = request.getParameter("currencyCost" + i);
             String isVat = request.getParameter("isVat" + i);
-            String vat = request.getParameter("vat" + i);
+//            String vat = request.getParameter("vat" + i);
             String amount = request.getParameter("amount" + i);
             String currencyAmount = request.getParameter("currencyAmount" + i);
             
             TaxInvoiceDetail taxInvoiceDetail = new TaxInvoiceDetail();
             MBilltype mBillType = new MBilltype();
             
-            if((product!="" && product!=null) || (refNo!="" && refNo!=null) || (description!="" && description!=null) || (cost!="" && cost!=null) || (currencyCost!="" && currencyCost!=null) || (isVat!="" && isVat!=null) || (vat!="" && vat!=null) || (amount!="" && amount!=null) || (currencyAmount!="" && currencyAmount!=null)){                               
+            if((product!="" && product!=null) || (refNo!="" && refNo!=null) || (description!="" && description!=null) || (cost!="" && cost!=null) || (currencyCost!="" && currencyCost!=null) || (isVat!="" && isVat!=null) || (amount!="" && amount!=null) || (currencyAmount!="" && currencyAmount!=null)){                               
                 
                 if(taxDetailId!="" && taxDetailId!=null){
                     taxInvoiceDetail.setId(taxDetailId);                                                 
@@ -196,14 +209,16 @@ public class TaxInvoiceController extends SMITravelController {
                 
                 if("1".equalsIgnoreCase(isVat)){
                     taxInvoiceDetail.setIsVat(1);
+                    BigDecimal vatRe = new BigDecimal(vat);
+                    taxInvoiceDetail.setVat(vatRe);
                 } else {
                     taxInvoiceDetail.setIsVat(0);
                 }
                 
-                if(vat!="" && vat!=null){
-                    BigDecimal vatRe = new BigDecimal(vat);
-                    taxInvoiceDetail.setVat(vatRe);
-                }        
+//                if(vat!="" && vat!=null){
+//                    BigDecimal vatRe = new BigDecimal(vat);
+//                    taxInvoiceDetail.setVat(vatRe);
+//                }        
                 
                 if(amount!="" && amount!=null){
                     BigDecimal amountRe = new BigDecimal(amount.replaceAll(",",""));
