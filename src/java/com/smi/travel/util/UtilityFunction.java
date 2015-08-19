@@ -6,6 +6,7 @@
 package com.smi.travel.util;
 
 import com.smi.travel.datalayer.entity.AirticketFlight;
+import com.smi.travel.datalayer.entity.Customer;
 import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -374,6 +375,19 @@ public class UtilityFunction {
 
     public String getAddressUrl(String requestUrl){
         return requestUrl.substring(requestUrl.lastIndexOf("/")+1).replaceAll(URL, "");
+    }
+    
+    public String getCustomerName(Customer cus){
+        String name ="";
+        if(cus == null){
+            return "";
+        }
+        String MInitial= "";
+        if(cus.getMInitialname() != null){
+            MInitial = cus.getMInitialname().getName();
+        }
+        name = MInitial +" "+cus.getLastName() +" "+cus.getFirstName();
+        return name;
     }
     
 }
