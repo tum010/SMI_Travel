@@ -237,8 +237,12 @@ public class TaxInvoiceController extends SMITravelController {
             request.setAttribute("invToDate", invToDate);
             request.setAttribute("createDate", createDate);
             request.setAttribute(TAXINVOICEDETAILLIST, taxInvoiceList);
-            request.setAttribute(RESULTTEXT, result);
-            
+            if("success".equalsIgnoreCase(result)){
+                request.setAttribute(RESULTTEXT, "disableVoid success");
+            } else {
+                request.setAttribute(RESULTTEXT, "disableVoid success");
+            }
+                       
         } else if("edit".equalsIgnoreCase(action)){
 
         }
