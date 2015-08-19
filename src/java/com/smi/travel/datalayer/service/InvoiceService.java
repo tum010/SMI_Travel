@@ -7,6 +7,7 @@ package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.dao.InvoiceDao;
 import com.smi.travel.datalayer.entity.Invoice;
+import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.view.entity.InvoiceView;
 import java.util.List;
 
@@ -65,4 +66,7 @@ public class InvoiceService {
         return  invoiceDao.searchInvoiceNo(department, invoiceType);
     }
     
+    public List<InvoiceDetail> getInvoiceDetailFromBillableDescId(String billableDescId){
+        return  invoiceDao.getInvoiceDetailFromBillableDescId(billableDescId);
+    }
 }
