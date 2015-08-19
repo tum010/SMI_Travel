@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!--<script type="text/javascript" src="js/Receipt.js"></script> sss--> 
+<!--<script type="text/javascript" src="js/Receipt.js"></script>--> 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -429,7 +429,9 @@
                                     </tbody>
                                 </table>      
                             </div>
-                        </div>
+                        </div> 
+                        <!--<input type="hidden" name="mAccPayBillable" id="mAccPayBillable" value="">-->
+                        
                         <input type="hidden" name="receiptIdDelete" id="receiptIdDelete" value="">
                         <input type="hidden" name="receiptDetailIdDelete" id="receiptDetailIdDelete" value="">
                         <input type="hidden" name="receiptRowDelete" id="receiptRowDelete" value="">
@@ -1670,16 +1672,19 @@ function invoicenoValidate(){
     $('#invoicenopanel').addClass('has-success');
     $('#invoicenopanel').removeClass('has-error');  
 }
-function addProduct(product,description,cost,cur,isVat,vat,amount,currency,invId){
+function addProduct(product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode){
     var tempCount = parseInt($("#counter").val());
-    AddDataRowProduct(tempCount,product,description,cost,cur,isVat,vat,amount,currency,invId);
+    AddDataRowProduct(tempCount,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode);
 
 }
-function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,currency,invId) {
+function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode) {
     $("#ReceiptListTable tbody").append(
         '<tr style="higth 100px">' +
         '<input id="invId' + row + '" name="invId' + row + '"  type="hidden" value="'+invId+'" >' +
         '<input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >' +
+        '<input id="billDescId' + row + '" name="billDescId' + row + '"  type="hidden" value="'+billDescId+'" >' +
+        '<input id="paymentId' + row + '" name="paymentId' + row + '"  type="hidden" value="'+paymentId+'" >' +
+        '<input id="airlineCode' + row + '" name="airlineCode' + row + '"  type="hidden" value="'+airlineCode+'" >' +
         '<td>' + 
         '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="'+product+'" selected></option></select>' +                          
         '</td>' +
@@ -1796,10 +1801,11 @@ function CallAjaxSearchRef(param) {
                         $('#RefNoListTable').dataTable().fnDestroy();
                         $("#RefNoListTable tbody").append(msg);
                         
-                        document.getElementById("receiveFromCode").value = $("#receiveFromInvoice").val();
-                        document.getElementById("receiveFromName").value = $("#receiveNameInvoice").val();
-                        document.getElementById("receiveFromAddress").value = $("#receiveAddressInvoice").val();
-                        document.getElementById("arCode").value = $("#arcodeInvoice").val();
+                        document.getElementById("receiveFromCode").value = $("#receiveFromBillable").val();
+                        document.getElementById("receiveFromName").value = $("#receiveNameBillable").val();
+                        document.getElementById("receiveFromAddress").value = $("#receiveAddressBillable").val();
+                        document.getElementById("arCode").value = $("#arcodeBillable").val();
+                        document.getElementById("inputStatus").value = $("#mAccPayBillable").val();
                     }
                     $("#ajaxload2").addClass("hidden");
                      
