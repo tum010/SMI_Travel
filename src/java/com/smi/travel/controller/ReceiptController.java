@@ -1,4 +1,6 @@
 package com.smi.travel.controller;
+import com.smi.travel.datalayer.entity.BillableDesc;
+import com.smi.travel.datalayer.entity.Invoice;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.MAccpay;
 import com.smi.travel.datalayer.entity.MBilltype;
@@ -6,10 +8,12 @@ import com.smi.travel.datalayer.entity.MCreditBank;
 import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MDefaultData;
 import com.smi.travel.datalayer.entity.MFinanceItemstatus;
+import com.smi.travel.datalayer.entity.PaymentAirticket;
 import com.smi.travel.datalayer.entity.Receipt;
 import com.smi.travel.datalayer.entity.ReceiptCredit;
 import com.smi.travel.datalayer.entity.ReceiptDetail;
 import com.smi.travel.datalayer.entity.SystemUser;
+import com.smi.travel.datalayer.service.InvoiceService;
 import com.smi.travel.datalayer.service.ReceiptService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
@@ -18,6 +22,7 @@ import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,7 +44,7 @@ public class ReceiptController extends SMITravelController {
     private static final String PRODUCTROWCOUNT = "productRowCount";
     private static final String CREDITROWCOUNT = "creditRowCount";
     private static final String RECEIPT = "receipt"; // search receive no from Receipt table
-    private static final String RECEIPTDETAILLIST = "receiptDetailList"; // search receive no from Receipt Detail table sss
+    private static final String RECEIPTDETAILLIST = "receiptDetailList"; // search receive no from Receipt Detail table
     private static final String RECEIPTCREDITLIST = "receiptCreditList"; // search receive no from Receipt Credit table
     private static final String SAVERESULT = "saveresult"; // save result
     private static final String RECEIVEDATE = "receiveFromDate";
@@ -48,6 +53,7 @@ public class ReceiptController extends SMITravelController {
     private static final String DELETERESULT = "deleteresult";
     private UtilityService utilityService;
     private ReceiptService receiptService;
+    private InvoiceService invoiceService;
     UtilityFunction util;
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -147,13 +153,12 @@ public class ReceiptController extends SMITravelController {
             
             int rowsProduct = Integer.parseInt(counter);
             int rowsCredit = Integer.parseInt(countRowCredit);
-            
-            System.out.println("rowsProduct " + rowsProduct);
-            System.out.println("rowsCredit " + rowsCredit);
-                //save or update payment air ticket fare
+                       
+            //save or update payment air ticket fare
             if(receipt.getReceiptDetails() == null){
                 receipt.setReceiptDetails(new ArrayList<ReceiptDetail>());
             }
+            
             for (int i = 0; i < rowsProduct ; i++) {
                 String tableId = request.getParameter("tableId" + i);
                 String receiveProduct = request.getParameter("receiveProduct" + i);
@@ -166,14 +171,15 @@ public class ReceiptController extends SMITravelController {
                 String receiveAmount = request.getParameter("receiveAmount" + i);
                 String receiveCurrency = request.getParameter("receiveCurrency" + i);
                 String invId = request.getParameter("invId" + i);
-
+                String billDescId = request.getParameter("billDescId" + i);
+                String paymentId = request.getParameter("paymentId" + i);
+                String airlineCode = request.getParameter("airlineCode" + i);
+                System.out.println(" invId " + invId);
+                System.out.println(" billDescId " + billDescId);
+                System.out.println(" paymentId " + paymentId);
+                System.out.println(" airlineCode " + airlineCode);
                 ReceiptDetail receiptDetail = new ReceiptDetail();
-                
-                if(StringUtils.isNotEmpty(invId)){
-                    InvoiceDetail invoiceDetail = new InvoiceDetail();
-                    invoiceDetail.setId(invId);
-                    receiptDetail.setInvoiceDetail(invoiceDetail);
-                }
+               
                 receiptDetail.setId(tableId);
                 receiptDetail.setReceipt(receipt);
                 if(StringUtils.isNotEmpty(receiveProduct)){
@@ -185,7 +191,6 @@ public class ReceiptController extends SMITravelController {
                 receiptDetail.setDisplayDescription(receiveDes);
                 receiptDetail.setCost(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(receiveCost) ? receiveCost.replaceAll(",","") : 0)));
                 receiptDetail.setCurCost(receiveCurCost);
-                System.out.println("receiveIsVat " + i + receiveIsVat);
                 if("1".equals(receiveIsVat)){
                     receiptDetail.setIsVat(1);
                 }else{
@@ -193,9 +198,92 @@ public class ReceiptController extends SMITravelController {
                 }
                 receiptDetail.setVat(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(receiveVat) ? receiveVat.replaceAll(",","") : 0)));
                 receiptDetail.setAmount(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(receiveAmount) ? receiveAmount.replaceAll(",","") : 0)));
-                
                 receiptDetail.setCurAmount(receiveCurrency);
+                
+                if(StringUtils.isNotEmpty(invId)){
+                    InvoiceDetail invoiceDetail = new InvoiceDetail();
+                    invoiceDetail.setId(invId);
+                    receiptDetail.setInvoiceDetail(invoiceDetail);
+                }
+                
+                if(StringUtils.isNotEmpty(billDescId) || StringUtils.isNotEmpty(paymentId)){
+                    List<InvoiceDetail>  invoiceDetailList = null;
+                    if(StringUtils.isNotEmpty(billDescId)){
+                        invoiceDetailList = invoiceService.getInvoiceDetailFromBillableDescId(billDescId);
+                    }
+                    if(invoiceDetailList == null){
+                       Invoice invoice = new Invoice();
+                       invoice.setInvNo(receiveNo);
+                       invoice.setInvTo(receiveFromCode);
+                       invoice.setInvName(receiveFromName);
+                       invoice.setInvAddress(receiveFromAddress);
+                       invoice.setArcode(arCode);
+                       invoice.setInvDate(util.convertStringToDate(receiveFromDate != "" ? receiveFromDate : ""));
+                       invoice.setDeparement(InputDepartment);
+                       invoice.setInvType(InputReceiptType);
+                       invoice.setIsLock(1);
+                       invoice.setCreateBy(user.getUsername());
+                       invoice.setCreateDate(new Date());
+                       if(StringUtils.isNotEmpty(inputStatus)){
+                           MAccpay mAccpay = new MAccpay();
+                           mAccpay.setId(inputStatus);
+                           invoice.setMAccpay(mAccpay);
+                       }
+                       invoice.setStaff(user);
+                       MFinanceItemstatus mFinanceItemstatus = new MFinanceItemstatus();
+                       mFinanceItemstatus.setId("1"); // 1 = Normal
+                       invoice.setMFinanceItemstatus(mFinanceItemstatus);
 
+                       List<InvoiceDetail> listInvoiceDetail = new LinkedList<InvoiceDetail>();
+                       InvoiceDetail invoiceDetail = new InvoiceDetail();
+                       
+                       if(StringUtils.isNotEmpty(billDescId)){
+                            BillableDesc bill = new BillableDesc();
+                            bill.setId(billDescId);
+                            invoiceDetail.setBillableDesc(bill);
+                       }
+                       if(receiptDetail.getMBilltype() != null){
+                            invoiceDetail.setMbillType(receiptDetail.getMBilltype());
+                       }    
+                       invoiceDetail.setInvoice(invoice);
+                       invoiceDetail.setDescription(receiptDetail.getDescription());
+                       invoiceDetail.setCost(receiptDetail.getCost());
+                       invoiceDetail.setCostLocal(receiptDetail.getCost());
+                       invoiceDetail.setCurCost(receiptDetail.getCurCost());
+                       invoiceDetail.setAmount(receiptDetail.getAmount());
+                       invoiceDetail.setAmountLocal(receiptDetail.getAmount());
+                       invoiceDetail.setCurAmount(receiptDetail.getCurAmount());
+                       invoiceDetail.setVat(receiptDetail.getVat());
+                       invoiceDetail.setIsVat(receiptDetail.getIsVat());
+                       listInvoiceDetail.add(invoiceDetail);
+
+                       invoice.setInvoiceDetails(listInvoiceDetail);
+                       String invoiceNo = invoiceService.saveInvoice(invoice);
+                       if("fail".equals(invoiceNo)){
+                           System.out.println(" SAVE INVOICE FAIL ");
+                       }else{
+                           System.out.println("invoiceNo " + invoiceNo);
+                           Invoice inv = invoiceService.getInvoiceFromInvoiceNumber(invoiceNo);
+                           List<InvoiceDetail> invDetaill = new ArrayList<InvoiceDetail>(inv.getInvoiceDetails());
+                           InvoiceDetail invD = new InvoiceDetail();
+                           invD.setId(invDetaill.get(0).getId());
+                           receiptDetail.setInvoiceDetail(invD);
+                       }
+
+                       if(StringUtils.isNotEmpty(paymentId)){
+                           PaymentAirticket pay = new PaymentAirticket();
+                           pay.setId(paymentId);
+                           receiptDetail.setPaymentAirticket(pay);
+                           receiptDetail.setRemark(receiveDes);
+                           if(StringUtils.isNotEmpty(airlineCode)){
+                               receiptDetail.setAirlineCode(airlineCode);
+                           }
+                           receiptDetail.setCurAmount("THB");
+                       }
+                   }
+                }
+
+                
                 if( (receiveProduct!="" && receiveProduct!=null) || 
                     (receiveDes!="" && receiveDes!=null) || 
                     (receiveCost!="" && receiveCost!=null) || 
@@ -204,7 +292,6 @@ public class ReceiptController extends SMITravelController {
                     (receiveCurrency!="" && receiveCurrency!=null)){
                     receipt.getReceiptDetails().add(receiptDetail);
                 }
-
             }
             
             if(receipt.getReceiptCredits() == null){
@@ -415,5 +502,13 @@ public class ReceiptController extends SMITravelController {
 
     public void setReceiptService(ReceiptService receiptService) {
         this.receiptService = receiptService;
+    }
+
+    public InvoiceService getInvoiceService() {
+        return invoiceService;
+    }
+
+    public void setInvoiceService(InvoiceService invoiceService) {
+        this.invoiceService = invoiceService;
     }
 }
