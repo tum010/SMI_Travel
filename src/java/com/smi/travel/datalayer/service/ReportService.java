@@ -27,7 +27,7 @@ import com.smi.travel.datalayer.view.dao.TicketSaleProfitVolumnDao;
 import com.smi.travel.datalayer.view.dao.TicketSummaryDao;
 import com.smi.travel.datalayer.view.dao.TransferJobReportDao;
 import com.smi.travel.datalayer.view.dao.InvoiceEmailDao;
-import com.smi.travel.datalayer.view.dao.InvoiceDao;
+import com.smi.travel.datalayer.view.dao.InvoiceReportDao;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +55,7 @@ public class ReportService {
     private ReceiptDao receiptDao;
     private ReceiveListDao  receiveListDao;
     private InvoiceEmailDao invoiceEmaildao;
-    private InvoiceDao invoicedao;
+    private InvoiceReportDao invoicedao;
     
     public List getHotelVoucher(String hotelID,String name) {
         List data  = new ArrayList();
@@ -353,11 +353,11 @@ public class ReportService {
         return invoiceEmaildao;
     }
 
-    public void setInvoicedao(InvoiceDao invoicedao) {
+    public void setInvoicedao(InvoiceReportDao invoicedao) {
         this.invoicedao = invoicedao;
     }
 
-    public InvoiceDao getInvoicedao() {
+    public InvoiceReportDao getInvoicedao() {
         return invoicedao;
     }
    

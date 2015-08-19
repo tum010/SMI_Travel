@@ -6,7 +6,7 @@
 
 package com.smi.travel.datalayer.view.dao.impl;
 import com.smi.travel.datalayer.report.model.InvoiceReport;
-import com.smi.travel.datalayer.view.dao.InvoiceDao;
+import com.smi.travel.datalayer.view.dao.InvoiceReportDao;
 import com.smi.travel.util.UtilityFunction;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,7 +19,7 @@ import org.hibernate.SessionFactory;
  *
  * @author chonnasith
  */
-public class InvoiceImpl implements InvoiceDao{
+public class InvoiceImpl implements InvoiceReportDao{
     private SessionFactory sessionFactory;
     private UtilityFunction utilityFunction;
 
