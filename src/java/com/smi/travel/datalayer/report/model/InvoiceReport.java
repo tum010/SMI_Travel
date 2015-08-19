@@ -29,7 +29,7 @@ public class InvoiceReport {
     private String branch;
     private String accno;
     private String acctype;
-    private String usercreate;
+    private String user;
     private String textmoney;
 
     public String getInvto() {
@@ -168,12 +168,12 @@ public class InvoiceReport {
         this.acctype = acctype;
     }
 
-    public String getUsercreate() {
-        return usercreate;
+    public String getUser() {
+        return user;
     }
 
-    public void setUsercreate(String usercreate) {
-        this.usercreate = usercreate;
+    public void setUser(String user) {
+        this.user = user;
     }
 
     
