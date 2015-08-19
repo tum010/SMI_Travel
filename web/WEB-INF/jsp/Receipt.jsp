@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!--<script type="text/javascript" src="js/Receipt.js"></script> ss--> 
+<!--<script type="text/javascript" src="js/Receipt.js"></script> --> 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -1645,7 +1645,7 @@ function CallAjaxSearchInvoice(param) {
                     }else{
                         $('#InvoiceListTable').dataTable().fnClearTable();
                         $('#InvoiceListTable').dataTable().fnDestroy();
-                        $("#InvoiceListTable tbody").empty().append(msg);
+                        $("#InvoiceListTable tbody").append(msg);
                         
                         document.getElementById("receiveFromCode").value = $("#receiveFromInvoice").val();
                         document.getElementById("receiveFromName").value = $("#receiveNameInvoice").val();
