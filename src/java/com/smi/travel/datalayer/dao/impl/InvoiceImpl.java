@@ -13,6 +13,8 @@ import com.smi.travel.datalayer.entity.Stock;
 import com.smi.travel.datalayer.view.entity.InvoiceView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -42,6 +44,8 @@ public class InvoiceImpl implements InvoiceDao{
         Session session = this.sessionFactory.openSession();
         try { 
             transaction = session.beginTransaction();
+            result = generateInvoiceNo(invoice.getDeparement() , invoice.getInvType());
+            invoice.setInvNo(result);
             session.save(invoice);
             List<InvoiceDetail> invoiceDetail = invoice.getInvoiceDetails();
             if(invoiceDetail != null){
@@ -52,7 +56,7 @@ public class InvoiceImpl implements InvoiceDao{
             transaction.commit();
             session.close();
             this.sessionFactory.close();
-            result = "success";
+//            result = "success";
         } catch (Exception ex) {
             transaction.rollback();
             ex.printStackTrace();
@@ -63,6 +67,78 @@ public class InvoiceImpl implements InvoiceDao{
         return result;
     }
 
+    private String generateInvoiceNo(String department, String invoiceType){
+        String invNo = "";
+        String invType = "";
+        Session session = this.sessionFactory.openSession();
+        List<String> list = new LinkedList<String>();
+        Date thisdate = new Date();
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("MMyy");
+        Query query = session.createSQLQuery("SELECT RIGHT(inv_no, 4) as invnum  FROM invoice where deparement = :deparement and inv_type = :invoiceType and inv_no Like :invno  ORDER BY RIGHT(inv_no, 4) desc");
+        query.setParameter("invno", "%"+ df.format(thisdate) + "%");
+        query.setParameter("deparement", department);
+        query.setParameter("invoiceType", invoiceType);
+        query.setMaxResults(1);
+        list = query.list();
+        String departtype = "";
+        if("Wendy".equals(department)){
+            if("T".equals(invoiceType)){
+                departtype = "W";
+            }else if("V".equals(invoiceType)){
+                departtype = "WV";
+            }else if("N".equals(invoiceType)){
+                departtype = "WN";
+            }
+        }else if("Inbound".equals(department)){
+            if("T".equals(invoiceType)){
+                departtype = "I";
+            }else if("V".equals(invoiceType)){
+                departtype = "IV";
+            }else if("N".equals(invoiceType)){
+                departtype = "IN";
+            }
+        }else if("Outbound".equals(department)){
+            if("T".equals(invoiceType)){
+                departtype = "O";    
+            }else if("V".equals(invoiceType)){
+                departtype = "OV";
+            }else if("N".equals(invoiceType)){
+                departtype = "ON";
+            }
+        }
+        
+        if (list.isEmpty()) {
+            invNo = departtype + df.format(thisdate) + "-" + "0001";
+        } else {
+            invNo = list.get(0);
+            System.out.println("invNo === " + invNo + " === ");
+            if (!invNo.equalsIgnoreCase("")) {
+                System.out.println("invNo type" + invNo.substring(1,2) + "/////");
+                invType = invNo.substring(1,2);
+                if(!"V".equals(invType) && !"N".equals(invType)){
+                    int running = Integer.parseInt(invNo) + 1;
+                    String temp = String.valueOf(running);
+                    for (int i = temp.length(); i < 4; i++) {
+                        temp = "0" + temp;
+                    }
+                    invNo = departtype + "-" + df.format(thisdate) + "-" + temp;
+                }else{
+                    int running = Integer.parseInt(invNo) + 1;
+                    String temp = String.valueOf(running);
+                    for (int i = temp.length(); i < 4; i++) {
+                        temp = "0" + temp;
+                    }
+                    invNo = departtype + "-" + df.format(thisdate) + "-" + temp;
+                }
+            }
+        }
+        System.out.println("invNo ::: " +invNo);
+        session.close();
+        this.sessionFactory.close();
+        return invNo.replace("-","");
+    }
+        
     @Override
     public String updateInvoice(Invoice invoice) {
         String result = "";
@@ -226,7 +302,7 @@ public class InvoiceImpl implements InvoiceDao{
         return invoiceNoLast;
     }
 
-    @Override
+//    @Override
     public Invoice getInvoiceFromId(String invoiceId) {
        Session session = this.sessionFactory.openSession();
         Invoice invoice = new Invoice();
@@ -362,5 +438,19 @@ public class InvoiceImpl implements InvoiceDao{
     @Override
     public String LockAndUnLockInvoice(String InvoiceId, int LockStatus) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<InvoiceDetail> getInvoiceDetailFromBillableDescId(String billableDescId) {
+        Session session = this.sessionFactory.openSession();
+        List<InvoiceDetail> list = session.createQuery("from InvoiceDetail inv WHERE inv.billableDesc.id = :billableDescId")
+                .setParameter("billableDescId", billableDescId)
+                .list();
+        if(list.isEmpty()){
+            return null;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return list;
     }
 }
