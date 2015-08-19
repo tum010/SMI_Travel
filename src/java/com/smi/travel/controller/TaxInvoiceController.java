@@ -1,7 +1,9 @@
 package com.smi.travel.controller;
+import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.MBilltype;
 import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MDefaultData;
+import com.smi.travel.datalayer.entity.MFinanceItemstatus;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.entity.TaxInvoice;
@@ -68,6 +70,14 @@ public class TaxInvoiceController extends SMITravelController {
         String idRole = user.getRole().getId();
         String username = user.getUsername();
         request.setAttribute("idRole", idRole);
+        String roleName = user.getRole().getName();
+        if("Finance Manager".equalsIgnoreCase(roleName)){
+            roleName = "YES";
+            request.setAttribute("roleName", roleName);
+        }else{
+            roleName = "NO";
+            request.setAttribute("roleName", roleName);
+        }
         
         List<String> RefNoList =  paymentTourHotelService.getMasterAll();       
         request.setAttribute(REFNOLIST, RefNoList);
@@ -75,12 +85,12 @@ public class TaxInvoiceController extends SMITravelController {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar cal = Calendar.getInstance();
         System.out.println(dateFormat.format(cal.getTime()));
-        String createDate = dateFormat.format(cal.getTime());
+        String dateData = dateFormat.format(cal.getTime());
         Date date = new Date();
-        date = utilty.convertStringToDate(createDate);
+        date = utilty.convertStringToDate(dateData);
         
         String action = request.getParameter("action");
-        String TaxInvNo = request.getParameter("TaxInvNo");
+        String taxInvNo = request.getParameter("TaxInvNo");
         String taxInvId = request.getParameter("TaxInvId");
         String taxInvTo = request.getParameter("TaxInvTo");
         String invToDate = request.getParameter("InvToDate");
@@ -88,6 +98,9 @@ public class TaxInvoiceController extends SMITravelController {
         String invToAddress = request.getParameter("InvToAddress");
         String arCode = request.getParameter("ARCode");
         String remark = request.getParameter("Remark");
+        String taxInvStatus = request.getParameter("TaxInvStatus");
+        String createDate = request.getParameter("createDate");
+        String createBy = request.getParameter("createBy");
         String count = request.getParameter("countTaxInvoice");
         String vatDefault = request.getParameter("vatDefault");
         
@@ -98,16 +111,26 @@ public class TaxInvoiceController extends SMITravelController {
             taxInvoice.setTaxInvName(invToName);
             taxInvoice.setTaxInvAddr(invToAddress);
             taxInvoice.setArCode(arCode);
-            taxInvoice.setRemark(remark);
+            taxInvoice.setRemark(remark);                                    
+            
             Date invToDateConvert = new Date();
             invToDateConvert = utilty.convertStringToDate(invToDate);
             taxInvoice.setTaxInvDate(invToDateConvert);
             
+            MFinanceItemstatus mFinanceItemstatus = new MFinanceItemstatus();
             if(taxInvId=="" || taxInvId==null){
                 taxInvoice.setCreateBy(username);
                 taxInvoice.setCreateDate(date);
+                mFinanceItemstatus.setId("1");
+                taxInvoice.setMFinanceItemstatus(mFinanceItemstatus);
             } else {
-                taxInvoice.setTaxNo(TaxInvNo);
+                taxInvoice.setTaxNo(taxInvNo);               
+                taxInvoice.setCreateBy(createBy);
+                mFinanceItemstatus.setId(taxInvStatus);
+                taxInvoice.setMFinanceItemstatus(mFinanceItemstatus);
+                
+                invToDateConvert = utilty.convertStringToDate(createDate);
+                taxInvoice.setCreateDate(invToDateConvert);
             }
             
             if(Integer.parseInt(count) > 1){
@@ -119,12 +142,13 @@ public class TaxInvoiceController extends SMITravelController {
             taxInvoiceList = taxInvoice.getTaxInvoiceDetails();
             request.setAttribute(TAXINVOICE, taxInvoice);
             request.setAttribute("invToDate", invToDate);
+            request.setAttribute("createDate", createDate);
             request.setAttribute(TAXINVOICEDETAILLIST, taxInvoiceList);
             request.setAttribute(RESULTTEXT, result);
             
         } else if("search".equalsIgnoreCase(action)){
             TaxInvoice taxInvoice = new TaxInvoice();
-            taxInvoice = taxInvoiceService.getTaxInvoiceFromTaxInvNo(TaxInvNo);
+            taxInvoice = taxInvoiceService.getTaxInvoiceFromTaxInvNo(taxInvNo);
             if(taxInvoice==null){
                 request.setAttribute(RESULTTEXT, "not found");
                 return new ModelAndView(LINKNAME+callPageFrom);
@@ -133,6 +157,7 @@ public class TaxInvoiceController extends SMITravelController {
             taxInvoiceList = taxInvoice.getTaxInvoiceDetails();
             request.setAttribute(TAXINVOICE, taxInvoice);
             request.setAttribute("invToDate", taxInvoice.getTaxInvDate());
+            request.setAttribute("createDate", taxInvoice.getCreateDate());
             request.setAttribute(TAXINVOICEDETAILLIST, taxInvoiceList);
             
         } else if("deleteTaxInvoiceDetail".equalsIgnoreCase(action)){
@@ -141,6 +166,78 @@ public class TaxInvoiceController extends SMITravelController {
             taxInvoiceDetail.setId(taxInvoiceDetailId);
             String result = taxInvoiceService.DeleteTaxInvoiceInvoiceDetail(taxInvoiceDetail);
             System.out.println(result);
+            
+        } else if("enableVoid".equalsIgnoreCase(action)){
+            TaxInvoice taxInvoice = new TaxInvoice();
+            taxInvoice.setId(taxInvId);
+            taxInvoice.setTaxInvTo(taxInvTo);
+            taxInvoice.setTaxInvName(invToName);
+            taxInvoice.setTaxInvAddr(invToAddress);
+            taxInvoice.setArCode(arCode);
+            taxInvoice.setRemark(remark); 
+            taxInvoice.setTaxNo(taxInvNo);               
+            taxInvoice.setCreateBy(createBy);
+            
+            Date invToDateConvert = new Date();
+            invToDateConvert = utilty.convertStringToDate(invToDate);
+            taxInvoice.setTaxInvDate(invToDateConvert);
+            
+            MFinanceItemstatus mFinanceItemstatus = new MFinanceItemstatus();
+            mFinanceItemstatus.setId("1");
+            mFinanceItemstatus.setName("NORMAL");
+            taxInvoice.setMFinanceItemstatus(mFinanceItemstatus);
+            
+            invToDateConvert = utilty.convertStringToDate(createDate);
+            taxInvoice.setCreateDate(invToDateConvert);
+            
+            if(Integer.parseInt(count) > 1){
+                setTaxInvoiceDetails(request, count, taxInvoice, username, date, vatDefault);
+            }
+            
+            String result = taxInvoiceService.saveInvoice(taxInvoice);
+            List<TaxInvoiceDetail> taxInvoiceList = new ArrayList<TaxInvoiceDetail>();
+            taxInvoiceList = taxInvoice.getTaxInvoiceDetails();
+            request.setAttribute(TAXINVOICE, taxInvoice);
+            request.setAttribute("invToDate", invToDate);
+            request.setAttribute("createDate", createDate);
+            request.setAttribute(TAXINVOICEDETAILLIST, taxInvoiceList);
+            request.setAttribute(RESULTTEXT, result);
+            
+        } else if("disableVoid".equalsIgnoreCase(action)){
+            TaxInvoice taxInvoice = new TaxInvoice();
+            taxInvoice.setId(taxInvId);
+            taxInvoice.setTaxInvTo(taxInvTo);
+            taxInvoice.setTaxInvName(invToName);
+            taxInvoice.setTaxInvAddr(invToAddress);
+            taxInvoice.setArCode(arCode);
+            taxInvoice.setRemark(remark); 
+            taxInvoice.setTaxNo(taxInvNo);               
+            taxInvoice.setCreateBy(createBy);
+            
+            Date invToDateConvert = new Date();
+            invToDateConvert = utilty.convertStringToDate(invToDate);
+            taxInvoice.setTaxInvDate(invToDateConvert);
+            
+            MFinanceItemstatus mFinanceItemstatus = new MFinanceItemstatus();
+            mFinanceItemstatus.setId("2");
+            mFinanceItemstatus.setName("VOID");
+            taxInvoice.setMFinanceItemstatus(mFinanceItemstatus);
+            
+            invToDateConvert = utilty.convertStringToDate(createDate);
+            taxInvoice.setCreateDate(invToDateConvert);
+            
+            if(Integer.parseInt(count) > 1){
+                setTaxInvoiceDetails(request, count, taxInvoice, username, date, vatDefault);
+            }
+            
+            String result = taxInvoiceService.saveInvoice(taxInvoice);
+            List<TaxInvoiceDetail> taxInvoiceList = new ArrayList<TaxInvoiceDetail>();
+            taxInvoiceList = taxInvoice.getTaxInvoiceDetails();
+            request.setAttribute(TAXINVOICE, taxInvoice);
+            request.setAttribute("invToDate", invToDate);
+            request.setAttribute("createDate", createDate);
+            request.setAttribute(TAXINVOICEDETAILLIST, taxInvoiceList);
+            request.setAttribute(RESULTTEXT, result);
             
         } else if("edit".equalsIgnoreCase(action)){
 
@@ -158,6 +255,7 @@ public class TaxInvoiceController extends SMITravelController {
         }
         for(int i=1;i<=rows;i++){
             String taxDetailId = request.getParameter("taxDetailId" + i);
+            String invoiceDetailId = request.getParameter("invoiceDetailId" + i);
             String product = request.getParameter("product" + i);
             String refNo = request.getParameter("refNo" + i);
             String description = request.getParameter("description" + i);
@@ -170,6 +268,7 @@ public class TaxInvoiceController extends SMITravelController {
             
             TaxInvoiceDetail taxInvoiceDetail = new TaxInvoiceDetail();
             MBilltype mBillType = new MBilltype();
+            InvoiceDetail invoiceDetail = new InvoiceDetail();
             
             if((product!="" && product!=null) || (refNo!="" && refNo!=null) || (description!="" && description!=null) || (cost!="" && cost!=null) || (currencyCost!="" && currencyCost!=null) || (isVat!="" && isVat!=null) || (amount!="" && amount!=null) || (currencyAmount!="" && currencyAmount!=null)){                               
                 
@@ -178,6 +277,11 @@ public class TaxInvoiceController extends SMITravelController {
                 } else {
                     taxInvoiceDetail.setCreateDate(createDate);
                     taxInvoiceDetail.setCreateBy(createBy);
+                }
+                
+                if(invoiceDetailId!="" && invoiceDetailId!=null){
+                    invoiceDetail.setId(invoiceDetailId);
+                    taxInvoiceDetail.setInvoiceDetail(invoiceDetail);
                 }
                 
                 if(product!="" && product!=null){
@@ -228,8 +332,6 @@ public class TaxInvoiceController extends SMITravelController {
                 if(currencyAmount!="" && currencyAmount!=null){
                     taxInvoiceDetail.setCurAmount(currencyAmount);
                 }
-                
-                taxInvoiceDetail.setInvoiceDetail(null);
                 
                 taxInvoiceDetail.setTaxInvoice(taxInvoice);
                 taxInvoice.getTaxInvoiceDetails().add(taxInvoiceDetail);

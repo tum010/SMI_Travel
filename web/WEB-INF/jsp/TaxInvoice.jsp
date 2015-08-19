@@ -12,6 +12,7 @@
 <c:set var="refNo_list" value="${requestScope['refNo_list']}" />
 <c:set var="taxInvoice" value="${requestScope['taxInvoice']}" />
 <c:set var="taxInvoiceDetail" value="${requestScope['taxInvoiceDetail_list']}" />
+<c:set var="roleName" value="${requestScope['roleName']}" />
 <input type="hidden" id="Type" name="Type" value="${param.Department}">
 <section class="content-header" >
     <h1>
@@ -45,6 +46,12 @@
         <div id="textAlertDivFindNotFound"  style="" class="alert alert-danger alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
            <strong>Tax invoice no not found!.</strong> 
+        </div>
+        </c:if>
+        <c:if test="${requestScope['result_text'] =='not found'}">
+        <div id="textAlertDivFindNotFound"  style="" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+           <strong>Tax invoice void!.</strong> 
         </div>
         </c:if>
         <div class="row" style="padding-left: 15px">  
@@ -101,12 +108,12 @@
                                     <div class="col-xs-12 form-group"></div>
                                     <div class="row" style="padding-left:35px">    
                                         <div class="col-md-12">
-                                            <table id="InvoiceNoTable" class="display" cellspacing="0" width="100%">
+                                            <table id="InvoiceListTable" class="display" cellspacing="0" width="100%">
                                                 <thead>
                                                     <tr class="datatable-header">
                                                         <th style="width: 15%" >Product</th>
-                                                        <th style="width: 60%">Description</th>
-                                                        <th style="width: 10%">Amount</th>
+                                                        <th style="width: 50%">Description</th>
+                                                        <th style="width: 20%">Amount</th>
                                                         <th style="width: 1%">Currency</th>
                                                         <th style="width: 1%">Action</th>
                                                     </tr>
@@ -143,6 +150,9 @@
                         </div>
                         <div class="col-md-2 form-group">
                             <input type="hidden" class="form-control" id="TaxInvId" name="TaxInvId" value="${taxInvoice.id}"/>
+                            <input type="hidden" class="form-control" id="TaxInvStatus" name="TaxInvStatus" value="${taxInvoice.MFinanceItemstatus.id}"/>
+                            <input type="hidden" class="form-control" id="createDate" name="createDate" value="${requestScope['createDate']}"/>
+                            <input type="hidden" class="form-control" id="createBy" name="createBy" value="${taxInvoice.createBy}"/>
                             <input type="text"  class="form-control" id="TaxInvNo" name="TaxInvNo"  value="${taxInvoice.taxNo}" >
                         </div>
                         <div class="col-md-1" >
@@ -238,7 +248,7 @@
                                 <div class="row" style="">    
                                     <div class="col-md-12">
                                         <input type="hidden" class="form-control" id="vatDefault" name="vatDefault" value="${vatDefault}"/>
-                                        <input type="text" class="hidden" id="countTaxInvoice" name="countTaxInvoice" value="1" >
+                                        <input type="hidden" class="hidden" id="countTaxInvoice" name="countTaxInvoice" value="1" >
                                         <table id="TaxInvoiceTable" class="display" cellspacing="0" width="100%">
                                             <thead>
                                                 <tr class="datatable-header">
@@ -260,6 +270,7 @@
                                                 <c:forEach var="taxDetail" items="${taxInvoiceDetail}" varStatus="i">
                                                 <tr>
                                                     <td class="hidden"><input class="form-control" type="text" id="taxDetailId${i.count}" name="taxDetailId${i.count}" value="${taxDetail.id}"></td>
+                                                    <td class="hidden"><input class="form-control" type="text" id="invoiceDetailId${i.count}" name="invoiceDetailId${i.count}" value="${taxDetail.invoiceDetail.id}"></td>
                                                     <td>
                                                         <select class="form-control" name="product${i.count}" id="product${i.count}" onchange="AddrowBySelect('${i.count}')">
                                                             <option  value="" >---------</option>
@@ -371,38 +382,69 @@
                         <div role="tabpanel" class="tab-pane  active" id="infoButton">
                             <div class="panel panel-default">                              
                                 <div class="panel-body">
-                                    <div class="col-xs-12 ">
-                                        <div class="col-md-2 text-right ">
+                                    <div class="col-xs-12 ">                                       
+                                        <div class="col-md-1 text-right " style="width: 200px">
+                                            <select class="form-control" name="select_print" id="select_print">                               
+                                                <option  value="taxInvoice">Tax Invoice</option>
+                                                <option  value="taxInvoiceEmail">Tax Invoice Email</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-1 text-left ">
                                             <button type="button" onclick="" class="btn btn-default">
-                                                <span id="SpanPrintPackage" class="glyphicon glyphicon-print"></span> Print Package
+                                                <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Print
                                             </button>
                                         </div>
-                                        <div class="col-md-2 text-left " style="padding-left: 0px">
-                                            <button type="button" onclick="" class="btn btn-default">
-                                                <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Print Invoice New
+                                        <div class="col-md-1 " style="width: 350px"></div>
+                                        <div class="col-md-2 text-right">
+                                            <c:set var="isDisableVoid" value="disabled='true'" />
+                                            <c:set var="isEnableVoid" value="style='display: none;'" />
+                                            <c:set var="isSaveVoid" value="" />
+                                            <c:if test="${result =='success'}">        
+                                                <c:set var="isDisableVoid" value="" />
+                                            </c:if>
+                                            <c:if test="${result =='void'}">        
+                                                <c:set var="isDisableVoid" value="style='display: none;'" />
+                                                <c:if test="${roleName =='YES'}">        
+                                                    <c:set var="isEnableVoid" value="" />
+                                                    <c:set var="isSaveVoid" value="disabled='true'" />
+                                                </c:if>
+                                                <c:if test="${roleName =='NO'}">        
+                                                    <c:set var="isEnableVoid" value="disabled='true'" />
+                                                    <c:set var="isSaveVoid" value="disabled='true'" />
+                                                </c:if>
+                                            </c:if>
+                                            <c:if test="${taxInvoice.MFinanceItemstatus.id == '2'}">        
+                                                <c:set var="isDisableVoid" value="style='display: none;'" />
+                                                <c:if test="${roleName =='YES'}">        
+                                                    <c:set var="isEnableVoid" value="" />
+                                                    <c:set var="isSaveVoid" value="disabled='true'" />
+                                                </c:if>
+                                                <c:if test="${roleName =='NO'}">        
+                                                    <c:set var="isEnableVoid" value="disabled='true'" />
+                                                    <c:set var="isSaveVoid" value="disabled='true'" />
+                                                </c:if>
+                                            </c:if>
+                                            <c:if test="${result =='cancelvoid'}">        
+                                                <c:set var="isDisableVoid" value="" />
+                                            </c:if>
+                                            <c:if test="${taxInvoice.MFinanceItemstatus.id == '1'}">        
+                                                <c:set var="isDisableVoid" value="" />
+                                            </c:if>
+                                            <button type="button" class="btn btn-primary" onclick="EnableVoidInvoice();" data-toggle="modal" data-target="#EnableVoid" id="enableVoidButton" name="enableVoidButton"  ${isEnableVoid} >
+                                                <span id="SpanEnableVoid" class="glyphicon glyphicon-ok" ></span> Cancel Void
                                             </button>
-                                        </div>
-                                        <div class="col-md-4 text-right "></div>
-                                        <div class="col-md-1 text-right ">
-                                            <button type="button" onclick="printVoucher('');" class="btn btn-default">
-                                                <span id="SpanPrint" class="glyphicon glyphicon-print"></span> Print 
-                                            </button>
-                                        </div>
-                                        <div class="col-md-1 text-right ">
-                                            <button type="button" class="btn btn-primary hidden" onclick="EnableVoid();" data-toggle="modal" data-target="#EnableVoid">
-                                                <span id="SpanEnableVoid" class="glyphicon glyphicon-ok" ></span> Void
-                                            </button>
-                                            <button type="button" class="btn btn-danger" onclick="DisableVoid();" data-toggle="modal" data-target="#DisableVoid">
+                                            
+                                            <button type="button" class="btn btn-danger" onclick="DisableVoidInvoice();" data-toggle="modal" data-target="#DisableVoid" id="disableVoidButton" name="disableVoidButton" ${isDisableVoid} >
                                                 <span id="SpanDisableVoid" class="glyphicon glyphicon-remove" ></span> Void
                                             </button>
                                         </div>
-                                        <div class="col-md-1 text-right ">
-                                            <button type="submit" onclick="" class="btn btn-success">
+                                        <div class="col-md-1 text-left ">
+                                            <button type="submit" onclick="" class="btn btn-success" ${isSaveVoid}>
                                                 <span id="SpanSave" class="fa fa-save"></span> Save 
                                             </button>
                                         </div>
-                                        <div class="col-md-1 text-right ">
-                                            <button type="button" onclick="" class="btn btn-success">
+                                        <div class="col-md-1 text-left ">
+                                            <button type="button" onclick="clearScreen()" class="btn btn-success" >
                                                 <span id="SpanNew" class="fa fa-plus-circle"></span> New 
                                             </button>
                                         </div>
@@ -422,18 +464,37 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title"  id="Titlemodel">Finance & Cashier - Tax Invoice</h4>
+                <h4 class="modal-title"  id="Titlemodel">Disable Void Invoice</h4>
             </div>
-            <div class="modal-body" id="disableVoid">
-                
+            <div class="modal-body" id="disableVoidModal">
+                Are you confirm to void invoice ${taxInvoice.taxNo}?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" onclick='window.top.location.href="Invoice.smi?type=${param.type}&action=edit"'>Delete</button>               
+                <button type="button" class="btn btn-danger" onclick='DisableInvoice()' data-dismiss="modal">Cancel Void</button>               
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->                                                  
+</div><!-- /.modal -->
+
+<!--Enable Modal-->
+<div class="modal fade" id="EnableVoid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Finance & Cashier - Invoice</h4>
+            </div>
+            <div class="modal-body" id="enableVoid">
+                Are you confirm to cancel void invoice ${taxInvoice.taxNo}?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" onclick='Enable()'>Enable</button>               
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->                                                
                                             
 <!--Modal Search Tax Inv To-->
 <div class="modal fade" id="TaxInvToModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -603,6 +664,7 @@
     $(document).ready(function () {
         $('.date').datetimepicker();
         $('.datemask').mask('0000-00-00');
+        $(".money").mask('000,000,000.00', {reverse: true});
         $('.spandate').click(function() {
             var position = $(this).offset();
             console.log("positon :" + position.top);
@@ -639,9 +701,7 @@
             "bLengthChange": false,
             "iDisplayLength": 10
         });
-        
-        $(".money").mask('0000000000', {reverse: true});
-     
+                   
         $(".numerical").on('input', function() { 
             var value=$(this).val().replace(/[^0-9.,]*/g, '');
             value=value.replace(/\.{2,}/g, '.');
@@ -901,16 +961,22 @@
                     try { 
                         if(msg == "null"){
                             $('#InvoiceListTable').dataTable().fnClearTable();
-                            $('#InvoiceListTable').dataTable().fnDestroy();
+                            $('#InvoiceListTable').dataTable().fnDestroy();                            
+                            document.getElementById("TaxInvTo").value = '';
+                            document.getElementById("InvToName").value = '';
+                            document.getElementById("InvToAddress").value = '';
+                            document.getElementById("ARCode").value = '';
+                            document.getElementById("InvToDate").value = '';
+                            
                         }else{
                             $('#InvoiceListTable').dataTable().fnClearTable();
                             $('#InvoiceListTable').dataTable().fnDestroy();
                             $("#InvoiceListTable tbody").empty().append(msg);
-
-                            document.getElementById("receiveFromCode").value = $("#receiveFromInvoice").val();
-                            document.getElementById("receiveFromName").value = $("#receiveNameInvoice").val();
-                            document.getElementById("receiveFromAddress").value = $("#receiveAddressInvoice").val();
-                            document.getElementById("arCode").value = $("#arcodeInvoice").val();
+                            document.getElementById("TaxInvTo").value = $("#receiveTaxInvTo").val();
+                            document.getElementById("InvToName").value = $("#receiveInvToName").val();
+                            document.getElementById("InvToAddress").value = $("#receiveInvToAddress").val();
+                            document.getElementById("ARCode").value = $("#receiveARCode").val();
+                            document.getElementById("InvToDate").value = $("#receiveInvToDate").val();
                         }
                         $("#ajaxload").addClass("hidden");
 
@@ -923,7 +989,7 @@
                 }
             });
         } catch (e) {
-            alert(e);
+            alert('error');
         }
     }   
     
@@ -940,6 +1006,7 @@
         $("#TaxInvoiceTable tbody").append(           
             '<tr>' +
             '<td class="hidden"><input class="form-control" type="text" id="taxDetailId' + row + '" name="taxDetailId' + row + '" value=""></td>' +
+            '<td class="hidden"><input class="form-control" type="text" id="invoiceDetailId' + row + '" name="invoiceDetailId' + row + '" value=""></td>' +
             '<td><select class="form-control" name="product' + row + '" id="product' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
             '<td><input class="form-control" type="text" id="refNo' + row + '" name="refNo' + row + '" value="" onfocusout="checkRefNo(\'' + row + '\')"></td>' +
             '<td><input class="form-control" type="text" id="description' + row + '" name="description' + row + '" value=""></td>' +
@@ -974,6 +1041,62 @@
         if(row === rowTable){
            AddRowTaxInvoiceTable(rowTable); 
         }       
+    }
+    
+    function AddProduct(id,product,description,amount,currency){
+        var count = $("#countTaxInvoice").val();
+        var row = $("#TaxInvoiceTable tr").length;
+        AddDataRowProduct(row,count,id,product,description,amount,currency);
+
+    }
+    
+    function AddDataRowProduct(row,count,id,product,description,amount,currency) {
+        if (!row) {
+            row = 1;
+        }
+        
+        $("#invoiceDetailId" + count).val(id);
+        $('[name=product' + count + '] option').filter(function() { 
+            return ($(this).text() === product);
+        }).prop('selected', true);
+        $("#description" + count).val(description);
+        $("#amount" + count).val(formatNumber(parseFloat(amount)));
+        $('[name=currencyAmount' + count + '] option').filter(function() { 
+            return ($(this).text() === currency);
+        }).prop('selected', true);
+        
+        var tempCount = parseInt($("#countTaxInvoice").val()) + 1;
+        
+        $("#TaxInvoiceTable tbody").append(           
+            '<tr>' +
+            '<td class="hidden"><input class="form-control" type="text" id="taxDetailId' + row + '" name="taxDetailId' + row + '" value=""></td>' +
+            '<td class="hidden"><input class="form-control" type="text" id="invoiceDetailId' + row + '" name="invoiceDetailId' + row + '" value=""></td>' +
+            '<td><select class="form-control" name="product' + row + '" id="product' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
+            '<td><input class="form-control" type="text" id="refNo' + row + '" name="refNo' + row + '" value="" onfocusout="checkRefNo(\'' + row + '\')"></td>' +
+            '<td><input class="form-control" type="text" id="description' + row + '" name="description' + row + '" value=""></td>' +
+            '<td><input class="form-control numerical" style="text-align:right;" type="text" id="cost' + row + '" name="cost' + row +'" value="" onfocusout="CalculateAmountTotal()" onkeyup="insertCommas(this)"></td>' +
+            '<td><select class="form-control" name="currencyCost' + row + '" id="currencyCost' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
+            '<td align="center"><input type="checkbox" id="isVat' + row + '" name="isVat' + row + '" value="1" onclick="CalculateGross(\'' + row + '\')"></td>' +
+            '<td align="right" id="vatShow' + row + '"></td>' +
+            '<td><input class="form-control numerical" style="text-align:right;" type="text" id="gross' + row + '" name="gross' + row + '" value="" readonly=""></td>' +
+            '<td><input class="form-control numerical" style="text-align:right;" type="text" id="amount' + row + '" name="amount' + row + '" value="" onfocusout="CalculateAmountTotal()" onkeyup="insertCommas(this)"></td>' +
+            '<td><select class="form-control" name="currencyAmount' + row + '" id="currencyAmount' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
+            '<td>' + 
+                '<center>' +
+                '<a id="expenButtonRemove' + row + '" name="expenButtonRemove' + row + '" onclick="deleteTaxList(\'\',\'' + row + '\')"  data-toggle="modal" data-target="#DeleteExpenModal">' + 
+                '<span id="expenSpanEdit' + row + '" name="expenSpanEdit' + row + '" class="glyphicon glyphicon-remove deleteicon"></span>' +
+                '</a>' + 
+                '</center>' +
+            '</td>' +
+            '</tr>'           
+        );
+        $("#tr_TaxInvoiceDetailAddRow").removeClass("show");
+        $("#tr_TaxInvoiceDetailAddRow").addClass("hide");
+        $("#select_product_list option").clone().appendTo("#product" + row);
+        $("#select_currency_list option").clone().appendTo("#currencyCost" + row);
+        $("#select_currency_list option").clone().appendTo("#currencyAmount" + row);               
+        $("#countTaxInvoice").val(row);
+        CalculateAmountTotal();
     }
     
     function CalculateAmountTotal(){
@@ -1172,6 +1295,53 @@
         }    
         $('#delTaxInvoiceDetailModal').modal('hide');
         CalculateAmountTotal();
+    }
+    
+    function clearScreen(){
+        $("#TaxInvId").val("");
+        $("#TaxInvNo").val("");
+        $("#InvToDate").val("");
+        $("#TaxInvTo").val("");
+        $("#InvToName").val("");
+        $("#InvToAddress").val("");
+        $("#ARCode").val("");
+        $("#Remark").val("");
+        $("#TextAmount").val("");
+        $("#TotalAmount").val("");
+        $("#taxInvStatus").val("");
+        $("#createDate").val("");
+        $("#createBy").val("");
+        $("#countTaxInvoice").val("1");              
+        $('#InvoiceListTable > tbody  > tr').each(function() {
+            $(this).remove();
+        });       
+        $('#TaxInvoiceTable > tbody  > tr').each(function() {
+            $(this).remove();
+        });              
+        AddRowTaxInvoiceTable();
+        CalculateAmountTotal();
+    }
+    
+    function DisableVoidInvoice(){
+        var TaxInvNo = document.getElementById('TaxInvNo');
+        document.getElementById('disableVoid').innerHTML = "Are you sure to delete booking other : " + TaxInvNo.value + " ?";
+    }
+
+    function EnableVoidInvoice(){
+        var TaxInvNo = document.getElementById('TaxInvNo');
+        document.getElementById('enableVoid').innerHTML = "Are you sure to enable booking other : " + TaxInvNo.value + " ?";
+    }
+    
+    function Enable() {
+        var action = document.getElementById('action');
+        action.value = 'enableVoid';
+        document.getElementById('TaxInvoiceForm').submit();
+    }
+
+    function DisableInvoice() {
+        var action = document.getElementById('action');
+        action.value = 'disableVoid';
+        document.getElementById('TaxInvoiceForm').submit();
     }
     
 </script>

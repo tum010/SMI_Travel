@@ -57,10 +57,13 @@ import com.smi.travel.util.Mail;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -704,17 +707,17 @@ public class AJAXBean extends AbstractBean implements
                 
             }
         }else if (TAXINVOICE.equalsIgnoreCase(servletName)) {
-            String invoiceNo = map.get("invoiceNo").toString();
-            List<HashMap<String,Object>> invoiceNoList = invoicedao.getInvoiceDetailFromInvoiceNumber(invoiceNo);
-            Invoice invoice = new Invoice();
-            invoice = invoicedao.getInvoiceFromInvoiceNumber(invoiceNo);
-                
-            if("".equals(invoice.getId()) || null == invoice.getId()){
-                result = "null";
-            }else{
-                result = buildInvoiceListHTML(invoice);
-            }
-            
+            if("searchInvoiceNo".equalsIgnoreCase(type)){
+                String invoiceNo = map.get("invoiceNo").toString();
+                System.out.println("invoiceNo ::: "+invoiceNo);
+                Invoice invoice = new Invoice();
+                invoice = invoicedao.getInvoiceFromInvoiceNumber(invoiceNo);
+                if("".equals(invoice.getId()) || null == invoice.getId()){
+                    result = "null";
+                }else{
+                    result = buildTaxInvoiceListHTML(invoice);
+                }
+            }           
         }  
         
         return result;
@@ -758,6 +761,60 @@ public class AJAXBean extends AbstractBean implements
             html.append(newrow);
         }
         
+        return html.toString();
+    }
+    
+    private String buildTaxInvoiceListHTML(Invoice invoice) {
+        StringBuffer html = new StringBuffer();
+        List<InvoiceDetail> invoiceDetaillList = new ArrayList<InvoiceDetail>(invoice.getInvoiceDetails());
+        String receiveTaxInvTo = invoice.getInvTo();
+        String receiveInvToName = invoice.getInvName();
+        String receiveInvToAddress = invoice.getInvAddress();
+        String receiveARCode = invoice.getArcode();
+        String id = "";
+        String product = "";
+        String description = "";
+        BigDecimal amount = new BigDecimal(0);
+        String currency = "";
+        
+        UtilityFunction utilty = new UtilityFunction();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+        System.out.println(dateFormat.format(cal.getTime()));
+        String receiveInvToDate = dateFormat.format(cal.getTime());       
+        
+        int row = 1;
+        if (invoiceDetaillList == null || invoiceDetaillList.size() == 0) {
+            return html.toString();
+        }
+        for(int i=0; i< invoiceDetaillList.size(); i++){
+            InvoiceDetail invoiceDetail = new InvoiceDetail();
+            invoiceDetail = invoiceDetaillList.get(i);
+            id = invoiceDetail.getId();
+            product = invoiceDetail.getMbillType().getName();
+            description = invoiceDetail.getDescription();
+            amount = invoiceDetail.getAmount();
+            currency = invoiceDetail.getCurAmount();
+            if(!"".equalsIgnoreCase(id)){
+                String newrow = "";
+                    newrow +=   "<tr>"+
+                                "<input type='hidden' name='receiveTaxInvTo' id='receiveTaxInvTo' value='" + receiveTaxInvTo + "'>" +
+                                "<input type='hidden' name='receiveInvToName' id='receiveInvToName' value='" + receiveInvToName + "'>" +
+                                "<input type='hidden' name='receiveInvToAddress' id='receiveInvToAddress' value='" + receiveInvToAddress + "'>" +
+                                "<input type='hidden' name='receiveARCode' id='receiveARCode' value='" + receiveARCode + "'>" +
+                                "<input type='hidden' name='receiveInvToDate' id='receiveInvToDate' value='" + receiveInvToDate + "'>" +
+                                "<input type='hidden' name='invoiceId' id='invoiceId' value='"+invoice.getId()+"'>" +
+                                "<input type='hidden' name='invoiceId" + row + "' id='invoiceId" + row + "' value='" + id + "'>" +
+                                "<td class='text-center'>" + product + "</td>"+
+                                "<td>" + description + "</td>"+
+                                "<td class='money' style=\"text-align:right;\">" + amount + "</td>"+
+                                "<td style=\"text-align:center;\">" + currency + "</td>"+ 
+                                "<td><center><a href=\"\"><span onclick=\"AddProduct('"+id+"','"+product+"','"+description+"','"+amount+"','"+currency+"')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>" +
+                                "</tr>";
+                    html.append(newrow);
+            }
+            row++;
+        }
         return html.toString();
     }
     
@@ -1358,8 +1415,6 @@ public class AJAXBean extends AbstractBean implements
 
     public void setPaymentairticketdao(PaymentAirTicketDao paymentairticketdao) {
         this.paymentairticketdao = paymentairticketdao;
-    }
-
- 
+    }  
   
 }

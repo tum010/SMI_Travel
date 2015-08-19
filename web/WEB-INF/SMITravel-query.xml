@@ -388,6 +388,7 @@
     <bean id="RefundAirlineServlet" class="com.smi.travel.servlet.RefundAirlineServlet" />
     <bean id="InvoiceServlet" class="com.smi.travel.servlet.InvoiceServlet" />
     <bean id="ReceiptServlet" class="com.smi.travel.servlet.ReceiptServlet" />
+    <bean id="TaxInvoiceServlet" class="com.smi.travel.servlet.TaxInvoiceServlet" />
 	<!--<add data>-->
 	
 </beans>
