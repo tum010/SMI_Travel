@@ -1,5 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties. ss
+ * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -787,6 +787,14 @@ public class AJAXBean extends AbstractBean implements
         String receiveAddress = invoice.getInvAddress();
         String arcode = invoice.getArcode();
         if (invoiceDetaill == null || invoiceDetaill.size() == 0) {
+            String newrow = "";
+            newrow +=   "<tr>"+
+                        "<input type='hidden' name='receiveFromInvoice' id='receiveFromInvoice' value='"+receiveFrom+"'>" +
+                        "<input type='hidden' name='receiveNameInvoice' id='receiveNameInvoice' value='"+receiveName+"'>" +
+                        "<input type='hidden' name='receiveAddressInvoice' id='receiveAddressInvoice' value='"+receiveAddress+"'>" +
+                        "<input type='hidden' name='arcodeInvoice' id='arcodeInvoice' value='"+arcode+"'>" +
+                        "</tr>";
+            html.append(newrow);
             return html.toString();
         }
         for(int i = 0 ; i < invoiceDetaill.size() ; i++ ){
@@ -863,6 +871,14 @@ public class AJAXBean extends AbstractBean implements
             mAccPay = billable.getMAccpay().getId();
         }
         if (billableDescs == null || billableDescs.size() == 0) {
+            String newrow = "";
+            newrow +=   "<tr>"+
+                        "<input type='hidden' name='receiveFromBillable' id='receiveFromBillable' value='"+receiveFrom+"'>" +
+                        "<input type='hidden' name='receiveNameBillable' id='receiveNameBillable' value='"+receiveName+"'>" +
+                        "<input type='hidden' name='receiveAddressBillable' id='receiveAddressBillable' value='"+receiveAddress+"'>" +
+                        "<input type='hidden' name='arcodeBillable' id='arcodeBillable' value='"+arcode+"'>" +
+                        "</tr>";
+            html.append(newrow);
             return html.toString();
         }
         for(int i = 0 ; i < billableDescs.size() ; i++ ){
