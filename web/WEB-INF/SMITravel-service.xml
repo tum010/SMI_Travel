@@ -151,7 +151,9 @@
         <property name="receiptEmailDao" ref="ReceiptEmailDao" />
         <property name="receiptDao" ref="ReceiptDao" />
         <property name="invoiceEmaildao" ref="InvoiceEmailDao" />
-        <!--property name="invoicedao" ref="InvoiceDao" /-->
+        <property name="invoicedao" ref="InvoiceReportDao" />
+        <property name="genreport" ref="GenerateReport" />
+         
     </bean> 
     
     
@@ -278,6 +280,10 @@
     
     <bean id="ReceiptService" class="com.smi.travel.datalayer.service.ReceiptService">
         <property name="receiptDao" ref="ReceiptDetailDao" />
+    </bean>
+    
+    <bean id="TaxInvoiceService" class="com.smi.travel.datalayer.service.TaxInvoiceService">
+        <property name="taxInvoiceDao" ref="TaxInvoiceDao" />
     </bean>
     
     <bean id="CreditNoteService" class="com.smi.travel.datalayer.service.CreditNoteService">
