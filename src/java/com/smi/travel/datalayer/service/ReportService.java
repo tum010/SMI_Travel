@@ -24,6 +24,8 @@ import com.smi.travel.datalayer.view.dao.ReceiptDao;
 import com.smi.travel.datalayer.view.dao.ReceiptEmailDao;
 import com.smi.travel.datalayer.view.dao.ReceiveListDao;
 import com.smi.travel.datalayer.view.dao.StaffSummaryDao;
+import com.smi.travel.datalayer.view.dao.TaxInvoiceEmailReportDao;
+import com.smi.travel.datalayer.view.dao.TaxInvoiceReportDao;
 import com.smi.travel.datalayer.view.dao.TicketOrderDao;
 import com.smi.travel.datalayer.view.dao.TicketSaleProfitVolumnDao;
 import com.smi.travel.datalayer.view.dao.TicketSummaryDao;
@@ -59,6 +61,8 @@ public class ReportService {
     private InvoiceEmailDao invoiceEmaildao;
     private InvoiceReportDao invoicedao;
     private GenerateReport genreport;
+    private TaxInvoiceReportDao taxInvoiceDao;
+    private TaxInvoiceEmailReportDao taxInvoiceEmailDao;
     
     public List getHotelVoucher(String hotelID,String name) {
         List data  = new ArrayList();
@@ -177,6 +181,18 @@ public class ReportService {
     public List getInvoiceEmail(){
         List data  = new ArrayList();
         data.add(invoiceEmaildao.getInvoiceEmail());  
+        return data;
+    }
+    
+    public List getTaxInvoice(){
+        List data  = new ArrayList();
+        data.add(taxInvoiceDao.getTaxInvoice());  
+        return data;
+    }
+    
+    public List getTaxInvoiceEmail(){
+        List data = new ArrayList();
+        data.add(taxInvoiceEmailDao.getTaxInvoiceEmail());
         return data;
     }
     
@@ -376,7 +392,21 @@ public class ReportService {
     public void setGenreport(GenerateReport genreport) {
         this.genreport = genreport;
     }
-   
-    
+
+    public TaxInvoiceReportDao getTaxInvoiceDao() {
+        return taxInvoiceDao;
+    }
+
+    public void setTaxInvoiceDao(TaxInvoiceReportDao taxInvoiceDao) {
+        this.taxInvoiceDao = taxInvoiceDao;
+    }
+
+    public TaxInvoiceEmailReportDao getTaxInvoiceEmailDao() {
+        return taxInvoiceEmailDao;
+    }
+
+    public void setTaxInvoiceEmailDao(TaxInvoiceEmailReportDao taxInvoiceEmailDao) {
+        this.taxInvoiceEmailDao = taxInvoiceEmailDao;
+    }
     
 }

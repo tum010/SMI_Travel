@@ -385,13 +385,18 @@
                                 <div class="panel-body">
                                     <div class="col-xs-12 ">                                       
                                         <div class="col-md-1 text-right " style="width: 200px">
-                                            <select class="form-control" name="select_print" id="select_print">                               
+                                            <select class="form-control" name="select_print" id="select_print">
+                                                <option  value="">---------------</option>
                                                 <option  value="taxInvoice">Tax Invoice</option>
                                                 <option  value="taxInvoiceEmail">Tax Invoice Email</option>
                                             </select>
                                         </div>
                                         <div class="col-md-1 text-left ">
-                                            <button type="button" onclick="" class="btn btn-default">
+                                            <c:set var="print" value="" />
+                                            <c:if test="${(taxInvoice.id == '') || (taxInvoice.id == null) }">        
+                                                <c:set var="print" value="disabled='true'" />
+                                            </c:if>
+                                            <button type="button" onclick="printTaxInvoice()" class="btn btn-default" ${print}>
                                                 <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Print
                                             </button>
                                         </div>
@@ -817,6 +822,28 @@
             setGross();
         });
     });
+    
+    function printTaxInvoice(){
+        var printType = document.getElementById('select_print').value;
+        var taxInvId = document.getElementById('TaxInvId').value;
+        var department = '${page}';
+        
+        if("W" === department){
+            department = "Wendy";
+        } else if("O" === department){
+            department = "Outbound";
+        } else if("I" === department){
+            department = "Inbound";
+        } 
+        
+        if(printType === ""){
+            alert("Please choose print type.");
+        }else if(printType === "taxInvoice"){
+            window.open("report.smi?name=TaxInvoiceReport&taxInvId="+taxInvId+"&department="+department);
+        }else if(printType === "taxInvoiceEmail"){
+            window.open("report.smi?name=TaxInvoiceEmailReport&taxInvId="+taxInvId+"&department="+department);
+        }
+    }
     
     function searchTaxInvoiceNo(){
         var action = document.getElementById('action');
