@@ -952,6 +952,14 @@
     function searchInvoiceNo(){
         var invoiceNo = $("#invoiceNo").val();
         var invoicenopanel = $("#invoicenopanel").val();
+        var department = '${page}';
+        if("W" === department){
+            department = "Wendy";
+        } else if("O" === department){
+            department = "Outbound";
+        } else if("I" === department){
+            department = "Inbound";
+        }
         if(invoiceNo === ""){
             if(!$('#invoicenopanel').hasClass('has-feedback')) {
                 $('#invoicenopanel').addClass('has-feedback');
@@ -965,6 +973,7 @@
                     '&servletName=' + servletName +
                     '&servicesName=' + servicesName +
                     '&invoiceNo=' + invoiceNo +
+                    '&department=' + department +
                     '&type=' + 'searchInvoiceNo';
             CallAjaxSearchInvoice(param);
         }  
@@ -1354,6 +1363,7 @@
     }
     
     function clearScreen(){
+        $("#department").val("");
         $("#TaxInvId").val("");
         $("#TaxInvNo").val("");
         $("#InvToDate").val("");

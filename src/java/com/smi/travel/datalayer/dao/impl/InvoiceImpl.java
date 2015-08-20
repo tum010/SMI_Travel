@@ -38,6 +38,7 @@ public class InvoiceImpl implements InvoiceDao{
     private static final String DELETE_INVOICEDETAIL_QUERY ="DELETE FROM InvoiceDetail ind where ind.id = :invoiceDetailID";
     private static final String SEARCH_INVOICE_TYPE = "FROM Invoice inv where inv.deparement = :invoiceDepartment and inv.invType = :invoiceType ORDER BY inv.invNo DESC LIMIT 1";
     private static final String GET_INVOICE_FROMNO = "FROM Invoice inv where inv.invNo = :invoiceNo and inv.deparement = :department and inv.invType = :invType";
+    private static final String GET_INVOICE_FOR_TAX_INVOICE = "FROM Invoice inv where inv.invNo = :invoiceNo and inv.deparement = :department";
     @Override
     public String insertInvoice(Invoice invoice) {
         String result = "";
@@ -462,6 +463,39 @@ public class InvoiceImpl implements InvoiceDao{
                 .setParameter("invoiceNo", InvoiceNumber)
                 .setParameter("department", department)
                 .setParameter("invType", invType)
+                .list(); 
+        if(!invoiceList.isEmpty()){
+            invoice.setId(invoiceList.get(0).getId());
+            invoice.setInvNo(invoiceList.get(0).getInvNo());
+            invoice.setInvTo(invoiceList.get(0).getInvTo());
+            invoice.setInvName(invoiceList.get(0).getInvName());
+            invoice.setInvType(invoiceList.get(0).getInvType());
+            invoice.setInvAddress(invoiceList.get(0).getInvAddress());
+            invoice.setInvoiceDetails(invoiceList.get(0).getInvoiceDetails());
+            invoice.setArcode(invoiceList.get(0).getArcode());
+            invoice.setCreateBy(invoiceList.get(0).getCreateBy());
+            invoice.setCreateDate(invoiceList.get(0).getCreateDate());
+            invoice.setDeparement(invoiceList.get(0).getDeparement());
+            invoice.setDueDate(invoiceList.get(0).getDueDate());
+            invoice.setIsGroup(invoiceList.get(0).getIsGroup());
+            invoice.setIsLock(invoiceList.get(0).getIsLock());
+            invoice.setMAccpay(invoiceList.get(0).getMAccpay());
+            invoice.setMFinanceItemstatus(invoiceList.get(0).getMFinanceItemstatus());
+            invoice.setRemark(invoiceList.get(0).getRemark());
+            invoice.setStaff(invoiceList.get(0).getStaff());
+            invoice.setSubDepartment(invoiceList.get(0).getSubDepartment());
+        }
+        
+        return invoice;    
+    }
+
+    @Override
+    public Invoice searchInvoiceForTaxInvoice(String InvoiceNumber, String department) {       
+        Session session = this.sessionFactory.openSession();
+        Invoice invoice = new Invoice();
+        List<Invoice> invoiceList = session.createQuery(GET_INVOICE_FOR_TAX_INVOICE)
+                .setParameter("invoiceNo", InvoiceNumber)
+                .setParameter("department", department)
                 .list(); 
         if(!invoiceList.isEmpty()){
             invoice.setId(invoiceList.get(0).getId());
