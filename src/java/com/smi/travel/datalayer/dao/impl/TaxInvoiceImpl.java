@@ -30,7 +30,7 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
     private SessionFactory sessionFactory;
     private Transaction transaction;
     private UtilityFunction utilityFunction;
-    private static final String GET_TAXINVOICE = "FROM TaxInvoice t where t.taxNo = :TaxInvNo";
+    private static final String GET_TAXINVOICE = "FROM TaxInvoice t where t.taxNo = :TaxInvNo and t.department = :Page";
 
     @Override
     public String insertTaxInvoice(TaxInvoice tax) {
@@ -126,10 +126,10 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
     }
 
     @Override
-    public TaxInvoice getTaxInvoiceFromTaxInvNo(String TaxInvNo) {
+    public TaxInvoice getTaxInvoiceFromTaxInvNo(String TaxInvNo, String Page) {
         Session session = this.sessionFactory.openSession();
         TaxInvoice taxInvoice = new TaxInvoice();
-        List<TaxInvoice> taxInvoiceList = session.createQuery(GET_TAXINVOICE).setParameter("TaxInvNo", TaxInvNo).list();
+        List<TaxInvoice> taxInvoiceList = session.createQuery(GET_TAXINVOICE).setParameter("TaxInvNo", TaxInvNo).setParameter("Page", Page).list();
         if(taxInvoiceList.isEmpty()){
             return null;
         } 

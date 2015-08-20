@@ -27,13 +27,14 @@ public class TaxInvoice   {
      private String createBy;
      private String remark;
      private Date createDate;
+     private String department;
      private List creditNoteDetails = new LinkedList<CreditNoteDetail>();
      private List taxInvoiceDetails = new LinkedList<TaxInvoiceDetail>();
 
     public TaxInvoice() {
     }
 
-    public TaxInvoice(MFinanceItemstatus MFinanceItemstatus, Passenger passenger, String taxNo, Date taxInvDate, String taxInvTo, String taxInvName, String taxInvAddr, String arCode, String invoiceType, String createBy, Date createDate, String remark, List creditNoteDetails, List taxInvoiceDetails) {
+    public TaxInvoice(MFinanceItemstatus MFinanceItemstatus, Passenger passenger, String taxNo, Date taxInvDate, String taxInvTo, String taxInvName, String taxInvAddr, String arCode, String invoiceType, String createBy, Date createDate, String remark, String department, List creditNoteDetails, List taxInvoiceDetails) {
        this.MFinanceItemstatus = MFinanceItemstatus;
        this.passenger = passenger;
        this.taxNo = taxNo;
@@ -46,6 +47,7 @@ public class TaxInvoice   {
        this.createBy = createBy;
        this.createDate = createDate;
        this.remark = remark;
+       this.department = department;
        this.creditNoteDetails = creditNoteDetails;
        this.taxInvoiceDetails = taxInvoiceDetails;
     }
@@ -155,6 +157,14 @@ public class TaxInvoice   {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
     }
 
 }

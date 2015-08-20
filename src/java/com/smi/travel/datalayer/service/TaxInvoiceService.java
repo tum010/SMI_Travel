@@ -26,8 +26,8 @@ public class TaxInvoiceService {
         }
     }
     
-    public TaxInvoice getTaxInvoiceFromTaxInvNo(String TaxInvNo) {
-        return taxInvoiceDao.getTaxInvoiceFromTaxInvNo(TaxInvNo);
+    public TaxInvoice getTaxInvoiceFromTaxInvNo(String TaxInvNo, String Page) {
+        return taxInvoiceDao.getTaxInvoiceFromTaxInvNo(TaxInvNo,Page);
     }
 
     public TaxInvoiceDao getTaxInvoiceDao() {

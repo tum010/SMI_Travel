@@ -149,6 +149,7 @@
                             <label class="control-label" for="">Tax Invoice No</lable>
                         </div>
                         <div class="col-md-2 form-group">
+                            <input type="hidden" class="form-control" id="department" name="department" value="${taxInvoice.department}"/>
                             <input type="hidden" class="form-control" id="TaxInvId" name="TaxInvId" value="${taxInvoice.id}"/>
                             <input type="hidden" class="form-control" id="TaxInvStatus" name="TaxInvStatus" value="${taxInvoice.MFinanceItemstatus.id}"/>
                             <input type="hidden" class="form-control" id="createDate" name="createDate" value="${requestScope['createDate']}"/>
@@ -182,11 +183,11 @@
                     </div>    
                     <div class="col-xs-12 ">
                         <div class="col-md-2 text-left">
-                            <label class="control-label" for="">Tax Inv To</lable>
+                            <label class="control-label" for="">Tax Inv To<font style="color: red">*</font></lable>
                         </div>
                         <div class="col-md-1 form-group" style="width: 585px">
                             <div class="input-group">                               
-                                <input type="text" class="form-control" id="TaxInvTo" name="TaxInvTo" value="${taxInvoice.taxInvTo}" style="background-color: #ffffff">
+                                <input type="text" style="text-transform:uppercase" class="form-control" id="TaxInvTo" name="TaxInvTo" value="${taxInvoice.taxInvTo}" style="background-color: #ffffff">
                                 <span class="input-group-addon" id="TaxInvTo_Modal"  data-toggle="modal" data-target="#TaxInvToModal">
                                     <span class="glyphicon-search glyphicon"></span>
                                 </span>
@@ -226,7 +227,7 @@
                             <input type="text"  class="form-control" id="PassengerName" name="PassengerName"  value="" readonly="">
                         </div>
                         <div class="col-md-1 text-right">
-                            <label class="control-label" for="" >A/R&nbsp;Code</label>
+                            <label class="control-label" for="" >A/R&nbsp;Code<font style="color: red">*</font></label>
                         </div>  
                         <div class="col-md-2 form-group">
                             <div class="input-group">
@@ -307,7 +308,7 @@
                                                     </td>
                                                     <td align="right" id="vatShow${i.count}">${taxDetail.vat}</td>
                                                     <td align="right"><input class="form-control numerical" style="text-align:right;" type="text" id="gross${i.count}" name="gross${i.count}" value="" readonly=""></td>
-                                                    <td align="right"><input class="form-control numerical" style="text-align:right;" type="text" id="amount${i.count}" name="amount${i.count}" value="${taxDetail.amount}" onfocusout="CalculateAmountTotal()" onkeyup="insertCommas(this)"></td>
+                                                    <td align="right"><input class="form-control numerical" style="text-align:right;" type="text" id="amount${i.count}" name="amount${i.count}" value="${taxDetail.amount}" onfocusout="CalculateAmountTotal('${i.count}')" onkeyup="insertCommas(this)"></td>
                                                     <td>
                                                         <select class="form-control" name="currencyAmount${i.count}" id="currencyAmount${i.count}" onchange="AddrowBySelect(${i.count})">
                                                             <option  value="" >---------</option>
@@ -720,11 +721,33 @@
            $(".arrowReservstion").removeClass("glyphicon glyphicon-chevron-up").addClass("glyphicon glyphicon-chevron-down");
         });
         
-//        $("#TaxInvoiceTable").on("change", "select:last", function () {
-//            var rowCount = $('#TaxInvoiceTable tr').length;
-//            var row = parseInt($("#countTaxInvoice").val());
-//            AddRowTaxInvoiceTable(row);
-//        });
+        $('#TaxInvoiceForm').bootstrapValidator({
+            container: 'tooltip',
+            excluded: [':disabled'],
+            feedbackIcons: {
+                valid: 'uk-icon-check',
+                invalid: 'uk-icon-times',
+                validating: 'uk-icon-refresh'
+            },
+            fields: {
+                TaxInvTo: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        notEmpty: {
+                            message: 'The Tax Invoice No. is required'
+                        }
+                    }
+                },
+                ARCode: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        notEmpty: {
+                            message: 'The A/R Code is required'
+                        }
+                    }
+                }
+            }
+        });
         
         $("#TaxInvNo").keyup(function (event) {
             if (event.keyCode === 13) {
@@ -801,19 +824,18 @@
         document.getElementById('TaxInvoiceForm').submit();
     }
     
-    function setupCustomerAgentValue(billTo,billName,address){
-        $('#TaxInvToModal').modal('hide');
+    function setupCustomerAgentValue(billTo,billName,address){      
         document.getElementById('TaxInvTo').value = billTo;
         document.getElementById('InvToName').value = billName;
+        document.getElementById('ARCode').value = billTo;
         if(address === null){
             document.getElementById('InvToAddress').value = '';
         } else {
             document.getElementById('InvToAddress').value = address;
-        }       
-        document.getElementById('ARCode').value = billTo;
-        document.getElementById('InvTo').focus();
-//        $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputInvoiceSupCode');
-//        $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputAPCode');
+        }              
+        $('#TaxInvoiceForm').bootstrapValidator('revalidateField', 'TaxInvTo');
+        $('#TaxInvoiceForm').bootstrapValidator('revalidateField', 'ARCode');
+        $('#TaxInvToModal').modal('hide');
     }
     
     function formatNumber(num) {
@@ -972,11 +994,35 @@
                             $('#InvoiceListTable').dataTable().fnClearTable();
                             $('#InvoiceListTable').dataTable().fnDestroy();
                             $("#InvoiceListTable tbody").empty().append(msg);
-                            document.getElementById("TaxInvTo").value = $("#receiveTaxInvTo").val();
-                            document.getElementById("InvToName").value = $("#receiveInvToName").val();
-                            document.getElementById("InvToAddress").value = $("#receiveInvToAddress").val();
-                            document.getElementById("ARCode").value = $("#receiveARCode").val();
-                            document.getElementById("InvToDate").value = $("#receiveInvToDate").val();
+                            
+                            if(document.getElementById("receiveTaxInvTo")!==null && ($("#receiveTaxInvTo").val()!==undefined)){
+                                document.getElementById("TaxInvTo").value = $("#receiveTaxInvTo").val();
+                            } else {
+                                document.getElementById("TaxInvTo").value = '';
+                            }
+                            if((document.getElementById("InvToName")!==null) && ($("#receiveInvToName").val()!==undefined)){
+                                document.getElementById("InvToName").value = $("#receiveInvToName").val();
+                            } else {
+                                document.getElementById("InvToName").value = '';
+                            }
+                            
+                            if((document.getElementById("InvToAddress")!==null) && ($("#receiveInvToAddress").val()!==undefined)){
+                                document.getElementById("InvToAddress").value = $("#receiveInvToAddress").val();
+                            } else {
+                               document.getElementById("InvToAddress").value = ''; 
+                            }
+                            
+                            if((document.getElementById("receiveARCode")!==null) && ($("#receiveARCode").val()!==undefined)){
+                                document.getElementById("ARCode").value = $("#receiveARCode").val();
+                            } else {
+                                document.getElementById("ARCode").value = '';
+                            }
+                            
+                            if((document.getElementById("receiveInvToDate")!==null) && ($("#receiveInvToDate").val()!==undefined)){
+                                document.getElementById("InvToDate").value = $("#receiveInvToDate").val();
+                            } else {
+                                document.getElementById("InvToDate").value = '';
+                            }                          
                         }
                         $("#ajaxload").addClass("hidden");
 
@@ -1015,7 +1061,7 @@
             '<td align="center"><input type="checkbox" id="isVat' + row + '" name="isVat' + row + '" value="1" onclick="CalculateGross(\'' + row + '\')"></td>' +
             '<td align="right" id="vatShow' + row + '"></td>' +
             '<td><input class="form-control numerical" style="text-align:right;" type="text" id="gross' + row + '" name="gross' + row + '" value="" readonly=""></td>' +
-            '<td><input class="form-control numerical" style="text-align:right;" type="text" id="amount' + row + '" name="amount' + row + '" value="" onfocusout="CalculateAmountTotal()" onkeyup="insertCommas(this)"></td>' +
+            '<td><input class="form-control numerical" style="text-align:right;" type="text" id="amount' + row + '" name="amount' + row + '" value="" onfocusout="CalculateAmountTotal(\'' + row + '\')" onkeyup="insertCommas(this)"></td>' +
             '<td><select class="form-control" name="currencyAmount' + row + '" id="currencyAmount' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
             '<td>' + 
                 '<center>' +
@@ -1079,7 +1125,7 @@
             '<td align="center"><input type="checkbox" id="isVat' + row + '" name="isVat' + row + '" value="1" onclick="CalculateGross(\'' + row + '\')"></td>' +
             '<td align="right" id="vatShow' + row + '"></td>' +
             '<td><input class="form-control numerical" style="text-align:right;" type="text" id="gross' + row + '" name="gross' + row + '" value="" readonly=""></td>' +
-            '<td><input class="form-control numerical" style="text-align:right;" type="text" id="amount' + row + '" name="amount' + row + '" value="" onfocusout="CalculateAmountTotal()" onkeyup="insertCommas(this)"></td>' +
+            '<td><input class="form-control numerical" style="text-align:right;" type="text" id="amount' + row + '" name="amount' + row + '" value="" onfocusout="CalculateAmountTotal(\'' + row + '\')" onkeyup="insertCommas(this)"></td>' +
             '<td><select class="form-control" name="currencyAmount' + row + '" id="currencyAmount' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
             '<td>' + 
                 '<center>' +
@@ -1099,7 +1145,7 @@
         CalculateAmountTotal();
     }
     
-    function CalculateAmountTotal(){
+    function CalculateAmountTotal(row){
 //        var count = parseInt(document.getElementById('counter').value);
         var count = $('#TaxInvoiceTable tr').length;
         
@@ -1117,12 +1163,12 @@
                     grandTotal += total;
                     document.getElementById('amount' + i).value = formatNumber(total);
                     
-                    var isVatCheck = document.getElementById("isVat"+i);
-                    if(isVatCheck !== null && isVatCheck !== ''){
-                        if(document.getElementById("isVat"+i).checked){
-                            CalculateGross(i);
-                        } 
-                    }   
+//                    var isVatCheck = document.getElementById("isVat"+i);
+//                    if(isVatCheck !== null && isVatCheck !== ''){
+//                        if(document.getElementById("isVat"+i).checked){
+//                            CalculateGross(i);
+//                        } 
+//                    }   
                 }
             }
             if (cost !== null){
@@ -1145,6 +1191,9 @@
 //            value=value.replace(/\.[0-9]+\./g, '.');
 //            $(this).val(value);
 //        });
+        if(row){
+            CalculateGross(row);
+        }
     }
     
     function CalculateGross(row){       
@@ -1421,7 +1470,7 @@
                         if(amountChk !== null && amountChk !== ''){
                             var amount = document.getElementById('amount'+i).value;
                             var gross = document.getElementById('gross'+i).value;
-                           
+                            
                             amount = amount.replace(/,/g,"");
                             var grossTotal = parseFloat(amount);
 

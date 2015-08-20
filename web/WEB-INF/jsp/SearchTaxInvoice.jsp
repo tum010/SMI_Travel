@@ -31,7 +31,7 @@
             </div>
             <div class="col-xs-12 ">
                 <div class="col-xs-1 text-right">
-                    <label class="control-label" for="">From<font style="color: red">*</font>&nbsp;</lable>
+                    <label class="control-label" for="">From<font style="color: red"></font>&nbsp;</lable>
                 </div>
                 <div class="col-md-2 form-group"> 
                     <div class='input-group date' id='InputDatePicker'>
@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <div class="col-xs-1 text-right">
-                    <label class="control-label" for="">To<font style="color: red">*</font>&nbsp;</lable>
+                    <label class="control-label" for="">To<font style="color: red"></font>&nbsp;</lable>
                 </div>
                 <div class="col-md-2 form-group"> 
                     <div class='input-group date' id='InputDatePicker'>
@@ -66,7 +66,7 @@
                     </div>
                 </div>
                 <div class="col-xs-1 text-right" style="padding: 0px 0px 0px 20px">
-                    <label class="control-label" for="">Department<font style="color: red">*</font></lable>
+                    <label class="control-label" for="">Department<font style="color: red"></font></lable>
                 </div>
                 <div class="col-md-2 form-group" style="padding: 0px 0px 0px 30px">
                     <select class="form-control" id="Department" name="Department">
