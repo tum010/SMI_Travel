@@ -638,7 +638,7 @@ public class AJAXBean extends AbstractBean implements
                     if("Air Ticket".equals(typeName)){
                         result += "|Air Ticket|";
                         result += billableDao.getDescriptionInvoiceAirTicket(searchRefNo);
-                    }else if("Others".equals(typeName)){
+                     }else if(("Others".equals(typeName))||("Coupon".equals(typeName))){
                         result += "|Others|";
                         result += billableDao.getDescriptionInvoiceOthers(searchRefNo);
                     }else if("Land".equals(typeName)){
@@ -650,6 +650,10 @@ public class AJAXBean extends AbstractBean implements
                     }else if("Day Tour".equals(typeName)){
                         result += "|Day Tour|";
                         result += billableDao.getDescriptionInvoiceDayTour(searchRefNo);
+                    }else if("Air Additional".equals(typeName)){
+                        System.out.println("result LL : "+result);
+                        result += "|Air Additional|";
+                        result += billableDao.getDescriptionInvoiceAirAdditional(searchRefNo);
                     }
                 }
             }
@@ -1366,8 +1370,12 @@ public class AJAXBean extends AbstractBean implements
     
     public String getListInvoice(Billable bill) {
         String result = "";
-        result +=  bill.getBillTo() +","+ bill.getBillName() +"," + bill.getBillAddress()+"," + bill.getMAccterm().getId()
-                +","+bill.getMaster().getStaff().getId()+","+bill.getMaster().getStaff().getName() + ","+ bill.getMaster().getStaff().getUsername()+"||";
+        String term="";
+        if( bill.getMAccterm() != null){
+            term =","+ bill.getMAccterm().getId();
+        }
+        result +=  bill.getBillTo() +","+ bill.getBillName() +"," + bill.getBillAddress()+term
+                +","+bill.getMaster().getStaff().getId()+","+bill.getMaster().getStaff().getName() + ","+ bill.getMaster().getStaff().getUsername()+","+"||";
         List<BillableDesc> billdeescList = bill.getBillableDescs();
         
         for (int i = 0; i < billdeescList.size(); i++) {
@@ -1395,6 +1403,7 @@ public class AJAXBean extends AbstractBean implements
     }
     
     public Integer[] checkBillDescInuse(String billdesc){
+        
         Integer[] value = new Integer[2];
         Integer amount = new Integer(0);
         Integer cost = new Integer(0);
