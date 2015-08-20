@@ -289,6 +289,17 @@
 	}
 
 	$(function() {
+		/*
+		$('#btnAdd').click(function(){
+			$('#idModal').val('');
+			$('#accCodeModal').val('');
+			//$('#accCodeModal2').val(accCode.substr(1));
+			$('#accTypeModal').val('');
+			$('#detailModal').val('');
+			onChangeAccType('accTypeModal','accCodeModalAddOn');
+			
+		});
+		*/
 		$('#btnSearch').click(function(e) {
 			e.preventDefault();
 			$('#action').val('search');
@@ -317,6 +328,12 @@
 		
 		$('#btnClose').click(function(e){
 			e.preventDefault();
+			$('#idModal').val('');
+			$('#accCodeModal').val('');
+			$('#accCodeModal2').val('');
+			$('#accTypeModal').val('');
+			$('#detailModal').val('');
+			onChangeAccType('accTypeModal','accCodeModalAddOn');
 		});
 		
 		onChangeAccType('accTypeModal','accCodeModalAddOn');
