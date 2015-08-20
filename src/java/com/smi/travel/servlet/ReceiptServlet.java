@@ -27,6 +27,8 @@ public class ReceiptServlet implements AbstractAJAXServlet{
         String refNo = request.getParameter("refNo");
         String type = request.getParameter("type");
         String paymentNo = request.getParameter("paymentNo");
+        String department = request.getParameter("department");
+        String invType = request.getParameter("invType");
         Map result = new HashMap();
         
         result.put("invoiceNo", invoiceNo);
@@ -34,7 +36,8 @@ public class ReceiptServlet implements AbstractAJAXServlet{
         result.put("servletName", servletName);
         result.put("type", type);
         result.put("paymentNo", paymentNo);
-                 
+        result.put("department", department);
+        result.put("invType", invType);
         return result;    
     }
     

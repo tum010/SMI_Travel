@@ -7,6 +7,7 @@ package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.BillableDao;
 import com.smi.travel.datalayer.entity.AirticketAirline;
+import com.smi.travel.datalayer.entity.AirticketDesc;
 import com.smi.travel.datalayer.entity.AirticketFlight;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.Billable;
@@ -62,6 +63,7 @@ public class BillableImpl implements BillableDao {
 //            + "WHERE DB.master.id = :masterid";
     private static final String DaytourBookingUpdate = "UPDATE DaytourBooking DB set  DB.isBill = 1 "
             + "WHERE DB.id = :Keyid";
+    private static final String QUERY_AIRADDITIONAL = "from AirticketDesc aird where aird.id = :refitemid";
 
     @Override
     public Billable getBillableBooking(String refno) {
@@ -443,7 +445,7 @@ public class BillableImpl implements BillableDao {
                 }else{
                      description += " |";
                 }
-                if(list.get(i).getMaster().getCustomer().getMInitialname().getName() != null){ // prename
+                if(list.get(i).getMaster().getCustomer().getMInitialname() != null){ // prename
                     description += ""+list.get(i).getMaster().getCustomer().getMInitialname().getName() +"|";
                 }else{
                      description += " |";
@@ -738,5 +740,25 @@ public class BillableImpl implements BillableDao {
         long diffDays = diff / (24 * 60 * 60 * 1000) + 1;
         daysdiff = (int) diffDays;
         return daysdiff;
+    }
+
+    @Override
+    public String getDescriptionInvoiceAirAdditional(String refno) {
+        String description = "";
+        System.out.println("refno : "+refno);
+        UtilityFunction util = new UtilityFunction();
+        Session session = this.sessionFactory.openSession();
+        List<AirticketDesc> list = session.createQuery(QUERY_AIRADDITIONAL).setParameter("refitemid", refno).list();
+        //Ref No. 250034 : Mr. IWATA ARISA
+        if (list.isEmpty()) {
+            return null;
+        }else{
+            AirticketDesc desc = list.get(0);
+            description += "Ref No. "+desc.getAirticketBooking().getMaster().getReferenceNo()+" : "+util.getCustomerName(desc.getAirticketBooking().getMaster().getCustomer())+"\n";
+            description += desc.getDetail() + "\t(" + desc.getAmount() +" * "+desc.getQty() +")";
+        }
+        System.out.println("DEscription : " + description);
+        return description;
+
     }
 }

@@ -34,4 +34,5 @@ public interface InvoiceDao {
     public List<HashMap<String,Object>> getInvoiceDetailFromInvoiceNumber(String InvoiceNumber);
     
     public List<InvoiceDetail> getInvoiceDetailFromBillableDescId(String billableDescId);
+    public Invoice searchInvoiceFromInvoiceNumber(String InvoiceNumber,String department,String invType);
 }
