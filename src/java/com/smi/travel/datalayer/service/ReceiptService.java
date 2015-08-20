@@ -18,8 +18,8 @@ import java.util.List;
 public class ReceiptService {
     private ReceiptDao receiptDao;
 
-    public Receipt getReceiptfromReceiptNo(String receiptNo){
-        return receiptDao.getReceiptfromReceiptNo(receiptNo);
+    public Receipt getReceiptfromReceiptNo(String receiptNo,String department,String recType){
+        return receiptDao.getReceiptfromReceiptNo(receiptNo,department,recType);
     }
     public String UpdateFinanceStatusReceipt(String receiptId,int status){
         return receiptDao.UpdateFinanceStatusReceipt(receiptId,status);

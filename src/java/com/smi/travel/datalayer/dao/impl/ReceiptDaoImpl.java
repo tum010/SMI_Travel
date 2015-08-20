@@ -36,11 +36,15 @@ import org.hibernate.Transaction;
     }
 
     @Override
-    public Receipt getReceiptfromReceiptNo(String receiptNo) {
+    public Receipt getReceiptfromReceiptNo(String receiptNo,String department,String recType) {
         Receipt receipt = new Receipt();
-        String query = "from Receipt r where r.recNo =:recNo";
+        String query = "from Receipt r where r.recNo =:recNo and r.department =:department and r.recType =:recType";
         Session session = this.sessionFactory.openSession();
-        List<Receipt> receiptList = session.createQuery(query).setParameter("recNo", receiptNo).list();
+        List<Receipt> receiptList = session.createQuery(query)
+                .setParameter("recNo", receiptNo)
+                .setParameter("department", department)
+                .setParameter("recType", recType)
+                .list();
         if (receiptList.isEmpty()) {
             return null;
         }else{

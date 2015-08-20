@@ -678,9 +678,10 @@ public class AJAXBean extends AbstractBean implements
         }else if (RECEIPT.equalsIgnoreCase(servletName)) {
             if("searchInvoiceNo".equalsIgnoreCase(type)){
                 String invoiceNo = map.get("invoiceNo").toString();
-                System.out.println("invoiceNo ::: "+invoiceNo);
+                String department = map.get("department").toString();
+                String invType = map.get("invType").toString();
                 Invoice invoice = new Invoice();
-                invoice = invoicedao.getInvoiceFromInvoiceNumber(invoiceNo);
+                invoice = invoicedao.searchInvoiceFromInvoiceNumber(invoiceNo,department,invType);
                 if("".equals(invoice.getId()) || null == invoice.getId()){
                     result = "null";
                 }else{

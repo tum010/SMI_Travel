@@ -1608,6 +1608,8 @@ function clearNew(){
 
 function searchInvoice() {
     var invoiceNo = $("#invoiceNo").val();
+    var department = "${typeDepartment}";
+    var invType = "${typeReceipt}";
     var invoicenopanel = $("#invoicenopanel").val();
     if(invoiceNo == ""){
         if(!$('#invoicenopanel').hasClass('has-feedback')) {
@@ -1623,6 +1625,8 @@ function searchInvoice() {
                 '&servletName=' + servletName +
                 '&servicesName=' + servicesName +
                 '&invoiceNo=' + invoiceNo +
+                '&department=' + department +
+                '&invType=' + invType +
                 '&type=' + 'searchInvoiceNo';
         CallAjaxSearchInvoice(param);
     }

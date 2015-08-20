@@ -126,7 +126,7 @@ public class ReceiptController extends SMITravelController {
         }else if ("searchReceiveNo".equalsIgnoreCase(action)) {
             Receipt receipt = new Receipt();
             if(receiveNo != null || !"".equals(receiveNo)){
-                receipt = receiptService.getReceiptfromReceiptNo(receiveNo);
+                receipt = receiptService.getReceiptfromReceiptNo(receiveNo,InputDepartment,InputReceiptType);
                 if(receipt != null) {
                     if(!receipt.getId().isEmpty()){
                         List<ReceiptDetail> receiptDetailList = receiptService.getReceiptDetailFromReceiptId(receipt.getId());
@@ -416,7 +416,7 @@ public class ReceiptController extends SMITravelController {
             }
             Receipt receipt = new Receipt();
             if(receiveNo != null || !"".equals(receiveNo)){
-                receipt = receiptService.getReceiptfromReceiptNo(receiveNo);
+                receipt = receiptService.getReceiptfromReceiptNo(receiveNo,InputDepartment,InputReceiptType);
                 if(receipt != null) {
                     if(!receipt.getId().isEmpty()){
                         List<ReceiptDetail> receiptDetailList = receiptService.getReceiptDetailFromReceiptId(receipt.getId());
@@ -444,7 +444,7 @@ public class ReceiptController extends SMITravelController {
             
             Receipt receipt = new Receipt();
             if(receiveNo != null || !"".equals(receiveNo)){
-                receipt = receiptService.getReceiptfromReceiptNo(receiveNo);
+                receipt = receiptService.getReceiptfromReceiptNo(receiveNo,InputDepartment,InputReceiptType);
                 if(receipt != null) {
                     if(!receipt.getId().isEmpty()){
                         List<ReceiptDetail> receiptDetailList = receiptService.getReceiptDetailFromReceiptId(receipt.getId());

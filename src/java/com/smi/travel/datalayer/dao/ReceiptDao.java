@@ -19,7 +19,7 @@ import java.util.List;
 public interface ReceiptDao {
     
     public List<HashMap<String,Object>> getAirlineComFromPaymentNo(String invoiceNumber);
-    public Receipt getReceiptfromReceiptNo(String receiptNo); // search ReceiveNo --> table Receipt
+    public Receipt getReceiptfromReceiptNo(String receiptNo,String department,String recType); // search ReceiveNo --> table Receipt
     public String UpdateFinanceStatusReceipt(String receiptId,int status); //status 1 normal , 2 void
     // UPDATE Receipt rec set rec.MFinanceItemstatus.id = :status  WHERE rec.id = :ReceiptId
     public String insertReceipt(Receipt receipt); // insert table Receipt
