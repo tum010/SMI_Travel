@@ -1395,6 +1395,7 @@ public class AJAXBean extends AbstractBean implements
     }
     
     public Integer[] checkBillDescInuse(String billdesc){
+        
         Integer[] value = new Integer[2];
         Integer amount = new Integer(0);
         Integer cost = new Integer(0);
