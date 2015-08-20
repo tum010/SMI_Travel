@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!--<script type="text/javascript" src="js/Receipt.js"></script> sssss--> 
+<!--<script type="text/javascript" src="js/Receipt.js"></script>--> 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -1675,9 +1675,27 @@ function invoicenoValidate(){
 function addProduct(product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode){
     var tempCount = parseInt($("#counter").val());
     AddDataRowProduct(tempCount,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode);
-
 }
 function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode) {
+    var rowAll = $("#ReceiptListTable tr").length;
+    var tempCount = parseInt(rowAll-2);
+//    alert(rowAll + "___" + tempCount + " row :: "+row);
+    for(var i =0; i<rowAll ;i++){
+        if($("#receiveProduct"+i).val() != "" 
+            || $("#receiveDes"+i).val() != "" 
+            || $("#receiveCost"+i).val() != "" 
+            || $("#receiveCurCost"+i).val() != "" 
+            || $("#receiveVat"+i).val() != ""
+            || $("#receiveAmount"+i).val() != "" 
+            || $("#receiveCurrency"+i).val() != ""
+            ){
+        
+        }else{
+            $("#receiveProduct" +i).parent().parent().remove();
+            row = parseInt(i);
+            $("#counter").val(row);
+        }
+    }
 
     $("#ReceiptListTable tbody").append(
         '<tr style="higth 100px">' +
@@ -1741,8 +1759,10 @@ function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,cur
         setFormatCurrency(row);
     }); 
     var tempCount = parseInt($("#counter").val()) + 1;
-    $("#counter").val(tempCount);      
+    $("#counter").val(tempCount);
+    AddRowProduct(tempCount);
 }
+
 function searchReceiveNo(){
     var action = document.getElementById('action');
     action.value = 'searchReceiveNo';
