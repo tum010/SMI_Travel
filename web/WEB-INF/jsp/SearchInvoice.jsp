@@ -176,7 +176,18 @@
                                     <td >${inv.address}</td>
                                     <td align="center">${inv.totalPrice}</td>
                                     <td align="center">${inv.currency}</td>
-                                    <td>${inv.department}</td>
+                                    <td>${inv.department}
+                                        <c:choose>
+                                            <c:when test="${inv.department == 'Wendy'}">
+                                                <c:set var="depart" value="W" />
+                                            </c:when>
+                                        </c:choose>
+                                        <c:choose>
+                                            <c:when test="${inv.department == 'Outbound'}">
+                                                <c:set var="depart" value="O" />
+                                            </c:when>
+                                        </c:choose>
+                                    </td>
                                     <td>
                                         <c:choose>
                                             <c:when test="${inv.type == 'N'}">
@@ -198,7 +209,7 @@
                                     <td>${inv.termPayName}</td>
                                     <td align="center" > 
                                         <center> 
-                                        <span id="spanEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon" onclick="window.open('/SMITravel/Invoice.smi?typeInvoice=${inv.type}&departmentInvoice=${inv.department}&idInvoice=${inv.invoiceId}&action=edit');">
+                                        <span id="spanEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon" onclick="window.open('/SMITravel/Invoice${depart}${inv.type}.smi?typeInvoice=${inv.type}&departmentInvoice=${inv.department}&idInvoice=${inv.invoiceId}&action=edit');">
                                         </span>
                                         </center>
                                     </td>

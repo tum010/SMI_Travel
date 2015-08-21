@@ -10,6 +10,7 @@ $(document).ready(function () {
  });
  
  function validForm(){
+//     alert("1");
       $("#SearchInvoiceForm")
             .bootstrapValidator({
                 framework: 'bootstrap',
@@ -62,6 +63,7 @@ $(document).ready(function () {
  function search(){
     var action = document.getElementById('action');
     action.value = 'search';
+    validForm();
     document.getElementById('SearchInvoiceForm').submit();
  }
 function DisableInvoice(){
