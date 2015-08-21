@@ -25,7 +25,7 @@ import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.apache.log4j.Logger;
 import org.springframework.web.servlet.ModelAndView;
-import sun.org.mozilla.javascript.internal.ScriptRuntime;
+
 
 /**
  *
