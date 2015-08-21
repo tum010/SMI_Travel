@@ -22,27 +22,28 @@
         <!-- side bar -->
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
             <div ng-include="'WebContent/FinanceAndCashier/TaxInvoiceMainMenu.html'"></div>
-        </div>
+        </div>        
         <div class="col-sm-10">
             <div class="row" style="padding-left: 15px">  
                 <div class="col-sm-6 " style="padding-right: 15px">
                     <h4><b>Search Tax Invoice</b></h4>
                 </div>            
             </div>
+            <form action="SearchTaxInvoice.smi" method="post" id="TaxInvoiceSearchForm" name="TaxInvoiceSearchForm" role="form">
             <div class="col-xs-12 ">
                 <div class="col-xs-1 text-right">
                     <label class="control-label" for="">From<font style="color: red"></font>&nbsp;</lable>
                 </div>
                 <div class="col-md-2 form-group"> 
-                    <div class='input-group date' id='InputDatePicker'>
+                    <div class='input-group date' id="FromDate">
                         <c:if test='${dayTourOperation.tourDate != null}'>
-                            <input id="FromDate" name="FromDate"  type="text" 
+                            <input id="InputFromDate" name="InputFromDate"  type="text" 
                             class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 
                         </c:if>
                         <c:if test='${dayTourOperation.tourDate == null}'>
-                            <input id="FromDate" name="FromDate"  type="text" 
+                            <input id="InputFromDate" name="InputFromDate"  type="text" 
                                 class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['']}">
                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                
                         </c:if>                             
@@ -52,14 +53,14 @@
                     <label class="control-label" for="">To<font style="color: red"></font>&nbsp;</lable>
                 </div>
                 <div class="col-md-2 form-group"> 
-                    <div class='input-group date' id='InputDatePicker'>
+                    <div class='input-group date' id='ToDate'>
                         <c:if test='${dayTourOperation.tourDate != null}'>
-                            <input id="ToDate" name="ToDate"  type="text" 
+                            <input id="InputToDate" name="InputToDate"  type="text" 
                                 class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                               
                         </c:if>
                         <c:if test='${dayTourOperation.tourDate == null}'>
-                            <input id="ToDate" name="ToDate"  type="text" 
+                            <input id="InputToDate" name="InputToDate"  type="text" 
                                 class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['']}">
                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                               
                         </c:if>                             
@@ -76,13 +77,19 @@
                                     <c:set var="accountOneSelected" value="selected" />
                                 </c:when>
                             </c:choose>
-                        <option value="1" ${accountOneSelected}>Account 1</option>
+                        <option value="1" ${accountOneSelected}>Inbound</option>
                             <c:choose>
                                 <c:when test="${requestScope['BankAccountType'] == '2'}">
                                     <c:set var="accountTwoSelected" value="selected" />
                                 </c:when>
                             </c:choose>
-                        <option value="2" ${accountTwoSelected}>Account 2</option>
+                        <option value="2" ${accountTwoSelected}>Outbound</option>
+                            <c:choose>
+                                <c:when test="${requestScope['BankAccountType'] == '2'}">
+                                    <c:set var="accountTwoSelected" value="selected" />
+                                </c:when>
+                            </c:choose>
+                        <option value="2" ${accountTwoSelected}>Wendy</option>
                     </select>    
                 </div>
                 <div class="col-md-2 text-right " style="padding: 0px 0px 0px 0px">
@@ -96,11 +103,13 @@
                     </button>
                 </div>   
             </div>
+            <input type="hidden" id="action" name="action" value="search">        
+            </form>
             <div class="col-xs-12 form-group"></div>        
             <div class="col-xs-12 form-group"><hr/></div>
             <div class="row" >    
                 <div class="col-md-12">
-                    <table id="SearchTaxInvoice" class="display" cellspacing="0" width="100%">
+                    <table id="SearchTaxInvoiceTable" class="display" cellspacing="0" width="100%">
                         <thead>
                             <tr class="datatable-header">
                                 <th>No</th>
@@ -151,14 +160,24 @@
 <!--Script-->
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
-        var table = $('#SearchTaxInvoice').dataTable({bJQueryUI: true,
+        $(".money").mask('000,000,000,000.00', {reverse: true});
+        $('.date').datetimepicker();
+        $('.datemask').mask('0000-00-00');
+        $('.spandate').click(function () {
+            var position = $(this).offset();
+            console.log("positon :" + position.top);
+            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+
+        });
+        
+        var table = $('#SearchTaxInvoiceTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
             "bFilter": false,
             "bInfo": false
         });
         
-        $('#SearchTaxInvoice tbody').on('click', 'tr', function () {
+        $('#SearchTaxInvoiceTable tbody').on('click', 'tr', function () {
             if ($(this).hasClass('row_selected')) {
                 $(this).removeClass('row_selected');
                 $('#hdGridSelected').val('');
@@ -166,7 +185,55 @@
             else {
                 table.$('tr.row_selected').removeClass('row_selected');
                 $(this).addClass('row_selected');
-                $('#hdGridSelected').val($('#SearchTaxInvoice tbody tr.row_selected').attr("id"));
+                $('#hdGridSelected').val($('#SearchTaxInvoiceTable tbody tr.row_selected').attr("id"));
+            }
+        });
+        
+        //validate date
+        $('#FromDate').datetimepicker().on('dp.change', function (e) {
+            $('#TaxInvoiceSearchForm').bootstrapValidator('revalidateField', 'InputFromDate');
+        });
+        $('#ToDate').datetimepicker().on('dp.change', function (e) {
+            $('#TaxInvoiceSearchForm').bootstrapValidator('revalidateField', 'InputToDate');
+        });
+
+        $("#TaxInvoiceSearchForm").bootstrapValidator({
+                    framework: 'bootstrap',
+    //                container: 'tooltip',
+                    feedbackIcons: {
+                        valid: 'uk-icon-check',
+                        invalid: 'uk-icon-times',
+                        validating: 'uk-icon-refresh'
+                    },
+                    fields: {
+                        InputFromDate: {
+                            trigger: 'focus keyup change',
+                            validators: {
+                                date: {
+                                    format: 'YYYY-MM-DD',
+                                    max: 'InputToDate',
+                                    message: 'The Date From is not a valid'
+                                }
+                            }
+                        },
+                        InputToDate: {
+                            trigger: 'focus keyup change',
+                            validators: {
+                                date: {
+                                    format: 'YYYY-MM-DD',
+                                    min: 'InputFromDate',
+                                    message: 'The Date To is not a valid'
+                                }
+                            }
+                        }
+                    }
+                }).on('success.field.fv', function (e, data) {
+            if (data.field === 'InputFromDate' && data.fv.isValidField('InputToDate') === false) {
+                data.fv.revalidateField('InputToDate');
+            }
+
+            if (data.field === 'InputToDate' && data.fv.isValidField('InputFromDate') === false) {
+                data.fv.revalidateField('InputFromDate');
             }
         });
                

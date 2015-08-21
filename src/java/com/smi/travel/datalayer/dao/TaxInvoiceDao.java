@@ -9,6 +9,7 @@ package com.smi.travel.datalayer.dao;
 import com.smi.travel.datalayer.entity.TaxInvoice;
 import com.smi.travel.datalayer.entity.TaxInvoiceDetail;
 import com.smi.travel.datalayer.view.entity.TaxInvoiceView;
+import java.util.List;
 
 /**
  *
@@ -23,5 +24,5 @@ public interface TaxInvoiceDao {
     public String UpdateFinanceStatusTaxInvoice(String TaxId,int status);
     // UPDATE TaxInvoice tax set tax.MFinanceItemstatus.id = :status  WHERE tax.id = :TaxId
     public TaxInvoiceView getTaxInvoiceViewFromTaxNo(String TaxNo);
-    public TaxInvoiceView SearchTaxInvoiceFromFilter(String from,String To,String Department);
+    public List<TaxInvoiceView> SearchTaxInvoiceFromFilter(String From,String To,String Department);
 }
