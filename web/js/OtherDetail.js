@@ -374,4 +374,29 @@ function replaceComma(input) {
     return input.replace(',', '');
 }
 
+function setStockTicket(id){
+    document.getElementById("stockticketid").value = id;
+    $("#stockTicketModal").modal("show");
+}
+
+function cancelStockTicket(){
+    $("#stockTicketModal").modal("hide");
+    var action = document.getElementById('action');
+    if (document.getElementById('reuse').checked) {
+        var reuseTicket = document.getElementById('reuse').value;
+        action.value = reuseTicket;
+        document.getElementById('otherForm').submit();
+    } else if (document.getElementById('refund').checked) {
+        var refundTicket = document.getElementById('refund').value;
+        action.value = refundTicket;
+        document.getElementById('otherForm').submit();
+    } else if (document.getElementById('void').checked) {
+        var voidTicket = document.getElementById('void').value;
+        action.value = voidTicket;
+        document.getElementById('otherForm').submit();
+    } else {
+        
+    }         
+}
+
 

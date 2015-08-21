@@ -46,9 +46,10 @@ public class BookingOtherService {
         return otherBookDao.getBookDetailOtherFromID(OtherBookingID);
     }
     
-    public List<String> saveBookingOther(OtherBooking other ,SystemUser user){
+    public List<String> saveBookingOther(OtherBooking other ,SystemUser user ,String createby){
         List<String> result = new ArrayList<String>();
         if(other.getId() != null){
+            other.setCreateBy(createby);
             result = otherBookDao.updateBookDetailOther(other);
         }else{
             MItemstatus status = new MItemstatus();
@@ -100,5 +101,7 @@ public class BookingOtherService {
         return otherBookDao.getListStockDetail(otherBookingId);
     }
     
-    
+    public String manageStockTicket(String stockTicketId, String status) {
+        return otherBookDao.manageStockTicket(stockTicketId,status);
+    }
 }

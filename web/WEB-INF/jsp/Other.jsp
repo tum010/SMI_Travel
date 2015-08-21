@@ -68,9 +68,9 @@
                     }
                 });
 
-                $(function() {
-                    $('[data-toggle="tooltip"]').tooltip({html: true})
-                })
+//                $(function() {
+//                    $('[data-toggle="tooltip"]').tooltip({html: true})
+//                })
                 
                 setformat();
             });
@@ -146,6 +146,12 @@
                             <th >Qty</th>
                             <th>Price</th>
                         </tr>
+                        
+<!--                        <tr class="datatable-header">
+                            <th colspan="6">Remark</th>
+                            <th colspan="7">Remark Stock</th>
+                            <th colspan="1"></th>
+                        </tr>-->
                     </thead>
                     <tbody>
                      
@@ -192,6 +198,10 @@
                                     </center>
                                 </td>
                             </tr>
+<!--                            <tr>
+                                <td>xxxxxxxxx</td>
+                                <td>xxxxxxxxx</td>
+                            </tr>-->
                         </c:forEach>
                     </tbody>
                 </table>        

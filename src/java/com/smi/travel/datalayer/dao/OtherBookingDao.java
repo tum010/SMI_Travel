@@ -32,4 +32,5 @@ public interface OtherBookingDao {
     public  List<OtherBooking> searchOtherBooking(Customer customer, int filter);
     public String saveStockDetailOther(OtherBooking Other, SystemUser user);
     public List<OtherTicketView> getListStockDetail(String otherBookingId);
+    public String manageStockTicket(String stockTicketId,String status);
 }

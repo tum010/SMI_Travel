@@ -307,6 +307,7 @@ public class OtherBookingImpl implements OtherBookingDao{
             for(int i=0;i<stockDetailList.size();i++){
                 StockDetail stockDetail = stockDetailList.get(i);
                 OtherTicketView otherTicketView = new OtherTicketView();
+                otherTicketView.setId(stockDetail.getId());
                 otherTicketView.setAddDate(stockDetail.getPickupDate());
                 otherTicketView.setTicketCode(stockDetail.getCode());
                 otherTicketView.setTypeName(stockDetail.getTypeId().getName());
@@ -571,4 +572,38 @@ public class OtherBookingImpl implements OtherBookingDao{
         return list;
 
     }     
+
+    @Override
+    public String manageStockTicket(String stockdetailid,String statusTicket) {
+        String result = "";
+        String status = "";
+        String hql = "";
+        String productid = "";
+        if("reuse".equalsIgnoreCase(statusTicket)){
+            status = "1";
+            productid = "";
+            hql = "UPDATE StockDetail stock set stock.MStockStatus.id =: status , stock.OtherBooking.id =: productid where stock.id  = :stockdetailid ";
+        } else if("refund".equalsIgnoreCase(statusTicket)){
+            status = "4";
+            hql = "UPDATE StockDetail stock set stock.MStockStatus.id =: status where stock.id  = :stockdetailid ";
+        } else {
+            status = "3";
+            hql = "UPDATE StockDetail stock set stock.MStockStatus.id =: status where stock.id  = :stockdetailid ";
+        }
+
+        try {
+            Session session = this.sessionFactory.openSession();
+             Query query = session.createQuery(hql);
+             query.setParameter("status", status);
+             query.setParameter("stockdetailid", stockdetailid);
+             query.setParameter("productid", productid);
+             query.executeUpdate();
+             result = "success";
+         } catch (Exception ex) {
+            ex.printStackTrace();
+            result = "fail";
+        }
+
+        return result;
+    }
 }

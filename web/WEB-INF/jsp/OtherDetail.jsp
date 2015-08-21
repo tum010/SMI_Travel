@@ -62,10 +62,26 @@
             <input type="hidden" id="bookingtype" name="bookingtype" value="${booktype}">
             <input type="hidden" id="callpage" name="callpage" value="${param.callpage}">            
             <!--Alert Save -->
+            <c:set var="require" value=""/>
+            <c:set var="adultCancel" value=""/>
+            <c:set var="childCancel" value=""/>
+            <c:set var="infantCancel" value=""/>
+            <c:if test="${(requestScope['adultCancel'] != '0') || (requestScope['childCancel'] != '0') || (requestScope['infantCancel'] != '0')}">
+                <c:set var="require" value="Require Ticket - "/>
+            </c:if>
+            <c:if test="${requestScope['adultCancel'] != '0'}">
+                <c:set var="adultCancel" value="Adult: ${requestScope['adultCancel']}"/>
+            </c:if>
+            <c:if test="${requestScope['childCancel'] != '0'}">
+                <c:set var="childCancel" value="Child: ${requestScope['childCancel']}"/>
+            </c:if>  
+            <c:if test="${requestScope['infantCancel'] != '0'}">
+                <c:set var="infantCancel" value="Infant: ${requestScope['infantCancel']}"/>
+            </c:if>           
             <c:if test="${requestScope['resultText'] == 'success'}">      
             <div id="textAlertDivSave"  style="" class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Save Success!</strong> 
+                    <strong>Save Success! ${require} ${adultCancel} ${childCancel} ${infantCancel}</strong> 
             </div>
             </c:if>
             <c:if test="${requestScope['resultText'] == 'unsuccess'}">
@@ -304,7 +320,9 @@
                         <input type="hidden" class="form-control" id="itemid" name="itemid" value="${requestScope['itemid']}">
                         <input type="hidden" value="${param.referenceNo}" id="refno" name="referenceNo">
                         <input type="hidden" class="form-control" id="status" name="status" value="${requestScope['status']}">
-                        <input type="hidden" class="form-control" id="isbill" name="isbill" value="${requestScope['isbill']}">                
+                        <input type="hidden" class="form-control" id="isbill" name="isbill" value="${requestScope['isbill']}">
+                        <input type="hidden" class="form-control" id="createby" name="createby" value="${requestScope['createby']}">
+                        <input type="hidden" class="form-control" id="stockticketid" name="stockticketid" value="">
                         
                         <div class="text-center" >    
                             <c:choose>
@@ -333,20 +351,24 @@
                             <thead>
                                 <tr class="datatable-header">
                                     <th class="hidden">id</th>
-                                    <th style="width: 10%">No</th>
-                                    <th style="width: 30%">Add Date</th>
-                                    <th style="width: 30%">Ticket</th>
-                                    <th style="width: 30%">Type</th>
+                                    <th style="width: 5%">No</th>
+                                    <th style="width: 11%">Add Date</th>
+                                    <th style="width: 41%">Ticket</th>
+                                    <th style="width: 41%">Type</th>
+                                    <th style="width: 2%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="table" items="${ticketList}" varStatus="status">                                   
                                     <tr>
-                                        <td class="hidden"> </td> 
-                                        <td>${status.count} </td>
-                                        <td>${table.addDate}</td>
+                                        <td class="hidden">${table.id}</td> 
+                                        <td align="center">${status.count} </td>
+                                        <td align="center">${table.addDate}</td>
                                         <td>${table.ticketCode}</td>
                                         <td>${table.typeName}</td>
+                                        <td align="center">
+                                            <span id="SpanGlyphiconRemove" class="glyphicon glyphicon-remove deleteicon" onclick="setStockTicket('${table.id}')" data-toggle="modal" ></span>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -589,6 +611,37 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
+                        
+<div class="modal fade" id="stockTicketModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="Daytour.smi" method="post" id="DaytourForm" class="form-horizontal"  role="form">            
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 id="titleDaytourModal" class="modal-title"> Cancel Ticket </h4>
+                </div>
+                <div class="modal-body" id="modalText" name="modalText">
+                    <div>Please select ticket status ?</div>                   
+                    <div class="radio col-xs-12">
+                        <div class="col-xs-4">
+                            <label ><input value="reuse" id="reuse" name="reuse" type="radio" >Reuse</label>
+                        </div>
+                        <div class="col-xs-4">
+                            <label ><input value="refund" id="refund" name="refund" type="radio" >Refund</label>
+                        </div>    
+                        <div class="col-xs-4">
+                            <label ><input value="void" id="void" name="void" type="radio" >Void</label>
+                        </div>    
+                    </div><br/>                   
+                </div>                              
+                <div class="modal-footer">
+                    <button type="button" id="enableCancelStockTicket" name="enableCancelStockTicket" class="btn btn-success" onclick="cancelStockTicket()">OK</button>
+                    <button type="button" id="closeModal" name="closeModal" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <c:if test="${! empty requestScope['result']}">
     <script language="javascript">

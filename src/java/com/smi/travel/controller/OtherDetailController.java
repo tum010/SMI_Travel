@@ -63,6 +63,8 @@ public class OtherDetailController extends SMITravelController {
         String status = request.getParameter("status");
         String isbill = request.getParameter("isbill");
         String currency = request.getParameter("currency");
+        String createby = request.getParameter("createby");
+        String stockticketid = request.getParameter("stockticketid");
                         
         SystemUser user = (SystemUser) session.getAttribute("USER");
 
@@ -148,7 +150,7 @@ public class OtherDetailController extends SMITravelController {
             }
             
 //            int result = OtherService.saveBookingOther(Other,user);
-            List<String> result = OtherService.saveBookingOther(Other,user);
+            List<String> result = OtherService.saveBookingOther(Other,user,createby);
             if(("1".equalsIgnoreCase(result.get(0))) && (callpageSubmit==null || !callpageSubmit.equalsIgnoreCase("FromDayTour"))){
                 String stock = OtherService.saveStockDetailOther(Other, user);
                 if("notStock".equalsIgnoreCase(stock)){
@@ -160,7 +162,15 @@ public class OtherDetailController extends SMITravelController {
                     String[] ticketData = stock.split("\\|\\|", 3);//Adult||Child||Infant
                     getTicket(request, Other.getId());
                     itemid = result.get(1);
+                    createby = Other.getCreateBy();
+                    
+                    Other.setRemarkTicket("Require Ticket-Adult:{" + ticketData[0] + "}Child:{" + ticketData[1] + "}Infant:{" + ticketData[2] + "}");
+                    List<String> resultRemarkTicket = OtherService.saveBookingOther(Other,user,createby);
+                    
                     request.setAttribute("resultText", "success");
+                    request.setAttribute("adultCancel", ticketData[0]);
+                    request.setAttribute("childCancel", ticketData[1]);
+                    request.setAttribute("infantCancel", ticketData[2]);
                 }
             }else if(("1".equalsIgnoreCase(result.get(0))) && (callpageSubmit!=null) && (callpageSubmit.equalsIgnoreCase("FromDayTour"))){
                 String stock = OtherService.saveStockDetailOther(Other, user);
@@ -171,8 +181,17 @@ public class OtherDetailController extends SMITravelController {
                     request.setAttribute("resultText", "unsuccess");
                 }else{
                     String[] ticketData = stock.split("\\|\\|", 3);//Adult||Child||Infant
-                    getTicket(request, Other.getId());
+                    getTicket(request, Other.getId());                   
+                    itemid = result.get(1);
+                    createby = Other.getCreateBy();
+                    
+                    Other.setRemarkTicket("Require Ticket-Adult:{" + ticketData[0] + "}Child:{" + ticketData[1] + "}Infant:{" + ticketData[2] + "}");
+                    List<String> resultRemarkTicket = OtherService.saveBookingOther(Other,user,createby);
+                    
                     request.setAttribute("resultText", "success");
+                    request.setAttribute("adultCancel", ticketData[0]);
+                    request.setAttribute("childCancel", ticketData[1]);
+                    request.setAttribute("infantCancel", ticketData[2]);
                 }    
             }else{
                 request.setAttribute(TransectionResult, "save unsuccessful");
@@ -226,8 +245,24 @@ public class OtherDetailController extends SMITravelController {
             }
             remark = Other.getRemark();
             currency = Other.getCurrency();
+            createby = Other.getCreateBy();
             request.setAttribute("currency", currency);
             getTicket(request, Other.getId());
+        }
+        
+        if("reuse".equalsIgnoreCase(action)){
+            String result = OtherService.manageStockTicket(stockticketid,action);
+            getTicket(request, itemid);
+        }
+        
+        if("refund".equalsIgnoreCase(action)){
+            String result = OtherService.manageStockTicket(stockticketid,action);
+            getTicket(request, itemid);
+        }
+        
+        if("void".equalsIgnoreCase(action)){
+            String result = OtherService.manageStockTicket(stockticketid,action);
+            getTicket(request, itemid);
         }
 
         request.setAttribute("isbill", isbill);
@@ -254,6 +289,7 @@ public class OtherDetailController extends SMITravelController {
         request.setAttribute("othertime", othertime);
         request.setAttribute("cancelDate", canceldate);
         request.setAttribute("remark", remark);
+        request.setAttribute("createby", createby);
         request.setAttribute(PRODUCTLIST, OtherService.getListMasterProduct());
         request.setAttribute(AGENTLIST, utilservice.getListAgent());
         List<MCurrency> mCurrency = utilservice.getListMCurrency();
