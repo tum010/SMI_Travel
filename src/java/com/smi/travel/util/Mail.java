@@ -34,14 +34,14 @@ public class Mail extends SMITravelController {
         mail = (MailConfig) applicationContext.getBean("mailSender");
     }
 
-    public static String main(String sendTo,String subject,String content,String attachfile,String sendCc) throws EmailException, MalformedURLException {
+    public static String main(String sendTo,String subject,String content,String pathAttachfile,String attachfile,String sendCc) throws EmailException, MalformedURLException {
         String result = "";
         Mail mail = new Mail();
-        result = mail.sendmailwithAttchfile(sendTo,subject,content,attachfile,sendCc);
+        result = mail.sendmailwithAttchfile(sendTo,subject,content,pathAttachfile,attachfile,sendCc);
         return result;
     }
 
-    public String sendmailwithAttchfile(String sendTo,String subject,String content ,String attachfile,String sendCc) throws EmailException {
+    public String sendmailwithAttchfile(String sendTo,String subject,String content ,String pathAttachfile,String attachfile,String sendCc) throws EmailException {
         String result = "";
         boolean send = false;
         EmailAttachment attachment = new EmailAttachment();
@@ -49,10 +49,10 @@ public class Mail extends SMITravelController {
         try {
             if ((attachfile != null) && (!attachfile.equalsIgnoreCase(""))) {
                 //attachment.setPath("C:\\Users\\Surachai\\Documents\\NetBeansProjects\\SMITravel\\test.txt");
-                attachment.setPath(attachfile);
+                attachment.setPath(pathAttachfile+"\\"+attachfile);
                 attachment.setDisposition(EmailAttachment.ATTACHMENT);
                 attachment.setDescription("file attachment");
-                attachment.setName("text.txt");
+                attachment.setName(attachfile);
                 email.attach(attachment);
             }
             send = true;
