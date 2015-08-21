@@ -47,12 +47,14 @@ import com.smi.travel.datalayer.entity.Place;
 import com.smi.travel.datalayer.entity.ProductDetail;
 import com.smi.travel.datalayer.entity.ReceiptDetail;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
+import com.smi.travel.datalayer.service.ReportService;
 import com.smi.travel.datalayer.view.dao.BookingSummaryDao;
 import com.smi.travel.datalayer.view.dao.CustomerAgentInfoDao;
 import com.smi.travel.datalayer.view.dao.TicketAircommissionViewDao;
 import com.smi.travel.datalayer.view.entity.BookSummary;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.datalayer.view.entity.TicketAircommissionView;
+import com.smi.travel.report.GenerateReport;
 import com.smi.travel.util.Mail;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
@@ -537,14 +539,15 @@ public class AJAXBean extends AbstractBean implements
             }
         }else if (MAIL.equalsIgnoreCase(servletName)) {
             if ("sendMail".equalsIgnoreCase(type)) {
-//                try {
-//                    result = sendMail.main(sendTo,subject,content,attachfile,sendCc);
-//                } catch (EmailException ex) {
-//                    Logger.getLogger(AJAXBean.class.getName()).log(Level.SEVERE, null, ex);
-//                } catch (MalformedURLException ex) {
-//                    Logger.getLogger(AJAXBean.class.getName()).log(Level.SEVERE, null, ex);
-//                }
+                try {
+                    result = sendMail.main(sendTo,subject,content,attachfile,sendCc);
+                } catch (EmailException ex) {
+                    Logger.getLogger(AJAXBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (MalformedURLException ex) {
+                    Logger.getLogger(AJAXBean.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
+//                } catch (MalformedURLException ex) {
         } else if (BOOKINGSTATUS.equalsIgnoreCase(servletName)) {
             if ("search".equalsIgnoreCase(type)) {
                 if(refNo == null){
