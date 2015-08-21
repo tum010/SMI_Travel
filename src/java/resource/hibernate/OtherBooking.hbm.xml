@@ -77,6 +77,9 @@
         <property name="remarkAgentCommission" type="string">
             <column name="remark_agent_commission" length="255" />
         </property>
+        <property name="remarkTicket" type="string">
+            <column name="remark_ticket"  />
+        </property>
         <property name="agentCommission" type="java.lang.Long">
             <column name="agent_commission" length="10" />
         </property>

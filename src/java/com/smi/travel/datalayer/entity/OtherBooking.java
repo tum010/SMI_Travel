@@ -38,6 +38,7 @@ public class OtherBooking  {
      private String currency;
      private Long agentCommission;
      private Long guideCommission;
+     private String remarkTicket;
      private String remarkGuideCommission;
      private String remarkAgentCommission;
      private Set coupons = new HashSet(0);
@@ -51,7 +52,7 @@ public class OtherBooking  {
         this.master = master;
         this.status = status;
     }
-    public OtherBooking(Product product,SystemUser guide, Master master,Agent agent, Long adCost, Long adPrice, Integer adQty, Long chCost, Long chPrice, Integer chQty, Long inCost, Long inPrice, Integer inQty,Integer isBill, MItemstatus status, Date otherDate, Date otherTime, Date createDate, String updateBy, Date updateDate, String createBy, String remark,String currency,Date cancelDate, Long agentCommission,Long guideCommission,String remarkGuideCommission,String remarkAgentCommission,Set coupons) {
+    public OtherBooking(Product product,SystemUser guide, Master master,Agent agent, Long adCost, Long adPrice, Integer adQty, Long chCost, Long chPrice, Integer chQty, Long inCost, Long inPrice, Integer inQty,Integer isBill, MItemstatus status, Date otherDate, Date otherTime, Date createDate, String updateBy, Date updateDate, String createBy, String remark,String currency,Date cancelDate, Long agentCommission,Long guideCommission,String remarkGuideCommission,String remarkAgentCommission,String remarkTicket,Set coupons) {
        this.product = product;
        this.master = master;
        this.agent = agent;
@@ -76,6 +77,7 @@ public class OtherBooking  {
        this.remark = remark;
        this.currency = currency;
        this.cancelDate = cancelDate;
+       this.remarkTicket = remarkTicket;
        this.agentCommission = agentCommission;
        this.guideCommission = guideCommission;
        this.remarkGuideCommission = remarkGuideCommission;
@@ -313,6 +315,14 @@ public class OtherBooking  {
 
     public void setAgentCommission(Integer agentCommission) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public String getRemarkTicket() {
+        return remarkTicket;
+    }
+
+    public void setRemarkTicket(String remarkTicket) {
+        this.remarkTicket = remarkTicket;
     }
 
    
