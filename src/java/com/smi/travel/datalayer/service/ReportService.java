@@ -30,8 +30,10 @@ import com.smi.travel.datalayer.view.dao.TicketOrderDao;
 import com.smi.travel.datalayer.view.dao.TicketSaleProfitVolumnDao;
 import com.smi.travel.datalayer.view.dao.TicketSummaryDao;
 import com.smi.travel.datalayer.view.dao.TransferJobReportDao;
+import com.smi.travel.datalayer.view.entity.ReceiptView;
 import com.smi.travel.report.GenerateReport;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import net.sf.jasperreports.engine.JRDataSource;
 
@@ -146,32 +148,14 @@ public class ReportService {
         return agentCommissiondao.getAgentReportInfo(datefrom, dateto, user,agentid);
     }
     
-    public List getReceiptEmail(){
+    public List getReceiptEmail(String receiptId,String receiptNo){
         List data  = new ArrayList();
-        data.add(receiptEmailDao.getReceiptEmail());
-        data.add(receiptEmailDao.getReceiptEmail());
-        data.add(receiptEmailDao.getReceiptEmail());
-        data.add(receiptEmailDao.getReceiptEmail());
-        data.add(receiptEmailDao.getReceiptEmail());
         data.add(receiptEmailDao.getReceiptEmail());
         return data;
     }
     
-     public List getReceipt(){
-        List data  = new ArrayList();
-        data.add(receiptDao.getReceipt());
-        data.add(receiptDao.getReceipt());
-        data.add(receiptDao.getReceipt());
-        data.add(receiptDao.getReceipt());
-        data.add(receiptDao.getReceipt());
-        data.add(receiptDao.getReceipt());
-        data.add(receiptDao.getReceipt());
-        data.add(receiptDao.getReceipt());
-        data.add(receiptDao.getReceipt());
-        data.add(receiptDao.getReceipt());
-        data.add(receiptDao.getReceipt());
-        data.add(receiptDao.getReceipt());
-        return data;
+     public List getReceipt(String receiptId,String receiptNo,int option){
+        return receiptDao.getReceipt(receiptId,receiptNo,option);
     }
     
     public List getReceiveList(String datefrom,String dateto,String user,String agentid){

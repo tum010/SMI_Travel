@@ -637,7 +637,7 @@
                                         <option value="">--- Select Print ---</option> 
                                          <c:choose>
                                             <c:when test="${requestScope['SelectPrint'] == '1'}">
-                                                <c:set var="selectedC" value="selected" />
+                                                <c:set var="selected1" value="selected" />
                                             </c:when>
                                         </c:choose>
                                         <option value="1" ${selected1}>Receipt</option>
@@ -656,7 +656,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-1 text-left " style="width: 150px">
-                                    <button type="button" class="btn btn-default" onclick="print('')">
+                                    <button type="button" class="btn btn-default" onclick="printReceipt()">
                                         <span id="buttonPrint" class="glyphicon glyphicon-print" ></span> Print 
                                     </button>
                                 </div>
@@ -1077,6 +1077,37 @@
     </div><!-- /.modal-dialog -->
 </div>
 
+<!--Disable Modal-->
+<div class="modal fade" id="PrintReceiptModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Print Receipt</h4>
+            </div>
+            <div class="modal-body" id="printReceiptModal" >
+                <div class="col-xs-1" style="width: 500px">
+                    <label class="text-right">select option for print receipt<font style="color: red">*</font></label>                                    
+                </div>
+                <div class="text-center" style="width: 250px" >
+                    <select name="optionPrint" id="optionPrint" class="form-control" style="height:34px">
+                        <option value="1" >Not Show Description</option>
+                        <option value="2" >Show Description</option>
+                        <option value="3" >Print Format Package Tour</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-default" onclick="confirmPrintReceipt()"  data-dismiss="modal">
+                    <span id="buttonPrint" class="glyphicon glyphicon-print" ></span> Print 
+                </button>          
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <c:if test="${! empty requestScope['saveresult']}">
     <c:if test="${requestScope['saveresult'] =='save successful'}">        
         <script language="javascript">
@@ -1393,9 +1424,27 @@
     }
     
     function printReceipt() {
-        window.open("report.smi?name=ReceiptReport");
+        $('#PrintReceiptModal').modal('show');       
     }
     
+    function confirmPrintReceipt() {
+        $('#PrintReceiptModal').modal('hide'); 
+        var printtype = document.getElementById('selectPrint').value;
+        var receiveId = document.getElementById('receiveId').value;
+        var receiveNo = document.getElementById('receiveNo').value;
+        var optionPrint =  document.getElementById('optionPrint').value;
+        if(receiveId == ""){
+            alert("please save before print");
+        }else if(printtype == 0){
+            alert('please select option print');
+        }else if(printtype == 1){
+            window.open("report.smi?name=ReceiptReport&receiveId="+receiveId+"&receiveNo="+receiveNo+"&optionPrint="+optionPrint);
+        }else if(printtype == 2){
+            window.open("report.smi?name=ReceiptEmail&receiveId="+receiveId+"&receiveNo="+receiveNo+"&optionPrint="+optionPrint);
+        }else if(printtype == 3){
+            window.open("report.smi?name=ReceiptEmail&receiveId="+receiveId+"&receiveNo="+receiveNo+"&optionPrint="+optionPrint);
+        }          
+    }
     function AddRowProduct(row) {           
             $("#ReceiptListTable tbody").append(
                 '<tr style="higth 100px">' +

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptEmail" language="groovy" pageWidth="595" pageHeight="421" columnWidth="525" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="0038deea-02d3-4a9f-8925-fb54dc3fc533">
-	<property name="ireport.zoom" value="1.8150000000000066"/>
+	<property name="ireport.zoom" value="2.196150000000009"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="306"/>
+	<property name="ireport.y" value="384"/>
 	<field name="recto" class="java.lang.String"/>
 	<field name="recadd" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -22,10 +22,11 @@
 	<field name="transferflag" class="java.lang.String"/>
 	<field name="tax" class="java.lang.String"/>
 	<field name="taxflag" class="java.lang.String"/>
-	<field name="total" class="java.lang.String"/>
 	<field name="chqno" class="java.lang.String"/>
 	<field name="chqdate" class="java.lang.String"/>
 	<field name="textmoney" class="java.lang.String"/>
+	<field name="invdesc" class="java.lang.String"/>
+	<field name="totalamount" class="java.lang.String"/>
 	<background>
 		<band height="250">
 			<rectangle>
@@ -304,7 +305,7 @@
 	<detail>
 		<band height="13" splitType="Stretch">
 			<textField isStretchWithOverflow="true" pattern="#,##0.00">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="421" y="-2" width="96" height="14" uuid="dd249f80-444e-443e-b320-4b8a62986dd1"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="429" y="-2" width="88" height="14" uuid="dd249f80-444e-443e-b320-4b8a62986dd1"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.0"/>
@@ -318,7 +319,7 @@
 				<textFieldExpression><![CDATA[($F{amount} != null && $F{amount}.length() > 0) ? Double.valueOf($F{amount}) : ""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="5" y="-2" width="429" height="14" uuid="5ca36030-1d00-413e-a98d-6b86fa0619c4"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="5" y="-2" width="283" height="14" uuid="5ca36030-1d00-413e-a98d-6b86fa0619c4"/>
 				<box>
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -330,6 +331,20 @@
 					<font fontName="TH SarabunPSK" size="12" isBold="false" isUnderline="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="288" y="-2" width="141" height="14" uuid="a34cb96b-8c9f-4412-84f4-ac976e04dece"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="TH SarabunPSK" size="12" isBold="false" isUnderline="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{invdesc}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -418,7 +433,7 @@
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="15" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{total} != null && $F{total}.length() > 0) ? Double.valueOf($F{total}) : ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{totalamount} != null && $F{totalamount}.length() > 0) ? Double.valueOf($F{totalamount}) : ""]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
 				<reportElement x="70" y="36" width="45" height="14" uuid="3eae4981-7060-4621-8cea-914f67979f43"/>
@@ -442,14 +457,14 @@
 				<textFieldExpression><![CDATA[($F{cash} != null && $F{cash}.length() > 0) ? Double.valueOf($F{cash}) : ""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="5" y="36" width="14" height="14" uuid="2e9d6bc2-e5c5-4d5a-b3b9-5886e5c18ff4"/>
+				<reportElement x="4" y="19" width="14" height="14" uuid="2e9d6bc2-e5c5-4d5a-b3b9-5886e5c18ff4"/>
 				<textElement textAlignment="Left">
 					<font isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{chqbankflag}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="4" y="19" width="15" height="14" uuid="a0cb6371-43cf-49de-979c-f7e6358ee496"/>
+				<reportElement x="4" y="36" width="15" height="14" uuid="a0cb6371-43cf-49de-979c-f7e6358ee496"/>
 				<textElement textAlignment="Left">
 					<font isBold="false"/>
 				</textElement>

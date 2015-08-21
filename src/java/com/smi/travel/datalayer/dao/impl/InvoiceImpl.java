@@ -39,6 +39,8 @@ public class InvoiceImpl implements InvoiceDao{
     private static final String SEARCH_INVOICE_TYPE = "FROM Invoice inv where inv.deparement = :invoiceDepartment and inv.invType = :invoiceType ORDER BY inv.invNo DESC LIMIT 1";
     private static final String GET_INVOICE_FROMNO = "FROM Invoice inv where inv.invNo = :invoiceNo and inv.deparement = :department and inv.invType = :invType";
     private static final String GET_INVOICE_FOR_TAX_INVOICE = "FROM Invoice inv where inv.invNo = :invoiceNo and inv.deparement = :department";
+    private static final String GET_BILLDESC = "from InvoiceDetail inv WHERE inv.billableDesc.id = :billableDescId";
+    
     @Override
     public String insertInvoice(Invoice invoice) {
         String result = "";
@@ -520,5 +522,32 @@ public class InvoiceImpl implements InvoiceDao{
         }
         
         return invoice;    
+    }
+    
+     @Override
+    public BigDecimal[] checkBillDescInuse(String billdesc,String cost,String amount) {
+        BigDecimal[] value = new BigDecimal[2];
+        BigDecimal costInt =  new BigDecimal(cost.replaceAll(",", ""));
+        BigDecimal amountInt =  new BigDecimal(amount.replaceAll(",", ""));
+        BigDecimal amountTemp = new BigDecimal(0);
+        BigDecimal costTemp = new BigDecimal(0);
+        Session session = this.sessionFactory.openSession();
+        Invoice invoice = new Invoice();
+        List<InvoiceDetail> invoiceList = session.createQuery(GET_BILLDESC)
+                .setParameter("billdesc", billdesc)
+                .list();
+        if(invoiceList != null){
+            for (int i = 0; i < invoiceList.size(); i++) {
+                amountTemp = amountInt.divide(invoiceList.get(i).getAmount());
+                costTemp = costInt.divide(invoiceList.get(i).getCost());
+            }
+        }
+        
+        //from InvoiceDetail inv where inv.billableDesc.id = :billdesc
+        //get amount and cost from InvoiceDetail
+        
+        value[0] = costTemp;
+        value[1] = amountTemp;
+        return value;
     }
 }

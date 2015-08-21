@@ -6,12 +6,13 @@
 
 package com.smi.travel.datalayer.view.dao;
 
-import com.smi.travel.datalayer.report.model.ReceiptEmail;
+import com.smi.travel.datalayer.view.entity.ReceiptView;
+import java.util.List;
 
 /**
  *
  * @author chonnasith
  */
 public interface ReceiptDao {
-    public ReceiptEmail getReceipt();   
+    public List getReceipt(String receiptId,String receiptNo,int option);   
 }
