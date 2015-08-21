@@ -25,7 +25,7 @@ import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.apache.log4j.Logger;
 import org.springframework.web.servlet.ModelAndView;
-import sun.org.mozilla.javascript.internal.ScriptRuntime;
+
 
 /**
  *
@@ -175,7 +175,7 @@ public class ReportController extends SMITravelController {
             data = reportservice.getDaytourOtherReport(refno, status);
         } else if (ReceiptEmail.equalsIgnoreCase(name)) {
             PrintMethod = 0;
-            data = reportservice.getReceiptEmail(receiveId,receiveNo);
+            data = reportservice.getReceiptEmail(receiveId,receiveNo,option);
         } else if (ReceiptReport.equalsIgnoreCase(name)) {
             PrintMethod = 0;
             data = reportservice.getReceipt(receiveId,receiveNo,option);
