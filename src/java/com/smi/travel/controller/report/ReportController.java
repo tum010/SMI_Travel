@@ -25,6 +25,7 @@ import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.apache.log4j.Logger;
 import org.springframework.web.servlet.ModelAndView;
+import sun.org.mozilla.javascript.internal.ScriptRuntime;
 
 /**
  *
@@ -88,6 +89,10 @@ public class ReportController extends SMITravelController {
         String landId = request.getParameter("landId");
         SystemUser user = (SystemUser) session.getAttribute("USER");
         String status = request.getParameter("comfirm");
+        String receiveId = request.getParameter("receiveId");
+        String receiveNo = request.getParameter("receiveNo");
+        String optionPrint = request.getParameter("optionPrint");
+        int option = Integer.parseInt(optionPrint);
 
         Map model = new HashMap();
         List data = new ArrayList();
@@ -166,10 +171,10 @@ public class ReportController extends SMITravelController {
             data = reportservice.getDaytourOtherReport(refno, status);
         } else if (ReceiptEmail.equalsIgnoreCase(name)) {
             PrintMethod = 0;
-            data = reportservice.getReceiptEmail();
+            data = reportservice.getReceiptEmail(receiveId,receiveNo);
         } else if (ReceiptReport.equalsIgnoreCase(name)) {
             PrintMethod = 0;
-            data = reportservice.getReceipt();
+            data = reportservice.getReceipt(receiveId,receiveNo,option);
         } else if (ReceiveList.equalsIgnoreCase(name)) {
             PrintMethod = 0;
             data = reportservice.getDaytourOtherReport(refno, status);
