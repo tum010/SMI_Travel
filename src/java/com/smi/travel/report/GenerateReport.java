@@ -28,17 +28,21 @@ public class GenerateReport {
 
     }
     
-    public void printReport(String reportName,String exportfile,JRDataSource dataSource){
+    public String printReport(String reportName,String exportfile,JRDataSource dataSource){
         System.out.println("reportpath "+reportpath);
         System.out.println("exportpath "+exportpath);
         JasperPrint jprint;
+        String result = "";
             try {
                 jprint = (JasperPrint) JasperFillManager.fillReport(reportpath+reportName, null, dataSource);
                 // Export pdf file
                 JasperExportManager.exportReportToPdfFile(jprint,exportpath+exportfile);
-            } catch (JRException ex) {
+                result = "success";
+            } catch (JRException ex){
+                result = "fail";
                 java.util.logging.Logger.getLogger(ReportController.class.getName()).log(Level.SEVERE, null, ex);
             }
+            return result;
     }
 
     public String getReportpath() {

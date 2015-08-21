@@ -17,11 +17,17 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Send an e-mail</title>
     </head>
+ <c:set var="file" value="${requestScope['file']}" />   
+ <c:set var="reportname" value="${requestScope['reportname']}" />   
+ <c:set var="reportid" value="${requestScope['reportid']}" />   
 <body>
+    
 <div class ="container"  style="padding-top: 30px;" ng-app="">
     <div class="row">
         <div class="col-sm-12">
-            <form method="post" id="Mail" role="form">
+            <form action="SendMail.smi" method="post" id="Mail" role="form">
+                <input type="text" id="reportname" name="reportname" value="${reportname}">
+                <input type="text" id="reportid" name="reportid" value="${reportid}">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">New Message</h3>
@@ -30,12 +36,12 @@
                     <div class="panel-body" style="padding-top: 30px">
                         <div class="col-sm-12">
                             <div class="col-xs-1 text-right">
-                                <button style="height: 50px ;width: 120px" type="button" onclick="sendEmail();" class="form-control btn btn-primary">Send</button> 
+                                <button style="height: 50px ;width: 120px" type="submit" onclick="" class="form-control btn btn-primary">Send</button> 
                             </div>
                             <div class="col-xs-10 text-right">
                                 <label class="col-sm-2 control-label text-right">To : </label>
                                 <div class="input-group text-left" >
-                                    <input type="text" class="form-control" id="sendTo" name="sendTo" size="50" style="width: 200%" > 
+                                    <input type="text" class="form-control" id="recipient" name="recipient" size="50" style="width: 200%" > 
                                 </div>
                             </div>
                         </div>
@@ -65,7 +71,7 @@
                             <div class="col-xs-10 text-right">
                                 <label class="col-sm-2 control-label text-right">File : </label>
                                 <div class="input-group text-left" >
-                                    <input type="text" class="form-control" id="attachfile" name="attachfile" size="50" style="width: 200%"> 
+                                    <input type="text" class="form-control" id="attachfile" name="attachfile" readonly  value="${reportname}" size="50" style="width: 200%"> 
                                 </div>
                             </div>
                         </div>
@@ -75,7 +81,7 @@
                             <div class="col-xs-10 text-right">
                                 <label class="col-sm-2 control-label text-right"></label>
                                 <div class="input-group text-left" >
-                                    <textarea rows="10" cols="52" class="form-control" id="content" name="content" style="width: 200%"></textarea>  
+                                    <textarea rows="10" cols="52" class="form-control" id="message" name="message" style="width: 200%"></textarea>  
                                 </div>
                             </div>
                         </div>

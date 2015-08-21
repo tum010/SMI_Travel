@@ -353,7 +353,7 @@
     
     <bean id="GenerateReport" class="com.smi.travel.report.GenerateReport">
           <property name="reportpath" value="C:\\Users\\Surachai\\Documents\\NetBeansProjects\\SMI_Travel_nokey\\web\\WEB-INF\\report\\"></property>
-          <property name="exportpath" value="C:\\Users\\Surachai\\Documents\\report\\"></property>
+          <property name="exportpath" value="D:\\report\\"></property>
     </bean>
     
     

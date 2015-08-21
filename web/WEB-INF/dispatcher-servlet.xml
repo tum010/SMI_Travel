@@ -90,7 +90,7 @@
 				<prop key="MProductCommission.smi">MProductCommissionController</prop>
 				<prop key="MProductCommissionDetail.smi">MProductCommissionDetailController</prop>
 				<prop key="Excel.smi">ExportDataToExcelController</prop>
-				<prop key="SendMail.smi">Mail</prop>
+				<prop key="SendMail.smi">SendEmailController</prop>
 				<prop key="MBank.smi">MBankController</prop>
 				<prop key="AddTicketFare.smi">AddTicketFareController</prop>
 				<prop key="SearchTicketFare.smi">SearchTicketFareController</prop>
@@ -207,8 +207,10 @@
 		<property name="datasource" ref="dataSource" />
 	</bean>
 
-	<bean id="SendEmailController" class="com.smi.travel.controller.mail.SendEmailController">
+    <bean id="SendEmailController" class="com.smi.travel.controller.mail.SendEmailController">
 		<property name="mailSender" ref="mailSender" />
+                <property name="reportservice" ref="ReportService" />
+                <property name="datasource" ref="dataSource" />
 	</bean>
 
 
