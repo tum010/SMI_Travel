@@ -261,7 +261,16 @@ public class TaxInvoiceController extends SMITravelController {
             }
                        
         } else if("edit".equalsIgnoreCase(action)){
-
+            if((!"".equalsIgnoreCase(taxInvId)) && (taxInvId != null)){
+                TaxInvoice taxInvoice = new TaxInvoice();
+                taxInvoice = taxInvoiceService.getTaxInvoiceFromTaxInvNo(taxInvNo,department);            
+                List<TaxInvoiceDetail> taxInvoiceList = new ArrayList<TaxInvoiceDetail>();
+                taxInvoiceList = taxInvoice.getTaxInvoiceDetails();
+                request.setAttribute(TAXINVOICE, taxInvoice);
+                request.setAttribute("invToDate", taxInvoice.getTaxInvDate());
+                request.setAttribute("createDate", taxInvoice.getCreateDate());
+                request.setAttribute(TAXINVOICEDETAILLIST, taxInvoiceList);
+            }         
         }
         
                

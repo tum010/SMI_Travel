@@ -13,6 +13,7 @@ public class SearchTaxInvoiceController extends SMITravelController {
     private static final ModelAndView SearchTaxInvoice = new ModelAndView("SearchTaxInvoice");
     private static final ModelAndView SearchTaxInvoice_REFRESH = new ModelAndView(new RedirectView("SearchTaxInvoice.smi", true));
     private TaxInvoiceService taxInvoiceService;
+    private static final String DATALIST = "taxInvoiceView_List";
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -25,6 +26,11 @@ public class SearchTaxInvoiceController extends SMITravelController {
         if("search".equalsIgnoreCase(action)){
             taxInvoiceViewList = taxInvoiceService.SearchTaxInvoiceFromFilter(inputFromDate, inputToDate, department);
         }
+        
+        request.setAttribute(DATALIST, taxInvoiceViewList);
+        request.setAttribute("inputFromDate", inputFromDate);
+        request.setAttribute("inputToDate", inputToDate);
+        request.setAttribute("department", department);
         
         return SearchTaxInvoice;
     }

@@ -7,6 +7,7 @@
 <script type="text/javascript" src="js/selectize.js"></script>
 <link href="css/selectize.bootstrap3.css" rel="stylesheet">
 <link href="css/jquery-ui.css" rel="stylesheet">
+<c:set var="taxInvoiceView_List" value="${requestScope['taxInvoiceView_List']}" />
 <section class="content-header" >
     <h1>
         Finance & Cashier - Tax Invoice
@@ -36,34 +37,19 @@
                 </div>
                 <div class="col-md-2 form-group"> 
                     <div class='input-group date' id="FromDate">
-                        <c:if test='${dayTourOperation.tourDate != null}'>
-                            <input id="InputFromDate" name="InputFromDate"  type="text" 
-                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
-                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                                
-                        </c:if>
-                        <c:if test='${dayTourOperation.tourDate == null}'>
-                            <input id="InputFromDate" name="InputFromDate"  type="text" 
-                                class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['']}">
-                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                
-                        </c:if>                             
+                        <input id="InputFromDate" name="InputFromDate"  type="text" 
+                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['inputFromDate']}">
+                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                                         
                     </div>
                 </div>
                 <div class="col-xs-1 text-right">
                     <label class="control-label" for="">To<font style="color: red"></font>&nbsp;</lable>
                 </div>
                 <div class="col-md-2 form-group"> 
-                    <div class='input-group date' id='ToDate'>
-                        <c:if test='${dayTourOperation.tourDate != null}'>
-                            <input id="InputToDate" name="InputToDate"  type="text" 
-                                class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
-                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                               
-                        </c:if>
-                        <c:if test='${dayTourOperation.tourDate == null}'>
-                            <input id="InputToDate" name="InputToDate"  type="text" 
-                                class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['']}">
-                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                               
-                        </c:if>                             
+                    <div class='input-group date' id='ToDate'>                    
+                        <input id="InputToDate" name="InputToDate"  type="text" 
+                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['inputToDate']}">
+                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                                       
                     </div>
                 </div>
                 <div class="col-xs-1 text-right" style="padding: 0px 0px 0px 20px">
@@ -73,23 +59,23 @@
                     <select class="form-control" id="Department" name="Department">
                         <option value="">Choose</option>
                             <c:choose>
-                                <c:when test="${requestScope['BankAccountType'] == '1'}">
-                                    <c:set var="accountOneSelected" value="selected" />
+                                <c:when test="${requestScope['department'] == 'Inbound'}">
+                                    <c:set var="select" value="selected" />
                                 </c:when>
                             </c:choose>
-                        <option value="1" ${accountOneSelected}>Inbound</option>
+                        <option value="Inbound" ${select}>Inbound</option>
                             <c:choose>
-                                <c:when test="${requestScope['BankAccountType'] == '2'}">
-                                    <c:set var="accountTwoSelected" value="selected" />
+                                <c:when test="${requestScope['department'] == 'Outbound'}">
+                                    <c:set var="select" value="selected" />
                                 </c:when>
                             </c:choose>
-                        <option value="2" ${accountTwoSelected}>Outbound</option>
+                        <option value="Outbound" ${select}>Outbound</option>
                             <c:choose>
-                                <c:when test="${requestScope['BankAccountType'] == '2'}">
-                                    <c:set var="accountTwoSelected" value="selected" />
+                                <c:when test="${requestScope['department'] == 'Wendy'}">
+                                    <c:set var="select" value="selected" />
                                 </c:when>
                             </c:choose>
-                        <option value="2" ${accountTwoSelected}>Wendy</option>
+                        <option value="Wendy" ${select}>Wendy</option>
                     </select>    
                 </div>
                 <div class="col-md-2 text-right " style="padding: 0px 0px 0px 0px">
@@ -112,43 +98,49 @@
                     <table id="SearchTaxInvoiceTable" class="display" cellspacing="0" width="100%">
                         <thead>
                             <tr class="datatable-header">
-                                <th>No</th>
-                                <th>Tax No</th>
-                                <th>Date</th>
-                                <th>Code</th>
-                                <th>Name</th>
-                                <th>Detail</th>
-                                <th>Invoice No</th>
-                                <th>Receipt No</th>
-                                <th>Gross</th>
-                                <th>Vat</th>
-                                <th>Amount</th>
-                                <th>Status</th>
-                                <th>Action</th>
+                                <th class="hidden" >Id</th>
+                                <th class="hidden" >Department</th>
+                                <th style="width: 1%">No</th>
+                                <th style="width: 5%">Tax No</th>
+                                <th style="width: 9%">Date</th>
+                                <th style="width: 5%">Code</th>
+                                <th style="width: 10%">Name</th>
+                                <th style="width: 8%">Detail</th>
+                                <th style="width: 7%">Invoice No</th>
+                                <th style="width: 7%">Receipt No</th>
+                                <th style="width: 7%">Gross</th>
+                                <th style="width: 7%">Vat</th>
+                                <th style="width: 7%">Amount</th>
+                                <th style="width: 1%">Status</th>
+                                <th style="width: 1%">Action</th>
                             </tr>
                         </thead>
-                        <tbody>               
+                        <tbody>
+                            <c:forEach var="taxInvoice" items="${taxInvoiceView_List}" varStatus="i">
                                 <tr>
-                                    <td>XXX</td>
-                                    <td>XXXXXX</td>
-                                    <td>2015-01-01</td>
-                                    <td>XXXXXX</td>
-                                    <td>Mr.Test Testman</td>
-                                    <td>XXXXXXXX</td>
-                                    <td>XXX</td>
-                                    <td>XXX</td>
-                                    <td>XXX</td>
-                                    <td>XXX</td>
-                                    <td>XXX</td>
-                                    <td>XXX</td>
+                                    <th class="hidden">${taxInvoice.taxId}</th>
+                                    <th class="hidden">${taxInvoice.department}</th>
+                                    <td align="center">${i.count}</td>
+                                    <td align="center">${taxInvoice.taxNo}</td>
+                                    <td align="center">${taxInvoice.taxDate}</td>
+                                    <td align="center">${taxInvoice.taxTo}</td>
+                                    <td align="center">${taxInvoice.name}</td>
+                                    <td>${taxInvoice.detail}</td>
+                                    <td>${taxInvoice.invoiceNo}</td>
+                                    <td>${taxInvoice.receiptNo}</td>
+                                    <td class="money" align="right">${taxInvoice.totalGross}</td>
+                                    <td class="money" align="right">${taxInvoice.totalVat}</td>
+                                    <td class="money" align="right">${taxInvoice.totalAmount}</td>
+                                    <td align="center">${taxInvoice.status}</td>
                                     <td align="center" > 
                                         <center> 
-                                        <span id="spanEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon"      
-                                          onclick="EditBank('${table.id}', '${table.code}', '${table.name}', '${table.branch}', '${table.accNo}', '${table.accType}')" data-toggle="modal" data-target="#BankModal" >
+                                        <span id="spanEdit${i.count}" class="glyphicon glyphicon-edit editicon"      
+                                          onclick="EditTaxInvoice('${taxInvoice.taxId}','${taxInvoice.taxNo}','${taxInvoice.department}')" data-toggle="modal">
                                         </span>                                       
                                         </center>
                                     </td>
                                 </tr>
+                            </c:forEach>    
                         </tbody>
                     </table>    
                 </div>
@@ -238,4 +230,16 @@
         });
                
     });   
+    
+    function EditTaxInvoice(taxId,taxNo,department){
+        var page = "";
+        if(department === 'Inbound'){
+            page = 'I';
+        } else if(department === 'Outbound'){
+            page = 'O';
+        } else {
+            page = 'W';
+        }
+        window.location = ("TaxInvoice"+page+".smi?action=edit&TaxInvId="+taxId+"&TaxInvNo="+taxNo+"&department="+department);
+    }
 </script>

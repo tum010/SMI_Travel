@@ -7,6 +7,7 @@
 package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.TaxInvoiceDao;
+import com.smi.travel.datalayer.entity.ReceiptDetail;
 import com.smi.travel.datalayer.entity.TaxInvoice;
 import com.smi.travel.datalayer.entity.TaxInvoiceDetail;
 import com.smi.travel.datalayer.view.entity.TaxInvoiceView;
@@ -180,7 +181,7 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
         }
         if ((Department != null) && (!"".equalsIgnoreCase(Department))) {
             query.append(haveCondition ? " and" : " where");
-            query.append(" taxInv.department = " + Department);
+            query.append(" taxInv.department = '" + Department + "'");
             haveCondition = true;
         }
         
@@ -208,38 +209,90 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
             taxInvoice = taxInvoiceList.get(i);
             
             taxInvoiceView.setAddress(taxInvoice.getTaxInvAddr());
-            taxInvoiceView.setDeparement(taxInvoice.getDepartment());
+            taxInvoiceView.setDepartment(taxInvoice.getDepartment());
             taxInvoiceView.setDetail(taxInvoice.getRemark());
-//            taxInvoiceView.setInvoiceNo();
             taxInvoiceView.setName(taxInvoice.getTaxInvName());
-//            taxInvoiceView.setReceiptNo();
-            taxInvoiceView.setStatus(taxInvoice.getMFinanceItemstatus().getId());
-//            taxInvoiceView.setTaxDate(utilityFunction.convertDateToString(taxInvoice.getTaxInvDate()));
+            taxInvoiceView.setTaxDate(String.valueOf(taxInvoice.getTaxInvDate()));
             taxInvoiceView.setTaxId(taxInvoice.getId());
             taxInvoiceView.setTaxNo(taxInvoice.getTaxNo());
             taxInvoiceView.setTaxTo(taxInvoice.getTaxInvTo());
             
+            if("1".equalsIgnoreCase(taxInvoice.getMFinanceItemstatus().getId())){
+                taxInvoiceView.setStatus("Normal");
+            } else {
+                taxInvoiceView.setStatus("Void");
+            }
+//            taxInvoiceView.setStatus(taxInvoice.getMFinanceItemstatus().getId());
+            
             BigDecimal totalAmount = new BigDecimal(0);
             BigDecimal totalGross = new BigDecimal(0);
             BigDecimal totalVat = new BigDecimal(0);
+            String totalInvoiceNo = "";
+            String totalReceiptNo = "";
             List<TaxInvoiceDetail> taxInvoiceDetailList = new ArrayList<TaxInvoiceDetail>();
             taxInvoiceDetailList = taxInvoice.getTaxInvoiceDetails();
             for(int j=0;j<taxInvoiceDetailList.size();j++){
+                if(!"".equalsIgnoreCase(totalInvoiceNo)){
+                    totalInvoiceNo += " ";
+                } else {
+                    totalInvoiceNo += "";
+                }
+                
                 TaxInvoiceDetail taxInvoiceDetail = new TaxInvoiceDetail();
                 taxInvoiceDetail = taxInvoiceDetailList.get(j);
-                BigDecimal amount = new BigDecimal(String.valueOf(taxInvoiceDetail.getAmount()));              
-                BigDecimal vat = new BigDecimal(String.valueOf(taxInvoiceDetail.getVat()));
+                
+                BigDecimal amount = new BigDecimal(0);
+                BigDecimal vat = new BigDecimal(0);
                 BigDecimal onehundred = new BigDecimal(100);
                 BigDecimal gross = new BigDecimal(0);
-                gross = vat.add(onehundred);
-//                gross = (amount.multiply(onehundred)).divide(vat.add(onehundred));
-                taxInvoiceDetail.setCreateBy(taxInvoiceDetail.getCreateBy());
-//                gross = (amount*100)/(100+vat);
-//                vat = amount - gross
+                if(taxInvoiceDetail.getIsVat() == 1){
+                    if(taxInvoiceDetail.getAmount() != null){
+                        amount = taxInvoiceDetail.getAmount();           
+                        vat = taxInvoiceDetail.getVat();
+
+                        gross = ((amount.multiply(onehundred)).divide((vat.add(onehundred)), 2));
+                        vat = amount.subtract(gross);
+
+                        totalAmount = totalAmount.add(amount);
+                        totalGross = totalGross.add(gross);
+                        totalVat = totalVat.add(vat);
+                    }
+                } else {
+                    if(taxInvoiceDetail.getAmount() != null){
+                        amount = taxInvoiceDetail.getAmount(); 
+                        totalAmount = totalAmount.add(amount);
+                    }
+                }
+               
+                String invoiceNo = "";
+                if(taxInvoiceDetail.getInvoiceDetail() != null){
+                    invoiceNo = taxInvoiceDetail.getInvoiceDetail().getInvoice().getInvNo();
+                    totalInvoiceNo += invoiceNo;
+                    
+                    if(!"".equalsIgnoreCase(totalReceiptNo)){
+                        totalReceiptNo += " ";
+                    } else {
+                        totalReceiptNo += "";
+                    }
+                    List<ReceiptDetail> receiptDetailList = taxInvoiceDetail.getInvoiceDetail().getReceiptDetails();
+                    for(int k=0;k<receiptDetailList.size();k++){
+                        ReceiptDetail receiptDetail = new ReceiptDetail();
+                        receiptDetail = receiptDetailList.get(k);
+                        String receiptNo = "";
+                        if(receiptDetail.getReceipt() != null){
+                            receiptNo = receiptDetail.getReceipt().getRecNo();
+                            totalReceiptNo += receiptNo;           
+                        }                       
+                    }                
+                }                           
             }
-//            taxInvoiceView.setTotalAmount();
-//            taxInvoiceView.setTotalGross();
-//            taxInvoiceView.setTotalvat();
+            taxInvoiceView.setTotalAmount(totalAmount);
+            taxInvoiceView.setTotalGross(totalGross);
+            taxInvoiceView.setTotalVat(totalVat);           
+            taxInvoiceView.setInvoiceNo(totalInvoiceNo);
+            taxInvoiceView.setReceiptNo(totalReceiptNo);
+            
+            taxInvoiceViewList.add(taxInvoiceView);
         }
         
         return taxInvoiceViewList;
