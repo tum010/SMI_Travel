@@ -34,6 +34,9 @@
         }
         else {
             ReceiveFromTable.$('tr.row_selected').removeClass('row_selected');
+            var staff_code = $(this).find("td").eq(0).html();
+//            alert("Herree" + staff_code);
+            $("#ARCode").val(staff_code);
             $(this).addClass('row_selected');
         }
     });
@@ -226,9 +229,10 @@ function validFromInvoice(){
 }
 var isDuplicateInvoiceDetail = 0;
 var description ="";
-function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo){
+function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur){
 
     var selectT="";
+    var selectC = "";
     if(prod === undefined){
         prod = "";
     }
@@ -248,6 +252,9 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo){
     if(price === undefined){
         price = "";
     }
+    if(cur === undefined){
+        cur = "";
+    }
     if (!row) {
         row = 1;
     }
@@ -256,6 +263,7 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo){
         $("#tr_FormulaAddRow").css("display","none");
     }
    selectT = selectType.replace("value='"+ prod +"'", "selected value='"+ prod+"'");
+   selectC = select.replace("value='"+ cur +"'", "selected value='"+ cur+"'");
 //   alert(select);
    $("#DetailBillableTable tbody").append(
         '<tr>' +
@@ -265,16 +273,16 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo){
         '<td><a href="" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail('+row+')">'+ des + ' : ' + RefNo +'</a> </td>' +
         '<td class="hidden"><input type="text" class="form-control" id="BillDescription' + row + '" name="BillDescription' + row + '" value="'+des +'" > </td>' +
         '<td><input  maxlength ="15" type="text" onfocusout="changeFormatCostNumber(' + row + ')" class="form-control numerical" id="InputCost' + row + '" name="InputCost' + row + '" value="'+ cos +'" ></td>' +
-        '<td><select id="SelectCurrencyCost' + row + '" name="SelectCurrencyCost' + row + '" class="form-control">'+ select +'</select></td>' +
-        '<td>'+cos +' </td>' +
+        '<td><select id="SelectCurrencyCost' + row + '" name="SelectCurrencyCost' + row + '" class="form-control">'+ selectC +'</select></td>' +
+        '<td><input type="text" value="'+cos +'" id="InputCostLocal' + row + '" name="InputCostLocal' + row + '" class="form-control"></td>' +
         '<td class="hidden"><input type="text" value="'+cos +'" id="InputCostLocalTemp' + row + '" name="InputCostLocalTemp' + row + '"></td>'+
         '<td><input type="checkbox"  id="checkUse' + row + '" name="checkUse' + row + '"  onclick="calculateGross('+row+')"></td>'+
-        '<td>'+ defaultD +'</td>'+ 
+        '<td>' +'</td>'+ 
         '<td class="hidden"><input type="text" class="form-control" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '" value="'+ defaultD +'" ></td>'+
-        '<td><input type="text" maxlength ="15" onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control numerical" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>'+
-        '<td><input type="text" maxlength ="15"  class="form-control numerical" id="InputAmount' + row + '" name="InputAmount' + row + '" value="" onfocusout="CalculateGrandTotal(' + row + ')"></td>'+
-        '<td><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control">'+ select +'</select></td>'+
-        '<td>'+price +'</td>'+
+        '<td class="hidden"><input type="text" maxlength ="15" onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control numerical" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>'+
+        '<td><input type="text" maxlength ="15"  class="form-control numerical" id="InputAmount' + row + '" name="InputAmount' + row + '"  value="'+price +'" onfocusout="CalculateGrandTotal(' + row + ')"></td>'+
+        '<td><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control">'+ selectC +'</select></td>'+
+        '<td><input type="text" value="'+price +'" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control" ></td>'+
         '<td class="hidden"><input type="text" value="'+price +'" id="InputAmountLocalTemp' + row + '" name="InputAmountLocalTemp' + row + '"  ></td>'+
         '<td align="center" ><center><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('+row+',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span></center>'+
         '<td class="hidden"><textarea id="DescriptionInvoiceDetail' + row + '" name="DescriptionInvoiceDetail' + row + '"> '+ description +'</textarea> </td>'+
@@ -287,17 +295,16 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo){
 
 function getDescriptionDetail(row){
     var description = $('#DescriptionInvoiceDetail'+row).val();
-    $('#InputDescriptionDetailId').text(row);
-    $('#InputDescriptionDetail').html(description);
+    $('#InputDescriptionDetailId').val(row);
+    $('#InputDescriptionDetail').val(description);
 }
 
 function saveDescriptionDetail(){
-    var row = $('#InputDescriptionDetailId').text();
-    $('#InputDescriptionDetail').change(function(){
-       var descriptionDetail = $('#InputDescriptionDetail').html();
-        alert(row + " : " + descriptionDetail);
-        $('#DescriptionInvoiceDetail'+row).html(descriptionDetail);
-    });
+    var row = $('#InputDescriptionDetailId').val();
+    var descriptionDetail = $('#InputDescriptionDetail').val();
+
+    console.log($('#InputDescriptionDetail').val());
+    $('#DescriptionInvoiceDetail'+row).html(descriptionDetail);
 }
 
 function changeFormatCostNumber(id){
@@ -608,7 +615,10 @@ function setBillableInvoice(data){
 
 function addInvoiceDetail(rowId){
     isDuplicateInvoiceDetail = 0;
+    var rowCount = $('#DetailBillableTable >tbody >tr').length;
+    $("#counter").val((rowCount++));
     var countTable = $("#counter").val();
+//    alert("C : "+countTable);
     var RefNo = $("#SearchRefNo").val();
     var count = 1;
     $('#MasterReservation > tbody  > tr').each(function() {
@@ -635,7 +645,7 @@ function addInvoiceDetail(rowId){
                         '&type=' + 'searchInvoiceDescription';
                    CallAjaxSearchDescription(param,countTable);
                 // Send Add Row
-                AddRowDetailBillAble(countTable,prod,des,cos,id,price,RefNo);
+                AddRowDetailBillAble(countTable,prod,des,cos,id,price,RefNo,cur);
               
             }else if (isDuplicateInvoiceDetail !== 0){
                 alert("Duplicate");
@@ -673,6 +683,8 @@ function CallAjaxSearchDescription(param,rowId) {
                     setDescriptionDaytour(array,rowId);
                 }else if(array[1] === 'Air Ticket'){
                     setDescriptionAirticket(array,rowId);
+                }else if(array[1] === 'Air Additional'){
+                    setDescriptionAirAdditional(array,rowId);
                 }
                 
 //                alert("DES :"+array[1]);
@@ -781,6 +793,14 @@ function checkDuplicateInvoiceDetail(product,rowId){
             isDuplicateInvoiceDetail++;
         }
     });
+}
+
+function setDescriptionAirAdditional(data,row){
+    
+    var text = "";
+    text += data;
+    $('#DescriptionInvoiceDetail'+row).html(text);
+    $("#DescriptionInvoiceDetailTextArea"+row).html(text);
 }
 
 function formatNumber(num) {
