@@ -26,8 +26,8 @@
     <div class="row">
         <div class="col-sm-12">
             <form action="SendMail.smi" method="post" id="Mail" role="form">
-                <input type="text" id="reportname" name="reportname" value="${reportname}">
-                <input type="text" id="reportid" name="reportid" value="${reportid}">
+                <input type="hidden" id="reportname" name="reportname" value="${reportname}">
+                <input type="hidden" id="reportid" name="reportid" value="${reportid}">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">New Message</h3>
