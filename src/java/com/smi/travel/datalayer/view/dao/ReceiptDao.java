@@ -14,5 +14,5 @@ import java.util.List;
  * @author chonnasith
  */
 public interface ReceiptDao {
-    public List getReceipt(String receiptId,String receiptNo,int option);   
+    public List getReceipt(String receiptId,int option);   
 }

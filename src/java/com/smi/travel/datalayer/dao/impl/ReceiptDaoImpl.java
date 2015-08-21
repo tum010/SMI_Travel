@@ -87,7 +87,7 @@ import org.hibernate.Transaction;
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
-            result = gennarateReceiptNo();
+            result = gennarateReceiptNo(receipt.getDepartment() , receipt.getRecType());
             receipt.setRecNo(result);
             session.save(receipt);
             
@@ -115,21 +115,25 @@ import org.hibernate.Transaction;
         return result;
     }
     
-    private String gennarateReceiptNo(){
+    private String gennarateReceiptNo(String department, String receiptType){
         String recNo = "";
         Session session = this.sessionFactory.openSession();
-        List<Receipt> list = new LinkedList<Receipt>();
+        List<String> list = new LinkedList<String>();
         Date thisdate = new Date();
         SimpleDateFormat df = new SimpleDateFormat();
         df.applyPattern("yyMM");
-        Query query = session.createQuery("from Receipt r where r.recNo Like :recNo Order by r.recNo desc");
-        query.setParameter("recNo", "%"+ df.format(thisdate) + "%");
+        
+        Query query = session.createSQLQuery("SELECT RIGHT(rec_no, 4) as recnum  FROM receipt where department = :department rec_type = :recType and rec_no Like :recno  ORDER BY RIGHT(rec_no, 4) desc");
+        query.setParameter("recno", "%"+ df.format(thisdate) + "%");
+        query.setParameter("department", department);
+        query.setParameter("recType", receiptType);
+
         query.setMaxResults(1);
         list = query.list();
         if (list.isEmpty()) {
             recNo = df.format(thisdate) + "-" + "0001";
         } else {
-            recNo = String.valueOf(list.get(0).getRecNo());
+            recNo = String.valueOf(list.get(0));
             if (!recNo.equalsIgnoreCase("")) {
                 System.out.println("recNo" + recNo.substring(4,8) + "/////");
                 int running = Integer.parseInt(recNo.substring(4,8)) + 1;

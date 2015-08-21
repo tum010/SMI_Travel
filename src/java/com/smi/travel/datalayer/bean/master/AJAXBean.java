@@ -537,13 +537,13 @@ public class AJAXBean extends AbstractBean implements
             }
         }else if (MAIL.equalsIgnoreCase(servletName)) {
             if ("sendMail".equalsIgnoreCase(type)) {
-                try {
-                    result = sendMail.main(sendTo,subject,content,attachfile,sendCc);
-                } catch (EmailException ex) {
-                    Logger.getLogger(AJAXBean.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (MalformedURLException ex) {
-                    Logger.getLogger(AJAXBean.class.getName()).log(Level.SEVERE, null, ex);
-                }
+//                try {
+//                    result = sendMail.main(sendTo,subject,content,attachfile,sendCc);
+//                } catch (EmailException ex) {
+//                    Logger.getLogger(AJAXBean.class.getName()).log(Level.SEVERE, null, ex);
+//                } catch (MalformedURLException ex) {
+//                    Logger.getLogger(AJAXBean.class.getName()).log(Level.SEVERE, null, ex);
+//                }
             }
         } else if (BOOKINGSTATUS.equalsIgnoreCase(servletName)) {
             if ("search".equalsIgnoreCase(type)) {
@@ -768,7 +768,7 @@ public class AJAXBean extends AbstractBean implements
                             "<td>"+airline+"</td>"+
                             "<td class='money'>"+commission+"</td>"+
                             "<td class='text-center'>"+isUse+"</td>"+ 
-                            "<td><center><a href=\"\"><span onclick=\"addProduct('"+product+"','"+description+"','','','','','"+commission+"','"+currency+"','','','"+paymentId+"','"+airline+"')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>" +
+                            "<td><center><a href=\"\"><span onclick=\"addProduct('"+product+"','"+description+"','','','','','"+commission+"','"+currency+"','','','"+paymentId+"','"+airline+"','3')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>" +
                             "</tr>";
             }
             html.append(newrow);
@@ -895,7 +895,7 @@ public class AJAXBean extends AbstractBean implements
                             "<td>"+description+"</td>"+
                             "<td class='money'>"+amount+"</td>"+
                             "<td>"+currency+"</td>"+ 
-                            "<td><center><a href=\"\"><span onclick=\"addProduct('"+product+"','"+description+"','"+cost+"','"+cur+"','"+isVat+"','"+vat+"','"+amount+"','"+currency+"','"+invId+"','','','')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>" +
+                            "<td><center><a href=\"\"><span onclick=\"addProduct('"+product+"','"+description+"','"+cost+"','"+cur+"','"+isVat+"','"+vat+"','"+amount+"','"+currency+"','"+invId+"','','','','1')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>" +
                             "</tr>";
                 html.append(newrow);
             }else{
@@ -917,14 +917,16 @@ public class AJAXBean extends AbstractBean implements
         StringBuffer html = new StringBuffer();
         List<BillableDesc> billableDescs = new ArrayList<BillableDesc>(billable.getBillableDescs());
         String description = "";
-        String amount = "";
         String currency = "";
         String product = "";
-        String cost = "" ;
         String cur = "" ; 
         String isVat = "";
         String vat = "";
         String billableDescId = "";
+        BigDecimal amount = new BigDecimal(0);
+        BigDecimal cost = new BigDecimal(0);
+        BigDecimal amountinvoice = new BigDecimal(0);
+        BigDecimal costinvoice = new BigDecimal(0);
         int No = 0;
         String mAccPay = "";
         String receiveFrom = billable.getBillTo();
@@ -951,30 +953,54 @@ public class AJAXBean extends AbstractBean implements
             description = billableDescs.get(i).getDetail();
             
             BigDecimal amounttemp = new BigDecimal(billableDescs.get(i).getPrice());
-            amounttemp = amounttemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
-            amount = String.valueOf(amounttemp);
+            amountinvoice = amounttemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
             
             currency = billableDescs.get(i).getCurrency();
             if(billableDescs.get(i).getMBilltype() != null){
                 product = billableDescs.get(i).getMBilltype().getId();
             }
-            cost = String.valueOf(billableDescs.get(i).getCost());
+            
+            BigDecimal costtemp = new BigDecimal(billableDescs.get(i).getCost());
+            costinvoice = costtemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+            
             cur = billableDescs.get(i).getCurrency();
-            String newrow = "";
-            newrow +=   "<tr>"+
-                        "<input type='hidden' name='receiveFromBillable' id='receiveFromBillable' value='"+receiveFrom+"'>" +
-                        "<input type='hidden' name='receiveNameBillable' id='receiveNameBillable' value='"+receiveName+"'>" +
-                        "<input type='hidden' name='receiveAddressBillable' id='receiveAddressBillable' value='"+receiveAddress+"'>" +
-                        "<input type='hidden' name='arcodeBillable' id='arcodeBillable' value='"+arcode+"'>" +
-                        "<input type='hidden' name='mAccPayBillable' id='mAccPayBillable' value='"+mAccPay+"'>" +
-//                        "<input type='hidden' name='billableDescId' id='billableDescId' value='"+billableDescId+"'>" +
-                        "<td class='text-center'>"+No+"</td>"+
-                        "<td>"+description+"</td>"+
-                        "<td class='money'>"+amount+"</td>"+
-                        "<td>"+currency+"</td>"+ 
-                        "<td><center><a href=\"\"><span onclick=\"addProduct('"+product+"','"+description+"','"+cost+"','"+cur+"','','','"+amount+"','"+currency+"','','"+billableDescId+"','','')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>" +
-                        "</tr>";
-            html.append(newrow);
+            
+            
+            BigDecimal[] value = checkInvoiceDetailFromBilldescId(billableDescId); 
+            BigDecimal costTemp = value[0];
+            BigDecimal amountTemp = value[1];
+            amount = amountinvoice.subtract(amountTemp);
+            cost = costinvoice.subtract(costTemp);
+            System.out.println(" amount =  " + amountinvoice + "-" + amountTemp + " = "+  amount);
+            System.out.println(" cost =  " + costinvoice + "-" + costTemp + " = "+  cost);
+            
+            if(amount.compareTo(BigDecimal.ZERO) != 0){
+                String newrow = "";
+                newrow +=   "<tr>"+
+                            "<input type='hidden' name='receiveFromBillable' id='receiveFromBillable' value='"+receiveFrom+"'>" +
+                            "<input type='hidden' name='receiveNameBillable' id='receiveNameBillable' value='"+receiveName+"'>" +
+                            "<input type='hidden' name='receiveAddressBillable' id='receiveAddressBillable' value='"+receiveAddress+"'>" +
+                            "<input type='hidden' name='arcodeBillable' id='arcodeBillable' value='"+arcode+"'>" +
+                            "<input type='hidden' name='mAccPayBillable' id='mAccPayBillable' value='"+mAccPay+"'>" +
+                            "<td class='text-center'>"+No+"</td>"+
+                            "<td>"+description+"</td>"+
+                            "<td class='money'>"+amount+"</td>"+
+                            "<td>"+currency+"</td>"+ 
+                            "<td><center><a href=\"\"><span onclick=\"addProduct('"+product+"','"+description+"','"+cost+"','"+cur+"','','','"+amount+"','"+currency+"','','"+billableDescId+"','','','2')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>" +
+                            "</tr>";
+                html.append(newrow);
+            }else{
+                String newrow = "";
+                newrow +=   "<tr>"+
+                            "<input type='hidden' name='receiveFromBillable' id='receiveFromBillable' value='"+receiveFrom+"'>" +
+                            "<input type='hidden' name='receiveNameBillable' id='receiveNameBillable' value='"+receiveName+"'>" +
+                            "<input type='hidden' name='receiveAddressBillable' id='receiveAddressBillable' value='"+receiveAddress+"'>" +
+                            "<input type='hidden' name='arcodeBillable' id='arcodeBillable' value='"+arcode+"'>" +
+                            "<input type='hidden' name='mAccPayBillable' id='mAccPayBillable' value='"+mAccPay+"'>" +
+                            "</tr>";
+                html.append(newrow);
+            
+            }
         }
         return html.toString();
     }
@@ -1440,6 +1466,31 @@ public class AJAXBean extends AbstractBean implements
         }
         //from InvoiceDetail inv where inv.billableDesc.id = :billdesc
         //get amount and cost from InvoiceDetail
+
+        value[0] = resultCost;
+        value[1] = resultAmount;
+        return value;
+    }
+    
+    public BigDecimal[] checkInvoiceDetailFromBilldescId(String billdescId){
+        BigDecimal[] value = new BigDecimal[2];
+        BigDecimal amount = new BigDecimal(0);
+        BigDecimal cost = new BigDecimal(0);
+        BigDecimal resultAmount = new BigDecimal(0);
+        BigDecimal resultCost = new BigDecimal(0);
+        
+        List<InvoiceDetail> invoiceDetailList = invoicedao.getInvoiceDetailFromBillableDescId(billdescId);
+        if (invoiceDetailList == null || invoiceDetailList.size() == 0) {
+            value[0] = resultCost;
+            value[1] = resultAmount;
+            return value;
+        }
+        for (int i = 0; i < invoiceDetailList.size(); i++) {
+            cost = invoiceDetailList.get(i).getCost();
+            amount = invoiceDetailList.get(i).getAmount();
+            resultCost = resultCost.add(cost);
+            resultAmount = resultAmount.add(amount);
+        }
 
         value[0] = resultCost;
         value[1] = resultAmount;

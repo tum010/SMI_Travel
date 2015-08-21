@@ -104,9 +104,10 @@
                      <!-- Nav tabs -->
                      
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#bl" aria-controls="bl" role="tab" data-toggle="tab">BL</a></li>
+                        <li role="presentation" class="active"><a href="#inv" aria-controls="inv" role="tab" data-toggle="tab">INV</a></li>
+                        <li role="presentation" class=""><a href="#ref" aria-controls="ref" role="tab" data-toggle="tab">REF</a></li>
                         <li role="presentation" class=""><a href="#com" aria-controls="com" role="tab" data-toggle="tab">COM</a></li>
-                        <h4><a class="col-xs-10 text-right" data-toggle="collapse" href="#collapseTab" aria-expanded="false" aria-controls="collapseTab">
+                        <h4><a class="col-xs-9 text-right" data-toggle="collapse" href="#collapseTab" aria-expanded="false" aria-controls="collapseTab">
                             <span id="arrowReceipt" class="arrowReceipt glyphicon glyphicon-chevron-up"></span>
                         </a></h4>
                     </ul>
@@ -115,8 +116,8 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="tab-content collapse in" id="collapseTab" aria-expanded="false">
-                                <div role="tabpanel" class="tab-pane hidden active" id="bl">
-                                    <div class="col-xs-6 form-group" style="padding-top: 20px;">
+                                <div role="tabpanel" class="tab-pane hidden active" id="inv">
+                                    <div class="col-xs-12" style="padding-top: 20px; padding-left: 50px;padding-right: 50px">
                                         <div class="col-xs-1 text-right" style="width: 120px">
                                             <label class="control-label text-right">Invoice No </label>
                                         </div>
@@ -147,7 +148,10 @@
                                             </table>
                                         </div>
                                     </div>
-                                    <div class="col-xs-6 form-group" style="padding-top: 20px;">
+                                </div>
+                                <!-- Tab REF -->
+                                <div role="tabpanel" class="tab-pane hidden" id="ref">
+                                    <div class="col-xs-12" style="padding-top: 20px; padding-left: 50px;padding-right: 50px">
                                         <div class="col-xs-1 text-right" style="width: 120px">
                                             <label class="control-label text-right">Ref No </label>
                                         </div>
@@ -181,7 +185,7 @@
                                 </div>
                                 <!-- Tab COM -->
                                 <div role="tabpanel" class="tab-pane hidden" id="com">
-                                    <div class="col-xs-6 form-group" style="padding-top: 20px; border-right:solid 1px #D9D9D9">
+                                    <div class="col-xs-6" style="padding-top: 20px; border-right:solid 1px #D9D9D9">
                                         <div class="col-xs-1 text-left" style="width: 200px">
                                             <label class="control-label text-right">Air Commission </label>
                                         </div>
@@ -209,7 +213,7 @@
                                             </table>
                                         </div>
                                     </div>
-                                    <div class="col-xs-6 form-group" style="padding-top: 20px;">
+                                    <div class="col-xs-6" style="padding-top: 20px;">
                                        <div class="col-xs-1 text-left" style="width: 200px">
                                             <label class="control-label text-right">Tour Commission </label>
                                         </div>
@@ -362,6 +366,7 @@
                                                 <input type="hidden" name="count${i.count}" id="count${i.count}" value="${i.count}">
                                                 <input id="invId${i.count}"  name="invId${i.count}"   type="hidden" value="${table.invoiceDetail.id}" >
                                                 <input type="hidden" name="tableId${i.count}" id="tableId${i.count}" value="${table.id}">
+                                                <input id="receiveAmountTemp${i.count}" name="receiveAmountTemp${i.count}"  type="hidden" value="${table.amount}" >
                                                 <td>                                   
                                                     <select class="form-control" name="receiveProduct${i.count}" id="receiveProduct${i.count}">
                                                         <option  value="" >---------</option>
@@ -408,7 +413,7 @@
                                                         </c:when>
                                                     </c:choose>
                                                 </td>
-                                                <td><input id="receiveAmount${i.count}" name="receiveAmount${i.count}" type="text" class="form-control text-right" onkeyup="insertCommas(this)" value="${table.amount}"></td>
+                                                <td><input id="receiveAmount${i.count}" name="receiveAmount${i.count}" type="text" class="form-control text-right" onkeyup="insertCommas(this)" onkeypress="checkAmount('${i.count}')" value="${table.amount}"></td>
                                                 <td>                                   
                                                     <select class="form-control" name="receiveCurrency${i.count}" id="receiveCurrency${i.count}">
                                                         <option  value="" >---------</option>
@@ -431,7 +436,7 @@
                             </div>
                         </div> 
                         <!--<input type="hidden" name="mAccPayBillable" id="mAccPayBillable" value="">-->
-                        
+                        <input type="hidden" name="amountTemp" id="amountTemp" value="">
                         <input type="hidden" name="receiptIdDelete" id="receiptIdDelete" value="">
                         <input type="hidden" name="receiptDetailIdDelete" id="receiptDetailIdDelete" value="">
                         <input type="hidden" name="receiptRowDelete" id="receiptRowDelete" value="">
@@ -1135,7 +1140,7 @@
 <!--Script-->       
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
-        $("#bl,#com").removeClass('hidden');
+        $("#inv,#ref,#com").removeClass('hidden');
         $('.datemask').mask('0000-00-00');
         $('.date').datetimepicker();
         $(".money").mask('000,000,000.00', {reverse: true});
@@ -1453,12 +1458,12 @@
                 '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="">---------</option></select>' +                          
                 '</td>' +
                 '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" ></td>' +
-                '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control" onkeyup="insertCommas(this)"></td>' +
+                '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control" onkeyup="insertCommas(this)" disabled="disabled" ></td>' +
                 '<td>' + 
-                '<select class="form-control" name="receiveCurCost' + row + '" id="receiveCurCost' + row + '" ><option value="">---------</option></select>' +                          
+                '<select class="form-control" name="receiveCurCost' + row + '" id="receiveCurCost' + row + '" disabled="disabled"><option value="">---------</option></select>' +                          
                 '</td>' +
                 '<td align="center">' +
-                '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" onclick="handleClick(this,'+row+')" value="">' +
+                '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" onclick="handleClick(this,'+row+')" value="" disabled="disabled">' +
                 '</td>' +
                 '<td><div id="receiveVat' + row + '" style="display:none" ></div></td>' +
                 '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)"></td>' +
@@ -1725,7 +1730,20 @@ function invoicenoValidate(){
     $('#invoicenopanel').addClass('has-success');
     $('#invoicenopanel').removeClass('has-error');  
 }
-function addProduct(product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode){
+function addProduct(product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,checkadd){
+    if(checkadd == 1){
+        $("#ButtonSearchRefNo").attr("disabled", "disabled");
+        $("#searchPaymentNoAir").attr("disabled", "disabled");
+        $("#searchPaymentNoTour").attr("disabled", "disabled");
+    }else if(checkadd == 2){
+        $("#ButtonSearchInvoice").attr("disabled", "disabled");
+        $("#searchPaymentNoAir").attr("disabled", "disabled");
+        $("#searchPaymentNoTour").attr("disabled", "disabled");
+    }else if(checkadd == 3){
+        $("#ButtonSearchRefNo").attr("disabled", "disabled");
+        $("#ButtonSearchInvoice").attr("disabled", "disabled");
+        $("#searchPaymentNoTour").attr("disabled", "disabled");
+    }
     var tempCount = parseInt($("#counter").val());
     AddDataRowProduct(tempCount,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode);
 }
@@ -1757,19 +1775,20 @@ function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,cur
         '<input id="billDescId' + row + '" name="billDescId' + row + '"  type="hidden" value="'+billDescId+'" >' +
         '<input id="paymentId' + row + '" name="paymentId' + row + '"  type="hidden" value="'+paymentId+'" >' +
         '<input id="airlineCode' + row + '" name="airlineCode' + row + '"  type="hidden" value="'+airlineCode+'" >' +
+        '<input id="receiveAmountTemp' + row + '" name="receiveAmountTemp' + row + '"  type="hidden" value="'+amount+'" >' +
         '<td>' + 
         '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="'+product+'" selected></option></select>' +                          
         '</td>' +
         '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" value="'+description+'"></td>' +
-        '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control" value="'+cost+'" onkeyup="insertCommas(this)"></td>' +
+        '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control" value="'+cost+'" onkeyup="insertCommas(this)" disabled="disabled"></td>' +
         '<td>' + 
-        '<select class="form-control" name="receiveCurCost' + row + '" id="receiveCurCost' + row + '"><option value="'+cur+'"></option></select>' +                          
+        '<select class="form-control" name="receiveCurCost' + row + '" id="receiveCurCost' + row + '" disabled="disabled"><option value="'+cur+'" ></option></select>' +                          
         '</td>' +
         '<td align="center">' +
-        '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" onclick="handleClick(this,'+row+')" value="'+isVat+'">' +
+        '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" disabled="disabled" onclick="handleClick(this,'+row+')" value="'+isVat+'">' +
         '</td>' +
         '<td><div id="receiveVat' + row + '" style="display:none" ></div></td>' +
-        '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)" value="'+amount+'"></td>' +
+        '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)" onkeypress="checkAmount('+row+')" value="'+amount+'"></td>' +
         '<td>' + 
         '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="'+currency+'"></option></select>' +                           
         '</td>' +
@@ -2065,6 +2084,8 @@ function DeleteRowProduct(){
                     $("#tr_ProductDetailAddRow").removeClass("hide");
                     $("#tr_ProductDetailAddRow").addClass("show");
                 }
+                
+                AddRowProduct()
             },
             error: function () {
                 console.log("error");
@@ -2073,6 +2094,27 @@ function DeleteRowProduct(){
         }); 
     }    
     $('#DeleteProduct').modal('hide');
+    
+    var tempcount = parseInt($("#ReceiptListTable tr").length);
+    if(tempcount == 1){
+        $("#ButtonSearchRefNo").removeAttr("disabled");
+        $("#ButtonSearchInvoice").removeAttr("disabled");
+        $("#searchPaymentNoAir").removeAttr("disabled");
+        $("#searchPaymentNoTour").removeAttr("disabled");
+    }else if(tempcount == 2){
+        $('#ReceiptListTable').dataTable().fnClearTable();
+        $('#ReceiptListTable').dataTable().fnDestroy();
+        $("#counter").val(0);
+        AddRowProduct(0);
+        var amount = document.getElementById('receiveAmount0').value;
+        if(amount === ""){
+            $("#ButtonSearchRefNo").removeAttr("disabled");
+            $("#ButtonSearchInvoice").removeAttr("disabled");
+            $("#searchPaymentNoAir").removeAttr("disabled");
+            $("#searchPaymentNoTour").removeAttr("disabled");
+        }
+    }
+
 }
 
 function deleteCreditList(id,Ccount) {
@@ -2135,5 +2177,19 @@ function DisableReceipt() {
     var action = document.getElementById('action');
     action.value = 'disableVoid';
     document.getElementById('ReceiptForm').submit();
+}
+
+function checkAmount(row){
+    var amountTemp = document.getElementById('receiveAmountTemp'+row).value;
+    var amount = document.getElementById('receiveAmount'+row).value;
+    
+    amountTemp = replaceAll(",","",amountTemp.toString()); 
+    amount = replaceAll(",","",amount.toString()); 
+    
+    $("#receiveAmount"+row).focusout(function(){
+        if(parseInt(amount) > parseInt(amountTemp)){
+            document.getElementById('receiveAmount'+row).value = amountTemp; 
+        }
+    }); 
 }
 </script>

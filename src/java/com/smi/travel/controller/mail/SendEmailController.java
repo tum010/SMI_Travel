@@ -80,8 +80,20 @@ public class SendEmailController extends SMITravelController {
                 if (checkDirectory(path[0] + username)) {
                     result = reportservice.printreport(jasperFileName, username + "\\" + pdfFileName, dataSource);
                 }
-
             }
+            if (ReceiptEmail.equalsIgnoreCase(name)) {
+                data = reportservice.getReceiptEmail("33",1);
+                JRDataSource dataSource = new JRBeanCollectionDataSource(data);
+                jasperFileName = "ReceiptEmail.jasper";
+                pdfFileName = "receipt.pdf";
+                pathAttachfile = path[0] + "\\" + username;
+                System.out.println("path : " + path[0] + username);
+                if (checkDirectory(path[0] + username)) {
+                    result = reportservice.printreport(jasperFileName, username + "\\" + pdfFileName, dataSource);
+                }
+            }
+            
+            
         }
 
         System.out.println("result : " + result);
