@@ -278,12 +278,7 @@
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
     
-    
     <bean id="MBankDao" class="com.smi.travel.datalayer.dao.impl.MBankImpl">
-          <property name="sessionFactory" ref="sessionFactory"></property>
-    </bean>
-    
-    <bean id="ReceiptEmailDao" class="com.smi.travel.datalayer.view.dao.impl.ReceiptEmailImpl">
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
     
