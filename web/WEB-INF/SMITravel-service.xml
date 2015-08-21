@@ -148,7 +148,6 @@
         <property name="guideJobdao" ref="GuideJobDao" />
         <property name="daytourOtherdao" ref="DaytourOtherDao" />
         <property name="agentCommissiondao" ref="AgentCommissionReportDao" />
-        <property name="receiptEmailDao" ref="ReceiptEmailDao" />
         <property name="receiptDao" ref="ReceiptDao" />
         <property name="invoiceEmaildao" ref="InvoiceEmailDao" />
         <property name="invoicedao" ref="InvoiceReportDao" />

@@ -175,7 +175,7 @@ public class ReportController extends SMITravelController {
             data = reportservice.getDaytourOtherReport(refno, status);
         } else if (ReceiptEmail.equalsIgnoreCase(name)) {
             PrintMethod = 0;
-            data = reportservice.getReceiptEmail(receiveId,receiveNo);
+            data = reportservice.getReceiptEmail(receiveId,receiveNo,option);
         } else if (ReceiptReport.equalsIgnoreCase(name)) {
             PrintMethod = 0;
             data = reportservice.getReceipt(receiveId,receiveNo,option);

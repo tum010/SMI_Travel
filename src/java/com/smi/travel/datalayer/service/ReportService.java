@@ -21,7 +21,6 @@ import com.smi.travel.datalayer.view.dao.InvoiceReportDao;
 import com.smi.travel.datalayer.view.dao.InvoiceSummaryDao;
 import com.smi.travel.datalayer.view.dao.LandVoucherDao;
 import com.smi.travel.datalayer.view.dao.ReceiptDao;
-import com.smi.travel.datalayer.view.dao.ReceiptEmailDao;
 import com.smi.travel.datalayer.view.dao.ReceiveListDao;
 import com.smi.travel.datalayer.view.dao.StaffSummaryDao;
 import com.smi.travel.datalayer.view.dao.TaxInvoiceEmailReportDao;
@@ -57,7 +56,6 @@ public class ReportService {
     private GuideJobDao guideJobdao;
     private DaytourOtherDao daytourOtherdao;
     private AgentCommissionReportDao agentCommissiondao;
-    private ReceiptEmailDao receiptEmailDao;
     private ReceiptDao receiptDao;
     private ReceiveListDao  receiveListDao;
     private InvoiceEmailDao invoiceEmaildao;
@@ -148,10 +146,8 @@ public class ReportService {
         return agentCommissiondao.getAgentReportInfo(datefrom, dateto, user,agentid);
     }
     
-    public List getReceiptEmail(String receiptId,String receiptNo){
-        List data  = new ArrayList();
-        data.add(receiptEmailDao.getReceiptEmail());
-        return data;
+    public List getReceiptEmail(String receiptId,String receiptNo,int option){
+        return receiptDao.getReceipt(receiptId,receiptNo,option);
     }
     
      public List getReceipt(String receiptId,String receiptNo,int option){
@@ -319,14 +315,6 @@ public class ReportService {
 
     public List getInvoiceSummary(String ticketfrom, String tickettype, String startdate, String enddate) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public ReceiptEmailDao getReceiptEmailDao() {
-        return receiptEmailDao;
-    }
-
-    public void setReceiptEmailDao(ReceiptEmailDao receiptEmailDao) {
-        this.receiptEmailDao = receiptEmailDao;
     }
 
     public ReceiptDao getReceiptDao() {

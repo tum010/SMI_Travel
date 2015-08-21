@@ -58,100 +58,76 @@ public class ReceiptImpl implements ReceiptDao{
                 .list();
         
         List data = new ArrayList();
+        String invdescTemp = "";
+        ReceiptView receiptViewTemp  = new ReceiptView();
         for(Object[] T : QueryList){
             ReceiptView receiptView = new ReceiptView();
-            receiptView.setId(((String.valueOf(T[0]) == "null" ? "" : String.valueOf(T[0]))));
-            receiptView.setRecto(((String.valueOf(T[1]) == "null" ? "" : String.valueOf(T[1]))));
-            receiptView.setRecadd(((String.valueOf(T[2]) == "null" ? "" : String.valueOf(T[2]))));
-            receiptView.setTel(((String.valueOf(T[3]) == "null" ? "" : String.valueOf(T[3]))));
-            receiptView.setFax(((String.valueOf(T[4]) == "null" ? "" : String.valueOf(T[4]))));
-            receiptView.setRecno(((String.valueOf(T[5]) == "null" ? "" : String.valueOf(T[5]))));
-            receiptView.setRecdate(((String.valueOf(T[6]) == "null" ? "" : String.valueOf(T[6]))));
-            receiptView.setPaidby(((String.valueOf(T[7]) == "null" ? "" : String.valueOf(T[7]))));
-            receiptView.setDescription(((String.valueOf(T[8]) == "null" ? "" : String.valueOf(T[8]))));
-            receiptView.setNondescription(((String.valueOf(T[9]) == "null" ? "" : String.valueOf(T[9]))));
-            receiptView.setInvdesc(((String.valueOf(T[10]) == "null" ? "" : String.valueOf(T[10]))));
-            receiptView.setAmount(((String.valueOf(T[11]) == "0" ? "" : String.valueOf(T[11]))));
-            receiptView.setTotalamount(((String.valueOf(T[12]) == "0" ? "" : String.valueOf(T[12]))));
-            receiptView.setCash(((String.valueOf(T[13]) == "0" ? "" : String.valueOf(T[13]))));
-            receiptView.setCashflag(((String.valueOf(T[14]) == "0" ? "" : String.valueOf(T[14]))));
-            receiptView.setTransfer(((String.valueOf(T[15]) == "0" ? "" : String.valueOf(T[15]))));
-            receiptView.setTransferflag(((String.valueOf(T[16]) == "0" ? "" : String.valueOf(T[16]))));
-            receiptView.setTax(((String.valueOf(T[17]) == "0" ? "" : String.valueOf(T[17]))));
-            receiptView.setTaxflag(((String.valueOf(T[18]) == "0" ? "" : String.valueOf(T[18]))));
-            receiptView.setChqbank(((String.valueOf(T[19]) == "null" ? "" : String.valueOf(T[19]))));
-            receiptView.setChqno(((String.valueOf(T[20]) == "null" ? "" : String.valueOf(T[20]))));
-            receiptView.setChqdate(((String.valueOf(T[21]) == "null" ? "" : String.valueOf(T[21]))));
-            receiptView.setChqvalue(((String.valueOf(T[22]) == "null" ? "" : String.valueOf(T[22]))));
-            receiptView.setChqbankflag(((String.valueOf(T[23]) == "0" ? "" : String.valueOf(T[23]))));
-            receiptView.setCredit(((String.valueOf(T[24]) == "null" ? "" : String.valueOf(T[24]))));
-            receiptView.setCreditflag(((String.valueOf(T[25]) == "0" ? "" : String.valueOf(T[25]))));
-            
+            receiptView.setId((("null".equals(String.valueOf(T[0])) ? "" : String.valueOf(T[0]))));
+            receiptView.setRecto((("null".equals(String.valueOf(T[1])) ? "" : String.valueOf(T[1]))));
+            receiptView.setRecadd((("null".equals(String.valueOf(T[2])) ? "" : String.valueOf(T[2]))));
+            receiptView.setTel((("null".equals(String.valueOf(T[3])) ? "" : String.valueOf(T[3]))));
+            receiptView.setFax((("null".equals(String.valueOf(T[4])) ? "" : String.valueOf(T[4]))));
+            receiptView.setRecno((("null".equals(String.valueOf(T[5])) ? "" : String.valueOf(T[5]))));
+            receiptView.setRecdate((("null".equals(String.valueOf(T[6])) ? "" : String.valueOf(T[6]))));
+            receiptView.setPaidby((("null".equals(String.valueOf(T[7]))? "" : String.valueOf(T[7]))));
+            receiptView.setDescription((("null".equals(String.valueOf(T[8])) ? "" : String.valueOf(T[8]))));
+            receiptView.setNondescription((("null".equals(String.valueOf(T[9])) ? "" : String.valueOf(T[9]))));
+            receiptView.setInvdesc((("null".equals(String.valueOf(T[10])) ? "" : String.valueOf(T[10]))));
+            receiptView.setAmount((("0.00".equals(String.valueOf(T[11])) ? "" : String.valueOf(T[11]))));
+            receiptView.setTotalamount((("0.00".equals(String.valueOf(T[12]))? "" : String.valueOf(T[12]))));
+            receiptView.setCash((("0.00".equals(String.valueOf(T[13])) ? "" : String.valueOf(T[13]))));
+            receiptView.setCashflag((("0.00".equals(String.valueOf(T[14])) ? "" : String.valueOf(T[14]))));
+            receiptView.setTransfer((("0.00".equals(String.valueOf(T[15]))? "" : String.valueOf(T[15]))));
+            receiptView.setTransferflag((("0.00".equals(String.valueOf(T[16])) ? "" : String.valueOf(T[16]))));
+            receiptView.setTax((("0.00".equals(String.valueOf(T[17])) ? "" : String.valueOf(T[17]))));
+            receiptView.setTaxflag((("0.00".equals(String.valueOf(T[18])) ? "" : String.valueOf(T[18]))));
+            receiptView.setChqbank((("null".equals(String.valueOf(T[19])) ? "" : String.valueOf(T[19]))));
+            receiptView.setChqno((("null".equals(String.valueOf(T[20])) ? "" : String.valueOf(T[20]))));
+            receiptView.setChqdate((("null".equals(String.valueOf(T[21])) ? "" : String.valueOf(T[21]))));
+            receiptView.setChqvalue((("0.00".equals(String.valueOf(T[22])) ? "" : String.valueOf(T[22]))));
+            receiptView.setChqbankflag((("0.00".equals(String.valueOf(T[23]))? "" : String.valueOf(T[23]))));
+            receiptView.setCredit((("null".equals(String.valueOf(T[24])) ? "" : String.valueOf(T[24]))));
+            receiptView.setCreditflag((("0.00".equals(String.valueOf(T[25])) ? "" : String.valueOf(T[25]))));
+            System.err.println("receiptView cash " +receiptView.getCash());
+            String total = (receiptView.getTotalamount()).replaceAll("\\.", ",");
+            String[] totals = total.split(",");
             int totalWord = 0;
-            totalWord = Integer.parseInt(String.valueOf("24710"));
+            totalWord = Integer.parseInt(String.valueOf(totals[0]));
             receiptView.setTextmoney(utilityFunction.convert(totalWord)+" baht");
 
-            if(option == 1 ){
+            if(option == 1){
                 receiptView.setDescription(receiptView.getNondescription());
+                System.out.println(" receiptView.getDes " +receiptView.getDescription());
+                data.add(receiptView);
             }else if(option == 2 ){
                 receiptView.setInvdesc("");
+                System.out.println(" receiptView.getDes " +receiptView.getDescription());
+                data.add(receiptView);
             }
-//            else if(option == 3 ){
-//                receiptView.setAmount(receiptView.getTotalamount());
-//                receiptView.setDescription(receiptView.getDescription() + " " + receiptView.getInvdesc());
-//                receiptView.setInvdesc("");
-//            }
-            
-            data.add(receiptView);  
-        }
-        if(option == 3 ){
-            ReceiptView receiptView = new ReceiptView();
-            String desc = "" ;
-            String invdesc = "";
-            for(Object[] T : QueryList){
-                receiptView.setId(((String.valueOf(T[0]) == "null" ? "" : String.valueOf(T[0]))));
-                receiptView.setRecto(((String.valueOf(T[1]) == "null" ? "" : String.valueOf(T[1]))));
-                receiptView.setRecadd(((String.valueOf(T[2]) == "null" ? "" : String.valueOf(T[2]))));
-                receiptView.setTel(((String.valueOf(T[3]) == "null" ? "" : String.valueOf(T[3]))));
-                receiptView.setFax(((String.valueOf(T[4]) == "null" ? "" : String.valueOf(T[4]))));
-                receiptView.setRecno(((String.valueOf(T[5]) == "null" ? "" : String.valueOf(T[5]))));
-                receiptView.setRecdate(((String.valueOf(T[6]) == "null" ? "" : String.valueOf(T[6]))));
-                receiptView.setPaidby(((String.valueOf(T[7]) == "null" ? "" : String.valueOf(T[7]))));
-                receiptView.setDescription(((String.valueOf(T[8]) == "null" ? "" : String.valueOf(T[8]))));
-                receiptView.setNondescription(((String.valueOf(T[9]) == "null" ? "" : String.valueOf(T[9]))));
-                receiptView.setInvdesc(((String.valueOf(T[10]) == "null" ? "" : String.valueOf(T[10]))));
-                receiptView.setAmount(((String.valueOf(T[11]) == "0" ? "" : String.valueOf(T[11]))));
-                receiptView.setTotalamount(((String.valueOf(T[12]) == "0" ? "" : String.valueOf(T[12]))));
-                receiptView.setCash(((String.valueOf(T[13]) == "0" ? "" : String.valueOf(T[13]))));
-                receiptView.setCashflag(((String.valueOf(T[14]) == "0" ? "" : String.valueOf(T[14]))));
-                receiptView.setTransfer(((String.valueOf(T[15]) == "0" ? "" : String.valueOf(T[15]))));
-                receiptView.setTransferflag(((String.valueOf(T[16]) == "0" ? "" : String.valueOf(T[16]))));
-                receiptView.setTax(((String.valueOf(T[17]) == "0" ? "" : String.valueOf(T[17]))));
-                receiptView.setTaxflag(((String.valueOf(T[18]) == "0" ? "" : String.valueOf(T[18]))));
-                receiptView.setChqbank(((String.valueOf(T[19]) == "null" ? "" : String.valueOf(T[19]))));
-                receiptView.setChqno(((String.valueOf(T[20]) == "null" ? "" : String.valueOf(T[20]))));
-                receiptView.setChqdate(((String.valueOf(T[21]) == "null" ? "" : String.valueOf(T[21]))));
-                receiptView.setChqvalue(((String.valueOf(T[22]) == "null" ? "" : String.valueOf(T[22]))));
-                receiptView.setChqbankflag(((String.valueOf(T[23]) == "0" ? "" : String.valueOf(T[23]))));
-                receiptView.setCredit(((String.valueOf(T[24]) == "null" ? "" : String.valueOf(T[24]))));
-                receiptView.setCreditflag(((String.valueOf(T[25]) == "0" ? "" : String.valueOf(T[25]))));
-
-                int totalWord = 0;
-                totalWord = Integer.parseInt(String.valueOf("24710"));
-                receiptView.setTextmoney(utilityFunction.convert(totalWord)+" baht");
-
+            else if(option == 3 ){
                 receiptView.setAmount(receiptView.getTotalamount());
-                
-                desc += receiptView.getDescription() + " ";
-                invdesc += receiptView.getInvdesc() + " ";
-                receiptView.setInvdesc("");
+                invdescTemp += receiptView.getInvdesc() + ",";
+                receiptViewTemp = receiptView;
             }
-            receiptView.setInvdesc("");
-            receiptView.setDescription(desc + " " + invdesc);
-            data.add(receiptView); 
+            
+           
         }
-        System.err.println(" ReceiptViewList size " + data.size());
-                
+        if(option == 3){
+            System.out.println(" invdesc " + invdescTemp);
+            String[] invdescs = invdescTemp.split(",");
+            String invdesc = invdescTemp;
+            for (int j=0;j<invdescs.length;j++){
+                for (int k=j+1;k<invdescs.length;k++){
+                    if (k!=j && invdescs[k].equals(invdescs[j])){
+                        invdesc = invdescs[k];
+                    }
+                }
+            }
+            receiptViewTemp.setDescription("TOUR" + " " + invdesc);
+            receiptViewTemp.setInvdesc("");
+            data.add(receiptViewTemp);
+        }
+        
         if(data.isEmpty()) {
             return null;
         }
