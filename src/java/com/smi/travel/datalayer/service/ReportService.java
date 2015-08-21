@@ -156,12 +156,12 @@ public class ReportService {
         return agentCommissiondao.getAgentReportInfo(datefrom, dateto, user,agentid);
     }
     
-    public List getReceiptEmail(String receiptId,String receiptNo,int option){
-        return receiptDao.getReceipt(receiptId,receiptNo,option);
+    public List getReceiptEmail(String receiptId,int option){
+        return receiptDao.getReceipt(receiptId,option);
     }
     
-     public List getReceipt(String receiptId,String receiptNo,int option){
-        return receiptDao.getReceipt(receiptId,receiptNo,option);
+     public List getReceipt(String receiptId,int option){
+        return receiptDao.getReceipt(receiptId,option);
     }
     
     public List getReceiveList(String datefrom,String dateto,String user,String agentid){

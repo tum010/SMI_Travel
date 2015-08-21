@@ -33,12 +33,12 @@ public class InvoiceImpl implements InvoiceDao{
     private static final String DELETEALL_INVOICE_QUERY ="DELETE FROM Invoice in where in.id = :invouceID";
     private static final String GET_INVOICE = "FROM Invoice inv where inv.invNo = :invoiceNo";
     private static final String GET_INVOICE_FROMID = "FROM Invoice inv where inv.id = :invoiceId";
-    private static final String SEARCH_INVOICE = "FROM Invoice inv where inv.id = :invoiceId and inv.invType = :invoiceType and inv.deparement = :invoiceDepartment";
+    private static final String SEARCH_INVOICE = "FROM Invoice inv where inv.id = :invoiceId and inv.invType = :invoiceType and inv.department = :invoiceDepartment";
     private static final String SELECT_INVOICE_DETAIL = "FROM InvoiceDetail ind where ind.invoice.id = :invoiceID";
     private static final String DELETE_INVOICEDETAIL_QUERY ="DELETE FROM InvoiceDetail ind where ind.id = :invoiceDetailID";
-    private static final String SEARCH_INVOICE_TYPE = "FROM Invoice inv where inv.deparement = :invoiceDepartment and inv.invType = :invoiceType ORDER BY inv.invNo DESC LIMIT 1";
-    private static final String GET_INVOICE_FROMNO = "FROM Invoice inv where inv.invNo = :invoiceNo and inv.deparement = :department and inv.invType = :invType";
-    private static final String GET_INVOICE_FOR_TAX_INVOICE = "FROM Invoice inv where inv.invNo = :invoiceNo and inv.deparement = :department";
+    private static final String SEARCH_INVOICE_TYPE = "FROM Invoice inv where inv.department = :invoiceDepartment and inv.invType = :invoiceType ORDER BY inv.invNo DESC LIMIT 1";
+    private static final String GET_INVOICE_FROMNO = "FROM Invoice inv where inv.invNo = :invoiceNo and inv.department = :department and inv.invType = :invType";
+    private static final String GET_INVOICE_FOR_TAX_INVOICE = "FROM Invoice inv where inv.invNo = :invoiceNo and inv.department = :department";
     private static final String GET_BILLDESC = "from InvoiceDetail inv WHERE inv.billableDesc.id = :billableDescId";
     
     @Override
@@ -78,9 +78,9 @@ public class InvoiceImpl implements InvoiceDao{
         Date thisdate = new Date();
         SimpleDateFormat df = new SimpleDateFormat();
         df.applyPattern("MMyy");
-        Query query = session.createSQLQuery("SELECT RIGHT(inv_no, 4) as invnum  FROM invoice where deparement = :deparement and inv_type = :invoiceType and inv_no Like :invno  ORDER BY RIGHT(inv_no, 4) desc");
+        Query query = session.createSQLQuery("SELECT RIGHT(inv_no, 4) as invnum  FROM invoice where department = :department and inv_type = :invoiceType and inv_no Like :invno  ORDER BY RIGHT(inv_no, 4) desc");
         query.setParameter("invno", "%"+ df.format(thisdate) + "%");
-        query.setParameter("deparement", department);
+        query.setParameter("department", department);
         query.setParameter("invoiceType", invoiceType);
         query.setMaxResults(1);
         list = query.list();
@@ -348,7 +348,7 @@ public class InvoiceImpl implements InvoiceDao{
         }
         
         if ( department != null && (!"".equalsIgnoreCase(department)) ) {
-            query += " st.deparement = '" + department + "'";
+            query += " st.department = '" + department + "'";
         }
        
         if (type != null && (!"".equalsIgnoreCase(type)) ) {

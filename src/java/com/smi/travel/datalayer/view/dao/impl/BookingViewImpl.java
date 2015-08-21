@@ -62,7 +62,7 @@ public class BookingViewImpl implements BookingViewDao{
         
         if ((pnr != null) && (!"".equalsIgnoreCase(pnr))) {
             if (check == 1) {query += " and ";}
-            query += " book.pnr = '" +pnr +"'";
+            query += " book.pnr Like '%" +pnr +"%'";
             check = 1;
         }
         

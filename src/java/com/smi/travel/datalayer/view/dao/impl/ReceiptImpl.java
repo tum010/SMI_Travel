@@ -25,7 +25,7 @@ public class ReceiptImpl implements ReceiptDao{
     private UtilityFunction utilityFunction;
     
     @Override
-    public List getReceipt(String receiptId,String receiptNo,int option) {
+    public List getReceipt(String receiptId,int option) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List<Object[]> QueryList =  session.createSQLQuery("SELECT * FROM `receipt_view` where `receipt_view`.id =  "+receiptId)

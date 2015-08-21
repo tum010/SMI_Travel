@@ -31,8 +31,8 @@
         <property name="dueDate" type="date">
             <column name="due_date" length="10" />
         </property>
-        <property name="deparement" type="string">
-            <column name="deparement" length="20" />
+        <property name="department" type="string">
+            <column name="department" length="20" />
         </property> 
         <property name="arcode" type="string">
             <column name="arcode" length="20" />
