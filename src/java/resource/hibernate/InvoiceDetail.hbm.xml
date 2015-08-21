@@ -55,5 +55,11 @@
             </key>
             <one-to-many class="com.smi.travel.datalayer.entity.InvoiceDocument" />
         </bag>
+         <bag name="receiptDetails" table="receipt_detail" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="inv_detail_id" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.ReceiptDetail" />
+        </bag>
     </class>
 </hibernate-mapping>
