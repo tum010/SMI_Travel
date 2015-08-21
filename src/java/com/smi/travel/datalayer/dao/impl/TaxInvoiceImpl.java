@@ -13,6 +13,7 @@ import com.smi.travel.datalayer.view.entity.TaxInvoiceView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -30,7 +31,8 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
     private SessionFactory sessionFactory;
     private Transaction transaction;
     private UtilityFunction utilityFunction;
-    private static final String GET_TAXINVOICE = "FROM TaxInvoice t where t.taxNo = :TaxInvNo";
+    private static final String GET_TAXINVOICE = "FROM TaxInvoice t where t.taxNo = :TaxInvNo and t.department = :Page";
+    private static final int MAX_ROW = 200;
 
     @Override
     public String insertTaxInvoice(TaxInvoice tax) {
@@ -126,10 +128,10 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
     }
 
     @Override
-    public TaxInvoice getTaxInvoiceFromTaxInvNo(String TaxInvNo) {
+    public TaxInvoice getTaxInvoiceFromTaxInvNo(String TaxInvNo, String Page) {
         Session session = this.sessionFactory.openSession();
         TaxInvoice taxInvoice = new TaxInvoice();
-        List<TaxInvoice> taxInvoiceList = session.createQuery(GET_TAXINVOICE).setParameter("TaxInvNo", TaxInvNo).list();
+        List<TaxInvoice> taxInvoiceList = session.createQuery(GET_TAXINVOICE).setParameter("TaxInvNo", TaxInvNo).setParameter("Page", Page).list();
         if(taxInvoiceList.isEmpty()){
             return null;
         } 
@@ -163,14 +165,84 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
     }
 
     @Override
-    public TaxInvoiceView SearchTaxInvoiceFromFilter(String from, String To, String Department) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<TaxInvoiceView> SearchTaxInvoiceFromFilter(String from, String To, String Department) {
+        StringBuffer query = new StringBuffer("from TaxInvoice taxInv ");
+        boolean haveCondition = false;
+        if ((from != null) && (!"".equalsIgnoreCase(from))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" taxInv.taxInvDate >= '" + from + "'");
+            haveCondition = true;
+        }
+        if ((To != null) && (!"".equalsIgnoreCase(To))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" taxInv.taxInvDate <= '" + To + "'");
+            haveCondition = true;
+        }
+        if ((Department != null) && (!"".equalsIgnoreCase(Department))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" taxInv.department = " + Department);
+            haveCondition = true;
+        }
+        
+        Session session = this.sessionFactory.openSession();
+        Query HqlQuery = session.createQuery(query.toString());
+        System.out.println(HqlQuery.toString());
+        HqlQuery.setMaxResults(MAX_ROW);
+        List<TaxInvoice> taxInvoiceList = HqlQuery.list();
+        if (taxInvoiceList.isEmpty()) {
+            return null;
+        }
+        
+        List<TaxInvoiceView> taxInvoiceViewList = mappingTaxInvoice(taxInvoiceList);
+        this.sessionFactory.close();
+        session.close();
+        return taxInvoiceViewList;
     }
     
-    public TaxInvoiceView mappingTaxInvoice(TaxInvoice tax){
-        TaxInvoiceView taxview = new TaxInvoiceView();
+    public List<TaxInvoiceView> mappingTaxInvoice(List<TaxInvoice> taxInvoiceList){
+        List<TaxInvoiceView> taxInvoiceViewList = new ArrayList<TaxInvoiceView>();
         
-        return taxview;
+        for(int i=0;i<taxInvoiceList.size();i++){
+            TaxInvoiceView taxInvoiceView = new TaxInvoiceView();
+            TaxInvoice taxInvoice = new TaxInvoice();
+            taxInvoice = taxInvoiceList.get(i);
+            
+            taxInvoiceView.setAddress(taxInvoice.getTaxInvAddr());
+            taxInvoiceView.setDeparement(taxInvoice.getDepartment());
+            taxInvoiceView.setDetail(taxInvoice.getRemark());
+//            taxInvoiceView.setInvoiceNo();
+            taxInvoiceView.setName(taxInvoice.getTaxInvName());
+//            taxInvoiceView.setReceiptNo();
+            taxInvoiceView.setStatus(taxInvoice.getMFinanceItemstatus().getId());
+//            taxInvoiceView.setTaxDate(utilityFunction.convertDateToString(taxInvoice.getTaxInvDate()));
+            taxInvoiceView.setTaxId(taxInvoice.getId());
+            taxInvoiceView.setTaxNo(taxInvoice.getTaxNo());
+            taxInvoiceView.setTaxTo(taxInvoice.getTaxInvTo());
+            
+            BigDecimal totalAmount = new BigDecimal(0);
+            BigDecimal totalGross = new BigDecimal(0);
+            BigDecimal totalVat = new BigDecimal(0);
+            List<TaxInvoiceDetail> taxInvoiceDetailList = new ArrayList<TaxInvoiceDetail>();
+            taxInvoiceDetailList = taxInvoice.getTaxInvoiceDetails();
+            for(int j=0;j<taxInvoiceDetailList.size();j++){
+                TaxInvoiceDetail taxInvoiceDetail = new TaxInvoiceDetail();
+                taxInvoiceDetail = taxInvoiceDetailList.get(j);
+                BigDecimal amount = new BigDecimal(String.valueOf(taxInvoiceDetail.getAmount()));              
+                BigDecimal vat = new BigDecimal(String.valueOf(taxInvoiceDetail.getVat()));
+                BigDecimal onehundred = new BigDecimal(100);
+                BigDecimal gross = new BigDecimal(0);
+                gross = vat.add(onehundred);
+//                gross = (amount.multiply(onehundred)).divide(vat.add(onehundred));
+                taxInvoiceDetail.setCreateBy(taxInvoiceDetail.getCreateBy());
+//                gross = (amount*100)/(100+vat);
+//                vat = amount - gross
+            }
+//            taxInvoiceView.setTotalAmount();
+//            taxInvoiceView.setTotalGross();
+//            taxInvoiceView.setTotalvat();
+        }
+        
+        return taxInvoiceViewList;
     }
 
     @Override

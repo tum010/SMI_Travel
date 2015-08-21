@@ -84,10 +84,11 @@ public class TaxInvoiceController extends SMITravelController {
         
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar cal = Calendar.getInstance();
-        System.out.println(dateFormat.format(cal.getTime()));
-        String dateData = dateFormat.format(cal.getTime());
         Date date = new Date();
-        date = utilty.convertStringToDate(dateData);
+        System.out.println(dateFormat.format(cal.getTime()));
+//        String dateData = dateFormat.format(cal.getTime());
+//        Date date = new Date();
+//        date = utilty.convertStringToDate(dateData);
         
         String action = request.getParameter("action");
         String taxInvNo = request.getParameter("TaxInvNo");
@@ -103,6 +104,15 @@ public class TaxInvoiceController extends SMITravelController {
         String createBy = request.getParameter("createBy");
         String count = request.getParameter("countTaxInvoice");
         String vatDefault = request.getParameter("vatDefault");
+        String department = request.getParameter("department");
+        String page = "";
+        if("W".equalsIgnoreCase(callPageFrom)){
+            page = "Wendy";
+        } else if("O".equalsIgnoreCase(callPageFrom)){
+            page = "Outbound";
+        } else if("I".equalsIgnoreCase(callPageFrom)){
+            page = "Inbound";
+        }
         
         if("save".equalsIgnoreCase(action)){
             TaxInvoice taxInvoice = new TaxInvoice();
@@ -111,7 +121,7 @@ public class TaxInvoiceController extends SMITravelController {
             taxInvoice.setTaxInvName(invToName);
             taxInvoice.setTaxInvAddr(invToAddress);
             taxInvoice.setArCode(arCode);
-            taxInvoice.setRemark(remark);                                    
+            taxInvoice.setRemark(remark);            
             
             Date invToDateConvert = new Date();
             invToDateConvert = utilty.convertStringToDate(invToDate);
@@ -120,9 +130,15 @@ public class TaxInvoiceController extends SMITravelController {
             MFinanceItemstatus mFinanceItemstatus = new MFinanceItemstatus();
             if(taxInvId=="" || taxInvId==null){
                 taxInvoice.setCreateBy(username);
-                taxInvoice.setCreateDate(date);
+                
                 mFinanceItemstatus.setId("1");
                 taxInvoice.setMFinanceItemstatus(mFinanceItemstatus);
+                taxInvoice.setDepartment(page);
+                
+                createDate = dateFormat.format(cal.getTime());              
+                date = utilty.convertStringToDate(createDate);
+                taxInvoice.setCreateDate(date);
+                
             } else {
                 taxInvoice.setTaxNo(taxInvNo);               
                 taxInvoice.setCreateBy(createBy);
@@ -131,10 +147,11 @@ public class TaxInvoiceController extends SMITravelController {
                 
                 invToDateConvert = utilty.convertStringToDate(createDate);
                 taxInvoice.setCreateDate(invToDateConvert);
+                taxInvoice.setDepartment(department);
             }
             
             if(Integer.parseInt(count) > 1){
-                setTaxInvoiceDetails(request, count, taxInvoice, username, date, vatDefault);
+                setTaxInvoiceDetails(request, count, taxInvoice, username, date, vatDefault, createBy, invToDateConvert);
             }
             
             String result = taxInvoiceService.saveInvoice(taxInvoice);
@@ -148,7 +165,7 @@ public class TaxInvoiceController extends SMITravelController {
             
         } else if("search".equalsIgnoreCase(action)){
             TaxInvoice taxInvoice = new TaxInvoice();
-            taxInvoice = taxInvoiceService.getTaxInvoiceFromTaxInvNo(taxInvNo);
+            taxInvoice = taxInvoiceService.getTaxInvoiceFromTaxInvNo(taxInvNo,page);
             if(taxInvoice==null){
                 request.setAttribute(RESULTTEXT, "not found");
                 return new ModelAndView(LINKNAME+callPageFrom);
@@ -191,7 +208,7 @@ public class TaxInvoiceController extends SMITravelController {
             taxInvoice.setCreateDate(invToDateConvert);
             
             if(Integer.parseInt(count) > 1){
-                setTaxInvoiceDetails(request, count, taxInvoice, username, date, vatDefault);
+                setTaxInvoiceDetails(request, count, taxInvoice, username, date, vatDefault, createBy, invToDateConvert);
             }
             
             String result = taxInvoiceService.saveInvoice(taxInvoice);
@@ -227,7 +244,7 @@ public class TaxInvoiceController extends SMITravelController {
             taxInvoice.setCreateDate(invToDateConvert);
             
             if(Integer.parseInt(count) > 1){
-                setTaxInvoiceDetails(request, count, taxInvoice, username, date, vatDefault);
+                setTaxInvoiceDetails(request, count, taxInvoice, username, date, vatDefault, createBy, invToDateConvert);
             }
             
             String result = taxInvoiceService.saveInvoice(taxInvoice);
@@ -251,7 +268,7 @@ public class TaxInvoiceController extends SMITravelController {
         return new ModelAndView(LINKNAME+callPageFrom);
     }
     
-    private void setTaxInvoiceDetails(HttpServletRequest request, String count, TaxInvoice taxInvoice, String createBy, Date createDate, String vat) {
+    private void setTaxInvoiceDetails(HttpServletRequest request, String count, TaxInvoice taxInvoice, String username, Date date, String vat, String createBy, Date createDate) {
         util = new UtilityFunction();
         int rows = Integer.parseInt(count);
         if(taxInvoice.getTaxInvoiceDetails() == null){
@@ -277,10 +294,12 @@ public class TaxInvoiceController extends SMITravelController {
             if((product!="" && product!=null) || (refNo!="" && refNo!=null) || (description!="" && description!=null) || (cost!="" && cost!=null) || (currencyCost!="" && currencyCost!=null) || (isVat!="" && isVat!=null) || (amount!="" && amount!=null) || (currencyAmount!="" && currencyAmount!=null)){                               
                 
                 if(taxDetailId!="" && taxDetailId!=null){
-                    taxInvoiceDetail.setId(taxDetailId);                                                 
-                } else {
+                    taxInvoiceDetail.setId(taxDetailId);
                     taxInvoiceDetail.setCreateDate(createDate);
                     taxInvoiceDetail.setCreateBy(createBy);
+                } else {
+                    taxInvoiceDetail.setCreateDate(date);
+                    taxInvoiceDetail.setCreateBy(username);
                 }
                 
                 if(invoiceDetailId!="" && invoiceDetailId!=null){

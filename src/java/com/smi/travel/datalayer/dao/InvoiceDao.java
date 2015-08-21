@@ -11,6 +11,7 @@ import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.view.entity.InvoiceView;
 import java.util.List;
 import com.smi.travel.datalayer.view.entity.InvoiceView;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 /**
@@ -32,7 +33,8 @@ public interface InvoiceDao {
     public List<Invoice> getSearchInvoice(String fromData,String toDate ,String department,String type);
     public List<InvoiceView> setSearchInvoiceView(List<Invoice> listInvoice);
     public List<HashMap<String,Object>> getInvoiceDetailFromInvoiceNumber(String InvoiceNumber);
-    
+    public BigDecimal[] checkBillDescInuse(String billdesc,String cost,String amount);
     public List<InvoiceDetail> getInvoiceDetailFromBillableDescId(String billableDescId);
     public Invoice searchInvoiceFromInvoiceNumber(String InvoiceNumber,String department,String invType);
+    public Invoice searchInvoiceForTaxInvoice(String InvoiceNumber,String department);
 }

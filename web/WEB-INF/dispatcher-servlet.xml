@@ -520,7 +520,7 @@
             <property name="taxInvoiceService" ref="TaxInvoiceService" />
 	</bean>
 	<bean id="SearchTaxInvoiceController" class="com.smi.travel.controller.SearchTaxInvoiceController">
-
+            <property name="taxInvoiceService" ref="TaxInvoiceService" />
 	</bean>
 	<bean id="ReceiveTableController" class="com.smi.travel.controller.ReceiveTableController">
 

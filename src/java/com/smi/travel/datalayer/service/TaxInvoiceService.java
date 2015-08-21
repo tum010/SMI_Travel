@@ -9,6 +9,7 @@ package com.smi.travel.datalayer.service;
 import com.smi.travel.datalayer.dao.TaxInvoiceDao;
 import com.smi.travel.datalayer.entity.TaxInvoice;
 import com.smi.travel.datalayer.entity.TaxInvoiceDetail;
+import com.smi.travel.datalayer.view.entity.TaxInvoiceView;
 import java.util.List;
 
 /**
@@ -26,8 +27,12 @@ public class TaxInvoiceService {
         }
     }
     
-    public TaxInvoice getTaxInvoiceFromTaxInvNo(String TaxInvNo) {
-        return taxInvoiceDao.getTaxInvoiceFromTaxInvNo(TaxInvNo);
+    public TaxInvoice getTaxInvoiceFromTaxInvNo(String TaxInvNo, String Page) {
+        return taxInvoiceDao.getTaxInvoiceFromTaxInvNo(TaxInvNo,Page);
+    }
+    
+    public List<TaxInvoiceView> SearchTaxInvoiceFromFilter(String From,String To,String Department){
+        return taxInvoiceDao.SearchTaxInvoiceFromFilter(From,To,Department);
     }
 
     public TaxInvoiceDao getTaxInvoiceDao() {
@@ -41,5 +46,6 @@ public class TaxInvoiceService {
     public String DeleteTaxInvoiceInvoiceDetail(TaxInvoiceDetail taxInvoiceDetail) {
         return taxInvoiceDao.DeleteTaxInvoiceInvoiceDetail(taxInvoiceDetail);
     }
+    
     
 }
