@@ -539,13 +539,7 @@ public class AJAXBean extends AbstractBean implements
             }
         }else if (MAIL.equalsIgnoreCase(servletName)) {
             if ("sendMail".equalsIgnoreCase(type)) {
-                try {
-                    result = sendMail.main(sendTo,subject,content,attachfile,sendCc);
-                } catch (EmailException ex) {
-                    Logger.getLogger(AJAXBean.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (MalformedURLException ex) {
-                    Logger.getLogger(AJAXBean.class.getName()).log(Level.SEVERE, null, ex);
-                }
+               
             }
 //                } catch (MalformedURLException ex) {
         } else if (BOOKINGSTATUS.equalsIgnoreCase(servletName)) {
