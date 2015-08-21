@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-
+ 
 function searchAction() {
     var action = document.getElementById('Action');
     action.value = 'search';
