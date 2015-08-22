@@ -552,8 +552,10 @@ function searchAction(){
     $('#MasterReservation > tbody  > tr').each(function() {
         $(this).remove();
     });
+
     var searchNo = $("#SearchRefNo").val();
 //    alert("Ref : " + searchNo);
+
     if(searchNo !== ""){ 
         var servletName = 'InvoiceServlet';
         var servicesName = 'AJAXBean';
@@ -566,6 +568,7 @@ function searchAction(){
     }else{
         $('#SearchRefNo').focus();
     }
+   
 }
 function CallAjaxAdd(param) {
     var url = 'AJAXServlet';
@@ -1076,6 +1079,6 @@ function checkVatInvoiceAll(){
 
 
 function sendEmailInvoice(){
-    var InvoiceId = document.getElementById('receiveId').value;
-    window.open("SendMail.smi?reportname=Invoice&reportid="+InvoiceId);
+    var InvoiceId = document.getElementById('InvoiceId').value;
+    window.open("SendMail.smi?reportname=Invoice&reportid="+InvoiceId+"&bankid=4");
 }
