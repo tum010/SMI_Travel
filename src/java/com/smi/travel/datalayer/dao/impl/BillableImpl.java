@@ -76,6 +76,7 @@ public class BillableImpl implements BillableDao {
 
         return list.get(0);
     }
+    
 
     @Override
     public int updateBillStatusBooking(String refno, Billable bill) {
@@ -121,57 +122,6 @@ public class BillableImpl implements BillableDao {
                     }
                     ListBill.add(b.getMBilltype().getId());
                 }
-              //  Iterator<String> listbilltype = ListBill.iterator();
-
-                /*
-                 while (listbilltype.hasNext()) {
-                 String hql = "";
-                 String billtype = listbilltype.next();
-                 System.out.println("billtype : " + billtype);
-                 if (billtype.equalsIgnoreCase("1")) {
-                 List<AirticketAirline> list = session.createQuery(SelectAirLineId).setParameter("masterid", bill.getMaster().getId()).list();
-                 String AirlineList = "(";
-
-                 for (int i = 0; i < list.size(); i++) {
-                 AirlineList += list.get(i).getId() + ",";
-                 }
-                 AirlineList = AirlineList.substring(0, AirlineList.length() - 1) + ")";
-                 hql = AirBookingUpdate + AirlineList;
-
-                 //update Airticket_desc
-                 String AirBookList = "";
-     
-                 List<AirticketBooking> listAirBook = session.createQuery(SelectAirBookId).setParameter("masterid", bill.getMaster().getId()).list();
-                 for (int i = 0; i < listAirBook.size(); i++) {
-                 AirBookList += listAirBook.get(i).getId() + ",";
-                 }
-                 AirBookList = AirBookList.substring(0, AirBookList.length() - 1) + "";
-                 System.out.println("update Book Desc HQL : "+AirBookingDescUpdate+" "+AirBookList);
-                 Query DescQuery = session.createQuery(AirBookingDescUpdate+" "+AirBookList);
-                 DescQuery.executeUpdate();
-
-                 } else if (billtype.equalsIgnoreCase("2")) {
-                 System.out.println("update other");
-                 hql = OtherBookingUpdate;
-                 } else if (billtype.equalsIgnoreCase("3")) {
-                 System.out.println("update land");
-                 hql = LandBookingUpdate;
-                 } else if (billtype.equalsIgnoreCase("4")) {
-                 System.out.println("update hotel");
-                 hql = HotelBookingUpdate;
-                 }else if (billtype.equalsIgnoreCase("6")) {
-                 System.out.println("update daytour");
-                 hql = DaytourBookingUpdate;
-                 }
-                    
-                    
-                 Query query = session.createQuery(hql);
-                 if (!billtype.equalsIgnoreCase("1")) {
-                 //   query.setParameter("Keyid", );
-                 }
-                 query.executeUpdate();
-                    
-                 } */
             }
 
             transaction.commit();
@@ -207,10 +157,7 @@ public class BillableImpl implements BillableDao {
         String hql = "";
         String AirlineId = "";
         String billtype = bill.getMBilltype().getId();
-        if (billtype.equalsIgnoreCase("1")) {
-            System.out.println("bill.getBillable()"+bill.getBillable());
-            System.out.println("bill.master()"+bill.getBillable().getMaster());
-            System.out.println("bill.masterid()"+bill.getBillable().getMaster().getId());
+        if (billtype.equalsIgnoreCase("1")) {         
             List<AirticketFlight> listAirFlight = session.createQuery(SelectAirLineId).setParameter("Keyid", bill.getBillable().getMaster().getId()).list();
              for(int i=0;i<listAirFlight.size();i++){
                  String airlineId = listAirFlight.get(i).getAirticketAirline().getId();
@@ -284,61 +231,7 @@ public class BillableImpl implements BillableDao {
                     }
                     ListBill.add(b.getMBilltype().getId());
                 }
-            //    Iterator<String> listbilltype = ListBill.iterator();
-                /*
-                 while (listbilltype.hasNext()) {
-                 String hql = "";
-                 String billtype = listbilltype.next();
-                 System.out.println("billtype : " + billtype);
-                 if (billtype.equalsIgnoreCase("1")) {
-                 List<AirticketAirline> list = session.createQuery(SelectAirLineId).setParameter("masterid", bill.getMaster().getId()).list();
-                 String AirlineList = "(";
-
-                 for (int i = 0; i < list.size(); i++) {
-                 AirlineList += list.get(i).getId() + ",";
-                 }
-                 AirlineList = AirlineList.substring(0, AirlineList.length() - 1) + ")";
-                 hql = AirBookingUpdate + AirlineList;
-
-                 //update Airticket_desc
-                 String AirBookList = "";
-     
-                 List<AirticketBooking> listAirBook = session.createQuery(SelectAirBookId).setParameter("masterid", bill.getMaster().getId()).list();
-                 for (int i = 0; i < listAirBook.size(); i++) {
-                 AirBookList += listAirBook.get(i).getId() + ",";
-                 }
-                 AirBookList = AirBookList.substring(0, AirBookList.length() - 1) + "";
-                 System.out.println("update Book Desc HQL : "+AirBookingDescUpdate+" "+AirBookList);
-                 Query DescQuery = session.createQuery(AirBookingDescUpdate+" "+AirBookList);
-                 DescQuery.executeUpdate();
-                 } else if (billtype.equalsIgnoreCase("2")) {
-                 List<AirticketAirline> list = session.createQuery(SelectAirLineId).setParameter("masterid", bill.getMaster().getId()).list();
-                 String AirlineList = "(";
-                 for (int i = 0; i < list.size(); i++) {
-                 AirlineList += list.get(i).getId() + ",";
-                 }
-                 AirlineList = AirlineList.substring(0, AirlineList.length() - 1) + ")";
-                 System.out.println("AirlineList :" + AirlineList);
-                 System.out.println("update other");
-                 hql = OtherBookingUpdate;
-                 } else if (billtype.equalsIgnoreCase("3")) {
-                 System.out.println("update land");
-                 hql = LandBookingUpdate;
-                 } else if (billtype.equalsIgnoreCase("4")) {
-                 System.out.println("update hotel");
-                 hql = HotelBookingUpdate;
-                 } else if (billtype.equalsIgnoreCase("6")) {
-                 System.out.println("update daytour");
-                 hql = DaytourBookingUpdate;
-                 }
-                 Query query = session.createQuery(hql);
-                 if (!billtype.equalsIgnoreCase("1")) {
-                 query.setParameter("Keyid", bill.getMaster().getId());
-                 }
-                 query.executeUpdate();
-
-                 } */
-
+         
             }
 
             transaction.commit();
@@ -745,7 +638,6 @@ public class BillableImpl implements BillableDao {
     @Override
     public String getDescriptionInvoiceAirAdditional(String refno) {
         String description = "";
-        System.out.println("refno : "+refno);
         UtilityFunction util = new UtilityFunction();
         Session session = this.sessionFactory.openSession();
         List<AirticketDesc> list = session.createQuery(QUERY_AIRADDITIONAL).setParameter("refitemid", refno).list();

@@ -40,6 +40,15 @@
         </div>
     
         <div class="col-sm-10">
+            
+<div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Save Success!</strong> 
+</div>
+<div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Save Not  Success!</strong> 
+</div>            
             <form action="Invoice${page}.smi" method="post" id="InvoiceForm" role="form" >
             <div id="textAlertDisable"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -269,7 +278,10 @@
                             <label class="control-label" for="">Address </lable>
                         </div>
                         <div class="col-md-6 form-group">
-                            <textarea  rows="3" cols="100" id="InvToAddress" name="InvToAddress" class="form-control" value="${invoice.invAddress}" ></textarea>
+                            <textarea  rows="3" cols="100" id="InvToAddress" name="InvToAddress" class="form-control" >
+                                ${invoice.invAddress}
+                            </textarea>
+                           
                         </div>
                         <div class="form-group">
                             <div class="col-sm-2"></div>
@@ -492,17 +504,17 @@
                                                          <option value='' ></option>
                                                         <c:forEach var="cur" items="${listCurrency}">
                                                             <c:set var="select" value="" />
-                                                            <c:if test="${cur.id == ind.curCost}">
+                                                            <c:if test="${cur.code == ind.curCost}">
                                                                 <c:set var="select" value="selected" />
 
                                                             </c:if> 
-                                                            <option value='${cur.id}' ${select}>${cur.code}</option>
+                                                            <option value='${cur.code}' ${select}>${cur.code}</option>
                                                         </c:forEach>
                                                     </select>
                                                 </td>
                                                 <td><input type="text" value="${ind.costLocal}" id="InputCostLocal${taxdesc.count}" name="InputCostLocal${taxdesc.count}" class="form-control"></td>
                                                 <td class="hidden"><input type="text" value="${ind.costLocal}" id="InputCostLocalTemp${taxdesc.count}" name="InputCostLocalTemp${taxdesc.count}"></td>      
-                                                <td>
+                                                <td class="hidden">
                                                     <c:set var="checkIsVat" value="" />
                                                     <c:if test="${ind.isVat == 1}">
                                                         <c:set var="checkIsVat" value="checked" />
@@ -518,10 +530,10 @@
                                                          <option value='' ></option>
                                                         <c:forEach var="cur" items="${listCurrency}">
                                                             <c:set var="selectA" value="" />
-                                                            <c:if test="${cur.id == ind.curAmount}">
+                                                            <c:if test="${cur.code == ind.curAmount}">
                                                                 <c:set var="selectA" value="selected" />
                                                             </c:if> 
-                                                            <option value='${cur.id}' ${selectA}>${cur.code}</option>
+                                                            <option value='${cur.code}' ${selectA}>${cur.code}</option>
                                                         </c:forEach>
                                                     </select>
                                                 </td>
@@ -906,9 +918,11 @@
            defaultD = ${defaultData.value};
         </script>
 </c:if>
-<input type="text" id="showvat" name="showvat" value="${showvat}">      
+<input type="hidden" id="showvat" name="showvat" value="${showvat}">      
 <input type="hidden" id="type" name="type" value="${param.type}">
 <input type="hidden" id="resultAction" name="resultAction" value="${result}">
 <input type="hidden" id="roleName" name="roleName" value="${roleName}">
 <input type="hidden" id="InputDescriptionDetailId" name="InputDescriptionDetailId" value="">
+<input type="hidden" id="resultText" name="resultText" value="${result}">
+
 <script type="text/javascript" src="js/Invoice.js"></script>

@@ -646,7 +646,7 @@ function addInvoiceDetail(rowId){
             var cos = $(this).find("td").eq(5).html();
             var price = $(this).find("td").eq(6).html(); 
             var cur = $(this).find("td").eq(7).html();
-            checkDuplicateInvoiceDetail(id,rowId);
+            //checkDuplicateInvoiceDetail(id,rowId);
             if(isDuplicateInvoiceDetail === 0){
                 $("#DetailBillableTable tr:last").remove(); 
                 // Search Description
@@ -1101,3 +1101,17 @@ function sendEmailInvoice(){
     var InvoiceId = document.getElementById('InvoiceId').value;
     window.open("SendMail.smi?reportname=Invoice&reportid="+InvoiceId+"&bankid=4");
 }
+
+
+$(document).ready(function () {
+    var bla = $('#resultText').val();
+
+    if(bla == "success"){
+        
+        $('#textAlertDivSave').show();
+    }else if ( bla === ""){
+        $('#textAlertDivSave').hide();
+    }else {
+        $('#textAlertDivNotSave').show();
+    }
+});
