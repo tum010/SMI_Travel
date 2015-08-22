@@ -291,8 +291,8 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur){
         '<td  '+vathidden+'><input type="checkbox" '+check+' id="checkUse' + row + '" name="checkUse' + row + '"  onclick="calculateGross('+row+')"></td>'+
         '<td align="center" '+vathidden+'>'+vatValue +'</td>'+ 
         '<td class="hidden"><input type="text" class="form-control" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '" value="'+ defaultD +'" ></td>'+
-        '<td '+vathidden+' ><input type="text" maxlength ="15" onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control numerical" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>'+
-        '<td><input type="text" maxlength ="15"  class="form-control numerical" id="InputAmount' + row + '" name="InputAmount' + row + '"  value="'+price +'" onfocusout="CalculateGrandTotal(' + row + ')"></td>'+
+        '<td '+vathidden+' ><input type="text" maxlength ="15" readonly onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control numerical" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>'+
+        '<td><input type="text" maxlength ="15"  class="form-control numerical" id="InputAmount' + row + '" name="InputAmount' + row + '"  value="'+price +'" onfocusout="CalculateGrandTotal(' + row + ');calculateGross('+row+')"></td>'+
         '<td><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control">'+ selectC +'</select></td>'+
         '<td><input type="text" value="'+price +'" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control" ></td>'+
         '<td class="hidden"><input type="text" value="'+price +'" id="InputAmountLocalTemp' + row + '" name="InputAmountLocalTemp' + row + '"  ></td>'+
@@ -841,25 +841,32 @@ function calculateGross(row){
 //    var vatData = document.getElementById("DetailBillableTable").rows[row].cells[7].innerHTML;
     var varTemp = document.getElementById('InputVatTemp'+row).value;
     var vatDefaultData = parseFloat(varTemp);
-
+    $('#checkUse'+row).val();
     amount = amount.replace(/,/g,"");
     var grossTotal = parseFloat(amount);
-
+    if ($('#checkUse'+row).is(":checked")){
+       document.getElementById("DetailBillableTable").rows[row].cells[10].innerHTML = vatDefaultData;
+       grossTotal = (amount*100)/(100+vatDefaultData);
+       document.getElementById('InputGross'+row).value = formatNumber(grossTotal); 
+    }else{
+       document.getElementById("DetailBillableTable").rows[row].cells[10].innerHTML = ''; 
+       document.getElementById('InputGross'+row).value = '';
+    }
+    /*
     if((gross === '')){
-//        alert("1: " + gross);
-        grossTotal = (amount*100)/(100+vatDefaultData);
-        document.getElementById('InputGross'+row).value = formatNumber(grossTotal);
-        document.getElementById("DetailBillableTable").rows[row].cells[10].innerHTML = vatDefaultData;
+        //alert("1: " + gross);
+        
     }else if((gross === '0.00')){
-//        alert("3: " + gross);
+        //alert("3: " + gross);
         grossTotal = (amount*100)/(100+vatDefaultData);
+        if(grossTotal == 0){
+            grossTotal = '';
+        }
         document.getElementById('InputGross'+row).value = formatNumber(grossTotal);
-        document.getElementById("DetailBillableTable").rows[row].cells[10].innerHTML = vatDefaultData;
     }else {
-//        alert("2 : " + gross)
+        //alert("2 : " + gross)
         document.getElementById('InputGross'+row).value = '';
-        document.getElementById("DetailBillableTable").rows[row].cells[10].innerHTML = '';
-    } 
+    } */
 }
 
 function calculateGrossTemp(row){
@@ -902,7 +909,7 @@ function CalculateGrandTotal(id){
             }    
         }
         if(id !== ''){
-            calculateGrossTemp(id);
+          //  calculateGrossTemp(id);
         }
         
         document.getElementById('TotalNet').value = formatNumber(grandTotal);
