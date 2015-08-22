@@ -47,7 +47,7 @@ public class InvoiceImpl implements InvoiceDao{
         Session session = this.sessionFactory.openSession();
         try { 
             transaction = session.beginTransaction();
-            result = generateInvoiceNo(invoice.getDeparement() , invoice.getInvType());
+            result = generateInvoiceNo(invoice.getDepartment() , invoice.getInvType());
             invoice.setInvNo(result);
             session.save(invoice);
             List<InvoiceDetail> invoiceDetail = invoice.getInvoiceDetails();
@@ -258,7 +258,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setArcode(invoiceList.get(0).getArcode());
             invoice.setCreateBy(invoiceList.get(0).getCreateBy());
             invoice.setCreateDate(invoiceList.get(0).getCreateDate());
-            invoice.setDeparement(invoiceList.get(0).getDeparement());
+            invoice.setDepartment(invoiceList.get(0).getDepartment());
             invoice.setDueDate(invoiceList.get(0).getDueDate());
             invoice.setIsGroup(invoiceList.get(0).getIsGroup());
             invoice.setIsLock(invoiceList.get(0).getIsLock());
@@ -323,7 +323,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setArcode(invoiceList.get(0).getArcode());
             invoice.setCreateBy(invoiceList.get(0).getCreateBy());
             invoice.setCreateDate(invoiceList.get(0).getCreateDate());
-            invoice.setDeparement(invoiceList.get(0).getDeparement());
+            invoice.setDepartment(invoiceList.get(0).getDepartment());
             invoice.setDueDate(invoiceList.get(0).getDueDate());
             invoice.setIsGroup(invoiceList.get(0).getIsGroup());
             invoice.setIsLock(invoiceList.get(0).getIsLock());
@@ -378,7 +378,7 @@ public class InvoiceImpl implements InvoiceDao{
                 List<InvoiceDetail> invoiceDetail = listInvoice.get(i).getInvoiceDetails();
                     invoiceView.setInvoiceId(listInvoice.get(i).getId());
                     invoiceView.setInvoiceNo(listInvoice.get(i).getInvNo());
-                    invoiceView.setDepartment(listInvoice.get(i).getDeparement());
+                    invoiceView.setDepartment(listInvoice.get(i).getDepartment());
                     invoiceView.setType(listInvoice.get(i).getInvType());
                     String invoiceDate = utility.convertDateToString(listInvoice.get(i).getCreateDate());
                     invoiceView.setInvoiceDate(invoiceDate);
@@ -419,7 +419,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setArcode(invoiceList.get(0).getArcode());
             invoice.setCreateBy(invoiceList.get(0).getCreateBy());
             invoice.setCreateDate(invoiceList.get(0).getCreateDate());
-            invoice.setDeparement(invoiceList.get(0).getDeparement());
+            invoice.setDepartment(invoiceList.get(0).getDepartment());
             invoice.setDueDate(invoiceList.get(0).getDueDate());
             invoice.setIsGroup(invoiceList.get(0).getIsGroup());
             invoice.setIsLock(invoiceList.get(0).getIsLock());
@@ -477,7 +477,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setArcode(invoiceList.get(0).getArcode());
             invoice.setCreateBy(invoiceList.get(0).getCreateBy());
             invoice.setCreateDate(invoiceList.get(0).getCreateDate());
-            invoice.setDeparement(invoiceList.get(0).getDeparement());
+            invoice.setDepartment(invoiceList.get(0).getDepartment());
             invoice.setDueDate(invoiceList.get(0).getDueDate());
             invoice.setIsGroup(invoiceList.get(0).getIsGroup());
             invoice.setIsLock(invoiceList.get(0).getIsLock());
@@ -510,7 +510,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setArcode(invoiceList.get(0).getArcode());
             invoice.setCreateBy(invoiceList.get(0).getCreateBy());
             invoice.setCreateDate(invoiceList.get(0).getCreateDate());
-            invoice.setDeparement(invoiceList.get(0).getDeparement());
+            invoice.setDepartment(invoiceList.get(0).getDepartment());
             invoice.setDueDate(invoiceList.get(0).getDueDate());
             invoice.setIsGroup(invoiceList.get(0).getIsGroup());
             invoice.setIsLock(invoiceList.get(0).getIsLock());

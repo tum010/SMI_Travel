@@ -219,7 +219,7 @@ public class ReceiptController extends SMITravelController {
                        invoice.setInvAddress(receiveFromAddress);
                        invoice.setArcode(arCode);
                        invoice.setInvDate(util.convertStringToDate(receiveFromDate != "" ? receiveFromDate : ""));
-                       invoice.setDeparement(InputDepartment);
+                       invoice.setDepartment(InputDepartment);
                        invoice.setInvType(InputReceiptType);
                        invoice.setIsLock(1);
                        invoice.setCreateBy(user.getUsername());

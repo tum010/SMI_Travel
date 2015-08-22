@@ -285,7 +285,7 @@
                             <div class="col-sm-2"></div>
                             <div class="radio col-sm-2 ${isHiddenOut}" >
                                 <c:set var="checkDepartOut" value="" />
-                                <c:if test="${invoice.deparement == 'Outbound'}">
+                                <c:if test="${invoice.department == 'Outbound'}">
                                     <c:set var="checkDepartOut" value="checked" />
                                 </c:if>
                                 <label ${checkDepartOut}><input value="Outbound" id="DepartmentOutbound" name="Department" type="radio" >Outbound</label>
@@ -496,12 +496,12 @@
                                                 <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Print
                                             </button>
                                         </div>
-                                        <div class="col-md-4 text-left ">
-                                            <button type="button" onclick="" class="btn btn-default">
-                                                <span id="SpanPrint" class="glyphicon glyphicon-user"></span> Customer Invoice 
+                                        <div class="col-md-1 text-left " style="width: 125px">
+                                            <button type="button" class="btn btn-default" onclick="sendEmailInvoice()">
+                                                <span id="buttonEmail" class="glyphicon glyphicon-send" ></span> SendEmail 
                                             </button>
                                         </div>
-                                        <div class="col-md-1 text-right " >
+                                        <div class="col-md-3 text-right " >
                                             
                                         </div>
                                         <div class="col-md-2 text-right ">

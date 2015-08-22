@@ -1073,3 +1073,9 @@ function checkVatInvoiceAll(){
     }
     CalculateGrandTotal(''); 
 }  
+
+
+function sendEmailInvoice(){
+    var InvoiceId = document.getElementById('receiveId').value;
+    window.open("SendMail.smi?reportname=Invoice&reportid="+InvoiceId);
+}

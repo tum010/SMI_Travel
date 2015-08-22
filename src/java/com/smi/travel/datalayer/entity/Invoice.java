@@ -25,7 +25,7 @@ public class Invoice {
      private String invAddress;
      private Date dueDate;
      private Date invDate;
-     private String deparement;
+     private String department;
      private String arcode;
      private String remark;
      private String invType;
@@ -48,7 +48,7 @@ public class Invoice {
        this.invName = invName;
        this.invAddress = invAddress;
        this.dueDate = dueDate;
-       this.deparement = deparement;
+       this.department = deparement;
        this.arcode = arcode;
        this.remark = remark;
        this.invType = invType;
@@ -137,14 +137,17 @@ public class Invoice {
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
     }
-    public String getDeparement() {
-        return this.deparement;
-    }
-    
-    public void setDeparement(String deparement) {
-        this.deparement = deparement;
+
+    public String getDepartment() {
+        return department;
     }
 
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+    
+    
+    
     public void setArcode(String arcode) {
         this.arcode = arcode;
     }

@@ -82,7 +82,7 @@ public class SendEmailController extends SMITravelController {
                 }
             }
             if (ReceiptEmail.equalsIgnoreCase(name)) {
-                data = reportservice.getReceiptEmail("33",1);
+                data = reportservice.getReceiptEmail(reportid,1);
                 JRDataSource dataSource = new JRBeanCollectionDataSource(data);
                 jasperFileName = "ReceiptEmail.jasper";
                 pdfFileName = "receipt.pdf";

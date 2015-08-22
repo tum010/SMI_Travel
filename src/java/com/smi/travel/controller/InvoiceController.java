@@ -318,10 +318,10 @@ public class InvoiceController extends SMITravelController {
 
             if(department != null){
                 if(department.equals("W")){
-                    invoice.setDeparement("Wendy");
+                    invoice.setDepartment("Wendy");
                     department = "Wendy";
                 } else if(department.equals("O")){
-                    invoice.setDeparement("Outbound");
+                    invoice.setDepartment("Outbound");
                     department = "Outbound";
                 }  
             }

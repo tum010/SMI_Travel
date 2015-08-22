@@ -660,12 +660,16 @@
                                         <option value="3" ${selected3}>Invoice</option>
                                     </select>
                                 </div>
-                                <div class="col-md-1 text-left " style="width: 150px">
+                                <div class="col-md-1 text-left " style="width: 100px">
                                     <button type="button" class="btn btn-default" onclick="printReceipt()">
                                         <span id="buttonPrint" class="glyphicon glyphicon-print" ></span> Print 
                                     </button>
                                 </div>
-                                    
+                                <div class="col-md-1 text-left " style="width: 125px">
+                                    <button type="button" class="btn btn-default" onclick="sendEmailReceipt()">
+                                        <span id="buttonEmail" class="glyphicon glyphicon-send" ></span> SendEmail 
+                                    </button>
+                                </div>
                                 <div class="col-md-3 text-right " ></div>
                                 <div class="col-md-2 text-right ">
                                     <c:set var="isDisableVoid" value="disabled='true'" />
@@ -1450,6 +1454,12 @@
 //            window.open("report.smi?name=ReceiptEmail&receiveId="+receiveId+"&receiveNo="+receiveNo+"&optionPrint="+optionPrint);
         }          
     }
+    //http://localhost:8080/SMITravel/SendMail.smi?reportname=Invoice
+    function sendEmailReceipt(){
+        var receiveId = document.getElementById('receiveId').value;
+        window.open("SendMail.smi?reportname=ReceiptEmail&reportid="+receiveId);
+    }
+    
     function AddRowProduct(row) {           
             $("#ReceiptListTable tbody").append(
                 '<tr style="higth 100px">' +
