@@ -233,6 +233,18 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur){
 
     var selectT="";
     var selectC = "";
+    var showvat = $('#showvat').val();
+    var check = "";
+    var vatValue = '';
+    var vathidden = '';
+   
+    if(showvat=='true'){
+        vathidden = '';
+        check  = "checked";
+        vatValue = defaultD;
+    }else{
+        vathidden ='class="hidden"';
+    }
     if(prod === undefined){
         prod = "";
     }
@@ -276,10 +288,10 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur){
         '<td><select id="SelectCurrencyCost' + row + '" name="SelectCurrencyCost' + row + '" class="form-control">'+ selectC +'</select></td>' +
         '<td><input type="text" value="'+cos +'" id="InputCostLocal' + row + '" name="InputCostLocal' + row + '" class="form-control"></td>' +
         '<td class="hidden"><input type="text" value="'+cos +'" id="InputCostLocalTemp' + row + '" name="InputCostLocalTemp' + row + '"></td>'+
-        '<td><input type="checkbox"  id="checkUse' + row + '" name="checkUse' + row + '"  onclick="calculateGross('+row+')"></td>'+
-        '<td>' +'</td>'+ 
+        '<td  '+vathidden+'><input type="checkbox" '+check+' id="checkUse' + row + '" name="checkUse' + row + '"  onclick="calculateGross('+row+')"></td>'+
+        '<td align="center" '+vathidden+'>'+vatValue +'</td>'+ 
         '<td class="hidden"><input type="text" class="form-control" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '" value="'+ defaultD +'" ></td>'+
-        '<td class="hidden"><input type="text" maxlength ="15" onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control numerical" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>'+
+        '<td '+vathidden+' ><input type="text" maxlength ="15" onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control numerical" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>'+
         '<td><input type="text" maxlength ="15"  class="form-control numerical" id="InputAmount' + row + '" name="InputAmount' + row + '"  value="'+price +'" onfocusout="CalculateGrandTotal(' + row + ')"></td>'+
         '<td><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control">'+ selectC +'</select></td>'+
         '<td><input type="text" value="'+price +'" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control" ></td>'+
