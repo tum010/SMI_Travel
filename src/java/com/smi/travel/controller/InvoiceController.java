@@ -170,12 +170,18 @@ public class InvoiceController extends SMITravelController {
                 request.setAttribute("listInvoiceDetail", null);
             }  
         }else if("searchInvoice".equals(action)){ // search invoice when input invoice no 
-            invoice = invoiceService.getInvoiceFromInvoiceNumber(invoice.getInvNo());
+            invoice = invoiceService.getInvoiceFromInvoiceNumber(invoiceNo);
+            System.out.println(invoiceNo);
+            System.out.println("1");
             listInvoiceDetail = invoice.getInvoiceDetails();
             if(invoice != null){
+                System.out.println("2");
+                System.out.println(invoice.getId());
+                System.out.println(invoice.getInvNo());
                 request.setAttribute("invoice", invoice);
                 result = "success";
             }else{
+                System.out.println("3");
                 request.setAttribute("invoice", null);
             }
             if(listInvoiceDetail != null){
@@ -184,6 +190,7 @@ public class InvoiceController extends SMITravelController {
             }else{
                 request.setAttribute("listInvoiceDetail", null);
             }
+            System.out.println("result : "+result);
             request.setAttribute("result", result);   
         }else if("disableVoid".equals(action)){
             invoice = setValueInvoice(action, user.getUsername(), invoiceType, invoiceId, invoiceTo, invoiceName, invoiceAddress, isGroup, termPay, dueDate, department, staffCode, staffName, staffId, arCode, remark, invoiceNo, InputInvDate, request);

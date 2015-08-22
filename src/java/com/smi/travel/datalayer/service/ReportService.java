@@ -186,37 +186,8 @@ public class ReportService {
         return data;
     }
     
-    public List getInvoice(){
-        List data  = new ArrayList();
-        data.add(invoicedao.getInvoice());
-        data.add(invoicedao.getInvoice());  
-        data.add(invoicedao.getInvoice());  
-        data.add(invoicedao.getInvoice());  
-        data.add(invoicedao.getInvoice());  
-        data.add(invoicedao.getInvoice());  
-        data.add(invoicedao.getInvoice());  
-        data.add(invoicedao.getInvoice());  
-        data.add(invoicedao.getInvoice());  
-        data.add(invoicedao.getInvoice());  
-        data.add(invoicedao.getInvoice());  
-        data.add(invoicedao.getInvoice());  
-        data.add(invoicedao.getInvoice());  
-        data.add(invoicedao.getInvoice());  
-        data.add(invoicedao.getInvoice());  
-        data.add(invoicedao.getInvoice());  
-        data.add(invoicedao.getInvoice());  
-        data.add(invoicedao.getInvoice());  
-        data.add(invoicedao.getInvoice());  
-        data.add(invoicedao.getInvoice());  
-        data.add(invoicedao.getInvoice());  
-        data.add(invoicedao.getInvoice());
-        data.add(invoicedao.getInvoice());  
-        data.add(invoicedao.getInvoice());  
-        data.add(invoicedao.getInvoice());  
-        data.add(invoicedao.getInvoice());  
-        data.add(invoicedao.getInvoice());  
-        data.add(invoicedao.getInvoice());  
-        return data;
+    public List getInvoice(String InvoiceId,String BankId){
+        return invoicedao.getInvoice(InvoiceId, BankId);
     }
 
     public HotelVoucherDao getHotelVoucherdao() {
