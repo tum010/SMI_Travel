@@ -16,6 +16,9 @@
         $(this).val(value);
     });
     
+   
+
+    
    // Invoice To Modal
    var showflag = 1;
     var ReceiveFromTable = $('#InvToTable').dataTable({bJQueryUI: true,
@@ -796,7 +799,13 @@ function setDescriptionHotel(data,row){
     $("#DescriptionInvoiceDetailTextArea"+row).html(text);
 }
 function setDescriptionAirticket(data,row){
-    
+   
+    var array  = [];
+    array = data;
+    var text = "";
+    text += array[2];
+    $('#DescriptionInvoiceDetail'+row).html(text);
+    $("#DescriptionInvoiceDetailTextArea"+row).html(text);
 }
 
 function checkDuplicateInvoiceDetail(product,rowId){
@@ -811,9 +820,11 @@ function checkDuplicateInvoiceDetail(product,rowId){
 }
 
 function setDescriptionAirAdditional(data,row){
-    
+   
+    var array  = [];
+    array = data;
     var text = "";
-    text += data;
+    text += array[2];
     $('#DescriptionInvoiceDetail'+row).html(text);
     $("#DescriptionInvoiceDetailTextArea"+row).html(text);
 }

@@ -633,6 +633,7 @@ public class AJAXBean extends AbstractBean implements
                 String typeId = map.get("typeId").toString();
                 String typeName = billableDao.getMBillTypeName(typeId);
                 if(typeName != null){
+                    result = "";
                     if("Air Ticket".equals(typeName)){
                         result += "|Air Ticket|";
                         result += billableDao.getDescriptionInvoiceAirTicket(searchRefNo);

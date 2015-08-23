@@ -744,7 +744,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade" id="DescriptionInvoiceDetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade " id="DescriptionInvoiceDetailModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -754,11 +754,11 @@
             
             <div class="modal-body" >
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <h5>Description</h5>
                     </div>
-                    <div class="col-md-9">
-                        <textarea id="InputDescriptionDetail" rows="5" cols="50" class="form-control" onclick="saveDescriptionDetail();">
+                    <div class="col-md-10">
+                        <textarea id="InputDescriptionDetail" rows="12" cols="80" class="form-control" onclick="saveDescriptionDetail();">
                         </textarea>
 <!--<input type="text" id="InputDescriptionDetail" value="" style="width: 400px;height: 200px;">-->
                     </div>
