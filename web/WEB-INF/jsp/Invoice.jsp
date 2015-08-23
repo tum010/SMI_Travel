@@ -20,7 +20,7 @@
 <c:set var="roleName" value="${requestScope['roleName']}" />
 <c:set var="page" value="${requestScope['page']}" />
 <c:set var="showvat" value="false" />
-
+<c:set var="typeBooking" value="" />
 <section class="content-header" >
     <h1>
         Finance & Cashier - Invoice
@@ -59,37 +59,44 @@
                     <c:choose>
                         <c:when test="${fn:contains(page , 'OT')}">
                             <c:set var="typeInvoice" value="O/T" />
+                            <c:set var="typeBooking" value="O" />
                             <h4><b>Invoice Temp Outbound</b></h4>
                         </c:when>
                         <c:when test="${fn:contains(page , 'OV')}">
                             <c:set var="typeInvoice" value="O/V" />
+                            <c:set var="typeBooking" value="O" />
                             <c:set var="showvat" value="true" />
                             <h4><b>Invoice Vat Outbound</b></h4>
                         </c:when>
                         <c:when test="${fn:contains(page , 'WT')}">
                             <c:set var="typeInvoice" value="W/T" />
-                            
+                            <c:set var="typeBooking" value="I" />
                             <h4><b>Invoice Temp Wendy</b></h4>
                         </c:when>
                         <c:when test="${fn:contains(page , 'WV')}">
                             <c:set var="typeInvoice" value="W/V" />
+                            <c:set var="typeBooking" value="I" />
                             <c:set var="showvat" value="true" />
                             <h4><b>Invoice Vat Wendy</b></h4>
                         </c:when>
                         <c:when test="${fn:contains(page , 'WN')}">
                             <c:set var="typeInvoice" value="W/N" />
+                            <c:set var="typeBooking" value="W" />
                             <h4><b>Invoice No Vat Wendy</b></h4>
                         </c:when> 
                         <c:when test="${fn:contains(page , 'ON')}">
                             <c:set var="typeInvoice" value="O/N" />
+                            <c:set var="typeBooking" value="O" />
                             <h4><b>Invoice No Vat Outbound</b></h4>
                         </c:when> 
                         <c:when test="${fn:contains(page , 'WA')}">
                             <c:set var="typeInvoice" value="W/A" />
+                            <c:set var="typeBooking" value="I" />
                             <h4><b>Invoice Air Ticket Wendy</b></h4>
                         </c:when> 
                         <c:when test="${fn:contains(page , 'OA')}">
                             <c:set var="typeInvoice" value="O/A" />
+                            <c:set var="typeBooking" value="O" />
                             <h4><b>Invoice Air Ticket Outbound</b></h4>
                         </c:when> 
                     </c:choose> 
@@ -127,8 +134,20 @@
                                             <div class="col-md-1 text-right">
                                                 <button type="button"  id="ButtonSearch"  name="ButtonSearch" onclick="searchAction();" class="btn btn-primary btn-sm">
                                                     <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
-                                                </button>                                          
-                                            </div>      
+                                                </button>   
+                                            </div>  
+                                            <div class="col-md-5 ">
+                                                <c:choose>
+                                                    <c:when test="${typeBooking == 'O'}">
+                                                        <div id='AlertBooking' style='display:none'><font color="red">This Ref No can get billable detail from wendy only</font></div>
+                                                    </c:when>
+                                                    <c:when test="${typeBooking == 'I'}">
+                                                        <div id='AlertBooking' style='display:none'><font color="red">This Ref No can get billable detail from outbound only</font></div>
+                                                    </c:when>
+                                                </c:choose>   
+                                            </div>
+                                            
+                                            
                                         </div>
                                         <div class="col-xs-12 form-group"></div>
                                         <div class="row" style="padding-left:35px">
@@ -924,5 +943,5 @@
 <input type="hidden" id="roleName" name="roleName" value="${roleName}">
 <input type="hidden" id="InputDescriptionDetailId" name="InputDescriptionDetailId" value="">
 <input type="hidden" id="resultText" name="resultText" value="${result}">
-
+<input type="text" id="typeBooking" name="typeBooking" value="${typeBooking}">
 <script type="text/javascript" src="js/Invoice.js"></script>

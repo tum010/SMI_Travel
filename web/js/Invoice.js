@@ -587,6 +587,7 @@ function searchAction(){
 }
 function CallAjaxAdd(param) {
     var url = 'AJAXServlet';
+    var BookintType = "";
     $("#ajaxloadsearch").removeClass("hidden");
     try {
         $.ajax({
@@ -598,16 +599,23 @@ function CallAjaxAdd(param) {
                 var strx   = msg.split('||');
                 var array  = [];
                 array = array.concat(strx);
-                setBillableInvoice(array[0]);
-                //MasterReservation Table
-                try {
-//                    alert(array[1]);
-                    $("#MasterReservation tbody").append(array[1]);
+                
+                BookintType = array[0];
+                if(BookintType == $('#typeBooking').val()){
+                    $('#AlertBooking').hide();
+                    setBillableInvoice(array[1]);
+                    //MasterReservation Table
+                    try {
+                        $("#MasterReservation tbody").append(array[2]);          
+                    } catch (e) {
+                        alert(e);
+                    }
+                }else{          
+                    $('#AlertBooking').show();
                     
-                     $("#ajaxloadsearch").addClass("hidden");
-                } catch (e) {
-                    alert(e);
                 }
+                
+                 $("#ajaxloadsearch").addClass("hidden");
             }, error: function (msg) {
                  $("#ajaxloadsearch").addClass("hidden");
             }

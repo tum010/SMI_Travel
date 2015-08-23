@@ -1402,6 +1402,7 @@ public class AJAXBean extends AbstractBean implements
         if( bill.getMAccterm() != null){
             term =","+ bill.getMAccterm().getId();
         }
+        result += bill.getMaster().getBookingType() +"||";
         result +=  bill.getBillTo() +","+ bill.getBillName() +"," + bill.getBillAddress()+term
                 +","+bill.getMaster().getStaff().getId()+","+bill.getMaster().getStaff().getName() + ","+ bill.getMaster().getStaff().getUsername()+","+"||";
         List<BillableDesc> billdeescList = bill.getBillableDescs();
