@@ -7,12 +7,14 @@
 package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.InvoiceDao;
+import com.smi.travel.datalayer.entity.BillableDesc;
 import com.smi.travel.datalayer.entity.Invoice;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.Stock;
 import com.smi.travel.datalayer.view.entity.InvoiceView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -40,6 +42,8 @@ public class InvoiceImpl implements InvoiceDao{
     private static final String GET_INVOICE_FROMNO = "FROM Invoice inv where inv.invNo = :invoiceNo and inv.department = :department and inv.invType = :invType";
     private static final String GET_INVOICE_FOR_TAX_INVOICE = "FROM Invoice inv where inv.invNo = :invoiceNo and inv.department = :department";
     private static final String GET_BILLDESC = "from InvoiceDetail inv WHERE inv.billableDesc.id = :billableDescId";
+    private static final String GET_BILLDESC_FILTER = "from InvoiceDetail inv WHERE inv.billableDesc.id = :billableDescId and inv.id != :invdID";
+    private static final String GET_BILL_AMOUNT = "from BillableDesc bill where bill.id = :descid";
     
     @Override
     public String insertInvoice(Invoice invoice) {
@@ -554,5 +558,49 @@ public class InvoiceImpl implements InvoiceDao{
         session.close();
         this.sessionFactory.close();
         return value;
+    }
+
+    @Override
+    public String checkOverflowValueOfInvoice(List<InvoiceDetail> invoiceDetail) {
+        Session session = this.sessionFactory.openSession();
+        String result = "";
+        for(int i=0;i<invoiceDetail.size();i++){
+            BigDecimal cost;
+            BigDecimal price;
+            BigDecimal InvoiceCost = new BigDecimal(0);
+            BigDecimal InvoicePrice  = new BigDecimal(0);
+            InvoiceDetail  detail  = invoiceDetail.get(i);
+            List<BillableDesc> Billdesc = session.createQuery(GET_BILL_AMOUNT)
+                .setParameter("descid", detail.getBillableDesc().getId())
+                .list();
+            cost = new BigDecimal(Billdesc.get(0).getCost());
+            price = new BigDecimal(Billdesc.get(0).getPrice());
+            System.out.println("cost : "+cost +"price : "+price);
+            
+            List<InvoiceDetail> invoiceList = session.createQuery(GET_BILLDESC_FILTER )
+                .setParameter("billableDescId", detail.getBillableDesc().getId())
+                .setParameter("invdID", detail.getId())
+                .list();
+            for(int j=0;j<invoiceList.size();j++){
+                InvoiceCost = InvoiceCost.add(invoiceList.get(j).getCost());
+                InvoicePrice = InvoicePrice.add(invoiceList.get(j).getAmount());
+            }
+            System.out.println("InvoiceCost : "+InvoiceCost +"InvoicePrice : "+InvoicePrice);
+            
+            InvoicePrice = InvoicePrice.add(detail.getAmount());
+            InvoiceCost = InvoiceCost.add(detail.getCost());
+            System.out.println("SumInvoiceCost : "+InvoiceCost +"SumInvoicePrice : "+InvoicePrice);
+            System.out.println("Compare price : "+price.compareTo(InvoicePrice));
+            if((price.compareTo(InvoicePrice) == -1)||(cost.compareTo(InvoiceCost) == -1)){
+                result = "fail";
+            }else{
+                result = "success";
+            }
+            
+        }
+        this.sessionFactory.close();
+        session.close();
+        return result;
+        
     }
 }

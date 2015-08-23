@@ -943,5 +943,5 @@
 <input type="hidden" id="roleName" name="roleName" value="${roleName}">
 <input type="hidden" id="InputDescriptionDetailId" name="InputDescriptionDetailId" value="">
 <input type="hidden" id="resultText" name="resultText" value="${result}">
-<input type="text" id="typeBooking" name="typeBooking" value="${typeBooking}">
+<input type="hidden" id="typeBooking" name="typeBooking" value="${typeBooking}">
 <script type="text/javascript" src="js/Invoice.js"></script>

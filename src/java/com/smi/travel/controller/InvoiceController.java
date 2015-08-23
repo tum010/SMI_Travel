@@ -142,6 +142,7 @@ public class InvoiceController extends SMITravelController {
         if("save".equals(action)){
             invoice = setValueInvoice(action, user.getUsername(), invoiceType, invoiceId, invoiceTo, invoiceName, invoiceAddress, isGroup, termPay, dueDate, department, staffCode, staffName, staffId, arCode, remark, invoiceNo, InputInvDate, request);
             result = invoiceService.saveInvoice(invoice);
+            System.out.println("invoiceService checkOverflowValueOfInvoice:"+invoiceService.checkOverflowValueOfInvoice(invoice.getInvoiceDetails()));
             System.out.println("ddddd result : "+result);
             if(result.equals("update success")){
                    result = "success";
@@ -172,7 +173,7 @@ public class InvoiceController extends SMITravelController {
                 request.setAttribute("result", result);
             }else{
                 request.setAttribute("result", result);
-                request.setAttribute("invoice", null);
+                request.setAttribute("invoice", invoice);
                 request.setAttribute("listInvoiceDetail", null);
             }  
         }else if("searchInvoice".equals(action)){ // search invoice when input invoice no 
@@ -237,6 +238,7 @@ public class InvoiceController extends SMITravelController {
             invoice = setValueInvoice(action, user.getUsername(), invoiceType, invoiceId, invoiceTo, invoiceName, invoiceAddress, isGroup, termPay, dueDate, department, staffCode, staffName, staffId, arCode, remark, invoiceNo, InputInvDate, request);
             String rowId  = request.getParameter("idDeleteDetailBillable");
             String DetailBillId  = request.getParameter("detailId"+rowId);
+            
             result = invoiceService.DeleteInvoiceDetail(DetailBillId);
             if("success".equals(result)){
                 invoice = invoiceService.getInvoiceFromInvoiceNumber(invoice.getInvNo());
