@@ -576,11 +576,18 @@ public class InvoiceImpl implements InvoiceDao{
             cost = new BigDecimal(Billdesc.get(0).getCost());
             price = new BigDecimal(Billdesc.get(0).getPrice());
             System.out.println("cost : "+cost +"price : "+price);
-            
-            List<InvoiceDetail> invoiceList = session.createQuery(GET_BILLDESC_FILTER )
+            List<InvoiceDetail> invoiceList;
+            if(detail.getId() != null){
+                invoiceList = session.createQuery(GET_BILLDESC_FILTER )
                 .setParameter("billableDescId", detail.getBillableDesc().getId())
                 .setParameter("invdID", detail.getId())
                 .list();
+            }else{
+                invoiceList = session.createQuery(GET_BILLDESC )
+                .setParameter("billableDescId", detail.getBillableDesc().getId())
+                .list();
+            }
+            
             for(int j=0;j<invoiceList.size();j++){
                 InvoiceCost = InvoiceCost.add(invoiceList.get(j).getCost());
                 InvoicePrice = InvoicePrice.add(invoiceList.get(j).getAmount());
