@@ -199,6 +199,11 @@ public class UtilityFunction {
             return input.toString();
         }
     }
+    
+    public String setFormatMoney(Object data){
+        DecimalFormat df = new DecimalFormat("###,###.00");
+        return df.format(data);
+    }
 
     public String ConvertString(Object input) {
         if (input == null) {
