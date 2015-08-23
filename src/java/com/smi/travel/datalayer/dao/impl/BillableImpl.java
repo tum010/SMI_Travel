@@ -18,13 +18,17 @@ import com.smi.travel.datalayer.entity.HotelRoom;
 import com.smi.travel.datalayer.entity.LandBooking;
 import com.smi.travel.datalayer.entity.LandItinerary;
 import com.smi.travel.datalayer.entity.MBilltype;
+import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.OtherBooking;
 import com.smi.travel.util.UtilityFunction;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -39,7 +43,7 @@ public class BillableImpl implements BillableDao {
     private SessionFactory sessionFactory;
     private Transaction transaction;
     private static final String BillQuery = "from Billable B where B.master.referenceNo =:refno ";
-    private static final String QUERY_AIRTICKET = "from Billable B where B.master.referenceNo =:refno ";
+    private static final String QUERY_AIRTICKET = "from AirticketAirline AA where AA.id in ";
     private static final String QUERY_OTHERS = "from OtherBooking ot where ot.id = :refitemid";
     private static final String QUERY_LAND = "from LandBooking lb where lb.id =   :refitemid";
     private static final String QUERY_HOTEL = "from HotelBooking hb where hb.id = :refitemid";
@@ -236,6 +240,7 @@ public class BillableImpl implements BillableDao {
 
             transaction.commit();
             session.close();
+            this.sessionFactory.close();
             result = 1;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -255,7 +260,8 @@ public class BillableImpl implements BillableDao {
         }else{
             typeName = list.get(0).getName();
         }
-
+        session.close();
+        this.sessionFactory.close();
         return typeName;
     }
 
@@ -263,12 +269,65 @@ public class BillableImpl implements BillableDao {
     public String getDescriptionInvoiceAirTicket(String refno) {
         String description = "";
         Session session = this.sessionFactory.openSession();
-        List<AirticketAirline> list = session.createQuery(QUERY_AIRTICKET).setParameter("refitemid", refno).list();
-
+        String airlineQuery = QUERY_AIRTICKET + "(" + refno +")";
+        List<AirticketAirline> list = session.createQuery(airlineQuery).list();
+        String FlightDescription ="";
         if (list.isEmpty()) {
             return null;
         }else{
             UtilityFunction utility = new UtilityFunction();
+            AirticketAirline  airline = list.get(0);
+            String ticketlife = "";
+            DecimalFormat df = new DecimalFormat("###,##0.00");
+            String DepartDateAndFlight = "";
+            Integer price = new Integer(0);
+            Integer tax = new Integer(0);
+            //Ref No. {Ref NO}
+            FlightDescription += "Ref No. "+airline.getAirticketPnr().getAirticketBooking().getMaster().getReferenceNo()+" : "+"\n";
+            //AIR TICKET         {ROUNTING} Ticket Type: {TICKET LIFE NAME}
+            List<AirticketFlight> flight = new ArrayList<AirticketFlight>(airline.getAirticketFlights()); 
+            
+            for(int f =0;f<flight.size();f++){
+                AirticketFlight flightDetail = flight.get(f);
+                //get Ticket Type
+                if(flight.get(f).getMTicketType() != null){
+                    if(ticketlife.indexOf(flightDetail.getMTicketType().getName()) == -1){
+                        ticketlife += flightDetail.getMTicketType().getName()+",";
+                    }
+                }
+                
+                //get Depart date and flight
+                DepartDateAndFlight += "\t\t\t"+new SimpleDateFormat("ddMMMyyyy", new Locale("us", "us")).format(flightDetail.getDepartDate()) + "/"+flightDetail.getFlightNo() +"\n";
+                
+                //PRICE
+                price += flightDetail.getAdPrice() + flightDetail.getChPrice() +flightDetail.getInPrice();
+                
+                //TAX
+                tax += flightDetail.getAdTax() + flightDetail.getChTax() +flightDetail.getInTax();
+            }
+            if(ticketlife.length() > 0){
+                    ticketlife = ticketlife.substring(0, ticketlife.length()-1);
+            }
+            FlightDescription += "AIR TICKET"+"\t"+utility.GetRounting(flight)
+                        + " Ticket Type: "+ticketlife+"\n";
+            //{DEPART DATE}/{FLIGHT}
+            
+            FlightDescription += DepartDateAndFlight;
+            
+            
+            List<AirticketPassenger>  passengerList = new ArrayList<AirticketPassenger>(airline.getAirticketPassengers());
+            
+            for(int p =0;p<passengerList.size();p++){
+                AirticketPassenger passenger = passengerList.get(p);
+                description += FlightDescription +"\n";
+                String Initname = "";
+                if(passenger.getMInitialname() != null){
+                    Initname = passenger.getMInitialname().getName();
+                }
+            //FOR  {INITNAME} {LAST NAME}/{FIRST NAME}        {PRICE} + {TAX}
+                description += "FOR" +"\t\t" + Initname +" "+passenger.getLastName() +"/"+passenger.getFirstName() +"\t\t\t\t"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+"\n";
+            }
+                    /*
             for(int i = 0; i < list.size(); i++){
                 if(list.get(i).getAirticketFlights() != null){ // flight
                     description += ""+list.get(i).getAirticketFlights() +"|";
@@ -318,8 +377,11 @@ public class BillableImpl implements BillableDao {
                      description += " |";
                 }
             }
+                    */
         }
-
+        System.out.println("description : "+description);
+        session.close();
+        this.sessionFactory.close();
         return description;
     }
 
@@ -395,7 +457,8 @@ public class BillableImpl implements BillableDao {
                 }
             }
         }
-
+        session.close();
+        this.sessionFactory.close();
         return description;
     }
 
@@ -475,7 +538,9 @@ public class BillableImpl implements BillableDao {
                 }        
             }
         }
-
+        session.close();
+        this.sessionFactory.close();
+        System.out.println("description : "+description);
         return description;
     }
 
@@ -557,7 +622,8 @@ public class BillableImpl implements BillableDao {
                 }  
             }
         }
-
+        session.close();
+        this.sessionFactory.close();
         return description;
     }
 
@@ -623,6 +689,8 @@ public class BillableImpl implements BillableDao {
                 }
             }
         }
+        session.close();
+        this.sessionFactory.close();
         System.out.println("DEscription : " + description);
         return description;
     }
@@ -647,8 +715,10 @@ public class BillableImpl implements BillableDao {
         }else{
             AirticketDesc desc = list.get(0);
             description += "Ref No. "+desc.getAirticketBooking().getMaster().getReferenceNo()+" : "+util.getCustomerName(desc.getAirticketBooking().getMaster().getCustomer())+"\n";
-            description += desc.getDetail() + "\t(" + desc.getAmount() +" * "+desc.getQty() +")";
+            description += desc.getDetail() +"\t\t\t\t\t"+ "(" + desc.getAmount() +" * "+desc.getQty() +")";
         }
+        session.close();
+        this.sessionFactory.close();
         System.out.println("DEscription : " + description);
         return description;
 
