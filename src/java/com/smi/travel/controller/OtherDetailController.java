@@ -164,7 +164,7 @@ public class OtherDetailController extends SMITravelController {
                     itemid = result.get(1);
                     createby = Other.getCreateBy();
                     
-                    Other.setRemarkTicket("Require Ticket-Adult:{" + ticketData[0] + "}Child:{" + ticketData[1] + "}Infant:{" + ticketData[2] + "}");
+                    Other.setRemarkTicket("Require Ticket-Adult:" + ticketData[0] + " Child:" + ticketData[1] + " Infant:" + ticketData[2]);
                     List<String> resultRemarkTicket = OtherService.saveBookingOther(Other,user,createby);
                     
                     request.setAttribute("resultText", "success");
