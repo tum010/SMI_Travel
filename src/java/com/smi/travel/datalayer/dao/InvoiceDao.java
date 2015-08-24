@@ -9,8 +9,6 @@ package com.smi.travel.datalayer.dao;
 import com.smi.travel.datalayer.entity.Invoice;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.view.entity.InvoiceView;
-import java.util.List;
-import com.smi.travel.datalayer.view.entity.InvoiceView;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;

@@ -41,6 +41,8 @@ public class SendEmailController extends SMITravelController {
     private static final String ReportName = "reportname";
     private static final String ReportID = "reportid";
     private static final String BANKID = "bankid";
+    private static final String SHOWSTAFF = "showstaff";
+    private static final String SHOWLEADER = "showleader";
     private JavaMailSender mailSender;
     private ReportService reportservice;
     private DataSource datasource;
@@ -129,6 +131,8 @@ public class SendEmailController extends SMITravelController {
         request.setAttribute(ReportName, name);
         request.setAttribute(ReportID, reportid);
         request.setAttribute(BANKID, bankid);
+        request.setAttribute(SHOWSTAFF, showstaff);
+        request.setAttribute(SHOWLEADER, showleader);
         return ModelMail;
     }
 

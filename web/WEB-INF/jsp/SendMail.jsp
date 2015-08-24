@@ -30,11 +30,11 @@
     <div class="row">
         <div class="col-sm-12">
             <form action="SendMail.smi" method="post" id="Mail" role="form">
-                <input type="text" id="reportname" name="reportname" value="${reportname}">
-                <input type="text" id="reportid" name="reportid" value="${reportid}">
-                <input type="text" id="bankid" name="bankid" value="${bankid}">
-                <input type="text" id="showstaff" name="bankid" value="${showstaff}">
-                <input type="text" id="showleader" name="bankid" value="${showleader}">
+                <input type="text" id="reportname" name="reportname" value="${reportname}" class="hidden">
+                <input type="text" id="reportid" name="reportid" value="${reportid}" class="hidden">
+                <input type="text" id="bankid" name="bankid" value="${bankid}" class="hidden">
+                <input type="text" id="showstaff" name="showstaff" value="${showstaff}" class="hidden">
+                <input type="text" id="showleader" name="showleader" value="${showleader}" class="hidden">
                 
                 <div class="panel panel-default">
                     <div class="panel-heading">
