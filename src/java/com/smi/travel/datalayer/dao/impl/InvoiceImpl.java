@@ -51,8 +51,9 @@ public class InvoiceImpl implements InvoiceDao{
         Session session = this.sessionFactory.openSession();
         try { 
             transaction = session.beginTransaction();
-            result = generateInvoiceNo(invoice.getDepartment() , invoice.getInvType());
-            invoice.setInvNo(result);
+//            result = generateInvoiceNo(invoice.getDepartment() , invoice.getInvType());
+               result = invoice.getInvNo();
+//            invoice.setInvNo(result);
             session.save(invoice);
             List<InvoiceDetail> invoiceDetail = invoice.getInvoiceDetails();
             if(invoiceDetail != null){
@@ -63,7 +64,7 @@ public class InvoiceImpl implements InvoiceDao{
             transaction.commit();
             session.close();
             this.sessionFactory.close();
-            System.out.println("ss result : "+ result);
+            System.out.println("ss result : "+ invoice.getInvNo());
 //            result = "success";
         } catch (Exception ex) {
             transaction.rollback();
@@ -258,6 +259,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setInvTo(invoiceList.get(0).getInvTo());
             invoice.setInvName(invoiceList.get(0).getInvName());
             invoice.setInvType(invoiceList.get(0).getInvType());
+            invoice.setInvDate(invoiceList.get(0).getInvDate());
             invoice.setInvAddress(invoiceList.get(0).getInvAddress());
             invoice.setInvoiceDetails(invoiceList.get(0).getInvoiceDetails());
             invoice.setArcode(invoiceList.get(0).getArcode());
@@ -322,6 +324,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setInvNo(invoiceList.get(0).getInvNo());
             invoice.setInvTo(invoiceList.get(0).getInvTo());
             invoice.setInvName(invoiceList.get(0).getInvName());
+            invoice.setInvDate(invoiceList.get(0).getInvDate());
             invoice.setInvType(invoiceList.get(0).getInvType());
             invoice.setInvAddress(invoiceList.get(0).getInvAddress());
             invoice.setInvoiceDetails(invoiceList.get(0).getInvoiceDetails());
@@ -437,6 +440,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setInvTo(invoiceList.get(0).getInvTo());
             invoice.setInvName(invoiceList.get(0).getInvName());
             invoice.setInvType(invoiceList.get(0).getInvType());
+            invoice.setInvDate(invoiceList.get(0).getInvDate());
             invoice.setInvAddress(invoiceList.get(0).getInvAddress());
             invoice.setInvoiceDetails(invoiceList.get(0).getInvoiceDetails());
             invoice.setArcode(invoiceList.get(0).getArcode());
@@ -495,6 +499,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setInvTo(invoiceList.get(0).getInvTo());
             invoice.setInvName(invoiceList.get(0).getInvName());
             invoice.setInvType(invoiceList.get(0).getInvType());
+            invoice.setInvDate(invoiceList.get(0).getInvDate());
             invoice.setInvAddress(invoiceList.get(0).getInvAddress());
             invoice.setInvoiceDetails(invoiceList.get(0).getInvoiceDetails());
             invoice.setArcode(invoiceList.get(0).getArcode());
@@ -528,6 +533,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setInvTo(invoiceList.get(0).getInvTo());
             invoice.setInvName(invoiceList.get(0).getInvName());
             invoice.setInvType(invoiceList.get(0).getInvType());
+            invoice.setInvDate(invoiceList.get(0).getInvDate());
             invoice.setInvAddress(invoiceList.get(0).getInvAddress());
             invoice.setInvoiceDetails(invoiceList.get(0).getInvoiceDetails());
             invoice.setArcode(invoiceList.get(0).getArcode());

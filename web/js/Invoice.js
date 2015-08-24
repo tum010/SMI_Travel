@@ -16,9 +16,6 @@
         $(this).val(value);
     });
     
-   
-
-    
    // Invoice To Modal
    var showflag = 1;
     var ReceiveFromTable = $('#InvToTable').dataTable({bJQueryUI: true,
@@ -77,7 +74,6 @@
                 $(".ui-widget").css("top", -1000);
                 showflag=1;
             }
-
     });
     
    // Sale Staff Modal
@@ -285,20 +281,20 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur){
         '<td class="hidden"><input type="text" class="form-control" id="detailId' + row + '" name="detailId' + row + '" value="" > </td>' +
         '<td class="hidden"><input type="text" class="form-control" id="DetailBillId' + row + '" name="DetailBillId' + row + '" value="'+id+'" > </td>' +
         '<td><select id="SelectProductType' + row + '" name="SelectProductType' + row + '" class="form-control">'+ selectT +'</select> </td>' +
-        '<td><a href="" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail('+row+')">'+ des + ' : ' + RefNo +'</a> </td>' +
+        '<td><a href="" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail('+row+')" id="InputDescription' + row + '">'+ des + ' : ' + RefNo +'</a> </td>' +
         '<td class="hidden"><input type="text" class="form-control" id="BillDescription' + row + '" name="BillDescription' + row + '" value="'+des +'" > </td>' +
         '<td><input  maxlength ="15" type="text" onfocusout="changeFormatCostNumber(' + row + ')" class="form-control numerical" id="InputCost' + row + '" name="InputCost' + row + '" value="'+ cos +'" ></td>' +
         '<td><select id="SelectCurrencyCost' + row + '" name="SelectCurrencyCost' + row + '" class="form-control">'+ selectC +'</select></td>' +
-        '<td><input type="text" value="'+cos +'" id="InputCostLocal' + row + '" name="InputCostLocal' + row + '" class="form-control"></td>' +
+        '<td><input type="text" onfocusout="changeFormatCostLocalNumber(' + row + ')"  value="'+cos +'" id="InputCostLocal' + row + '" name="InputCostLocal' + row + '" class="form-control"></td>' +
         '<td class="hidden"><input type="text" value="'+cos +'" id="InputCostLocalTemp' + row + '" name="InputCostLocalTemp' + row + '"></td>'+
         '<td  '+vathidden+'><input type="checkbox" '+check+' id="checkUse' + row + '" name="checkUse' + row + '"  onclick="calculateGross('+row+')"></td>'+
         '<td align="center" '+vathidden+'>'+vatValue +'</td>'+ 
         '<td class="hidden"><input type="text" class="form-control" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '" value="'+ defaultD +'" ></td>'+
         '<td '+vathidden+' ><input type="text" maxlength ="15" readonly onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control numerical" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>'+
-        '<td><input type="text" maxlength ="15"  class="form-control numerical" id="InputAmount' + row + '" name="InputAmount' + row + '"  value="'+price +'" onfocusout="CalculateGrandTotal(' + row + ');calculateGross('+row+')"></td>'+
+        '<td><input type="text" maxlength ="15" onfocusout="changeFormatAmountNumber(' + row + ')" class="form-control numerical" id="InputAmount' + row + '" name="InputAmount' + row + '"  value="'+price +'" onfocusout="CalculateGrandTotal(' + row + ');calculateGross('+row+')"></td>'+
         '<td><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control">'+ selectC +'</select></td>'+
-        '<td><input type="text" value="'+price +'" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control" ></td>'+
-        '<td class="hidden"><input type="text" value="'+price +'" id="InputAmountLocalTemp' + row + '" name="InputAmountLocalTemp' + row + '"  ></td>'+
+        '<td><input type="text" onfocusout="changeFormatAmountLocalNumber(' + row + ')" value="'+price +'" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control" ></td>'+
+        '<td class="hidden"><input type="text" onfocusout="changeFormatAmountLocalTempNumber(' + row + ')" value="'+price +'" id="InputAmountLocalTemp' + row + '" name="InputAmountLocalTemp' + row + '"  ></td>'+
         '<td align="center" ><center><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('+row+',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span></center>'+
         '<td class="hidden"><textarea id="DescriptionInvoiceDetail' + row + '" name="DescriptionInvoiceDetail' + row + '"> '+ description +'</textarea> </td>'+
         '</tr>'
@@ -310,6 +306,7 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur){
 
 function getDescriptionDetail(row){
     var description = $('#DescriptionInvoiceDetail'+row).val();
+//    alert(description);
     $('#InputDescriptionDetailId').val(row);
     $('#InputDescriptionDetail').val(description);
 }
@@ -317,11 +314,47 @@ function getDescriptionDetail(row){
 function saveDescriptionDetail(){
     var row = $('#InputDescriptionDetailId').val();
     var descriptionDetail = $('#InputDescriptionDetail').val();
-
-    console.log($('#InputDescriptionDetail').val());
+    subStringDescription(descriptionDetail,row);
+    console.log("Detail : "+$('#InputDescriptionDetail').val());
     $('#DescriptionInvoiceDetail'+row).html(descriptionDetail);
 }
-
+function subStringDescription(description,row){
+    var index = description.indexOf("\n");
+    var product = $('#SelectProductType'+row +'  option:selected').text();
+    console.log("Product :" + product);
+    var des = description.substring(0,index);
+    $('#InputDescription'+row).html(des +" >> "+product);
+}
+function changeFormatAmountNumber(id){
+    var count  = parseFloat(document.getElementById('InputAmount'+id).value);
+    
+    if(isNaN(count)){
+        document.getElementById('InputAmount' + id).value = "";
+    }else{
+        count = parseFloat(document.getElementById('InputAmount'+id).value);
+        document.getElementById('InputAmount' + id).value = formatNumber(count);
+    } 
+}
+function changeFormatAmountLocalNumber(id){
+    var count  = parseFloat(document.getElementById('InputAmountLocal'+id).value);
+    
+    if(isNaN(count)){
+        document.getElementById('InputAmountLocal' + id).value = "";
+    }else{
+        count = parseFloat(document.getElementById('InputAmountLocal'+id).value);
+        document.getElementById('InputAmountLocal' + id).value = formatNumber(count);
+    } 
+}
+function changeFormatAmountLocalTempNumber(id){
+    var count  = parseFloat(document.getElementById('InputAmountLocalTemp'+id).value);
+    
+    if(isNaN(count)){
+        document.getElementById('InputAmountLocalTemp' + id).value = "";
+    }else{
+        count = parseFloat(document.getElementById('InputAmountLocalTemp'+id).value);
+        document.getElementById('InputAmountLocalTemp' + id).value = formatNumber(count);
+    } 
+}
 function changeFormatCostNumber(id){
     var count  = parseFloat(document.getElementById('InputCost'+id).value);
     
@@ -330,8 +363,17 @@ function changeFormatCostNumber(id){
     }else{
         count = parseFloat(document.getElementById('InputCost'+id).value);
         document.getElementById('InputCost' + id).value = formatNumber(count);
-    }
+    } 
+}
+function changeFormatCostLocalNumber(id){
+    var count  = parseFloat(document.getElementById('InputCostLocal'+id).value);
     
+    if(isNaN(count)){
+        document.getElementById('InputCostLocal' + id).value = "";
+    }else{
+        count = parseFloat(document.getElementById('InputCostLocal'+id).value);
+        document.getElementById('InputCostLocal' + id).value = formatNumber(count);
+    } 
 }
 function changeFormatGrossNumber(id){
     var count = parseFloat(document.getElementById('InputGross'+id).value);
@@ -349,28 +391,6 @@ function DeleteDetailBill(rowID,code){
         $("#DeleteDetailBillable").text('Are you sure to delete detail billable Code :'+ code +'..?');
     }else{
         $("#DeleteDetailBillable").text('Are you sure to delete detail billable ?');
-    }
-}
-
-function DeleteBill() {
-    var count = document.getElementById('counterTable');
-    var rowId  = document.getElementById('idDeleteDetailBillable');
-    var DetailBillId  = $("#DetailBillId"+rowId.value).val();
-    if((DetailBillId !== "")&&(DetailBillId !== undefined)){
-        rowId.value = DetailBillId ;
-        var action = document.getElementById('action');
-        action.value = 'delete';
-        document.getElementById('InvoiceForm').submit();
-        
-    }else{
-        $("#BillDescription" + rowId.value).parent().parent().remove();
-        $('#DelDetailBill').modal('hide');
-        console.log("Row 0  : " + count.value );
-        if (count.value <= 1) {
-            console.log("show button tr_FormulaAddRow : " );
-            $("#tr_FormulaAddRow").css("display","block");
-        }
-        count.value = count.value - 1 ;
     }
 }
 
@@ -410,12 +430,22 @@ function DisableInvoice() {
     document.getElementById('InvoiceForm').submit();
 }
 
-function printInvoice(){  
-    window.open("report.smi?name=InvoiceReport");   
+function printInvoice(text){
+    $('#typePrint').val(text); 
 }
 
-function printInvoiceNew(){  
-    window.open("report.smi?name=InvoiceEmail");   
+function printInvoiceNew(){
+    var invoiceId = $('#InvoiceId').val();
+    var typePrint = $('#SelectTypePrint').val();
+    var sale = $('#selectSalesStaff').val();
+    var leader = $('#selectLeader').val();
+    var payment = $('#selectPayment').val();
+    var type = $('#typePrint').val(); 
+    if(type === 'print'){
+        window.open("report.smi?name="+typePrint+"&invoiceid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"");   
+    }else if(type === 'email'){
+        window.open("SendMail.smi?reportname=Invoice&reportid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"");   
+    }
 }
 
 function setBillValue(billto, billname, address, term, pay) {
@@ -427,6 +457,60 @@ function setBillValue(billto, billname, address, term, pay) {
         $("#InvToAddress").val(address);
     }
     $("#InvToModal").modal('hide');
+}
+
+function DeleteBill() {
+    var count = document.getElementById('counterTable');
+    var rowId  = document.getElementById('idDeleteDetailBillable');
+    var row = rowId.value;
+    var DetailBillId  = $("#detailId"+rowId.value).val();
+    if((DetailBillId !== "")&&(DetailBillId !== undefined)){
+        rowId.value = DetailBillId ;
+        console.log("Row : " + rowId.value);
+        var servletName = 'BillableServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&name=' + DetailBillId +
+            '&type=' + 'deleteInvoiceDetail';
+    CallAjaxDeleteBill(param,row);
+        
+    }else{
+        $("#BillDescription" + rowId.value).parent().parent().remove();
+        $('#DelDetailBill').modal('hide');
+        console.log("Row 0  : " + count.value );
+        if (count.value <= 1) {
+            console.log("show button tr_FormulaAddRow : " );
+            $("#tr_FormulaAddRow").css("display","block");
+        }
+        count.value = count.value - 1 ;
+    }
+}
+
+function CallAjaxDeleteBill(param,row) {
+    var url = 'AJAXServlet';
+    $("#ajaxload").removeClass("hidden");
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function(msg) {
+                if(msg === 'success'){
+                    $("#BillDescription" + row).parent().parent().remove();
+                }
+                $("#ajaxload").addClass("hidden");
+
+            }, error: function(msg) {
+                $("#ajaxload").addClass("hidden");
+                alert('error');
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
 }
                     
 function searchCustomerAgentList(name) {
@@ -604,6 +688,7 @@ function CallAjaxAdd(param) {
                 if(BookintType == $('#typeBooking').val()){
                     $('#AlertBooking').hide();
                     setBillableInvoice(array[1]);
+//                    alert(array[1]);
                     //MasterReservation Table
                     try {
                         $("#MasterReservation tbody").append(array[2]);          
