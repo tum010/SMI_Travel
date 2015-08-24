@@ -10,7 +10,7 @@
         <many-to-one name="taxInvoice" class="com.smi.travel.datalayer.entity.TaxInvoice" fetch="select">
             <column name="tax_invoice_id" />
         </many-to-one>
-        <many-to-one name="MProductType" class="com.smi.travel.datalayer.entity.MProductType" fetch="select">
+        <many-to-one name="MPayType" class="com.smi.travel.datalayer.entity.MPayType" fetch="select">
             <column name="product_type" />
         </many-to-one>
         <many-to-one name="creditNote" class="com.smi.travel.datalayer.entity.CreditNote" fetch="select">
