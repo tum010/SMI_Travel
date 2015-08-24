@@ -68,9 +68,9 @@
                     }
                 });
 
-//                $(function() {
-//                    $('[data-toggle="tooltip"]').tooltip({html: true})
-//                })
+                $(function() {
+                    $('[data-toggle="tooltip"]').tooltip({html: true})
+                })
                 
                 setformat();
             });
@@ -124,14 +124,14 @@
                     <thead>
                         <tr class="datatable-header">
                             <th class="hidden" rowspan="2">Code</th>
-                            <th rowspan="3" style="width: 85px">Date</th>
+                            <th rowspan="2" style="width: 85px">Date</th>
                             <th rowspan="2">Product Name</th>
                             <th colspan="3" >Adult</th>
                             <th colspan="3">Child</th>
                             <th colspan="3">Infant</th>
                             <th rowspan="2">Cur</th>
                             <th rowspan="2">Amount</th>
-                            <th rowspan="3">Action</th>
+                            <th rowspan="2">Action</th>
 
                         </tr>
 
@@ -146,26 +146,21 @@
                             <th >Qty</th>
                             <th>Price</th>
                         </tr>                        
-                        <tr class="datatable-header">
-                            <th colspan="4">Remark</th>
-                            <th colspan="8">Remark Stock</th>
-                        </tr>
                     </thead>
                     <tbody>
                      
                         <c:forEach var="table" items="${other_list}" varStatus="i">
                              <c:set var="colourStatus" value="" />
                              <c:set var="colourStatusFirstrow" value="" />
-                             <c:set var="index" value="${i.index + 1}"></c:set>
                             
                              <c:if test="${table.status.id == 2}">
                                 <c:set var="colourStatus" value="style='background-color: #FFD3D3'" />
                                 <c:set var="colourStatusFirstrow" value="background-color: #FFD3D3" />
                                 <c:set var="statusicon" value="glyphicon-remove deleteicon" />
                              </c:if>
-                            <tr row="${index}">
+                            <tr data-toggle="tooltip"  data-placement="left" title="<p align='left'>  Remark :${table.remark} <br> Remark Stock :${table.remarkTicket} </p>" ${colourStatus} ${colourStatus}>
                                 <td class="hidden tdcenter ${colourStatus}" style="width:75px;${colourStatusFirstrow}"> </td> 
-                                <td class="tdcenter ${colourStatus}" style="width:75px;${colourStatusFirstrow}" rowspan="2"> ${table.otherDate} </td>
+                                <td class="tdcenter ${colourStatus}" style="width:75px;${colourStatusFirstrow}"> ${table.otherDate} </td>
                                 <td> ${table.product.name}</td>
                                 
                                 <td class="tdright moneyformat"> ${table.adCost}</td>
@@ -179,7 +174,7 @@
                                 <td class="tdright moneyformat"> ${table.inPrice }</td>
                                 <td class="tdcenter"> ${table.currency}</td>
                                 <td class="tdright moneyformat"> ${(table.adPrice * table.adQty) + (table.chPrice * table.chQty) + (table.inPrice * table.inQty)}</td>
-                                <td rowspan="2"> 
+                                <td> 
                                     <center> 
                                         <a href="OtherDetail.smi?referenceNo=${param.referenceNo}&itemid=${table.id}&action=edit&callPageFrom=FromOther"><span class="glyphicon glyphicon-edit editicon"      onclick="" ></span></a>
                                         <c:if test="${table.status.id == 2}">
@@ -196,11 +191,7 @@
                                         
                                     </center>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td colspan="4">${table.remark}</td>
-                                <td colspan="8">${table.remarkTicket}</td>
-                            </tr>
+                            </tr>                    
                         </c:forEach>
                     </tbody>
                 </table>        

@@ -12,7 +12,7 @@ public class CreditNoteDetail  {
 
      private String id;
      private TaxInvoice taxInvoice;
-     private MProductType MProductType;
+     private MPaytype MPayType;
      private CreditNote creditNote;
      private String description;
      private BigDecimal amount;
@@ -21,9 +21,9 @@ public class CreditNoteDetail  {
     public CreditNoteDetail() {
     }
 
-    public CreditNoteDetail(TaxInvoice taxInvoice, MProductType MProductType, CreditNote creditNote, String description, BigDecimal amount,BigDecimal vat) {
+    public CreditNoteDetail(TaxInvoice taxInvoice, MPaytype MPaytype, CreditNote creditNote, String description, BigDecimal amount,BigDecimal vat) {
        this.taxInvoice = taxInvoice;
-       this.MProductType = MProductType;
+       this.MPayType = MPaytype;
        this.creditNote = creditNote;
        this.description = description;
        this.amount = amount;
@@ -44,13 +44,17 @@ public class CreditNoteDetail  {
     public void setTaxInvoice(TaxInvoice taxInvoice) {
         this.taxInvoice = taxInvoice;
     }
-    public MProductType getMProductType() {
-        return this.MProductType;
+
+    public MPaytype getMPayType() {
+        return MPayType;
+    }
+
+    public void setMPayType(MPaytype MPayType) {
+        this.MPayType = MPayType;
     }
     
-    public void setMProductType(MProductType MProductType) {
-        this.MProductType = MProductType;
-    }
+    
+    
     public CreditNote getCreditNote() {
         return this.creditNote;
     }
