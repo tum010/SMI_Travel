@@ -174,16 +174,12 @@ public class ReportService {
         return data;
     }
     
-    public List getTaxInvoice(){
-        List data  = new ArrayList();
-        data.add(taxInvoiceDao.getTaxInvoice());  
-        return data;
+    public List getTaxInvoice(String taxInvId,int option){        
+        return taxInvoiceDao.getTaxInvoice(taxInvId,option);
     }
     
-    public List getTaxInvoiceEmail(){
-        List data = new ArrayList();
-        data.add(taxInvoiceEmailDao.getTaxInvoiceEmail());
-        return data;
+    public List getTaxInvoiceEmail(String taxInvId,int option){
+        return taxInvoiceDao.getTaxInvoice(taxInvId,option);
     }
     
     public List getInvoice(String InvoiceId,String BankId,String showStaff,String showLeader){

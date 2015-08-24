@@ -167,9 +167,9 @@ public class ReportController extends SMITravelController {
         } else if (InvoiceReport.equalsIgnoreCase(name)) {
             data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader);
         } else if (TaxInvoiceReport.equalsIgnoreCase(name)) {
-            data = reportservice.getTaxInvoice();
+            data = reportservice.getTaxInvoice(taxInvId, option);
         } else if (TaxInvoiceEmailReport.equalsIgnoreCase(name)) {
-            data = reportservice.getTaxInvoiceEmail();
+            data = reportservice.getTaxInvoiceEmail(taxInvId, option);
         }
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);
