@@ -38,7 +38,7 @@ public class CreditNoteReportImpl implements  CreditNoteReportDao{
                  .addScalar("customer", Hibernate.STRING)
                  .addScalar("address", Hibernate.STRING)
                  .addScalar("cnno", Hibernate.STRING)
-                 .addScalar("cddate", Hibernate.DATE)
+                 .addScalar("cndate", Hibernate.DATE)
                  .addScalar("description", Hibernate.STRING)
                  .addScalar("amount", Hibernate.BIG_DECIMAL)
                  .addScalar("subtotal", Hibernate.BIG_DECIMAL)
@@ -47,20 +47,27 @@ public class CreditNoteReportImpl implements  CreditNoteReportDao{
                  .addScalar("vat", Hibernate.BIG_DECIMAL)
                  .addScalar("realsubtotal", Hibernate.BIG_DECIMAL)
                  .addScalar("remark", Hibernate.STRING)
+                 .addScalar("user", Hibernate.STRING)
                  .list();
         for (Object[] B : QueryCNList) {
             CreditNoteReport cn = new CreditNoteReport();
             cn.setCustomer(util.ConvertString(B[0]));
             cn.setAddress(util.ConvertString(B[1]));
             cn.setCnno(util.ConvertString(B[2]));
-            cn.setCndate(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format((Date)B[3]));
+            if(B[3] != null){
+                cn.setCndate(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format((Date)B[3]));
+            }else{
+                cn.setCndate("");
+            }
             cn.setDescription(util.ConvertString(B[4]));
-            cn.setAmount(df.format(B[5]));
-            cn.setSubtotal(df.format(B[6]));
-            cn.setGrandtotal(df.format(B[7]));
-            cn.setDifsubtotal(df.format(B[8]));
-            cn.setVat(df.format(B[9]));
-            cn.setReadsubtotal(df.format(B[10]));
+            cn.setAmount(util.setFormatMoney(B[5]));
+            cn.setSubtotal(util.setFormatMoney(B[6]));
+            cn.setGrandtotal(util.setFormatMoney(B[7]));
+            cn.setDifsubtotal(util.setFormatMoney(B[8]));
+            cn.setVat(util.setFormatMoney(B[9]));
+            cn.setReadsubtotal(util.setFormatMoney(B[10]));
+            cn.setRemark(util.ConvertString(B[11]));
+            cn.setUser(util.ConvertString(B[12]));
             data.add(cn);
         }
         return data;

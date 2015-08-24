@@ -11,6 +11,7 @@ import com.smi.travel.datalayer.report.model.InvoiceSummary;
 import com.smi.travel.datalayer.report.model.LandVoucher;
 import com.smi.travel.datalayer.view.dao.AgentCommissionReportDao;
 import com.smi.travel.datalayer.view.dao.AirlineSummaryDao;
+import com.smi.travel.datalayer.view.dao.CreditNoteReportDao;
 import com.smi.travel.datalayer.view.dao.DaytourOtherDao;
 import com.smi.travel.datalayer.view.dao.GuideCommissionReportDao;
 import com.smi.travel.datalayer.view.dao.GuideJobDao;
@@ -63,6 +64,7 @@ public class ReportService {
     private GenerateReport genreport;
     private TaxInvoiceReportDao taxInvoiceDao;
     private TaxInvoiceEmailReportDao taxInvoiceEmailDao;
+    private CreditNoteReportDao creditNoteReportdao;
     
     public List getHotelVoucher(String hotelID,String name) {
         List data  = new ArrayList();
@@ -184,6 +186,10 @@ public class ReportService {
     
     public List getInvoice(String InvoiceId,String BankId,String showStaff,String showLeader){
         return invoicedao.getInvoice(InvoiceId, BankId,showStaff,showLeader);
+    }
+    
+    public List getCreditNoteReport(String Cnid){
+        return creditNoteReportdao.getCreditNoteReport(Cnid);
     }
 
     public HotelVoucherDao getHotelVoucherdao() {
@@ -357,5 +363,15 @@ public class ReportService {
     public void setTaxInvoiceEmailDao(TaxInvoiceEmailReportDao taxInvoiceEmailDao) {
         this.taxInvoiceEmailDao = taxInvoiceEmailDao;
     }
+
+    public CreditNoteReportDao getCreditNoteReportdao() {
+        return creditNoteReportdao;
+    }
+
+    public void setCreditNoteReportdao(CreditNoteReportDao creditNoteReportdao) {
+        this.creditNoteReportdao = creditNoteReportdao;
+    }
+    
+    
     
 }
