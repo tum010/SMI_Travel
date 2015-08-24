@@ -32,6 +32,9 @@ public class InvoiceReport {
     private String user;
     private String textmoney;
     private String bankid;
+    private String showleader;
+    private String showstaff;
+    private String co;
 
     public String getInvto() {
         return invto;
@@ -200,6 +203,30 @@ public class InvoiceReport {
 
     public void setBankid(String bankid) {
         this.bankid = bankid;
+    }
+
+    public String getShowleader() {
+        return showleader;
+    }
+
+    public void setShowleader(String showleader) {
+        this.showleader = showleader;
+    }
+
+    public String getShowstaff() {
+        return showstaff;
+    }
+
+    public void setShowstaff(String showstaff) {
+        this.showstaff = showstaff;
+    }
+
+    public String getCo() {
+        return co;
+    }
+
+    public void setCo(String co) {
+        this.co = co;
     }
        
     
