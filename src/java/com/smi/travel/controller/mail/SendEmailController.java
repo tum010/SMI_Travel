@@ -36,6 +36,7 @@ public class SendEmailController extends SMITravelController {
     private static final Logger LOG = Logger.getLogger(SendEmailController.class.getName());
     private static final String InvoiceReport = "Invoice";
     private static final String ReceiptEmail = "ReceiptEmail";
+    private static final String CreditNote = "CreditNote";
     private ModelAndView ModelMail = new ModelAndView("SendMail");
     private static final String TaxInvoiceEmailReport = "TaxInvoiceEmailReport";
     private static final String ReportName = "reportname";
@@ -98,6 +99,18 @@ public class SendEmailController extends SMITravelController {
                     result = reportservice.printreport(jasperFileName, username + "\\" + pdfFileName, dataSource);
                 }
             }
+            if (CreditNote.equalsIgnoreCase(name)) {
+                data = reportservice.getCreditNoteReport(reportid);
+                JRDataSource dataSource = new JRBeanCollectionDataSource(data);
+                jasperFileName = "CreditNote.jasper";
+                pdfFileName = "creditnote.pdf";
+                pathAttachfile = path[0] + "\\" + username;
+                System.out.println("path : " + path[0] + username);
+                if (checkDirectory(path[0] + username)) {
+                    result = reportservice.printreport(jasperFileName, username + "\\" + pdfFileName, dataSource);
+                }
+            }
+            
             
             
         }
