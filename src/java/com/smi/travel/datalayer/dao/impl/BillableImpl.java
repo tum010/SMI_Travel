@@ -300,7 +300,35 @@ public class BillableImpl implements BillableDao {
                 DepartDateAndFlight += "\t\t\t"+new SimpleDateFormat("ddMMMyyyy", new Locale("us", "us")).format(flightDetail.getDepartDate()) + "/"+flightDetail.getFlightNo() +"\n";
                 
                 //PRICE
-                price += flightDetail.getAdPrice() + flightDetail.getChPrice() +flightDetail.getInPrice();
+                if(flightDetail.getAdPrice() != null){
+                    if(flightDetail.getChPrice() != null){
+                        if(flightDetail.getInPrice() != null){
+                            price += flightDetail.getAdPrice() + flightDetail.getChPrice() + flightDetail.getInPrice();
+                        }else{
+                            price += flightDetail.getAdPrice() + flightDetail.getChPrice() + 0;
+                        }
+                    }else{
+                        if(flightDetail.getInPrice() != null){
+                            price += flightDetail.getAdPrice() + 0 + flightDetail.getInPrice();
+                        }else{
+                            price += flightDetail.getAdPrice() + 0 + 0;
+                        }
+                    }
+                }else{
+                    if(flightDetail.getChPrice() != null){
+                        if(flightDetail.getInPrice() != null){
+                            price += 0 + flightDetail.getChPrice() + flightDetail.getInPrice();
+                        }else{
+                            price += 0 + flightDetail.getChPrice() + 0;
+                        }
+                    }else{
+                        if(flightDetail.getInPrice() != null){
+                            price += 0 + 0 + flightDetail.getInPrice();
+                        }else{
+                            price += 0;
+                        }
+                    }
+                }    
                 
                 //TAX
                 tax += flightDetail.getAdTax() + flightDetail.getChTax() +flightDetail.getInTax();

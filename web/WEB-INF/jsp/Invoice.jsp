@@ -288,10 +288,7 @@
                             <label class="control-label" for="">Address </lable>
                         </div>
                         <div class="col-md-6 form-group">
-                            <textarea  rows="3" cols="100" id="InvToAddress" name="InvToAddress" class="form-control" >
-                                ${invoice.invAddress}
-                            </textarea>
-                           
+                            <textarea  rows="3" cols="100" id="InvToAddress" name="InvToAddress" class="form-control" >${invoice.invAddress}</textarea>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-2"></div>

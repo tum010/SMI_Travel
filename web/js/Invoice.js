@@ -688,7 +688,7 @@ function CallAjaxAdd(param) {
                 if(BookintType == $('#typeBooking').val()){
                     $('#AlertBooking').hide();
                     setBillableInvoice(array[1]);
-                    alert(array[1]);
+//                    alert(array[1]);
                     //MasterReservation Table
                     try {
                         $("#MasterReservation tbody").append(array[2]);          

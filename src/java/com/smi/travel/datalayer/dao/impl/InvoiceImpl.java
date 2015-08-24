@@ -259,6 +259,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setInvTo(invoiceList.get(0).getInvTo());
             invoice.setInvName(invoiceList.get(0).getInvName());
             invoice.setInvType(invoiceList.get(0).getInvType());
+            invoice.setInvDate(invoiceList.get(0).getInvDate());
             invoice.setInvAddress(invoiceList.get(0).getInvAddress());
             invoice.setInvoiceDetails(invoiceList.get(0).getInvoiceDetails());
             invoice.setArcode(invoiceList.get(0).getArcode());
@@ -323,6 +324,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setInvNo(invoiceList.get(0).getInvNo());
             invoice.setInvTo(invoiceList.get(0).getInvTo());
             invoice.setInvName(invoiceList.get(0).getInvName());
+            invoice.setInvDate(invoiceList.get(0).getInvDate());
             invoice.setInvType(invoiceList.get(0).getInvType());
             invoice.setInvAddress(invoiceList.get(0).getInvAddress());
             invoice.setInvoiceDetails(invoiceList.get(0).getInvoiceDetails());
@@ -438,6 +440,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setInvTo(invoiceList.get(0).getInvTo());
             invoice.setInvName(invoiceList.get(0).getInvName());
             invoice.setInvType(invoiceList.get(0).getInvType());
+            invoice.setInvDate(invoiceList.get(0).getInvDate());
             invoice.setInvAddress(invoiceList.get(0).getInvAddress());
             invoice.setInvoiceDetails(invoiceList.get(0).getInvoiceDetails());
             invoice.setArcode(invoiceList.get(0).getArcode());
@@ -496,6 +499,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setInvTo(invoiceList.get(0).getInvTo());
             invoice.setInvName(invoiceList.get(0).getInvName());
             invoice.setInvType(invoiceList.get(0).getInvType());
+            invoice.setInvDate(invoiceList.get(0).getInvDate());
             invoice.setInvAddress(invoiceList.get(0).getInvAddress());
             invoice.setInvoiceDetails(invoiceList.get(0).getInvoiceDetails());
             invoice.setArcode(invoiceList.get(0).getArcode());
@@ -529,6 +533,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setInvTo(invoiceList.get(0).getInvTo());
             invoice.setInvName(invoiceList.get(0).getInvName());
             invoice.setInvType(invoiceList.get(0).getInvType());
+            invoice.setInvDate(invoiceList.get(0).getInvDate());
             invoice.setInvAddress(invoiceList.get(0).getInvAddress());
             invoice.setInvoiceDetails(invoiceList.get(0).getInvoiceDetails());
             invoice.setArcode(invoiceList.get(0).getArcode());
