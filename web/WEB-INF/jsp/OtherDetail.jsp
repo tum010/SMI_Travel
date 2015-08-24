@@ -85,9 +85,21 @@
             </div>
             </c:if>
             <c:if test="${requestScope['resultText'] == 'unsuccess'}">
-            <div id="textAlertDivNotSave"  style="" class="alert alert-success alert-dismissible" role="alert">
+            <div id="textAlertDivNotSave"  style="" class="alert alert-danger alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong>Save Not Success!</strong> 
+            </div>
+            </c:if>
+            <c:if test="${requestScope['resultText'] == 'stock success'}">
+            <div id="textAlertDivNotSave"  style="" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Update Stock Ticket Success!</strong> 
+            </div>
+            </c:if>
+            <c:if test="${requestScope['resultText'] == 'stock fail'}">
+            <div id="textAlertDivNotSave"  style="" class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Update Stock Ticket Not Success!</strong> 
             </div>
             </c:if>
             <div class="row">
@@ -354,7 +366,8 @@
                                     <th style="width: 5%">No</th>
                                     <th style="width: 11%">Add Date</th>
                                     <th style="width: 41%">Ticket</th>
-                                    <th style="width: 41%">Type</th>
+                                    <th style="width: 21%">Type</th>
+                                    <th style="width: 20%">Status</th>
                                     <th style="width: 2%">Action</th>
                                 </tr>
                             </thead>
@@ -365,7 +378,8 @@
                                         <td align="center">${status.count} </td>
                                         <td align="center">${table.addDate}</td>
                                         <td>${table.ticketCode}</td>
-                                        <td>${table.typeName}</td>
+                                        <td align="center">${table.typeName}</td>
+                                        <th align="center">${table.status}</th>
                                         <td align="center">
                                             <span id="SpanGlyphiconRemove" class="glyphicon glyphicon-remove deleteicon" onclick="setStockTicket('${table.id}')" data-toggle="modal" ></span>
                                         </td>

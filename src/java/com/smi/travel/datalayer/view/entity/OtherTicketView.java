@@ -16,6 +16,7 @@ public class OtherTicketView {
     private Date addDate;
     private String ticketCode;
     private String typeName;
+    private String status;
     
     public OtherTicketView() {
         
@@ -58,5 +59,13 @@ public class OtherTicketView {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
