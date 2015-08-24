@@ -22,4 +22,5 @@ public interface BillableDao {
     public String getDescriptionInvoiceHotel(String refno);
     public String getDescriptionInvoiceDayTour(String refno);
     public String getDescriptionInvoiceAirAdditional(String refno);
+
 }

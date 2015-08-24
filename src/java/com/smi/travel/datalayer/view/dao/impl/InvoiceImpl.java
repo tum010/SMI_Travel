@@ -8,7 +8,9 @@ package com.smi.travel.datalayer.view.dao.impl;
 import com.smi.travel.datalayer.report.model.InvoiceReport;
 import com.smi.travel.datalayer.view.dao.InvoiceReportDao;
 import com.smi.travel.util.UtilityFunction;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -24,33 +26,72 @@ public class InvoiceImpl implements InvoiceReportDao{
     private UtilityFunction utilityFunction;
 
     @Override
-    public InvoiceReport getInvoice() {
+    public List getInvoice(String InvoiceId,String BankId) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();  
-        InvoiceReport invoice = new InvoiceReport();
-        invoice.setAccname("TestMan");
-        invoice.setAccno("11111111");
-        invoice.setAcctype("Test");
-        invoice.setAmount("1000000000");
-        invoice.setBank("KBank");
-        invoice.setBranch("Bangkapi");
-        invoice.setDescription("test ภาษาไทย");
-        invoice.setGross("999999");
-        int a = 1999999999;
-        invoice.setGrtotal("1999999999");
-        invoice.setInvdate("01-12-15");
-        invoice.setInvno("123456789");
-        invoice.setInvto("Iconext Thailand co.ltd");
-        invoice.setPayment("Mr. Test Man");
-        invoice.setRefno("11111111");
-        invoice.setStaff("Minions");
-        invoice.setTotal("9999999999");
-       // invoice.setUser("Mike Jr. Robert");
-        invoice.setVat("79999");
-        invoice.setTextmoney(utilityFunction.convert(a)+" baht");
+        List data = new ArrayList();
+        DecimalFormat df = new DecimalFormat("###,###.00");
+        String accName = "S.M.I. TRAVEL CO., LTD.";
+        String accType = "CURRENT ACCOUNT";
+        String Branch = "";
+        String Accno = "";
+        String Bank = "";
+         List<Object[]> QueryBankList = session.createSQLQuery("SELECT * FROM `m_bank` where id= " + BankId)
+                 .addScalar("code", Hibernate.STRING)
+                 .addScalar("name", Hibernate.STRING)
+                 .addScalar("branch", Hibernate.STRING)
+                 .addScalar("acc_no", Hibernate.STRING)
+                 .list();
+        for (Object[] B : QueryBankList) {
+            Bank = util.ConvertString(B[1]);
+            Branch = util.ConvertString(B[2]);
+            Accno = util.ConvertString(B[3]);   
+            
+        }
+        List<Object[]> QueryInvoiceList = session.createSQLQuery(" SELECT * FROM `invoice_view` where id =  " + InvoiceId)      
+                .addScalar("invto", Hibernate.STRING)
+                .addScalar("invdate", Hibernate.DATE)
+                .addScalar("staff", Hibernate.STRING)
+                .addScalar("payment", Hibernate.STRING)
+                .addScalar("description", Hibernate.STRING)
+                .addScalar("gross", Hibernate.BIG_DECIMAL)
+                .addScalar("vat", Hibernate.BIG_DECIMAL)
+                .addScalar("total", Hibernate.BIG_DECIMAL)
+                .addScalar("totalvat", Hibernate.BIG_DECIMAL)
+                .addScalar("grtotal", Hibernate.BIG_DECIMAL)
+                .addScalar("user_create", Hibernate.STRING)
+                .addScalar("amount", Hibernate.BIG_DECIMAL)
+                .list();
+        
+        for (Object[] B : QueryInvoiceList) {
+            InvoiceReport invoice = new InvoiceReport();
+            invoice.setAccname(accName);
+            invoice.setAccno(Accno);
+            invoice.setAcctype(accType);
+            invoice.setRefno("");
+            invoice.setAmount(df.format(B[11]));
+            invoice.setBank(Bank);
+            invoice.setBranch(Branch);
+            invoice.setInvto(util.ConvertString(B[0]));
+            invoice.setInvno(util.ConvertString(B[1]));
+            invoice.setInvdate(new SimpleDateFormat("dd-mm-yyyy", new Locale("us", "us")).format((Date)B[1]));
+            invoice.setStaff(util.ConvertString(B[2]));
+            invoice.setPayment(util.ConvertString(B[3]));
+            invoice.setDescription(util.ConvertString(B[4]));
+            invoice.setGross(df.format(B[5]));
+            invoice.setVat(df.format(B[6]));
+            invoice.setTotal(df.format(B[7]));
+            invoice.setTotalvat(df.format(B[8]));
+            invoice.setGrtotal(df.format(B[9]));
+            invoice.setUser(util.ConvertString(B[10]));
+            invoice.setTextmoney("");
+            data.add(invoice);
+        }
+        
+
         session.close();
         this.sessionFactory.close();
-        return invoice;
+        return data;
     }
 
     public SessionFactory getSessionFactory() {

@@ -69,4 +69,8 @@ public class InvoiceService {
     public List<InvoiceDetail> getInvoiceDetailFromBillableDescId(String billableDescId){
         return  invoiceDao.getInvoiceDetailFromBillableDescId(billableDescId);
     }
+    
+    public String checkOverflowValueOfInvoice(List<InvoiceDetail> invoiceDetail) {
+        return invoiceDao.checkOverflowValueOfInvoice(invoiceDetail);
+    }
 }

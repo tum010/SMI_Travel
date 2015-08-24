@@ -7,12 +7,14 @@
 package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.InvoiceDao;
+import com.smi.travel.datalayer.entity.BillableDesc;
 import com.smi.travel.datalayer.entity.Invoice;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.Stock;
 import com.smi.travel.datalayer.view.entity.InvoiceView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -40,6 +42,8 @@ public class InvoiceImpl implements InvoiceDao{
     private static final String GET_INVOICE_FROMNO = "FROM Invoice inv where inv.invNo = :invoiceNo and inv.department = :department and inv.invType = :invType";
     private static final String GET_INVOICE_FOR_TAX_INVOICE = "FROM Invoice inv where inv.invNo = :invoiceNo and inv.department = :department";
     private static final String GET_BILLDESC = "from InvoiceDetail inv WHERE inv.billableDesc.id = :billableDescId";
+    private static final String GET_BILLDESC_FILTER = "from InvoiceDetail inv WHERE inv.billableDesc.id = :billableDescId and inv.id != :invdID";
+    private static final String GET_BILL_AMOUNT = "from BillableDesc bill where bill.id = :descid";
     
     @Override
     public String insertInvoice(Invoice invoice) {
@@ -47,7 +51,7 @@ public class InvoiceImpl implements InvoiceDao{
         Session session = this.sessionFactory.openSession();
         try { 
             transaction = session.beginTransaction();
-            result = generateInvoiceNo(invoice.getDeparement() , invoice.getInvType());
+            result = generateInvoiceNo(invoice.getDepartment() , invoice.getInvType());
             invoice.setInvNo(result);
             session.save(invoice);
             List<InvoiceDetail> invoiceDetail = invoice.getInvoiceDetails();
@@ -59,6 +63,7 @@ public class InvoiceImpl implements InvoiceDao{
             transaction.commit();
             session.close();
             this.sessionFactory.close();
+            System.out.println("ss result : "+ result);
 //            result = "success";
         } catch (Exception ex) {
             transaction.rollback();
@@ -258,7 +263,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setArcode(invoiceList.get(0).getArcode());
             invoice.setCreateBy(invoiceList.get(0).getCreateBy());
             invoice.setCreateDate(invoiceList.get(0).getCreateDate());
-            invoice.setDeparement(invoiceList.get(0).getDeparement());
+            invoice.setDepartment(invoiceList.get(0).getDepartment());
             invoice.setDueDate(invoiceList.get(0).getDueDate());
             invoice.setIsGroup(invoiceList.get(0).getIsGroup());
             invoice.setIsLock(invoiceList.get(0).getIsLock());
@@ -323,7 +328,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setArcode(invoiceList.get(0).getArcode());
             invoice.setCreateBy(invoiceList.get(0).getCreateBy());
             invoice.setCreateDate(invoiceList.get(0).getCreateDate());
-            invoice.setDeparement(invoiceList.get(0).getDeparement());
+            invoice.setDepartment(invoiceList.get(0).getDepartment());
             invoice.setDueDate(invoiceList.get(0).getDueDate());
             invoice.setIsGroup(invoiceList.get(0).getIsGroup());
             invoice.setIsLock(invoiceList.get(0).getIsLock());
@@ -378,7 +383,7 @@ public class InvoiceImpl implements InvoiceDao{
                 List<InvoiceDetail> invoiceDetail = listInvoice.get(i).getInvoiceDetails();
                     invoiceView.setInvoiceId(listInvoice.get(i).getId());
                     invoiceView.setInvoiceNo(listInvoice.get(i).getInvNo());
-                    invoiceView.setDepartment(listInvoice.get(i).getDeparement());
+                    invoiceView.setDepartment(listInvoice.get(i).getDepartment());
                     invoiceView.setType(listInvoice.get(i).getInvType());
                     String invoiceDate = utility.convertDateToString(listInvoice.get(i).getCreateDate());
                     invoiceView.setInvoiceDate(invoiceDate);
@@ -419,7 +424,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setArcode(invoiceList.get(0).getArcode());
             invoice.setCreateBy(invoiceList.get(0).getCreateBy());
             invoice.setCreateDate(invoiceList.get(0).getCreateDate());
-            invoice.setDeparement(invoiceList.get(0).getDeparement());
+            invoice.setDepartment(invoiceList.get(0).getDepartment());
             invoice.setDueDate(invoiceList.get(0).getDueDate());
             invoice.setIsGroup(invoiceList.get(0).getIsGroup());
             invoice.setIsLock(invoiceList.get(0).getIsLock());
@@ -477,7 +482,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setArcode(invoiceList.get(0).getArcode());
             invoice.setCreateBy(invoiceList.get(0).getCreateBy());
             invoice.setCreateDate(invoiceList.get(0).getCreateDate());
-            invoice.setDeparement(invoiceList.get(0).getDeparement());
+            invoice.setDepartment(invoiceList.get(0).getDepartment());
             invoice.setDueDate(invoiceList.get(0).getDueDate());
             invoice.setIsGroup(invoiceList.get(0).getIsGroup());
             invoice.setIsLock(invoiceList.get(0).getIsLock());
@@ -510,7 +515,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setArcode(invoiceList.get(0).getArcode());
             invoice.setCreateBy(invoiceList.get(0).getCreateBy());
             invoice.setCreateDate(invoiceList.get(0).getCreateDate());
-            invoice.setDeparement(invoiceList.get(0).getDeparement());
+            invoice.setDepartment(invoiceList.get(0).getDepartment());
             invoice.setDueDate(invoiceList.get(0).getDueDate());
             invoice.setIsGroup(invoiceList.get(0).getIsGroup());
             invoice.setIsLock(invoiceList.get(0).getIsLock());
@@ -533,21 +538,76 @@ public class InvoiceImpl implements InvoiceDao{
         BigDecimal costTemp = new BigDecimal(0);
         Session session = this.sessionFactory.openSession();
         Invoice invoice = new Invoice();
+        System.out.println("billdesc : "+billdesc);
+        System.out.println("cost : "+cost);
+        System.out.println("amount : "+amount);
         List<InvoiceDetail> invoiceList = session.createQuery(GET_BILLDESC)
-                .setParameter("billdesc", billdesc)
+                .setParameter("billableDescId", billdesc)
                 .list();
         if(invoiceList != null){
             for (int i = 0; i < invoiceList.size(); i++) {
-                amountTemp = amountInt.divide(invoiceList.get(i).getAmount());
-                costTemp = costInt.divide(invoiceList.get(i).getCost());
+                amountInt = amountInt.subtract(invoiceList.get(i).getAmount());
+                costInt = costInt.subtract(invoiceList.get(i).getCost());
             }
         }
         
-        //from InvoiceDetail inv where inv.billableDesc.id = :billdesc
-        //get amount and cost from InvoiceDetail
-        
-        value[0] = costTemp;
-        value[1] = amountTemp;
+        System.out.println("costint : "+costInt);
+         System.out.println("amountInt : "+amountInt);
+        value[0] = costInt;
+        value[1] = amountInt;
+        session.close();
+        this.sessionFactory.close();
         return value;
+    }
+
+    @Override
+    public String checkOverflowValueOfInvoice(List<InvoiceDetail> invoiceDetail) {
+        Session session = this.sessionFactory.openSession();
+        String result = "";
+        for(int i=0;i<invoiceDetail.size();i++){
+            BigDecimal cost;
+            BigDecimal price;
+            BigDecimal InvoiceCost = new BigDecimal(0);
+            BigDecimal InvoicePrice  = new BigDecimal(0);
+            InvoiceDetail  detail  = invoiceDetail.get(i);
+            List<BillableDesc> Billdesc = session.createQuery(GET_BILL_AMOUNT)
+                .setParameter("descid", detail.getBillableDesc().getId())
+                .list();
+            cost = new BigDecimal(Billdesc.get(0).getCost());
+            price = new BigDecimal(Billdesc.get(0).getPrice());
+            System.out.println("cost : "+cost +"price : "+price);
+            List<InvoiceDetail> invoiceList;
+            if(detail.getId() != null){
+                invoiceList = session.createQuery(GET_BILLDESC_FILTER )
+                .setParameter("billableDescId", detail.getBillableDesc().getId())
+                .setParameter("invdID", detail.getId())
+                .list();
+            }else{
+                invoiceList = session.createQuery(GET_BILLDESC )
+                .setParameter("billableDescId", detail.getBillableDesc().getId())
+                .list();
+            }
+            
+            for(int j=0;j<invoiceList.size();j++){
+                InvoiceCost = InvoiceCost.add(invoiceList.get(j).getCost());
+                InvoicePrice = InvoicePrice.add(invoiceList.get(j).getAmount());
+            }
+            System.out.println("InvoiceCost : "+InvoiceCost +"InvoicePrice : "+InvoicePrice);
+            
+            InvoicePrice = InvoicePrice.add(detail.getAmount());
+            InvoiceCost = InvoiceCost.add(detail.getCost());
+            System.out.println("SumInvoiceCost : "+InvoiceCost +"SumInvoicePrice : "+InvoicePrice);
+            System.out.println("Compare price : "+price.compareTo(InvoicePrice));
+            if((price.compareTo(InvoicePrice) == -1)||(cost.compareTo(InvoiceCost) == -1)){
+                result = "fail";
+            }else{
+                result = "success";
+            }
+            
+        }
+        this.sessionFactory.close();
+        session.close();
+        return result;
+        
     }
 }

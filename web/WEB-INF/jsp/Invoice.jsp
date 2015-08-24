@@ -19,11 +19,8 @@
 <c:set var="result" value="${requestScope['result']}" />
 <c:set var="roleName" value="${requestScope['roleName']}" />
 <c:set var="page" value="${requestScope['page']}" />
-
-<input type="hidden" id="type" name="type" value="${param.type}">
-<input type="hidden" id="resultAction" name="resultAction" value="${result}">
-<input type="hidden" id="roleName" name="roleName" value="${roleName}">
-<input type="hidden" id="InputDescriptionDetailId" name="InputDescriptionDetailId" value="">
+<c:set var="showvat" value="false" />
+<c:set var="typeBooking" value="" />
 <section class="content-header" >
     <h1>
         Finance & Cashier - Invoice
@@ -43,6 +40,15 @@
         </div>
     
         <div class="col-sm-10">
+            
+<div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Save Success!</strong> 
+</div>
+<div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Save Not  Success!</strong> 
+</div>            
             <form action="Invoice${page}.smi" method="post" id="InvoiceForm" role="form" >
             <div id="textAlertDisable"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -53,34 +59,44 @@
                     <c:choose>
                         <c:when test="${fn:contains(page , 'OT')}">
                             <c:set var="typeInvoice" value="O/T" />
+                            <c:set var="typeBooking" value="O" />
                             <h4><b>Invoice Temp Outbound</b></h4>
                         </c:when>
                         <c:when test="${fn:contains(page , 'OV')}">
                             <c:set var="typeInvoice" value="O/V" />
+                            <c:set var="typeBooking" value="O" />
+                            <c:set var="showvat" value="true" />
                             <h4><b>Invoice Vat Outbound</b></h4>
                         </c:when>
                         <c:when test="${fn:contains(page , 'WT')}">
                             <c:set var="typeInvoice" value="W/T" />
+                            <c:set var="typeBooking" value="I" />
                             <h4><b>Invoice Temp Wendy</b></h4>
                         </c:when>
                         <c:when test="${fn:contains(page , 'WV')}">
                             <c:set var="typeInvoice" value="W/V" />
+                            <c:set var="typeBooking" value="I" />
+                            <c:set var="showvat" value="true" />
                             <h4><b>Invoice Vat Wendy</b></h4>
                         </c:when>
                         <c:when test="${fn:contains(page , 'WN')}">
                             <c:set var="typeInvoice" value="W/N" />
+                            <c:set var="typeBooking" value="W" />
                             <h4><b>Invoice No Vat Wendy</b></h4>
                         </c:when> 
                         <c:when test="${fn:contains(page , 'ON')}">
                             <c:set var="typeInvoice" value="O/N" />
+                            <c:set var="typeBooking" value="O" />
                             <h4><b>Invoice No Vat Outbound</b></h4>
                         </c:when> 
                         <c:when test="${fn:contains(page , 'WA')}">
                             <c:set var="typeInvoice" value="W/A" />
+                            <c:set var="typeBooking" value="I" />
                             <h4><b>Invoice Air Ticket Wendy</b></h4>
                         </c:when> 
                         <c:when test="${fn:contains(page , 'OA')}">
                             <c:set var="typeInvoice" value="O/A" />
+                            <c:set var="typeBooking" value="O" />
                             <h4><b>Invoice Air Ticket Outbound</b></h4>
                         </c:when> 
                     </c:choose> 
@@ -118,8 +134,20 @@
                                             <div class="col-md-1 text-right">
                                                 <button type="button"  id="ButtonSearch"  name="ButtonSearch" onclick="searchAction();" class="btn btn-primary btn-sm">
                                                     <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
-                                                </button>                                          
-                                            </div>      
+                                                </button>   
+                                            </div>  
+                                            <div class="col-md-5 ">
+                                                <c:choose>
+                                                    <c:when test="${typeBooking == 'O'}">
+                                                        <div id='AlertBooking' style='display:none'><font color="red">This Ref No can get billable detail from wendy only</font></div>
+                                                    </c:when>
+                                                    <c:when test="${typeBooking == 'I'}">
+                                                        <div id='AlertBooking' style='display:none'><font color="red">This Ref No can get billable detail from outbound only</font></div>
+                                                    </c:when>
+                                                </c:choose>   
+                                            </div>
+                                            
+                                            
                                         </div>
                                         <div class="col-xs-12 form-group"></div>
                                         <div class="row" style="padding-left:35px">
@@ -269,7 +297,10 @@
                             <label class="control-label" for="">Address </lable>
                         </div>
                         <div class="col-md-6 form-group">
-                            <textarea  rows="3" cols="100" id="InvToAddress" name="InvToAddress" class="form-control" value="${invoice.invAddress}" ></textarea>
+                            <textarea  rows="3" cols="100" id="InvToAddress" name="InvToAddress" class="form-control" >
+                                ${invoice.invAddress}
+                            </textarea>
+                           
                         </div>
                         <div class="form-group">
                             <div class="col-sm-2"></div>
@@ -285,7 +316,7 @@
                             <div class="col-sm-2"></div>
                             <div class="radio col-sm-2 ${isHiddenOut}" >
                                 <c:set var="checkDepartOut" value="" />
-                                <c:if test="${invoice.deparement == 'Outbound'}">
+                                <c:if test="${invoice.department == 'Outbound'}">
                                     <c:set var="checkDepartOut" value="checked" />
                                 </c:if>
                                 <label ${checkDepartOut}><input value="Outbound" id="DepartmentOutbound" name="Department" type="radio" >Outbound</label>
@@ -337,22 +368,24 @@
                                     <input type="text" class="hidden" id="counterTable" name="counterTable" value="1" >
                                     <input type="text" class="hidden" id="idDeleteDetailBillable" name="idDeleteDetailBillable" value="0" >
                                     <input type="text" class="hidden" id="action" name="action" value="save" >
+                                    <c:choose>
+                                        <c:when test="${showvat =='true'}">
                                     <table class="display" id="DetailBillableTable">
                                         <thead class="datatable-header">
                                             <tr>
                                                 <th class="hidden"> Id</th>
                                                 <th class="hidden">Detail Id</th>
                                                 <th style="width:10%;" align="center">Product</th>
-                                                <th style="width:15%;" align="center">Description</th>
+                                                <th style="width:13%;" align="center">Description</th>
                                                 <th class="hidden">Description Temp</th>
                                                 <th style="width: 8%" align="center">Cost</th>
                                                 <th style="width: 7%" align="center">Cur</th>
                                                 <th style="width: 8%" align="center">Cost Local</th>
                                                 <th class="hidden">Cost Local Input</th>
                                                 <th style="width: 3%" onclick="checkVatInvoiceAll()" align="center"><u>Is vat</u></th> 
-                                                <th style="width: 5%" align="center">Vat</th>
+                                                <th style="width: 3%" align="center">Vat</th>
                                                 <th class="hidden" align="center">Vat Temp</th>
-                                                <th style="width: 8%" align="center" class="hidden">Gross</th>
+                                                <th style="width: 8%" align="center">Gross</th>
                                                 <th style="width: 8%" align="center">Amount</th>
                                                 <th style="width: 7%" align="center">Cur</th>
                                                 <th style="width: 8%" align="center">Amount Local</th>
@@ -408,7 +441,7 @@
                                                 </td>
                                                 <td>${ind.vat}</td>
                                                 <td class="hidden"><input type="text" class="form-control" id="InputVatTemp${taxdesc.count}" name="InputVatTemp${taxdesc.count}" value="${ind.vat}" ></td>
-                                                <td class="hidden"><input type="text" maxlength ="15"  class="form-control numerical" id="InputGross${taxdesc.count}" name="InputGross${taxdesc.count}" value="${ind.gross}" ></td>
+                                                <td ><input type="text" maxlength ="15" readonly  class="form-control numerical" id="InputGross${taxdesc.count}" name="InputGross${taxdesc.count}" value="${ind.gross}" ></td>
                                                 <td><input type="text" maxlength ="15" class="form-control numerical" id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" value="${ind.amount}" onfocusout="CalculateGrandTotal('${taxdesc.count}')"></td>
                                                 <td>
                                                     <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control">
@@ -434,7 +467,113 @@
                                             </tr>
                                             </c:forEach>
                                         </tbody>
-                                    </table>
+                                    </table>                                        
+                                            
+                                        </c:when>
+                                        <c:when test="${showvat =='false'}">
+                                    <table class="display" id="DetailBillableTable">
+                                        <thead class="datatable-header">
+                                            <tr>
+                                                <th class="hidden"> Id</th>
+                                                <th class="hidden">Detail Id</th>
+                                                <th style="width:10%;" align="center">Product</th>
+                                                <th style="width:15%;" align="center">Description</th>
+                                                <th class="hidden">Description Temp</th>
+                                                <th style="width: 10%" align="center">Cost</th>
+                                                <th style="width: 7%" align="center">Cur</th>
+                                                <th style="width: 10%" align="center">Cost Local</th>
+                                                <th class="hidden">Cost Local Input</th>
+                                                <th class="hidden" onclick="checkVatInvoiceAll()" align="center"><u>Is vat</u></th> 
+                                                <th class="hidden" align="center">Vat</th>
+                                                <th class="hidden" align="center">Vat Temp</th>
+                                                <th class="hidden" align="center">Gross</th>
+                                                <th style="width: 10%" align="center">Amount</th>
+                                                <th style="width: 7%" align="center">Cur</th>
+                                                <th style="width: 10%" align="center">Amount Local</th>
+                                                <th class="hidden">Amount Local Input</th>
+                                                <th style="width: 3%" align="center">Action</th>
+                                                <th class="hidden">Description Temp Type</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach var="ind" items="${listInvoiceDetail}" varStatus="taxdesc">
+                                            <tr> 
+                                                <td class="hidden"><input type="text" class="form-control" id="detailId${taxdesc.count}" name="detailId${taxdesc.count}" value="${ind.id}" > </td>
+                                                <td class="hidden"><input type="text" class="form-control" id="DetailBillId${taxdesc.count}" name="DetailBillId${taxdesc.count}" value="${ind.billableDesc.id}" > </td>
+                                                <td>  
+                                                    <select id="SelectProductType${taxdesc.count}" name="SelectProductType${taxdesc.count}" class="form-control">
+                                                        <option value='' ></option>
+                                                        <c:forEach var="typeP" items="${listType}">
+                                                            <c:set var="selectTypePro" value="" />
+                                                            <c:if test="${typeP.id == ind.mbillType.id}">
+                                                                <c:set var="selectTypePro" value="selected" />
+
+                                                            </c:if> 
+                                                            <option value='${typeP.id}' ${selectTypePro}>${typeP.name}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </td>
+                                                <td> 
+                                                    <a href="" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail('${taxdesc.count}')">${ind.description}</a>                                           
+                                                </td>
+                                                <td class="hidden"><input type="text" class="form-control" id="BillDescription${taxdesc.count}" name="BillDescription${taxdesc.count}" value="${ind.description}" > </td>
+                                                <td><input type="text" maxlength ="15" class="form-control numerical" id="InputCost${taxdesc.count}" name="InputCost${taxdesc.count}" value="${ind.cost}" ></td>
+                                                <td>
+                                                    <select id="SelectCurrencyCost${taxdesc.count}" name="SelectCurrencyCost${taxdesc.count}" class="form-control">
+                                                         <option value='' ></option>
+                                                        <c:forEach var="cur" items="${listCurrency}">
+                                                            <c:set var="select" value="" />
+                                                            <c:if test="${cur.code == ind.curCost}">
+                                                                <c:set var="select" value="selected" />
+
+                                                            </c:if> 
+                                                            <option value='${cur.code}' ${select}>${cur.code}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </td>
+                                                <td><input type="text" value="${ind.costLocal}" id="InputCostLocal${taxdesc.count}" name="InputCostLocal${taxdesc.count}" class="form-control"></td>
+                                                <td class="hidden"><input type="text" value="${ind.costLocal}" id="InputCostLocalTemp${taxdesc.count}" name="InputCostLocalTemp${taxdesc.count}"></td>      
+                                                <td class="hidden">
+                                                    <c:set var="checkIsVat" value="" />
+                                                    <c:if test="${ind.isVat == 1}">
+                                                        <c:set var="checkIsVat" value="checked" />
+                                                    </c:if> 
+                                                    <input class="hidden" type="checkbox" id="checkUse${taxdesc.count}" name="checkUse${taxdesc.count}"  onclick="calculateGross('${taxdesc.count}')"  ${checkIsVat}>
+                                                </td>
+                                                <td class="hidden" >${ind.vat}</td>
+                                                <td class="hidden" ><input type="text" class="form-control" id="InputVatTemp${taxdesc.count}" name="InputVatTemp${taxdesc.count}" value="${ind.vat}" ></td>
+                                                <td class="hidden" ><input type="text" maxlength ="15"  class="form-control numerical" id="InputGross${taxdesc.count}" name="InputGross${taxdesc.count}" value="${ind.gross}" ></td>
+                                                <td><input type="text" maxlength ="15" class="form-control numerical" id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" value="${ind.amount}" onfocusout="CalculateGrandTotal('${taxdesc.count}')"></td>
+                                                <td>
+                                                    <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control">
+                                                         <option value='' ></option>
+                                                        <c:forEach var="cur" items="${listCurrency}">
+                                                            <c:set var="selectA" value="" />
+                                                            <c:if test="${cur.code == ind.curAmount}">
+                                                                <c:set var="selectA" value="selected" />
+                                                            </c:if> 
+                                                            <option value='${cur.code}' ${selectA}>${cur.code}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </td>
+                                                <td><input type="text" value="${ind.amount}" id="InputAmountLocal${taxdesc.count}" name="InputAmountLocal${taxdesc.count}" class="form-control" ></td>
+                                                <td class="hidden"><input type="text" value="${ind.amount}" id="InputAmountLocalTemp${taxdesc.count}" name="InputAmountLocalTemp${taxdesc.count}"  ></td>
+                                                <td align="center" ><center><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('${taxdesc.count}')" data-toggle="modal" data-target="#DelDetailBill" >  </span></center></td>
+                                                <td class="hidden">
+                                                    <c:set var="displayDescriptionTemp" value="${fn:trim(ind.displayDescription)}" />
+                                                    <textarea id="DescriptionInvoiceDetail${taxdesc.count}" name="DescriptionInvoiceDetail${taxdesc.count}" >
+                                                        ${displayDescriptionTemp}
+                                                    </textarea>
+                                                </td>
+                                            </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>                                        
+                                            
+                                        </c:when>
+                                    </c:choose> 
+                                    
+                                    
                                     <div id="tr_FormulaAddRow" class="text-center" style="padding-top: 10px;display: none;">
                                         <a class="btn btn-success" onclick="AddRowDetailBillAble()">
                                             <i class="glyphicon glyphicon-plus"></i> Add
@@ -496,12 +635,12 @@
                                                 <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Print
                                             </button>
                                         </div>
-                                        <div class="col-md-4 text-left ">
-                                            <button type="button" onclick="" class="btn btn-default">
-                                                <span id="SpanPrint" class="glyphicon glyphicon-user"></span> Customer Invoice 
+                                        <div class="col-md-1 text-left " style="width: 125px">
+                                            <button type="button" class="btn btn-default" onclick="sendEmailInvoice()">
+                                                <span id="buttonEmail" class="glyphicon glyphicon-send" ></span> SendEmail 
                                             </button>
                                         </div>
-                                        <div class="col-md-1 text-right " >
+                                        <div class="col-md-3 text-right " >
                                             
                                         </div>
                                         <div class="col-md-2 text-right ">
@@ -624,7 +763,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade" id="DescriptionInvoiceDetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade " id="DescriptionInvoiceDetailModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -634,11 +773,11 @@
             
             <div class="modal-body" >
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <h5>Description</h5>
                     </div>
-                    <div class="col-md-9">
-                        <textarea id="InputDescriptionDetail" rows="5" cols="50" class="form-control" onclick="saveDescriptionDetail();">
+                    <div class="col-md-10">
+                        <textarea id="InputDescriptionDetail" rows="12" cols="80" class="form-control" onclick="saveDescriptionDetail();">
                         </textarea>
 <!--<input type="text" id="InputDescriptionDetail" value="" style="width: 400px;height: 200px;">-->
                     </div>
@@ -798,4 +937,11 @@
            defaultD = ${defaultData.value};
         </script>
 </c:if>
+<input type="hidden" id="showvat" name="showvat" value="${showvat}">      
+<input type="hidden" id="type" name="type" value="${param.type}">
+<input type="hidden" id="resultAction" name="resultAction" value="${result}">
+<input type="hidden" id="roleName" name="roleName" value="${roleName}">
+<input type="hidden" id="InputDescriptionDetailId" name="InputDescriptionDetailId" value="">
+<input type="hidden" id="resultText" name="resultText" value="${result}">
+<input type="hidden" id="typeBooking" name="typeBooking" value="${typeBooking}">
 <script type="text/javascript" src="js/Invoice.js"></script>

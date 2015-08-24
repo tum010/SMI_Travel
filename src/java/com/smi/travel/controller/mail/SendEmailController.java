@@ -40,6 +40,7 @@ public class SendEmailController extends SMITravelController {
     private static final String TaxInvoiceEmailReport = "TaxInvoiceEmailReport";
     private static final String ReportName = "reportname";
     private static final String ReportID = "reportid";
+    private static final String BANKID = "bankid";
     private JavaMailSender mailSender;
     private ReportService reportservice;
     private DataSource datasource;
@@ -55,6 +56,7 @@ public class SendEmailController extends SMITravelController {
         String cc = request.getParameter("sendCc");
         String name = request.getParameter("reportname");
         String reportid = request.getParameter("reportid");
+        String bankid = request.getParameter("bankid");
         String reportFile = request.getParameter("file");
         String jasperFileName = "";
         String pdfFileName = "";
@@ -71,9 +73,9 @@ public class SendEmailController extends SMITravelController {
         String[] path = reportservice.getPartReport();
         if ((recipientAddress != null) && (!"".equalsIgnoreCase(recipientAddress))) {
             if (InvoiceReport.equalsIgnoreCase(name)) {
-                data = reportservice.getInvoice();
+                data = reportservice.getInvoice(reportid,bankid);
                 JRDataSource dataSource = new JRBeanCollectionDataSource(data);
-                jasperFileName = "InvoiceReport.jasper";
+                jasperFileName = "InvoiceEmail.jasper";
                 pdfFileName = "invoice.pdf";
                 pathAttachfile = path[0] + "\\" + username;
                 System.out.println("path : " + path[0] + username);
@@ -82,7 +84,7 @@ public class SendEmailController extends SMITravelController {
                 }
             }
             if (ReceiptEmail.equalsIgnoreCase(name)) {
-                data = reportservice.getReceiptEmail("33",1);
+                data = reportservice.getReceiptEmail(reportid,1);
                 JRDataSource dataSource = new JRBeanCollectionDataSource(data);
                 jasperFileName = "ReceiptEmail.jasper";
                 pdfFileName = "receipt.pdf";
@@ -124,6 +126,7 @@ public class SendEmailController extends SMITravelController {
         request.setAttribute(TransectionResult, result);
         request.setAttribute(ReportName, name);
         request.setAttribute(ReportID, reportid);
+        request.setAttribute(BANKID, bankid);
         return ModelMail;
     }
 

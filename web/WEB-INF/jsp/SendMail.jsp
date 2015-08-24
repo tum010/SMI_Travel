@@ -20,14 +20,18 @@
  <c:set var="file" value="${requestScope['file']}" />   
  <c:set var="reportname" value="${requestScope['reportname']}" />   
  <c:set var="reportid" value="${requestScope['reportid']}" />   
+ <c:set var="bankid" value="${requestScope['bankid']}" />   
+ 
 <body>
     
 <div class ="container"  style="padding-top: 30px;" ng-app="">
     <div class="row">
         <div class="col-sm-12">
             <form action="SendMail.smi" method="post" id="Mail" role="form">
-                <input type="hidden" id="reportname" name="reportname" value="${reportname}">
-                <input type="hidden" id="reportid" name="reportid" value="${reportid}">
+                <input type="text" id="reportname" name="reportname" value="${reportname}">
+                <input type="text" id="reportid" name="reportid" value="${reportid}">
+                <input type="text" id="bankid" name="bankid" value="${bankid}">
+                
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">New Message</h3>

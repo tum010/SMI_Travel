@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceEmail" language="groovy" pageWidth="595" pageHeight="842" columnWidth="522" leftMargin="45" rightMargin="28" topMargin="59" bottomMargin="56" uuid="573bfe06-de4f-4adc-b5b3-76cb68d89d08">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="336"/>
+	<property name="ireport.y" value="344"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
@@ -22,6 +22,7 @@
 	<field name="acctype" class="java.lang.String"/>
 	<field name="user" class="java.lang.String"/>
 	<field name="textmoney" class="java.lang.String"/>
+	<field name="totalvat" class="java.lang.String"/>
 	<background>
 		<band height="727">
 			<line>
@@ -323,31 +324,31 @@
 		<band height="27" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="27" y="3" width="286" height="20" uuid="72e266b6-b5ad-408e-9bcb-4dfe9f1f0cc9"/>
-				<textElement>
+				<textElement markup="html">
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="#,##0.00">
+			<textField isStretchWithOverflow="true" pattern="">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="317" y="3" width="60" height="20" uuid="5844ba89-9d82-43b7-8104-f44a5c549885"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{gross} != null && $F{gross}.length() > 0) ? Double.valueOf($F{gross}) : ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{gross}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="#,##0.00">
+			<textField isStretchWithOverflow="true" pattern="">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="381" y="3" width="55" height="20" uuid="1a6a5eb3-8e70-4c80-a373-d7fa350afc10"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{vat} != null && $F{vat}.length() > 0) ? Double.valueOf($F{vat}) : ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{vat}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="#,##0.00">
+			<textField isStretchWithOverflow="true" pattern="">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="439" y="3" width="78" height="20" uuid="947a5225-ea47-4395-9c48-c96c7d90de49"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{amount} != null && $F{amount}.length() > 0) ? Double.valueOf($F{amount}) : ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="3" width="22" height="20" uuid="87557536-8cfa-4f8b-ac9b-412bd53b8933"/>
@@ -461,26 +462,19 @@
 				</textElement>
 				<text><![CDATA[GR. TOTAL]]></text>
 			</staticText>
-			<textField pattern="#,##0.00">
+			<textField pattern="">
 				<reportElement x="414" y="2" width="104" height="14" uuid="1d78a392-1cf8-4c73-8bdd-248a94481871"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{total} != null && $F{total}.length() > 0) ? Double.valueOf($F{total}) : ""]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.00">
-				<reportElement x="414" y="18" width="104" height="16" uuid="110ab546-179d-4505-bceb-d4171b3fdfe6"/>
-				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{vat} != null && $F{vat}.length() > 0) ? Double.valueOf($F{vat}) : ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
 				<reportElement x="414" y="34" width="104" height="17" uuid="a74cb599-f2d6-4f04-acfc-b4fe187e1307"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{grtotal} != null && $F{grtotal}.length() > 0) ? Double.valueOf($F{grtotal}) : ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{grtotal}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="366" y="2" width="1" height="45" uuid="d59d59b1-2805-4fa4-b52d-46dfa69d4f46"/>
@@ -583,6 +577,13 @@
 			<line>
 				<reportElement x="369" y="33" width="148" height="1" uuid="a4e1d42e-1989-4cd9-9560-87d7b2a32728"/>
 			</line>
+			<textField>
+				<reportElement x="418" y="18" width="100" height="14" uuid="bece9a49-bd9d-4074-bb4f-3ebb4dd65bbc"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalvat}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 </jasperReport>

@@ -5,12 +5,11 @@
  */
 
 $(document).ready(function() {
-  $(window).keydown(function(event){
-    if(event.keyCode === 13) {
+$(window).keydown(function(event){
+    if((event.which== 13) && (event.target.nodeName !='TEXTAREA')) {
+
       event.preventDefault();
       return false;
     }
   });
-  
-  
 });
