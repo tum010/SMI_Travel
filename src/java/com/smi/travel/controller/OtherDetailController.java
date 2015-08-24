@@ -251,17 +251,17 @@ public class OtherDetailController extends SMITravelController {
         }
         
         if("reuse".equalsIgnoreCase(action)){
-            String result = OtherService.manageStockTicket(stockticketid,action);
+            String result = OtherService.updateStockTicketStatus(stockticketid,action);
             getTicket(request, itemid);
         }
         
         if("refund".equalsIgnoreCase(action)){
-            String result = OtherService.manageStockTicket(stockticketid,action);
+            String result = OtherService.updateStockTicketStatus(stockticketid,action);
             getTicket(request, itemid);
         }
         
         if("void".equalsIgnoreCase(action)){
-            String result = OtherService.manageStockTicket(stockticketid,action);
+            String result = OtherService.updateStockTicketStatus(stockticketid,action);
             getTicket(request, itemid);
         }
 

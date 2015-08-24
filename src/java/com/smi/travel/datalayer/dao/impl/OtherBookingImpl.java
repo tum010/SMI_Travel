@@ -574,36 +574,38 @@ public class OtherBookingImpl implements OtherBookingDao{
     }     
 
     @Override
-    public String manageStockTicket(String stockdetailid,String statusTicket) {
+    public String updateStockTicketStatus(String stockdetailid,String statusTicket) {       
         String result = "";
-        String status = "";
-        String hql = "";
-        String productid = "";
-        if("reuse".equalsIgnoreCase(statusTicket)){
-            status = "1";
-            productid = "";
-            hql = "UPDATE StockDetail stock set stock.MStockStatus.id =: status , stock.OtherBooking.id =: productid where stock.id  = :stockdetailid ";
-        } else if("refund".equalsIgnoreCase(statusTicket)){
-            status = "4";
-            hql = "UPDATE StockDetail stock set stock.MStockStatus.id =: status where stock.id  = :stockdetailid ";
-        } else {
-            status = "3";
-            hql = "UPDATE StockDetail stock set stock.MStockStatus.id =: status where stock.id  = :stockdetailid ";
-        }
-
-        try {
+        try {           
+            String status = "";
+            String hql = "";
+            String productid = "";
+            if("reuse".equalsIgnoreCase(statusTicket)){
+                status = "1";
+                productid = "";
+                hql = "UPDATE StockDetail stock set stock.MStockStatus.id =: status , stock.OtherBooking.id =: productid where stock.id  = :stockdetailid ";
+            } else if("refund".equalsIgnoreCase(statusTicket)){
+                status = "4";
+                hql = "UPDATE StockDetail stock set stock.MStockStatus.id =: status where stock.id  = :stockdetailid ";
+            } else {
+                status = "3";
+                hql = "UPDATE StockDetail stock set stock.MStockStatus.id =: status where stock.id  = :stockdetailid ";
+            }
             Session session = this.sessionFactory.openSession();
-             Query query = session.createQuery(hql);
-             query.setParameter("status", status);
-             query.setParameter("stockdetailid", stockdetailid);
-             query.setParameter("productid", productid);
-             query.executeUpdate();
-             result = "success";
+            Query query = session.createQuery(hql);
+            query.setParameter("status", status);
+            query.setParameter("stockdetailid", stockdetailid);
+            if("reuse".equalsIgnoreCase(statusTicket)){
+                query.setParameter("productid", productid);
+            }          
+            query.executeUpdate();
+            result = "success";
+            session.close();
+            this.sessionFactory.close();
          } catch (Exception ex) {
             ex.printStackTrace();
             result = "fail";
         }
-
         return result;
     }
 }

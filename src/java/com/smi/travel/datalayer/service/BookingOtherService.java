@@ -101,7 +101,7 @@ public class BookingOtherService {
         return otherBookDao.getListStockDetail(otherBookingId);
     }
     
-    public String manageStockTicket(String stockTicketId, String status) {
-        return otherBookDao.manageStockTicket(stockTicketId,status);
+    public String updateStockTicketStatus(String stockTicketId, String status) {
+        return otherBookDao.updateStockTicketStatus(stockTicketId,status);
     }
 }
