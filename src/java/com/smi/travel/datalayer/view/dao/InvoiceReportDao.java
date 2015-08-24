@@ -13,5 +13,5 @@ import java.util.List;
  * @author chonnasith
  */
 public interface InvoiceReportDao {
-    public List getInvoice(String InvoiceId,String BankId);
+    public List getInvoice(String InvoiceId,String BankId,String showStaff,String showLeader);
 }

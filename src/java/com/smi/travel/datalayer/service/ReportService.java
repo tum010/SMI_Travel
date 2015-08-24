@@ -186,8 +186,8 @@ public class ReportService {
         return data;
     }
     
-    public List getInvoice(String InvoiceId,String BankId){
-        return invoicedao.getInvoice(InvoiceId, BankId);
+    public List getInvoice(String InvoiceId,String BankId,String showStaff,String showLeader){
+        return invoicedao.getInvoice(InvoiceId, BankId,showStaff,showLeader);
     }
 
     public HotelVoucherDao getHotelVoucherdao() {

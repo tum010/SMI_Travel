@@ -98,6 +98,8 @@ public class ReportController extends SMITravelController {
         String bankid = request.getParameter("bankid");
         String invoiceid = request.getParameter("invoiceid");
         String optionPrint = request.getParameter("optionPrint");
+        String showStaff  = request.getParameter("showstaff");
+        String showLeader = request.getParameter("showleader");
         int option = Integer.parseInt(optionPrint == null ? "0":optionPrint);
 
         Map model = new HashMap();
@@ -161,9 +163,9 @@ public class ReportController extends SMITravelController {
         } else if (ReceiveList.equalsIgnoreCase(name)) {
             data = reportservice.getDaytourOtherReport(refno, status);
         } else if (InvoiceEmail.equalsIgnoreCase(name)) {
-            data = reportservice.getInvoice(invoiceid,bankid);
+            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader);
         } else if (InvoiceReport.equalsIgnoreCase(name)) {
-            data = reportservice.getInvoice(invoiceid,bankid);
+            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader);
         } else if (TaxInvoiceReport.equalsIgnoreCase(name)) {
             data = reportservice.getTaxInvoice();
         } else if (TaxInvoiceEmailReport.equalsIgnoreCase(name)) {

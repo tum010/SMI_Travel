@@ -5,6 +5,8 @@
  */
 
 package com.smi.travel.datalayer.view.dao.impl;
+import com.smi.travel.datalayer.entity.Invoice;
+import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.report.model.InvoiceReport;
 import com.smi.travel.datalayer.view.dao.InvoiceReportDao;
 import com.smi.travel.util.UtilityFunction;
@@ -24,9 +26,10 @@ import org.hibernate.SessionFactory;
 public class InvoiceImpl implements InvoiceReportDao{
     private SessionFactory sessionFactory;
     private UtilityFunction utilityFunction;
+    private static final String GET_INVOICE_FROMID = "FROM InvoiceDetail invD where invD.invoice.id = :invId";
 
     @Override
-    public List getInvoice(String InvoiceId,String BankId) {
+    public List getInvoice(String InvoiceId,String BankId,String showStaff,String showLeader) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();  
         List data = new ArrayList();
@@ -61,6 +64,8 @@ public class InvoiceImpl implements InvoiceReportDao{
                 .addScalar("grtotal", Hibernate.BIG_DECIMAL)
                 .addScalar("user_create", Hibernate.STRING)
                 .addScalar("amount", Hibernate.BIG_DECIMAL)
+                .addScalar("id", Hibernate.STRING)
+                .addScalar("invno", Hibernate.STRING)
                 .list();
         
         for (Object[] B : QueryInvoiceList) {
@@ -73,10 +78,10 @@ public class InvoiceImpl implements InvoiceReportDao{
             invoice.setBank(Bank);
             invoice.setBranch(Branch);
             invoice.setInvto(util.ConvertString(B[0]));
-            invoice.setInvno(util.ConvertString(B[1]));
+            invoice.setInvno(util.ConvertString(B[13]));
             invoice.setBankid(BankId);
             if(B[1] != null){
-                invoice.setInvdate(new SimpleDateFormat("dd-mm-yyyy", new Locale("us", "us")).format((Date)B[1]));
+                invoice.setInvdate(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format((Date)B[1]));
             }
             
             invoice.setStaff(util.ConvertString(B[2]));
@@ -93,9 +98,12 @@ public class InvoiceImpl implements InvoiceReportDao{
                 invoice.setTotalvat(df.format(B[8])); 
             }
             
+            invoice.setCo(getLeaderNameFromInvoiceID(util.ConvertString(B[12])));
             invoice.setGrtotal(df.format(B[9]));
             invoice.setUser(util.ConvertString(B[10]));
             invoice.setTextmoney("");
+            invoice.setShowleader(showLeader);
+            invoice.setShowstaff(showStaff);
             data.add(invoice);
         }
         
@@ -103,6 +111,42 @@ public class InvoiceImpl implements InvoiceReportDao{
         session.close();
         this.sessionFactory.close();
         return data;
+    }
+    
+    private String getLeaderNameFromInvoiceID(String InvId){
+        String result ="";
+        UtilityFunction util = new UtilityFunction();
+        Session session = this.sessionFactory.openSession();
+        System.out.println("InvId : "+InvId);
+        List<InvoiceDetail> invoiceList = session.createQuery(GET_INVOICE_FROMID)
+                .setParameter("invId", InvId)
+                .list();
+        if (invoiceList.isEmpty()) {
+            return "";
+        }else{
+            for(int i=0;i<invoiceList.size();i++){
+                String Cusname = util.getCustomerName(invoiceList.get(i).getBillableDesc().getBillable().getMaster().getCustomer());
+                System.out.println("Cusname : "+Cusname);
+                
+                    if(result.length() != 0){
+                        String[] data = result.split("/");
+                        int isLap = 0;
+                        for(int j=0;j<data.length;j++){
+                            if(data[j].equalsIgnoreCase(Cusname))isLap =1;
+                        }
+                        if(isLap == 0)
+                        result += "/"+Cusname;
+                        
+                    }else{
+                        result += Cusname;
+                    }
+                    
+                
+            }
+        }
+        session.close();
+        this.sessionFactory.close();
+        return result;
     }
 
     public SessionFactory getSessionFactory() {
