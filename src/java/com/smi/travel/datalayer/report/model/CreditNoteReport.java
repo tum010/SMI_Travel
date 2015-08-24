@@ -23,6 +23,8 @@ public class CreditNoteReport {
     private String vat;
     private String readsubtotal;
     private String remark;
+    private String textamount;
+    private String user;
 
     public String getCustomer() {
         return customer;
@@ -119,6 +121,23 @@ public class CreditNoteReport {
     public void setRemark(String remark) {
         this.remark = remark;
     }
+
+    public String getTextamount() {
+        return textamount;
+    }
+
+    public void setTextamount(String textamount) {
+        this.textamount = textamount;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+    
     
     
 }
