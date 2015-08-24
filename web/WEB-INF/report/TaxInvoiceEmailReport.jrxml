@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TaxInvoiceEmailReport" language="groovy" pageWidth="594" pageHeight="421" columnWidth="524" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="346dddd2-e21a-4c7b-8d69-ccea53d38a9d">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="65"/>
+	<property name="ireport.x" value="81"/>
 	<property name="ireport.y" value="144"/>
 	<field name="customer" class="java.lang.String"/>
 	<field name="address" class="java.lang.String"/>
@@ -152,13 +152,6 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{customer}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="450" y="104" width="73" height="17" uuid="7cb0bdf9-9a10-4361-821a-7b8a904e30d9"/>
-				<textElement textAlignment="Left">
-					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{recdate}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="53" y="103" width="13" height="17" uuid="f3f954c9-0b80-4f09-8c1c-754cec41de4f"/>
 				<textElement>
@@ -307,7 +300,7 @@
 				<textElement textAlignment="Left">
 					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{taxdate}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
