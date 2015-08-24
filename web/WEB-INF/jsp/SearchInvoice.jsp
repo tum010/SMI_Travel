@@ -76,7 +76,7 @@
                         </div>
                     </div>
                     <div class="col-xs-1 text-right" style="padding: 0px 0px 0px 20px">
-                        <label class="control-label" for="">Department<font style="color: red">*</font></lable>
+                        <label class="control-label" for="">Department</lable>
                     </div>
                     <div class="col-md-2 form-group" style="padding: 0px 0px 0px 30px">
                         <select class="form-control" id="Department" name="Department">
@@ -105,7 +105,7 @@
                         </select>    
                     </div>
                     <div class="col-xs-1 text-right" style="padding: 0px 0px 0px 20px">
-                        <label class="control-label" for="">Type<font style="color: red">*</font></lable>
+                        <label class="control-label" for="">Type</lable>
                     </div>
                     <div class="col-md-2 form-group" style="padding: 0px 0px 0px 30px">
                         <select class="form-control" id="Type" name="Type">
@@ -114,20 +114,21 @@
                                     <c:when test="${type == 'V'}">
                                     <c:set var="accountSelectedV" value="selected" />
                                     </c:when>
-                                </c:choose>         
-                                <c:choose>
-                                    <c:when test="${type == 'N'}">
+                                     <c:when test="${type == 'N'}">
                                         <c:set var="accountSelectedN" value="selected" />
                                     </c:when>
-                                </c:choose>
-                                <c:choose>
-                                    <c:when test="${type == 'T'}">
+                                     <c:when test="${type == 'T'}">
                                         <c:set var="accountSelectedT" value="selected" />
                                     </c:when>
-                                </c:choose>
+                                     <c:when test="${type == 'A'}">
+                                        <c:set var="accountSelectedA" value="selected" />
+                                    </c:when>
+                                </c:choose>         
+       
                             <option value="V" ${accountSelectedV}>Vat</option>
                             <option value="N" ${accountSelectedN}>No Vat</option>
                             <option value="T" ${accountSelectedT}>Temp</option>
+                            <option value="A" ${accountSelectedA}>Ticket</option>
                         </select>    
                     </div>
                 </div>

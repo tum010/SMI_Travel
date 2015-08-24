@@ -346,6 +346,7 @@ public class InvoiceImpl implements InvoiceDao{
     public List<Invoice> getSearchInvoice(String fromData, String toDate, String department, String type) {
         Session session = this.sessionFactory.openSession();
         String query = "";
+        int AndQuery = 0;
         if("".equals(department) && department == null && "".equals(type) && type == null && fromData == null &&  toDate == null){
             query = "FROM Invoice st " ;
         }else{
@@ -353,16 +354,30 @@ public class InvoiceImpl implements InvoiceDao{
         }
         
         if ( department != null && (!"".equalsIgnoreCase(department)) ) {
+            AndQuery = 1;
             query += " st.department = '" + department + "'";
         }
        
         if (type != null && (!"".equalsIgnoreCase(type)) ) {
-            query += " and st.invType = '" + type + "'";
+           if(AndQuery == 1){
+                query += " and st.invType = '" + type + "'";
+           }else{
+               AndQuery = 1;
+               query += " st.invType = '" + type + "'";
+           }
+           
         }
         
-        if (fromData != null ) {
-            if (toDate != null ) {
-                query += " and st.createDate  BETWEEN  '" + fromData + "' AND '" + toDate + "' ";
+        if ((fromData != null )&&(!"".equalsIgnoreCase(fromData))) {
+            if ((toDate != null )&&(!"".equalsIgnoreCase(toDate))) {
+                if(AndQuery == 1){
+                     query += " and st.invDate  BETWEEN  '" + fromData + "' AND '" + toDate + "' ";
+                }else{
+                    AndQuery = 1;
+                     query += " st.invDate  BETWEEN  '" + fromData + "' AND '" + toDate + "' ";
+                }
+                
+               
             }
         }
         
@@ -389,7 +404,10 @@ public class InvoiceImpl implements InvoiceDao{
                     invoiceView.setInvoiceDate(invoiceDate);
                     invoiceView.setName(listInvoice.get(i).getInvName());
                     invoiceView.setAddress(listInvoice.get(i).getInvAddress());
-                    invoiceView.setTermPayName(listInvoice.get(i).getMAccpay().getName());                
+                    if(listInvoice.get(i).getMAccpay() != null){
+                        invoiceView.setTermPayName(listInvoice.get(i).getMAccpay().getName()); 
+                    }
+                                   
                 
                     for (int j = 0; j < invoiceDetail.size(); j++) {
                         invoiceView.setCurrency(invoiceDetail.get(0).getCurAmount());
