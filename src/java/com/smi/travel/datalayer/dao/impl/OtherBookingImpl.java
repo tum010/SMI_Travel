@@ -298,7 +298,7 @@ public class OtherBookingImpl implements OtherBookingDao{
         List<OtherTicketView> ticketList = new ArrayList<OtherTicketView>();
         try{
             Session session = this.sessionFactory.openSession();
-            String query = "from StockDetail s where s.otherBooking.id = " + otherBookingId + " and s.MStockStatus.id = 2";
+            String query = "from StockDetail s where s.otherBooking.id = " + otherBookingId ;
             List<StockDetail> stockDetailList = session.createQuery(query).list();            
             if(stockDetailList.isEmpty()){
                 return ticketList;  
@@ -311,6 +311,7 @@ public class OtherBookingImpl implements OtherBookingDao{
                 otherTicketView.setAddDate(stockDetail.getPickupDate());
                 otherTicketView.setTicketCode(stockDetail.getCode());
                 otherTicketView.setTypeName(stockDetail.getTypeId().getName());
+                otherTicketView.setStatus(stockDetail.getMStockStatus().getName());
                 ticketList.add(otherTicketView);
             }
            
@@ -597,12 +598,12 @@ public class OtherBookingImpl implements OtherBookingDao{
                 query.setParameter("productid", null);
             }          
             query.executeUpdate();
-            result = "success";
+            result = "stock success";
             session.close();
             this.sessionFactory.close();
          } catch (Exception ex) {
             ex.printStackTrace();
-            result = "fail";
+            result = "stock fail";
         }
         return result;
     }

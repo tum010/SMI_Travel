@@ -167,14 +167,14 @@
             <table class="display" id="OtherTable">
                 <thead class="datatable-header">
                     <tr>
-                        <th style="width:15%" rowspan="2">Date</th>
+                        <th style="width:10%" rowspan="3">Date</th>
                         <th style="width:20%" rowspan="2">Product Name</th>
                         <th style="width:15%" colspan="3">Adult</th>
                         <th style="width:15%" colspan="3">Child</th>
                         <th style="width:15%" colspan="3">Infant</th>
-                        <th style="width:10%" rowspan="2">Cur</th>
+                        <th style="width:8%" rowspan="2">Cur</th>
                         <th style="width:10%" rowspan="2">Amount</th>
-                        <th style="width:8%" rowspan="2">Action</th>
+                        <th style="width:8%" rowspan="3">Action</th>
                     </tr>
                     <tr>
                         <th style="width:5%">Cost</th>
@@ -186,7 +186,10 @@
                         <th style="width:5%">Cost</th>
                         <th style="width:5%">Qty</th>
                         <th style="width:5%">Price</th>
-
+                    </tr>
+                    <tr>
+                        <th colspan="4">Remark</th>
+                        <th colspan="8">Remark Stock</th>
                     </tr>
                 </thead>
                 <script>
@@ -204,8 +207,9 @@
                             <c:set var="colourStatusFirstrow" value="background-color: #FFD3D3" />
                             <c:set var="statusicon" value="glyphicon-remove deleteicon" />
                         </c:if>
-                        <tr data-toggle="tooltip"  data-placement="left" title="<p align='left'>  date :${table.otherDate} <br> remark :${table.remark} </p>" ${colourStatus} ${colourStatus}>
-                            <td class="tdcenter ${colourStatus}" style="width:75px;${colourStatusFirstrow}"> ${table.otherDate} </td>
+<!--                        <tr data-toggle="tooltip"  data-placement="left" title="<p align='left'>  date :${table.otherDate} <br> remark :${table.remark} </p>" ${colourStatus} ${colourStatus}>-->
+                        <tr>
+                            <td class="tdcenter ${colourStatus}" style="width:75px;${colourStatusFirstrow}" rowspan="2"> ${table.otherDate} </td>
                             <td>${table.product.name}</td>
                             <td class="tdright moneyformat"> ${table.adCost}</td>
                             <td class="tdcenter moneyformat"> ${table.adQty}</td>
@@ -221,7 +225,7 @@
                                                                (table.chPrice * table.chQty) + 
                                                                (table.inPrice * table.inQty)}
                             </td>
-                            <td>
+                            <td rowspan="2">
                     <center> 
                         <a href="OtherDetail.smi?referenceNo=${param.referenceNo}&itemid=${table.id}&action=edit&callPageFrom=FromDayTour"><span class="glyphicon glyphicon-edit editicon"      onclick="" ></span></a>
                             <c:if test="${table.status.id == 2}">
@@ -236,6 +240,10 @@
                         </c:if>                                   
                     </center>
                     </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">${table.remark}</td>
+                        <td colspan="8">${table.remarkTicket}</td>
                     </tr>
                 </c:forEach>
                 </tbody>
