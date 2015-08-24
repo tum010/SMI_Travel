@@ -400,7 +400,12 @@
                                                 <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Print
                                             </button>
                                         </div>
-                                        <div class="col-md-1 " style="width: 350px"></div>
+                                        <div class="col-md-1 text-right" style="width: 170px">
+                                            <button type="button" class="btn btn-default" onclick="sendEmailTaxInvoice()">
+                                                <span id="buttonEmail" class="glyphicon glyphicon-send" ></span> SendEmail 
+                                            </button>
+                                        </div>        
+                                        <div class="col-md-1 " style="width: 180px"></div>
                                         <div class="col-md-2 text-right">
                                             <c:set var="isDisableVoid" value="disabled='true'" />
                                             <c:set var="isEnableVoid" value="style='display: none;'" />
@@ -884,6 +889,11 @@
         }else if(printType === "taxInvoiceEmail"){
             window.open("report.smi?name=TaxInvoiceEmailReport&taxInvId="+taxInvId+"&department="+department+"&optionPrint="+optionPrint);
         }
+    }
+    
+    function sendEmailTaxInvoice(){
+        var taxInvId = document.getElementById('TaxInvId').value;
+        window.open("SendMail.smi?reportname=TaxInvoiceEmail&reportid="+taxInvId);
     }
     
     function searchTaxInvoiceNo(){

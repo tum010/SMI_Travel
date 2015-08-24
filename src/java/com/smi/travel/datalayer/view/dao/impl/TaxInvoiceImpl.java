@@ -76,7 +76,8 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
             if(B[11] != null){
                 taxInvoiceView.setAmount(df.format(B[11]));
             }
-            String total = (taxInvoiceView.getGrandtotal()).toString().replaceAll("\\.", ",");
+            String total = taxInvoiceView.getGrandtotal().replaceAll(",", "");
+            total = total.replaceAll("\\.", ",");
             String[] totals = total.split(",");
             int totalWord = 0;
             totalWord = Integer.parseInt(String.valueOf(totals[0]));

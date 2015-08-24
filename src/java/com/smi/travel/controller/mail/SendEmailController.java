@@ -36,8 +36,8 @@ public class SendEmailController extends SMITravelController {
     private static final Logger LOG = Logger.getLogger(SendEmailController.class.getName());
     private static final String InvoiceReport = "Invoice";
     private static final String ReceiptEmail = "ReceiptEmail";
+    private static final String TaxInvoiceEmail = "TaxInvoiceEmail";
     private ModelAndView ModelMail = new ModelAndView("SendMail");
-    private static final String TaxInvoiceEmailReport = "TaxInvoiceEmailReport";
     private static final String ReportName = "reportname";
     private static final String ReportID = "reportid";
     private static final String BANKID = "bankid";
@@ -92,6 +92,17 @@ public class SendEmailController extends SMITravelController {
                 JRDataSource dataSource = new JRBeanCollectionDataSource(data);
                 jasperFileName = "ReceiptEmail.jasper";
                 pdfFileName = "receipt.pdf";
+                pathAttachfile = path[0] + "\\" + username;
+                System.out.println("path : " + path[0] + username);
+                if (checkDirectory(path[0] + username)) {
+                    result = reportservice.printreport(jasperFileName, username + "\\" + pdfFileName, dataSource);
+                }
+            }
+            if (TaxInvoiceEmail.equalsIgnoreCase(name)) {
+                data = reportservice.getTaxInvoiceEmail(reportid,1);
+                JRDataSource dataSource = new JRBeanCollectionDataSource(data);
+                jasperFileName = "TaxInvoiceEmailReport.jasper";
+                pdfFileName = "taxInvoice.pdf";
                 pathAttachfile = path[0] + "\\" + username;
                 System.out.println("path : " + path[0] + username);
                 if (checkDirectory(path[0] + username)) {
