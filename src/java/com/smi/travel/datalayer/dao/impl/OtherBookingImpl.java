@@ -579,24 +579,22 @@ public class OtherBookingImpl implements OtherBookingDao{
         try {           
             String status = "";
             String hql = "";
-            String productid = "";
             if("reuse".equalsIgnoreCase(statusTicket)){
                 status = "1";
-                productid = "";
-                hql = "UPDATE StockDetail stock set stock.MStockStatus.id =: status , stock.OtherBooking.id =: productid where stock.id  = :stockdetailid ";
+                hql = "UPDATE StockDetail stock set stock.MStockStatus.id = :status , stock.otherBooking.id = :productid where stock.id  = :stockdetailid ";
             } else if("refund".equalsIgnoreCase(statusTicket)){
                 status = "4";
-                hql = "UPDATE StockDetail stock set stock.MStockStatus.id =: status where stock.id  = :stockdetailid ";
+                hql = "UPDATE StockDetail stock set stock.MStockStatus.id = :status where stock.id  = :stockdetailid ";
             } else {
                 status = "3";
-                hql = "UPDATE StockDetail stock set stock.MStockStatus.id =: status where stock.id  = :stockdetailid ";
+                hql = "UPDATE StockDetail stock set stock.MStockStatus.id = :status where stock.id  = :stockdetailid ";
             }
             Session session = this.sessionFactory.openSession();
             Query query = session.createQuery(hql);
             query.setParameter("status", status);
             query.setParameter("stockdetailid", stockdetailid);
             if("reuse".equalsIgnoreCase(statusTicket)){
-                query.setParameter("productid", productid);
+                query.setParameter("productid", null);
             }          
             query.executeUpdate();
             result = "success";
