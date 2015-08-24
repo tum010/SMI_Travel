@@ -23,6 +23,7 @@
 	<field name="user" class="java.lang.String"/>
 	<field name="textmoney" class="java.lang.String"/>
 	<field name="totalvat" class="java.lang.String"/>
+	<field name="bankid" class="java.lang.String"/>
 	<background>
 		<band height="727">
 			<line>
@@ -365,77 +366,99 @@
 				<reportElement mode="Transparent" x="0" y="2" width="520" height="45" uuid="59b143a8-6766-4667-8710-dadbe9eacac9"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="2" y="-1" width="127" height="16" uuid="d40cc862-6036-4014-b411-a8bc2b4fd884"/>
+				<reportElement x="2" y="-1" width="127" height="16" uuid="d40cc862-6036-4014-b411-a8bc2b4fd884">
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
+				</reportElement>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" isBold="true" isUnderline="true" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[PAYMENT  BY MONEY TRANSFER]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="2" y="10" width="85" height="15" uuid="f20c58f3-63a0-4048-952c-7823e4ce7b9c"/>
+				<reportElement x="2" y="10" width="85" height="15" uuid="f20c58f3-63a0-4048-952c-7823e4ce7b9c">
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
+				</reportElement>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[NAME OF ACCOUNT]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="2" y="21" width="40" height="18" uuid="84fe934e-80cc-44ce-b211-a5ee16337330"/>
+				<reportElement x="2" y="21" width="40" height="18" uuid="84fe934e-80cc-44ce-b211-a5ee16337330">
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
+				</reportElement>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" isBold="true" isItalic="false" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[BANK]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="3" y="33" width="83" height="14" uuid="522853d9-246a-4fa4-a963-fadea28a0231"/>
+				<reportElement x="3" y="33" width="83" height="14" uuid="522853d9-246a-4fa4-a963-fadea28a0231">
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
+				</reportElement>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[TYPE OF ACCOUNT]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="206" y="21" width="40" height="20" uuid="9ccf1d69-249e-4b44-b960-59f82e29f042"/>
+				<reportElement x="206" y="21" width="40" height="20" uuid="9ccf1d69-249e-4b44-b960-59f82e29f042">
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
+				</reportElement>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[BRANCH]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="206" y="33" width="66" height="14" uuid="f21931ca-e1c5-4440-8cf1-9269c8fc2b4a"/>
+				<reportElement x="206" y="33" width="66" height="14" uuid="f21931ca-e1c5-4440-8cf1-9269c8fc2b4a">
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
+				</reportElement>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[ACCOUNT NO.]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="86" y="10" width="274" height="14" uuid="82bc5bb2-8c20-45c9-9cb7-22a1a0da31f8"/>
+				<reportElement x="86" y="10" width="274" height="14" uuid="82bc5bb2-8c20-45c9-9cb7-22a1a0da31f8">
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
+				</reportElement>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{accname}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="86" y="21" width="116" height="19" uuid="26f482f5-b772-48f2-9cb6-a7f6920ff42a"/>
+				<reportElement x="86" y="21" width="116" height="19" uuid="26f482f5-b772-48f2-9cb6-a7f6920ff42a">
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
+				</reportElement>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{bank}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="86" y="33" width="116" height="14" uuid="1ee82163-3f76-4849-8562-ea5ca1c7b302"/>
+				<reportElement x="86" y="33" width="116" height="14" uuid="1ee82163-3f76-4849-8562-ea5ca1c7b302">
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
+				</reportElement>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{acctype}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="271" y="33" width="95" height="14" uuid="3e0f9c5c-3b37-4ff9-835d-9c404f23459d"/>
+				<reportElement x="271" y="33" width="95" height="14" uuid="3e0f9c5c-3b37-4ff9-835d-9c404f23459d">
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
+				</reportElement>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{branch}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="273" y="21" width="93" height="18" uuid="dc5b905e-0516-4f72-8e47-adc075533d32"/>
+				<reportElement x="273" y="21" width="93" height="18" uuid="dc5b905e-0516-4f72-8e47-adc075533d32">
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
+				</reportElement>
 				<textElement verticalAlignment="Top">
 					<font fontName="TH SarabunPSK" size="12" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>

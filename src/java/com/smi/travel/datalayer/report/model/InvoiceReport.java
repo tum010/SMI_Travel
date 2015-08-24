@@ -31,6 +31,7 @@ public class InvoiceReport {
     private String acctype;
     private String user;
     private String textmoney;
+    private String bankid;
 
     public String getInvto() {
         return invto;
@@ -191,6 +192,14 @@ public class InvoiceReport {
 
     public void setTotalvat(String totalvat) {
         this.totalvat = totalvat;
+    }
+
+    public String getBankid() {
+        return bankid;
+    }
+
+    public void setBankid(String bankid) {
+        this.bankid = bankid;
     }
        
     

@@ -74,14 +74,25 @@ public class InvoiceImpl implements InvoiceReportDao{
             invoice.setBranch(Branch);
             invoice.setInvto(util.ConvertString(B[0]));
             invoice.setInvno(util.ConvertString(B[1]));
-            invoice.setInvdate(new SimpleDateFormat("dd-mm-yyyy", new Locale("us", "us")).format((Date)B[1]));
+            invoice.setBankid(BankId);
+            if(B[1] != null){
+                invoice.setInvdate(new SimpleDateFormat("dd-mm-yyyy", new Locale("us", "us")).format((Date)B[1]));
+            }
+            
             invoice.setStaff(util.ConvertString(B[2]));
             invoice.setPayment(util.ConvertString(B[3]));
             invoice.setDescription(util.ConvertString(B[4]));
-            invoice.setGross(df.format(B[5]));
-            invoice.setVat(df.format(B[6]));
+            if(B[5] != null){
+                invoice.setGross(df.format(B[5]));
+            }
+            if(B[6] != null){
+                invoice.setVat(df.format(B[6]));
+            }
             invoice.setTotal(df.format(B[7]));
-            invoice.setTotalvat(df.format(B[8]));
+            if(B[8] != null){
+                invoice.setTotalvat(df.format(B[8])); 
+            }
+            
             invoice.setGrtotal(df.format(B[9]));
             invoice.setUser(util.ConvertString(B[10]));
             invoice.setTextmoney("");
