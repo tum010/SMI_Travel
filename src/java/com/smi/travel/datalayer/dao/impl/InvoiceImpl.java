@@ -51,8 +51,9 @@ public class InvoiceImpl implements InvoiceDao{
         Session session = this.sessionFactory.openSession();
         try { 
             transaction = session.beginTransaction();
-            result = generateInvoiceNo(invoice.getDepartment() , invoice.getInvType());
-            invoice.setInvNo(result);
+//            result = generateInvoiceNo(invoice.getDepartment() , invoice.getInvType());
+               result = invoice.getInvNo();
+//            invoice.setInvNo(result);
             session.save(invoice);
             List<InvoiceDetail> invoiceDetail = invoice.getInvoiceDetails();
             if(invoiceDetail != null){
@@ -63,7 +64,7 @@ public class InvoiceImpl implements InvoiceDao{
             transaction.commit();
             session.close();
             this.sessionFactory.close();
-            System.out.println("ss result : "+ result);
+            System.out.println("ss result : "+ invoice.getInvNo());
 //            result = "success";
         } catch (Exception ex) {
             transaction.rollback();

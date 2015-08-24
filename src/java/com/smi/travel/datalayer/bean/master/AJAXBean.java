@@ -399,6 +399,9 @@ public class AJAXBean extends AbstractBean implements
             }else  if ("getAutoListBillto".equalsIgnoreCase(type)) {
                 String name = map.get("name").toString();
                 result = buildBillListJSON(customerAgentInfoDao.SearchListCustomerAgentInfo(name));
+            }else  if ("deleteInvoiceDetail".equalsIgnoreCase(type)) {
+                String id = map.get("name").toString();
+                result = invoicedao.DeleteInvoiceDetail(id);
             }
         } else if (BOOKDAYTOUR.equalsIgnoreCase(servletName)) {
             String TourID = null;
@@ -1400,10 +1403,10 @@ public class AJAXBean extends AbstractBean implements
         String result = "";
         String term="";
         if( bill.getMAccterm() != null){
-            term =","+ bill.getMAccterm().getId();
+            term =""+ bill.getMAccterm().getId();
         }
         result += bill.getMaster().getBookingType() +"||";
-        result +=  bill.getBillTo() +","+ bill.getBillName() +"," + bill.getBillAddress()+term
+        result +=  bill.getBillTo() +","+ bill.getBillName() +"," + bill.getBillAddress()+","+term
                 +","+bill.getMaster().getStaff().getId()+","+bill.getMaster().getStaff().getName() + ","+ bill.getMaster().getStaff().getUsername()+","+"||";
         List<BillableDesc> billdeescList = bill.getBillableDescs();
         int count =0;
