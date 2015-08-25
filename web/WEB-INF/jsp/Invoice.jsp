@@ -46,10 +46,18 @@
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <strong>Save Success!</strong> 
 </div>
-<div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+<div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <strong>Save Not  Success!</strong> 
-</div>            
+</div>
+<div id="textAlertNotInvoice"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Not have Invoice In Page!!</strong> 
+</div>
+<div id="textAlertMoney"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Money more than Billable, Please Input money</strong> 
+</div>
             <form action="Invoice${page}.smi" method="post" id="InvoiceForm" role="form" >
             <div id="textAlertDisable"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>

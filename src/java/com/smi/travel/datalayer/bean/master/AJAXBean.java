@@ -1404,14 +1404,22 @@ public class AJAXBean extends AbstractBean implements
     }
     
     public String getListInvoice(Billable bill,String invType) {
+        UtilityFunction utility = new UtilityFunction();
         String result = "";
         String term="";
         if( bill.getMAccterm() != null){
             term =""+ bill.getMAccterm().getId();
         }
+        Date ff = new Date();
+        System.out.println(ff);
+        ff.setDate(ff.getDate() + bill.getMAccterm().getValue());
+        System.out.println("Value Term : " + bill.getMAccterm().getValue());
+        System.out.println("Dueeeeeeeee  Date : "+ff);
+        String  dateDue =  utility.convertDateToString(ff);
+        
         result += bill.getMaster().getBookingType() +"||";
         result +=  bill.getBillTo() +","+ bill.getBillName() +"," + bill.getBillAddress()+","+term
-                +","+bill.getMaster().getStaff().getId()+","+bill.getMaster().getStaff().getName() + ","+ bill.getMaster().getStaff().getUsername()+","+bill.getMaster().getStaff().getUsername()+","+"||";
+                +","+bill.getMaster().getStaff().getId()+","+bill.getMaster().getStaff().getName() + ","+ bill.getMaster().getStaff().getUsername()+","+ dateDue +","+"||";
         List<BillableDesc> billdeescList = bill.getBillableDescs();
         int count =0;
         if("Air Ticket".equals(invType)){      

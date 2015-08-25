@@ -754,6 +754,7 @@ function setBillableInvoice(data){
     $('#SaleStaffId').val(array[4]);
     $('#SaleStaffName').val(array[5]);
     $('#SaleStaffCode').val(array[6]);
+    $('#InputDueDate').val(array[7]);
 }
 
 function addInvoiceDetail(rowId){
@@ -1245,6 +1246,14 @@ $(document).ready(function () {
         $('#textAlertDivSave').show();
     }else if ( bla === ""){
         $('#textAlertDivSave').hide();
+    }else if(bla === "notInvoice"){  
+        $('#textAlertNotInvoice').show();
+    }else if(bla === "yesInvoice"){  
+        $('#textAlertNotInvoice').hide();
+    }else if(bla === "moreMoney"){  
+        $('#textAlertMoney').show();
+    }else if(bla === "okMoney"){  
+        $('#textAlertMoney').hide();
     }else {
         $('#textAlertDivNotSave').show();
     }

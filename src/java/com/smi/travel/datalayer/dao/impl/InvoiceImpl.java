@@ -624,9 +624,9 @@ public class InvoiceImpl implements InvoiceDao{
             System.out.println("SumInvoiceCost : "+InvoiceCost +"SumInvoicePrice : "+InvoicePrice);
             System.out.println("Compare price : "+price.compareTo(InvoicePrice));
             if((price.compareTo(InvoicePrice) == -1)||(cost.compareTo(InvoiceCost) == -1)){
-                result = "fail";
+                result = "moreMoney";
             }else{
-                result = "success";
+                result = "okMoney";
             }
             
         }
