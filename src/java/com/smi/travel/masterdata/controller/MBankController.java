@@ -26,6 +26,7 @@ public class MBankController extends SMITravelController {
     private static final ModelAndView Bank_REFRESH = new ModelAndView(new RedirectView("MBank.smi", true));
     private static final String DataList = "Bank_List";
     private static final String BankSearch = "BankSearch";
+    private static final String BankData = "BankData";
     private static final String TransactionResult = "result";
     private MBankService mBankService;
     
@@ -38,6 +39,7 @@ public class MBankController extends SMITravelController {
         String branch = request.getParameter("BankBranch");
         String accountNo = request.getParameter("BankAccountNo");
         String accountType = request.getParameter("BankAccountType");
+        String status = request.getParameter("BankStatus");
         String bankId = request.getParameter("BankId");
                 
         System.out.println("MBankController - action  :" + action);
@@ -50,12 +52,13 @@ public class MBankController extends SMITravelController {
         bank.setName((String.valueOf(name)).toUpperCase());
         bank.setBranch((String.valueOf(branch)).toUpperCase());
         bank.setAccNo((String.valueOf(accountNo)).toUpperCase());
+        bank.setStatus((String.valueOf(status)).toUpperCase());
+        if((!"".equalsIgnoreCase(accountType)) && (accountType != null)){
+            bank.setAccType(Integer.parseInt(accountType));
+        }
           
         if ("search".equalsIgnoreCase(action)) {
-            log.info("Bank searching...");
-            if(accountType != ""){
-                bank.setAccType(Integer.parseInt(accountType));
-            }
+            log.info("Bank searching...");            
             request.setAttribute(BankSearch, bank);
             listBanks = mBankService.getListBank(bank, 2);
             request.setAttribute(DataList, listBanks);
@@ -80,7 +83,10 @@ public class MBankController extends SMITravelController {
                     request.setAttribute(TransactionResult, "save unsuccessful");
                 }
             } else {
-                request.setAttribute(TransactionResult, "already used");
+                request.setAttribute(TransactionResult, validateList);
+                listBanks = mBankService.getListBank(bank, 2);
+                request.setAttribute(DataList, listBanks);
+                request.setAttribute(BankData, bank);
             }
             
         } else if ("update".equalsIgnoreCase(action)) {
@@ -94,7 +100,10 @@ public class MBankController extends SMITravelController {
             System.out.println("bank AccNo :" + accountNo);
             String validateList = mBankService.validateBank(validateBank, "update");
             if (!"".equalsIgnoreCase(validateList)) {
-                request.setAttribute(TransactionResult, "already used");
+                request.setAttribute(TransactionResult, validateList);
+                listBanks = mBankService.getListBank(bank, 2);
+                request.setAttribute(DataList, listBanks);
+                request.setAttribute(BankData, bank);
             } else {
                 bank.setId(bankId);
                 bank.setAccType(Integer.parseInt(accountType));
@@ -123,6 +132,7 @@ public class MBankController extends SMITravelController {
         request.setAttribute("bankBranch", branch);
         request.setAttribute("bankAccountNo", accountNo);
         request.setAttribute("bankAccountType", accountType);
+        request.setAttribute("bankStatus", status);
         
         return Bank;
     }
