@@ -104,6 +104,11 @@ public class SendEmailController extends SMITravelController {
                 JRDataSource dataSource = new JRBeanCollectionDataSource(data);
                 jasperFileName = "TaxInvoiceEmailReport.jasper";
                 pdfFileName = "taxinvoice.pdf";
+                pathAttachfile = path[0] + "\\" + username;
+                System.out.println("path : " + path[0] + username);
+                if (checkDirectory(path[0] + username)) {
+                    result = reportservice.printreport(jasperFileName, username + "\\" + pdfFileName, dataSource);
+                }
             }
             if (CreditNote.equalsIgnoreCase(name)) {
                 data = reportservice.getCreditNoteReport(reportid);
@@ -115,8 +120,10 @@ public class SendEmailController extends SMITravelController {
                 if (checkDirectory(path[0] + username)) {
                     result = reportservice.printreport(jasperFileName, username + "\\" + pdfFileName, dataSource);
                 }
-            }  
+            }
+            
         }
+
         System.out.println("result : " + result);
         // sends the e-mail
         if ("success".equalsIgnoreCase(result)) {
@@ -151,7 +158,7 @@ public class SendEmailController extends SMITravelController {
         return ModelMail;
     }
         
-    
+
 
     public boolean checkDirectory(String pathFile){
         File f = new File(pathFile);
