@@ -44,6 +44,7 @@ public class SendEmailController extends SMITravelController {
     private static final String BANKID = "bankid";
     private static final String SHOWSTAFF = "showstaff";
     private static final String SHOWLEADER = "showleader";
+    private static final String OPTIONSENDMAIL = "optionsend";
     private JavaMailSender mailSender;
     private ReportService reportservice;
     private DataSource datasource;
@@ -65,6 +66,8 @@ public class SendEmailController extends SMITravelController {
         String reportFile = request.getParameter("file");
         String jasperFileName = "";
         String pdfFileName = "";
+        String optionsend = request.getParameter("optionsend");
+        int option = Integer.parseInt(optionsend == null ? "0":optionsend);
         //mail.smi?recipient=surachai@iconext.co.th&subject=testingsendmail&message=helloworld
         // prints debug info
         System.out.println("To: " + recipientAddress);
@@ -89,7 +92,7 @@ public class SendEmailController extends SMITravelController {
                 }
             }
             if (ReceiptEmail.equalsIgnoreCase(name)) {
-                data = reportservice.getReceiptEmail(reportid,1);
+                data = reportservice.getReceiptEmail(reportid,option);
                 JRDataSource dataSource = new JRBeanCollectionDataSource(data);
                 jasperFileName = "ReceiptEmail.jasper";
                 pdfFileName = "receipt.pdf";
@@ -155,6 +158,7 @@ public class SendEmailController extends SMITravelController {
         request.setAttribute(BANKID, bankid);
         request.setAttribute(SHOWSTAFF, showstaff);
         request.setAttribute(SHOWLEADER, showleader);
+        request.setAttribute(OPTIONSENDMAIL, optionsend);
         return ModelMail;
     }
 

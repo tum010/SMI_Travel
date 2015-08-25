@@ -51,9 +51,9 @@ public class InvoiceImpl implements InvoiceDao{
         Session session = this.sessionFactory.openSession();
         try { 
             transaction = session.beginTransaction();
-//            result = generateInvoiceNo(invoice.getDepartment() , invoice.getInvType());
-               result = invoice.getInvNo();
-//            invoice.setInvNo(result);
+            result = generateInvoiceNo(invoice.getDepartment() , invoice.getInvType());
+//            result = invoice.getInvNo();
+            invoice.setInvNo(result);
             session.save(invoice);
             List<InvoiceDetail> invoiceDetail = invoice.getInvoiceDetails();
             if(invoiceDetail != null){

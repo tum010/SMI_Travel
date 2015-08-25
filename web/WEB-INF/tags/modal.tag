@@ -1,14 +1,15 @@
 <%@ tag pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ variable name-given="isModal" scope="NESTED"%>
+<c:set var="isModal" value="true"/>
 <%@ attribute name="id" required="true"%>
 <%@ attribute name="title" required="true"%>
 <%@ attribute name="enableOKButton" required="false"%>
 <%@ attribute name="enableSaveButton" required="false"%>
 <%@ attribute name="enableCloseButton" required="false"%>
 <%@ attribute name="enableCancelButton" required="false"%>
-<%@ variable name-given="isModal" scope="NESTED"%>
-<c:set var="isModal" value="true"/>
+
+
 
 <div class="modal fade" id="${id}" tabindex="-1" role="dialog" aria-labelledby="${id}Label">
 		<div class="modal-dialog" role="document">
@@ -21,9 +22,7 @@
 						<h4 class="modal-title" id="${id}Label">${title}</h4>
 					</div>
 					<div class="modal-body">
-							
-							<jsp:doBody></jsp:doBody>
-						
+							<jsp:doBody/>
 					</div>
 					<div class="modal-footer">
 						<c:if test="${enableOKButton}">
@@ -43,5 +42,6 @@
 			</div>
 		</div>
 	</div>
+	<c:set var="isModal" value="false"/>
 
 

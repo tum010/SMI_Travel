@@ -30,4 +30,9 @@ public class MAccountCodeServiceImpl implements MAccountCodeService {
 		return mAccountCodeDao.update(accountCode);
 	}
 
+	@Override
+	public int delete(AccountCode accountCode) {
+		return mAccountCodeDao.delete(accountCode);
+	}
+
 }

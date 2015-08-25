@@ -14,6 +14,7 @@ public class MAccterm   {
      private String id;
      private String code;
      private String name;
+     private Integer value;
      private Set agents = new HashSet(0);
 
     public MAccterm() {
@@ -24,9 +25,10 @@ public class MAccterm   {
         this.code = code;
         this.name = name;
     }
-    public MAccterm(String code, String name, Set agents) {
+    public MAccterm(String code, String name,Integer value, Set agents) {
        this.code = code;
        this.name = name;
+       this.value = value;
        this.agents = agents;
     }
    
@@ -57,6 +59,14 @@ public class MAccterm   {
     
     public void setAgents(Set agents) {
         this.agents = agents;
+    }
+
+    public Integer getValue() {
+        return value;
+    }
+
+    public void setValue(Integer value) {
+        this.value = value;
     }
 
 

@@ -174,6 +174,7 @@ public class ReceiptController extends SMITravelController {
                 String billDescId = request.getParameter("billDescId" + i);
                 String paymentId = request.getParameter("paymentId" + i);
                 String airlineCode = request.getParameter("airlineCode" + i);
+                String displayDescription = request.getParameter("DescriptionReceiptDetail" + i);
                 System.out.println(" invId " + invId);
                 System.out.println(" billDescId " + billDescId);
                 System.out.println(" paymentId " + paymentId);
@@ -188,7 +189,7 @@ public class ReceiptController extends SMITravelController {
                     receiptDetail.setMBilltype(mBilltype);
                 }
                 receiptDetail.setDescription(receiveDes);
-                receiptDetail.setDisplayDescription(receiveDes);
+                receiptDetail.setDisplayDescription(displayDescription);
                 receiptDetail.setCost(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(receiveCost) ? receiveCost.replaceAll(",","") : 0)));
                 receiptDetail.setCurCost(receiveCurCost);
                 if("1".equals(receiveIsVat)){

@@ -23,5 +23,8 @@
         <property name="accType" type="java.lang.Integer">
             <column name="acc_type" />
         </property>
+        <property name="status" type="string">
+            <column name="status" />
+        </property>
     </class>
 </hibernate-mapping>

@@ -51,6 +51,13 @@ $(document).ready(function () {
                 }
             }
         },
+        BankStatus: {
+            validators: {
+                notEmpty: {
+                    message: 'The Status is required'
+                }
+            }
+        },
         
     }
     }).on('success.field.bv', function (e, data) {
@@ -59,10 +66,20 @@ $(document).ready(function () {
         }
     });
     
-    $("#CodeSearch,#NameSearch,#BrachSearch,#AccountNoSearch,#TypeSearch").keyup(function (event) {
+    $("#CodeSearch,#NameSearch,#BrachSearch,#AccountNoSearch,#TypeSearch,#StatusSearch").keyup(function (event) {
         if (event.keyCode === 13) {
             searchAction();
         }
+    });
+    
+    $(".numerical").on('input', function() { 
+        var value=$(this).val().replace(/[^0-9]*/g, '');
+        $(this).val(value);
+    });
+    
+    $(".specialcharactor").on('input', function() { 
+        var value=$(this).val().replace(/[^ก-ฮa-z0-9]*/g, '');
+        $(this).val(value);
     });
 });
 
@@ -73,7 +90,7 @@ function searchAction() {
     $("#SearchBank").submit();
 }
 
-function EditBank(id, code, name, branch, accNo, accType) {
+function EditBank(id, code, name, branch, accNo, accType, status) {
     $('#Bankform').bootstrapValidator('resetForm', true);
     $("#BankIdEdit").val(id);
     $("#BankCode").val(code);
@@ -81,7 +98,9 @@ function EditBank(id, code, name, branch, accNo, accType) {
     $("#BankBranch").val(branch);
     $("#BankAccountNo").val(accNo);
     $("#BankAccountType").val(accType);
+    $("#BankStatus").val(status);
     $("#actionIUP").val('update');
+    $('#BankModal').modal('show');
 }
 
 function DeleteBank(id,code,name){
@@ -96,3 +115,5 @@ function Delete() {
     action.value = 'delete';
     document.getElementById('SearchBank').submit();
 }
+
+
