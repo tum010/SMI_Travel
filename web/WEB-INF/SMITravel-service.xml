@@ -288,8 +288,9 @@
         <property name="taxInvoiceDao" ref="TaxInvoiceDao" />
     </bean>
     
-<!--    <bean id="CreditNoteService" class="com.smi.travel.datalayer.service.CreditNoteService">
+    <bean id="CreditNoteService" class="com.smi.travel.datalayer.service.CreditNoteService">
         <property name="creditNoteDao" ref="CreditNoteDao" />
-    </bean>-->
+    </bean>
+    
     <!--<add data>-->
 </beans>

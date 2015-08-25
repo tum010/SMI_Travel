@@ -350,6 +350,10 @@
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
     
+    <bean id="CreditNoteDao" class="com.smi.travel.datalayer.dao.impl.CreditNoteImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
     <bean id="GenerateReport" class="com.smi.travel.report.GenerateReport">
           <property name="reportpath" value="C:\\Users\\Surachai\\Documents\\NetBeansProjects\\SMI_Travel_nokey\\web\\WEB-INF\\report\\"></property>
           <property name="exportpath" value="D:\\report\\"></property>
@@ -381,6 +385,8 @@
                 <ref local="ReceiptDetailDao" />
                 <ref local="InvoiceDao" /> 
                 <ref local="TicketAircommissionViewDao" />
+                <ref local="TaxInvoiceDao" />
+                <ref local="CreditNoteDao" />
             </list>
         </constructor-arg>
     </bean>
@@ -406,6 +412,7 @@
     <bean id="InvoiceServlet" class="com.smi.travel.servlet.InvoiceServlet" />
     <bean id="ReceiptServlet" class="com.smi.travel.servlet.ReceiptServlet" />
     <bean id="TaxInvoiceServlet" class="com.smi.travel.servlet.TaxInvoiceServlet" />
+    <bean id="CreditNoteServlet" class="com.smi.travel.servlet.CreditNoteServlet" />
 	<!--<add data>-->
 	
 </beans>
