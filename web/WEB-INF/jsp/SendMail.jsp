@@ -20,6 +20,7 @@
  <c:set var="file" value="${requestScope['file']}" />   
  <c:set var="reportname" value="${requestScope['reportname']}" />   
  <c:set var="reportid" value="${requestScope['reportid']}" />   
+ <c:set var="optionsend" value="${requestScope['optionsend']}" />
  <c:set var="bankid" value="${requestScope['bankid']}" />   
  <c:set var="showstaff" value="${requestScope['showstaff']}" />  
  <c:set var="showleader" value="${requestScope['showleader']}" />  
@@ -32,6 +33,7 @@
             <form action="SendMail.smi" method="post" id="Mail" role="form">
                 <input type="text" id="reportname" name="reportname" value="${reportname}" class="hidden">
                 <input type="text" id="reportid" name="reportid" value="${reportid}" class="hidden">
+                <input type="text" id="optionsend" name="optionsend" value="${optionsend}" class="hidden">
                 <input type="text" id="bankid" name="bankid" value="${bankid}" class="hidden">
                 <input type="text" id="showstaff" name="showstaff" value="${showstaff}" class="hidden">
                 <input type="text" id="showleader" name="showleader" value="${showleader}" class="hidden">
@@ -103,19 +105,18 @@
 </html>
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
-      
+
     });
 
     function sendEmail(){
-
 //            alert($('#sendCc').val());
 //            alert($('#subject').val());
 //            alert($('#fileAttachment').val());
 //            alert($('#message').val());
             var servletName = 'MailServlet';
             var servicesName = 'AJAXBean';
-            var sendTo = document.getElementById('sendTo').value;;
-            var sendCc = document.getElementById('sendCc').value;;
+            var sendTo = document.getElementById('sendTo').value;
+            var sendCc = document.getElementById('sendCc').value;
             var subject = document.getElementById('subject').value;
             var attachfile = document.getElementById('attachfile').value;
             var content = document.getElementById('content').value;

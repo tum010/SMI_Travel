@@ -384,26 +384,26 @@
                                                     <a href="" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail('${i.count}')">${table.description}</a>                                           
                                                 </td>
                                                 <td class="hidden"><input maxlength="255" id="receiveDes${i.count}" name="receiveDes${i.count}" type="text" class="form-control" value="${table.description}"></td>
-                                                <td><input maxlength="10" id="receiveCost${i.count}"  name="receiveCost${i.count}"  type="text" class="form-control text-right"  value="${table.cost}" onkeyup="insertCommas(this)"></td>
+                                                <td><input maxlength="10" id="receiveCost${i.count}"  name="receiveCost${i.count}"  type="text" class="form-control text-right"  value="${table.cost}" onkeyup="insertCommas(this)" disabled="disabled"></td>
                                                 <td>                                   
-                                                    <select class="form-control" name="receiveCurCost${i.count}" id="receiveCurCost${i.count}">
+                                                    <select class="form-control" name="receiveCurCost${i.count}" id="receiveCurCost${i.count}" disabled="disabled">
                                                         <option  value="" >---------</option>
                                                         <c:forEach var="curCost" items="${currencyList}" varStatus="status">                                       
                                                             <c:set var="select" value="" />
                                                             <c:if test="${curCost.code == table.curCost}">
                                                                 <c:set var="select" value="selected" />
                                                             </c:if>
-                                                            <option  value="${curCost.code}" ${select}>${curCost.code}</option>
+                                                            <option  value="${curCost.code}" ${select} >${curCost.code}</option>
                                                         </c:forEach>
                                                     </select>                                                                  
                                                 </td>
                                                 <td align="center">
                                                     <c:choose>
                                                         <c:when test="${table.isVat == '1'}">
-                                                            <input type="checkbox" checked name="receiveIsVat${i.count}" id="receiveIsVat${i.count}" onclick="handleClick(this,${i.count})" value="${table.isVat}">
+                                                            <input type="checkbox" checked name="receiveIsVat${i.count}" id="receiveIsVat${i.count}" onclick="handleClick(this,${i.count})" value="${table.isVat}" disabled="disabled">
                                                         </c:when>
                                                         <c:when test="${table.isVat == '0'}">
-                                                            <input type="checkbox"  name="receiveIsVat${i.count}" id="receiveIsVat${i.count}" onclick="handleClick(this,${i.count})" value="${table.isVat}">
+                                                            <input type="checkbox"  name="receiveIsVat${i.count}" id="receiveIsVat${i.count}" onclick="handleClick(this,${i.count})" value="${table.isVat}" disabled="disabled">
                                                         </c:when>
                                                     </c:choose>
                                                 </td> 
@@ -1119,7 +1119,35 @@
         </div>
     </div>
 </div>
-
+<!--Disable Modal-->
+<div class="modal fade" id="SendEmailReceiptModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Send Email</h4>
+            </div>
+            <div class="modal-body" id="sendEmailReceiptModal" >
+                <div class="col-xs-1" style="width: 500px">
+                    <label class="text-right">select option for send email receipt<font style="color: red">*</font></label>                                    
+                </div>
+                <div class="text-center" style="width: 250px" >
+                    <select name="optionSend" id="optionSend" class="form-control" style="height:34px">
+                        <option value="1" >Not Show Description</option>
+                        <option value="2" >Show Description</option>
+                        <option value="3" >Print Format Package Tour</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="confirmSendEmailReceipt()">
+                    <span id="buttonEmail" class="glyphicon glyphicon-send" ></span> Send Email 
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade " id="DescriptionReceiptDetailModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -1386,10 +1414,43 @@
         });
         
         setFormatCurrencyReceipt();       
-//        var creditlength = $("#CreditDetailTable tr").length ;
-//        var detaillength = $("#ReceiptListTable tr").length ;
+        var creditlength = $("#CreditDetailTable tr").length ;
         
+        setFormatCurrencyDetail();
     });
+    
+    function setFormatCurrencyDetail(){
+        var detaillength = $("#ReceiptListTable tr").length ;
+        if(detaillength > 1) {
+            for(var i =1;i<detaillength;i++){
+                if($('#receiveCost'+i).val() != ""){
+                     var receiveCost = replaceAll(",","",$('#receiveCost'+i).val()); 
+                     if (receiveCost == ""){
+                         receiveCost = 0;
+                     }
+                     receiveCost = parseFloat(receiveCost); 
+                     document.getElementById("receiveCost"+i).value = formatNumber(receiveCost);
+
+ //                    if (receiveCost == "" || receiveCost == 0){
+ //                        document.getElementById("receiveCost"+i).value = "";
+ //                    }
+                }
+                if($('#receiveAmount'+i).val() != ""){
+                    var receiveAmount = replaceAll(",","",$('#receiveAmount'+i).val()); 
+                    if (receiveAmount == ""){
+                        receiveAmount = 0;
+                    }
+                    receiveAmount = parseFloat(receiveAmount); 
+                    document.getElementById("receiveAmount"+i).value = formatNumber(receiveAmount);
+                    if (receiveAmount == "" || receiveAmount == 0){
+                        document.getElementById("receiveAmount"+i).value = "";
+                    }
+                }
+           }
+
+        }
+
+    }
     
     function setFormatCurrencyReceipt(){
         var withTax = replaceAll(",","",$('#withTax').val()); 
@@ -1487,8 +1548,14 @@
     }
     //http://localhost:8080/SMITravel/SendMail.smi?reportname=Invoice
     function sendEmailReceipt(){
+        $('#SendEmailReceiptModal').modal('show');     
+    }
+    
+    function confirmSendEmailReceipt(){
+        $('#SendEmailReceiptModal').modal('hide');
+        var optionSend =  document.getElementById('optionSend').value;
         var receiveId = document.getElementById('receiveId').value;
-        window.open("SendMail.smi?reportname=ReceiptEmail&reportid="+receiveId);
+        window.open("SendMail.smi?reportname=ReceiptEmail&reportid="+receiveId+"&optionsend="+optionSend);
     }
     
     function AddRowProduct(row) {           
@@ -1499,7 +1566,7 @@
                 '<td>' + 
                 '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="">---------</option></select>' +                          
                 '</td>' +
-                '<td><a href="" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail('+row+')" id="InputDescription' + row + '">new : </a> </td>' +           
+                '<td><a href="" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail('+row+')" id="InputDescription' + row + '">New</a> </td>' +           
                 '<td class="hidden"><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" ></td>' +
                 '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control" onkeyup="insertCommas(this)" disabled="disabled" ></td>' +
                 '<td>' + 
@@ -1825,7 +1892,7 @@ function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,cur
         '</td>' +
         '<td><a href="" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail('+row+')" id="InputDescription' + row + '">'+ description + ' : '+number+' </a></td>' +      
         '<td class="hidden"><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" value="'+description+'"></td>' +
-        '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control" value="'+cost+'" onkeyup="insertCommas(this)" disabled="disabled"></td>' +
+        '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control text-right" value="'+cost+'" onkeyup="insertCommas(this)" disabled="disabled"></td>' +
         '<td>' + 
         '<select class="form-control" name="receiveCurCost' + row + '" id="receiveCurCost' + row + '" disabled="disabled"><option value="'+cur+'" ></option></select>' +                          
         '</td>' +
@@ -1878,6 +1945,7 @@ function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,cur
     var tempCount = parseInt($("#counter").val()) + 1;
     $("#counter").val(tempCount);
     AddRowProduct(tempCount);
+    setFormatCurrencyDetail();
 }
 
 function searchReceiveNo(){
