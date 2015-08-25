@@ -190,42 +190,82 @@
  }
  
 function validFromInvoice(){
-    // Validator Date From and To
+    // Validator Date From and To 
     $("#InvoiceForm")
-            .bootstrapValidator({
-                framework: 'bootstrap',
-                feedbackIcons: {
-                    valid: 'uk-icon-check',
-                    invalid: 'uk-icon-times',
-                    validating: 'uk-icon-refresh'
-                },
-                fields: {                
-                    InvTo : {
-                        trigger: 'focus keyup change',
-                        validators: {
-                            notEmpty: {
-                                message: 'Input Invoice To'
-                            }
-                        }
-                    },
-                    InvToName : {
-                        trigger: 'focus keyup change',
-                        validators: {
-                            notEmpty: {
-                                message: 'Input Invoice To Name'
-                            }
-                        }
-                    },ARCode : {
-                        trigger: 'focus keyup change',
-                        validators: {
-                            notEmpty: {
-                                message: 'Input A/R Code'
-                            }
-                        }
+    .bootstrapValidator({
+        framework: 'bootstrap',
+        feedbackIcons: {
+            valid: 'uk-icon-check',
+            invalid: 'uk-icon-times',
+            validating: 'uk-icon-refresh'
+        },
+        fields: {                
+            InvTo : {
+                trigger: 'focus keyup change',
+                validators: {
+                    notEmpty: {
+                        message: 'Input Invoice To'
                     }
-                }  
-            });     
+                }
+            },
+            InvToName : {
+                trigger: 'focus keyup change',
+                validators: {
+                    notEmpty: {
+                        message: 'Input Invoice To Name'
+                    }
+                }
+            },ARCode : {
+                trigger: 'focus keyup change',
+                validators: {
+                    notEmpty: {
+                        message: 'Input A/R Code'
+                    }
+                }
+            }
+        }  
+    });
+    
+    checkCurrencyCost();
 }
+
+function checkCurrencyCost(){
+    var counter = $('#DetailBillableTable tbody tr').length;
+    var different = 0;
+    for(var i=1 ; i <= (counter-1);i++){
+        var currency1 = $('#SelectCurrencyAmount' +i).find(":selected").text();
+        for(var j=2;j<=(counter-1);j++){
+            var currency2 = $('#SelectCurrencyAmount' +j).find(":selected").text();
+            if(currency1 !== currency2){
+                different++;
+            }
+        }
+    }
+                alert("Heeee : " + different);
+    if(different>0){          
+        $('#DetailBillableTable').find('tr').each(function () { 
+            $(this).find('td').each(function () { 
+                if ($(this).hasClass('priceCurrencyAmount')) {
+                    $(this).addClass("alert-danger");
+                }
+            });
+        });    
+        $('#textAlertCurrency').show();
+        $('#InvoiceForm').bootstrapValidator('revalidateField', '');
+        return false;
+    } else {
+         $('#DetailBillableTable').find('tr').each(function () { 
+            $(this).find('td').each(function () { 
+                if ($(this).hasClass('priceCurrencyAmount')) {
+                    $(this).removeClass("alert-danger");
+                }
+            });
+        });
+        $('#textAlertCurrency').hide();
+        return true;
+    }    
+}
+
 var isDuplicateInvoiceDetail = 0;
 var description ="";
 function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur){
@@ -292,7 +332,7 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur){
         '<td class="hidden"><input type="text" class="form-control" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '" value="'+ defaultD +'" ></td>'+
         '<td '+vathidden+' ><input type="text" maxlength ="15" readonly onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control numerical" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>'+
         '<td><input type="text" maxlength ="15" onfocusout="changeFormatAmountNumber(' + row + ')" class="form-control numerical" id="InputAmount' + row + '" name="InputAmount' + row + '"  value="'+price +'" onfocusout="CalculateGrandTotal(' + row + ');calculateGross('+row+')"></td>'+
-        '<td><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control">'+ selectC +'</select></td>'+
+        '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control">'+ selectC +'</select></td>'+
         '<td><input type="text" onfocusout="changeFormatAmountLocalNumber(' + row + ')" value="'+price +'" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control" ></td>'+
         '<td class="hidden"><input type="text" onfocusout="changeFormatAmountLocalTempNumber(' + row + ')" value="'+price +'" id="InputAmountLocalTemp' + row + '" name="InputAmountLocalTemp' + row + '"  ></td>'+
         '<td align="center" ><center><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('+row+',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span></center>'+

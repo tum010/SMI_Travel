@@ -343,6 +343,10 @@
                                     <h4 class="panel-title">Detail Billable</h4>
                                 </div>
                                 <div class="panel-body">
+                                    <div id="textAlertCurrency"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <strong>Currency is not match!!! </strong> 
+                                    </div>
                                     <input type="text" class="hidden" id="counterTable" name="counterTable" value="1" >
                                     <input type="text" class="hidden" id="idDeleteDetailBillable" name="idDeleteDetailBillable" value="0" >
                                     <input type="text" class="hidden" id="action" name="action" value="save" >
@@ -357,7 +361,7 @@
                                                 <th style="width:13%;" align="center">Description</th>
                                                 <th class="hidden">Description Temp</th>
                                                 <th style="width: 8%" align="center">Cost</th>
-                                                <th style="width: 7%" align="center">Cur</th>
+                                                <th style="width: 7%" align="center" class="priceCurrencyCost">Cur</th>
                                                 <th style="width: 8%" align="center">Cost Local</th>
                                                 <th class="hidden">Cost Local Input</th>
                                                 <th style="width: 3%" onclick="checkVatInvoiceAll()" align="center"><u>Is vat</u></th> 
@@ -365,7 +369,7 @@
                                                 <th class="hidden" align="center">Vat Temp</th>
                                                 <th style="width: 8%" align="center">Gross</th>
                                                 <th style="width: 8%" align="center">Amount</th>
-                                                <th style="width: 7%" align="center">Cur</th>
+                                                <th style="width: 7%" align="center" class="" >Cur</th>
                                                 <th style="width: 8%" align="center">Amount Local</th>
                                                 <th class="hidden">Amount Local Input</th>
                                                 <th style="width: 3%" align="center">Action</th>
@@ -395,7 +399,7 @@
                                                 </td>
                                                 <td class="hidden"><input type="text" class="form-control" id="BillDescription${taxdesc.count}" name="BillDescription${taxdesc.count}" value="${ind.description}" > </td>
                                                 <td><input type="text" maxlength ="15" class="form-control numerical" id="InputCost${taxdesc.count}" name="InputCost${taxdesc.count}" value="${ind.cost}" ></td>
-                                                <td>
+                                                <td class="priceCurrencyCost">
                                                     <select id="SelectCurrencyCost${taxdesc.count}" name="SelectCurrencyCost${taxdesc.count}" class="form-control">
                                                          <option value='' ></option>
                                                         <c:forEach var="cur" items="${listCurrency}">
@@ -421,9 +425,9 @@
                                                 <td class="hidden"><input type="text" class="form-control" id="InputVatTemp${taxdesc.count}" name="InputVatTemp${taxdesc.count}" value="${ind.vat}" ></td>
                                                 <td ><input type="text" maxlength ="15" readonly  class="form-control numerical" id="InputGross${taxdesc.count}" name="InputGross${taxdesc.count}" value="${ind.gross}" ></td>
                                                 <td><input type="text" maxlength ="15" class="form-control numerical" id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" value="${ind.amount}" onfocusout="CalculateGrandTotal('${taxdesc.count}')"></td>
-                                                <td>
+                                                <td class="priceCurrencyAmount">
                                                     <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control">
-                                                         <option value='' ></option>
+                                                        <option value='' ></option>
                                                         <c:forEach var="cur" items="${listCurrency}">
                                                             <c:set var="selectA" value="" />
                                                             <c:if test="${cur.id == ind.curAmount}">
@@ -522,7 +526,7 @@
                                                 <td class="hidden" ><input type="text" class="form-control" id="InputVatTemp${taxdesc.count}" name="InputVatTemp${taxdesc.count}" value="${ind.vat}" ></td>
                                                 <td class="hidden" ><input type="text" maxlength ="15"  class="form-control numerical" id="InputGross${taxdesc.count}" name="InputGross${taxdesc.count}" value="${ind.gross}" ></td>
                                                 <td><input type="text" maxlength ="15" class="form-control numerical" id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" value="${ind.amount}" onfocusout="CalculateGrandTotal('${taxdesc.count}')"></td>
-                                                <td>
+                                                <td class="priceCurrencyAmount">
                                                     <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control">
                                                          <option value='' ></option>
                                                         <c:forEach var="cur" items="${listCurrency}">
@@ -663,7 +667,7 @@
                                             </button>
                                         </div>
                                         <div class="col-md-1 text-right ">
-                                            <button type="submit" onsubmit="validFromInvoice()" id="saveInvoice" name="saveInvoice" class="btn btn-success" ${isSaveVoid}>
+                                            <button type="submit" onsubmit="return validFromInvoice()" id="saveInvoice" name="saveInvoice" class="btn btn-success" ${isSaveVoid}>
                                                 <span id="SpanSave" class="fa fa-save"></span> Save 
                                             </button>
                                         </div>
