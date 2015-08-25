@@ -28,13 +28,13 @@
 <body>
     
 <div class ="container"  style="padding-top: 30px;" ng-app="">
-    <c:if test="${requestScope['result'] == 'success'}">                                            
+    <c:if test="${requestScope['result'] == 'send email success'}">                                            
         <div id="textAlertDivSave"  style="" class="alert alert-success alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>Send Email Success!.</strong> 
         </div>
     </c:if>        
-    <c:if test="${requestScope['result'] == 'fail'}">
+    <c:if test="${requestScope['result'] == 'send email fail'}">
         <div id="textAlertDivNotSave"  style="" class="alert alert-danger alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>Send Email Unsuccess!.</strong> 

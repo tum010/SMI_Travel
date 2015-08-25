@@ -149,8 +149,10 @@ public class SendEmailController extends SMITravelController {
                     }
 
                 } catch (EmailException ex) {
+                    result = "send email fail";
                     java.util.logging.Logger.getLogger(SendEmailController.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (MalformedURLException ex) {
+                    result = "send email fail";
                     java.util.logging.Logger.getLogger(SendEmailController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 System.out.println("send email");
