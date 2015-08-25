@@ -1415,42 +1415,51 @@
         
         setFormatCurrencyReceipt();       
         var creditlength = $("#CreditDetailTable tr").length ;
-        
-        setFormatCurrencyDetail();
-    });
-    
-    function setFormatCurrencyDetail(){
         var detaillength = $("#ReceiptListTable tr").length ;
         if(detaillength > 1) {
-            for(var i =1;i<detaillength;i++){
+            for(var i =0;i<detaillength;i++){
                 if($('#receiveCost'+i).val() != ""){
-                     var receiveCost = replaceAll(",","",$('#receiveCost'+i).val()); 
-                     if (receiveCost == ""){
-                         receiveCost = 0;
-                     }
-                     receiveCost = parseFloat(receiveCost); 
-                     document.getElementById("receiveCost"+i).value = formatNumber(receiveCost);
-
- //                    if (receiveCost == "" || receiveCost == 0){
- //                        document.getElementById("receiveCost"+i).value = "";
- //                    }
+                    setFormatCurrency(i);
                 }
                 if($('#receiveAmount'+i).val() != ""){
-                    var receiveAmount = replaceAll(",","",$('#receiveAmount'+i).val()); 
-                    if (receiveAmount == ""){
-                        receiveAmount = 0;
-                    }
-                    receiveAmount = parseFloat(receiveAmount); 
-                    document.getElementById("receiveAmount"+i).value = formatNumber(receiveAmount);
-                    if (receiveAmount == "" || receiveAmount == 0){
-                        document.getElementById("receiveAmount"+i).value = "";
-                    }
+                    setFormatCurrency(i);
                 }
-           }
-
+            }
         }
-
-    }
+    });
+    
+//    function setFormatCurrencyDetail(){
+//        var detaillength = $("#ReceiptListTable tr").length ;
+//        if(detaillength > 1) {
+//            for(var i =1;i<detaillength;i++){
+//                if($('#receiveCost'+i).val() != ""){
+//                     var receiveCost = replaceAll(",","",$('#receiveCost'+i).val()); 
+//                     if (receiveCost == ""){
+//                         receiveCost = 0;
+//                     }
+//                     receiveCost = parseFloat(receiveCost); 
+//                     document.getElementById("receiveCost"+i).value = formatNumber(receiveCost);
+//
+// //                    if (receiveCost == "" || receiveCost == 0){
+// //                        document.getElementById("receiveCost"+i).value = "";
+// //                    }
+//                }
+//                if($('#receiveAmount'+i).val() != ""){
+//                    var receiveAmount = replaceAll(",","",$('#receiveAmount'+i).val()); 
+//                    if (receiveAmount == ""){
+//                        receiveAmount = 0;
+//                    }
+//                    receiveAmount = parseFloat(receiveAmount); 
+//                    document.getElementById("receiveAmount"+i).value = formatNumber(receiveAmount);
+//                    if (receiveAmount == "" || receiveAmount == 0){
+//                        document.getElementById("receiveAmount"+i).value = "";
+//                    }
+//                }
+//           }
+//
+//        }
+//
+//    }
     
     function setFormatCurrencyReceipt(){
         var withTax = replaceAll(",","",$('#withTax').val()); 
@@ -1859,7 +1868,7 @@ function addProduct(product,description,cost,cur,isVat,vat,amount,currency,invId
 }
 function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,disdescription,number) {
     var rowAll = $("#ReceiptListTable tr").length;
-    var tempCount = parseInt(rowAll-2);
+//    var tempCount = parseInt(rowAll-2);
 //    alert(rowAll + "___" + tempCount + " row :: "+row);
     for(var i =0; i<rowAll ;i++){
         if($("#receiveProduct"+i).val() != "" 
@@ -1942,10 +1951,11 @@ function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,cur
     $("#receiveCost"+row).focusout(function(){
         setFormatCurrency(row);
     }); 
+    setFormatCurrency(row);
     var tempCount = parseInt($("#counter").val()) + 1;
     $("#counter").val(tempCount);
     AddRowProduct(tempCount);
-    setFormatCurrencyDetail();
+    
 }
 
 function searchReceiveNo(){
@@ -2176,7 +2186,7 @@ function deleteReceiptList(id,Ccount) {
 
 function DeleteRowProduct(){
     var cCount = document.getElementById('receiptRowDelete').value;
-    var id = document.getElementById('receiptDetailIdDelete').value;
+    var id = document.getElementById('receiptDetailIdDelete').value;    
     if(id === ''){
         $("#receiveProduct" + cCount).parent().parent().remove();
         var rowAll = $("#ReceiptListTable tr").length;
@@ -2197,8 +2207,7 @@ function DeleteRowProduct(){
                     $("#tr_ProductDetailAddRow").removeClass("hide");
                     $("#tr_ProductDetailAddRow").addClass("show");
                 }
-                
-                AddRowProduct()
+                AddRowProduct();
             },
             error: function () {
                 console.log("error");
