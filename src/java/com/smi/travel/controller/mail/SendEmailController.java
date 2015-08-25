@@ -36,11 +36,8 @@ public class SendEmailController extends SMITravelController {
     private static final Logger LOG = Logger.getLogger(SendEmailController.class.getName());
     private static final String InvoiceReport = "Invoice";
     private static final String ReceiptEmail = "ReceiptEmail";
-<<<<<<< HEAD
     private static final String TaxInvoiceEmail = "TaxInvoiceEmail";
-=======
     private static final String CreditNote = "CreditNote";
->>>>>>> c75eb74fda5f0fed746ec24ec28a6f20ce3b26b2
     private ModelAndView ModelMail = new ModelAndView("SendMail");
     private static final String ReportName = "reportname";
     private static final String ReportID = "reportid";
@@ -118,7 +115,8 @@ public class SendEmailController extends SMITravelController {
                 if (checkDirectory(path[0] + username)) {
                     result = reportservice.printreport(jasperFileName, username + "\\" + pdfFileName, dataSource);
                 }
-            }                      
+            }  
+        }
         System.out.println("result : " + result);
         // sends the e-mail
         if ("success".equalsIgnoreCase(result)) {
@@ -152,14 +150,18 @@ public class SendEmailController extends SMITravelController {
         request.setAttribute(SHOWLEADER, showleader);
         return ModelMail;
     }
+        
+    
 
-    public boolean checkDirectory(String pathFile) {
+    public boolean checkDirectory(String pathFile){
         File f = new File(pathFile);
         if (!f.exists()) {
             new File(pathFile).mkdir();
         }
         return f.exists();
     }
+    
+    
 
     public JavaMailSender getMailSender() {
         return mailSender;
