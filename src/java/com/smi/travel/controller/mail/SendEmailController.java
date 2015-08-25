@@ -120,9 +120,9 @@ public class SendEmailController extends SMITravelController {
                 if (checkDirectory(path[0] + username)) {
                     result = reportservice.printreport(jasperFileName, username + "\\" + pdfFileName, dataSource);
                 }
-            }
+             }
+        }             
             
-        }
 
         System.out.println("result : " + result);
         // sends the e-mail
@@ -157,8 +157,9 @@ public class SendEmailController extends SMITravelController {
         request.setAttribute(SHOWLEADER, showleader);
         return ModelMail;
     }
-        
 
+    
+    
 
     public boolean checkDirectory(String pathFile){
         File f = new File(pathFile);
@@ -167,6 +168,7 @@ public class SendEmailController extends SMITravelController {
         }
         return f.exists();
     }
+
     
     
 
