@@ -123,7 +123,7 @@ import org.hibernate.Transaction;
         SimpleDateFormat df = new SimpleDateFormat();
         df.applyPattern("yyMM");
         
-        Query query = session.createSQLQuery("SELECT RIGHT(rec_no, 4) as recnum  FROM receipt where department = :department rec_type = :recType and rec_no Like :recno  ORDER BY RIGHT(rec_no, 4) desc");
+        Query query = session.createSQLQuery("SELECT RIGHT(rec_no, 4) as recnum  FROM receipt where department = :department and rec_type = :recType and rec_no Like :recno  ORDER BY RIGHT(rec_no, 4) desc");
         query.setParameter("recno", "%"+ df.format(thisdate) + "%");
         query.setParameter("department", department);
         query.setParameter("recType", receiptType);
@@ -135,8 +135,7 @@ import org.hibernate.Transaction;
         } else {
             recNo = String.valueOf(list.get(0));
             if (!recNo.equalsIgnoreCase("")) {
-                System.out.println("recNo" + recNo.substring(4,8) + "/////");
-                int running = Integer.parseInt(recNo.substring(4,8)) + 1;
+                int running = Integer.parseInt(recNo) + 1;
                 String temp = String.valueOf(running);
                 for (int i = temp.length(); i < 4; i++) {
                     temp = "0" + temp;
