@@ -194,6 +194,7 @@ public class AJAXBean extends AbstractBean implements
         String content = String.valueOf(map.get("content"));
         String attachfile = String.valueOf(map.get("attachfile"));
         
+        
         String refNo = String.valueOf(map.get("refNo"));
         String selectStatus = String.valueOf(map.get("selectStatus"));
         String flagAir = String.valueOf(map.get("flagAir"));
@@ -626,8 +627,9 @@ public class AJAXBean extends AbstractBean implements
         } else if (INVOICE.equalsIgnoreCase(servletName)){
             if("searchInvoice".equalsIgnoreCase(type)){
                 String searchRefNo = map.get("refNo").toString();
+                String invType = map.get("invType").toString();
                 Billable bill = billableDao.getBillableBooking(searchRefNo);
-                result = getListInvoice(bill);
+                result = getListInvoice(bill,invType);
             }else if("searchInvoiceDescription".equalsIgnoreCase(type)){
                 String searchRefNo = map.get("refNo").toString();
                 String typeId = map.get("typeId").toString();
@@ -1411,7 +1413,7 @@ public class AJAXBean extends AbstractBean implements
         return data;
     }
     
-    public String getListInvoice(Billable bill) {
+    public String getListInvoice(Billable bill,String invType) {
         String result = "";
         String term="";
         if( bill.getMAccterm() != null){
@@ -1419,35 +1421,70 @@ public class AJAXBean extends AbstractBean implements
         }
         result += bill.getMaster().getBookingType() +"||";
         result +=  bill.getBillTo() +","+ bill.getBillName() +"," + bill.getBillAddress()+","+term
-                +","+bill.getMaster().getStaff().getId()+","+bill.getMaster().getStaff().getName() + ","+ bill.getMaster().getStaff().getUsername()+","+"||";
+                +","+bill.getMaster().getStaff().getId()+","+bill.getMaster().getStaff().getName() + ","+ bill.getMaster().getStaff().getUsername()+","+bill.getMaster().getStaff().getUsername()+","+"||";
         List<BillableDesc> billdeescList = bill.getBillableDescs();
         int count =0;
-        for (int i = 0; i < billdeescList.size(); i++) {
-            BigDecimal[] valueresult = invoicedao.checkBillDescInuse(billdeescList.get(i).getId(), String.valueOf(billdeescList.get(i).getCost()), String.valueOf(billdeescList.get(i).getPrice()));
-            System.out.println("valueresult[1] : "+valueresult[1]);
-            if(valueresult[1].compareTo(BigDecimal.ZERO) != 0){
-                
-                System.out.println("11valueresult[1] : "+valueresult[1]);
-            
-                if(billdeescList.get(i).getCurrency() == null){
-                    billdeescList.get(i).setCurrency("");
+        if("Air Ticket".equals(invType)){      
+            for (int i = 0; i < billdeescList.size(); i++) {
+                if(billdeescList.get(i).getMBilltype().getName().equals(invType) || billdeescList.get(i).getMBilltype().getName().equals("Air Additional")){
+                    BigDecimal[] valueresult = invoicedao.checkBillDescInuse(billdeescList.get(i).getId(), String.valueOf(billdeescList.get(i).getCost()), String.valueOf(billdeescList.get(i).getPrice()));
+                    System.out.println("valueresult[1] : "+valueresult[1]);
+                    if(valueresult[1].compareTo(BigDecimal.ZERO) != 0){
+
+                        System.out.println("11valueresult[1] : "+valueresult[1]);
+
+                        if(billdeescList.get(i).getCurrency() == null){
+                            billdeescList.get(i).setCurrency("");
+                        }
+                        if(billdeescList.get(i).getDetail() == null){
+                            billdeescList.get(i).setDetail("");
+                        }
+                        result += "<tr>"
+                            + "<td align=\"center\">" + (count+1) + "</td>"
+                            + "<td class=\"hidden\"><input type=\"hidden\" id=\"invoiceIdSearch"+(count+1)+"\" name=\"invoiceIdSearch"+(count+1)+"\" value=" + billdeescList.get(i).getId() + "></td>"
+                            + "<td class=\"hidden\"><input type=\"hidden\" id=\"invoiceIdType"+(count+1)+"\" name=\"invoiceIdType"+(count+1)+"\" value=" + billdeescList.get(i).getMBilltype().getId() + "></td>"
+                            + "<td>" + billdeescList.get(i).getMBilltype().getName() + "</td>"
+                            + "<td>" +  billdeescList.get(i).getDetail() + "</td>"
+                            + "<td align=\"center\">" + valueresult[0] + "</td>"
+                            + "<td align=\"center\">" + valueresult[1] + "</td>"
+                            + "<td align=\"center\">" + billdeescList.get(i).getCurrency() + "</td>"
+                            + "<td align=\"center\"><center><a href=\"\" onclick=\"addInvoiceDetail("+(count+1)+")\"><span class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                            + "<td class=\"hidden\"><input type=\"hidden\" id=\"RefItemId"+(count+1)+"\" name=\"RefItemId"+(count+1)+"\" value=" + billdeescList.get(i).getRefItemId() + "></td>"
+                            + "</tr>";
+                        count+=1;
+                    }
                 }
-                if(billdeescList.get(i).getDetail() == null){
-                    billdeescList.get(i).setDetail("");
+            }
+        }else{
+            for (int i = 0; i < billdeescList.size(); i++) {
+                if(!billdeescList.get(i).getMBilltype().getName().equals("Air Ticket") && !billdeescList.get(i).getMBilltype().getName().equals("Air Additional")){
+                    BigDecimal[] valueresult = invoicedao.checkBillDescInuse(billdeescList.get(i).getId(), String.valueOf(billdeescList.get(i).getCost()), String.valueOf(billdeescList.get(i).getPrice()));
+                    System.out.println("valueresult[1] : "+valueresult[1]);
+                    if(valueresult[1].compareTo(BigDecimal.ZERO) != 0){
+
+                        System.out.println("11valueresult[1] : "+valueresult[1]);
+
+                        if(billdeescList.get(i).getCurrency() == null){
+                            billdeescList.get(i).setCurrency("");
+                        }
+                        if(billdeescList.get(i).getDetail() == null){
+                            billdeescList.get(i).setDetail("");
+                        }
+                        result += "<tr>"
+                            + "<td align=\"center\">" + (count+1) + "</td>"
+                            + "<td class=\"hidden\"><input type=\"hidden\" id=\"invoiceIdSearch"+(count+1)+"\" name=\"invoiceIdSearch"+(count+1)+"\" value=" + billdeescList.get(i).getId() + "></td>"
+                            + "<td class=\"hidden\"><input type=\"hidden\" id=\"invoiceIdType"+(count+1)+"\" name=\"invoiceIdType"+(count+1)+"\" value=" + billdeescList.get(i).getMBilltype().getId() + "></td>"
+                            + "<td>" + billdeescList.get(i).getMBilltype().getName() + "</td>"
+                            + "<td>" +  billdeescList.get(i).getDetail() + "</td>"
+                            + "<td align=\"center\">" + valueresult[0] + "</td>"
+                            + "<td align=\"center\">" + valueresult[1] + "</td>"
+                            + "<td align=\"center\">" + billdeescList.get(i).getCurrency() + "</td>"
+                            + "<td align=\"center\"><center><a href=\"\" onclick=\"addInvoiceDetail("+(count+1)+")\"><span class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                            + "<td class=\"hidden\"><input type=\"hidden\" id=\"RefItemId"+(count+1)+"\" name=\"RefItemId"+(count+1)+"\" value=" + billdeescList.get(i).getRefItemId() + "></td>"
+                            + "</tr>";
+                        count+=1;
+                    }
                 }
-                result += "<tr>"
-                    + "<td align=\"center\">" + (count+1) + "</td>"
-                    + "<td class=\"hidden\"><input type=\"hidden\" id=\"invoiceIdSearch"+(count+1)+"\" name=\"invoiceIdSearch"+(count+1)+"\" value=" + billdeescList.get(i).getId() + "></td>"
-                    + "<td class=\"hidden\"><input type=\"hidden\" id=\"invoiceIdType"+(count+1)+"\" name=\"invoiceIdType"+(count+1)+"\" value=" + billdeescList.get(i).getMBilltype().getId() + "></td>"
-                    + "<td>" + billdeescList.get(i).getMBilltype().getName() + "</td>"
-                    + "<td>" +  billdeescList.get(i).getDetail() + "</td>"
-                    + "<td align=\"center\">" + valueresult[0] + "</td>"
-                    + "<td align=\"center\">" + valueresult[1] + "</td>"
-                    + "<td align=\"center\">" + billdeescList.get(i).getCurrency() + "</td>"
-                    + "<td align=\"center\"><center><a href=\"\" onclick=\"addInvoiceDetail("+(count+1)+")\"><span class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
-                    + "<td class=\"hidden\"><input type=\"hidden\" id=\"RefItemId"+(count+1)+"\" name=\"RefItemId"+(count+1)+"\" value=" + billdeescList.get(i).getRefItemId() + "></td>"
-                    + "</tr>";
-                count+=1;
             }
         }
         return result;

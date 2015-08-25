@@ -35,10 +35,10 @@ public class InvoiceImpl implements InvoiceDao{
     private static final String DELETEALL_INVOICE_QUERY ="DELETE FROM Invoice in where in.id = :invouceID";
     private static final String GET_INVOICE = "FROM Invoice inv where inv.invNo = :invoiceNo";
     private static final String GET_INVOICE_FROMID = "FROM Invoice inv where inv.id = :invoiceId";
-    private static final String SEARCH_INVOICE = "FROM Invoice inv where inv.id = :invoiceId and inv.invType = :invoiceType and inv.department = :invoiceDepartment";
+    private static final String SEARCH_INVOICE = "FROM Invoice inv where inv.id = :invoiceId and inv.invType = :invoiceType and inv.department = :invoiceDepartment ";
     private static final String SELECT_INVOICE_DETAIL = "FROM InvoiceDetail ind where ind.invoice.id = :invoiceID";
     private static final String DELETE_INVOICEDETAIL_QUERY ="DELETE FROM InvoiceDetail ind where ind.id = :invoiceDetailID";
-    private static final String SEARCH_INVOICE_TYPE = "FROM Invoice inv where inv.department = :invoiceDepartment and inv.invType = :invoiceType ORDER BY inv.invNo DESC LIMIT 1";
+    private static final String SEARCH_INVOICE_TYPE = "FROM Invoice inv where inv.department = :invoiceDepartment and inv.invType = :invoiceType  and inv.invNo  LIKE :invoiceNo  ORDER BY inv.invNo DESC LIMIT 1";
     private static final String GET_INVOICE_FROMNO = "FROM Invoice inv where inv.invNo = :invoiceNo and inv.department = :department and inv.invType = :invType";
     private static final String GET_INVOICE_FOR_TAX_INVOICE = "FROM Invoice inv where inv.invNo = :invoiceNo and inv.department = :department";
     private static final String GET_BILLDESC = "from InvoiceDetail inv WHERE inv.billableDesc.id = :billableDescId";
@@ -296,12 +296,13 @@ public class InvoiceImpl implements InvoiceDao{
     }
 
     @Override
-    public String searchInvoiceNo(String department,String invoiceType) {
+    public String searchInvoiceNum(String department,String invoiceType,String invoiceNo) {
         String invoiceNoLast = "";
         Session session = this.sessionFactory.openSession();
         List<Invoice> invoiceList = session.createQuery(SEARCH_INVOICE_TYPE)
                 .setParameter("invoiceDepartment", department)
                 .setParameter("invoiceType", invoiceType)
+                .setParameter("invoiceNo", "%"+invoiceNo+"%")
                 .list();
         if (invoiceList.isEmpty()) {
             return null;
