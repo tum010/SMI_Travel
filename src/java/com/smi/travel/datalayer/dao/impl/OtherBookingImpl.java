@@ -89,31 +89,25 @@ public class OtherBookingImpl implements OtherBookingDao{
             transaction = session.beginTransaction();
             String date = util.convertDateToString(otherbook.getOtherDate());
             String productId = otherbook.getProduct().getId();
-            List<StockDetail> stockDetailList = getStockByDate(productId, date, session);
-            if(stockDetailList.isEmpty()){
+            Stock stock = getStockByDate(productId, date, session);
+            if(stock == null){
                 result = "notStock";
                 return result;
             }
             
+            List<StockDetail> stockDetailList = new ArrayList<StockDetail>();
+            String productIdChk = stock.getProduct().getId();
+            int isStock = getIsStock(productIdChk, session);
+            if(isStock == 1){
+                result = "isStock";                              
+            } else {
+                result = "notStock";
+                return result;
+            }
+                                 
             int adultQty = otherbook.getAdQty();
             int childQty = otherbook.getChQty();
             int infantQty = otherbook.getInQty();
-            int adultCount = 0;
-            int childCount = 0;
-            int infantCount = 0;
-            int noneCount = 0;
-            for(int i=0;i<stockDetailList.size();i++){
-                String typeName = stockDetailList.get(i).getTypeId().getName();
-                if("ADULT".equalsIgnoreCase(typeName)){
-                    adultCount++;
-                } else if("CHILD".equalsIgnoreCase(typeName)){
-                    childCount++;
-                } else if("INFANT".equalsIgnoreCase(typeName)){
-                    infantCount++;
-                } else if("NONE".equalsIgnoreCase(typeName)){
-                    noneCount++;
-                }
-            }
             
             int ad = 0;
             int adCancel = 0;
@@ -131,6 +125,28 @@ public class OtherBookingImpl implements OtherBookingDao{
             System.out.println("adult : "+ ad );
             System.out.println("child : "+ ch );
             System.out.println("infant : "+ inf );
+            
+            String stockDetailId = stock.getId();
+            stockDetailList = new ArrayList<StockDetail>();
+            stockDetailList = getStockDetail(stockDetailId, session);                        
+            if(stockDetailList.isEmpty()) {
+                if(ad != adultQty){
+                    adCancel = adultQty - ad;
+                }
+                if(ch != childQty){
+                    chCancel = childQty - ch;
+                }
+                if(inf != infantQty){
+                    infCancel = infantQty - inf;
+                }
+
+                String adStr = String.valueOf(adCancel);
+                String chStr = String.valueOf(chCancel);
+                String infStr = String.valueOf(infCancel);
+                result = adStr+"||"+chStr+"||"+infStr;
+                return result;
+            }
+            
             OtherBooking otherBooking = new OtherBooking();
             String otherbookId = otherbook.getId();
             otherBooking.setId(otherbookId);
@@ -203,29 +219,18 @@ public class OtherBookingImpl implements OtherBookingDao{
         return result;
     }
     
-    private List<StockDetail> getStockByDate(String Id, String date, Session session) {
-        List<StockDetail> fail = new ArrayList<StockDetail>();
+    private Stock getStockByDate(String Id, String date, Session session) {
         try {       
-            String queryDate = "from Stock s where s.effectiveFrom <= '" + date + "' and s.effectiveTo >= '" + date + "' and s.product.id = " + Id;
+            String queryDate = "from Stock s where s.effectiveFrom <= '" + date + "' and s.effectiveTo >= '" + date + "' and s.product.id = " + Id + " order by s.effectiveFrom asc ";
             List<Stock> stockList =  session.createQuery(queryDate).list();
             if(stockList.isEmpty()){                
-                return fail;
+                return null;
             }
-            
-            for(int i=0;i<=stockList.size();i++){
-                String productId = stockList.get(i).getProduct().getId();
-                int result = getIsStock(productId, session);
-                if(result == 1){
-                    String stockDetailId = stockList.get(i).getId();
-                    List<StockDetail> stockDetailList = getStockDetail(stockDetailId, session);
-                    return stockDetailList;
-                }
-            }
-            
+            return stockList.get(0);                       
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return fail;
+        return null;
     }
     
     private List<Integer> getStockNumFromOtherBookID(String Id , Session session) {
@@ -582,7 +587,7 @@ public class OtherBookingImpl implements OtherBookingDao{
             String hql = "";
             if("reuse".equalsIgnoreCase(statusTicket)){
                 status = "1";
-                hql = "UPDATE StockDetail stock set stock.MStockStatus.id = :status , stock.otherBooking.id = :productid where stock.id  = :stockdetailid ";
+                hql = "UPDATE StockDetail stock set stock.MStockStatus.id = :status , stock.otherBooking.id = :productid , stock.staff.id = :staffId , stock.pickupDate = :pickupDate where stock.id  = :stockdetailid ";
             } else if("refund".equalsIgnoreCase(statusTicket)){
                 status = "4";
                 hql = "UPDATE StockDetail stock set stock.MStockStatus.id = :status where stock.id  = :stockdetailid ";
@@ -596,6 +601,8 @@ public class OtherBookingImpl implements OtherBookingDao{
             query.setParameter("stockdetailid", stockdetailid);
             if("reuse".equalsIgnoreCase(statusTicket)){
                 query.setParameter("productid", null);
+                query.setParameter("staffId", null);
+                query.setParameter("pickupDate", null);
             }          
             query.executeUpdate();
             result = "stock success";
