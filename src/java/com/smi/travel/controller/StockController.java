@@ -175,9 +175,11 @@ public class StockController extends SMITravelController {
             String stockDetailId = request.getParameter("stockDetailId"+i);
             String codeItemList = request.getParameter("codeItemList"+i);
             String typeitem = request.getParameter("SeleteTypeItemList"+i);
-            Integer  payStatusItemListInt = new Integer("0");
-            mStockStatus.setName("NEW");
-            mStockStatus.setId("1");
+            String pay = request.getParameter("payTemp"+i);
+            String items = request.getParameter("itemTemp"+i);
+            Integer  payStatusItemListInt = new Integer(pay);
+//            mStockStatus.setName("NEW");
+            mStockStatus.setId(items);
             mPriceCategory.setId(typeitem);
             if(!"".equals(stockDetailId)){
                 stockDetail.setId(stockDetailId);

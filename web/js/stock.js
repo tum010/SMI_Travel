@@ -330,7 +330,9 @@ function AddRow(row) {
             '<td><input type="text"  class="form-control" name="codeItemList' + row + '" id="codeItemList' + row + '" value=""/></td>' +
             '<td><select id="SeleteTypeItemList' + row + '" name="SeleteTypeItemList' + row + '" class="form-control"><option></option>'+ select +'</select></td>' +
             '<td>No Paid</td>' +
+            '<td class="hidden"><input type="text"  class="form-control" name="payTemp' + row + '" id="payTemp' + row + '" value="0" /></td>'+
             '<td>NEW</td>' +
+            '<td class="hidden"><input type="text"  class="form-control" name="itemTemp' + row + '" id="itemTemp' + row + '" value="1" /></td>'+
             '<td class="text-center"><a href="#" onclick="deleteItemListRow('+row+')"  data-toggle="modal" data-target="" class="remCF" id="ButtonRemove' + row + '"><span id="Spanremove' + row + '" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal" data-target="#delStockModal"></span></a></td>' +
             '</tr>'
     );
