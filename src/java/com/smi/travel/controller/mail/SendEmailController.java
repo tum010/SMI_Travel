@@ -45,11 +45,15 @@ public class SendEmailController extends SMITravelController {
     private static final String SHOWSTAFF = "showstaff";
     private static final String SHOWLEADER = "showleader";
     private static final String OPTIONSENDMAIL = "optionsend";
+    private static final String RECIPIENT = "recipient";
+    private static final String SENDCC = "sendCc"; 
+    private static final String SUBJECT = "subject";  
+    private static final String MESSAGE = "message";        
     private JavaMailSender mailSender;
     private ReportService reportservice;
     private DataSource datasource;
     private Mail sendMail;
-    private String TransectionResult = "";
+    private static  final String TransectionResult = "result";
 
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -103,7 +107,7 @@ public class SendEmailController extends SMITravelController {
                 }
             }
             if (TaxInvoiceEmail.equalsIgnoreCase(name)) {
-                data = reportservice.getTaxInvoiceEmail(reportid,1);
+                data = reportservice.getTaxInvoiceEmail(reportid,option);
                 JRDataSource dataSource = new JRBeanCollectionDataSource(data);
                 jasperFileName = "TaxInvoiceEmailReport.jasper";
                 pdfFileName = "taxinvoice.pdf";
@@ -159,6 +163,10 @@ public class SendEmailController extends SMITravelController {
         request.setAttribute(SHOWSTAFF, showstaff);
         request.setAttribute(SHOWLEADER, showleader);
         request.setAttribute(OPTIONSENDMAIL, optionsend);
+        request.setAttribute(RECIPIENT, recipientAddress);
+        request.setAttribute(SENDCC, cc);
+        request.setAttribute(SUBJECT, subject);
+        request.setAttribute(MESSAGE, message);        
         return ModelMail;
     }
 

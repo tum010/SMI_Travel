@@ -28,6 +28,18 @@
 <body>
     
 <div class ="container"  style="padding-top: 30px;" ng-app="">
+    <c:if test="${requestScope['result'] == 'success'}">                                            
+        <div id="textAlertDivSave"  style="" class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Send Email Success!.</strong> 
+        </div>
+    </c:if>        
+    <c:if test="${requestScope['result'] == 'fail'}">
+        <div id="textAlertDivNotSave"  style="" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Send Email Unsuccess!.</strong> 
+        </div>
+    </c:if>
     <div class="row">
         <div class="col-sm-12">
             <form action="SendMail.smi" method="post" id="Mail" role="form">
@@ -40,18 +52,19 @@
                 
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">New Message</h3>
+                        <h3 class="panel-title">Send Email</h3>
                     </div>
                     
                     <div class="panel-body" style="padding-top: 30px">
                         <div class="col-sm-12">
                             <div class="col-xs-1 text-right">
-                                <button style="height: 50px ;width: 120px" type="submit" onclick="" class="form-control btn btn-primary">Send</button> 
+                                <button style="height: 50px ;width: 120px" type="submit" onclick="sendEmailStatus()" class="form-control btn btn-primary">Send</button>
                             </div>
+                            <div class="col-xs-1" style="padding: 20px 0px 0px 50px"><i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i></div>
                             <div class="col-xs-10 text-right">
-                                <label class="col-sm-2 control-label text-right">To : </label>
+                                <label class="col-sm-1 control-label text-right">To : </label>
                                 <div class="input-group text-left" >
-                                    <input type="text" class="form-control" id="recipient" name="recipient" size="50" style="width: 200%" > 
+                                    <input type="text" class="form-control " id="recipient" name="recipient" size="50" style="width: 200%" value="${requestScope['recipient']}" onkeypress="sendEmailStatusCancel()"> 
                                 </div>
                             </div>
                         </div>
@@ -59,9 +72,9 @@
                             <div class="col-xs-1 text-right">
                             </div>
                             <div class="col-xs-10 text-right">
-                                <label class="col-sm-2 control-label text-right">Cc : </label>
+                                <label class="col-sm-2 control-label text-right" style="width: 177px">Cc : </label>
                                 <div class="input-group text-left" >
-                                    <input type="text" class="form-control" id="sendCc" name="sendCc" size="50" style="width: 200%"> 
+                                    <input type="text" class="form-control" id="sendCc" name="sendCc" size="50" style="width: 200%" value="${requestScope['sendCc']}" onkeypress="sendEmailStatusCancel()"> 
                                 </div>
                             </div>
                         </div>
@@ -69,9 +82,9 @@
                             <div class="col-xs-1 text-right">
                             </div>
                             <div class="col-xs-10 text-right">
-                                <label class="col-sm-2 control-label text-right">Subject : </label>
+                                <label class="col-sm-2 control-label text-right" style="width: 177px">Subject : </label>
                                 <div class="input-group text-left" >
-                                    <input type="text" class="form-control" id="subject" name="subject" size="50" style="width: 200%"> 
+                                    <input type="text" class="form-control" id="subject" name="subject" size="50" style="width: 200%" value="${requestScope['subject']}" onkeypress="sendEmailStatusCancel()"> 
                                 </div>
                             </div>
                         </div>
@@ -79,7 +92,7 @@
                             <div class="col-xs-1 text-right">
                             </div>
                             <div class="col-xs-10 text-right">
-                                <label class="col-sm-2 control-label text-right">File : </label>
+                                <label class="col-sm-2 control-label text-right" style="width: 177px">File : </label>
                                 <div class="input-group text-left" >
                                     <input type="text" class="form-control" id="attachfile" name="attachfile" readonly  value="${reportname}" size="50" style="width: 200%"> 
                                 </div>
@@ -89,9 +102,9 @@
                             <div class="col-xs-1 text-right">
                             </div>
                             <div class="col-xs-10 text-right">
-                                <label class="col-sm-2 control-label text-right"></label>
+                                <label class="col-sm-2 control-label text-right" style="width: 177px"></label>
                                 <div class="input-group text-left" >
-                                    <textarea rows="10" cols="52" class="form-control" id="message" name="message" style="width: 200%"></textarea>  
+                                    <textarea rows="10" cols="52" class="form-control" id="message" name="message" style="width: 200%" onkeypress="sendEmailStatusCancel()">${requestScope['message']}</textarea>  
                                 </div>
                             </div>
                         </div>
@@ -105,7 +118,33 @@
 </html>
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
-
+        $('#Mail').bootstrapValidator({
+            container: 'tooltip',
+            excluded: [':disabled'],
+            feedbackIcons: {
+                valid: 'uk-icon-check',
+                invalid: 'uk-icon-times',
+                validating: 'uk-icon-refresh'
+            },
+            fields: {
+                recipient: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        notEmpty: {
+                            message: 'Please specify a destination email.'
+                        }
+                    }
+                },
+                subject: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        notEmpty: {
+                            message: 'Please specify a subject.'
+                        }
+                    }
+                }
+            }
+        });
     });
 
     function sendEmail(){
@@ -155,6 +194,14 @@
                    alert('send unsuccessful');
                 }
             });
+    }
+    
+    function sendEmailStatus(){
+        $("#ajaxload").removeClass("hidden");
+    }
+    
+    function sendEmailStatusCancel(){
+        $("#ajaxload").addClass("hidden");
     }
 
 </script>
