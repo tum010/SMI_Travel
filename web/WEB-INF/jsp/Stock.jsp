@@ -212,7 +212,9 @@
                                         <th style="width: 20%">Code</th>
                                         <th style="width: 10%">Type</th>
                                         <th style="width: 15%">Pay Status</th>
+                                        <th class="hidden">Pay Status Temp</th>
                                         <th style="width: 15%">Item Status</th>
+                                        <th class="hidden">Item Status Temp</th>
                                         <th style="width: 8%">Action</th>
                                     </tr>
                                 </thead>
@@ -260,7 +262,9 @@
                                             </select>                                             
                                         </td>                                
                                         <td>${pay}</td>
+                                        <td class="hidden"><input type="text"  class="form-control" name="payTemp${taxdesc.count}" id="payTemp${taxdesc.count}" value="${std.payStatus}" /></td>
                                         <td>${itemS}</td>
+                                        <td class="hidden"><input type="text"  class="form-control" name="itemTemp${taxdesc.count}" id="itemTemp${taxdesc.count}" value="${std.MStockStatus.id}" /></td>
                                         <td class="text-center">                                          
                                             <a href="#" onclick="deleteItemListRow('${taxdesc.count}','${std.code}')"  data-toggle="modal" data-target="" class="remCF" id="ButtonRemove${taxdesc.count}">
                                                 <span id="Spanremove${taxdesc.count}" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal" data-target="#delStockModal"></span>

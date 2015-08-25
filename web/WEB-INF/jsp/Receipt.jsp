@@ -367,6 +367,7 @@
                                                 <input id="invId${i.count}"  name="invId${i.count}"   type="hidden" value="${table.invoiceDetail.id}" >
                                                 <input type="hidden" name="tableId${i.count}" id="tableId${i.count}" value="${table.id}">
                                                 <input id="receiveAmountTemp${i.count}" name="receiveAmountTemp${i.count}"  type="hidden" value="${table.amount}" >
+                                                <input id="DescriptionReceiptDetail${i.count}" name="DescriptionReceiptDetail${i.count}"  type="hidden" value="${table.displayDescription}" >
                                                 <td>                                   
                                                     <select class="form-control" name="receiveProduct${i.count}" id="receiveProduct${i.count}">
                                                         <option  value="" >---------</option>
@@ -379,7 +380,10 @@
                                                         </c:forEach>
                                                     </select>                                                                  
                                                 </td>
-                                                <td><input maxlength="255" id="receiveDes${i.count}" name="receiveDes${i.count}" type="text" class="form-control" value="${table.displayDescription}"></td>
+                                                <td> 
+                                                    <a href="" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail('${i.count}')">${table.description}</a>                                           
+                                                </td>
+                                                <td class="hidden"><input maxlength="255" id="receiveDes${i.count}" name="receiveDes${i.count}" type="text" class="form-control" value="${table.description}"></td>
                                                 <td><input maxlength="10" id="receiveCost${i.count}"  name="receiveCost${i.count}"  type="text" class="form-control text-right"  value="${table.cost}" onkeyup="insertCommas(this)"></td>
                                                 <td>                                   
                                                     <select class="form-control" name="receiveCurCost${i.count}" id="receiveCurCost${i.count}">
@@ -435,15 +439,14 @@
                                 </table>      
                             </div>
                         </div> 
+                        <input type="hidden" id="InputDescriptionDetailId" name="InputDescriptionDetailId" value="">
                         <!--<input type="hidden" name="mAccPayBillable" id="mAccPayBillable" value="">-->
                         <input type="hidden" name="amountTemp" id="amountTemp" value="">
                         <input type="hidden" name="receiptIdDelete" id="receiptIdDelete" value="">
                         <input type="hidden" name="receiptDetailIdDelete" id="receiptDetailIdDelete" value="">
                         <input type="hidden" name="receiptRowDelete" id="receiptRowDelete" value="">
-                        
                         <input type="hidden" name="receiptCreditIdDelete" id="receiptCreditIdDelete" value="">
                         <input type="hidden" name="receiptCreditRowDelete" id="receiptCreditRowDelete" value="">
-                        
                         <input type="hidden" name="action" id="action" value="">
                         <input type="hidden" class="form-control" id="countRowCredit" name="countRowCredit" value="${requestScope['creditRowCount']}" />
                         <input type="hidden" class="form-control" id="counter" name="counter" value="${requestScope['productRowCount']}" />
@@ -1117,6 +1120,34 @@
     </div>
 </div>
 
+<div class="modal fade " id="DescriptionReceiptDetailModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Description</h4>
+            </div>
+            
+            <div class="modal-body" >
+                <div class="row">
+                    <div class="col-md-2">
+                        <h5>Description</h5>
+                    </div>
+                    <div class="col-md-10">
+                        <input maxlength="255" id="InputDescriptionDetail" name="InputDescriptionDetail" type="text" class="form-control" value=""></td>
+                        <!--<textarea id="InputDescriptionDetail" rows="12" cols="80" class="form-control" >-->
+<!--                        </textarea>-->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">  
+                <button type="button" onclick="saveDescriptionDetail()" class="btn btn-success" data-dismiss="modal">OK</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <c:if test="${! empty requestScope['saveresult']}">
     <c:if test="${requestScope['saveresult'] =='save successful'}">        
         <script language="javascript">
@@ -1464,10 +1495,12 @@
             $("#ReceiptListTable tbody").append(
                 '<tr style="higth 100px">' +
                 '<input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >' +
+                '<input id="DescriptionReceiptDetail' + row + '" name="DescriptionReceiptDetail' + row + '"  type="hidden" >' +
                 '<td>' + 
                 '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="">---------</option></select>' +                          
                 '</td>' +
-                '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" ></td>' +
+                '<td><a href="" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail('+row+')" id="InputDescription' + row + '">new : </a> </td>' +           
+                '<td class="hidden"><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" ></td>' +
                 '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control" onkeyup="insertCommas(this)" disabled="disabled" ></td>' +
                 '<td>' + 
                 '<select class="form-control" name="receiveCurCost' + row + '" id="receiveCurCost' + row + '" disabled="disabled"><option value="">---------</option></select>' +                          
@@ -1740,7 +1773,7 @@ function invoicenoValidate(){
     $('#invoicenopanel').addClass('has-success');
     $('#invoicenopanel').removeClass('has-error');  
 }
-function addProduct(product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,checkadd){
+function addProduct(product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,checkadd,disdescription,number){
     if(checkadd == 1){
         $("#ButtonSearchRefNo").attr("disabled", "disabled");
         $("#searchPaymentNoAir").attr("disabled", "disabled");
@@ -1755,9 +1788,9 @@ function addProduct(product,description,cost,cur,isVat,vat,amount,currency,invId
         $("#searchPaymentNoTour").attr("disabled", "disabled");
     }
     var tempCount = parseInt($("#counter").val());
-    AddDataRowProduct(tempCount,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode);
+    AddDataRowProduct(tempCount,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,disdescription,number);
 }
-function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode) {
+function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,disdescription,number) {
     var rowAll = $("#ReceiptListTable tr").length;
     var tempCount = parseInt(rowAll-2);
 //    alert(rowAll + "___" + tempCount + " row :: "+row);
@@ -1786,10 +1819,12 @@ function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,cur
         '<input id="paymentId' + row + '" name="paymentId' + row + '"  type="hidden" value="'+paymentId+'" >' +
         '<input id="airlineCode' + row + '" name="airlineCode' + row + '"  type="hidden" value="'+airlineCode+'" >' +
         '<input id="receiveAmountTemp' + row + '" name="receiveAmountTemp' + row + '"  type="hidden" value="'+amount+'" >' +
+        '<input id="DescriptionReceiptDetail' + row + '" name="DescriptionReceiptDetail' + row + '"  type="hidden" value="'+disdescription+'" >' +
         '<td>' + 
         '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="'+product+'" selected></option></select>' +                          
         '</td>' +
-        '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" value="'+description+'"></td>' +
+        '<td><a href="" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail('+row+')" id="InputDescription' + row + '">'+ description + ' : '+number+' </a></td>' +      
+        '<td class="hidden"><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" value="'+description+'"></td>' +
         '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control" value="'+cost+'" onkeyup="insertCommas(this)" disabled="disabled"></td>' +
         '<td>' + 
         '<select class="form-control" name="receiveCurCost' + row + '" id="receiveCurCost' + row + '" disabled="disabled"><option value="'+cur+'" ></option></select>' +                          
@@ -2201,5 +2236,21 @@ function checkAmount(row){
             document.getElementById('receiveAmount'+row).value = amountTemp; 
         }
     }); 
+}
+
+function getDescriptionDetail(row){
+    var description = $('#DescriptionReceiptDetail'+row).val();
+    $('#InputDescriptionDetailId').val(row);
+    $('#InputDescriptionDetail').val(description);
+}
+
+function saveDescriptionDetail(){
+    var row = $('#InputDescriptionDetailId').val();
+    var descriptionDetail = $('#InputDescriptionDetail').val();
+    $('#DescriptionReceiptDetail'+row).val(descriptionDetail);
+    $('#InputDescriptionDetail'+row).val(descriptionDetail);    
+    $('#InputDescription'+row).val(descriptionDetail); 
+    
+    
 }
 </script>
