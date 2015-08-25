@@ -120,8 +120,10 @@ public class SendEmailController extends SMITravelController {
                 if (checkDirectory(path[0] + username)) {
                     result = reportservice.printreport(jasperFileName, username + "\\" + pdfFileName, dataSource);
                 }
-            }
-        }    
+             }
+        }             
+            
+
         System.out.println("result : " + result);
         // sends the e-mail
         if ("success".equalsIgnoreCase(result)) {
@@ -155,15 +157,20 @@ public class SendEmailController extends SMITravelController {
         request.setAttribute(SHOWLEADER, showleader);
         return ModelMail;
     }
-        
 
-    public boolean checkDirectory(String pathFile) {
+    
+    
+
+    public boolean checkDirectory(String pathFile){
         File f = new File(pathFile);
         if (!f.exists()) {
             new File(pathFile).mkdir();
         }
         return f.exists();
     }
+
+    
+    
 
     public JavaMailSender getMailSender() {
         return mailSender;
