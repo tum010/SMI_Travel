@@ -25,7 +25,7 @@ public interface InvoiceDao {
     //UPDATE Invoice inv set inv.isLock = :LockStatus where inv.id = :InvoiceId
     public String DeleteInvoiceDetail(String InvoiceDetailId);
     public Invoice getInvoiceFromInvoiceNumber(String InvoiceNumber);
-    public String searchInvoiceNo(String department,String invoiceType);
+    public String searchInvoiceNum(String department,String invoiceType,String invoiceNo);
     public Invoice searchInvoiceNo(String invoiceId,String department,String invoiceType);
     public Invoice getInvoiceFromId(String invoiceId);
     public List<Invoice> getSearchInvoice(String fromData,String toDate ,String department,String type);
