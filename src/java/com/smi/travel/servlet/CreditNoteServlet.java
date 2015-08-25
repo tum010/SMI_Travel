@@ -15,26 +15,21 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Kanokporn
+ * @author nanthachaip
  */
-public class InvoiceServlet implements AbstractAJAXServlet{
+public class CreditNoteServlet implements AbstractAJAXServlet {
 
     @Override
     public Map process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Map result = new HashMap();
         String servletName = request.getParameter("servletName");
         String type = request.getParameter("type");
-        String searchRefNo = request.getParameter("refNo");
-        String typeId = request.getParameter("typeId");
-        String invType = request.getParameter("invType");
-        
+        String cnDetailId = request.getParameter("cnDetailId");
+        Map result = new HashMap();
+
+        result.put("cnDetailId", cnDetailId);
         result.put("servletName", servletName);
-        result.put("invType", invType);
         result.put("type", type);
-        result.put("typeId", typeId);
-        result.put("refNo", searchRefNo);
-        
-        return result; 
+        return result;
     }
-    
+
 }

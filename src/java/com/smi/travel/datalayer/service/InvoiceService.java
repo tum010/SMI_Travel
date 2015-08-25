@@ -62,8 +62,8 @@ public class InvoiceService {
         return invoiceDao;
     }
     
-    public String searchInvoiceNo(String department ,String invoiceType){
-        return  invoiceDao.searchInvoiceNo(department, invoiceType);
+    public String searchInvoiceNum(String department ,String invoiceType,String invoiceNo){
+        return  invoiceDao.searchInvoiceNum(department, invoiceType,invoiceNo);
     }
     
     public List<InvoiceDetail> getInvoiceDetailFromBillableDescId(String billableDescId){
