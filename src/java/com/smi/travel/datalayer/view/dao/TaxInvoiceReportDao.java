@@ -7,10 +7,11 @@
 package com.smi.travel.datalayer.view.dao;
 
 import com.smi.travel.datalayer.report.model.TaxInvoiceReport;
+import java.util.List;
 /**
  *
  * @author chonnasith
  */
 public interface TaxInvoiceReportDao {
-    public TaxInvoiceReport getTaxInvoice();
+    public List getTaxInvoice(String taxInvId,int option);
 }

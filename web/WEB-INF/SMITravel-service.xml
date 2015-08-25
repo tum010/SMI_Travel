@@ -154,6 +154,8 @@
         <property name="genreport" ref="GenerateReport" />
         <property name="taxInvoiceDao" ref="TaxInvoiceReportDao" />
         <property name="taxInvoiceEmailDao" ref="TaxInvoiceEmailReportDao" />
+        <property name="creditNoteReportdao" ref="CreditNoteReportDao" />
+        
     </bean> 
     
     

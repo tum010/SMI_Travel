@@ -11,6 +11,7 @@ package com.smi.travel.datalayer.report.model;
  * @author chonnasith
  */
 public class TaxInvoiceReport {
+    private String id;
     private String customer;
     private String address;
     private String tel;
@@ -19,6 +20,7 @@ public class TaxInvoiceReport {
     private String paid;
     private String taxdate;
     private String description;
+    private String nondescription;
     private String invoice;
     private String amount;
     private String total;
@@ -145,5 +147,33 @@ public class TaxInvoiceReport {
 
     public void setTextamount(String textamount) {
         this.textamount = textamount;
+    }
+
+    /**
+     * @return the id
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the nondescription
+     */
+    public String getNondescription() {
+        return nondescription;
+    }
+
+    /**
+     * @param nondescription the nondescription to set
+     */
+    public void setNondescription(String nondescription) {
+        this.nondescription = nondescription;
     }
 }

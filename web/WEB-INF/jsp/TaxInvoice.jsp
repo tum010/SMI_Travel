@@ -386,7 +386,7 @@
                                     <div class="col-xs-12 ">                                       
                                         <div class="col-md-1 text-right " style="width: 200px">
                                             <select class="form-control" name="select_print" id="select_print">
-                                                <option  value="">---------------</option>
+                                                <option  value="">--- Select Print ---</option>
                                                 <option  value="taxInvoice">Tax Invoice</option>
                                                 <option  value="taxInvoiceEmail">Tax Invoice Email</option>
                                             </select>
@@ -396,11 +396,16 @@
                                             <c:if test="${(taxInvoice.id == '') || (taxInvoice.id == null) }">        
                                                 <c:set var="print" value="disabled='true'" />
                                             </c:if>
-                                            <button type="button" onclick="printTaxInvoice()" class="btn btn-default" ${print}>
+                                            <button type="button" onclick="selectPrintType()" class="btn btn-default" ${print}>
                                                 <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Print
                                             </button>
                                         </div>
-                                        <div class="col-md-1 " style="width: 350px"></div>
+                                        <div class="col-md-1 text-right" style="width: 170px">
+                                            <button type="button" class="btn btn-default" onclick="sendEmailTaxInvoice()">
+                                                <span id="buttonEmail" class="glyphicon glyphicon-send" ></span> SendEmail 
+                                            </button>
+                                        </div>        
+                                        <div class="col-md-1 " style="width: 180px"></div>
                                         <div class="col-md-2 text-right">
                                             <c:set var="isDisableVoid" value="disabled='true'" />
                                             <c:set var="isEnableVoid" value="style='display: none;'" />
@@ -654,6 +659,38 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<!--Print Modal-->
+<div class="modal fade" id="PrintTaxInvoiceModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Print Tax Invoice</h4>
+            </div>
+            <div class="modal-body" id="printReceiptModal" >
+                <div class="col-xs-1" style="width: 280px">
+                    <label class="text-right">Select option for print tax invoice<font style="color: red">*</font></label>                                    
+                </div>
+                <div class="col-xs-1" style="width: 200px" >
+                    <select name="optionPrint" id="optionPrint" class="form-control" style="height:34px">
+                        <option value="1" >Not Show Description</option>
+                        <option value="2" >Show Description</option>
+                        <option value="3" >Print Format Package Tour</option>
+                    </select>
+                </div>
+                </br>
+                </br>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="printTaxInvoice()"  data-dismiss="modal">
+                    <span id="buttonPrint" class="glyphicon glyphicon-print" ></span> Print 
+                </button>          
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <select class="form-control hidden" name="select_product_list" id="select_product_list">
     <c:forEach var="product" items="${product_list}" varStatus="status">                                              
         <option  value="${product.id}">${product.name}</option>
@@ -823,26 +860,40 @@
         });
     });
     
+    function selectPrintType(){
+        var printType = document.getElementById('select_print').value;
+        if(printType !== ""){
+            $("#PrintTaxInvoiceModal").modal("show");
+        }       
+    }  
+    
     function printTaxInvoice(){
+        $("#PrintTaxInvoiceModal").modal("hide");
         var printType = document.getElementById('select_print').value;
         var taxInvId = document.getElementById('TaxInvId').value;
+        var optionPrint =  document.getElementById('optionPrint').value;
         var department = '${page}';
-        
+
         if("W" === department){
             department = "Wendy";
         } else if("O" === department){
             department = "Outbound";
         } else if("I" === department){
             department = "Inbound";
-        } 
+        }
         
         if(printType === ""){
             alert("Please choose print type.");
         }else if(printType === "taxInvoice"){
-            window.open("report.smi?name=TaxInvoiceReport&taxInvId="+taxInvId+"&department="+department);
+            window.open("report.smi?name=TaxInvoiceReport&taxInvId="+taxInvId+"&department="+department+"&optionPrint="+optionPrint);
         }else if(printType === "taxInvoiceEmail"){
-            window.open("report.smi?name=TaxInvoiceEmailReport&taxInvId="+taxInvId+"&department="+department);
+            window.open("report.smi?name=TaxInvoiceEmailReport&taxInvId="+taxInvId+"&department="+department+"&optionPrint="+optionPrint);
         }
+    }
+    
+    function sendEmailTaxInvoice(){
+        var taxInvId = document.getElementById('TaxInvId').value;
+        window.open("SendMail.smi?reportname=TaxInvoiceEmail&reportid="+taxInvId);
     }
     
     function searchTaxInvoiceNo(){

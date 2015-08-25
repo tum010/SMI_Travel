@@ -64,6 +64,7 @@ public class ReportController extends SMITravelController {
     private static final String InvoiceReport = "InvoiceReport";
     private static final String TaxInvoiceReport = "TaxInvoiceReport";
     private static final String TaxInvoiceEmailReport = "TaxInvoiceEmailReport";
+    private static final String CreditNoteReport = "CreditNoteReport";
 
     private DataSource datasource;
     private static final Logger LOG = Logger.getLogger(ReportController.class.getName());
@@ -100,6 +101,7 @@ public class ReportController extends SMITravelController {
         String optionPrint = request.getParameter("optionPrint");
         String showStaff  = request.getParameter("showstaff");
         String showLeader = request.getParameter("showleader");
+        String cnid = request.getParameter("cnid");
         int option = Integer.parseInt(optionPrint == null ? "0":optionPrint);
 
         Map model = new HashMap();
@@ -167,9 +169,11 @@ public class ReportController extends SMITravelController {
         } else if (InvoiceReport.equalsIgnoreCase(name)) {
             data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader);
         } else if (TaxInvoiceReport.equalsIgnoreCase(name)) {
-            data = reportservice.getTaxInvoice();
+            data = reportservice.getTaxInvoice(taxInvId, option);
         } else if (TaxInvoiceEmailReport.equalsIgnoreCase(name)) {
-            data = reportservice.getTaxInvoiceEmail();
+            data = reportservice.getTaxInvoiceEmail(taxInvId, option);
+        }else if(CreditNoteReport.equalsIgnoreCase(name)){
+            data = reportservice.getCreditNoteReport(cnid);
         }
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);

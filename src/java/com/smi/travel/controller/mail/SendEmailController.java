@@ -36,8 +36,9 @@ public class SendEmailController extends SMITravelController {
     private static final Logger LOG = Logger.getLogger(SendEmailController.class.getName());
     private static final String InvoiceReport = "Invoice";
     private static final String ReceiptEmail = "ReceiptEmail";
+    private static final String TaxInvoiceEmail = "TaxInvoiceEmail";
+    private static final String CreditNote = "CreditNote";
     private ModelAndView ModelMail = new ModelAndView("SendMail");
-    private static final String TaxInvoiceEmailReport = "TaxInvoiceEmailReport";
     private static final String ReportName = "reportname";
     private static final String ReportID = "reportid";
     private static final String BANKID = "bankid";
@@ -98,9 +99,30 @@ public class SendEmailController extends SMITravelController {
                     result = reportservice.printreport(jasperFileName, username + "\\" + pdfFileName, dataSource);
                 }
             }
+            if (TaxInvoiceEmail.equalsIgnoreCase(name)) {
+                data = reportservice.getTaxInvoiceEmail(reportid,1);
+                JRDataSource dataSource = new JRBeanCollectionDataSource(data);
+                jasperFileName = "TaxInvoiceEmailReport.jasper";
+                pdfFileName = "taxinvoice.pdf";
+                pathAttachfile = path[0] + "\\" + username;
+                System.out.println("path : " + path[0] + username);
+                if (checkDirectory(path[0] + username)) {
+                    result = reportservice.printreport(jasperFileName, username + "\\" + pdfFileName, dataSource);
+                }
+            }
+            if (CreditNote.equalsIgnoreCase(name)) {
+                data = reportservice.getCreditNoteReport(reportid);
+                JRDataSource dataSource = new JRBeanCollectionDataSource(data);
+                jasperFileName = "CreditNote.jasper";
+                pdfFileName = "creditnote.pdf";
+                pathAttachfile = path[0] + "\\" + username;
+                System.out.println("path : " + path[0] + username);
+                if (checkDirectory(path[0] + username)) {
+                    result = reportservice.printreport(jasperFileName, username + "\\" + pdfFileName, dataSource);
+                }
+             }
+        }             
             
-            
-        }
 
         System.out.println("result : " + result);
         // sends the e-mail
@@ -136,13 +158,19 @@ public class SendEmailController extends SMITravelController {
         return ModelMail;
     }
 
-    public boolean checkDirectory(String pathFile) {
+    
+    
+
+    public boolean checkDirectory(String pathFile){
         File f = new File(pathFile);
         if (!f.exists()) {
             new File(pathFile).mkdir();
         }
         return f.exists();
     }
+
+    
+    
 
     public JavaMailSender getMailSender() {
         return mailSender;
