@@ -68,6 +68,14 @@ public class CreditNoteReportImpl implements  CreditNoteReportDao{
             cn.setReadsubtotal(util.setFormatMoney(B[10]));
             cn.setRemark(util.ConvertString(B[11]));
             cn.setUser(util.ConvertString(B[12]));
+            
+            String total = cn.getGrandtotal().replaceAll(",", "");
+            total = total.replaceAll("\\.", ",");
+            String[] totals = total.split(",");
+            int totalWord = 0;
+            totalWord = Integer.parseInt(String.valueOf(totals[0]));
+            cn.setTextamount(utilityFunction.convert(totalWord)+" baht");
+            
             data.add(cn);
         }
         return data;
