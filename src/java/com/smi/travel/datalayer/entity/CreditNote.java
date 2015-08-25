@@ -15,6 +15,7 @@ public class CreditNote  {
 
 
      private String id;
+     private MFinanceItemstatus MFinanceItemstatus;
      private String createBy;
      private Date createDate;
      private String cnNo;
@@ -30,7 +31,7 @@ public class CreditNote  {
     public CreditNote() {
     }
 
-    public CreditNote(String createBy, Date createDate, String cnNo, Date cnDate, String cnName, String cnAddress, String cnRemark, String apCode, String invoiceType, List creditNoteDetails,String department) {
+    public CreditNote(String createBy, Date createDate, String cnNo, Date cnDate, String cnName, String cnAddress, String cnRemark, String apCode, String invoiceType, List creditNoteDetails,String department,MFinanceItemstatus MFinanceItemstatus) {
        this.createBy = createBy;
        this.createDate = createDate;
        this.cnNo = cnNo;
@@ -40,6 +41,7 @@ public class CreditNote  {
        this.cnRemark = cnRemark;
        this.apCode = apCode;
        this.invoiceType = invoiceType;
+       this.MFinanceItemstatus = MFinanceItemstatus;
        this.creditNoteDetails = creditNoteDetails;
        this.department = department;
     }
@@ -128,6 +130,14 @@ public class CreditNote  {
 
     public void setDepartment(String department) {
         this.department = department;
+    }
+
+    public MFinanceItemstatus getMFinanceItemstatus() {
+        return MFinanceItemstatus;
+    }
+
+    public void setMFinanceItemstatus(MFinanceItemstatus MFinanceItemstatus) {
+        this.MFinanceItemstatus = MFinanceItemstatus;
     }
 
 

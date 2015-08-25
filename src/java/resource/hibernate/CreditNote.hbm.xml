@@ -7,6 +7,9 @@
             <column name="id" />
             <generator class="identity" />
         </id>
+        <many-to-one name="MFinanceItemstatus" class="com.smi.travel.datalayer.entity.MFinanceItemstatus" fetch="select">
+            <column name="status" />
+        </many-to-one>
         <property name="createBy" type="string">
             <column name="create_by" length="5" />
         </property>
