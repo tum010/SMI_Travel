@@ -155,7 +155,7 @@
                                             <!--<input type="" name="taxType" class="form-control" value=""/>-->
                                             <select name="taxType" >
                                                 <c:forEach var="item" items="${productTypeList}" >
-                                                    <option value="${item.id}" ${creditNoteDetail.MPaytype.id == item.id ? 'selected="selected"' : ''}>${item.name}</option>
+                                                    <option value="${item.id}" ${creditNoteDetail.MPayType.id == item.id ? 'selected="selected"' : ''}>${item.name}</option>
                                                 </c:forEach>
                                             </select>
                                         </td>
