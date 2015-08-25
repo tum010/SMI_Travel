@@ -20,7 +20,7 @@
             <column name="description" />
         </property>
         <property name="displayDescription" type="string">
-            <column name="display_description" />
+            <column name="display_description"  length="65535" />
         </property>
         <property name="cost" type="big_decimal">
             <column name="cost" precision="10" />
