@@ -90,7 +90,7 @@ import org.hibernate.Transaction;
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
-            result = gennarateReceiptNo(receipt.getDepartment() , receipt.getRecType());
+            result = gennarateReceiptNo(receipt.getDepartment() , receipt.getRecType() , receipt.getRecDate());
             receipt.setRecNo(result);
             session.save(receipt);
             
@@ -118,23 +118,22 @@ import org.hibernate.Transaction;
         return result;
     }
     
-    private String gennarateReceiptNo(String department, String receiptType){
+    private String gennarateReceiptNo(String department, String receiptType,Date recDate){
         String recNo = "";
         Session session = this.sessionFactory.openSession();
         List<String> list = new LinkedList<String>();
-        Date thisdate = new Date();
+//        Date thisdate = new Date();
         SimpleDateFormat df = new SimpleDateFormat();
         df.applyPattern("yyMM");
-        
         Query query = session.createSQLQuery("SELECT RIGHT(rec_no, 4) as recnum  FROM receipt where department = :department and rec_type = :recType and rec_no Like :recno  ORDER BY RIGHT(rec_no, 4) desc");
-        query.setParameter("recno", "%"+ df.format(thisdate) + "%");
+        query.setParameter("recno", "%"+ df.format(recDate) + "%");
         query.setParameter("department", department);
         query.setParameter("recType", receiptType);
 
         query.setMaxResults(1);
         list = query.list();
         if (list.isEmpty()) {
-            recNo = df.format(thisdate) + "-" + "0001";
+            recNo = df.format(recDate) + "-" + "0001";
         } else {
             recNo = String.valueOf(list.get(0));
             if (!recNo.equalsIgnoreCase("")) {
@@ -143,7 +142,7 @@ import org.hibernate.Transaction;
                 for (int i = temp.length(); i < 4; i++) {
                     temp = "0" + temp;
                 }
-                recNo = df.format(thisdate) + "-" + temp;
+                recNo = df.format(recDate) + "-" + temp;
             }
         }
         session.close();
@@ -478,6 +477,7 @@ import org.hibernate.Transaction;
         view.setRecName(detail.getRecName());
         view.setRecType(detail.getRecType());
         view.setDepartment(detail.getDepartment());
+        view.setRecDate(detail.getRecDate());
         String InvoiceNo ="";
         BigDecimal amount = new BigDecimal(0);
         for(int i=0;i<detail.getReceiptDetails().size();i++){
@@ -491,7 +491,7 @@ import org.hibernate.Transaction;
                     InvoiceNo += invoice;
                 }else{
                     String path[] = InvoiceNo.split(",");
-                    for(int j=0;j<InvoiceNo.length();j++){
+                    for(int j=0;j<path.length;j++){
                         if(path[j].equalsIgnoreCase(invoice)){
                             checkLap = 1;
                         }
@@ -503,7 +503,10 @@ import org.hibernate.Transaction;
             if(detail.getMAccpay() != null)
             view.setTermPay(detail.getMAccpay().getName());
         }
-        view.setAmount(util.setFormatMoney(amount));
+        
+        amount = amount.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+        String amounts = String.valueOf(amount);
+        view.setAmount(amounts);
         return view;
     }
 
@@ -521,6 +524,24 @@ import org.hibernate.Transaction;
 
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
+    }
+
+    @Override
+    public Receipt getReceiptfromReceiptId(String recId) {
+        Receipt receipt = new Receipt();
+        String query = "from Receipt r where r.id =:recId";
+        Session session = this.sessionFactory.openSession();
+        List<Receipt> receiptList = session.createQuery(query)
+                .setParameter("recId", recId)
+                .list();
+        if (receiptList.isEmpty()) {
+            return null;
+        }else{
+            receipt =  receiptList.get(0);
+        }
+        session.close();
+        this.sessionFactory.close();
+        return receipt;
     }
 
     

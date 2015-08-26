@@ -624,9 +624,9 @@ public class InvoiceImpl implements InvoiceDao{
             System.out.println("SumInvoiceCost : "+InvoiceCost +"SumInvoicePrice : "+InvoicePrice);
             System.out.println("Compare price : "+price.compareTo(InvoicePrice));
             if((price.compareTo(InvoicePrice) == -1)||(cost.compareTo(InvoiceCost) == -1)){
-                result = "fail";
+                result = "moreMoney";
             }else{
-                result = "success";
+                result = "okMoney";
             }
             
         }
@@ -634,5 +634,20 @@ public class InvoiceImpl implements InvoiceDao{
         session.close();
         return result;
         
+    }
+
+    @Override
+    public List<InvoiceDetail> getInvoiceDetailFromInvoiceId(String invoiceId) {
+        Session session = this.sessionFactory.openSession();
+        List<InvoiceDetail> list = session.createQuery("from InvoiceDetail inv WHERE inv.invoice.id = :invoiceId")
+                .setParameter("invoiceId", invoiceId)
+                .list();
+        if(list.isEmpty()){
+            return null;
+        }
+        System.out.println(" list " + list.size());
+        session.close();
+        this.sessionFactory.close();
+        return list;
     }
 }

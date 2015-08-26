@@ -60,6 +60,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -972,7 +973,7 @@ public class AJAXBean extends AbstractBean implements
             BigDecimal amounttemp = new BigDecimal(billableDescs.get(i).getPrice());
             amountinvoice = amounttemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
             
-            currency = billableDescs.get(i).getCurrency();
+            currency = billableDescs.get(i).getCurrency() == null ? "" : billableDescs.get(i).getCurrency() ;
             if(billableDescs.get(i).getMBilltype() != null){
                 product = billableDescs.get(i).getMBilltype().getId();
             }
@@ -1414,14 +1415,22 @@ public class AJAXBean extends AbstractBean implements
     }
     
     public String getListInvoice(Billable bill,String invType) {
+        UtilityFunction utility = new UtilityFunction();
         String result = "";
         String term="";
         if( bill.getMAccterm() != null){
             term =""+ bill.getMAccterm().getId();
         }
+        Date ff = new Date();
+        System.out.println(ff);
+        ff.setDate(ff.getDate() + bill.getMAccterm().getValue());
+        System.out.println("Value Term : " + bill.getMAccterm().getValue());
+        System.out.println("Dueeeeeeeee  Date : "+ff);
+        String  dateDue =  utility.convertDateToString(ff);
+        
         result += bill.getMaster().getBookingType() +"||";
         result +=  bill.getBillTo() +","+ bill.getBillName() +"," + bill.getBillAddress()+","+term
-                +","+bill.getMaster().getStaff().getId()+","+bill.getMaster().getStaff().getName() + ","+ bill.getMaster().getStaff().getUsername()+","+bill.getMaster().getStaff().getUsername()+","+"||";
+                +","+bill.getMaster().getStaff().getId()+","+bill.getMaster().getStaff().getName() + ","+ bill.getMaster().getStaff().getUsername()+","+ dateDue +","+"||";
         List<BillableDesc> billdeescList = bill.getBillableDescs();
         int count =0;
         if("Air Ticket".equals(invType)){      
@@ -1430,9 +1439,11 @@ public class AJAXBean extends AbstractBean implements
                     BigDecimal[] valueresult = invoicedao.checkBillDescInuse(billdeescList.get(i).getId(), String.valueOf(billdeescList.get(i).getCost()), String.valueOf(billdeescList.get(i).getPrice()));
                     System.out.println("valueresult[1] : "+valueresult[1]);
                     if(valueresult[1].compareTo(BigDecimal.ZERO) != 0){
-
+                        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
                         System.out.println("11valueresult[1] : "+valueresult[1]);
-
+                        String cost = numberFormat.format(valueresult[0]);
+                        String price = numberFormat.format(valueresult[1]);
+                        System.out.println("Cost And Price : " + cost +" && "  + price );
                         if(billdeescList.get(i).getCurrency() == null){
                             billdeescList.get(i).setCurrency("");
                         }
@@ -1445,8 +1456,8 @@ public class AJAXBean extends AbstractBean implements
                             + "<td class=\"hidden\"><input type=\"hidden\" id=\"invoiceIdType"+(count+1)+"\" name=\"invoiceIdType"+(count+1)+"\" value=" + billdeescList.get(i).getMBilltype().getId() + "></td>"
                             + "<td>" + billdeescList.get(i).getMBilltype().getName() + "</td>"
                             + "<td>" +  billdeescList.get(i).getDetail() + "</td>"
-                            + "<td align=\"center\">" + valueresult[0] + "</td>"
-                            + "<td align=\"center\">" + valueresult[1] + "</td>"
+                            + "<td align=\"center\">" + cost + "</td>"
+                            + "<td align=\"center\">" + price + "</td>"
                             + "<td align=\"center\">" + billdeescList.get(i).getCurrency() + "</td>"
                             + "<td align=\"center\"><center><a href=\"\" onclick=\"addInvoiceDetail("+(count+1)+")\"><span class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                             + "<td class=\"hidden\"><input type=\"hidden\" id=\"RefItemId"+(count+1)+"\" name=\"RefItemId"+(count+1)+"\" value=" + billdeescList.get(i).getRefItemId() + "></td>"

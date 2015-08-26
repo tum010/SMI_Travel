@@ -89,6 +89,8 @@ public class ReceiptController extends SMITravelController {
         String chqAmount2 = request.getParameter("chqAmount2"); 
         String InputReceiptType = request.getParameter("InputReceiptType");
         String InputDepartment = request.getParameter("InputDepartment");
+        String searchId = request.getParameter("Id");
+        System.out.println(" callPageFrom " + callPageFrom);
         if(!"".equals(callPageFrom)){
            //String[] type = callPageFrom.split("\\?");
            request.setAttribute("typeReceipt", callPageFrom.substring(1));  
@@ -159,6 +161,28 @@ public class ReceiptController extends SMITravelController {
                 receipt.setReceiptDetails(new ArrayList<ReceiptDetail>());
             }
             
+            Invoice invoice = new Invoice();
+            invoice.setInvNo(receiveNo);
+            invoice.setInvTo(receiveFromCode);
+            invoice.setInvName(receiveFromName);
+            invoice.setInvAddress(receiveFromAddress);
+            invoice.setArcode(arCode);
+            invoice.setInvDate(util.convertStringToDate(receiveFromDate != "" ? receiveFromDate : ""));
+            invoice.setDepartment(InputDepartment);
+            invoice.setInvType(InputReceiptType);
+            invoice.setIsLock(1);
+            invoice.setCreateBy(user.getUsername());
+            invoice.setCreateDate(new Date());
+            if(StringUtils.isNotEmpty(inputStatus)){
+                MAccpay mAccpay = new MAccpay();
+                mAccpay.setId(inputStatus);
+                invoice.setMAccpay(mAccpay);
+            }
+            invoice.setStaff(user);
+            MFinanceItemstatus mFinanceItemstatus = new MFinanceItemstatus();
+            mFinanceItemstatus.setId("1"); // 1 = Normal
+            invoice.setMFinanceItemstatus(mFinanceItemstatus);
+                       
             for (int i = 0; i < rowsProduct ; i++) {
                 String tableId = request.getParameter("tableId" + i);
                 String receiveProduct = request.getParameter("receiveProduct" + i);
@@ -213,27 +237,27 @@ public class ReceiptController extends SMITravelController {
                         invoiceDetailList = invoiceService.getInvoiceDetailFromBillableDescId(billDescId);
                     }
                     if(invoiceDetailList == null){
-                       Invoice invoice = new Invoice();
-                       invoice.setInvNo(receiveNo);
-                       invoice.setInvTo(receiveFromCode);
-                       invoice.setInvName(receiveFromName);
-                       invoice.setInvAddress(receiveFromAddress);
-                       invoice.setArcode(arCode);
-                       invoice.setInvDate(util.convertStringToDate(receiveFromDate != "" ? receiveFromDate : ""));
-                       invoice.setDepartment(InputDepartment);
-                       invoice.setInvType(InputReceiptType);
-                       invoice.setIsLock(1);
-                       invoice.setCreateBy(user.getUsername());
-                       invoice.setCreateDate(new Date());
-                       if(StringUtils.isNotEmpty(inputStatus)){
-                           MAccpay mAccpay = new MAccpay();
-                           mAccpay.setId(inputStatus);
-                           invoice.setMAccpay(mAccpay);
-                       }
-                       invoice.setStaff(user);
-                       MFinanceItemstatus mFinanceItemstatus = new MFinanceItemstatus();
-                       mFinanceItemstatus.setId("1"); // 1 = Normal
-                       invoice.setMFinanceItemstatus(mFinanceItemstatus);
+//                       Invoice invoice = new Invoice();
+//                       invoice.setInvNo(receiveNo);
+//                       invoice.setInvTo(receiveFromCode);
+//                       invoice.setInvName(receiveFromName);
+//                       invoice.setInvAddress(receiveFromAddress);
+//                       invoice.setArcode(arCode);
+//                       invoice.setInvDate(util.convertStringToDate(receiveFromDate != "" ? receiveFromDate : ""));
+//                       invoice.setDepartment(InputDepartment);
+//                       invoice.setInvType(InputReceiptType);
+//                       invoice.setIsLock(1);
+//                       invoice.setCreateBy(user.getUsername());
+//                       invoice.setCreateDate(new Date());
+//                       if(StringUtils.isNotEmpty(inputStatus)){
+//                           MAccpay mAccpay = new MAccpay();
+//                           mAccpay.setId(inputStatus);
+//                           invoice.setMAccpay(mAccpay);
+//                       }
+//                       invoice.setStaff(user);
+//                       MFinanceItemstatus mFinanceItemstatus = new MFinanceItemstatus();
+//                       mFinanceItemstatus.setId("1"); // 1 = Normal
+//                       invoice.setMFinanceItemstatus(mFinanceItemstatus);
 
                        List<InvoiceDetail> listInvoiceDetail = new LinkedList<InvoiceDetail>();
                        InvoiceDetail invoiceDetail = new InvoiceDetail();
@@ -265,10 +289,10 @@ public class ReceiptController extends SMITravelController {
                        }else{
                            System.out.println("invoiceNo " + invoiceNo);
                            Invoice inv = invoiceService.getInvoiceFromInvoiceNumber(invoiceNo);
-                           List<InvoiceDetail> invDetaill = new ArrayList<InvoiceDetail>(inv.getInvoiceDetails());
-                           InvoiceDetail invD = new InvoiceDetail();
-                           invD.setId(invDetaill.get(0).getId());
-                           receiptDetail.setInvoiceDetail(invD);
+//                           List<InvoiceDetail> invDetaill = new ArrayList<InvoiceDetail>(inv.getInvoiceDetails());
+//                           InvoiceDetail invD = new InvoiceDetail();
+//                           invD.setId(invDetaill.get(i).getId());
+//                           receiptDetail.setInvoiceDetail(invD);
                        }
 
                        if(StringUtils.isNotEmpty(paymentId)){
@@ -334,7 +358,7 @@ public class ReceiptController extends SMITravelController {
             receipt.setArCode(arCode);
             receipt.setRemark(remark);
             
-            MFinanceItemstatus mFinanceItemstatus = new MFinanceItemstatus();
+//            MFinanceItemstatus mFinanceItemstatus = new MFinanceItemstatus();
             mFinanceItemstatus.setId("1"); // 1 = Normal
             receipt.setMFinanceItemstatus(mFinanceItemstatus);
             
@@ -460,6 +484,28 @@ public class ReceiptController extends SMITravelController {
                         }
                     }
 
+                    request.setAttribute(RECEIPT,receipt);
+                    request.setAttribute(RECEIVEDATE,receipt.getRecDate());
+                }
+            }
+        }else if (!"".equalsIgnoreCase(searchId)) {
+            System.out.println(" Id ::: "+ searchId);
+            Receipt receipt = new Receipt();
+            if(searchId != null || !"".equals(searchId)){
+                receipt = receiptService.getReceiptfromReceiptId(searchId);
+                if(receipt != null) {
+                    if(!receipt.getId().isEmpty()){
+                        List<ReceiptDetail> receiptDetailList = receiptService.getReceiptDetailFromReceiptId(receipt.getId());
+                        List<ReceiptCredit> receiptCreditList = receiptService.getReceiptCreditFromReceiptId(receipt.getId());
+                        request.setAttribute(RECEIPTDETAILLIST,receiptDetailList);
+                        request.setAttribute(RECEIPTCREDITLIST,receiptCreditList);
+                        if(receiptDetailList != null){
+                        request.setAttribute(PRODUCTROWCOUNT, receiptDetailList.size()+1);
+                        }
+                        if(receiptCreditList != null){
+                        request.setAttribute(CREDITROWCOUNT, receiptCreditList.size()+1);
+                        }
+                    }
                     request.setAttribute(RECEIPT,receipt);
                     request.setAttribute(RECEIVEDATE,receipt.getRecDate());
                 }
