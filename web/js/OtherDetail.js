@@ -64,7 +64,9 @@ $(document).ready(function() {
     $.each(product, function (key, value) {
         codeProduct.push(value.code);
         if ( !(value.name in codeProduct) ){
-           codeProduct.push(value.name);
+            if(value.code !== value.name){
+                codeProduct.push(value.name);
+            }
         }
     });
 
@@ -136,7 +138,9 @@ $(document).ready(function() {
     $.each(agent, function (key, value) {
         codeAgent.push(value.code);
         if ( !(value.name in codeAgent) ){
-           codeAgent.push(value.name);
+            if(value.code !== value.name){ 
+                codeAgent.push(value.name);
+            }
         }
     });
 
@@ -374,39 +378,46 @@ function replaceComma(input) {
     return input.replace(',', '');
 }
 
-function setStockTicket(id,status){
+function setStockTicket(){
     $("#reuse").prop("checked", false);
     $("#void").prop("checked", false);
-    $("#refund").prop("checked", false);
-    if(status === 'CANCEL'){
-        $("#void").prop("checked", true);
-    } else if(status === 'REFUND'){
-        $("#refund").prop("checked", true);
-    } else {
-        
-    }
+    $("#refund").prop("checked", false);   
     $("#stockTicketModal").modal("show");
 }
 
 function cancelStockTicket(){
-    $("#stockTicketModal").modal("hide");
-    $('#counter').val($('#TicketTable tr').length); 
-    var ticketstatus = document.getElementById('ticketstatus');
-    if (document.getElementById('reuse').checked) {
-        var reuseTicket = document.getElementById('reuse').value;
-        ticketstatus.value = reuseTicket;
-        document.getElementById('otherForm').submit();
-    } else if (document.getElementById('refund').checked) {
-        var refundTicket = document.getElementById('refund').value;
-        ticketstatus.value = refundTicket;
-        document.getElementById('otherForm').submit();
-    } else if (document.getElementById('void').checked) {
-        var voidTicket = document.getElementById('void').value;
-        ticketstatus.value = voidTicket;
-        document.getElementById('otherForm').submit();
+    var row = $('#TicketTable tr').length;
+    var check = 0;
+    for(var i=1;i<row;i++){          
+        var selectAll = document.getElementById("selectAll"+i);
+        if(selectAll !== null && selectAll !== ''){
+            if(document.getElementById("selectAll"+i).checked){
+                check++;
+            } 
+        }   
+    }
+    if(check !== 0){
+        $('#counter').val(row);       
+        var ticketstatus = document.getElementById('ticketstatus');
+        if (document.getElementById('reuse').checked) {
+            var reuseTicket = document.getElementById('reuse').value;
+            ticketstatus.value = reuseTicket;
+            document.getElementById('otherForm').submit();
+        } else if (document.getElementById('refund').checked) {
+            var refundTicket = document.getElementById('refund').value;
+            ticketstatus.value = refundTicket;
+            document.getElementById('otherForm').submit();
+        } else if (document.getElementById('void').checked) {
+            var voidTicket = document.getElementById('void').value;
+            ticketstatus.value = voidTicket;
+            document.getElementById('otherForm').submit();
+        } else {
+
+        }         
     } else {
-        
-    }         
+        document.getElementById('alertCheckbox').innerHTML = 'Please select check box!.';
+    }
+    $("#stockTicketModal").modal("hide");
 }
 
 function selectAll(){
@@ -481,6 +492,11 @@ function selectAll(){
             }             
         }            
     }
-}  
+    removeAlertCheckbox();
+}
+
+function removeAlertCheckbox(){
+    document.getElementById('alertCheckbox').innerHTML = '';
+}
 
 

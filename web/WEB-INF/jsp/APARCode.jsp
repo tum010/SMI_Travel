@@ -130,11 +130,12 @@
 	</div>
 </div>
 <smi:modal title="AP/AR Code" id="formModal" enableOKButton="true" enableCancelButton="true">
-	<smi:input name="aparCode.id" type="hidden" id="frmModalId"/>
-	<smi:input label="Code" name="aparCode.code" type="text" id="frmModalCode" isReadonly="true"/>
-	<smi:input label="Name" name="aparCode.name" type="text" id="frmModalName" isReadonly="true"/>
-	<smi:input label="APCode" name="aparCode.apcode" type="text" id="frmModalApcode"/>
-	<smi:input label="ARCode" name="aparCode.arcode" type="text" id="frmModalArcode"/>
+	<smi:input isModal="true" name="aparCode.id" type="hidden" id="frmModalId"/>
+	<smi:input isModal="true" label="Code" name="aparCode.code" type="text" id="frmModalCode" isReadonly="true"/>
+	<smi:input isModal="true" label="Name" name="aparCode.name" type="text" id="frmModalName" isReadonly="true"/>
+	<smi:input isModal="true" label="APCode" name="aparCode.apcode" type="text" id="frmModalApcode"/>
+	<smi:input isModal="true" label="ARCode" name="aparCode.arcode" type="text" id="frmModalArcode"/>
+
 </smi:modal>
 </form:form>
 <script>

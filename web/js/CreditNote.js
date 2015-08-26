@@ -1,5 +1,5 @@
 var rowIndex;
-
+var taxNoShow = "";
 $(document).ready(function () {
     $("#cnNo").on("keyup", function (event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);
@@ -120,6 +120,7 @@ function setDeletRow(btn) {
     var row = $(btn).parent().parent()
     rowIndex = row.index();
     console.log(rowIndex);
+    $("#delCode").html("are you sure to delete tax invoice no " + row.find("[name='taxNo']").val() + "?")
     var taxId = row.find("[name='taxId']").val();
     if (taxId !== "") {
 
@@ -173,20 +174,84 @@ function deleteCreditNotedetail() {
 }
 
 function enableVoid() {
+    var cnNo = $("#cnNo").val();
     $("#titleVoidModel").html("Void Credit Note");
-    $("#voidCode").html("Are you confirm to void credit note {CN No}?");
+    $("#voidCode").html("Are you confirm to void credit note " + cnNo + "?");
     $("#voidBtn").attr('onclick', 'submitVoid(2)');
 }
 
 function disableVoid() {
+    var cnNo = $("#cnNo").val();
     $("#titleVoidModel").html("Canle Void Credit Note");
-    $("#voidCode").html("{Are you confirm to cancel voice  credit note  {CN No}?");
+    $("#voidCode").html("{Are you confirm to cancel voice  credit note " + cnNo + "?");
     $("#voidBtn").attr('onclick', 'submitVoid(1)');
 }
 
 function submitVoid(status) {
     var action = document.getElementById('action');
     action.value = 'void';
-    $('#CreditNoteForm').append('<input type="hidden" name="status" value="' + status +'" /> ');
+    $('#CreditNoteForm').append('<input type="hidden" name="status" value="' + status + '" /> ');
     document.getElementById('CreditNoteForm').submit();
+}
+
+function show(taxNo) {
+    if (taxNoShow === "" || taxNoShow !== taxNo) {
+        taxNoShow = taxNo;
+        var url = 'AJAXServlet';
+        var servletName = 'TaxInvoiceServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&type=getTaxInvoice' +
+                '&invoiceNo=' + taxNo;
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                beforeSend: function () {
+                    $("#dataload").removeClass("hidden");
+                },
+                success: function (msg) {
+                    console.log("getAutoListBillto ==" + msg);
+                    var tax = JSON.parse(msg);
+
+                    var table = $("#taxDetail tbody");
+                    table.html("");
+                    for (var i = 0; i < tax.detailList.length; i++) {
+                        var detail = tax.detailList[i];
+                        var html = "<tr>" +
+                                "<td style='text-align:center'>" + (i + 1) + "</td>" +
+                                "<td style='text-align:center'>" + detail.product + "</td>" +
+                                "<td style='text-align:center'>" + detail.refNo + "</td>" +
+                                "<td style='text-align:center'>" + detail.description + "</td>" +
+                                "<td style='text-align:center'>" + detail.amount + "</td>" +
+                                "<td style='text-align:center'>" + detail.cur + "</td>" +
+                                "</tr>";
+                        table.append(html);
+                    }
+                    $('.collapse').collapse('show');
+
+                }, error: function (msg) {
+                }
+            });
+        } catch (e) {
+            alert(e);
+        }
+    } else {
+        taxNoShow = "";
+        $('.collapse').collapse('hide');
+    }
+}
+
+function openReport(){
+    var cnId = $("#cnId").val();
+    window.open("report.smi?name=CreditNoteReport&cnid=" + cnId);
+}
+
+function sendMail(){
+    var cnId = $("#cnId").val();
+    window.open("SendMail.smi?name=CreditNote&reportid=" + cnId);
 }

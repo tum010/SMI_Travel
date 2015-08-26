@@ -644,19 +644,64 @@ public class InvoiceImpl implements InvoiceDao{
         return result;
         
     }
+    
+    @Override
+    public String insertInvoiceDetail(Invoice invoice) {
+        String result = "";
+        Session session = this.sessionFactory.openSession();
+        try { 
+            transaction = session.beginTransaction();
+            result = generateInvoiceNo(invoice.getDepartment() , invoice.getInvType());
+//            result = invoice.getInvNo();
+            invoice.setInvNo(result);
+            session.save(invoice);
+            List<InvoiceDetail> invoiceDetail = invoice.getInvoiceDetails();
+            if(invoiceDetail != null){
+                for (int i = 0; i < invoiceDetail.size(); i++) {
+                    session.save(invoiceDetail.get(i));
+                }
+            }
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+            System.out.println("ss result : "+ invoice.getInvNo());
+//            result = "success";
+        } catch (Exception ex) {
+            transaction.rollback();
+            ex.printStackTrace();
+            session.close();
+            this.sessionFactory.close();
+            result = "fail";
+        }
+        return result;
+    }
 
     @Override
-    public List<InvoiceDetail> getInvoiceDetailFromInvoiceId(String invoiceId) {
-        Session session = this.sessionFactory.openSession();
-        List<InvoiceDetail> list = session.createQuery("from InvoiceDetail inv WHERE inv.invoice.id = :invoiceId")
-                .setParameter("invoiceId", invoiceId)
-                .list();
-        if(list.isEmpty()){
-            return null;
+    public String updateInvoiceDetail(Invoice invoice) {
+        String result = "";
+        try {
+            Session session = this.sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            session.update(invoice);
+            
+            List<InvoiceDetail> invoiceDetail = invoice.getInvoiceDetails();
+            for (int i = 0; i < invoiceDetail.size(); i++) {
+                if (invoiceDetail.get(i).getId() == null) {
+                    session.save(invoiceDetail.get(i));
+                } else {
+                    session.update(invoiceDetail.get(i));
+                }
+            }
+
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+            result = invoice.getInvNo();
+        } catch (Exception ex) {
+            transaction.rollback();
+            ex.printStackTrace();
+            result = "update fail";
         }
-        System.out.println(" list " + list.size());
-        session.close();
-        this.sessionFactory.close();
-        return list;
+        return  result;
     }
 }
