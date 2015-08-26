@@ -48,9 +48,6 @@
         <script src="js/moment.js"></script>
         <script src="js/bootstrap/bootstrap.min.js"></script>
         <script src="js/bootstrap/bootstrap-datetimepicker.js"></script>
-        <script>
-        	console.log('Pratz:: '+$.datetimepicker);
-        </script>
         <script src="js/bootstrap/navbar.js"></script>
 <!--		<script src="js/bootstrapValidator.min.js" type="text/javascript"></script>-->
         <script src="js/datatable/js/jquery.dataTables.min.js" type="text/javascript"></script>

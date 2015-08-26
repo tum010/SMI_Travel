@@ -635,4 +635,19 @@ public class InvoiceImpl implements InvoiceDao{
         return result;
         
     }
+
+    @Override
+    public List<InvoiceDetail> getInvoiceDetailFromInvoiceId(String invoiceId) {
+        Session session = this.sessionFactory.openSession();
+        List<InvoiceDetail> list = session.createQuery("from InvoiceDetail inv WHERE inv.invoice.id = :invoiceId")
+                .setParameter("invoiceId", invoiceId)
+                .list();
+        if(list.isEmpty()){
+            return null;
+        }
+        System.out.println(" list " + list.size());
+        session.close();
+        this.sessionFactory.close();
+        return list;
+    }
 }
