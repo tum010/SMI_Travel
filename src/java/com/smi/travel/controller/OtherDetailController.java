@@ -64,7 +64,9 @@ public class OtherDetailController extends SMITravelController {
         String isbill = request.getParameter("isbill");
         String currency = request.getParameter("currency");
         String createby = request.getParameter("createby");
-        String stockticketid = request.getParameter("stockticketid");
+        String createdate = request.getParameter("createdate");
+        String ticketstatus = request.getParameter("ticketstatus");
+        String counter = request.getParameter("counter");
                         
         SystemUser user = (SystemUser) session.getAttribute("USER");
 
@@ -132,6 +134,7 @@ public class OtherDetailController extends SMITravelController {
             Other.setInCost(util.convertStringTolong(inCost));
             Other.setInPrice(util.convertStringTolong(inPrice));
             Other.setInQty(util.convertStringToInteger(inQty));
+            Other.setCreateDate(util.convertStringToDate(createdate));
             if(!("").equalsIgnoreCase(isbill)){
                 Other.setIsBill(Integer.parseInt(isbill));
             }
@@ -159,10 +162,24 @@ public class OtherDetailController extends SMITravelController {
                 }else if("fail".equalsIgnoreCase(stock)){
                     request.setAttribute("resultText", "unsuccess");
                 }else {
+                    if((!"".equalsIgnoreCase(ticketstatus)) && (ticketstatus != null)){
+                        int row = Integer.parseInt(counter);
+                        for(int i=1;i<row;i++){
+                            String selectAll = request.getParameter("selectAll"+i);
+                            if("1".equalsIgnoreCase(selectAll)){
+                                String stockticketid = request.getParameter("selectAll"+i);
+                                String resultTicket = OtherService.updateStockTicketStatus(stockticketid,ticketstatus);
+                                request.setAttribute("resultTicket", resultTicket);
+                            }
+                        }                       
+                    }
                     String[] ticketData = stock.split("\\|\\|", 3);//Adult||Child||Infant
                     getTicket(request, Other.getId());
                     itemid = result.get(1);
                     createby = Other.getCreateBy();
+                    status = Other.getStatus().getId();
+                    createdate = util.convertDateToString(Other.getCreateDate());
+                    isbill = String.valueOf(Other.getIsBill());
                     
                     Other.setRemarkTicket("Require Ticket-Adult:" + ticketData[0] + " Child:" + ticketData[1] + " Infant:" + ticketData[2]);
                     List<String> resultRemarkTicket = OtherService.saveBookingOther(Other,user,createby);
@@ -184,8 +201,11 @@ public class OtherDetailController extends SMITravelController {
                     getTicket(request, Other.getId());                   
                     itemid = result.get(1);
                     createby = Other.getCreateBy();
+                    status = Other.getStatus().getId();
+                    createdate = util.convertDateToString(Other.getCreateDate());
+                    isbill = String.valueOf(Other.getIsBill());
                     
-                    Other.setRemarkTicket("Require Ticket-Adult:{" + ticketData[0] + "}Child:{" + ticketData[1] + "}Infant:{" + ticketData[2] + "}");
+                    Other.setRemarkTicket("Require Ticket-Adult:" + ticketData[0] + " Child:" + ticketData[1] + " Infant:" + ticketData[2]);
                     List<String> resultRemarkTicket = OtherService.saveBookingOther(Other,user,createby);
                     
                     request.setAttribute("resultText", "success");
@@ -246,28 +266,13 @@ public class OtherDetailController extends SMITravelController {
             remark = Other.getRemark();
             currency = Other.getCurrency();
             createby = Other.getCreateBy();
+            status = Other.getStatus().getId();
+            createdate = String.valueOf(Other.getCreateDate());
+            isbill = String.valueOf(Other.getIsBill());
             request.setAttribute("currency", currency);
             getTicket(request, Other.getId());
         }
-        
-        if("reuse".equalsIgnoreCase(action)){
-            String result = OtherService.updateStockTicketStatus(stockticketid,action);
-            request.setAttribute("resultText", result);
-            getTicket(request, itemid);
-        }
-        
-        if("refund".equalsIgnoreCase(action)){
-            String result = OtherService.updateStockTicketStatus(stockticketid,action);
-            request.setAttribute("resultText", result);
-            getTicket(request, itemid);
-        }
-        
-        if("void".equalsIgnoreCase(action)){
-            String result = OtherService.updateStockTicketStatus(stockticketid,action);
-            request.setAttribute("resultText", result);
-            getTicket(request, itemid);
-        }
-
+                
         request.setAttribute("isbill", isbill);
         request.setAttribute("status", status);
         request.setAttribute("itemid", itemid);
@@ -293,6 +298,7 @@ public class OtherDetailController extends SMITravelController {
         request.setAttribute("cancelDate", canceldate);
         request.setAttribute("remark", remark);
         request.setAttribute("createby", createby);
+        request.setAttribute("createdate", createdate);       
         request.setAttribute(PRODUCTLIST, OtherService.getListMasterProduct());
         request.setAttribute(AGENTLIST, utilservice.getListAgent());
         List<MCurrency> mCurrency = utilservice.getListMCurrency();

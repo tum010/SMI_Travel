@@ -374,29 +374,113 @@ function replaceComma(input) {
     return input.replace(',', '');
 }
 
-function setStockTicket(id){
-    document.getElementById("stockticketid").value = id;
+function setStockTicket(id,status){
+    $("#reuse").prop("checked", false);
+    $("#void").prop("checked", false);
+    $("#refund").prop("checked", false);
+    if(status === 'CANCEL'){
+        $("#void").prop("checked", true);
+    } else if(status === 'REFUND'){
+        $("#refund").prop("checked", true);
+    } else {
+        
+    }
     $("#stockTicketModal").modal("show");
 }
 
 function cancelStockTicket(){
     $("#stockTicketModal").modal("hide");
-    var action = document.getElementById('action');
+    $('#counter').val($('#TicketTable tr').length); 
+    var ticketstatus = document.getElementById('ticketstatus');
     if (document.getElementById('reuse').checked) {
         var reuseTicket = document.getElementById('reuse').value;
-        action.value = reuseTicket;
+        ticketstatus.value = reuseTicket;
         document.getElementById('otherForm').submit();
     } else if (document.getElementById('refund').checked) {
         var refundTicket = document.getElementById('refund').value;
-        action.value = refundTicket;
+        ticketstatus.value = refundTicket;
         document.getElementById('otherForm').submit();
     } else if (document.getElementById('void').checked) {
         var voidTicket = document.getElementById('void').value;
-        action.value = voidTicket;
+        ticketstatus.value = voidTicket;
         document.getElementById('otherForm').submit();
     } else {
         
     }         
 }
+
+function selectAll(){
+    var row = $('#TicketTable tr').length;     
+    var check = 0;
+    var unCheck = 0;
+    for(var i=1;i<row;i++){          
+        var selectAll = document.getElementById("selectAll"+i);
+        if(selectAll !== null && selectAll !== ''){
+            if(document.getElementById("selectAll"+i).checked){
+                check++;
+            } else {
+                unCheck++;
+            }
+        }   
+    }
+
+    if(check > unCheck){
+        for(var i=1;i<row;i++){
+            var selectAll = document.getElementById("selectAll"+i);
+            if(selectAll !== null && selectAll !== ''){
+                if(document.getElementById("selectAll"+i).checked){
+                        
+                } else { 
+                    document.getElementById("selectAll"+i).checked = true;                   
+                }    
+            }   
+        }
+    }
+            
+    if(check < unCheck){
+        for(var i=1;i<row;i++){
+            var selectAll = document.getElementById("selectAll"+i);
+            if(selectAll !== null && selectAll !== ''){
+                document.getElementById("selectAll"+i).checked = false;
+            }   
+        }
+    }
+         
+    if(check === 0 && unCheck !== 0){
+        for(var i=1;i<row;i++){
+            var selectAll = document.getElementById("selectAll"+i);
+            if(selectAll !== null && selectAll !== ''){
+                if(document.getElementById("selectAll"+i).checked){
+                        
+                } else { 
+                    document.getElementById("selectAll"+i).checked = true;
+                        
+                }
+            }    
+        }    
+    }
+            
+    if(check !== 0 && unCheck === 0){
+        for(var i=1;i<row;i++){
+            var selectAll = document.getElementById("selectAll"+i);
+            if(selectAll !== null && selectAll !== ''){
+                document.getElementById("selectAll"+i).checked = false;
+            }   
+        }
+    }
+            
+    if(check === unCheck){
+        for(var i=1;i<row;i++){
+            var selectAll = document.getElementById("selectAll"+i);
+            if(selectAll !== null && selectAll !== ''){
+                if(document.getElementById("selectAll"+i).checked){
+                        
+                } else { 
+                    document.getElementById("selectAll"+i).checked = true;                        
+                }    
+            }             
+        }            
+    }
+}  
 
 

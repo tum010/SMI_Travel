@@ -25,4 +25,5 @@ public interface TaxInvoiceDao {
     // UPDATE TaxInvoice tax set tax.MFinanceItemstatus.id = :status  WHERE tax.id = :TaxId
     public TaxInvoiceView getTaxInvoiceViewFromTaxNo(String TaxNo);
     public List<TaxInvoiceView> SearchTaxInvoiceFromFilter(String From,String To,String Department);
+    public TaxInvoice getTaxInvoiceByTaxNo(String invoiceNo);
 }

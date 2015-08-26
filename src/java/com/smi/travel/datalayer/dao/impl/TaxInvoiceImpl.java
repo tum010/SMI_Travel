@@ -319,4 +319,19 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
         this.transaction = transaction;
     }
     
+
+    @Override
+    public TaxInvoice getTaxInvoiceByTaxNo(String taxNo) {
+        Session session = this.sessionFactory.openSession();
+        TaxInvoice taxInvoice = new TaxInvoice();
+        String query = "FROM TaxInvoice t where t.taxNo = :TaxInvNo";
+        List<TaxInvoice> taxInvoiceList = session.createQuery(query).setParameter("TaxInvNo", taxNo).list();
+        if(taxInvoiceList.isEmpty()){
+            return null;
+        } 
+        
+        taxInvoice = taxInvoiceList.get(0);
+               
+        return taxInvoice;
+    }
 }

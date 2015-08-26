@@ -6,9 +6,9 @@
 package com.smi.travel.datalayer.bean.master;
 
 import com.smi.travel.common.bean.AbstractBean;
-import com.smi.travel.controller.LockUnlockBookingController;
 import com.smi.travel.datalayer.ajax.service.AbstractAJAXServices;
 import com.smi.travel.datalayer.dao.BillableDao;
+import com.smi.travel.datalayer.dao.CreditNoteDao;
 import com.smi.travel.datalayer.dao.CustomerDao;
 import com.smi.travel.datalayer.dao.DaytourBookingDao;
 import com.smi.travel.datalayer.dao.DaytourComissionDao;
@@ -22,14 +22,12 @@ import com.smi.travel.datalayer.dao.PaymentAirTicketDao;
 import com.smi.travel.datalayer.dao.ProductDetailDao;
 import com.smi.travel.datalayer.dao.ReceiptDao;
 import com.smi.travel.datalayer.dao.RefundAirticketDao;
+import com.smi.travel.datalayer.dao.TaxInvoiceDao;
 import com.smi.travel.datalayer.dao.TicketFareAirlineDao;
 import com.smi.travel.datalayer.dao.TransferJobDao;
-import com.smi.travel.datalayer.entity.AirticketFlight;
-import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.Billable;
 import com.smi.travel.datalayer.entity.BillableDesc;
 import com.smi.travel.datalayer.entity.Customer;
-import com.smi.travel.datalayer.entity.Daytour;
 import com.smi.travel.datalayer.entity.DaytourBooking;
 import com.smi.travel.datalayer.entity.DaytourBookingPrice;
 import com.smi.travel.datalayer.entity.DaytourPrice;
@@ -42,39 +40,31 @@ import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.PackageItinerary;
 import com.smi.travel.datalayer.entity.PackagePrice;
 import com.smi.travel.datalayer.entity.PackageTour;
-import com.smi.travel.datalayer.entity.Passenger;
 import com.smi.travel.datalayer.entity.Place;
 import com.smi.travel.datalayer.entity.ProductDetail;
 import com.smi.travel.datalayer.entity.ReceiptDetail;
-import com.smi.travel.datalayer.entity.TicketFareAirline;
-import com.smi.travel.datalayer.service.ReportService;
+import com.smi.travel.datalayer.entity.TaxInvoice;
+import com.smi.travel.datalayer.entity.TaxInvoiceDetail;
 import com.smi.travel.datalayer.view.dao.BookingSummaryDao;
 import com.smi.travel.datalayer.view.dao.CustomerAgentInfoDao;
 import com.smi.travel.datalayer.view.dao.TicketAircommissionViewDao;
 import com.smi.travel.datalayer.view.entity.BookSummary;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.datalayer.view.entity.TicketAircommissionView;
-import com.smi.travel.report.GenerateReport;
 import com.smi.travel.util.Mail;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.net.MalformedURLException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.apache.commons.mail.EmailException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -104,6 +94,7 @@ public class AJAXBean extends AbstractBean implements
     private static final String REFUNDAIRLINE = "RefundAirlineServlet";
     private static final String RECEIPT = "ReceiptServlet";
     private static final String TAXINVOICE = "TaxInvoiceServlet";
+    private static final String CREDITNOTE = "CreditNoteServlet";
     private CustomerDao customerdao;
     private ProductDetailDao productDetailDao;
     private BookingSummaryDao bookingsummarydao;
@@ -124,6 +115,8 @@ public class AJAXBean extends AbstractBean implements
     private InvoiceDao invoicedao;
     private ReceiptDao receiptdao;
     private TicketAircommissionViewDao ticketAircommissionViewDao;
+    private TaxInvoiceDao taxInvoiceDao;
+    private CreditNoteDao creditNoteDao;
     
     public AJAXBean(List queryList) {
         super(queryList);
@@ -171,6 +164,10 @@ public class AJAXBean extends AbstractBean implements
                     receiptdao = (ReceiptDao) obj;
                 }else if (obj instanceof TicketAircommissionViewDao){
                     ticketAircommissionViewDao = (TicketAircommissionViewDao) obj;
+                }else if (obj instanceof TaxInvoiceDao){
+                    taxInvoiceDao = (TaxInvoiceDao) obj;
+                }else if (obj instanceof CreditNoteDao){
+                    creditNoteDao = (CreditNoteDao) obj;
                 }
             }
         }
@@ -728,7 +725,20 @@ public class AJAXBean extends AbstractBean implements
                 }else{
                     result = buildTaxInvoiceListHTML(invoice);
                 }
-            }           
+            }else if("getTaxInvoice".equalsIgnoreCase(type)){
+                String invoiceNo = map.get("invoiceNo").toString();
+                TaxInvoice taxInv = taxInvoiceDao.getTaxInvoiceByTaxNo(invoiceNo);
+                JSONObject obj =new JSONObject(convertInvoiceToMap(taxInv));
+                result = obj.toJSONString();
+                
+            }else if(CREDITNOTE.equalsIgnoreCase(servletName)){
+                if("delete".equalsIgnoreCase(type)){
+                String cnDetailId = map.get("cnDetailId").toString();
+                if(cnDetailId != null && !cnDetailId.equals("")){
+                    result = creditNoteDao.DeleteCreditNoteDetail(cnDetailId);
+                }
+            }
+        }           
         }  
         
         return result;
@@ -1555,5 +1565,33 @@ public class AJAXBean extends AbstractBean implements
     public void setPaymentairticketdao(PaymentAirTicketDao paymentairticketdao) {
         this.paymentairticketdao = paymentairticketdao;
     }  
+
+    private Map convertInvoiceToMap(TaxInvoice tax) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("taxId", tax.getId());
+        map.put("taxNo", tax.getTaxNo());
+        map.put("taxTo", tax.getTaxInvTo());
+        map.put("taxName", tax.getTaxInvName());
+        map.put("taxAddress", tax.getTaxInvAddr());
+        UtilityFunction util = new UtilityFunction();
+        map.put("taxDate", util.convertDateToString(tax.getCreateDate()));
+        BigDecimal amount = new BigDecimal("0.00");
+        String invNo = "";
+        for (Iterator detailList = tax.getTaxInvoiceDetails().iterator(); detailList.hasNext();) {
+            TaxInvoiceDetail detail = (TaxInvoiceDetail)detailList.next();
+            BigDecimal detailAmount = detail.getAmount();
+            BigDecimal datailVat = new BigDecimal("0.00");
+            if(detail.getVat() != null){
+                datailVat = detail.getAmount().multiply(detail.getVat()).divide(new BigDecimal("100.00"));
+            }
+            amount = detailAmount.subtract(datailVat);
+            if(detail.getInvoiceDetail() != null){
+                invNo += detail.getInvoiceDetail().getInvoice().getInvNo() + ",";
+            }
+        }
+        map.put("taxAmount", tax.getAmountExcludeVat());
+        map.put("taxDesc",invNo);
+        return map;
+    }
   
 }
