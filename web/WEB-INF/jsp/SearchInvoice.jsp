@@ -38,10 +38,10 @@
                 <input type="text" class="hidden" id="action" name="action" value="">
                 <div class="col-xs-12 ">
                     <div class="col-xs-1 text-right">
-                        <label class="control-label" for="">From<font style="color: red">*</font>&nbsp;</lable>
+                        <label class="control-label" for="">From</lable>
                     </div>
                     <div class="col-md-2 form-group"> 
-                        <div class='input-group date' >
+                        <div class='input-group date' id="DateFrom">
                             <c:if test='${fromdate != null}'>
                                 <input id="FromDate" name="FromDate"  type="text" 
                                    class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${fromdate}">
@@ -57,10 +57,10 @@
                         </div>
                     </div>
                     <div class="col-xs-1 text-right">
-                        <label class="control-label" for="">To<font style="color: red">*</font>&nbsp;</lable>
+                        <label class="control-label" for="">To &nbsp;</lable>
                     </div>
                     <div class="col-md-2 form-group"> 
-                        <div class='input-group date' >
+                        <div class='input-group date' id="DateTo">
                             <c:if test='${todate != null}'>
                                 <input id="ToDate" name="ToDate"  type="text" 
                                    class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${todate}">
@@ -175,7 +175,7 @@
                                     <td >${inv.invoiceDate}</td>
                                     <td >${inv.name}</td>
                                     <td >${inv.address}</td>
-                                    <td align="center">${inv.totalPrice}</td>
+                                    <td align="right"><fmt:formatNumber type="number" maxFractionDigits="3" value="${inv.totalPrice}"/> </td>
                                     <td align="center">${inv.currency}</td>
                                     <td>${inv.department}
                                         <c:choose>
@@ -245,7 +245,53 @@
                 $('#hdGridSelected').val($('#MasterInvoice tbody tr.row_selected').attr("id"));
             }
         });
-               
+        
+        $("#SearchInvoiceForm")
+            .bootstrapValidator({
+                framework: 'bootstrap',
+                feedbackIcons: {
+                    valid: 'uk-icon-check',
+                    invalid: 'uk-icon-times',
+                    validating: 'uk-icon-refresh'
+                },
+                fields: {
+                    FromDate: {
+                        trigger: 'focus keyup change',
+                            validators: {
+                                date: {
+                                    format: 'YYYY-MM-DD',
+                                    max: 'ToDate',
+                                    message: 'The Date From is not a valid'
+                                }
+                            }
+                    },
+                    ToDate: {
+                        trigger: 'focus keyup change',
+                            validators: {
+                                date: {
+                                    format: 'YYYY-MM-DD',
+                                    min: 'FromDate',
+                                    message: 'The Date To is not a valid'
+                                }
+                            }
+                    }
+                }
+            }).on('success.field.fv', function (e, data) {
+                alert("1");
+                if (data.field === 'FromDate' && data.fv.isValidField('ToDate') === false) {
+                        data.fv.revalidateField('InputToDate');
+                    }
+
+                    if (data.field === 'ToDate' && data.fv.isValidField('FromDate') === false) {
+                        data.fv.revalidateField('FromDate');
+                    }
+            });
+    $('#DateFrom').datetimepicker().on('dp.change', function (e) {
+        $('#SearchInvoiceForm').bootstrapValidator('revalidateField', 'FromDate');
+    });
+    $('#DateTo').datetimepicker().on('dp.change', function (e) {
+        $('#SearchInvoiceForm').bootstrapValidator('revalidateField', 'ToDate');
+    });
     });   
 </script>
 <script type="text/javascript" src="js/SearchInvoice.js"></script> 

@@ -35,6 +35,8 @@ public class InvoiceReport {
     private String showleader;
     private String showstaff;
     private String co;
+    private String taxid;
+    private String taxbranch;
 
     public String getInvto() {
         return invto;
@@ -228,7 +230,20 @@ public class InvoiceReport {
     public void setCo(String co) {
         this.co = co;
     }
-       
-    
-    
+
+    public String getTaxbranch() {
+        return taxbranch;
+    }
+
+    public String getTaxid() {
+        return taxid;
+    }
+
+    public void setTaxbranch(String taxbranch) {
+        this.taxbranch = taxbranch;
+    }
+
+    public void setTaxid(String taxid) {
+        this.taxid = taxid;
+    }
 }

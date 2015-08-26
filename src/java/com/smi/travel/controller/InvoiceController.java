@@ -401,13 +401,13 @@ public class InvoiceController extends SMITravelController {
                 invoice.setInvNo(invoiceNo);         
             }else{
                 String day[] = new String[2];
-                if("copyInvoice".equals(action)){
+//                if("copyInvoice".equals(action)){
                     day = InputInvDate.split("-");
                     date = utilty.convertStringToDate(InputInvDate);
-                    invoice.setCreateDate(date);
-                }else{
-                    day = createDate.split("-");
-                }
+//                    invoice.setCreateDate(date);
+//                }else{
+//                    day = createDate.split("-");
+//                }
                 SimpleDateFormat df = new SimpleDateFormat();
                 df.applyPattern("MMyy");
                 String month = day[1];
