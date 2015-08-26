@@ -89,6 +89,8 @@ public class ReceiptController extends SMITravelController {
         String chqAmount2 = request.getParameter("chqAmount2"); 
         String InputReceiptType = request.getParameter("InputReceiptType");
         String InputDepartment = request.getParameter("InputDepartment");
+        String searchId = "";
+        System.out.println(" callPageFrom " + callPageFrom);
         if(!"".equals(callPageFrom)){
            //String[] type = callPageFrom.split("\\?");
            request.setAttribute("typeReceipt", callPageFrom.substring(1));  
@@ -486,6 +488,8 @@ public class ReceiptController extends SMITravelController {
                     request.setAttribute(RECEIVEDATE,receipt.getRecDate());
                 }
             }
+        }else if (!"".equalsIgnoreCase(searchId)) {
+            System.out.println(" Id ::: "+ searchId);
         }
         
         setResponseAttribute(request);

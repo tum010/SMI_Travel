@@ -3,7 +3,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<c:set var="receiptSearchList" value="${requestScope['receiptSearchList']}" />
+<c:set var="callPage" value="${requestScope['callPage']}" />
 <section class="content-header" >
     <h1>
         Finance & Cashier - Receipt
@@ -62,19 +63,19 @@
                         <select id="department" name="department" class="form-control selectize">
                             <option value="">-------</option> 
                              <c:choose>
-                                <c:when test="${requestScope['department'] == 'wendy'}">
+                                <c:when test="${requestScope['department'] == 'Wendy'}">
                                     <c:set var="selectedWendy" value="selected" />
                                 </c:when>
                             </c:choose>
                             <option value="Wendy" ${selectedWendy}>Wendy</option>
                             <c:choose>
-                                <c:when test="${requestScope['department'] == 'inbound'}">
+                                <c:when test="${requestScope['department'] == 'Inbound'}">
                                     <c:set var="selectedInbound" value="selected" />
                                 </c:when>
                             </c:choose>
                             <option value="Inbound" ${selectedInbound}>Inbound</option>
                             <c:choose>
-                                <c:when test="${requestScope['department'] == 'outbound'}">
+                                <c:when test="${requestScope['department'] == 'Outbound'}">
                                     <c:set var="selectedOutbound" value="selected" />
                                 </c:when>
                             </c:choose>
@@ -131,7 +132,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
+                            <c:forEach var="table" items="${receiptSearchList}" varStatus="dataStatus">
+                                <tr>
+                                    <td align="center">${table.recNo}</td>
+                                    <td align="center">${table.recDate}</td>
+                                    <td align="center">${table.recTo}</td>
+                                    <td align="center">${table.recName}</td>
+                                    <td align="center">${table.invoiceNo}</td>
+                                    <td align="center">${table.amount}</td>
+                                    <td align="center">${table.termPay}</td>
+                                    <td align="center">${table.department}</td>
+                                    <td> 
+                                        <center> 
+                                            <a  href="${callPage}&action=searchReceiveNo">
+                                                <span class="glyphicon glyphicon-edit editicon"  ></span>
+                                            </a>
+                                        </center> 
+                                    </td>    
+                                </tr>
+                            </c:forEach>
                         </tbody>
                     </table>      
                 </div>
