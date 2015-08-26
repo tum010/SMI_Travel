@@ -108,8 +108,6 @@ public class InvoiceImpl implements InvoiceReportDao{
             invoice.setShowstaff(showStaff);
             data.add(invoice);
         }
-        
-
         session.close();
         this.sessionFactory.close();
         return data;

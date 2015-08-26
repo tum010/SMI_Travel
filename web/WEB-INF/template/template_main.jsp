@@ -14,17 +14,17 @@
         <link rel="stylesheet" href="css/bootstrap/bootstrap-datetimepicker.min.css" />
         <link rel="stylesheet" href="css/dataTables.jqueryui.css">
         <link rel="stylesheet" href="css/jquery-ui.css">
-		<link href="css/select2.min.css" rel="stylesheet">
+<!--	<link href="css/select2.min.css" rel="stylesheet">-->
         <link href="css/selectize.bootstrap3.css" rel="stylesheet">
         <link href="css/SMITravel.css" rel="stylesheet">
         <link href="css/bootstrapValidator.css" rel="stylesheet">
 
         <!--javascript-->
-		<script src="js/require/require.js"></script>
+		
         <script src="js/jquery-1.11.0.min.js"></script>
         <script src="js/bootstrapValidator.min.js" type="text/javascript"></script>
         <script src="js/angular.min.js"></script>
-		<script src="js/select2.full.js"></script>
+<!--	<script src="js/select2.full.js"></script>-->
         <script src="js/es.js"></script>
         <script type="text/javascript" src="js/jquery.mask.min.js"></script>
         <script type="text/javascript" src="js/Utility.js"></script>
@@ -49,7 +49,7 @@
         <script src="js/bootstrap/bootstrap.min.js"></script>
         <script src="js/bootstrap/bootstrap-datetimepicker.js"></script>
         <script src="js/bootstrap/navbar.js"></script>
-		<script src="js/bootstrapValidator.min.js" type="text/javascript"></script>
+<!--		<script src="js/bootstrapValidator.min.js" type="text/javascript"></script>-->
         <script src="js/datatable/js/jquery.dataTables.min.js" type="text/javascript"></script>
         <script src="js/datatable/js/jquery.jeditable.js" type="text/javascript"></script>
         <script src="js/datatable/js/jquery-ui.js" type="text/javascript"></script>

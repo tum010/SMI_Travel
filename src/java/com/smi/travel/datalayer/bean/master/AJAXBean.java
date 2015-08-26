@@ -1439,9 +1439,11 @@ public class AJAXBean extends AbstractBean implements
                     BigDecimal[] valueresult = invoicedao.checkBillDescInuse(billdeescList.get(i).getId(), String.valueOf(billdeescList.get(i).getCost()), String.valueOf(billdeescList.get(i).getPrice()));
                     System.out.println("valueresult[1] : "+valueresult[1]);
                     if(valueresult[1].compareTo(BigDecimal.ZERO) != 0){
-
+                        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
                         System.out.println("11valueresult[1] : "+valueresult[1]);
-
+                        String cost = numberFormat.format(valueresult[0]);
+                        String price = numberFormat.format(valueresult[1]);
+                        System.out.println("Cost And Price : " + cost +" && "  + price );
                         if(billdeescList.get(i).getCurrency() == null){
                             billdeescList.get(i).setCurrency("");
                         }
@@ -1454,8 +1456,8 @@ public class AJAXBean extends AbstractBean implements
                             + "<td class=\"hidden\"><input type=\"hidden\" id=\"invoiceIdType"+(count+1)+"\" name=\"invoiceIdType"+(count+1)+"\" value=" + billdeescList.get(i).getMBilltype().getId() + "></td>"
                             + "<td>" + billdeescList.get(i).getMBilltype().getName() + "</td>"
                             + "<td>" +  billdeescList.get(i).getDetail() + "</td>"
-                            + "<td align=\"center\">" + valueresult[0] + "</td>"
-                            + "<td align=\"center\">" + valueresult[1] + "</td>"
+                            + "<td align=\"center\">" + cost + "</td>"
+                            + "<td align=\"center\">" + price + "</td>"
                             + "<td align=\"center\">" + billdeescList.get(i).getCurrency() + "</td>"
                             + "<td align=\"center\"><center><a href=\"\" onclick=\"addInvoiceDetail("+(count+1)+")\"><span class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                             + "<td class=\"hidden\"><input type=\"hidden\" id=\"RefItemId"+(count+1)+"\" name=\"RefItemId"+(count+1)+"\" value=" + billdeescList.get(i).getRefItemId() + "></td>"
