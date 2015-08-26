@@ -193,8 +193,7 @@
 							<input type="text" class="form-control" id="detailModal" name="detailModal" style="text-transform: uppercase">
 						</div>
 					</div>
-					<input type="hidden" id="idModal" name="idModal">
-					<input type="hidden" id="accTypeHidden" name="accTypeHidden"/>
+					<input type="hidden" id="idModal" name="idModal"> <input type="hidden" id="accTypeHidden" name="accTypeHidden" />
 				</div>
 				<div class="modal-footer">
 					<button id="btnSave" type="submit" class="btn btn-success">
@@ -283,17 +282,20 @@
 	}
 
 	$(function() {
-		/*
-		$('#btnAdd').click(function(){
+
+		$("#AccountCodeModal").on('hide.bs.modal', function(e) {
+			//e.preventDefault();
 			$('#idModal').val('');
 			$('#accCodeModal').val('');
-			//$('#accCodeModal2').val(accCode.substr(1));
+			$('#accCodeModal2').val('');
 			$('#accTypeModal').val('');
 			$('#detailModal').val('');
-			onChangeAccType('accTypeModal','accCodeModalAddOn');
-			
+
+			$('#accCodeModal2').removeAttr('readonly');
+			$('#accTypeModal').removeAttr('disabled');
+			onChangeAccType('accTypeModal', 'accCodeModalAddOn');
 		});
-		 */
+
 
 		var table = $('#MasterOthers').dataTable({
 			bJQueryUI : true,
@@ -354,7 +356,7 @@
 			$('#action').val('search');
 			$('#frmMAccountCode').submit();
 		});
-		
+
 		/*
 		function preSave() {
 			//	e.preventDefault();
@@ -405,18 +407,19 @@
 							//	$('#frmMAccountCode').submit();
 						});*/
 
-		$('#btnClose').click(function(e) {
+		/*
+						$('#btnClose').click(function(e) {
 			e.preventDefault();
 			$('#idModal').val('');
 			$('#accCodeModal').val('');
 			$('#accCodeModal2').val('');
 			$('#accTypeModal').val('');
 			$('#detailModal').val('');
-			
+
 			$('#accCodeModal2').removeAttr('readonly');
 			$('#accTypeModal').removeAttr('disabled');
 			onChangeAccType('accTypeModal', 'accCodeModalAddOn');
-		});
+		});*/
 
 		onChangeAccType('accTypeModal', 'accCodeModalAddOn');
 		onChangeAccType('accType', 'accCodeAddOn');
