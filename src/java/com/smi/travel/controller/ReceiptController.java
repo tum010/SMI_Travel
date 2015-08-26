@@ -283,16 +283,18 @@ public class ReceiptController extends SMITravelController {
                        listInvoiceDetail.add(invoiceDetail);
 
                        invoice.setInvoiceDetails(listInvoiceDetail);
-                       String invoiceNo = invoiceService.saveInvoice(invoice);
+                       String invoiceNo = invoiceService.saveInvoiceDetail(invoice);
                        if("fail".equals(invoiceNo)){
                            System.out.println(" SAVE INVOICE FAIL ");
                        }else{
                            System.out.println("invoiceNo " + invoiceNo);
                            Invoice inv = invoiceService.getInvoiceFromInvoiceNumber(invoiceNo);
-//                           List<InvoiceDetail> invDetaill = new ArrayList<InvoiceDetail>(inv.getInvoiceDetails());
-//                           InvoiceDetail invD = new InvoiceDetail();
-//                           invD.setId(invDetaill.get(i).getId());
-//                           receiptDetail.setInvoiceDetail(invD);
+                           List<InvoiceDetail> invDetaill = new ArrayList<InvoiceDetail>(inv.getInvoiceDetails());
+                           for(int j=0 ; j < inv.getInvoiceDetails().size() ;j++){
+                               InvoiceDetail invD = new InvoiceDetail();
+                               invD.setId(invDetaill.get(j).getId());
+                               receiptDetail.setInvoiceDetail(invD);
+                           }
                        }
 
                        if(StringUtils.isNotEmpty(paymentId)){
@@ -357,7 +359,7 @@ public class ReceiptController extends SMITravelController {
             receipt.setRecDate(util.convertStringToDate(receiveFromDate != "" ? receiveFromDate : ""));
             receipt.setArCode(arCode);
             receipt.setRemark(remark);
-            
+
 //            MFinanceItemstatus mFinanceItemstatus = new MFinanceItemstatus();
             mFinanceItemstatus.setId("1"); // 1 = Normal
             receipt.setMFinanceItemstatus(mFinanceItemstatus);
@@ -466,7 +468,6 @@ public class ReceiptController extends SMITravelController {
             if (result == "success"){
                 request.setAttribute("result", "cancelvoid");
             }
-            
             Receipt receipt = new Receipt();
             if(receiveNo != null || !"".equals(receiveNo)){
                 receipt = receiptService.getReceiptfromReceiptNo(receiveNo,InputDepartment,InputReceiptType);
