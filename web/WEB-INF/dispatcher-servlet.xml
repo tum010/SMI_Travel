@@ -545,6 +545,8 @@
 	</bean>
 
 	<bean id="CreditNoteController" class="com.smi.travel.controller.CreditNoteController">
+		<property name="creditNoteService" ref="CreditNoteService"></property>
+		<property name="utilityService" ref="UtilityService"></property>
 	</bean>
 
 	<bean id="SearchCreditNoteController" class="com.smi.travel.controller.SearchCreditNoteController">

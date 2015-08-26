@@ -15,23 +15,18 @@ public class MBank  {
      private String branch;
      private String accNo;
      private Integer accType;
+     private String status;
 
     public MBank() {
     }
 
-	
-    public MBank(String code, String name, String branch, String accNo) {
-        this.code = code;
-        this.name = name;
-        this.branch = branch;
-        this.accNo = accNo;
-    }
-    public MBank(String code, String name, String branch, String accNo, Integer accType) {
+    public MBank(String code, String name, String branch, String accNo, Integer accType, String status) {
        this.code = code;
        this.name = name;
        this.branch = branch;
        this.accNo = accNo;
        this.accType = accType;
+       this.status = status;
     }
    
     public String getId() {
@@ -71,22 +66,21 @@ public class MBank  {
         this.accType = accType;
     }
 
-    /**
-     * @return the accNo
-     */
     public String getAccNo() {
         return this.accNo;
     }
 
-    /**
-     * @param accNo
-     */
     public void setAccNo(String accNo) {
         this.accNo = accNo;
     }
 
+    public String getStatus() {
+        return status;
+    }
 
-
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
 }
 

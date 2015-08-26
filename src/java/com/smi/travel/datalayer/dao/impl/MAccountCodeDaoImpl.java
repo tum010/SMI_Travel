@@ -70,4 +70,18 @@ public class MAccountCodeDaoImpl implements MAccountCodeDao {
 			return 0;
 		}
 	}
+
+	@Override
+	public int delete(AccountCode accountCode) {
+		try{
+			Session session = this.sessionFactory.openSession();
+			Transaction tx = session.beginTransaction();
+			session.delete(accountCode);
+			tx.commit();
+			session.close();
+			return 1;
+			}catch(Exception ex){
+				return 0;
+			}
+	}
 }

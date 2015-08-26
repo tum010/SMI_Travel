@@ -7,10 +7,6 @@
 <%@ attribute name="label" required="false"%>
 <%@ attribute name="optionitems" required="false" type="java.util.Map"%>
 <%@ attribute name="isReadonly" required="false"%>
-
-<script>
-	alert('${isModal}');
-</script>
 <div class="form-group">
 	
 	<c:if test="${not empty label}">

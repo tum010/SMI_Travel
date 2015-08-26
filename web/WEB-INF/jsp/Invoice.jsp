@@ -19,6 +19,7 @@
 <c:set var="result" value="${requestScope['result']}" />
 <c:set var="roleName" value="${requestScope['roleName']}" />
 <c:set var="page" value="${requestScope['page']}" />
+<c:set var="create" value="${requestScope['thisdate']}" />
 <c:set var="showvat" value="false" />
 <c:set var="typeBooking" value="" />
 <section class="content-header" >
@@ -45,10 +46,18 @@
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <strong>Save Success!</strong> 
 </div>
-<div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+<div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <strong>Save Not  Success!</strong> 
-</div>            
+</div>
+<div id="textAlertNotInvoice"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Not have Invoice In Page!!</strong> 
+</div>
+<div id="textAlertMoney"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Money more than Billable, Please Input money</strong> 
+</div>
             <form action="Invoice${page}.smi" method="post" id="InvoiceForm" role="form" >
             <div id="textAlertDisable"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -91,16 +100,19 @@
                         </c:when> 
                         <c:when test="${fn:contains(page , 'WA')}">
                             <c:set var="typeInvoice" value="W/A" />
+                            <c:set var="invType" value="Air Ticket" />
                             <c:set var="typeBooking" value="I" />
                             <h4><b>Invoice Air Ticket Wendy</b></h4>
                         </c:when> 
                         <c:when test="${fn:contains(page , 'OA')}">
                             <c:set var="typeInvoice" value="O/A" />
+                            <c:set var="invType" value="Air Ticket" />
                             <c:set var="typeBooking" value="O" />
                             <h4><b>Invoice Air Ticket Outbound</b></h4>
                         </c:when> 
                     </c:choose> 
                     <input type="text" class="hidden" value="${typeInvoice}" id="InputInvoiceType" name="InputInvoiceType">
+                    <input type="text" class="hidden" value="${invType}" id="invType" name="invType">
                 </div>
                 <div class="col-xs-12 form-group"><hr/></div>
             </div>
@@ -207,7 +219,7 @@
                                 </c:if>
                                 <c:if test='${invoice.invDate == null}'>
                                     <input id="InputInvDate" name="InputInvDate"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['']}">
+                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${create}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                              
                                 </c:if>  
                             </div>
@@ -621,7 +633,9 @@
                                             </button>
                                         </div>
                                         <div class="col-md-3 text-right " >
-                                            
+                                            <button type="button" class="btn btn-default" id="copyButton" onclick="printInvoice('email')" data-toggle="modal" data-target="#CopyModal">
+                                                <span id="buttonCopy" class="glyphicon glyphicon-send" ></span> Copy 
+                                            </button>
                                         </div>
                                         <div class="col-md-2 text-right ">
                                             <c:set var="isDisableVoid" value="disabled='true'" />
@@ -767,6 +781,24 @@
             </div>
             <div class="modal-footer">  
                 <button type="button" onclick="saveDescriptionDetail()" class="btn btn-success" data-dismiss="modal">OK</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade " id="CopyModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Copy Invoice</h4>
+            </div>
+            
+            <div class="modal-body" >
+                You want copy invoice ? If copy click OK
+            </div>
+            <div class="modal-footer">  
+                <button type="button" onclick="copyInvoice()" class="btn btn-success" data-dismiss="modal">OK</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->

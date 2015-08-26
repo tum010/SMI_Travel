@@ -10,6 +10,9 @@ import com.smi.travel.datalayer.dao.ReceiptDao;
 import com.smi.travel.datalayer.entity.Receipt;
 import com.smi.travel.datalayer.entity.ReceiptCredit;
 import com.smi.travel.datalayer.entity.ReceiptDetail;
+import com.smi.travel.datalayer.view.entity.ReceiptSearchView;
+import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -421,6 +424,86 @@ import org.hibernate.Transaction;
         session.close();
         this.sessionFactory.close();
         return list;
+    }
+    
+    @Override
+    public List<ReceiptSearchView> getReceiptViewFromFilter(String from, String to, String Department, String type) {
+         Session session = this.sessionFactory.openSession();
+         String query = "from Receipt rec Where";
+         int checkQuery = 0;
+         String prefix ="";
+         if(((from != null) &&(!"".equalsIgnoreCase(from))) &&((to != null) &&(!"".equalsIgnoreCase(to)))){
+             query += " rec.recDate >= '" +from +"' and rec.recDate <= '"+to +"' ";
+             checkQuery = 1;
+         }else if((from != null) &&(!"".equalsIgnoreCase(from))){
+             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+             query += prefix+ " rec.recDate >= '" +from +"'";
+             
+         }else if((to != null) &&(!"".equalsIgnoreCase(to))){
+             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+             query += " rec.recDate <= '" +to +"'";
+         }
+         
+         if((Department != null) &&(!"".equalsIgnoreCase(Department))){
+             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+             query += " and rec.department = '"+Department+"'";
+         }
+         
+         if((type != null) &&(!"".equalsIgnoreCase(type))){
+             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+             query += " and rec.recType = '"+type+"'";
+         }
+         if(checkQuery == 0){query = query.replaceAll("Where", "");}
+         System.out.println("query : "+query);
+         List<ReceiptSearchView> viewList = new LinkedList<ReceiptSearchView>();
+         List<Receipt> receiptList = session.createQuery(query)
+                .list();
+         if(receiptList.isEmpty()){
+             return null;
+         }else{
+             for(int i=0;i<receiptList.size();i++){
+                 viewList.add(mappingReceiptView(receiptList.get(i)));
+             }
+         }
+         return viewList;
+    }
+    
+    public ReceiptSearchView mappingReceiptView(Receipt detail){
+        ReceiptSearchView view = new ReceiptSearchView();
+        UtilityFunction util = new UtilityFunction();
+        view.setRecId(detail.getId());
+        view.setRecNo(detail.getRecNo());
+        view.setRecTo(detail.getRecFrom());
+        view.setRecName(detail.getRecName());
+        view.setRecType(detail.getRecType());
+        view.setDepartment(detail.getDepartment());
+        String InvoiceNo ="";
+        BigDecimal amount = new BigDecimal(0);
+        for(int i=0;i<detail.getReceiptDetails().size();i++){
+            ReceiptDetail recd = (ReceiptDetail)detail.getReceiptDetails().get(i);
+            if(recd.getAmount() != null)
+            amount = amount.add(recd.getAmount());
+            if(recd.getInvoiceDetail() != null){
+                String invoice = recd.getInvoiceDetail().getInvoice().getInvNo();
+                int checkLap =0;
+                if(InvoiceNo.length() ==0){
+                    InvoiceNo += invoice;
+                }else{
+                    String path[] = InvoiceNo.split(",");
+                    for(int j=0;j<InvoiceNo.length();j++){
+                        if(path[j].equalsIgnoreCase(invoice)){
+                            checkLap = 1;
+                        }
+                    }
+                    if(checkLap == 0) InvoiceNo += ","+invoice;
+                }
+            }
+            view.setInvoiceNo(InvoiceNo);
+            if(detail.getMAccpay() != null)
+            view.setTermPay(detail.getMAccpay().getName());
+        }
+        view.setAmount(util.setFormatMoney(amount));
+        return view;
     }
 
     public SessionFactory getSessionFactory() {

@@ -26,8 +26,10 @@ public class InvoiceServlet implements AbstractAJAXServlet{
         String type = request.getParameter("type");
         String searchRefNo = request.getParameter("refNo");
         String typeId = request.getParameter("typeId");
+        String invType = request.getParameter("invType");
         
         result.put("servletName", servletName);
+        result.put("invType", invType);
         result.put("type", type);
         result.put("typeId", typeId);
         result.put("refNo", searchRefNo);

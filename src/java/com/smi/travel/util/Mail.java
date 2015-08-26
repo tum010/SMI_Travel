@@ -59,7 +59,7 @@ public class Mail extends SMITravelController {
         } catch (EmailException ex) {
             System.out.println("Email Exception");
             ex.printStackTrace();
-            result = "fail";
+            result = "send email fail";
         }   
         if(send){
             System.out.println(mail.getUsername() + mail.getPassword());
@@ -87,7 +87,7 @@ public class Mail extends SMITravelController {
             }}
             email.send();
 
-            result = "success";
+            result = "send email success";
             
             
         }

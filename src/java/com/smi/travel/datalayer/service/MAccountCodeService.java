@@ -10,5 +10,6 @@ public interface MAccountCodeService {
 	
 	public int save(AccountCode accountCode);
 	public int update(AccountCode accountCode);
+	public int delete(AccountCode accountCode);
 
 }

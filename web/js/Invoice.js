@@ -241,7 +241,7 @@ function checkCurrencyCost(){
             }
         }
     }
-                alert("Heeee : " + different);
+//                alert("Heeee : " + different);
     if(different>0){          
         $('#DetailBillableTable').find('tr').each(function () { 
             $(this).find('td').each(function () { 
@@ -455,16 +455,6 @@ function Enable() {
 }
 
 function DisableInvoice() {
-//    var roleName = $('#roleName').val();
-//    $("#disableVoidButton").css("display", "none");
-//    $("#saveInvoice").prop("disabled",true);
-//    if(roleName === 'YES'){
-//        $('#enableVoidButton').css("display", "block");
-//    }else if(roleName === 'NO'){
-//        $("#enableVoidButton").prop("disabled",true);
-//    }
-//    
-//    $('#textAlertDisable').show();
     var action = document.getElementById('action');
     action.value = 'disableVoid';
     document.getElementById('InvoiceForm').submit();
@@ -693,8 +683,9 @@ function searchAction(){
     });
 
     var searchNo = $("#SearchRefNo").val();
+    var invType = $("#invType").val();
 //    alert("Ref : " + searchNo);
-
+    console.log("inv type : " +invType+":");
     if(searchNo !== ""){ 
         var servletName = 'InvoiceServlet';
         var servicesName = 'AJAXBean';
@@ -702,6 +693,7 @@ function searchAction(){
                 '&servletName=' + servletName +
                 '&servicesName=' + servicesName +
                 '&refNo=' + searchNo +
+                '&invType=' + invType +
                 '&type=' + 'searchInvoice';
         CallAjaxAdd(param);
     }else{
@@ -762,6 +754,7 @@ function setBillableInvoice(data){
     $('#SaleStaffId').val(array[4]);
     $('#SaleStaffName').val(array[5]);
     $('#SaleStaffCode').val(array[6]);
+    $('#InputDueDate').val(array[7]);
 }
 
 function addInvoiceDetail(rowId){
@@ -1249,13 +1242,28 @@ function sendEmailInvoice(){
 
 $(document).ready(function () {
     var bla = $('#resultText').val();
-
-    if(bla == "success"){
-        
+    if(bla === "success"){  
         $('#textAlertDivSave').show();
     }else if ( bla === ""){
         $('#textAlertDivSave').hide();
+    }else if(bla === "notInvoice"){  
+        $('#textAlertNotInvoice').show();
+    }else if(bla === "yesInvoice"){  
+        $('#textAlertNotInvoice').hide();
+    }else if(bla === "moreMoney"){  
+        $('#textAlertMoney').show();
+    }else if(bla === "okMoney"){  
+        $('#textAlertMoney').hide();
     }else {
         $('#textAlertDivNotSave').show();
     }
 });
+
+function copyInvoice(){
+    $('#InvoiceId').val('');
+    $('#InvNo').val('');
+    console.log("Invoice Id : " + $('#InvoiceId').val() + "Invoice Number : " + $('#InvNo').val());
+    var action = document.getElementById('action');
+    action.value = 'copyInvoice';
+    document.getElementById('InvoiceForm').submit();
+}

@@ -66,8 +66,10 @@
             <c:set var="adultCancel" value=""/>
             <c:set var="childCancel" value=""/>
             <c:set var="infantCancel" value=""/>
+            <c:set var="alert" value=""/>
             <c:if test="${(requestScope['adultCancel'] != '0') || (requestScope['childCancel'] != '0') || (requestScope['infantCancel'] != '0')}">
                 <c:set var="require" value="Require Ticket - "/>
+                <c:set var="alert" value="alert-danger"/>
             </c:if>
             <c:if test="${requestScope['adultCancel'] != '0'}">
                 <c:set var="adultCancel" value="Adult: ${requestScope['adultCancel']}"/>
@@ -78,8 +80,11 @@
             <c:if test="${requestScope['infantCancel'] != '0'}">
                 <c:set var="infantCancel" value="Infant: ${requestScope['infantCancel']}"/>
             </c:if>           
-            <c:if test="${requestScope['resultText'] == 'success'}">      
-            <div id="textAlertDivSave"  style="" class="alert alert-success alert-dismissible" role="alert">
+            <c:if test="${requestScope['resultText'] == 'success'}">
+                <c:if test="${alert == ''}">
+                    <c:set var="alert" value="alert-success"/>
+                </c:if>
+            <div id="textAlertDivSave"  style="" class="alert ${alert} alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong>Save Success! ${require} ${adultCancel} ${childCancel} ${infantCancel}</strong> 
             </div>
@@ -90,13 +95,13 @@
                     <strong>Save Not Success!</strong> 
             </div>
             </c:if>
-            <c:if test="${requestScope['resultText'] == 'stock success'}">
+            <c:if test="${requestScope['resultTicket'] == 'stock success'}">
             <div id="textAlertDivNotSave"  style="" class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong>Update Stock Ticket Success!</strong> 
             </div>
             </c:if>
-            <c:if test="${requestScope['resultText'] == 'stock fail'}">
+            <c:if test="${requestScope['resultTicket'] == 'stock fail'}">
             <div id="textAlertDivNotSave"  style="" class="alert alert-danger alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong>Update Stock Ticket Not Success!</strong> 
@@ -334,8 +339,10 @@
                         <input type="hidden" class="form-control" id="status" name="status" value="${requestScope['status']}">
                         <input type="hidden" class="form-control" id="isbill" name="isbill" value="${requestScope['isbill']}">
                         <input type="hidden" class="form-control" id="createby" name="createby" value="${requestScope['createby']}">
+                        <input type="hidden" class="form-control" id="createdate" name="createdate" value="${requestScope['createdate']}">
                         <input type="hidden" class="form-control" id="stockticketid" name="stockticketid" value="">
-                        
+                        <input type="hidden" class="form-control" id="ticketstatus" name="ticketstatus" value="">
+                        <input type="hidden" class="form-control" id="counter" name="counter" value="">
                         <div class="text-center" >    
                             <c:choose>
                                 <c:when test="${requestScope['status'] == 2}">
@@ -363,6 +370,7 @@
                             <thead>
                                 <tr class="datatable-header">
                                     <th class="hidden">id</th>
+                                    <th style="width: 3%" onclick="selectAll()"><u>All</u></th>
                                     <th style="width: 5%">No</th>
                                     <th style="width: 11%">Add Date</th>
                                     <th style="width: 41%">Ticket</th>
@@ -374,14 +382,19 @@
                             <tbody>
                                 <c:forEach var="table" items="${ticketList}" varStatus="status">                                   
                                     <tr>
-                                        <td class="hidden">${table.id}</td> 
-                                        <td align="center">${status.count} </td>
+                                        <td class="hidden">
+                                            <input type="hidden" id="stockticketid${status.count}" name="stockticketid${status.count}" value="${table.id}">
+                                        </td>
+                                        <td align="center">
+                                            <input type="checkbox" id="selectAll${status.count}" name="selectAll${status.count}" value="1" >
+                                        </td>
+                                        <td align="center">${status.count}</td>
                                         <td align="center">${table.addDate}</td>
                                         <td>${table.ticketCode}</td>
                                         <td align="center">${table.typeName}</td>
                                         <th align="center">${table.status}</th>
                                         <td align="center">
-                                            <span id="SpanGlyphiconRemove" class="glyphicon glyphicon-remove deleteicon" onclick="setStockTicket('${table.id}')" data-toggle="modal" ></span>
+                                            <span id="SpanGlyphiconRemove" class="glyphicon glyphicon-remove deleteicon" onclick="setStockTicket('${table.id}','${table.status}')" data-toggle="modal" ></span>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -638,14 +651,14 @@
                     <div>Please select ticket status ?</div>                   
                     <div class="radio col-xs-12">
                         <div class="col-xs-4">
-                            <label ><input value="reuse" id="reuse" name="reuse" type="radio" >Reuse</label>
+                            <label ><input value="reuse" id="reuse" name="cancelTicket" type="radio" >Reuse</label>
                         </div>
                         <div class="col-xs-4">
-                            <label ><input value="refund" id="refund" name="refund" type="radio" >Refund</label>
+                            <label ><input value="refund" id="refund" name="cancelTicket" type="radio" >Refund</label>
                         </div>    
                         <div class="col-xs-4">
-                            <label ><input value="void" id="void" name="void" type="radio" >Void</label>
-                        </div>    
+                            <label ><input value="void" id="void" name="cancelTicket" type="radio" >Void</label>
+                        </div>
                     </div><br/>                   
                 </div>                              
                 <div class="modal-footer">

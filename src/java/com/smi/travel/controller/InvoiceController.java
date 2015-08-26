@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
@@ -142,63 +143,62 @@ public class InvoiceController extends SMITravelController {
         // Save Invoice And Update
         if("save".equals(action)){
             invoice = setValueInvoice(action, user.getUsername(), invoiceType, invoiceId, invoiceTo, invoiceName, invoiceAddress, isGroup, termPay, dueDate, department, staffCode, staffName, staffId, arCode, remark, invoiceNo, InputInvDate, request,subDepartment);
-            result = invoiceService.saveInvoice(invoice);
-//            System.out.println("invoiceService checkOverflowValueOfInvoice:"+invoiceService.checkOverflowValueOfInvoice(invoice.getInvoiceDetails()));
-            System.out.println("ddddd result : "+result);
-            if(result.equals("update success")){
-                   result = "success";
-                   request.setAttribute("listInvoiceDetail", listInvoiceDetail);
-                   invoice = invoiceService.getInvoiceFromInvoiceNumber(invoiceNo);
-                   request.setAttribute("invoice", invoice);
-                   request.setAttribute("result", result);
-                   
-            }else if(!result.equals("fail")){ // Save New Success
-                // search invoice from invoice no
-                System.out.println("save result : "+result); 
-                Invoice newInvoice = invoiceService.getInvoiceFromInvoiceNumber(result);
-                result = "success";
-                // set invoice detail in list
-                List<InvoiceDetail> listInvoiceDetailNew = newInvoice.getInvoiceDetails();
-                if(newInvoice != null){
-                    
-                    request.setAttribute("invoice", newInvoice);             
-                }else{
-                    request.setAttribute("invoice", null);    
+            if("okMoney".equals(invoiceService.checkOverflowValueOfInvoice(invoice.getInvoiceDetails()))){
+                result = invoiceService.saveInvoice(invoice);
+                System.out.println("ddddd result : "+result);
+                saveAction(result, invoiceNo, invoice, request);
+            }else{
+                result = invoiceService.checkOverflowValueOfInvoice(invoice.getInvoiceDetails());
+                request.setAttribute("result", result);
+            }
+            System.out.println("invoiceService checkOverflowValueOfInvoice:"+invoiceService.checkOverflowValueOfInvoice(invoice.getInvoiceDetails()));
+        }else if("searchInvoice".equals(action)){ // search invoice when input invoice no
+            String depart = invoiceNo.substring(0,1);
+            String type = invoiceNo.substring(1,2);
+            if("W".equals(depart)){
+                if("0".equals(type)){
+                    type = "T";
+                }else if("T".equals(type)){
+                    type = "A";
                 }
-                if(listInvoiceDetailNew != null){
-                    request.setAttribute("listInvoiceDetail", listInvoiceDetailNew);
+            }
+            if("O".equals(depart)){
+                if("0".equals(type)){
+                    type = "T";
+                }else if("T".equals(type)){
+                    type = "A";
+                }
+            }
+            System.out.println("Search Invoice : Depart >>>> " + depart +  "  Typee >>> " + type);
+            if(depart.equals(department) && type.equals(invoiceType)){
+                invoice = invoiceService.getInvoiceFromInvoiceNumber(invoiceNo);
+                System.out.println(invoiceNo);
+                System.out.println("1");
+                listInvoiceDetail = invoice.getInvoiceDetails();
+                if(invoice != null){
+                    System.out.println("2");
+                    System.out.println(invoice.getId());
+                    System.out.println(invoice.getInvNo());
+                    request.setAttribute("invoice", invoice);
+                    //result = "success";
+                }else{
+                    System.out.println("3");
+                    request.setAttribute("invoice", null);
+                }
+                if(listInvoiceDetail != null){
+                    request.setAttribute("listInvoiceDetail", listInvoiceDetail);
+                    //result = "success";
                 }else{
                     request.setAttribute("listInvoiceDetail", null);
-                }               
+                }
+                result="yesInvoice";
+                System.out.println("result : "+result);
                 request.setAttribute("result", result);
             }else{
+                result = "notInvoice";
+                System.out.println("result : "+result);
                 request.setAttribute("result", result);
-                request.setAttribute("invoice", invoice);
-                request.setAttribute("listInvoiceDetail", null);
-            }  
-        }else if("searchInvoice".equals(action)){ // search invoice when input invoice no 
-            invoice = invoiceService.getInvoiceFromInvoiceNumber(invoiceNo);
-            System.out.println(invoiceNo);
-            System.out.println("1");
-            listInvoiceDetail = invoice.getInvoiceDetails();
-            if(invoice != null){
-                System.out.println("2");
-                System.out.println(invoice.getId());
-                System.out.println(invoice.getInvNo());
-                request.setAttribute("invoice", invoice);
-                //result = "success";
-            }else{
-                System.out.println("3");
-                request.setAttribute("invoice", null);
             }
-            if(listInvoiceDetail != null){
-                request.setAttribute("listInvoiceDetail", listInvoiceDetail);
-                //result = "success";
-            }else{
-                request.setAttribute("listInvoiceDetail", null);
-            }
-            System.out.println("result : "+result);
-            request.setAttribute("result", result);   
         }else if("disableVoid".equals(action)){
             invoice = setValueInvoice(action, user.getUsername(), invoiceType, invoiceId, invoiceTo, invoiceName, invoiceAddress, isGroup, termPay, dueDate, department, staffCode, staffName, staffId, arCode, remark, invoiceNo, InputInvDate, request,subDepartment);
             result = invoiceService.saveInvoice(invoice);
@@ -237,8 +237,6 @@ public class InvoiceController extends SMITravelController {
         }else if("delete".equals(action)){// Delete Invoice From Search invoice page
             invoice = setValueInvoice(action, user.getUsername(), invoiceType, invoiceId, invoiceTo, invoiceName, invoiceAddress, isGroup, termPay, dueDate, department, staffCode, staffName, staffId, arCode, remark, invoiceNo, InputInvDate, request,subDepartment);
             String rowId  = request.getParameter("idDeleteDetailBillable");
-//            String DetailBillId  = request.getParameter("detailId"+rowId);
-            
             result = invoiceService.DeleteInvoiceDetail(rowId);
             if("success".equals(result)){
                 invoice = invoiceService.getInvoiceFromInvoiceNumber(invoice.getInvNo());
@@ -257,10 +255,50 @@ public class InvoiceController extends SMITravelController {
                 request.setAttribute("invoice",null);
                 request.setAttribute("listInvoiceDetail", null);
             }
+        }else if("copyInvoice".equals(action)){
+            invoice = setValueInvoice(action, user.getUsername(), invoiceType, invoiceId, invoiceTo, invoiceName, invoiceAddress, isGroup, termPay, dueDate, department, staffCode, staffName, staffId, arCode, remark, invoiceNo, InputInvDate, request,subDepartment);
+            invoice.setId(null);
+            result = invoiceService.saveInvoice(invoice);
+            System.out.println("Copy Invoice result : "+result);
+            saveAction(result, invoice.getInvNo(), invoice, request);
         }
-        
+        request.setAttribute("thisdate", utilty.convertDateToString(new Date()));
         request.setAttribute("page", callPageFrom);
         return new ModelAndView(LINKNAME+callPageFrom);
+    }   
+    
+    public void saveAction(String result ,String invoiceNo, Invoice invoice ,HttpServletRequest request){
+        if(result.equals("update success")){
+            result = "success";
+            request.setAttribute("listInvoiceDetail", listInvoiceDetail);
+            invoice = invoiceService.getInvoiceFromInvoiceNumber(invoiceNo);
+            request.setAttribute("invoice", invoice);
+            request.setAttribute("result", result);
+                   
+        }else if(!result.equals("fail")){ // Save New Success
+            // search invoice from invoice no
+            System.out.println("save result : "+result); 
+            Invoice newInvoice = invoiceService.getInvoiceFromInvoiceNumber(result);
+            result = "success";
+            // set invoice detail in list
+            List<InvoiceDetail> listInvoiceDetailNew = newInvoice.getInvoiceDetails();
+            if(newInvoice != null){
+
+                request.setAttribute("invoice", newInvoice);             
+            }else{
+                request.setAttribute("invoice", null);    
+            }
+            if(listInvoiceDetailNew != null){
+                request.setAttribute("listInvoiceDetail", listInvoiceDetailNew);
+            }else{
+                request.setAttribute("listInvoiceDetail", null);
+            }               
+            request.setAttribute("result", result);
+        }else{
+            request.setAttribute("result", result);
+            request.setAttribute("invoice", invoice);
+            request.setAttribute("listInvoiceDetail", null);
+        }  
     }
     
     public Invoice setValueInvoice(String action , String username,String invoiceType,String invoiceId, String invoiceTo,String invoiceName,String invoiceAddress,
@@ -294,7 +332,7 @@ public class InvoiceController extends SMITravelController {
             if(invoiceType != null && !"".equals(invoiceType) ){
                 invoice.setInvType(invoiceType);
             }
-            if(!invoiceId.equals("") && (invoiceId != null)){
+            if(!"".equals(invoiceId) && invoiceId != null){
                 invoice.setId(invoiceId);
             }
           
@@ -362,11 +400,21 @@ public class InvoiceController extends SMITravelController {
             if(invoiceNo != null && !invoiceNo.equals("")){
                 invoice.setInvNo(invoiceNo);         
             }else{
-                String day[] = createDate.split("-");
+                String day[] = new String[2];
+                if("copyInvoice".equals(action)){
+                    day = InputInvDate.split("-");
+                    date = utilty.convertStringToDate(InputInvDate);
+                    invoice.setCreateDate(date);
+                }else{
+                    day = createDate.split("-");
+                }
+                SimpleDateFormat df = new SimpleDateFormat();
+                df.applyPattern("MMyy");
                 String month = day[1];
                 String year = day[0];
                 year = year.substring(2);
-                String lastInvoiceType = invoiceService.searchInvoiceNo(department, invoiceType);
+                System.out.println("Date MMYY : " + df.format(date));
+                String lastInvoiceType = invoiceService.searchInvoiceNum(department, invoiceType,df.format(date));
                 String invoiceNoNew ="";
                 if(lastInvoiceType != null && !lastInvoiceType.equals("")){
                    invoiceNoNew = generateInvoiceNo(department, invoiceType, month, year,lastInvoiceType);
@@ -419,7 +467,15 @@ public class InvoiceController extends SMITravelController {
                 invoiceNum = "WT"+month+""+year+""+numberAsString;
             }
         }else if (department.equals("Outbound")){
-            invoiceNum = "O"+month+""+year+""+numberAsString;
+            if(invoiceType.equals("T")){
+                invoiceNum = "O"+month+""+year+""+numberAsString;
+            }else if(invoiceType.equals("V")){
+                invoiceNum = "OV"+month+""+year+""+numberAsString;
+            }else if(invoiceType.equals("N")){
+                invoiceNum = "ON"+month+""+year+""+numberAsString;
+            }else if(invoiceType.equals("A")){
+                invoiceNum = "OT"+month+""+year+""+numberAsString;
+            }
         }
 
         return invoiceNum;
