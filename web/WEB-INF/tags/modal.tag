@@ -1,7 +1,5 @@
 <%@ tag pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ variable name-given="isModal" scope="NESTED"%>
-<c:set var="isModal" value="true"/>
 <%@ attribute name="id" required="true"%>
 <%@ attribute name="title" required="true"%>
 <%@ attribute name="enableOKButton" required="false"%>
@@ -42,6 +40,6 @@
 			</div>
 		</div>
 	</div>
-	<c:set var="isModal" value="false"/>
+
 
 

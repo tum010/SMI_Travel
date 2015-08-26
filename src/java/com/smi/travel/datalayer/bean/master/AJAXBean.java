@@ -739,12 +739,12 @@ public class AJAXBean extends AbstractBean implements
                 
             }else if(CREDITNOTE.equalsIgnoreCase(servletName)){
                 if("delete".equalsIgnoreCase(type)){
-                String cnDetailId = map.get("cnDetailId").toString();
-                if(cnDetailId != null && !cnDetailId.equals("")){
-                    result = creditNoteDao.DeleteCreditNoteDetail(cnDetailId);
+                    String cnDetailId = map.get("cnDetailId").toString();
+                    if(cnDetailId != null && !cnDetailId.equals("")){
+                        result = creditNoteDao.DeleteCreditNoteDetail(cnDetailId);
+                    }
                 }
-            }
-        }           
+            }           
         }  
         
         return result;
@@ -807,8 +807,11 @@ public class AJAXBean extends AbstractBean implements
         String id = "";
         String product = "";
         String description = "";
+        BigDecimal cost = new BigDecimal(0);
+        String curCost = "";
         BigDecimal amount = new BigDecimal(0);
-        String currency = "";
+        String curAmount = "";
+        String isVat = "";
         
         UtilityFunction utilty = new UtilityFunction();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -825,9 +828,20 @@ public class AJAXBean extends AbstractBean implements
             invoiceDetail = invoiceDetaillList.get(i);
             id = invoiceDetail.getId();
             product = invoiceDetail.getMbillType().getName();
-            description = invoiceDetail.getDescription();
-            amount = invoiceDetail.getAmount();
-            currency = invoiceDetail.getCurAmount();
+            description = invoiceDetail.getDescription();           
+            curCost = invoiceDetail.getCurCost();           
+            curAmount = invoiceDetail.getCurAmount();
+            isVat = String.valueOf(invoiceDetail.getIsVat());
+            if(invoiceDetail.getCost() != null){
+                cost = invoiceDetail.getCost();
+            } else {
+                cost = new BigDecimal(0);
+            }
+            if(invoiceDetail.getAmount() != null){
+                amount = invoiceDetail.getAmount();
+            } else {
+                amount = new BigDecimal(0);
+            }
             if(!"".equalsIgnoreCase(id)){
                 String newrow = "";
                     newrow +=   "<tr>"+
@@ -841,8 +855,8 @@ public class AJAXBean extends AbstractBean implements
                                 "<td class='text-center'>" + product + "</td>"+
                                 "<td>" + description + "</td>"+
                                 "<td class='money' style=\"text-align:right;\">" + amount + "</td>"+
-                                "<td style=\"text-align:center;\">" + currency + "</td>"+ 
-                                "<td><center><a href=\"\"><span onclick=\"AddProduct('"+id+"','"+product+"','"+description+"','"+amount+"','"+currency+"')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>" +
+                                "<td style=\"text-align:center;\">" + curAmount + "</td>"+ 
+                                "<td><center><a href=\"\"><span onclick=\"AddProduct('"+id+"','"+product+"','"+description+"','"+cost+"','"+curCost+"','"+amount+"','"+curAmount+"','"+isVat+"')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>" +
                                 "</tr>";
                     html.append(newrow);
             }
