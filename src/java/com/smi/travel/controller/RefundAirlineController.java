@@ -39,7 +39,7 @@ public class RefundAirlineController extends SMITravelController {
                 request.setAttribute("refundAirline", refundAirticket);
                 if(refundAirticket == null){
                     request.setAttribute("failStatus", true);
-                    request.setAttribute("failMessage", "Refund no. not available !");
+                    request.setAttribute("failMessage", "Refund no." + refundNo + " not available !");
                 }
             } catch (Exception e) {
                 e.printStackTrace();

@@ -82,8 +82,8 @@ $(document).ready(function () {
             document.getElementById('RefundAirlineForm').submit();
         }
     });
-    
-    
+
+
     $("#ButtonSaveAndNew").click(function () {
 
         $('#RefundAirlineForm').bootstrapValidator('revalidateField', 'refundAgentId');
@@ -121,7 +121,6 @@ function addRowRefundAirlineList() {
         $(this).attr({row: counter});
     });
     clone.find('div,input,span,output').each(function () {
-        console.log('count :' + counter);
         $(this).attr({
             id: $(this).attr('colName') + counter,
             name: $(this).attr('colName') + counter
@@ -183,63 +182,82 @@ function addRowRefundAirlineList() {
                 }
             });
         });
-
-        console.log(this.id + '/' + "ticketno");
         if (this.id.startsWith("ticketNo")) {
             $(this).on("keyup", function (event) {
+                var inputTicket = this;
+                var ticketNo = this.value;
+                var ticketNoId = this.id;
                 var keycode = (event.keyCode ? event.keyCode : event.which);
                 if (keycode == '13') {
+                    var duplicate = false;
+                    $("#alertFail").hide();
+                    $("#alertSuccess").hide();
+                    $('#RefundAirlineTable tbody [colName="ticketNo"]').each(function () {
+                        if (ticketNoId !== this.id && ticketNo === this.value) {
+                            console.log(this.value);
+                            inputTicket.style.borderColor = "Red";
+                            duplicate = true;
+                            return;
+                        }
+                    });
+                    if (!duplicate) {
+                        var url = 'AJAXServlet';
+                        var servletName = 'RefundAirlineServlet';
+                        var servicesName = 'AJAXBean';
+                        var param = 'action=' + 'text' +
+                                '&servletName=' + servletName +
+                                '&servicesName=' + servicesName +
+                                '&type=getTicketFare' +
+                                '&ticketNo=' + this.value;
+                        var row = parseInt($(this).parent().parent().attr("row"));
+                        try {
+                            $.ajax({
+                                type: "POST",
+                                url: url,
+                                cache: false,
+                                data: param,
+                                beforeSend: function () {
+                                    $("#dataload").removeClass("hidden");
+                                },
+                                success: function (msg) {
+                                    if (msg !== "") {
+                                        var fare = JSON.parse(msg);
+                                        console.log(fare.Id);
+                                        $("#ticketId" + row).val(fare.Id);
+                                        $("#ticketDate" + row).html(fare.TicketDate);
+                                        $("#sectorIssue" + row).html(fare.Sector);
+                                        $("#total" + row).html(fare.Total);
+                                        $("#department" + row).html(fare.Dept);
+                                        $("#passsenger" + row).html(fare.Passenger);
+                                        var counter = $('#RefundAirlineTable tbody tr').length / 2;
+                                        if (row === counter) {
+                                            addRowRefundAirlineList();
+                                            $(".decimal").inputmask({
+                                                alias: "decimal",
+                                                integerDigits: 8,
+                                                groupSeparator: ',',
+                                                autoGroup: true,
+                                                digits: 2,
+                                                allowMinus: false,
+                                                digitsOptional: false,
+                                                placeholder: "0.00"
+                                            });
+                                        }
+                                        inputTicket.style.removeProperty('border');
+                                    } else {
+                                        $("#alertTextFail").html("Ticket no " + ticketNo + " is not available.");
+                                        $("#alertFail").show();
+                                        $("#alertSuccess").hide();
+                                    }
 
-                    var url = 'AJAXServlet';
-                    var servletName = 'RefundAirlineServlet';
-                    var servicesName = 'AJAXBean';
-                    var param = 'action=' + 'text' +
-                            '&servletName=' + servletName +
-                            '&servicesName=' + servicesName +
-                            '&type=getTicketFare' +
-                            '&ticketNo=' + this.value;
-                    var row = parseInt($(this).parent().parent().attr("row"));
-                    try {
-                        $.ajax({
-                            type: "POST",
-                            url: url,
-                            cache: false,
-                            data: param,
-                            beforeSend: function () {
-                                $("#dataload").removeClass("hidden");
-                            },
-                            success: function (msg) {
-                                console.log("getAutoListBillto ==" + msg);
-                                var fare = JSON.parse(msg);
-                                console.log(fare.Id);
-                                $("#ticketId" + row).val(fare.Id);
-                                $("#ticketDate" + row).html(fare.TicketDate);
-                                $("#sectorIssue" + row).html(fare.Sector);
-                                $("#total" + row).html(fare.Total);
-                                $("#department" + row).html(fare.Dept);
-                                $("#passsenger" + row).html(fare.Passenger);
-                                var counter = $('#RefundAirlineTable tbody tr').length / 2;
-                                if (row === counter) {
-                                    addRowRefundAirlineList();
-                                    $(".decimal").inputmask({
-                                        alias: "decimal",
-                                        integerDigits: 8,
-                                        groupSeparator: ',',
-                                        autoGroup: true,
-                                        digits: 2,
-                                        allowMinus: false,
-                                        digitsOptional: false,
-                                        placeholder: "0.00"
-                                    });
+                                }, error: function (msg) {
+                                    console.log('auto ERROR');
+                                    $("#dataload").addClass("hidden");
                                 }
-
-                            }, error: function (msg) {
-                                console.log('auto ERROR');
-                                $("#dataload").addClass("hidden");
-                            }
-                        });
-                    } catch (e) {
-                        alert(e);
+                            });
+                        } catch (e) {
+                            alert(e);
+                        }
                     }
                 }
                 event.stopPropagation();
