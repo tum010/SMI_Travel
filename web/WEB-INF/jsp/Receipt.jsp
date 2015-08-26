@@ -256,15 +256,15 @@
                                     <input id="receiveId" name="receiveId" type="hidden" class="form-control" maxlength="11" value="${receipt.id}">
                                     <input id="receiveNo" name="receiveNo" type="text" style="width: 150px" class="form-control" maxlength="20" value="${receipt.recNo}">
                                 </div>
-                                <div class="col-xs-1 text-right" style="width:10px"></div>
-                                <div class="col-xs-1 text-right" style="width: 90px">
+                                <div class="col-xs-1 text-right" style="width: 8px"></div>
+                                <div class="col-xs-1 text-right" style="width: 80px">
                                     <button style="height:34px" type="button"  id="ButtonSearch"  name="ButtonSearch" onclick="searchReceiveNo();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
                                 </div>
-                                <div class="col-xs-1 text-right" style="width: 120px">
-                                    <label class="control-label text-right">Receive Date </label>
+                                <div class="col-xs-1 text-right" style="width: 130px">
+                                    <label class="control-label text-right">Receive Date<font style="color: red">*</font></label>
                                 </div>
                                 <div class="col-xs-1 form-group" style="width: 170px">
-                                    <div class='input-group date'>
+                                    <div class='input-group date' id="ReceiveDate">
                                         <input id="receiveFromDate" name="receiveFromDate"  type="text" 
                                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['receiveFromDate']}">
                                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -1249,6 +1249,10 @@
             }
         });
         
+        $('#ReceiveDate').datetimepicker().on('dp.change', function (e) {
+                $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromDate');
+        });
+        
         $('#ReceiptForm').bootstrapValidator({
             container: 'tooltip',
             excluded: [':disabled'],
@@ -1269,6 +1273,13 @@
                     validators: {
                         notEmpty: {
                             message: 'The A/R Code is required'
+                        }
+                    }
+                },
+                receiveFromDate: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The Receive Date is required'
                         }
                     }
                 }
