@@ -491,7 +491,7 @@ import org.hibernate.Transaction;
                     InvoiceNo += invoice;
                 }else{
                     String path[] = InvoiceNo.split(",");
-                    for(int j=0;j<InvoiceNo.length();j++){
+                    for(int j=0;j<path.length;j++){
                         if(path[j].equalsIgnoreCase(invoice)){
                             checkLap = 1;
                         }
