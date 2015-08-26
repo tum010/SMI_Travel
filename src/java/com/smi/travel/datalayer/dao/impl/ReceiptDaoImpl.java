@@ -436,23 +436,24 @@ import org.hibernate.Transaction;
              query += " rec.recDate >= '" +from +"' and rec.recDate <= '"+to +"' ";
              checkQuery = 1;
          }else if((from != null) &&(!"".equalsIgnoreCase(from))){
-             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
-             query += prefix+ " rec.recDate >= '" +from +"'";
+             checkQuery = 1;
+             query +=  " rec.recDate >= '" +from +"'";
              
          }else if((to != null) &&(!"".equalsIgnoreCase(to))){
-             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+             checkQuery = 1;
              query += " rec.recDate <= '" +to +"'";
          }
          
          if((Department != null) &&(!"".equalsIgnoreCase(Department))){
              if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
-             query += " and rec.department = '"+Department+"'";
+             query += prefix+" rec.department = '"+Department+"'";
          }
          
          if((type != null) &&(!"".equalsIgnoreCase(type))){
              if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
-             query += " and rec.recType = '"+type+"'";
+             query += prefix+ " rec.recType = '"+type+"'";
          }
+         
          if(checkQuery == 0){query = query.replaceAll("Where", "");}
          System.out.println("query : "+query);
          List<ReceiptSearchView> viewList = new LinkedList<ReceiptSearchView>();
@@ -465,6 +466,8 @@ import org.hibernate.Transaction;
                  viewList.add(mappingReceiptView(receiptList.get(i)));
              }
          }
+         this.sessionFactory.close();
+         session.close();
          return viewList;
     }
     
