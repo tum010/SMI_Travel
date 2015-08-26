@@ -3,7 +3,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<c:set var="receiptSearchList" value="${requestScope['receiptSearchList']}" />
+<c:set var="callPage" value="${requestScope['callPage']}" />
 <section class="content-header" >
     <h1>
         Finance & Cashier - Receipt
@@ -30,38 +31,83 @@
             <hr/>
             
             <form action="SearchReceipt.smi" method="post" id="SearchReceiptForm" name="SearchReceiptForm" role="form">
-                <div class="col-xs-12 form-group">
+                <div class="col-xs-12">
                     <div class="col-xs-1 text-right"  style="width: 80px">
                         <label class="control-label text-right">From </label>
                     </div>
-                    <div class="col-xs-1"  style="width: 200px">
-                        <div class='input-group date'>
-                            <input id="inputFromDate" name="inputFromDate"  type="text" 
-                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
-                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                    <div class="col-xs-1"  style="width: 170px">
+                        <div class=" form-group"> 
+                            <div class='input-group date' id="DateFrom">
+                                <input id="inputFromDate" name="inputFromDate"  type="text" 
+                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['inputFromDate']}">
+                                <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
                         </div>
                     </div>
                     <div class="col-xs-1 text-right"  style="width: 80px">
                         <label class="control-label text-right">To </label>
                     </div>
-                    <div class="col-xs-1"  style="width: 200px">
-                        <div class='input-group date'>
-                            <input id="inputToDate" name="inputToDate"  type="text" 
-                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
-                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                        </div>
+                    <div class="col-xs-1"  style="width: 170px">
+                        <div class=" form-group"> 
+                            <div class='input-group date' id="DateTo">
+                                <input id="inputToDate" name="inputToDate"  type="text" 
+                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['inputToDate']}">
+                                <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                        </div>        
                     </div>
-                    <div class="col-xs-1 text-right" style="width: 140px">
+                    <div class="col-xs-1 text-right" style="width: 100px">
                         <label class="control-label text-right">Department </label>
                     </div>
-                    <div class="col-xs-1" style="width: 200px">
-                        <select id="inputDepartment" name="inputDepartment" class="form-control selectize">
-                            <option value="">---Department---</option>
-
+                    <div class="col-xs-1" style="width: 130px">
+                        <select id="department" name="department" class="form-control selectize">
+                            <option value="">-------</option> 
+                             <c:choose>
+                                <c:when test="${requestScope['department'] == 'Wendy'}">
+                                    <c:set var="selectedWendy" value="selected" />
+                                </c:when>
+                            </c:choose>
+                            <option value="Wendy" ${selectedWendy}>Wendy</option>
+                            <c:choose>
+                                <c:when test="${requestScope['department'] == 'Inbound'}">
+                                    <c:set var="selectedInbound" value="selected" />
+                                </c:when>
+                            </c:choose>
+                            <option value="Inbound" ${selectedInbound}>Inbound</option>
+                            <c:choose>
+                                <c:when test="${requestScope['department'] == 'Outbound'}">
+                                    <c:set var="selectedOutbound" value="selected" />
+                                </c:when>
+                            </c:choose>
+                            <option value="Outbound" ${selectedOutbound}>Outbound</option>
                         </select>
                     </div>
+                    <div class="col-xs-1 text-right" style="width: 40px">
+                        <label class="control-label text-right">Type </label>
+                    </div>
+                    <div class="col-xs-1" style="width: 100px">
+                        <select id="recType" name="recType" class="form-control selectize">
+                            <option value="">----</option> 
+                             <c:choose>
+                                <c:when test="${requestScope['recType'] == 'T'}">
+                                    <c:set var="selectedTemp" value="selected" />
+                                </c:when>
+                            </c:choose>
+                            <option value="T" ${selectedTemp}>Temp</option>
+                            <c:choose>
+                                <c:when test="${requestScope['recType'] == 'V'}">
+                                    <c:set var="selectedVat" value="selected" />
+                                </c:when>
+                            </c:choose>
+                            <option value="V" ${selectedVat}>Vat</option>
+                        </select>
+                    </div>   
+                    <input type="hidden" id="dateFromSearch" name="InputDateFrom" >                        
+                    <input type="hidden" id="dateToSearch" name="InputDateTo" > 
+                    <!--<input type="hidden" id="ticketId" name="ticketId" >-->
+                    <input type="hidden" name="action" id="action" value="">    
                     <div class="col-xs-1 text-left" >
-                        <button type="submit" id="ButtonShow" name="ButtonShow" onclick="showReceiptListTable()" style="height:34px" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Show </button>
+                        <button type="submit" id="ButtonSearch" name="ButtonSearch" onclick="searchAction()" style="height:34px" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search </button>
                     </div>
                     <div class="col-xs-1 text-left" >
                         <button type="submit" id="ButtonPrint" name="ButtonPrint" class="btn btn-default"><i class="glyphicon glyphicon-print"></i> Print </button>
@@ -86,21 +132,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><center>111111</center></td>
-                                <td><center>2015-01-02</center></td>
-                                <td><center>333333</center></td>
-                                <td><center>444444</center></td>
-                                <td><center>555555</center></td>
-                                <td><center>666666</center></td>
-                                <td><center>777777</center></td>
-                                <td><center>888888</center></td>
-                                <td>
-                                    <center>
-                                        <a href="Receipt.smi"><span class="glyphicon glyphicon-edit editicon"></span></a>
-                                    </center>
-                                </td>
-                            </tr>
+                            <c:forEach var="table" items="${receiptSearchList}" varStatus="dataStatus">
+                                <tr>
+                                    <td align="center">${table.recNo}</td>
+                                    <td align="center">${table.recDate}</td>
+                                    <td align="center">${table.recTo}</td>
+                                    <td align="center">${table.recName}</td>
+                                    <td align="center">${table.invoiceNo}</td>
+                                    <td align="center">${table.amount}</td>
+                                    <td align="center">${table.termPay}</td>
+                                    <td align="center">${table.department}</td>
+                                    <td> 
+                                        <center> 
+                                            <a  href="${callPage}&action=searchReceiveNo">
+                                                <span class="glyphicon glyphicon-edit editicon"  ></span>
+                                            </a>
+                                        </center> 
+                                    </td>    
+                                </tr>
+                            </c:forEach>
                         </tbody>
                     </table>      
                 </div>
@@ -143,9 +193,68 @@
             alert('Print');
         });
         
+        
+        //validate date
+        $('#DateFrom').datetimepicker().on('dp.change', function (e) {
+            $('#SearchReceiptForm').bootstrapValidator('revalidateField', 'inputFromDate');
+        });
+        $('#DateTo').datetimepicker().on('dp.change', function (e) {
+            $('#SearchReceiptForm').bootstrapValidator('revalidateField', 'inputToDate');
+        });
+
+        $("#SearchReceiptForm")
+                .bootstrapValidator({
+                    framework: 'bootstrap',
+    //                container: 'tooltip',
+                    feedbackIcons: {
+                        valid: 'uk-icon-check',
+                        invalid: 'uk-icon-times',
+                        validating: 'uk-icon-refresh'
+                    },
+                    fields: {
+                        inputFromDate: {
+                            trigger: 'focus keyup change',
+                            validators: {
+                                notEmpty: {
+                                    message: 'The Date From is required'
+                                },
+                                date: {
+                                    format: 'YYYY-MM-DD',
+                                    max: 'inputToDate',
+                                    message: 'The Date From is not a valid'
+                                }
+                            }
+                        },
+                        inputToDate: {
+                            trigger: 'focus keyup change',
+                            validators: {
+                                notEmpty: {
+                                    message: 'The Date To is required'
+                                },
+                                date: {
+                                    format: 'YYYY-MM-DD',
+                                    min: 'inputFromDate',
+                                    message: 'The Date To is not a valid'
+                                }
+                            }
+                        }
+                    }
+                }).on('success.field.fv', function (e, data) {
+                    if (data.field === 'inputFromDate' && data.fv.isValidField('inputToDate') === false) {
+                        data.fv.revalidateField('inputToDate');
+                    }
+
+                    if (data.field === 'inputToDate' && data.fv.isValidField('inputFromDate') === false) {
+                        data.fv.revalidateField('inputFromDate');
+                    }
+                });
 
 
     });
 
+function searchAction(){
+    var action = document.getElementById('action');
+    action.value = 'search';
+}
     
 </script>
