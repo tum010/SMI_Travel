@@ -207,8 +207,8 @@
                                 <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
                             </button>
                         </div>
-                        <div class="col-xs-1 text-right" style="width: 100px;padding-left: 0px;">
-                            <label class="control-label" for="">Invoice date</lable>
+                        <div class="col-xs-1 text-right" style="width: 105px;padding-left: 0px;">
+                            <label class="control-label" for="">Invoice date<font style="color: red">*</font></lable>
                         </div>
                         <div class="col-md-2 form-group">
                             <div class='input-group date' id='InputDatePicker'>    
@@ -436,7 +436,7 @@
                                                 <td>${ind.vat}</td>
                                                 <td class="hidden"><input type="text" class="form-control" id="InputVatTemp${taxdesc.count}" name="InputVatTemp${taxdesc.count}" value="${ind.vat}" ></td>
                                                 <td ><input type="text" maxlength ="15" readonly  class="form-control numerical" id="InputGross${taxdesc.count}" name="InputGross${taxdesc.count}" value="${ind.gross}" ></td>
-                                                <td><input type="text" maxlength ="15" class="form-control numerical" id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" value="${ind.amount}" onfocusout="CalculateGrandTotal('${taxdesc.count}')"></td>
+                                                <td><input type="text" maxlength ="15" class="form-control numerical" id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" value="${ind.amount}" onfocusout="changeFormatAmountNumber('${taxdesc.count}');CalculateGrandTotal('${taxdesc.count}');calculateGross('${taxdesc.count}')"></td>
                                                 <td class="priceCurrencyAmount">
                                                     <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control">
                                                         <option value='' ></option>
@@ -537,7 +537,7 @@
                                                 <td class="hidden" >${ind.vat}</td>
                                                 <td class="hidden" ><input type="text" class="form-control" id="InputVatTemp${taxdesc.count}" name="InputVatTemp${taxdesc.count}" value="${ind.vat}" ></td>
                                                 <td class="hidden" ><input type="text" maxlength ="15"  class="form-control numerical" id="InputGross${taxdesc.count}" name="InputGross${taxdesc.count}" value="${ind.gross}" ></td>
-                                                <td><input type="text" maxlength ="15" class="form-control numerical" id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" value="${ind.amount}" onfocusout="CalculateGrandTotal('${taxdesc.count}')"></td>
+                                                <td><input type="text" maxlength ="15" class="form-control numerical" id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" value="${ind.amount}" onfocusout="changeFormatAmountNumber('${taxdesc.count}');CalculateGrandTotal('${taxdesc.count}');calculateGross('${taxdesc.count}');"></td>
                                                 <td class="priceCurrencyAmount">
                                                     <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control">
                                                          <option value='' ></option>
@@ -633,11 +633,11 @@
                                             </button>
                                         </div>
                                         <div class="col-md-3 text-right " >
-                                            <button type="button" class="btn btn-default" id="copyButton" onclick="printInvoice('email')" data-toggle="modal" data-target="#CopyModal">
-                                                <span id="buttonCopy" class="glyphicon glyphicon-send" ></span> Copy 
+                                            <button type="button" class="btn btn-success" id="copyButton" onclick="printInvoice('email')" data-toggle="modal" data-target="#CopyModal">
+                                                <span id="buttonCopy" class="glyphicon glyphicon-file" ></span> Copy 
                                             </button>
                                         </div>
-                                        <div class="col-md-2 text-right ">
+                                        <div class="col-md-1 text-right ">
                                             <c:set var="isDisableVoid" value="disabled='true'" />
                                             <c:set var="isEnableVoid" value="style='display: none;'" />
                                             <c:set var="isSaveVoid" value="" />
@@ -673,7 +673,7 @@
                                                 <c:set var="isDisableVoid" value="" />
                                             </c:if>
                                             <button type="button" class="btn btn-primary" onclick="EnableVoidInvoice();" data-toggle="modal" data-target="#EnableVoid" id="enableVoidButton" name="enableVoidButton"  ${isEnableVoid} >
-                                                <span id="SpanEnableVoid" class="glyphicon glyphicon-ok" ></span> Cancel Void
+                                                <span id="SpanEnableVoid" class="glyphicon glyphicon-ok" ></span>Cancel
                                             </button>
                                             
                                             <button type="button" class="btn btn-danger" onclick="DisableVoidInvoice();" data-toggle="modal" data-target="#DisableVoid" id="disableVoidButton" name="disableVoidButton" ${isDisableVoid} >
