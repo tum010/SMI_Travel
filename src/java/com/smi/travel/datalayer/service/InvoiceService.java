@@ -69,8 +69,16 @@ public class InvoiceService {
     public List<InvoiceDetail> getInvoiceDetailFromBillableDescId(String billableDescId){
         return  invoiceDao.getInvoiceDetailFromBillableDescId(billableDescId);
     }
-    
+
     public String checkOverflowValueOfInvoice(List<InvoiceDetail> invoiceDetail) {
         return invoiceDao.checkOverflowValueOfInvoice(invoiceDetail);
+    }
+    
+    public String saveInvoiceDetail(Invoice invoice){
+        if(invoice.getId() != null){
+            return invoiceDao.updateInvoiceDetail(invoice);
+        }else{
+            return invoiceDao.insertInvoiceDetail(invoice);
+        }
     }
 }

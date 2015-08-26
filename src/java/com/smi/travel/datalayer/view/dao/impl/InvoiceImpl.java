@@ -66,6 +66,8 @@ public class InvoiceImpl implements InvoiceReportDao{
                 .addScalar("amount", Hibernate.BIG_DECIMAL)
                 .addScalar("id", Hibernate.STRING)
                 .addScalar("invno", Hibernate.STRING)
+                .addScalar("tax_no", Hibernate.STRING)
+                .addScalar("branch", Hibernate.STRING)
                 .list();
         
         for (Object[] B : QueryInvoiceList) {
@@ -106,8 +108,6 @@ public class InvoiceImpl implements InvoiceReportDao{
             invoice.setShowstaff(showStaff);
             data.add(invoice);
         }
-        
-
         session.close();
         this.sessionFactory.close();
         return data;

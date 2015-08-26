@@ -220,7 +220,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="col-md-7"></div>
-                    <div class="form-group" style="display: none;" id="alertDiv">
+                    <div class="form-group" style="display: block;" id="alertDiv">
                         <font style="color: red" id="alertMessage"></font>
                     </div>
                     <div class="form-group hidden">
@@ -232,31 +232,31 @@
                     <div class="form-group">
                         <label for="BankCode" class="col-sm-3 control-label" >Code <font style="color: red">*</font></label>
                         <div class="col-sm-8"> 
-                            <input type="text" style="text-transform:uppercase" class="form-control specialcharactor" maxlength="21" id="BankCode" name="BankCode" >
+                            <input type="text" style="text-transform:uppercase" class="form-control specialcharactor" maxlength="21" id="BankCode" name="BankCode" onkeydown="clearAlertMessage()">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="BankName" class="col-sm-3 control-label" >Name <font style="color: red">*</font></label>
                         <div class="col-sm-8">  
-                            <input type="text" style="text-transform:uppercase" class="form-control" maxlength="255" id="BankName" name="BankName" >
+                            <input type="text" style="text-transform:uppercase" class="form-control" maxlength="255" id="BankName" name="BankName" onkeydown="clearAlertMessage()">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="BankBranch" class="col-sm-3 control-label" >Branch <font style="color: red">*</font></label>
                         <div class="col-sm-8">   
-                            <input type="text" style="text-transform:uppercase" class="form-control" maxlength="255" id="BankBranch" name="BankBranch" > 
+                            <input type="text" style="text-transform:uppercase" class="form-control" maxlength="255" id="BankBranch" name="BankBranch" onkeydown="clearAlertMessage()"> 
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="BankAccountNo" class="col-sm-3 control-label" >Account No. <font style="color: red">*</font></label>
                         <div class="col-sm-8">   
-                            <input type="text" style="text-transform:uppercase" class="form-control numerical" maxlength="20" id="BankAccountNo" name="BankAccountNo" > 
+                            <input type="text" style="text-transform:uppercase" class="form-control numerical" maxlength="20" id="BankAccountNo" name="BankAccountNo" onchange="clearAlertMessage()"> 
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="BankAccountType" class="col-sm-3 control-label" >Account Type  <font style="color: red">*</font></label>
                         <div class="col-sm-8 dropdown">
-                            <select class="form-control col-sm-8" id="BankAccountType" name="BankAccountType">
+                            <select class="form-control col-sm-8" id="BankAccountType" name="BankAccountType" onchange="clearAlertMessage()">
                                 <option value="">------------</option>
                                 <option value="1">Account 1</option>
                                 <option value="2">Account 2</option>
@@ -364,13 +364,11 @@
             $('#actionIUP').val("add");
         }
         
-        document.getElementById('alertDiv').style.display = 'block';
         document.getElementById('alertMessage').innerHTML = '${requestScope['result']}';
         $('#BankModal').modal('show');
     }
     
     function clearAlertMessage(){
-        document.getElementById('alertDiv').style.display = 'none';
         document.getElementById('alertMessage').innerHTML = '';
     }
     

@@ -6,6 +6,8 @@
 
 package com.smi.travel.datalayer.view.entity;
 
+import java.util.Date;
+
 /**
  *
  * @author Surachai
@@ -13,7 +15,7 @@ package com.smi.travel.datalayer.view.entity;
 public class ReceiptSearchView {
     private String recId;
     private String recNo;
-    private String recDate;
+    private Date recDate;
     private String recTo;
     private String recName;
     private String invoiceNo;
@@ -37,12 +39,12 @@ public class ReceiptSearchView {
     public void setRecNo(String recNo) {
         this.recNo = recNo;
     }
-
-    public String getRecDate() {
+    
+    public Date getRecDate() {
         return recDate;
     }
 
-    public void setRecDate(String recDate) {
+    public void setRecDate(Date recDate) {
         this.recDate = recDate;
     }
 
@@ -101,6 +103,8 @@ public class ReceiptSearchView {
     public void setRecType(String recType) {
         this.recType = recType;
     }
+
+
     
     
     

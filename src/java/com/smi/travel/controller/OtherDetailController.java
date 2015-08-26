@@ -165,13 +165,15 @@ public class OtherDetailController extends SMITravelController {
                     if((!"".equalsIgnoreCase(ticketstatus)) && (ticketstatus != null)){
                         int row = Integer.parseInt(counter);
                         for(int i=1;i<row;i++){
-                            String selectAll = request.getParameter("selectAll"+i);
+                            String selectAll = request.getParameter("selectAll" + i);
                             if("1".equalsIgnoreCase(selectAll)){
-                                String stockticketid = request.getParameter("selectAll"+i);
+                                String stockticketid = request.getParameter("stockticketid" + i);
                                 String resultTicket = OtherService.updateStockTicketStatus(stockticketid,ticketstatus);
                                 request.setAttribute("resultTicket", resultTicket);
                             }
                         }                       
+                    } else {
+                       request.setAttribute("resultText", "success"); 
                     }
                     String[] ticketData = stock.split("\\|\\|", 3);//Adult||Child||Infant
                     getTicket(request, Other.getId());
@@ -183,8 +185,7 @@ public class OtherDetailController extends SMITravelController {
                     
                     Other.setRemarkTicket("Require Ticket-Adult:" + ticketData[0] + " Child:" + ticketData[1] + " Infant:" + ticketData[2]);
                     List<String> resultRemarkTicket = OtherService.saveBookingOther(Other,user,createby);
-                    
-                    request.setAttribute("resultText", "success");
+                                        
                     request.setAttribute("adultCancel", ticketData[0]);
                     request.setAttribute("childCancel", ticketData[1]);
                     request.setAttribute("infantCancel", ticketData[2]);

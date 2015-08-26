@@ -252,24 +252,23 @@
                                 <div class="col-xs-1 text-right" style="width: 135px">
                                     <label class="control-label text-right">Receive No </label>                                    
                                 </div>
-                                <div class="col-xs-1" style="width: 180px" id='receivenumber'>
+                                <div class="col-xs-1" style="width: 150px" id='receivenumber'>
                                     <input id="receiveId" name="receiveId" type="hidden" class="form-control" maxlength="11" value="${receipt.id}">
-                                    <input id="receiveNo" name="receiveNo" type="text" style="width: 180px" class="form-control" maxlength="20" value="${receipt.recNo}">
+                                    <input id="receiveNo" name="receiveNo" type="text" style="width: 150px" class="form-control" maxlength="20" value="${receipt.recNo}">
                                 </div>
-                                <div class="col-xs-1 text-right" style="width:10px"></div>
+                                <div class="col-xs-1 text-right" style="width: 8px"></div>
                                 <div class="col-xs-1 text-right" style="width: 80px">
                                     <button style="height:34px" type="button"  id="ButtonSearch"  name="ButtonSearch" onclick="searchReceiveNo();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
                                 </div>
-                                <div class="col-xs-1 text-right" style="width:10px"></div>
-                                <div class="col-xs-1 text-left" style="width: 70px">
-                                    <label class="control-label text-right">Date </label>
+                                <div class="col-xs-1 text-right" style="width: 130px">
+                                    <label class="control-label text-right">Receive Date<font style="color: red">*</font></label>
                                 </div>
                                 <div class="col-xs-1 form-group" style="width: 170px">
-                                    <div class='input-group date'>
-                                        <input id="inputDate" name="inputDate"  type="text" 
-                                           class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                    <div class='input-group date' id="ReceiveDate">
+                                        <input id="receiveFromDate" name="receiveFromDate"  type="text" 
+                                           class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['receiveFromDate']}">
                                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                                    </div>
+                                    </div>  
                                 </div>
                                 <div class="col-xs-1 text-right" style="width: 135px">
                                     <label class="control-label text-right" for="codeBillto">Receive From <font style="color: red">*</font></label> 
@@ -305,16 +304,6 @@
                                 </div>
                             </div>
                             <div class="col-xs-4" style="padding-top: 0px;">
-                                <div class="col-xs-1 text-right" style="width: 130px">
-                                    <label class="control-label text-right">Receive Date </label>
-                                </div>
-                                <div class="col-xs-1 form-group" style="width: 170px">
-                                    <div class='input-group date'>
-                                        <input id="receiveFromDate" name="receiveFromDate"  type="text" 
-                                           class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['receiveFromDate']}">
-                                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                                    </div>  
-                                </div>
                                 <div class="col-xs-1 text-right" style="width: 130px">
                                     <label class="control-label text-right">Status </label>
                                 </div>
@@ -673,7 +662,13 @@
                                         <span id="buttonEmail" class="glyphicon glyphicon-send" ></span> SendEmail 
                                     </button>
                                 </div>
-                                <div class="col-md-3 text-right " ></div>
+                                <div class="col-md-2 text-right"> 
+                                </div>
+                                <div class="col-md-1 text-right">                                    
+                                    <button type="button" class="btn btn-default" onclick="copyReceipt()">
+                                        <span id="ButtonCopy" class="glyphicon glyphicon-copyright-mark" ></span> Copy 
+                                    </button>
+                                </div>
                                 <div class="col-md-2 text-right ">
                                     <c:set var="isDisableVoid" value="disabled='true'" />
                                     <c:set var="isEnableVoid" value="style='display: none;'" />
@@ -1176,6 +1171,25 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<div class="modal fade" id="CopyReceiptModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Copy Receipt</h4>
+            </div>
+            <div class="modal-body" id="copyReceiptModal" >
+                <label class="text-right">Are you sure to copy receipt ?</label>                                    
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="confirmCopyReceipt()">
+                    <span id="buttonCopyReceipt" class="glyphicon glyphicon-copyright-mark" ></span> Copy
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <c:if test="${! empty requestScope['saveresult']}">
     <c:if test="${requestScope['saveresult'] =='save successful'}">        
         <script language="javascript">
@@ -1235,6 +1249,10 @@
             }
         });
         
+        $('#ReceiveDate').datetimepicker().on('dp.change', function (e) {
+                $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromDate');
+        });
+        
         $('#ReceiptForm').bootstrapValidator({
             container: 'tooltip',
             excluded: [':disabled'],
@@ -1255,6 +1273,13 @@
                     validators: {
                         notEmpty: {
                             message: 'The A/R Code is required'
+                        }
+                    }
+                },
+                receiveFromDate: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The Receive Date is required'
                         }
                     }
                 }
@@ -2327,7 +2352,26 @@ function saveDescriptionDetail(){
     $('#DescriptionReceiptDetail'+row).val(descriptionDetail);
     $('#InputDescriptionDetail'+row).val(descriptionDetail);    
     $('#InputDescription'+row).val(descriptionDetail); 
-    
-    
 }
+
+
+function copyReceipt(){
+    $('#CopyReceiptModal').modal('show');     
+}
+
+function confirmCopyReceipt(){
+    $('#CopyReceiptModal').modal('hide');
+    var action = document.getElementById('action');
+    action.value = 'saveReceipt';
+    var receiveId = document.getElementById('receiveId');
+    receiveId.value = '';
+    var receiveNo = document.getElementById('receiveNo');
+    receiveNo.value = '';
+    var counter = document.getElementById('counter');
+    counter.value = $("#ReceiptListTable tr").length;
+    var countRowCredit = document.getElementById('countRowCredit');
+    countRowCredit.value = $("#CreditDetailTable tr").length;
+    document.getElementById('ReceiptForm').submit();
+}
+
 </script>

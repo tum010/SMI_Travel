@@ -195,6 +195,8 @@ public class AJAXBean extends AbstractBean implements
         String content = String.valueOf(map.get("content"));
         String attachfile = String.valueOf(map.get("attachfile"));
 
+        
+        
         String refNo = String.valueOf(map.get("refNo"));
         String selectStatus = String.valueOf(map.get("selectStatus"));
         String flagAir = String.valueOf(map.get("flagAir"));
@@ -692,6 +694,7 @@ public class AJAXBean extends AbstractBean implements
                     result = buildInvoiceListHTML(invoice);
                 }
             } else if ("searchRefNo".equalsIgnoreCase(type)) {
+
                 String searchRefNo = map.get("refNo").toString();
                 Billable bill = billableDao.getBillableBooking(searchRefNo);
                 if ("".equals(bill.getId()) || null == bill.getId()) {
@@ -975,7 +978,7 @@ public class AJAXBean extends AbstractBean implements
             amountinvoice = amounttemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
 <<<<<<< HEAD
 
-            currency = billableDescs.get(i).getCurrency();
+            currency = billableDescs.get(i).getCurrency() == null ? "" : billableDescs.get(i).getCurrency() ;
             if (billableDescs.get(i).getMBilltype() != null) {
 =======
             
@@ -1063,7 +1066,9 @@ public class AJAXBean extends AbstractBean implements
 
         return passenger;
     }
-
+    
+    
+    
     public JSONArray buildAirportListJSON(List<MAirport> listAirport) {
         JSONArray record = new JSONArray();
         for (int i = 0; i < listAirport.size(); i++) {
@@ -1433,11 +1438,16 @@ public class AJAXBean extends AbstractBean implements
         if (bill.getMAccterm() != null) {
             term = "" + bill.getMAccterm().getId();
         }
-<<<<<<< HEAD
+        Date ff = new Date();
+        System.out.println(ff);
+        ff.setDate(ff.getDate() + bill.getMAccterm().getValue());
+        System.out.println("Value Term : " + bill.getMAccterm().getValue());
+        System.out.println("Dueeeeeeeee  Date : "+ff);
+        String  dateDue =  utility.convertDateToString(ff);
+        
         result += bill.getMaster().getBookingType() + "||";
         result += bill.getBillTo() + "," + bill.getBillName() + "," + bill.getBillAddress() + "," + term
-                + "," + bill.getMaster().getStaff().getId() + "," + bill.getMaster().getStaff().getName() + "," + bill.getMaster().getStaff().getUsername() + "," + bill.getMaster().getStaff().getUsername() + "," + "||";
-=======
+                +","+bill.getMaster().getStaff().getId()+","+bill.getMaster().getStaff().getName() + ","+ bill.getMaster().getStaff().getUsername()+","+ dateDue +","+"||";
         Date ff = new Date();
         System.out.println(ff);
         ff.setDate(ff.getDate() + bill.getMAccterm().getValue());
@@ -1458,9 +1468,11 @@ public class AJAXBean extends AbstractBean implements
 <<<<<<< HEAD
                     System.out.println("valueresult[1] : " + valueresult[1]);
                     if (valueresult[1].compareTo(BigDecimal.ZERO) != 0) {
-
+                        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
                         System.out.println("11valueresult[1] : " + valueresult[1]);
-
+                        String cost = numberFormat.format(valueresult[0]);
+                        String price = numberFormat.format(valueresult[1]);
+                        System.out.println("Cost And Price : " + cost +" && "  + price );
                         if (billdeescList.get(i).getCurrency() == null) {
 =======
                     System.out.println("valueresult[1] : "+valueresult[1]);
@@ -1484,8 +1496,8 @@ public class AJAXBean extends AbstractBean implements
                                 + "<td class=\"hidden\"><input type=\"hidden\" id=\"invoiceIdType" + (count + 1) + "\" name=\"invoiceIdType" + (count + 1) + "\" value=" + billdeescList.get(i).getMBilltype().getId() + "></td>"
                                 + "<td>" + billdeescList.get(i).getMBilltype().getName() + "</td>"
                                 + "<td>" + billdeescList.get(i).getDetail() + "</td>"
-                                + "<td align=\"center\">" + valueresult[0] + "</td>"
-                                + "<td align=\"center\">" + valueresult[1] + "</td>"
+                            + "<td align=\"center\">" + valueresult[0] + "</td>"
+                            + "<td align=\"center\">" + valueresult[1] + "</td>"
                                 + "<td align=\"center\">" + billdeescList.get(i).getCurrency() + "</td>"
                                 + "<td align=\"center\"><center><a href=\"\" onclick=\"addInvoiceDetail(" + (count + 1) + ")\"><span class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                                 + "<td class=\"hidden\"><input type=\"hidden\" id=\"RefItemId" + (count + 1) + "\" name=\"RefItemId" + (count + 1) + "\" value=" + billdeescList.get(i).getRefItemId() + "></td>"
@@ -1620,6 +1632,7 @@ public class AJAXBean extends AbstractBean implements
         map.put("taxAddress", tax.getTaxInvAddr());
         UtilityFunction util = new UtilityFunction();
         map.put("taxDate", util.convertDateToString(tax.getCreateDate()));
+        BigDecimal amount = new BigDecimal("0.00");
         String invNo = "";
         List<Map<String, Object>> detailMapList = new ArrayList<Map<String, Object>>();
         for (Iterator detailList = tax.getTaxInvoiceDetails().iterator(); detailList.hasNext();) {
@@ -1629,7 +1642,8 @@ public class AJAXBean extends AbstractBean implements
             if (detail.getVat() != null) {
                 datailVat = detail.getAmount().multiply(detail.getVat()).divide(new BigDecimal("100.00"));
             }
-            if (detail.getInvoiceDetail() != null) {
+      
+            if(detail.getInvoiceDetail() != null){
                 invNo += detail.getInvoiceDetail().getInvoice().getInvNo() + ",";
             }
             Map<String, Object> detailMap = new HashMap<String, Object>();

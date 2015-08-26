@@ -55,7 +55,7 @@
             <input hidden="" value="${booking_size[5]}" id="input-billable_size">
             <input hidden="" value="${booking_size[6]}" id="input-daytour_size">  
         </div>
-
+        <form  id="otherForm" action="OtherDetail.smi" method="post" role="form" class="form-horizontal">
         <div class="col-sm-10">
             <div ng-include="'WebContent/Book/BookNavbar.html'"></div>
             <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
@@ -130,7 +130,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Detail</div>
                 <div class="panel-body">
-                    <form  id="otherForm" action="OtherDetail.smi" method="post" role="form" class="form-horizontal">
+                    
                         <div class="row">
                             <div class="col-sm-6" style="padding-left: 70px">
                                 <label  class="col-sm-2 control-label" >Product<font style="color: red">*</font></label>
@@ -340,7 +340,6 @@
                         <input type="hidden" class="form-control" id="isbill" name="isbill" value="${requestScope['isbill']}">
                         <input type="hidden" class="form-control" id="createby" name="createby" value="${requestScope['createby']}">
                         <input type="hidden" class="form-control" id="createdate" name="createdate" value="${requestScope['createdate']}">
-                        <input type="hidden" class="form-control" id="stockticketid" name="stockticketid" value="">
                         <input type="hidden" class="form-control" id="ticketstatus" name="ticketstatus" value="">
                         <input type="hidden" class="form-control" id="counter" name="counter" value="">
                         <div class="text-center" >    
@@ -359,12 +358,20 @@
                             </c:choose>                               
                         </div>
                         <input type="hidden" id="callPageFrom" name="callPageFrom" value="${callpage}">
-                    </form>   
+                       
                 </div>
             </div>
             <div class="panel panel-default">
                 <div class="panel-heading">Ticket</div>
                 <div class="panel-body">
+                    <div class="form-group col-md-3" style="padding-left: 30px">
+                        <font style="color: red" id="alertCheckbox"></font>
+                    </div>
+                    <div class="form-group col-md-1 text-right" style="padding-left: 650px">
+                        <button type="button" class="btn btn-danger" onclick="setStockTicket()" id="changeStatusButton" name="changeStatusButton">
+                            <span id="SpanDisableVoid" class="glyphicon glyphicon-remove" ></span> Change Status
+                        </button>
+                    </div>        
                     <div class="row" style="margin-left: 10px;margin-right: 10px;"> 
                         <table id="TicketTable" class="display" cellspacing="0"  >
                             <thead>
@@ -376,26 +383,22 @@
                                     <th style="width: 41%">Ticket</th>
                                     <th style="width: 21%">Type</th>
                                     <th style="width: 20%">Status</th>
-                                    <th style="width: 2%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="table" items="${ticketList}" varStatus="status">                                   
+                                <c:forEach var="table" items="${ticketList}" varStatus="i">                                   
                                     <tr>
                                         <td class="hidden">
-                                            <input type="hidden" id="stockticketid${status.count}" name="stockticketid${status.count}" value="${table.id}">
+                                            <input type="hidden" class="form-control" id="stockticketid${i.count}" name="stockticketid${i.count}" value="${table.id}">
                                         </td>
                                         <td align="center">
-                                            <input type="checkbox" id="selectAll${status.count}" name="selectAll${status.count}" value="1" >
+                                            <input type="checkbox" class="form-control" id="selectAll${i.count}" name="selectAll${i.count}" value="1" onclick="removeAlertCheckbox()">
                                         </td>
-                                        <td align="center">${status.count}</td>
+                                        <td align="center">${i.count}</td>
                                         <td align="center">${table.addDate}</td>
                                         <td>${table.ticketCode}</td>
                                         <td align="center">${table.typeName}</td>
-                                        <th align="center">${table.status}</th>
-                                        <td align="center">
-                                            <span id="SpanGlyphiconRemove" class="glyphicon glyphicon-remove deleteicon" onclick="setStockTicket('${table.id}','${table.status}')" data-toggle="modal" ></span>
-                                        </td>
+                                        <th align="center">${table.status}</th>                                        
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -427,7 +430,8 @@
                     </div>
                 </div>
             </div>
-        </div>       
+        </div>
+        </form>                
     </div>
 </div>                        
 
