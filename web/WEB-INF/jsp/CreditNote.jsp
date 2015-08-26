@@ -14,10 +14,10 @@
     var vat = ${vat};
 </script>
 <style type="text/css">
-   /*table tr:nth-child(n) {background: #EEE}*/
-   table tr:nth-child(2n) {background: #F5F5F5}
+    /*table tr:nth-child(n) {background: #EEE}*/
+    table tr:nth-child(2n) {background: #F5F5F5}
 
-  </style>
+</style>
 <c:set var="page" value="${requestScope['page']}" />
 <section class="content-header" >
     <h1>
@@ -130,12 +130,12 @@
 
                                     <th style="width:10%;">No</th>
                                     <th style="width:15%;">Date</th>
-                                    <th style="width:15%;">Product Type</th>
+                                    <th style="width:10%;">Product Type</th>
                                     <th style="width:12%;">Amount</th>
                                     <th style="width:12%;">Real Amount</th>
                                     <th style="width:10%;">Vat Amount</th>
                                     <th style="width:25%;">Description</th>
-                                    <th style="width:14%;">Action</th>
+                                    <th style="width:20%;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -164,7 +164,7 @@
                                         <td style="text-align:center"><input type="text" name="taxVat" class="form-control text-right decimal" value="${creditNoteDetail.vat}" readonly/></td>
                                         <td style="text-align:center"><input type="text" name="taxDesc" class="form-control" value="${creditNoteDetail.description}"/></td>
                                         <td class="text-center">
-                                            <a id="ButtonRemove${varRefundAirline.count}" data-toggle="modal" data-target="#DeleteRefundAirline" onclick="">
+                                            <a id="ButtonRemove${varRefundAirline.count}" data-toggle="modal" data-target="#DeleteRefundAirline" onclick="show('${creditNoteDetail.taxInvoice.taxNo}')">
                                                 <i id="IRemove${varRefundAirline.count}" class="glyphicon glyphicon-list "></i>
                                             </a>
                                             <a id="ButtonRemove${varRefundAirline.count}" data-toggle="modal" data-target="#DeleteDetail" onclick="setDeletRow(this)">
@@ -177,6 +177,34 @@
                         </table>
                     </div>
                 </div> 
+
+                <div class="collapse" id="flight1" aria-expanded="true" style="">
+                    <!--Order Panel-->
+                    <div class="panel panel-default" style="margin-top: 10px">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Tax Invoice Detail</h3>
+                        </div>
+                        <div class="panel-body">
+
+                            <table id="taxDetail" class="display" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr class="datatable-header" >
+                                        <th style="width:10%;">No</th>
+                                        <th style="width:10%;">Product</th>
+                                        <th style="width:10%;">Refno</th>
+                                        <th style="width:10%;">Description</th>
+                                        <th style="width:10%;">Amount</th>
+                                        <th style="width:10%;">Cur</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
 
                 <div class="row">
                     <div class="col-md-12" style="padding-top: 15px">
@@ -198,12 +226,12 @@
                                 <div class="panel-body">
                                     <div class="col-xs-12 ">
                                         <div class="col-md-2 text-right ">
-                                            <button type="button" onclick="" class="btn btn-default">
+                                            <button type="button" onclick="openReport()">
                                                 <span id="SpanPrintPackage" class="glyphicon glyphicon-print"></span> Print
                                             </button>
                                         </div>
                                         <div class="col-md-2 text-left " style="padding-left: 0px">
-                                            <button type="button" onclick="" class="btn btn-default">
+                                            <button type="button" onclick="sendMail()" class="btn btn-default">
                                                 <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Send Mail
                                             </button>
                                         </div>
@@ -301,7 +329,7 @@
                 <td style="text-align:center"><input type="text" name="taxVat" class="form-control text-right decimal" readonly/></td>
                 <td style="text-align:center"><input type="text" name="taxDesc" class="form-control" /></td>
                 <td class="text-center">
-                    <a id="ButtonRemove${varRefundAirline.count}" data-toggle="modal" data-target="#DeleteRefundAirline" onclick="">
+                    <a id="ButtonRemove${varRefundAirline.count}" data-toggle="modal" data-target="#DeleteRefundAirline" onclick="hide()">
                         <i id="IRemove${varRefundAirline.count}" class="glyphicon glyphicon-list "></i>
                     </a>
                     <a id="ButtonRemove${varRefundAirline.count}" data-toggle="modal" data-target="#DeleteRefundAirline" onclick="setDeletRow(this)">
