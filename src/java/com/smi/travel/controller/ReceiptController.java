@@ -89,7 +89,7 @@ public class ReceiptController extends SMITravelController {
         String chqAmount2 = request.getParameter("chqAmount2"); 
         String InputReceiptType = request.getParameter("InputReceiptType");
         String InputDepartment = request.getParameter("InputDepartment");
-        String searchId = "";
+        String searchId = request.getParameter("Id");
         System.out.println(" callPageFrom " + callPageFrom);
         if(!"".equals(callPageFrom)){
            //String[] type = callPageFrom.split("\\?");
@@ -490,6 +490,26 @@ public class ReceiptController extends SMITravelController {
             }
         }else if (!"".equalsIgnoreCase(searchId)) {
             System.out.println(" Id ::: "+ searchId);
+            Receipt receipt = new Receipt();
+            if(searchId != null || !"".equals(searchId)){
+                receipt = receiptService.getReceiptfromReceiptId(searchId);
+                if(receipt != null) {
+                    if(!receipt.getId().isEmpty()){
+                        List<ReceiptDetail> receiptDetailList = receiptService.getReceiptDetailFromReceiptId(receipt.getId());
+                        List<ReceiptCredit> receiptCreditList = receiptService.getReceiptCreditFromReceiptId(receipt.getId());
+                        request.setAttribute(RECEIPTDETAILLIST,receiptDetailList);
+                        request.setAttribute(RECEIPTCREDITLIST,receiptCreditList);
+                        if(receiptDetailList != null){
+                        request.setAttribute(PRODUCTROWCOUNT, receiptDetailList.size()+1);
+                        }
+                        if(receiptCreditList != null){
+                        request.setAttribute(CREDITROWCOUNT, receiptCreditList.size()+1);
+                        }
+                    }
+                    request.setAttribute(RECEIPT,receipt);
+                    request.setAttribute(RECEIVEDATE,receipt.getRecDate());
+                }
+            }
         }
         
         setResponseAttribute(request);

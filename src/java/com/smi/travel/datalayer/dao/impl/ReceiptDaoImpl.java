@@ -477,6 +477,7 @@ import org.hibernate.Transaction;
         view.setRecName(detail.getRecName());
         view.setRecType(detail.getRecType());
         view.setDepartment(detail.getDepartment());
+        view.setRecDate(detail.getRecDate());
         String InvoiceNo ="";
         BigDecimal amount = new BigDecimal(0);
         for(int i=0;i<detail.getReceiptDetails().size();i++){
@@ -502,7 +503,10 @@ import org.hibernate.Transaction;
             if(detail.getMAccpay() != null)
             view.setTermPay(detail.getMAccpay().getName());
         }
-        view.setAmount(util.setFormatMoney(amount));
+        
+        amount = amount.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+        String amounts = String.valueOf(amount);
+        view.setAmount(amounts);
         return view;
     }
 
@@ -520,6 +524,24 @@ import org.hibernate.Transaction;
 
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
+    }
+
+    @Override
+    public Receipt getReceiptfromReceiptId(String recId) {
+        Receipt receipt = new Receipt();
+        String query = "from Receipt r where r.id =:recId";
+        Session session = this.sessionFactory.openSession();
+        List<Receipt> receiptList = session.createQuery(query)
+                .setParameter("recId", recId)
+                .list();
+        if (receiptList.isEmpty()) {
+            return null;
+        }else{
+            receipt =  receiptList.get(0);
+        }
+        session.close();
+        this.sessionFactory.close();
+        return receipt;
     }
 
     

@@ -144,7 +144,7 @@
                                     <td align="center">${table.department}</td>
                                     <td> 
                                         <center> 
-                                            <a  href="${callPage}&action=searchReceiveNo">
+                                            <a  href="${callPage}?Id=${table.recId}">
                                                 <span class="glyphicon glyphicon-edit editicon"  ></span>
                                             </a>
                                         </center> 

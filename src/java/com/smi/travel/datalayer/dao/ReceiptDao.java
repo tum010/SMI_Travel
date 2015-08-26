@@ -34,4 +34,6 @@ public interface ReceiptDao {
     public List<ReceiptDetail> getReceiptDetailFromReceiptId(String receiptId);
     public List<ReceiptCredit> getReceiptCreditFromReceiptId(String receiptId);
     public List<ReceiptSearchView> getReceiptViewFromFilter(String from ,String to,String Department,String type);
+    
+    public Receipt getReceiptfromReceiptId(String recId); // search Receipt ---> edit receipt
 }

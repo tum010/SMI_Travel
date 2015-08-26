@@ -34,6 +34,7 @@ public class SearchReceiptController extends SMITravelController {
         System.out.println("inputToDate  " + inputToDate);
         if ("search".equalsIgnoreCase(action)) {
             List<ReceiptSearchView>  receiptSearchViews = receiptService.getReceiptViewFromFilter(inputFromDate, inputToDate, department, recType);
+            System.out.println(" receiptSearchViews "+ receiptSearchViews.get(0).getAmount());
             if(receiptSearchViews != null){
                 request.setAttribute(RECEIPTSEARCHLIST,receiptSearchViews);
             } 
