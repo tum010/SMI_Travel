@@ -25,7 +25,7 @@ public class InvoiceView {
     private BigDecimal TotalPrice; // Amount
     private String Currency;
     private String TaxId;
-    private String Branch;
+    private String TaxBranch;
 
     public String getInvoiceId() {
         return InvoiceId;
@@ -118,7 +118,7 @@ public class InvoiceView {
     }
 
     public void setBranch(String Branch) {
-        this.Branch = Branch;
+        this.TaxBranch = Branch;
     }
 
     public void setTaxId(String TaxId) {
@@ -126,7 +126,7 @@ public class InvoiceView {
     }
 
     public String getBranch() {
-        return Branch;
+        return TaxBranch;
     }
 
     public String getTaxId() {
