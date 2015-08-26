@@ -164,5 +164,16 @@ public class InvoiceImpl implements InvoiceReportDao{
     public void setUtilityFunction(UtilityFunction utilityFunction) {
         this.utilityFunction = utilityFunction;
     }
+
+    @Override
+    public List getInvoiceMonthly(String BillFrom, String BillTo, String Payment, String Accno, String vattype, String from, String to, String department) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();  
+        List data = new ArrayList();
+        
+        session.close();
+        this.sessionFactory.close();
+        return data;
+    }
   
 }
