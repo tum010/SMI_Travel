@@ -1614,8 +1614,10 @@ public class AJAXBean extends AbstractBean implements
         map.put("taxDate", util.convertDateToString(tax.getCreateDate()));
         BigDecimal amount = new BigDecimal("0.00");
         String invNo = "";
-
+        List<Map<String, Object>> detailMapList = new ArrayList<Map<String, Object>>();
         for (Iterator detailList = tax.getTaxInvoiceDetails().iterator(); detailList.hasNext();) {
+            TaxInvoiceDetail detail = (TaxInvoiceDetail) detailList.next();
+            if (detail.getInvoiceDetail() != null) {
             TaxInvoiceDetail detail = (TaxInvoiceDetail)detailList.next();
             BigDecimal detailAmount = detail.getAmount();
             BigDecimal datailVat = new BigDecimal("0.00");
@@ -1636,7 +1638,7 @@ public class AJAXBean extends AbstractBean implements
         }
         map.put("detailList", detailMapList);
         map.put("taxAmount", tax.getAmountExcludeVat());
-        map.put("taxDesc",invNo);
+        map.put("taxDesc", invNo);
         return map;
     }
   
