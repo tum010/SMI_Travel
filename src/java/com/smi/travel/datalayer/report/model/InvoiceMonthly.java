@@ -26,6 +26,9 @@ public class InvoiceMonthly {
     private String accno;
     private String billfrom;
     private String billto;
+    private String systemdate;
+    private String headdepartment;
+    
     
 
     public String getInvname() {
@@ -146,6 +149,22 @@ public class InvoiceMonthly {
 
     public void setBillto(String billto) {
         this.billto = billto;
+    }
+
+    public String getSystemdate() {
+        return systemdate;
+    }
+
+    public void setSystemdate(String systemdate) {
+        this.systemdate = systemdate;
+    }
+
+    public String getHeaddepartment() {
+        return headdepartment;
+    }
+
+    public void setHeaddepartment(String headdepartment) {
+        this.headdepartment = headdepartment;
     }
     
     
