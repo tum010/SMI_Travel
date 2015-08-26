@@ -1587,7 +1587,7 @@ public class AJAXBean extends AbstractBean implements
     public void setPaymentairticketdao(PaymentAirTicketDao paymentairticketdao) {
         this.paymentairticketdao = paymentairticketdao;
     }  
-
+     
     private Map convertInvoiceToMap(TaxInvoice tax) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("taxId", tax.getId());
@@ -1597,21 +1597,16 @@ public class AJAXBean extends AbstractBean implements
         map.put("taxAddress", tax.getTaxInvAddr());
         UtilityFunction util = new UtilityFunction();
         map.put("taxDate", util.convertDateToString(tax.getCreateDate()));
-        BigDecimal amount = new BigDecimal("0.00");
         String invNo = "";
         List<Map<String, Object>> detailMapList = new ArrayList<Map<String, Object>>();
         for (Iterator detailList = tax.getTaxInvoiceDetails().iterator(); detailList.hasNext();) {
             TaxInvoiceDetail detail = (TaxInvoiceDetail) detailList.next();
-            if (detail.getInvoiceDetail() != null) {
-               
-            if (detail.getInvoiceDetail() != null) {
-                BigDecimal detailAmount = detail.getAmount();
-                BigDecimal datailVat = new BigDecimal("0.00");
-            if(detail.getVat() != null){
+            BigDecimal detailAmount = detail.getAmount();
+            BigDecimal datailVat = new BigDecimal("0.00");
+            if (detail.getVat() != null) {
                 datailVat = detail.getAmount().multiply(detail.getVat()).divide(new BigDecimal("100.00"));
             }
-            amount = detailAmount.subtract(datailVat);
-            if(detail.getInvoiceDetail() != null){
+            if (detail.getInvoiceDetail() != null) {
                 invNo += detail.getInvoiceDetail().getInvoice().getInvNo() + ",";
             }
             Map<String, Object> detailMap = new HashMap<String, Object>();
@@ -1621,13 +1616,12 @@ public class AJAXBean extends AbstractBean implements
             detailMap.put("amount", detail.getAmount());
             detailMap.put("cur", detail.getCurAmount());
             detailMapList.add(detailMap);
-            }
-            }
         }
         map.put("detailList", detailMapList);
         map.put("taxAmount", tax.getAmountExcludeVat());
         map.put("taxDesc", invNo);
         return map;
     }
+
   
 }
