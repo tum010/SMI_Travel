@@ -1619,6 +1619,7 @@ public class AJAXBean extends AbstractBean implements
             TaxInvoiceDetail detail = (TaxInvoiceDetail) detailList.next();
             if (detail.getInvoiceDetail() != null) {
             TaxInvoiceDetail detail = (TaxInvoiceDetail)detailList.next();
+            if (detail.getInvoiceDetail() != null) {
             BigDecimal detailAmount = detail.getAmount();
             BigDecimal datailVat = new BigDecimal("0.00");
             if(detail.getVat() != null){
