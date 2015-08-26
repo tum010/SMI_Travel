@@ -64,7 +64,9 @@ $(document).ready(function() {
     $.each(product, function (key, value) {
         codeProduct.push(value.code);
         if ( !(value.name in codeProduct) ){
-           codeProduct.push(value.name);
+            if(value.code !== value.name){
+                codeProduct.push(value.name);
+            }
         }
     });
 
@@ -136,7 +138,9 @@ $(document).ready(function() {
     $.each(agent, function (key, value) {
         codeAgent.push(value.code);
         if ( !(value.name in codeAgent) ){
-           codeAgent.push(value.name);
+            if(value.code !== value.name){ 
+                codeAgent.push(value.name);
+            }
         }
     });
 
