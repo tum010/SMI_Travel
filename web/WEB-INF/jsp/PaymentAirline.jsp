@@ -1262,21 +1262,35 @@ function DeleteRowTicket(){
     var paymentId = document.getElementById('paymentId').value;
     
     $("#tableId" + count).parent().remove();
-    calculateTotalAmount();
-    calculateTotalCommission();
-    calculateTotalPayment();
-    calculateAmount();
+    
+    if($("#TicketFareTable tr").length > 1){
+        calculateTotalAmount();
+        calculateTotalCommission();
+        calculateTotalPayment();
+        calculateAmount();
+    }else{
+        $('#totalCommissionTicketFare').val("");
+        $('#totalAmountTicketFare').val("");
+        calculateTotalPayment();
+        calculateAmount();
+    }
+
     $.ajax({
         url: 'PaymentAirline.smi?action=deleteTicket',
         type: 'get',
         data: {deleteTicketId: ticketid , paymentId:paymentId},
         success: function () {
-            
-        calculateTotalAmount();
-        calculateTotalCommission();
-        calculateTotalPayment();
-        calculateAmount();
-
+            if($("#TicketFareTable tr").length > 1){
+                calculateTotalAmount();
+                calculateTotalCommission();
+                calculateTotalPayment();
+                calculateAmount();
+            }else{
+                $('#totalCommissionTicketFare').val("");
+                $('#totalAmountTicketFare').val("");
+                calculateTotalPayment();
+                calculateAmount();
+            }    
         },
         error: function () {
             console.log("error");
@@ -1299,19 +1313,34 @@ function DeleteRowRefund(){
     var refundid = document.getElementById('delRefundId').value;
     var paymentId = document.getElementById('paymentId').value;
     $("#tableRefundId" + rowCount).parent().remove();
-    calculateTotalAmountRefund();
-    calculateTotalRefundVat();
-    calculateTotalPayment();
-    calculateAmount();
+    if($("#RefundTicketTable tr").length > 1){
+        calculateTotalAmountRefund();
+        calculateTotalRefundVat();
+        calculateTotalPayment();
+        calculateAmount();
+    }else{
+        $('#totalAmountRefund').val("");
+        $('#totalAmountRefundVat').val("");
+        calculateTotalPayment();
+        calculateAmount();
+    }
+
     $.ajax({
         url: 'PaymentAirline.smi?action=deleteRefund',
         type: 'get',
         data: {delRefundId:refundid ,paymentId:paymentId },
         success: function () {
-            calculateTotalAmountRefund();
-            calculateTotalRefundVat();
-            calculateTotalPayment();
-            calculateAmount();
+            if($("#RefundTicketTable tr").length > 1){
+                calculateTotalAmountRefund();
+                calculateTotalRefundVat();
+                calculateTotalPayment();
+                calculateAmount();
+            }else{
+                $('#totalAmountRefund').val("0");
+                $('#totalAmountRefundVat').val("0");
+                calculateTotalPayment();
+                calculateAmount();
+            }
         },
         error: function () {
             console.log("error");

@@ -349,7 +349,7 @@ public class StockImpl implements StockDao{
     }
 
     @Override
-    public List<Stock> searchStock(String productId, Date createDate, Date EffecttiveFrom, Date EffectiveTo) {
+    public List<Stock> searchStock(String productId, Date createDate, Date EffecttiveFrom, Date EffectiveTo,String expire) {
         Session session = this.sessionFactory.openSession();
         String query = "";
         if("".equals(productId) && createDate == null && EffecttiveFrom == null &&  EffectiveTo == null){
@@ -376,8 +376,33 @@ public class StockImpl implements StockDao{
         
         System.out.println("query : " + query);
         List<Stock> list = session.createQuery(query).list();
-
+        for(int i=0;i< list.size();i++){
+            System.out.println("Stock Id Show"+ i + " : " + list.get(i).getId() );
+        }
+        if("0".equals(expire)){
+            list = checkItemStatusStockDetail(list);
+        }
+       
         return list;
+    }
+    
+    private List<Stock> checkItemStatusStockDetail(List<Stock> listStock){
+        Session session = this.sessionFactory.openSession();
+        String query = "";
+        List<Stock> stockList = new LinkedList<Stock>();
+        if(listStock != null){
+            for (int i=0;i< listStock.size();i++) {
+                List<StockDetail> listStockDetail = listStock.get(i).getStockDetails();
+                query = "FROM StockDetail std where std.stock.id = " + listStock.get(i).getId() + " and std.MStockStatus.id = 1";
+                System.out.println("query : " + query);
+                listStockDetail = session.createQuery(query).list();
+                if(listStockDetail != null && !"".equals(listStockDetail) && listStockDetail.size() != 0){
+                    stockList.add(listStock.get(i));
+                    System.out.println("Stock Id "+ i + " : " + listStock.get(i).getId() );
+                }
+            }
+        }
+        return stockList;
     }
 
     @Override

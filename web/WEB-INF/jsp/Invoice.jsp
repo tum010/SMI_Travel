@@ -58,7 +58,7 @@
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <strong>Money more than Billable, Please Input money</strong> 
 </div>
-            <form action="Invoice${page}.smi" method="post" id="InvoiceForm" role="form" >
+            <form action="Invoice${page}.smi" method="post" id="InvoiceForm" role="form" onsubmit="return validFromInvoice();">
             <div id="textAlertDisable"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Void Success </strong> 
@@ -687,7 +687,7 @@
                                             </button>
                                         </div>
                                         <div class="col-md-1 text-right ">
-                                            <button type="submit" onsubmit="return validFromInvoice();" id="saveInvoice" name="saveInvoice" class="btn btn-success" ${isSaveVoid}>
+                                            <button type="submit"  id="saveInvoice" name="saveInvoice" class="btn btn-success" ${isSaveVoid}>
                                                 <span id="SpanSave" class="fa fa-save"></span> Save 
                                             </button>
                                         </div>
@@ -985,7 +985,51 @@
         $('#collapseExample${advanced.search}').on('hidden.bs.collapse', function () {
            $(".arrowReservstion").removeClass("glyphicon glyphicon-chevron-up").addClass("glyphicon glyphicon-chevron-down");
         });
-    });   
+    });
+    
+            $("#InvoiceForm")
+        .bootstrapValidator({
+            framework: 'bootstrap',
+            feedbackIcons: {
+                valid: 'uk-icon-check',
+                invalid: 'uk-icon-times',
+                validating: 'uk-icon-refresh'
+            },
+            fields: {                
+                InvTo: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        notEmpty: {
+                            message: 'Input Invoice To'
+                        }
+                    }
+                },
+                InvToName: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        notEmpty: {
+                            message: 'Input Invoice To Name'
+                        }
+                    }
+                },
+                ARCode: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        notEmpty: {
+                            message: 'Input A/R Code'
+                        }
+                    }
+                },
+                InputInvDate: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        notEmpty: {
+                            message: 'Input Invoice Date'
+                        }
+                    }
+                } 
+            }  
+        });
 </script>
 <script type="text/javascript" charset="utf-8">
     var select = "<option value='' ></option>";

@@ -768,6 +768,7 @@
 
 <script language="javascript">
     $(document).ready(function () {
+        var showflag = 1;
         $('.date').datetimepicker();
         $('.datemask').mask('0000-00-00');
         $(".money").mask('000,000,000.00', {reverse: true});
@@ -826,6 +827,10 @@
            $(".arrowReservstion").removeClass("glyphicon glyphicon-chevron-up").addClass("glyphicon glyphicon-chevron-down");
         });
         
+        $('#InputDatePicker').datetimepicker().on('dp.change', function (e) {
+                $('#TaxInvoiceForm').bootstrapValidator('revalidateField', 'InvToDate');
+        });
+        
         $('#TaxInvoiceForm').bootstrapValidator({
             container: 'tooltip',
             excluded: [':disabled'],
@@ -836,7 +841,6 @@
             },
             fields: {
                 TaxInvTo: {
-                    trigger: 'focus keyup change',
                     validators: {
                         notEmpty: {
                             message: 'The Tax Invoice No. is required'
@@ -844,7 +848,6 @@
                     }
                 },
                 ARCode: {
-                    trigger: 'focus keyup change',
                     validators: {
                         notEmpty: {
                             message: 'The A/R Code is required'
@@ -852,7 +855,6 @@
                     }
                 },
                 InvToDate: {
-                    trigger: 'focus keyup change',
                     validators: {
                         notEmpty: {
                             message: 'The Invoice Date is required'

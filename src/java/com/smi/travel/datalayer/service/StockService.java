@@ -64,8 +64,8 @@ public class StockService {
         return stockDao.checkStockDetail(stockId);
     }
     
-    public List<Stock> searchStock(String productId,Date createDate,Date EffecttiveFrom,Date EffectiveTo){
-        return stockDao.searchStock(productId, createDate, EffecttiveFrom, EffectiveTo);
+    public List<Stock> searchStock(String productId,Date createDate,Date EffecttiveFrom,Date EffectiveTo,String expire){
+        return stockDao.searchStock(productId, createDate, EffecttiveFrom, EffectiveTo,expire);
     }
     
     public StockViewSummary searchStockDetail(String productId,String payStatus,String itemStatus){

@@ -35,6 +35,7 @@ public class SearchStockController extends SMITravelController {
         String createDate = request.getParameter("InputStockDate");
         String EffecttiveFrom = request.getParameter("InputEffectiveFromDate");
         String EffectiveTo = request.getParameter("InputInputEffectiveToDate");
+        String expire = request.getParameter("SelectExpire");
         Date create = utility.convertStringToDate(createDate);
         Date from = utility.convertStringToDate(EffecttiveFrom);
         Date to = utility.convertStringToDate(EffectiveTo);
@@ -78,13 +79,14 @@ public class SearchStockController extends SMITravelController {
                 stock.setEffectiveTo(to);
             }
             // Search Stock
-            List<Stock> listStock = stockService.searchStock(productId, create, from, to);
+            List<Stock> listStock = stockService.searchStock(productId, create, from, to,expire);
             if(listStock != null){
                 request.setAttribute("stock", stock);
                 request.setAttribute("listStock", listStock);
             }
             request.setAttribute("payStatus", pStatus);
             request.setAttribute("itemStatus", iStatus);
+            request.setAttribute("expire", expire);
         }else if("view".equalsIgnoreCase(action)){
             // view Stock Detail After Search Stock
             String stockId = request.getParameter("stockIdView");
@@ -128,10 +130,11 @@ public class SearchStockController extends SMITravelController {
                 stock.setEffectiveTo(to);
             }
             // Search Stock Detail
-            List<Stock> listStock = stockService.searchStock(productId, create, from, to);
+            List<Stock> listStock = stockService.searchStock(productId, create, from, to,expire);
             if(listStock != null){
                 request.setAttribute("stock", stock);
                 request.setAttribute("listStock", listStock);
+                request.setAttribute("expire", expire);
             }
             
         }else{
