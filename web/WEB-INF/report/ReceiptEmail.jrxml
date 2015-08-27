@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptEmail" language="groovy" pageWidth="595" pageHeight="421" columnWidth="525" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="0038deea-02d3-4a9f-8925-fb54dc3fc533">
-	<property name="ireport.zoom" value="3.2153832150000183"/>
-	<property name="ireport.x" value="144"/>
-	<property name="ireport.y" value="394"/>
+	<property name="ireport.zoom" value="1.996500000000011"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="192"/>
 	<field name="recto" class="java.lang.String"/>
 	<field name="recadd" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -353,13 +353,6 @@
 			<rectangle>
 				<reportElement x="4" y="2" width="15" height="14" uuid="412d1efc-05db-4f43-be1f-6e3d403a71a6"/>
 			</rectangle>
-			<textField>
-				<reportElement x="4" y="2" width="15" height="14" uuid="167b5adf-9024-4260-aa85-98bf08a78df0"/>
-				<textElement textAlignment="Center">
-					<font isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{cashflag}.equals("2") ? $F{cashflag} : "")]]></textFieldExpression>
-			</textField>
 			<rectangle>
 				<reportElement x="4" y="19" width="15" height="14" uuid="d167e91f-a511-4ef7-ac84-efba2bc669c0"/>
 			</rectangle>
@@ -456,34 +449,6 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cash}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="4" y="19" width="15" height="14" uuid="2e9d6bc2-e5c5-4d5a-b3b9-5886e5c18ff4"/>
-				<textElement textAlignment="Center">
-					<font isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{chqbankflag}.equals("2") ? $F{chqbankflag} : "")]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="4" y="36" width="15" height="14" uuid="a0cb6371-43cf-49de-979c-f7e6358ee496"/>
-				<textElement textAlignment="Center">
-					<font isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{creditflag}.equals("2") ? $F{creditflag} : "")]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="127" y="2" width="15" height="14" uuid="e1dc5d23-b1b5-4f17-a728-7a247a57f066"/>
-				<textElement textAlignment="Center">
-					<font isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{transferflag}.equals("2") ? $F{transferflag} : "")]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="273" y="2" width="15" height="14" uuid="e4122d4b-675c-4d54-94e1-0228d1603d0a"/>
-				<textElement textAlignment="Center">
-					<font isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{taxflag}.equals("2") ? $F{taxflag} : "")]]></textFieldExpression>
-			</textField>
 			<textField pattern="#,##0.00">
 				<reportElement x="202" y="2" width="54" height="14" uuid="c1cba420-9d37-46b6-a85b-393763ee614b"/>
 				<textElement textAlignment="Left">
@@ -573,6 +538,26 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{textmoney}]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="128" y="4" width="12" height="10" uuid="600ad498-2a8b-4385-b5f2-2278a991f70b"/>
+				<imageExpression><![CDATA[($F{transferflag}.equals("1") ? "resource/images/checkmark.png" : "")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="6" y="21" width="12" height="10" uuid="e214cbdd-cd93-432a-8be0-2720ccffcd60"/>
+				<imageExpression><![CDATA[($F{chqbankflag}.equals("1") ? "resource/images/checkmark.png" : "")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="6" y="38" width="12" height="10" uuid="21df260c-a967-4d7e-8cc6-ed2cbd6115b8"/>
+				<imageExpression><![CDATA[($F{creditflag}.equals("1") ? "resource/images/checkmark.png" : "")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="6" y="4" width="12" height="10" uuid="f7e0f2cb-f71d-4493-a546-eb9598e63a83"/>
+				<imageExpression><![CDATA[($F{cashflag}.equals("1") ? "resource/images/checkmark.png" : "")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="274" y="4" width="12" height="10" uuid="90dd7066-93ab-4c29-b7f6-8e4a5978f088"/>
+				<imageExpression><![CDATA[($F{taxflag}.equals("1") ? "resource/images/checkmark.png" : "")]]></imageExpression>
+			</image>
 		</band>
 	</pageFooter>
 </jasperReport>
