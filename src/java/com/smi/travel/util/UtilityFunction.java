@@ -10,8 +10,10 @@ import com.smi.travel.datalayer.entity.Customer;
 import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  *
@@ -238,6 +240,11 @@ public class UtilityFunction {
             return input.toString();
         }
     }
+    
+    public String SetFormatDate(Date paramdate,String format){
+        //"dd MMM yyyy hh:mm:ss"
+        return new SimpleDateFormat("dd MMM yyyy hh:mm:ss", new Locale("us", "us")).format(paramdate);
+    }
 
     public static void main(String[] args) throws ParseException {
         UtilityFunction util = new UtilityFunction();
@@ -356,7 +363,7 @@ public class UtilityFunction {
       result =  result + tradThousand;
 
       // remove extra spaces!
-      return result.replaceAll("^\\s+", "").replaceAll("\\b\\s{2,}\\b", " ");
+      return result.replaceAll("^\\s+", "").replaceAll("\\b\\s{2,}\\b", " ").toUpperCase();
     }
     
     public String GetRounting( List<AirticketFlight> FlightList){

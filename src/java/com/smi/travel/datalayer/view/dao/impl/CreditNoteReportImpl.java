@@ -73,13 +73,17 @@ public class CreditNoteReportImpl implements  CreditNoteReportDao{
             total = total.replaceAll("\\.", ",");
             String[] totals = total.split(",");
             int totalWord = 0;
-            totalWord = Integer.parseInt(String.valueOf(totals[0]));
+            if(!"".equalsIgnoreCase(totals[0])){
+                totalWord = Integer.parseInt(String.valueOf(totals[0]));
+            }
+            
             cn.setTextamount(utilityFunction.convert(totalWord)+" baht");
             
             data.add(cn);
         }
         return data;
     }
+    
 
     public SessionFactory getSessionFactory() {
         return sessionFactory;

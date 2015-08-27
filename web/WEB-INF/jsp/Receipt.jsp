@@ -3,7 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<script type="text/javascript" src="js/workspace.js"></script> 
+<!--<script type="text/javascript" src="js/workspace.js"></script> -->
 <script type="text/javascript" src="js/jquery-ui.js"></script>
 
 <c:set var="dataPVList" value="${requestScope['PVList']}" />
@@ -370,9 +370,21 @@
                                                     </select>                                                                  
                                                 </td>
                                                 <td><input maxlength="255" id="receiveDes${i.count}" name="receiveDes${i.count}" type="text" class="form-control" value="${table.description}"></td>
-                                                <td><input maxlength="10" id="receiveCost${i.count}"  name="receiveCost${i.count}"  type="text" class="form-control text-right"  value="${table.cost}" onkeyup="insertCommas(this)" disabled="disabled"></td>
+                                                <td><input maxlength="10" id="receiveCost${i.count}"  name="receiveCost${i.count}"  type="text" class="form-control text-right"  value="${table.cost}" onkeyup="insertCommas(this)" readonly=""></td>
                                                 <td>                                   
-                                                    <select class="form-control" name="receiveCurCost${i.count}" id="receiveCurCost${i.count}" disabled="disabled">
+                                                    <select class="form-control" name="receiveCurCostTemp${i.count}" id="receiveCurCostTemp${i.count}" disabled="disabled">
+                                                        <option  value="" >---------</option>
+                                                        <c:forEach var="curCost" items="${currencyList}" varStatus="status">                                       
+                                                            <c:set var="select" value="" />
+                                                            <c:if test="${curCost.code == table.curCost}">
+                                                                <c:set var="select" value="selected" />
+                                                            </c:if>
+                                                            <option  value="${curCost.code}" ${select} >${curCost.code}</option>
+                                                        </c:forEach>
+                                                    </select>                                                                  
+                                                </td>
+                                                <td class="hidden">                                   
+                                                    <select class="form-control" name="receiveCurCost${i.count}" id="receiveCurCost${i.count}" >
                                                         <option  value="" >---------</option>
                                                         <c:forEach var="curCost" items="${currencyList}" varStatus="status">                                       
                                                             <c:set var="select" value="" />
@@ -386,10 +398,10 @@
                                                 <td align="center">
                                                     <c:choose>
                                                         <c:when test="${table.isVat == '1'}">
-                                                            <input type="checkbox" checked name="receiveIsVat${i.count}" id="receiveIsVat${i.count}" onclick="handleClick(this,${i.count})" value="${table.isVat}" disabled="disabled">
+                                                            <input type="checkbox" checked name="receiveIsVat${i.count}" id="receiveIsVat${i.count}" onclick="return false" value="${table.isVat}" readonly="">
                                                         </c:when>
                                                         <c:when test="${table.isVat == '0'}">
-                                                            <input type="checkbox"  name="receiveIsVat${i.count}" id="receiveIsVat${i.count}" onclick="handleClick(this,${i.count})" value="${table.isVat}" disabled="disabled">
+                                                            <input type="checkbox"  name="receiveIsVat${i.count}" id="receiveIsVat${i.count}" onclick="return false" value="${table.isVat}" readonly="">
                                                         </c:when>
                                                     </c:choose>
                                                 </td> 
@@ -1439,9 +1451,11 @@
         setFormatCurrencyReceipt();       
         var creditlength = $("#CreditDetailTable tr").length ;
         var detaillength = $("#ReceiptListTable tr").length ;
+        detaillength = detaillength - 1 ;
         if(detaillength > 1) {
             for(var i =0;i<detaillength;i++){
-                if($('#receiveCost'+i).val() != ""){
+                alert(i + " " + $('#receiveCost'+i).val());
+                if( $('#receiveCost'+i).val() != ""){
                     setFormatCurrency(i);
                 }
                 if($('#receiveAmount'+i).val() != ""){
@@ -1592,19 +1606,22 @@
     
     function AddRowProduct(row) {           
             $("#ReceiptListTable tbody").append(
-                '<tr style="higth 100px">' +
+                '<tr style="higth 100px">' + 
                 '<input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >' +
                 '<input id="DescriptionReceiptDetail' + row + '" name="DescriptionReceiptDetail' + row + '"  type="hidden" >' +
                 '<td>' + 
                 '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="">---------</option></select>' +                          
                 '</td>' +
                 '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" ></td>' +
-                '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control" onkeyup="insertCommas(this)" disabled="disabled" ></td>' +
+                '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control" onkeyup="insertCommas(this)" readonly="" ></td>' +
                 '<td>' + 
-                '<select class="form-control" name="receiveCurCost' + row + '" id="receiveCurCost' + row + '" disabled="disabled"><option value="">---------</option></select>' +                          
+                '<select class="form-control" name="receiveCurCostTemp' + row + '" id="receiveCurCostTemp' + row + '"><option value="">---------</option></select>' +                          
+                '</td>' +
+                '<td class="hidden">' + 
+                '<select class="form-control" name="receiveCurCost' + row + '" id="receiveCurCost' + row + '"><option value="" >---------</option></select>' +                          
                 '</td>' +
                 '<td align="center">' +
-                '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" onclick="handleClick(this,'+row+')" value="" disabled="disabled">' +
+                '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" value="" onclick="return false">' +
                 '</td>' +
                 '<td><div id="receiveVat' + row + '" style="display:none" ></div></td>' +
                 '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)"></td>' +
@@ -1621,9 +1638,10 @@
             $("#billTypeList option").clone().appendTo("#receiveProduct" + row);
             $("#currencyList option").clone().appendTo("#receiveCurrency" + row);
             $("#currencyList option").clone().appendTo("#receiveCurCost" + row);
-            
+            $("#currencyList option").clone().appendTo("#receiveCurCostTemp" + row);
+            $('#receiveCurCostTemp'+row).attr("disabled", true); 
             $("#receiveAmount"+row).focusout(function(){
-//        calculatGross(row);
+//              calculatGross(row);
                 setFormatCurrency(row);
             }); 
             $("#receiveCost"+row).focusout(function(){
@@ -1924,12 +1942,15 @@ function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,cur
         '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="'+product+'" selected></option></select>' +                          
         '</td>' +
         '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" value="'+description+'"></td>' +
-        '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control text-right" value="'+cost+'" onkeyup="insertCommas(this)" disabled="disabled"></td>' +
+        '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control text-right" value="'+cost+'" onkeyup="insertCommas(this)" readonly="" ></td>' +
         '<td>' + 
-        '<select class="form-control" name="receiveCurCost' + row + '" id="receiveCurCost' + row + '" disabled="disabled"><option value="'+cur+'" ></option></select>' +                          
+        '<select class="form-control" name="receiveCurCostTemp' + row + '" id="receiveCurCostTemp' + row + '"><option value="'+cur+'" ></option></select>' +                          
+        '</td>' +
+        '<td class="hidden">' + 
+        '<select class="form-control" name="receiveCurCost' + row + '" id="receiveCurCost' + row + '"><option value="'+cur+'" ></option></select>' +                          
         '</td>' +
         '<td align="center">' +
-        '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" disabled="disabled" onclick="handleClick(this,'+row+')" value="'+isVat+'">' +
+        '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" value="'+isVat+'" onclick="return false" >' +
         '</td>' +
         '<td><div id="receiveVat' + row + '" style="display:none" ></div></td>' +
         '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)" onkeypress="checkAmount('+row+')" value="'+amount+'"></td>' +
@@ -1945,6 +1966,8 @@ function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,cur
     $("#billTypeList option").clone().appendTo("#receiveProduct" + row);
     $("#currencyList option").clone().appendTo("#receiveCurrency" + row);
     $("#currencyList option").clone().appendTo("#receiveCurCost" + row);
+    $("#currencyList option").clone().appendTo("#receiveCurCostTemp" + row);
+    $('#receiveCurCostTemp'+row).attr("disabled", true); 
     var isvat = $('#receiveIsVat'+row).val();
     if (isvat === '1')
     {
@@ -1961,6 +1984,10 @@ function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,cur
     }).prop('selected', true);
     
     $('[name=receiveCurCost'+row+'] option').filter(function() { 
+        return ($(this).val() === cur);
+    }).prop('selected', true);
+    
+    $('[name=receiveCurCostTemp'+row+'] option').filter(function() { 
         return ($(this).val() === cur);
     }).prop('selected', true);
     

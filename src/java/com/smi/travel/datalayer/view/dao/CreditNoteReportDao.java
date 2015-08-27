@@ -13,5 +13,5 @@ import java.util.List;
  * @author Surachai
  */
 public interface CreditNoteReportDao {
-    public List getCreditNoteReport(String creditId);
+    public List getCreditNoteReport(String creditId); 
 }

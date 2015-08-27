@@ -203,12 +203,7 @@
     function sendEmailStatusCancel(){
         $("#ajaxload").addClass("hidden");
     }
-    
-    function validateEmail(email) {
-        var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-        return re.test(email);
-    }
-    
+
     function checkEmailTo() {
         var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         var email = document.getElementById('recipient');
@@ -231,20 +226,24 @@
     function checkEmailCc(){
         var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         var email = document.getElementById('sendCc');
-        var email_list = (email.value).split(',');
-        var sendCcField = document.getElementById('sendCc');
-        for(var i=0;i<email_list.length;i++){
-            if (!filter.test(email_list[i])) {                 
-                sendCcField.style.borderColor = "Red";
-                $("#sendEmailBtn").addClass("disabled");
+        if(email.value === ''){
+            return ;
+        } else {
+            var email_list = (email.value).split(',');
+            var sendCcField = document.getElementById('sendCc');
+            for(var i=0;i<email_list.length;i++){
+                if (!filter.test(email_list[i])) {                 
+                    sendCcField.style.borderColor = "Red";
+                    $("#sendEmailBtn").addClass("disabled");
+                    return false;
+                }          
+            }
+            sendCcField.style.borderColor = "Green";
+            if(document.getElementById('recipient').style.borderColor === 'red'){
                 return false;
-            }          
-        }
-        sendCcField.style.borderColor = "Green";
-        if(document.getElementById('recipient').style.borderColor === 'red'){
-            return false;
-        }
-        $("#sendEmailBtn").removeClass("disabled");
+            }
+            $("#sendEmailBtn").removeClass("disabled");
+        }      
     }
 
 </script>
