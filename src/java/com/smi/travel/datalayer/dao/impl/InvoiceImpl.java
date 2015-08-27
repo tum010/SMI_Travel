@@ -51,9 +51,9 @@ public class InvoiceImpl implements InvoiceDao{
         Session session = this.sessionFactory.openSession();
         try { 
             transaction = session.beginTransaction();
-            result = generateInvoiceNo(invoice.getDepartment() , invoice.getInvType());
-//            result = invoice.getInvNo();
-            invoice.setInvNo(result);
+//            result = generateInvoiceNo(invoice.getDepartment() , invoice.getInvType());
+            result = invoice.getInvNo();
+//            invoice.setInvNo(result);
             session.save(invoice);
             List<InvoiceDetail> invoiceDetail = invoice.getInvoiceDetails();
             if(invoiceDetail != null){
@@ -149,7 +149,7 @@ public class InvoiceImpl implements InvoiceDao{
     }
         
     @Override
-    public String updateInvoice(Invoice invoice) {
+    public synchronized String updateInvoice(Invoice invoice) {
         String result = "";
         try {
             Session session = this.sessionFactory.openSession();
@@ -178,7 +178,7 @@ public class InvoiceImpl implements InvoiceDao{
     }
 
     @Override
-    public String deleteInvoice(Invoice invoice) {
+    public synchronized String deleteInvoice(Invoice invoice) {
         List<InvoiceDetail> invoiceDetailList = new LinkedList<InvoiceDetail>();
         String result = "";
         try {
@@ -348,11 +348,15 @@ public class InvoiceImpl implements InvoiceDao{
 
     @Override
     public List<Invoice> getSearchInvoice(String fromData, String toDate, String department, String type) {
+        System.out.println("From Date : " + fromData + ":");
+        System.out.println("To Date : " + toDate + ":");
+        System.out.println("Department : " + department + ":");
+        System.out.println("Type : " + type + ":");
         Session session = this.sessionFactory.openSession();
         String query = "";
         int AndQuery = 0;
-        if("".equals(department) && department == null && "".equals(type) && type == null && fromData == null &&  toDate == null){
-            query = "FROM Invoice st " ;
+        if("".equals(department)  && "".equals(type)  && "".equals(fromData)  && "".equals(toDate)){
+            query = "FROM Invoice st " ; 
         }else{
             query = "FROM Invoice st where" ;
         }
@@ -589,46 +593,57 @@ public class InvoiceImpl implements InvoiceDao{
     public String checkOverflowValueOfInvoice(List<InvoiceDetail> invoiceDetail) {
         Session session = this.sessionFactory.openSession();
         String result = "";
+        if(invoiceDetail != null && invoiceDetail.size() != 0){
         for(int i=0;i<invoiceDetail.size();i++){
             BigDecimal cost;
             BigDecimal price;
             BigDecimal InvoiceCost = new BigDecimal(0);
             BigDecimal InvoicePrice  = new BigDecimal(0);
             InvoiceDetail  detail  = invoiceDetail.get(i);
-            List<BillableDesc> Billdesc = session.createQuery(GET_BILL_AMOUNT)
-                .setParameter("descid", detail.getBillableDesc().getId())
-                .list();
-            cost = new BigDecimal(Billdesc.get(0).getCost());
-            price = new BigDecimal(Billdesc.get(0).getPrice());
-            System.out.println("cost : "+cost +"price : "+price);
-            List<InvoiceDetail> invoiceList;
-            if(detail.getId() != null){
-                invoiceList = session.createQuery(GET_BILLDESC_FILTER )
-                .setParameter("billableDescId", detail.getBillableDesc().getId())
-                .setParameter("invdID", detail.getId())
-                .list();
-            }else{
-                invoiceList = session.createQuery(GET_BILLDESC )
-                .setParameter("billableDescId", detail.getBillableDesc().getId())
-                .list();
-            }
-            
-            for(int j=0;j<invoiceList.size();j++){
-                InvoiceCost = InvoiceCost.add(invoiceList.get(j).getCost());
-                InvoicePrice = InvoicePrice.add(invoiceList.get(j).getAmount());
-            }
-            System.out.println("InvoiceCost : "+InvoiceCost +"InvoicePrice : "+InvoicePrice);
-            
-            InvoicePrice = InvoicePrice.add(detail.getAmount());
-            InvoiceCost = InvoiceCost.add(detail.getCost());
-            System.out.println("SumInvoiceCost : "+InvoiceCost +"SumInvoicePrice : "+InvoicePrice);
-            System.out.println("Compare price : "+price.compareTo(InvoicePrice));
-            if((price.compareTo(InvoicePrice) == -1)||(cost.compareTo(InvoiceCost) == -1)){
-                result = "moreMoney";
+            if(detail.getBillableDesc()  != null){
+                if(detail.getBillableDesc().getId() != null){
+                List<BillableDesc> Billdesc = session.createQuery(GET_BILL_AMOUNT)
+                    .setParameter("descid", detail.getBillableDesc().getId())
+                    .list();
+                cost = new BigDecimal(Billdesc.get(0).getCost());
+                price = new BigDecimal(Billdesc.get(0).getPrice());
+                System.out.println("cost : "+cost +"price : "+price);
+                List<InvoiceDetail> invoiceList;
+                if(detail.getId() != null){
+                    invoiceList = session.createQuery(GET_BILLDESC_FILTER )
+                    .setParameter("billableDescId", detail.getBillableDesc().getId())
+                    .setParameter("invdID", detail.getId())
+                    .list();
+                }else{
+                    invoiceList = session.createQuery(GET_BILLDESC )
+                    .setParameter("billableDescId", detail.getBillableDesc().getId())
+                    .list();
+                }
+
+                for(int j=0;j<invoiceList.size();j++){
+                    InvoiceCost = InvoiceCost.add(invoiceList.get(j).getCost());
+                    InvoicePrice = InvoicePrice.add(invoiceList.get(j).getAmount());
+                }
+                System.out.println("InvoiceCost : "+InvoiceCost +"InvoicePrice : "+InvoicePrice);
+
+                InvoicePrice = InvoicePrice.add(detail.getAmount());
+                InvoiceCost = InvoiceCost.add(detail.getCost());
+                System.out.println("SumInvoiceCost : "+InvoiceCost +"SumInvoicePrice : "+InvoicePrice);
+                System.out.println("Compare price : "+price.compareTo(InvoicePrice));
+                    if((price.compareTo(InvoicePrice) == -1)||(cost.compareTo(InvoiceCost) == -1)){
+                        result = "moreMoney";
+                    }else{
+                        result = "okMoney";
+                    }
+                }else{
+                    result = "okMoney";
+                }
             }else{
                 result = "okMoney";
             }
-            
+        }
+        }else{
+            result = "okMoney";
         }
         this.sessionFactory.close();
         session.close();

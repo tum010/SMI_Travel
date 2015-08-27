@@ -7,8 +7,8 @@
 package com.smi.travel.datalayer.dao;
 
 import com.smi.travel.datalayer.entity.CreditNote;
-import java.util.Date;
 import com.smi.travel.datalayer.view.entity.CreditNoteView;
+import java.util.Date;
 import java.util.List;
 
 /**

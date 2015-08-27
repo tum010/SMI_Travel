@@ -55,12 +55,12 @@
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right" style="width: 80px">
-                                <label class="control-label text-right">CN No.</label>
+                                <label class="control-label text-right">Department</label>
                             </div>
-                            <div class="col-xs-1" style="width: 170px">
-                                <div class="input-group">
-                                    <input id="cnNo" name="cnNo" type="text" class="form-control" value="${ticketFare.ticketNo}">
-                                </div>
+                             <div class="col-md-2 form-group" style="padding: 0px 0px 0px 30px">
+                                <select class="form-control" id="Department" name="Department">
+                        
+                                </select>    
                             </div>
                             <div class="col-md-1 text-right " style="padding: 0px 0px 0px 0px ; width: 160px">
                                 <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="" class="btn btn-primary btn-primary ">
@@ -84,17 +84,23 @@
                                 <tr class="datatable-header" >
                                     <th style="width:10%;">CN No.</th>
                                     <th style="width:10%;">Date</th>
-                                    <th style="width:30%;">Name</th>
-                                    <th style="width:20%;">AP Code</th>
+                                    <th style="width:20%;">Name</th>
+                                    <th style="width:10%;">AP Code</th>
+                                    <th style="width:10%;">Department</th>
+                                    <th style="width:10%;">Sub Total</th>
+                                    <th style="width:10%;">Grand Total</th>
                                     <th style="width:10%;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td align="center">1</td>
+                                    <td align="center">15089765</td>
                                     <td align="center">2015-07-21</td>
                                     <td align="center">Test 1</td>
                                     <td align="center">12345678</td>
+                                    <td align="center">Wendy</td>
+                                    <td align="right">2,500.00</td>
+                                    <td align="right">1,500.00</td>
                                     <td> 
                                         <center> 
                                             <a  href="SearchCreditNote.smi?action=edit">
@@ -103,165 +109,7 @@
                                         </center>
                                     </td>  
                                 </tr>
-                                <tr>
-                                    <td align="center">1</td>
-                                    <td align="center">2015-07-21</td>
-                                    <td align="center">Test 1</td>
-                                    <td align="center">12345678</td>
-                                    <td> 
-                                        <center> 
-                                            <a  href="SearchCreditNote.smi?action=edit">
-                                                <span class="glyphicon glyphicon-edit editicon"  ></span>
-                                            </a>
-                                        </center>
-                                    </td>  
-                                </tr>
-                                <tr>
-                                    <td align="center">1</td>
-                                    <td align="center">2015-07-21</td>
-                                    <td align="center">Test 1</td>
-                                    <td align="center">12345678</td>
-                                    <td> 
-                                        <center> 
-                                            <a  href="SearchCreditNote.smi?action=edit">
-                                                <span class="glyphicon glyphicon-edit editicon"  ></span>
-                                            </a>
-                                        </center>
-                                    </td>  
-                                </tr>
-                                <tr>
-                                    <td align="center">1</td>
-                                    <td align="center">2015-07-21</td>
-                                    <td align="center">Test 1</td>
-                                    <td align="center">12345678</td>
-                                    <td> 
-                                        <center> 
-                                            <a  href="SearchCreditNote.smi?action=edit">
-                                                <span class="glyphicon glyphicon-edit editicon"  ></span>
-                                            </a>
-                                        </center>
-                                    </td>  
-                                </tr>
-                                <tr>
-                                    <td align="center">1</td>
-                                    <td align="center">2015-07-21</td>
-                                    <td align="center">Test 1</td>
-                                    <td align="center">12345678</td>
-                                    <td> 
-                                        <center> 
-                                            <a  href="SearchCreditNote.smi?action=edit">
-                                                <span class="glyphicon glyphicon-edit editicon"  ></span>
-                                            </a>
-                                        </center>
-                                    </td>  
-                                </tr>
-                                <tr>
-                                    <td align="center">1</td>
-                                    <td align="center">2015-07-21</td>
-                                    <td align="center">Test 1</td>
-                                    <td align="center">12345678</td>
-                                    <td> 
-                                        <center> 
-                                            <a  href="SearchCreditNote.smi?action=edit">
-                                                <span class="glyphicon glyphicon-edit editicon"  ></span>
-                                            </a>
-                                        </center>
-                                    </td>  
-                                </tr>
-                                <tr>
-                                    <td align="center">1</td>
-                                    <td align="center">2015-07-21</td>
-                                    <td align="center">Test 1</td>
-                                    <td align="center">12345678</td>
-                                    <td> 
-                                        <center> 
-                                            <a  href="SearchCreditNote.smi?action=edit">
-                                                <span class="glyphicon glyphicon-edit editicon"  ></span>
-                                            </a>
-                                        </center>
-                                    </td>  
-                                </tr>
-                                <tr>
-                                    <td align="center">1</td>
-                                    <td align="center">2015-07-21</td>
-                                    <td align="center">Test 1</td>
-                                    <td align="center">12345678</td>
-                                    <td> 
-                                        <center> 
-                                            <a  href="SearchCreditNote.smi?action=edit">
-                                                <span class="glyphicon glyphicon-edit editicon"  ></span>
-                                            </a>
-                                        </center>
-                                    </td>  
-                                </tr>
-                                <tr>
-                                    <td align="center">1</td>
-                                    <td align="center">2015-07-21</td>
-                                    <td align="center">Test 1</td>
-                                    <td align="center">12345678</td>
-                                    <td> 
-                                        <center> 
-                                            <a  href="SearchCreditNote.smi?action=edit">
-                                                <span class="glyphicon glyphicon-edit editicon"  ></span>
-                                            </a>
-                                        </center>
-                                    </td>  
-                                </tr>
-                                <tr>
-                                    <td align="center">1</td>
-                                    <td align="center">2015-07-21</td>
-                                    <td align="center">Test 1</td>
-                                    <td align="center">12345678</td>
-                                    <td> 
-                                        <center> 
-                                            <a  href="SearchCreditNote.smi?action=edit">
-                                                <span class="glyphicon glyphicon-edit editicon"  ></span>
-                                            </a>
-                                        </center>
-                                    </td>  
-                                </tr>
-                                <tr>
-                                    <td align="center">1</td>
-                                    <td align="center">2015-07-21</td>
-                                    <td align="center">Test 1</td>
-                                    <td align="center">12345678</td>
-                                    <td> 
-                                        <center> 
-                                            <a  href="SearchCreditNote.smi?action=edit">
-                                                <span class="glyphicon glyphicon-edit editicon"  ></span>
-                                            </a>
-                                        </center>
-                                    </td>  
-                                </tr>
-                                <tr>
-                                    <td align="center">1</td>
-                                    <td align="center">2015-07-21</td>
-                                    <td align="center">Test 1</td>
-                                    <td align="center">12345678</td>
-                                    <td> 
-                                        <center> 
-                                            <a  href="SearchCreditNote.smi?action=edit">
-                                                <span class="glyphicon glyphicon-edit editicon"  ></span>
-                                            </a>
-                                        </center>
-                                    </td>  
-                                </tr>
-                                <%--<c:forEach var="table" items="${dataList}" varStatus="dataStatus">--%>
-<!--                                    <tr>
-                                        <td align="center"> <c:out value="${table.type}" /></td>
-                                        <td align="center"> <c:out value="${table.buy}" /></td>
-                                        <td align="center"> <c:out value="${table.airline}" /></td>
-                                        <td align="center"> <c:out value="${table.ticketNo}" /></td>
-                                        <td> 
-                                            <center> 
-                                                <a  href="SearchCreditNote.smi?ticketId=${table.id}&action=edit">
-                                                    <span class="glyphicon glyphicon-edit editicon"  ></span>
-                                                </a>
-
-                                            </center>
-                                        </td>                                    
-                                    </tr>-->
-                                <%--</c:forEach>--%>
+                                
                             </tbody>
                         </table>      
                     </div>

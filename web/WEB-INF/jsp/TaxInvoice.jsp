@@ -95,7 +95,7 @@
                                         </div>
                                         <div class="col-md-2 form-group" id="invoicenopanel">
                                             <div class="input-group">
-                                                <input type="text" class="form-control" id="invoiceNo" name="invoiceNo" value="" onkeydown="invoiceNoValidate()">
+                                                <input type="text" style="text-transform:uppercase" class="form-control" id="invoiceNo" name="invoiceNo" value="" onkeydown="invoiceNoValidate()">
                                             </div>
                                         </div>
                                         <div class="col-xs-1  text-right" style="width: 8px;padding-top: 7px"><i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i></div>
@@ -154,7 +154,7 @@
                             <input type="hidden" class="form-control" id="TaxInvStatus" name="TaxInvStatus" value="${taxInvoice.MFinanceItemstatus.id}"/>
                             <input type="hidden" class="form-control" id="createDate" name="createDate" value="${requestScope['createDate']}"/>
                             <input type="hidden" class="form-control" id="createBy" name="createBy" value="${taxInvoice.createBy}"/>
-                            <input type="text"  class="form-control" id="TaxInvNo" name="TaxInvNo"  value="${taxInvoice.taxNo}" >
+                            <input type="text" style="text-transform:uppercase" class="form-control" id="TaxInvNo" name="TaxInvNo"  value="${taxInvoice.taxNo}" >
                         </div>
                         <div class="col-md-1" >
                             <button type="button"  id="btnSearchTaxInvoiceNo"  name="btnSearchTaxInvoiceNo" onclick="searchTaxInvoiceNo()" class="btn btn-primary btn-sm">
@@ -162,7 +162,7 @@
                             </button>
                         </div>
                         <div class="col-xs-2 text-right">
-                            <label class="control-label" for="">Invoice date</lable>
+                            <label class="control-label" for="">Invoice date<font style="color: red">*</font></lable>
                         </div>
                         <div class="col-md-2 form-group">
                             <div class='input-group date' id='InputDatePicker'>
@@ -211,10 +211,10 @@
                         </div>
                     </div>
                     <div class="col-xs-12 ">
-                        <div class="col-md-2 text-left">
+                        <div class="col-md-2 text-left hidden">
                             <label class="control-label" for="">Passenger</label>
                         </div>                       
-                        <div class="col-md-2 form-group">
+                        <div class="col-md-2 form-group hidden">
                             <div class="input-group">
                             <input type="hidden" class="form-control" id="PassengerId" name="PassengerId" value=""/>
                             <input type="text" class="form-control" id="PassengerCode" name="PassengerCode" value="" style="background-color: #ffffff">
@@ -223,18 +223,15 @@
                             </span>
                             </div>
                         </div>
-                        <div class="col-md-3 form-group">
+                        <div class="col-md-3 form-group hidden">
                             <input type="text"  class="form-control" id="PassengerName" name="PassengerName"  value="" readonly="">
                         </div>
-                        <div class="col-md-1 text-right">
+                        <div class="col-md-2 text-left">
                             <label class="control-label" for="" >A/R&nbsp;Code<font style="color: red">*</font></label>
                         </div>  
-                        <div class="col-md-2 form-group">
-                            <div class="input-group">
-                                <input type="hidden" class="form-control" id="ARCodeId" name="ARCodeId" value=""/>
-                                <input type="text" class="form-control" id="ARCode" name="ARCode" value="${taxInvoice.arCode}" style="background-color: #ffffff">
-                               
-                            </div>
+                        <div class="col-md-2 form-group" >
+                            <input type="hidden" class="form-control" id="ARCodeId" name="ARCodeId" value=""/>
+                            <input type="text" class="form-control" id="ARCode" name="ARCode" value="${taxInvoice.arCode}" style="background-color: #ffffff">                              
                         </div>
                     </div>    
                                 
@@ -401,10 +398,23 @@
                                             </button>
                                         </div>
                                         <div class="col-md-1 text-right" style="width: 170px">
-                                            <button type="button" class="btn btn-default" onclick="selectEmailType()">
+                                            <c:set var="sendemail" value="" />
+                                            <c:if test="${(taxInvoice.id == '') || (taxInvoice.id == null) }">        
+                                                <c:set var="sendemail" value="disabled='true'" />
+                                            </c:if>
+                                            <button type="button" class="btn btn-default" onclick="selectEmailType()" ${sendemail}>
                                                 <span id="buttonEmail" class="glyphicon glyphicon-send" ></span> SendEmail 
                                             </button>
-                                        </div>        
+                                        </div>
+                                        <div class="col-md-1 text-left" style="width: 170px">
+                                            <c:set var="copy" value="" />
+                                            <c:if test="${(taxInvoice.id == '') || (taxInvoice.id == null) }">        
+                                                <c:set var="copy" value="disabled='true'" />
+                                            </c:if>
+                                            <button type="button" class="btn btn-default" onclick="copyTaxInvoice()" ${copy}>
+                                                <span id="ButtonCopy" class="glyphicon glyphicon-copyright-mark" ></span> Copy 
+                                            </button>
+                                        </div>
                                         <div class="col-md-1 " style="width: 180px"></div>
                                         <div class="col-md-2 text-right">
                                             <c:set var="isDisableVoid" value="disabled='true'" />
@@ -691,6 +701,27 @@
     </div>
 </div>
 
+<!--Copy Tax Invoice Modal-->
+<div class="modal fade" id="CopyTaxInvoiceModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Copy Tax Invoice</h4>
+            </div>
+            <div class="modal-body" id="copyReceiptModal" >
+                <label class="text-right">Are you sure to copy tax invoice ?</label>                                  
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-default" onclick="confirmCopyTaxInvoice()">
+                    <span id="buttonCopyTaxInvoice" class="glyphicon glyphicon-copyright-mark" ></span> Copy
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!--Email Modal-->
 <div class="modal fade" id="EmailTaxInvoiceModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -819,6 +850,14 @@
                             message: 'The A/R Code is required'
                         }
                     }
+                },
+                InvToDate: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        notEmpty: {
+                            message: 'The Invoice Date is required'
+                        }
+                    }
                 }
             }
         });
@@ -921,6 +960,26 @@
         }else if(printType === "taxInvoiceEmail"){
             window.open("report.smi?name=TaxInvoiceEmailReport&taxInvId="+taxInvId+"&department="+department+"&optionPrint="+optionPrint);
         }
+    }
+    
+    function copyTaxInvoice(){
+        var invDate = document.getElementById("InvToDate").value;
+        if(invDate !== ''){
+            $("#CopyTaxInvoiceModal").modal("show");
+        }        
+    }
+    
+    function confirmCopyTaxInvoice(){
+        var row = $('#TaxInvoiceTable tr').length;
+        document.getElementById('TaxInvId').value = '';
+        document.getElementById('TaxInvNo').value = '';
+        document.getElementById('createBy').value = '';
+        document.getElementById('createDate').value = '';
+        for(var i=1;i<row;i++){
+            document.getElementById('taxDetailId' + i).value = '';
+        }
+        $("#CopyTaxInvoiceModal").modal("hide");
+        document.getElementById('TaxInvoiceForm').submit();           
     }
     
     function selectEmailType(){
@@ -1143,11 +1202,11 @@
                                 document.getElementById("ARCode").value = '';
                             }
                             
-                            if((document.getElementById("receiveInvToDate")!==null) && ($("#receiveInvToDate").val()!==undefined)){
-                                document.getElementById("InvToDate").value = $("#receiveInvToDate").val();
-                            } else {
-                                document.getElementById("InvToDate").value = '';
-                            }                          
+//                            if((document.getElementById("receiveInvToDate")!==null) && ($("#receiveInvToDate").val()!==undefined)){
+//                                document.getElementById("InvToDate").value = $("#receiveInvToDate").val();
+//                            } else {
+//                                document.getElementById("InvToDate").value = '';
+//                            }                          
                         }
                         $("#ajaxload").addClass("hidden");
 
@@ -1214,28 +1273,38 @@
         }       
     }
     
-    function AddProduct(id,product,description,amount,currency){
+    function AddProduct(id,product,description,cost,curCost,amount,curAmount,isVat){
         var count = $("#countTaxInvoice").val();
         var row = $("#TaxInvoiceTable tr").length;
-        AddDataRowProduct(row,count,id,product,description,amount,currency);
+        AddDataRowProduct(row,count,id,product,description,cost,curCost,amount,curAmount,isVat);
 
     }
     
-    function AddDataRowProduct(row,count,id,product,description,amount,currency) {
+    function AddDataRowProduct(row,count,id,product,description,cost,curCost,amount,curAmount,isVat) {
         if (!row) {
             row = 1;
         }
-        
+
         $("#invoiceDetailId" + count).val(id);
         $('[name=product' + count + '] option').filter(function() { 
             return ($(this).text() === product);
         }).prop('selected', true);
         $("#description" + count).val(description);
+        $("#cost" + count).val(formatNumber(parseFloat(cost)));
+        $('[name=currencyCost' + count + '] option').filter(function() { 
+            return ($(this).text() === curCost);
+        }).prop('selected', true);
         $("#amount" + count).val(formatNumber(parseFloat(amount)));
         $('[name=currencyAmount' + count + '] option').filter(function() { 
-            return ($(this).text() === currency);
-        }).prop('selected', true);
-        
+            return ($(this).text() === curAmount);
+        }).prop('selected', true);       
+        if (isVat === '1'){
+            $('#isVat'+count).prop('checked', true);
+            var vatData = parseFloat($("#vatDefault").val());
+            document.getElementById('vatShow'+count).innerHTML = formatNumber(vatData);
+            CalculateGross(count);
+        }
+      
         var tempCount = parseInt($("#countTaxInvoice").val()) + 1;
         
         $("#TaxInvoiceTable tbody").append(           
@@ -1317,7 +1386,9 @@
 //            $(this).val(value);
 //        });
         if(row){
-            CalculateGross(row);
+            if(document.getElementById("isVat"+row).checked){
+                CalculateGross(row);
+            }            
         }
     }
     
@@ -1356,7 +1427,7 @@
         
     function toWords(s){
         if(s === 0){
-            var defaultWord = 'zero point zero baht';
+            var defaultWord = '';
             return  defaultWord;
         }
         var th = ['','thousand','million', 'billion','trillion'];
@@ -1391,7 +1462,7 @@
             for (var i=x+1; i<y; i++) str += dg[n[i]] +' ';
         }
         str += ' baht';
-        return str.replace(/\s+/g,' ');
+        return str.replace(/\s+/g,' ').toUpperCase();
     }
     
     function checkRefNo(row){
@@ -1480,6 +1551,7 @@
     
     function clearScreen(){
         $("#department").val("");
+        $("#invoiceNo").val("");
         $("#TaxInvId").val("");
         $("#TaxInvNo").val("");
         $("#InvToDate").val("");
@@ -1655,6 +1727,6 @@
             }             
         }            
         CalculateAmountTotal();   
-    }  
+    }
     
 </script>

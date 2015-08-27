@@ -2,15 +2,9 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */
-// Validator Date From and To
-$(document).ready(function () {
-//    var $stockForm = $("#StockForm");
-   
- });
- 
+ */ 
  function validForm(){
-//     alert("1");
+     alert("1");
       $("#SearchInvoiceForm")
             .bootstrapValidator({
                 framework: 'bootstrap',
@@ -22,37 +16,42 @@ $(document).ready(function () {
                 fields: {
                     FromDate: {
                         trigger: 'focus keyup change',
-                        validators: {
-                            date: {
-                                format: 'YYYY-MM-DD',
-                                max: 'FromDate',
-                                message: 'The Date From is not a valid'
+                            validators: {
+                                notEmpty: {
+                                    message: 'The Date From is required'
+                                },
+                                date: {
+                                    format: 'YYYY-MM-DD',
+                                    max: 'FromDate',
+                                    message: 'The Date From is not a valid'
+                                }
                             }
-                        }
                     },
                     ToDate: {
                         trigger: 'focus keyup change',
-                        validators: {
-                            date: {
-                                format: 'YYYY-MM-DD',
-                                min: 'ToDate',
-                                message: 'The Date To is not a valid'
+                            validators: {
+                                notEmpty: {
+                                    message: 'The Date To is required'
+                                },
+                                date: {
+                                    format: 'YYYY-MM-DD',
+                                    min: 'ToDate',
+                                    message: 'The Date To is not a valid'
+                                }
                             }
-                        }
                     }
                 }
             }).on('success.field.fv', function (e, data) {
-                alert("1");
                 if (data.field === 'FromDate' && data.fv.isValidField('ToDate') === false) {
-                    data.fv.revalidateField('ToDate');
-                }
+                        data.fv.revalidateField('ToDate');
+                    }
 
-                if (data.field === 'ToDate' && data.fv.isValidField('FromDate') === false) {
-                    data.fv.revalidateField('FromDate');
-                }
+                    if (data.field === 'ToDate' && data.fv.isValidField('FromDate') === false) {
+                        data.fv.revalidateField('FromDate');
+                    }
             });
             
-            $('#DateFrom').datetimepicker().on('dp.change', function (e) {
+             $('#DateFrom').datetimepicker().on('dp.change', function (e) {
                 $('#SearchInvoiceForm').bootstrapValidator('revalidateField', 'FromDate');
             });
             $('#DateTo').datetimepicker().on('dp.change', function (e) {
@@ -63,8 +62,8 @@ $(document).ready(function () {
  function search(){
     var action = document.getElementById('action');
     action.value = 'search';
-    validForm();
-    document.getElementById('SearchInvoiceForm').submit();
+//    validForm();
+//    document.getElementById('SearchInvoiceForm').submit();
  }
 function DisableInvoice(){
     var OtherID = document.getElementById('OtherID');

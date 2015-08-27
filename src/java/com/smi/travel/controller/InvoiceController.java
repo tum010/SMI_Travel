@@ -143,7 +143,8 @@ public class InvoiceController extends SMITravelController {
         // Save Invoice And Update
         if("save".equals(action)){
             invoice = setValueInvoice(action, user.getUsername(), invoiceType, invoiceId, invoiceTo, invoiceName, invoiceAddress, isGroup, termPay, dueDate, department, staffCode, staffName, staffId, arCode, remark, invoiceNo, InputInvDate, request,subDepartment);
-            if("okMoney".equals(invoiceService.checkOverflowValueOfInvoice(invoice.getInvoiceDetails()))){
+            String checkOverFlow = invoiceService.checkOverflowValueOfInvoice(invoice.getInvoiceDetails());
+            if("okMoney".equals(checkOverFlow)){
                 result = invoiceService.saveInvoice(invoice);
                 System.out.println("ddddd result : "+result);
                 saveAction(result, invoiceNo, invoice, request);
@@ -378,16 +379,19 @@ public class InvoiceController extends SMITravelController {
                     department = "Outbound";
                 }  
             }
-            
-            if(staffCode != null){
-                staff.setUsername(staffCode);
-            }
-            if(staffName != null){
-                staff.setName(staffName);
-            }
-            if(staffId != null){
+
+            if(staffId != null && !"".equals(staffId)){
                 staff.setId(staffId);
                 invoice.setStaff(staff);
+                if(staffCode != null){
+                    staff.setUsername(staffCode);
+                }
+                if(staffName != null){
+                    staff.setName(staffName);
+                }
+            }else{
+                staff.setId(null);
+                invoice.setStaff(null);
             }
             
             if(arCode != null && !arCode.equals("")){
@@ -401,13 +405,13 @@ public class InvoiceController extends SMITravelController {
                 invoice.setInvNo(invoiceNo);         
             }else{
                 String day[] = new String[2];
-                if("copyInvoice".equals(action)){
+//                if("copyInvoice".equals(action)){
                     day = InputInvDate.split("-");
                     date = utilty.convertStringToDate(InputInvDate);
-                    invoice.setCreateDate(date);
-                }else{
-                    day = createDate.split("-");
-                }
+//                    invoice.setCreateDate(date);
+//                }else{
+//                    day = createDate.split("-");
+//                }
                 SimpleDateFormat df = new SimpleDateFormat();
                 df.applyPattern("MMyy");
                 String month = day[1];

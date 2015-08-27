@@ -58,13 +58,13 @@
                     <div class="panel-body" style="padding-top: 30px">
                         <div class="col-sm-12">
                             <div class="col-xs-1 text-right">
-                                <button style="height: 50px ;width: 120px" type="submit" onclick="sendEmailStatus()" class="form-control btn btn-primary">Send</button>
+                                <button style="height: 50px ;width: 120px" type="submit" id="sendEmailBtn" name="sendEmailBtn" onclick="sendEmailStatus()" class="form-control btn btn-primary">Send</button>
                             </div>
                             <div class="col-xs-1" style="padding: 20px 0px 0px 50px"><i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i></div>
                             <div class="col-xs-10 text-right">
                                 <label class="col-sm-1 control-label text-right">To : </label>
                                 <div class="input-group text-left" >
-                                    <input type="text" class="form-control " id="recipient" name="recipient" size="50" style="width: 200%" value="${requestScope['recipient']}" onkeypress="sendEmailStatusCancel()"> 
+                                    <input type="text" class="form-control " id="recipient" name="recipient" size="50" style="width: 200%" value="${requestScope['recipient']}" onkeypress="sendEmailStatusCancel()" onfocusout="checkEmailTo()"> 
                                 </div>
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                             <div class="col-xs-10 text-right">
                                 <label class="col-sm-2 control-label text-right" style="width: 177px">Cc : </label>
                                 <div class="input-group text-left" >
-                                    <input type="text" class="form-control" id="sendCc" name="sendCc" size="50" style="width: 200%" value="${requestScope['sendCc']}" onkeypress="sendEmailStatusCancel()"> 
+                                    <input type="text" class="form-control" id="sendCc" name="sendCc" size="50" style="width: 200%" value="${requestScope['sendCc']}" onkeypress="sendEmailStatusCancel()" onfocusout="checkEmailCc()"> 
                                 </div>
                             </div>
                         </div>
@@ -202,6 +202,48 @@
     
     function sendEmailStatusCancel(){
         $("#ajaxload").addClass("hidden");
+    }
+
+    function checkEmailTo() {
+        var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        var email = document.getElementById('recipient');
+        var email_list = (email.value).split(',');
+        var recipientField = document.getElementById('recipient');
+        for(var i=0;i<email_list.length;i++){
+            if (!filter.test(email_list[i])) {                 
+                recipientField.style.borderColor = "Red";
+                $("#sendEmailBtn").addClass("disabled");
+                return false;
+            }          
+        }
+        recipientField.style.borderColor = "Green";
+        if(document.getElementById('sendCc').style.borderColor === 'red'){
+            return false;
+        }
+        $("#sendEmailBtn").removeClass("disabled");
+    }               
+
+    function checkEmailCc(){
+        var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        var email = document.getElementById('sendCc');
+        if(email.value === ''){
+            return ;
+        } else {
+            var email_list = (email.value).split(',');
+            var sendCcField = document.getElementById('sendCc');
+            for(var i=0;i<email_list.length;i++){
+                if (!filter.test(email_list[i])) {                 
+                    sendCcField.style.borderColor = "Red";
+                    $("#sendEmailBtn").addClass("disabled");
+                    return false;
+                }          
+            }
+            sendCcField.style.borderColor = "Green";
+            if(document.getElementById('recipient').style.borderColor === 'red'){
+                return false;
+            }
+            $("#sendEmailBtn").removeClass("disabled");
+        }      
     }
 
 </script>

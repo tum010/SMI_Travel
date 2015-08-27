@@ -7,6 +7,7 @@
 package com.smi.travel.datalayer.view.dao.impl;
 import com.smi.travel.datalayer.entity.Invoice;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
+import com.smi.travel.datalayer.report.model.InvoiceMonthly;
 import com.smi.travel.datalayer.report.model.InvoiceReport;
 import com.smi.travel.datalayer.view.dao.InvoiceReportDao;
 import com.smi.travel.util.UtilityFunction;
@@ -82,6 +83,8 @@ public class InvoiceImpl implements InvoiceReportDao{
             invoice.setInvto(util.ConvertString(B[0]));
             invoice.setInvno(util.ConvertString(B[13]));
             invoice.setBankid(BankId);
+            invoice.setTaxid(util.ConvertString(B[14]));
+            invoice.setTaxbranch(util.ConvertString(B[15]));
             if(B[1] != null){
                 invoice.setInvdate(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format((Date)B[1]));
             }
@@ -163,6 +166,87 @@ public class InvoiceImpl implements InvoiceReportDao{
 
     public void setUtilityFunction(UtilityFunction utilityFunction) {
         this.utilityFunction = utilityFunction;
+    }
+
+    @Override
+    public List getInvoiceMonthly(String BillFrom, String BillTo, String Payment, String Accno, String vattype, String from, String to, String department) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();  
+        Date thisdate = new Date();
+        List data = new ArrayList();
+        
+        String query = "SELECT * FROM `invoice_monthly_view` invm Where";
+        int checkQuery = 0;
+        String prefix ="";
+        if(((from != null) &&(!"".equalsIgnoreCase(from))) &&((to != null) &&(!"".equalsIgnoreCase(to)))){
+             query += " invm.invdate >= '" +from +"' and invm.invdate <= '"+to +"' ";
+             checkQuery = 1;
+        }else if((from != null) &&(!"".equalsIgnoreCase(from))){
+             checkQuery = 1;
+             query +=  " invm.invdate >= '" +from +"'";   
+        }else if((to != null) &&(!"".equalsIgnoreCase(to))){
+             checkQuery = 1;
+             query += " invm.invdate <= '" +to +"'";
+        }
+         
+         
+         if((BillTo != null) &&(!"".equalsIgnoreCase(BillTo))){
+             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+             query += prefix+" invm.invname = '"+BillTo+"'";
+         }
+         if((vattype != null) &&(!"".equalsIgnoreCase(vattype))){
+             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+             query += prefix+" invm.type = '"+vattype+"'";
+         }
+         if((department != null) &&(!"".equalsIgnoreCase(department))){
+             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+             query += prefix+" invm.department = '"+department+"'";
+         }
+         
+        
+        if(checkQuery == 0){query = query.replaceAll("Where", "");}
+         System.out.println("query : "+query);
+         
+        List<Object[]> QueryInvoiceMounthList = session.createSQLQuery(query)      
+                .addScalar("invname", Hibernate.STRING)
+                .addScalar("invno", Hibernate.STRING)
+                .addScalar("invdate", Hibernate.DATE)
+                .addScalar("detail", Hibernate.STRING)
+                .addScalar("thb", Hibernate.BIG_DECIMAL)
+                .addScalar("jpy", Hibernate.BIG_DECIMAL)
+                .addScalar("usd", Hibernate.BIG_DECIMAL)
+                .addScalar("department", Hibernate.STRING)
+                .addScalar("recno", Hibernate.STRING)
+                .addScalar("recamt", Hibernate.BIG_DECIMAL)
+                .addScalar("type", Hibernate.STRING)
+                .list();
+        
+        for (Object[] B : QueryInvoiceMounthList) {
+            InvoiceMonthly invM = new InvoiceMonthly();
+            
+            invM.setSystemdate(util.SetFormatDate(thisdate, "dd MMM yyyy hh:mm:ss"));
+            invM.setAccno(Accno);
+            invM.setBillfrom(BillFrom);
+            invM.setBillto(BillTo);
+            invM.setDepartment(util.ConvertString(B[7]));
+            invM.setDetail(util.ConvertString(B[3]));
+            invM.setHeaddepartment(department);
+            invM.setInvdate(util.SetFormatDate(thisdate, "dd MMM yyyy"));
+            invM.setInvname(util.ConvertString(B[0]));
+            invM.setInvno(util.ConvertString(B[1]));
+            invM.setJpy(util.setFormatMoney(B[5]));
+            invM.setThb(util.setFormatMoney(B[4]));
+            invM.setUsd(util.setFormatMoney(B[6]));
+            invM.setPayment(Payment);
+            invM.setRecamt(util.setFormatMoney(B[9]));
+            invM.setRecno(util.setFormatMoney(B[8]));
+            invM.setType(vattype);
+            data.add(invM);
+        }
+        
+        session.close();
+        this.sessionFactory.close();
+        return data;
     }
   
 }
