@@ -165,7 +165,7 @@
                                             </select>
                                         </td>
                                         <td style="text-align:center"><input type="text" name="taxAmount" class="form-control text-right decimal" value="${creditNoteDetail.amount}"/></td>
-                                        <td style="text-align:center"><input type="text" name="taxReal" class="form-control text-right decimal" value="${creditNoteDetail.realAmount}"/></td>
+                                        <td style="text-align:center"><input type="text" name="taxReal" class="form-control text-right decimal" value="${creditNoteDetail.realamount}"/></td>
                                         <td style="text-align:center"><input type="text" name="taxVat" class="form-control text-right decimal" value="${creditNoteDetail.vat}" readonly/></td>
                                         <td style="text-align:center"><input type="text" name="taxDesc" class="form-control" value="${creditNoteDetail.description}"/></td>
                                         <td class="text-center">

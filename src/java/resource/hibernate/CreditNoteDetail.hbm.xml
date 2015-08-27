@@ -22,9 +22,6 @@
         <property name="amount" type="big_decimal">
             <column name="amount" precision="10" />
         </property>
-        <property name="realAmount" type="big_decimal">
-            <column name="real_amount" precision="10" />
-        </property>
         <property name="vat" type="big_decimal">
             <column name="vat" precision="10" />
         </property>

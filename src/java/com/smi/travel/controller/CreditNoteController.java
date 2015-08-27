@@ -164,7 +164,7 @@ public class CreditNoteController extends SMITravelController {
                     cnd.setAmount(new BigDecimal(uf.StringUtilReplaceChar(taxAmount[i])));
                 }
                 if (taxReal[i] != null && !taxReal[i].equals("")) {
-                    cnd.setRealAmount(new BigDecimal(uf.StringUtilReplaceChar(taxReal[i])));
+                    cnd.setRealamount(new BigDecimal(uf.StringUtilReplaceChar(taxReal[i])));
                 }
                 if (taxVat[i] != null && !taxVat[i].equals("")) {
                     cnd.setVat(new BigDecimal(uf.StringUtilReplaceChar(taxVat[i])));
