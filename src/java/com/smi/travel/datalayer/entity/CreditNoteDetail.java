@@ -93,12 +93,6 @@ public class CreditNoteDetail  {
 
     public void setRealamount(BigDecimal realamount) {
         this.realamount = realamount;
-
-    /**
-     * @param realAmount the realAmount to set
-     */
-    public void setRealAmount(BigDecimal realAmount) {
-        this.realAmount = realAmount;
     }
 
 
