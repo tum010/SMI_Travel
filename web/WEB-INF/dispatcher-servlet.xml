@@ -129,6 +129,7 @@
                                 <prop key="CreditNoteO.smi">CreditNoteController</prop>
                                 <prop key="CreditNoteI.smi">CreditNoteController</prop>
                                 <prop key="SearchCreditNote.smi">SearchCreditNoteController</prop>
+                                <prop key="InvoiceMonthly.smi">InvoiceMonthlyController</prop>
 				<!-- add mapping url -->
 			</props>
 		</property>
@@ -555,27 +556,31 @@
         
      
 
+    <bean id="InvoiceMonthlyController" class="com.smi.travel.controller.InvoiceMonthlyController">
+        
+    </bean>
 	<!-- add bean id controller -->
 
 	<bean id="monitorGalileo" class="com.smi.travel.monitor.MonitorGalileo"
 		init-method="init">
 		<constructor-arg index="0" type="java.lang.String">
-			<!--<value>C:/Users/Administrator/Desktop/PNR/galileo/</value> -->
-			 <value>D:/iCONEXT/SMI/PNR/gali/</value> 
+			<value>C:/Users/Administrator/Desktop/PNR/galileo/</value> 
+<!--			 <value>D:/iCONEXT/SMI/PNR/gali/</value> -->
 			 <!--<value>S:/BackupPNR/</value>--> 
 		</constructor-arg>
 		<constructor-arg index="1" type="java.lang.String">
-			<!--<value>C:/Users/Administrator/Desktop/PNR/galileo/archived/</value> -->
-			 <value>D:/iCONEXT/SMI/PNR/archived/</value> 
+			<value>C:/Users/Administrator/Desktop/PNR/galileo/archived/</value> 
+<!--			 <value>D:/iCONEXT/SMI/PNR/archived/</value> -->
 			 <!--<value>S:/BackupPNR/archived/</value>-->
 		</constructor-arg>
 		<constructor-arg index="2" type="java.lang.String">
-			<!--<value>C:/Users/Administrator/Desktop/PNR/galileo/error/</value>-->
-			 <value>D:/iCONEXT/SMI/PNR/error/</value> 
+			<value>C:/Users/Administrator/Desktop/PNR/galileo/error/</value>
+<!--			 <value>D:/iCONEXT/SMI/PNR/error/</value> -->
 			 <!--<value>S:/BackupPNR/error/</value>--> 
 		</constructor-arg>
 		<constructor-arg index="3" type="java.lang.String">
-			 <value>D:/iCONEXT/SMI/PNR/swap/</value> 
+<!--			 <value>D:/iCONEXT/SMI/PNR/swap/</value> -->
+                         <value>C:/Users/Administrator/Desktop/PNR/galileo/swap/</value> 
 		</constructor-arg>
 		<property name="mGalileoService" ref="MGalileoService" />
 		<property name="mAirticketService" ref="MAirticketService" />
@@ -585,32 +590,33 @@
 	<bean id="monitorAmadeus" class="com.smi.travel.monitor.MonitorAmadeus"
 		init-method="init">
 		<constructor-arg index="0" type="java.lang.String">
-			<!--<value>C:/Users/Administrator/Desktop/PNR/amadeus/</value>-->
-			 <value>D:/iCONEXT/SMI/PNR/ama/</value> 
+			<value>C:/Users/Administrator/Desktop/PNR/amadeus/</value>
+<!--			 <value>D:/iCONEXT/SMI/PNR/ama/</value> -->
 			 <!--<value>T:/BackupPNR/</value>--> 
 		</constructor-arg>
 		<constructor-arg index="1" type="java.lang.String">
-		<!--	<value>C:/Users/Administrator/Desktop/PNR/amadeus/archived/</value> -->
-			 <value>D:/iCONEXT/SMI/PNR/archived/</value> 
+			<value>C:/Users/Administrator/Desktop/PNR/amadeus/archived/</value> 
+<!--			 <value>D:/iCONEXT/SMI/PNR/archived/</value> -->
 			 <!--<value>T:/BackupPNR/archived/</value>--> 
 		</constructor-arg>
 		<constructor-arg index="2" type="java.lang.String">
-			<!--<value>C:/Users/Administrator/Desktop/PNR/amadeus/error/</value>-->
-			 <value>D:/iCONEXT/SMI/PNR/error/</value> 
+			<value>C:/Users/Administrator/Desktop/PNR/amadeus/error/</value>
+<!--			 <value>D:/iCONEXT/SMI/PNR/error/</value> -->
 			 <!--<value>T:/BackupPNR/error/</value>--> 
 		</constructor-arg>
 		<constructor-arg index="3" type="java.lang.String">
-			 <value>D:/iCONEXT/SMI/PNR/swap/</value> 
+<!--			 <value>D:/iCONEXT/SMI/PNR/swap/</value> -->
+                         <value>C:/Users/Administrator/Desktop/PNR/amadeus/swap/</value> 
 		</constructor-arg>
 		<property name="mAmadeusService" ref="MAmadeusService" />
 		<property name="mAirticketService" ref="MAirticketService" />
 		<property name="bookingAirticketService" ref="BookingAirticket" />
 	</bean>
 
-<!--        <task:scheduled-tasks> 
+        <task:scheduled-tasks> 
             <task:scheduled ref="monitorAmadeus" method="run" fixed-delay="5000" /> 
             <task:scheduled ref="monitorGalileo" method="run" fixed-delay="5000" /> 
-        </task:scheduled-tasks>  -->
+        </task:scheduled-tasks>  
 
 	<bean id="MProductTypeController"
 		class="com.smi.travel.masterdata.controller.MProductTypeController">

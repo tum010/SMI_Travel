@@ -12,6 +12,7 @@
 <c:set var="ListItemStatus" value="${requestScope['ListItemStatus']}" />
 <c:set var="itemStatus" value="${requestScope['itemStatus']}" />
 <c:set var="payStatus" value="${requestScope['payStatus']}" />
+<c:set var="expire" value="${requestScope['expire']}" />
 
 <section class="content-header" >
     <h1>
@@ -115,9 +116,27 @@
             </div>
         </div><!-- End Row 2-->
         <div class="row" >
-            <div class="col-xs-12"  style="padding-right:36px;">
-                <div class="col-md-10 text-right"></div>
-                <div class="col-md-2 text-right">
+            <c:set var="expireStockShow" value="" />
+            <c:set var="expireStockNotShow" value="checked" />
+                <c:if test="${expire == '1'}">
+                    <c:set var="expireStockShow" value="checked" />
+                    <c:set var="expireStockNotShow" value="" />
+                </c:if>
+                <c:if test="${expire == '0'}">
+                    <c:set var="expireStockNotShow" value="checked" />
+                    <c:set var="expireStockShow" value="" />
+                </c:if>
+            <div class="col-xs-12" >
+                <div class="col-md-1 text-right" style="padding-left: 20px;width: 130px;">
+                    <label class="control-label">Expire </lable>
+                </div>
+                <div class="col-md-2 text-left" style="width: 120px;padding-top: 6px;">
+                    <input type="radio" name="SelectExpire" id="SelectExpireNotShow" value="0" ${expireStockNotShow}> Not Show
+                </div>
+                <div class="col-md-7 text-left" style="padding-left: 0px;padding-top: 6px;" >
+                    <input type="radio" name="SelectExpire" id="SelectExpireShow" value="1" ${expireStockShow}> Show
+                </div>
+                <div class="col-md-2 text-right" style="padding-right: 30px;">
                     <input type="hidden" name="action" id="action">
                     <button type="button"  id="ButtonSearch"  name="ButtonSearch" onclick="searchAction()" class="btn btn-primary" style="width: 100px;">
                         <span id="SpanSearch" class="glyphicon glyphicon-search"></span> Search

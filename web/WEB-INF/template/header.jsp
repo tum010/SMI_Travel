@@ -90,7 +90,8 @@
 									"<li><a href='AirTicketMonthReport.smi'> AirTicket</a></li>",
 									"<li><a href='HotelSumReport.smi'> Hotel</a></li>",
 									"<li><a href=''>Land</a></li>",
-									"<li><a href=''>Others</a></li>" ];
+									"<li><a href=''>Others</a></li>",
+                                                                        "<li><a href='InvoiceMonthly.smi'>Finance And Account</a></li>"];
 							var CheckingMenu = [
 									"<li><a href='PaymentTourHotel.smi'> PackageTour/Hotel </a></li>",
 									"<li><a href='AddTicketFare.smi'> AirTicket </a></li>",
