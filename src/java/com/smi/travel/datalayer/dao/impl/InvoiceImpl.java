@@ -51,9 +51,9 @@ public class InvoiceImpl implements InvoiceDao{
         Session session = this.sessionFactory.openSession();
         try { 
             transaction = session.beginTransaction();
-            result = generateInvoiceNo(invoice.getDepartment() , invoice.getInvType());
-//            result = invoice.getInvNo();
-            invoice.setInvNo(result);
+//            result = generateInvoiceNo(invoice.getDepartment() , invoice.getInvType());
+            result = invoice.getInvNo();
+//            invoice.setInvNo(result);
             session.save(invoice);
             List<InvoiceDetail> invoiceDetail = invoice.getInvoiceDetails();
             if(invoiceDetail != null){
@@ -149,7 +149,7 @@ public class InvoiceImpl implements InvoiceDao{
     }
         
     @Override
-    public String updateInvoice(Invoice invoice) {
+    public synchronized String updateInvoice(Invoice invoice) {
         String result = "";
         try {
             Session session = this.sessionFactory.openSession();
@@ -178,7 +178,7 @@ public class InvoiceImpl implements InvoiceDao{
     }
 
     @Override
-    public String deleteInvoice(Invoice invoice) {
+    public synchronized String deleteInvoice(Invoice invoice) {
         List<InvoiceDetail> invoiceDetailList = new LinkedList<InvoiceDetail>();
         String result = "";
         try {
@@ -593,6 +593,7 @@ public class InvoiceImpl implements InvoiceDao{
     public String checkOverflowValueOfInvoice(List<InvoiceDetail> invoiceDetail) {
         Session session = this.sessionFactory.openSession();
         String result = "";
+        if(invoiceDetail != null && invoiceDetail.size() != 0){
         for(int i=0;i<invoiceDetail.size();i++){
             BigDecimal cost;
             BigDecimal price;
@@ -629,15 +630,20 @@ public class InvoiceImpl implements InvoiceDao{
                 InvoiceCost = InvoiceCost.add(detail.getCost());
                 System.out.println("SumInvoiceCost : "+InvoiceCost +"SumInvoicePrice : "+InvoicePrice);
                 System.out.println("Compare price : "+price.compareTo(InvoicePrice));
-                if((price.compareTo(InvoicePrice) == -1)||(cost.compareTo(InvoiceCost) == -1)){
-                    result = "moreMoney";
+                    if((price.compareTo(InvoicePrice) == -1)||(cost.compareTo(InvoiceCost) == -1)){
+                        result = "moreMoney";
+                    }else{
+                        result = "okMoney";
+                    }
                 }else{
                     result = "okMoney";
-                }
                 }
             }else{
                 result = "okMoney";
             }
+        }
+        }else{
+            result = "okMoney";
         }
         this.sessionFactory.close();
         session.close();

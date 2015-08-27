@@ -407,7 +407,7 @@
                                                     </select>
                                                 </td>
                                                 <td> 
-                                                    <a href="" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail('${taxdesc.count}')">${ind.description}</a>                                           
+                                                    <input type="text" class="form-control" id="BillDescriptionTemp${taxdesc.count}" name="BillDescriptionTemp${taxdesc.count}" value="${ind.description}" >                                           
                                                 </td>
                                                 <td class="hidden"><input type="text" class="form-control" id="BillDescription${taxdesc.count}" name="BillDescription${taxdesc.count}" value="${ind.description}" > </td>
                                                 <td><input type="text" maxlength ="15" class="form-control numerical" id="InputCost${taxdesc.count}" name="InputCost${taxdesc.count}" value="${ind.cost}" ></td>
@@ -451,7 +451,10 @@
                                                 </td>
                                                 <td><input type="text" value="${ind.amount}" id="InputAmountLocal${taxdesc.count}" name="InputAmountLocal${taxdesc.count}" class="form-control" ></td>
                                                 <td class="hidden"><input type="text" value="${ind.amount}" id="InputAmountLocalTemp${taxdesc.count}" name="InputAmountLocalTemp${taxdesc.count}"  ></td>
-                                                <td align="center" ><center><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('${taxdesc.count}',${ind.description})" data-toggle="modal" data-target="#DelDetailBill" >  </span></center></td>
+                                                <td align="center" >
+                                                    <span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('${taxdesc.count}','${ind.description}')" data-toggle="modal" data-target="#DelDetailBill" >  </span>
+                                                    <a href="" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail('${taxdesc.count}')" id="InputDescription${taxdesc.count}"><span  class="glyphicon glyphicon-file"></span></a>                
+                                                </td>
                                                 <td class="hidden">
                                                     <c:set var="displayDescriptionTemp" value="${fn:trim(ind.displayDescription)}" />
                                                     <textarea id="DescriptionInvoiceDetail${taxdesc.count}" name="DescriptionInvoiceDetail${taxdesc.count}" >
@@ -508,7 +511,7 @@
                                                     </select>
                                                 </td>
                                                 <td> 
-                                                    <a href="" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail('${taxdesc.count}')" id="InputDescription${taxdesc.count}">${ind.description}</a>                                           
+                                                    <input type="text" class="form-control" id="BillDescriptionTemp${taxdesc.count}" name="BillDescriptionTemp${taxdesc.count}" value="${ind.description}" >                                           
                                                 </td>
                                                 <td class="hidden"><input type="text" class="form-control" id="BillDescription${taxdesc.count}" name="BillDescription${taxdesc.count}" value="${ind.description}" > </td>
                                                 <td><input type="text" maxlength ="15" class="form-control numerical" id="InputCost${taxdesc.count}" name="InputCost${taxdesc.count}" value="${ind.cost}" ></td>
@@ -552,7 +555,10 @@
                                                 </td>
                                                 <td><input type="text" value="${ind.amount}" id="InputAmountLocal${taxdesc.count}" name="InputAmountLocal${taxdesc.count}" class="form-control" ></td>
                                                 <td class="hidden"><input type="text" value="${ind.amount}" id="InputAmountLocalTemp${taxdesc.count}" name="InputAmountLocalTemp${taxdesc.count}"  ></td>
-                                                <td align="center" ><center><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('${taxdesc.count}')" data-toggle="modal" data-target="#DelDetailBill" >  </span></center></td>
+                                                <td align="center" >
+                                                    <span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('${taxdesc.count}','${ind.description}')" data-toggle="modal" data-target="#DelDetailBill" >  </span>
+                                                    <a href="" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail('${taxdesc.count}')" id="InputDescription${taxdesc.count}"><span  class="glyphicon glyphicon-file"></span></a>                
+                                                </td>
                                                 <td class="hidden">
                                                     <c:set var="displayDescriptionTemp" value="${fn:trim(ind.displayDescription)}" />
                                                     <textarea id="DescriptionInvoiceDetail${taxdesc.count}" name="DescriptionInvoiceDetail${taxdesc.count}" >${fn:trim(displayDescriptionTemp)}</textarea>
@@ -681,7 +687,7 @@
                                             </button>
                                         </div>
                                         <div class="col-md-1 text-right ">
-                                            <button type="submit" onsubmit="return validFromInvoice()" id="saveInvoice" name="saveInvoice" class="btn btn-success" ${isSaveVoid}>
+                                            <button type="submit" onsubmit="return validFromInvoice();" id="saveInvoice" name="saveInvoice" class="btn btn-success" ${isSaveVoid}>
                                                 <span id="SpanSave" class="fa fa-save"></span> Save 
                                             </button>
                                         </div>

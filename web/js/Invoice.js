@@ -188,69 +188,86 @@
  function searchInvoice(){
      
  }
- 
+
+var currency = 0;
 function validFromInvoice(){
-    // Validator Date From and To 
-    $("#InvoiceForm")
-    .bootstrapValidator({
-        framework: 'bootstrap',
-        feedbackIcons: {
-            valid: 'uk-icon-check',
-            invalid: 'uk-icon-times',
-            validating: 'uk-icon-refresh'
-        },
-        fields: {                
-            InvTo : {
-                trigger: 'focus keyup change',
-                validators: {
-                    notEmpty: {
-                        message: 'Input Invoice To'
-                    }
-                }
+    // Validator Date From and To
+    var result = checkCurrencyCost();
+    if(result === true){
+        $("#InvoiceForm")
+        .bootstrapValidator({
+            framework: 'bootstrap',
+            feedbackIcons: {
+                valid: 'uk-icon-check',
+                invalid: 'uk-icon-times',
+                validating: 'uk-icon-refresh'
             },
-            InvToName : {
-                trigger: 'focus keyup change',
-                validators: {
-                    notEmpty: {
-                        message: 'Input Invoice To Name'
+            fields: {                
+                InvTo: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        notEmpty: {
+                            message: 'Input Invoice To'
+                        }
                     }
-                }
-            },ARCode : {
-                trigger: 'focus keyup change',
-                validators: {
-                    notEmpty: {
-                        message: 'Input A/R Code'
+                },
+                InvToName: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        notEmpty: {
+                            message: 'Input Invoice To Name'
+                        }
                     }
-                }
-            },InputInvDate : {
-                trigger: 'focus keyup change',
-                validators: {
-                    notEmpty: {
-                        message: 'Input Invoice Date'
+                },
+                ARCode: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        notEmpty: {
+                            message: 'Input A/R Code'
+                        }
                     }
-                }
-            }
-            
-        }  
-    });
-    
-    checkCurrencyCost();
+                },
+                InputInvDate: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        notEmpty: {
+                            message: 'Input Invoice Date'
+                        }
+                    }
+                } 
+            }  
+        });
+        return true;
+//                .on('err.form.fv', function(e) {
+//            checkCurrencyCost
+//        });
+//        var action = document.getElementById('action');
+//        action.value = 'save';
+//        document.getElementById('InvoiceForm').submit();
+    }else if(result === false){
+        alert("Stop");
+        return false;
+    }
+//    checkCurrencyCost();
 }
 
 function checkCurrencyCost(){
+//    alert("check");
     var counter = $('#DetailBillableTable tbody tr').length;
     var different = 0;
+    var rowTemp = 0;
     for(var i=1 ; i <= (counter-1);i++){
         var currency1 = $('#SelectCurrencyAmount' +i).find(":selected").text();
         for(var j=2;j<=(counter-1);j++){
             var currency2 = $('#SelectCurrencyAmount' +j).find(":selected").text();
             if(currency1 !== currency2){
+                rowTemp = j;
                 different++;
             }
         }
     }
 //                alert("Heeee : " + different);
-    if(different>0){          
+    if(different > 0){          
         $('#DetailBillableTable').find('tr').each(function () { 
             $(this).find('td').each(function () { 
                 if ($(this).hasClass('priceCurrencyAmount')) {
@@ -259,7 +276,9 @@ function checkCurrencyCost(){
             });
         });    
         $('#textAlertCurrency').show();
-        $('#InvoiceForm').bootstrapValidator('revalidateField', '');
+        currency = 1;
+        alert("Currency : " + currency); 
+//        $('#InvoiceForm').bootstrapValidator('validateField', 'SelectCurrencyAmount2'+rowTemp);
         return false;
     } else {
          $('#DetailBillableTable').find('tr').each(function () { 
@@ -270,8 +289,10 @@ function checkCurrencyCost(){
             });
         });
         $('#textAlertCurrency').hide();
+        currency = 0;
         return true;
-    }    
+    } 
+
 }
 
 var isDuplicateInvoiceDetail = 0;
@@ -330,7 +351,7 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur){
             '<td class="hidden"><input type="text" class="form-control" id="detailId' + row + '" name="detailId' + row + '" value="" > </td>' +
             '<td class="hidden"><input type="text" class="form-control" id="DetailBillId' + row + '" name="DetailBillId' + row + '" value="'+id+'" > </td>' +
             '<td><select id="SelectProductType' + row + '" name="SelectProductType' + row + '" class="form-control">'+ selectT +'</select> </td>' +
-            '<td><a href="" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail('+row+')" id="InputDescription' + row + '">'+ des + ' : ' + RefNo +'</a> </td>' +
+            '<td><input type="text" class="form-control" id="BillDescriptionTemp' + row + '" name="BillDescriptionTemp' + row + '" value="'+des +'" ></td>' +
             '<td class="hidden"><input type="text" class="form-control" id="BillDescription' + row + '" name="BillDescription' + row + '" value="'+des +'" > </td>' +
             '<td><input  maxlength ="15" type="text" onfocusout="changeFormatCostNumber(' + row + ')" class="form-control numerical" id="InputCost' + row + '" name="InputCost' + row + '" value="'+ cos +'" ></td>' +
             '<td><select id="SelectCurrencyCost' + row + '" name="SelectCurrencyCost' + row + '" class="form-control">'+ selectC +'</select></td>' +
@@ -344,7 +365,7 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur){
             '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control">'+ selectC +'</select></td>'+
             '<td><input type="text" onfocusout="changeFormatAmountLocalNumber(' + row + ')" value="'+price +'" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control" ></td>'+
             '<td class="hidden"><input type="text" onfocusout="changeFormatAmountLocalTempNumber(' + row + ')" value="'+price +'" id="InputAmountLocalTemp' + row + '" name="InputAmountLocalTemp' + row + '"  ></td>'+
-            '<td align="center" ><center><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('+row+',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span></center>'+
+            '<td align="center" ><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('+row+',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span><a href="" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"><span  class="glyphicon glyphicon-file"></span></a></td>'+
             '<td class="hidden"><textarea id="DescriptionInvoiceDetail' + row + '" name="DescriptionInvoiceDetail' + row + '"> '+ description +'</textarea> </td>'+
             '</tr>'
         );
@@ -354,7 +375,7 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur){
             '<td class="hidden"><input type="text" class="form-control" id="detailId' + row + '" name="detailId' + row + '" value="" > </td>' +
             '<td class="hidden"><input type="text" class="form-control" id="DetailBillId' + row + '" name="DetailBillId' + row + '" value="'+id+'" > </td>' +
             '<td><select id="SelectProductType' + row + '" name="SelectProductType' + row + '" class="form-control">'+ selectT +'</select> </td>' +
-            '<td><a href="" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail('+row+')" id="InputDescription' + row + '">NEW</a> </td>' +
+            '<td><input type="text" class="form-control" id="BillDescriptionTemp' + row + '" name="BillDescriptionTemp' + row + '" value="'+des +'" ></td>' +
             '<td class="hidden"><input type="text" class="form-control" id="BillDescription' + row + '" name="BillDescription' + row + '" value="'+des +'" > </td>' +
             '<td><input  maxlength ="15" type="text" onfocusout="changeFormatCostNumber(' + row + ')" class="form-control numerical" id="InputCost' + row + '" name="InputCost' + row + '" value="'+ cos +'" ></td>' +
             '<td><select id="SelectCurrencyCost' + row + '" name="SelectCurrencyCost' + row + '" class="form-control">'+ selectC +'</select></td>' +
@@ -368,7 +389,7 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur){
             '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control">'+ selectC +'</select></td>'+
             '<td><input type="text" onfocusout="changeFormatAmountLocalNumber(' + row + ')" value="'+price +'" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control" ></td>'+
             '<td class="hidden"><input type="text" onfocusout="changeFormatAmountLocalTempNumber(' + row + ')" value="'+price +'" id="InputAmountLocalTemp' + row + '" name="InputAmountLocalTemp' + row + '"  ></td>'+
-            '<td align="center" ><center><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('+row+',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span></center>'+
+            '<td align="center" ><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('+row+',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span><a href="" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"><span  class="glyphicon glyphicon-file"></span></a></td>'+
             '<td class="hidden"><textarea id="DescriptionInvoiceDetail' + row + '" name="DescriptionInvoiceDetail' + row + '"> '+ description +'</textarea> </td>'+
             '</tr>'
         );
@@ -388,8 +409,8 @@ function getDescriptionDetail(row){
 function saveDescriptionDetail(){
     var row = $('#InputDescriptionDetailId').val();
     var descriptionDetail = $('#InputDescriptionDetail').val();
-    $('#BillDescription'+row).val(descriptionDetail);
-    subStringDescription(descriptionDetail,row);
+//    $('#BillDescription'+row).val(descriptionDetail);
+//    subStringDescription(descriptionDetail,row);
     console.log("Detail : "+$('#InputDescriptionDetail').val());
     $('#DescriptionInvoiceDetail'+row).html(descriptionDetail);
 }
@@ -399,11 +420,11 @@ function subStringDescription(description,row){
     console.log("Product :" + product);
     var des = description.substring(0,index);
     console.log("description :" + description);
-    if(index === -1){
-        $('#InputDescription'+row).html(description +" >> "+product);
-    }else{
-        $('#InputDescription'+row).html(des +" >> "+product);
-    }
+//    if(index === -1){
+//        $('#BillDescriptionTemp'+row).val(description +" >> "+product);
+//    }else{
+//        $('#BillDescriptionTemp'+row).val(des +" >> "+product);
+//    }
 }
 function changeFormatAmountNumber(id){
     var count  = parseFloat(document.getElementById('InputAmount'+id).value);
@@ -468,7 +489,7 @@ function changeFormatGrossNumber(id){
 function DeleteDetailBill(rowID,code){
     $("#idDeleteDetailBillable").val(rowID);
     if(code !== ""){
-        $("#DeleteDetailBillable").text('Are you sure to delete detail billable Code :'+ code +'..?');
+        $("#DeleteDetailBillable").text('Are you sure to delete detail billable : '+ code +'..?');
     }else{
         $("#DeleteDetailBillable").text('Are you sure to delete detail billable ?');
     }
@@ -815,7 +836,8 @@ function addInvoiceDetail(rowId){
             var cos = $(this).find("td").eq(5).html();
             var price = $(this).find("td").eq(6).html(); 
             var cur = $(this).find("td").eq(7).html();
-            //checkDuplicateInvoiceDetail(id,rowId);
+            checkDuplicateInvoiceDetail(id,rowId);
+            console.log("Duplicate : " + isDuplicateInvoiceDetail);
             if(isDuplicateInvoiceDetail === 0){
                 $("#DetailBillableTable tr:last").remove(); 
                 // Search Description
