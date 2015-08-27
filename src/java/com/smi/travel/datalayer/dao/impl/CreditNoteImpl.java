@@ -130,7 +130,7 @@ public class CreditNoteImpl implements CreditNoteDao {
     }
 
     @Override
-    public String UpdateFinanceStatusCreditNote(String CNId, int status) {
+    public String UpdateFinanceStatusCreditNote(String CNId, String status) {
 
         String result = "";
         try {
@@ -142,7 +142,7 @@ public class CreditNoteImpl implements CreditNoteDao {
             }
             CreditNote dbCreditNote = cnList.get(0);
             MFinanceItemstatus itemStatus = new MFinanceItemstatus();
-            itemStatus.setId("1");
+            itemStatus.setId(status);
             dbCreditNote.setMFinanceItemstatus(itemStatus);
             session.update(dbCreditNote);
             transaction.commit();
@@ -170,19 +170,18 @@ public class CreditNoteImpl implements CreditNoteDao {
         this.sessionFactory = sessionFactory;
     }
 
-    public String gennarateTaxInvoiceNo() {
+    public String gennarateTaxInvoiceNo(Date createDate) {
         String cnNo = "";
         Session session = this.sessionFactory.openSession();
         List<CreditNote> list = new ArrayList<CreditNote>();
-        Date thisdate = new Date();
         SimpleDateFormat df = new SimpleDateFormat();
         df.applyPattern("yyMM");
         Query query = session.createQuery("from CreditNote c where c.cnNo Like :cnNo Order by c.cnNo desc  LIMIT 1");
-        query.setParameter("cnNo", "%" + df.format(thisdate) + "%");
+        query.setParameter("cnNo", "%" + df.format(createDate) + "%");
         query.setMaxResults(1);
         list = query.list();
         if (list.isEmpty()) {
-            cnNo = df.format(thisdate) + "-" + "0001";
+            cnNo = df.format(createDate) + "-" + "0001";
         } else {
             cnNo = String.valueOf(list.get(0).getCnNo());
             if (!cnNo.equalsIgnoreCase("")) {
@@ -192,7 +191,7 @@ public class CreditNoteImpl implements CreditNoteDao {
                 for (int i = temp.length(); i < 4; i++) {
                     temp = "0" + temp;
                 }
-                cnNo = df.format(thisdate) + "-" + temp;
+                cnNo = df.format(createDate) + "-" + temp;
             }
         }
         session.close();

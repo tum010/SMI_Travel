@@ -16,6 +16,7 @@ public class CreditNoteDetail  {
      private CreditNote creditNote;
      private String description;
      private BigDecimal amount;
+     private BigDecimal realAmount;
      private BigDecimal vat;
 
     public CreditNoteDetail() {
@@ -83,6 +84,20 @@ public class CreditNoteDetail  {
 
     public void setVat(BigDecimal vat) {
         this.vat = vat;
+    }
+
+    /**
+     * @return the realAmount
+     */
+    public BigDecimal getRealAmount() {
+        return realAmount;
+    }
+
+    /**
+     * @param realAmount the realAmount to set
+     */
+    public void setRealAmount(BigDecimal realAmount) {
+        this.realAmount = realAmount;
     }
 
 
