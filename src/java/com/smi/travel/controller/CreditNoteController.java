@@ -10,6 +10,7 @@ import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,16 +33,17 @@ public class CreditNoteController extends SMITravelController {
         request.setAttribute("disableVoid", false);
         System.out.println("request.getRequestURI() :" + request.getRequestURI());
         String callPageFrom = utilty.getAddressUrl(request.getRequestURI()).replaceAll(LINKNAME, "");//request.getParameter("type");
-        String Department = "";
+        String department = "";
         if (callPageFrom != null) {
-            Department = callPageFrom;
+            department = callPageFrom;
         }
-
         String action = request.getParameter("action");
         String creditNo = request.getParameter("cnNo");
+        SystemUser user = (SystemUser) session.getAttribute("USER");
+        
         if ("search".equalsIgnoreCase(action)) {
             CreditNote creditNote = new CreditNote();
-            creditNote = creditNoteService.getCreditNote(creditNo);
+            creditNote = creditNoteService.getCreditNote(creditNo, department);
             if (creditNote == null) {
                 request.setAttribute("failStatus", true);
                 request.setAttribute("failMessage", "Credit note no:" + creditNo + " not available !");
@@ -51,9 +53,14 @@ public class CreditNoteController extends SMITravelController {
             }
         } else if ("save".equalsIgnoreCase(action)) {
             CreditNote cn = mapCreditNoteRequest(request);
+            if(null == cn.getId() || "".equals(cn.getId())){
+                cn.setDepartment(department);
+                cn.setCreateBy(user.getUsername());
+                cn.setCreateDate(Calendar.getInstance().getTime());
+            }
             String result = creditNoteService.saveCreditNote(cn);
             if (!"fail".equals(result)) {
-                CreditNote creditNote = creditNoteService.getCreditNote(result);
+                CreditNote creditNote = creditNoteService.getCreditNote(result, department);
                 request.setAttribute("creditNote", creditNote);
                 request.setAttribute("successStatus", true);
                 request.setAttribute("successMessage", "Save Success!");
@@ -76,12 +83,11 @@ public class CreditNoteController extends SMITravelController {
                 request.setAttribute("failStatus", true);
                 request.setAttribute("failMessage", method + " fail!");
             }
-            CreditNote creditNote = creditNoteService.getCreditNote(cnNo);
+            CreditNote creditNote = creditNoteService.getCreditNote(cnNo, department);
             request.setAttribute("creditNote", creditNote);
         }
         CreditNote cn = (CreditNote) request.getAttribute("creditNote");
         if (cn != null && cn.getId() != null && !"".equals(cn.getId())) {
-            SystemUser user = (SystemUser) session.getAttribute("USER");
             if (user != null && user.getRole() != null && user.getRole().getId() != null
                     && user.getRole().getId().equals("23")) {
                 request.setAttribute("enableVoid", true);
@@ -137,7 +143,7 @@ public class CreditNoteController extends SMITravelController {
 
         cn.setId(cnId);
         cn.setCnNo(cnNo);
-        cn.setCreateDate(uf.convertStringToDate(date));
+        cn.setCnDate(uf.convertStringToDate(date));
         cn.setCnName(name);
         cn.setCnAddress(address);
         cn.setCnRemark(remark);
@@ -170,9 +176,11 @@ public class CreditNoteController extends SMITravelController {
                     cnd.setVat(new BigDecimal(uf.StringUtilReplaceChar(taxVat[i])));
                 }
                 cnd.setDescription(taxDesc[i]);
-                MPaytype type = new MPaytype();
-                type.setId(taxType[i]);
-                cnd.setMPayType(type);
+                if (!"".equals(taxType[i])) {
+                    MPaytype type = new MPaytype();
+                    type.setId(taxType[i]);
+                    cnd.setMPayType(type);
+                }
                 cn.getCreditNoteDetails().add(cnd);
             }
         }

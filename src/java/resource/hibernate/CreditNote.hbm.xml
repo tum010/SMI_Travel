@@ -37,6 +37,9 @@
         <property name="invoiceType" type="string">
             <column name="invoice_type" length="20" />
         </property>
+        <property name="department" type="string">
+            <column name="department" />
+        </property>
         <bag name="creditNoteDetails" table="credit_note_detail" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="credit_note_id" />

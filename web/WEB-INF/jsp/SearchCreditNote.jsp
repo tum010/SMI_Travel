@@ -31,20 +31,23 @@
             </div>
             <hr/>
             <form action="SearchCreditNote.smi" method="post" id="SearchCreditNoteForm" name="SearchCreditNoteForm" role="form">
+                <input type="hidden" name="action" value="search" />
                 <div class="panel panel-default">
                     <div class="panel-body"  style="width: 100%">
-                        <div class="col-xs-12 form-group" style="padding-top: 15px">
-                            <div class="col-xs-1 text-right"  style="width: 70px">
+                        <div class="col-xs-3 form-group" style="padding-top: 15px">
+                            <div class="col-xs-1 text-right"  style="width: 70px; margin-left: -20px">
                                 <label class="control-label text-right">Form<font style="color: red">*</font>&nbsp;</label>
                             </div>
                             <div class="col-xs-1"  style="width: 170px">
                                 <div class='input-group date'>
-                                    <input id="dateForm" name="dateForm"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['dateForm']}">
+                                    <input id="dateFrom" name="dateFrom"  type="text" 
+                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['dateFrom']}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
-                            <div class="col-xs-1 text-right"  style="width: 70px">
+                        </div>
+                        <div class="col-xs-3 form-group" style="padding-top: 15px">
+                            <div class="col-xs-1 text-right"  style="width: 70px; margin-left: -20px">
                                 <label class="control-label text-right">To<font style="color: red">*</font>&nbsp;</label>
                             </div>
                             <div class="col-xs-1"  style="width: 170px">
@@ -54,12 +57,16 @@
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-xs-6 form-group" style="padding-top: 15px">
                             <div class="col-xs-1 text-right" style="width: 80px">
                                 <label class="control-label text-right">Department</label>
                             </div>
-                             <div class="col-md-2 form-group" style="padding: 0px 0px 0px 30px">
-                                <select class="form-control" id="Department" name="Department">
-                        
+                            <div class="col-md-2 form-group" style="margin-left: 20px">
+                                 <select class="form-control" id="department" name="department" style="width: 100px">
+                                    <option value="W">Wendy</option>
+                                    <option value="O">Outbound</option>
+                                    <option value="I">Inbound</option>
                                 </select>    
                             </div>
                             <div class="col-md-1 text-right " style="padding: 0px 0px 0px 0px ; width: 160px">
@@ -93,23 +100,24 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <c:forEach var="creditNote" items="${creditNoteList}">
                                 <tr>
-                                    <td align="center">15089765</td>
-                                    <td align="center">2015-07-21</td>
-                                    <td align="center">Test 1</td>
-                                    <td align="center">12345678</td>
-                                    <td align="center">Wendy</td>
-                                    <td align="right">2,500.00</td>
-                                    <td align="right">1,500.00</td>
+                                    <td align="center">${creditNote.cnno}</td>
+                                    <td align="center">${creditNote.cndate}</td>
+                                    <td align="center">${creditNote.cnname}</td>
+                                    <td align="center">${creditNote.apCode}</td>
+                                    <td align="center">${creditNote.department}</td>
+                                    <td align="right">${creditNote.subtotal}</td>
+                                    <td align="right">${creditNote.grandTotal}</td>
                                     <td> 
                                         <center> 
-                                            <a  href="SearchCreditNote.smi?action=edit">
+                                            <a  href="CreditNote${creditNote.department}.smi?action=search&cnNo=${creditNote.cnno}">
                                                 <span class="glyphicon glyphicon-edit editicon"  ></span>
                                             </a>
                                         </center>
                                     </td>  
                                 </tr>
-                                
+                                </c:forEach>
                             </tbody>
                         </table>      
                     </div>
@@ -139,6 +147,54 @@
                 $('#hdGridSelected').val($('#CreditNoteTable tbody tr.row_selected').attr("id"));
             }
         });
+        
+        
+    $("#SearchCreditNoteForm")
+            .bootstrapValidator({
+                framework: 'bootstrap',
+//                container: 'tooltip',
+                feedbackIcons: {
+                    valid: 'uk-icon-check',
+                    invalid: 'uk-icon-times',
+                    validating: 'uk-icon-refresh'
+                },
+                fields: {
+                    dateFrom: {
+                        trigger: 'focus keyup change',
+                        validators: {
+                            notEmpty: {
+                                message: 'The Date From is required'
+                            },
+                            date: {
+                                format: 'YYYY-MM-DD',
+                                max: 'dateTo',
+                                message: 'The Date From is more than date to'
+                            }
+                        }
+                    },
+                    dateTo: {
+                        trigger: 'focus keyup change',
+                        validators: {
+                            notEmpty: {
+                                message: 'The Date To is required'
+                            },
+                            date: {
+                                format: 'YYYY-MM-DD',
+                                min: 'dateFrom',
+                                message: 'The Date To is less than date from'
+                            }
+                        }
+                    }
+                }
+            }).on('success.field.fv', function (e, data) {
+                if (data.field === 'dateFrom' && data.fv.isValidField('dateTo') === false) {
+                    data.fv.revalidateField('dateTo');
+                }
+
+                if (data.field === 'IdateTo' && data.fv.isValidField('dateFrom') === false) {
+                    data.fv.revalidateField('dateFrom');
+                }
+            });
     });
 
 function searchAction() {

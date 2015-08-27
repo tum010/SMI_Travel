@@ -3,6 +3,8 @@ package com.smi.travel.datalayer.service;
 import com.smi.travel.datalayer.dao.CreditNoteDao;
 import com.smi.travel.datalayer.entity.CreditNote;
 import com.smi.travel.datalayer.entity.MFinanceItemstatus;
+import com.smi.travel.datalayer.view.entity.CreditNoteView;
+import java.util.List;
 
 /**
  *
@@ -12,8 +14,8 @@ public class CreditNoteService {
     
     private CreditNoteDao creditNoteDao;
 
-    public CreditNote getCreditNote(String creditNo) {
-        return creditNoteDao.getCreditNoteFromCNNo(creditNo);
+    public CreditNote getCreditNote(String creditNo, String department) {
+        return creditNoteDao.getCreditNoteFromCNNo(creditNo, department);
     }
 
     /**
@@ -53,6 +55,10 @@ public class CreditNoteService {
 
     public String UpdateFinanceStatusCreditNote(String cnId, String status) {
         return this.creditNoteDao.UpdateFinanceStatusCreditNote(cnId, status);
+    }
+
+    public List<CreditNoteView> getCreditNoteFromFilter(String dateFrom, String dateTo, String department) {
+        return this.creditNoteDao.getCreditNoteFromFilter(dateFrom, dateTo, department);
     }
     
 }

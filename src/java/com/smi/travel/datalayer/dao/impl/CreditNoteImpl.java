@@ -101,12 +101,12 @@ public class CreditNoteImpl implements CreditNoteDao {
     }
 
     @Override
-    public CreditNote getCreditNoteFromCNNo(String cnNo) {
+    public CreditNote getCreditNoteFromCNNo(String cnNo, String department) {
 
-        String query = "from  CreditNote crditNote where  crditNote.cnNo = :cnNo";
+        String query = "from  CreditNote crditNote where  crditNote.cnNo = :cnNo and crditNote.department = :department";
         Session session = this.getSessionFactory().openSession();
         CreditNote result = new CreditNote();
-        List<CreditNote> List = session.createQuery(query).setParameter("cnNo", cnNo).list();
+        List<CreditNote> List = session.createQuery(query).setParameter("cnNo", cnNo).setParameter("department", department).list();
         if (List.isEmpty()) {
             return null;
         }

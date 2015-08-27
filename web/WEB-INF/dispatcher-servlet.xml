@@ -550,6 +550,7 @@
 	</bean>
 
 	<bean id="SearchCreditNoteController" class="com.smi.travel.controller.SearchCreditNoteController">
+		<property name="creditNoteService" ref="CreditNoteService"></property>
 	</bean>
         
      
