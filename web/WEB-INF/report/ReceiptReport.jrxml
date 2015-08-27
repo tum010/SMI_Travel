@@ -402,23 +402,23 @@
 			</textField>
 			<image>
 				<reportElement x="10" y="41" width="12" height="10" uuid="7e9929c7-7a83-490f-8141-67ccbe283c46"/>
-				<imageExpression><![CDATA[("1".equals(String.valueOf($F{creditflag}))) ? "resource/images/checkmark.png" : "resource/images/imagecheck.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[("1".equals(String.valueOf($F{creditflag}))) ? "resource/images/checkmark.png" : "resource/images/uncheck.jpg"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="10" y="7" width="12" height="10" uuid="2bcad7d0-f449-4dee-8f7b-1bcbf06ea3a2"/>
-				<imageExpression><![CDATA[("1".equals(String.valueOf($F{cashflag}))) ? "resource/images/checkmark.png" : "resource/images/imagecheck.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[("1".equals(String.valueOf($F{cashflag}))) ? "resource/images/checkmark.png" : "resource/images/uncheck.jpg"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="10" y="24" width="12" height="10" uuid="d0671560-3677-44db-8c16-9e4fa3662a16"/>
-				<imageExpression><![CDATA[("1".equals(String.valueOf($F{chqbankflag}))) ? "resource/images/checkmark.png" : "resource/images/imagecheck.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[("1".equals(String.valueOf($F{chqbankflag}))) ? "resource/images/checkmark.png" : "resource/images/uncheck.jpg"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="133" y="7" width="12" height="10" uuid="51e70654-7eef-4a57-98cd-a33a1b8dbd40"/>
-				<imageExpression><![CDATA[("1".equals(String.valueOf($F{transferflag}))) ? "resource/images/checkmark.png" : "resource/images/imagecheck.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[("1".equals(String.valueOf($F{transferflag}))) ? "resource/images/checkmark.png" : "resource/images/uncheck.jpg"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="279" y="7" width="12" height="10" uuid="44153b47-b16b-46b2-b922-c9080dab6037"/>
-				<imageExpression><![CDATA[("1".equals(String.valueOf($F{taxflag}))) ? "resource/images/checkmark.png" : "resource/images/imagecheck.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[("1".equals(String.valueOf($F{taxflag}))) ? "resource/images/checkmark.png" : "resource/images/uncheck.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</pageFooter>

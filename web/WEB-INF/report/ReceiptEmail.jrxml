@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptEmail" language="groovy" pageWidth="595" pageHeight="421" columnWidth="525" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="0038deea-02d3-4a9f-8925-fb54dc3fc533">
 	<property name="ireport.zoom" value="1.996500000000013"/>
-	<property name="ireport.x" value="467"/>
+	<property name="ireport.x" value="49"/>
 	<property name="ireport.y" value="350"/>
 	<field name="recto" class="java.lang.String"/>
 	<field name="recadd" class="java.lang.String"/>
@@ -519,23 +519,23 @@
 			</textField>
 			<image>
 				<reportElement x="129" y="4" width="12" height="10" uuid="600ad498-2a8b-4385-b5f2-2278a991f70b"/>
-				<imageExpression><![CDATA[($F{transferflag}.equalsIgnoreCase("1") ? "resource/images/checkmark.png" : "resource/images/imagecheck.jpg")]]></imageExpression>
+				<imageExpression><![CDATA[($F{transferflag}.equalsIgnoreCase("1") ? "resource/images/checkmark.png" : "resource/images/uncheck.jpg")]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="6" y="21" width="12" height="10" uuid="e214cbdd-cd93-432a-8be0-2720ccffcd60"/>
-				<imageExpression><![CDATA[($F{chqbankflag}.equalsIgnoreCase("1") ? "resource/images/checkmark.png" : "resource/images/imagecheck.jpg")]]></imageExpression>
+				<imageExpression><![CDATA[($F{chqbankflag}.equalsIgnoreCase("1") ? "resource/images/checkmark.png" : "resource/images/uncheck.jpg")]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="6" y="38" width="12" height="10" uuid="21df260c-a967-4d7e-8cc6-ed2cbd6115b8"/>
-				<imageExpression><![CDATA[($F{creditflag}.equalsIgnoreCase("1") ? "resource/images/checkmark.png" : "resource/images/imagecheck.jpg")]]></imageExpression>
+				<imageExpression><![CDATA[($F{creditflag}.equalsIgnoreCase("1") ? "resource/images/checkmark.png" : "resource/images/uncheck.jpg")]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="6" y="4" width="12" height="10" uuid="f7e0f2cb-f71d-4493-a546-eb9598e63a83"/>
-				<imageExpression><![CDATA[($F{cashflag}.equalsIgnoreCase("1") ? "resource/images/checkmark.png" : "resource/images/imagecheck.jpg")]]></imageExpression>
+				<imageExpression><![CDATA[($F{cashflag}.equalsIgnoreCase("1") ? "resource/images/checkmark.png" : "resource/images/uncheck.jpg")]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="275" y="4" width="12" height="10" uuid="90dd7066-93ab-4c29-b7f6-8e4a5978f088"/>
-				<imageExpression><![CDATA[($F{taxflag}.equalsIgnoreCase("1") ? "resource/images/checkmark.png" : "resource/images/imagecheck.jpg")]]></imageExpression>
+				<imageExpression><![CDATA[($F{taxflag}.equalsIgnoreCase("1") ? "resource/images/checkmark.png" : "resource/images/uncheck.jpg")]]></imageExpression>
 			</image>
 			<textField pattern="#,##0.00">
 				<reportElement x="203" y="2" width="54" height="14" uuid="60318c39-303a-47f6-9075-2cb3f978e98f"/>
