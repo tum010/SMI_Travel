@@ -68,7 +68,7 @@ public class CreditNoteController extends SMITravelController {
             String cnId = request.getParameter("cnId");
             String cnNo = request.getParameter("cnNo");
             String method = "2".equals(status) ? "Void" : "Cancel Void";
-            String result = creditNoteService.UpdateFinanceStatusCreditNote(cnId, Integer.parseInt(status));
+            String result = creditNoteService.UpdateFinanceStatusCreditNote(cnId, status);
             if ("success".equals(result)) {
                 request.setAttribute("successStatus", true);
                 request.setAttribute("successMessage", method + " Success!");
@@ -160,13 +160,19 @@ public class CreditNoteController extends SMITravelController {
                 taxInv.setId(taxId[i]);
                 cnd.setTaxInvoice(taxInv);
                 cnd.setCreditNote(cn);
+                if (taxAmount[i] != null && !taxAmount[i].equals("")) {
+                    cnd.setAmount(new BigDecimal(uf.StringUtilReplaceChar(taxAmount[i])));
+                }
                 if (taxReal[i] != null && !taxReal[i].equals("")) {
-                    cnd.setAmount(new BigDecimal(uf.StringUtilReplaceChar(taxReal[i])));
+                    cnd.setRealAmount(new BigDecimal(uf.StringUtilReplaceChar(taxReal[i])));
                 }
                 if (taxVat[i] != null && !taxVat[i].equals("")) {
                     cnd.setVat(new BigDecimal(uf.StringUtilReplaceChar(taxVat[i])));
                 }
                 cnd.setDescription(taxDesc[i]);
+                MPaytype type = new MPaytype();
+                type.setId(taxType[i]);
+                cnd.setMPayType(type);
                 cn.getCreditNoteDetails().add(cnd);
             }
         }

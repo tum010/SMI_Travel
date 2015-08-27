@@ -1,6 +1,22 @@
 var rowIndex;
 var taxNoShow = "";
 $(document).ready(function () {
+    var inputDate = $("#inputDate").val();
+    if (inputDate === "") {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd
+        }
+        if (mm < 10) {
+            mm = '0' + mm
+        }
+        today = yyyy + "-" + mm + "-" + dd;
+        $("#inputDate").val(today);
+    }
+
     $("#cnNo").on("keyup", function (event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
@@ -21,12 +37,19 @@ $(document).ready(function () {
         document.getElementById('CreditNoteForm').submit();
     });
     $("#buttonSave").click(function () {
+        var result = true;
+        $('#CreditNoteForm').bootstrapValidator('revalidateField', 'name');
+        $('#CreditNoteForm').bootstrapValidator('revalidateField', 'inputDate');
+        if ($("#inputDate").val() === "" || $("#name").val() === "") {
+            return;
+        }
         var action = document.getElementById('action');
         action.value = 'save';
         document.getElementById('CreditNoteForm').submit();
     });
 
     addRow();
+    validFrom();
 });
 
 function addRow() {
@@ -49,7 +72,7 @@ function addRow() {
             if (keycode == '13') {
                 var realAmount = this.value.replace(",", "");
                 var vatAmount = $(this).parent().parent().find("[name='taxVat']");
-                vatAmount.val(realAmount * vat / 100);
+                vatAmount.val((realAmount * 100 / (vat + 100)) * vat / 100);
             }
         });
     });
@@ -178,13 +201,15 @@ function enableVoid() {
     $("#titleVoidModel").html("Void Credit Note");
     $("#voidCode").html("Are you confirm to void credit note " + cnNo + "?");
     $("#voidBtn").attr('onclick', 'submitVoid(2)');
+    $("#voidBtn").text("Void");
 }
 
 function disableVoid() {
     var cnNo = $("#cnNo").val();
     $("#titleVoidModel").html("Canle Void Credit Note");
-    $("#voidCode").html("{Are you confirm to cancel voice  credit note " + cnNo + "?");
+    $("#voidCode").html("Are you confirm to cancel void credit note " + cnNo + "?");
     $("#voidBtn").attr('onclick', 'submitVoid(1)');
+    $("#voidBtn").text("Cancel void");
 }
 
 function submitVoid(status) {
@@ -246,12 +271,44 @@ function show(taxNo) {
     }
 }
 
-function openReport(){
+function openReport() {
     var cnId = $("#cnId").val();
     window.open("report.smi?name=CreditNoteReport&cnid=" + cnId);
 }
 
-function sendMail(){
+function sendMail() {
     var cnId = $("#cnId").val();
     window.open("SendMail.smi?name=CreditNote&reportid=" + cnId);
+}
+
+function validFrom() {
+    // Validator Date From and To 
+    $("#CreditNoteForm")
+            .bootstrapValidator({
+                framework: 'bootstrap',
+                feedbackIcons: {
+                    valid: 'uk-icon-check',
+                    invalid: 'uk-icon-times',
+                    validating: 'uk-icon-refresh'
+                },
+                fields: {
+                    name: {
+                        trigger: 'focus keyup change',
+                        validators: {
+                            notEmpty: {
+                                message: 'Please fill name'
+                            }
+                        }
+                    },
+                    inputDate: {
+                        trigger: 'focus keyup change',
+                        validators: {
+                            notEmpty: {
+                                message: 'Please fill date'
+                            }
+                        }
+                    }
+                }
+            });
+
 }
