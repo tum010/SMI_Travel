@@ -273,7 +273,12 @@ public class PaymentTourHotelController extends SMITravelController {
             InputChqNo = paymentWendy.getChqNo();
             InputChqAmount = String.valueOf(paymentWendy.getChqAmount());
             crateDate = String.valueOf(paymentWendy.getCreateDate());
-            tourDescId = String.valueOf(paymentWendy.getTourOperationDesc().getId());
+            
+            if(paymentWendy.getTourOperationDesc() != null){
+                tourDescId = String.valueOf(paymentWendy.getTourOperationDesc().getId());
+            } else {
+                tourDescId = "";
+            }          
             
             if(paymentWendy.getAccount() != null){
                 account = String.valueOf(paymentWendy.getAccount()); 
