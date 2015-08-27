@@ -535,6 +535,11 @@
     </definition>
     
 
+    
+    <definition name="InvoiceMonthly" extends="baseLayout">
+        <put-attribute name="title" value="Finance : Invoice Monthly" />
+        <put-attribute name="body" value="/WEB-INF/jsp/InvoiceMonthly.jsp" />
+    </definition>
     <!--<add data>-->
     
     <definition name="SendMail" extends="baseLayout">
