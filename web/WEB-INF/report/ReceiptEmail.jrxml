@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptEmail" language="groovy" pageWidth="595" pageHeight="421" columnWidth="525" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="0038deea-02d3-4a9f-8925-fb54dc3fc533">
-	<property name="ireport.zoom" value="1.996500000000011"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="192"/>
+	<property name="ireport.zoom" value="1.996500000000013"/>
+	<property name="ireport.x" value="467"/>
+	<property name="ireport.y" value="350"/>
 	<field name="recto" class="java.lang.String"/>
 	<field name="recadd" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -35,6 +35,13 @@
 			<rectangle>
 				<reportElement x="429" y="157" width="96" height="72" uuid="e375ee91-2287-4e8c-b972-814ce1c75fd7"/>
 			</rectangle>
+			<textField pattern="#,##0.00">
+				<reportElement x="352" y="-223" width="44" height="14" uuid="abeb5a26-e0e4-40a1-8a6f-b23162d9dde9"/>
+				<textElement textAlignment="Left">
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(!"null".equals($F{tax}) && $F{tax}.length() > 0) ? new BigDecimal($F{tax}) : ""]]></textFieldExpression>
+			</textField>
 		</band>
 	</background>
 	<pageHeader>
@@ -316,7 +323,7 @@
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12" isBold="false" isUnderline="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{amount} != null && $F{amount}.length() > 0) ? Double.valueOf($F{amount}) : ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[(!"null".equals($F{amount}) && $F{amount} != "null" && $F{amount}.length() > 0) ? Double.valueOf($F{amount}) : ""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="5" y="-2" width="333" height="14" uuid="5ca36030-1d00-413e-a98d-6b86fa0619c4"/>
@@ -426,7 +433,7 @@
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="15" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{totalamount} != null && $F{totalamount}.length() > 0) ? Double.valueOf($F{totalamount}) : ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[(!"null".equals($F{totalamount}) && $F{totalamount} != "null" && $F{totalamount}.length() > 0) ? Double.valueOf($F{totalamount}) : ""]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
 				<reportElement x="70" y="36" width="429" height="14" uuid="3eae4981-7060-4621-8cea-914f67979f43"/>
@@ -434,27 +441,6 @@
 					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{credit}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.00">
-				<reportElement x="76" y="19" width="61" height="14" uuid="0e756d8c-6ed7-46f8-b265-dac57a13c7ba"/>
-				<textElement textAlignment="Left">
-					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{chqvalue}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.00">
-				<reportElement x="45" y="2" width="43" height="14" uuid="38f4b1e5-ec78-41dd-adf5-13addf8a6a99"/>
-				<textElement textAlignment="Left">
-					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{cash}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.00">
-				<reportElement x="202" y="2" width="54" height="14" uuid="c1cba420-9d37-46b6-a85b-393763ee614b"/>
-				<textElement textAlignment="Left">
-					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{transfer}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="268" y="19" width="54" height="14" uuid="7f20a5b0-7d2a-4e23-bdcd-39c7c317d045"/>
@@ -469,13 +455,6 @@
 					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{chqdate}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="352" y="2" width="44" height="14" uuid="39e37be9-ce86-4ff9-80a7-83f796ebff6e"/>
-				<textElement textAlignment="Left">
-					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{tax}]]></textFieldExpression>
 			</textField>
 			<rectangle radius="10">
 				<reportElement x="73" y="58" width="230" height="19" backcolor="#CCCCCC" uuid="8ad5469c-47a7-4809-8afc-610bb84fdf8a"/>
@@ -539,25 +518,47 @@
 				<textFieldExpression><![CDATA[$F{textmoney}]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="128" y="4" width="12" height="10" uuid="600ad498-2a8b-4385-b5f2-2278a991f70b"/>
-				<imageExpression><![CDATA[($F{transferflag}.equals("1") ? "resource/images/checkmark.png" : "")]]></imageExpression>
+				<reportElement x="129" y="4" width="12" height="10" uuid="600ad498-2a8b-4385-b5f2-2278a991f70b"/>
+				<imageExpression><![CDATA[($F{transferflag}.equalsIgnoreCase("1") ? "resource/images/checkmark.png" : "resource/images/imagecheck.jpg")]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="6" y="21" width="12" height="10" uuid="e214cbdd-cd93-432a-8be0-2720ccffcd60"/>
-				<imageExpression><![CDATA[($F{chqbankflag}.equals("1") ? "resource/images/checkmark.png" : "")]]></imageExpression>
+				<imageExpression><![CDATA[($F{chqbankflag}.equalsIgnoreCase("1") ? "resource/images/checkmark.png" : "resource/images/imagecheck.jpg")]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="6" y="38" width="12" height="10" uuid="21df260c-a967-4d7e-8cc6-ed2cbd6115b8"/>
-				<imageExpression><![CDATA[($F{creditflag}.equals("1") ? "resource/images/checkmark.png" : "")]]></imageExpression>
+				<imageExpression><![CDATA[($F{creditflag}.equalsIgnoreCase("1") ? "resource/images/checkmark.png" : "resource/images/imagecheck.jpg")]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="6" y="4" width="12" height="10" uuid="f7e0f2cb-f71d-4493-a546-eb9598e63a83"/>
-				<imageExpression><![CDATA[($F{cashflag}.equals("1") ? "resource/images/checkmark.png" : "")]]></imageExpression>
+				<imageExpression><![CDATA[($F{cashflag}.equalsIgnoreCase("1") ? "resource/images/checkmark.png" : "resource/images/imagecheck.jpg")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="274" y="4" width="12" height="10" uuid="90dd7066-93ab-4c29-b7f6-8e4a5978f088"/>
-				<imageExpression><![CDATA[($F{taxflag}.equals("1") ? "resource/images/checkmark.png" : "")]]></imageExpression>
+				<reportElement x="275" y="4" width="12" height="10" uuid="90dd7066-93ab-4c29-b7f6-8e4a5978f088"/>
+				<imageExpression><![CDATA[($F{taxflag}.equalsIgnoreCase("1") ? "resource/images/checkmark.png" : "resource/images/imagecheck.jpg")]]></imageExpression>
 			</image>
+			<textField pattern="#,##0.00">
+				<reportElement x="203" y="2" width="54" height="14" uuid="60318c39-303a-47f6-9075-2cb3f978e98f"/>
+				<textElement textAlignment="Left">
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(!"null".equals($F{transfer}) && $F{transfer}.length() > 0) ? new BigDecimal($F{transfer}) : ""]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="77" y="19" width="61" height="14" uuid="64fef8d1-eab4-4483-bfe9-e9e32bb05453"/>
+				<textElement textAlignment="Left">
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(!"null".equals($F{chqvalue}) && $F{chqvalue}.length() > 0) ? new BigDecimal($F{chqvalue}) : ""]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="46" y="2" width="43" height="14" uuid="6e23a083-604d-47ed-b7f5-1f0bdc9da53d"/>
+				<textElement textAlignment="Left">
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(!"null".equals($F{cash}) && $F{cash}.length() > 0) ? new BigDecimal($F{cash}) : ""
+]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 </jasperReport>
