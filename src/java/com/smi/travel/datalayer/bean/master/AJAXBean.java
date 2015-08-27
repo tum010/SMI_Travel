@@ -1515,13 +1515,15 @@ public class AJAXBean extends AbstractBean implements
             term =""+ bill.getMAccterm().getId();
         }
         String  dateDue="";
-        if(bill.getMAccterm().getValue() != null){
-            Date ff = new Date();
-            System.out.println(ff);
-            ff.setDate(ff.getDate() + bill.getMAccterm().getValue());
-            System.out.println("Value Term : " + bill.getMAccterm().getValue());
-            System.out.println("Dueeeeeeeee  Date : "+ff);
-            dateDue =  utility.convertDateToString(ff);
+        if(bill.getMAccterm() != null){
+            if(bill.getMAccterm().getValue() != null){
+                Date ff = new Date();
+                System.out.println(ff);
+                ff.setDate(ff.getDate() + bill.getMAccterm().getValue());
+                System.out.println("Value Term : " + bill.getMAccterm().getValue());
+                System.out.println("Dueeeeeeeee  Date : "+ff);
+                dateDue =  utility.convertDateToString(ff);
+            }
         }
 
         result += bill.getMaster().getBookingType() +"||";
