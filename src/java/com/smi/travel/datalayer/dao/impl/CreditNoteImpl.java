@@ -9,10 +9,16 @@ import com.smi.travel.datalayer.dao.CreditNoteDao;
 import com.smi.travel.datalayer.entity.CreditNote;
 import com.smi.travel.datalayer.entity.CreditNoteDetail;
 import com.smi.travel.datalayer.entity.MFinanceItemstatus;
+import com.smi.travel.datalayer.view.entity.CreditNoteView;
+import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -197,6 +203,70 @@ public class CreditNoteImpl implements CreditNoteDao {
         session.close();
         this.sessionFactory.close();
         return cnNo.replace("-", "");
+    }
+
+    @Override
+    public List<CreditNoteView> getCreditNoteFromFilter(String from, String to, String Department) {
+         String query = "from CreditNote cn Where";
+         int checkQuery = 0;
+         String prefix ="";
+         if(((from != null) &&(!"".equalsIgnoreCase(from))) &&((to != null) &&(!"".equalsIgnoreCase(to)))){
+             query += " cn.cnDate >= '" +from +"' and cn.cnDate <= '"+to +"' ";
+             checkQuery = 1;
+         }else if((from != null) &&(!"".equalsIgnoreCase(from))){
+             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+             query += prefix+ " cn.cnDate >= '" +from +"'";
+             
+         }else if((to != null) &&(!"".equalsIgnoreCase(to))){
+             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+             query += prefix+" cn.cnDate <= '" +to +"'";
+         }
+         
+         if((Department != null) &&(!"".equalsIgnoreCase(Department))){
+             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+             query += prefix+" cn.department = '"+Department+"'";
+         }
+         
+         if(checkQuery == 0){query = query.replaceAll("Where", "");}
+         System.out.println("query : "+query);
+         Session session = this.sessionFactory.openSession();
+         List<CreditNoteView> viewList = new LinkedList<CreditNoteView>();
+         List<CreditNote> NoteList = session.createQuery(query)
+                .list();
+         if(NoteList.isEmpty()){
+             return null;
+         }else{
+             for(int i=0;i<NoteList.size();i++){
+                 viewList.add(mappingCreditNoteView(NoteList.get(i)));
+             }
+         }
+         
+        return viewList;
+    }
+    
+    private CreditNoteView mappingCreditNoteView(CreditNote notedetail){
+        CreditNoteView noteview = new CreditNoteView();
+        UtilityFunction util = new UtilityFunction();
+        noteview.setId(notedetail.getId());
+        noteview.setApCode(notedetail.getApCode());
+        noteview.setCnno(notedetail.getCnNo());
+        noteview.setCndate(util.convertDateToString(notedetail.getCnDate()));
+        noteview.setDepartment(notedetail.getDepartment());
+        List<CreditNoteDetail> detaillist =  notedetail.getCreditNoteDetails();
+        BigDecimal subtotal = new BigDecimal(0);
+        BigDecimal grandtotal = new BigDecimal(0);
+        for(int i=0;i<detaillist.size();i++){
+            CreditNoteDetail detail = detaillist.get(i);
+            if(detail.getAmount() != null){
+                subtotal = subtotal.add(detail.getAmount());
+            }
+            if(detail.getRealamount() != null){
+                grandtotal = grandtotal.add(detail.getRealamount());
+            }
+        }
+        noteview.setSubtotal(util.setFormatMoney(subtotal));
+        noteview.setGrandTotal(util.setFormatMoney(grandtotal));
+        return noteview;
     }
 
 }
