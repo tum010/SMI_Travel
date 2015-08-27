@@ -191,64 +191,45 @@
 
 var currency = 0;
 function validFromInvoice(){
-    // Validator Date From and To
-    var result = checkCurrencyCost();
-    if(result === true){
-        $("#InvoiceForm")
-        .bootstrapValidator({
-            framework: 'bootstrap',
-            feedbackIcons: {
-                valid: 'uk-icon-check',
-                invalid: 'uk-icon-times',
-                validating: 'uk-icon-refresh'
-            },
-            fields: {                
-                InvTo: {
-                    trigger: 'focus keyup change',
-                    validators: {
-                        notEmpty: {
-                            message: 'Input Invoice To'
-                        }
-                    }
-                },
-                InvToName: {
-                    trigger: 'focus keyup change',
-                    validators: {
-                        notEmpty: {
-                            message: 'Input Invoice To Name'
-                        }
-                    }
-                },
-                ARCode: {
-                    trigger: 'focus keyup change',
-                    validators: {
-                        notEmpty: {
-                            message: 'Input A/R Code'
-                        }
-                    }
-                },
-                InputInvDate: {
-                    trigger: 'focus keyup change',
-                    validators: {
-                        notEmpty: {
-                            message: 'Input Invoice Date'
-                        }
-                    }
-                } 
-            }  
-        });
-        return true;
-//                .on('err.form.fv', function(e) {
-//            checkCurrencyCost
-//        });
-//        var action = document.getElementById('action');
-//        action.value = 'save';
-//        document.getElementById('InvoiceForm').submit();
-    }else if(result === false){
-        alert("Stop");
-        return false;
+  var counter = $('#DetailBillableTable tbody tr').length;
+    var different = 0;
+    var rowTemp = 0;
+    for(var i=1 ; i <= (counter-1);i++){
+        var currency1 = $('#SelectCurrencyAmount' +i).find(":selected").text();
+        for(var j=2;j<=(counter-1);j++){
+            var currency2 = $('#SelectCurrencyAmount' +j).find(":selected").text();
+            if(currency1 !== currency2){
+                rowTemp = j;
+                different++;
+            }
+        }
     }
-//    checkCurrencyCost();
+//                alert("Heeee : " + different);
+    if(different > 0){          
+        $('#DetailBillableTable').find('tr').each(function () { 
+            $(this).find('td').each(function () { 
+                if ($(this).hasClass('priceCurrencyAmount')) {
+                    $(this).addClass("alert-danger");
+                }
+            });
+        });    
+        $('#textAlertCurrency').show();
+        currency = 1;
+        alert("Currency : " + currency); 
+//        $('#InvoiceForm').bootstrapValidator('validateField', 'SelectCurrencyAmount2'+rowTemp);
+        return false;
+    } else {
+         $('#DetailBillableTable').find('tr').each(function () { 
+            $(this).find('td').each(function () { 
+                if ($(this).hasClass('priceCurrencyAmount')) {
+                    $(this).removeClass("alert-danger");
+                }
+            });
+        });
+        $('#textAlertCurrency').hide();
+        currency = 0;
+        return true;
+    } 
 }
 
 function checkCurrencyCost(){
@@ -278,7 +259,7 @@ function checkCurrencyCost(){
         $('#textAlertCurrency').show();
         currency = 1;
         alert("Currency : " + currency); 
-//        $('#InvoiceForm').bootstrapValidator('validateField', 'SelectCurrencyAmount2'+rowTemp);
+        $('#InvoiceForm').bootstrapValidator('revalidateField', 'InvTo');
         return false;
     } else {
          $('#DetailBillableTable').find('tr').each(function () { 
