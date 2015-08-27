@@ -41,7 +41,7 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
         Session session = this.getSessionFactory().openSession();
         try { 
             setTransaction(session.beginTransaction());
-            String taxNo = gennarateTaxInvoiceNo();
+            String taxNo = gennarateTaxInvoiceNo(tax.getTaxInvDate(),tax.getDepartment());
             tax.setTaxNo(taxNo);
             session.save(tax);
             List<TaxInvoiceDetail> taxInvoiceDetail = tax.getTaxInvoiceDetails();
@@ -64,19 +64,19 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
         return result;
     }
     
-    private String gennarateTaxInvoiceNo(){
+    private String gennarateTaxInvoiceNo(Date taxInvDate,String department){
         String taxNo = "";
         Session session = this.sessionFactory.openSession();
         List<TaxInvoice> list = new LinkedList<TaxInvoice>();
-        Date thisdate = new Date();
         SimpleDateFormat df = new SimpleDateFormat();
-        df.applyPattern("MMyy");
-        Query query = session.createQuery("from TaxInvoice t where t.taxNo Like :taxNo Order by t.taxNo desc");
-        query.setParameter("taxNo", "%"+ df.format(thisdate) + "%");
+        df.applyPattern("yyMM");
+        Query query = session.createQuery("from TaxInvoice t where t.department = :department and t.taxNo Like :taxNo Order by t.taxNo desc");
+        query.setParameter("taxNo", "%"+ df.format(taxInvDate) + "%");
+        query.setParameter("department", department);
         query.setMaxResults(1);
         list = query.list();
         if (list.isEmpty()) {
-            taxNo = df.format(thisdate) + "-" + "0001";
+            taxNo = df.format(taxInvDate) + "-" + "0001";
         } else {
             taxNo = String.valueOf(list.get(0).getTaxNo());
             if (!taxNo.equalsIgnoreCase("")) {
@@ -86,7 +86,7 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
                 for (int i = temp.length(); i < 4; i++) {
                     temp = "0" + temp;
                 }
-                taxNo = df.format(thisdate) + "-" + temp;
+                taxNo = df.format(taxInvDate) + "-" + temp;
             }
         }
         session.close();
@@ -333,5 +333,18 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
         taxInvoice = taxInvoiceList.get(0);
                
         return taxInvoice;
+    }
+
+    @Override
+    public List<TaxInvoiceDetail> getTaxInvoiceDetailFromInvDetailId(String invDetailId) {
+        Session session = this.sessionFactory.openSession();
+        String query = " from TaxInvoiceDetail t WHERE t.invoiceDetail.id = :invDetailId";
+        List<TaxInvoiceDetail> taxInvoiceDetailList = session.createQuery(query).setParameter("invDetailId", invDetailId).list();
+        if(taxInvoiceDetailList.isEmpty()){
+            return null;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return taxInvoiceDetailList;
     }
 }

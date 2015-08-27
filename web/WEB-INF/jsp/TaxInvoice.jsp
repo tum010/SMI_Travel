@@ -162,7 +162,7 @@
                             </button>
                         </div>
                         <div class="col-xs-2 text-right">
-                            <label class="control-label" for="">Invoice date</lable>
+                            <label class="control-label" for="">Invoice date<font style="color: red">*</font></lable>
                         </div>
                         <div class="col-md-2 form-group">
                             <div class='input-group date' id='InputDatePicker'>
@@ -405,7 +405,16 @@
                                             <button type="button" class="btn btn-default" onclick="selectEmailType()" ${sendemail}>
                                                 <span id="buttonEmail" class="glyphicon glyphicon-send" ></span> SendEmail 
                                             </button>
-                                        </div>        
+                                        </div>
+                                        <div class="col-md-1 text-left" style="width: 170px">
+                                            <c:set var="copy" value="" />
+                                            <c:if test="${(taxInvoice.id == '') || (taxInvoice.id == null) }">        
+                                                <c:set var="copy" value="disabled='true'" />
+                                            </c:if>
+                                            <button type="button" class="btn btn-default" onclick="copyTaxInvoice()" ${copy}>
+                                                <span id="ButtonCopy" class="glyphicon glyphicon-copyright-mark" ></span> Copy 
+                                            </button>
+                                        </div>
                                         <div class="col-md-1 " style="width: 180px"></div>
                                         <div class="col-md-2 text-right">
                                             <c:set var="isDisableVoid" value="disabled='true'" />
@@ -692,6 +701,27 @@
     </div>
 </div>
 
+<!--Copy Tax Invoice Modal-->
+<div class="modal fade" id="CopyTaxInvoiceModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Copy Tax Invoice</h4>
+            </div>
+            <div class="modal-body" id="copyReceiptModal" >
+                <label class="text-right">Are you sure to copy tax invoice ?</label>                                  
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-default" onclick="confirmCopyTaxInvoice()">
+                    <span id="buttonCopyTaxInvoice" class="glyphicon glyphicon-copyright-mark" ></span> Copy
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!--Email Modal-->
 <div class="modal fade" id="EmailTaxInvoiceModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -820,6 +850,14 @@
                             message: 'The A/R Code is required'
                         }
                     }
+                },
+                InvToDate: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        notEmpty: {
+                            message: 'The Invoice Date is required'
+                        }
+                    }
                 }
             }
         });
@@ -922,6 +960,26 @@
         }else if(printType === "taxInvoiceEmail"){
             window.open("report.smi?name=TaxInvoiceEmailReport&taxInvId="+taxInvId+"&department="+department+"&optionPrint="+optionPrint);
         }
+    }
+    
+    function copyTaxInvoice(){
+        var invDate = document.getElementById("InvToDate").value;
+        if(invDate !== ''){
+            $("#CopyTaxInvoiceModal").modal("show");
+        }        
+    }
+    
+    function confirmCopyTaxInvoice(){
+        var row = $('#TaxInvoiceTable tr').length;
+        document.getElementById('TaxInvId').value = '';
+        document.getElementById('TaxInvNo').value = '';
+        document.getElementById('createBy').value = '';
+        document.getElementById('createDate').value = '';
+        for(var i=1;i<row;i++){
+            document.getElementById('taxDetailId' + i).value = '';
+        }
+        $("#CopyTaxInvoiceModal").modal("hide");
+        document.getElementById('TaxInvoiceForm').submit();           
     }
     
     function selectEmailType(){
@@ -1144,11 +1202,11 @@
                                 document.getElementById("ARCode").value = '';
                             }
                             
-                            if((document.getElementById("receiveInvToDate")!==null) && ($("#receiveInvToDate").val()!==undefined)){
-                                document.getElementById("InvToDate").value = $("#receiveInvToDate").val();
-                            } else {
-                                document.getElementById("InvToDate").value = '';
-                            }                          
+//                            if((document.getElementById("receiveInvToDate")!==null) && ($("#receiveInvToDate").val()!==undefined)){
+//                                document.getElementById("InvToDate").value = $("#receiveInvToDate").val();
+//                            } else {
+//                                document.getElementById("InvToDate").value = '';
+//                            }                          
                         }
                         $("#ajaxload").addClass("hidden");
 
@@ -1328,7 +1386,9 @@
 //            $(this).val(value);
 //        });
         if(row){
-            CalculateGross(row);
+            if(document.getElementById("isVat"+row).checked){
+                CalculateGross(row);
+            }            
         }
     }
     
@@ -1491,6 +1551,7 @@
     
     function clearScreen(){
         $("#department").val("");
+        $("#invoiceNo").val("");
         $("#TaxInvId").val("");
         $("#TaxInvNo").val("");
         $("#InvToDate").val("");
@@ -1666,6 +1727,6 @@
             }             
         }            
         CalculateAmountTotal();   
-    }  
+    }
     
 </script>
