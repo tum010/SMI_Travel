@@ -199,12 +199,11 @@ public class ReceiptController extends SMITravelController {
                 String paymentId = request.getParameter("paymentId" + i);
                 String airlineCode = request.getParameter("airlineCode" + i);
                 String displayDescription = request.getParameter("DescriptionReceiptDetail" + i);
-                System.out.println(" invId " + invId);
-                System.out.println(" billDescId " + billDescId);
-                System.out.println(" paymentId " + paymentId);
-                System.out.println(" airlineCode " + airlineCode);
+//                System.out.println(" invId " + invId);
+//                System.out.println(" billDescId " + billDescId);
+//                System.out.println(" paymentId " + paymentId);
+//                System.out.println(" airlineCode " + airlineCode);
                 ReceiptDetail receiptDetail = new ReceiptDetail();
-               
                 receiptDetail.setId(tableId);
                 receiptDetail.setReceipt(receipt);
                 if(StringUtils.isNotEmpty(receiveProduct)){
