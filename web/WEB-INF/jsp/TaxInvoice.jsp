@@ -53,7 +53,19 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
            <strong>Tax invoice void!.</strong> 
         </div>
-        </c:if>       
+        </c:if>    
+        <c:if test="${requestScope['result_text'] =='cost much over'}">
+        <div id="textAlertDivNotSave"  style="" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+           <strong>Save Unsuccess Cost Much Over!.</strong> 
+        </div>
+        </c:if>  
+        <c:if test="${requestScope['result_text'] =='amount much over'}">
+        <div id="textAlertDivNotSave"  style="" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+           <strong>Save Unsuccess Amount Much Over!.</strong> 
+        </div>
+        </c:if>
         <div class="row" style="padding-left: 15px">  
             <div class="col-sm-6 " style="padding-right: 15px">
 		<c:choose>
@@ -112,9 +124,11 @@
                                                 <thead>
                                                     <tr class="datatable-header">
                                                         <th style="width: 15%" >Product</th>
-                                                        <th style="width: 50%">Description</th>
+                                                        <th style="width: 35%">Description</th>
+                                                        <th style="width: 20%">Cost</th>
+                                                        <th style="width: 10%">Cur</th>
                                                         <th style="width: 20%">Amount</th>
-                                                        <th style="width: 1%">Currency</th>
+                                                        <th style="width: 10%">Cur</th>
                                                         <th style="width: 1%">Action</th>
                                                     </tr>
                                                 </thead>
@@ -269,6 +283,8 @@
                                                 <tr>
                                                     <td class="hidden"><input class="form-control" type="text" id="taxDetailId${i.count}" name="taxDetailId${i.count}" value="${taxDetail.id}"></td>
                                                     <td class="hidden"><input class="form-control" type="text" id="invoiceDetailId${i.count}" name="invoiceDetailId${i.count}" value="${taxDetail.invoiceDetail.id}"></td>
+                                                    <td class="hidden"><input class="form-control" type="text" id="invoiceDetailCost${i.count}" name="invoiceDetailCost${i.count}" value="${taxDetail.invoiceDetail.cost}"></td>
+                                                    <td class="hidden"><input class="form-control" type="text" id="invoiceDetailAmount${i.count}" name="invoiceDetailAmount${i.count}" value="${taxDetail.invoiceDetail.amount}"></td>
                                                     <td>
                                                         <select class="form-control" name="product${i.count}" id="product${i.count}" onchange="AddrowBySelect('${i.count}')">
                                                             <option  value="" >---------</option>
@@ -1239,6 +1255,8 @@
             '<tr>' +
             '<td class="hidden"><input class="form-control" type="text" id="taxDetailId' + row + '" name="taxDetailId' + row + '" value=""></td>' +
             '<td class="hidden"><input class="form-control" type="text" id="invoiceDetailId' + row + '" name="invoiceDetailId' + row + '" value=""></td>' +
+            '<td class="hidden"><input class="form-control" type="text" id="invoiceDetailCost' + row + '" name="invoiceDetailCost' + row + '" value=""></td>' +
+            '<td class="hidden"><input class="form-control" type="text" id="invoiceDetailAmount' + row + '" name="invoiceDetailAmount' + row + '" value=""></td>' +
             '<td><select class="form-control" name="product' + row + '" id="product' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
             '<td><input class="form-control" type="text" id="refNo' + row + '" name="refNo' + row + '" value="" onfocusout="checkRefNo(\'' + row + '\')"></td>' +
             '<td><input class="form-control" type="text" id="description' + row + '" name="description' + row + '" value=""></td>' +
@@ -1288,6 +1306,8 @@
         }
 
         $("#invoiceDetailId" + count).val(id);
+        $("#invoiceDetailCost" + count).val(formatNumber(parseFloat(cost)));
+        $("#invoiceDetailAmount" + count).val(formatNumber(parseFloat(amount)));
         $('[name=product' + count + '] option').filter(function() { 
             return ($(this).text() === product);
         }).prop('selected', true);
@@ -1313,6 +1333,8 @@
             '<tr>' +
             '<td class="hidden"><input class="form-control" type="text" id="taxDetailId' + row + '" name="taxDetailId' + row + '" value=""></td>' +
             '<td class="hidden"><input class="form-control" type="text" id="invoiceDetailId' + row + '" name="invoiceDetailId' + row + '" value=""></td>' +
+            '<td class="hidden"><input class="form-control" type="text" id="invoiceDetailCost' + row + '" name="invoiceDetailCost' + row + '" value=""></td>' +
+            '<td class="hidden"><input class="form-control" type="text" id="invoiceDetailAmount' + row + '" name="invoiceDetailAmount' + row + '" value=""></td>' +
             '<td><select class="form-control" name="product' + row + '" id="product' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
             '<td><input class="form-control" type="text" id="refNo' + row + '" name="refNo' + row + '" value="" onfocusout="checkRefNo(\'' + row + '\')"></td>' +
             '<td><input class="form-control" type="text" id="description' + row + '" name="description' + row + '" value=""></td>' +
