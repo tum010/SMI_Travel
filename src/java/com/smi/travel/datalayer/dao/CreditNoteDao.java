@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.dao;
 
 import com.smi.travel.datalayer.entity.CreditNote;
 import com.smi.travel.datalayer.view.entity.CreditNoteView;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,8 +21,8 @@ public interface CreditNoteDao {
     public String deleteCreditNote(CreditNote note); // delete table CreditNote
     public CreditNote getCreditNoteFromCNNo(String CNNo);//from CreditNote cn where cn.cnNo = :CNNo
     public String DeleteCreditNoteDetail(String CreditNoteDetailId);//Delete from CreditNoteDetail cn where cn.id = :CreditNoteDetailId
-    public String UpdateFinanceStatusCreditNote(String CNId,int status);
-    public String gennarateTaxInvoiceNo();
+    public String UpdateFinanceStatusCreditNote(String CNId, String status);
+    public String gennarateTaxInvoiceNo(Date createDate);
     public List<CreditNoteView> getCreditNoteFromFilter(String from,String to,String Department);
     // UPDATE CreditNote cn set cn.MFinanceItemstatus.id = :status  WHERE cn.id = :CNId
     //public TaxInvoiceView SearchTaxInvoiceFromFilter(String from,String To,String Department);

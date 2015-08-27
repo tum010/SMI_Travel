@@ -1454,7 +1454,6 @@
         detaillength = detaillength - 1 ;
         if(detaillength > 1) {
             for(var i =0;i<detaillength;i++){
-                alert(i + " " + $('#receiveCost'+i).val());
                 if( $('#receiveCost'+i).val() != ""){
                     setFormatCurrency(i);
                 }

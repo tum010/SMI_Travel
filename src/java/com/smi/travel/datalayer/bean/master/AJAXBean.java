@@ -804,7 +804,7 @@ public class AJAXBean extends AbstractBean implements
         String receiveInvToName = invoice.getInvName();
         String receiveInvToAddress = invoice.getInvAddress();
         String receiveARCode = invoice.getArcode();
-        String id = "";
+        String invDetailId = "";
         String product = "";
         String description = "";
         BigDecimal cost = new BigDecimal(0);
@@ -821,28 +821,44 @@ public class AJAXBean extends AbstractBean implements
         
         int row = 1;
         if (invoiceDetaillList == null || invoiceDetaillList.size() == 0) {
+            String newrow = "";
+                newrow +=   "<tr>"+
+                            "<input type='hidden' name='receiveTaxInvTo' id='receiveTaxInvTo' value='" + receiveTaxInvTo + "'>" +
+                            "<input type='hidden' name='receiveInvToName' id='receiveInvToName' value='" + receiveInvToName + "'>" +
+                            "<input type='hidden' name='receiveInvToAddress' id='receiveInvToAddress' value='" + receiveInvToAddress + "'>" +
+                            "<input type='hidden' name='receiveARCode' id='receiveARCode' value='" + receiveARCode + "'>" +
+                            "<input type='hidden' name='receiveInvToDate' id='receiveInvToDate' value='" + receiveInvToDate + "'>" ;
             return html.toString();
         }
         for(int i=0; i< invoiceDetaillList.size(); i++){
             InvoiceDetail invoiceDetail = new InvoiceDetail();
+            BigDecimal costInvoice = new BigDecimal(0);
+            BigDecimal amountInvoice = new BigDecimal(0);
             invoiceDetail = invoiceDetaillList.get(i);
-            id = invoiceDetail.getId();
+            invDetailId = invoiceDetail.getId();
             product = invoiceDetail.getMbillType().getName();
             description = invoiceDetail.getDescription();           
             curCost = invoiceDetail.getCurCost();           
             curAmount = invoiceDetail.getCurAmount();
             isVat = String.valueOf(invoiceDetail.getIsVat());
             if(invoiceDetail.getCost() != null){
-                cost = invoiceDetail.getCost();
+                costInvoice = invoiceDetail.getCost();
             } else {
-                cost = new BigDecimal(0);
+                costInvoice = new BigDecimal(0);
             }
             if(invoiceDetail.getAmount() != null){
-                amount = invoiceDetail.getAmount();
+                amountInvoice = invoiceDetail.getAmount();
             } else {
-                amount = new BigDecimal(0);
+                amountInvoice = new BigDecimal(0);
             }
-            if(!"".equalsIgnoreCase(id)){
+            
+            BigDecimal[] value = checkTaxInvoiceDetail(invDetailId);
+            BigDecimal costTemp = value[0];
+            BigDecimal amountTemp = value[1];
+            cost = costInvoice.subtract(costTemp);
+            amount = amountInvoice.subtract(amountTemp);
+            
+            if(amount.compareTo(BigDecimal.ZERO) != 0){
                 String newrow = "";
                     newrow +=   "<tr>"+
                                 "<input type='hidden' name='receiveTaxInvTo' id='receiveTaxInvTo' value='" + receiveTaxInvTo + "'>" +
@@ -851,12 +867,12 @@ public class AJAXBean extends AbstractBean implements
                                 "<input type='hidden' name='receiveARCode' id='receiveARCode' value='" + receiveARCode + "'>" +
                                 "<input type='hidden' name='receiveInvToDate' id='receiveInvToDate' value='" + receiveInvToDate + "'>" +
                                 "<input type='hidden' name='invoiceId' id='invoiceId' value='"+invoice.getId()+"'>" +
-                                "<input type='hidden' name='invoiceId" + row + "' id='invoiceId" + row + "' value='" + id + "'>" +
+                                "<input type='hidden' name='invoiceId" + row + "' id='invoiceId" + row + "' value='" + invDetailId + "'>" +
                                 "<td class='text-center'>" + product + "</td>"+
                                 "<td>" + description + "</td>"+
                                 "<td class='money' style=\"text-align:right;\">" + amount + "</td>"+
                                 "<td style=\"text-align:center;\">" + curAmount + "</td>"+ 
-                                "<td><center><a href=\"\"><span onclick=\"AddProduct('"+id+"','"+product+"','"+description+"','"+cost+"','"+curCost+"','"+amount+"','"+curAmount+"','"+isVat+"')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>" +
+                                "<td><center><a href=\"\"><span onclick=\"AddProduct('"+invDetailId+"','"+product+"','"+description+"','"+cost+"','"+curCost+"','"+amount+"','"+curAmount+"','"+isVat+"')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>" +
                                 "</tr>";
                     html.append(newrow);
             }
@@ -1630,6 +1646,38 @@ public class AJAXBean extends AbstractBean implements
         return value;
     }
     
+    private BigDecimal[] checkTaxInvoiceDetail(String invDetailId) {
+        BigDecimal[] value = new BigDecimal[2];       
+        BigDecimal resultAmount = new BigDecimal(0);
+        BigDecimal resultCost = new BigDecimal(0);
+        List<TaxInvoiceDetail> taxInvoiceDetailList = taxInvoiceDao.getTaxInvoiceDetailFromInvDetailId(invDetailId);
+        if (taxInvoiceDetailList == null || taxInvoiceDetailList.size() == 0) {
+            value[0] = resultCost;
+            value[1] = resultAmount;
+            return value;
+        }
+        for (int i = 0; i < taxInvoiceDetailList.size(); i++) {
+            BigDecimal amount = new BigDecimal(0);
+            BigDecimal cost = new BigDecimal(0);
+            if((taxInvoiceDetailList.get(i).getCost() != null)){
+                cost = taxInvoiceDetailList.get(i).getCost();
+            } else {
+                cost = new BigDecimal(0);
+            }
+            if((taxInvoiceDetailList.get(i).getAmount() != null)){
+                amount = taxInvoiceDetailList.get(i).getAmount();
+            } else {
+                amount = new BigDecimal(0);
+            }          
+            resultCost = resultCost.add(cost);
+            resultAmount = resultAmount.add(amount);
+        }
+       
+        value[0] = resultCost;
+        value[1] = resultAmount;
+        return value;
+    }
+    
     public BigDecimal[] checkInvoiceDetailFromBilldescId(String billdescId){
         BigDecimal[] value = new BigDecimal[2];
         BigDecimal amount = new BigDecimal(0);
@@ -1706,5 +1754,5 @@ public class AJAXBean extends AbstractBean implements
         return map;
     }
 
-  
+    
 }

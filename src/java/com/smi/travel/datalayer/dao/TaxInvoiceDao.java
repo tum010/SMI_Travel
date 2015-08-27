@@ -23,6 +23,7 @@ public interface TaxInvoiceDao {
     public String DeleteTaxInvoiceInvoiceDetail(TaxInvoiceDetail taxInvoiceDetail);//Delete from TaxInvoiceDetail tax where tax.id = :TaxInvoiceDetailId
     public String UpdateFinanceStatusTaxInvoice(String TaxId,int status);
     // UPDATE TaxInvoice tax set tax.MFinanceItemstatus.id = :status  WHERE tax.id = :TaxId
+    public List<TaxInvoiceDetail> getTaxInvoiceDetailFromInvDetailId(String invDetailId);
     public TaxInvoiceView getTaxInvoiceViewFromTaxNo(String TaxNo);
     public List<TaxInvoiceView> SearchTaxInvoiceFromFilter(String From,String To,String Department);
     public TaxInvoice getTaxInvoiceByTaxNo(String invoiceNo);

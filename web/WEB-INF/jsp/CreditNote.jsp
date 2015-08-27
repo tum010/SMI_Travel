@@ -63,7 +63,7 @@
                 <input type="hidden" name="action" id="action" value="search">
                 <input type="hidden" name="cnId" id="cnId" value="${creditNote.id}"/>
                 <div class="row">
-                    <div class="col-xs-12 form-group">
+                    <div class="col-xs-4 form-group">
                         <div class="col-xs-1 text-right" style="width: 120px">
                             <label class="control-label text-right">CN No. </label>
                         </div>
@@ -71,12 +71,14 @@
                             <input id="cnNo" name="cnNo" type="text" class="form-control" value="${creditNote.cnNo}">
                         </div>
                         <div class="col-md-1 text-right ">
-                            <button type="button" id="buttonSearch" class="btn btn-success">
+                            <button type="button" id="buttonSearch" class="btn btn-primary">
                                 <span class="fa fa-search"></span> Search 
                             </button>
                         </div>
+                    </div>
+                    <div class="col-xs-4 form-group" style="padding-left: 70px">
                         <div class="col-xs-1 text-right"  style="width: 80px">
-                            <label class="control-label text-right">Date </label>
+                            <label class="control-label text-right">Date <font style="color: red">*</font></label>
                         </div>
                         <div class="col-xs-1"  style="width: 200px">
                             <div class='input-group date'>
@@ -85,6 +87,8 @@
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-xs-4 form-group">
                         <div class="col-xs-1 text-right" style="width: 100px">
                             <label class="control-label text-right">AP Code </label>
                         </div>
@@ -96,7 +100,7 @@
                 <div class="row">
                     <div class="col-xs-12 form-group">
                         <div class="col-xs-1 text-right" style="width: 120px">
-                            <label class="control-label text-right">Name </label>
+                            <label class="control-label text-right">Name <font style="color: red">*</font></label>
                         </div>
                         <div class="col-xs-1" style="width: 481px">
                             <input id="name" name="name" type="text" class="form-control" value="${creditNote.cnName}">
@@ -154,13 +158,14 @@
                                         <td style="text-align:center">
                                             <!--<input type="" name="taxType" class="form-control" value=""/>-->
                                             <select name="taxType" >
+                                                <option value=""></option>
                                                 <c:forEach var="item" items="${productTypeList}" >
                                                     <option value="${item.id}" ${creditNoteDetail.MPayType.id == item.id ? 'selected="selected"' : ''}>${item.name}</option>
                                                 </c:forEach>
                                             </select>
                                         </td>
-                                        <td style="text-align:center"><input type="text" name="taxAmount" class="form-control text-right decimal" value="${creditNoteDetail.taxInvoice.amountExcludeVat}"/></td>
-                                        <td style="text-align:center"><input type="text" name="taxReal" class="form-control text-right decimal" value="${creditNoteDetail.amount}"/></td>
+                                        <td style="text-align:center"><input type="text" name="taxAmount" class="form-control text-right decimal" value="${creditNoteDetail.amount}"/></td>
+                                        <td style="text-align:center"><input type="text" name="taxReal" class="form-control text-right decimal" value="${creditNoteDetail.realamount}"/></td>
                                         <td style="text-align:center"><input type="text" name="taxVat" class="form-control text-right decimal" value="${creditNoteDetail.vat}" readonly/></td>
                                         <td style="text-align:center"><input type="text" name="taxDesc" class="form-control" value="${creditNoteDetail.description}"/></td>
                                         <td class="text-center">
@@ -198,7 +203,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+
                                 </tbody>
                             </table>
                         </div>
@@ -226,27 +231,27 @@
                                 <div class="panel-body">
                                     <div class="col-xs-12 ">
                                         <div class="col-md-2 text-right ">
-                                            <button type="button" onclick="openReport()">
+                                            <button type="button" onclick="openReport()" class="btn btn-default">
                                                 <span id="SpanPrintPackage" class="glyphicon glyphicon-print"></span> Print
                                             </button>
                                         </div>
                                         <div class="col-md-2 text-left " style="padding-left: 0px">
                                             <button type="button" onclick="sendMail()" class="btn btn-default">
-                                                <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Send Mail
+                                                <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-envelope"></span> Send Mail
                                             </button>
                                         </div>
-                                        <div class="col-md-4 text-right "></div>
+                                        <div class="col-md-3 text-right "></div>
 
-                                        <div class="col-md-1 text-right ">
-                                            <button type="button" class="btn btn-primary ${creditNote.MFinanceItemstatus.id == '1' ? '' : 'hidden'}" 
+                                        <div class="col-md-2 text-right ">
+                                            <button type="button" class="btn btn-danger ${creditNote.MFinanceItemstatus.id == '1' ? '' : 'hidden'}" 
                                                     onclick="enableVoid();" data-toggle="modal" data-target="#voidModal"
                                                     ${enableVoid ? '' : 'disabled'}>
-                                                <span id="SpanEnableVoid" class="glyphicon glyphicon-ok" ></span> Void
+                                                <span id="SpanEnableVoid" class="glyphicon glyphicon-remove" ></span> Void
                                             </button>
                                             <button type="button" class="btn btn-danger ${creditNote.MFinanceItemstatus.id == '2' ? '' : 'hidden'}" 
                                                     onclick="disableVoid();" data-toggle="modal" data-target="#voidModal" 
                                                     ${disableVoid ? '' : 'disabled'}>
-                                                <span id="SpanDisableVoid" class="glyphicon glyphicon-remove" ></span> Void
+                                                <span id="SpanDisableVoid" class="glyphicon glyphicon-remove" ></span> Cancel Void
                                             </button>
                                         </div>
                                         <div class="col-md-1 text-right ">
@@ -319,6 +324,7 @@
                 </td>
                 <td style="text-align:center">
                     <select name="taxType" >
+                        <option value=""></option>
                         <c:forEach var="item" items="${productTypeList}">
                             <option value="${item.id}" title="">${item.name}</option>
                         </c:forEach>
