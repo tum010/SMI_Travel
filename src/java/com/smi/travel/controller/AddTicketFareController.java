@@ -4,11 +4,14 @@ import com.smi.travel.datalayer.entity.AirticketFlight;
 import com.smi.travel.datalayer.entity.AirticketFlightView;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.BookingFlight;
+import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.MAirlineAgent;
 import com.smi.travel.datalayer.entity.MPaymentDoctype;
 import com.smi.travel.datalayer.entity.Master;
+import com.smi.travel.datalayer.entity.ReceiptDetail;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.service.AgentService;
+import com.smi.travel.datalayer.service.ReceiptService;
 import com.smi.travel.datalayer.service.TicketFareAirlineService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
@@ -49,10 +52,12 @@ public class AddTicketFareController extends SMITravelController {
     private static final String TICKETFAREFLAG = "ticketFareFlag";
     private static final String REFNO = "refNo";
     private static final String FLIGHTDETAILFROMAIR = "Flight_Detail_Airticket";
-    
+    private static final String INVOICEDETAILLIST = "invoiceDetailList";
+    private static final String RECEIPTDETAILLIST = "receiptDetailList";
     private UtilityService utilityService;
     private TicketFareAirlineService ticketFareAirlineService;
     private AgentService agentService;
+    private ReceiptService receiptService;
     UtilityFunction util;
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -279,6 +284,17 @@ public class AddTicketFareController extends SMITravelController {
             List<AirticketFlightView> airticketFlightView = new ArrayList<AirticketFlightView>();
             bookingFlights = ticketFareAirlineService.getListFlightFromTicketNo(ticketNo);
             request.setAttribute(FLIGHTDETAIL, bookingFlights);
+
+            List<InvoiceDetail> invoiceDetailList = new ArrayList<InvoiceDetail>();
+            invoiceDetailList = ticketFareAirlineService.getInvoiceDetailFromTicketNo(ticketNo);
+            request.setAttribute(INVOICEDETAILLIST, invoiceDetailList);
+            List<ReceiptDetail> receiptDetailList = new ArrayList<ReceiptDetail>();
+            for (int i = 0; i < invoiceDetailList.size() ; i++) {
+                System.out.println(" invoiceDetailList ===  " + invoiceDetailList.get(i).getId());
+                receiptDetailList = receiptService.getReceiptDetailFromInvDetailId(invoiceDetailList.get(i).getId());
+                request.setAttribute(RECEIPTDETAILLIST, receiptDetailList);
+            }
+            
             if(bookingFlights == null){
                 airticketFlightView = ticketFareAirlineService.getListAirticketFlightFromTicketNo(ticketNo);
                 request.setAttribute(FLIGHTDETAILFROMAIR, airticketFlightView);
@@ -330,6 +346,15 @@ public class AddTicketFareController extends SMITravelController {
                 List<AirticketFlightView> airticketFlightView = new ArrayList<AirticketFlightView>();
                 bookingFlights = ticketFareAirlineService.getListFlightFromTicketNo(ticketNo);
                 request.setAttribute(FLIGHTDETAIL, bookingFlights);
+                List<InvoiceDetail> invoiceDetailList = new ArrayList<InvoiceDetail>();
+                invoiceDetailList = ticketFareAirlineService.getInvoiceDetailFromTicketNo(ticketNo);
+                request.setAttribute(INVOICEDETAILLIST, invoiceDetailList);
+                List<ReceiptDetail> receiptDetailList = new ArrayList<ReceiptDetail>();
+                for (int i = 0; i < invoiceDetailList.size() ; i++) {
+                    System.out.println(" invoiceDetailList ===  " + invoiceDetailList.get(i).getId());
+                    receiptDetailList = receiptService.getReceiptDetailFromInvDetailId(invoiceDetailList.get(i).getId());
+                    request.setAttribute(RECEIPTDETAILLIST, receiptDetailList);
+                }
                 if(bookingFlights == null){
                     airticketFlightView = ticketFareAirlineService.getListAirticketFlightFromTicketNo(ticketNo);
                     request.setAttribute(FLIGHTDETAILFROMAIR, airticketFlightView);
@@ -476,6 +501,14 @@ public class AddTicketFareController extends SMITravelController {
 
     public void setAgentService(AgentService agentService) {
         this.agentService = agentService;
+    }
+
+    public ReceiptService getReceiptService() {
+        return receiptService;
+    }
+
+    public void setReceiptService(ReceiptService receiptService) {
+        this.receiptService = receiptService;
     }
 
 }
