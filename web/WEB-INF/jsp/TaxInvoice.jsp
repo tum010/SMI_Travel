@@ -317,10 +317,10 @@
                                                         <c:if test="${'1' == taxDetail.isVat}">
                                                             <c:set var="vatChk" value="checked" />
                                                         </c:if>  
-                                                        <input type="checkbox" id="isVat${i.count}" name="isVat${i.count}" value="1" ${vatChk} onclick="CalculateGross('${i.count}')">
+                                                        <input type="checkbox" id="isVat${i.count}" name="isVat${i.count}" value="1" ${vatChk} onclick="CalculateGross('${i.count}')" checked>
                                                     </td>
                                                     <td align="right" id="vatShow${i.count}">${taxDetail.vat}</td>
-                                                    <td align="right"><input class="form-control numerical" style="text-align:right;" type="text" id="gross${i.count}" name="gross${i.count}" value="" readonly=""></td>
+                                                    <td align="right"><input class="form-control numerical" style="text-align:right;" type="text" id="gross${i.count}" name="gross${i.count}" value="0.00" readonly=""></td>
                                                     <td align="right"><input class="form-control numerical" style="text-align:right;" type="text" id="amount${i.count}" name="amount${i.count}" value="${taxDetail.amount}" onfocusout="CalculateAmountTotal('${i.count}')" onkeyup="insertCommas(this)"></td>
                                                     <td>
                                                         <select class="form-control" name="currencyAmount${i.count}" id="currencyAmount${i.count}" onchange="AddrowBySelect(${i.count})">
@@ -1262,9 +1262,9 @@
             '<td><input class="form-control" type="text" id="description' + row + '" name="description' + row + '" value=""></td>' +
             '<td><input class="form-control numerical" style="text-align:right;" type="text" id="cost' + row + '" name="cost' + row +'" value="" onfocusout="CalculateAmountTotal()" onkeyup="insertCommas(this)"></td>' +
             '<td><select class="form-control" name="currencyCost' + row + '" id="currencyCost' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
-            '<td align="center"><input type="checkbox" id="isVat' + row + '" name="isVat' + row + '" value="1" onclick="CalculateGross(\'' + row + '\')"></td>' +
+            '<td align="center"><input type="checkbox" id="isVat' + row + '" name="isVat' + row + '" value="1" onclick="CalculateGross(\'' + row + '\')" checked></td>' +
             '<td align="right" id="vatShow' + row + '"></td>' +
-            '<td><input class="form-control numerical" style="text-align:right;" type="text" id="gross' + row + '" name="gross' + row + '" value="" readonly=""></td>' +
+            '<td><input class="form-control numerical" style="text-align:right;" type="text" id="gross' + row + '" name="gross' + row + '" value="0.00" readonly=""></td>' +
             '<td><input class="form-control numerical" style="text-align:right;" type="text" id="amount' + row + '" name="amount' + row + '" value="" onfocusout="CalculateAmountTotal(\'' + row + '\')" onkeyup="insertCommas(this)"></td>' +
             '<td><select class="form-control" name="currencyAmount' + row + '" id="currencyAmount' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
             '<td>' + 
@@ -1281,6 +1281,8 @@
         $("#select_product_list option").clone().appendTo("#product" + row);
         $("#select_currency_list option").clone().appendTo("#currencyCost" + row);
         $("#select_currency_list option").clone().appendTo("#currencyAmount" + row);
+        var vatData = parseFloat($("#vatDefault").val());
+        document.getElementById('vatShow'+row).innerHTML = formatNumber(vatData);         
         $("#countTaxInvoice").val(row+1);
         
     }
@@ -1317,9 +1319,9 @@
                 '<td><input class="form-control" type="text" id="description' + count + '" name="description' + count + '" value=""></td>' +
                 '<td><input class="form-control numerical" style="text-align:right;" type="text" id="cost' + count + '" name="cost' + count +'" value="" onfocusout="CalculateAmountTotal()" onkeyup="insertCommas(this)"></td>' +
                 '<td><select class="form-control" name="currencyCost' + count + '" id="currencyCost' + count + '" onchange="AddrowBySelect(\'' + count + '\')"><option  value="" >---------</option></select></td>' +
-                '<td align="center"><input type="checkbox" id="isVat' + count + '" name="isVat' + count + '" value="1" onclick="CalculateGross(\'' + count + '\')"></td>' +
+                '<td align="center"><input type="checkbox" id="isVat' + count + '" name="isVat' + count + '" value="1" onclick="CalculateGross(\'' + count + '\')" checked></td>' +
                 '<td align="right" id="vatShow' + count + '"></td>' +
-                '<td><input class="form-control numerical" style="text-align:right;" type="text" id="gross' + count + '" name="gross' + count + '" value="" readonly=""></td>' +
+                '<td><input class="form-control numerical" style="text-align:right;" type="text" id="gross' + count + '" name="gross' + count + '" value="0.00" readonly=""></td>' +
                 '<td><input class="form-control numerical" style="text-align:right;" type="text" id="amount' + count + '" name="amount' + count + '" value="" onfocusout="CalculateAmountTotal(\'' + row + '\')" onkeyup="insertCommas(this)"></td>' +
                 '<td><select class="form-control" name="currencyAmount' + count + '" id="currencyAmount' + count + '" onchange="AddrowBySelect(\'' + count + '\')"><option  value="" >---------</option></select></td>' +
                 '<td>' + 
@@ -1358,6 +1360,8 @@
                 document.getElementById('vatShow'+count).innerHTML = formatNumber(vatData);
                 CalculateGross(count);
             }
+            var vatData = parseFloat($("#vatDefault").val());
+            document.getElementById('vatShow'+count).innerHTML = formatNumber(vatData);         
             row = count + 1;
         } else {
             $("#invoiceDetailId" + (count-1)).val(id);
@@ -1380,7 +1384,14 @@
                 var vatData = parseFloat($("#vatDefault").val());
                 document.getElementById('vatShow'+(count-1)).innerHTML = formatNumber(vatData);
                 CalculateGross((count-1));
+            } else {
+                $('#isVat'+(count-1)).prop('checked', true);
+                var vatData = parseFloat($("#vatDefault").val());
+                document.getElementById('vatShow'+(count-1)).innerHTML = formatNumber(vatData);
+                CalculateGross((count-1));
             }
+            var vatData = parseFloat($("#vatDefault").val());
+            document.getElementById('vatShow'+(count-1)).innerHTML = formatNumber(vatData);         
             row = count + 1;
         }    
                   
@@ -1395,9 +1406,9 @@
             '<td><input class="form-control" type="text" id="description' + row + '" name="description' + row + '" value=""></td>' +
             '<td><input class="form-control numerical" style="text-align:right;" type="text" id="cost' + row + '" name="cost' + row +'" value="" onfocusout="CalculateAmountTotal()" onkeyup="insertCommas(this)"></td>' +
             '<td><select class="form-control" name="currencyCost' + row + '" id="currencyCost' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
-            '<td align="center"><input type="checkbox" id="isVat' + row + '" name="isVat' + row + '" value="1" onclick="CalculateGross(\'' + row + '\')"></td>' +
+            '<td align="center"><input type="checkbox" id="isVat' + row + '" name="isVat' + row + '" value="1" onclick="CalculateGross(\'' + row + '\')" checked></td>' +
             '<td align="right" id="vatShow' + row + '"></td>' +
-            '<td><input class="form-control numerical" style="text-align:right;" type="text" id="gross' + row + '" name="gross' + row + '" value="" readonly=""></td>' +
+            '<td><input class="form-control numerical" style="text-align:right;" type="text" id="gross' + row + '" name="gross' + row + '" value="0.00" readonly=""></td>' +
             '<td><input class="form-control numerical" style="text-align:right;" type="text" id="amount' + row + '" name="amount' + row + '" value="" onfocusout="CalculateAmountTotal(\'' + row + '\')" onkeyup="insertCommas(this)"></td>' +
             '<td><select class="form-control" name="currencyAmount' + row + '" id="currencyAmount' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
             '<td>' + 
@@ -1413,7 +1424,9 @@
         $("#tr_TaxInvoiceDetailAddRow").addClass("hide");
         $("#select_product_list option").clone().appendTo("#product" + row);
         $("#select_currency_list option").clone().appendTo("#currencyCost" + row);
-        $("#select_currency_list option").clone().appendTo("#currencyAmount" + row); 
+        $("#select_currency_list option").clone().appendTo("#currencyAmount" + row);
+        var vatData = parseFloat($("#vatDefault").val());
+        document.getElementById('vatShow'+row).innerHTML = formatNumber(vatData);         
         var tempCount = row+1;
         $("#countTaxInvoice").val(tempCount);
         CalculateAmountTotal();
@@ -1453,7 +1466,7 @@
         document.getElementById('TextAmount').value = toWords(grandTotal);
 
         if(row){
-            if(document.getElementById("isVat"+row).checked){
+            if((document.getElementById("isVat"+row).checked) && (document.getElementById("gross"+row).value === '0.00')){
                 CalculateGross(row);
             }            
         }
