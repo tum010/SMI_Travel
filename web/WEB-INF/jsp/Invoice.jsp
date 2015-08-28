@@ -452,8 +452,8 @@
                                                 <td><input type="text" value="${ind.amount}" id="InputAmountLocal${taxdesc.count}" name="InputAmountLocal${taxdesc.count}" class="form-control" ></td>
                                                 <td class="hidden"><input type="text" value="${ind.amount}" id="InputAmountLocalTemp${taxdesc.count}" name="InputAmountLocalTemp${taxdesc.count}"  ></td>
                                                 <td align="center" >
-                                                    <span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('${taxdesc.count}','${ind.description}')" data-toggle="modal" data-target="#DelDetailBill" >  </span>
-                                                    <a href="" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail('${taxdesc.count}')" id="InputDescription${taxdesc.count}"><span  class="glyphicon glyphicon-file"></span></a>                
+                                                    <span  class="glyphicon glyphicon-th-list" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail('${taxdesc.count}')" id="InputDescription${taxdesc.count}"></span>
+                                                    <span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('${taxdesc.count}','${ind.description}')" data-toggle="modal" data-target="#DelDetailBill" >  </span>        
                                                 </td>
                                                 <td class="hidden">
                                                     <c:set var="displayDescriptionTemp" value="${fn:trim(ind.displayDescription)}" />
@@ -556,8 +556,8 @@
                                                 <td><input type="text" value="${ind.amount}" id="InputAmountLocal${taxdesc.count}" name="InputAmountLocal${taxdesc.count}" class="form-control" ></td>
                                                 <td class="hidden"><input type="text" value="${ind.amount}" id="InputAmountLocalTemp${taxdesc.count}" name="InputAmountLocalTemp${taxdesc.count}"  ></td>
                                                 <td align="center" >
-                                                    <span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('${taxdesc.count}','${ind.description}')" data-toggle="modal" data-target="#DelDetailBill" >  </span>
-                                                    <a href="" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail('${taxdesc.count}')" id="InputDescription${taxdesc.count}"><span  class="glyphicon glyphicon-file"></span></a>                
+                                                    <span  class="glyphicon glyphicon-th-list" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail('${taxdesc.count}')" id="InputDescription${taxdesc.count}"></span>
+                                                    <span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('${taxdesc.count}','${ind.description}')" data-toggle="modal" data-target="#DelDetailBill" >  </span>        
                                                 </td>
                                                 <td class="hidden">
                                                     <c:set var="displayDescriptionTemp" value="${fn:trim(ind.displayDescription)}" />

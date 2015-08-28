@@ -346,7 +346,7 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur){
             '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control">'+ selectC +'</select></td>'+
             '<td><input type="text" onfocusout="changeFormatAmountLocalNumber(' + row + ')" value="'+price +'" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control" ></td>'+
             '<td class="hidden"><input type="text" onfocusout="changeFormatAmountLocalTempNumber(' + row + ')" value="'+price +'" id="InputAmountLocalTemp' + row + '" name="InputAmountLocalTemp' + row + '"  ></td>'+
-            '<td align="center" ><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('+row+',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span><a href="" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"><span  class="glyphicon glyphicon-file"></span></a></td>'+
+            '<td align="center" ><span  class="glyphicon glyphicon-th-list" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"></span><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('+row+',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span></td>'+
             '<td class="hidden"><textarea id="DescriptionInvoiceDetail' + row + '" name="DescriptionInvoiceDetail' + row + '"> '+ description +'</textarea> </td>'+
             '</tr>'
         );
@@ -370,7 +370,7 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur){
             '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control">'+ selectC +'</select></td>'+
             '<td><input type="text" onfocusout="changeFormatAmountLocalNumber(' + row + ')" value="'+price +'" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control" ></td>'+
             '<td class="hidden"><input type="text" onfocusout="changeFormatAmountLocalTempNumber(' + row + ')" value="'+price +'" id="InputAmountLocalTemp' + row + '" name="InputAmountLocalTemp' + row + '"  ></td>'+
-            '<td align="center" ><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('+row+',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span><a href="" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"><span  class="glyphicon glyphicon-file"></span></a></td>'+
+            '<td align="center" ><span  class="glyphicon glyphicon-th-list" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"></span><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('+row+',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span></td>'+
             '<td class="hidden"><textarea id="DescriptionInvoiceDetail' + row + '" name="DescriptionInvoiceDetail' + row + '"> '+ description +'</textarea> </td>'+
             '</tr>'
         );
@@ -1111,19 +1111,9 @@ function CalculateGrandTotal(id){
 }
 
 function clearScreenInvoice(){
-    $('#SearchRefNo, #InvNo, #InputInvDate, #InputDueDate, #InvTo, #InvToName, #InvToAddress, #SaleStaffId, #SaleStaffCode, #SaleStaffName, #ARCode, #Remark, #TextAmount, #TotalNet ').val('');
-    $('#Grpup').attr('checked', false);
-    $('input[name="Department"]')[0].checked = false;
-    $('input[name="Department"]')[1].checked = false;
-    $('input[name="Department"]')[2].checked = false;
-    $('#MasterReservation > tbody  > tr').each(function() {
-        $(this).remove();
-    });
-    $('#DetailBillableTable > tbody  > tr').each(function() {
-        $(this).remove();
-    });
-    $('#counterTable').val('1');
-    AddRowDetailBillAble();
+    var action = document.getElementById('action');
+    action.value = 'new';
+    document.getElementById('InvoiceForm').submit();
 }
 
 function checkVatInvoiceAll(){
