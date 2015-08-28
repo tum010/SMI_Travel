@@ -558,7 +558,7 @@
      
 
     <bean id="InvoiceMonthlyController" class="com.smi.travel.controller.InvoiceMonthlyController">
-        
+        <property name="utilityService" ref="UtilityService" />
     </bean>
 	<!-- add bean id controller -->
 
