@@ -2,6 +2,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<c:set var="listClient" value="${requestScope['listClient']}" />
+<c:set var="listAccno" value="${requestScope['listAccno']}" />
+
 <section class="content-header"  >
     <h4>
         <b>Report : Invoice monthly report </b>
@@ -28,17 +32,17 @@
                     <div class="row"> 
                         <div class="col-sm-8">
                             <div class="form-group">
-                                <label for="billFrom" class="col-sm-3 control-label text-right">Bill From</label>
-                                <div class="col-sm-4">
+                                <label for="billFrom" class="col-sm-5 control-label text-right">Bill From</label>
+                                <div class="col-sm-3">
                                     <div class="form-group">
                                          <div class='input-group' >
                                             <input type='text' id="billFromCode" name="billFromCode"  class="form-control" />
-                                            <span class="input-group-addon"><span class="glyphicon glyphicon-search" data-toggle="modal" data-target="#BillToModal"></span></span>
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-search" data-toggle="modal" data-target="#BillFromModal"></span></span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-5">
-                                    <input type='text' id="billFromName" name="billFromName"  class="form-control" />
+                                <div class="col-sm-4">
+                                    <input type='text' id="billFromName" name="billFromName"  class="form-control" readonly/>
                                 </div>
                             </div>
                         </div>
@@ -46,17 +50,17 @@
                     <div class="row">
                         <div class="col-sm-8">
                             <div class="form-group">
-                                <label for="client" class="col-sm-3 control-label text-right">Client</label>
-                                <div class="col-sm-4">
+                                <label for="client" class="col-sm-5 control-label text-right">Client</label>
+                                <div class="col-sm-3">
                                     <div class="form-group">
                                          <div class='input-group' >
                                             <input type='text' id="clientCode" name="clientCode"  class="form-control" />
-                                            <span class="input-group-addon"><span class="glyphicon glyphicon-search" data-toggle="modal" data-target="#BillToModal"></span></span>
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-search" data-toggle="modal" data-target="#ClientModal"></span></span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-5">
-                                    <input type='text' id="clientName" name="clientName"  class="form-control" />
+                                <div class="col-sm-4">
+                                    <input type='text' id="clientName" name="clientName"  class="form-control" readonly/>
                                 </div>
                             </div>
                         </div>
@@ -64,8 +68,8 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label for="payment" class="col-sm-3 control-label text-right">Payment</label>
-                                <div class="col-sm-9">
+                                <label for="payment" class="col-sm-5 control-label text-right">Payment</label>
+                                <div class="col-sm-4">
                                     <div class="form-group">
                                         <input type='text' id="payment" name="payment"  class="form-control" />
                                     </div>
@@ -76,13 +80,17 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label for="accNo" class="col-sm-3 control-label text-right">Acc No</label>
-                                <div class="col-sm-9">
+                                <label for="accNo" class="col-sm-5 control-label text-right">Acc No</label>
+                                <div class="col-sm-4">
                                     <div class="form-group">
                                         <select id="accNo" name="accNo"  class="form-control">
-                                            <option value="">1</option>
-                                            <option value="">1</option>
-                                            <option value="">1</option>
+                                            <c:forEach var="item" items="${listAccno}" >
+                                                <c:set var="selectAccno" value="" />
+                                                <%--<c:if test="${item.id == invoice.MAccpay.id}">--%>
+                                                    <%--<c:set var="selectTerm" value="selected" />--%>
+                                                <%--</c:if>--%>
+                                                <option value="${item.code} ${item.accNo}" ${selectAccno}>${item.code} - ${item.accNo}</option>
+                                            </c:forEach>
                                         </select>
                                     </div>
                                 </div>
@@ -92,13 +100,14 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label for="vatType" class="col-sm-3 control-label text-right">Vat Type</label>
-                                <div class="col-sm-9">
+                                <label for="vatType" class="col-sm-5 control-label text-right">Vat Type</label>
+                                <div class="col-sm-4">
                                     <div class="form-group">
                                         <select id="vatType" name="vatType"  class="form-control">
-                                            <option value="">1</option>
-                                            <option value="">1</option>
-                                            <option value="">1</option>
+                                            <option value="V">Vat</option>
+                                            <option value="N">No Vat</option>
+                                            <option value="T">Temp</option>
+                                            <option value="A">Ticket</option>
                                         </select>
                                     </div>
                                 </div>
@@ -108,8 +117,8 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-3 control-label text-right"> From </label>
-                                <div class="col-md-9">  
+                                <label class="col-md-5 control-label text-right"> From </label>
+                                <div class="col-md-4">  
                                     <div class="form-group" id="fromdatepanel">
                                         <div class='input-group date' id='fromdate'>
                                             <input type='text' id="fromdate" name="fromdate" class="form-control" data-date-format="YYYY-MM-DD" />
@@ -124,8 +133,8 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group" id="todatepanel">
-                                <label class="col-md-3 control-label text-right"> To </label>
-                                <div class="col-md-9">  
+                                <label class="col-md-5 control-label text-right"> To </label>
+                                <div class="col-md-4">  
                                     <div class="form-group">
                                         <div class='input-group date' id='todate'>
                                             <input   type='text' id="todate" name="todate" class="form-control" data-date-format="YYYY-MM-DD"  />
@@ -140,13 +149,13 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label for="department" class="col-sm-3 control-label text-right">Department</label>
-                                <div class="col-sm-9">
+                                <label for="department" class="col-sm-5 control-label text-right">Department</label>
+                                <div class="col-sm-4">
                                     <div class="form-group">
                                         <select id="department" name="department"  class="form-control">
-                                            <option value="">1</option>
-                                            <option value="">1</option>
-                                            <option value="">1</option>
+                                            <option value="Wendy">Wendy</option>
+                                            <option value="Outbound">Outbound</option>
+                                            <option value="Inbound">Inbound</option>
                                         </select>
                                     </div>
                                 </div>
@@ -170,29 +179,29 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="BillToModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="BillFromModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">Bill To</h4>
+                <h4 class="modal-title">Bill From</h4>
             </div>
             <div class="modal-body">
-                <!--Bill To List Table-->
-                <table class="display" id="BillToTable">
+                Bill To List Table
+                <table class="display" id="BillFromTable">
                     <thead>                        
                         <tr class="datatable-header">
-                            <th>Bill To</th>
+                            <th>Bill From</th>
                             <th>Bill Name</th>
                             <th>Address</th>
                             <th>Tel</th>
                         </tr>
                     </thead>
                     <script>
-                        bill = [];
+                        billFrom = [];
                     </script>
                     <tbody>
-                        <c:forEach var="item" items="${customerAgentList}">
+                        <c:forEach var="item" items="${listClient}">
                             <tr>                                
                                 <td class="item-billto">${item.billTo}</td>
                                 <td class="item-name">${item.billName}</td>                                
@@ -200,7 +209,125 @@
                                 <td class="item-tel ">${item.tel}</td>
                             </tr>
                         <script>
-                            bill.push({code: "${item.billTo}", name: "${item.billName}", address: "${item.address}" , tel: "${item.tel}"})
+                            billFrom.push({code: "${item.billTo}", name: "${item.billName}", address: "${item.address}" , tel: "${item.tel}"});
+                        </script>
+                        </c:forEach>
+                            
+                    </tbody>
+
+                </table>
+                <!--Script Bill To List Table-->
+                <script>
+                    $(document).ready(function () {
+                        var billF = [];
+                        $.each(billFrom, function (key, value) {
+                            billF.push(value.code);
+                            if ( !(value.name in billF) ){
+                               billF.push(value.name);
+                            }
+                        });
+
+                        $("#billFromCode").autocomplete({
+                            source: billF,
+                            close:function( event, ui ) {
+                               $("#billFromCode").trigger('keyup');
+                            }
+                        });
+                        $("#billFromCode").keyup(function () {
+                            var position = $(this).offset();
+                            $(".ui-widget").css("top", position.top + 30);
+                            $(".ui-widget").css("left", position.left);
+                            var code = this.value.toUpperCase();
+                            var name = this.value;
+                            $("#billFromName").val(null);
+                            $.each(billFrom, function (key, value) {
+                                if (value.code.toUpperCase() === code) {
+                                    $("#billFromName").val(value.name);                                   
+                                }
+                                if(name === value.name){
+                                    $("#billFromCode").val(value.code);
+                                    $("#billFromName").val(value.name);    
+                                    code = $("#billFromCode").val().toUpperCase();
+                                }
+                                
+                            });
+                        });
+                        
+                        $("#BillFromTable tr").on('click', function () {
+                            var billto = $(this).find(".item-billto").text();
+                            var billname = $(this).find(".item-name").text();
+                            var address = $(this).find(".item-address").text();
+                            var tel = $(this).find(".item-tel").text();
+                            $("#billFromCode").val(billto);
+                            $("#billFromName").val(billname);
+//                            $("#address").val(address);
+                            $("#BillFromModal").modal('hide');
+                        });
+
+                        // BillTo Table
+                        var BillToTable = $('#BillFromTable').dataTable({bJQueryUI: true,
+                            "sPaginationType": "full_numbers",
+                            "bAutoWidth": false,
+                            "bFilter": true,
+                            "bPaginate": true,
+                            "bInfo": false,
+                            "bLengthChange": false,
+                            "iDisplayLength": 10
+                        });
+                        $('#BillFromTable tbody').on('click', 'tr', function () {
+                            $('.collapse').collapse('show');
+                            if ($(this).hasClass('row_selected')) {
+                                $(this).removeClass('row_selected');
+                            }
+                            else {
+                                BillToTable.$('tr.row_selected').removeClass('row_selected');
+                                $(this).addClass('row_selected');
+                            }
+                        });
+
+                    });
+
+                </script>
+            </div>
+            <div class="modal-footer">
+                <div class="text-right">
+                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<div class="modal fade" id="ClientModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Client </h4>
+            </div>
+            <div class="modal-body">
+                <!--Bill To List Table-->
+                <table class="display" id="ClientTable">
+                    <thead>                        
+                        <tr class="datatable-header">
+                            <th>Bill From</th>
+                            <th>Bill Name</th>
+                            <th class="hidden">Address</th>
+                            <th class="hidden">Tel</th>
+                        </tr>
+                    </thead>
+                    <script>
+                        bill = [];
+                    </script>
+                    <tbody>
+                        <c:forEach var="client" items="${listClient}">
+                            <tr>                                
+                                <td class="item-billto">${client.billTo}</td>
+                                <td class="item-name">${client.billName}</td>                                
+                                <td class="item-address hidden">${client.address}</td>
+                                <td class="item-tel hidden">${client.tel}</td>
+                            </tr>
+                        <script>
+                            bill.push({code: "${client.billTo}", name: "${client.billName}"});
                         </script>
                         </c:forEach>
                             
@@ -218,45 +345,45 @@
                             }
                         });
 
-                        $("#billto").autocomplete({
+                        $("#clientCode").autocomplete({
                             source: billTo,
                             close:function( event, ui ) {
-                               $("#billto").trigger('keyup');
+                               $("#clientCode").trigger('keyup');
                             }
                         });
-                        $("#billto").keyup(function () {
+                        $("#clientCode").keyup(function () {
                             var position = $(this).offset();
                             $(".ui-widget").css("top", position.top + 30);
                             $(".ui-widget").css("left", position.left);
                             var code = this.value.toUpperCase();
                             var name = this.value;
-                            $("#billname").val(null);
+                            $("#clientName").val(null);
                             $.each(bill, function (key, value) {
                                 if (value.code.toUpperCase() === code) {
-                                    $("#billname").val(value.name);                                   
+                                    $("#clientName").val(value.name);                                   
                                 }
                                 if(name === value.name){
-                                    $("#billto").val(value.code);
-                                    $("#billname").val(value.name);    
-                                    code = $("#billto").val().toUpperCase();
+                                    $("#clientCode").val(value.code);
+                                    $("#clientName").val(value.name);    
+                                    code = $("#clientCode").val().toUpperCase();
                                 }
                                 
                             });
                         });
                         
-                        $("#BillToTable tr").on('click', function () {
+                        $("#ClientTable tr").on('click', function () {
                             var billto = $(this).find(".item-billto").text();
                             var billname = $(this).find(".item-name").text();
-                            var address = $(this).find(".item-address").text();
-                            var tel = $(this).find(".item-tel").text();
-                            $("#billto").val(billto);
-                            $("#billname").val(billname);
-                            $("#address").val(address);
-                            $("#BillToModal").modal('hide');
+//                            var address = $(this).find(".item-address").text();
+//                            var tel = $(this).find(".item-tel").text();
+                            $("#clientCode").val(billto);
+                            $("#clientName").val(billname);
+//                            $("#address").val(address);
+                            $("#ClientModal").modal('hide');
                         });
 
                         // BillTo Table
-                        var BillToTable = $('#BillToTable').dataTable({bJQueryUI: true,
+                        var BillToTable = $('#ClientTable').dataTable({bJQueryUI: true,
                             "sPaginationType": "full_numbers",
                             "bAutoWidth": false,
                             "bFilter": true,
@@ -265,7 +392,7 @@
                             "bLengthChange": false,
                             "iDisplayLength": 10
                         });
-                        $('#BillToTable tbody').on('click', 'tr', function () {
+                        $('#ClientTable tbody').on('click', 'tr', function () {
                             $('.collapse').collapse('show');
                             if ($(this).hasClass('row_selected')) {
                                 $(this).removeClass('row_selected');
@@ -275,11 +402,8 @@
                                 $(this).addClass('row_selected');
                             }
                         });
-
                     });
-
                 </script>
-
             </div>
             <div class="modal-footer">
                 <div class="text-right">

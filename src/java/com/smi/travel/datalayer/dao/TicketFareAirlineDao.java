@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.dao;
 
 import com.smi.travel.datalayer.entity.AirticketFlightView;
 import com.smi.travel.datalayer.entity.BookingFlight;
+import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
 import java.util.HashMap;
@@ -32,4 +33,6 @@ public interface TicketFareAirlineDao {
     public int checkDeletePaymentFromTicketNo(String ticketNo);
     public int checkDeleteRefundFromTicketNo(String ticketNo);
     public HashMap<String,Object> getDetailTicketFareAirline(String TicketNo);
+    
+    public List<InvoiceDetail> getInvoiceDetailFromTicketNo(String ticketNo);
 }

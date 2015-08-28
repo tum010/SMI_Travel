@@ -450,6 +450,7 @@
                         <input type="hidden" class="form-control" id="countRowCredit" name="countRowCredit" value="${requestScope['creditRowCount']}" />
                         <input type="hidden" class="form-control" id="counter" name="counter" value="${requestScope['productRowCount']}" />
                         <input type="hidden" name="vatValue" id="vatValue" value="${requestScope['vat']}">
+                        <input type="hidden" name="searchReceipt" id="searchReceipt" value="${requestScope['searchReceipt']}">
                         <select class="hidden" name="billTypeList" id="billTypeList">
                             <c:forEach var="product" items="${billTypeList}" varStatus="status">                                
                                 <option  value="${product.id}">${product.name}</option>
@@ -1231,6 +1232,10 @@
         $('.datemask').mask('0000-00-00');
         $('.date').datetimepicker();
         $(".money").mask('000,000,000.00', {reverse: true});
+        
+        if($('#searchReceipt').val() == "dummy"){
+            $('#textAlertReceiveNo').show();
+        }    
 //        $(".moneyformat").mask('000,000,000', {reverse: true});
         $("#receiveNo").keyup(function (event) {
             if(event.keyCode === 13){
@@ -1449,12 +1454,12 @@
         });
         
         setFormatCurrencyReceipt();       
-        var creditlength = $("#CreditDetailTable tr").length ;
+//        var creditlength = $("#CreditDetailTable tr").length ;
         var detaillength = $("#ReceiptListTable tr").length ;
-        detaillength = detaillength - 1 ;
+
         if(detaillength > 1) {
-            for(var i =0;i<detaillength;i++){
-                if( $('#receiveCost'+i).val() != ""){
+            for(var i = 1;i<detaillength;i++){
+                if( $('#receiveCost'+i).val() != "" ){
                     setFormatCurrency(i);
                 }
                 if($('#receiveAmount'+i).val() != ""){
@@ -1809,12 +1814,8 @@ function clearNew(){
     $("#chqDate2").val("");
     $("#chqAmount2").val("");
 
-    $('#ReceiptListTable').dataTable().fnClearTable();
-    $('#ReceiptListTable').dataTable().fnDestroy();
     $("#ReceiptListTable tbody").empty();
 
-    $('#CreditDetailTable').dataTable().fnClearTable();
-    $('#CreditDetailTable').dataTable().fnDestroy();
     $("#CreditDetailTable tbody").empty();
     AddRowProduct(0);
     AddRowCredit(0);
@@ -1908,9 +1909,7 @@ function addProduct(product,description,cost,cur,isVat,vat,amount,currency,invId
     AddDataRowProduct(tempCount,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,disdescription,number);
 }
 function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,disdescription,number) {
-    var rowAll = $("#ReceiptListTable tr").length;
-//    var tempCount = parseInt(rowAll-2);
-//    alert(rowAll + "___" + tempCount + " row :: "+row);
+    var rowAll = row+1;
     for(var i =0; i<rowAll ;i++){
         if($("#receiveProduct"+i).val() != "" 
             || $("#receiveDes"+i).val() != "" 

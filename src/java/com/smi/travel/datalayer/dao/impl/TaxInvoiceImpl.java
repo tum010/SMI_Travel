@@ -347,4 +347,13 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
         this.sessionFactory.close();
         return taxInvoiceDetailList;
     }
+
+    @Override
+    public String checkInvoiceDetailValue(String id, BigDecimal cost, BigDecimal amount) {
+        String result = "";
+        Session session = this.sessionFactory.openSession();
+        String query = " from InvoiceDetail i WHERE t.invoiceDetail.id = :invDetailId";
+        
+        return result;
+    }
 }

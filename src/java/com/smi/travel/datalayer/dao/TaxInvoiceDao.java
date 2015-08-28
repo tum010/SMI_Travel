@@ -9,6 +9,7 @@ package com.smi.travel.datalayer.dao;
 import com.smi.travel.datalayer.entity.TaxInvoice;
 import com.smi.travel.datalayer.entity.TaxInvoiceDetail;
 import com.smi.travel.datalayer.view.entity.TaxInvoiceView;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -27,4 +28,5 @@ public interface TaxInvoiceDao {
     public TaxInvoiceView getTaxInvoiceViewFromTaxNo(String TaxNo);
     public List<TaxInvoiceView> SearchTaxInvoiceFromFilter(String From,String To,String Department);
     public TaxInvoice getTaxInvoiceByTaxNo(String invoiceNo);
+    public String checkInvoiceDetailValue(String id, BigDecimal cost, BigDecimal amount);
 }
