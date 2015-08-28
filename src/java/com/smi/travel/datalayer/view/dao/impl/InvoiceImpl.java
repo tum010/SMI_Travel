@@ -220,7 +220,7 @@ public class InvoiceImpl implements InvoiceReportDao{
                 .addScalar("recamt", Hibernate.BIG_DECIMAL)
                 .addScalar("type", Hibernate.STRING)
                 .list();
-        
+        if(QueryInvoiceMounthList != null && QueryInvoiceMounthList.size() != 0){
         for (Object[] B : QueryInvoiceMounthList) {
             InvoiceMonthly invM = new InvoiceMonthly();
             
@@ -239,12 +239,12 @@ public class InvoiceImpl implements InvoiceReportDao{
             invM.setUsd(util.setFormatMoney(B[6]));
             invM.setPayment(Payment);
             invM.setRecamt(util.setFormatMoney(B[9]));
-            System.out.println("Recamt : " + util.setFormatMoney(B[8]));
-            invM.setRecno(util.setFormatMoney(B[8]));
+//            System.out.println("Recamt : " + util.setFormatMoney(B[8]));
+            invM.setRecno(util.ConvertString(B[8]));
             invM.setType(vattype);
             data.add(invM);
         }
-        
+        }
         session.close();
         this.sessionFactory.close();
         return data;
