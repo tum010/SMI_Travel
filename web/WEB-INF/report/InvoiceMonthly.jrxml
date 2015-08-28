@@ -173,37 +173,37 @@
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="50">
+			<band height="42">
 				<textField pattern="">
-					<reportElement x="200" y="19" width="64" height="13" uuid="60e2efdd-298b-4cb4-aece-08c15682c434"/>
+					<reportElement x="200" y="16" width="64" height="13" uuid="60e2efdd-298b-4cb4-aece-08c15682c434"/>
 					<textElement>
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[   $V{totalthb}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="143" y="19" width="57" height="13" uuid="a8208b61-f01f-4eaf-9f7b-e5deb5f5af5c"/>
+					<reportElement x="143" y="16" width="57" height="13" uuid="a8208b61-f01f-4eaf-9f7b-e5deb5f5af5c"/>
 					<textElement textAlignment="Right">
 						<font size="8"/>
 					</textElement>
 					<text><![CDATA[Total :  ]]></text>
 				</staticText>
 				<textField pattern="">
-					<reportElement x="264" y="19" width="64" height="13" uuid="27bd829e-d277-4ee9-81ac-e67bb5d4dc16"/>
+					<reportElement x="264" y="16" width="64" height="13" uuid="27bd829e-d277-4ee9-81ac-e67bb5d4dc16"/>
 					<textElement>
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[   $V{totaljpy}]]></textFieldExpression>
 				</textField>
 				<textField pattern="">
-					<reportElement x="328" y="19" width="64" height="13" uuid="f91d6539-b748-425d-9701-1382759cf0ba"/>
+					<reportElement x="328" y="16" width="59" height="13" uuid="f91d6539-b748-425d-9701-1382759cf0ba"/>
 					<textElement>
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[   $V{totalusd}]]></textFieldExpression>
 				</textField>
 				<textField pattern="">
-					<reportElement x="414" y="19" width="64" height="13" uuid="7fefa16e-aa2e-4ceb-bb2d-d09dc8f72d2e"/>
+					<reportElement x="414" y="16" width="64" height="13" uuid="7fefa16e-aa2e-4ceb-bb2d-d09dc8f72d2e"/>
 					<textElement>
 						<font size="8"/>
 					</textElement>
@@ -503,7 +503,7 @@
 				<textFieldExpression><![CDATA[  $F{recamt}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="478" y="0" width="65" height="21" uuid="b337dde0-0be7-473a-857f-20a3f209bd40"/>
+				<reportElement x="478" y="0" width="66" height="21" uuid="b337dde0-0be7-473a-857f-20a3f209bd40"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
@@ -512,12 +512,6 @@
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="9" splitType="Stretch"/>
 	</columnFooter>
-	<pageFooter>
-		<band height="54" splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>
