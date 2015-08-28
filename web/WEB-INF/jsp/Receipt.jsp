@@ -1908,9 +1908,7 @@ function addProduct(product,description,cost,cur,isVat,vat,amount,currency,invId
     AddDataRowProduct(tempCount,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,disdescription,number);
 }
 function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,disdescription,number) {
-    var rowAll = $("#ReceiptListTable tr").length;
-//    var tempCount = parseInt(rowAll-2);
-//    alert(rowAll + "___" + tempCount + " row :: "+row);
+    var rowAll = row+1;
     for(var i =0; i<rowAll ;i++){
         if($("#receiveProduct"+i).val() != "" 
             || $("#receiveDes"+i).val() != "" 
