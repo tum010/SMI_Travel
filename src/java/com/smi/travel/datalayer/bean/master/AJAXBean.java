@@ -870,12 +870,10 @@ public class AJAXBean extends AbstractBean implements
                         + "<input type='hidden' name='invoiceId" + row + "' id='invoiceId" + row + "' value='" + invDetailId + "'>"
                         + "<td class='text-center'>" + product + "</td>"
                         + "<td>" + description + "</td>"
-                                "<td class='money' style=\"text-align:right;\">" + cost + "</td>"+
-                                "<td style=\"text-align:center;\">" + curCost + "</td>"+ 
-                        + "<td><center><a href=\"\"><span onclick=\"AddProduct('" + invDetailId + "','" + product + "','" + description + "','" + cost + "','" + curCost + "','" + amount + "','" + curAmount + "','" + isVat + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                        + "<td class='money' style=\"text-align:right;\">" + cost + "</td>"
+                        + "<td style=\"text-align:center;\">" + curCost + "</td>"
+                        + "<td><center><a href=\"\"><span onclick=\"AddProduct('"+invDetailId+"','"+product+"','"+description+"','"+cost+"','"+curCost+"','"+amount+"','"+curAmount+"','"+isVat+"','"+refNo+"')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
-                                "<td><center><a href=\"\"><span onclick=\"AddProduct('"+invDetailId+"','"+product+"','"+description+"','"+cost+"','"+curCost+"','"+amount+"','"+curAmount+"','"+isVat+"','"+refNo+"')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>" +
-                                "</tr>";
                     html.append(newrow);
             }
             row++;
