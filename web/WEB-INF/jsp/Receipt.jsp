@@ -1454,12 +1454,12 @@
         });
         
         setFormatCurrencyReceipt();       
-        var creditlength = $("#CreditDetailTable tr").length ;
+//        var creditlength = $("#CreditDetailTable tr").length ;
         var detaillength = $("#ReceiptListTable tr").length ;
-        detaillength = detaillength - 1 ;
+
         if(detaillength > 1) {
-            for(var i =0;i<detaillength;i++){
-                if( $('#receiveCost'+i).val() != ""){
+            for(var i = 1;i<detaillength;i++){
+                if( $('#receiveCost'+i).val() != "" ){
                     setFormatCurrency(i);
                 }
                 if($('#receiveAmount'+i).val() != ""){
@@ -1814,12 +1814,8 @@ function clearNew(){
     $("#chqDate2").val("");
     $("#chqAmount2").val("");
 
-    $('#ReceiptListTable').dataTable().fnClearTable();
-    $('#ReceiptListTable').dataTable().fnDestroy();
     $("#ReceiptListTable tbody").empty();
 
-    $('#CreditDetailTable').dataTable().fnClearTable();
-    $('#CreditDetailTable').dataTable().fnDestroy();
     $("#CreditDetailTable tbody").empty();
     AddRowProduct(0);
     AddRowCredit(0);

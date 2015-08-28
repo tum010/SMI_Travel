@@ -12,6 +12,7 @@ import com.smi.travel.datalayer.entity.AirticketFlightView;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.BookingFlight;
 import com.smi.travel.datalayer.entity.BookingPassenger;
+import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.MAirlineAgent;
 import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.entity.MRunningCode;
@@ -629,6 +630,36 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         session.close();
         this.sessionFactory.close();
         return flightViews;
+    }
+
+    @Override
+    public List<InvoiceDetail> getInvoiceDetailFromTicketNo(String ticketNo) {
+        List<InvoiceDetail> invoiceDetailList = new ArrayList<InvoiceDetail>();
+        String AirticketPassengerQuery  = "from AirticketPassenger pass where pass.series1||pass.series2||pass.series3 = :ticketNo";
+        String InvoiceDetailQuery  = "from InvoiceDetail invd where invd.billableDesc.billable.master.id = :masterId and invd.billableDesc.MBilltype.name = 'Air Ticket' GROUP BY invd.invoice";
+        Session session = this.sessionFactory.openSession();
+        List<AirticketPassenger> airticketPassList = session.createQuery(AirticketPassengerQuery).setParameter("ticketNo", ticketNo).list();
+        
+        if (airticketPassList.isEmpty()) {
+            System.out.println(" airticketPassList.isEmpty() ");
+            return null;
+        }
+        System.out.println(" airticketPassList size " + airticketPassList.size());
+        if(airticketPassList.get(0).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster() != null) {
+            
+            String masterId = airticketPassList.get(0).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId();
+            System.out.println(" masterId " + masterId);
+            invoiceDetailList = session.createQuery(InvoiceDetailQuery).setParameter("masterId", masterId).list();
+        }
+        
+        if (invoiceDetailList.isEmpty()) {
+            System.out.println(" invoiceDetailList.isEmpty() ");
+            return null;
+        }
+        System.out.println(" invoiceDetailList size " + invoiceDetailList.size());
+//        session.close();
+//        this.sessionFactory.close();
+        return invoiceDetailList;
     }
     
 }

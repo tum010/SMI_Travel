@@ -9,6 +9,7 @@ import com.smi.travel.datalayer.dao.TicketFareAirlineDao;
 import com.smi.travel.datalayer.entity.AirticketFlight;
 import com.smi.travel.datalayer.entity.AirticketFlightView;
 import com.smi.travel.datalayer.entity.BookingFlight;
+import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
 import java.util.List;
@@ -69,6 +70,15 @@ public class TicketFareAirlineService {
     public List<AirticketFlightView> getListAirticketFlightFromTicketNo(String ticketNo){
         return ticketFareAirlineDao.getListAirticketFlightFromTicketNo(ticketNo);
     }
+    
+    public List<InvoiceDetail> getInvoiceDetailFromTicketNo(String ticketNo){
+        return ticketFareAirlineDao.getInvoiceDetailFromTicketNo(ticketNo);
+    }
+    
+    
+    
+    
+    //------------------------ Getter Setter TicketFareAirlineDao ------------------------ 
     
     public TicketFareAirlineDao getTicketFareAirlineDao() {
         return ticketFareAirlineDao;

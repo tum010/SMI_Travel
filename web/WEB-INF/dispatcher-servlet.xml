@@ -471,6 +471,7 @@
 		<property name="utilityService" ref="UtilityService" />
 		<property name="ticketFareAirlineService" ref="TicketFareAirlineService" />
 		<property name="agentService" ref="AgentService" />
+                <property name="receiptService" ref="ReceiptService" />
 	</bean>
 
 	<bean id="SearchTicketFareController" class="com.smi.travel.controller.SearchTicketFareController">
@@ -557,7 +558,7 @@
      
 
     <bean id="InvoiceMonthlyController" class="com.smi.travel.controller.InvoiceMonthlyController">
-        
+        <property name="utilityService" ref="UtilityService" />
     </bean>
 	<!-- add bean id controller -->
 
