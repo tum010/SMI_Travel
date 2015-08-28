@@ -2,6 +2,7 @@
 <!--<script type="text/javascript" src="js/PaymentAirline.js"></script>-->
 <script type="text/javascript" src="js/workspace.js"></script> 
 <script type="text/javascript" src="js/jquery-ui.js"></script>
+<script type="text/javascript" src="js/bootstrapValidator.min.js"></script>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -733,7 +734,7 @@
         
         $('#PaymentAirlineForm').bootstrapValidator({
             container: 'tooltip',
-            excluded: [':disabled', ':hidden', ':not(:visible)'],
+            excluded: [':disabled'],
             feedbackIcons: {
                 valid: 'uk-icon-check',
                 invalid: 'uk-icon-times',
@@ -775,6 +776,15 @@
                     }
                 }
             }
+        }).on('err.field.fv', function(e, data) {
+            if (data.fv.getSubmitButton()) {
+                data.fv.disableSubmitButtons(false);
+            }
+        })
+        .on('success.field.fv', function(e, data) {
+            if (data.fv.getSubmitButton()) {
+                data.fv.disableSubmitButtons(false);
+            }
         });
 
         $( ".numerical" ).on('input', function() { 
@@ -799,6 +809,13 @@
 
         $('#InvoiceSupTable tbody').on('click', 'tr', function () {
             $(this).addClass('row_selected').siblings().removeClass('row_selected');
+            $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'invoiceSupCode');
+            $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'apCode');
+            if($("#invoiceSupCode").val() != "" & $("#apCode").val() != ""){
+                $("#ButtonSave").removeAttr("disabled");
+                $("#ButtonSaveAndNew").removeAttr("disabled");
+                $("#ButtonSearch").removeAttr("disabled");
+            }
         });
         
         $("#InvoiceSupTable tr").on('click', function () {
@@ -812,13 +829,17 @@
             $("#apCode").val(invoice_apcode);
             $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'invoiceSupCode');
             $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'apCode');
+            if($("#invoiceSupCode").val() != "" & $("#apCode").val() != ""){
+                $("#ButtonSave").removeAttr("disabled");
+                $("#ButtonSaveAndNew").removeAttr("disabled");
+                $("#ButtonSearch").removeAttr("disabled");
+            }
             $("#InvoiceSupModal").modal('hide');
         });
         
         
         var invoiceSupCode = [];
         $.each(invoiceSup, function (key, value) {
-//            console.log("invoiceCount=="+invoiceSup.length);
             invoiceSupCode.push(value.code);
             invoiceSupCode.push(value.name);
         });
@@ -850,9 +871,14 @@
                     $("#invoiceSupName").val(value.name);
                     $("#apCode").val(value.apcode);
                 }
-            }); 
+            });
             $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'invoiceSupCode');
             $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'apCode');
+            if($("#invoiceSupCode").val() != "" & $("#apCode").val() != ""){
+                $("#ButtonSave").removeAttr("disabled");
+                $("#ButtonSaveAndNew").removeAttr("disabled");
+                $("#ButtonSearch").removeAttr("disabled");
+            }
         });
 
 
@@ -925,7 +951,7 @@
             clearData();
         }
     });
-    
+
 function refundnoValidate(){
     $('#refundnopanel').removeClass('has-feedback');
     $('#refundnopanel').addClass('has-success');
