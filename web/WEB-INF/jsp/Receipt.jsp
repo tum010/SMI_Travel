@@ -1813,9 +1813,7 @@ function clearNew(){
     $("#chqNo2").val("");
     $("#chqDate2").val("");
     $("#chqAmount2").val("");
-
     $("#ReceiptListTable tbody").empty();
-
     $("#CreditDetailTable tbody").empty();
     AddRowProduct(0);
     AddRowCredit(0);
