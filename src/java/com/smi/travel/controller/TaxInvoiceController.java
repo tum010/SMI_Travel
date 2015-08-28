@@ -217,9 +217,15 @@ public class TaxInvoiceController extends SMITravelController {
             
             if(Integer.parseInt(count) > 1){
                 setTaxInvoiceDetails(request, count, taxInvoice, username, date, vatDefault, createBy, invToDateConvert);
+                checkInvoiceDetail = checkInvoiceDetail(taxInvoice);
             }
             
-            result = taxInvoiceService.saveInvoice(taxInvoice);
+            if("success".equalsIgnoreCase(checkInvoiceDetail)){
+                result = taxInvoiceService.saveInvoice(taxInvoice);
+            } else {
+                result = checkInvoiceDetail;
+            }
+            
             List<TaxInvoiceDetail> taxInvoiceList = new ArrayList<TaxInvoiceDetail>();
             taxInvoiceList = taxInvoice.getTaxInvoiceDetails();
             request.setAttribute(TAXINVOICE, taxInvoice);
@@ -252,10 +258,16 @@ public class TaxInvoiceController extends SMITravelController {
             taxInvoice.setCreateDate(invToDateConvert);
             
             if(Integer.parseInt(count) > 1){
-                setTaxInvoiceDetails(request, count, taxInvoice, username, date, vatDefault, createBy, invToDateConvert);               
+                setTaxInvoiceDetails(request, count, taxInvoice, username, date, vatDefault, createBy, invToDateConvert);
+                checkInvoiceDetail = checkInvoiceDetail(taxInvoice);
             }
             
-            result = taxInvoiceService.saveInvoice(taxInvoice);
+            if("success".equalsIgnoreCase(checkInvoiceDetail)){
+                result = taxInvoiceService.saveInvoice(taxInvoice);
+            } else {
+                result = checkInvoiceDetail;
+            }
+            
             List<TaxInvoiceDetail> taxInvoiceList = new ArrayList<TaxInvoiceDetail>();
             taxInvoiceList = taxInvoice.getTaxInvoiceDetails();
             request.setAttribute(TAXINVOICE, taxInvoice);
