@@ -310,11 +310,11 @@
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
    
-        $('.date').datetimepicker();
-        
-        $(".daydatepicker").datetimepicker({
-            pickTime: false   
-        }); 
+//        $('.date').datetimepicker();
+//        
+//        $(".daydatepicker").datetimepicker({
+//            pickTime: false   
+//        }); 
         var RefundAgentTable = $('#RefundAgentTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
