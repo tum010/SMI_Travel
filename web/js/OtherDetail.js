@@ -420,6 +420,15 @@ function cancelStockTicket(){
     $("#stockTicketModal").modal("hide");
 }
 
+function addStockTicket(){
+    var productCode = document.getElementById("product_code").value;
+    var addticket = document.getElementById("addticket");
+    if(productCode !== ''){
+        addticket.value = "addTicket";
+        document.getElementById('otherForm').submit();
+    }   
+}
+
 function selectAll(){
     var row = $('#TicketTable tr').length;     
     var check = 0;

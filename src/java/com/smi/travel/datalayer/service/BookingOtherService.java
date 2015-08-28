@@ -93,8 +93,8 @@ public class BookingOtherService {
         this.otherBookDao = otherBookDao;
     }
 
-    public String saveStockDetailOther(OtherBooking Other, SystemUser user) {
-        return otherBookDao.saveStockDetailOther(Other, user);
+    public String saveStockDetailOther(OtherBooking Other, SystemUser user, String addticket, String adTicket, String chTicket, String infTicket, String itemid) {
+        return otherBookDao.saveStockDetailOther(Other, user, addticket, adTicket, chTicket, infTicket, itemid);
     }
 
     public List<OtherTicketView> getListStockDetail(String otherBookingId) {
