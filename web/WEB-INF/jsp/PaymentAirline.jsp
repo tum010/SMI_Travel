@@ -717,6 +717,11 @@
             if(dateTo!="" && dateFrom!="" && dateTo < dateFrom){
                 $("#ButtonSearchTicket").attr("disabled", "disabled");
             }else{
+                if($("#invoiceSupCode").val() != "" & $("#apCode").val() != ""){
+                    $("#ButtonSave").removeAttr("disabled");
+                    $("#ButtonSaveAndNew").removeAttr("disabled");
+                    $("#ButtonSearch").removeAttr("disabled");
+                }
                 $("#ButtonSearchTicket").removeAttr("disabled");
             }
         });
@@ -728,6 +733,11 @@
             if(dateTo!="" && dateFrom!="" && dateTo < dateFrom){
                 $("#ButtonSearchTicket").attr("disabled", "disabled");
             }else{
+                if($("#invoiceSupCode").val() != "" & $("#apCode").val() != ""){
+                    $("#ButtonSave").removeAttr("disabled");
+                    $("#ButtonSaveAndNew").removeAttr("disabled");
+                    $("#ButtonSearch").removeAttr("disabled");
+                }
                 $("#ButtonSearchTicket").removeAttr("disabled");
             }
         });

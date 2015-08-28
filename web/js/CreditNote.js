@@ -1,6 +1,7 @@
 var rowIndex;
 var taxNoShow = "";
 $(document).ready(function () {
+    $('.datemask').mask('0000-00-00');
     var inputDate = $("#inputDate").val();
     if (inputDate === "") {
         var today = new Date();
@@ -72,7 +73,7 @@ function addRow() {
             if (keycode == '13') {
                 var realAmount = this.value.replace(",", "");
                 var vatAmount = $(this).parent().parent().find("[name='taxVat']");
-                vatAmount.val((realAmount * 100 / (vat + 100)) * vat / 100);
+                vatAmount.val(realAmount -(realAmount * 100 / (vat + 100)));
             }
         });
     });
@@ -90,6 +91,11 @@ function addRow() {
 }
 
 function getTaxInv(input) {
+    input.style.removeProperty('border');
+    $("#alertFail").hide();
+    $("#alertSuccess").hide();
+    var ticketNo = ""
+    ticketNo = input.value;
     var url = 'AJAXServlet';
     var servletName = 'TaxInvoiceServlet';
     var servicesName = 'AJAXBean';
@@ -97,7 +103,7 @@ function getTaxInv(input) {
             '&servletName=' + servletName +
             '&servicesName=' + servicesName +
             '&type=getTaxInvoice' +
-            '&invoiceNo=' + input.value;
+            '&invoiceNo=' + ticketNo;
 //    var row = parseInt($(input).parent().parent().attr("row"));
     try {
         $.ajax({
@@ -116,6 +122,7 @@ function getTaxInv(input) {
                 var amount = $(input).parent().parent().find("[name='taxAmount']");
                 var desc = $(input).parent().parent().find("[name='taxDesc']");
                 var taxId = $(input).parent().parent().find("[name='taxId']");
+                var btnDetail = $(input).parent().parent().find("[name='btnDetail']");
                 $("#apCode").val(tax.taxTo);
                 $("#name").val(tax.taxName);
                 $("#address").val(tax.taxAddress);
@@ -123,13 +130,15 @@ function getTaxInv(input) {
                 amount.val(tax.taxAmount);
                 desc.val(tax.taxDesc);
                 taxId.val(tax.taxId);
+                btnDetail.attr('onclick', "show('" + ticketNo + "')");
                 var index = $(input).parent().parent().index();
                 var count = $('#ItemCreditTable tbody tr').length;
                 if (index == (count - 1)) {
                     addRow();
                 }
             }, error: function (msg) {
-                $("#alertTextFail").html("Cannot find tax invoice " + ticketNo);
+                input.style.borderColor = "Red";
+                $("#alertTextFail").html("Cannot find tax invoice no " + ticketNo);
                 $("#alertFail").show();
                 $("#alertSuccess").hide();
             }
@@ -252,7 +261,7 @@ function show(taxNo) {
                                 "<td style='text-align:center'>" + detail.product + "</td>" +
                                 "<td style='text-align:center'>" + detail.refNo + "</td>" +
                                 "<td style='text-align:center'>" + detail.description + "</td>" +
-                                "<td style='text-align:center'>" + detail.amount + "</td>" +
+                                "<td style='text-align:right'>" + detail.amount + "</td>" +
                                 "<td style='text-align:center'>" + detail.cur + "</td>" +
                                 "</tr>";
                         table.append(html);
@@ -293,7 +302,7 @@ function validFrom() {
                 },
                 fields: {
                     name: {
-                        trigger: 'focus keyup change',
+                        trigger: 'keyup change',
                         validators: {
                             notEmpty: {
                                 message: 'Please fill name'
@@ -301,7 +310,7 @@ function validFrom() {
                         }
                     },
                     inputDate: {
-                        trigger: 'focus keyup change',
+                        trigger: 'keyup change',
                         validators: {
                             notEmpty: {
                                 message: 'Please fill date'
