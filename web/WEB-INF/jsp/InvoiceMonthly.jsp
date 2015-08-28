@@ -1,5 +1,4 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript" src="js/InvoiceMonthly.js"></script> 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -154,26 +153,23 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <div class="col-sm-10 text-right">
+                                    <button type="button" onclick="printInvoiceMonthly();" class="btn btn-success"><span class="glyphicon glyphicon-print"></span> Print</button>
+                                </div>
+                                <div class="col-sm-2 text-left">
+                                    <button type="button" onclick="" class="btn btn-warning"><span class="glyphicon glyphicon-print"></span> Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </form>                
             </div>
         </div>
     </div>
 </div>
-<script type="text/javascript" charset="utf-8">
-    $(document).ready(function () {
-        $('.date').datetimepicker();
-        $('span').click(function () {
-            var position = $(this).offset();
-            console.log("positon :"+position.top);
-            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
-            
-        });
-
-
-
-    });
-</script>
-
 <div class="modal fade" id="BillToModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -293,3 +289,4 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
+<script type="text/javascript" src="js/InvoiceMonthly.js"></script> 
