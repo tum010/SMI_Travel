@@ -24,6 +24,7 @@ public class Receipt {
      private String recAddress;
      private String arCode;
      private Date recDate;
+     private Date receiveDate;
      private Integer payType;
      private String remark;
      private BigDecimal withTax;
@@ -48,7 +49,7 @@ public class Receipt {
     public Receipt() {
     }
 
-    public Receipt(MFinanceItemstatus MFinanceItemstatus, String recNo, String recFrom, String recName, String recAddress, String arCode, Date recDate, Integer payType, String remark, BigDecimal withTax, BigDecimal cashAmount, BigDecimal cashMinusAmount, BigDecimal bankTransfer, String chqBank1, String chqBank2, Date chqDate1, Date chqDate2, BigDecimal chqAmount1, BigDecimal chqAmount2, List receiptDetails, List receiptCredits,String chqNo1,String chqNo2,MItemstatus MItemStatus,String recType,String department,Date createDate,String createBy,MAccpay MAccpay) {
+    public Receipt(MFinanceItemstatus MFinanceItemstatus, String recNo, String recFrom, String recName, String recAddress, String arCode, Date recDate, Integer payType, String remark, BigDecimal withTax, BigDecimal cashAmount, BigDecimal cashMinusAmount, BigDecimal bankTransfer, String chqBank1, String chqBank2, Date chqDate1, Date chqDate2, BigDecimal chqAmount1, BigDecimal chqAmount2, List receiptDetails, List receiptCredits,String chqNo1,String chqNo2,MItemstatus MItemStatus,String recType,String department,Date createDate,String createBy,MAccpay MAccpay,Date receiveDate) {
        this.MFinanceItemstatus = MFinanceItemstatus;
        this.MItemStatus =  MItemStatus;
        this.recNo = recNo;
@@ -57,6 +58,7 @@ public class Receipt {
        this.recAddress = recAddress;
        this.arCode = arCode;
        this.recDate = recDate;
+       this.receiveDate = receiveDate;
        this.payType = payType;
        this.remark = remark;
        this.withTax = withTax;
@@ -303,6 +305,14 @@ public class Receipt {
 
     public void setCreateBy(String createBy) {
         this.createBy = createBy;
+    }
+
+    public Date getReceiveDate() {
+        return receiveDate;
+    }
+
+    public void setReceiveDate(Date receiveDate) {
+        this.receiveDate = receiveDate;
     }
 
 
