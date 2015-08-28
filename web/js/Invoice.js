@@ -1111,19 +1111,9 @@ function CalculateGrandTotal(id){
 }
 
 function clearScreenInvoice(){
-    $('#SearchRefNo, #InvNo, #InputInvDate, #InputDueDate, #InvTo, #InvToName, #InvToAddress, #SaleStaffId, #SaleStaffCode, #SaleStaffName, #ARCode, #Remark, #TextAmount, #TotalNet ').val('');
-    $('#Grpup').attr('checked', false);
-    $('input[name="Department"]')[0].checked = false;
-    $('input[name="Department"]')[1].checked = false;
-    $('input[name="Department"]')[2].checked = false;
-    $('#MasterReservation > tbody  > tr').each(function() {
-        $(this).remove();
-    });
-    $('#DetailBillableTable > tbody  > tr').each(function() {
-        $(this).remove();
-    });
-    $('#counterTable').val('1');
-    AddRowDetailBillAble();
+    var action = document.getElementById('action');
+    action.value = 'new';
+    document.getElementById('InvoiceForm').submit();
 }
 
 function checkVatInvoiceAll(){

@@ -262,6 +262,9 @@ public class InvoiceController extends SMITravelController {
             result = invoiceService.saveInvoice(invoice);
             System.out.println("Copy Invoice result : "+result);
             saveAction(result, invoice.getInvNo(), invoice, request);
+        }else if("new".equals(action)){
+            request.setAttribute("invoice",null);
+            request.setAttribute("listInvoiceDetail", null);
         }
         request.setAttribute("thisdate", utilty.convertDateToString(new Date()));
         request.setAttribute("page", callPageFrom);
