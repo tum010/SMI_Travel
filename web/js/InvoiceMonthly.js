@@ -14,5 +14,14 @@ $(document).ready(function () {
 });
 
 function printInvoiceMonthly(){
-   window.open("report.smi?name="+typePrint+"&invoiceid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"");   
+    var BillFrom = $("#billFromName").val();
+    var ClientTo = $("#clientCode").val();
+    var ClientName = $("#clientName").val();
+    var Payment  = $("#payment").val();
+    var Accno  = $("#accNo").val();
+    var vattype  = $("#vatType").val();
+    var from  = $("#fromdate").val();
+    var to  = $("#todate").val();
+    var departmentInvoice = $('#departmentInvoice').val();
+   window.open("report.smi?name=InvoiceMonthly&billFromName="+BillFrom+"&clientCode="+ClientTo+"&clientName="+ClientName+"&payment="+Payment+"&accNo="+Accno+"&vatType="+vattype+"&fromdate="+from+"&todate="+to+"&departmentInvoice="+departmentInvoice);   
 }

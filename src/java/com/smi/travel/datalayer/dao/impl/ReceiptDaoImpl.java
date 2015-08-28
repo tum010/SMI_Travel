@@ -395,10 +395,12 @@ import org.hibernate.Transaction;
         Session session = this.sessionFactory.openSession();
         List<ReceiptDetail> list = session.createQuery("from ReceiptDetail d WHERE d.invoiceDetail.id = :invDetailId").setParameter("invDetailId", invDetailId).list();
         if(list.isEmpty()){
+            System.out.println("ReceiptDetail empty ");
             return null;
         }
-        session.close();
-        this.sessionFactory.close();
+        System.out.println("ReceiptDetail size " + list.size());
+//        session.close();
+//        this.sessionFactory.close();
         return list;
     }
     

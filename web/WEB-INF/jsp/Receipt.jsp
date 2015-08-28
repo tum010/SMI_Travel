@@ -261,7 +261,7 @@
                                     <button style="height:34px" type="button"  id="ButtonSearch"  name="ButtonSearch" onclick="searchReceiveNo();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
                                 </div>
                                 <div class="col-xs-1 text-right" style="width: 130px">
-                                    <label class="control-label text-right">Receive Date<font style="color: red">*</font></label>
+                                    <label class="control-label text-right">Receipt Date<font style="color: red">*</font></label>
                                 </div>
                                 <div class="col-xs-1 form-group" style="width: 170px">
                                     <div class='input-group date' id="ReceiveDate">
@@ -304,6 +304,16 @@
                                 </div>
                             </div>
                             <div class="col-xs-4" style="padding-top: 0px;">
+                                <div class="col-xs-1 text-right" style="width: 130px">
+                                    <label class="control-label text-right">Receive Date</label>
+                                </div>
+                                <div class="col-xs-1 form-group" style="width: 170px">
+                                    <div class='input-group date'>
+                                        <input id="receiveDate" name="receiveDate"  type="text" 
+                                           class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['receiveDate']}">
+                                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>  
+                                </div>
                                 <div class="col-xs-1 text-right" style="width: 130px">
                                     <label class="control-label text-right">Status </label>
                                 </div>
@@ -1798,6 +1808,7 @@ function clearNew(){
     $("#receiveFromAddress").val("");
     $("#remark").val("");
     $("#receiveFromDate").val("");
+    $("#receiveDate").val("");
     $("#inputStatus").val("");
     $("#arCode").val("");
     $("#grandTotal").val("");
@@ -2378,7 +2389,9 @@ function saveDescriptionDetail(){
 
 
 function copyReceipt(){
-    $('#CopyReceiptModal').modal('show');     
+    if($("#receiveFromDate").val() != ""){
+        $('#CopyReceiptModal').modal('show');
+    }    
 }
 
 function confirmCopyReceipt(){

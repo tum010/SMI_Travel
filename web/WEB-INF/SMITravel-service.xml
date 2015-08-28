@@ -155,7 +155,7 @@
         <property name="taxInvoiceDao" ref="TaxInvoiceReportDao" />
         <property name="taxInvoiceEmailDao" ref="TaxInvoiceEmailReportDao" />
         <property name="creditNoteReportdao" ref="CreditNoteReportDao" />
-        
+        <property name="invoiceReportDao" ref="InvoiceReportDao" />
     </bean> 
     
     

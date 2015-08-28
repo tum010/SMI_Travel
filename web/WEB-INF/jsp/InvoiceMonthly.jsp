@@ -5,7 +5,7 @@
 
 <c:set var="listClient" value="${requestScope['listClient']}" />
 <c:set var="listAccno" value="${requestScope['listAccno']}" />
-
+<c:set var="listStaff" value="${requestScope['listStaff']}" />
 <section class="content-header"  >
     <h4>
         <b>Report : Invoice monthly report </b>
@@ -84,6 +84,7 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <select id="accNo" name="accNo"  class="form-control">
+                                            <option value="">--Select--</option>
                                             <c:forEach var="item" items="${listAccno}" >
                                                 <c:set var="selectAccno" value="" />
                                                 <%--<c:if test="${item.id == invoice.MAccpay.id}">--%>
@@ -104,6 +105,7 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <select id="vatType" name="vatType"  class="form-control">
+                                            <option value="">--select--</option>
                                             <option value="V">Vat</option>
                                             <option value="N">No Vat</option>
                                             <option value="T">Temp</option>
@@ -120,7 +122,7 @@
                                 <label class="col-md-5 control-label text-right"> From </label>
                                 <div class="col-md-4">  
                                     <div class="form-group" id="fromdatepanel">
-                                        <div class='input-group date' id='fromdate'>
+                                        <div class='input-group date'>
                                             <input type='text' id="fromdate" name="fromdate" class="form-control" data-date-format="YYYY-MM-DD" />
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -136,7 +138,7 @@
                                 <label class="col-md-5 control-label text-right"> To </label>
                                 <div class="col-md-4">  
                                     <div class="form-group">
-                                        <div class='input-group date' id='todate'>
+                                        <div class='input-group date'>
                                             <input   type='text' id="todate" name="todate" class="form-control" data-date-format="YYYY-MM-DD"  />
                                             <span class="input-group-addon"><span  class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -149,10 +151,11 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label for="department" class="col-sm-5 control-label text-right">Department</label>
+                                <label for="depart" class="col-sm-5 control-label text-right">Department</label>
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <select id="department" name="department"  class="form-control">
+                                        <select id="departmentInvoice" name="departmentInvoice"  class="form-control">
+                                            <option value="">--Select--</option>
                                             <option value="Wendy">Wendy</option>
                                             <option value="Outbound">Outbound</option>
                                             <option value="Inbound">Inbound</option>
@@ -187,29 +190,26 @@
                 <h4 class="modal-title">Bill From</h4>
             </div>
             <div class="modal-body">
-                Bill To List Table
                 <table class="display" id="BillFromTable">
                     <thead>                        
                         <tr class="datatable-header">
-                            <th>Bill From</th>
-                            <th>Bill Name</th>
-                            <th>Address</th>
-                            <th>Tel</th>
+                            <th>Code</th>
+                            <th>Name</th>
+                            
                         </tr>
                     </thead>
                     <script>
                         billFrom = [];
                     </script>
                     <tbody>
-                        <c:forEach var="item" items="${listClient}">
+                        <c:forEach var="item" items="${listStaff}">
                             <tr>                                
-                                <td class="item-billto">${item.billTo}</td>
-                                <td class="item-name">${item.billName}</td>                                
-                                <td class="item-address ">${item.address}</td>
-                                <td class="item-tel ">${item.tel}</td>
+                                <td class="item-billto">${item.username}</td>
+                                <td class="item-name">${item.name}</td>                                
+               
                             </tr>
                         <script>
-                            billFrom.push({code: "${item.billTo}", name: "${item.billName}", address: "${item.address}" , tel: "${item.tel}"});
+                            billFrom.push({code: "${item.username}", name: "${item.name}"});
                         </script>
                         </c:forEach>
                             

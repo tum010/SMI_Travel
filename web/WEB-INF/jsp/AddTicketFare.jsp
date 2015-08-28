@@ -12,6 +12,8 @@
 <c:set var="ticketList" value="${requestScope['ticketList']}" />
 <c:set var="flightDetail" value="${requestScope['Flight_Detail']}" />
 <c:set var="flightDetailFromAirticket" value="${requestScope['Flight_Detail_Airticket']}" /> 
+<c:set var="invoiceDetailList" value="${requestScope['invoiceDetailList']}" />
+<c:set var="receiptDetailList" value="${requestScope['receiptDetailList']}" />
 <section class="content-header" >
     <h1>
         Checking - Air Ticket
@@ -510,7 +512,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                               
+                               <c:forEach var="table" items="${invoiceDetailList}" varStatus="dataStatus">
+                                    <tr>
+                                        <td align="center">${dataStatus.count}</td>
+                                        <td align="center">${table.invoice.invNo}</td>
+                                        <td align="center">${table.invoice.invDate}</td>
+                                        <td align="center">${table.invoice.department}</td>
+                                        <td align="center">${table.invoice.dueDate}</td>
+                                        <td align="center">${table.invoice.staff.name}</td>
+                                    </tr>
+                                </c:forEach>
                             </tbody>
                         </table>
                     </div>
@@ -528,12 +539,21 @@
                                     <th style="width:20%;">Receipt No</th>
                                     <th style="width:20%;">Receipt Date</th>
                                     <th style="width:20%;">Invoice No</th>
-                                    <th style="width:15%;">Date</th>
+                                    <th style="width:15%;">Receive Date</th>
                                     <th style="width:20%;">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                
+                                <c:forEach var="table" items="${receiptDetailList}" varStatus="dataStatus">
+                                    <tr>
+                                        <td align="center">${dataStatus.count}</td>
+                                        <td align="center">${table.receipt.recNo}</td>
+                                        <td align="center">${table.receipt.recDate}</td>
+                                        <td align="center">${table.invoiceDetail.invoice.invNo}</td>
+                                        <td align="center">${table.receipt.receiveDate}</td>
+                                        <td align="center">${table.receipt.MAccpay.name}</td>
+                                    </tr>
+                                </c:forEach>
                             </tbody>
                         </table>
                     </div>
