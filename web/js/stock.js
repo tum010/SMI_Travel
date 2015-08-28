@@ -334,6 +334,9 @@ function AddRow(row) {
             '<td>NEW</td>' +
             '<td class="hidden"><input type="text"  class="form-control" name="itemTemp' + row + '" id="itemTemp' + row + '" value="1" /></td>'+
             '<td class="text-center"><a href="#" onclick="deleteItemListRow('+row+')"  data-toggle="modal" data-target="" class="remCF" id="ButtonRemove' + row + '"><span id="Spanremove' + row + '" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal" data-target="#delStockModal"></span></a></td>' +
+            '<td class="hidden"></td>'+
+            '<td class="hidden"></td>'+
+            '<td class="hidden"></td>'+
             '</tr>'
     );
     var tempCount = parseInt($("#counter").val()) + 1;
