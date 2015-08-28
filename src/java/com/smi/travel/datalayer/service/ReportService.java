@@ -65,6 +65,11 @@ public class ReportService {
     private TaxInvoiceReportDao taxInvoiceDao;
     private TaxInvoiceEmailReportDao taxInvoiceEmailDao;
     private CreditNoteReportDao creditNoteReportdao;
+    private InvoiceReportDao invoiceReportDao;
+    
+    public List getInvoiceMonthly(String BillFrom,String BillTo,String ClientName,String Payment,String Accno,String vattype,String from,String to,String department){
+        return invoiceReportDao.getInvoiceMonthly(BillFrom, BillTo, ClientName, Payment, Accno, vattype, from, to, department);
+    }
     
     public List getHotelVoucher(String hotelID,String name) {
         List data  = new ArrayList();
@@ -371,7 +376,13 @@ public class ReportService {
     public void setCreditNoteReportdao(CreditNoteReportDao creditNoteReportdao) {
         this.creditNoteReportdao = creditNoteReportdao;
     }
-    
-    
+
+    public void setInvoiceReportDao(InvoiceReportDao invoiceReportDao) {
+        this.invoiceReportDao = invoiceReportDao;
+    }
+
+    public InvoiceReportDao getInvoiceReportDao() {
+        return invoiceReportDao;
+    }
     
 }

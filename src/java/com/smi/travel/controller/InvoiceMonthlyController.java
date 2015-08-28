@@ -1,5 +1,6 @@
 package com.smi.travel.controller;
 import com.smi.travel.datalayer.entity.MBank;
+import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.master.controller.SMITravelController;
@@ -33,6 +34,14 @@ public class InvoiceMonthlyController extends SMITravelController {
             request.setAttribute("listAccno", listAccno);
         }else{
             request.setAttribute("listAccno", null);
+        }
+        
+        List<SystemUser> listStaff = new LinkedList<SystemUser>();
+        listStaff = utilityService.getUserList();
+        if(listStaff != null){
+            request.setAttribute("listStaff", listStaff);
+        }else{
+            request.setAttribute("listStaff", null);
         }
         return InvoiceMonthly;
     }
