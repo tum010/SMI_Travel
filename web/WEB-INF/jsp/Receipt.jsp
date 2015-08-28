@@ -450,6 +450,7 @@
                         <input type="hidden" class="form-control" id="countRowCredit" name="countRowCredit" value="${requestScope['creditRowCount']}" />
                         <input type="hidden" class="form-control" id="counter" name="counter" value="${requestScope['productRowCount']}" />
                         <input type="hidden" name="vatValue" id="vatValue" value="${requestScope['vat']}">
+                        <input type="hidden" name="searchReceipt" id="searchReceipt" value="${requestScope['searchReceipt']}">
                         <select class="hidden" name="billTypeList" id="billTypeList">
                             <c:forEach var="product" items="${billTypeList}" varStatus="status">                                
                                 <option  value="${product.id}">${product.name}</option>
@@ -1231,6 +1232,10 @@
         $('.datemask').mask('0000-00-00');
         $('.date').datetimepicker();
         $(".money").mask('000,000,000.00', {reverse: true});
+        
+        if($('#searchReceipt').val() == "dummy"){
+            $('#textAlertReceiveNo').show();
+        }    
 //        $(".moneyformat").mask('000,000,000', {reverse: true});
         $("#receiveNo").keyup(function (event) {
             if(event.keyCode === 13){
