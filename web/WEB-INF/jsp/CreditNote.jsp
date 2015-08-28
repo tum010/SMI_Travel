@@ -63,7 +63,7 @@
                 <input type="hidden" name="action" id="action" value="search">
                 <input type="hidden" name="cnId" id="cnId" value="${creditNote.id}"/>
                 <div class="row">
-                    <div class="col-xs-4 form-group">
+                    <div class="col-xs-5 form-group">
                         <div class="col-xs-1 text-right" style="width: 120px">
                             <label class="control-label text-right">CN No. </label>
                         </div>
@@ -77,7 +77,7 @@
                         </div>
                     </div>
                     <div class="col-xs-4 form-group" style="padding-left: 70px">
-                        <div class="col-xs-1 text-right"  style="width: 80px">
+                        <div class="col-xs-1 text-right"  style="width: 80px; margin-left: -70px">
                             <label class="control-label text-right">Date <font style="color: red">*</font></label>
                         </div>
                         <div class="col-xs-1"  style="width: 200px">
@@ -88,8 +88,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-4 form-group">
-                        <div class="col-xs-1 text-right" style="width: 100px">
+                    <div class="col-xs-3 form-group">
+                        <div class="col-xs-1 text-right" style="width: 100px; margin-left: -100px">
                             <label class="control-label text-right">AP Code </label>
                         </div>
                         <div class="col-xs-1" style="width: 200px">
@@ -335,7 +335,7 @@
                 <td style="text-align:center"><input type="text" name="taxVat" class="form-control text-right decimal" readonly/></td>
                 <td style="text-align:center"><input type="text" name="taxDesc" class="form-control" /></td>
                 <td class="text-center">
-                    <a id="ButtonRemove${varRefundAirline.count}" data-toggle="modal" data-target="#DeleteRefundAirline" onclick="hide()">
+                    <a id="ButtonRemove${varRefundAirline.count}" name="btnDetail" data-toggle="modal" data-target="#DeleteRefundAirline" onclick="hide()">
                         <i id="IRemove${varRefundAirline.count}" class="glyphicon glyphicon-list "></i>
                     </a>
                     <a id="ButtonRemove${varRefundAirline.count}" data-toggle="modal" data-target="#DeleteRefundAirline" onclick="setDeletRow(this)">

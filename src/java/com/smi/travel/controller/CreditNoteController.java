@@ -29,7 +29,7 @@ public class CreditNoteController extends SMITravelController {
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         UtilityFunction utilty = new UtilityFunction();
-        request.setAttribute("enableVoid", false);
+        request.setAttribute("enableVoid", true);
         request.setAttribute("disableVoid", false);
         System.out.println("request.getRequestURI() :" + request.getRequestURI());
         String callPageFrom = utilty.getAddressUrl(request.getRequestURI()).replaceAll(LINKNAME, "");//request.getParameter("type");
@@ -40,7 +40,7 @@ public class CreditNoteController extends SMITravelController {
         String action = request.getParameter("action");
         String creditNo = request.getParameter("cnNo");
         SystemUser user = (SystemUser) session.getAttribute("USER");
-        
+
         if ("search".equalsIgnoreCase(action)) {
             CreditNote creditNote = new CreditNote();
             creditNote = creditNoteService.getCreditNote(creditNo, department);
@@ -53,12 +53,15 @@ public class CreditNoteController extends SMITravelController {
             }
         } else if ("save".equalsIgnoreCase(action)) {
             CreditNote cn = mapCreditNoteRequest(request);
-            if(null == cn.getId() || "".equals(cn.getId())){
-                cn.setDepartment(department);
-                cn.setCreateBy(user.getUsername());
-                cn.setCreateDate(Calendar.getInstance().getTime());
+            String result = "fail";
+            if (null != cn) {
+                if (null == cn.getId() || "".equals(cn.getId())) {
+                    cn.setDepartment(department);
+                    cn.setCreateBy(user.getUsername());
+                    cn.setCreateDate(Calendar.getInstance().getTime());
+                }
+                result = creditNoteService.saveCreditNote(cn);
             }
-            String result = creditNoteService.saveCreditNote(cn);
             if (!"fail".equals(result)) {
                 CreditNote creditNote = creditNoteService.getCreditNote(result, department);
                 request.setAttribute("creditNote", creditNote);
@@ -90,7 +93,6 @@ public class CreditNoteController extends SMITravelController {
         if (cn != null && cn.getId() != null && !"".equals(cn.getId())) {
             if (user != null && user.getRole() != null && user.getRole().getId() != null
                     && user.getRole().getId().equals("23")) {
-                request.setAttribute("enableVoid", true);
                 request.setAttribute("disableVoid", true);
             }
         }
@@ -133,56 +135,67 @@ public class CreditNoteController extends SMITravelController {
 
     private CreditNote mapCreditNoteRequest(HttpServletRequest request) {
         UtilityFunction uf = new UtilityFunction();
-        CreditNote cn = new CreditNote();
-        String cnId = request.getParameter("cnId");
-        String cnNo = request.getParameter("cnNo");
-        String date = request.getParameter("inputDate");
-        String name = request.getParameter("name");
-        String address = request.getParameter("address");
-        String remark = request.getParameter("remark");
+        CreditNote cn = null;
+        try {
+            cn = new CreditNote();
+            String cnId = request.getParameter("cnId");
+            String cnNo = request.getParameter("cnNo");
+            String date = request.getParameter("inputDate");
+            String name = request.getParameter("name");
+            String address = request.getParameter("address");
+            String remark = request.getParameter("remark");
+            String apCode = request.getParameter("apCode");
 
-        cn.setId(cnId);
-        cn.setCnNo(cnNo);
-        cn.setCnDate(uf.convertStringToDate(date));
-        cn.setCnName(name);
-        cn.setCnAddress(address);
-        cn.setCnRemark(remark);
+            cn.setId(cnId);
+            cn.setCnNo(cnNo);
+            cn.setCnDate(uf.convertStringToDate(date));
+            cn.setCnName(name);
+            cn.setCnAddress(address);
+            cn.setCnRemark(remark);
+            cn.setApCode(apCode);
 
-        String[] id = request.getParameterValues("id");
-        String[] taxId = request.getParameterValues("taxId");
-        String[] taxNo = request.getParameterValues("taxNo");
-        String[] taxDate = request.getParameterValues("taxDate");
-        String[] taxType = request.getParameterValues("taxType");
-        String[] taxAmount = request.getParameterValues("taxAmount");
-        String[] taxReal = request.getParameterValues("taxReal");
-        String[] taxVat = request.getParameterValues("taxVat");
-        String[] taxDesc = request.getParameterValues("taxDesc");
+            String[] id = request.getParameterValues("id");
+            String[] taxId = request.getParameterValues("taxId");
+            String[] taxNo = request.getParameterValues("taxNo");
+            String[] taxDate = request.getParameterValues("taxDate");
+            String[] taxType = request.getParameterValues("taxType");
+            String[] taxAmount = request.getParameterValues("taxAmount");
+            String[] taxReal = request.getParameterValues("taxReal");
+            String[] taxVat = request.getParameterValues("taxVat");
+            String[] taxDesc = request.getParameterValues("taxDesc");
 
-        for (int i = 0; i < taxId.length; i++) {
-            if (null != taxId && null != taxId[i] && !"".equals(taxId[i])) {
-                CreditNoteDetail cnd = new CreditNoteDetail();
-                cnd.setId(id[i]);
-                TaxInvoice taxInv = new TaxInvoice();
-                taxInv.setId(taxId[i]);
-                cnd.setTaxInvoice(taxInv);
-                cnd.setCreditNote(cn);
-                if (taxAmount[i] != null && !taxAmount[i].equals("")) {
-                    cnd.setAmount(new BigDecimal(uf.StringUtilReplaceChar(taxAmount[i])));
+            for (int i = 0; i < taxId.length; i++) {
+                if (null != taxId && null != taxId[i] && !"".equals(taxId[i])) {
+                    try {
+                        CreditNoteDetail cnd = new CreditNoteDetail();
+                        cnd.setId(id[i]);
+                        TaxInvoice taxInv = new TaxInvoice();
+                        taxInv.setId(taxId[i]);
+                        cnd.setTaxInvoice(taxInv);
+                        cnd.setCreditNote(cn);
+                        if (taxAmount[i] != null && !taxAmount[i].equals("")) {
+                            cnd.setAmount(new BigDecimal(uf.StringUtilReplaceChar(taxAmount[i])));
+                        }
+                        if (taxReal[i] != null && !taxReal[i].equals("")) {
+                            cnd.setRealamount(new BigDecimal(uf.StringUtilReplaceChar(taxReal[i])));
+                        }
+                        if (taxVat[i] != null && !taxVat[i].equals("")) {
+                            cnd.setVat(new BigDecimal(uf.StringUtilReplaceChar(taxVat[i])));
+                        }
+                        cnd.setDescription(taxDesc[i]);
+                        if (!"".equals(taxType[i])) {
+                            MPaytype type = new MPaytype();
+                            type.setId(taxType[i]);
+                            cnd.setMPayType(type);
+                        }
+                        cn.getCreditNoteDetails().add(cnd);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
-                if (taxReal[i] != null && !taxReal[i].equals("")) {
-                    cnd.setRealamount(new BigDecimal(uf.StringUtilReplaceChar(taxReal[i])));
-                }
-                if (taxVat[i] != null && !taxVat[i].equals("")) {
-                    cnd.setVat(new BigDecimal(uf.StringUtilReplaceChar(taxVat[i])));
-                }
-                cnd.setDescription(taxDesc[i]);
-                if (!"".equals(taxType[i])) {
-                    MPaytype type = new MPaytype();
-                    type.setId(taxType[i]);
-                    cnd.setMPayType(type);
-                }
-                cn.getCreditNoteDetails().add(cnd);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return cn;
