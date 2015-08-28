@@ -462,13 +462,13 @@ public class OtherBookingImpl implements OtherBookingDao{
             int chCancel = 0;
             int infCancel = 0;
             
-            if(ad != adultQty){
+            if((ad != adultQty) && (ad < adultQty)){
                 adCancel = adultQty - ad;
             }
-            if(ch != childQty){
+            if((ch != childQty) && (ch < childQty)){
                 chCancel = childQty - ch;
             }
-            if(inf != infantQty){
+            if((inf != infantQty) && (inf < infantQty)){
                 infCancel = infantQty - inf;
             }
             
