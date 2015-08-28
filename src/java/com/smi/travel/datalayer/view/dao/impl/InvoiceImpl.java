@@ -239,6 +239,7 @@ public class InvoiceImpl implements InvoiceReportDao{
             invM.setUsd(util.setFormatMoney(B[6]));
             invM.setPayment(Payment);
             invM.setRecamt(util.setFormatMoney(B[9]));
+            System.out.println("Recamt : " + util.setFormatMoney(B[8]));
             invM.setRecno(util.setFormatMoney(B[8]));
             invM.setType(vattype);
             data.add(invM);

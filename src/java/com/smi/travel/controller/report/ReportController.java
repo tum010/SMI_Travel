@@ -65,6 +65,7 @@ public class ReportController extends SMITravelController {
     private static final String TaxInvoiceReport = "TaxInvoiceReport";
     private static final String TaxInvoiceEmailReport = "TaxInvoiceEmailReport";
     private static final String CreditNoteReport = "CreditNoteReport";
+    private static final String InvoiceMonthly = "InvoiceMonthly";
 
     private DataSource datasource;
     private static final Logger LOG = Logger.getLogger(ReportController.class.getName());
@@ -103,6 +104,16 @@ public class ReportController extends SMITravelController {
         String showLeader = request.getParameter("showleader");
         String cnid = request.getParameter("cnid");
         int option = Integer.parseInt(optionPrint == null ? "0":optionPrint);
+        
+        String BillFrom = request.getParameter("billFromName");
+        String ClientTo = request.getParameter("clientCode");
+        String ClientName = request.getParameter("clientName");
+        String Payment  = request.getParameter("payment");
+        String Accno  = request.getParameter("accNo");
+        String vattype  = request.getParameter("vatType");
+        String from  = request.getParameter("fromdate");
+        String to  = request.getParameter("todate");
+        String departmentInvoice  = request.getParameter("departmentInvoice");
 
         Map model = new HashMap();
         List data = new ArrayList();
@@ -174,6 +185,8 @@ public class ReportController extends SMITravelController {
             data = reportservice.getTaxInvoiceEmail(taxInvId, option);
         }else if(CreditNoteReport.equalsIgnoreCase(name)){
             data = reportservice.getCreditNoteReport(cnid);
+        }else if(InvoiceMonthly.equalsIgnoreCase(name)){
+            data = reportservice.getInvoiceMonthly(BillFrom, ClientTo, ClientName, Payment, Accno, vattype, from, to, departmentInvoice);
         }
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);
