@@ -438,7 +438,7 @@
                                                 <td ><input type="text" maxlength ="15" readonly  class="form-control numerical" id="InputGross${taxdesc.count}" name="InputGross${taxdesc.count}" value="${ind.gross}" ></td>
                                                 <td><input type="text" maxlength ="15" class="form-control numerical" id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" value="${ind.amount}" onfocusout="changeFormatAmountNumber('${taxdesc.count}');CalculateGrandTotal('${taxdesc.count}');calculateGross('${taxdesc.count}')"></td>
                                                 <td class="priceCurrencyAmount">
-                                                    <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control">
+                                                    <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control" onclick="validFromInvoice()">
                                                         <option value='' ></option>
                                                         <c:forEach var="cur" items="${listCurrency}">
                                                             <c:set var="selectA" value="" />
@@ -542,7 +542,7 @@
                                                 <td class="hidden" ><input type="text" maxlength ="15"  class="form-control numerical" id="InputGross${taxdesc.count}" name="InputGross${taxdesc.count}" value="${ind.gross}" ></td>
                                                 <td><input type="text" maxlength ="15" class="form-control numerical" id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" value="${ind.amount}" onfocusout="changeFormatAmountNumber('${taxdesc.count}');CalculateGrandTotal('${taxdesc.count}');calculateGross('${taxdesc.count}');"></td>
                                                 <td class="priceCurrencyAmount">
-                                                    <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control">
+                                                    <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control" onclick="validFromInvoice()">
                                                          <option value='' ></option>
                                                         <c:forEach var="cur" items="${listCurrency}">
                                                             <c:set var="selectA" value="" />

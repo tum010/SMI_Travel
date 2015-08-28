@@ -169,7 +169,7 @@ public class InvoiceImpl implements InvoiceReportDao{
     }
 
     @Override
-    public List getInvoiceMonthly(String BillFrom, String BillTo, String Payment, String Accno, String vattype, String from, String to, String department) {
+    public List getInvoiceMonthly(String BillFrom, String BillTo,String ClientName, String Payment, String Accno, String vattype, String from, String to, String department) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();  
         Date thisdate = new Date();
@@ -192,7 +192,7 @@ public class InvoiceImpl implements InvoiceReportDao{
          
          if((BillTo != null) &&(!"".equalsIgnoreCase(BillTo))){
              if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
-             query += prefix+" invm.invname = '"+BillTo+"'";
+             query += prefix+" invm.invto = '"+BillTo+"'";
          }
          if((vattype != null) &&(!"".equalsIgnoreCase(vattype))){
              if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
@@ -227,7 +227,7 @@ public class InvoiceImpl implements InvoiceReportDao{
             invM.setSystemdate(util.SetFormatDate(thisdate, "dd MMM yyyy hh:mm:ss"));
             invM.setAccno(Accno);
             invM.setBillfrom(BillFrom);
-            invM.setBillto(BillTo);
+            invM.setBillto(ClientName);
             invM.setDepartment(util.ConvertString(B[7]));
             invM.setDetail(util.ConvertString(B[3]));
             invM.setHeaddepartment(department);
