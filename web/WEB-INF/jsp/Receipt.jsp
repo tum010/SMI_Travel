@@ -1814,12 +1814,8 @@ function clearNew(){
     $("#chqDate2").val("");
     $("#chqAmount2").val("");
 
-    $('#ReceiptListTable').dataTable().fnClearTable();
-    $('#ReceiptListTable').dataTable().fnDestroy();
     $("#ReceiptListTable tbody").empty();
 
-    $('#CreditDetailTable').dataTable().fnClearTable();
-    $('#CreditDetailTable').dataTable().fnDestroy();
     $("#CreditDetailTable tbody").empty();
     AddRowProduct(0);
     AddRowCredit(0);
