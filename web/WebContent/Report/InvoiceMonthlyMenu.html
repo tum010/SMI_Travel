@@ -1,0 +1,31 @@
+<ul id="InvoiceReportMenu" class="nav nav-list" style="top: 0px;  background-color: #FAFEFA;border: solid 1px #0063DC">
+    <li>
+        <a href="InvoiceMonthly.smi" id="menu-passenger">
+            <i class="menu-icon fa fa-plane"></i>
+            <span class="menu-text"> Invoice Monthly <strong></strong></span>
+        </a>
+        <b class="arrow"></b>
+    </li>
+    <li class="">
+        <a href="">
+            <i class="menu-icon fa fa-users"></i>
+            <span class="menu-text">Invoice Monthly 2</span>
+        </a>
+        <b class="arrow"></b>
+    </li>
+</ul>
+
+<script>
+    $(document).ready(function () {
+        var path = location.pathname;
+        var name = path.split("/");
+        console.log(name[2]);
+        str = name[2].split(".");
+        console.log(str[0]);
+        sub = str[0].substr(0,20);
+        console.log(sub);
+        var $select = $('a[href*="' + sub + '"]');
+        $("#InvoiceReportMenu").find($select).css('background-color', '#ccc');
+    });
+
+</script>

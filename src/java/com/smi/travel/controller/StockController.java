@@ -1,6 +1,7 @@
 package com.smi.travel.controller;
 import com.smi.travel.datalayer.entity.MPricecategory;
 import com.smi.travel.datalayer.entity.MStockStatus;
+import com.smi.travel.datalayer.entity.OtherBooking;
 import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.datalayer.entity.Stock;
 import com.smi.travel.datalayer.entity.StockDetail;
@@ -159,6 +160,7 @@ public class StockController extends SMITravelController {
     private List<StockDetail> setStockDetails(HttpServletRequest request,Stock stock){
         List<StockDetail> listStockDetail = new LinkedList<StockDetail>();
         String stockDetailRows = request.getParameter("counterTable");
+        UtilityFunction utility = new UtilityFunction();
         if (stockDetailRows == null) {
             return null;
         }
@@ -171,18 +173,35 @@ public class StockController extends SMITravelController {
             StockDetail stockDetail = new StockDetail();
             MStockStatus mStockStatus = new MStockStatus();
             MPricecategory mPriceCategory = new MPricecategory();
+            OtherBooking otherbooking = new OtherBooking();
+            SystemUser staff = new SystemUser();
             
             String stockDetailId = request.getParameter("stockDetailId"+i);
             String codeItemList = request.getParameter("codeItemList"+i);
             String typeitem = request.getParameter("SeleteTypeItemList"+i);
             String pay = request.getParameter("payTemp"+i);
             String items = request.getParameter("itemTemp"+i);
+            String otherBookingId = request.getParameter("otherBookingId" + i );
+            String staffId = request.getParameter("staffId"+i);
+            String pickupDate = request.getParameter("pickupDate"+i);
             Integer  payStatusItemListInt = new Integer(pay);
 //            mStockStatus.setName("NEW");
             mStockStatus.setId(items);
             mPriceCategory.setId(typeitem);
             if(!"".equals(stockDetailId)){
                 stockDetail.setId(stockDetailId);
+            }
+            if(otherBookingId != null && !"".equals(otherBookingId)){
+                otherbooking.setId(otherBookingId);
+                stockDetail.setOtherBooking(otherbooking);
+            }
+            if(staffId != null && !"".equals(staffId)){
+                staff.setId(staffId);
+                stockDetail.setStaff(staff);
+            }
+            if(pickupDate != null && !"".equals(pickupDate)){
+                Date date = utility.convertStringToDate(pickupDate);
+                stockDetail.setPickupDate(date);
             }
             stockDetail.setCode(codeItemList);
             stockDetail.setPayStatus(payStatusItemListInt);
