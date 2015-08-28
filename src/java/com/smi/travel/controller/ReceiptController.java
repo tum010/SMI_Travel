@@ -51,10 +51,11 @@ public class ReceiptController extends SMITravelController {
     private static final String CHQDATE1 = "chqDate1";
     private static final String CHQDATE2 = "chqDate2";
     private static final String DELETERESULT = "deleteresult";
+    private static final String SEARCHRECEIPT = "searchReceipt";
     private UtilityService utilityService;
     private ReceiptService receiptService;
     private InvoiceService invoiceService;
-    UtilityFunction util;
+    UtilityFunction util; 
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         UtilityFunction utilty = new UtilityFunction();
@@ -110,6 +111,7 @@ public class ReceiptController extends SMITravelController {
         String result = "";
         request.setAttribute(PRODUCTROWCOUNT, "0");
         request.setAttribute(CREDITROWCOUNT, "0");
+        request.setAttribute(SEARCHRECEIPT,"notdummy");
         //Role User
         String roleName = user.getRole().getName();
         System.out.println("roleName"+roleName);
@@ -127,7 +129,8 @@ public class ReceiptController extends SMITravelController {
             
         }else if ("searchReceiveNo".equalsIgnoreCase(action)) {
             Receipt receipt = new Receipt();
-            if(receiveNo != null || !"".equals(receiveNo)){
+            request.setAttribute(SEARCHRECEIPT,"dummy");
+            if(!"".equals(receiveNo)){
                 receipt = receiptService.getReceiptfromReceiptNo(receiveNo,InputDepartment,InputReceiptType);
                 if(receipt != null) {
                     if(!receipt.getId().isEmpty()){
@@ -142,7 +145,7 @@ public class ReceiptController extends SMITravelController {
                         request.setAttribute(CREDITROWCOUNT, receiptCreditList.size()+1);
                         }
                     }
-
+                    request.setAttribute(SEARCHRECEIPT,"notdummy");
                     request.setAttribute(RECEIPT,receipt);
                     request.setAttribute(RECEIVEDATE,receipt.getRecDate());
                 }

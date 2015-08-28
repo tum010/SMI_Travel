@@ -105,7 +105,9 @@ public class TaxInvoiceController extends SMITravelController {
         String count = request.getParameter("countTaxInvoice");
         String vatDefault = request.getParameter("vatDefault");
         String department = request.getParameter("department");
+        String checkInvoiceDetail = "";
         String page = "";
+        String result = "";
         if("W".equalsIgnoreCase(callPageFrom)){
             page = "Wendy";
         } else if("O".equalsIgnoreCase(callPageFrom)){
@@ -152,9 +154,15 @@ public class TaxInvoiceController extends SMITravelController {
             
             if(Integer.parseInt(count) > 1){
                 setTaxInvoiceDetails(request, count, taxInvoice, username, date, vatDefault, createBy, invToDateConvert);
+                checkInvoiceDetail = checkInvoiceDetail(taxInvoice);
             }
             
-            String result = taxInvoiceService.saveInvoice(taxInvoice);
+            if("success".equalsIgnoreCase(checkInvoiceDetail)){
+                result = taxInvoiceService.saveInvoice(taxInvoice);
+            } else {
+                result = checkInvoiceDetail;
+            }
+           
             List<TaxInvoiceDetail> taxInvoiceList = new ArrayList<TaxInvoiceDetail>();
             taxInvoiceList = taxInvoice.getTaxInvoiceDetails();
             request.setAttribute(TAXINVOICE, taxInvoice);
@@ -181,7 +189,7 @@ public class TaxInvoiceController extends SMITravelController {
             String taxInvoiceDetailId = request.getParameter("taxInvoiceDetailId");
             TaxInvoiceDetail taxInvoiceDetail = new TaxInvoiceDetail();
             taxInvoiceDetail.setId(taxInvoiceDetailId);
-            String result = taxInvoiceService.DeleteTaxInvoiceInvoiceDetail(taxInvoiceDetail);
+            result = taxInvoiceService.DeleteTaxInvoiceInvoiceDetail(taxInvoiceDetail);
             System.out.println(result);
             
         } else if("enableVoid".equalsIgnoreCase(action)){
@@ -209,9 +217,15 @@ public class TaxInvoiceController extends SMITravelController {
             
             if(Integer.parseInt(count) > 1){
                 setTaxInvoiceDetails(request, count, taxInvoice, username, date, vatDefault, createBy, invToDateConvert);
+                checkInvoiceDetail = checkInvoiceDetail(taxInvoice);
             }
             
-            String result = taxInvoiceService.saveInvoice(taxInvoice);
+            if("success".equalsIgnoreCase(checkInvoiceDetail)){
+                result = taxInvoiceService.saveInvoice(taxInvoice);
+            } else {
+                result = checkInvoiceDetail;
+            }
+            
             List<TaxInvoiceDetail> taxInvoiceList = new ArrayList<TaxInvoiceDetail>();
             taxInvoiceList = taxInvoice.getTaxInvoiceDetails();
             request.setAttribute(TAXINVOICE, taxInvoice);
@@ -245,9 +259,15 @@ public class TaxInvoiceController extends SMITravelController {
             
             if(Integer.parseInt(count) > 1){
                 setTaxInvoiceDetails(request, count, taxInvoice, username, date, vatDefault, createBy, invToDateConvert);
+                checkInvoiceDetail = checkInvoiceDetail(taxInvoice);
             }
             
-            String result = taxInvoiceService.saveInvoice(taxInvoice);
+            if("success".equalsIgnoreCase(checkInvoiceDetail)){
+                result = taxInvoiceService.saveInvoice(taxInvoice);
+            } else {
+                result = checkInvoiceDetail;
+            }
+            
             List<TaxInvoiceDetail> taxInvoiceList = new ArrayList<TaxInvoiceDetail>();
             taxInvoiceList = taxInvoice.getTaxInvoiceDetails();
             request.setAttribute(TAXINVOICE, taxInvoice);
@@ -286,6 +306,8 @@ public class TaxInvoiceController extends SMITravelController {
         for(int i=1;i<=rows;i++){
             String taxDetailId = request.getParameter("taxDetailId" + i);
             String invoiceDetailId = request.getParameter("invoiceDetailId" + i);
+            String invoiceDetailCost = request.getParameter("invoiceDetailCost" + i);
+            String invoiceDetailAmount = request.getParameter("invoiceDetailAmount" + i);
             String product = request.getParameter("product" + i);
             String refNo = request.getParameter("refNo" + i);
             String description = request.getParameter("description" + i);
@@ -313,6 +335,10 @@ public class TaxInvoiceController extends SMITravelController {
                 
                 if(invoiceDetailId!="" && invoiceDetailId!=null){
                     invoiceDetail.setId(invoiceDetailId);
+                    BigDecimal invoiceDetailCostRe = new BigDecimal(invoiceDetailCost.replaceAll(",",""));
+                    invoiceDetail.setCost(invoiceDetailCostRe);
+                    BigDecimal invoiceDetailAmountRe = new BigDecimal(invoiceDetailAmount.replaceAll(",",""));
+                    invoiceDetail.setAmount(invoiceDetailAmountRe);
                     taxInvoiceDetail.setInvoiceDetail(invoiceDetail);
                 }
                 
@@ -371,6 +397,87 @@ public class TaxInvoiceController extends SMITravelController {
             
         }
     }
+    
+    private String checkInvoiceDetail(TaxInvoice taxInvoice) {
+        String result = "";
+        List<String> idList = new ArrayList<String>();
+        List<BigDecimal> costList = new ArrayList<BigDecimal>();
+        List<BigDecimal> amountList = new ArrayList<BigDecimal>();
+        List<BigDecimal> costLocalList = new ArrayList<BigDecimal>();
+        List<BigDecimal> amountLocalList = new ArrayList<BigDecimal>();
+        List<TaxInvoiceDetail> taxInvDetailList = new ArrayList<TaxInvoiceDetail>();
+        taxInvDetailList = taxInvoice.getTaxInvoiceDetails();
+        
+        for(int i=0;i<taxInvDetailList.size();i++){
+            if(taxInvDetailList.get(i).getInvoiceDetail() != null){
+                int check = 0;
+                InvoiceDetail invoiceDetail1 = taxInvDetailList.get(i).getInvoiceDetail();
+                TaxInvoiceDetail taxInvoiceDetail1 = taxInvDetailList.get(i);
+                BigDecimal costTotal = new BigDecimal(0);
+                BigDecimal amountTotal = new BigDecimal(0);               
+                String id1 = invoiceDetail1.getId();
+                
+//                if(!idList.isEmpty()){
+                    for(int a=0;a<idList.size();a++){
+                        String idCheck = idList.get(a);
+                        if(id1.equalsIgnoreCase(idCheck)){
+                            check++;
+                        }
+                    }
+                    
+                    if(check == 0){
+                        BigDecimal cost1 = taxInvoiceDetail1.getCost();
+                        BigDecimal amount1 = taxInvoiceDetail1.getAmount();
+
+                        costTotal = costTotal.add(cost1);
+                        amountTotal = amountTotal.add(amount1);
+
+                        for(int j=i+1;j<taxInvDetailList.size();j++){
+                            if(taxInvDetailList.get(j).getInvoiceDetail() != null){
+                                InvoiceDetail invoiceDetail2 = taxInvDetailList.get(j).getInvoiceDetail();
+                                TaxInvoiceDetail taxInvoiceDetail2 = taxInvDetailList.get(i);
+                                String id2 = invoiceDetail2.getId();
+                                if(id2.equalsIgnoreCase(id1)){
+                                    BigDecimal cost2 = taxInvoiceDetail2.getCost();
+                                    BigDecimal amount2 = taxInvoiceDetail2.getAmount();
+                                    costTotal = costTotal.add(cost2);
+                                    amountTotal = amountTotal.add(amount2);
+                                }
+                            }    
+                        }
+                        idList.add(id1);
+                        costList.add(costTotal);
+                        amountList.add(amountTotal);
+                        costLocalList.add(invoiceDetail1.getCost());
+                        amountLocalList.add(invoiceDetail1.getAmount());
+                    }
+//                }               
+            }    
+        }
+        
+        for(int i=0;i<idList.size();i++){
+            String id = idList.get(i);
+            BigDecimal costTotal = new BigDecimal(0);
+            BigDecimal amountTotal = new BigDecimal(0);
+            BigDecimal cost = costList.get(i);
+            BigDecimal amount = amountList.get(i);
+            BigDecimal costLocal = costLocalList.get(i);
+            BigDecimal amountLocal = amountLocalList.get(i);
+            costTotal = costLocal.subtract(cost);
+            amountTotal = amountLocal.subtract(amount);
+            if((costTotal.compareTo(BigDecimal.ZERO) < 0)){
+                result = "cost much over";
+                return result;
+            } else if((amountTotal.compareTo(BigDecimal.ZERO) < 0)){
+                result = "amount much over";
+                return result;
+            }
+//            result = taxInvoiceService.checkInvoiceDetailValue(id,cost,amount);
+        }
+        result = "success";
+        
+        return result;
+    }
 
     public UtilityService getUtilservice() {
         return utilservice;
@@ -394,5 +501,5 @@ public class TaxInvoiceController extends SMITravelController {
 
     public void setTaxInvoiceService(TaxInvoiceService taxInvoiceService) {
         this.taxInvoiceService = taxInvoiceService;
-    }
+    }    
 }

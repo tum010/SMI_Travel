@@ -10,6 +10,7 @@ import com.smi.travel.datalayer.dao.TaxInvoiceDao;
 import com.smi.travel.datalayer.entity.TaxInvoice;
 import com.smi.travel.datalayer.entity.TaxInvoiceDetail;
 import com.smi.travel.datalayer.view.entity.TaxInvoiceView;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -45,6 +46,10 @@ public class TaxInvoiceService {
 
     public String DeleteTaxInvoiceInvoiceDetail(TaxInvoiceDetail taxInvoiceDetail) {
         return taxInvoiceDao.DeleteTaxInvoiceInvoiceDetail(taxInvoiceDetail);
+    }
+
+    public String checkInvoiceDetailValue(String id, BigDecimal cost, BigDecimal amount) {
+        return taxInvoiceDao.checkInvoiceDetailValue(id,cost,amount);
     }
     
     

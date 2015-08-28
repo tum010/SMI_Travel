@@ -216,6 +216,9 @@
                                         <th style="width: 15%">Item Status</th>
                                         <th class="hidden">Item Status Temp</th>
                                         <th style="width: 8%">Action</th>
+                                        <th class="hidden">Ref no</th>
+                                        <th class="hidden">Pick up</th>
+                                        <th class="hidden">Pick up date</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -271,6 +274,9 @@
                                             </a>
 
                                         </td>
+                                        <td class="hidden"><input type="text"  class="form-control" name="otherBookingId${taxdesc.count}" id="otherBookingId${taxdesc.count}" value="${std.otherBooking.id}" /></td>
+                                        <td class="hidden"><input type="text"  class="form-control" name="staffId${taxdesc.count}" id="staffId${taxdesc.count}" value="${std.staff.id}" /></td>
+                                        <td class="hidden"><input type="text"  class="form-control" name="pickupDate${taxdesc.count}" id="pickupDate${taxdesc.count}" value="${std.pickupDate}" /></td>
                                         <c:set var="valueNameRow" value="${count}"></c:set>
                                     </tr>                                                                                       
                                     </c:forEach>
