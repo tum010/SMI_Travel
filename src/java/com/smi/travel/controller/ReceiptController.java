@@ -47,11 +47,12 @@ public class ReceiptController extends SMITravelController {
     private static final String RECEIPTDETAILLIST = "receiptDetailList"; // search receive no from Receipt Detail table
     private static final String RECEIPTCREDITLIST = "receiptCreditList"; // search receive no from Receipt Credit table
     private static final String SAVERESULT = "saveresult"; // save result
-    private static final String RECEIVEDATE = "receiveFromDate";
+    private static final String RECEIPTDATE = "receiveFromDate";
     private static final String CHQDATE1 = "chqDate1";
     private static final String CHQDATE2 = "chqDate2";
     private static final String DELETERESULT = "deleteresult";
     private static final String SEARCHRECEIPT = "searchReceipt";
+    private static final String RECEIVEDATE = "receiveDate";
     private UtilityService utilityService;
     private ReceiptService receiptService;
     private InvoiceService invoiceService;
@@ -91,6 +92,8 @@ public class ReceiptController extends SMITravelController {
         String InputReceiptType = request.getParameter("InputReceiptType");
         String InputDepartment = request.getParameter("InputDepartment");
         String searchId = request.getParameter("Id");
+        String receiveDate = request.getParameter("receiveDate");
+        
         System.out.println(" callPageFrom " + callPageFrom);
         if(!"".equals(callPageFrom)){
            //String[] type = callPageFrom.split("\\?");
@@ -147,7 +150,8 @@ public class ReceiptController extends SMITravelController {
                     }
                     request.setAttribute(SEARCHRECEIPT,"notdummy");
                     request.setAttribute(RECEIPT,receipt);
-                    request.setAttribute(RECEIVEDATE,receipt.getRecDate());
+                    request.setAttribute(RECEIPTDATE,receipt.getRecDate());
+                    request.setAttribute(RECEIVEDATE,receipt.getReceiveDate());
                 }
             }
         }else if ("saveReceipt".equalsIgnoreCase(action)) {
@@ -359,6 +363,7 @@ public class ReceiptController extends SMITravelController {
             receipt.setRecName(receiveFromName);
             receipt.setRecAddress(receiveFromAddress);
             receipt.setRecDate(util.convertStringToDate(receiveFromDate != "" ? receiveFromDate : ""));
+            receipt.setReceiveDate(util.convertStringToDate(receiveDate != "" ? receiveDate : ""));
             receipt.setArCode(arCode);
             receipt.setRemark(remark);
 
@@ -406,7 +411,8 @@ public class ReceiptController extends SMITravelController {
                 request.setAttribute(SAVERESULT, "save successful");
             }
             request.setAttribute(RECEIPT,receipt);
-            request.setAttribute(RECEIVEDATE,receiveFromDate);
+            request.setAttribute(RECEIPTDATE,receiveFromDate);
+            request.setAttribute(RECEIVEDATE,receiveDate);
             request.setAttribute(CHQDATE1,chqDate1);
             request.setAttribute(CHQDATE2,chqDate2);
             
@@ -461,7 +467,8 @@ public class ReceiptController extends SMITravelController {
                     }
 
                     request.setAttribute(RECEIPT,receipt);
-                    request.setAttribute(RECEIVEDATE,receipt.getRecDate());
+                    request.setAttribute(RECEIPTDATE,receipt.getRecDate());
+                    request.setAttribute(RECEIVEDATE,receipt.getReceiveDate());
                 }
             }
             
@@ -488,7 +495,8 @@ public class ReceiptController extends SMITravelController {
                     }
 
                     request.setAttribute(RECEIPT,receipt);
-                    request.setAttribute(RECEIVEDATE,receipt.getRecDate());
+                    request.setAttribute(RECEIPTDATE,receipt.getRecDate());
+                    request.setAttribute(RECEIVEDATE,receipt.getReceiveDate());
                 }
             }
         }else if (!"".equalsIgnoreCase(searchId)) {
@@ -510,7 +518,8 @@ public class ReceiptController extends SMITravelController {
                         }
                     }
                     request.setAttribute(RECEIPT,receipt);
-                    request.setAttribute(RECEIVEDATE,receipt.getRecDate());
+                    request.setAttribute(RECEIPTDATE,receipt.getRecDate());
+                    request.setAttribute(RECEIVEDATE,receipt.getReceiveDate());
                 }
             }
         }
