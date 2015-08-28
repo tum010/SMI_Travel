@@ -429,8 +429,8 @@
                                                     </select>                                                                  
                                                 </td>
                                                 <td class="text-center">
-                                                    <a class="remCF"><span id="SpanRemove${i.count}" onclick="deleteReceiptList('${table.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>&nbsp
-                                                    <a href="" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail('${i.count}')"><span class="glyphicon glyphicon-edit editicon"></span></a>
+                                                    <a href="#/inv" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail('${i.count}')"><span class="glyphicon glyphicon-th-list"></span></a>&nbsp
+                                                    <a class="remCF"><span id="SpanRemove${i.count}" onclick="deleteReceiptList('${table.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
                                                 </td>                                   
                                             </tr>
                                         </c:forEach>
@@ -1628,9 +1628,9 @@
                 '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="">---------</option></select>' +                          
                 '</td>' +
                 '<td class="text-center">' +
-                '<a class="remCF" onclick="deleteReceiptList(\'\', \''+row+'\')">  '+
-                '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a>&nbsp&nbsp'+  
-                '<a href="" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail('+row+')" id="InputDescription' + row + '"><span class="glyphicon glyphicon-edit editicon"></span></a></td>' +    
+                '<a href="#/inv" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail('+row+')" id="InputDescription' + row + '"><span class="glyphicon glyphicon-th-list"></span></a>&nbsp&nbsp' +    
+                '<a class="remCF" onclick="deleteReceiptList(\'\', \''+row+'\')">'+
+                '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+  
                 '</td>' +
                 '</tr>'
             );
@@ -1957,9 +1957,9 @@ function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,cur
         '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="'+currency+'"></option></select>' +                           
         '</td>' +
         '<td class="text-center">' +
+        '<a href="#/inv" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail('+row+')" id="InputDescription' + row + '"><span class="glyphicon glyphicon-th-list"></span></a>&nbsp' +    
         '<a class="remCF" onclick="deleteReceiptList(\'\', \''+row+'\')">  '+
-        '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a>&nbsp&nbsp'+
-        '<a href="" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail('+row+')" id="InputDescription' + row + '"><span class="glyphicon glyphicon-edit editicon"></span></a></td>' +    
+        '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+
         '</tr>'
     );
     $("#billTypeList option").clone().appendTo("#receiveProduct" + row);
