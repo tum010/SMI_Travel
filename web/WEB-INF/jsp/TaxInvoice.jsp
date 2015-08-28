@@ -1296,14 +1296,14 @@
         }       
     }
     
-    function AddProduct(id,product,description,cost,curCost,amount,curAmount,isVat){
+    function AddProduct(id,product,description,cost,curCost,amount,curAmount,isVat,refNo){
         var count = parseInt($("#countTaxInvoice").val());
         var row = parseInt(count)+1;
-        AddDataRowProduct(row,count,id,product,description,cost,curCost,amount,curAmount,isVat);
+        AddDataRowProduct(row,count,id,product,description,cost,curCost,amount,curAmount,isVat,refNo);
 
     }
     
-    function AddDataRowProduct(row,count,id,product,description,cost,curCost,amount,curAmount,isVat) {
+    function AddDataRowProduct(row,count,id,product,description,cost,curCost,amount,curAmount,isVat,refNo) {
         if (!row) {
             row = 1;
         }
@@ -1361,7 +1361,8 @@
                 CalculateGross(count);
             }
             var vatData = parseFloat($("#vatDefault").val());
-            document.getElementById('vatShow'+count).innerHTML = formatNumber(vatData);         
+            document.getElementById('vatShow'+count).innerHTML = formatNumber(vatData);
+            $("#refNo" + count).val(refNo);
             row = count + 1;
         } else {
             $("#invoiceDetailId" + (count-1)).val(id);
@@ -1391,7 +1392,8 @@
                 CalculateGross((count-1));
             }
             var vatData = parseFloat($("#vatDefault").val());
-            document.getElementById('vatShow'+(count-1)).innerHTML = formatNumber(vatData);         
+            document.getElementById('vatShow'+(count-1)).innerHTML = formatNumber(vatData);
+            $("#refNo" + (count-1)).val(refNo);
             row = count + 1;
         }    
                   
