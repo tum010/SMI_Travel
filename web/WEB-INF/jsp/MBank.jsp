@@ -350,6 +350,7 @@
     });
     
     function validateFail(){
+        alert('a');
         $("#BankIdEdit").val("<c:out value="${bankData.id}" />");
         $("#BankCode").val("<c:out value="${bankData.code}" />");
         $("#BankName").val("<c:out value="${bankData.name}" />");
@@ -384,7 +385,7 @@
            $('#textAlertDivNotSave').show();
         </script>
     </c:if>
-    <c:if test="${requestScope['result'] =='bank code already exist'}">        
+    <c:if test="${requestScope['result'] =='bank code already exist.'}">        
         <script language="javascript">
            $('#textAlertDivCodeAlreadyUsed').show();
            $(document).ready(function () {
@@ -392,7 +393,7 @@
            });                
         </script>
     </c:if>
-    <c:if test="${requestScope['result'] =='account no already exist'}">        
+    <c:if test="${requestScope['result'] =='account no already exist.'}">        
         <script language="javascript">
            $('#textAlertDivAccountAlreadyUsed').show();
            $(document).ready(function () {
