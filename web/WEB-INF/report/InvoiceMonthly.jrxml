@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceMonthly" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f3e0a4ca-601e-4515-90b1-1c808ba982a2">
-	<property name="ireport.zoom" value="1.2100000000000009"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.4641000000000015"/>
+	<property name="ireport.x" value="23"/>
+	<property name="ireport.y" value="43"/>
 	<field name="systemdate" class="java.lang.String"/>
-	<field name="headerDepartment" class="java.lang.String"/>
-	<field name="print" class="java.lang.String"/>
 	<field name="billto" class="java.lang.String"/>
 	<field name="billfrom" class="java.lang.String"/>
 	<field name="accno" class="java.lang.String"/>
@@ -14,12 +12,14 @@
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
 	<field name="detail" class="java.lang.String"/>
-	<field name="thb" class="java.lang.String"/>
-	<field name="jpy" class="java.lang.String"/>
-	<field name="usd" class="java.lang.String"/>
+	<field name="thb" class="java.math.BigDecimal"/>
+	<field name="jpy" class="java.math.BigDecimal"/>
+	<field name="usd" class="java.math.BigDecimal"/>
 	<field name="recno" class="java.lang.String"/>
-	<field name="recamt" class="java.lang.String"/>
+	<field name="recamt" class="java.math.BigDecimal"/>
 	<field name="department" class="java.lang.String"/>
+	<field name="type" class="java.lang.String"/>
+	<field name="headdepartment" class="java.lang.String"/>
 	<variable name="totalthb" class="java.math.BigDecimal" resetType="Group" resetGroup="invoice" calculation="Sum">
 		<variableExpression><![CDATA[$F{thb}]]></variableExpression>
 	</variable>
@@ -32,23 +32,23 @@
 	<variable name="totalamount" class="java.math.BigDecimal" resetType="Group" resetGroup="invoice" calculation="Sum">
 		<variableExpression><![CDATA[$F{recamt}]]></variableExpression>
 	</variable>
-	<group name="invoice">
-		<groupExpression><![CDATA[$V{PAGE_NUMBER}]]></groupExpression>
+	<group name="invoice" keepTogether="true">
+		<groupExpression><![CDATA[$F{invname}]]></groupExpression>
 		<groupHeader>
 			<band height="38">
 				<staticText>
-					<reportElement x="9" y="10" width="57" height="13" uuid="ffb74467-5f29-464b-ac72-a574d862ae2f"/>
+					<reportElement x="8" y="10" width="32" height="13" uuid="ffb74467-5f29-464b-ac72-a574d862ae2f"/>
 					<textElement textAlignment="Right">
 						<font size="8"/>
 					</textElement>
 					<text><![CDATA[Name :  ]]></text>
 				</staticText>
 				<textField pattern="">
-					<reportElement x="65" y="10" width="110" height="13" uuid="e65b9154-2ada-4227-a58d-157c1c175ae0"/>
+					<reportElement x="41" y="10" width="260" height="13" uuid="e65b9154-2ada-4227-a58d-157c1c175ae0"/>
 					<textElement>
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[   $F{invname}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{invname}]]></textFieldExpression>
 				</textField>
 				<rectangle>
 					<reportElement x="9" y="25" width="534" height="13" backcolor="#E6E6E6" uuid="b3003aec-3085-4ad6-9bb8-ef196fce4c2e"/>
@@ -96,13 +96,13 @@
 					</graphicElement>
 				</rectangle>
 				<rectangle>
-					<reportElement mode="Transparent" x="434" y="25" width="44" height="13" forecolor="#CCCCCC" uuid="7e142df5-e244-4a3d-b639-003e9be67db7"/>
+					<reportElement mode="Transparent" x="434" y="25" width="54" height="13" forecolor="#CCCCCC" uuid="7e142df5-e244-4a3d-b639-003e9be67db7"/>
 					<graphicElement>
 						<pen lineWidth="0.25"/>
 					</graphicElement>
 				</rectangle>
 				<rectangle>
-					<reportElement mode="Transparent" x="478" y="25" width="65" height="13" forecolor="#CCCCCC" uuid="138045e1-426d-4875-807b-d9b62234d584"/>
+					<reportElement mode="Transparent" x="489" y="25" width="54" height="13" forecolor="#CCCCCC" uuid="138045e1-426d-4875-807b-d9b62234d584"/>
 					<graphicElement>
 						<pen lineWidth="0.25"/>
 					</graphicElement>
@@ -157,14 +157,14 @@
 					<text><![CDATA[Rev No]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="434" y="25" width="44" height="13" backcolor="#FFFFFF" uuid="805ed78c-7f96-4f47-b964-a26c7ec9dc7b"/>
+					<reportElement x="434" y="25" width="55" height="13" backcolor="#FFFFFF" uuid="805ed78c-7f96-4f47-b964-a26c7ec9dc7b"/>
 					<textElement textAlignment="Center">
 						<font size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Rev Amt]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="478" y="25" width="65" height="13" backcolor="#FFFFFF" uuid="ec5b9b76-2770-4371-a54d-d76f5d1ab102"/>
+					<reportElement x="489" y="25" width="54" height="13" backcolor="#FFFFFF" uuid="ec5b9b76-2770-4371-a54d-d76f5d1ab102"/>
 					<textElement textAlignment="Center">
 						<font size="8" isBold="true"/>
 					</textElement>
@@ -173,41 +173,41 @@
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="42">
-				<textField pattern="">
-					<reportElement x="200" y="16" width="64" height="13" uuid="60e2efdd-298b-4cb4-aece-08c15682c434"/>
-					<textElement>
+			<band height="15">
+				<textField pattern=" #,##0.00" isBlankWhenNull="true">
+					<reportElement x="200" y="0" width="64" height="13" uuid="60e2efdd-298b-4cb4-aece-08c15682c434"/>
+					<textElement textAlignment="Right">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[   $V{totalthb}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{totalthb}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="143" y="16" width="57" height="13" uuid="a8208b61-f01f-4eaf-9f7b-e5deb5f5af5c"/>
+					<reportElement x="143" y="0" width="57" height="13" uuid="a8208b61-f01f-4eaf-9f7b-e5deb5f5af5c"/>
 					<textElement textAlignment="Right">
 						<font size="8"/>
 					</textElement>
 					<text><![CDATA[Total :  ]]></text>
 				</staticText>
-				<textField pattern="">
-					<reportElement x="264" y="16" width="64" height="13" uuid="27bd829e-d277-4ee9-81ac-e67bb5d4dc16"/>
-					<textElement>
+				<textField pattern=" #,##0.00" isBlankWhenNull="true">
+					<reportElement x="264" y="0" width="60" height="13" uuid="27bd829e-d277-4ee9-81ac-e67bb5d4dc16"/>
+					<textElement textAlignment="Right">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[   $V{totaljpy}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{totaljpy}]]></textFieldExpression>
 				</textField>
-				<textField pattern="">
-					<reportElement x="328" y="16" width="59" height="13" uuid="f91d6539-b748-425d-9701-1382759cf0ba"/>
-					<textElement>
+				<textField pattern=" #,##0.00" isBlankWhenNull="true">
+					<reportElement x="328" y="0" width="59" height="13" uuid="f91d6539-b748-425d-9701-1382759cf0ba"/>
+					<textElement textAlignment="Right">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[   $V{totalusd}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{totalusd}]]></textFieldExpression>
 				</textField>
-				<textField pattern="">
-					<reportElement x="414" y="16" width="64" height="13" uuid="7fefa16e-aa2e-4ceb-bb2d-d09dc8f72d2e"/>
-					<textElement>
+				<textField pattern=" #,##0.00" isBlankWhenNull="true">
+					<reportElement x="424" y="0" width="64" height="13" uuid="7fefa16e-aa2e-4ceb-bb2d-d09dc8f72d2e"/>
+					<textElement textAlignment="Right">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[   $V{totalamount}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{totalamount}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -282,14 +282,14 @@
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[   "Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
 				<reportElement x="434" y="34" width="110" height="13" uuid="26c670d5-c782-4e23-a209-3cfcbec41fa8"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[   $F{systemdate}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{systemdate}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="392" y="46" width="42" height="12" uuid="13c33f46-e094-4475-88f4-c3eb8aa535b2"/>
@@ -298,13 +298,6 @@
 				</textElement>
 				<text><![CDATA[Print :  ]]></text>
 			</staticText>
-			<textField pattern="">
-				<reportElement x="434" y="58" width="110" height="13" uuid="9d413c23-c5b4-4ea1-8154-86ca173ea99a"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[   $F{headerDepartment}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="377" y="58" width="57" height="13" uuid="a018ac39-ceea-42cf-a7c3-e232ec233a06"/>
 				<textElement textAlignment="Right">
@@ -312,13 +305,6 @@
 				</textElement>
 				<text><![CDATA[Department :  ]]></text>
 			</staticText>
-			<textField pattern="">
-				<reportElement x="434" y="71" width="110" height="13" uuid="2883da5c-5c46-4f84-a8e9-37ff2eef86b5"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[   $F{print}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="377" y="71" width="57" height="13" uuid="edfbf294-40aa-4984-a338-c581ecfe0416"/>
 				<textElement textAlignment="Right">
@@ -339,12 +325,12 @@
 				</textElement>
 				<text><![CDATA[Bill To :  ]]></text>
 			</staticText>
-			<textField pattern="">
+			<textField pattern="" isBlankWhenNull="true">
 				<reportElement x="80" y="110" width="110" height="13" uuid="157f0b60-629d-48fa-9b0c-a6446c890851"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[   $F{billto}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{billto}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="301" y="110" width="57" height="13" uuid="17711b93-6457-41a0-bc51-c69b82330bb3"/>
@@ -353,12 +339,12 @@
 				</textElement>
 				<text><![CDATA[Bill From :  ]]></text>
 			</staticText>
-			<textField pattern="">
+			<textField pattern="" isBlankWhenNull="true">
 				<reportElement x="358" y="110" width="110" height="13" uuid="7830399d-0413-4263-93da-ebd00dda0c7f"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[   $F{billfrom}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{billfrom}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="301" y="123" width="57" height="13" uuid="aa5d2da8-1939-449f-87c7-274da1d554e0"/>
@@ -367,12 +353,12 @@
 				</textElement>
 				<text><![CDATA[Payment :  ]]></text>
 			</staticText>
-			<textField pattern="">
+			<textField pattern="" isBlankWhenNull="true">
 				<reportElement x="358" y="123" width="110" height="13" uuid="2ce491de-0a69-4cad-b243-0ff5cc464df8"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[   $F{payment}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{payment}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="23" y="123" width="57" height="13" uuid="82f146e5-be7d-4d33-8c4a-51f7547867ee"/>
@@ -381,17 +367,31 @@
 				</textElement>
 				<text><![CDATA[Acc No :  ]]></text>
 			</staticText>
-			<textField pattern="">
+			<textField pattern="" isBlankWhenNull="true">
 				<reportElement x="80" y="123" width="110" height="13" uuid="06a9eb11-a23d-4c6b-ad60-58cf8cb5d1f7"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[   $F{accno}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{accno}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="434" y="71" width="109" height="13" uuid="a2084f80-44b5-49c0-b1c3-622851367151"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{type}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="434" y="58" width="100" height="13" uuid="fa3c1002-a99f-4767-b297-e353f241d76b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{headdepartment}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
 	<detail>
-		<band height="41" splitType="Stretch">
+		<band height="21" splitType="Stretch">
 			<rectangle>
 				<reportElement mode="Transparent" x="9" y="0" width="71" height="21" forecolor="#CCCCCC" uuid="fc04e99c-1dca-49f6-9c3d-ada4ba4d974a"/>
 				<graphicElement>
@@ -435,13 +435,13 @@
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="434" y="0" width="44" height="21" forecolor="#CCCCCC" uuid="eec89760-2bea-42be-984b-b50ef5e7ae7b"/>
+				<reportElement mode="Transparent" x="433" y="0" width="55" height="21" forecolor="#CCCCCC" uuid="eec89760-2bea-42be-984b-b50ef5e7ae7b"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="478" y="0" width="65" height="21" forecolor="#CCCCCC" uuid="9631cd64-accd-4e64-bf1e-6c8f399878b9"/>
+				<reportElement mode="Transparent" x="489" y="0" width="54" height="21" forecolor="#CCCCCC" uuid="9631cd64-accd-4e64-bf1e-6c8f399878b9"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
@@ -451,63 +451,63 @@
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[  $F{invno}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{invno}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="80" y="0" width="49" height="21" uuid="8215df2e-c206-47f4-9ce9-75bad7c32c2d"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[  $F{invdate}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{invdate}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="129" y="0" width="71" height="21" uuid="204215c6-1c49-4f8f-a8d5-5a871a6228c3"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[  $F{detail}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{detail}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern=" #,##0.00" isBlankWhenNull="true">
 				<reportElement x="200" y="0" width="64" height="21" uuid="e1da11f1-2d1f-42bd-92cf-6d3f263df59f"/>
-				<textElement>
+				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[  $F{thb}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{thb}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern=" #,##0.00" isBlankWhenNull="true">
 				<reportElement x="264" y="0" width="60" height="21" uuid="466abef9-c5db-490f-8210-0a34624c5f18"/>
-				<textElement>
+				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[  $F{jpy}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{jpy}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern=" #,##0.00" isBlankWhenNull="true">
 				<reportElement x="324" y="0" width="63" height="21" uuid="173e973c-b599-4bf8-a3fe-f27ed7029cf6"/>
-				<textElement>
+				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[  $F{usd}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{usd}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="387" y="0" width="47" height="21" uuid="56093851-832c-49c4-a4a4-7c2ac5100346"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[  $F{recno}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{recno}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="434" y="0" width="55" height="21" uuid="ca2b1fd9-be17-44cf-8fc9-31203b6c7df9"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{recamt}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="434" y="0" width="44" height="21" uuid="ca2b1fd9-be17-44cf-8fc9-31203b6c7df9"/>
+				<reportElement x="489" y="0" width="55" height="21" uuid="b337dde0-0be7-473a-857f-20a3f209bd40"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[  $F{recamt}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="478" y="0" width="66" height="21" uuid="b337dde0-0be7-473a-857f-20a3f209bd40"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[  $F{department}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{department}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

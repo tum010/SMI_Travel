@@ -243,7 +243,7 @@ public class UtilityFunction {
     
     public String SetFormatDate(Date paramdate,String format){
         //"dd MMM yyyy hh:mm:ss"
-        return new SimpleDateFormat("dd MMM yyyy hh:mm:ss", new Locale("us", "us")).format(paramdate);
+        return new SimpleDateFormat(format, new Locale("us", "us")).format(paramdate);
     }
 
     public static void main(String[] args) throws ParseException {

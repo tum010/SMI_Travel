@@ -11,6 +11,7 @@ import com.smi.travel.datalayer.report.model.InvoiceMonthly;
 import com.smi.travel.datalayer.report.model.InvoiceReport;
 import com.smi.travel.datalayer.view.dao.InvoiceReportDao;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -174,7 +175,7 @@ public class InvoiceImpl implements InvoiceReportDao{
         UtilityFunction util = new UtilityFunction();  
         Date thisdate = new Date();
         List data = new ArrayList();
-        
+        String querydata = "SELECT * FROM `invoice_monthly_view`";
         String query = "SELECT * FROM `invoice_monthly_view` invm Where";
         int checkQuery = 0;
         String prefix ="";
@@ -207,7 +208,7 @@ public class InvoiceImpl implements InvoiceReportDao{
         if(checkQuery == 0){query = query.replaceAll("Where", "");}
          System.out.println("query : "+query);
          
-        List<Object[]> QueryInvoiceMounthList = session.createSQLQuery(query)      
+        List<Object[]> QueryInvoiceMounthList = session.createSQLQuery(querydata)      
                 .addScalar("invname", Hibernate.STRING)
                 .addScalar("invno", Hibernate.STRING)
                 .addScalar("invdate", Hibernate.DATE)
@@ -234,11 +235,11 @@ public class InvoiceImpl implements InvoiceReportDao{
             invM.setInvdate(util.SetFormatDate(thisdate, "dd MMM yyyy"));
             invM.setInvname(util.ConvertString(B[0]));
             invM.setInvno(util.ConvertString(B[1]));
-            invM.setJpy(util.setFormatMoney(B[5]));
-            invM.setThb(util.setFormatMoney(B[4]));
-            invM.setUsd(util.setFormatMoney(B[6]));
+            invM.setJpy((BigDecimal) (B[5]));
+            invM.setThb((BigDecimal)(B[4]));
+            invM.setUsd((BigDecimal)(B[6]));
             invM.setPayment(Payment);
-            invM.setRecamt(util.setFormatMoney(B[9]));
+            invM.setRecamt((BigDecimal)(B[9]));
 //            System.out.println("Recamt : " + util.setFormatMoney(B[8]));
             invM.setRecno(util.ConvertString(B[8]));
             invM.setType(vattype);
