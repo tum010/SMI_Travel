@@ -6,6 +6,8 @@
 
 package com.smi.travel.datalayer.report.model;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author Surachai
@@ -25,6 +27,7 @@ public class CreditNoteReport {
     private String remark;
     private String textamount;
     private String user;
+
 
     public String getCustomer() {
         return customer;
