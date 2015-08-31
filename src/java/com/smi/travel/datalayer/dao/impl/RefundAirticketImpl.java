@@ -65,6 +65,7 @@ public class RefundAirticketImpl implements RefundAirticketDao{
             dbRefund.setRefundBy(refund.getRefundBy());
             dbRefund.setRemark(refund.getRemark());
             dbRefund.setAgent(refund.getAgent());
+            dbRefund.setReceiveDate(refund.getReceiveDate());
             session.update(dbRefund);
             for (int i = 0; i < refund.getRefundAirticketDetails().size(); i++) {
                 RefundAirticketDetail detail = (RefundAirticketDetail) refund.getRefundAirticketDetails().get(i);

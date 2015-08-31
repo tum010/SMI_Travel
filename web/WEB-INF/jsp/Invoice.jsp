@@ -638,11 +638,23 @@
                                                 <span id="buttonEmail" class="glyphicon glyphicon-send" ></span> Send Email 
                                             </button>
                                         </div>
-                                        <div class="col-md-3 text-right " >
+                                        <div class="col-md-1 text-right " >
+                                            <label class="control-label" for="">Sign :</lable>               
+                                        </div>
+                                        <div class="col-md-2 text-left " >
+                                            <select id="SelectSign" name="SelectSign" class="form-control">
+                                                <option value="">--Sign--</option>
+                                                <option value="benjaporn">Benjaporn</option>
+                                                <option value="pawina">Pawina</option>
+                                                <option value="supavadee">Supavadee</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-1 text-right " >
                                             <button type="button" class="btn btn-success" id="copyButton" onclick="printInvoice('email')" data-toggle="modal" data-target="#CopyModal">
                                                 <span id="buttonCopy" class="glyphicon glyphicon-file" ></span> Copy 
                                             </button>
                                         </div>
+                                        
                                         <div class="col-md-1 text-right ">
                                             <c:set var="isDisableVoid" value="disabled='true'" />
                                             <c:set var="isEnableVoid" value="style='display: none;'" />

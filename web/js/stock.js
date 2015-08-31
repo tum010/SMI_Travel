@@ -394,8 +394,13 @@ function addItemList(){
                                 '<td><input type="text"  class="form-control" name="codeItemList' + count.value + '" id="codeItemList' + count.value + '" value="'+prefix.value+'-'+code+'"/></td>' +
                                 '<td><select id="SeleteTypeItemList' + count.value + '" name="SeleteTypeItemList' + count.value + '" class="form-control">' + res + '</select></td>' +
                                 '<td>No Paid</td>' +
+                                '<td class="hidden"><input type="text"  class="form-control" name="payTemp' + count.value + '" id="payTemp' + count.value + '" value="0" /></td>'+
                                 '<td>NEW</td>' +
+                                '<td class="hidden"><input type="text"  class="form-control" name="itemTemp' + count.value + '" id="itemTemp' + count.value + '" value="1" /></td>'+
                                 '<td class="text-center"><a href="#"  class="remCF" id="ButtonRemove' + count.value + '" onclick="deleteItemListRow('+count.value+",'"+ prefix.value+"-"+code+"'"+')" data-toggle="modal" data-target="#delStockModal"><span id="Spanremove' + count.value + '" class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
+                                '<td class="hidden"></td>'+
+                                '<td class="hidden"></td>'+
+                                '<td class="hidden"></td>'+
                                 '</tr>'
                                 );
                                 start.value++;
@@ -408,8 +413,15 @@ function addItemList(){
                                 '<td><input type="text"  class="form-control" name="codeItemList' + count.value + '" id="codeItemList' + count.value + '" value="'+code+'"/></td>' +
                                 '<td><select id="SeleteTypeItemList' + count.value + '" name="SeleteTypeItemList' + count.value + '" class="form-control">' + res + '</select></td>' +
                                 '<td>No Paid</td>' +
+                                '<td class="hidden"><input type="text"  class="form-control" name="payTemp' + count.value + '" id="payTemp' + count.value + '" value="0" /></td>'+
                                 '<td>NEW</td>' +
+                                '<td class="hidden"><input type="text"  class="form-control" name="itemTemp' + count.value + '" id="itemTemp' + count.value + '" value="1" /></td>'+
                                 '<td class="text-center"><a href="#"  class="remCF" id="ButtonRemove' + count.value + '" onclick="deleteItemListRow('+count.value+",'"+code+"'"+')" data-toggle="modal" data-target="#delStockModal"><span id="Spanremove' + count.value + '" class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
+                                '<td class="hidden"></td>' +
+                                '<td class="hidden"></td>' +
+                                '<td class="hidden"></td>' +'<td class="hidden"></td>'+
+                                '<td class="hidden"></td>'+
+                                '<td class="hidden"></td>'+
                                 '</tr>'
                                 );
                                 start.value++;
@@ -495,7 +507,7 @@ function resetNumberItemList(){
         var codea = $(this).find("td").eq(2).find("input").val();
         $(this).find("td").eq(1).html(count);
         if(codea !== undefined ){
-            $(this).find("td").eq(6).html("<a href='#'  class='remCF' id='ButtonRemove"+ count +"'  onclick=\"deleteItemListRow("+ count +",'"+ codea +"')\"  data-toggle='modal' data-target='#delStockModal'><span id='Spanremove"+ count +"'  class='glyphicon glyphicon-remove deleteicon'></span></a>");      
+            $(this).find("td").eq(9).html("<a href='#'  class='remCF' id='ButtonRemove"+ count +"'  onclick=\"deleteItemListRow("+ count +",'"+ codea +"')\"  data-toggle='modal' data-target='#delStockModal'><span id='Spanremove"+ count +"'  class='glyphicon glyphicon-remove deleteicon'></span></a>");      
         }
         count+= 1;
     });
