@@ -34,7 +34,7 @@ public class StockImpl implements StockDao{
     private static final String SELECT_STOCK_DETAIL = "FROM StockDetail std where std.stock.id = :stockID";
     private static final String SELECT_STOCK_PRODUCT = "FROM Product pr where pr.isStock = 1";
     private static final String GET_STOCK_ID = "FROM Stock st where st.product.id = :proID and st.staff.username = :staffID and st.effectiveFrom = :from  and st.effectiveTo = :to and st.createDate = :create ";
-    private static final String GET_STOCK = "FROM Stock st where st.id = :stockID";
+    private static final String GET_STOCK = "FROM Stock st where st.id = :stockID ";
     
     @Override
     public String InsertStock(Stock ItemLot) {
@@ -374,6 +374,7 @@ public class StockImpl implements StockDao{
             query += " and st.effectiveTo = '" + EffectiveTo + "'";
         }
         
+//        query += "ORDER BY  st.stockDetails.code  ASC";
         System.out.println("query : " + query);
         List<Stock> list = session.createQuery(query).list();
         for(int i=0;i< list.size();i++){
