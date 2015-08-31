@@ -23,6 +23,7 @@ import com.smi.travel.datalayer.view.dao.InvoiceSummaryDao;
 import com.smi.travel.datalayer.view.dao.LandVoucherDao;
 import com.smi.travel.datalayer.view.dao.ReceiptDao;
 import com.smi.travel.datalayer.view.dao.ReceiveListDao;
+import com.smi.travel.datalayer.view.dao.RefundAirReportDao;
 import com.smi.travel.datalayer.view.dao.StaffSummaryDao;
 import com.smi.travel.datalayer.view.dao.TaxInvoiceEmailReportDao;
 import com.smi.travel.datalayer.view.dao.TaxInvoiceReportDao;
@@ -66,6 +67,7 @@ public class ReportService {
     private TaxInvoiceEmailReportDao taxInvoiceEmailDao;
     private CreditNoteReportDao creditNoteReportdao;
     private InvoiceReportDao invoiceReportDao;
+    private RefundAirReportDao refundAirReportDao;
     
     public List getInvoiceMonthly(String BillFrom,String BillTo,String ClientName,String Payment,String Accno,String vattype,String from,String to,String department){
         return invoiceReportDao.getInvoiceMonthly(BillFrom, BillTo, ClientName, Payment, Accno, vattype, from, to, department);
@@ -195,6 +197,10 @@ public class ReportService {
     
     public List getCreditNoteReport(String Cnid){
         return creditNoteReportdao.getCreditNoteReport(Cnid);
+    }
+    
+    public List getRefundAirReport(){        
+        return getRefundAirReportDao().getRefundAir();
     }
 
     public HotelVoucherDao getHotelVoucherdao() {
@@ -383,6 +389,14 @@ public class ReportService {
 
     public InvoiceReportDao getInvoiceReportDao() {
         return invoiceReportDao;
+    }
+
+    public RefundAirReportDao getRefundAirReportDao() {
+        return refundAirReportDao;
+    }
+
+    public void setRefundAirReportDao(RefundAirReportDao refundAirReportDao) {
+        this.refundAirReportDao = refundAirReportDao;
     }
     
 }
