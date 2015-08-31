@@ -310,6 +310,10 @@
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
     
+    <bean id="RefundAirReportDao" class="com.smi.travel.datalayer.view.dao.impl.RefundAirReportImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
     <bean id="PaymentWendytourDao" class="com.smi.travel.datalayer.dao.impl.PaymentWendytourImpl">
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>

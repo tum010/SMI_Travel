@@ -46,6 +46,11 @@ public class TicketFareAirline {
      private String department;
      private Master Master;
      private String pvCode;
+     private String owner;
+     private String routingDetail;
+     private BigDecimal airlineCharge;
+     private BigDecimal invAmount;
+     private Date dueDate;
      private MPaymentDoctype MPaymentDoctype;
      private List paymentAirticketFares = new LinkedList<PaymentAirticketFare>();
      private List refundAirticketDetails = new LinkedList<RefundAirticketDetail>();
@@ -352,6 +357,46 @@ public class TicketFareAirline {
 
     public void setPvCode(String pvCode) {
         this.pvCode = pvCode;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public String getRoutingDetail() {
+        return routingDetail;
+    }
+
+    public void setRoutingDetail(String routingDetail) {
+        this.routingDetail = routingDetail;
+    }
+
+    public BigDecimal getAirlineCharge() {
+        return airlineCharge;
+    }
+
+    public void setAirlineCharge(BigDecimal airlineCharge) {
+        this.airlineCharge = airlineCharge;
+    }
+
+    public BigDecimal getInvAmount() {
+        return invAmount;
+    }
+
+    public void setInvAmount(BigDecimal invAmount) {
+        this.invAmount = invAmount;
+    }
+
+    public Date getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
     }
 
     

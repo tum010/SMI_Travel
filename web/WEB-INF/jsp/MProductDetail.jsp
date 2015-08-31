@@ -231,7 +231,7 @@
          <div class="row">
                 <div class="col-xs-12 text-center">
                 <c:choose>
-                    <c:when test="${requestScope['stock'] == 'success'}">
+                    <c:when test="${(requestScope['stock'] == 'success') && (requestScope['isStock'] == '1')}">
                         <button id="saveProduct" name="saveProduct" type="button" class="btn btn-success" onclick="confirmDisableStock()"><i class="fa fa-save"></i> Save </button>
                     </c:when>
                     <c:otherwise>    

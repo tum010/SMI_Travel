@@ -107,6 +107,21 @@
         <property name="pvCode" type="string">
             <column name="pv_code" length="10" />
         </property>
+        <property name="owner" type="string">
+            <column name="owner" length="50" />
+        </property>
+        <property name="airlineCharge" type="big_decimal">
+            <column name="airline_charge" precision="10"  />
+        </property>
+        <property name="routingDetail" type="string">
+            <column name="routing_detail" length="255" />
+        </property>
+        <property name="dueDate" type="date">
+            <column name="due_date" length="10" />
+        </property>
+        <property name="invAmount" type="big_decimal">
+            <column name="inv_amount" precision="10"  />
+        </property>
         <bag name="paymentAirticketFares" table="payment_airticket_fare" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="ticket_fare_id" />

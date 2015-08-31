@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportTest" language="groovy" pageWidth="595" pageHeight="432" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="053f4d0e-4534-4ae9-bd3a-d9c39367ad2d">
 	<property name="ireport.zoom" value="1.5000000000000007"/>
-	<property name="ireport.x" value="273"/>
-	<property name="ireport.y" value="96"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="125"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["/Users/taninsammanee/Projects/ICONEXT/icoweb/trunk/SMITravel/web/WEB-INF/report/"]]></defaultValueExpression>
 	</parameter>
@@ -113,9 +113,12 @@ FROM
 				<text><![CDATA[NAME : ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="40" y="28" width="353" height="18" isRemoveLineWhenBlank="true" uuid="e0ae6dc4-a6d1-4c6f-b094-bcb24c206992">
+				<reportElement x="40" y="26" width="353" height="18" isRemoveLineWhenBlank="true" uuid="e0ae6dc4-a6d1-4c6f-b094-bcb24c206992">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{leadername}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -503,9 +506,9 @@ Double.valueOf($F{sell2} != null && $F{sell2}.length() > 0 ? Double.valueOf($F{s
 				<text><![CDATA[AUTHORIZED BY]]></text>
 			</staticText>
 			<textField>
-				<reportElement positionType="Float" x="68" y="14" width="162" height="20" isRemoveLineWhenBlank="true" uuid="0329f522-7790-4326-93f1-dc9fd23c23f2"/>
+				<reportElement positionType="Float" x="68" y="12" width="162" height="20" isRemoveLineWhenBlank="true" uuid="0329f522-7790-4326-93f1-dc9fd23c23f2"/>
 				<textElement>
-					<font size="8"/>
+					<font fontName="TH SarabunPSK" size="11" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{prepareby}]]></textFieldExpression>
 			</textField>
@@ -530,9 +533,9 @@ Double.valueOf($F{sell2} != null && $F{sell2}.length() > 0 ? Double.valueOf($F{s
 				<reportElement positionType="Float" x="327" y="24" width="217" height="1" isRemoveLineWhenBlank="true" uuid="4eebf173-2ad4-4793-aefb-54fdeddaa1fd"/>
 			</line>
 			<textField>
-				<reportElement positionType="Float" x="68" y="25" width="162" height="13" isRemoveLineWhenBlank="true" uuid="411ef0ad-912d-4986-a3e4-9c654fa92237"/>
+				<reportElement positionType="Float" x="68" y="23" width="162" height="13" isRemoveLineWhenBlank="true" uuid="411ef0ad-912d-4986-a3e4-9c654fa92237"/>
 				<textElement>
-					<font size="8"/>
+					<font fontName="TH SarabunPSK" size="11" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{issueby}]]></textFieldExpression>
 			</textField>
@@ -540,9 +543,9 @@ Double.valueOf($F{sell2} != null && $F{sell2}.length() > 0 ? Double.valueOf($F{s
 				<reportElement positionType="Float" x="66" y="24" width="170" height="1" isRemoveLineWhenBlank="true" uuid="ba464001-b2f0-4f5f-99a8-68b99e4007d0"/>
 			</line>
 			<textField>
-				<reportElement positionType="Float" x="68" y="3" width="475" height="13" isRemoveLineWhenBlank="true" uuid="09c83f7d-7333-4282-af51-c54f41653937"/>
+				<reportElement positionType="Float" x="68" y="1" width="475" height="13" isRemoveLineWhenBlank="true" uuid="09c83f7d-7333-4282-af51-c54f41653937"/>
 				<textElement>
-					<font size="8"/>
+					<font fontName="TH SarabunPSK" size="11" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{remark}]]></textFieldExpression>
 			</textField>
