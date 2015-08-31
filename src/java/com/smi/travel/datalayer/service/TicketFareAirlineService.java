@@ -76,9 +76,7 @@ public class TicketFareAirlineService {
         return ticketFareAirlineDao.getInvoiceDetailFromTicketNo(ticketNo);
     }
     
-    
-    
-    
+
     //------------------------ Getter Setter TicketFareAirlineDao ------------------------ 
     
     public TicketFareAirlineDao getTicketFareAirlineDao() {

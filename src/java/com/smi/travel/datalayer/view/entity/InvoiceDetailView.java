@@ -23,7 +23,8 @@ public class InvoiceDetailView {
     private String credit;
     private String owner;
     private String routing;
-
+    private String invoiceId;
+    
     public String getId() {
         return id;
     }
@@ -102,6 +103,14 @@ public class InvoiceDetailView {
 
     public void setRouting(String routing) {
         this.routing = routing;
+    }
+
+    public String getInvoiceId() {
+        return invoiceId;
+    }
+
+    public void setInvoiceId(String invoiceId) {
+        this.invoiceId = invoiceId;
     }
    
     

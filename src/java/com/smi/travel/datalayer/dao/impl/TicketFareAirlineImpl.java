@@ -20,6 +20,7 @@ import com.smi.travel.datalayer.entity.PaymentAirticketFare;
 import com.smi.travel.datalayer.entity.PaymentAirticketRefund;
 import com.smi.travel.datalayer.entity.RefundAirticketDetail;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
+import com.smi.travel.datalayer.entity.TicketFareInvoice;
 import com.smi.travel.datalayer.view.entity.InvoiceDetailView;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
 import com.smi.travel.util.UtilityFunction;
@@ -59,6 +60,17 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                 }
             }
             session.save(ticket);
+            
+            List<TicketFareInvoice> ticketFareInvoices = ticket.getTicketFareInvoices();
+            
+            if(ticketFareInvoices != null){
+                for(int i = 0; i < ticketFareInvoices.size(); i++){
+                   session.save(ticketFareInvoices.get(i));
+                }
+            }
+            
+            
+            
             transaction.commit();
             session.close();
             this.sessionFactory.close();
@@ -83,6 +95,17 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                 }
             }
             session.update(ticket);
+            
+            List<TicketFareInvoice> ticketFareInvoices = ticket.getTicketFareInvoices();
+            if(ticketFareInvoices != null){
+                for(int i = 0; i < ticketFareInvoices.size(); i++){
+                    if(ticketFareInvoices.get(i).getId() == null){
+                        session.save(ticketFareInvoices.get(i));
+                    } else {
+                        session.update(ticketFareInvoices.get(i));
+                    }             
+                }
+            }
             transaction.commit();
             session.close();
             this.sessionFactory.close();
@@ -685,8 +708,9 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         
         for (int i = 0; i < invoiceDetailList.size() ; i++) {
             InvoiceDetailView invoiceDetailView = new InvoiceDetailView();
-            invoiceDetailView.setId(invoiceDetailList.get(i).getId());
+//            invoiceDetailView.setId(invoiceDetailList.get(i).getId());
             if(invoiceDetailList.get(i).getInvoice() != null){
+                invoiceDetailView.setInvoiceId(invoiceDetailList.get(i).getInvoice().getId());
                 invoiceDetailView.setInvNo(invoiceDetailList.get(i).getInvoice().getInvNo());
                 invoiceDetailView.setInvDate(invoiceDetailList.get(i).getInvoice().getInvDate());
                 invoiceDetailView.setDepartment(invoiceDetailList.get(i).getInvoice().getDepartment());
