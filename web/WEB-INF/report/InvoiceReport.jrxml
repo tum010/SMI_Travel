@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="59f0ec99-8109-4367-975c-dc17aad92f4d">
 	<property name="ireport.zoom" value="1.3660269107301415"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="102"/>
+	<property name="ireport.y" value="240"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
@@ -236,7 +236,7 @@
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{vat}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{vat} == null || "".equalsIgnoreCase($F{vat}))? "":$F{vat}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="32" height="20" uuid="4c5e01bc-f9aa-4b23-9060-b8e5780a0170"/>
@@ -252,12 +252,12 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="#,##0.00">
+			<textField isStretchWithOverflow="true" pattern="">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="340" y="0" width="69" height="20" uuid="3f5a42b4-9f38-42d2-bd3d-ba5e4eac98f5"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{gross}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{gross} == null || ".00".equalsIgnoreCase($F{gross}))? "":$F{gross}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="37" y="0" width="296" height="20" uuid="59dca7a0-fb9d-46da-a044-52d8de6f2220"/>
@@ -390,19 +390,19 @@
 				</textElement>
 				<text><![CDATA[GR. TOTAL]]></text>
 			</staticText>
-			<textField pattern="">
+			<textField pattern="" isBlankWhenNull="true">
 				<reportElement x="447" y="2" width="104" height="14" uuid="f84d1f7f-775a-4608-bf56-ea5878650ea5"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{total} == null ? "0.00":$F{total}]]></textFieldExpression>
 			</textField>
-			<textField pattern="">
+			<textField pattern="" isBlankWhenNull="true">
 				<reportElement x="447" y="34" width="104" height="17" uuid="69f80e35-e29e-4be1-aefa-8e2d409be2ab"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{grtotal}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{grtotal} == null ? "0.00":$F{grtotal}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="403" y="0" width="1" height="50" uuid="52acd9a6-ec0f-4061-b476-7e8679770ce1"/>
@@ -475,12 +475,12 @@
 			<line>
 				<reportElement x="404" y="33" width="148" height="1" uuid="a8f1fb13-9951-401e-aabe-264760348b70"/>
 			</line>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="450" y="19" width="100" height="14" uuid="a967d43e-c729-4f41-a590-79b13bab2265"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{totalvat}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{totalvat} == null ? "0.00":$F{totalvat}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

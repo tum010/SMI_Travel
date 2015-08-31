@@ -134,5 +134,11 @@
             </key>
             <one-to-many class="com.smi.travel.datalayer.entity.RefundAirticketDetail" />
         </bag>
+        <bag name="ticketFareInvoices" table="ticket_fare_invoice" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ticket_fare_id" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.TicketFareInvoice" />
+        </bag>
     </class>
 </hibernate-mapping>

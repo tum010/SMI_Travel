@@ -33,6 +33,8 @@ public class RefundAirlineController extends SMITravelController {
         String refundNo = request.getParameter("refundNo");
         List<Agent> agent = getUtilityService().getListAgent();
         request.setAttribute("agent", agent);
+        List user = getUtilityService().getUserList();
+        request.setAttribute("user", user);
         if ("search".equalsIgnoreCase(action)) {
             try {
                 RefundAirticket refundAirticket = getRefundAirlineService().getRefundAirTicketFromRefundNo(refundNo);
@@ -106,10 +108,12 @@ public class RefundAirlineController extends SMITravelController {
             String agenName = request.getParameter("agentName");
             String remark = request.getParameter("remark");
             String refundBy = request.getParameter("refundBy");
+            String receiveDate = request.getParameter("receiveDate");
 
             airticket.setId(refundId);
             airticket.setRefundNo(refundNo);
             airticket.setRefundDate(uf.convertStringToDate(refundDate));
+            airticket.setReceiveDate(uf.convertStringToDate(receiveDate));
             airticket.setRefundBy(refundBy);
             airticket.setRemark(remark);
             Agent agent = new Agent();

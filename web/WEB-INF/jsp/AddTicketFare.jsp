@@ -63,6 +63,7 @@
                 <input type="hidden" name="passengerTemp" id="passengerTemp" value="">
                 <input type="hidden" name="departmentTemp" id="departmentTemp" value="">
                 <input type="hidden" name="masterIdTemp" id="masterIdTemp" value="">
+                <input type="hidden" name="countRow" id="countRow" value="">
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="col-xs-1 text-right" style="width: 150px">
@@ -576,6 +577,8 @@
                             <tbody>
                                <c:forEach var="table" items="${invoiceDetailList}" varStatus="dataStatus">
                                     <tr>
+                                        <input type="hidden" name="tableId${dataStatus.count}" id="tableId${dataStatus.count}" value="${table.id}">
+                                        <input type="hidden" name="invoiceId${dataStatus.count}" id="invoiceId${dataStatus.count}" value="${table.invoiceId}">
                                         <td align="center">${dataStatus.count}</td>
                                         <td align="center">${table.invNo}</td>
                                         <td align="center">${table.invDate}</td>
@@ -1267,6 +1270,10 @@ function saveAction(optionsave){
     pvType.value = $("#pvType").val(); 
     var optionSave = document.getElementById('optionSave');
     optionSave.value = $("#optionSave").val(); 
+    
+    var countRow = document.getElementById('countRow');
+    countRow.value = $('#InvoiceDeailTable tr').length;
+    
 }
 
 function searchTicketNo() {

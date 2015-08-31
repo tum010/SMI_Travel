@@ -22,6 +22,9 @@
         <property name="remark" type="string">
             <column name="remark" />
         </property>
+        <property name="receiveDate" type="date">
+            <column name="receive_date" length="10" />
+        </property>
         <bag name="refundAirticketDetails" table="refund_airticket_detail" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="refund_id" />

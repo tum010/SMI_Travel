@@ -68,6 +68,7 @@ public class SendEmailController extends SMITravelController {
         String showstaff = request.getParameter("showstaff");
         String showleader = request.getParameter("showleader");
         String reportFile = request.getParameter("file");
+        String sign = request.getParameter("sign");
         String jasperFileName = "";
         String pdfFileName = "";
         String optionsend = request.getParameter("optionsend");
@@ -85,7 +86,7 @@ public class SendEmailController extends SMITravelController {
         String[] path = reportservice.getPartReport();
         if ((recipientAddress != null) && (!"".equalsIgnoreCase(recipientAddress))) {
             if (InvoiceReport.equalsIgnoreCase(name)) {
-                data = reportservice.getInvoice(reportid,bankid,showstaff,showleader);
+                data = reportservice.getInvoice(reportid,bankid,showstaff,showleader,sign);
                 JRDataSource dataSource = new JRBeanCollectionDataSource(data);
                 jasperFileName = "InvoiceEmail.jasper";
                 pdfFileName = "invoice.pdf";

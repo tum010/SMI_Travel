@@ -12,7 +12,6 @@ import java.util.List;
  */
 public class TicketFareAirline {
 
-
      private String id;
      private MAirlineAgent MAirlineAgent;
      private String ticketNo;
@@ -54,11 +53,12 @@ public class TicketFareAirline {
      private MPaymentDoctype MPaymentDoctype;
      private List paymentAirticketFares = new LinkedList<PaymentAirticketFare>();
      private List refundAirticketDetails = new LinkedList<RefundAirticketDetail>();
+     private List ticketFareInvoices = new LinkedList<TicketFareInvoice>();
 
     public TicketFareAirline() {
     }
 
-    public TicketFareAirline(MAirlineAgent MAirlineAgent, String ticketNo, String ticketType, String ticketBuy, String ticketRouting, String passenger, Date issueDate, Date ticketDate, BigDecimal ticketFare, BigDecimal ticketTax, BigDecimal ticketIns, BigDecimal ticketCommission, BigDecimal agentCommission, BigDecimal salePrice, Integer agentId, String remark, BigDecimal overCommission, BigDecimal litterCommission, BigDecimal decPay, BigDecimal addPay, BigDecimal agentComPay, BigDecimal agentComReceive, Date overDate, Date litterDate, Date decPayDate, Date addPayDate, Date agentPayDate, Date agentReceiveDate, List paymentAirticketFares, List refundAirticketDetails,BigDecimal diffVat,String department,Master master,String pvCode,MPaymentDoctype MPaymentDoctype) {
+    public TicketFareAirline(MAirlineAgent MAirlineAgent, String ticketNo, String ticketType, String ticketBuy, String ticketRouting, String passenger, Date issueDate, Date ticketDate, BigDecimal ticketFare, BigDecimal ticketTax, BigDecimal ticketIns, BigDecimal ticketCommission, BigDecimal agentCommission, BigDecimal salePrice, Integer agentId, String remark, BigDecimal overCommission, BigDecimal litterCommission, BigDecimal decPay, BigDecimal addPay, BigDecimal agentComPay, BigDecimal agentComReceive, Date overDate, Date litterDate, Date decPayDate, Date addPayDate, Date agentPayDate, Date agentReceiveDate, List paymentAirticketFares, List refundAirticketDetails,BigDecimal diffVat,String department,Master master,String pvCode,MPaymentDoctype MPaymentDoctype, List ticketFareInvoices) {
        this.MAirlineAgent = MAirlineAgent;
        this.ticketNo = ticketNo;
        this.ticketType = ticketType;
@@ -94,6 +94,7 @@ public class TicketFareAirline {
        this.MPaymentDoctype = MPaymentDoctype;
        this.paymentAirticketFares = paymentAirticketFares;
        this.refundAirticketDetails = refundAirticketDetails;
+       this.ticketFareInvoices = ticketFareInvoices;
     }
    
     public String getId() {
@@ -397,6 +398,14 @@ public class TicketFareAirline {
 
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public List getTicketFareInvoices() {
+        return ticketFareInvoices;
+    }
+
+    public void setTicketFareInvoices(List ticketFareInvoices) {
+        this.ticketFareInvoices = ticketFareInvoices;
     }
 
     

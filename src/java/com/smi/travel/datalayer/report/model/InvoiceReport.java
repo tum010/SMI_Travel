@@ -37,6 +37,7 @@ public class InvoiceReport {
     private String co;
     private String taxid;
     private String taxbranch;
+    private String sign;
 
     public String getInvto() {
         return invto;
@@ -246,4 +247,13 @@ public class InvoiceReport {
     public void setTaxid(String taxid) {
         this.taxid = taxid;
     }
+
+    public void setSign(String sign) {
+        this.sign = sign;
+    }
+
+    public String getSign() {
+        return sign;
+    }
+    
 }
