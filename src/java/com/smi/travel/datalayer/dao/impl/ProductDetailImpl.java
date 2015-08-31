@@ -10,6 +10,7 @@ import com.smi.travel.common.HibernateSession;
 import com.smi.travel.datalayer.dao.ProductDetailDao;
 import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.datalayer.entity.ProductDetail;
+import com.smi.travel.datalayer.entity.Stock;
 import com.smi.travel.util.UtilityFunction;
 import java.util.Date;
 import java.util.List;
@@ -114,7 +115,25 @@ public class ProductDetailImpl   implements ProductDetailDao{
         }
         return product;
     }
-
+    
+    @Override
+    public String checkProductIsStock(String productId) {
+        String result = "";
+        try {
+            String query = " from Stock s where s.product.id = :productId";
+            Session session = this.sessionFactory.openSession();
+            List<Stock> stockList = session.createQuery(query).setParameter("productId", productId).list();
+            if(stockList.isEmpty()){
+                result = "fail";
+                return result;
+            }
+            result = "success";
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            result = "fail";
+        }
+        return result;
+    }
 
     public Transaction getTransaction() {
         return transaction;
@@ -132,8 +151,6 @@ public class ProductDetailImpl   implements ProductDetailDao{
         this.sessionFactory = sessionFactory;
     }
 
-
     
-    
-    
+      
 }

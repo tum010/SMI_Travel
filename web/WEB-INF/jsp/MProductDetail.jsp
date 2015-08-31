@@ -83,14 +83,14 @@
             <!-- Alert Uni -->
             <div id="textAlertLap"  style="display:none;" class="alert alert-danger" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Product code or name already exist!</strong> 
+                    <strong>Product Code already exist!</strong> 
             </div>
             <div class="panel panel-default">
                 <div class="panel-heading">Detail</div>
                 <div class="panel-body">
                         <div class="row">
                         <div class="col-md-12 form-group">
-                            <div class="col-md-6 col-md-offset-6 text-right">
+                            <div class="col-md-6 col-md-offset-6 text-right" style="width: 415px">
                                 <a id="ButtonBack" name="ButtonBack" href="Product.smi" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Back</a>
                             </div>
                         </div>
@@ -110,7 +110,11 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="nameProduct">Name<font style="color: red">*</font></label>
                                 <div class="col-sm-10">
-                                    <input type="text" maxlength="100" class="form-control" id="name" name="name" style="text-transform:uppercase" value="${requestScope['name']}">  
+                                    <c:set var="validate" value="" />
+                                    <c:if test="${requestScope['stock'] == 'success'}">
+                                        <c:set var="validate" value="onkeyup=\"validateNameProduct()\"" />
+                                    </c:if>
+                                    <input type="text" maxlength="100" class="form-control" id="name" name="name" style="text-transform:uppercase" value="${requestScope['name']}" ${validate}>  
                                 </div>
                             </div>
                         </div>
@@ -137,12 +141,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="nameProduct">Stock</label>
-                                <div class="col-sm-10" style="padding-top: 7px">
+                                <div class="col-sm-1" style="width: 60px">
                                     <c:set var="check" value="" />
                                         <c:if test="${requestScope['isStock'] == '1'}">
                                             <c:set var="check" value="checked" />
                                         </c:if>
-                                    <input type="checkbox" id="isStock" name="isStock" value="1" ${check}>
+                                    <input class="form-control" type="checkbox" id="isStock" name="isStock" value="1" ${check}>
+                                    <input class="form-control" type="hidden" id="stock" name="stock" value="${requestScope['stock']}">
                                 </div>            
                             </div>
                         </div>    
@@ -224,9 +229,16 @@
         </div>
 
          <div class="row">
-                 <div class="col-xs-12 text-center">
+                <div class="col-xs-12 text-center">
+                <c:choose>
+                    <c:when test="${requestScope['stock'] == 'success'}">
+                        <button id="saveProduct" name="saveProduct" type="button" class="btn btn-success" onclick="confirmDisableStock()"><i class="fa fa-save"></i> Save </button>
+                    </c:when>
+                    <c:otherwise>    
                         <button id="saveProduct" name="saveProduct" type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
-                 </div>
+                    </c:otherwise>    
+                </c:choose>    
+                </div>
         </div>               
         <input type="hidden" id="F" name="ProductID" value="${requestScope['ProductID']}" >
         <input type="hidden" id="actionIUP" name="action" value="save">
@@ -352,7 +364,24 @@
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="disableIsStockModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Disabled isStock product</h4>
+            </div>
+            <div class="modal-body" id="disabledCode"></div>
+            <div class="modal-footer">
+                <button id="btnDelete" type="button" onclick="disabledIsStock()" class="btn btn-danger">Disabled</button>
+                <button id="btnDeleteClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
 </div><!-- /.modal --> 
+
 <c:if test="${! empty requestScope['product_lap']}">
     <script language="javascript">
         $('#textAlertLap').show();
