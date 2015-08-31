@@ -11,6 +11,7 @@ import com.smi.travel.datalayer.entity.AirticketFlightView;
 import com.smi.travel.datalayer.entity.BookingFlight;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
+import com.smi.travel.datalayer.view.entity.InvoiceDetailView;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
 import java.util.List;
 
@@ -71,7 +72,7 @@ public class TicketFareAirlineService {
         return ticketFareAirlineDao.getListAirticketFlightFromTicketNo(ticketNo);
     }
     
-    public List<InvoiceDetail> getInvoiceDetailFromTicketNo(String ticketNo){
+    public List<InvoiceDetailView> getInvoiceDetailFromTicketNo(String ticketNo){
         return ticketFareAirlineDao.getInvoiceDetailFromTicketNo(ticketNo);
     }
     

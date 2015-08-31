@@ -12,11 +12,14 @@ import com.smi.travel.datalayer.service.AgentService;
 import com.smi.travel.datalayer.service.ReceiptService;
 import com.smi.travel.datalayer.service.TicketFareAirlineService;
 import com.smi.travel.datalayer.service.UtilityService;
+import com.smi.travel.datalayer.view.entity.InvoiceDetailView;
 import com.smi.travel.datalayer.view.entity.ReceiptDetailView;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -53,6 +56,10 @@ public class AddTicketFareController extends SMITravelController {
     private static final String FLIGHTDETAILFROMAIR = "Flight_Detail_Airticket";
     private static final String INVOICEDETAILLIST = "invoiceDetailList";
     private static final String RECEIPTDETAILLIST = "receiptDetailList";
+    private static final String INVOICEDATE = "invoiceDate";
+    private static final String INVOICENO = "invoiceNo";
+    private static final String INVOICECREDIT = "invoiceCredit";
+    private static final String DUEDATE = "dueDate";
     private UtilityService utilityService;
     private TicketFareAirlineService ticketFareAirlineService;
     private AgentService agentService;
@@ -91,14 +98,17 @@ public class AddTicketFareController extends SMITravelController {
         String agentPayDate = request.getParameter("agentPayDate");
         String agentReceiveDate = request.getParameter("agentReceiveDate");
         String ticketId = request.getParameter("ticketId");
-        String invoiceAmount = request.getParameter("invoiceAmount");
         String department = request.getParameter("department");
         String pvType = request.getParameter("pvType");
         String pvCode = request.getParameter("pvCode");
         String masterId = request.getParameter("masterId");
         String optionSave = request.getParameter("optionSave");
         String refno = request.getParameter("refno");
-        
+        String invoiceAmount = request.getParameter("invoiceAmount");
+        String airlineCharge = request.getParameter("airlineCharge");
+        String owner = request.getParameter("owner");
+        String routing = request.getParameter("routing");
+        String dueDate = request.getParameter("dueDate");
         
         String result = "";
         List<MAirlineAgent> mAirlineAgentsList = utilityService.getListMAirLineAgent();
@@ -117,6 +127,14 @@ public class AddTicketFareController extends SMITravelController {
         AirticketPassenger airticketPassenger = new AirticketPassenger();
         MAirlineAgent mAirlineAgent = new MAirlineAgent();
         MPaymentDoctype mPaymentDoctype = new MPaymentDoctype();
+        
+        BigDecimal invAmount = new BigDecimal(BigInteger.ONE);
+        String invNo = "" ;
+        Date invDate = new Date() ;
+        String invcredit = "" ;
+        String staffowner = "" ;
+        String ticketflightrouting = "" ;
+        
         if ("save".equalsIgnoreCase(action)){
             System.out.println("ticketId : "+ ticketId);
             System.out.println("masterId : "+ masterId);
@@ -259,7 +277,24 @@ public class AddTicketFareController extends SMITravelController {
                 ticketFareAirline.setDepartment(department);
                 request.setAttribute(DEPARTMENT, department);
             }
+            if (StringUtils.isNotEmpty(dueDate)){
+                ticketFareAirline.setDueDate(util.convertStringToDate(dueDate));
+                request.setAttribute(DUEDATE, dueDate);
+            }
             
+            if(StringUtils.isNotEmpty(airlineCharge)){
+                ticketFareAirline.setAirlineCharge(new BigDecimal(String.valueOf(airlineCharge.replaceAll(",",""))));
+            }else{
+                ticketFareAirline.setAirlineCharge(new BigDecimal(0)); 
+            }
+            
+            if(StringUtils.isNotEmpty(invoiceAmount)){
+                ticketFareAirline.setInvAmount(new BigDecimal(String.valueOf(invoiceAmount.replaceAll(",",""))));
+            }else{
+                ticketFareAirline.setInvAmount(new BigDecimal(0)); 
+            }
+            ticketFareAirline.setOwner(owner);
+            ticketFareAirline.setRoutingDetail(routing);
             if("".equals(ticketNo) || ticketNo == null ){
                 request.setAttribute(SAVERESULT, "save unsuccessful");
             }else{
@@ -275,7 +310,6 @@ public class AddTicketFareController extends SMITravelController {
                     request.setAttribute(SAVERESULT, "save successful");
                 }
             }
-            
             request.setAttribute(OPTIONSAVE,optionSave); 
             request.setAttribute(TICKETFARE,ticketFareAirline);
                 
@@ -284,15 +318,18 @@ public class AddTicketFareController extends SMITravelController {
             bookingFlights = ticketFareAirlineService.getListFlightFromTicketNo(ticketNo);
             request.setAttribute(FLIGHTDETAIL, bookingFlights);
 
-            List<InvoiceDetail> invoiceDetailList = new ArrayList<InvoiceDetail>();
-            invoiceDetailList = ticketFareAirlineService.getInvoiceDetailFromTicketNo(ticketNo);
-            request.setAttribute(INVOICEDETAILLIST, invoiceDetailList);
+            List<InvoiceDetailView> InvoiceDetailViewList = new ArrayList<InvoiceDetailView>();
+            InvoiceDetailViewList = ticketFareAirlineService.getInvoiceDetailFromTicketNo(ticketNo);
+            request.setAttribute(INVOICEDETAILLIST, InvoiceDetailViewList);
             
             List<ReceiptDetailView> receiptDetailViewListTemp = new ArrayList<ReceiptDetailView>();
             List<ReceiptDetailView> receiptDetailViewList = new ArrayList<ReceiptDetailView>();
-            if(invoiceDetailList != null){
-                for (int i = 0; i < invoiceDetailList.size() ; i++) {
-                    receiptDetailViewListTemp = receiptService.getReceiptDetailViewFromInvDetailId(invoiceDetailList.get(i).getId());
+            if(InvoiceDetailViewList != null){
+                for (int i = 0; i < InvoiceDetailViewList.size() ; i++) {
+                    invNo = InvoiceDetailViewList.get(i).getInvNo();
+                    invDate = InvoiceDetailViewList.get(i).getInvDate();
+                    invcredit =  InvoiceDetailViewList.get(i).getCredit();
+                    receiptDetailViewListTemp = receiptService.getReceiptDetailViewFromInvDetailId(InvoiceDetailViewList.get(i).getId());
                     if(receiptDetailViewListTemp != null){
                         for (int j = 0; j < receiptDetailViewListTemp.size() ; j++) {
                             ReceiptDetailView receiptDetailView = new ReceiptDetailView();
@@ -306,6 +343,9 @@ public class AddTicketFareController extends SMITravelController {
                     }
                 }
             }
+            request.setAttribute(INVOICENO, invNo);
+            request.setAttribute(INVOICEDATE, invDate);
+            request.setAttribute(INVOICECREDIT, invcredit);
             request.setAttribute(RECEIPTDETAILLIST, receiptDetailViewList);
             
             if(bookingFlights == null){
@@ -359,15 +399,23 @@ public class AddTicketFareController extends SMITravelController {
                 List<AirticketFlightView> airticketFlightView = new ArrayList<AirticketFlightView>();
                 bookingFlights = ticketFareAirlineService.getListFlightFromTicketNo(ticketNo);
                 request.setAttribute(FLIGHTDETAIL, bookingFlights);
-                List<InvoiceDetail> invoiceDetailList = new ArrayList<InvoiceDetail>();
-                invoiceDetailList = ticketFareAirlineService.getInvoiceDetailFromTicketNo(ticketNo);
-                request.setAttribute(INVOICEDETAILLIST, invoiceDetailList);
                 
+                List<InvoiceDetailView> InvoiceDetailViewList = new ArrayList<InvoiceDetailView>();
+                InvoiceDetailViewList = ticketFareAirlineService.getInvoiceDetailFromTicketNo(ticketNo);
+                request.setAttribute(INVOICEDETAILLIST, InvoiceDetailViewList);
+
                 List<ReceiptDetailView> receiptDetailViewListTemp = new ArrayList<ReceiptDetailView>();
                 List<ReceiptDetailView> receiptDetailViewList = new ArrayList<ReceiptDetailView>();
-                if(invoiceDetailList != null){
-                    for (int i = 0; i < invoiceDetailList.size() ; i++) {
-                        receiptDetailViewListTemp = receiptService.getReceiptDetailViewFromInvDetailId(invoiceDetailList.get(i).getId());
+                if(InvoiceDetailViewList != null){
+                    for (int i = 0; i < InvoiceDetailViewList.size() ; i++) {
+                        BigDecimal invAmounttemp = InvoiceDetailViewList.get(i).getInvAmount();
+                        invAmount = invAmounttemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                        invNo = InvoiceDetailViewList.get(i).getInvNo();
+                        invDate = InvoiceDetailViewList.get(i).getInvDate();
+                        invcredit =  InvoiceDetailViewList.get(i).getCredit();
+                        staffowner =  InvoiceDetailViewList.get(i).getOwner();
+                        ticketflightrouting = InvoiceDetailViewList.get(i).getRouting();
+                        receiptDetailViewListTemp = receiptService.getReceiptDetailViewFromInvDetailId(InvoiceDetailViewList.get(i).getId());
                         if(receiptDetailViewListTemp != null){
                             for (int j = 0; j < receiptDetailViewListTemp.size() ; j++) {
                                 ReceiptDetailView receiptDetailView = new ReceiptDetailView();
@@ -381,8 +429,10 @@ public class AddTicketFareController extends SMITravelController {
                         }
                     }
                 }
+                request.setAttribute(INVOICENO, invNo);
+                request.setAttribute(INVOICEDATE, invDate);
+                request.setAttribute(INVOICECREDIT, invcredit);
                 request.setAttribute(RECEIPTDETAILLIST, receiptDetailViewList);
-                
                 if(bookingFlights == null){
                     airticketFlightView = ticketFareAirlineService.getListAirticketFlightFromTicketNo(ticketNo);
                     request.setAttribute(FLIGHTDETAILFROMAIR, airticketFlightView);
@@ -398,8 +448,8 @@ public class AddTicketFareController extends SMITravelController {
                     request.setAttribute(TICKETFAREFLAG,"dummy");
                     if(StringUtils.isNotEmpty(airticketPass)){
                         String[] parts = airticketPass.split(",");
-                        String TicketFare = parts[0].trim(); 
-                        String TicketTax = parts[1].trim(); 
+                        String TicketFare = parts[0].trim();
+                        String TicketTax = parts[1].trim();
                         String IssueDate = parts[2].trim(); 
                         String TicketRouting = parts[3].trim(); 
                         String Airline = parts[4].trim(); 
@@ -433,8 +483,9 @@ public class AddTicketFareController extends SMITravelController {
                             master.setId(MasterId);
                             ticketFareAirlines.setMaster(master);
                         }
-                        
-                        ticketFareAirlines.setPassenger(Passenger);
+                        ticketFareAirlines.setOwner(staffowner);
+                        ticketFareAirlines.setRoutingDetail(ticketflightrouting);
+                        ticketFareAirlines.setInvAmount(invAmount);
                         request.setAttribute(TICKETBUY, TicketBy);
                         request.setAttribute(TICKETROUTING, TicketRouting);
                         request.setAttribute(ISSUEDATE, IssueDate);
@@ -484,7 +535,6 @@ public class AddTicketFareController extends SMITravelController {
                     if(StringUtils.isEmpty(String.valueOf(ticketFareAirline.getAgentComReceive()))){
                         ticketFareAirline.setAgentComReceive(new BigDecimal(0)); 
                     }                    
-
                     request.setAttribute(TICKETFARE,ticketFareAirline);
                     request.setAttribute(TICKETTYPE, ticketFareAirline.getTicketType());
                     request.setAttribute(TICKETBUY, ticketFareAirline.getTicketBuy());
@@ -500,6 +550,7 @@ public class AddTicketFareController extends SMITravelController {
                     request.setAttribute(AGENTRECEIVEDATE, ticketFareAirline.getAgentReceiveDate());
                     request.setAttribute(DEPARTMENT, ticketFareAirline.getDepartment());
                     request.setAttribute(TICKETFAREFLAG,"notdummy");
+                    request.setAttribute(DUEDATE, dueDate);
                 }	
             }
         }
