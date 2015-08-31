@@ -789,7 +789,7 @@
                         <h5>Description</h5>
                     </div>
                     <div class="col-md-10">
-                        <textarea id="InputDescriptionDetail" rows="12" cols="80" class="form-control" >
+                        <textarea id="InputDescriptionDetail" rows="12" style="width: 450px" class="form-control" >
 
                         </textarea>
 <!--<input type="text" id="InputDescriptionDetail" value="" style="width: 400px;height: 200px;">-->

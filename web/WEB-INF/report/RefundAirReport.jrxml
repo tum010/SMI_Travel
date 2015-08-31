@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RefundAirReport" language="groovy" pageWidth="594" pageHeight="421" columnWidth="524" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="7b4a2257-2f70-4963-bf1f-6e60068f6f43">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="74"/>
-	<property name="ireport.y" value="57"/>
+	<property name="ireport.y" value="201"/>
 	<field name="refundno" class="java.lang.String"/>
 	<field name="ticketdate" class="java.lang.String"/>
 	<field name="passenger" class="java.lang.String"/>
@@ -14,6 +14,7 @@
 	<field name="refunddate" class="java.lang.String"/>
 	<field name="receiveby" class="java.lang.String"/>
 	<field name="receivedate" class="java.lang.String"/>
+	<field name="ticketamount" class="java.lang.String"/>
 	<background>
 		<band height="351">
 			<rectangle>
@@ -354,33 +355,40 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{remark}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="53" y="32" width="199" height="16" uuid="354a53ec-7af3-4a1e-ade5-e9ad5e5abb25"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{refundby}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="53" y="46" width="199" height="15" uuid="195c42f3-f409-48d9-a393-b1c7b651a113"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{refunddate}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="357" y="34" width="165" height="14" uuid="f3576081-0f95-40ff-93ea-7713fa6db9cc"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{receiveby}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="357" y="47" width="165" height="14" uuid="1c7a6e7b-1985-4dd7-96f6-046d29380420"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{receivedate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="18" width="149" height="20" uuid="269ead68-160c-46b7-b278-9a749642b9b0"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="12" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ticketamount}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

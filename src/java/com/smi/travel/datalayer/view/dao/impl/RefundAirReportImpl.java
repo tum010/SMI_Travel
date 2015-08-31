@@ -29,8 +29,53 @@ public class RefundAirReportImpl implements RefundAirReportDao{
     private UtilityFunction utilityFunction;
     
     @Override
-    public List getRefundAir() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List getRefundAir(String refundId) {
+        UtilityFunction util = new UtilityFunction();
+        Session session = this.sessionFactory.openSession();
+        List data = new ArrayList();
+        BigDecimal SumTicketAmount = new BigDecimal(0);
+         List<Object[]> QueryRefundList = session.createSQLQuery("SELECT * FROM `refund_ticket_view` where refundid = " + refundId)
+                 .addScalar("refundno", Hibernate.STRING)
+                 .addScalar("ticketdate", Hibernate.DATE)
+                 .addScalar("passenger", Hibernate.STRING)
+                 .addScalar("ticketno", Hibernate.STRING)
+                 .addScalar("sectorissue", Hibernate.STRING)
+                 .addScalar("sectorrefund", Hibernate.STRING)
+                 .addScalar("remark", Hibernate.STRING)
+                 .addScalar("refundby", Hibernate.STRING)
+                 .addScalar("refunddate", Hibernate.DATE)
+                 .addScalar("receiveby", Hibernate.STRING)
+                 .addScalar("receivedate", Hibernate.DATE)
+                 .addScalar("ticketamount", Hibernate.BIG_DECIMAL)
+                 .list();
+        for (Object[] B : QueryRefundList) {
+             RefundAirReport report = new RefundAirReport();
+             report.setRefundno(util.ConvertString(B[0]));
+             report.setTicketdate(util.SetFormatDate((Date)B[1], "dd-MM-YYYY"));
+             report.setPassenger(util.ConvertString(B[2]));
+             report.setTicketno(util.ConvertString(B[3]));
+             report.setSectorissue(util.ConvertString(B[4]));
+             report.setSectorrefund(util.ConvertString(B[5]));
+             report.setRemark(util.ConvertString(B[6]));
+             report.setRefundby(util.ConvertString(B[7]));
+             report.setRefunddate(util.SetFormatDate((Date)B[8], "dd-MM-YYYY"));
+             report.setReceiveby(util.ConvertString(B[9]));
+             report.setReceivedate(util.SetFormatDate((Date)B[10], "dd-MM-YYYY"));
+             //report.setTicketamount(util.setFormatMoney(B[11]));
+             SumTicketAmount = SumTicketAmount.add((BigDecimal) B[11]);
+             data.add(report);
+            
+        }
+        for(int i=0;i<data.size();i++){
+            RefundAirReport temp = (RefundAirReport) data.get(i);
+            temp.setTicketamount(util.setFormatMoney(SumTicketAmount));
+            data.set(0, temp);
+            
+        }
+        
+        this.sessionFactory.close();
+        session.close();
+        return data;
     }
 
     public SessionFactory getSessionFactory() {

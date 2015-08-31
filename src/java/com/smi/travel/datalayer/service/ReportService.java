@@ -199,8 +199,8 @@ public class ReportService {
         return creditNoteReportdao.getCreditNoteReport(Cnid);
     }
     
-    public List getRefundAirReport(){        
-        return refundAirReportDao.getRefundAir();
+    public List getRefundAirReport(String refundId){        
+        return refundAirReportDao.getRefundAir(refundId);
     }
 
     public HotelVoucherDao getHotelVoucherdao() {
