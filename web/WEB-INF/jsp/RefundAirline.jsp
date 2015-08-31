@@ -91,29 +91,48 @@
                             </div>
                         </div>
                         <div class="col-xs-1 text-left" style="width: 250px">
-                            <input type="text" class="form-control" id="refundAgentName" name="agentName" value="${refundAirline.agent.name}" readonly=""
-                                data-bv-notempty="true" data-bv-notempty-message="agent empty !">                           
+                            <input type="text" class="form-control" id="refundAgentName" name="agentName" value="${refundAirline.agent.name}" readonly="">                           
                         </div>
                     </div>  
-                    <div class="col-xs-4 form-group">
+                    <div class="col-xs-6 form-group">
                         <div class="col-xs-1 text-right" style="width: 140px">
                             <label class="control-label text-right">Refund By </label>
                         </div>
+                        <div class="col-xs-1"  style="width: 150px">
+                            <div class="input-group" id="refundByValidate">
+                                <input type="text" class="form-control" id="refundBy" name="refundBy" value="${refundAirline.refundBy}" />
+                                <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#RefundUserModal">
+                                    <span class="glyphicon-search glyphicon"></span>
+                                </span>
+                            </div>
+                        </div>
                         <div class="col-xs-1" style="width: 200px">
                             <div class="input-group">
-                                <input id="refundBy" name="refundBy" type="text" class="form-control" value="${refundAirline.refundBy}" maxlength="5">
+                                <input id="refundByName" name="refundByName" type="text" class="form-control"  readonly="">
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12 form-group">
+                    <div class="col-xs-6 form-group">
                         <div class="col-xs-1 text-right"  style="width: 140px">
                             <label class="control-label text-right">Remark </label>
                         </div>
                         <div class="col-xs-1" style="width: 200px">
                             <div class="input-group">                                    
                                 <textarea rows="3" class="form-control" id="remark" name="remark" maxlength="255" style="width: 228%">${refundAirline.remark}</textarea>  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 form-group">
+                        <div class="col-xs-1 text-right"  style="width: 140px">
+                            <label class="control-label text-right">Receive Date </label>
+                        </div>
+                        <div class="col-xs-1"  style="width: 200px">
+                            <div class='input-group date'>
+                                <input id="inputReceiveDate" name="receiveDate"  type="text" 
+                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${refundAirline.receiveDate}">
+                                <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
                     </div>
@@ -248,6 +267,55 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
+<!--Modal  User-->
+<div class="modal fade" id="RefundUserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Refund User</h4>
+            </div>
+            <div class="modal-body">
+                <table class="display" id="RefundUserTable">
+                    <thead class="datatable-header">                     
+                        <tr>
+                            <th class="hidden">ID</th>
+                            <th>User</th>
+                            <th>Name</th>
+                            <th class="hidden">Address</th>
+                            <th class="hidden">Tel</th>
+                            <th class="hidden">Fax</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <script>
+                        user = [];
+                    </script>
+                    <c:forEach var="a" items="${user}">
+                        <tr>
+                            <td class="user-id hidden">${a.id}</td>
+                            <td class="user-user">${a.username}</td>
+                            <td class="user-name">${a.name}</td>
+                            <td class="user-addr hidden">${a.name}</td>
+                            <td class="user-tel hidden">${a.tel}</td>
+                            <td class="user-fax hidden">${a.tel}</td>
+                        </tr>
+                        <script>
+                            user.push({id: "${a.id}", code: "${a.username}", name: "${a.name}", 
+                                        address: "${a.name}", tel: "${a.tel}", fax: "${a.tel}"});
+                        </script>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <div class="text-right">
+                    <button id="RefundUserModalClose" type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 <div class="modal fade" id="DeleteRefundAirline" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -316,6 +384,15 @@
 //            pickTime: false   
 //        }); 
         var RefundAgentTable = $('#RefundAgentTable').dataTable({bJQueryUI: true,
+            "sPaginationType": "full_numbers",
+            "bAutoWidth": false,
+            "bFilter": true,
+            "bPaginate": true,
+            "bInfo": false,
+            "bLengthChange": false,
+            "iDisplayLength": 10
+        });
+        var RefundUserTable = $('#RefundUserTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
             "bFilter": true,
