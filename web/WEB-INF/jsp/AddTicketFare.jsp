@@ -88,7 +88,7 @@
                     </div> 
                 </div>
                 <div class="row">
-                    <div class="col-xs-12 form-group">
+                    <div class="col-xs-12" style="padding-top: 7px">
                         <div class="col-xs-1 text-right" style="width: 150px">
                             <label class="control-label text-right">Ticket&nbsp;Type&nbsp;</label>
                         </div>
@@ -160,7 +160,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12">
+                    <div class="col-xs-12" style="padding-top: 20px">
                         <div class="col-xs-1 text-right" style="width: 150px">
                             <label class="control-label text-right">Passenger</label>
                         </div>
@@ -218,7 +218,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12 form-group">
+                    <div class="col-xs-12" style="padding-top: 7px">
                         <div class="col-xs-1 text-right" style="width: 150px">
                             <label class="control-label text-right">PV Type</label>
                         </div>
@@ -241,15 +241,26 @@
                         <div class="col-xs-1" style="width: 200px">
                             <input id="pvCode" name="pvCode" type="text" class="form-control" maxlength="20" value="${ticketFare.pvCode}" readonly="">
                         </div>
+                        <div class="col-xs-1 text-right"  style="width: 150px">
+                           <label class="control-label text-right">Due Date </label>
+                        </div>
+                        <div class="col-xs-1"  style="width: 200px">
+                            <div class='input-group date' id='InputDueDate'>
+                                <input id="dueDate" name="dueDate"  type="text" 
+                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['dueDate']}">
+                                <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                        </div>
                     </div>
+                    <div class="col-xs-12" style="padding-top: 20px"></div>    
                 </div>
                 <!----- Ticket Detail ----->
-                <div class="panel panel-default">
-                    <div class="panel-heading">
+                <div class="panel panel-default" >
+                    <div class="panel-heading" >
                         <h4 class="panel-title">Ticket Detail</h4>
                     </div> 
-                    <div class="panel-body"  style="padding-right: 0px;" style="width: 100%">
-                        <div class="col-xs-12 form-group">
+                    <div class="panel-body"  style="padding-right: 0px;" style="width: 100%" >
+                        <div class="col-xs-12">
                             <div class="col-xs-1 text-right"  style="width: 121px">
                                 <label class="control-label text-right">Issue Date </label>
                             </div>
@@ -277,7 +288,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12 form-group">
+                        <div class="col-xs-12" style="padding-top: 20px">
                             <div class="col-xs-1 text-right"  style="width: 121px">
                                 <label class="control-label text-right">Ticket Ins </label>
                             </div>
@@ -303,13 +314,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12 form-group">
+                        <div class="col-xs-12" style="padding-top: 20px">
                             <div class="col-xs-1 text-right"  style="width: 121px">
                                 <label class="control-label text-right">Inv Amount</label>
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">
-                                    <input id="invoiceAmount" name="invoiceAmount" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" value="" readonly="">
+                                    <input id="invoiceAmount" name="invoiceAmount" type="text" class="form-control money" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" value="${ticketFare.invAmount}" readonly="">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -328,9 +339,8 @@
                                     <input id="diffVat" name="diffVat" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" onkeypress="return isNumberKey(event)" value="${ticketFare.diffVat}">
                                 </div>
                             </div>
-
                         </div>
-                        <div class="col-xs-12 form-group">
+                        <div class="col-xs-12" style="padding-top: 20px">
                             <div class="col-xs-1 text-right"  style="width: 121px">
                                 <label class="control-label text-right">Agent</label>
                             </div>
@@ -348,8 +358,16 @@
                             <div class="col-xs-1" style="width: 298px">
                                 <input type="text" class="form-control" id="agent_name" name="agent_name" value="${SelectedAgent.name}" readonly="">
                             </div>
+                            <div class="col-xs-1 text-right"  style="width: 185px">
+                                <label class="control-label text-right">Airline Charge</label>
+                            </div>
+                            <div class="col-xs-1" style="width: 200px">
+                                <div class="input-group">                                    
+                                    <input id="airlineCharge" name="airlineCharge" type="text" maxlength="10" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" onkeypress="return isNumberKey(event)" value="${ticketFare.airlineCharge}">
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-xs-10 form-group">
+                        <div class="col-xs-12" style="padding-top: 20px">
                             <div class="col-xs-1 text-right"  style="width: 121px">
                                 <label class="control-label text-right">Remark </label>
                             </div>
@@ -359,6 +377,50 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-xs-12" style="padding-top: 20px">
+                            <div class="col-xs-1 text-right"  style="width: 121px">
+                                <label class="control-label text-right">Inv No</label>
+                            </div>
+                            <div class="col-xs-1"  style="width: 200px">
+                                <div class="input-group">
+                                    <input id="invoiceNo" name="invoiceNo" type="text" class="form-control" maxlength="50" value="${requestScope['invoiceNo']}" readonly="">
+                                </div>
+                            </div>
+                            <div class="col-xs-1 text-right"  style="width: 128px">
+                                <label class="control-label text-right">Inv Date </label>
+                            </div>
+                            <div class="col-xs-1"  style="width: 200px">
+                                <div class="input-group">                                    
+                                    <input id="invoiceDate" name="invoiceDate" type="text" class="form-control" readonly="" value="${requestScope['invoiceDate']}">
+                                </div>
+                            </div>
+                            <div class="col-xs-1 text-right"  style="width: 185px">
+                                <label class="control-label text-right">Credit</label>
+                            </div>
+                            <div class="col-xs-1" style="width: 200px">
+                                <div class="input-group">                                    
+                                    <input id="invoiceCredit" name="invoiceCredit" type="text" class="form-control" maxlength="30" readonly="" value="${requestScope['invoiceCredit']}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12" style="padding-top: 20px">
+                            <div class="col-xs-1 text-right"  style="width: 121px">
+                                <label class="control-label text-right">Owner</label>
+                            </div>
+                            <div class="col-xs-1"  style="width: 200px">
+                                <div class="input-group">
+                                    <input id="owner" name="owner" type="text" class="form-control" maxlength="50" value="${ticketFare.owner}" readonly="">
+                                </div>
+                            </div>
+                            <div class="col-xs-1 text-right"  style="width: 128px">
+                                <label class="control-label text-right">Routing</label>
+                            </div>
+                            <div class="col-xs-1"  style="width: 200px">
+                                <div class="input-group">                                    
+                                    <input id="routing" name="routing" type="text"  style="width: 555px" class="form-control" maxlength="255" readonly="" value="${ticketFare.routingDetail}">
+                                </div>
+                            </div>
+                        </div>        
                     </div>
                 </div>
                 <!----- Detail ----->
@@ -368,13 +430,13 @@
                     </div> -->
                     <div class="panel-body"  style="padding-right: 0px;" style="width: 100%">
                         <div div class="col-sm-4"  style="border-right:solid 1px #D9D9D9">
-                            <div class="row form-group">
+                            <div class="row" style="padding-top: 20px">
                                 <label class="col-lg-4 control-label text-right">Over Comm </label>
                                 <div class="col-sm-6">
                                     <input id="overCommission" name="overCommission" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.overCommission}" tabindex="1"/>
                                 </div>
                             </div>
-                            <div class="row form-group">
+                            <div class="row" style="padding-top: 20px">
                                 <label class="col-lg-4 control-label text-right">Date </label>
                                     <div class="col-sm-6">
                                     <div class='input-group date'>
@@ -384,13 +446,13 @@
                                     </div>
                                 </div>
                             </div>         
-                            <div class="row form-group">
+                            <div class="row" style="padding-top: 20px">
                                 <label class="col-lg-4 control-label text-right">Little Comm </label>
                                 <div class="col-sm-6">
                                     <input id="litterCommission" name="litterCommission" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.litterCommission}" tabindex="3"/>
                                 </div>
                             </div>    
-                            <div class="row form-group">
+                            <div class="row" style="padding-top: 20px">
                                 <label class="col-lg-4 control-label text-right">Date </label>
                                 <div class="col-sm-6">                             
                                     <div class='input-group date'>
@@ -402,7 +464,7 @@
                             </div>
                         </div>                
                         <div div class="col-sm-4" style="border-right:solid 1px #D9D9D9">
-                            <div class="row form-group">
+                            <div class="row" style="padding-top: 20px">
                                 <label class="col-lg-4 control-label text-right">Add Pay </label>
                                 <div class="col-sm-6">
                                     <div class="input-group">                                    
@@ -410,7 +472,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row form-group">
+                            <div class="row" style="padding-top: 20px">
                                 <label class="col-lg-4 control-label text-right">Date </label>
                                 <div class="col-sm-6"> 
                                 <div class='input-group date'>
@@ -420,7 +482,7 @@
                                 </div>
                                 </div>
                             </div>
-                            <div class="row form-group">
+                            <div class="row" style="padding-top: 20px">
                                 <label class="col-lg-4 control-label text-right">Dec Pay </label>
                                 <div class="col-sm-6"> 
                                     <div class="input-group">                                    
@@ -428,7 +490,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row form-group">
+                            <div class="row" style="padding-top: 20px">
                                 <label class="col-lg-4 control-label text-right">Date </label>
                                 <div class="col-sm-6"> 
                                     <div class='input-group date' id='date1'>
@@ -440,7 +502,7 @@
                             </div>
                         </div>
                         <div div class="col-sm-4" >
-                            <div class="row form-group">
+                            <div class="row" style="padding-top: 20px">
                                 <label class="col-lg-6 control-label text-right">Agent Comm Pay </label>
                                 <div class="col-sm-6"> 
                                     <div class="input-group">                                    
@@ -448,7 +510,7 @@
                                     </div>
                                 </div>
                             </div>                            
-                            <div class="row form-group">
+                            <div class="row" style="padding-top: 20px">
                                 <label class="col-lg-6 control-label text-right">Date </label>
                                 <div class="col-sm-6"> 
                                     <div class='input-group date'>
@@ -458,7 +520,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row form-group">
+                            <div class="row" style="padding-top: 20px">
                                 <label class="col-lg-6 control-label text-right">Agent Comm Receive </label>
                                 <div class="col-sm-6"> 
                                     <div class="input-group">                                    
@@ -466,7 +528,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row form-group">
+                            <div class="row" style="padding-top: 20px">
                                 <label class="col-lg-6 control-label text-right">Date </label>
                                 <div class="col-sm-6"> 
                                     <div class='input-group date' id='date2'>
@@ -515,11 +577,11 @@
                                <c:forEach var="table" items="${invoiceDetailList}" varStatus="dataStatus">
                                     <tr>
                                         <td align="center">${dataStatus.count}</td>
-                                        <td align="center">${table.invoice.invNo}</td>
-                                        <td align="center">${table.invoice.invDate}</td>
-                                        <td align="center">${table.invoice.department}</td>
-                                        <td align="center">${table.invoice.dueDate}</td>
-                                        <td align="center">${table.invoice.staff.name}</td>
+                                        <td align="center">${table.invNo}</td>
+                                        <td align="center">${table.invDate}</td>
+                                        <td align="center">${table.department}</td>
+                                        <td align="center">${table.dueDate}</td>
+                                        <td align="center">${table.staffName}</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -937,6 +999,13 @@
             setFormatCurrency();
             setDataCurrency();
         });
+        
+        $("#airlineCharge").focusout(function(){
+            setFormatCurrency();
+            setDataCurrency();
+        });
+        
+        
         setDataCurrency();
         
         if($('#optionSave').val() == "1"){
@@ -1036,6 +1105,15 @@ function setFormatCurrency(){
     }
     agentComReceive = parseFloat(agentComReceive); 
     document.getElementById("agentComReceive").value = formatNumber(agentComReceive);    
+    
+    var airlineCharge = replaceAll(",","",$('#airlineCharge').val()); 
+    if (airlineCharge == ""){
+        airlineCharge = 0;
+    }
+    airlineCharge = parseFloat(airlineCharge); 
+    document.getElementById("airlineCharge").value = formatNumber(airlineCharge);    
+    
+    
 }
 
 function setDataCurrency(){    
@@ -1104,6 +1182,11 @@ function setDataCurrency(){
     var agentComReceive = replaceAll(",","",$('#agentComReceive').val()); 
     if (agentComReceive == "" || agentComReceive == 0){
         document.getElementById("agentComReceive").value = ""; 
+    }
+    
+    var airlineCharge = replaceAll(",","",$('#airlineCharge').val()); 
+    if (airlineCharge == "" || airlineCharge == 0){
+        document.getElementById("airlineCharge").value = ""; 
     }
 }
 function isNumberKey(evt){

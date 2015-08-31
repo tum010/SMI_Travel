@@ -20,7 +20,9 @@ import com.smi.travel.datalayer.entity.PaymentAirticketFare;
 import com.smi.travel.datalayer.entity.PaymentAirticketRefund;
 import com.smi.travel.datalayer.entity.RefundAirticketDetail;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
+import com.smi.travel.datalayer.view.entity.InvoiceDetailView;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
+import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,7 +44,7 @@ import org.hibernate.Transaction;
 public class TicketFareAirlineImpl implements TicketFareAirlineDao{
     private SessionFactory sessionFactory;
     private Transaction transaction;
-
+    private UtilityFunction util;
     @Override
     public String InsertTicketFare(TicketFareAirline ticket) {
         String result = "success";
@@ -633,8 +635,15 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
     }
 
     @Override
-    public List<InvoiceDetail> getInvoiceDetailFromTicketNo(String ticketNo) {
+    public List<InvoiceDetailView> getInvoiceDetailFromTicketNo(String ticketNo) {
+        util = new UtilityFunction();
+        String priceType = "";
+        String airticketAirline = "";
+        String owner = "";
+        String routing = "";
+        int invamount = 0;
         List<InvoiceDetail> invoiceDetailList = new ArrayList<InvoiceDetail>();
+        List<InvoiceDetailView> invoiceDetailViewList = new ArrayList<InvoiceDetailView>();
         String AirticketPassengerQuery  = "from AirticketPassenger pass where pass.series1||pass.series2||pass.series3 = :ticketNo";
         String InvoiceDetailQuery  = "from InvoiceDetail invd where invd.billableDesc.billable.master.id = :masterId and invd.billableDesc.MBilltype.name = 'Air Ticket' GROUP BY invd.invoice";
         Session session = this.sessionFactory.openSession();
@@ -644,9 +653,26 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
             System.out.println(" airticketPassList.isEmpty() ");
             return null;
         }
-        System.out.println(" airticketPassList size " + airticketPassList.size());
+        
+        if(airticketPassList.get(0).getMPricecategory() != null){
+            priceType = airticketPassList.get(0).getMPricecategory().getName();
+            System.out.println(" priceType " + priceType);
+        }
+        
+        owner = airticketPassList.get(0).getAirticketAirline().getAirticketPnr().getAirticketBooking() != null ? airticketPassList.get(0).getAirticketAirline().getAirticketPnr().getAirticketBooking().getStaffByOwnerBy().getName() : "";
+        if(airticketPassList.get(0).getAirticketAirline() != null){
+            List<AirticketFlight> flightList = new ArrayList<AirticketFlight>(airticketPassList.get(0).getAirticketAirline().getAirticketFlights());
+            if("ADULT".equals(priceType)){
+                invamount = flightList.get(0).getAdPrice() + flightList.get(0).getAdTax();
+            }else if("CHILD".equals(priceType)){
+                invamount = flightList.get(0).getChPrice() + flightList.get(0).getChTax();
+            }else if("INFANT".equals(priceType)){
+                invamount = flightList.get(0).getInPrice() + flightList.get(0).getInTax();
+            }
+            System.out.println(" invamount " + invamount);
+            routing = util.GetRounting(flightList);
+        }
         if(airticketPassList.get(0).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster() != null) {
-            
             String masterId = airticketPassList.get(0).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId();
             System.out.println(" masterId " + masterId);
             invoiceDetailList = session.createQuery(InvoiceDetailQuery).setParameter("masterId", masterId).list();
@@ -656,10 +682,34 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
             System.out.println(" invoiceDetailList.isEmpty() ");
             return null;
         }
-        System.out.println(" invoiceDetailList size " + invoiceDetailList.size());
-//        session.close();
-//        this.sessionFactory.close();
-        return invoiceDetailList;
+        
+        for (int i = 0; i < invoiceDetailList.size() ; i++) {
+            InvoiceDetailView invoiceDetailView = new InvoiceDetailView();
+            invoiceDetailView.setId(invoiceDetailList.get(i).getId());
+            if(invoiceDetailList.get(i).getInvoice() != null){
+                invoiceDetailView.setInvNo(invoiceDetailList.get(i).getInvoice().getInvNo());
+                invoiceDetailView.setInvDate(invoiceDetailList.get(i).getInvoice().getInvDate());
+                invoiceDetailView.setDepartment(invoiceDetailList.get(i).getInvoice().getDepartment());
+                invoiceDetailView.setDueDate(invoiceDetailList.get(i).getInvoice().getDueDate());
+                invoiceDetailView.setStaffName(invoiceDetailList.get(i).getInvoice().getStaff() != null ? invoiceDetailList.get(i).getInvoice().getStaff().getName() : "");
+                invoiceDetailView.setCredit(invoiceDetailList.get(i).getInvoice().getMAccpay() != null ? invoiceDetailList.get(i).getInvoice().getMAccpay().getName() : "");
+                invoiceDetailView.setOwner(owner);
+                invoiceDetailView.setRouting(routing);
+                invoiceDetailView.setInvAmount(new BigDecimal(String.valueOf(invamount)));
+                invoiceDetailViewList.add(invoiceDetailView);
+            }
+        }
+        session.close();
+        this.sessionFactory.close();
+        return invoiceDetailViewList;
+    }
+
+    public UtilityFunction getUtil() {
+        return util;
+    }
+
+    public void setUtil(UtilityFunction util) {
+        this.util = util;
     }
     
 }
