@@ -10,6 +10,7 @@ import com.smi.travel.datalayer.dao.ReceiptDao;
 import com.smi.travel.datalayer.entity.Receipt;
 import com.smi.travel.datalayer.entity.ReceiptCredit;
 import com.smi.travel.datalayer.entity.ReceiptDetail;
+import com.smi.travel.datalayer.view.entity.ReceiptDetailView;
 import com.smi.travel.datalayer.view.entity.ReceiptSearchView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
@@ -32,7 +33,7 @@ import org.hibernate.Transaction;
      
     private SessionFactory sessionFactory;
     private Transaction transaction;
-
+    UtilityFunction util;
     @Override
     public List<HashMap<String, Object>> getAirlineComFromPaymentNo(String invoiceNumber) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -399,8 +400,8 @@ import org.hibernate.Transaction;
             return null;
         }
         System.out.println("ReceiptDetail size " + list.size());
-//        session.close();
-//        this.sessionFactory.close();
+        session.close();
+        this.sessionFactory.close();
         return list;
     }
     
@@ -547,6 +548,35 @@ import org.hibernate.Transaction;
         session.close();
         this.sessionFactory.close();
         return receipt;
+    }
+
+    @Override
+    public List<ReceiptDetailView> getReceiptDetailViewFromInvDetailId(String invDetailId) {
+        Session session = this.sessionFactory.openSession();
+        List<ReceiptDetailView> receiptDetailViewList = new ArrayList<ReceiptDetailView>();
+        List<ReceiptDetail> list = session.createQuery("from ReceiptDetail d WHERE d.invoiceDetail.id = :invDetailId GROUP BY d.receipt.id").setParameter("invDetailId", invDetailId).list();
+        if(list.isEmpty()){
+            System.out.println("ReceiptDetail empty ");
+            return null;
+        }
+        
+        for (int i = 0; i < list.size() ; i++) {
+            ReceiptDetailView receiptDetailView = new ReceiptDetailView();
+            receiptDetailView.setReceiptNo(list.get(i).getReceipt() != null ? list.get(i).getReceipt().getRecNo(): "");
+            receiptDetailView.setReceiptDate(list.get(i).getReceipt() != null ? list.get(i).getReceipt().getRecDate() : util.convertStringToDate(""));
+            receiptDetailView.setReceiveDate(list.get(i).getReceipt() != null ? list.get(i).getReceipt().getReceiveDate() : util.convertStringToDate(""));
+            receiptDetailView.setMbillTypeStatus(list.get(i).getMBilltype() != null ? list.get(i).getMBilltype().getName() : "");
+            
+            if(list.get(i).getInvoiceDetail() != null && list.get(i).getInvoiceDetail().getInvoice() != null){
+                receiptDetailView.setInvoiceNo(list.get(i).getInvoiceDetail().getInvoice().getInvNo());
+            }
+            
+            receiptDetailViewList.add(receiptDetailView);
+        }
+        
+        session.close();
+        this.sessionFactory.close();
+        return receiptDetailViewList;
     }
 
     

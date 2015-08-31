@@ -547,11 +547,11 @@
                                 <c:forEach var="table" items="${receiptDetailList}" varStatus="dataStatus">
                                     <tr>
                                         <td align="center">${dataStatus.count}</td>
-                                        <td align="center">${table.receipt.recNo}</td>
-                                        <td align="center">${table.receipt.recDate}</td>
-                                        <td align="center">${table.invoiceDetail.invoice.invNo}</td>
-                                        <td align="center">${table.receipt.receiveDate}</td>
-                                        <td align="center">${table.receipt.MAccpay.name}</td>
+                                        <td align="center">${table.receiptNo}</td>
+                                        <td align="center">${table.receiptDate}</td>
+                                        <td align="center">${table.invoiceNo}</td>
+                                        <td align="center">${table.receiveDate}</td>
+                                        <td align="center">${table.mbillTypeStatus}</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>

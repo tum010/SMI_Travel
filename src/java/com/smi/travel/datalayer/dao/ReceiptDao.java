@@ -9,6 +9,7 @@ package com.smi.travel.datalayer.dao;
 import com.smi.travel.datalayer.entity.Receipt;
 import com.smi.travel.datalayer.entity.ReceiptCredit;
 import com.smi.travel.datalayer.entity.ReceiptDetail;
+import com.smi.travel.datalayer.view.entity.ReceiptDetailView;
 import com.smi.travel.datalayer.view.entity.ReceiptSearchView;
 import java.util.HashMap;
 import java.util.List;
@@ -36,4 +37,5 @@ public interface ReceiptDao {
     public List<ReceiptSearchView> getReceiptViewFromFilter(String from ,String to,String Department,String type);
     
     public Receipt getReceiptfromReceiptId(String recId); // search Receipt ---> edit receipt
+    public List<ReceiptDetailView> getReceiptDetailViewFromInvDetailId(String invDetailId);
 }
