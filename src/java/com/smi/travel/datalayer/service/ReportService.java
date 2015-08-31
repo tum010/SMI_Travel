@@ -67,7 +67,7 @@ public class ReportService {
     private TaxInvoiceEmailReportDao taxInvoiceEmailDao;
     private CreditNoteReportDao creditNoteReportdao;
     private InvoiceReportDao invoiceReportDao;
-    private RefundAirReportDao refundAirReportDao;
+//    private RefundAirReportDao refundAirReportDao;
     
     public List getInvoiceMonthly(String BillFrom,String BillTo,String ClientName,String Payment,String Accno,String vattype,String from,String to,String department){
         return invoiceReportDao.getInvoiceMonthly(BillFrom, BillTo, ClientName, Payment, Accno, vattype, from, to, department);
@@ -199,9 +199,9 @@ public class ReportService {
         return creditNoteReportdao.getCreditNoteReport(Cnid);
     }
     
-    public List getRefundAirReport(){        
-        return getRefundAirReportDao().getRefundAir();
-    }
+//    public List getRefundAirReport(){        
+//        return getRefundAirReportDao().getRefundAir();
+//    }
 
     public HotelVoucherDao getHotelVoucherdao() {
         return hotelVoucherdao;
@@ -391,12 +391,12 @@ public class ReportService {
         return invoiceReportDao;
     }
 
-    public RefundAirReportDao getRefundAirReportDao() {
-        return refundAirReportDao;
-    }
-
-    public void setRefundAirReportDao(RefundAirReportDao refundAirReportDao) {
-        this.refundAirReportDao = refundAirReportDao;
-    }
-    
+//    public RefundAirReportDao getRefundAirReportDao() {
+//        return refundAirReportDao;
+//    }
+//
+//    public void setRefundAirReportDao(RefundAirReportDao refundAirReportDao) {
+//        this.refundAirReportDao = refundAirReportDao;
+//    }
+//    
 }

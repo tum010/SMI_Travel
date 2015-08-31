@@ -6,7 +6,7 @@
 
 package com.smi.travel.datalayer.view.dao;
 
-import com.smi.travel.datalayer.report.model.TaxInvoiceReport;
+import com.smi.travel.datalayer.report.model.RefundAirReport;
 import java.util.List;
 /**
  *
