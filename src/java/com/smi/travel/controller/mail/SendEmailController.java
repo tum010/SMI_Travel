@@ -71,7 +71,7 @@ public class SendEmailController extends SMITravelController {
         String jasperFileName = "";
         String pdfFileName = "";
         String optionsend = request.getParameter("optionsend");
-        int option = Integer.parseInt(optionsend == null ? "0":optionsend);
+        int option = Integer.parseInt(optionsend == null || "".equalsIgnoreCase(optionsend) ? "0":optionsend);
         //mail.smi?recipient=surachai@iconext.co.th&subject=testingsendmail&message=helloworld
         // prints debug info
         System.out.println("To: " + recipientAddress);
