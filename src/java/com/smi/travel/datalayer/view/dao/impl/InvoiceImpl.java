@@ -107,7 +107,15 @@ public class InvoiceImpl implements InvoiceReportDao{
             invoice.setCo(getLeaderNameFromInvoiceID(util.ConvertString(B[12])));
             invoice.setGrtotal(df.format(B[9]));
             invoice.setUser(util.ConvertString(B[10]));
-            invoice.setTextmoney("");
+            
+            // Set Text Amount 
+            System.out.println("B9 : " + B[9]);
+            String text = util.ConvertString(B[9]);
+            System.out.println("Text B[9] : " +text);
+            text = convertGrantotal(text);
+            System.out.println("Text Amount Last : " + text);
+            invoice.setTextmoney(text);
+            
             invoice.setShowleader(showLeader);
             invoice.setShowstaff(showStaff);
             data.add(invoice);
@@ -115,6 +123,69 @@ public class InvoiceImpl implements InvoiceReportDao{
         session.close();
         this.sessionFactory.close();
         return data;
+    }
+    
+    private String convertGrantotal(String grand){
+        String text = "";
+        Long numLong = null;
+        int dot = grand.indexOf('.');
+        int intGross = grand.length();
+	System.out.println("Dot : " + dot + "  Size : " + intGross);
+        
+        if((dot + 1) == intGross){
+            numLong = numLong.valueOf(grand);
+            text += utilityFunction.convert(numLong);
+        }else{
+            String number = grand.substring(0, dot);
+            String point = grand.substring((dot+1));
+            numLong = numLong.valueOf(number);
+            text += utilityFunction.convert(numLong);
+            
+            if (point != null && !"".equals(point)) {
+                text += changPoint(point);
+                System.out.println("Text Amount : " + text);
+            }
+        }
+        System.out.println("Text Amount Total : " + text);
+        return text;
+    }
+    
+    private String changPoint(String point){
+        String text = " POINT ";
+        String one = point.substring(0,1);
+        String two = point.substring(1,2);
+        System.out.println("Point SubString : " + one + " : " + two );
+
+        String array[] = { one, two };
+
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] != null && array[i] != "") {
+                System.out.println("Array : "+array[i]+":");
+                if ("0".equals(array[i])) {
+                        text += "ZERO ";
+                } else if ("1".equals(array[i])) {
+                        text += "ONE ";
+                } else if ("2".equals(array[i])) {
+                        text += "TWO ";
+                } else if ("3".equals(array[i])) {
+                        text += "THREE ";
+                } else if ("4".equals(array[i])) {
+                        text += "FOUR";
+                } else if ("5".equals(array[i])) {
+                        text += "FIVE ";
+                } else if ("6".equals(array[i])) {
+                        text += "SIX ";
+                } else if ("7".equals(array[i])) {
+                        text += "SEVEN ";
+                } else if ("8".equals(array[i])) {
+                        text += "EIGHT ";
+                } else if ("9".equals(array[i])) {
+                        text += "NINE ";
+                }
+            }
+        }
+	System.out.println("Amount :  " + text);
+	return text;
     }
     
     private String getLeaderNameFromInvoiceID(String InvId){
@@ -128,8 +199,13 @@ public class InvoiceImpl implements InvoiceReportDao{
         if (invoiceList.isEmpty()) {
             return "";
         }else{
+            System.out.println("Size Leader Name : " + invoiceList.size());
+            if(invoiceList != null && invoiceList.size() != 0){
             for(int i=0;i<invoiceList.size();i++){
-                String Cusname = util.getCustomerName(invoiceList.get(i).getBillableDesc().getBillable().getMaster().getCustomer());
+                String Cusname = "";
+                if(invoiceList.get(i).getBillableDesc() != null && !"".equals(invoiceList.get(i).getBillableDesc())){
+                    Cusname = util.getCustomerName(invoiceList.get(i).getBillableDesc().getBillable().getMaster().getCustomer());
+                }
                 System.out.println("Cusname : "+Cusname);
                 
                     if(result.length() != 0){
@@ -144,8 +220,7 @@ public class InvoiceImpl implements InvoiceReportDao{
                     }else{
                         result += Cusname;
                     }
-                    
-                
+            }
             }
         }
         session.close();
