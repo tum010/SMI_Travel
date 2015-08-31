@@ -31,7 +31,7 @@ public class InvoiceImpl implements InvoiceReportDao{
     private static final String GET_INVOICE_FROMID = "FROM InvoiceDetail invD where invD.invoice.id = :invId";
 
     @Override
-    public List getInvoice(String InvoiceId,String BankId,String showStaff,String showLeader) {
+    public List getInvoice(String InvoiceId,String BankId,String showStaff,String showLeader,String sign) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();  
         List data = new ArrayList();
@@ -118,6 +118,13 @@ public class InvoiceImpl implements InvoiceReportDao{
             
             invoice.setShowleader(showLeader);
             invoice.setShowstaff(showStaff);
+            if(sign != null){
+                if("".equals(sign)){
+                    invoice.setSign("nosign");
+                }
+                invoice.setSign(sign);
+            }
+            
             data.add(invoice);
         }
         session.close();

@@ -115,6 +115,7 @@ public class ReportController extends SMITravelController {
         String from  = request.getParameter("fromdate");
         String to  = request.getParameter("todate");
         String departmentInvoice  = request.getParameter("departmentInvoice");
+        String sign = request.getParameter("sign");
 
         Map model = new HashMap();
         List data = new ArrayList();
@@ -177,9 +178,9 @@ public class ReportController extends SMITravelController {
         } else if (ReceiveList.equalsIgnoreCase(name)) {
             data = reportservice.getDaytourOtherReport(refno, status);
         } else if (InvoiceEmail.equalsIgnoreCase(name)) {
-            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader);
+            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign);
         } else if (InvoiceReport.equalsIgnoreCase(name)) {
-            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader);
+            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign);
         } else if (TaxInvoiceReport.equalsIgnoreCase(name)) {
             data = reportservice.getTaxInvoice(taxInvId, option);
         } else if (TaxInvoiceEmailReport.equalsIgnoreCase(name)) {

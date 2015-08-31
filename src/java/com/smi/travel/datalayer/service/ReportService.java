@@ -191,8 +191,8 @@ public class ReportService {
         return taxInvoiceDao.getTaxInvoice(taxInvId,option);
     }
     
-    public List getInvoice(String InvoiceId,String BankId,String showStaff,String showLeader){
-        return invoicedao.getInvoice(InvoiceId, BankId,showStaff,showLeader);
+    public List getInvoice(String InvoiceId,String BankId,String showStaff,String showLeader,String sign){
+        return invoicedao.getInvoice(InvoiceId, BankId,showStaff,showLeader,sign);
     }
     
     public List getCreditNoteReport(String Cnid){
