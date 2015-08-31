@@ -41,6 +41,7 @@ public class MProductDetailController extends SMITravelController {
         String isStock = request.getParameter("isStock");
         UtilityFunction util = new UtilityFunction();
         String operation = "";
+        String stock = request.getParameter("stock");
         
         System.out.println("action  :" + action);
         System.out.println("code ; "+code);
@@ -126,6 +127,7 @@ public class MProductDetailController extends SMITravelController {
                     ProductID =  productsave.getId();
                     List<Product> productSaveList = productService.searchProduct(product, 1);
                     if(productSaveList != null){ProductID = productSaveList.get(0).getId();}
+                    stock = productService.checkProductIsStock(product.getId());
                 } else {
                     request.setAttribute(TransectionResult, "save unsuccessful");
                 }
@@ -177,6 +179,7 @@ public class MProductDetailController extends SMITravelController {
             if (productDetail.getMProductType() != null) {
                 ProductTypeID = productDetail.getMProductType().getId();
             }
+            stock = productService.checkProductIsStock(request.getParameter("productid").toString());
 
             List<ProductDetail> priceList = new ArrayList<ProductDetail>(productDetail.getProductDetails());
             request.setAttribute(DATALIST, priceList);
@@ -196,7 +199,7 @@ public class MProductDetailController extends SMITravelController {
             
             Product productDetail = productService.getProductFromID(request.getParameter("ProductID").toString());
             code =  (String.valueOf(productDetail.getCode())).toUpperCase();
-            name = (String.valueOf(productDetail.getCode())).toUpperCase();
+            name = (String.valueOf(productDetail.getName())).toUpperCase();
             description = productDetail.getDescription();
             remark = productDetail.getRemark();
             isStock = String.valueOf(productDetail.getIsStock());
@@ -204,6 +207,7 @@ public class MProductDetailController extends SMITravelController {
             if (productDetail.getMProductType() != null) {
                 ProductTypeID = productDetail.getMProductType().getId();
             }
+            stock = productService.checkProductIsStock(request.getParameter("productid").toString());
         }
         
         
@@ -221,6 +225,7 @@ public class MProductDetailController extends SMITravelController {
         request.setAttribute("remark", remark);
         request.setAttribute("isStock", isStock);
         request.setAttribute("ProductID", ProductID);
+        request.setAttribute("stock", stock);        
 
         return MProductDetail;
     }
