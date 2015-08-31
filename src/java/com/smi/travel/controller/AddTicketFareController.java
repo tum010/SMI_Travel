@@ -290,16 +290,20 @@ public class AddTicketFareController extends SMITravelController {
             
             List<ReceiptDetailView> receiptDetailViewListTemp = new ArrayList<ReceiptDetailView>();
             List<ReceiptDetailView> receiptDetailViewList = new ArrayList<ReceiptDetailView>();
-            for (int i = 0; i < invoiceDetailList.size() ; i++) {
-                receiptDetailViewListTemp = receiptService.getReceiptDetailViewFromInvDetailId(invoiceDetailList.get(i).getId());
-                for (int j = 0; j < receiptDetailViewListTemp.size() ; j++) {
-                    ReceiptDetailView receiptDetailView = new ReceiptDetailView();
-                    receiptDetailView.setReceiptNo(receiptDetailViewListTemp.get(j).getReceiptNo());
-                    receiptDetailView.setReceiptDate(receiptDetailViewListTemp.get(j).getReceiptDate());
-                    receiptDetailView.setReceiveDate(receiptDetailViewListTemp.get(j).getReceiveDate());
-                    receiptDetailView.setMbillTypeStatus(receiptDetailViewListTemp.get(j).getMbillTypeStatus());
-                    receiptDetailView.setInvoiceNo(receiptDetailViewListTemp.get(j).getInvoiceNo());
-                    receiptDetailViewList.add(receiptDetailView);
+            if(invoiceDetailList != null){
+                for (int i = 0; i < invoiceDetailList.size() ; i++) {
+                    receiptDetailViewListTemp = receiptService.getReceiptDetailViewFromInvDetailId(invoiceDetailList.get(i).getId());
+                    if(receiptDetailViewListTemp != null){
+                        for (int j = 0; j < receiptDetailViewListTemp.size() ; j++) {
+                            ReceiptDetailView receiptDetailView = new ReceiptDetailView();
+                            receiptDetailView.setReceiptNo(receiptDetailViewListTemp.get(j).getReceiptNo());
+                            receiptDetailView.setReceiptDate(receiptDetailViewListTemp.get(j).getReceiptDate());
+                            receiptDetailView.setReceiveDate(receiptDetailViewListTemp.get(j).getReceiveDate());
+                            receiptDetailView.setMbillTypeStatus(receiptDetailViewListTemp.get(j).getMbillTypeStatus());
+                            receiptDetailView.setInvoiceNo(receiptDetailViewListTemp.get(j).getInvoiceNo());
+                            receiptDetailViewList.add(receiptDetailView);
+                        }
+                    }
                 }
             }
             request.setAttribute(RECEIPTDETAILLIST, receiptDetailViewList);
@@ -361,16 +365,20 @@ public class AddTicketFareController extends SMITravelController {
                 
                 List<ReceiptDetailView> receiptDetailViewListTemp = new ArrayList<ReceiptDetailView>();
                 List<ReceiptDetailView> receiptDetailViewList = new ArrayList<ReceiptDetailView>();
-                for (int i = 0; i < invoiceDetailList.size() ; i++) {
-                    receiptDetailViewListTemp = receiptService.getReceiptDetailViewFromInvDetailId(invoiceDetailList.get(i).getId());
-                    for (int j = 0; j < receiptDetailViewListTemp.size() ; j++) {
-                        ReceiptDetailView receiptDetailView = new ReceiptDetailView();
-                        receiptDetailView.setReceiptNo(receiptDetailViewListTemp.get(j).getReceiptNo());
-                        receiptDetailView.setReceiptDate(receiptDetailViewListTemp.get(j).getReceiptDate());
-                        receiptDetailView.setReceiveDate(receiptDetailViewListTemp.get(j).getReceiveDate());
-                        receiptDetailView.setMbillTypeStatus(receiptDetailViewListTemp.get(j).getMbillTypeStatus());
-                        receiptDetailView.setInvoiceNo(receiptDetailViewListTemp.get(j).getInvoiceNo());
-                        receiptDetailViewList.add(receiptDetailView);
+                if(invoiceDetailList != null){
+                    for (int i = 0; i < invoiceDetailList.size() ; i++) {
+                        receiptDetailViewListTemp = receiptService.getReceiptDetailViewFromInvDetailId(invoiceDetailList.get(i).getId());
+                        if(receiptDetailViewListTemp != null){
+                            for (int j = 0; j < receiptDetailViewListTemp.size() ; j++) {
+                                ReceiptDetailView receiptDetailView = new ReceiptDetailView();
+                                receiptDetailView.setReceiptNo(receiptDetailViewListTemp.get(j).getReceiptNo());
+                                receiptDetailView.setReceiptDate(receiptDetailViewListTemp.get(j).getReceiptDate());
+                                receiptDetailView.setReceiveDate(receiptDetailViewListTemp.get(j).getReceiveDate());
+                                receiptDetailView.setMbillTypeStatus(receiptDetailViewListTemp.get(j).getMbillTypeStatus());
+                                receiptDetailView.setInvoiceNo(receiptDetailViewListTemp.get(j).getInvoiceNo());
+                                receiptDetailViewList.add(receiptDetailView);
+                            }
+                        }
                     }
                 }
                 request.setAttribute(RECEIPTDETAILLIST, receiptDetailViewList);
