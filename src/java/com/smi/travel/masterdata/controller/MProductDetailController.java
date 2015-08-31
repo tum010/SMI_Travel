@@ -207,7 +207,7 @@ public class MProductDetailController extends SMITravelController {
             if (productDetail.getMProductType() != null) {
                 ProductTypeID = productDetail.getMProductType().getId();
             }
-            stock = productService.checkProductIsStock(request.getParameter("productid").toString());
+            stock = productService.checkProductIsStock(request.getParameter("ProductID").toString());
         }
         
         

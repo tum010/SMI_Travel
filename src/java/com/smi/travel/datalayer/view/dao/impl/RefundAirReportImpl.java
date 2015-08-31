@@ -25,10 +25,28 @@ import org.hibernate.SessionFactory;
  * @author chonnasith
  */
 public class RefundAirReportImpl implements RefundAirReportDao{
-
+    private SessionFactory sessionFactory;
+    private UtilityFunction utilityFunction;
+    
     @Override
     public List getRefundAir() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    public UtilityFunction getUtilityFunction() {
+        return utilityFunction;
+    }
+
+    public void setUtilityFunction(UtilityFunction utilityFunction) {
+        this.utilityFunction = utilityFunction;
     }
     
 }

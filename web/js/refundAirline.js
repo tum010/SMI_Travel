@@ -153,10 +153,34 @@ function addRowRefundAirlineList() {
             agentCode.push(value.name);
         });
 
+        $("#RefundUserTable tr").on('click', function () {
+            var user_id = $(this).find(".user-id").text();
+            var user_user = $(this).find(".user-user").text();
+            var user_name = $(this).find(".user-name").text();
+            $("#refundBy").val(user_user);
+            $("#refundByName").val(user_name);
+            $("#RefundUserModal").modal('hide');
+        });
+        var userCode = [];
+        $.each(user, function (key, value) {
+            userCode.push(value.code);
+            userCode.push(value.name);
+            if ($("#refundBy").val() === value.code) {
+                $("#refundByName").val(value.name);
+            }
+        });
+
         $("#refundAgentCode").autocomplete({
             source: agentCode,
             close: function (event, ui) {
                 $("#refundAgentCode").trigger('keyup');
+            }
+        });
+
+        $("#refundBy").autocomplete({
+            source: userCode,
+            close: function (event, ui) {
+                $("#refundBy").trigger('keyup');
             }
         });
 
@@ -178,6 +202,26 @@ function addRowRefundAirlineList() {
                     $("#refundAgentCode").val(value.code);
                     $("#refundAgentId").val(value.id);
                     $("#refundAgentName").val(value.name);
+                }
+            });
+        });
+
+        $("#refundBy").on('keyup', function () {
+            var position = $(this).offset();
+            $(".ui-widget").css("top", position.top + 30);
+            $(".ui-widget").css("left", position.left);
+            var code = this.value.toUpperCase();
+            var name = this.value.toUpperCase();
+            console.log("Name :" + name);
+            $("#agent_id,#agent_name,#agent_addr,#agent_tel").val(null);
+            $.each(user, function (key, value) {
+                if (value.code.toUpperCase() === code) {
+                    $("#refundByName").val(value.name);
+                    $("#refundBy").val(value.code);
+                }
+                else if (value.name.toUpperCase() === name) {
+                    $("#refundBy").val(value.code);
+                    $("#refundByName").val(value.name);
                 }
             });
         });

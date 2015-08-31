@@ -188,10 +188,9 @@ public class ReportController extends SMITravelController {
             data = reportservice.getCreditNoteReport(cnid);
         }else if(InvoiceMonthly.equalsIgnoreCase(name)){
             data = reportservice.getInvoiceMonthly(BillFrom, ClientTo, ClientName, Payment, Accno, vattype, from, to, departmentInvoice);
-        }    
-//        }else if(RefundAirReport.equalsIgnoreCase(name)){
-//            data = reportservice.getRefundAirReport();
-//        }
+        }else if(RefundAirReport.equalsIgnoreCase(name)){
+            data = reportservice.getRefundAirReport();
+        }
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);
 

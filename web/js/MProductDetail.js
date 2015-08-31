@@ -126,7 +126,8 @@ function confirmDisableStock(){
     var name = document.getElementById('name').value;
     if(!document.getElementById('isStock').checked){          
         var code = document.getElementById('code').value;
-        document.getElementById('disabledCode').innerHTML = "Are you sure to disabled isStock " + code + " ?";
+        document.getElementById('disabledCode').innerHTML = code + " is currently being used in stock. Are you sure to disable isStock " + code + " ?";
+        
         $('#disableIsStockModal').modal('show');
     } else {       
         if(name === ''){

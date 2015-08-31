@@ -22,7 +22,10 @@
 				<reportElement x="0" y="0" width="404" height="15" uuid="bb642606-5987-45db-aaf8-33182bcee9c5"/>
 			</rectangle>
 			<textField>
-				<reportElement x="34" y="0" width="362" height="15" uuid="aefaf7ab-6f0d-4f53-a5a6-1cb32722d632"/>
+				<reportElement x="34" y="-1" width="362" height="15" uuid="aefaf7ab-6f0d-4f53-a5a6-1cb32722d632"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{nameAndTicket}]]></textFieldExpression>
 			</textField>
 			<textField>
