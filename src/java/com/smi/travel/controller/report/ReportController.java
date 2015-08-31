@@ -65,7 +65,7 @@ public class ReportController extends SMITravelController {
     private static final String TaxInvoiceReport = "TaxInvoiceReport";
     private static final String TaxInvoiceEmailReport = "TaxInvoiceEmailReport";
     private static final String CreditNoteReport = "CreditNoteReport";
-    private static final String InvoiceMonthly = "InvoiceMonthly";
+    private static final String InvoiceMonthly = "InvoiceMonthlyReport";
 
     private DataSource datasource;
     private static final Logger LOG = Logger.getLogger(ReportController.class.getName());

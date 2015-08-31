@@ -9,6 +9,8 @@ package com.smi.travel.datalayer.view.dao.impl;
 import com.smi.travel.datalayer.report.model.CreditNoteReport;
 import com.smi.travel.datalayer.view.dao.CreditNoteReportDao;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,21 +35,25 @@ public class CreditNoteReportImpl implements  CreditNoteReportDao{
         UtilityFunction util = new UtilityFunction();  
         List data = new ArrayList();
         DecimalFormat df = new DecimalFormat("###,###.00");
-        
+        BigDecimal Subtotal = new BigDecimal(0);
+        BigDecimal Grandtotal = new BigDecimal(0);
+        BigDecimal Difsubtotal = new BigDecimal(0);
+        BigDecimal sumvat = new BigDecimal(0);
+        BigDecimal Realsubtotal = new BigDecimal(0);
+        BigDecimal percent = new BigDecimal(100);        
+            
         List<Object[]> QueryCNList = session.createSQLQuery("SELECT * FROM `creditnote_view` where id= " + creditId)
                  .addScalar("customer", Hibernate.STRING)
                  .addScalar("address", Hibernate.STRING)
                  .addScalar("cnno", Hibernate.STRING)
                  .addScalar("cndate", Hibernate.DATE)
                  .addScalar("description", Hibernate.STRING)
-                 .addScalar("amount", Hibernate.BIG_DECIMAL)
-                 .addScalar("subtotal", Hibernate.BIG_DECIMAL)
-                 .addScalar("grandtotal", Hibernate.BIG_DECIMAL)
-                 .addScalar("difsubtotal", Hibernate.BIG_DECIMAL)
-                 .addScalar("vat", Hibernate.BIG_DECIMAL)
-                 .addScalar("realsubtotal", Hibernate.BIG_DECIMAL)
+                 .addScalar("amount", Hibernate.BIG_DECIMAL)   
                  .addScalar("remark", Hibernate.STRING)
                  .addScalar("user", Hibernate.STRING)
+                 .addScalar("vat", Hibernate.BIG_DECIMAL)
+                 .addScalar("realamount", Hibernate.BIG_DECIMAL)
+                 .addScalar("realvat", Hibernate.BIG_DECIMAL)
                  .list();
         for (Object[] B : QueryCNList) {
             CreditNoteReport cn = new CreditNoteReport();
@@ -61,26 +67,42 @@ public class CreditNoteReportImpl implements  CreditNoteReportDao{
             }
             cn.setDescription(util.ConvertString(B[4]));
             cn.setAmount(util.setFormatMoney(B[5]));
-            cn.setSubtotal(util.setFormatMoney(B[6]));
-            cn.setGrandtotal(util.setFormatMoney(B[7]));
-            cn.setDifsubtotal(util.setFormatMoney(B[8]));
-            cn.setVat(util.setFormatMoney(B[9]));
-            cn.setReadsubtotal(util.setFormatMoney(B[10]));
-            cn.setRemark(util.ConvertString(B[11]));
-            cn.setUser(util.ConvertString(B[12]));
-            
-            String total = cn.getGrandtotal().replaceAll(",", "");
+            BigDecimal amount = (BigDecimal) B[5] == null ? new BigDecimal(0):(BigDecimal) B[5];
+            Subtotal= Subtotal.add(amount);
+            Grandtotal = Grandtotal.add((BigDecimal) B[9] == null ? new BigDecimal(0):(BigDecimal) B[9]);
+            BigDecimal realamount = (BigDecimal) B[9] == null ? new BigDecimal(0):(BigDecimal) B[9];
+            BigDecimal vat = (BigDecimal) B[8] == null ? new BigDecimal(0):(BigDecimal) B[8];
+            //
+            BigDecimal subtotal = realamount.multiply(percent).divide(percent.add((BigDecimal) B[10]),2,RoundingMode.HALF_UP);
+            Difsubtotal = Difsubtotal.add(subtotal);
+            sumvat = sumvat.add(vat);
+            BigDecimal RealTotal = amount.subtract(subtotal);
+            Realsubtotal = Realsubtotal.add(RealTotal);
+            cn.setRemark(util.ConvertString(B[6]));
+            cn.setUser(util.ConvertString(B[7]));
+            data.add(cn);
+        }
+        
+        for(int i =0;i<data.size();i++){
+            CreditNoteReport re = (CreditNoteReport) data.get(i);
+            re.setSubtotal(util.setFormatMoney(Subtotal));
+            re.setGrandtotal(util.setFormatMoney(Grandtotal));
+            re.setDifsubtotal(util.setFormatMoney(Difsubtotal));
+            re.setVat(util.setFormatMoney(sumvat));
+            re.setReadsubtotal(util.setFormatMoney(Realsubtotal));
+            String total = re.getGrandtotal().replaceAll(",", "");
             total = total.replaceAll("\\.", ",");
             String[] totals = total.split(",");
             int totalWord = 0;
             if(!"".equalsIgnoreCase(totals[0])){
                 totalWord = Integer.parseInt(String.valueOf(totals[0]));
-            }
-            
-            cn.setTextamount(utilityFunction.convert(totalWord)+" baht");
-            
-            data.add(cn);
+            }  
+            re.setTextamount(utilityFunction.convert(totalWord)+" BATH");
+            data.set(i, re);
         }
+        
+        
+        
         return data;
     }
     

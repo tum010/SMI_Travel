@@ -341,6 +341,7 @@
                         <input type="hidden" class="form-control" id="createby" name="createby" value="${requestScope['createby']}">
                         <input type="hidden" class="form-control" id="createdate" name="createdate" value="${requestScope['createdate']}">
                         <input type="hidden" class="form-control" id="ticketstatus" name="ticketstatus" value="">
+                        <input type="hidden" class="form-control" id="addticket" name="addticket" value="">
                         <input type="hidden" class="form-control" id="counter" name="counter" value="">
                         <div class="text-center" >    
                             <c:choose>
@@ -363,15 +364,38 @@
             </div>
             <div class="panel panel-default">
                 <div class="panel-heading">Ticket</div>
-                <div class="panel-body">
-                    <div class="form-group col-md-3" style="padding-left: 30px">
-                        <font style="color: red" id="alertCheckbox"></font>
+                <div class="panel-body">                    
+                    <div class="form-group col-md-1" style="width: 200px">
+                        <label class="col-sm-3 control-label">Adult</label>
+                        <div class="col-sm-1" style="width: 100px">
+                            <input type="text" class="form-control money" id="adTicket" name="adTicket" value="0">  
+                        </div>
                     </div>
-                    <div class="form-group col-md-1 text-right" style="padding-left: 650px">
+                    <div class="form-group col-md-1" style="width: 200px">
+                        <label class="col-sm-3 control-label">Child</label>
+                        <div class="col-sm-1" style="width: 100px">
+                            <input type="text" class="form-control money" id="chTicket" name="chTicket" value="0">  
+                        </div>
+                    </div>    
+                    <div class="form-group col-md-1" style="width: 200px">
+                        <label class="col-sm-3 control-label">Infant</label>
+                        <div class="col-sm-1" style="width: 100px">
+                            <input type="text" class="form-control money" id="infTicket" name="infTicket" value="0">  
+                        </div>
+                    </div>
+                    <div class="form-group col-md-1" style="width: 200px">
+                        <button type="button"  class="btn btn-success" onclick="addStockTicket()" id="addTicketButton" name="addTicketButton">
+                            <span class="glyphicon glyphicon-plus"></span> Add
+                        </button>
+                    </div>
+                    <div class="form-group col-md-1 text-right" style="padding-left: 190px">
                         <button type="button" class="btn btn-danger" onclick="setStockTicket()" id="changeStatusButton" name="changeStatusButton">
                             <span id="SpanDisableVoid" class="glyphicon glyphicon-remove" ></span> Change Status
                         </button>
-                    </div>        
+                    </div> 
+                    <div class="row" style="padding: 50px 0px 0px 30px">
+                        <font style="color: red" id="alertCheckbox"></font>
+                    </div>    
                     <div class="row" style="margin-left: 10px;margin-right: 10px;"> 
                         <table id="TicketTable" class="display" cellspacing="0"  >
                             <thead>

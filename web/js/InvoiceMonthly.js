@@ -23,5 +23,5 @@ function printInvoiceMonthly(){
     var from  = $("#fromdate").val();
     var to  = $("#todate").val();
     var departmentInvoice = $('#departmentInvoice').val();
-   window.open("report.smi?name=InvoiceMonthly&billFromName="+BillFrom+"&clientCode="+ClientTo+"&clientName="+ClientName+"&payment="+Payment+"&accNo="+Accno+"&vatType="+vattype+"&fromdate="+from+"&todate="+to+"&departmentInvoice="+departmentInvoice);   
+   window.open("report.smi?name=InvoiceMonthlyReport&billFromName="+BillFrom+"&clientCode="+ClientTo+"&clientName="+ClientName+"&payment="+Payment+"&accNo="+Accno+"&vatType="+vattype+"&fromdate="+from+"&todate="+to+"&departmentInvoice="+departmentInvoice);   
 }

@@ -6,6 +6,8 @@
 
 package com.smi.travel.datalayer.report.model;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author Surachai
@@ -15,12 +17,12 @@ public class InvoiceMonthly {
     private String invno;
     private String invdate;
     private String detail;
-    private String thb;
-    private String jpy;
-    private String usd;
+    private BigDecimal thb;
+    private BigDecimal jpy;
+    private BigDecimal usd;
     private String department;
     private String recno;
-    private String recamt;
+    private BigDecimal recamt;
     private String type;
     private String payment;
     private String accno;
@@ -63,30 +65,6 @@ public class InvoiceMonthly {
         this.detail = detail;
     }
 
-    public String getThb() {
-        return thb;
-    }
-
-    public void setThb(String thb) {
-        this.thb = thb;
-    }
-
-    public String getJpy() {
-        return jpy;
-    }
-
-    public void setJpy(String jpy) {
-        this.jpy = jpy;
-    }
-
-    public String getUsd() {
-        return usd;
-    }
-
-    public void setUsd(String usd) {
-        this.usd = usd;
-    }
-
     public String getDepartment() {
         return department;
     }
@@ -103,13 +81,39 @@ public class InvoiceMonthly {
         this.recno = recno;
     }
 
-    public String getRecamt() {
+    public BigDecimal getThb() {
+        return thb;
+    }
+
+    public void setThb(BigDecimal thb) {
+        this.thb = thb;
+    }
+
+    public BigDecimal getJpy() {
+        return jpy;
+    }
+
+    public void setJpy(BigDecimal jpy) {
+        this.jpy = jpy;
+    }
+
+    public BigDecimal getUsd() {
+        return usd;
+    }
+
+    public void setUsd(BigDecimal usd) {
+        this.usd = usd;
+    }
+
+    public BigDecimal getRecamt() {
         return recamt;
     }
 
-    public void setRecamt(String recamt) {
+    public void setRecamt(BigDecimal recamt) {
         this.recamt = recamt;
     }
+
+
 
     public String getType() {
         return type;
@@ -166,6 +170,8 @@ public class InvoiceMonthly {
     public void setHeaddepartment(String headdepartment) {
         this.headdepartment = headdepartment;
     }
+
+    
     
     
     

@@ -81,12 +81,12 @@ public class OtherBookingImpl implements OtherBookingDao{
     }
     
     @Override
-    public String saveStockDetailOther(OtherBooking otherbook, SystemUser user) {
+    public String saveStockDetailOther(OtherBooking otherbook, SystemUser user, String addticket, String adTicket, String chTicket, String infTicket, String itemid) {
         util = new UtilityFunction();
         String result = "";
         try {       
             Session session = this.sessionFactory.openSession();
-            transaction = session.beginTransaction();
+//            transaction = session.beginTransaction();
             String date = util.convertDateToString(otherbook.getOtherDate());
             String productId = otherbook.getProduct().getId();
             Stock stock = getStockByDate(productId, date, session);
@@ -115,6 +115,7 @@ public class OtherBookingImpl implements OtherBookingDao{
             int chCancel = 0;
             int inf = 0;
             int infCancel = 0;
+            
             List<Integer> stockNum = getStockNumFromOtherBookID(otherbook.getId(),session);
             if(stockNum != null){
                 ad = stockNum.get(0);
@@ -125,7 +126,7 @@ public class OtherBookingImpl implements OtherBookingDao{
             System.out.println("adult : "+ ad );
             System.out.println("child : "+ ch );
             System.out.println("infant : "+ inf );
-            
+                        
             String stockDetailId = stock.getId();
             stockDetailList = new ArrayList<StockDetail>();
             stockDetailList = getStockDetail(stockDetailId, session);                        
@@ -147,67 +148,73 @@ public class OtherBookingImpl implements OtherBookingDao{
                 return result;
             }
             
-            OtherBooking otherBooking = new OtherBooking();
-            String otherbookId = otherbook.getId();
-            otherBooking.setId(otherbookId);
-           
-            MStockStatus mstockStatus = new MStockStatus();
-            mstockStatus.setId("2");
-            // pickupDate must use current date
-            String pickupDate = util.convertDateToString(new Date());
-            for (int i = 0; i < stockDetailList.size(); i++){
-                StockDetail stockDetail = stockDetailList.get(i);
-                String typeName = stockDetail.getTypeId().getName();
-                if("ADULT".equalsIgnoreCase(typeName)){
-                    if(ad < adultQty){
-                        stockDetail.setPickupDate(util.convertStringToDate(pickupDate));
-                        stockDetail.setOtherBooking(otherbook);                   
-                        stockDetail.setMStockStatus(mstockStatus);
-                        stockDetail.setStaff(user);
-                        session.update(stockDetailList.get(i));
-                        ad++;
-                    }
-                    
-                } else if("CHILD".equalsIgnoreCase(typeName)){
-                    if(ch < childQty){
-                        stockDetail.setPickupDate(util.convertStringToDate(pickupDate));
-                        stockDetail.setOtherBooking(otherbook);                   
-                        stockDetail.setMStockStatus(mstockStatus);
-                        stockDetail.setStaff(user);
-                        session.update(stockDetailList.get(i));
-                        ch++;
-                    }
-                    
-                } else if("INFANT".equalsIgnoreCase(typeName)){
-                    if(inf < infantQty){
-                        stockDetail.setPickupDate(util.convertStringToDate(pickupDate));
-                        stockDetail.setOtherBooking(otherbook);                   
-                        stockDetail.setMStockStatus(mstockStatus);
-                        stockDetail.setStaff(user);
-                        session.update(stockDetailList.get(i));
-                        inf++;
-                    }
-                } 
+            if("addTicket".equalsIgnoreCase(addticket)){
+                result = addStockTicket(otherbook,user,stockDetailList,adultQty,childQty,infantQty,ad,ch,inf,adTicket,chTicket,infTicket);
+            } else {
+                result = saveStockTicket(otherbook,user,itemid,stockDetailList,adultQty,childQty,infantQty,ad,ch,inf);
             }
-                            
-            transaction.commit();
+            
+//            OtherBooking otherBooking = new OtherBooking();
+//            String otherbookId = otherbook.getId();
+//            otherBooking.setId(otherbookId);
+//           
+//            MStockStatus mstockStatus = new MStockStatus();
+//            mstockStatus.setId("2");
+//            // pickupDate must use current date
+//            String pickupDate = util.convertDateToString(new Date());
+//            for (int i = 0; i < stockDetailList.size(); i++){
+//                StockDetail stockDetail = stockDetailList.get(i);
+//                String typeName = stockDetail.getTypeId().getName();
+//                if("ADULT".equalsIgnoreCase(typeName)){
+//                    if(ad < adultQty){
+//                        stockDetail.setPickupDate(util.convertStringToDate(pickupDate));
+//                        stockDetail.setOtherBooking(otherbook);                   
+//                        stockDetail.setMStockStatus(mstockStatus);
+//                        stockDetail.setStaff(user);
+//                        session.update(stockDetailList.get(i));
+//                        ad++;
+//                    }
+//                    
+//                } else if("CHILD".equalsIgnoreCase(typeName)){
+//                    if(ch < childQty){
+//                        stockDetail.setPickupDate(util.convertStringToDate(pickupDate));
+//                        stockDetail.setOtherBooking(otherbook);                   
+//                        stockDetail.setMStockStatus(mstockStatus);
+//                        stockDetail.setStaff(user);
+//                        session.update(stockDetailList.get(i));
+//                        ch++;
+//                    }
+//                    
+//                } else if("INFANT".equalsIgnoreCase(typeName)){
+//                    if(inf < infantQty){
+//                        stockDetail.setPickupDate(util.convertStringToDate(pickupDate));
+//                        stockDetail.setOtherBooking(otherbook);                   
+//                        stockDetail.setMStockStatus(mstockStatus);
+//                        stockDetail.setStaff(user);
+//                        session.update(stockDetailList.get(i));
+//                        inf++;
+//                    }
+//                } 
+//            }
+//                            
+//            transaction.commit();
             session.close();
-            this.sessionFactory.close();
-            
-            if(ad != adultQty){
-                adCancel = adultQty - ad;
-            }
-            if(ch != childQty){
-                chCancel = childQty - ch;
-            }
-            if(inf != infantQty){
-                infCancel = infantQty - inf;
-            }
-            
-            String adStr = String.valueOf(adCancel);
-            String chStr = String.valueOf(chCancel);
-            String infStr = String.valueOf(infCancel);
-            result = adStr+"||"+chStr+"||"+infStr;
+//            this.sessionFactory.close();
+//            
+//            if(ad != adultQty){
+//                adCancel = adultQty - ad;
+//            }
+//            if(ch != childQty){
+//                chCancel = childQty - ch;
+//            }
+//            if(inf != infantQty){
+//                infCancel = infantQty - inf;
+//            }
+//            
+//            String adStr = String.valueOf(adCancel);
+//            String chStr = String.valueOf(chCancel);
+//            String infStr = String.valueOf(infCancel);
+//            result = adStr+"||"+chStr+"||"+infStr;
             
             //result = stockDetailList.get(0).getStock().getId();
             
@@ -296,6 +303,186 @@ public class OtherBookingImpl implements OtherBookingDao{
             ex.printStackTrace();
         }
         return fail;
+    }
+    
+    private String addStockTicket(OtherBooking otherbook, SystemUser user, List<StockDetail> stockDetailList, int adultQty, int childQty, int infantQty, int ad, int ch, int inf, String adT, String chT, String infT) {
+        util = new UtilityFunction();
+        String result = "";
+        try {       
+            Session session = this.sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            
+            int adTicket = 0;
+            int chTicket = 0;
+            int infTicket = 0;
+            int adNew = 0;
+            int chNew = 0;
+            int infNew = 0;
+            if(!"".equalsIgnoreCase(adT)){
+                adTicket = Integer.parseInt(adT);
+            }
+            if(!"".equalsIgnoreCase(chT)){
+                chTicket = Integer.parseInt(chT);
+            }
+            if(!"".equalsIgnoreCase(infT)){
+                infTicket = Integer.parseInt(infT);
+            }
+           
+            OtherBooking otherBooking = new OtherBooking();
+            String otherbookId = otherbook.getId();
+            otherBooking.setId(otherbookId);
+
+            MStockStatus mstockStatus = new MStockStatus();
+            mstockStatus.setId("2");
+            // pickupDate must use current date
+            String pickupDate = util.convertDateToString(new Date());
+            for (int i = 0; i < stockDetailList.size(); i++){
+                StockDetail stockDetail = stockDetailList.get(i);
+                String typeName = stockDetail.getTypeId().getName();
+                if("ADULT".equalsIgnoreCase(typeName)){
+                    if(adNew < adTicket){
+                        stockDetail.setPickupDate(util.convertStringToDate(pickupDate));
+                        stockDetail.setOtherBooking(otherbook);                   
+                        stockDetail.setMStockStatus(mstockStatus);
+                        stockDetail.setStaff(user);
+                        session.update(stockDetailList.get(i));
+                        adNew++;
+                    }
+
+                } else if("CHILD".equalsIgnoreCase(typeName)){
+                    if(chNew < chTicket){
+                        stockDetail.setPickupDate(util.convertStringToDate(pickupDate));
+                        stockDetail.setOtherBooking(otherbook);                   
+                        stockDetail.setMStockStatus(mstockStatus);
+                        stockDetail.setStaff(user);
+                        session.update(stockDetailList.get(i));
+                        chNew++;
+                    }
+
+                } else if("INFANT".equalsIgnoreCase(typeName)){
+                    if(infNew < infTicket){
+                        stockDetail.setPickupDate(util.convertStringToDate(pickupDate));
+                        stockDetail.setOtherBooking(otherbook);                   
+                        stockDetail.setMStockStatus(mstockStatus);
+                        stockDetail.setStaff(user);
+                        session.update(stockDetailList.get(i));
+                        infNew++;
+                    }
+                } 
+            }
+            
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+            
+            int adCancel = 0;
+            int chCancel = 0;
+            int infCancel = 0;
+            
+            if(((adNew+ad) != adultQty) && ((adNew+ad) < adultQty)){
+                adCancel = adultQty - (adNew+ad);
+            }
+            if(((chNew+ch) != childQty) && ((chNew+ch) < childQty)){
+                chCancel = childQty - (chNew+ch);
+            }
+            if(((infNew+inf) != infantQty) && ((infNew+inf) < infantQty)){
+                infCancel = infantQty - (infNew+inf);
+            }
+            
+            String adStr = String.valueOf(adCancel);
+            String chStr = String.valueOf(chCancel);
+            String infStr = String.valueOf(infCancel);
+            result = adStr+"||"+chStr+"||"+infStr;
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            result = "fail";
+        }
+        
+        return result;
+    }
+
+    private String saveStockTicket(OtherBooking otherbook, SystemUser user, String itemid, List<StockDetail> stockDetailList, int adultQty, int childQty, int infantQty, int ad, int ch, int inf) {
+        util = new UtilityFunction();
+        String result = "";
+        try {
+            if("".equalsIgnoreCase(itemid)){               
+                Session session = this.sessionFactory.openSession();
+                transaction = session.beginTransaction();
+
+                OtherBooking otherBooking = new OtherBooking();
+                String otherbookId = otherbook.getId();
+                otherBooking.setId(otherbookId);
+
+                MStockStatus mstockStatus = new MStockStatus();
+                mstockStatus.setId("2");
+                // pickupDate must use current date
+                String pickupDate = util.convertDateToString(new Date());
+                for (int i = 0; i < stockDetailList.size(); i++){
+                    StockDetail stockDetail = stockDetailList.get(i);
+                    String typeName = stockDetail.getTypeId().getName();
+                    if("ADULT".equalsIgnoreCase(typeName)){
+                        if(ad < adultQty){
+                            stockDetail.setPickupDate(util.convertStringToDate(pickupDate));
+                            stockDetail.setOtherBooking(otherbook);                   
+                            stockDetail.setMStockStatus(mstockStatus);
+                            stockDetail.setStaff(user);
+                            session.update(stockDetailList.get(i));
+                            ad++;
+                        }
+
+                    } else if("CHILD".equalsIgnoreCase(typeName)){
+                        if(ch < childQty){
+                            stockDetail.setPickupDate(util.convertStringToDate(pickupDate));
+                            stockDetail.setOtherBooking(otherbook);                   
+                            stockDetail.setMStockStatus(mstockStatus);
+                            stockDetail.setStaff(user);
+                            session.update(stockDetailList.get(i));
+                            ch++;
+                        }
+
+                    } else if("INFANT".equalsIgnoreCase(typeName)){
+                        if(inf < infantQty){
+                            stockDetail.setPickupDate(util.convertStringToDate(pickupDate));
+                            stockDetail.setOtherBooking(otherbook);                   
+                            stockDetail.setMStockStatus(mstockStatus);
+                            stockDetail.setStaff(user);
+                            session.update(stockDetailList.get(i));
+                            inf++;
+                        }
+                    } 
+                }
+            
+                transaction.commit();
+                session.close();
+                this.sessionFactory.close();
+            }    
+            
+            int adCancel = 0;
+            int chCancel = 0;
+            int infCancel = 0;
+            
+            if((ad != adultQty) && (ad < adultQty)){
+                adCancel = adultQty - ad;
+            }
+            if((ch != childQty) && (ch < childQty)){
+                chCancel = childQty - ch;
+            }
+            if((inf != infantQty) && (inf < infantQty)){
+                infCancel = infantQty - inf;
+            }
+            
+            String adStr = String.valueOf(adCancel);
+            String chStr = String.valueOf(chCancel);
+            String infStr = String.valueOf(infCancel);
+            result = adStr+"||"+chStr+"||"+infStr;
+            
+         } catch (Exception ex) {
+            ex.printStackTrace();
+            result = "fail";
+        }
+        
+        return result;    
     }
     
     @Override
@@ -613,5 +800,5 @@ public class OtherBookingImpl implements OtherBookingDao{
             result = "stock fail";
         }
         return result;
-    }
+    }   
 }

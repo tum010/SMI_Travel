@@ -1735,7 +1735,10 @@ public class AJAXBean extends AbstractBean implements
             }
             Map<String, Object> detailMap = new HashMap<String, Object>();
             detailMap.put("product", detail.getMbillType().getName());
-            detailMap.put("refNo", detail.getMaster().getReferenceNo());
+            if(detail.getMaster() != null){
+                detailMap.put("refNo", detail.getMaster().getReferenceNo());
+            }
+            
             detailMap.put("description", detail.getDescription());
             detailMap.put("amount", util.setFormatMoney(detail.getAmount()));
             detailMap.put("cur", detail.getCurAmount());

@@ -149,7 +149,7 @@
 	   <property name="url" value="/WEB-INF/report/CreditNote.jrxml"/>
 	</bean>
         
-        <bean id="InvoiceMonthly"
+        <bean id="InvoiceMonthlyReport"
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/InvoiceMonthly.jrxml"/>
 	</bean>

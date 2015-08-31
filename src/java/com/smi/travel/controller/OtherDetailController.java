@@ -66,6 +66,10 @@ public class OtherDetailController extends SMITravelController {
         String createby = request.getParameter("createby");
         String createdate = request.getParameter("createdate");
         String ticketstatus = request.getParameter("ticketstatus");
+        String addticket = request.getParameter("addticket");
+        String adTicket = request.getParameter("adTicket");
+        String chTicket = request.getParameter("chTicket");
+        String infTicket = request.getParameter("infTicket");       
         String counter = request.getParameter("counter");
                         
         SystemUser user = (SystemUser) session.getAttribute("USER");
@@ -155,7 +159,7 @@ public class OtherDetailController extends SMITravelController {
 //            int result = OtherService.saveBookingOther(Other,user);
             List<String> result = OtherService.saveBookingOther(Other,user,createby);
             if(("1".equalsIgnoreCase(result.get(0))) && (callpageSubmit==null || !callpageSubmit.equalsIgnoreCase("FromDayTour"))){
-                String stock = OtherService.saveStockDetailOther(Other, user);
+                String stock = OtherService.saveStockDetailOther(Other, user, addticket, adTicket, chTicket, infTicket, itemid);
                 if("notStock".equalsIgnoreCase(stock)){
                     ModelAndView OTHER = new ModelAndView(new RedirectView("Other.smi?referenceNo="+refno+"&result=1", true));
                     return OTHER;
@@ -171,7 +175,7 @@ public class OtherDetailController extends SMITravelController {
                                 String resultTicket = OtherService.updateStockTicketStatus(stockticketid,ticketstatus);
                                 request.setAttribute("resultTicket", resultTicket);
                             }
-                        }                       
+                        }                                             
                     } else {
                        request.setAttribute("resultText", "success"); 
                     }
@@ -191,7 +195,7 @@ public class OtherDetailController extends SMITravelController {
                     request.setAttribute("infantCancel", ticketData[2]);
                 }
             }else if(("1".equalsIgnoreCase(result.get(0))) && (callpageSubmit!=null) && (callpageSubmit.equalsIgnoreCase("FromDayTour"))){
-                String stock = OtherService.saveStockDetailOther(Other, user);
+                String stock = OtherService.saveStockDetailOther(Other, user, addticket, adTicket, chTicket, infTicket, itemid);
                 if("notStock".equalsIgnoreCase(stock)){
                     ModelAndView DAYTOUR = new ModelAndView(new RedirectView("Daytour.smi?referenceNo="+refno+"&result=success", true));
                     return DAYTOUR;
