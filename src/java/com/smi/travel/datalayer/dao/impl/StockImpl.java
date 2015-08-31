@@ -31,7 +31,7 @@ public class StockImpl implements StockDao{
     private Transaction transaction;
     private static final String DELETEALL_STOCK_QUERY ="DELETE FROM Stock st where st.id = :stockID";
     private static final String DELETE_STOCKDETAIL_QUERY ="DELETE FROM StockDetail std where std.id = :stockDetailID";
-    private static final String SELECT_STOCK_DETAIL = "FROM StockDetail std where std.stock.id = :stockID";
+    private static final String SELECT_STOCK_DETAIL = "FROM StockDetail std where std.stock.id = :stockID ORDER BY  std.typeId.name,std.code  ASC";
     private static final String SELECT_STOCK_PRODUCT = "FROM Product pr where pr.isStock = 1";
     private static final String GET_STOCK_ID = "FROM Stock st where st.product.id = :proID and st.staff.username = :staffID and st.effectiveFrom = :from  and st.effectiveTo = :to and st.createDate = :create ";
     private static final String GET_STOCK = "FROM Stock st where st.id = :stockID ";
@@ -198,6 +198,7 @@ public class StockImpl implements StockDao{
             }else if("3".equalsIgnoreCase(status.getId())){
                 SumCancel +=1;
             }
+            System.out.println("Code Stock Detail : " + stockDataList.get(i).getCode());
         }
         stockview.setId(stockData.getId());
         stockview.setAdddate(util.convertDateToString(stockData.getCreateDate()));
@@ -212,7 +213,12 @@ public class StockImpl implements StockDao{
         
         stockview.setCancel(SumCancel);
         stockview.setInuse(SumInuse);
-        stockview.setItemList(mappingStockView(stockData.getStockDetails()));
+        stockview.setItemList(mappingStockView(stockDataList));
+        List<StockDetail> listStockDetail = stockDataList;
+        for(int i =0;i< listStockDetail.size();i++){
+            
+            System.out.println("Code TTTT : " + listStockDetail.get(i).getCode());
+        }
         return stockview;
     }
     
@@ -241,6 +247,7 @@ public class StockImpl implements StockDao{
             stock.setPickupDate(util.convertDateToString(detail.getPickupDate()));
             stock.setPayStatusName(String.valueOf(detail.getPayStatus()));
             StockList.add(stock);
+            System.out.println("Code Stock View Detail : " + Listdetail.get(i).getCode());
         }
         
         
@@ -394,7 +401,7 @@ public class StockImpl implements StockDao{
         if(listStock != null){
             for (int i=0;i< listStock.size();i++) {
                 List<StockDetail> listStockDetail = listStock.get(i).getStockDetails();
-                query = "FROM StockDetail std where std.stock.id = " + listStock.get(i).getId() + " and std.MStockStatus.id = 1";
+                query = "FROM StockDetail std where std.stock.id = " + listStock.get(i).getId() + " and std.MStockStatus.id = 1 ";
                 System.out.println("query : " + query);
                 listStockDetail = session.createQuery(query).list();
                 if(listStockDetail != null && !"".equals(listStockDetail) && listStockDetail.size() != 0){
@@ -435,7 +442,8 @@ public class StockImpl implements StockDao{
             query += " and st.MStockStatus.id = " + itemStatus ;
         }
         
-        System.out.println("query : " + query);
+        query += "  ORDER BY  st.typeId.name,st.code  ASC";
+        System.out.println("query view: " + query);
         List<StockDetail> list = session.createQuery(query).list();
         stockview = mappingStockViewSummary(list);
         session.close();
