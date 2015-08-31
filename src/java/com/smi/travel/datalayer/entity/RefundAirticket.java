@@ -19,6 +19,7 @@ public class RefundAirticket {
      private Date refundDate;
      private String refundBy;
      private String remark;
+     private Date receiveDate;
      private List<RefundAirticketDetail> refundAirticketDetails = new LinkedList<RefundAirticketDetail>();
 
     public RefundAirticket() {
@@ -82,6 +83,20 @@ public class RefundAirticket {
 
     public void setRefundAirticketDetails(List refundAirticketDetails) {
         this.refundAirticketDetails = refundAirticketDetails;
+    }
+
+    /**
+     * @return the receiveDate
+     */
+    public Date getReceiveDate() {
+        return receiveDate;
+    }
+
+    /**
+     * @param receiveDate the receiveDate to set
+     */
+    public void setReceiveDate(Date receiveDate) {
+        this.receiveDate = receiveDate;
     }
 
 }
