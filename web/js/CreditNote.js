@@ -287,7 +287,7 @@ function openReport() {
 
 function sendMail() {
     var cnId = $("#cnId").val();
-    window.open("SendMail.smi?name=CreditNote&reportid=" + cnId);
+    window.open("SendMail.smi?reportname=CreditNote&reportid=" + cnId);
 }
 
 function validFrom() {
