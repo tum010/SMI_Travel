@@ -322,7 +322,7 @@ public class TaxInvoiceController extends SMITravelController {
             MBilltype mBillType = new MBilltype();
             InvoiceDetail invoiceDetail = new InvoiceDetail();
             
-            if((product!="" && product!=null) || (refNo!="" && refNo!=null) || (description!="" && description!=null) || (cost!="" && cost!=null) || (currencyCost!="" && currencyCost!=null) || (isVat!="" && isVat!=null) || (amount!="" && amount!=null) || (currencyAmount!="" && currencyAmount!=null)){                               
+            if((product!="" && product!=null) || (refNo!="" && refNo!=null) || (description!="" && description!=null) || (cost!="" && cost!=null) || (currencyCost!="" && currencyCost!=null) || (amount!="" && amount!=null) || (currencyAmount!="" && currencyAmount!=null)){                               
                 
                 if(taxDetailId!="" && taxDetailId!=null){
                     taxInvoiceDetail.setId(taxDetailId);

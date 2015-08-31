@@ -840,7 +840,7 @@ public class AJAXBean extends AbstractBean implements
             curCost = invoiceDetail.getCurCost();
             curAmount = invoiceDetail.getCurAmount();
             isVat = String.valueOf(invoiceDetail.getIsVat());
-            refNo = invoiceDetail.getBillableDesc().getBillable().getMaster().getReferenceNo();
+            
             if (invoiceDetail.getCost() != null) {
                 costInvoice = invoiceDetail.getCost();
             } else {
@@ -850,6 +850,12 @@ public class AJAXBean extends AbstractBean implements
                 amountInvoice = invoiceDetail.getAmount();
             } else {
                 amountInvoice = new BigDecimal(0);
+            }
+            
+            if(invoiceDetail.getBillableDesc() != null){
+                refNo = invoiceDetail.getBillableDesc().getBillable().getMaster().getReferenceNo();
+            } else {
+                refNo = "";
             }
 
             BigDecimal[] value = checkTaxInvoiceDetail(invDetailId);
@@ -872,6 +878,8 @@ public class AJAXBean extends AbstractBean implements
                         + "<td>" + description + "</td>"
                         + "<td class='money' style=\"text-align:right;\">" + cost + "</td>"
                         + "<td style=\"text-align:center;\">" + curCost + "</td>"
+                        + "<td class='money' style=\"text-align:right;\">" + amount + "</td>"
+                        + "<td style=\"text-align:center;\">" + curAmount + "</td>"
                         + "<td><center><a href=\"\"><span onclick=\"AddProduct('"+invDetailId+"','"+product+"','"+description+"','"+cost+"','"+curCost+"','"+amount+"','"+curAmount+"','"+isVat+"','"+refNo+"')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
                     html.append(newrow);

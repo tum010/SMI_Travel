@@ -1468,10 +1468,33 @@
         document.getElementById('TextAmount').value = toWords(grandTotal);
 
         if(row){
-            if((document.getElementById("isVat"+row).checked) && (document.getElementById("gross"+row).value === '0.00')){
-                CalculateGross(row);
+            if((document.getElementById("isVat"+row).checked)){
+//                if(document.getElementById("gross"+row).value === '0.00'){
+//                    CalculateGross(row);
+//                } else if(document.getElementById("gross"+row).value !== '0.00'){
+//                    CalculateGross(row);
+//                } else {
+//                    
+//                }
+                CalculateGrossByGross(row);
             }            
         }
+    }
+    
+    function CalculateGrossByGross(row){       
+        var amount = document.getElementById('amount'+row).value;
+        var gross = document.getElementById('gross'+row).value;
+        var vatData = parseFloat(document.getElementById('vatDefault').value);
+
+        amount = amount.replace(/,/g,"");
+        var grossTotal = parseFloat(amount);
+        var vatTotal = parseFloat(vatData);
+
+
+            grossTotal = (amount*100)/(100+vatData);
+            document.getElementById('gross'+row).value = formatNumber(grossTotal);
+            document.getElementById('vatShow'+row).innerHTML = formatNumber(vatTotal);
+       
     }
     
     function CalculateGross(row){       
@@ -1488,8 +1511,8 @@
             document.getElementById('gross'+row).value = formatNumber(grossTotal);
             document.getElementById('vatShow'+row).innerHTML = formatNumber(vatTotal);
         } else {
-            document.getElementById('gross'+row).value = '';
-            document.getElementById('vatShow'+row).innerHTML = '';
+            document.getElementById('gross'+row).value = '0.00';
+//            document.getElementById('vatShow'+row).innerHTML = '';
         }
     }
     
