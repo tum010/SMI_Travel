@@ -3,7 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+$(document).ready(function () {
+    
+    $("#CodeS,#NameS").keyup(function (event) {
+        if (event.keyCode === 13) {
+            searchAction();
+        }
+    });
+});
 
 function searchAction(){
     var action = document.getElementById('Action');
