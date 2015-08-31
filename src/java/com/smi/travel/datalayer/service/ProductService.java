@@ -29,7 +29,7 @@ public class ProductService {
     public String validateProduct(Product Vproduct, String operation) {
         String validate = "";
         Product product = new Product();
-        product.setName(Vproduct.getName());
+//        product.setName(Vproduct.getName());
         product.setCode(Vproduct.getCode());
         List<Product> list = productDao.validateProduct(product);
         if (list != null) {
@@ -43,18 +43,18 @@ public class ProductService {
             }
 
         }
-        product.setName(Vproduct.getName());
-        product.setCode(null);
-        list = productDao.searchProduct(product, 1);
-        if (list != null) {
-            if ("update".equalsIgnoreCase(operation)) {
-                if (!(list.get(0).getId().equalsIgnoreCase(Vproduct.getId()))) {
-                    validate = "product name already exist";
-                }
-            } else {
-                validate = "product name already exist";
-            }
-        }
+//        product.setName(Vproduct.getName());
+//        product.setCode(null);
+//        list = productDao.searchProduct(product, 1);
+//        if (list != null) {
+//            if ("update".equalsIgnoreCase(operation)) {
+//                if (!(list.get(0).getId().equalsIgnoreCase(Vproduct.getId()))) {
+//                    validate = "product name already exist";
+//                }
+//            } else {
+//                validate = "product name already exist";
+//            }
+//        }
         
         return validate;
     }
@@ -141,7 +141,10 @@ public class ProductService {
     public void setProductPriceDetailDao(ProductPriceDetailDao productPriceDetailDao) {
         this.productPriceDetailDao = productPriceDetailDao;
     }
+
+    public String checkProductIsStock(String productId) {
+        return productdetailDao.checkProductIsStock(productId);
+    }
     
-    
-    
+        
 }

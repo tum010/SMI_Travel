@@ -9,6 +9,7 @@ import com.smi.travel.datalayer.dao.ReceiptDao;
 import com.smi.travel.datalayer.entity.Receipt;
 import com.smi.travel.datalayer.entity.ReceiptCredit;
 import com.smi.travel.datalayer.entity.ReceiptDetail;
+import com.smi.travel.datalayer.view.entity.ReceiptDetailView;
 import com.smi.travel.datalayer.view.entity.ReceiptSearchView;
 import java.util.List;
 
@@ -61,6 +62,10 @@ public class ReceiptService {
     
     public List<ReceiptDetail> getReceiptDetailFromInvDetailId(String invDetailId){
         return receiptDao.getReceiptDetailFromInvDetailId(invDetailId);
+    }
+    
+    public List<ReceiptDetailView> getReceiptDetailViewFromInvDetailId(String invDetailId){
+        return receiptDao.getReceiptDetailViewFromInvDetailId(invDetailId);
     }
     
     public ReceiptDao getReceiptDao() {

@@ -121,3 +121,32 @@ function Delete() {
     document.getElementById("actionprice").value = 'deletePriceItem';
     document.getElementById("ProductPriceform").submit();
 }
+
+function confirmDisableStock(){
+    var name = document.getElementById('name').value;
+    if(!document.getElementById('isStock').checked){          
+        var code = document.getElementById('code').value;
+        document.getElementById('disabledCode').innerHTML = "Are you sure to disabled isStock " + code + " ?";
+        $('#disableIsStockModal').modal('show');
+    } else {       
+        if(name === ''){
+            $("#saveProduct").addClass("disabled");
+        } else {
+            document.getElementById("ProductDetailForm").submit();
+        }               
+    }    
+}
+
+function disabledIsStock(){
+    $('#disableIsStockModal').modal('hide');
+    document.getElementById("ProductDetailForm").submit();
+}
+
+function validateNameProduct(){
+    var name = document.getElementById('name').value;
+    if(name !== ''){
+        $("#saveProduct").removeClass("disabled");
+    } else {
+        $("#saveProduct").addClass("disabled");
+    }
+}

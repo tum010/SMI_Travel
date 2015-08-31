@@ -7,6 +7,7 @@
 package com.smi.travel.datalayer.dao;
 
 
+import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.datalayer.entity.ProductDetail;
 import java.util.List;
 
@@ -20,4 +21,5 @@ public interface ProductDetailDao {
     public int updateProductDetail(ProductDetail productDetail);
     public int DeleteProductDetail(ProductDetail productDetail);
     public ProductDetail getValueFromProduct(String productID, String otherdate);
+    public String checkProductIsStock(String productId);
 }

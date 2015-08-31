@@ -880,7 +880,9 @@ public class AirTicketDetailController extends SMITravelController {
                     infant += 1;
                 }
             }
-
+            System.out.println("adult : "+adult );
+            System.out.println("child : "+child );
+            System.out.println("infant : "+infant );
             Set<AirticketFlight> flights = airline.getAirticketFlights();
             for (AirticketFlight flight : flights) {
                 int totalCost;
@@ -893,12 +895,14 @@ public class AirTicketDetailController extends SMITravelController {
                 }
                 if (flight.getAdPrice() != null) {
                     priceAdult = flight.getAdPrice() * adult;
+                    System.out.println("adult adprice : "+flight.getAdPrice() );
                 }
                 if (flight.getChCost() != null) {
                     costChild = flight.getChCost() * child;
                 }
                 if (flight.getChPrice() != null) {
-                    priceChild = flight.getChPrice() * adult;
+                    priceChild = flight.getChPrice() * child;
+                    System.out.println("adult chprice : "+flight.getChPrice() );
                 }
                 if (flight.getInCost() != null) {
                     costInfant = flight.getInCost() * infant;
@@ -906,7 +910,9 @@ public class AirTicketDetailController extends SMITravelController {
                 if (flight.getInPrice() != null) {
                     priceInfant = flight.getInPrice() * infant;
                 }
-
+                System.out.println("priceAdult : "+priceAdult );
+                System.out.println("priceChild : "+priceChild );
+                System.out.println("priceInfant : "+priceInfant );
                 totalCost = costAdult + costChild + costInfant;
                 totalPrice = priceAdult + priceChild + priceInfant;
                 flight.setTotalCost(totalCost);
