@@ -15,7 +15,6 @@ import com.smi.travel.datalayer.entity.RefundAirticketDetail;
 import com.smi.travel.datalayer.entity.RefundAirticketDetailView;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -262,7 +261,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
     }
 
     @Override
-    public List<TicketFareView> getListTicketFare(String from, String to, String by, String airAgentId) {
+    public List<TicketFareView> getListTicketFare(String from, String to, String by, String airAgentId,String invoiceSubCode) {
         Session session = this.sessionFactory.openSession();
         String query ="from TicketFareAirline t where";
         String queryOperation = "";
@@ -311,35 +310,45 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             return null;
         }else{
             for(int i=0;i<listAirline.size();i++){
-                TicketFareView ticketFareView = new TicketFareView();
-                ticketFareView.setId(String.valueOf(listAirline.get(i).getId()));
-                ticketFareView.setType(String.valueOf(listAirline.get(i).getTicketType()));
-                ticketFareView.setBuy(String.valueOf(listAirline.get(i).getTicketBuy()));
-                ticketFareView.setRouting(String.valueOf(listAirline.get(i).getTicketRouting()));
-                MAirlineAgent mAirlineAgent = new MAirlineAgent();
-                if(listAirline.get(i).getMAirlineAgent() != null){
-                    mAirlineAgent.setId(listAirline.get(i).getMAirlineAgent().getId());
-                    mAirlineAgent.setCode(listAirline.get(i).getMAirlineAgent().getCode());
-                    ticketFareView.setAirline(String.valueOf(mAirlineAgent.getCode()));
+                System.out.println(" invoiceSubCode " + invoiceSubCode);
+                String paymentAirFare = "from PaymentAirticketFare fare where fare.ticketFareAirline.id = :ticketfareId and fare.paymentAirticket.invoiceSup = :invoiceSup";
+                List<PaymentAirticketFare> paymentAirticketFares = session.createQuery(paymentAirFare).setParameter("ticketfareId", listAirline.get(i).getId()).setParameter("invoiceSup", invoiceSubCode).list();
+                System.out.println(" paymentAirticketFares .size "+ paymentAirticketFares.size());
+                if(paymentAirticketFares.isEmpty()){
+                    
+                    System.out.println(" paymentAirticketFares.isEmpty() ");
+                    TicketFareView ticketFareView = new TicketFareView();
+                    ticketFareView.setId(String.valueOf(listAirline.get(i).getId()));
+                    ticketFareView.setType(String.valueOf(listAirline.get(i).getTicketType()));
+                    ticketFareView.setBuy(String.valueOf(listAirline.get(i).getTicketBuy()));
+                    ticketFareView.setRouting(String.valueOf(listAirline.get(i).getTicketRouting()));
+                    MAirlineAgent mAirlineAgent = new MAirlineAgent();
+                    if(listAirline.get(i).getMAirlineAgent() != null){
+                        mAirlineAgent.setId(listAirline.get(i).getMAirlineAgent().getId());
+                        mAirlineAgent.setCode(listAirline.get(i).getMAirlineAgent().getCode());
+                        ticketFareView.setAirline(String.valueOf(mAirlineAgent.getCode()));
+                    }
+                    ticketFareView.setTicketNo(String.valueOf(listAirline.get(i).getTicketNo()));
+                    ticketFareView.setIssueDate(listAirline.get(i).getIssueDate());
+                    ticketFareView.setDepartment(listAirline.get(i).getDepartment());
+                    ticketFareView.setFare(listAirline.get(i).getTicketFare());
+                    ticketFareView.setTax(listAirline.get(i).getTicketTax());
+                    ticketFareView.setTicketCommission(listAirline.get(i).getTicketCommission());
+                    ticketFareView.setAgentCommission(listAirline.get(i).getAgentCommission());
+                    ticketFareView.setDiffVat(listAirline.get(i).getDiffVat());
+
+                    ticketFareView.setTicketIns(listAirline.get(i).getTicketIns());
+                    ticketFareView.setSalePrice(listAirline.get(i).getSalePrice());
+                    if(listAirline.get(i).getMaster() != null){
+                        ticketFareView.setReferenceNo(listAirline.get(i).getMaster().getReferenceNo());
+                    }
+                    listView.add(ticketFareView);
+                }else{
+                    System.out.println(" paymentAirticketFares " +  listAirline.get(i).getId() + " ---- " + paymentAirticketFares.size());
                 }
-                ticketFareView.setTicketNo(String.valueOf(listAirline.get(i).getTicketNo()));
-                ticketFareView.setIssueDate(listAirline.get(i).getIssueDate());
-                ticketFareView.setDepartment(listAirline.get(i).getDepartment());
-                ticketFareView.setFare(listAirline.get(i).getTicketFare());
-                ticketFareView.setTax(listAirline.get(i).getTicketTax());
-                ticketFareView.setTicketCommission(listAirline.get(i).getTicketCommission());
-                ticketFareView.setAgentCommission(listAirline.get(i).getAgentCommission());
-                ticketFareView.setDiffVat(listAirline.get(i).getDiffVat());
-                
-                ticketFareView.setTicketIns(listAirline.get(i).getTicketIns());
-                ticketFareView.setSalePrice(listAirline.get(i).getSalePrice());
-                if(listAirline.get(i).getMaster() != null){
-                    ticketFareView.setReferenceNo(listAirline.get(i).getMaster().getReferenceNo());
-                }
-                listView.add(ticketFareView);
             }
         }
-        
+        System.out.println("listView " + listView.size());
         session.close();
         this.sessionFactory.close();
         return listView; 
@@ -487,13 +496,14 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                         + "<input type='hidden' name='count"+countrow+"' id='count"+countrow+"' value='"+countrow+"'>"
                         + "<input type='hidden' name='tableRefundId"+countrow+"' id='tableRefundId"+countrow+"' value='"+id+"'>"
                         + "<input type='hidden' name='refundNoRow"+countrow+"' id='refundNoRow"+countrow+"' value='"+refund+"'>"
-                        + "<input type='hidden' name='payCustomer"+countrow+"' id='payCustomer"+countrow+"' value='"+payCustomer+"'>"
+//                        + "<input type='hidden' name='payCustomer"+countrow+"' id='payCustomer"+countrow+"' value='"+payCustomer+"'>"
                         + "<td align='center'>"+ (refund  == "null" ? "" : refund )+ "</td>"
                         + "<td align='left'>" + (ticketNo == "null" ? "": ticketNo )+  "</td>"
                         + "<td align='left'>" + (department == "null" ? "": department )+ "</td>"
                         + "<td align='center'>" + (route == "null" ? "" : route )+  "</td>"
                         + "<td align='right' class='money'>" + (commission == "null" ? "": commission )+  "</td>"
                         + "<td class='money'>" + (amount == "null" ? "" : amount )+  "</td>"
+                        + "<td class='money'>" + (payCustomer == "null" ? "" : payCustomer )+  "</td>"
                         + "<td><center><a class=\"remCF\"><span onclick=\"deleteRefund('"+id+"','"+refund+"','"+countrow+"')\" class=\"glyphicon glyphicon-remove deleteicon \"></span></center></td>"
                         + "</tr>";
                 System.out.println("newrow [[[[[[[ "+newrow +" ]]]]");
@@ -504,13 +514,14 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                         + "<input type='hidden' name='count"+rowCount+"' id='count"+rowCount+"' value='"+rowCount+"'>"
                         + "<input type='hidden' name='tableRefundId"+rowCount+"' id='tableRefundId"+rowCount+"' value='"+id+"'>"
                         + "<input type='hidden' name='refundNoRow"+rowCount+"' id='refundNoRow"+rowCount+"' value='"+refund+"'>"
-                        + "<input type='hidden' name='payCustomer"+rowCount+"' id='payCustomer"+rowCount+"' value='"+payCustomer+"'>"
+//                        + "<input type='hidden' name='payCustomer"+rowCount+"' id='payCustomer"+rowCount+"' value='"+payCustomer+"'>"
                         + "<td align='center'>" + (refund  == "null" ?  "" : refund )+ "</td>"
                         + "<td align='left'>" + (ticketNo == "null" ? "" : ticketNo )+  "</td>"
                         + "<td align='left'>" + (department == "null" ? "": department )+ "</td>"
                         + "<td align='center'>" + (route == "null" ? "" : route )+  "</td>"
                         + "<td align='right' class='money'>" + (commission == "null" ? "" : commission )+  "</td>"
                         + "<td class='money'>" + (amount == "null" ? "" : amount )+  "</td>"
+                        + "<td class='money'>" + (payCustomer == "null" ? "" : payCustomer )+  "</td>"
                         + "<td><center><a class=\"remCF\"><span onclick=\"deleteRefund('"+id+"','"+refund+"','"+rowCount+"')\" class=\"glyphicon glyphicon-remove deleteicon \"></span></center></td>"
                         + "</tr>";
                 System.out.println("newrow [[[[[[[ "+newrow +" ]]]]");
@@ -588,13 +599,14 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                     refundView.setId(refundAirticketDetail.getId());
                     refundView.setRoute(refundAirticketDetail.getSectorRefund());
                     refundView.setCommisssion(refundAirticketDetail.getAirComission());
-                    
+                    refundView.setPayCus(refundAirticketDetail.getPayCustomer());
+                    refundView.setAmount(refundAirticketDetail.getReceiveAirline());
                     if(refundAirticketDetail.getRefundAirticket() != null){
                         refundView.setRefundNo(refundAirticketDetail.getRefundAirticket().getRefundNo());
                     }
                     if(refundAirticketDetail.getAirticketPassenger() != null){
                         refundView.setTicketNo(refundAirticketDetail.getAirticketPassenger().getSeries1()+refundAirticketDetail.getAirticketPassenger().getSeries2()+refundAirticketDetail.getAirticketPassenger().getSeries3());
-                        refundView.setAmount(refundAirticketDetail.getReceiveAirline());
+                        
                         if(refundAirticketDetail.getAirticketPassenger().getAirticketAirline() != null
                             && refundAirticketDetail.getAirticketPassenger().getAirticketAirline().getAirticketPnr() != null
                             && refundAirticketDetail.getAirticketPassenger().getAirticketAirline().getAirticketPnr().getAirticketBooking() != null
