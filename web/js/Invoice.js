@@ -177,6 +177,12 @@
         }
     });
     CalculateGrandTotal('');
+    var counter = $('#DetailBillableTable tbody tr').length;
+    for(var j = 1;j <= (counter-1) ; j++){
+        changeFormatCostNumber(j);
+        changeFormatCostLocalNumber(j);
+        changeFormatAmountLocalNumber(j);
+    }
  }); 
  
  function searchInvoiceFromInvoiceNo(){
@@ -289,7 +295,7 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur){
     var vatValue = '';
     var vathidden = '';
    
-    if(showvat=='true'){
+    if(showvat == 'true'){
         vathidden = '';
         check  = "checked";
         vatValue = defaultD;
@@ -334,19 +340,19 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur){
             '<td class="hidden"><input type="text" class="form-control" id="detailId' + row + '" name="detailId' + row + '" value="" > </td>' +
             '<td class="hidden"><input type="text" class="form-control" id="DetailBillId' + row + '" name="DetailBillId' + row + '" value="'+id+'" > </td>' +
             '<td><select id="SelectProductType' + row + '" name="SelectProductType' + row + '" class="form-control">'+ selectT +'</select> </td>' +
-            '<td><input type="text" class="form-control" id="BillDescriptionTemp' + row + '" name="BillDescriptionTemp' + row + '" value="'+des +'" onkeyup="setDescription(' + row + ')"></td>' +
+            '<td><input type="text" class="form-control" id="BillDescriptionTemp' + row + '" name="BillDescriptionTemp' + row + '" value="" onkeyup="setDescription(' + row + ')"></td>' +
             '<td class="hidden"><input type="text" class="form-control" id="BillDescription' + row + '" name="BillDescription' + row + '" value="'+des +'" > </td>' +
-            '<td><input  maxlength ="15" type="text" onfocusout="changeFormatCostNumber(' + row + ')" class="form-control numerical" id="InputCost' + row + '" name="InputCost' + row + '" value="'+ cos +'" ></td>' +
+            '<td><input  maxlength ="15" type="text" onfocusout="changeFormatCostNumber(' + row + ')" class="form-control numerical text-right" id="InputCost' + row + '" name="InputCost' + row + '" value="'+ cos +'" ></td>' +
             '<td><select id="SelectCurrencyCost' + row + '" name="SelectCurrencyCost' + row + '" class="form-control">'+ selectC +'</select></td>' +
-            '<td><input type="text" onfocusout="changeFormatCostLocalNumber(' + row + ')"  value="'+cos +'" id="InputCostLocal' + row + '" name="InputCostLocal' + row + '" class="form-control"></td>' +
+            '<td><input type="text" onfocusout="changeFormatCostLocalNumber(' + row + ')"  value="'+cos +'" id="InputCostLocal' + row + '" name="InputCostLocal' + row + '" class="form-control text-right"></td>' +
             '<td class="hidden"><input type="text" value="'+cos +'" id="InputCostLocalTemp' + row + '" name="InputCostLocalTemp' + row + '"></td>'+
             '<td  '+vathidden+'><input type="checkbox" '+check+' id="checkUse' + row + '" name="checkUse' + row + '"  onclick="calculateGross('+row+')"></td>'+
             '<td align="center" '+vathidden+'>'+vatValue +'</td>'+ 
             '<td class="hidden"><input type="text" class="form-control" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '" value="'+ defaultD +'" ></td>'+
-            '<td '+vathidden+' ><input type="text" maxlength ="15" readonly onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control numerical" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>'+
-            '<td><input type="text" maxlength ="15" onfocusout="changeFormatAmountNumber('+row+');CalculateGrandTotal('+row+');calculateGross('+row+');" class="form-control numerical" id="InputAmount' + row + '" name="InputAmount' + row + '"  value="'+price +'" ></td>'+
+            '<td '+vathidden+' ><input type="text" maxlength ="15" readonly onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control numerical text-right" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>'+
+            '<td><input type="text" maxlength ="15" onfocusout="changeFormatAmountNumber('+row+');" class="form-control numerical text-right" id="InputAmount' + row + '" name="InputAmount' + row + '"  value="'+price +'" ></td>'+
             '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="validFromInvoice()">'+ selectC +'</select></td>'+
-            '<td><input type="text" onfocusout="changeFormatAmountLocalNumber(' + row + ')" value="'+price +'" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control" ></td>'+
+            '<td><input type="text" onfocusout="changeFormatAmountLocalNumber(' + row + ')" value="'+price +'" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control text-right" ></td>'+
             '<td class="hidden"><input type="text" onfocusout="changeFormatAmountLocalTempNumber(' + row + ')" value="'+price +'" id="InputAmountLocalTemp' + row + '" name="InputAmountLocalTemp' + row + '"  ></td>'+
             '<td align="center" ><span  class="glyphicon glyphicon-th-list" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"></span><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('+row+',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span></td>'+
             '<td class="hidden"><textarea id="DescriptionInvoiceDetail' + row + '" name="DescriptionInvoiceDetail' + row + '"> '+ description +'</textarea> </td>'+
@@ -358,19 +364,19 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur){
             '<td class="hidden"><input type="text" class="form-control" id="detailId' + row + '" name="detailId' + row + '" value="" > </td>' +
             '<td class="hidden"><input type="text" class="form-control" id="DetailBillId' + row + '" name="DetailBillId' + row + '" value="'+id+'" > </td>' +
             '<td><select id="SelectProductType' + row + '" name="SelectProductType' + row + '" class="form-control">'+ selectT +'</select> </td>' +
-            '<td><input type="text" class="form-control" id="BillDescriptionTemp' + row + '" name="BillDescriptionTemp' + row + '" value="'+des +'" onkeyup="setDescription(' + row + ')"></td>' +
+            '<td><input type="text" class="form-control" id="BillDescriptionTemp' + row + '" name="BillDescriptionTemp' + row + '" value="" onkeyup="setDescription(' + row + ')"></td>' +
             '<td class="hidden"><input type="text" class="form-control" id="BillDescription' + row + '" name="BillDescription' + row + '" value="'+des +'" > </td>' +
-            '<td><input  maxlength ="15" type="text" onfocusout="changeFormatCostNumber(' + row + ')" class="form-control numerical" id="InputCost' + row + '" name="InputCost' + row + '" value="'+ cos +'" ></td>' +
+            '<td><input  maxlength ="15" type="text" onfocusout="changeFormatCostNumber(' + row + ')" class="form-control numerical text-right" id="InputCost' + row + '" name="InputCost' + row + '" value="'+ cos +'" ></td>' +
             '<td><select id="SelectCurrencyCost' + row + '" name="SelectCurrencyCost' + row + '" class="form-control">'+ selectC +'</select></td>' +
-            '<td><input type="text" onfocusout="changeFormatCostLocalNumber(' + row + ')"  value="'+cos +'" id="InputCostLocal' + row + '" name="InputCostLocal' + row + '" class="form-control"></td>' +
+            '<td><input type="text" onfocusout="changeFormatCostLocalNumber(' + row + ')"  value="'+cos +'" id="InputCostLocal' + row + '" name="InputCostLocal' + row + '" class="form-control text-right"></td>' +
             '<td class="hidden"><input type="text" value="'+cos +'" id="InputCostLocalTemp' + row + '" name="InputCostLocalTemp' + row + '"></td>'+
             '<td  '+vathidden+'><input type="checkbox" '+check+' id="checkUse' + row + '" name="checkUse' + row + '"  onclick="calculateGross('+row+')"></td>'+
             '<td align="center" '+vathidden+'>'+vatValue +'</td>'+ 
             '<td class="hidden"><input type="text" class="form-control" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '" value="'+ defaultD +'" ></td>'+
-            '<td '+vathidden+' ><input type="text" maxlength ="15" readonly onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control numerical" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>'+
-            '<td><input type="text" maxlength ="15" onfocusout="changeFormatAmountNumber('+row+');CalculateGrandTotal('+row+');calculateGross('+row+');" class="form-control numerical" id="InputAmount' + row + '" name="InputAmount' + row + '"  value="'+price +'" ></td>'+
+            '<td '+vathidden+' ><input type="text" maxlength ="15" readonly onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control numerical text-right" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>'+
+            '<td><input type="text" maxlength ="15" onfocusout="changeFormatAmountNumber('+row+');" class="form-control numerical text-right" id="InputAmount' + row + '" name="InputAmount' + row + '"  value="'+price +'" ></td>'+
             '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="validFromInvoice()">'+ selectC +'</select></td>'+
-            '<td><input type="text" onfocusout="changeFormatAmountLocalNumber(' + row + ')" value="'+price +'" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control" ></td>'+
+            '<td><input type="text" onfocusout="changeFormatAmountLocalNumber(' + row + ')" value="'+price +'" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control text-right" ></td>'+
             '<td class="hidden"><input type="text" onfocusout="changeFormatAmountLocalTempNumber(' + row + ')" value="'+price +'" id="InputAmountLocalTemp' + row + '" name="InputAmountLocalTemp' + row + '"  ></td>'+
             '<td align="center" ><span  class="glyphicon glyphicon-th-list" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"></span><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('+row+',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span></td>'+
             '<td class="hidden"><textarea id="DescriptionInvoiceDetail' + row + '" name="DescriptionInvoiceDetail' + row + '"> '+ description +'</textarea> </td>'+
@@ -398,8 +404,6 @@ function getDescriptionDetail(row){
 function saveDescriptionDetail(){
     var row = $('#InputDescriptionDetailId').val();
     var descriptionDetail = $('#InputDescriptionDetail').val();
-//    $('#BillDescription'+row).val(descriptionDetail);
-//    subStringDescription(descriptionDetail,row);
     console.log("Detail : "+$('#InputDescriptionDetail').val());
     $('#DescriptionInvoiceDetail'+row).html(descriptionDetail);
 }
@@ -409,21 +413,20 @@ function subStringDescription(description,row){
     console.log("Product :" + product);
     var des = description.substring(0,index);
     console.log("description :" + description);
-//    if(index === -1){
-//        $('#BillDescriptionTemp'+row).val(description +" >> "+product);
-//    }else{
-//        $('#BillDescriptionTemp'+row).val(des +" >> "+product);
-//    }
+
 }
 function changeFormatAmountNumber(id){
-    var count  = parseFloat(document.getElementById('InputAmount'+id).value);
-    
+    var count = document.getElementById('InputAmount'+id).value;
+    count = count.replace(/\,/g,'');
+    count  = parseFloat(count);
     if(isNaN(count)){
         document.getElementById('InputAmount' + id).value = "";
     }else{
-        count = parseFloat(document.getElementById('InputAmount'+id).value);
+        count = parseFloat(count);
         document.getElementById('InputAmount' + id).value = formatNumber(count);
-    } 
+    }
+    CalculateGrandTotal(id);
+    calculateGross(id);
 }
 function changeFormatAmountLocalNumber(id){
     var count  = parseFloat(document.getElementById('InputAmountLocal'+id).value);
@@ -446,12 +449,13 @@ function changeFormatAmountLocalTempNumber(id){
     } 
 }
 function changeFormatCostNumber(id){
-    var count  = parseFloat(document.getElementById('InputCost'+id).value);
-    
+    var count = document.getElementById('InputCost'+id).value;
+    count = count.replace(/\,/g,'');
+    count  = parseFloat(count);
     if(isNaN(count)){
         document.getElementById('InputCost' + id).value = "";
     }else{
-        count = parseFloat(document.getElementById('InputCost'+id).value);
+        count = parseFloat(count);
         document.getElementById('InputCost' + id).value = formatNumber(count);
     } 
 }
@@ -495,10 +499,6 @@ function EnableVoidInvoice(){
 }
 
 function Enable() {
-//    $("#disableVoidButton").css("display", "block");
-//    $("#saveInvoice").prop("disabled",false);
-//    $('#enableVoidButton').css("display", "none");
-//    $('#textAlertDisable').hide();
     var action = document.getElementById('action');
     action.value = 'enableVoid';
     document.getElementById('InvoiceForm').submit();
@@ -771,8 +771,6 @@ function CallAjaxAdd(param) {
                 if(BookintType == $('#typeBooking').val()){
                     $('#AlertBooking').hide();
                     setBillableInvoice(array[1]);
-//                    alert(array[1]);
-                    //MasterReservation Table
                     try {
                         $("#MasterReservation tbody").append(array[2]);          
                     } catch (e) {
@@ -813,7 +811,6 @@ function addInvoiceDetail(rowId){
     var rowCount = $('#DetailBillableTable >tbody >tr').length;
     $("#counter").val((rowCount++));
     var countTable = $("#counter").val();
-//    alert("C : "+countTable);
     var RefNo = $("#SearchRefNo").val();
     var count = 1;
     $('#MasterReservation > tbody  > tr').each(function() {
@@ -839,7 +836,7 @@ function addInvoiceDetail(rowId){
                         '&refNo=' + refItemId +
                         '&typeId=' + prod +
                         '&type=' + 'searchInvoiceDescription';
-                   CallAjaxSearchDescription(param,countTable);
+                   CallAjaxSearchDescription(param,countTable,pro,RefNo);
                 // Send Add Row
                 AddRowDetailBillAble(countTable,prod,des,cos,id,price,RefNo,cur);
 //                alert("C : " + countTable);
@@ -858,7 +855,7 @@ function addInvoiceDetail(rowId){
     }    
 }
 
-function CallAjaxSearchDescription(param,rowId) {
+function CallAjaxSearchDescription(param,rowId,des,RefNo) {
     var url = 'AJAXServlet';
     $("#ajaxloadsearch").removeClass("hidden");
     try {
@@ -871,26 +868,8 @@ function CallAjaxSearchDescription(param,rowId) {
                 var strx   = msg.split('|');
                 var array  = [];
                 array = array.concat(strx);
-                if(array[1] === 'Others'){
-                    setDescriptionOther(array,rowId);
-                }else if(array[1] === 'Land'){
-                    setDescriptionLand(array,rowId);
-                }else if(array[1] === 'Hotel'){
-                    setDescriptionHotel(array,rowId);
-                }else if(array[1] === 'Day Tour'){
-                    setDescriptionDaytour(array,rowId);
-                }else if(array[1] === 'Air Ticket'){
-                    setDescriptionAirticket(array,rowId);
-                }else if(array[1] === 'Air Additional'){
-                    setDescriptionAirAdditional(array,rowId);
-                }
-                
-//                alert("DES :"+array[1]);
-                //MasterReservation Table
+                setbillAndDescription(rowId,RefNo,array[1],array[0],des);
                 try {
-//                    alert(array[1]);
-//                    $("#DescriptionInvoiceDetail").html( msg );
-                    
                      $("#ajaxloadsearch").addClass("hidden");
                 } catch (e) {
                     alert(e);
@@ -902,29 +881,17 @@ function CallAjaxSearchDescription(param,rowId) {
     } catch (e) {
         alert(e);
     }
-}    
+} 
 
-function setDescriptionDaytour(des,row){
-//    var strx   = des.split(',');
-    var array  = [];
-    array = des;
-    var arrayNew ="";
-    var i = 0;
-    for (i = 1 ; i <= (array.length-1) ; i++){
-        arrayNew += array[i] +",";
-    };
-//    alert(arrayNew + " R : " + row );
-    var text = "";
-//    text += "<div class='row'> <div class='col-md-2 text-right' ><b>Description</b> </div> <div class='col-md-10 text-left'><textarea class='form-control' rows='5'>";
-    text += "Ref No. "+ array[2] +" : " + array[3] + " " + array[4] + " " + array[5] + "\n";
-    text += "" + array[1] + " " + array[6] + " : " + array[7]+ "\n";
-    text += "\t(" + array[8] + " " + array[9]+ ")\n";
-//    text += "</textarea> </div> </div>";
+function setbillAndDescription(row,ref,name,text,des){
+    var bill = ref + " " + name + " " + des;
+    $('#BillDescriptionTemp'+row).val(bill);
+    $('#BillDescription'+row).val(bill);
     $('#DescriptionInvoiceDetail'+row).html(text);
     $("#DescriptionInvoiceDetailTextArea"+row).html(text);
 }
-function setDescriptionOther(data,row){
-     //    var strx   = des.split(',');
+
+function setDescriptionDaytour(data,row,des){
     var array  = [];
     array = data;
     var arrayNew ="";
@@ -933,16 +900,28 @@ function setDescriptionOther(data,row){
         arrayNew += array[i] +",";
     };
     var text = "";
-//    text += "<div class='row'> <div class='col-md-2 text-right' ><b>Description</b> </div> <div class='col-md-10 text-left'><textarea class='form-control' rows='5'>";
+    var date = array[8].split("-"); ;
+    var newDate = date[2] +"-" + date[1] + "-" + date[0];
+    text += "Ref No. "+ array[2] +" : " + array[3] + " " + array[5] + " " + array[4] + "\n";
+    text += "" + array[1] + " " + array[6] + " : " + array[7]+ "\n";
+    text += "\t\t" +"(" + newDate + " " + array[9]+ ")\n";
+    setbillAndDescription(row,array[2],array[3],array[5],array[4],text,des);
+}
+function setDescriptionOther(data,row,des){
+    var array  = [];
+    array = data;
+    var arrayNew ="";
+    var i = 0;
+    for (i = 1 ; i <= (array.length-1) ; i++){
+        arrayNew += array[i] +",";
+    };
+    var text = "";
     text += "Ref No. "+array[2] +" : " + array[3] + " " + array[4] + " " + array[5] + "\n";
     text += "" + array[1] + " (" + array[6] + ")  " + array[7]+ " \n";
     text += "\t " + array[8] + " "+ array[9] +  " "+ array[10] + " \n";
-//    text += "</textarea> </div> </div>";
-    $('#DescriptionInvoiceDetail'+row).html(text);
-    $("#DescriptionInvoiceDetailTextArea"+row).html(text);
+    setbillAndDescription(row,array[2],array[3],array[5],array[4],text,des);
 }
-function setDescriptionLand(data,row){
-    //    var strx   = des.split(',');
+function setDescriptionLand(data,row,des){
     var array  = [];
     array = data;
     var arrayNew ="";
@@ -951,16 +930,14 @@ function setDescriptionLand(data,row){
         arrayNew += array[i] +",";
     };
     var text = "";
-//    text += "<div class='row'> <div class='col-md-2 text-right' ><b>Description</b> </div> <div class='col-md-10 text-left'><textarea class='form-control' rows='5'>";
+    var date = array[6].split("-"); ;
+    var newDate = date[2] +"-" + date[1] + "-" + date[0];
     text += "Ref No. "+ array[2] +" : " + array[3] + " " + array[4] + " " + array[5] + "\n";
-    text += "" + array[1] + " (" + array[6] + ")  " + array[7]+ " NTS \n";
+    text += "" + array[1] + " (" + newDate + ")  " + array[7]+ " NTS \n";
     text += "\t " + array[8] + " PAX \n";
-//    text += "</textarea> </div> </div>";
-    $('#DescriptionInvoiceDetail'+row).html(text);
-    $("#DescriptionInvoiceDetailTextArea"+row).html(text);
+    setbillAndDescription(row,array[2],array[3],array[5],array[4],text,des);
 }
-function setDescriptionHotel(data,row){
-    //    var strx   = des.split(',');
+function setDescriptionHotel(data,row,des){
     var array  = [];
     array = data;
     var arrayNew ="";
@@ -968,39 +945,58 @@ function setDescriptionHotel(data,row){
     for (i = 1 ; i <= (array.length-1) ; i++){
         arrayNew += array[i] +",";
     };
+    var number = parseFloat(array[9]);
     var text = "";
-//    text += "<div class='row'> <div class='col-md-2 text-right' ><b>Description</b> </div> <div class='col-md-10 text-left'><textarea class='form-control' rows='5'>";
+    var date = array[7].split("-"); ;
+    var newDate = date[2] +" " + changeMonth(date[1]) + " " + date[0];
+    var date1 = array[8].split("-"); ;
+    var newDate1 = date1[2] +" " + changeMonth(date1[1]) + " " + date1[0];
     text += "Ref No. "+ array[2] +" : " + array[3] + " " + array[4] + " " + array[5] + "\n";
-    text += "" + array[1] + "  " + array[6] + " \n";
-    text += "\t" + array[7] + " - " + array[8]+ " \n";
-    text += "\t" + array[9] + "  " + array[10]+ "  " + array[11] + "  " + array[12] + " : "+  array[13] + "  NTS  \n";
-//    text += "</textarea> </div> </div>";
-    $('#DescriptionInvoiceDetail'+row).html(text);
-    $("#DescriptionInvoiceDetailTextArea"+row).html(text);
+    text += "" + "HOTEL" + "  " + array[6] + " \n";
+    text += "\t" + "     " +newDate + " - " +  newDate1  + " \n";
+    text += "\t" + "     " + formatNumber(number) + "  " + array[10]+ "  " + array[11] + "  " + array[12] + " : "+  array[13] + "  NTS  \n";
+    setbillAndDescription(row,array[2],array[3],array[5],array[4],text,des);
 }
-function setDescriptionAirticket(data,row){
+
+function changeMonth(monthInt){
+    var text = "";
+    switch (monthInt){
+        case "01" : text = "JAN";break;
+        case "02" : text = "FEB";break;
+        case "03" : text = "MAR";break;
+        case "04" : text = "APR";break;
+        case "05" : text = "MAY";break;
+        case "06" : text = "JUN";break;
+        case "07" : text = "JUL";break;
+        case "08" : text = "AUG";break;
+        case "09" : text = "SEP";break;
+        case "10" : text = "OCT";break;
+        case "11" : text = "NOV";break;
+        case "12" : text = "DEC";break;
+        case "" : text = "" ;break;
+    }
+    return text;
+}
+
+function setDescriptionAirticket(data,row,des){
    
     var array  = [];
     array = data;
     var text = "";
     text += array[2];
-    $('#DescriptionInvoiceDetail'+row).html(text);
-    $("#DescriptionInvoiceDetailTextArea"+row).html(text);
+    setbillAndDescription(row,array[2],array[3],array[5],array[4],text,des);
 }
 
 function checkDuplicateInvoiceDetail(product,rowId){
     $('#DetailBillableTable > tbody  > tr').each(function() {
         var prod = $(this).find('input[type="text"]').eq(1).val();
-//        alert("Pro :" + $.trim(prod) + ":Product Input:" + product+":");
         if($.trim(prod) === product){
-//            alert("Product Old :" + prod + "Product New:" + product);
             isDuplicateInvoiceDetail++;
         }
     });
 }
 
 function setDescriptionAirAdditional(data,row){
-   
     var array  = [];
     array = data;
     var text = "";
@@ -1029,10 +1025,8 @@ var th = ['','THOUSAND','MILLION', 'BILLION','TRILLION'];
 var dg = ['ZERO','ONE','TWO','THREE','FOUR', 'FIVE','SIX','SEVEN','EIGHT','NINE']; var tn = ['TEN','ELEVEN','TWELVE','THIRTEEN', 'FOURTEEN','FIFTEEN','SIXTEEN', 'SEVENTEEN','EIGHTEEN','NINETEEN']; var tw = ['TWEENTY','THIRTY','FORTY','FIFTY', 'SIXTY','SEVENTY','RIGHTY','NINETY']; function toWords(s){s = s.toString(); s = s.replace(/[\, ]/g,''); if (s != parseFloat(s)) return 'NOT A NUMBER'; var x = s.indexOf('.'); if (x == -1) x = s.length; if (x > 15) return 'TOO BIG'; var n = s.split(''); var str = ''; var sk = 0; for (var i=0; i < x; i++) {if ((x-i)%3==2) {if (n[i] == '1') {str += tn[Number(n[i+1])] + ' '; i++; sk=1;} else if (n[i]!=0) {str += tw[n[i]-2] + ' ';sk=1;}} else if (n[i]!=0) {str += dg[n[i]] +' '; if ((x-i)%3==0) str += 'HUNDRED ';sk=1;} if ((x-i)%3==1) {if (sk) str += th[(x-i-1)/3] + ' ';sk=0;}} if (x != s.length) {var y = s.length; str += 'POINT '; for (var i=x+1; i<y; i++) str += dg[n[i]] +' ';} return str.replace(/\s+/g,' ');}
 
 function calculateGross(row){
-//    alert("1");
     var amount = document.getElementById('InputAmount'+row).value;
     var gross = document.getElementById('InputGross'+row).value;
-//    var vatData = document.getElementById("DetailBillableTable").rows[row].cells[7].innerHTML;
     var varTemp = document.getElementById('InputVatTemp'+row).value;
     var vatDefaultData = parseFloat(varTemp);
     $('#checkUse'+row).val();
@@ -1046,21 +1040,6 @@ function calculateGross(row){
        document.getElementById("DetailBillableTable").rows[row].cells[10].innerHTML = ''; 
        document.getElementById('InputGross'+row).value = '';
     }
-    /*
-    if((gross === '')){
-        //alert("1: " + gross);
-        
-    }else if((gross === '0.00')){
-        //alert("3: " + gross);
-        grossTotal = (amount*100)/(100+vatDefaultData);
-        if(grossTotal == 0){
-            grossTotal = '';
-        }
-        document.getElementById('InputGross'+row).value = formatNumber(grossTotal);
-    }else {
-        //alert("2 : " + gross)
-        document.getElementById('InputGross'+row).value = '';
-    } */
 }
 
 function calculateGrossTemp(row){
@@ -1086,7 +1065,6 @@ function calculateGrossTemp(row){
 }
 
 function CalculateGrandTotal(id){
-//    alert("11");
     var count = parseInt(document.getElementById('counterTable').value);
     var i;
     var grandTotal = 0;
@@ -1104,7 +1082,6 @@ function CalculateGrandTotal(id){
             }    
         }
         if(id !== ''){
-          //  calculateGrossTemp(id);
         }
         
         document.getElementById('TotalNet').value = formatNumber(grandTotal);
@@ -1142,7 +1119,6 @@ function checkVatInvoiceAll(){
             }
         }   
     }
-//    alert("C :"+check + "UN :" + unCheck );
     if(check > unCheck){
         if(unCheck !== 0){
             for(var i=0;i<=row;i++){
@@ -1156,7 +1132,6 @@ function checkVatInvoiceAll(){
                         if(amountChk !== null && amountChk !== ''){
                             var amount = document.getElementById('InputAmount'+i).value;
                             var gross = document.getElementById('InputGross'+i).value;
-//                            var vatData = document.getElementById("DetailBillableTable").rows[i].cells[7].innerHTML;
 
                             var vatTemp = document.getElementById('InputVatTemp'+i).value;
                             var vatDefaultData = parseFloat(vatTemp);
@@ -1167,11 +1142,9 @@ function checkVatInvoiceAll(){
                             if((gross === '')){
                                 grossTotal = (amount*100)/(100+vatDefaultData);
                                 document.getElementById('InputGross'+i).value = formatNumber(grossTotal);
-    //                            document.getElementById('InputVat'+i).value = vatDefaultData;
                                 document.getElementById("DetailBillableTable").rows[i].cells[10].innerHTML = vatDefaultData;
                             } else {
                                 document.getElementById('InputGross'+i).value = '';
-    //                            document.getElementById('InputVat'+i).value = '';
                                 document.getElementById("DetailBillableTable").rows[i].cells[10].innerHTML = '';
                             }
                         }
@@ -1186,7 +1159,6 @@ function checkVatInvoiceAll(){
             var isVatCheck = document.getElementById("checkUse"+i);
             if(isVatCheck !== null && isVatCheck !== ''){
                 document.getElementById("checkUse"+i).checked = false;
-//                document.getElementById("InputVat"+i).value = '';
                 document.getElementById("DetailBillableTable").rows[i].cells[10].innerHTML = "";
                 document.getElementById("InputGross"+i).value = '';
             }   
@@ -1194,23 +1166,17 @@ function checkVatInvoiceAll(){
     }
 
     if(check === 0 && unCheck !== 0){
-//        alert("1");
         for(var i=0; i <= row;i++){
             var isVatCheck = document.getElementById("checkUse"+i);
             if(isVatCheck !== null && isVatCheck !== ''){
                 if(document.getElementById("checkUse"+i).checked){
 
                 } else { 
-//                    alert("2");
-//                    document.getElementById("checkUse"+i).checked = true;
                     $("#checkUse"+i).prop("checked",true);
                     var amountChk = document.getElementById('InputAmount'+i);                                     
                     if(amountChk !== null && amountChk !== ''){
                         var amount = document.getElementById('InputAmount'+i).value;
                         var gross = document.getElementById('InputGross'+i).value;
-//                        var vatData = document.getElementById("DetailBillableTable").rows[i].columns[7].innerHTML;
-//                        var vatDefaultData = parseFloat(document.getElementById('InputVat'+i).value);
-//                        var vatData = document.getElementById("DetailBillableTable").rows[i].cells[7].innerHTML;
                         var vatTemp = document.getElementById('InputVatTemp'+i).value;
                         var vatDefaultData = parseFloat(vatTemp);
                         amount = amount.replace(/,/g,"");
@@ -1218,11 +1184,9 @@ function checkVatInvoiceAll(){
                         if((gross === '')){
                             grossTotal = (amount*100)/(100+vatDefaultData);
                             document.getElementById('InputGross'+i).value = formatNumber(grossTotal);
-//                            document.getElementById('InputVat'+i).value = vatDefaultData;
                             document.getElementById("DetailBillableTable").rows[i].cells[10].innerHTML = vatDefaultData;
                         } else {
                             document.getElementById('InputGross'+i).value = '';
-//                            document.getElementById('InputVat'+i).value = '';
                             document.getElementById("DetailBillableTable").rows[i].cells[10].innerHTML = '';
                         }
                     }
@@ -1236,7 +1200,6 @@ function checkVatInvoiceAll(){
             var isVatCheck = document.getElementById("checkUse"+i);
             if(isVatCheck !== null && isVatCheck !== ''){
                 document.getElementById("checkUse"+i).checked = false;
-//                document.getElementById("InputVat"+i).value = '';
                 document.getElementById("DetailBillableTable").rows[i].cells[10].innerHTML = '';
                 document.getElementById("InputGross"+i).value = '';
             }   
@@ -1255,9 +1218,6 @@ function checkVatInvoiceAll(){
                     if(amountChk !== null && amountChk !== ''){
                         var amount = document.getElementById('InputAmount'+i).value;
                         var gross = document.getElementById('InputGross'+i).value;
-//                        var vat = document.getElementById('InputVat'+i).value;
-//                        var vatDefaultData = parseFloat(document.getElementById('InputVat'+i).value);
-//                        var vatData = document.getElementById("DetailBillableTable").rows[i].cells[7].innerHTML;
                         var vatTemp = document.getElementById('InputVatTemp'+i).value;
                         var vatDefaultData = parseFloat(vatTemp);
                         amount = amount.replace(/,/g,"");
@@ -1266,11 +1226,9 @@ function checkVatInvoiceAll(){
                         if((gross === '')){
                             grossTotal = (amount*100)/(100+vatDefaultData);
                             document.getElementById('InputGross'+i).value = formatNumber(grossTotal);
-//                            document.getElementById('InputVat'+i).value = vatDefaultData;
                             document.getElementById("DetailBillableTable").rows[i].cells[10].innerHTML = vatDefaultData;
                         } else {
                             document.getElementById('InputGross'+i).value = '';
-//                            document.getElementById('InputVat'+i).value = '';
                             document.getElementById("DetailBillableTable").rows[i].cells[10].innerHTML = vatDefaultData;
                         }
                     }

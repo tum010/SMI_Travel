@@ -33,6 +33,7 @@ public class InvoiceImpl implements InvoiceReportDao{
     @Override
     public List getInvoice(String InvoiceId,String BankId,String showStaff,String showLeader,String sign) {
         Session session = this.sessionFactory.openSession();
+        System.out.println("Sign : " + sign);
         UtilityFunction util = new UtilityFunction();  
         List data = new ArrayList();
         DecimalFormat df = new DecimalFormat("###,###.00");
@@ -121,8 +122,9 @@ public class InvoiceImpl implements InvoiceReportDao{
             if(sign != null){
                 if("".equals(sign)){
                     invoice.setSign("nosign");
+                }else{
+                    invoice.setSign(sign);
                 }
-                invoice.setSign(sign);
             }
             
             data.add(invoice);

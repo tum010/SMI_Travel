@@ -1826,6 +1826,22 @@ function clearNew(){
     $("#chqAmount2").val("");
     $("#ReceiptListTable tbody").empty();
     $("#CreditDetailTable tbody").empty();
+    
+    //tab search inv,ref,com
+    $("#InvoiceListTable tbody").empty();
+    $("#RefNoListTable tbody").empty();
+    $("#AircommissionTable tbody").empty();
+    $("#TourcommissionTable tbody").empty();
+    $("#invoiceNo").val("");
+    $("#refNo").val("");
+    $("#searchPaymentNoAir").val("");
+    $("#searchPaymentNoTour").val("");
+    
+    $("#ButtonSearchRefNo").removeAttr("disabled");
+    $("#ButtonSearchInvoice").removeAttr("disabled");
+    $("#searchPaymentNoAir").removeAttr("disabled");
+    $("#searchPaymentNoTour").removeAttr("disabled");
+
     AddRowProduct(0);
     AddRowCredit(0);
 }
