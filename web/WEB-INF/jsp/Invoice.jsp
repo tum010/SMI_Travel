@@ -636,18 +636,8 @@
                                                 <span id="buttonEmail" class="glyphicon glyphicon-send" ></span> Send Email 
                                             </button>
                                         </div>
-                                        <div class="col-md-1 text-right " >
-                                            <label class="control-label" for="">Sign :</lable>               
-                                        </div>
-                                        <div class="col-md-2 text-left " >
-                                            <select id="SelectSign" name="SelectSign" class="form-control">
-                                                <option value="">--Sign--</option>
-                                                <option value="benjaporn">Benjaporn</option>
-                                                <option value="pawina">Pawina</option>
-                                                <option value="supavadee">Supavadee</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-1 text-right " >
+                                        
+                                        <div class="col-md-2 text-right " >
                                             <button type="button" class="btn btn-success" id="copyButton" onclick="printInvoice('email')" data-toggle="modal" data-target="#CopyModal">
                                                 <span id="buttonCopy" class="glyphicon glyphicon-file" ></span> Copy 
                                             </button>
@@ -859,6 +849,19 @@
                             <option value="0">Not show</option>
                             <option value="4">Payment Bank Siam commercial bank PCL</option>
                             <option value="1">Payment Bank Bangkok bank PCL</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <h5>Sign </h5>
+                    </div>
+                    <div class="col-md-7">
+                        <select id="SelectSign" name="SelectSign" class="form-control">
+                            <option value="">--Sign--</option>
+                            <option value="benjaporn">Benjaporn</option>
+                            <option value="pawina">Pawina</option>
+                            <option value="supavadee">Supavadee</option>
                         </select>
                     </div>
                 </div>
