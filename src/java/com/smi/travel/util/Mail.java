@@ -70,6 +70,8 @@ public class Mail extends SMITravelController {
             email.setFrom(mail.getUsername());
             email.setSubject(subject);
             if(StringUtils.isNotEmpty(content)){
+                content = content.replaceAll("(\r\n|\n)", "<br/>");
+                content = content.replaceAll(" ", "&nbsp;");
                 email.setHtmlMsg(content);
             }else{
                 email.setHtmlMsg("  ");

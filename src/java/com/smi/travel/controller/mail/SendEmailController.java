@@ -84,6 +84,7 @@ public class SendEmailController extends SMITravelController {
         SystemUser user = (SystemUser) session.getAttribute("USER");
         String username = user.getUsername();
         String[] path = reportservice.getPartReport();
+
         if ((recipientAddress != null) && (!"".equalsIgnoreCase(recipientAddress))) {
             if (InvoiceReport.equalsIgnoreCase(name)) {
                 data = reportservice.getInvoice(reportid,bankid,showstaff,showleader,sign);
@@ -172,9 +173,6 @@ public class SendEmailController extends SMITravelController {
         request.setAttribute(MESSAGE, message);        
         return ModelMail;
     }
-
-    
-    
 
     public boolean checkDirectory(String pathFile){
         File f = new File(pathFile);
