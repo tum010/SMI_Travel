@@ -405,12 +405,9 @@ public class PaymentAirlineController extends SMITravelController {
                 request.setAttribute(SELECTEDINVOICE, invoiceSupplier);
             }
             paymentAirticket.setPayTo(payto);
-            if((paymentAirticket.getTotalAmount()).compareTo(BigDecimal.ZERO) < 0){
-                result = "notsave";
-                request.setAttribute(PAYNO,paymentNo);
-            }else{
-                result = paymentAirTicketService.validateSavePaymentAir(paymentAirticket);
-            }
+            
+            result = paymentAirTicketService.validateSavePaymentAir(paymentAirticket);
+            
             System.out.println("result :::" +result);
             if (result == "success"){
                 request.setAttribute(PAYNO,paymentAirticket.getPayNo());
@@ -418,8 +415,6 @@ public class PaymentAirlineController extends SMITravelController {
             } else if (result == null || result == "fail") {
                 request.setAttribute(PAYNO,paymentAirticket.getPayNo());
                 request.setAttribute(SAVERESULT, "save unsuccessful");
-            } else if (result == "notsave") {
-                request.setAttribute(SAVERESULT, "paymentnegative");
             } else {
                 request.setAttribute(PAYNO,result);
                 request.setAttribute(SAVERESULT, "save successful");

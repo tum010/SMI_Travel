@@ -676,11 +676,6 @@
            $('#textAlertDivNotSave').show();
         </script>
     </c:if>
-    <c:if test="${requestScope['saveresult'] =='paymentnegative'}">        
-        <script language="javascript">
-           $('#textAlertTotalPayment').show();
-        </script>
-    </c:if>
 </c:if> 
 <c:if test="${! empty requestScope['deleteresult']}">
     <c:if test="${requestScope['deleteresult'] =='delete successful'}">        
@@ -854,7 +849,7 @@ for(var i = 0; i < rad.length; i++) {
             "bLengthChange": false,
             "iDisplayLength": 10
         });
-
+ 
         $('#InvoiceSupTable tbody').on('click', 'tr', function () {
             $(this).addClass('row_selected').siblings().removeClass('row_selected');
             $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'invoiceSupCode');
@@ -1478,6 +1473,14 @@ function calculateTotalPayment() {
         document.getElementById("totalPayment").value = formatNumber(totalPayment);
     }else if (payto == 'C'){
         calculateTotalPayCus();
+    }
+
+    if(totalPayment < 0){
+        $("#ButtonSave").attr("disabled", "disabled");
+        $("#ButtonSaveAndNew").attr("disabled", "disabled");
+    }else{
+        $("#ButtonSave").removeAttr("disabled");
+        $("#ButtonSaveAndNew").removeAttr("disabled");
     }
 }
 
