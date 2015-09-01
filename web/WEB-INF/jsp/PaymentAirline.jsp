@@ -750,11 +750,7 @@ for(var i = 0; i < rad.length; i++) {
             if(dateTo!="" && dateFrom!="" && dateTo < dateFrom){
                 $("#ButtonSearchTicket").attr("disabled", "disabled");
             }else{
-                if($("#invoiceSupCode").val() != "" & $("#apCode").val() != ""){
-                    $("#ButtonSave").removeAttr("disabled");
-                    $("#ButtonSaveAndNew").removeAttr("disabled");
-                    $("#ButtonSearch").removeAttr("disabled");
-                }
+                validateSaveButton();
                 $("#ButtonSearchTicket").removeAttr("disabled");
             }
         });
@@ -766,11 +762,7 @@ for(var i = 0; i < rad.length; i++) {
             if(dateTo!="" && dateFrom!="" && dateTo < dateFrom){
                 $("#ButtonSearchTicket").attr("disabled", "disabled");
             }else{
-                if($("#invoiceSupCode").val() != "" & $("#apCode").val() != ""){
-                    $("#ButtonSave").removeAttr("disabled");
-                    $("#ButtonSaveAndNew").removeAttr("disabled");
-                    $("#ButtonSearch").removeAttr("disabled");
-                }
+                validateSaveButton();
                 $("#ButtonSearchTicket").removeAttr("disabled");
             }
         });
@@ -854,11 +846,7 @@ for(var i = 0; i < rad.length; i++) {
             $(this).addClass('row_selected').siblings().removeClass('row_selected');
             $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'invoiceSupCode');
             $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'apCode');
-            if($("#invoiceSupCode").val() != "" & $("#apCode").val() != ""){
-                $("#ButtonSave").removeAttr("disabled");
-                $("#ButtonSaveAndNew").removeAttr("disabled");
-                $("#ButtonSearch").removeAttr("disabled");
-            }
+            validateSaveButton();
         });
         
         $("#InvoiceSupTable tr").on('click', function () {
@@ -872,11 +860,7 @@ for(var i = 0; i < rad.length; i++) {
             $("#apCode").val(invoice_apcode);
             $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'invoiceSupCode');
             $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'apCode');
-            if($("#invoiceSupCode").val() != "" & $("#apCode").val() != ""){
-                $("#ButtonSave").removeAttr("disabled");
-                $("#ButtonSaveAndNew").removeAttr("disabled");
-                $("#ButtonSearch").removeAttr("disabled");
-            }
+            validateSaveButton();
             $("#InvoiceSupModal").modal('hide');
         });
         
@@ -917,11 +901,7 @@ for(var i = 0; i < rad.length; i++) {
             });
             $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'invoiceSupCode');
             $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'apCode');
-            if($("#invoiceSupCode").val() != "" & $("#apCode").val() != ""){
-                $("#ButtonSave").removeAttr("disabled");
-                $("#ButtonSaveAndNew").removeAttr("disabled");
-                $("#ButtonSearch").removeAttr("disabled");
-            }
+            validateSaveButton();
         });
 
 
@@ -1638,4 +1618,21 @@ function clearData(){
     $("#invoiceSupName").val("");
 }
 
+function validateSaveButton(){
+        var totalPayment = replaceAll(",","",$('#totalPayment').val()); 
+    if (totalPayment == ""){
+        totalPayment = 0;
+    }
+    var payment = parseFloat(totalPayment); 
+    
+    if($("#invoiceSupCode").val() != "" & $("#apCode").val() != "" && payment > 0){
+        $("#ButtonSave").removeAttr("disabled");
+        $("#ButtonSaveAndNew").removeAttr("disabled");
+        $("#ButtonSearch").removeAttr("disabled");
+    }else{
+        $("#ButtonSave").attr("disabled", "disabled");
+        $("#ButtonSaveAndNew").attr("disabled", "disabled");
+        $("#ButtonSearch").attr("disabled", "disabled");
+    }
+}
 </script>
