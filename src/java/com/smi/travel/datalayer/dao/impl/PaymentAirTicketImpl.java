@@ -15,7 +15,6 @@ import com.smi.travel.datalayer.entity.RefundAirticketDetail;
 import com.smi.travel.datalayer.entity.RefundAirticketDetailView;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -487,13 +486,14 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                         + "<input type='hidden' name='count"+countrow+"' id='count"+countrow+"' value='"+countrow+"'>"
                         + "<input type='hidden' name='tableRefundId"+countrow+"' id='tableRefundId"+countrow+"' value='"+id+"'>"
                         + "<input type='hidden' name='refundNoRow"+countrow+"' id='refundNoRow"+countrow+"' value='"+refund+"'>"
-                        + "<input type='hidden' name='payCustomer"+countrow+"' id='payCustomer"+countrow+"' value='"+payCustomer+"'>"
+//                        + "<input type='hidden' name='payCustomer"+countrow+"' id='payCustomer"+countrow+"' value='"+payCustomer+"'>"
                         + "<td align='center'>"+ (refund  == "null" ? "" : refund )+ "</td>"
                         + "<td align='left'>" + (ticketNo == "null" ? "": ticketNo )+  "</td>"
                         + "<td align='left'>" + (department == "null" ? "": department )+ "</td>"
                         + "<td align='center'>" + (route == "null" ? "" : route )+  "</td>"
                         + "<td align='right' class='money'>" + (commission == "null" ? "": commission )+  "</td>"
                         + "<td class='money'>" + (amount == "null" ? "" : amount )+  "</td>"
+                        + "<td class='money'>" + (payCustomer == "null" ? "" : payCustomer )+  "</td>"
                         + "<td><center><a class=\"remCF\"><span onclick=\"deleteRefund('"+id+"','"+refund+"','"+countrow+"')\" class=\"glyphicon glyphicon-remove deleteicon \"></span></center></td>"
                         + "</tr>";
                 System.out.println("newrow [[[[[[[ "+newrow +" ]]]]");
@@ -504,13 +504,14 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                         + "<input type='hidden' name='count"+rowCount+"' id='count"+rowCount+"' value='"+rowCount+"'>"
                         + "<input type='hidden' name='tableRefundId"+rowCount+"' id='tableRefundId"+rowCount+"' value='"+id+"'>"
                         + "<input type='hidden' name='refundNoRow"+rowCount+"' id='refundNoRow"+rowCount+"' value='"+refund+"'>"
-                        + "<input type='hidden' name='payCustomer"+rowCount+"' id='payCustomer"+rowCount+"' value='"+payCustomer+"'>"
+//                        + "<input type='hidden' name='payCustomer"+rowCount+"' id='payCustomer"+rowCount+"' value='"+payCustomer+"'>"
                         + "<td align='center'>" + (refund  == "null" ?  "" : refund )+ "</td>"
                         + "<td align='left'>" + (ticketNo == "null" ? "" : ticketNo )+  "</td>"
                         + "<td align='left'>" + (department == "null" ? "": department )+ "</td>"
                         + "<td align='center'>" + (route == "null" ? "" : route )+  "</td>"
                         + "<td align='right' class='money'>" + (commission == "null" ? "" : commission )+  "</td>"
                         + "<td class='money'>" + (amount == "null" ? "" : amount )+  "</td>"
+                        + "<td class='money'>" + (payCustomer == "null" ? "" : payCustomer )+  "</td>"
                         + "<td><center><a class=\"remCF\"><span onclick=\"deleteRefund('"+id+"','"+refund+"','"+rowCount+"')\" class=\"glyphicon glyphicon-remove deleteicon \"></span></center></td>"
                         + "</tr>";
                 System.out.println("newrow [[[[[[[ "+newrow +" ]]]]");
@@ -588,13 +589,14 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                     refundView.setId(refundAirticketDetail.getId());
                     refundView.setRoute(refundAirticketDetail.getSectorRefund());
                     refundView.setCommisssion(refundAirticketDetail.getAirComission());
-                    
+                    refundView.setPayCus(refundAirticketDetail.getPayCustomer());
+                    refundView.setAmount(refundAirticketDetail.getReceiveAirline());
                     if(refundAirticketDetail.getRefundAirticket() != null){
                         refundView.setRefundNo(refundAirticketDetail.getRefundAirticket().getRefundNo());
                     }
                     if(refundAirticketDetail.getAirticketPassenger() != null){
                         refundView.setTicketNo(refundAirticketDetail.getAirticketPassenger().getSeries1()+refundAirticketDetail.getAirticketPassenger().getSeries2()+refundAirticketDetail.getAirticketPassenger().getSeries3());
-                        refundView.setAmount(refundAirticketDetail.getReceiveAirline());
+                        
                         if(refundAirticketDetail.getAirticketPassenger().getAirticketAirline() != null
                             && refundAirticketDetail.getAirticketPassenger().getAirticketAirline().getAirticketPnr() != null
                             && refundAirticketDetail.getAirticketPassenger().getAirticketAirline().getAirticketPnr().getAirticketBooking() != null

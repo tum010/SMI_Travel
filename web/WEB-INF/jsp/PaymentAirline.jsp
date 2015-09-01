@@ -50,6 +50,10 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>Payment no. not available !</strong> 
         </div>
+        <div id="textAlertTotalPayment"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Save Unsuccess !! Total Payment is a negative</strong> 
+        </div>
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
             <div ng-include="'WebContent/Checking/CheckingAirTicketMenu.html'"></div>
         </div>
@@ -68,6 +72,7 @@
                 <input type="hidden" name="action" id="action" value="">
                 <input type="hidden" name="vat" id="vat" value="">
                 <input type="hidden" name="flagSearch" id="flagSearch" value="${flagSearch}">
+                <input type="hidden" name="paytoTemp"  id="paytoTemp" value="${paymentAirticket.payTo}">
                 <div class="panel panel-default">
                     <div class="panel-body"  style="padding-right: 0px;" style="width: 100%">
                         <div class="col-xs-12">
@@ -128,11 +133,24 @@
                             <div class="form-group col-xs-1"  style="width: 170px">
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="apCode" name="apCode" maxlength="11" value="${SelectedInvoice.apcode}" readonly="" />
-<!--                                    <span class="input-group-addon" id="ap_modal"  data-toggle="modal" data-target="#ApModal">
-                                        <span class="glyphicon-search glyphicon"></span>
-                                    </span>-->
                                 </div>
                             </div>
+                            <div class="col-xs-1 text-right"  style="width: 165px">
+                                <label class="control-label text-right">Pay To</label>
+                            </div>
+                            <div class="col-xs-1" style="width: 300px;padding-top:6px " >
+                                <c:set var="checkA" value="" />
+                                <c:if test="${paymentAirticket.payTo == 'A'}">
+                                    <c:set var="checkA" value="checked" />
+                                </c:if>  
+                                <input type="radio" name="payto"  id="paytoA" value="A" ${checkA}/>&nbsp;Airline&nbsp;&nbsp;
+
+                                <c:set var="checkC" value="" />
+                                <c:if test="${paymentAirticket.payTo == 'C'}">
+                                    <c:set var="checkC" value="checked" />
+                                </c:if>  
+                                <input type="radio" name="payto"  id="paytoC" value="C" ${checkC}/>&nbsp;Customer
+                            </div>    
                         </div> 
                         <div class="col-xs-12" style="padding-top: 5px">
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -325,6 +343,7 @@
                                     <th style="width:10%;">Route</th>
                                     <th style="width:15%;">Commission</th>
                                     <th style="width:15%;">Amount</th>
+                                    <th style="width:15%;">Pay Customer</th>
                                     <th style="width:10%;">Action</th>
                                 </tr>
                             </thead>
@@ -340,6 +359,7 @@
                                         <td align="center"> <c:out value="${table.route}" /></td>
                                         <td align="right" class="moneyformat">${table.commisssion}</td>
                                         <td class="money">${table.amount}</td>
+                                        <td class="money">${table.payCus}</td>
                                         <td> 
                                             <center> 
                                                 <a class="remCF"><span id="SpanRemove${dataStatus.count}" onclick="deleteRefund('${table.id}','${table.refundNo}','${dataStatus.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
@@ -656,7 +676,12 @@
            $('#textAlertDivNotSave').show();
         </script>
     </c:if>
-</c:if>
+    <c:if test="${requestScope['saveresult'] =='paymentnegative'}">        
+        <script language="javascript">
+           $('#textAlertTotalPayment').show();
+        </script>
+    </c:if>
+</c:if> 
 <c:if test="${! empty requestScope['deleteresult']}">
     <c:if test="${requestScope['deleteresult'] =='delete successful'}">        
         <script language="javascript">
@@ -695,7 +720,20 @@
         </script>
     </c:if>
 </c:if>             
-        
+<script>
+var rad = document.PaymentAirlineForm.payto;
+var prev = null;
+for(var i = 0; i < rad.length; i++) {
+    rad[i].onclick = function() {
+        if(this !== prev) {
+            prev = this;
+        }
+        document.getElementById('paytoTemp').value = this.value;
+        calculateTotalPayment();
+        calculateAmount();
+    };
+}
+</script>     
 <!--Script-->       
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
@@ -1218,69 +1256,66 @@ function CallAjaxAdd(param) {
 }     
 
 function saveAction(optionsave){
-    $("#optionSave").val(optionsave); 
-    var action = document.getElementById('action');
-    action.value = 'save';
-    var paymentNo = document.getElementById('paymentNo');
-    paymentNo.value = $("#paymentNo").val();
-    var paymentDate = document.getElementById('paymentDate');
-    paymentDate.value = $("#paymentDate").val();
-    var duePaymentDate = document.getElementById('duePaymentDate');
-    duePaymentDate.value = $("#duePaymentDate").val();
-    var invoiceSupCode = document.getElementById('invoiceSupCode');
-    invoiceSupCode.value = $("#invoiceSupCode").val();
-    var apCode = document.getElementById('apCode');
-    apCode.value = $("#apCode").val(); 
-    var detail = document.getElementById('detail');
-    detail.value = $("#detail").val();
-    var payBy = document.getElementById('payBy');
-    payBy.value = $("#payBy").val();
-    var agentAmount = document.getElementById('agentAmount');
-    agentAmount.value = $("#agentAmount").val();
-    var creditNote = document.getElementById('creditNote'); 
-    creditNote.value = $("#creditNote").val();
-    var creditAmount = document.getElementById('creditAmount');
-    creditAmount.value = $("#creditAmount").val();
-    var commissionVat = document.getElementById('commissionVat');
-    commissionVat.value = $("#commissionVat").val();
-    var debitNote = document.getElementById('debitNote');
-    debitNote.value = $("#debitNote").val();
-    var cash = document.getElementById('cash');
-    cash.value = $("#cash").val();
-    var withholdingTax = document.getElementById('withholdingTax');
-    withholdingTax.value = $("#withholdingTax").val();
-    var chqNo = document.getElementById('chqNo');
-    chqNo.value = $("#chqNo").val();
-    var amount = document.getElementById('amount');
-    amount.value = $("#amount").val();
-    var totalPayment = document.getElementById('totalPayment');
-    totalPayment.value = $("#totalPayment").val();
-    var debitAmount = document.getElementById('debitAmount');
-    debitAmount.value = $("#debitAmount").val();
-    
-    var ticketFrom = document.getElementById('ticketFrom');
-    ticketFrom.value = $("#ticketFrom").val();
-    var typeAirline = document.getElementById('typeAirline');
-    typeAirline.value = $("#typeAirline").val();
-    var dateFrom = document.getElementById('dateFrom');
-    dateFrom.value = $("#dateFrom").val();
-    var dateTo = document.getElementById('dateTo');
-    dateTo.value = $("#dateTo").val();
-    
+        $("#optionSave").val(optionsave); 
+        var action = document.getElementById('action');
+        action.value = 'save';
+        var paymentNo = document.getElementById('paymentNo');
+        paymentNo.value = $("#paymentNo").val();
+        var paymentDate = document.getElementById('paymentDate');
+        paymentDate.value = $("#paymentDate").val();
+        var duePaymentDate = document.getElementById('duePaymentDate');
+        duePaymentDate.value = $("#duePaymentDate").val();
+        var invoiceSupCode = document.getElementById('invoiceSupCode');
+        invoiceSupCode.value = $("#invoiceSupCode").val();
+        var apCode = document.getElementById('apCode');
+        apCode.value = $("#apCode").val(); 
+        var detail = document.getElementById('detail');
+        detail.value = $("#detail").val();
+        var payBy = document.getElementById('payBy');
+        payBy.value = $("#payBy").val();
+        var agentAmount = document.getElementById('agentAmount');
+        agentAmount.value = $("#agentAmount").val();
+        var creditNote = document.getElementById('creditNote'); 
+        creditNote.value = $("#creditNote").val();
+        var creditAmount = document.getElementById('creditAmount');
+        creditAmount.value = $("#creditAmount").val();
+        var commissionVat = document.getElementById('commissionVat');
+        commissionVat.value = $("#commissionVat").val();
+        var debitNote = document.getElementById('debitNote');
+        debitNote.value = $("#debitNote").val();
+        var cash = document.getElementById('cash');
+        cash.value = $("#cash").val();
+        var withholdingTax = document.getElementById('withholdingTax');
+        withholdingTax.value = $("#withholdingTax").val();
+        var chqNo = document.getElementById('chqNo');
+        chqNo.value = $("#chqNo").val();
+        var amount = document.getElementById('amount');
+        amount.value = $("#amount").val();
+        var totalPayment = document.getElementById('totalPayment');
+        totalPayment.value = $("#totalPayment").val();
+        var debitAmount = document.getElementById('debitAmount');
+        debitAmount.value = $("#debitAmount").val();
+        var ticketFrom = document.getElementById('ticketFrom');
+        ticketFrom.value = $("#ticketFrom").val();
+        var typeAirline = document.getElementById('typeAirline');
+        typeAirline.value = $("#typeAirline").val();
+        var dateFrom = document.getElementById('dateFrom');
+        dateFrom.value = $("#dateFrom").val();
+        var dateTo = document.getElementById('dateTo');
+        dateTo.value = $("#dateTo").val();
+        var totalCommissionTicketFare = document.getElementById('totalCommissionTicketFare');
+        totalCommissionTicketFare.value = $("#totalCommissionTicketFare").val();
+        var totalAmountTicketFare = document.getElementById('totalAmountTicketFare');
+        totalAmountTicketFare.value = $("#totalAmountTicketFare").val();
+        var totalAmountRefund = document.getElementById('totalAmountRefund');
+        totalAmountRefund.value = $("#totalAmountRefund").val();
+        var totalAmountRefundVat = document.getElementById('totalAmountRefundVat');
+        totalAmountRefundVat.value = $("#totalAmountRefundVat").val();
 
-    var totalCommissionTicketFare = document.getElementById('totalCommissionTicketFare');
-    totalCommissionTicketFare.value = $("#totalCommissionTicketFare").val();
-    var totalAmountTicketFare = document.getElementById('totalAmountTicketFare');
-    totalAmountTicketFare.value = $("#totalAmountTicketFare").val();
-    var totalAmountRefund = document.getElementById('totalAmountRefund');
-    totalAmountRefund.value = $("#totalAmountRefund").val();
-    var totalAmountRefundVat = document.getElementById('totalAmountRefundVat');
-    totalAmountRefundVat.value = $("#totalAmountRefundVat").val();
-    
-    var rowRefundCount = document.getElementById('rowRefundCount');
-    rowRefundCount.value = $('#RefundTicketTable tr').length;
-    var optionSave = document.getElementById('optionSave');
-    optionSave.value = $("#optionSave").val(); 
+        var rowRefundCount = document.getElementById('rowRefundCount');
+        rowRefundCount.value = $('#RefundTicketTable tr').length;
+        var optionSave = document.getElementById('optionSave');
+        optionSave.value = $("#optionSave").val(); 
 }
 
 function deleteTicket(id,ticketNo,count){
@@ -1405,7 +1440,6 @@ function calculateAmount() {
 }
 
 function calculateTotalPayment() {
-//    Total Payment = Total Amount - TotalComission - Total Refund + Total Amount Refund Vat - Credit Amount
     var totalAmount = replaceAll(",","",$('#totalAmountTicketFare').val()); 
     if (totalAmount == ""){
         totalAmount = 0;
@@ -1437,9 +1471,33 @@ function calculateTotalPayment() {
     var refundVat = parseFloat(totalRefundVat);
     var creditAmount = parseFloat(credit);
     
-    
-    var totalPayment = amountTotal - comTotal - refundTotal + refundVat - creditAmount;
-    document.getElementById("totalPayment").value = formatNumber(totalPayment);
+    var payto = $("#paytoTemp").val();
+    if(payto == 'A'){
+//      Total Payment = Total Amount - TotalComission - Total Refund + Total Amount Refund Vat - Credit Amount
+        var totalPayment = amountTotal - comTotal - refundTotal + refundVat - creditAmount;
+        document.getElementById("totalPayment").value = formatNumber(totalPayment);
+    }else if (payto == 'C'){
+        calculateTotalPayCus();
+    }
+}
+
+function calculateTotalPayCus(){
+    var temp = 0;
+    var paycusTemp = parseFloat(0);
+    var table = document.getElementById('RefundTicketTable');
+    for (var r = 1, n = table.rows.length; r < n; r++) {
+        temp = table.rows[r].cells[6].innerHTML;
+        temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
+        if(temp == '') {
+            temp = 0;
+        }
+        temp = replaceAll(",","",temp.toString());
+        var value = parseFloat(temp) ;
+        var paycus = paycusTemp + value ;
+        paycusTemp = paycus;
+
+    }
+    document.getElementById("totalPayment").value = formatNumber(paycus);
 }
 
 function calculateTotalRefundVat() {

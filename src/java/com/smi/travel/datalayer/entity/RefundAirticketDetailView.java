@@ -19,7 +19,8 @@ public class RefundAirticketDetailView {
     private String route;
     private BigDecimal commisssion;
     private BigDecimal amount;
-
+    private BigDecimal payCus;
+    
     public String getId() {
         return id;
     }
@@ -74,6 +75,14 @@ public class RefundAirticketDetailView {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public BigDecimal getPayCus() {
+        return payCus;
+    }
+
+    public void setPayCus(BigDecimal payCus) {
+        this.payCus = payCus;
     }
 
 

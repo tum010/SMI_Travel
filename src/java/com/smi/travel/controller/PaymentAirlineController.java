@@ -85,6 +85,10 @@ public class PaymentAirlineController extends SMITravelController {
         String totalAmountRefund = request.getParameter("totalAmountRefund");
         String totalAmountRefundVat = request.getParameter("totalAmountRefundVat");
         String optionSave = request.getParameter("optionSave");
+        // Add PayTo radio
+        String payto = request.getParameter("payto");
+        
+        
         request.setAttribute(TICKETFARECOUNT,"0");
         request.setAttribute(FLAGSEARCG,"0");
         request.setAttribute(SETCALCULATETICKET,0);
@@ -122,7 +126,6 @@ public class PaymentAirlineController extends SMITravelController {
                     request.setAttribute(PAYDATE, paymentAirticket.getPayDate());
                     request.setAttribute(DUEDATE, paymentAirticket.getDueDate());
                     request.setAttribute(PAYMENTAIRTICKET,paymentAirticket);
-                    
                     ticketFareViews = paymentAirTicketService.getTicketFareViewsByPaymentAirId(paymentAirticket.getId());
                     if(ticketFareViews != null){
                         request.setAttribute(FLAGSEARCG,"1");
@@ -401,8 +404,13 @@ public class PaymentAirlineController extends SMITravelController {
                 invoiceSupplier = utilityService.getDataInvoiceSuppiler(invoiceSupCode);
                 request.setAttribute(SELECTEDINVOICE, invoiceSupplier);
             }
-            
-            result = paymentAirTicketService.validateSavePaymentAir(paymentAirticket);
+            paymentAirticket.setPayTo(payto);
+            if((paymentAirticket.getTotalAmount()).compareTo(BigDecimal.ZERO) < 0){
+                result = "notsave";
+                request.setAttribute(PAYNO,paymentNo);
+            }else{
+                result = paymentAirTicketService.validateSavePaymentAir(paymentAirticket);
+            }
             System.out.println("result :::" +result);
             if (result == "success"){
                 request.setAttribute(PAYNO,paymentAirticket.getPayNo());
@@ -410,22 +418,29 @@ public class PaymentAirlineController extends SMITravelController {
             } else if (result == null || result == "fail") {
                 request.setAttribute(PAYNO,paymentAirticket.getPayNo());
                 request.setAttribute(SAVERESULT, "save unsuccessful");
+            } else if (result == "notsave") {
+                request.setAttribute(SAVERESULT, "paymentnegative");
             } else {
                 request.setAttribute(PAYNO,result);
                 request.setAttribute(SAVERESULT, "save successful");
             }
             if("0".equals(optionSave)){
-                ticketFareViews = paymentAirTicketService.getTicketFareViewsByPaymentAirId(paymentAirticket.getId());
-                if(ticketFareViews != null){
-                    request.setAttribute(SETCALCULATETICKET,1);
-                }
-                request.setAttribute(TICKETFARELIST,ticketFareViews);
+                if(paymentAirticket.getId() != null){
+                    ticketFareViews = paymentAirTicketService.getTicketFareViewsByPaymentAirId(paymentAirticket.getId());
+                    if(ticketFareViews != null){
+                        request.setAttribute(SETCALCULATETICKET,1);
+                    }
+                    request.setAttribute(TICKETFARELIST,ticketFareViews);
 
-                refundAirticketDetailViews = paymentAirTicketService.getRefundDetailByPaymentAirId(paymentAirticket.getId());
-                if(refundAirticketDetailViews != null){
-                    request.setAttribute(SETCALCULATEREFUND,1);
-                }  
-                request.setAttribute(ADDREFUNDLIST,refundAirticketDetailViews);
+                    refundAirticketDetailViews = paymentAirTicketService.getRefundDetailByPaymentAirId(paymentAirticket.getId());
+                    if(refundAirticketDetailViews != null){
+                        request.setAttribute(SETCALCULATEREFUND,1);
+                    }  
+                    request.setAttribute(ADDREFUNDLIST,refundAirticketDetailViews);
+                }else{
+                    request.setAttribute(SETCALCULATETICKET,0);
+                    request.setAttribute(SETCALCULATEREFUND,0);
+                }
             }
             if("1".equals(optionSave)){
                 request.setAttribute(SETCALCULATETICKET,0);
@@ -440,7 +455,6 @@ public class PaymentAirlineController extends SMITravelController {
             } else {
                 request.setAttribute(DELETERESULT, "delete unsuccessful");
             }
-            
         }else if("deleteRefund".equalsIgnoreCase(action)) {
             String delRefundId = request.getParameter("delRefundId");
             String delRefundNo = request.getParameter("delRefundNo");
@@ -451,8 +465,8 @@ public class PaymentAirlineController extends SMITravelController {
                 request.setAttribute(DELETERESULT, "delete unsuccessful");
             }
         }
-
-//        request.setAttribute(PAYNO,paymentNo);
+        
+//      request.setAttribute(PAYNO,paymentNo);
         request.setAttribute(DATEFROM,dateFrom);
         request.setAttribute(DATETO,dateTo);
         request.setAttribute(TICKETFROM,ticketFrom);
@@ -472,7 +486,7 @@ public class PaymentAirlineController extends SMITravelController {
         MDefaultData mDefaultData = utilityService.getMDefaultDataFromType("vat");
         request.setAttribute(VAT,mDefaultData.getValue());
     }
-
+    
     public UtilityService getUtilityService() {
         return utilityService;
     }
