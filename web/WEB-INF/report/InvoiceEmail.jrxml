@@ -408,21 +408,21 @@
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{gross}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{gross} == null || ".00".equalsIgnoreCase($F{gross}))? "":$F{gross}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="381" y="3" width="55" height="20" uuid="1a6a5eb3-8e70-4c80-a373-d7fa350afc10"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{vat}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{vat} == null || "".equalsIgnoreCase($F{vat}))? "":$F{vat}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="439" y="3" width="78" height="20" uuid="947a5225-ea47-4395-9c48-c96c7d90de49"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{amount} == null || "".equalsIgnoreCase($F{amount}))? "":$F{amount}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="3" width="22" height="20" uuid="87557536-8cfa-4f8b-ac9b-412bd53b8933"/>
@@ -558,19 +558,20 @@
 				</textElement>
 				<text><![CDATA[GR. TOTAL]]></text>
 			</staticText>
-			<textField pattern="">
+			<textField pattern="" isBlankWhenNull="false">
 				<reportElement x="414" y="2" width="104" height="14" uuid="1d78a392-1cf8-4c73-8bdd-248a94481871"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{total} == null ? "0.00":$F{total}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00">
+			<textField pattern="" isBlankWhenNull="true">
 				<reportElement x="414" y="34" width="104" height="17" uuid="a74cb599-f2d6-4f04-acfc-b4fe187e1307"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{grtotal}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{grtotal} == null ? "0.00" : $F{grtotal}
+]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="366" y="2" width="1" height="45" uuid="d59d59b1-2805-4fa4-b52d-46dfa69d4f46"/>
@@ -683,12 +684,12 @@
 			<line>
 				<reportElement x="369" y="33" width="148" height="1" uuid="a4e1d42e-1989-4cd9-9560-87d7b2a32728"/>
 			</line>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="418" y="18" width="100" height="14" uuid="bece9a49-bd9d-4074-bb4f-3ebb4dd65bbc"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{totalvat}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{totalvat} == null ? "0.00":$F{totalvat}]]></textFieldExpression>
 			</textField>
 			<image hAlign="Center" vAlign="Middle">
 				<reportElement x="397" y="68" width="119" height="37" uuid="521c3cfe-8c7b-4214-822b-9498dd1569da"/>

@@ -13,5 +13,5 @@ import java.util.List;
  * @author chonnasith
  */
 public interface RefundAirReportDao {
-    public List getRefundAir();
+    public List getRefundAir(String refundId);
 }

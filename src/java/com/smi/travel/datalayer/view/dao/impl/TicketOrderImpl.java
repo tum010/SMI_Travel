@@ -53,10 +53,10 @@ public class TicketOrderImpl implements TicketOrderDao{
                 .addScalar("tel", Hibernate.STRING)
                 .addScalar("pnr", Hibernate.STRING)
                 .addScalar("inv", Hibernate.STRING)
-                .addScalar("sell", Hibernate.STRING)
-                .addScalar("sell_tax", Hibernate.STRING)
-                .addScalar("net", Hibernate.STRING)
-                .addScalar("net_tax", Hibernate.STRING)
+                .addScalar("sell", Hibernate.INTEGER)
+                .addScalar("sell_tax", Hibernate.INTEGER)
+                .addScalar("net", Hibernate.INTEGER)
+                .addScalar("net_tax", Hibernate.INTEGER)
                 .addScalar("term_of_payment", Hibernate.STRING)
                 .addScalar("remark", Hibernate.STRING)
                 .addScalar("prepare_by", Hibernate.STRING) 
@@ -73,15 +73,24 @@ public class TicketOrderImpl implements TicketOrderDao{
             ticket.setTel(util.ConvertString(B[4]));
             ticket.setPnr(util.ConvertString(B[5]));
             ticket.setInv(util.ConvertString(B[6]));
-            ticket.setPrice(util.ConvertString(B[7]));
-            ticket.setPricetax(util.ConvertString(B[8]));
-            ticket.setCost(util.ConvertString(B[9]));
-            ticket.setCosttax(util.ConvertString(B[10]));
+            price += (int)B[7];
+            priceTax += (int)B[8];
+            cost += (int)B[9];
+            costtax += (int)B[10];
+           // ticket.setPrice(util.ConvertString(B[7]));
+            //ticket.setPricetax(util.ConvertString(B[8]));
+            //ticket.setCost(util.ConvertString(B[9]));
+            //ticket.setCosttax(util.ConvertString(B[10]));
             ticket.setTermpay(util.ConvertString(B[11]));
             ticket.setRemark(util.ConvertString(B[12]));
             ticket.setPrepareby(util.ConvertString(B[13]));
             ticket.setIssueby(util.ConvertString(B[14]));
         }
+        ticket.setPrice(util.ConvertString(price));
+        ticket.setPricetax(util.ConvertString(priceTax));
+        ticket.setCost(util.ConvertString(cost));
+        ticket.setCosttax(util.ConvertString(costtax)); 
+         
 
         List<Object[]> QueryFlightList = session.createSQLQuery("SELECT * FROM `ticket_order_flight`  Where `ticket_order_flight`.pnr_id = " + pnrID)
                 .addScalar("flight_no", Hibernate.STRING)

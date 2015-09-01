@@ -116,6 +116,7 @@ public class ReportController extends SMITravelController {
         String to  = request.getParameter("todate");
         String departmentInvoice  = request.getParameter("departmentInvoice");
         String sign = request.getParameter("sign");
+        String refundId = request.getParameter("refundId");
 
         Map model = new HashMap();
         List data = new ArrayList();
@@ -190,7 +191,7 @@ public class ReportController extends SMITravelController {
         }else if(InvoiceMonthly.equalsIgnoreCase(name)){
             data = reportservice.getInvoiceMonthly(BillFrom, ClientTo, ClientName, Payment, Accno, vattype, from, to, departmentInvoice);
         }else if(RefundAirReport.equalsIgnoreCase(name)){
-            data = reportservice.getRefundAirReport();
+            data = reportservice.getRefundAirReport(refundId);
         }
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);
