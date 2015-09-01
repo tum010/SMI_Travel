@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TicketFareInvoiceReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="762e4bd3-effd-4e31-aae4-abc4d4225934">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="82"/>
+	<property name="ireport.y" value="69"/>
+	<field name="tickettype" class="java.lang.String"/>
+	<field name="ticketbuy" class="java.lang.String"/>
+	<field name="airline" class="java.lang.String"/>
+	<field name="from" class="java.lang.String"/>
+	<field name="to" class="java.lang.String"/>
+	<field name="headdepartment" class="java.lang.String"/>
+	<field name="headstaff" class="java.lang.String"/>
+	<field name="headtermpay" class="java.lang.String"/>
+	<field name="invno" class="java.lang.String"/>
+	<field name="invdate" class="java.lang.String"/>
+	<field name="staff" class="java.lang.String"/>
+	<field name="termpay" class="java.lang.String"/>
+	<field name="passenger" class="java.lang.String"/>
+	<field name="air" class="java.lang.String"/>
+	<field name="docno" class="java.lang.String"/>
+	<field name="issuedate" class="java.lang.String"/>
+	<field name="netsale" class="java.lang.String"/>
+	<field name="tax" class="java.lang.String"/>
+	<field name="ins" class="java.lang.String"/>
+	<field name="actcom" class="java.lang.String"/>
+	<field name="invamount" class="java.lang.String"/>
+	<field name="department" class="java.lang.String"/>
 	<background>
-		<band splitType="Stretch"/>
+		<band height="50"/>
 	</background>
 	<pageHeader>
 		<band height="126" splitType="Stretch">
@@ -488,6 +510,69 @@
 					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{termpay}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="264" y="2" width="124" height="20" uuid="978bd173-2d94-42fa-9102-339f263e0dcb"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{passenger}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="388" y="2" width="32" height="20" uuid="46c80cd3-5b4f-42a1-923c-d3d1b4870164"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{air}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="420" y="2" width="55" height="20" uuid="d9f0bc62-cd5b-4bf0-8874-cb6288f385ec"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{docno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="475" y="2" width="55" height="20" uuid="8fd96af9-1a9b-4d72-b821-adac45f39451"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{issuedate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="530" y="2" width="59" height="20" uuid="d9369045-db3e-4a4f-8928-22be330b774b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{netsale}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="589" y="2" width="37" height="20" uuid="69bc863c-bd61-4eea-873b-f6f4fe7c24a1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tax}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="628" y="2" width="56" height="20" uuid="65c40128-661e-4516-8bc3-4c9ad5d5f586"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ins}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="683" y="2" width="58" height="20" uuid="fc564b62-f719-4bf0-854c-197b22d8080b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{actcom}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="743" y="2" width="59" height="20" uuid="e2aee519-3826-4fb2-b7f2-2353f31ffeac"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{invamount}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
