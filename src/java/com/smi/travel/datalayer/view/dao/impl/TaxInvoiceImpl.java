@@ -68,9 +68,13 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
             taxInvoiceView.setDescription(util.ConvertString(B[8]));
             taxInvoiceView.setNondescription(util.ConvertString(B[9]));
             taxInvoiceView.setInvoice(util.ConvertString(B[10]));
+            if(B[12] != null){
+                taxInvoiceView.setTotal(df.format(B[12]));
+            }
+            if(B[13] != null){
+                taxInvoiceView.setVat(df.format(B[13]));
+            }
             
-            taxInvoiceView.setTotal(df.format(B[12]));
-            taxInvoiceView.setVat(df.format(B[13]));
             taxInvoiceView.setGrandtotal(df.format(B[14]));
             taxInvoiceView.setUser(util.ConvertString(B[15]));
             if(B[11] != null){

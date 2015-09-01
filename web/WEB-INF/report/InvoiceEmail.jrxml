@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceEmail" language="groovy" pageWidth="595" pageHeight="842" columnWidth="522" leftMargin="45" rightMargin="28" topMargin="59" bottomMargin="56" uuid="573bfe06-de4f-4adc-b5b3-76cb68d89d08">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="177"/>
-	<property name="ireport.y" value="432"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="240"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
@@ -398,7 +398,7 @@
 		<band height="27" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="27" y="3" width="286" height="20" uuid="72e266b6-b5ad-408e-9bcb-4dfe9f1f0cc9"/>
-				<textElement markup="html">
+				<textElement markup="none">
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
@@ -570,8 +570,7 @@
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{grtotal} == null ? "0.00" : $F{grtotal}
-]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{grtotal} == null ? "0.00" : $F{grtotal}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="366" y="2" width="1" height="45" uuid="d59d59b1-2805-4fa4-b52d-46dfa69d4f46"/>

@@ -358,7 +358,11 @@ public class BillableImpl implements BillableDao {
                 description += "FOR" +"\t\t" + Initname +" "+passenger.getLastName() +"/"+passenger.getFirstName() +"\t\t\t\t"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+"\n";
                 
             }
-             name = "|"+ passengerList.get(0).getMInitialname().getName() +" "+ passengerList.get(0).getLastName() +" "+ passengerList.get(0).getFirstName() ;
+            String MInitialname = "";
+            if(passengerList.get(0).getMInitialname() != null){
+                MInitialname = passengerList.get(0).getMInitialname().getName();
+            }
+             name = "|"+ MInitialname +" "+ passengerList.get(0).getLastName() +" "+ passengerList.get(0).getFirstName() ;
              description += name;
         }
         System.out.println("description : "+description);
