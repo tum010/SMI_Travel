@@ -47,8 +47,8 @@ public class PaymentAirTicketService {
         return paymentairticketdao.getPaymentAirTicketFromPayno(payNo);
     }
     
-    public List<TicketFareView> getListTicketFare(String from,String to,String by,String airAgentId){
-        return paymentairticketdao.getListTicketFare(from,to,by,airAgentId);
+    public List<TicketFareView> getListTicketFare(String from,String to,String by,String airAgentId,String invoiceSubCode){
+        return paymentairticketdao.getListTicketFare(from,to,by,airAgentId,invoiceSubCode);
     }
 
     public String addRefundAirTicket(String refundNo,String rowCount){
@@ -67,6 +67,9 @@ public class PaymentAirTicketService {
         return paymentairticketdao.getRefundDetailByPaymentAirId(paymentAirId);
     }
     
+    public List<PaymentAirticketFare> searchTicketFare(String ticketfareId,String invoiceSubCode){
+        return paymentairticketdao.searchTicketFare(ticketfareId,invoiceSubCode);
+    }
     
     public PaymentAirTicketDao getPaymentairticketdao() {
         return paymentairticketdao;

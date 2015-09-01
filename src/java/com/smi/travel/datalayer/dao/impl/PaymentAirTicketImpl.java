@@ -261,7 +261,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
     }
 
     @Override
-    public List<TicketFareView> getListTicketFare(String from, String to, String by, String airAgentId) {
+    public List<TicketFareView> getListTicketFare(String from, String to, String by, String airAgentId,String invoiceSubCode) {
         Session session = this.sessionFactory.openSession();
         String query ="from TicketFareAirline t where";
         String queryOperation = "";
@@ -310,35 +310,45 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             return null;
         }else{
             for(int i=0;i<listAirline.size();i++){
-                TicketFareView ticketFareView = new TicketFareView();
-                ticketFareView.setId(String.valueOf(listAirline.get(i).getId()));
-                ticketFareView.setType(String.valueOf(listAirline.get(i).getTicketType()));
-                ticketFareView.setBuy(String.valueOf(listAirline.get(i).getTicketBuy()));
-                ticketFareView.setRouting(String.valueOf(listAirline.get(i).getTicketRouting()));
-                MAirlineAgent mAirlineAgent = new MAirlineAgent();
-                if(listAirline.get(i).getMAirlineAgent() != null){
-                    mAirlineAgent.setId(listAirline.get(i).getMAirlineAgent().getId());
-                    mAirlineAgent.setCode(listAirline.get(i).getMAirlineAgent().getCode());
-                    ticketFareView.setAirline(String.valueOf(mAirlineAgent.getCode()));
+                System.out.println(" invoiceSubCode " + invoiceSubCode);
+                String paymentAirFare = "from PaymentAirticketFare fare where fare.ticketFareAirline.id = :ticketfareId and fare.paymentAirticket.invoiceSup = :invoiceSup";
+                List<PaymentAirticketFare> paymentAirticketFares = session.createQuery(paymentAirFare).setParameter("ticketfareId", listAirline.get(i).getId()).setParameter("invoiceSup", invoiceSubCode).list();
+                System.out.println(" paymentAirticketFares .size "+ paymentAirticketFares.size());
+                if(paymentAirticketFares.isEmpty()){
+                    
+                    System.out.println(" paymentAirticketFares.isEmpty() ");
+                    TicketFareView ticketFareView = new TicketFareView();
+                    ticketFareView.setId(String.valueOf(listAirline.get(i).getId()));
+                    ticketFareView.setType(String.valueOf(listAirline.get(i).getTicketType()));
+                    ticketFareView.setBuy(String.valueOf(listAirline.get(i).getTicketBuy()));
+                    ticketFareView.setRouting(String.valueOf(listAirline.get(i).getTicketRouting()));
+                    MAirlineAgent mAirlineAgent = new MAirlineAgent();
+                    if(listAirline.get(i).getMAirlineAgent() != null){
+                        mAirlineAgent.setId(listAirline.get(i).getMAirlineAgent().getId());
+                        mAirlineAgent.setCode(listAirline.get(i).getMAirlineAgent().getCode());
+                        ticketFareView.setAirline(String.valueOf(mAirlineAgent.getCode()));
+                    }
+                    ticketFareView.setTicketNo(String.valueOf(listAirline.get(i).getTicketNo()));
+                    ticketFareView.setIssueDate(listAirline.get(i).getIssueDate());
+                    ticketFareView.setDepartment(listAirline.get(i).getDepartment());
+                    ticketFareView.setFare(listAirline.get(i).getTicketFare());
+                    ticketFareView.setTax(listAirline.get(i).getTicketTax());
+                    ticketFareView.setTicketCommission(listAirline.get(i).getTicketCommission());
+                    ticketFareView.setAgentCommission(listAirline.get(i).getAgentCommission());
+                    ticketFareView.setDiffVat(listAirline.get(i).getDiffVat());
+
+                    ticketFareView.setTicketIns(listAirline.get(i).getTicketIns());
+                    ticketFareView.setSalePrice(listAirline.get(i).getSalePrice());
+                    if(listAirline.get(i).getMaster() != null){
+                        ticketFareView.setReferenceNo(listAirline.get(i).getMaster().getReferenceNo());
+                    }
+                    listView.add(ticketFareView);
+                }else{
+                    System.out.println(" paymentAirticketFares " +  listAirline.get(i).getId() + " ---- " + paymentAirticketFares.size());
                 }
-                ticketFareView.setTicketNo(String.valueOf(listAirline.get(i).getTicketNo()));
-                ticketFareView.setIssueDate(listAirline.get(i).getIssueDate());
-                ticketFareView.setDepartment(listAirline.get(i).getDepartment());
-                ticketFareView.setFare(listAirline.get(i).getTicketFare());
-                ticketFareView.setTax(listAirline.get(i).getTicketTax());
-                ticketFareView.setTicketCommission(listAirline.get(i).getTicketCommission());
-                ticketFareView.setAgentCommission(listAirline.get(i).getAgentCommission());
-                ticketFareView.setDiffVat(listAirline.get(i).getDiffVat());
-                
-                ticketFareView.setTicketIns(listAirline.get(i).getTicketIns());
-                ticketFareView.setSalePrice(listAirline.get(i).getSalePrice());
-                if(listAirline.get(i).getMaster() != null){
-                    ticketFareView.setReferenceNo(listAirline.get(i).getMaster().getReferenceNo());
-                }
-                listView.add(ticketFareView);
             }
         }
-        
+        System.out.println("listView " + listView.size());
         session.close();
         this.sessionFactory.close();
         return listView; 
@@ -629,6 +639,21 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
 
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
+    }
+
+    @Override
+    public List<PaymentAirticketFare> searchTicketFare(String ticketfareId, String invoiceSubCode) {
+        String query = "from PaymentAirticketFare fare where fare.ticketFareAirline.id = :ticketfareId and fare.paymentAirticket.invoiceSup = :invoiceSup";
+        Session session = this.sessionFactory.openSession();
+        List<PaymentAirticketFare> paymentAirticketFares = session.createQuery(query).setParameter("ticketfareId", ticketfareId).setParameter("invoiceSup", invoiceSubCode).list();
+        
+        if (paymentAirticketFares.isEmpty()) {
+            return null;
+        }
+        
+        session.close();
+        this.sessionFactory.close();
+        return paymentAirticketFares; 
     }
 
 }

@@ -212,20 +212,16 @@ public class PaymentAirlineController extends SMITravelController {
             }else{
                 paymentAirticket.setTotalAmount(new BigDecimal(0)); 
             }            
-    
+            paymentAirticket.setPayTo(payto);
             if(StringUtils.isNotEmpty(invoiceSupCode)){
                 invoiceSupplier = utilityService.getDataInvoiceSuppiler(invoiceSupCode);
                 request.setAttribute(SELECTEDINVOICE, invoiceSupplier);
             }
-            List<TicketFareView> ticketFareViewTemp = new ArrayList<TicketFareView>();
-            ticketFareViewTemp = paymentAirTicketService.getTicketFareViewsByPaymentAirId(paymentId);
-            if(ticketFareViewTemp != null){
-                paymentAirTicketService.DeletePaymentAirFare(paymentId,null,2);
-            }
-            ticketFareViews = paymentAirTicketService.getListTicketFare(dateFrom,dateTo,ticketFrom,typeAirline);
-            if(ticketFareViews != null){
-                 request.setAttribute(SETCALCULATETICKET,1);
-                 request.setAttribute(TICKETFARECOUNT,ticketFareViews.size()+1);
+           
+            ticketFareViews = paymentAirTicketService.getListTicketFare(dateFrom,dateTo,ticketFrom,typeAirline,invoiceSupCode);
+            if(!ticketFareViews.isEmpty()){
+                request.setAttribute(SETCALCULATETICKET,1);
+                request.setAttribute(TICKETFARECOUNT,ticketFareViews.size()+1);
             }
             request.setAttribute(TICKETFARELIST,ticketFareViews);
             
@@ -234,9 +230,17 @@ public class PaymentAirlineController extends SMITravelController {
             if(refundAirticketDetailViews != null){
                  request.setAttribute(SETCALCULATEREFUND,1);
             }
+            
+//            List<TicketFareView> ticketFareViewTemp = new ArrayList<TicketFareView>();
+//            ticketFareViewTemp = paymentAirTicketService.getTicketFareViewsByPaymentAirId(paymentId);
+//            if(ticketFareViewTemp != null){
+//                paymentAirTicketService.DeletePaymentAirFare(paymentId,null,2);
+//            }
+            
             request.setAttribute(ADDREFUNDLIST,refundAirticketDetailViews);
             request.setAttribute(PAYNO,paymentNo);
         }else if("save".equalsIgnoreCase(action)){
+           
             String counter = request.getParameter("counter");
             String rowRefundCount = request.getParameter("rowRefundCount");
             int Rows = Integer.parseInt(counter);
