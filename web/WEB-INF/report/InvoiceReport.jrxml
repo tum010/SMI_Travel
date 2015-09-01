@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="59f0ec99-8109-4367-975c-dc17aad92f4d">
 	<property name="ireport.zoom" value="1.3660269107301415"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="144"/>
+	<property name="ireport.y" value="96"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
