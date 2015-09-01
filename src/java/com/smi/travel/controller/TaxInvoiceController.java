@@ -115,6 +115,8 @@ public class TaxInvoiceController extends SMITravelController {
         } else if("I".equalsIgnoreCase(callPageFrom)){
             page = "Inbound";
         }
+        String defaultInvToDate = dateFormat.format(cal.getTime());
+        request.setAttribute("defaultInvToDate", defaultInvToDate);
         
         if("save".equalsIgnoreCase(action)){
             TaxInvoice taxInvoice = new TaxInvoice();
