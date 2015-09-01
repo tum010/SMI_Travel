@@ -404,8 +404,6 @@ function getDescriptionDetail(row){
 function saveDescriptionDetail(){
     var row = $('#InputDescriptionDetailId').val();
     var descriptionDetail = $('#InputDescriptionDetail').val();
-//    $('#BillDescription'+row).val(descriptionDetail);
-//    subStringDescription(descriptionDetail,row);
     console.log("Detail : "+$('#InputDescriptionDetail').val());
     $('#DescriptionInvoiceDetail'+row).html(descriptionDetail);
 }
@@ -415,11 +413,7 @@ function subStringDescription(description,row){
     console.log("Product :" + product);
     var des = description.substring(0,index);
     console.log("description :" + description);
-//    if(index === -1){
-//        $('#BillDescriptionTemp'+row).val(description +" >> "+product);
-//    }else{
-//        $('#BillDescriptionTemp'+row).val(des +" >> "+product);
-//    }
+
 }
 function changeFormatAmountNumber(id){
     var count = document.getElementById('InputAmount'+id).value;
@@ -458,15 +452,12 @@ function changeFormatCostNumber(id){
     var count = document.getElementById('InputCost'+id).value;
     count = count.replace(/\,/g,'');
     count  = parseFloat(count);
-//    alert("Cost1 : " + count);
     if(isNaN(count)){
         document.getElementById('InputCost' + id).value = "";
     }else{
         count = parseFloat(count);
-//        alert("Cost2 : " + count);
         document.getElementById('InputCost' + id).value = formatNumber(count);
     } 
-//    alert("Cost Last : " + formatNumber(count));
 }
 function changeFormatCostLocalNumber(id){
     var count  = parseFloat(document.getElementById('InputCostLocal'+id).value);
@@ -508,10 +499,6 @@ function EnableVoidInvoice(){
 }
 
 function Enable() {
-//    $("#disableVoidButton").css("display", "block");
-//    $("#saveInvoice").prop("disabled",false);
-//    $('#enableVoidButton').css("display", "none");
-//    $('#textAlertDisable').hide();
     var action = document.getElementById('action');
     action.value = 'enableVoid';
     document.getElementById('InvoiceForm').submit();
@@ -784,8 +771,6 @@ function CallAjaxAdd(param) {
                 if(BookintType == $('#typeBooking').val()){
                     $('#AlertBooking').hide();
                     setBillableInvoice(array[1]);
-//                    alert(array[1]);
-                    //MasterReservation Table
                     try {
                         $("#MasterReservation tbody").append(array[2]);          
                     } catch (e) {
@@ -826,7 +811,6 @@ function addInvoiceDetail(rowId){
     var rowCount = $('#DetailBillableTable >tbody >tr').length;
     $("#counter").val((rowCount++));
     var countTable = $("#counter").val();
-//    alert("C : "+countTable);
     var RefNo = $("#SearchRefNo").val();
     var count = 1;
     $('#MasterReservation > tbody  > tr').each(function() {
@@ -885,26 +869,7 @@ function CallAjaxSearchDescription(param,rowId,des,RefNo) {
                 var array  = [];
                 array = array.concat(strx);
                 setbillAndDescription(rowId,RefNo,array[1],array[0],des);
-//                if(array[1] === 'Others'){
-//                    setDescriptionOther(array,rowId,des);
-//                }else if(array[1] === 'Land'){
-//                    setDescriptionLand(array,rowId,des);
-//                }else if(array[1] === 'Hotel'){
-//                    setDescriptionHotel(array,rowId,des);
-//                }else if(array[1] === 'Day Tour'){
-//                    setDescriptionDaytour(array,rowId,des);
-//                }else if(array[1] === 'Air Ticket'){
-//                    setDescriptionAirticket(array,rowId,des);
-//                }else if(array[1] === 'Air Additional'){
-//                    setDescriptionAirAdditional(array,rowId,des);
-//                }
-                
-//                alert("DES :"+array[1]);
-                //MasterReservation Table
                 try {
-//                    alert(array[1]);
-//                    $("#DescriptionInvoiceDetail").html( msg );
-                    
                      $("#ajaxloadsearch").addClass("hidden");
                 } catch (e) {
                     alert(e);
@@ -1012,6 +977,7 @@ function changeMonth(monthInt){
     }
     return text;
 }
+
 function setDescriptionAirticket(data,row,des){
    
     var array  = [];
@@ -1024,16 +990,13 @@ function setDescriptionAirticket(data,row,des){
 function checkDuplicateInvoiceDetail(product,rowId){
     $('#DetailBillableTable > tbody  > tr').each(function() {
         var prod = $(this).find('input[type="text"]').eq(1).val();
-//        alert("Pro :" + $.trim(prod) + ":Product Input:" + product+":");
         if($.trim(prod) === product){
-//            alert("Product Old :" + prod + "Product New:" + product);
             isDuplicateInvoiceDetail++;
         }
     });
 }
 
 function setDescriptionAirAdditional(data,row){
-   
     var array  = [];
     array = data;
     var text = "";
@@ -1062,10 +1025,8 @@ var th = ['','THOUSAND','MILLION', 'BILLION','TRILLION'];
 var dg = ['ZERO','ONE','TWO','THREE','FOUR', 'FIVE','SIX','SEVEN','EIGHT','NINE']; var tn = ['TEN','ELEVEN','TWELVE','THIRTEEN', 'FOURTEEN','FIFTEEN','SIXTEEN', 'SEVENTEEN','EIGHTEEN','NINETEEN']; var tw = ['TWEENTY','THIRTY','FORTY','FIFTY', 'SIXTY','SEVENTY','RIGHTY','NINETY']; function toWords(s){s = s.toString(); s = s.replace(/[\, ]/g,''); if (s != parseFloat(s)) return 'NOT A NUMBER'; var x = s.indexOf('.'); if (x == -1) x = s.length; if (x > 15) return 'TOO BIG'; var n = s.split(''); var str = ''; var sk = 0; for (var i=0; i < x; i++) {if ((x-i)%3==2) {if (n[i] == '1') {str += tn[Number(n[i+1])] + ' '; i++; sk=1;} else if (n[i]!=0) {str += tw[n[i]-2] + ' ';sk=1;}} else if (n[i]!=0) {str += dg[n[i]] +' '; if ((x-i)%3==0) str += 'HUNDRED ';sk=1;} if ((x-i)%3==1) {if (sk) str += th[(x-i-1)/3] + ' ';sk=0;}} if (x != s.length) {var y = s.length; str += 'POINT '; for (var i=x+1; i<y; i++) str += dg[n[i]] +' ';} return str.replace(/\s+/g,' ');}
 
 function calculateGross(row){
-//    alert("1");
     var amount = document.getElementById('InputAmount'+row).value;
     var gross = document.getElementById('InputGross'+row).value;
-//    var vatData = document.getElementById("DetailBillableTable").rows[row].cells[7].innerHTML;
     var varTemp = document.getElementById('InputVatTemp'+row).value;
     var vatDefaultData = parseFloat(varTemp);
     $('#checkUse'+row).val();
@@ -1079,21 +1040,6 @@ function calculateGross(row){
        document.getElementById("DetailBillableTable").rows[row].cells[10].innerHTML = ''; 
        document.getElementById('InputGross'+row).value = '';
     }
-    /*
-    if((gross === '')){
-        //alert("1: " + gross);
-        
-    }else if((gross === '0.00')){
-        //alert("3: " + gross);
-        grossTotal = (amount*100)/(100+vatDefaultData);
-        if(grossTotal == 0){
-            grossTotal = '';
-        }
-        document.getElementById('InputGross'+row).value = formatNumber(grossTotal);
-    }else {
-        //alert("2 : " + gross)
-        document.getElementById('InputGross'+row).value = '';
-    } */
 }
 
 function calculateGrossTemp(row){
@@ -1119,7 +1065,6 @@ function calculateGrossTemp(row){
 }
 
 function CalculateGrandTotal(id){
-//    alert("11");
     var count = parseInt(document.getElementById('counterTable').value);
     var i;
     var grandTotal = 0;
@@ -1137,7 +1082,6 @@ function CalculateGrandTotal(id){
             }    
         }
         if(id !== ''){
-          //  calculateGrossTemp(id);
         }
         
         document.getElementById('TotalNet').value = formatNumber(grandTotal);
@@ -1175,7 +1119,6 @@ function checkVatInvoiceAll(){
             }
         }   
     }
-//    alert("C :"+check + "UN :" + unCheck );
     if(check > unCheck){
         if(unCheck !== 0){
             for(var i=0;i<=row;i++){
@@ -1189,7 +1132,6 @@ function checkVatInvoiceAll(){
                         if(amountChk !== null && amountChk !== ''){
                             var amount = document.getElementById('InputAmount'+i).value;
                             var gross = document.getElementById('InputGross'+i).value;
-//                            var vatData = document.getElementById("DetailBillableTable").rows[i].cells[7].innerHTML;
 
                             var vatTemp = document.getElementById('InputVatTemp'+i).value;
                             var vatDefaultData = parseFloat(vatTemp);
@@ -1200,11 +1142,9 @@ function checkVatInvoiceAll(){
                             if((gross === '')){
                                 grossTotal = (amount*100)/(100+vatDefaultData);
                                 document.getElementById('InputGross'+i).value = formatNumber(grossTotal);
-    //                            document.getElementById('InputVat'+i).value = vatDefaultData;
                                 document.getElementById("DetailBillableTable").rows[i].cells[10].innerHTML = vatDefaultData;
                             } else {
                                 document.getElementById('InputGross'+i).value = '';
-    //                            document.getElementById('InputVat'+i).value = '';
                                 document.getElementById("DetailBillableTable").rows[i].cells[10].innerHTML = '';
                             }
                         }
@@ -1219,7 +1159,6 @@ function checkVatInvoiceAll(){
             var isVatCheck = document.getElementById("checkUse"+i);
             if(isVatCheck !== null && isVatCheck !== ''){
                 document.getElementById("checkUse"+i).checked = false;
-//                document.getElementById("InputVat"+i).value = '';
                 document.getElementById("DetailBillableTable").rows[i].cells[10].innerHTML = "";
                 document.getElementById("InputGross"+i).value = '';
             }   
@@ -1227,23 +1166,17 @@ function checkVatInvoiceAll(){
     }
 
     if(check === 0 && unCheck !== 0){
-//        alert("1");
         for(var i=0; i <= row;i++){
             var isVatCheck = document.getElementById("checkUse"+i);
             if(isVatCheck !== null && isVatCheck !== ''){
                 if(document.getElementById("checkUse"+i).checked){
 
                 } else { 
-//                    alert("2");
-//                    document.getElementById("checkUse"+i).checked = true;
                     $("#checkUse"+i).prop("checked",true);
                     var amountChk = document.getElementById('InputAmount'+i);                                     
                     if(amountChk !== null && amountChk !== ''){
                         var amount = document.getElementById('InputAmount'+i).value;
                         var gross = document.getElementById('InputGross'+i).value;
-//                        var vatData = document.getElementById("DetailBillableTable").rows[i].columns[7].innerHTML;
-//                        var vatDefaultData = parseFloat(document.getElementById('InputVat'+i).value);
-//                        var vatData = document.getElementById("DetailBillableTable").rows[i].cells[7].innerHTML;
                         var vatTemp = document.getElementById('InputVatTemp'+i).value;
                         var vatDefaultData = parseFloat(vatTemp);
                         amount = amount.replace(/,/g,"");
@@ -1251,11 +1184,9 @@ function checkVatInvoiceAll(){
                         if((gross === '')){
                             grossTotal = (amount*100)/(100+vatDefaultData);
                             document.getElementById('InputGross'+i).value = formatNumber(grossTotal);
-//                            document.getElementById('InputVat'+i).value = vatDefaultData;
                             document.getElementById("DetailBillableTable").rows[i].cells[10].innerHTML = vatDefaultData;
                         } else {
                             document.getElementById('InputGross'+i).value = '';
-//                            document.getElementById('InputVat'+i).value = '';
                             document.getElementById("DetailBillableTable").rows[i].cells[10].innerHTML = '';
                         }
                     }
@@ -1269,7 +1200,6 @@ function checkVatInvoiceAll(){
             var isVatCheck = document.getElementById("checkUse"+i);
             if(isVatCheck !== null && isVatCheck !== ''){
                 document.getElementById("checkUse"+i).checked = false;
-//                document.getElementById("InputVat"+i).value = '';
                 document.getElementById("DetailBillableTable").rows[i].cells[10].innerHTML = '';
                 document.getElementById("InputGross"+i).value = '';
             }   
@@ -1288,9 +1218,6 @@ function checkVatInvoiceAll(){
                     if(amountChk !== null && amountChk !== ''){
                         var amount = document.getElementById('InputAmount'+i).value;
                         var gross = document.getElementById('InputGross'+i).value;
-//                        var vat = document.getElementById('InputVat'+i).value;
-//                        var vatDefaultData = parseFloat(document.getElementById('InputVat'+i).value);
-//                        var vatData = document.getElementById("DetailBillableTable").rows[i].cells[7].innerHTML;
                         var vatTemp = document.getElementById('InputVatTemp'+i).value;
                         var vatDefaultData = parseFloat(vatTemp);
                         amount = amount.replace(/,/g,"");
@@ -1299,11 +1226,9 @@ function checkVatInvoiceAll(){
                         if((gross === '')){
                             grossTotal = (amount*100)/(100+vatDefaultData);
                             document.getElementById('InputGross'+i).value = formatNumber(grossTotal);
-//                            document.getElementById('InputVat'+i).value = vatDefaultData;
                             document.getElementById("DetailBillableTable").rows[i].cells[10].innerHTML = vatDefaultData;
                         } else {
                             document.getElementById('InputGross'+i).value = '';
-//                            document.getElementById('InputVat'+i).value = '';
                             document.getElementById("DetailBillableTable").rows[i].cells[10].innerHTML = vatDefaultData;
                         }
                     }
