@@ -76,12 +76,14 @@ public class Mail extends SMITravelController {
             }else{
                 email.setHtmlMsg("  ");
             }
+            sendTo = sendTo.replaceAll(";", "\\,");
             String[] toSplit = sendTo.split("\\,");
             for(int i=0;i<toSplit.length;i++){
                 System.out.println("Print toSplit" + toSplit[i]);
                 email.addTo(toSplit[i]);
             }
             if(!sendCc.isEmpty()){
+            sendCc = sendCc.replaceAll(";", "\\,");
             String[] ccSplit = sendCc.split("\\,");
             for(int i=0;i<ccSplit.length;i++){
                 System.out.println("Print ccSplit" + ccSplit[i]);
