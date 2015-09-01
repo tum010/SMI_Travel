@@ -410,7 +410,7 @@
                                                     <input type="text" class="form-control" id="BillDescriptionTemp${taxdesc.count}" name="BillDescriptionTemp${taxdesc.count}" value="${ind.description}" onkeyup="setDescription(${taxdesc.count})">                                           
                                                 </td>
                                                 <td class="hidden"><input type="text" class="form-control" id="BillDescription${taxdesc.count}" name="BillDescription${taxdesc.count}" value="${ind.description}" > </td>
-                                                <td><input type="text" maxlength ="15" class="form-control numerical" onfocusout="changeFormatCostNumber(${taxdesc.count})"  id="InputCost${taxdesc.count}" name="InputCost${taxdesc.count}" value="${ind.cost}" ></td>
+                                                <td><input type="text" maxlength ="15" class="form-control numerical text-right" onfocusout="changeFormatCostNumber(${taxdesc.count})"  id="InputCost${taxdesc.count}" name="InputCost${taxdesc.count}" value="${ind.cost}" ></td>
                                                 <td class="priceCurrencyCost">
                                                     <select id="SelectCurrencyCost${taxdesc.count}" name="SelectCurrencyCost${taxdesc.count}" class="form-control">
                                                          <option value='' ></option>
@@ -424,7 +424,7 @@
                                                         </c:forEach>
                                                     </select>
                                                 </td>
-                                                <td><input type="text" value="${ind.costLocal}" onfocusout="changeFormatCostLocalNumber(${taxdesc.count})" id="InputCostLocal${taxdesc.count}" name="InputCostLocal${taxdesc.count}" class="form-control"></td>
+                                                <td><input type="text" value="${ind.costLocal}" onfocusout="changeFormatCostLocalNumber(${taxdesc.count})" id="InputCostLocal${taxdesc.count}" name="InputCostLocal${taxdesc.count}" class="form-control text-right"></td>
                                                 <td class="hidden"><input type="text" value="${ind.costLocal}" id="InputCostLocalTemp${taxdesc.count}" name="InputCostLocalTemp${taxdesc.count}"></td>      
                                                 <td>
                                                     <c:set var="checkIsVat" value="" />
@@ -436,7 +436,7 @@
                                                 <td>${ind.vat}</td>
                                                 <td class="hidden"><input type="text" class="form-control" id="InputVatTemp${taxdesc.count}" name="InputVatTemp${taxdesc.count}" value="${ind.vat}" ></td>
                                                 <td ><input type="text" maxlength ="15" readonly  onfocusout="changeFormatGrossNumber(${taxdesc.count})" class="form-control numerical" id="InputGross${taxdesc.count}" name="InputGross${taxdesc.count}" value="${ind.gross}" ></td>
-                                                <td><input type="text" maxlength ="15" class="form-control numerical" id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" value="${ind.amount}" onfocusout="changeFormatAmountNumber('${taxdesc.count}');CalculateGrandTotal('${taxdesc.count}');calculateGross('${taxdesc.count}')"></td>
+                                                <td><input type="text" maxlength ="15" class="form-control numerical text-right" id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" value="${ind.amount}" onfocusout="changeFormatAmountNumber('${taxdesc.count}');')"></td>
                                                 <td class="priceCurrencyAmount">
                                                     <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control" onclick="validFromInvoice()">
                                                         <option value='' ></option>
@@ -449,7 +449,7 @@
                                                         </c:forEach>
                                                     </select>
                                                 </td>
-                                                <td><input type="text" value="${ind.amount}" id="InputAmountLocal${taxdesc.count}" onfocusout="changeFormatAmountLocalNumber(${taxdesc.count})" name="InputAmountLocal${taxdesc.count}" class="form-control" ></td>
+                                                <td><input type="text" value="${ind.amount}" id="InputAmountLocal${taxdesc.count}" onfocusout="changeFormatAmountLocalNumber(${taxdesc.count})" name="InputAmountLocal${taxdesc.count}" class="form-control text-right" ></td>
                                                 <td class="hidden"><input type="text" value="${ind.amount}" onfocusout="changeFormatAmountLocalTempNumber(${taxdesc.count})" id="InputAmountLocalTemp${taxdesc.count}" name="InputAmountLocalTemp${taxdesc.count}"  ></td>
                                                 <td align="center" >
                                                     <span  class="glyphicon glyphicon-th-list" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail('${taxdesc.count}')" id="InputDescription${taxdesc.count}"></span>
@@ -457,9 +457,7 @@
                                                 </td>
                                                 <td class="hidden">
                                                     <c:set var="displayDescriptionTemp" value="${fn:trim(ind.displayDescription)}" />
-                                                    <textarea id="DescriptionInvoiceDetail${taxdesc.count}" name="DescriptionInvoiceDetail${taxdesc.count}" >
-                                                        ${displayDescriptionTemp}
-                                                    </textarea>
+                                                    <textarea id="DescriptionInvoiceDetail${taxdesc.count}" name="DescriptionInvoiceDetail${taxdesc.count}" >${displayDescriptionTemp}</textarea>
                                                 </td>
                                             </tr>
                                             </c:forEach>
@@ -514,7 +512,7 @@
                                                     <input type="text" class="form-control" id="BillDescriptionTemp${taxdesc.count}" name="BillDescriptionTemp${taxdesc.count}" value="${ind.description}" onkeyup="setDescription(${taxdesc.count})">                                           
                                                 </td>
                                                 <td class="hidden"><input type="text" class="form-control" id="BillDescription${taxdesc.count}" name="BillDescription${taxdesc.count}" value="${ind.description}" > </td>
-                                                <td><input type="text" maxlength ="15" onfocusout="changeFormatCostNumber(${taxdesc.count})" class="form-control numerical" id="InputCost${taxdesc.count}" name="InputCost${taxdesc.count}" value="${ind.cost}" ></td>
+                                                <td><input type="text" maxlength ="15" onfocusout="changeFormatCostNumber(${taxdesc.count})" class="form-control numerical text-right" id="InputCost${taxdesc.count}" name="InputCost${taxdesc.count}" value="${ind.cost}" ></td>
                                                 <td>
                                                     <select id="SelectCurrencyCost${taxdesc.count}" name="SelectCurrencyCost${taxdesc.count}" class="form-control">
                                                          <option value='' ></option>
@@ -528,7 +526,7 @@
                                                         </c:forEach>
                                                     </select>
                                                 </td>
-                                                <td><input type="text" value="${ind.costLocal}" onfocusout="changeFormatCostLocalNumber(${taxdesc.count})" id="InputCostLocal${taxdesc.count}" name="InputCostLocal${taxdesc.count}" class="form-control"></td>
+                                                <td><input type="text" value="${ind.costLocal}" onfocusout="changeFormatCostLocalNumber(${taxdesc.count})" id="InputCostLocal${taxdesc.count}" name="InputCostLocal${taxdesc.count}" class="form-control text-right"></td>
                                                 <td class="hidden"><input type="text" value="${ind.costLocal}" id="InputCostLocalTemp${taxdesc.count}" name="InputCostLocalTemp${taxdesc.count}"></td>      
                                                 <td class="hidden">
                                                     <c:set var="checkIsVat" value="" />
@@ -540,7 +538,7 @@
                                                 <td class="hidden" >${ind.vat}</td>
                                                 <td class="hidden" ><input type="text" class="form-control" id="InputVatTemp${taxdesc.count}" name="InputVatTemp${taxdesc.count}" value="${ind.vat}" ></td>
                                                 <td class="hidden" ><input type="text" maxlength ="15"  onfocusout="changeFormatGrossNumber(${taxdesc.count})" class="form-control numerical" id="InputGross${taxdesc.count}" name="InputGross${taxdesc.count}" value="${ind.gross}" ></td>
-                                                <td><input type="text" maxlength ="15" class="form-control numerical" id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" value="${ind.amount}" onfocusout="changeFormatAmountNumber('${taxdesc.count}');CalculateGrandTotal('${taxdesc.count}');calculateGross('${taxdesc.count}');"></td>
+                                                <td><input type="text" maxlength ="15" class="form-control numerical text-right" id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" value="${ind.amount}" onfocusout="changeFormatAmountNumber('${taxdesc.count}');"></td>
                                                 <td class="priceCurrencyAmount">
                                                     <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control" onclick="validFromInvoice()">
                                                          <option value='' ></option>
@@ -553,7 +551,7 @@
                                                         </c:forEach>
                                                     </select>
                                                 </td>
-                                                <td><input type="text" value="${ind.amount}" onfocusout="changeFormatAmountLocalNumber(${taxdesc.count})" id="InputAmountLocal${taxdesc.count}" name="InputAmountLocal${taxdesc.count}" class="form-control" ></td>
+                                                <td><input type="text" value="${ind.amount}" onfocusout="changeFormatAmountLocalNumber(${taxdesc.count})" id="InputAmountLocal${taxdesc.count}" name="InputAmountLocal${taxdesc.count}" class="form-control text-right" ></td>
                                                 <td class="hidden"><input type="text" value="${ind.amount}" id="InputAmountLocalTemp${taxdesc.count}" onfocusout="changeFormatAmountLocalTempNumber(${taxdesc.count})" name="InputAmountLocalTemp${taxdesc.count}"  ></td>
                                                 <td align="center" >
                                                     <span  class="glyphicon glyphicon-th-list" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail('${taxdesc.count}')" id="InputDescription${taxdesc.count}"></span>

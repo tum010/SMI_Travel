@@ -68,6 +68,7 @@ public class BillableImpl implements BillableDao {
     private static final String DaytourBookingUpdate = "UPDATE DaytourBooking DB set  DB.isBill = 1 "
             + "WHERE DB.id = :Keyid";
     private static final String QUERY_AIRADDITIONAL = "from AirticketDesc aird where aird.id = :refitemid";
+    UtilityFunction utility = new UtilityFunction();
 
     @Override
     public Billable getBillableBooking(String refno) {
@@ -332,6 +333,7 @@ public class BillableImpl implements BillableDao {
                 
                 //TAX
                 tax += flightDetail.getAdTax() + flightDetail.getChTax() +flightDetail.getInTax();
+                
             }
             if(ticketlife.length() > 0){
                     ticketlife = ticketlife.substring(0, ticketlife.length()-1);
@@ -344,7 +346,7 @@ public class BillableImpl implements BillableDao {
             
             
             List<AirticketPassenger>  passengerList = new ArrayList<AirticketPassenger>(airline.getAirticketPassengers());
-            
+            String name = "";
             for(int p =0;p<passengerList.size();p++){
                 AirticketPassenger passenger = passengerList.get(p);
                 description += FlightDescription +"\n";
@@ -354,58 +356,10 @@ public class BillableImpl implements BillableDao {
                 }
             //FOR  {INITNAME} {LAST NAME}/{FIRST NAME}        {PRICE} + {TAX}
                 description += "FOR" +"\t\t" + Initname +" "+passenger.getLastName() +"/"+passenger.getFirstName() +"\t\t\t\t"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+"\n";
+                
             }
-                    /*
-            for(int i = 0; i < list.size(); i++){
-                if(list.get(i).getAirticketFlights() != null){ // flight
-                    description += ""+list.get(i).getAirticketFlights() +"|";
-                }else{
-                     description += " |";
-                }
-                if(list.get(i).getAirticketPassengers() != null){ // passengers
-                    description += ""+ list.get(i).getAirticketPassengers() +"|";
-                }else{
-                     description += " |";
-                }
-                List<AirticketFlight> listFight = new LinkedList<AirticketFlight>(list.get(i).getAirticketFlights());
-                if(utility.GetRounting(listFight) != null){ // flight
-                    description += ""+ utility.GetRounting(listFight) +"|";
-                }else{
-                     description += " |";
-                }
-                if(listFight.get(i).getMTicketType().getName() != null){ // name flight
-                    description += ""+listFight.get(i).getMTicketType().getName() +"|";
-                }else{
-                     description += " |";
-                }
-                if(listFight.get(i).getDepartDate() != null){ // depart date
-                    description += ""+listFight.get(i).getDepartDate() +"|";
-                }else{
-                     description += " |";
-                }
-                if(listFight.get(i).getFlightNo() != null){ // flight no
-                    description += ""+listFight.get(i).getFlightNo() +"|";
-                }else{
-                     description += " |";
-                }
-                List<AirticketPassenger> listPassenger = new LinkedList<AirticketPassenger>(list.get(i).getAirticketPassengers());
-                if(listPassenger.get(i).getMInitialname().getName() != null){// prename
-                    description += ""+listPassenger.get(i).getMInitialname().getName() +"|";
-                }else{
-                     description += " |";
-                }
-                if(listPassenger.get(i).getLastName() != null){// lastname
-                    description += ""+listPassenger.get(i).getLastName() +"|";
-                }else{
-                     description += " |";
-                }
-                if(listPassenger.get(i).getFirstName() != null){// firstname
-                    description += ""+listPassenger.get(i).getFirstName() +"|";
-                }else{
-                     description += " |";
-                }
-            }
-                    */
+             name = "|"+ passengerList.get(0).getMInitialname().getName() +" "+ passengerList.get(0).getLastName() +" "+ passengerList.get(0).getFirstName() ;
+             description += name;
         }
         System.out.println("description : "+description);
         session.close();
@@ -424,67 +378,86 @@ public class BillableImpl implements BillableDao {
         }else{
             for(int i = 0; i < list.size(); i++){
                 if(list.get(i).getMaster().getReferenceNo() != null){ // Ref no
-                    description += ""+list.get(i).getMaster().getReferenceNo() +"|";
+                    description += "Ref No. "+list.get(i).getMaster().getReferenceNo() +" : ";
                 }else{
-                     description += " |";
+                     description += "";
                 }
                 if(list.get(i).getMaster().getCustomer().getMInitialname() != null){ // prename
-                    description += ""+list.get(i).getMaster().getCustomer().getMInitialname().getName() +"|";
+                    description += " "+list.get(i).getMaster().getCustomer().getMInitialname().getName() +"";
                 }else{
-                     description += " |";
+                     description += " ";
                 }
                 if(list.get(i).getMaster().getCustomer().getLastName() != null){ //last name
-                    description += ""+list.get(i).getMaster().getCustomer().getLastName() +"|";
+                    description += " "+list.get(i).getMaster().getCustomer().getLastName() +" ";
                 }else{
-                     description += " |";
+                     description += " ";
                 }
                 if(list.get(i).getMaster().getCustomer().getFirstName() != null){// firstname
-                    description += ""+list.get(i).getMaster().getCustomer().getFirstName() +"|";
+                    description += " "+list.get(i).getMaster().getCustomer().getFirstName() +"  \n";
                 }else{
-                     description += " |";
+                     description += " \n";
                 }
                 if(list.get(i).getProduct().getName() != null){ // Product Name
-                    description += ""+list.get(i).getProduct().getName() +"|";
+                    description += ""+list.get(i).getProduct().getName() +" ";
                 }else{
-                     description += " |";
+                     description += " ";
                 }
                 if(list.get(i).getOtherDate() != null){ // Other Date
-                    description += ""+list.get(i).getOtherDate() +"|";
+                    String  date = utility.convertDateToString(list.get(i).getOtherDate());
+                    String dateArr[] = date.split("-");
+                    String newDate = dateArr[2] +"/" + dateArr[1] + "/" + dateArr[0];
+                    description += "  ("+newDate +") ";
                 }else{
-                     description += " |";
+                     description += "";
                 }
-                if(list.get(i).getAdCost() != null){ // Adult Cost
-                    description += "("+list.get(i).getAdCost() +" x ";
-                    if(list.get(i).getAdQty() != null){ // Adult Qty
-                        description += ""+list.get(i).getAdQty() +")|";
+                if(list.get(i).getAdCost() != null && list.get(i).getAdCost() != 0 ){ // Adult Cost
+                    if(list.get(i).getAdQty() != null && list.get(i).getAdQty() != 0){ // Adult Qty
+                        description += "     ("+list.get(i).getAdCost() +" x ";
+                        description += ""+list.get(i).getAdQty() +") ";
                     }else{
-                        description += "0)|";
+                        description += "";
                     }
                 }else{
-                     description += " |";
+                     description += " ";
                 }
-                if(list.get(i).getChCost() != null){ // Children Cost
-                    description += "("+list.get(i).getChCost() +" x ";
-                    if(list.get(i).getChQty()!= null){ // Children Qty
-                        description += ""+list.get(i).getChQty() +")|";
+                if(list.get(i).getChCost() != null && list.get(i).getChCost() != 0){ // Children Cost
+                    if(list.get(i).getChQty()!= null && list.get(i).getChQty() != 0){ // Children Qty
+                        description += " ("+list.get(i).getChCost() +" x ";
+                        description += ""+list.get(i).getChQty() +")";
                     }else{
-                        description += "0)|";
+                        description += "";
                     }
                 }else{
-                     description += " |";
+                     description += "";
                 }
-                if(list.get(i).getInCost() != null){ // Infant Cost
-                    description += "("+list.get(i).getInCost() +" x ";
-                    if(list.get(i).getInQty()!= null){ // Infant Qty
-                        description += ""+list.get(i).getInQty() +")|";
+                if(list.get(i).getInCost() != null && list.get(i).getInCost() != 0){ // Infant Cost
+                    if(list.get(i).getInQty()!= null && list.get(i).getInQty() != 0){ // Infant Qty
+                        description += "  ("+list.get(i).getInCost() +" x ";
+                        description += ""+list.get(i).getInQty() +")";
                     }else{
-                        description += "0)|";
+                        description += "";
                     }
                 }else{
-                     description += " |";
+                     description += "";
+                }
+                if(list.get(i).getMaster().getCustomer().getMInitialname() != null){ // prename
+                    description += "|"+list.get(i).getMaster().getCustomer().getMInitialname().getName() +" ";
+                }else{
+                     description += " ";
+                }
+                if(list.get(i).getMaster().getCustomer().getLastName() != null){ //last name
+                    description += " "+list.get(i).getMaster().getCustomer().getLastName() +" ";
+                }else{
+                     description += " ";
+                }
+                if(list.get(i).getMaster().getCustomer().getFirstName() != null){// firstname
+                    description += " "+list.get(i).getMaster().getCustomer().getFirstName() +"";
+                }else{
+                     description += "";
                 }
             }
         }
+        System.out.println("Description :" + description);
         session.close();
         this.sessionFactory.close();
         return description;
@@ -501,37 +474,41 @@ public class BillableImpl implements BillableDao {
         }else{
             for(int i = 0; i < list.size(); i++){
                 if(list.get(i).getMaster().getReferenceNo() != null){ // Ref no
-                    description += ""+list.get(i).getMaster().getReferenceNo() +"|";
+                    description += "Ref No. "+list.get(i).getMaster().getReferenceNo() +" : ";
                 }else{
-                     description += " |";
+                     description += "";
                 }
-                if(list.get(i).getMaster().getCustomer().getMInitialname().getName() != null){ // prename
-                    description += ""+list.get(i).getMaster().getCustomer().getMInitialname().getName() +"|";
+                if(list.get(i).getMaster().getCustomer().getMInitialname() != null){ // prename
+                    description += " "+list.get(i).getMaster().getCustomer().getMInitialname().getName() +" ";
                 }else{
-                     description += " |";
+                     description += " ";
                 }
                 if(list.get(i).getMaster().getCustomer().getLastName() != null){ //last name
-                    description += ""+list.get(i).getMaster().getCustomer().getLastName() +"|";
+                    description += " "+list.get(i).getMaster().getCustomer().getLastName() +" ";
                 }else{
-                     description += " |";
+                     description += " ";
                 }
                 if(list.get(i).getMaster().getCustomer().getFirstName() != null){// firstname
-                    description += ""+list.get(i).getMaster().getCustomer().getFirstName() +"|";
+                    description += " "+list.get(i).getMaster().getCustomer().getFirstName() +"  \n";
                 }else{
-                     description += " |";
+                     description += "  \n";
                 }
+                description += "Land  ";
                 List<LandItinerary> listLand = new LinkedList<LandItinerary>();
                 listLand = list.get(i).getLandItineraries();
                 for (int j = 0; j < listLand.size(); j++) {
                     if(listLand.get(j).getDayDate() != null){ //day date
-                        description += ""+listLand.get(j).getDayDate() +"|";
+                        String  date = utility.convertDateToString(listLand.get(j).getDayDate());
+                        String dateArr[] = date.split("-");
+                        String newDate = dateArr[2] +"/" + dateArr[1] + "/" + dateArr[0];
+                        description += "  \t("+newDate +")";
                     }else{
-                         description += " |";
+                         description += "";
                     }
                     if(listLand.get(j).getDescription() != null){ // description
-                        description += ""+listLand.get(j).getDescription() +"|";
+                        description += "  "+listLand.get(j).getDescription() +" NTS \n";
                     }else{
-                         description += " |";
+                         description += " 0 NTS  \n";
                     }
                 }
                 
@@ -543,9 +520,9 @@ public class BillableImpl implements BillableDao {
                         int infant = list.get(i).getInboundInQty();
                         sum = adult + child + infant;
                         if(sum != 0){
-                            description += ""+ sum +"|";
+                            description += " \t\t"+ sum +"  PAX ";
                         }else{
-                            description += "0|";
+                            description += "\t\t 0  PAX";
                         } 
                     }else if ("O".equals(list.get(i).getMaster().getBookingType())){
                         int sum = 0;
@@ -554,16 +531,31 @@ public class BillableImpl implements BillableDao {
                         int infant = list.get(i).getOutboundInQty();
                         sum = adult + child + infant;
                         if(sum != 0){
-                            description += ""+ sum +"|";
+                            description += " \t\t"+ sum +" PAX ";
                         }else{
-                            description += "0|";
+                            description += "\t\t 0  PAX ";
                         } 
                     }else{
-                        description += "0|";
+                        description += "\t\t 0  PAX ";
                     }
                 }else{
-                     description += " |";
-                }        
+                     description += " ";
+                }
+                if(list.get(i).getMaster().getCustomer().getMInitialname() != null){ // prename
+                    description += "|"+list.get(i).getMaster().getCustomer().getMInitialname().getName() +" ";
+                }else{
+                     description += " ";
+                }
+                if(list.get(i).getMaster().getCustomer().getLastName() != null){ //last name
+                    description += " "+list.get(i).getMaster().getCustomer().getLastName() +" ";
+                }else{
+                     description += " ";
+                }
+                if(list.get(i).getMaster().getCustomer().getFirstName() != null){// firstname
+                    description += " "+list.get(i).getMaster().getCustomer().getFirstName() +"";
+                }else{
+                     description += "";
+                }
             }
         }
         session.close();
@@ -583,71 +575,95 @@ public class BillableImpl implements BillableDao {
         }else{
             for(int i = 0; i < list.size(); i++){
                 if(list.get(i).getMaster().getReferenceNo() != null){ // Ref no
-                    description += ""+list.get(i).getMaster().getReferenceNo() +"|";
+                    description += "Ref No. "+list.get(i).getMaster().getReferenceNo() +" : ";
                 }else{
-                     description += " |";
+                     description += "";
                 }
-                if(list.get(i).getMaster().getCustomer().getMInitialname().getName() != null){ // prename
-                    description += ""+list.get(i).getMaster().getCustomer().getMInitialname().getName() +"|";
+                if(list.get(i).getMaster().getCustomer().getMInitialname() != null){ // prename
+                    description += " "+list.get(i).getMaster().getCustomer().getMInitialname().getName() +" ";
                 }else{
-                     description += " |";
+                     description += " ";
                 }
                 if(list.get(i).getMaster().getCustomer().getLastName() != null){ //last name
-                    description += ""+list.get(i).getMaster().getCustomer().getLastName() +"|";
+                    description += " "+list.get(i).getMaster().getCustomer().getLastName() +" ";
                 }else{
-                     description += " |";
+                     description += " ";
                 }
                 if(list.get(i).getMaster().getCustomer().getFirstName() != null){// firstname
-                    description += ""+list.get(i).getMaster().getCustomer().getFirstName() +"|";
+                    description += " "+list.get(i).getMaster().getCustomer().getFirstName() +"  \n";
                 }else{
-                     description += " |";
+                     description += "  \n";
                 }
+                description += "HOTEL ";
                 if(list.get(i).getHotel().getName() != null){ // Hotel Name
-                    description += ""+list.get(i).getHotel().getName() +"|";
+                    description += "  "+list.get(i).getHotel().getName() +" \n";
                 }else{
-                     description += " |";
+                     description += " \n";
                 }
                 if(list.get(i).getCheckin() != null){ // check in
-                    description += ""+list.get(i).getCheckin() +"|";
+                    String  date = utility.convertDateToString(list.get(i).getCheckin());
+                    String dateArr[] = date.split("-");
+                    String newDate  = dateArr[2] +" " + changeMonth(dateArr[1]) + " " + dateArr[0];
+                    description += "  \t\t"+ newDate +" ";
                 }else{
-                     description += " |";
+                     description += "  \t\t";
                 }
                 if(list.get(i).getCheckout() != null){ // check out
-                    description += ""+list.get(i).getCheckout() +"|";
+                    String  date = utility.convertDateToString(list.get(i).getCheckout());
+                    String dateArr[] = date.split("-");
+                    String newDate  = dateArr[2] +" " + changeMonth(dateArr[1]) + " " + dateArr[0];
+                    description += " -  "+newDate +" \n";
                 }else{
-                     description += " |";
+                     description += " \n";
                 }
                 List<HotelRoom> listRoom = new LinkedList<HotelRoom>();
                 listRoom = list.get(i).getHotelRooms();
                 for (int j = 0; j < listRoom.size(); j++) {
                     if( listRoom.get(j).getPrice() != 0){ // room price
-                        description += ""+listRoom.get(j).getPrice() +"|";
+                        DecimalFormat myFormatter = new DecimalFormat("#,###");
+                        String output = myFormatter.format(listRoom.get(j).getPrice());
+                        description += "  \t\t"+ output +"  ";
                     }else{
-                         description += " |";
+                         description += " \t\t";
                     }
                     if(listRoom.get(j).getQty() != 0){ // room qty
-                        description += ""+listRoom.get(j).getQty() +"|";
+                        description += " "+listRoom.get(j).getQty() +"  ";
                     }else{
-                         description += " |";
+                         description += "  ";
                     }
                     if(listRoom.get(j).getRoom() != null){ // room number
-                        description += ""+listRoom.get(j).getRoom() +"|";
+                        description += " "+listRoom.get(j).getRoom() +"  ";
                     }else{
-                         description += " |";
+                         description += "  ";
                     }
                     if(listRoom.get(j).getCategory() != null){ // room catagory
-                        description += ""+listRoom.get(j).getCategory() +"|";
+                        description += "  "+listRoom.get(j).getCategory() +"  ";
                     }else{
-                         description += " |";
+                         description += "  ";
                     }
                 }
                 
                 int day = getDifferenceDays(list.get(i).getCheckin(), list.get(i).getCheckout()); // Day 
                 if( day != 0){
-                   description += ""+day +"|";
+                   description += "  :  "+day +" NST";
                 }else{
-                     description += " |";
-                }  
+                     description += "0 NST";
+                }
+                if(list.get(i).getMaster().getCustomer().getMInitialname() != null){ // prename
+                    description += "|"+list.get(i).getMaster().getCustomer().getMInitialname().getName() +" ";
+                }else{
+                     description += " ";
+                }
+                if(list.get(i).getMaster().getCustomer().getLastName() != null){ //last name
+                    description += " "+list.get(i).getMaster().getCustomer().getLastName() +" ";
+                }else{
+                     description += " ";
+                }
+                if(list.get(i).getMaster().getCustomer().getFirstName() != null){// firstname
+                    description += " "+list.get(i).getMaster().getCustomer().getFirstName() +"";
+                }else{
+                     description += "";
+                }
             }
         }
         session.close();
@@ -666,54 +682,73 @@ public class BillableImpl implements BillableDao {
         }else{
             for(int i = 0; i < list.size(); i++){
                 if(list.get(i).getMaster().getReferenceNo() != null){ // Ref no
-                    description += ""+list.get(i).getMaster().getReferenceNo() +"|";
+                    description += "Ref No. "+list.get(i).getMaster().getReferenceNo() +" : ";
                 }else{
-                     description += " |";
+                     description += "";
                 }
-                if(list.get(i).getMaster().getCustomer().getMInitialname().getName() != null){ // prename
-                    description += ""+ list.get(i).getMaster().getCustomer().getMInitialname().getName() +"|";
+                if(list.get(i).getMaster().getCustomer().getMInitialname() != null){ // prename
+                    description += " "+list.get(i).getMaster().getCustomer().getMInitialname().getName() +" ";
                 }else{
-                     description += " |";
+                     description += " ";
                 }
                 if(list.get(i).getMaster().getCustomer().getLastName() != null){ //last name
-                    description += ""+list.get(i).getMaster().getCustomer().getLastName() +"|";
+                    description += " "+list.get(i).getMaster().getCustomer().getLastName() +" ";
                 }else{
-                     description += " |";
+                     description += " ";
                 }
                 if(list.get(i).getMaster().getCustomer().getFirstName() != null){// firstname
-                    description += ""+list.get(i).getMaster().getCustomer().getFirstName() +"|";
+                    description += " "+list.get(i).getMaster().getCustomer().getFirstName() +"  \n";
                 }else{
-                     description += " |";
+                     description += "  \n";
                 }
+                description += "Day Tour ";
                 if(list.get(i).getDaytour().getCode() != null){ // code
-                    description += ""+list.get(i).getDaytour().getCode() +"|";
+                    description += " "+list.get(i).getDaytour().getCode() +" ";
                 }else{
                      description += " |";
                 }
                 if(list.get(i).getDaytour().getName()!= null){ // name
-                    description += ""+list.get(i).getDaytour().getName() +"|";
+                    description += " : "+list.get(i).getDaytour().getName() +"  \n";
                 }else{
-                     description += " |";
+                     description += "  \n";
                 }
                 if(list.get(i).getTourDate() != null){ // date
-                    description += ""+list.get(i).getTourDate() +"|";
+                    String  date = utility.convertDateToString(list.get(i).getTourDate());
+                    String dateArr[] = date.split("-");
+                    String newDate = dateArr[2] +"/" + dateArr[1] + "/" + dateArr[0];
+                    description += "  \t\t("+newDate +"  ";
                 }else{
-                     description += " |";
+                     description += "  ";
                 }
                 if(list.get(i).getAdult() != 0){ // adult
-                    description += " Adult "+ list.get(i).getAdult() +" Pax |";
+                    description += "  Adult "+ list.get(i).getAdult() +" Pax  ";
                 }else{
-                     description += " |";
+                     description += "  ";
                 }
                 if(list.get(i).getChild() != 0){ // child
-                    description += " Child "+ list.get(i).getChild() +" Pax |";
+                    description += " Child "+ list.get(i).getChild() +" Pax  ";
                 }else{
-                     description += " |";
+                     description += "  ";
                 }
                 if(list.get(i).getInfant() != 0){ // infant
-                    description += " Infant "+ list.get(i).getInfant() +" Pax |)";
+                    description += " Infant "+ list.get(i).getInfant() +" Pax  )";
                 }else{
-                     description += " |";
+                     description += "  )";
+                }
+                if(list.get(i).getMaster().getCustomer().getMInitialname() != null){ // prename
+                    description += "|"+list.get(i).getMaster().getCustomer().getMInitialname().getName() +" ";
+                }else{
+                     description += " ";
+                }
+                if(list.get(i).getMaster().getCustomer().getLastName() != null){ //last name
+                    description += " "+list.get(i).getMaster().getCustomer().getLastName() +" ";
+                }else{
+                     description += " ";
+                }
+                if(list.get(i).getMaster().getCustomer().getFirstName() != null){// firstname
+                    description += " "+list.get(i).getMaster().getCustomer().getFirstName() +"";
+                }else{
+                     description += "";
                 }
             }
         }
@@ -722,7 +757,25 @@ public class BillableImpl implements BillableDao {
         System.out.println("DEscription : " + description);
         return description;
     }
-    
+    private String changeMonth(String monthInt){
+        String text = "";
+        switch (monthInt){
+            case "01" : text = "JAN";break;
+            case "02" : text = "FEB";break;
+            case "03" : text = "MAR";break;
+            case "04" : text = "APR";break;
+            case "05" : text = "MAY";break;
+            case "06" : text = "JUN";break;
+            case "07" : text = "JUL";break;
+            case "08" : text = "AUG";break;
+            case "09" : text = "SEP";break;
+            case "10" : text = "OCT";break;
+            case "11" : text = "NOV";break;
+            case "12" : text = "DEC";break;
+            case "" : text = "" ;break;
+        }
+        return text;
+    }
     private  int getDifferenceDays(Date d1, Date d2) {
         int daysdiff = 0;
         long diff = d2.getTime() - d1.getTime();
@@ -744,7 +797,9 @@ public class BillableImpl implements BillableDao {
             AirticketDesc desc = list.get(0);
             description += "Ref No. "+desc.getAirticketBooking().getMaster().getReferenceNo()+" : "+util.getCustomerName(desc.getAirticketBooking().getMaster().getCustomer())+"\n";
             description += desc.getDetail() +"\t\t\t\t\t"+ "(" + desc.getAmount() +" * "+desc.getQty() +")";
+            description += "|"+ util.getCustomerName(desc.getAirticketBooking().getMaster().getCustomer());
         }
+        
         session.close();
         this.sessionFactory.close();
         System.out.println("DEscription : " + description);

@@ -295,7 +295,7 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur){
     var vatValue = '';
     var vathidden = '';
    
-    if(showvat=='true'){
+    if(showvat == 'true'){
         vathidden = '';
         check  = "checked";
         vatValue = defaultD;
@@ -340,7 +340,7 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur){
             '<td class="hidden"><input type="text" class="form-control" id="detailId' + row + '" name="detailId' + row + '" value="" > </td>' +
             '<td class="hidden"><input type="text" class="form-control" id="DetailBillId' + row + '" name="DetailBillId' + row + '" value="'+id+'" > </td>' +
             '<td><select id="SelectProductType' + row + '" name="SelectProductType' + row + '" class="form-control">'+ selectT +'</select> </td>' +
-            '<td><input type="text" class="form-control" id="BillDescriptionTemp' + row + '" name="BillDescriptionTemp' + row + '" value="'+des +'" onkeyup="setDescription(' + row + ')"></td>' +
+            '<td><input type="text" class="form-control" id="BillDescriptionTemp' + row + '" name="BillDescriptionTemp' + row + '" value="" onkeyup="setDescription(' + row + ')"></td>' +
             '<td class="hidden"><input type="text" class="form-control" id="BillDescription' + row + '" name="BillDescription' + row + '" value="'+des +'" > </td>' +
             '<td><input  maxlength ="15" type="text" onfocusout="changeFormatCostNumber(' + row + ')" class="form-control numerical" id="InputCost' + row + '" name="InputCost' + row + '" value="'+ cos +'" ></td>' +
             '<td><select id="SelectCurrencyCost' + row + '" name="SelectCurrencyCost' + row + '" class="form-control">'+ selectC +'</select></td>' +
@@ -364,7 +364,7 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur){
             '<td class="hidden"><input type="text" class="form-control" id="detailId' + row + '" name="detailId' + row + '" value="" > </td>' +
             '<td class="hidden"><input type="text" class="form-control" id="DetailBillId' + row + '" name="DetailBillId' + row + '" value="'+id+'" > </td>' +
             '<td><select id="SelectProductType' + row + '" name="SelectProductType' + row + '" class="form-control">'+ selectT +'</select> </td>' +
-            '<td><input type="text" class="form-control" id="BillDescriptionTemp' + row + '" name="BillDescriptionTemp' + row + '" value="'+des +'" onkeyup="setDescription(' + row + ')"></td>' +
+            '<td><input type="text" class="form-control" id="BillDescriptionTemp' + row + '" name="BillDescriptionTemp' + row + '" value="" onkeyup="setDescription(' + row + ')"></td>' +
             '<td class="hidden"><input type="text" class="form-control" id="BillDescription' + row + '" name="BillDescription' + row + '" value="'+des +'" > </td>' +
             '<td><input  maxlength ="15" type="text" onfocusout="changeFormatCostNumber(' + row + ')" class="form-control numerical" id="InputCost' + row + '" name="InputCost' + row + '" value="'+ cos +'" ></td>' +
             '<td><select id="SelectCurrencyCost' + row + '" name="SelectCurrencyCost' + row + '" class="form-control">'+ selectC +'</select></td>' +
@@ -458,15 +458,15 @@ function changeFormatCostNumber(id){
     var count = document.getElementById('InputCost'+id).value;
     count = count.replace(/\,/g,'');
     count  = parseFloat(count);
-    alert("Cost1 : " + count);
+//    alert("Cost1 : " + count);
     if(isNaN(count)){
         document.getElementById('InputCost' + id).value = "";
     }else{
         count = parseFloat(count);
-        alert("Cost2 : " + count);
+//        alert("Cost2 : " + count);
         document.getElementById('InputCost' + id).value = formatNumber(count);
     } 
-    alert("Cost Last : " + formatNumber(count));
+//    alert("Cost Last : " + formatNumber(count));
 }
 function changeFormatCostLocalNumber(id){
     var count  = parseFloat(document.getElementById('InputCostLocal'+id).value);
@@ -852,7 +852,7 @@ function addInvoiceDetail(rowId){
                         '&refNo=' + refItemId +
                         '&typeId=' + prod +
                         '&type=' + 'searchInvoiceDescription';
-                   CallAjaxSearchDescription(param,countTable);
+                   CallAjaxSearchDescription(param,countTable,pro,RefNo);
                 // Send Add Row
                 AddRowDetailBillAble(countTable,prod,des,cos,id,price,RefNo,cur);
 //                alert("C : " + countTable);
@@ -871,7 +871,7 @@ function addInvoiceDetail(rowId){
     }    
 }
 
-function CallAjaxSearchDescription(param,rowId) {
+function CallAjaxSearchDescription(param,rowId,des,RefNo) {
     var url = 'AJAXServlet';
     $("#ajaxloadsearch").removeClass("hidden");
     try {
@@ -884,19 +884,20 @@ function CallAjaxSearchDescription(param,rowId) {
                 var strx   = msg.split('|');
                 var array  = [];
                 array = array.concat(strx);
-                if(array[1] === 'Others'){
-                    setDescriptionOther(array,rowId);
-                }else if(array[1] === 'Land'){
-                    setDescriptionLand(array,rowId);
-                }else if(array[1] === 'Hotel'){
-                    setDescriptionHotel(array,rowId);
-                }else if(array[1] === 'Day Tour'){
-                    setDescriptionDaytour(array,rowId);
-                }else if(array[1] === 'Air Ticket'){
-                    setDescriptionAirticket(array,rowId);
-                }else if(array[1] === 'Air Additional'){
-                    setDescriptionAirAdditional(array,rowId);
-                }
+                setbillAndDescription(rowId,RefNo,array[1],array[0],des);
+//                if(array[1] === 'Others'){
+//                    setDescriptionOther(array,rowId,des);
+//                }else if(array[1] === 'Land'){
+//                    setDescriptionLand(array,rowId,des);
+//                }else if(array[1] === 'Hotel'){
+//                    setDescriptionHotel(array,rowId,des);
+//                }else if(array[1] === 'Day Tour'){
+//                    setDescriptionDaytour(array,rowId,des);
+//                }else if(array[1] === 'Air Ticket'){
+//                    setDescriptionAirticket(array,rowId,des);
+//                }else if(array[1] === 'Air Additional'){
+//                    setDescriptionAirAdditional(array,rowId,des);
+//                }
                 
 //                alert("DES :"+array[1]);
                 //MasterReservation Table
@@ -915,29 +916,17 @@ function CallAjaxSearchDescription(param,rowId) {
     } catch (e) {
         alert(e);
     }
-}    
+} 
 
-function setDescriptionDaytour(des,row){
-//    var strx   = des.split(',');
-    var array  = [];
-    array = des;
-    var arrayNew ="";
-    var i = 0;
-    for (i = 1 ; i <= (array.length-1) ; i++){
-        arrayNew += array[i] +",";
-    };
-//    alert(arrayNew + " R : " + row );
-    var text = "";
-//    text += "<div class='row'> <div class='col-md-2 text-right' ><b>Description</b> </div> <div class='col-md-10 text-left'><textarea class='form-control' rows='5'>";
-    text += "Ref No. "+ array[2] +" : " + array[3] + " " + array[4] + " " + array[5] + "\n";
-    text += "" + array[1] + " " + array[6] + " : " + array[7]+ "\n";
-    text += "\t(" + array[8] + " " + array[9]+ ")\n";
-//    text += "</textarea> </div> </div>";
+function setbillAndDescription(row,ref,name,text,des){
+    var bill = ref + " " + name + " " + des;
+    $('#BillDescriptionTemp'+row).val(bill);
+    $('#BillDescription'+row).val(bill);
     $('#DescriptionInvoiceDetail'+row).html(text);
     $("#DescriptionInvoiceDetailTextArea"+row).html(text);
 }
-function setDescriptionOther(data,row){
-     //    var strx   = des.split(',');
+
+function setDescriptionDaytour(data,row,des){
     var array  = [];
     array = data;
     var arrayNew ="";
@@ -946,16 +935,28 @@ function setDescriptionOther(data,row){
         arrayNew += array[i] +",";
     };
     var text = "";
-//    text += "<div class='row'> <div class='col-md-2 text-right' ><b>Description</b> </div> <div class='col-md-10 text-left'><textarea class='form-control' rows='5'>";
+    var date = array[8].split("-"); ;
+    var newDate = date[2] +"-" + date[1] + "-" + date[0];
+    text += "Ref No. "+ array[2] +" : " + array[3] + " " + array[5] + " " + array[4] + "\n";
+    text += "" + array[1] + " " + array[6] + " : " + array[7]+ "\n";
+    text += "\t\t" +"(" + newDate + " " + array[9]+ ")\n";
+    setbillAndDescription(row,array[2],array[3],array[5],array[4],text,des);
+}
+function setDescriptionOther(data,row,des){
+    var array  = [];
+    array = data;
+    var arrayNew ="";
+    var i = 0;
+    for (i = 1 ; i <= (array.length-1) ; i++){
+        arrayNew += array[i] +",";
+    };
+    var text = "";
     text += "Ref No. "+array[2] +" : " + array[3] + " " + array[4] + " " + array[5] + "\n";
     text += "" + array[1] + " (" + array[6] + ")  " + array[7]+ " \n";
     text += "\t " + array[8] + " "+ array[9] +  " "+ array[10] + " \n";
-//    text += "</textarea> </div> </div>";
-    $('#DescriptionInvoiceDetail'+row).html(text);
-    $("#DescriptionInvoiceDetailTextArea"+row).html(text);
+    setbillAndDescription(row,array[2],array[3],array[5],array[4],text,des);
 }
-function setDescriptionLand(data,row){
-    //    var strx   = des.split(',');
+function setDescriptionLand(data,row,des){
     var array  = [];
     array = data;
     var arrayNew ="";
@@ -964,16 +965,14 @@ function setDescriptionLand(data,row){
         arrayNew += array[i] +",";
     };
     var text = "";
-//    text += "<div class='row'> <div class='col-md-2 text-right' ><b>Description</b> </div> <div class='col-md-10 text-left'><textarea class='form-control' rows='5'>";
+    var date = array[6].split("-"); ;
+    var newDate = date[2] +"-" + date[1] + "-" + date[0];
     text += "Ref No. "+ array[2] +" : " + array[3] + " " + array[4] + " " + array[5] + "\n";
-    text += "" + array[1] + " (" + array[6] + ")  " + array[7]+ " NTS \n";
+    text += "" + array[1] + " (" + newDate + ")  " + array[7]+ " NTS \n";
     text += "\t " + array[8] + " PAX \n";
-//    text += "</textarea> </div> </div>";
-    $('#DescriptionInvoiceDetail'+row).html(text);
-    $("#DescriptionInvoiceDetailTextArea"+row).html(text);
+    setbillAndDescription(row,array[2],array[3],array[5],array[4],text,des);
 }
-function setDescriptionHotel(data,row){
-    //    var strx   = des.split(',');
+function setDescriptionHotel(data,row,des){
     var array  = [];
     array = data;
     var arrayNew ="";
@@ -981,24 +980,45 @@ function setDescriptionHotel(data,row){
     for (i = 1 ; i <= (array.length-1) ; i++){
         arrayNew += array[i] +",";
     };
+    var number = parseFloat(array[9]);
     var text = "";
-//    text += "<div class='row'> <div class='col-md-2 text-right' ><b>Description</b> </div> <div class='col-md-10 text-left'><textarea class='form-control' rows='5'>";
+    var date = array[7].split("-"); ;
+    var newDate = date[2] +" " + changeMonth(date[1]) + " " + date[0];
+    var date1 = array[8].split("-"); ;
+    var newDate1 = date1[2] +" " + changeMonth(date1[1]) + " " + date1[0];
     text += "Ref No. "+ array[2] +" : " + array[3] + " " + array[4] + " " + array[5] + "\n";
-    text += "" + array[1] + "  " + array[6] + " \n";
-    text += "\t" + array[7] + " - " + array[8]+ " \n";
-    text += "\t" + array[9] + "  " + array[10]+ "  " + array[11] + "  " + array[12] + " : "+  array[13] + "  NTS  \n";
-//    text += "</textarea> </div> </div>";
-    $('#DescriptionInvoiceDetail'+row).html(text);
-    $("#DescriptionInvoiceDetailTextArea"+row).html(text);
+    text += "" + "HOTEL" + "  " + array[6] + " \n";
+    text += "\t" + "     " +newDate + " - " +  newDate1  + " \n";
+    text += "\t" + "     " + formatNumber(number) + "  " + array[10]+ "  " + array[11] + "  " + array[12] + " : "+  array[13] + "  NTS  \n";
+    setbillAndDescription(row,array[2],array[3],array[5],array[4],text,des);
 }
-function setDescriptionAirticket(data,row){
+
+function changeMonth(monthInt){
+    var text = "";
+    switch (monthInt){
+        case "01" : text = "JAN";break;
+        case "02" : text = "FEB";break;
+        case "03" : text = "MAR";break;
+        case "04" : text = "APR";break;
+        case "05" : text = "MAY";break;
+        case "06" : text = "JUN";break;
+        case "07" : text = "JUL";break;
+        case "08" : text = "AUG";break;
+        case "09" : text = "SEP";break;
+        case "10" : text = "OCT";break;
+        case "11" : text = "NOV";break;
+        case "12" : text = "DEC";break;
+        case "" : text = "" ;break;
+    }
+    return text;
+}
+function setDescriptionAirticket(data,row,des){
    
     var array  = [];
     array = data;
     var text = "";
     text += array[2];
-    $('#DescriptionInvoiceDetail'+row).html(text);
-    $("#DescriptionInvoiceDetailTextArea"+row).html(text);
+    setbillAndDescription(row,array[2],array[3],array[5],array[4],text,des);
 }
 
 function checkDuplicateInvoiceDetail(product,rowId){
