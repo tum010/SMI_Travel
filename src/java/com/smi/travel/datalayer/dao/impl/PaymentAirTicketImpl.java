@@ -641,19 +641,4 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
         this.transaction = transaction;
     }
 
-    @Override
-    public List<PaymentAirticketFare> searchTicketFare(String ticketfareId, String invoiceSubCode) {
-        String query = "from PaymentAirticketFare fare where fare.ticketFareAirline.id = :ticketfareId and fare.paymentAirticket.invoiceSup = :invoiceSup";
-        Session session = this.sessionFactory.openSession();
-        List<PaymentAirticketFare> paymentAirticketFares = session.createQuery(query).setParameter("ticketfareId", ticketfareId).setParameter("invoiceSup", invoiceSubCode).list();
-        
-        if (paymentAirticketFares.isEmpty()) {
-            return null;
-        }
-        
-        session.close();
-        this.sessionFactory.close();
-        return paymentAirticketFares; 
-    }
-
 }

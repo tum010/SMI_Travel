@@ -67,10 +67,6 @@ public class PaymentAirTicketService {
         return paymentairticketdao.getRefundDetailByPaymentAirId(paymentAirId);
     }
     
-    public List<PaymentAirticketFare> searchTicketFare(String ticketfareId,String invoiceSubCode){
-        return paymentairticketdao.searchTicketFare(ticketfareId,invoiceSubCode);
-    }
-    
     public PaymentAirTicketDao getPaymentairticketdao() {
         return paymentairticketdao;
     }

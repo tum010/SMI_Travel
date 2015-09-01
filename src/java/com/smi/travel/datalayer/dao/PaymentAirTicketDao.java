@@ -39,5 +39,4 @@ public interface PaymentAirTicketDao {
     public List<TicketFareView> getTicketFareViewsByPaymentAirId(String paymentAirId);
     public List<RefundAirticketDetailView> getRefundDetailByPaymentAirId(String paymentAirId);
     
-    public List<PaymentAirticketFare> searchTicketFare(String ticketfareId,String invoiceSubCode);
 }

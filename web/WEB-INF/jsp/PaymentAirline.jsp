@@ -903,8 +903,6 @@ for(var i = 0; i < rad.length; i++) {
             $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'apCode');
             validateSaveButton();
         });
-
-
         
         $("#paymentNo").keyup(function (event) {
             if(event.keyCode === 13){
@@ -1452,16 +1450,13 @@ function calculateTotalPayment() {
         var totalPayment = amountTotal - comTotal - refundTotal + refundVat - creditAmount;
         document.getElementById("totalPayment").value = formatNumber(totalPayment);
     }else if (payto == 'C'){
-        calculateTotalPayCus();
+        var refundTable = $("#RefundTicketTable tr").length;
+        if(refundTable > 1){
+            calculateTotalPayCus();
+        }   
     }
 
-    if(totalPayment < 0){
-        $("#ButtonSave").attr("disabled", "disabled");
-        $("#ButtonSaveAndNew").attr("disabled", "disabled");
-    }else{
-        $("#ButtonSave").removeAttr("disabled");
-        $("#ButtonSaveAndNew").removeAttr("disabled");
-    }
+    validateSaveButton();
 }
 
 function calculateTotalPayCus(){
@@ -1624,6 +1619,12 @@ function validateSaveButton(){
         totalPayment = 0;
     }
     var payment = parseFloat(totalPayment); 
+    
+    if(payment < 0){
+        $('#textAlertTotalPayment').show();
+    }else{
+        $('#textAlertTotalPayment').hide();
+    }
     
     if($("#invoiceSupCode").val() != "" & $("#apCode").val() != "" && payment > 0){
         $("#ButtonSave").removeAttr("disabled");
