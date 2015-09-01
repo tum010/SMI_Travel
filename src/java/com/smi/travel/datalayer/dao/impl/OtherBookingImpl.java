@@ -293,7 +293,7 @@ public class OtherBookingImpl implements OtherBookingDao{
     private List<StockDetail> getStockDetail(String stockId, Session session) {
         List<StockDetail> fail = new ArrayList<StockDetail>();
         try {
-            String query = "from StockDetail s where s.stock.id = " + stockId + " and s.MStockStatus.id = 1";
+            String query = "from StockDetail s where s.stock.id = " + stockId + " and s.MStockStatus.id = 1 order by s.code ";
             List<StockDetail> stockDetailList = session.createQuery(query).list();
             if(stockDetailList.isEmpty()){
                 return fail;  
@@ -490,7 +490,7 @@ public class OtherBookingImpl implements OtherBookingDao{
         List<OtherTicketView> ticketList = new ArrayList<OtherTicketView>();
         try{
             Session session = this.sessionFactory.openSession();
-            String query = "from StockDetail s where s.otherBooking.id = " + otherBookingId ;
+            String query = "from StockDetail s where s.otherBooking.id = " + otherBookingId + " order by s.code";
             List<StockDetail> stockDetailList = session.createQuery(query).list();            
             if(stockDetailList.isEmpty()){
                 return ticketList;  

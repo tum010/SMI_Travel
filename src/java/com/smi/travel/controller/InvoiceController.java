@@ -150,6 +150,8 @@ public class InvoiceController extends SMITravelController {
                 saveAction(result, invoiceNo, invoice, request);
             }else{
                 result = invoiceService.checkOverflowValueOfInvoice(invoice.getInvoiceDetails());
+                request.setAttribute("listInvoiceDetail", invoice.getInvoiceDetails());
+                request.setAttribute("invoice", invoice);
                 request.setAttribute("result", result);
             }
             System.out.println("invoiceService checkOverflowValueOfInvoice:"+invoiceService.checkOverflowValueOfInvoice(invoice.getInvoiceDetails()));
@@ -419,19 +421,20 @@ public class InvoiceController extends SMITravelController {
                 df.applyPattern("MMyy");
                 String month = day[1];
                 String year = day[0];
+                String da = day[2];
                 year = year.substring(2);
                 System.out.println("Date MMYY : " + df.format(date));
                 String lastInvoiceType = invoiceService.searchInvoiceNum(department, invoiceType,df.format(date));
                 String invoiceNoNew ="";
                 if(lastInvoiceType != null && !lastInvoiceType.equals("")){
-                   invoiceNoNew = generateInvoiceNo(department, invoiceType, month, year,lastInvoiceType);
+                   invoiceNoNew = generateInvoiceNo(department, invoiceType, month, year,lastInvoiceType,da);
                    if(invoiceNoNew != null && !invoiceNoNew.equals("")){
                         invoice.setInvNo(invoiceNoNew);
                    }else{
                         invoice.setInvNo("");
                    }
                 }else{
-                    invoiceNoNew = generateInvoiceNo(department, invoiceType, month, year,null);
+                    invoiceNoNew = generateInvoiceNo(department, invoiceType, month, year,null,da);
                     if(invoiceNoNew != null && !invoiceNoNew.equals("")){
                          invoice.setInvNo(invoiceNoNew);
                     }else{
@@ -451,18 +454,25 @@ public class InvoiceController extends SMITravelController {
         return invoice;
     }
     
-    public String generateInvoiceNo(String department,String invoiceType,String month ,String year,String lastInvoiceType){
+    public String generateInvoiceNo(String department,String invoiceType,String month ,String year,String lastInvoiceType,String date){
         String invoiceNum = "";
         String invoiceLast = "";
         int count = 0;
-        if(lastInvoiceType != null && !"".equals(lastInvoiceType)){
+        if(lastInvoiceType != null && !"".equals(lastInvoiceType) ){
             count = lastInvoiceType.length();
             count = count-4;
             invoiceLast = lastInvoiceType.substring(count);    
             count = Integer.parseInt(invoiceLast);
+           
         }
-        
-        String numberAsString = String.format ("%04d", (count+1));
+        String numberAsString = "";
+//        System.out.println("Day Invoice : " + date);
+//        if("01".equals(date)){
+//            numberAsString = String.format ("%04d", 1);
+//        }else{
+//            numberAsString = String.format ("%04d", (count+1));
+//        }
+        numberAsString = String.format ("%04d", (count+1));
         if(department.equals("Wendy")){
             if(invoiceType.equals("T")){
                 invoiceNum = "W"+month+""+year+""+numberAsString;

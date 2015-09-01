@@ -49,19 +49,19 @@
         </div>
         </c:if>
         <c:if test="${taxInvoice.MFinanceItemstatus.id == '2'}">
-        <div id="textAlertDivFindNotFound"  style="" class="alert alert-danger alert-dismissible" role="alert">
+        <div id="textAlertTaxInvoiceVoid"  style="" class="alert alert-danger alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
            <strong>Tax invoice void!.</strong> 
         </div>
         </c:if>    
         <c:if test="${requestScope['result_text'] =='cost much over'}">
-        <div id="textAlertDivNotSave"  style="" class="alert alert-danger alert-dismissible" role="alert">
+        <div id="textAlertCostOver"  style="" class="alert alert-danger alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
            <strong>Save Unsuccess Cost Much Over!.</strong> 
         </div>
         </c:if>  
         <c:if test="${requestScope['result_text'] =='amount much over'}">
-        <div id="textAlertDivNotSave"  style="" class="alert alert-danger alert-dismissible" role="alert">
+        <div id="textAlertAmountOver"  style="" class="alert alert-danger alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
            <strong>Save Unsuccess Amount Much Over!.</strong> 
         </div>
@@ -188,7 +188,7 @@
                             </c:if>
                             <c:if test='${taxInvoice.taxInvDate == null}'>
                                 <input id="InvToDate" name="InvToDate"  type="text" 
-                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['defaultInvToDate']}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 
                             </c:if>                             
@@ -1661,7 +1661,7 @@
         $("#invoiceNo").val("");
         $("#TaxInvId").val("");
         $("#TaxInvNo").val("");
-        $("#InvToDate").val("");
+        $("#InvToDate").val("${requestScope['defaultInvToDate']}");
         $("#TaxInvTo").val("");
         $("#InvToName").val("");
         $("#InvToAddress").val("");
@@ -1678,7 +1678,13 @@
         });       
         $('#TaxInvoiceTable > tbody  > tr').each(function() {
             $(this).remove();
-        });              
+        });
+        $("#textAlertDivSave").addClass("hidden");
+        $("#textAlertDivNotSave").addClass("hidden");
+        $("#textAlertDivFindNotFound").addClass("hidden");
+        $("#textAlertTaxInvoiceVoid").addClass("hidden");
+        $("#textAlertCostOver").addClass("hidden");
+        $("#textAlertAmountOver").addClass("hidden");
         AddRowTaxInvoiceTable();
         CalculateAmountTotal();
     }

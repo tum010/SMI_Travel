@@ -206,8 +206,16 @@
 
     function checkEmailTo() {
         var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        var email = document.getElementById('recipient');
-        var email_list = (email.value).split(',');
+        var email = document.getElementById('recipient').value;
+        var email_list = "";       
+        email = email.replace(/ /g,"");
+        if(((email).indexOf(',')) !== -1){
+            email_list = (email).split(',');
+        } else if(((email).indexOf(';')) !== -1){
+            email_list = (email).split(';');
+        } else {
+            email_list = (email).split(';');
+        }
         var recipientField = document.getElementById('recipient');
         for(var i=0;i<email_list.length;i++){
             if (!filter.test(email_list[i])) {                 
@@ -225,11 +233,20 @@
 
     function checkEmailCc(){
         var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        var email = document.getElementById('sendCc');
-        if(email.value === ''){
+        var email = document.getElementById('sendCc').value;
+        if(email === ''){
             return ;
         } else {
-            var email_list = (email.value).split(',');
+            var email_list = "";
+            email = email.replace(/ /g,"");
+            if(((email).indexOf(',')) !== -1){
+                email_list = (email).split(',');
+            } else if(((email).indexOf(';')) !== -1){
+                email_list = (email).split(';');
+            } else {
+                email_list = (email).split(';');
+            }
+            
             var sendCcField = document.getElementById('sendCc');
             for(var i=0;i<email_list.length;i++){
                 if (!filter.test(email_list[i])) {                 
