@@ -73,6 +73,7 @@
                 <input type="hidden" name="vat" id="vat" value="">
                 <input type="hidden" name="flagSearch" id="flagSearch" value="${flagSearch}">
                 <input type="hidden" name="paytoTemp"  id="paytoTemp" value="${paymentAirticket.payTo}">
+                <input type="hidden" name="ticketNoList" id="ticketNoList" value="">
                 <div class="panel panel-default">
                     <div class="panel-body"  style="padding-right: 0px;" style="width: 100%">
                         <div class="col-xs-12">
@@ -138,13 +139,12 @@
                             <div class="col-xs-1 text-right"  style="width: 165px">
                                 <label class="control-label text-right">Pay To</label>
                             </div>
-                            <div class="col-xs-1" style="width: 300px;padding-top:6px " >
+                            <div class="col-xs-1" style="width: 170px;padding-top:6px " >
                                 <c:set var="checkA" value="" />
                                 <c:if test="${paymentAirticket.payTo == 'A'}">
                                     <c:set var="checkA" value="checked" />
                                 </c:if>  
-                                <input type="radio" name="payto"  id="paytoA" value="A" ${checkA}/>&nbsp;Airline&nbsp;&nbsp;
-
+                                <input type="radio" name="payto"  id="paytoA" value="A" ${checkA}/>&nbsp;Airline
                                 <c:set var="checkC" value="" />
                                 <c:if test="${paymentAirticket.payTo == 'C'}">
                                     <c:set var="checkC" value="checked" />
@@ -783,7 +783,7 @@ for(var i = 0; i < rad.length; i++) {
                         }
                     }
                 },
-                apCode: {
+                apCode: { 
                     validators: {
                         notEmpty: {
                             message: 'A/P Code is required'
@@ -1152,7 +1152,7 @@ function addAction(){
     var i = 1;
     for (i = 1; i < tablelength; i++) { 
         var refund = $("#refundNoRow"+i).val();
-        var refundNumber = refund.toString();
+        var refundNumber = refund;
         if(refundNumber != ""){
             if(refundNo == refundNumber){
                 duplicate = 2;
@@ -1172,7 +1172,9 @@ function addAction(){
 
 function addRefundNo(){
     $('#AddRefundNoModal').modal('hide');
+    getTicketNoFromTicketFare();
     var refundNo = $("#refundNo").val();
+    var ticketNoList = $("#ticketNoList").val();
     if(refundNo == ""){
         if(!$('#refundnopanel').hasClass('has-feedback')) {
             $('#refundnopanel').addClass('has-feedback');
@@ -1188,6 +1190,7 @@ function addRefundNo(){
                 '&servicesName=' + servicesName +
                 '&refundNo=' + refundNo +
                 '&rowCount=' + rowCount +
+                '&ticketNoList=' + ticketNoList +
                 '&type=' + 'addRefund';
         CallAjaxAdd(param);
     }
@@ -1614,7 +1617,7 @@ function clearData(){
 }
 
 function validateSaveButton(){
-        var totalPayment = replaceAll(",","",$('#totalPayment').val()); 
+    var totalPayment = replaceAll(",","",$('#totalPayment').val()); 
     if (totalPayment == ""){
         totalPayment = 0;
     }
@@ -1626,14 +1629,28 @@ function validateSaveButton(){
         $('#textAlertTotalPayment').hide();
     }
     
-    if($("#invoiceSupCode").val() != "" & $("#apCode").val() != "" && payment > 0){
+    if($("#invoiceSupCode").val() != "" & $("#apCode").val() != "" && (payment > 0 || payment == 0)){
         $("#ButtonSave").removeAttr("disabled");
         $("#ButtonSaveAndNew").removeAttr("disabled");
         $("#ButtonSearch").removeAttr("disabled");
+        $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'apCode'); 
+        $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'invoiceSupCode');
     }else{
         $("#ButtonSave").attr("disabled", "disabled");
         $("#ButtonSaveAndNew").attr("disabled", "disabled");
         $("#ButtonSearch").attr("disabled", "disabled");
     }
+}
+
+function getTicketNoFromTicketFare() {
+    var temp = 0;
+    var ticeketList = "";
+    var tableTicket = document.getElementById('TicketFareTable');
+    for (var r = 1, n = tableTicket.rows.length; r < n; r++) {
+        temp = tableTicket.rows[r].cells[1].innerHTML;
+        ticeketList += temp + ",";
+    }
+    
+    document.getElementById("ticketNoList").value = ticeketList;
 }
 </script>

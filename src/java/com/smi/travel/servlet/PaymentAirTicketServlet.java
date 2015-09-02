@@ -25,7 +25,7 @@ public class PaymentAirTicketServlet implements AbstractAJAXServlet{
         String type = request.getParameter("type");
         String refundNo = request.getParameter("refundNo");
         String rowCount = request.getParameter("rowCount");
-
+        String ticketNoList = request.getParameter("ticketNoList");
         System.out.print("set parameter mapping");
         Map result = new HashMap();
         
@@ -33,7 +33,7 @@ public class PaymentAirTicketServlet implements AbstractAJAXServlet{
         result.put("type", type);
         result.put("refundNo", refundNo);
         result.put("rowCount", rowCount);
-        
+        result.put("ticketNoList", ticketNoList);
         return result;   
     }
     

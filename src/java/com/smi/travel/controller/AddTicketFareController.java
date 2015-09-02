@@ -328,18 +328,17 @@ public class AddTicketFareController extends SMITravelController {
                 }
             }
                         
-            List<InvoiceDetailView> InvoiceDetailViewList = new ArrayList<InvoiceDetailView>();
-            InvoiceDetailViewList = ticketFareAirlineService.getInvoiceDetailFromTicketNo(ticketNo);
-            request.setAttribute(INVOICEDETAILLIST, InvoiceDetailViewList);
-            
+            List<InvoiceDetailView> invoiceDetailViewList = new ArrayList<InvoiceDetailView>();
+            invoiceDetailViewList = ticketFareAirlineService.getInvoiceDetailFromTicketNo(ticketNo);
             List<ReceiptDetailView> receiptDetailViewListTemp = new ArrayList<ReceiptDetailView>();
             List<ReceiptDetailView> receiptDetailViewList = new ArrayList<ReceiptDetailView>();
-            if(InvoiceDetailViewList != null){
-                for (int i = 0; i < InvoiceDetailViewList.size() ; i++) {
-                    invNo = InvoiceDetailViewList.get(i).getInvNo();
-                    invDate = InvoiceDetailViewList.get(i).getInvDate();
-                    invcredit =  InvoiceDetailViewList.get(i).getCredit();
-                    receiptDetailViewListTemp = receiptService.getReceiptDetailViewFromInvDetailId(InvoiceDetailViewList.get(i).getId());
+            if(!"null".equals(invoiceDetailViewList.get(0).getInvoiceId())){
+                request.setAttribute(INVOICEDETAILLIST, invoiceDetailViewList);
+                for (int i = 0; i < invoiceDetailViewList.size() ; i++) {
+                    invNo = invoiceDetailViewList.get(i).getInvNo();
+                    invDate = invoiceDetailViewList.get(i).getInvDate();
+                    invcredit =  invoiceDetailViewList.get(i).getCredit();
+                    receiptDetailViewListTemp = receiptService.getReceiptDetailViewFromInvDetailId(invoiceDetailViewList.get(i).getId());
                     if(receiptDetailViewListTemp != null){
                         for (int j = 0; j < receiptDetailViewListTemp.size() ; j++) {
                             ReceiptDetailView receiptDetailView = new ReceiptDetailView();
@@ -393,18 +392,18 @@ public class AddTicketFareController extends SMITravelController {
                 request.setAttribute(FLIGHTDETAILFLAG,"notdummy");
             }
             
-            List<InvoiceDetailView> InvoiceDetailViewList = new ArrayList<InvoiceDetailView>();
-            InvoiceDetailViewList = ticketFareAirlineService.getInvoiceDetailFromTicketNo(ticketNo);
-            request.setAttribute(INVOICEDETAILLIST, InvoiceDetailViewList);
+            List<InvoiceDetailView> invoiceDetailViewList = new ArrayList<InvoiceDetailView>();
+            invoiceDetailViewList = ticketFareAirlineService.getInvoiceDetailFromTicketNo(ticketNo);
             
             List<ReceiptDetailView> receiptDetailViewListTemp = new ArrayList<ReceiptDetailView>();
             List<ReceiptDetailView> receiptDetailViewList = new ArrayList<ReceiptDetailView>();
-            if(InvoiceDetailViewList != null){
-                for (int i = 0; i < InvoiceDetailViewList.size() ; i++) {
-                    invNo = InvoiceDetailViewList.get(i).getInvNo();
-                    invDate = InvoiceDetailViewList.get(i).getInvDate();
-                    invcredit =  InvoiceDetailViewList.get(i).getCredit();
-                    receiptDetailViewListTemp = receiptService.getReceiptDetailViewFromInvDetailId(InvoiceDetailViewList.get(i).getId());
+            if(!"null".equals(invoiceDetailViewList.get(0).getInvoiceId())){
+                request.setAttribute(INVOICEDETAILLIST, invoiceDetailViewList);
+                for (int i = 0; i < invoiceDetailViewList.size() ; i++) {
+                    invNo = invoiceDetailViewList.get(i).getInvNo();
+                    invDate = invoiceDetailViewList.get(i).getInvDate();
+                    invcredit =  invoiceDetailViewList.get(i).getCredit();
+                    receiptDetailViewListTemp = receiptService.getReceiptDetailViewFromInvDetailId(invoiceDetailViewList.get(i).getId());
                     if(receiptDetailViewListTemp != null){
                         for (int j = 0; j < receiptDetailViewListTemp.size() ; j++) {
                             ReceiptDetailView receiptDetailView = new ReceiptDetailView();
@@ -448,22 +447,22 @@ public class AddTicketFareController extends SMITravelController {
                 bookingFlights = ticketFareAirlineService.getListFlightFromTicketNo(ticketNo);
                 request.setAttribute(FLIGHTDETAIL, bookingFlights);
                 
-                List<InvoiceDetailView> InvoiceDetailViewList = new ArrayList<InvoiceDetailView>();
-                InvoiceDetailViewList = ticketFareAirlineService.getInvoiceDetailFromTicketNo(ticketNo);
-                request.setAttribute(INVOICEDETAILLIST, InvoiceDetailViewList);
+                List<InvoiceDetailView> invoiceDetailViewList = new ArrayList<InvoiceDetailView>();
+                invoiceDetailViewList = ticketFareAirlineService.getInvoiceDetailFromTicketNo(ticketNo);
 
                 List<ReceiptDetailView> receiptDetailViewListTemp = new ArrayList<ReceiptDetailView>();
                 List<ReceiptDetailView> receiptDetailViewList = new ArrayList<ReceiptDetailView>();
-                if(InvoiceDetailViewList != null){
-                    for (int i = 0; i < InvoiceDetailViewList.size() ; i++) {
-                        BigDecimal invAmounttemp = InvoiceDetailViewList.get(i).getInvAmount();
+                if(!"null".equals(invoiceDetailViewList.get(0).getInvoiceId())){
+                    request.setAttribute(INVOICEDETAILLIST, invoiceDetailViewList);
+                    for (int i = 0; i < invoiceDetailViewList.size() ; i++) {
+                        BigDecimal invAmounttemp = invoiceDetailViewList.get(i).getInvAmount();
                         invAmount = invAmounttemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
-                        invNo = InvoiceDetailViewList.get(i).getInvNo();
-                        invDate = InvoiceDetailViewList.get(i).getInvDate();
-                        invcredit =  InvoiceDetailViewList.get(i).getCredit();
-                        staffowner =  InvoiceDetailViewList.get(i).getOwner();
-                        ticketflightrouting = InvoiceDetailViewList.get(i).getRouting();
-                        receiptDetailViewListTemp = receiptService.getReceiptDetailViewFromInvDetailId(InvoiceDetailViewList.get(i).getId());
+                        invNo = invoiceDetailViewList.get(i).getInvNo();
+                        invDate = invoiceDetailViewList.get(i).getInvDate();
+                        invcredit =  invoiceDetailViewList.get(i).getCredit();
+                        staffowner =  invoiceDetailViewList.get(i).getOwner();
+                        ticketflightrouting = invoiceDetailViewList.get(i).getRouting();
+                        receiptDetailViewListTemp = receiptService.getReceiptDetailViewFromInvDetailId(invoiceDetailViewList.get(i).getId());
                         if(receiptDetailViewListTemp != null){
                             for (int j = 0; j < receiptDetailViewListTemp.size() ; j++) {
                                 ReceiptDetailView receiptDetailView = new ReceiptDetailView();

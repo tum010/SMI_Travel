@@ -427,7 +427,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
     }
 
     @Override
-    public String addRefundAirTicket(String refundNo,String rowCount) {
+    public String addRefundAirTicket(String refundNo,String rowCount,String ticketNoList) {
         String result ="";
         String query = "from RefundAirticketDetail r where r.refundAirticket.refundNo = :refundNo";
         Session session = this.sessionFactory.openSession();
@@ -436,14 +436,14 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
         if (refundAirticketDetails.isEmpty()) {
             return null;
         }else{
-            result =  buildRefundTicketHTML(refundAirticketDetails , rowCount);
+            result =  buildRefundTicketHTML(refundAirticketDetails , rowCount ,ticketNoList);
         }
         session.close();
         this.sessionFactory.close();
         return result;        
     }
     
-    public String buildRefundTicketHTML(List<RefundAirticketDetail> refundAirticketDetails ,String rowCount) {
+    public String buildRefundTicketHTML(List<RefundAirticketDetail> refundAirticketDetails ,String rowCount ,String ticketNoList) {
         StringBuffer html = new StringBuffer();
         List<StringBuffer> htmlList = new ArrayList<StringBuffer>();
         String id = "" ;
@@ -454,11 +454,14 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
         String commission = "";
         String amount = "";
         String payCustomer = "";
+        String ticketNoNotAdd = "";
+        boolean check = false;
         if (refundAirticketDetails == null || refundAirticketDetails.size() == 0) {
             return html.toString();
         }
         System.out.println("refundAirticketDetails.size() "+refundAirticketDetails.size());
         for(int i = 0 ; i < refundAirticketDetails.size() ; i++ ){
+            
             if(String.valueOf(refundAirticketDetails.get(i).getId()) != null){
                 id = String.valueOf(refundAirticketDetails.get(i).getId());
             }
@@ -488,47 +491,63 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                     department = String.valueOf(refundAirticketDetails.get(i).getAirticketPassenger().getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType());
                 }
             }
-
-            if(refundAirticketDetails.size() > 1){
-            int countrow = Integer.parseInt(rowCount)+i; 
-                String newrow 
-                        = "<tr>"
-                        + "<input type='hidden' name='count"+countrow+"' id='count"+countrow+"' value='"+countrow+"'>"
-                        + "<input type='hidden' name='tableRefundId"+countrow+"' id='tableRefundId"+countrow+"' value='"+id+"'>"
-                        + "<input type='hidden' name='refundNoRow"+countrow+"' id='refundNoRow"+countrow+"' value='"+refund+"'>"
-//                        + "<input type='hidden' name='payCustomer"+countrow+"' id='payCustomer"+countrow+"' value='"+payCustomer+"'>"
-                        + "<td align='center'>"+ (refund  == "null" ? "" : refund )+ "</td>"
-                        + "<td align='left'>" + (ticketNo == "null" ? "": ticketNo )+  "</td>"
-                        + "<td align='left'>" + (department == "null" ? "": department )+ "</td>"
-                        + "<td align='center'>" + (route == "null" ? "" : route )+  "</td>"
-                        + "<td align='right' class='money'>" + (commission == "null" ? "": commission )+  "</td>"
-                        + "<td class='money'>" + (amount == "null" ? "" : amount )+  "</td>"
-                        + "<td class='money'>" + (payCustomer == "null" ? "" : payCustomer )+  "</td>"
-                        + "<td><center><a class=\"remCF\"><span onclick=\"deleteRefund('"+id+"','"+refund+"','"+countrow+"')\" class=\"glyphicon glyphicon-remove deleteicon \"></span></center></td>"
-                        + "</tr>";
-                System.out.println("newrow [[[[[[[ "+newrow +" ]]]]");
-                html.append(newrow);
-            }else{
-                String newrow
-                        = "<tr>"
-                        + "<input type='hidden' name='count"+rowCount+"' id='count"+rowCount+"' value='"+rowCount+"'>"
-                        + "<input type='hidden' name='tableRefundId"+rowCount+"' id='tableRefundId"+rowCount+"' value='"+id+"'>"
-                        + "<input type='hidden' name='refundNoRow"+rowCount+"' id='refundNoRow"+rowCount+"' value='"+refund+"'>"
-//                        + "<input type='hidden' name='payCustomer"+rowCount+"' id='payCustomer"+rowCount+"' value='"+payCustomer+"'>"
-                        + "<td align='center'>" + (refund  == "null" ?  "" : refund )+ "</td>"
-                        + "<td align='left'>" + (ticketNo == "null" ? "" : ticketNo )+  "</td>"
-                        + "<td align='left'>" + (department == "null" ? "": department )+ "</td>"
-                        + "<td align='center'>" + (route == "null" ? "" : route )+  "</td>"
-                        + "<td align='right' class='money'>" + (commission == "null" ? "" : commission )+  "</td>"
-                        + "<td class='money'>" + (amount == "null" ? "" : amount )+  "</td>"
-                        + "<td class='money'>" + (payCustomer == "null" ? "" : payCustomer )+  "</td>"
-                        + "<td><center><a class=\"remCF\"><span onclick=\"deleteRefund('"+id+"','"+refund+"','"+rowCount+"')\" class=\"glyphicon glyphicon-remove deleteicon \"></span></center></td>"
-                        + "</tr>";
-                System.out.println("newrow [[[[[[[ "+newrow +" ]]]]");
-                html.append(newrow);
+            String[] ticketNoTicketFare = ticketNoList.split(",");
+            for(int j = 0 ; j < ticketNoTicketFare.length ; j++ ){
+                String x = String.valueOf(ticketNo).trim();
+                String y = String.valueOf(ticketNoTicketFare[j]).trim();
+                System.err.println(" x : " + x + "____ y :" +y);
+                if(x.equalsIgnoreCase(y)){
+                    check = true;
+                    if(refundAirticketDetails.size() > 1){
+                        System.out.println(" xxxx ");
+                        int countrow = Integer.parseInt(rowCount)+i; 
+                        String newrow 
+                                = "<tr>"
+                                + "<input type='hidden' name='count"+countrow+"' id='count"+countrow+"' value='"+countrow+"'>"
+                                + "<input type='hidden' name='tableRefundId"+countrow+"' id='tableRefundId"+countrow+"' value='"+id+"'>"
+                                + "<input type='hidden' name='refundNoRow"+countrow+"' id='refundNoRow"+countrow+"' value='"+refund+"'>"
+        //                        + "<input type='hidden' name='payCustomer"+countrow+"' id='payCustomer"+countrow+"' value='"+payCustomer+"'>"
+                                + "<td align='center'>"+ (refund  == "null" ? "" : refund )+ "</td>"
+                                + "<td align='left'>" + (ticketNo == "null" ? "": ticketNo )+  "</td>"
+                                + "<td align='left'>" + (department == "null" ? "": department )+ "</td>"
+                                + "<td align='center'>" + (route == "null" ? "" : route )+  "</td>"
+                                + "<td align='right' class='money'>" + (commission == "null" ? "": commission )+  "</td>"
+                                + "<td class='money'>" + (amount == "null" ? "" : amount )+  "</td>"
+                                + "<td class='money'>" + (payCustomer == "null" ? "" : payCustomer )+  "</td>"
+                                + "<td><center><a class=\"remCF\"><span onclick=\"deleteRefund('"+id+"','"+refund+"','"+countrow+"')\" class=\"glyphicon glyphicon-remove deleteicon \"></span></center></td>"
+                                + "</tr>";
+                        System.out.println("newrow [[[[[[[ "+newrow +" ]]]]");
+                        html.append(newrow);
+                    }else{
+                        System.out.println(" uuuu ");
+                        String newrow
+                                = "<tr>"
+                                + "<input type='hidden' name='count"+rowCount+"' id='count"+rowCount+"' value='"+rowCount+"'>"
+                                + "<input type='hidden' name='tableRefundId"+rowCount+"' id='tableRefundId"+rowCount+"' value='"+id+"'>"
+                                + "<input type='hidden' name='refundNoRow"+rowCount+"' id='refundNoRow"+rowCount+"' value='"+refund+"'>"
+        //                        + "<input type='hidden' name='payCustomer"+rowCount+"' id='payCustomer"+rowCount+"' value='"+payCustomer+"'>"
+                                + "<td align='center'>" + (refund  == "null" ?  "" : refund )+ "</td>"
+                                + "<td align='left'>" + (ticketNo == "null" ? "" : ticketNo )+  "</td>"
+                                + "<td align='left'>" + (department == "null" ? "": department )+ "</td>"
+                                + "<td align='center'>" + (route == "null" ? "" : route )+  "</td>"
+                                + "<td align='right' class='money'>" + (commission == "null" ? "" : commission )+  "</td>"
+                                + "<td class='money'>" + (amount == "null" ? "" : amount )+  "</td>"
+                                + "<td class='money'>" + (payCustomer == "null" ? "" : payCustomer )+  "</td>"
+                                + "<td><center><a class=\"remCF\"><span onclick=\"deleteRefund('"+id+"','"+refund+"','"+rowCount+"')\" class=\"glyphicon glyphicon-remove deleteicon \"></span></center></td>"
+                                + "</tr>";
+                        System.out.println("newrow [[[[[[[ "+newrow +" ]]]]");
+                        html.append(newrow);
+                    }
+                }
+            }
+            if(!check){
+                ticketNoNotAdd += ticketNo + ",";
             }
         }
         htmlList.add(html);
+        if(htmlList.size() == 0){
+            return null;
+        }
         return htmlList.toString();
     }    
 

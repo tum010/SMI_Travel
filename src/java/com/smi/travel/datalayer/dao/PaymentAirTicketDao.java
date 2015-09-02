@@ -32,7 +32,7 @@ public interface PaymentAirTicketDao {
     //By = ticketBuy 
     //From , to  = issueDate
     //AirAgentId = MAirlineAgent.id
-    public String addRefundAirTicket(String refundNo,String rowCount);
+    public String addRefundAirTicket(String refundNo,String rowCount,String ticketNoList);
     //from RefundAirticket
     //RefundID = id
     public String validateSavePaymentAir(PaymentAirticket payAir);
