@@ -665,6 +665,22 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
+<!--Add Refund MODAL-->
+<div class="modal fade" id="NotRefundNoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Not Refund No</h4>
+            </div>
+            <div class="modal-body" id="notRefundNoAlert">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>               
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 <c:if test="${! empty requestScope['saveresult']}">
     <c:if test="${requestScope['saveresult'] =='save successful'}">        
         <script language="javascript">
@@ -1206,7 +1222,19 @@ function CallAjaxAdd(param) {
             cache: false,
             data: param,
             success: function (msg) {
-            //RefundTicketTable
+                var ticketnotadd = msg.split("|");
+                var i = 1;
+                var check = 0;
+                var tickettemp = "";
+                for( i ; i < ticketnotadd.length ; i++) {
+                    tickettemp += ticketnotadd[i].replace("]", "") + " ";
+                    check = 1;
+                }
+                if(check == 1){
+                    $("#notRefundNoAlert").text('Ticket No : '+ tickettemp + " not available");
+                    $('#NotRefundNoModal').modal('show');
+                }
+                //RefundTicketTable
                 try {
                     if(msg == "null"){
                         alert('Refund no. not available');
