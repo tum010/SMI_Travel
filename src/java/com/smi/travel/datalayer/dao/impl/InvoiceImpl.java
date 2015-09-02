@@ -46,7 +46,7 @@ public class InvoiceImpl implements InvoiceDao{
     private static final String GET_BILL_AMOUNT = "from BillableDesc bill where bill.id = :descid";
     
     @Override
-    public String insertInvoice(Invoice invoice) {
+    public synchronized String insertInvoice(Invoice invoice) {
         String result = "";
         Session session = this.sessionFactory.openSession();
         try { 
@@ -648,7 +648,6 @@ public class InvoiceImpl implements InvoiceDao{
         this.sessionFactory.close();
         session.close();
         return result;
-        
     }
     
     @Override
@@ -685,8 +684,8 @@ public class InvoiceImpl implements InvoiceDao{
     @Override
     public String updateInvoiceDetail(Invoice invoice) {
         String result = "";
+        Session session = this.sessionFactory.openSession();
         try {
-            Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.update(invoice);
             
@@ -706,7 +705,10 @@ public class InvoiceImpl implements InvoiceDao{
         } catch (Exception ex) {
             transaction.rollback();
             ex.printStackTrace();
+            this.sessionFactory.close();
+            session.close();
             result = "update fail";
+            
         }
         return  result;
     }
