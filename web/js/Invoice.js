@@ -181,7 +181,9 @@
     for(var j = 1;j <= (counter-1) ; j++){
         changeFormatCostNumber(j);
         changeFormatCostLocalNumber(j);
+        changeFormatAmountNumber(j);
         changeFormatAmountLocalNumber(j);
+        
     }
  }); 
  
@@ -891,102 +893,6 @@ function setbillAndDescription(row,ref,name,text,des){
     $("#DescriptionInvoiceDetailTextArea"+row).html(text);
 }
 
-function setDescriptionDaytour(data,row,des){
-    var array  = [];
-    array = data;
-    var arrayNew ="";
-    var i = 0;
-    for (i = 1 ; i <= (array.length-1) ; i++){
-        arrayNew += array[i] +",";
-    };
-    var text = "";
-    var date = array[8].split("-"); ;
-    var newDate = date[2] +"-" + date[1] + "-" + date[0];
-    text += "Ref No. "+ array[2] +" : " + array[3] + " " + array[5] + " " + array[4] + "\n";
-    text += "" + array[1] + " " + array[6] + " : " + array[7]+ "\n";
-    text += "\t\t" +"(" + newDate + " " + array[9]+ ")\n";
-    setbillAndDescription(row,array[2],array[3],array[5],array[4],text,des);
-}
-function setDescriptionOther(data,row,des){
-    var array  = [];
-    array = data;
-    var arrayNew ="";
-    var i = 0;
-    for (i = 1 ; i <= (array.length-1) ; i++){
-        arrayNew += array[i] +",";
-    };
-    var text = "";
-    text += "Ref No. "+array[2] +" : " + array[3] + " " + array[4] + " " + array[5] + "\n";
-    text += "" + array[1] + " (" + array[6] + ")  " + array[7]+ " \n";
-    text += "\t " + array[8] + " "+ array[9] +  " "+ array[10] + " \n";
-    setbillAndDescription(row,array[2],array[3],array[5],array[4],text,des);
-}
-function setDescriptionLand(data,row,des){
-    var array  = [];
-    array = data;
-    var arrayNew ="";
-    var i = 0;
-    for (i = 1 ; i <= (array.length-1) ; i++){
-        arrayNew += array[i] +",";
-    };
-    var text = "";
-    var date = array[6].split("-"); ;
-    var newDate = date[2] +"-" + date[1] + "-" + date[0];
-    text += "Ref No. "+ array[2] +" : " + array[3] + " " + array[4] + " " + array[5] + "\n";
-    text += "" + array[1] + " (" + newDate + ")  " + array[7]+ " NTS \n";
-    text += "\t " + array[8] + " PAX \n";
-    setbillAndDescription(row,array[2],array[3],array[5],array[4],text,des);
-}
-function setDescriptionHotel(data,row,des){
-    var array  = [];
-    array = data;
-    var arrayNew ="";
-    var i = 0;
-    for (i = 1 ; i <= (array.length-1) ; i++){
-        arrayNew += array[i] +",";
-    };
-    var number = parseFloat(array[9]);
-    var text = "";
-    var date = array[7].split("-"); ;
-    var newDate = date[2] +" " + changeMonth(date[1]) + " " + date[0];
-    var date1 = array[8].split("-"); ;
-    var newDate1 = date1[2] +" " + changeMonth(date1[1]) + " " + date1[0];
-    text += "Ref No. "+ array[2] +" : " + array[3] + " " + array[4] + " " + array[5] + "\n";
-    text += "" + "HOTEL" + "  " + array[6] + " \n";
-    text += "\t" + "     " +newDate + " - " +  newDate1  + " \n";
-    text += "\t" + "     " + formatNumber(number) + "  " + array[10]+ "  " + array[11] + "  " + array[12] + " : "+  array[13] + "  NTS  \n";
-    setbillAndDescription(row,array[2],array[3],array[5],array[4],text,des);
-}
-
-function changeMonth(monthInt){
-    var text = "";
-    switch (monthInt){
-        case "01" : text = "JAN";break;
-        case "02" : text = "FEB";break;
-        case "03" : text = "MAR";break;
-        case "04" : text = "APR";break;
-        case "05" : text = "MAY";break;
-        case "06" : text = "JUN";break;
-        case "07" : text = "JUL";break;
-        case "08" : text = "AUG";break;
-        case "09" : text = "SEP";break;
-        case "10" : text = "OCT";break;
-        case "11" : text = "NOV";break;
-        case "12" : text = "DEC";break;
-        case "" : text = "" ;break;
-    }
-    return text;
-}
-
-function setDescriptionAirticket(data,row,des){
-   
-    var array  = [];
-    array = data;
-    var text = "";
-    text += array[2];
-    setbillAndDescription(row,array[2],array[3],array[5],array[4],text,des);
-}
-
 function checkDuplicateInvoiceDetail(product,rowId){
     $('#DetailBillableTable > tbody  > tr').each(function() {
         var prod = $(this).find('input[type="text"]').eq(1).val();
@@ -1009,19 +915,8 @@ function formatNumber(num) {
     return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }
 
-// Convert numbers to words
-// copyright 25th July 2006, by Stephen Chapman http://javascript.about.com
-// permission to use this Javascript on your web page is granted
-// provided that all of the code (including this copyright notice) is
-// used exactly as shown (you can change the numbering system if you wish)
-
 // American Numbering System
 var th = ['','THOUSAND','MILLION', 'BILLION','TRILLION'];
-//var th = ['','thousand','million', 'billion','trillion'];
-// uncomment this line for English Number System
-// var th = ['','thousand','million', 'milliard','billion'];
-
-//var dg = ['zero','one','two','three','four', 'five','six','seven','eight','nine']; var tn = ['ten','eleven','twelve','thirteen', 'fourteen','fifteen','sixteen', 'seventeen','eighteen','nineteen']; var tw = ['twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety']; function toWords(s){s = s.toString(); s = s.replace(/[\, ]/g,''); if (s != parseFloat(s)) return 'not a number'; var x = s.indexOf('.'); if (x == -1) x = s.length; if (x > 15) return 'too big'; var n = s.split(''); var str = ''; var sk = 0; for (var i=0; i < x; i++) {if ((x-i)%3==2) {if (n[i] == '1') {str += tn[Number(n[i+1])] + ' '; i++; sk=1;} else if (n[i]!=0) {str += tw[n[i]-2] + ' ';sk=1;}} else if (n[i]!=0) {str += dg[n[i]] +' '; if ((x-i)%3==0) str += 'hundred ';sk=1;} if ((x-i)%3==1) {if (sk) str += th[(x-i-1)/3] + ' ';sk=0;}} if (x != s.length) {var y = s.length; str += 'point '; for (var i=x+1; i<y; i++) str += dg[n[i]] +' ';} return str.replace(/\s+/g,' ');}
 var dg = ['ZERO','ONE','TWO','THREE','FOUR', 'FIVE','SIX','SEVEN','EIGHT','NINE']; var tn = ['TEN','ELEVEN','TWELVE','THIRTEEN', 'FOURTEEN','FIFTEEN','SIXTEEN', 'SEVENTEEN','EIGHTEEN','NINETEEN']; var tw = ['TWEENTY','THIRTY','FORTY','FIFTY', 'SIXTY','SEVENTY','RIGHTY','NINETY']; function toWords(s){s = s.toString(); s = s.replace(/[\, ]/g,''); if (s != parseFloat(s)) return 'NOT A NUMBER'; var x = s.indexOf('.'); if (x == -1) x = s.length; if (x > 15) return 'TOO BIG'; var n = s.split(''); var str = ''; var sk = 0; for (var i=0; i < x; i++) {if ((x-i)%3==2) {if (n[i] == '1') {str += tn[Number(n[i+1])] + ' '; i++; sk=1;} else if (n[i]!=0) {str += tw[n[i]-2] + ' ';sk=1;}} else if (n[i]!=0) {str += dg[n[i]] +' '; if ((x-i)%3==0) str += 'HUNDRED ';sk=1;} if ((x-i)%3==1) {if (sk) str += th[(x-i-1)/3] + ' ';sk=0;}} if (x != s.length) {var y = s.length; str += 'POINT '; for (var i=x+1; i<y; i++) str += dg[n[i]] +' ';} return str.replace(/\s+/g,' ');}
 
 function calculateGross(row){
@@ -1239,12 +1134,10 @@ function checkVatInvoiceAll(){
     CalculateGrandTotal(''); 
 }  
 
-
 function sendEmailInvoice(){
     var InvoiceId = document.getElementById('InvoiceId').value;
     window.open("SendMail.smi?reportname=Invoice&reportid="+InvoiceId+"&bankid=4");
 }
-
 
 $(document).ready(function () {
     var bla = $('#resultText').val();
