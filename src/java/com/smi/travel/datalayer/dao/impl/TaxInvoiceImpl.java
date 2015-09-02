@@ -229,6 +229,8 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
             BigDecimal totalVat = new BigDecimal(0);
             String totalInvoiceNo = "";
             String totalReceiptNo = "";
+            List<String> invNoChkList = new ArrayList<String>();
+            List<String> recNoChkList = new ArrayList<String>();
             List<TaxInvoiceDetail> taxInvoiceDetailList = new ArrayList<TaxInvoiceDetail>();
             taxInvoiceDetailList = taxInvoice.getTaxInvoiceDetails();
             for(int j=0;j<taxInvoiceDetailList.size();j++){
@@ -267,8 +269,23 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
                 String invoiceNo = "";
                 if(taxInvoiceDetail.getInvoiceDetail() != null){
                     invoiceNo = taxInvoiceDetail.getInvoiceDetail().getInvoice().getInvNo();
-                    totalInvoiceNo += invoiceNo;
-                    
+                    if(invNoChkList.isEmpty()){
+                        invNoChkList.add(invoiceNo);
+                        totalInvoiceNo += invoiceNo;
+                    } else {
+                        int matchInv = 0;
+                        invNoChkList.add(invoiceNo);
+                        for(int a=0;a<invNoChkList.size();a++){
+                            String invNoChk = invNoChkList.get(a);
+                            if(invoiceNo.equalsIgnoreCase(invNoChk)){
+                                matchInv++;
+                                a = invNoChkList.size();
+                            }
+                        }
+                        if(matchInv == 0){
+                            totalInvoiceNo += invoiceNo;
+                        }
+                    }                                     
                     if(!"".equalsIgnoreCase(totalReceiptNo)){
                         totalReceiptNo += " ";
                     } else {
@@ -281,7 +298,23 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
                         String receiptNo = "";
                         if(receiptDetail.getReceipt() != null){
                             receiptNo = receiptDetail.getReceipt().getRecNo();
-                            totalReceiptNo += receiptNo;           
+                            if(recNoChkList.isEmpty()){
+                                recNoChkList.add(receiptNo);
+                                totalReceiptNo += receiptNo;
+                            } else {
+                                int matchRec = 0;
+                                recNoChkList.add(receiptNo);
+                                for(int b=0;b<recNoChkList.size();b++){
+                                    String recNoChk = recNoChkList.get(b);
+                                    if(receiptNo.equalsIgnoreCase(recNoChk)){
+                                        matchRec++;
+                                        b = recNoChkList.size();
+                                    }
+                                }
+                                if(matchRec == 0){
+                                    totalReceiptNo += receiptNo;           
+                                }
+                            }                                                            
                         }                       
                     }                
                 }                           
