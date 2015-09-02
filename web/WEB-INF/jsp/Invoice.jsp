@@ -194,7 +194,7 @@
                     </div>
                 </div>                                      
                 <div class="col-xs-12 form-group"></div>   
-                <input type="hidden"  class="form-control" id="InvoiceId" name="InvoiceId"  value="${invoice.id}" >
+                <input type=""  class="form-control" id="InvoiceId" name="InvoiceId"  value="${invoice.id}" >
                     <div class="col-xs-12 ">
                         <div class="col-xs-1 text-right">
                             <label class="control-label" for="">INV no</lable>

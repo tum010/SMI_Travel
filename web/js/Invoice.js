@@ -996,6 +996,7 @@ function CalculateGrandTotal(id){
 
 function clearScreenInvoice(){
     var action = document.getElementById('action');
+    $('#InvoiceId').val('');
     action.value = 'new';
     document.getElementById('InvoiceForm').submit();
 }
@@ -1155,9 +1156,26 @@ $(document).ready(function () {
         $('#textAlertMoney').hide();
     }else if(bla === "fail") {
         $('#textAlertDivNotSave').show();
+    }else if(bla === "NEW"){
+        clearInvoice();
     }
 });
 
+function clearInvoice(){
+    $('#SearchRefNo, #InvNo, #InputInvDate, #InputDueDate, #InvTo, #InvToName, #InvToAddress, #SaleStaffId, #SaleStaffCode, #SaleStaffName, #ARCode, #Remark, #TextAmount, #TotalNet,#InvoiceId ').val('');
+    $('#Grpup').attr('checked', false);
+    $('input[name="Department"]')[0].checked = false;
+    $('input[name="Department"]')[1].checked = false;
+    $('input[name="Department"]')[2].checked = false;
+    $('#MasterReservation > tbody  > tr').each(function() {
+        $(this).remove();
+    });
+    $('#DetailBillableTable > tbody  > tr').each(function() {
+        $(this).remove();
+    });
+    $('#counterTable').val('1');
+    AddRowDetailBillAble();
+}
 function copyInvoice(){
     $('#InvoiceId').val('');
     $('#InvNo').val('');
