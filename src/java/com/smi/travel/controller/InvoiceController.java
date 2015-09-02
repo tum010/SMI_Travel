@@ -34,7 +34,7 @@ public class InvoiceController extends SMITravelController {
     private static final ModelAndView Invoice_REFRESH = new ModelAndView(new RedirectView("Invoice.smi", true));
     private UtilityService utilityService;
     private InvoiceService invoiceService;
-    Invoice invoice = new Invoice();
+    Invoice invoice = null;
     List<InvoiceDetail> listInvoiceDetail = new LinkedList<InvoiceDetail>();
     SystemUser staff = new SystemUser();
     MFinanceItemstatus mStatus = new MFinanceItemstatus();
@@ -142,6 +142,8 @@ public class InvoiceController extends SMITravelController {
        
         // Save Invoice And Update
         if("save".equals(action)){
+//            invoice = new Invoice();
+            invoice.setId(invoiceId);
             invoice = setValueInvoice(action, user.getUsername(), invoiceType, invoiceId, invoiceTo, invoiceName, invoiceAddress, isGroup, termPay, dueDate, department, staffCode, staffName, staffId, arCode, remark, invoiceNo, InputInvDate, request,subDepartment);
             String checkOverFlow = invoiceService.checkOverflowValueOfInvoice(invoice.getInvoiceDetails());
             if("okMoney".equals(checkOverFlow)){
@@ -267,6 +269,8 @@ public class InvoiceController extends SMITravelController {
         }else if("new".equals(action)){
             request.setAttribute("invoice",null);
             request.setAttribute("listInvoiceDetail", null);
+            result = "NEW";
+            request.setAttribute("result", result);
         }
         request.setAttribute("thisdate", utilty.convertDateToString(new Date()));
         request.setAttribute("page", callPageFrom);
@@ -340,6 +344,8 @@ public class InvoiceController extends SMITravelController {
             }
             if(!"".equals(invoiceId) && invoiceId != null){
                 invoice.setId(invoiceId);
+            }else{
+                invoice.setId(null);
             }
           
             if(invoiceTo != null){

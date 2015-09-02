@@ -47,6 +47,7 @@ public class RefundAirReportImpl implements RefundAirReportDao{
                  .addScalar("receiveby", Hibernate.STRING)
                  .addScalar("receivedate", Hibernate.DATE)
                  .addScalar("ticketamount", Hibernate.BIG_DECIMAL)
+                 .addScalar("address", Hibernate.STRING)
                  .list();
         for (Object[] B : QueryRefundList) {
              RefundAirReport report = new RefundAirReport();
@@ -62,6 +63,7 @@ public class RefundAirReportImpl implements RefundAirReportDao{
              report.setReceiveby(util.ConvertString(B[9]));
              report.setReceivedate(util.SetFormatDate((Date)B[10], "dd-MM-YYYY"));
              //report.setTicketamount(util.setFormatMoney(B[11]));
+             report.setAddress(util.ConvertString(B[12]));
              SumTicketAmount = SumTicketAmount.add((BigDecimal) B[11]);
              data.add(report);
             

@@ -85,7 +85,7 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
             String[] totals = total.split(",");
             int totalWord = 0;
             totalWord = Integer.parseInt(String.valueOf(totals[0]));
-            taxInvoiceView.setTextamount(utilityFunction.convert(totalWord)+" baht");
+            taxInvoiceView.setTextamount(utilityFunction.convert(totalWord)+" BAHT");
             
             if(option == 1){
                 taxInvoiceView.setDescription(taxInvoiceView.getNondescription());

@@ -244,7 +244,8 @@ public class TaxInvoiceController extends SMITravelController {
             taxInvoice.setTaxInvAddr(invToAddress);
             taxInvoice.setArCode(arCode);
             taxInvoice.setRemark(remark); 
-            taxInvoice.setTaxNo(taxInvNo);               
+            taxInvoice.setTaxNo(taxInvNo);
+            taxInvoice.setDepartment(department);
             taxInvoice.setCreateBy(createBy);
             
             Date invToDateConvert = new Date();
@@ -293,6 +294,8 @@ public class TaxInvoiceController extends SMITravelController {
                 request.setAttribute("createDate", taxInvoice.getCreateDate());
                 request.setAttribute(TAXINVOICEDETAILLIST, taxInvoiceList);
             }         
+        } else if("new".equalsIgnoreCase(action)){
+            
         }
         
                
@@ -337,10 +340,20 @@ public class TaxInvoiceController extends SMITravelController {
                 
                 if(invoiceDetailId!="" && invoiceDetailId!=null){
                     invoiceDetail.setId(invoiceDetailId);
-                    BigDecimal invoiceDetailCostRe = new BigDecimal(invoiceDetailCost.replaceAll(",",""));
-                    invoiceDetail.setCost(invoiceDetailCostRe);
-                    BigDecimal invoiceDetailAmountRe = new BigDecimal(invoiceDetailAmount.replaceAll(",",""));
-                    invoiceDetail.setAmount(invoiceDetailAmountRe);
+                    if(invoiceDetailCost!="" && invoiceDetailCost !=null){
+                        BigDecimal invoiceDetailCostRe = new BigDecimal(invoiceDetailCost.replaceAll(",",""));
+                        invoiceDetail.setCost(invoiceDetailCostRe);
+                    } else {
+                        BigDecimal invoiceDetailCostRe = new BigDecimal(0);
+                        invoiceDetail.setCost(invoiceDetailCostRe);
+                    }
+                    if(invoiceDetailAmount!="" && invoiceDetailAmount!=null){
+                        BigDecimal invoiceDetailAmountRe = new BigDecimal(invoiceDetailAmount.replaceAll(",",""));
+                        invoiceDetail.setAmount(invoiceDetailAmountRe);
+                    } else {
+                        BigDecimal invoiceDetailAmountRe = new BigDecimal(0);
+                        invoiceDetail.setAmount(invoiceDetailAmountRe);
+                    }                  
                     taxInvoiceDetail.setInvoiceDetail(invoiceDetail);
                 }
                 
@@ -437,7 +450,7 @@ public class TaxInvoiceController extends SMITravelController {
                         for(int j=i+1;j<taxInvDetailList.size();j++){
                             if(taxInvDetailList.get(j).getInvoiceDetail() != null){
                                 InvoiceDetail invoiceDetail2 = taxInvDetailList.get(j).getInvoiceDetail();
-                                TaxInvoiceDetail taxInvoiceDetail2 = taxInvDetailList.get(i);
+                                TaxInvoiceDetail taxInvoiceDetail2 = taxInvDetailList.get(j);
                                 String id2 = invoiceDetail2.getId();
                                 if(id2.equalsIgnoreCase(id1)){
                                     BigDecimal cost2 = taxInvoiceDetail2.getCost();
@@ -467,10 +480,14 @@ public class TaxInvoiceController extends SMITravelController {
             BigDecimal amountLocal = amountLocalList.get(i);
             costTotal = costLocal.subtract(cost);
             amountTotal = amountLocal.subtract(amount);
-            if((costTotal.compareTo(BigDecimal.ZERO) < 0)){
-                result = "cost much over";
-                return result;
-            } else if((amountTotal.compareTo(BigDecimal.ZERO) < 0)){
+//            if((costTotal.compareTo(BigDecimal.ZERO) < 0)){
+//                result = "cost much over";
+//                return result;
+//            } else if((amountTotal.compareTo(BigDecimal.ZERO) < 0)){
+//                result = "amount much over";
+//                return result;
+//            }
+            if((amountTotal.compareTo(BigDecimal.ZERO) < 0)){
                 result = "amount much over";
                 return result;
             }
