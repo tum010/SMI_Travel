@@ -810,4 +810,149 @@ public class BillableImpl implements BillableDao {
         return description;
 
     }
+
+    @Override
+    public String getDescriptionInvoiceOthersFromRefId(String refId) {
+        String description = "";
+        Session session = this.sessionFactory.openSession();
+        List<OtherBooking> list = session.createQuery(QUERY_OTHERS).setParameter("refitemid", refId).list();
+
+        if (list.isEmpty()) {
+            return null;
+        }else{
+            for(int i = 0; i < list.size(); i++){
+                if(list.get(i).getMaster().getReferenceNo() != null){ // Ref no
+                    description += ""+list.get(i).getMaster().getReferenceNo() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getMaster().getCustomer().getMInitialname() != null){ // prename
+                    description += ""+list.get(i).getMaster().getCustomer().getMInitialname().getName() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getMaster().getCustomer().getLastName() != null){ //last name
+                    description += ""+list.get(i).getMaster().getCustomer().getLastName() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getMaster().getCustomer().getFirstName() != null){// firstname
+                    description += ""+list.get(i).getMaster().getCustomer().getFirstName() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getProduct().getName() != null){ // Product Name
+                    description += ""+list.get(i).getProduct().getName() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getOtherDate() != null){ // Other Date
+                    description += ""+list.get(i).getOtherDate() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getAdCost() != null){ // Adult Cost
+                    description += "("+list.get(i).getAdCost() +" x ";
+                    if(list.get(i).getAdQty() != null){ // Adult Qty
+                        description += ""+list.get(i).getAdQty() +")|";
+                    }else{
+                        description += "0)|";
+                    }
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getChCost() != null){ // Children Cost
+                    description += "("+list.get(i).getChCost() +" x ";
+                    if(list.get(i).getChQty()!= null){ // Children Qty
+                        description += ""+list.get(i).getChQty() +")|";
+                    }else{
+                        description += "0)|";
+                    }
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getInCost() != null){ // Infant Cost
+                    description += "("+list.get(i).getInCost() +" x ";
+                    if(list.get(i).getInQty()!= null){ // Infant Qty
+                        description += ""+list.get(i).getInQty() +")|";
+                    }else{
+                        description += "0)|";
+                    }
+                }else{
+                     description += " |";
+                }
+            }
+        }
+        session.close();
+        this.sessionFactory.close();
+        return description;
+    }
+
+    @Override
+    public String getDescriptionInvoiceDayTourFromRefId(String refId) {
+                String description = "";
+        Session session = this.sessionFactory.openSession();
+        List<DaytourBooking> list = session.createQuery(QUERY_DAYTOUR).setParameter("refitemid", refId).list();
+
+        if (list.isEmpty()) {
+            return null;
+        }else{
+            for(int i = 0; i < list.size(); i++){
+                if(list.get(i).getMaster().getReferenceNo() != null){ // Ref no
+                    description += ""+list.get(i).getMaster().getReferenceNo() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getMaster().getCustomer().getMInitialname().getName() != null){ // prename
+                    description += ""+ list.get(i).getMaster().getCustomer().getMInitialname().getName() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getMaster().getCustomer().getLastName() != null){ //last name
+                    description += ""+list.get(i).getMaster().getCustomer().getLastName() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getMaster().getCustomer().getFirstName() != null){// firstname
+                    description += ""+list.get(i).getMaster().getCustomer().getFirstName() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getDaytour().getCode() != null){ // code
+                    description += ""+list.get(i).getDaytour().getCode() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getDaytour().getName()!= null){ // name
+                    description += ""+list.get(i).getDaytour().getName() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getTourDate() != null){ // date
+                    description += ""+list.get(i).getTourDate() +"|";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getAdult() != 0){ // adult
+                    description += " Adult "+ list.get(i).getAdult() +" Pax |";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getChild() != 0){ // child
+                    description += " Child "+ list.get(i).getChild() +" Pax |";
+                }else{
+                     description += " |";
+                }
+                if(list.get(i).getInfant() != 0){ // infant
+                    description += " Infant "+ list.get(i).getInfant() +" Pax |)";
+                }else{
+                     description += " |";
+                }
+            }
+        }
+        session.close();
+        this.sessionFactory.close();
+        System.out.println("DEscription : " + description);
+        return description;
+    }
 }

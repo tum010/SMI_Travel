@@ -17,17 +17,18 @@ $(document).ready(function () {
 
 
     $("#RefundAirlineForm").bootstrapValidator({
-        excluded: [':disabled', ':hidden', ':not(:visible)'],
+//        excluded: [':disabled', ':hidden', ':not(:visible)'],
+                framework: 'bootstrap',
         feedbackIcons: {
             valid: 'uk-icon-check',
             invalid: 'uk-icon-times',
             validating: 'uk-icon-refresh'
         },
         fields: {
-            refundAgentId: {
+            agentCode: {
                 validators: {
                     notEmpty: {
-                        message: 'The last name is required'
+                        message: 'The agent is required'
                     }
                 }
             }
@@ -59,7 +60,7 @@ $(document).ready(function () {
 
     $("#buttonSave").click(function () {
 
-        $('#RefundAirlineForm').bootstrapValidator('revalidateField', 'refundAgentId');
+        $('#RefundAirlineForm').bootstrapValidator('revalidateField', 'agentCode');
 
         if ($("#refundAgentId").val() === "") {
             return;
@@ -85,7 +86,7 @@ $(document).ready(function () {
 
     $("#ButtonSaveAndNew").click(function () {
 
-        $('#RefundAirlineForm').bootstrapValidator('revalidateField', 'refundAgentId');
+        $('#RefundAirlineForm').bootstrapValidator('revalidateField', 'agentCode');
 
         if ($("#refundAgentId").val() === "") {
             return;

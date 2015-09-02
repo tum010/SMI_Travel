@@ -96,55 +96,67 @@ function getTaxInv(input) {
     $("#alertSuccess").hide();
     var ticketNo = ""
     ticketNo = input.value;
-    var url = 'AJAXServlet';
-    var servletName = 'TaxInvoiceServlet';
-    var servicesName = 'AJAXBean';
-    var param = 'action=' + 'text' +
-            '&servletName=' + servletName +
-            '&servicesName=' + servicesName +
-            '&type=getTaxInvoice' +
-            '&invoiceNo=' + ticketNo;
-//    var row = parseInt($(input).parent().parent().attr("row"));
-    try {
-        $.ajax({
-            type: "POST",
-            url: url,
-            cache: false,
-            data: param,
-            beforeSend: function () {
-                $("#dataload").removeClass("hidden");
-            },
-            success: function (msg) {
-                console.log("getAutoListBillto ==" + msg);
-                var tax = JSON.parse(msg);
+    var duplicate = false;
+    $('#ItemCreditTable tbody [name="taxNo"]').each(function () {
+        if (ticketNo !== "" && ticketNo === input.value) {
+            input.style.borderColor = "Red";
+            $("#alertTextFail").html("Duplicated tax invoice no " + ticketNo);
+            $("#alertFail").show();
+            duplicate = true;
+            return;
+        }
+    });
+    if(!duplicate){
+        var url = 'AJAXServlet';
+        var servletName = 'TaxInvoiceServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&type=getTaxInvoice' +
+                '&invoiceNo=' + ticketNo;
+    //    var row = parseInt($(input).parent().parent().attr("row"));
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                beforeSend: function () {
+                    $("#dataload").removeClass("hidden");
+                },
+                success: function (msg) {
+                    console.log("getAutoListBillto ==" + msg);
+                    var tax = JSON.parse(msg);
 
-                var taxDate = $(input).parent().parent().find("[name='taxDate']");
-                var amount = $(input).parent().parent().find("[name='taxAmount']");
-                var desc = $(input).parent().parent().find("[name='taxDesc']");
-                var taxId = $(input).parent().parent().find("[name='taxId']");
-                var btnDetail = $(input).parent().parent().find("[name='btnDetail']");
-                $("#apCode").val(tax.taxTo);
-                $("#name").val(tax.taxName);
-                $("#address").val(tax.taxAddress);
-                taxDate.val(tax.taxDate);
-                amount.val(tax.taxAmount);
-                desc.val(tax.taxDesc);
-                taxId.val(tax.taxId);
-                btnDetail.attr('onclick', "show('" + ticketNo + "')");
-                var index = $(input).parent().parent().index();
-                var count = $('#ItemCreditTable tbody tr').length;
-                if (index == (count - 1)) {
-                    addRow();
+                    var taxDate = $(input).parent().parent().find("[name='taxDate']");
+                    var amount = $(input).parent().parent().find("[name='taxAmount']");
+                    var desc = $(input).parent().parent().find("[name='taxDesc']");
+                    var taxId = $(input).parent().parent().find("[name='taxId']");
+                    var btnDetail = $(input).parent().parent().find("[name='btnDetail']");
+                    $("#apCode").val(tax.taxTo);
+                    $("#name").val(tax.taxName);
+                    $("#address").val(tax.taxAddress);
+                    taxDate.val(tax.taxDate);
+                    amount.val(tax.taxAmount);
+                    desc.val(tax.taxDesc);
+                    taxId.val(tax.taxId);
+                    btnDetail.attr('onclick', "show('" + ticketNo + "')");
+                    var index = $(input).parent().parent().index();
+                    var count = $('#ItemCreditTable tbody tr').length;
+                    if (index == (count - 1)) {
+                        addRow();
+                    }
+                }, error: function (msg) {
+                    input.style.borderColor = "Red";
+                    $("#alertTextFail").html("Cannot find tax invoice no " + ticketNo);
+                    $("#alertFail").show();
+                    $("#alertSuccess").hide();
                 }
-            }, error: function (msg) {
-                input.style.borderColor = "Red";
-                $("#alertTextFail").html("Cannot find tax invoice no " + ticketNo);
-                $("#alertFail").show();
-                $("#alertSuccess").hide();
-            }
-        });
-    } catch (e) {
-        alert(e);
+            });
+        } catch (e) {
+            alert(e);
+        }
     }
 }
 
@@ -153,8 +165,8 @@ function setDeletRow(btn) {
     rowIndex = row.index();
     console.log(rowIndex);
     $("#delCode").html("are you sure to delete tax invoice no " + row.find("[name='taxNo']").val() + "?")
-    var taxId = row.find("[name='taxId']").val();
-    if (taxId !== "") {
+    var id = row.find("[name='id']").val();
+    if (id !== "") {
 
     } else {
         row.remove();

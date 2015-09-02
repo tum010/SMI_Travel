@@ -703,7 +703,12 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         
         if (invoiceDetailList.isEmpty()) {
             System.out.println(" invoiceDetailList.isEmpty() ");
-            return null;
+            InvoiceDetailView invoiceDetailView = new InvoiceDetailView();
+            invoiceDetailView.setOwner(owner);
+            invoiceDetailView.setRouting(routing);
+            invoiceDetailView.setInvAmount(new BigDecimal(String.valueOf(invamount)));
+            invoiceDetailViewList.add(invoiceDetailView);
+            return invoiceDetailViewList;
         }
         
         for (int i = 0; i < invoiceDetailList.size() ; i++) {
