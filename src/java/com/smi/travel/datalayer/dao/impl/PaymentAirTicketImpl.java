@@ -493,13 +493,11 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             }
             String[] ticketNoTicketFare = ticketNoList.split(",");
             for(int j = 0 ; j < ticketNoTicketFare.length ; j++ ){
-                String x = String.valueOf(ticketNo).trim();
-                String y = String.valueOf(ticketNoTicketFare[j]).trim();
-                System.err.println(" x : " + x + "____ y :" +y);
-                if(x.equalsIgnoreCase(y)){
+                String ticketNoRefund = String.valueOf(ticketNo).trim();
+                String ticketNoFare = String.valueOf(ticketNoTicketFare[j]).trim();
+                if(ticketNoRefund.equalsIgnoreCase(ticketNoFare)){
                     check = true;
                     if(refundAirticketDetails.size() > 1){
-                        System.out.println(" xxxx ");
                         int countrow = Integer.parseInt(rowCount)+i; 
                         String newrow 
                                 = "<tr>"
@@ -541,9 +539,11 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                 }
             }
             if(!check){
-                ticketNoNotAdd += ticketNo + ",";
+                ticketNoNotAdd += "|" + ticketNo ;
+                
             }
         }
+        html.append(ticketNoNotAdd);
         htmlList.add(html);
         if(htmlList.size() == 0){
             return null;
