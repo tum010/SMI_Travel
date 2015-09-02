@@ -21,7 +21,8 @@ public class RefundAirReport {
     private String receiveby;
     private String receivedate;
     private String ticketamount;
-
+    private String address;
+    
     public String getRefundno() {
         return refundno;
     }
@@ -116,6 +117,14 @@ public class RefundAirReport {
 
     public void setTicketamount(String ticketamount) {
         this.ticketamount = ticketamount;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
     
     
