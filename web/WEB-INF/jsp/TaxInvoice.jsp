@@ -1657,36 +1657,39 @@
     }
     
     function clearScreen(){
-        $("#department").val("");
-        $("#invoiceNo").val("");
-        $("#TaxInvId").val("");
-        $("#TaxInvNo").val("");
-        $("#InvToDate").val("${requestScope['defaultInvToDate']}");
-        $("#TaxInvTo").val("");
-        $("#InvToName").val("");
-        $("#InvToAddress").val("");
-        $("#ARCode").val("");
-        $("#Remark").val("");
-        $("#TextAmount").val("");
-        $("#TotalAmount").val("");
-        $("#taxInvStatus").val("");
-        $("#createDate").val("");
-        $("#createBy").val("");
-        $("#countTaxInvoice").val("1");              
-        $('#InvoiceListTable > tbody  > tr').each(function() {
-            $(this).remove();
-        });       
-        $('#TaxInvoiceTable > tbody  > tr').each(function() {
-            $(this).remove();
-        });
-        $("#textAlertDivSave").addClass("hidden");
-        $("#textAlertDivNotSave").addClass("hidden");
-        $("#textAlertDivFindNotFound").addClass("hidden");
-        $("#textAlertTaxInvoiceVoid").addClass("hidden");
-        $("#textAlertCostOver").addClass("hidden");
-        $("#textAlertAmountOver").addClass("hidden");
-        AddRowTaxInvoiceTable();
-        CalculateAmountTotal();
+//        $("#department").val("");
+//        $("#invoiceNo").val("");
+//        $("#TaxInvId").val("");
+//        $("#TaxInvNo").val("");
+//        $("#InvToDate").val("${requestScope['defaultInvToDate']}");
+//        $("#TaxInvTo").val("");
+//        $("#InvToName").val("");
+//        $("#InvToAddress").val("");
+//        $("#ARCode").val("");
+//        $("#Remark").val("");
+//        $("#TextAmount").val("");
+//        $("#TotalAmount").val("");
+//        $("#taxInvStatus").val("");
+//        $("#createDate").val("");
+//        $("#createBy").val("");
+//        $("#countTaxInvoice").val("1");              
+//        $('#InvoiceListTable > tbody  > tr').each(function() {
+//            $(this).remove();
+//        });       
+//        $('#TaxInvoiceTable > tbody  > tr').each(function() {
+//            $(this).remove();
+//        });
+//        $("#textAlertDivSave").addClass("hidden");
+//        $("#textAlertDivNotSave").addClass("hidden");
+//        $("#textAlertDivFindNotFound").addClass("hidden");
+//        $("#textAlertTaxInvoiceVoid").addClass("hidden");
+//        $("#textAlertCostOver").addClass("hidden");
+//        $("#textAlertAmountOver").addClass("hidden");
+//        AddRowTaxInvoiceTable();
+//        CalculateAmountTotal();
+          var action = document.getElementById("action");
+          action.value = "new";
+          document.getElementById('TaxInvoiceForm').submit();
     }
     
     function DisableVoidInvoice(){
