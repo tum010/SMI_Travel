@@ -125,7 +125,7 @@ public class AddTicketFareController extends SMITravelController {
         MAirlineAgent mAirlineAgent = new MAirlineAgent();
         MPaymentDoctype mPaymentDoctype = new MPaymentDoctype();
         
-        BigDecimal invAmount = new BigDecimal(BigInteger.ONE);
+        BigDecimal invAmount = new BigDecimal(BigInteger.ZERO);
         String invNo = "" ;
         Date invDate = new Date() ;
         String invcredit = "" ;

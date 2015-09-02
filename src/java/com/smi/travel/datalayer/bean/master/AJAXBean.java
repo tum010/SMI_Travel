@@ -681,6 +681,15 @@ public class AJAXBean extends AbstractBean implements
                 String department = map.get("department").toString();
                 String invType = map.get("invType").toString();
                 Invoice invoice = new Invoice();
+                
+                String invTypeTemp = "";
+                if("V".equals(invType)){
+                    invTypeTemp = invoiceNo.substring(1, 2);
+                    invType = invTypeTemp;
+                    if("T".equals(invTypeTemp)){
+                        invType = "A";
+                    }
+                }
                 invoice = invoicedao.searchInvoiceFromInvoiceNumber(invoiceNo, department, invType);
                 if ("".equals(invoice.getId()) || null == invoice.getId()) {
                     result = "null";
@@ -906,6 +915,7 @@ public class AJAXBean extends AbstractBean implements
         String receiveAddress = invoice.getInvAddress();
         String arcode = invoice.getArcode();
         String invNo = invoice.getInvNo();
+        System.out.println("invoiceDetaill.size() " + String.valueOf(invoiceDetaill.size()));
         if (invoiceDetaill == null || invoiceDetaill.size() == 0) {
             String newrow = "";
             newrow += "<tr>"
@@ -951,7 +961,7 @@ public class AJAXBean extends AbstractBean implements
                 displaydescription = billTypeName;
             } else if ("2".equals(product)) {
                 displaydescription += billTypeName + " #-- ";
-                displaydesTemp = billableDao.getDescriptionInvoiceOthers(refItemId);
+                displaydesTemp = billableDao.getDescriptionInvoiceOthersFromRefId(refItemId);
                 String[] parts = displaydesTemp.split("\\|");
                 displaydescription += parts[4] + " : " + parts[5];
                 System.out.println("displaydescription" + displaydescription);
@@ -962,7 +972,7 @@ public class AJAXBean extends AbstractBean implements
             } else if ("6".equals(product)) {
                 if (!"".equals(refItemId)) {
                     displaydescription += billTypeName + " ";
-                    displaydesTemp = billableDao.getDescriptionInvoiceDayTour(refItemId);
+                    displaydesTemp = billableDao.getDescriptionInvoiceDayTourFromRefId(refItemId);
                     String[] parts = displaydesTemp.split("\\|");
                     displaydescription += parts[5] + " : " + parts[6];
                     System.out.println("displaydescription" + displaydescription);
