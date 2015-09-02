@@ -467,10 +467,14 @@ public class TaxInvoiceController extends SMITravelController {
             BigDecimal amountLocal = amountLocalList.get(i);
             costTotal = costLocal.subtract(cost);
             amountTotal = amountLocal.subtract(amount);
-            if((costTotal.compareTo(BigDecimal.ZERO) < 0)){
-                result = "cost much over";
-                return result;
-            } else if((amountTotal.compareTo(BigDecimal.ZERO) < 0)){
+//            if((costTotal.compareTo(BigDecimal.ZERO) < 0)){
+//                result = "cost much over";
+//                return result;
+//            } else if((amountTotal.compareTo(BigDecimal.ZERO) < 0)){
+//                result = "amount much over";
+//                return result;
+//            }
+            if((amountTotal.compareTo(BigDecimal.ZERO) < 0)){
                 result = "amount much over";
                 return result;
             }
