@@ -788,6 +788,7 @@
         $('.date').datetimepicker();
         $('.datemask').mask('0000-00-00');
         $(".money").mask('000,000,000.00', {reverse: true});
+        $(".money2").mask('#,##0.00;-#,##0.00', {reverse: true});
         $('.spandate').click(function() {
             var position = $(this).offset();
             console.log("positon :" + position.top);
