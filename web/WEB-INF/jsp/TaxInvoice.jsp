@@ -267,14 +267,14 @@
                                                     <th style="width: 1%" class="hidden">Id</th>
                                                     <th style="width: 10%" >Product</th>
                                                     <th style="width: 10%" >Ref No</th>
-                                                    <th style="width: 10%">Description</th>
+                                                    <th style="width: 19%">Description</th>
                                                     <th style="width: 10%" >Cost</th>
-                                                    <th style="width: 10%" >Cur</th>
+                                                    <th style="width: 8%" >Cur</th>
                                                     <th style="width: 5%" onclick="checkVatAll()"><u>Is vat</u></th>
-                                                    <th style="width: 10%" >Vat</th>
+                                                    <th style="width: 5%" >Vat</th>
                                                     <th style="width: 10%" >Gross</th>
                                                     <th style="width: 10%">Amount</th>
-                                                    <th style="width: 10%">Cur</th>
+                                                    <th style="width: 8%">Cur</th>
                                                     <th style="width: 4%">Action</th>
                                                 </tr>
                                             </thead>
@@ -788,6 +788,7 @@
         $('.date').datetimepicker();
         $('.datemask').mask('0000-00-00');
         $(".money").mask('000,000,000.00', {reverse: true});
+        $(".money2").mask('#,##0.00;-#,##0.00', {reverse: true});
         $('.spandate').click(function() {
             var position = $(this).offset();
             console.log("positon :" + position.top);
