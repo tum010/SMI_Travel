@@ -667,8 +667,9 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         int invamount = 0;
         List<InvoiceDetail> invoiceDetailList = new ArrayList<InvoiceDetail>();
         List<InvoiceDetailView> invoiceDetailViewList = new ArrayList<InvoiceDetailView>();
+        System.out.println("ticketNo : "+ticketNo);
         String AirticketPassengerQuery  = "from AirticketPassenger pass where pass.series1||pass.series2||pass.series3 = :ticketNo";
-        String InvoiceDetailQuery  = "from InvoiceDetail invd where invd.billableDesc.billable.master.id = :masterId and invd.billableDesc.MBilltype.name = 'Air Ticket' GROUP BY invd.invoice";
+        String InvoiceDetailQuery  = "from InvoiceDetail invd where invd.billableDesc.billable.master.id = :masterId and invd.billableDesc.MBilltype.name = 'Air Ticket' GROUP BY invd.invoice.id";
         Session session = this.sessionFactory.openSession();
         List<AirticketPassenger> airticketPassList = session.createQuery(AirticketPassengerQuery).setParameter("ticketNo", ticketNo).list();
         

@@ -396,8 +396,8 @@ public class AddTicketFareController extends SMITravelController {
             invoiceDetailViewList = ticketFareAirlineService.getInvoiceDetailFromTicketNo(ticketNo);
             
             List<ReceiptDetailView> receiptDetailViewListTemp = new ArrayList<ReceiptDetailView>();
-            List<ReceiptDetailView> receiptDetailViewList = new ArrayList<ReceiptDetailView>();
-            if(!"null".equals(invoiceDetailViewList.get(0).getInvoiceId())){
+            List<ReceiptDetailView> receiptDetailViewList = new ArrayList<ReceiptDetailView>();         
+            if(((invoiceDetailViewList != null))&&(!"null".equals(invoiceDetailViewList.get(0).getInvoiceId()))){
                 request.setAttribute(INVOICEDETAILLIST, invoiceDetailViewList);
                 for (int i = 0; i < invoiceDetailViewList.size() ; i++) {
                     invNo = invoiceDetailViewList.get(i).getInvNo();

@@ -42,7 +42,7 @@ public class InvoiceImpl implements InvoiceReportDao{
         String Branch = "";
         String Accno = "";
         String Bank = "";
-         List<Object[]> QueryBankList = session.createSQLQuery("SELECT * FROM `m_bank` where id= " + BankId)
+         List<Object[]> QueryBankList = session.createSQLQuery("SELECT * FROM `m_bank` where code= '" + BankId+"'")
                  .addScalar("code", Hibernate.STRING)
                  .addScalar("name", Hibernate.STRING)
                  .addScalar("branch", Hibernate.STRING)

@@ -219,7 +219,7 @@ public class PaymentAirlineController extends SMITravelController {
             }
            
             ticketFareViews = paymentAirTicketService.getListTicketFare(dateFrom,dateTo,ticketFrom,typeAirline,invoiceSupCode);
-            if(!ticketFareViews.isEmpty()){
+            if(ticketFareViews != null){
                 request.setAttribute(SETCALCULATETICKET,1);
                 request.setAttribute(TICKETFARECOUNT,ticketFareViews.size()+1);
             }

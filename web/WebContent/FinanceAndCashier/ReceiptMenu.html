@@ -67,7 +67,7 @@
         <b class="arrow"></b>
     </li>
 </ul>
-<input id="tempBox" type="password" style="border: none; outline: none"/>
+<input id="tempBox"   onkeyup="checkmenu()" type="password" style="border: none; outline: none"/>
 
 <script>
     $(document).ready(function () {
@@ -97,16 +97,20 @@
             var $select = $('a[href*="' + sub + '"]');
             $("#ReceiptMenu").find($select).css('background-color', '#ccc');           
         
-
-    $("#tempBox").on("keyup", function (event) {
-        if($("#tempBox").val() === "1111"){
-            $(".invoiceTemp").show();
-            $("#tempBox").val("");
-        }else if($("#tempBox").val() === "2222"){
-            $(".invoiceTemp").hide();
-            $("#tempBox").val("");
-        }
-    });
+//
+//    $("#tempBox").on("keyup", function (event) {
+//        
+//        if($("#tempBox").val() === "1111"){
+//            alert(1);
+//            $(".invoiceTemp").show();
+//            $("#tempBox").val("");
+//        }else if($("#tempBox").val() === "2222"){
+//            $(".invoiceTemp").hide();
+//            $("#tempBox").val("");
+//        }
+//    });
+    
+    
         
        
         
@@ -124,5 +128,17 @@
 //        });
     });
 
+
+function checkmenu(){
+
+        if($("#tempBox").val() === "1111"){
+           
+            $(".invoiceTemp").show();
+            $("#tempBox").val("");
+        }else if($("#tempBox").val() === "2222"){
+            $(".invoiceTemp").hide();
+            $("#tempBox").val("");
+        }
+}
 
 </script>
