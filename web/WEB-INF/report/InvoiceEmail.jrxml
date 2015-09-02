@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceEmail" language="groovy" pageWidth="595" pageHeight="842" columnWidth="522" leftMargin="45" rightMargin="28" topMargin="59" bottomMargin="56" uuid="573bfe06-de4f-4adc-b5b3-76cb68d89d08">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="240"/>
+	<property name="ireport.x" value="178"/>
+	<property name="ireport.y" value="480"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
@@ -616,13 +616,6 @@
 				<reportElement x="253" y="111" width="131" height="1" uuid="c401d38d-155b-4db0-8a11-cdaaf0346a5f"/>
 			</line>
 			<textField>
-				<reportElement x="253" y="91" width="131" height="20" uuid="3eee64a1-812b-4b85-ad0a-4ea71a883e6e"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH SarabunPSK" size="14" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{user}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement x="3" y="55" width="229" height="32" uuid="606580e8-0632-46bc-a83c-297e7417026b"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -691,7 +684,7 @@
 				<textFieldExpression><![CDATA[$F{totalvat} == null ? "0.00":$F{totalvat}]]></textFieldExpression>
 			</textField>
 			<image hAlign="Center" vAlign="Middle">
-				<reportElement x="397" y="68" width="119" height="37" uuid="521c3cfe-8c7b-4214-822b-9498dd1569da"/>
+				<reportElement x="258" y="68" width="119" height="37" uuid="521c3cfe-8c7b-4214-822b-9498dd1569da"/>
 				<imageExpression><![CDATA["resource/images/"+$F{sign}+".png"]]></imageExpression>
 			</image>
 		</band>

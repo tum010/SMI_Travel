@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RefundAirReport" language="groovy" pageWidth="594" pageHeight="421" columnWidth="524" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="7b4a2257-2f70-4963-bf1f-6e60068f6f43">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="96"/>
+	<property name="ireport.y" value="192"/>
 	<field name="refundno" class="java.lang.String"/>
 	<field name="ticketdate" class="java.lang.String"/>
 	<field name="passenger" class="java.lang.String"/>
@@ -15,6 +15,7 @@
 	<field name="receiveby" class="java.lang.String"/>
 	<field name="receivedate" class="java.lang.String"/>
 	<field name="ticketamount" class="java.lang.String"/>
+	<field name="address" class="java.lang.String"/>
 	<background>
 		<band height="351">
 			<rectangle>
@@ -337,12 +338,6 @@
 				<reportElement x="53" y="59" width="199" height="1" uuid="8eba42f0-618e-46bf-9a31-25f03100f300"/>
 			</line>
 			<line>
-				<reportElement x="53" y="73" width="199" height="1" uuid="a41e0724-8fc2-4a88-b936-f26e15c99c8a"/>
-			</line>
-			<line>
-				<reportElement x="53" y="86" width="199" height="1" uuid="e9a3a8f7-8679-4e65-b187-9023fcc9ec8a"/>
-			</line>
-			<line>
 				<reportElement x="357" y="47" width="166" height="1" uuid="3de00946-ea2a-4450-81ca-e6481459ea32"/>
 			</line>
 			<line>
@@ -390,6 +385,16 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ticketamount}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="53" y="63" width="199" height="35" uuid="99e0ae25-065c-49c4-be42-857decbacac2"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="12" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="54" y="77" width="199" height="1" uuid="aedad5e9-a6fb-401c-8161-a782717969fe"/>
+			</line>
 		</band>
 	</pageFooter>
 </jasperReport>
