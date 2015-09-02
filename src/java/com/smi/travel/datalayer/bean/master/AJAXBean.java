@@ -880,7 +880,7 @@ public class AJAXBean extends AbstractBean implements
                         + "<input type='hidden' name='invoiceId" + row + "' id='invoiceId" + row + "' value='" + invDetailId + "'>"
                         + "<td class='text-center'>" + product + "</td>"
                         + "<td>" + description + "</td>"
-                        + "<td class='money' style=\"text-align:right;\">" + cost + "</td>"
+                        + "<td class='money2' style=\"text-align:right;\">" + cost + "</td>"
                         + "<td style=\"text-align:center;\">" + curCost + "</td>"
                         + "<td class='money' style=\"text-align:right;\">" + amount + "</td>"
                         + "<td style=\"text-align:center;\">" + curAmount + "</td>"
