@@ -330,7 +330,7 @@ public class ReportService {
     }
 
     public List getInvoiceSummary(String ticketfrom, String tickettype, String startdate, String enddate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return invoiceSummaryDao.getInvoiceSummary(ticketfrom, tickettype, startdate, enddate);
     }
 
     public ReceiptDao getReceiptDao() {
@@ -348,14 +348,15 @@ public class ReportService {
     public ReceiveListDao getReceiveListDao() {
         return receiveListDao;
     }
-    
-    public void setInvoiceSummaryDao(InvoiceSummaryDao invoiceSummaryDao) {
-        this.invoiceSummaryDao = invoiceSummaryDao;
-    }
-    
+
     public InvoiceSummaryDao getInvoiceSummaryDao() {
         return invoiceSummaryDao;
     }
+
+    public void setInvoiceSummaryDao(InvoiceSummaryDao invoiceSummaryDao) {
+        this.invoiceSummaryDao = invoiceSummaryDao;
+    }
+   
 
     public void setInvoiceEmaildao(InvoiceEmailDao invoiceEmaildao) {
         this.invoiceEmaildao = invoiceEmaildao;
@@ -444,5 +445,6 @@ public class ReportService {
     public void setCreditNoteSummaryReportDao(CreditNoteSummaryReportDao creditNoteSummaryReportDao) {
         this.creditNoteSummaryReportDao = creditNoteSummaryReportDao;
     }
+    
     
 }

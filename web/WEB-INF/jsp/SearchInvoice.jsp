@@ -159,7 +159,7 @@
                         </button>                                          
                     </div>                   
                     <div class="col-md-1 text-right " style="padding: 0px 0px 0px 0px">
-                        <button type="button" onclick="printVoucher('');" class="btn btn-default">
+                        <button type="button" onclick="printInvoiceSummary();" class="btn btn-default">
                             <span id="SpanPrint" class="glyphicon glyphicon-print"></span> Print
                         </button>
                     </div>    
