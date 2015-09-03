@@ -2,7 +2,6 @@ package com.smi.travel.controller;
 import com.smi.travel.datalayer.entity.BillableDesc;
 import com.smi.travel.datalayer.entity.Invoice;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
-import com.smi.travel.datalayer.entity.MAccpay;
 import com.smi.travel.datalayer.entity.MAccterm;
 import com.smi.travel.datalayer.entity.MBilltype;
 import com.smi.travel.datalayer.entity.MCurrency;
@@ -18,7 +17,6 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
@@ -38,7 +36,7 @@ public class InvoiceController extends SMITravelController {
     List<InvoiceDetail> listInvoiceDetail = new LinkedList<InvoiceDetail>();
     SystemUser staff = new SystemUser();
     MFinanceItemstatus mStatus = new MFinanceItemstatus();
-    MAccpay type = new MAccpay();
+    MAccterm type = new MAccterm();
     UtilityFunction utilty = new UtilityFunction();
 //    private UtilityFunction utilty; test
     
@@ -368,7 +366,7 @@ public class InvoiceController extends SMITravelController {
             }
             if(termPay != null && !termPay.equals("")){
                 type.setId(termPay);
-                invoice.setMAccpay(type);
+                invoice.setMAccTerm(type);
             }
             
             if(dueDate != null){

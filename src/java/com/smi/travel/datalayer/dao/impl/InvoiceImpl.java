@@ -269,7 +269,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setDueDate(invoiceList.get(0).getDueDate());
             invoice.setIsGroup(invoiceList.get(0).getIsGroup());
             invoice.setIsLock(invoiceList.get(0).getIsLock());
-            invoice.setMAccpay(invoiceList.get(0).getMAccpay());
+            invoice.setMAccTerm(invoiceList.get(0).getMAccTerm());
             invoice.setMFinanceItemstatus(invoiceList.get(0).getMFinanceItemstatus());
             invoice.setRemark(invoiceList.get(0).getRemark());
             invoice.setStaff(invoiceList.get(0).getStaff());
@@ -336,7 +336,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setDueDate(invoiceList.get(0).getDueDate());
             invoice.setIsGroup(invoiceList.get(0).getIsGroup());
             invoice.setIsLock(invoiceList.get(0).getIsLock());
-            invoice.setMAccpay(invoiceList.get(0).getMAccpay());
+            invoice.setMAccTerm(invoiceList.get(0).getMAccTerm());
             invoice.setMFinanceItemstatus(invoiceList.get(0).getMFinanceItemstatus());
             invoice.setRemark(invoiceList.get(0).getRemark());
             invoice.setStaff(invoiceList.get(0).getStaff());
@@ -420,8 +420,8 @@ public class InvoiceImpl implements InvoiceDao{
                     invoiceView.setInvoiceDate(invoiceDate);
                     invoiceView.setName(listInvoice.get(i).getInvName());
                     invoiceView.setAddress(listInvoice.get(i).getInvAddress());
-                    if(listInvoice.get(i).getMAccpay() != null){
-                        invoiceView.setTermPayName(listInvoice.get(i).getMAccpay().getName()); 
+                    if(listInvoice.get(i).getMAccTerm() != null){
+                        invoiceView.setTermPayName(listInvoice.get(i).getMAccTerm().getName()); 
                     }
                                    
                 
@@ -463,7 +463,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setDueDate(invoiceList.get(0).getDueDate());
             invoice.setIsGroup(invoiceList.get(0).getIsGroup());
             invoice.setIsLock(invoiceList.get(0).getIsLock());
-            invoice.setMAccpay(invoiceList.get(0).getMAccpay());
+            invoice.setMAccTerm(invoiceList.get(0).getMAccTerm());
             invoice.setMFinanceItemstatus(invoiceList.get(0).getMFinanceItemstatus());
             invoice.setRemark(invoiceList.get(0).getRemark());
             invoice.setStaff(invoiceList.get(0).getStaff());
@@ -522,7 +522,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setDueDate(invoiceList.get(0).getDueDate());
             invoice.setIsGroup(invoiceList.get(0).getIsGroup());
             invoice.setIsLock(invoiceList.get(0).getIsLock());
-            invoice.setMAccpay(invoiceList.get(0).getMAccpay());
+            invoice.setMAccTerm(invoiceList.get(0).getMAccTerm());
             invoice.setMFinanceItemstatus(invoiceList.get(0).getMFinanceItemstatus());
             invoice.setRemark(invoiceList.get(0).getRemark());
             invoice.setStaff(invoiceList.get(0).getStaff());
@@ -556,7 +556,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setDueDate(invoiceList.get(0).getDueDate());
             invoice.setIsGroup(invoiceList.get(0).getIsGroup());
             invoice.setIsLock(invoiceList.get(0).getIsLock());
-            invoice.setMAccpay(invoiceList.get(0).getMAccpay());
+            invoice.setMAccTerm(invoiceList.get(0).getMAccTerm());
             invoice.setMFinanceItemstatus(invoiceList.get(0).getMFinanceItemstatus());
             invoice.setRemark(invoiceList.get(0).getRemark());
             invoice.setStaff(invoiceList.get(0).getStaff());
