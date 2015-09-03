@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */ 
  function validForm(){
-     alert("1");
+//     alert("1");
       $("#SearchInvoiceForm")
             .bootstrapValidator({
                 framework: 'bootstrap',

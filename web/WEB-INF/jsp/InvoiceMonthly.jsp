@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="col-md-10" >
-                <form role="form" id="ticketsummary" class="form-horizontal">
+                <form role="form" id="InvoiceMonthlyFrom" method="post" class="form-horizontal" onsubmit="printInvoiceMonthly();">
                     <div class="row"> 
                         <div class="col-sm-8">
                             <div class="form-group">
@@ -121,7 +121,7 @@
                             <div class="form-group">
                                 <label class="col-md-5 control-label text-right"> From </label>
                                 <div class="col-md-4">  
-                                    <div class="form-group" id="fromdatepanel">
+                                    <div class="form-group" id="DateFrom">
                                         <div class='input-group date'>
                                             <input type='text' id="fromdate" name="fromdate" class="form-control" data-date-format="YYYY-MM-DD" />
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
@@ -134,7 +134,7 @@
                     </div>            
                     <div class="row">
                         <div class="col-md-8">
-                            <div class="form-group" id="todatepanel">
+                            <div class="form-group" id="DateTo">
                                 <label class="col-md-5 control-label text-right"> To </label>
                                 <div class="col-md-4">  
                                     <div class="form-group">
@@ -169,7 +169,7 @@
                         <div class="col-md-8">
                             <div class="form-group">
                                 <div class="col-sm-10 text-right">
-                                    <button type="button" onclick="printInvoiceMonthly();" class="btn btn-success"><span class="glyphicon glyphicon-print"></span> Print</button>
+                                    <button type="submit"  class="btn btn-success"><span class="glyphicon glyphicon-print"></span> Print</button>
                                 </div>
                                 <div class="col-sm-2 text-left">
                                     <button type="button" onclick="" class="btn btn-warning"><span class="glyphicon glyphicon-print"></span> Cancel</button>
@@ -413,4 +413,63 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
+<!--Script-->
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function () { 
+        $('.date').datetimepicker();
+    $('span').click(function () {
+        var position = $(this).offset();
+        console.log("positon :"+position.top);
+        $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+
+    });
+         $("#InvoiceMonthlyFrom")
+            .bootstrapValidator({
+                framework: 'bootstrap',
+                feedbackIcons: {
+                    valid: 'uk-icon-check',
+                    invalid: 'uk-icon-times',
+                    validating: 'uk-icon-refresh'
+                },
+                fields: {
+                    fromdate: {
+                        trigger: 'focus keyup change',
+                            validators: {
+                                date: {
+                                    format: 'YYYY-MM-DD',
+                                    max: 'todate',
+                                    message: 'The Date From is not a valid'
+                                }
+                            }
+                    },
+                    todate: {
+                        trigger: 'focus keyup change',
+                            validators: {
+                                date: {
+                                    format: 'YYYY-MM-DD',
+                                    min: 'fromdate',
+                                    message: 'The Date To is not a valid'
+                                }
+                            }
+                    }
+                }
+            }).on('success.field.fv', function (e, data) {
+//                alert("1");
+                if (data.field === 'fromdate' && data.fv.isValidField('todate') === false) {
+                    data.fv.revalidateField('todate');
+                }
+
+                if (data.field === 'todate' && data.fv.isValidField('fromdate') === false) {
+                    data.fv.revalidateField('fromdate');
+                }
+            });
+            $('#DateFrom').datetimepicker().on('dp.change', function (e) {
+//                alert("1");
+                $('#InvoiceMonthlyFrom').bootstrapValidator('revalidateField', 'fromdate');
+            });
+            $('#DateTo').datetimepicker().on('dp.change', function (e) {
+                $('#InvoiceMonthlyFrom').bootstrapValidator('revalidateField', 'todate');
+            });  
+    });   
+</script>
 <script type="text/javascript" src="js/InvoiceMonthly.js"></script> 

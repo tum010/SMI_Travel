@@ -84,7 +84,7 @@
                     </button>                                          
                 </div>
                 <div class="col-md-1 text-right " style="padding: 0px 0px 0px 0px">
-                    <button type="button" onclick="printVoucher('');" class="btn btn-default">
+                    <button type="button" onclick="printTaxInvoiceReportSummary();" class="btn btn-default">
                         <span id="SpanPrint" class="glyphicon glyphicon-print"></span> Print
                     </button>
                 </div>   
@@ -117,7 +117,7 @@
                         </thead>
                         <tbody>
                             <c:forEach var="taxInvoice" items="${taxInvoiceView_List}" varStatus="i">
-                                <tr>
+                                <tr id="${taxInvoice.taxId}"> 
                                     <th class="hidden">${taxInvoice.taxId}</th>
                                     <th class="hidden">${taxInvoice.department}</th>
                                     <td align="center">${i.count}</td>
@@ -241,5 +241,18 @@
             page = 'W';
         }
         window.location = ("TaxInvoice"+page+".smi?action=edit&TaxInvId="+taxId+"&TaxInvNo="+taxNo+"&department="+department);
+    }
+    
+    function printTaxInvoiceReportSummary(){
+//         var taxInvId = "";
+//        $('#SearchTaxInvoiceTable tr.row_selected').each(function () {
+//            taxInvId = $(this).attr('id');
+//        });
+//        if(taxInvId === ""){
+//            alert("please select tax invoice to print tax invoice summary.");
+//        }else{
+//            window.open("report.smi?name=TaxInvoiceSummaryReport&taxInvId="+taxInvId+"&department="+department+"&optionPrint="+optionPrint);
+//        }
+        window.open("report.smi?name=TaxInvoiceSummaryReport");
     }
 </script>

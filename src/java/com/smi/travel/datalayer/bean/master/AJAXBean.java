@@ -1549,8 +1549,8 @@ public class AJAXBean extends AbstractBean implements
         }
 
         result += bill.getMaster().getBookingType() + "||";
-        result += bill.getBillTo() + "," + bill.getBillName() + "," + bill.getBillAddress() + "," + term
-                + "," + bill.getMaster().getStaff().getId() + "," + bill.getMaster().getStaff().getName() + "," + bill.getMaster().getStaff().getUsername() + "," + dateDue + "," + "||";
+        result += bill.getBillTo() + "//" + bill.getBillName() + "//" + bill.getBillAddress() + "//" + term
+                + "//" + bill.getMaster().getStaff().getId() + "//" + bill.getMaster().getStaff().getName() + "//" + bill.getMaster().getStaff().getUsername() + "//" + dateDue + "//" + "||";
         List<BillableDesc> billdeescList = bill.getBillableDescs();
         int count = 0;
         NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);

@@ -794,7 +794,7 @@ function CallAjaxAdd(param) {
 }    
 
 function setBillableInvoice(data){
-    var strx   = data.split(',');
+    var strx   = data.split('//');
     var array  = [];
     array = array.concat(strx);
     $('#InvTo').val(array[0]);
