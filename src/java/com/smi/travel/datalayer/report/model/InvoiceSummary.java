@@ -12,10 +12,10 @@ import java.util.Date;
  * @author Kanokporn
  */
 public class InvoiceSummary {
-//    private Date invFrom;
-//    private Date invto;
-//    private String invtype;
-//    private String department;
+    private Date invfrom;
+    private Date invto;
+    private String invtype;
+    private String department;
     private String invno;
     private Date invdate;
     private String to;
@@ -188,36 +188,45 @@ public class InvoiceSummary {
         return sumprofit;
     }
 
-//    public void setDepartment(String department) {
-//        this.department = department;
-//    }
-//
-//    public void setInvFrom(Date invFrom) {
-//        this.invFrom = invFrom;
-//    }
-//
-//    public void setInvto(Date invto) {
-//        this.invto = invto;
-//    }
-//
-//    public void setInvtype(String invtype) {
-//        this.invtype = invtype;
-//    }
-//
-//    public String getDepartment() {
-//        return department;
-//    }
-//
-//    public Date getInvFrom() {
-//        return invFrom;
-//    }
+    public void setDepartment(String department) {
+        this.department = department;
+    }
 
-//    public Date getInvto() {
-//        return invto;
-//    }
-//
-//    public String getInvtype() {
-//        return invtype;
-//    }
+ 
+
+    public void setInvto(Date invto) {
+        this.invto = invto;
+    }
+
+    public void setInvtype(String invtype) {
+        this.invtype = invtype;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+
+    public Date getInvto() {
+        return invto;
+    }
+
+    public String getInvtype() {
+        return invtype;
+    }
+
+    /**
+     * @return the invfrom
+     */
+    public Date getInvfrom() {
+        return invfrom;
+    }
+
+    /**
+     * @param invfrom the invfrom to set
+     */
+    public void setInvfrom(Date invfrom) {
+        this.invfrom = invfrom;
+    }
 
 }
