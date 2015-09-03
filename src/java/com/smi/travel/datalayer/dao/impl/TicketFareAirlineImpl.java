@@ -193,6 +193,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         String department = "";
         String masterId = "";
         if (ticketPassList.isEmpty()) {
+            System.out.println(" ticketPassList.isEmpty() ");
             return null;
         }else{ 
             for(int i = 0 ; i < ticketPassList.size() ; i++ ){
