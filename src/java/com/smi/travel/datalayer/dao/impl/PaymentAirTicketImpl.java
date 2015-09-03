@@ -495,6 +495,9 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             for(int j = 0 ; j < ticketNoTicketFare.length ; j++ ){
                 String ticketNoRefund = String.valueOf(ticketNo).trim();
                 String ticketNoFare = String.valueOf(ticketNoTicketFare[j]).trim();
+                if("customer".equalsIgnoreCase(ticketNoList)){
+                    ticketNoFare = String.valueOf(ticketNo).trim();
+                }
                 if(ticketNoRefund.equalsIgnoreCase(ticketNoFare)){
                     check = true;
                     if(refundAirticketDetails.size() > 1){

@@ -62,38 +62,41 @@
         <div class="col-sm-10">
             <div class="row" style="padding-left: 15px">  
                 <div class="col-sm-6 " style="padding-right: 15px">
+                    <c:if test="${receipt.MFinanceItemstatus.id == '2'}">
+                        <c:set var="receiptVoid" value="VOID" />
+                    </c:if>
                     <c:choose>
                         <c:when test="${fn:contains(page , 'WT')}">
                             <c:set var="typeReceipt" value="T" />
                             <c:set var="typeDepartment" value="Wendy" />
-                            <h4><b>Receipt Temp Wendy</b></h4>
+                            <h4><b>Receipt Temp Wendy   <font style="color: red">${receiptVoid}</font></b></h4>
                         </c:when>
                         <c:when test="${fn:contains(page , 'WV')}">
                             <c:set var="typeReceipt" value="V" />
                             <c:set var="typeDepartment" value="Wendy" />
-                            <h4><b>Receipt Vat Wendy</b></h4>
+                            <h4><b>Receipt Vat Wendy   <font style="color: red">${receiptVoid}</font></b></h4>
                         </c:when>    
                         <c:when test="${fn:contains(page , 'OT')}">
                             <c:set var="typeReceipt" value="T" />
                             <c:set var="typeDepartment" value="Outbound" />
-                            <h4><b>Receipt Temp Outbound</b></h4>
+                            <h4><b>Receipt Temp Outbound   <font style="color: red">${receiptVoid}</font></b></h4>
                         </c:when>    
                         <c:when test="${fn:contains(page , 'OV')}">
                             <c:set var="typeReceipt" value="V" />
                             <c:set var="typeDepartment" value="Outbound" />
-                            <h4><b>Receipt Vat Outbound</b></h4>
+                            <h4><b>Receipt Vat Outbound   <font style="color: red">${receiptVoid}</font></b></h4>
                         </c:when>    
                         <c:when test="${fn:contains(page , 'IT')}">
                             <c:set var="typeReceipt" value="T" />
                             <c:set var="typeDepartment" value="Inbound" />
-                            <h4><b>Receipt Temp Inbound</b></h4>
+                            <h4><b>Receipt Temp Inbound   <font style="color: red">${receiptVoid}</font></b></h4>
                         </c:when>   
                         <c:when test="${fn:contains(page , 'IV')}">
                             <c:set var="typeReceipt" value="V" />
                             <c:set var="typeDepartment" value="Inbound" />
-                            <h4><b>Receipt Vat Inbound</b></h4>
+                            <h4><b>Receipt Vat Inbound   <font style="color: red">${receiptVoid}</font></b></h4>
                         </c:when>    
-                    </c:choose>                
+                    </c:choose>
                 </div>
                 <div class="col-xs-12 form-group"><hr/></div>
             </div>
@@ -425,7 +428,7 @@
                                                         </c:when>
                                                     </c:choose>
                                                 </td>
-                                                <td><input id="receiveAmount${i.count}" name="receiveAmount${i.count}" type="text" class="form-control text-right" onkeyup="insertCommas(this)" onkeypress="checkAmount('${i.count}')" value="${table.amount}"></td>
+                                                <td><input id="receiveAmount${i.count}" name="receiveAmount${i.count}" type="text" class="form-control text-right" onkeyup="insertCommas(this)" onkeypress="setFormatCurrencyOnFocusOut('${i.count}')"  value="${table.amount}"></td>
                                                 <td>                                   
                                                     <select class="form-control" name="receiveCurrency${i.count}" id="receiveCurrency${i.count}">
                                                         <option  value="" >---------</option>
@@ -491,7 +494,7 @@
                                 <label class="control-label text-right">Grand Total </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
-                                <input type="text" class="form-control" id="grandTotal" name="grandTotal" value="" />
+                                <input type="text" class="form-control text-right" id="grandTotal" name="grandTotal" value="" readonly=""/>
                             </div>
                         </div>
                     </div>
@@ -1477,6 +1480,7 @@
                 }
             }
         }
+        calculateGrandTotal();
     });
     
 //    function setFormatCurrencyDetail(){
@@ -1657,6 +1661,7 @@
             $("#receiveAmount"+row).focusout(function(){
 //              calculatGross(row);
                 setFormatCurrency(row);
+                calculateGrandTotal();
             }); 
             $("#receiveCost"+row).focusout(function(){
                 setFormatCurrency(row);
@@ -1664,7 +1669,7 @@
             var tempCount = parseInt($("#counter").val()) + 1;
             $("#counter").val(tempCount);
 //        }
-      
+        
     }
 function handleClick(cb,row) {
   if(cb.checked){
@@ -1747,6 +1752,7 @@ function setFormatCurrency(row){
     if (receiveCost == "" || receiveCost == 0){
         document.getElementById("receiveCost"+row).value = "";
     }
+    calculateGrandTotal();
 }
 
 function AddRowCredit(row) {
@@ -2021,6 +2027,7 @@ function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,cur
     $("#receiveAmount"+row).focusout(function(){
 //        calculatGross(row);
         setFormatCurrency(row);
+        calculateGrandTotal();
     }); 
     $("#receiveCost"+row).focusout(function(){
         setFormatCurrency(row);
@@ -2029,7 +2036,7 @@ function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,cur
     var tempCount = parseInt($("#counter").val()) + 1;
     $("#counter").val(tempCount);
     AddRowProduct(tempCount);
-    
+    calculateGrandTotal();
 }
 
 function searchReceiveNo(){
@@ -2310,7 +2317,7 @@ function DeleteRowProduct(){
             $("#searchPaymentNoTour").removeAttr("disabled");
         }
     }
-
+    calculateGrandTotal();
 }
 
 function deleteCreditList(id,Ccount) {
@@ -2386,7 +2393,8 @@ function checkAmount(row){
         if(parseInt(amount) > parseInt(amountTemp)){
             document.getElementById('receiveAmount'+row).value = amountTemp; 
         }
-    }); 
+    });
+    calculateGrandTotal();
 }
 
 function getDescriptionDetail(row){
@@ -2425,4 +2433,37 @@ function confirmCopyReceipt(){
     document.getElementById('ReceiptForm').submit();
 }
 
+function calculateGrandTotal(){
+    var temp = 0;
+    var i = 1;
+    var amountTemp = parseFloat(0);
+    var tableProduct = $("#ReceiptListTable tr").length;
+    for (i ; i < tableProduct ; i++) {
+        temp = $("#receiveAmount"+i).val();
+        temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
+        if(temp == '') {
+            temp = 0;
+        }
+        temp = replaceAll(",","",temp.toString());
+        var value = parseFloat(temp) ;
+        var amount = amountTemp + value ;
+        amountTemp = amount;
+    }
+    document.getElementById("grandTotal").value = formatNumber(amount);
+}
+
+
+function setFormatCurrencyOnFocusOut(row){
+    $('#receiveAmount'+row).focusout(function(){
+        setFormatCurrency(row);
+        calculateGrandTotal();
+    });
+
+    $('#receiveCost'+row).focusout(function(){
+        setFormatCurrency(row);
+        calculateGrandTotal()
+    });
+
+    
+}
 </script>
