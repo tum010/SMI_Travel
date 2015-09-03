@@ -3,17 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-$(document).ready(function () {
-    $('.date').datetimepicker();
-    $('span').click(function () {
-        var position = $(this).offset();
-        console.log("positon :"+position.top);
-        $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
-
-    });
-});
-
 function printInvoiceMonthly(){
+//    validateInvoiceMonthly();
     var BillFrom = $("#billFromName").val();
     var ClientTo = $("#clientCode").val();
     var ClientName = $("#clientName").val();
