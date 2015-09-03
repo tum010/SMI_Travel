@@ -715,6 +715,9 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         
         for (int i = 0; i < invoiceDetailList.size() ; i++) {
             InvoiceDetailView invoiceDetailView = new InvoiceDetailView();
+            invoiceDetailView.setOwner(owner);
+            invoiceDetailView.setRouting(routing);
+            invoiceDetailView.setInvAmount(new BigDecimal(String.valueOf(invamount)));
 //            invoiceDetailView.setId(invoiceDetailList.get(i).getId());
             if(invoiceDetailList.get(i).getInvoice() != null){
                 invoiceDetailView.setInvoiceId(invoiceDetailList.get(i).getInvoice().getId());
@@ -724,9 +727,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                 invoiceDetailView.setDueDate(invoiceDetailList.get(i).getInvoice().getDueDate());
                 invoiceDetailView.setStaffName(invoiceDetailList.get(i).getInvoice().getStaff() != null ? invoiceDetailList.get(i).getInvoice().getStaff().getName() : "");
                 invoiceDetailView.setCredit(invoiceDetailList.get(i).getInvoice().getMAccpay() != null ? invoiceDetailList.get(i).getInvoice().getMAccpay().getName() : "");
-                invoiceDetailView.setOwner(owner);
-                invoiceDetailView.setRouting(routing);
-                invoiceDetailView.setInvAmount(new BigDecimal(String.valueOf(invamount)));
+
                 invoiceDetailViewList.add(invoiceDetailView);
             }
         }
