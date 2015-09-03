@@ -70,7 +70,7 @@ public class ReportController extends SMITravelController {
     private static final String TicketFareReport = "TicketFareReport";
     private static final String TaxInvoiceSummaryReport = "TaxInvoiceSummaryReport";
     private static final String CreditNoteSummaryReport = "CreditNoteSummaryReport";
-
+    
     private DataSource datasource;
     private static final Logger LOG = Logger.getLogger(ReportController.class.getName());
     private ReportService reportservice;

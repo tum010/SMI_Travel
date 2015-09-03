@@ -187,4 +187,37 @@ public class InvoiceSummary {
     public Double getSumprofit() {
         return sumprofit;
     }
+
+//    public void setDepartment(String department) {
+//        this.department = department;
+//    }
+//
+//    public void setInvFrom(Date invFrom) {
+//        this.invFrom = invFrom;
+//    }
+//
+//    public void setInvto(Date invto) {
+//        this.invto = invto;
+//    }
+//
+//    public void setInvtype(String invtype) {
+//        this.invtype = invtype;
+//    }
+//
+//    public String getDepartment() {
+//        return department;
+//    }
+//
+//    public Date getInvFrom() {
+//        return invFrom;
+//    }
+
+//    public Date getInvto() {
+//        return invto;
+//    }
+//
+//    public String getInvtype() {
+//        return invtype;
+//    }
+
 }
