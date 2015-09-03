@@ -3,6 +3,7 @@ import com.smi.travel.datalayer.entity.BillableDesc;
 import com.smi.travel.datalayer.entity.Invoice;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.MAccpay;
+import com.smi.travel.datalayer.entity.MAccterm;
 import com.smi.travel.datalayer.entity.MBilltype;
 import com.smi.travel.datalayer.entity.MCreditBank;
 import com.smi.travel.datalayer.entity.MCurrency;
@@ -181,9 +182,9 @@ public class ReceiptController extends SMITravelController {
             invoice.setCreateBy(user.getUsername());
             invoice.setCreateDate(new Date());
             if(StringUtils.isNotEmpty(inputStatus)){
-                MAccpay mAccpay = new MAccpay();
+                MAccterm mAccpay = new MAccterm();
                 mAccpay.setId(inputStatus);
-                invoice.setMAccpay(mAccpay);
+                invoice.setMAccTerm(mAccpay);
             }
             invoice.setStaff(user);
             MFinanceItemstatus mFinanceItemstatus = new MFinanceItemstatus();
