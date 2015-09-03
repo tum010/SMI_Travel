@@ -21,9 +21,15 @@
 	<field name="status" class="java.lang.String"/>
 	<field name="department" class="java.lang.String"/>
 	<variable name="totalvoid" class="java.math.BigDecimal" resetType="Group" resetGroup="departmentGroup" calculation="Sum"/>
-	<variable name="totalgross" class="java.math.BigDecimal" resetType="Group" resetGroup="departmentGroup" calculation="Sum"/>
-	<variable name="totalvat" class="java.math.BigDecimal" resetType="Group" resetGroup="departmentGroup" calculation="Sum"/>
-	<variable name="totalamount" class="java.math.BigDecimal" resetType="Group" resetGroup="departmentGroup" calculation="Sum"/>
+	<variable name="totalgross" class="java.math.BigDecimal" resetType="Group" resetGroup="departmentGroup" calculation="Sum">
+		<variableExpression><![CDATA[$F{gross}]]></variableExpression>
+	</variable>
+	<variable name="totalvat" class="java.math.BigDecimal" resetType="Group" resetGroup="departmentGroup" calculation="Sum">
+		<variableExpression><![CDATA[$F{vat}]]></variableExpression>
+	</variable>
+	<variable name="totalamount" class="java.math.BigDecimal" resetType="Group" resetGroup="departmentGroup" calculation="Sum">
+		<variableExpression><![CDATA[$F{amount}]]></variableExpression>
+	</variable>
 	<group name="departmentGroup">
 		<groupExpression><![CDATA[$V{PAGE_NUMBER}]]></groupExpression>
 		<groupHeader>
@@ -463,4 +469,56 @@
 			</textField>
 		</band>
 	</detail>
+	<lastPageFooter>
+		<band height="80">
+			<staticText>
+				<reportElement x="1" y="1" width="104" height="16" backcolor="#FFFFFF" uuid="e1b67ec4-b013-4831-ac88-d4d169905acf"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.5" lineColor="#CCCCFF"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total All Department]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="1" width="802" height="16" forecolor="#000000" uuid="78399077-38b0-4e82-a448-b9df6efb289d"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="600" y="36" width="68" height="20" uuid="e72b765a-abb9-44a3-8441-3ee2fedb35a1"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Vat :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="154" y="57" width="61" height="20" uuid="95e9d232-8cbf-4579-bd64-29f7505e90a4"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Void :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="592" y="56" width="76" height="20" uuid="d1184fbc-37de-4dff-93ee-718e6b7070c8"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Amount :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="598" y="17" width="70" height="20" uuid="8029c2f6-4cc9-45cf-9538-e32c6c3fdc5c"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Gross :]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
 </jasperReport>
