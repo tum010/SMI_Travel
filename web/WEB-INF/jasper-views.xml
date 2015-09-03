@@ -163,4 +163,9 @@
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/TaxInvoiceSummaryReport.jrxml"/>
 	</bean>
+        
+        <bean id="ReceiptSummaryReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/ReceiptSummaryReport.jrxml"/>
+        </bean>
 </beans>

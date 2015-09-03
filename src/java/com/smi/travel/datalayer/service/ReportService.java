@@ -178,6 +178,10 @@ public class ReportService {
      public List getReceipt(String receiptId,int option){
         return receiptDao.getReceipt(receiptId,option);
     }
+     
+    public List getReceiptSummary(String receiptId,int option){
+        return receiptDao.getReceiptSummary(receiptId,option);
+    }
     
     public List getReceiveList(String datefrom,String dateto,String user,String agentid){
         return receiveListDao.getReceiveList(datefrom, agentid, dateto, dateto, dateto, agentid, user);
