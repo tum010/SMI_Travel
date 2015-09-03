@@ -531,7 +531,7 @@ function printInvoiceNew(){
     }
 }
 
-function setBillValue(billto, billname, address, term, pay) {
+function CallAjaxAuto(billto, billname, address, term, pay) {
     $("#InvTo").val(billto);
     $("#InvToName").val(billname);
     if (address == 'null') {

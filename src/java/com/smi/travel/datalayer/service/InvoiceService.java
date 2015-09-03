@@ -26,8 +26,8 @@ public class InvoiceService {
         }
     }
     
-    public List<Invoice> SearchInvoice(String fromData,String toDate ,String department,String type){
-       return  invoiceDao.getSearchInvoice(fromData, toDate , department,type);
+    public List<Invoice> SearchInvoice(String fromData,String toDate ,String department,String type,String agent){
+       return  invoiceDao.getSearchInvoice(fromData, toDate , department,type,agent);
     }
             
     public Invoice searchInvoiceNo(String invoiceId,String department,String invoiceType){
