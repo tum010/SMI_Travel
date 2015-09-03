@@ -399,7 +399,7 @@ public class AddTicketFareController extends SMITravelController {
             List<ReceiptDetailView> receiptDetailViewList = new ArrayList<ReceiptDetailView>();
             if(!"null".equals(invoiceDetailViewList.get(0).getInvoiceId())){
                 request.setAttribute(INVOICEDETAILLIST, invoiceDetailViewList);
-                for (int i = 0; i < invoiceDetailViewList.size() ; i++) {
+                for (int i = 0; i < invoiceDetailViewList.size() ; i++){
                     invNo = invoiceDetailViewList.get(i).getInvNo();
                     invDate = invoiceDetailViewList.get(i).getInvDate();
                     invcredit =  invoiceDetailViewList.get(i).getCredit();
@@ -474,6 +474,13 @@ public class AddTicketFareController extends SMITravelController {
                                 receiptDetailViewList.add(receiptDetailView);
                             }
                         }
+                    }
+                }else{
+                    for(int i = 0; i < invoiceDetailViewList.size() ; i++) {
+                        BigDecimal invAmounttemp = invoiceDetailViewList.get(i).getInvAmount();
+                        invAmount = invAmounttemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                        staffowner =  invoiceDetailViewList.get(i).getOwner();
+                        ticketflightrouting = invoiceDetailViewList.get(i).getRouting();
                     }
                 }
                 request.setAttribute(INVOICENO, invNo);
