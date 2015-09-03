@@ -31,7 +31,10 @@ public class TaxInvoiceSummaryReportImpl implements TaxInvoiceSummaryReportDao {
     
     @Override
     public List getTaxInvoiceSummaryReport() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List data = new ArrayList();
+        TaxInvoiceSummaryReport taxInvoiceSummaryReport = new TaxInvoiceSummaryReport();
+        data.add(taxInvoiceSummaryReport);
+        return data;
     }
 
     public SessionFactory getSessionFactory() {

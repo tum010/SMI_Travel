@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CreditNoteSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="886f6a61-cb51-422c-a379-c72412e46d94">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="39"/>
+	<property name="ireport.x" value="327"/>
+	<property name="ireport.y" value="7"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="user" class="java.lang.String"/>
 	<field name="from" class="java.lang.String"/>
@@ -294,7 +294,7 @@
 	<title>
 		<band height="94" splitType="Stretch">
 			<staticText>
-				<reportElement x="74" y="48" width="177" height="14" uuid="72fdb3d9-f019-4e5c-ad45-4054e5463ca8"/>
+				<reportElement x="102" y="48" width="177" height="14" uuid="72fdb3d9-f019-4e5c-ad45-4054e5463ca8"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
@@ -305,35 +305,35 @@
 				<imageExpression><![CDATA["resource/images/smi-logo.gif"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="74" y="18" width="210" height="24" uuid="5a43e402-236c-4923-814b-d0864ea0714e"/>
+				<reportElement x="102" y="18" width="210" height="24" uuid="5a43e402-236c-4923-814b-d0864ea0714e"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[9th Floor, Siam at Siam Hotel Building 865 Rama 1 Rd.,]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="74" y="5" width="111" height="15" uuid="2d5d5e5f-daca-4dcd-b214-80522b24f159"/>
+				<reportElement x="102" y="5" width="111" height="15" uuid="2d5d5e5f-daca-4dcd-b214-80522b24f159"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[S.M.I TRAVEL CO., LTD]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="74" y="60" width="145" height="17" uuid="0e2dd52e-3cc3-4b0f-b5c4-d024d57777c9"/>
+				<reportElement x="102" y="60" width="145" height="17" uuid="0e2dd52e-3cc3-4b0f-b5c4-d024d57777c9"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[http://www.wendytour.com]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="74" y="28" width="177" height="14" uuid="a8e85f82-6f31-4560-9f5d-b44920b0e773"/>
+				<reportElement x="102" y="28" width="177" height="14" uuid="a8e85f82-6f31-4560-9f5d-b44920b0e773"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Wangmai, Phatumwan, Bangkok 10330]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="74" y="72" width="145" height="15" uuid="40592a07-054c-40c6-afd2-bc8c0f7603e4"/>
+				<reportElement x="102" y="72" width="145" height="15" uuid="40592a07-054c-40c6-afd2-bc8c0f7603e4"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
@@ -347,7 +347,7 @@
 				<text><![CDATA[Department : ALL]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="717" y="43" width="84" height="14" uuid="06cbcdbb-a676-4074-98c3-6e8d42379edb"/>
+				<reportElement x="717" y="41" width="84" height="14" uuid="06cbcdbb-a676-4074-98c3-6e8d42379edb"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
@@ -368,8 +368,8 @@
 				<text><![CDATA[Page :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="718" y="56" width="11" height="14" uuid="200a33f4-3341-48c3-b2f3-0ba4923f7789"/>
-				<textElement>
+				<reportElement x="718" y="57" width="11" height="14" uuid="200a33f4-3341-48c3-b2f3-0ba4923f7789"/>
+				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[To]]></text>
@@ -403,7 +403,7 @@
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
-				<reportElement x="718" y="29" width="82" height="15" uuid="e01a2003-85d9-4566-a627-be4459f9488b"/>
+				<reportElement x="718" y="27" width="82" height="15" uuid="e01a2003-85d9-4566-a627-be4459f9488b"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
@@ -417,7 +417,7 @@
 				<text><![CDATA[Print on:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="730" y="56" width="71" height="14" uuid="3c9615d0-ece0-4e92-bca3-474f2791af92"/>
+				<reportElement x="730" y="54" width="71" height="14" uuid="3c9615d0-ece0-4e92-bca3-474f2791af92"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
@@ -431,8 +431,8 @@
 				<text><![CDATA[of]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="170" y="63" width="41" height="14" uuid="6347dcb3-0591-4db8-8ef8-af95ff0ce386"/>
-				<textElement>
+				<reportElement x="604" y="57" width="41" height="14" uuid="cb4aab4f-6aef-4194-8ed4-9c10748c84af"/>
+				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Report of :]]></text>
@@ -440,16 +440,28 @@
 		</band>
 	</title>
 	<detail>
-		<band height="17" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<textField>
 				<reportElement x="394" y="0" width="63" height="17" uuid="4e46d3e3-b23b-42fc-923f-1bdcdaa5133c"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
 				<textElement textAlignment="Center">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{refno}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0">
 				<reportElement x="458" y="0" width="67" height="17" uuid="4446e9e4-2177-499e-9a13-5f8108b28b4c"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
 				<textElement textAlignment="Center">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
@@ -457,13 +469,25 @@
 			</textField>
 			<textField>
 				<reportElement x="122" y="0" width="31" height="17" uuid="553a5094-5ca6-41c4-b3fe-3a51eedd7ec4"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
 				<textElement textAlignment="Center">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{notefrom}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="300" y="0" width="92" height="17" uuid="c9419041-37ae-4b56-9e0a-162d9d519cb1"/>
+				<reportElement x="298" y="0" width="96" height="17" uuid="c9419041-37ae-4b56-9e0a-162d9d519cb1"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
@@ -471,6 +495,12 @@
 			</textField>
 			<textField>
 				<reportElement x="1" y="0" width="19" height="17" uuid="947cc422-ce94-4908-830d-b878698cdacb"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
@@ -478,6 +508,12 @@
 			</textField>
 			<textField>
 				<reportElement x="153" y="0" width="145" height="17" uuid="a3c00df7-59b6-4bea-8185-ceb6ca6b95d1"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
@@ -485,6 +521,12 @@
 			</textField>
 			<textField>
 				<reportElement x="20" y="0" width="56" height="17" uuid="65c313d4-897b-4d2e-bc10-4e3453081019"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
@@ -492,6 +534,12 @@
 			</textField>
 			<textField>
 				<reportElement x="76" y="0" width="46" height="17" uuid="abbdeb2b-c9b7-4377-a204-27b533b79130"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
 				<textElement textAlignment="Center">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
@@ -499,6 +547,12 @@
 			</textField>
 			<textField pattern="#,##0">
 				<reportElement x="526" y="0" width="67" height="17" uuid="bba2e141-80ac-4c4f-b5c7-b303d250c367"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
@@ -506,6 +560,12 @@
 			</textField>
 			<textField>
 				<reportElement x="770" y="0" width="32" height="17" uuid="20f5cfd0-fe70-4d4a-bac7-5701dae96676"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
 				<textElement textAlignment="Center">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
@@ -513,6 +573,12 @@
 			</textField>
 			<textField pattern="#,##0">
 				<reportElement x="702" y="0" width="67" height="17" uuid="dc7912f1-ac1f-4204-8456-a31bcd66ec8a"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
@@ -520,6 +586,12 @@
 			</textField>
 			<textField pattern="#,##0">
 				<reportElement x="661" y="0" width="41" height="17" uuid="3b85608e-e702-4e4f-ae54-ea2865976c7d"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
@@ -527,6 +599,12 @@
 			</textField>
 			<textField pattern="#,##0">
 				<reportElement x="593" y="0" width="67" height="17" uuid="eacf69b0-b5d0-4f57-8926-0378d4050213"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>

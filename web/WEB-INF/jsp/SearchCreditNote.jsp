@@ -75,7 +75,7 @@
                                 </button>                                
                             </div>
                             <div class="col-md-1 text-right " style="padding: 0px 0px 0px 0px">
-                                <button type="button" onclick="printVoucher('');" class="btn btn-default">
+                                <button type="button" onclick="printCreditNoteSummaryReport();" class="btn btn-default">
                                     <span id="SpanPrint" class="glyphicon glyphicon-print"></span> Print
                                 </button>                                
                             </div>
@@ -207,5 +207,9 @@ function searchAction() {
     var cnNo = document.getElementById('cnNo');
     cnNo.value = $("#cnNo").val();
     document.getElementById('SearchCreditNoteForm').submit();
+}
+
+function printCreditNoteSummaryReport(){
+    window.open("report.smi?name=CreditNoteSummaryReport");
 }
 </script>
