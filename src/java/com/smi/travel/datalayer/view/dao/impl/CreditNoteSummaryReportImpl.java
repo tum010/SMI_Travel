@@ -9,7 +9,7 @@ package com.smi.travel.datalayer.view.dao.impl;
 import com.smi.travel.datalayer.view.dao.CreditNoteSummaryReportDao;
 
 import com.smi.travel.datalayer.report.model.CreditNoteSummaryReport;
-import com.smi.travel.datalayer.view.entity.CreditNoteView;
+
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -31,11 +31,29 @@ public class CreditNoteSummaryReportImpl implements CreditNoteSummaryReportDao{
     private UtilityFunction utilityFunction;
     
     @Override
-    public List getCreditNoteSummaryReport() {
+    public List getCreditNoteSummaryReport(String from,String to,String department) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();  
         List data = new ArrayList();
-        CreditNoteSummaryReport creditNoteSummaryReport = new CreditNoteSummaryReport();
-        creditNoteSummaryReport.setNo("1");
-        data.add(creditNoteSummaryReport);
+        DecimalFormat df = new DecimalFormat("###,###.00");
+         
+            
+        String query = "SELECT * FROM `creditnote_summary` where ";
+        
+        
+        
+        List<Object[]> QueryCNList = session.createSQLQuery(query)
+                 //add list
+                 .list();
+        for (Object[] B : QueryCNList) {
+            CreditNoteSummaryReport cn = new CreditNoteSummaryReport();
+//        
+    
+          
+            data.add(cn);
+        }
+        
+        
         return data;
     }
 
