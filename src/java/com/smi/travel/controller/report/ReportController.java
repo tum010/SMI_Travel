@@ -68,6 +68,7 @@ public class ReportController extends SMITravelController {
     private static final String InvoiceMonthly = "InvoiceMonthlyReport";
     private static final String RefundAirReport = "RefundAirReport";
     private static final String TicketFareReport = "TicketFareReport";
+    private static final String TaxInvoiceSummaryReport = "TaxInvoiceSummaryReport";
 
     private DataSource datasource;
     private static final Logger LOG = Logger.getLogger(ReportController.class.getName());
@@ -195,6 +196,8 @@ public class ReportController extends SMITravelController {
             data = reportservice.getRefundAirReport(refundId);
         }else if(TicketFareReport.equalsIgnoreCase(name)){
             data = reportservice.getTicketFareReport();
+        }else if(TaxInvoiceSummaryReport.equalsIgnoreCase(name)){
+            data = reportservice.getTaxInvoiceSummaryReport();
         }
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);

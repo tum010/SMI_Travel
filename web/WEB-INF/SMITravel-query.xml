@@ -310,6 +310,10 @@
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
     
+    <bean id="TaxInvoiceSummaryReportDao" class="com.smi.travel.datalayer.view.dao.impl.TaxInvoiceSummaryReportImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
     <bean id="RefundAirReportDao" class="com.smi.travel.datalayer.view.dao.impl.RefundAirReportImpl">
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
@@ -359,8 +363,8 @@
     </bean>
     
     <bean id="GenerateReport" class="com.smi.travel.report.GenerateReport">
-          <property name="reportpath" value="C:\\Users\\Surachai\\Documents\\NetBeansProjects\\SMI_Travel_nokey\\web\\WEB-INF\\report\\"></property>
-          <property name="exportpath" value="D:\\report\\"></property>
+          <property name="reportpath" value="C:\\Users\\chonnasith\\Documents\\NetBeansProjects\\SMI_Travel\\web\\WEB-INF\\report\\"></property>
+          <property name="exportpath" value="F:\\report\\"></property>
     </bean>
     
     

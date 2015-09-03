@@ -48,11 +48,13 @@
            <strong>Tax invoice no not found!.</strong> 
         </div>
         </c:if>
+        <c:set var="voidTaxInvoice" value="" />
         <c:if test="${taxInvoice.MFinanceItemstatus.id == '2'}">
-        <div id="textAlertTaxInvoiceVoid"  style="" class="alert alert-danger alert-dismissible" role="alert">
+            <c:set var="voidTaxInvoice" value="VOID" />
+<!--        <div id="textAlertTaxInvoiceVoid"  style="" class="alert alert-danger alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-           <strong>Tax invoice void!.</strong> 
-        </div>
+           <strong>Tax invoice void!.</strong>          
+        </div>-->
         </c:if>    
         <c:if test="${requestScope['result_text'] =='cost much over'}">
         <div id="textAlertCostOver"  style="" class="alert alert-danger alert-dismissible" role="alert">
@@ -70,13 +72,13 @@
             <div class="col-sm-6 " style="padding-right: 15px">
 		<c:choose>
                     <c:when test="${fn:contains(page , 'W')}">
-                        <h4><b>Tax Invoice Wendy</b></h4>
+                        <h4><b>Tax Invoice Wendy <font style="color: red">${voidTaxInvoice}</font></b></h4>
                     </c:when>
                     <c:when test="${fn:contains(page , 'O')}">
-                        <h4><b>Tax Invoice Outbound</b></h4>
+                        <h4><b>Tax Invoice Outbound <font style="color: red">${voidTaxInvoice}</font></b></h4>
                     </c:when> 
                     <c:when test="${fn:contains(page , 'I')}">
-                        <h4><b>Tax Invoice Inbound</b></h4>
+                        <h4><b>Tax Invoice Inbound <font style="color: red">${voidTaxInvoice}</font></b></h4>
                     </c:when> 
 		</c:choose> 
             </div>
