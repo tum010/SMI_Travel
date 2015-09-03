@@ -32,7 +32,11 @@ public class CreditNoteSummaryReportImpl implements CreditNoteSummaryReportDao{
     
     @Override
     public List getCreditNoteSummaryReport() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List data = new ArrayList();
+        CreditNoteSummaryReport creditNoteSummaryReport = new CreditNoteSummaryReport();
+        creditNoteSummaryReport.setNo("1");
+        data.add(creditNoteSummaryReport);
+        return data;
     }
 
     public SessionFactory getSessionFactory() {
