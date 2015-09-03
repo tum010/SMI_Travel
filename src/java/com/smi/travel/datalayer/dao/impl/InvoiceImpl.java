@@ -347,7 +347,7 @@ public class InvoiceImpl implements InvoiceDao{
     }
 
     @Override
-    public List<Invoice> getSearchInvoice(String fromData, String toDate, String department, String type) {
+    public List<Invoice> getSearchInvoice(String fromData, String toDate, String department, String type,String agent) {
         System.out.println("From Date : " + fromData + ":");
         System.out.println("To Date : " + toDate + ":");
         System.out.println("Department : " + department + ":");
@@ -373,7 +373,15 @@ public class InvoiceImpl implements InvoiceDao{
                AndQuery = 1;
                query += " st.invType = '" + type + "'";
            }
-           
+        }
+        
+        if(agent != null && (!"".equalsIgnoreCase(agent))){
+            if(AndQuery == 1){
+                query += " and st.invTo = '" + agent + "'";
+           }else{
+               AndQuery = 1;
+               query += " st.invTo = '" + agent + "'";
+           }
         }
         
         if ((fromData != null )&&(!"".equalsIgnoreCase(fromData))) {
