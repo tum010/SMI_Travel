@@ -159,7 +159,7 @@
         <property name="taxInvoiceSummaryReportDao" ref="TaxInvoiceSummaryReportDao" />
         <property name="creditNoteSummaryReportDao" ref="CreditNoteSummaryReportDao" />
         <property name="invoiceSummaryDao" ref="InvoiceSummaryDao" />
-        <!--<property name="refundAirReportDao" ref="RefundAirReportDao" />-->
+        <property name="refundAirReportDao" ref="RefundAirReportDao" />
     </bean> 
     
     
