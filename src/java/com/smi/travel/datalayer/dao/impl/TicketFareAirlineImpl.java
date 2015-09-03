@@ -399,7 +399,24 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
     }
 
     public List<TicketFareView> getListTicketFare(TicketFareView ticket, int option) {
+        List<TicketFareInvoice> list = new ArrayList<TicketFareInvoice>();
+        String ticketfareid = "";
         Session session = this.sessionFactory.openSession();
+        if((ticket.getInvoiceNo() != null) &&(!"".equalsIgnoreCase(ticket.getInvoiceNo()))){
+            String queryInvoice = "from TicketFareInvoice tk where tk.invoice.invNo = :invNo";
+            list = session.createQuery(queryInvoice).setParameter("invNo",ticket.getInvoiceNo()).list();
+        }
+        int temp = list.size()-1;
+        if(!list.isEmpty()){
+            for(int i = 0 ; i < list.size() ; i++ ){
+                if(i != temp){
+                    ticketfareid += "'" + list.get(i).getTicketFareAirline().getId() + "',";
+                }else{
+                    ticketfareid += "'" + list.get(i).getTicketFareAirline().getId() + "'";
+                }
+                
+            }
+        }
         String query ="from TicketFareAirline t where";
         String queryOperation = "";
         String Prefix_Subfix ="";
@@ -411,10 +428,15 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
              queryOperation = " Like ";
              Prefix_Subfix = "%";
         }
-       if((ticket.getType() != null) &&(!"".equalsIgnoreCase(ticket.getType()))){
-            query += " t.ticketType "+queryOperation+" '"+Prefix_Subfix+ticket.getType()+Prefix_Subfix+"'";
+        if((ticket.getType() != null) &&(!"".equalsIgnoreCase(ticket.getType()))){
+             query += " t.ticketType "+queryOperation+" '"+Prefix_Subfix+ticket.getType()+Prefix_Subfix+"'";
+             check =1;
+        }
+        if(!"".equalsIgnoreCase(ticketfareid)){
+            if(check == 1){query += " and ";}
+            query += " t.id in ("+ticketfareid.trim()+")";
             check =1;
-       }
+        }
         if((ticket.getRouting()!= null) &&(!"".equalsIgnoreCase(ticket.getRouting()))){
             if(check == 1){query += " and ";}
             query += " t.ticketRouting "+queryOperation+" '"+Prefix_Subfix+ticket.getRouting()+Prefix_Subfix+"'";
