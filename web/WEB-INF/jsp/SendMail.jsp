@@ -24,7 +24,7 @@
  <c:set var="bankid" value="${requestScope['bankid']}" />   
  <c:set var="showstaff" value="${requestScope['showstaff']}" />  
  <c:set var="showleader" value="${requestScope['showleader']}" />  
-
+<c:set var="sign" value="${requestScope['sign']}" />  
 <body>
     
 <div class ="container"  style="padding-top: 30px;" ng-app="">
@@ -49,6 +49,7 @@
                 <input type="text" id="bankid" name="bankid" value="${bankid}" class="hidden">
                 <input type="text" id="showstaff" name="showstaff" value="${showstaff}" class="hidden">
                 <input type="text" id="showleader" name="showleader" value="${showleader}" class="hidden">
+                <input type="text" id="showleader" name="sign" value="${sign}" class="hidden">
                 
                 <div class="panel panel-default">
                     <div class="panel-heading">

@@ -885,7 +885,7 @@
             $(".ui-widget").css("left", position.left);
             var code = this.value.toUpperCase();
             var name = this.value.toUpperCase();
-            console.log("Name :"+ name);
+           // console.log("Name :"+ name);
             $("#agent_id,#agent_name,#agent_addr,#agent_tel").val(null);
             $.each(agent, function (key, value) {
                 if (value.code.toUpperCase() === code ) {  

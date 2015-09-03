@@ -48,7 +48,9 @@ public class SendEmailController extends SMITravelController {
     private static final String RECIPIENT = "recipient";
     private static final String SENDCC = "sendCc"; 
     private static final String SUBJECT = "subject";  
-    private static final String MESSAGE = "message";        
+    private static final String MESSAGE = "message";       
+    private static final String SIGN = "sign";    
+    
     private JavaMailSender mailSender;
     private ReportService reportservice;
     private DataSource datasource;
@@ -170,7 +172,8 @@ public class SendEmailController extends SMITravelController {
         request.setAttribute(RECIPIENT, recipientAddress);
         request.setAttribute(SENDCC, cc);
         request.setAttribute(SUBJECT, subject);
-        request.setAttribute(MESSAGE, message);        
+        request.setAttribute(MESSAGE, message);
+        request.setAttribute(SIGN, sign);
         return ModelMail;
     }
 
