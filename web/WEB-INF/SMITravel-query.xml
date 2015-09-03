@@ -363,12 +363,10 @@
     </bean>
     
     <bean id="GenerateReport" class="com.smi.travel.report.GenerateReport">
-          <property name="reportpath" value="C:\\Users\\chonnasith\\Documents\\NetBeansProjects\\SMI_Travel\\web\\WEB-INF\\report\\"></property>
-          <property name="exportpath" value="F:\\report\\"></property>
+          <property name="reportpath" value="C:\\Users\\Surachai\\Documents\\NetBeansProjects\\SMI_Travel_nokey\\web\\WEB-INF\\report\\"></property>
+          <property name="exportpath" value="D:\\report\\"></property>
     </bean>
-    
-    
-    
+       
     <!-- Component Bean -->
     <bean id="AJAXBean" class="com.smi.travel.datalayer.bean.master.AJAXBean">
         <constructor-arg>
