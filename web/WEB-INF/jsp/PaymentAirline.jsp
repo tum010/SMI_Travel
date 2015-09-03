@@ -143,7 +143,7 @@
                                 <c:set var="checkA" value="" />
                                 <c:if test="${paymentAirticket.payTo == 'A'}">
                                     <c:set var="checkA" value="checked" />
-                                </c:if>  
+                                </c:if>
                                 <input type="radio" name="payto"  id="paytoA" value="A" ${checkA}/>&nbsp;Airline
                                 <c:set var="checkC" value="" />
                                 <c:if test="${paymentAirticket.payTo == 'C'}">
@@ -758,7 +758,7 @@ for(var i = 0; i < rad.length; i++) {
         if($('#searchPaymentNoFlag').val() == "dummy"){
             $('#textAlertPaymentNo').show();
         }     
-        
+         
         $('#inputDateFrom').datetimepicker().on('dp.change', function (e) {
             $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'dateFrom');
             var dateTo = $('#dateTo').val();
@@ -987,6 +987,11 @@ for(var i = 0; i < rad.length; i++) {
         if($('#optionSave').val() == "1"){
             clearData();
         }
+        
+        if($('#paytoTemp').val() === ""){
+           document.getElementById("paytoA").checked = true;
+           $('#paytoTemp').val('A');
+        }
     });
 
 function refundnoValidate(){
@@ -1201,13 +1206,25 @@ function addRefundNo(){
         var rowCount = $('#RefundTicketTable tr').length;
         var servletName = 'PaymentAirTicketServlet';
         var servicesName = 'AJAXBean';
-        var param = 'action=' + 'text' +
+        var payto = $("#paytoTemp").val();
+        
+        if(payto == 'A'){
+            var param = 'action=' + 'text' +
                 '&servletName=' + servletName +
                 '&servicesName=' + servicesName +
                 '&refundNo=' + refundNo +
                 '&rowCount=' + rowCount +
                 '&ticketNoList=' + ticketNoList +
                 '&type=' + 'addRefund';
+        }else if (payto == 'C'){
+            var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&refundNo=' + refundNo +
+                '&rowCount=' + rowCount +
+                '&ticketNoList=' + 'customer' +
+                '&type=' + 'addRefund';
+        }
         CallAjaxAdd(param);
     }
 }
@@ -1226,10 +1243,13 @@ function CallAjaxAdd(param) {
                 var i = 1;
                 var check = 0;
                 var tickettemp = "";
+                var datarefund = ticketnotadd[0].replace("[", "");
+                
                 for( i ; i < ticketnotadd.length ; i++) {
                     tickettemp += ticketnotadd[i].replace("]", "") + " ";
                     check = 1;
                 }
+                
                 if(check == 1){
                     $("#notRefundNoAlert").text('Ticket No : '+ tickettemp + " not available");
                     $('#NotRefundNoModal').modal('show');
@@ -1239,11 +1259,13 @@ function CallAjaxAdd(param) {
                     if(msg == "null"){
                         alert('Refund no. not available');
                     }else{
-                        $("#RefundTicketTable tbody").append(msg);
-                        calculateTotalAmountRefund();
-                        calculateTotalRefundVat();
-                        calculateTotalPayment();
-                        calculateAmount();
+                        if(datarefund != ""){
+                            $("#RefundTicketTable tbody").append(msg);
+                            calculateTotalAmountRefund();
+                            calculateTotalRefundVat();
+                            calculateTotalPayment();
+                            calculateAmount();
+                        }
                     }
                     $("#ajaxload").addClass("hidden");
                 } catch (e) {

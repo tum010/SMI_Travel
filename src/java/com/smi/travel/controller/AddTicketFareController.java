@@ -393,7 +393,7 @@ public class AddTicketFareController extends SMITravelController {
             }
             
             List<InvoiceDetailView> invoiceDetailViewList = new ArrayList<InvoiceDetailView>();
-            invoiceDetailViewList = ticketFareAirlineService.getInvoiceDetailFromTicketNo(ticketNo);
+            invoiceDetailViewList = ticketFareAirlineService.getInvoiceDetailFromTicketNo(ticketFareAirline.getTicketNo());
             
             List<ReceiptDetailView> receiptDetailViewListTemp = new ArrayList<ReceiptDetailView>();
             List<ReceiptDetailView> receiptDetailViewList = new ArrayList<ReceiptDetailView>();    
@@ -538,6 +538,7 @@ public class AddTicketFareController extends SMITravelController {
                             master.setId(MasterId);
                             ticketFareAirlines.setMaster(master);
                         }
+                        ticketFareAirlines.setPassenger(Passenger);
                         ticketFareAirlines.setOwner(staffowner);
                         ticketFareAirlines.setRoutingDetail(ticketflightrouting);
                         ticketFareAirlines.setInvAmount(invAmount);
