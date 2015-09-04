@@ -355,7 +355,7 @@ public class BillableImpl implements BillableDao {
                     Initname = passenger.getMInitialname().getName();
                 }
             //FOR  {INITNAME} {LAST NAME}/{FIRST NAME}        {PRICE} + {TAX}
-                description += "FOR" +"\t\t" + Initname +" "+passenger.getLastName() +"/"+passenger.getFirstName() +"\t\t\t\t"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+"\n";
+                description += "FOR" +"\t\t" + Initname +" "+passenger.getLastName() +"/"+passenger.getFirstName() +"\t\t\t"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+"\n";
                 
             }
             String MInitialname = "";

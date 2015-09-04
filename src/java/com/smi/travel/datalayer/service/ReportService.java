@@ -12,6 +12,7 @@ import com.smi.travel.datalayer.report.model.LandVoucher;
 import com.smi.travel.datalayer.view.dao.AgentCommissionReportDao;
 import com.smi.travel.datalayer.view.dao.AirlineSummaryDao;
 import com.smi.travel.datalayer.view.dao.CreditNoteReportDao;
+import com.smi.travel.datalayer.view.dao.CreditNoteSummaryReportDao;
 import com.smi.travel.datalayer.view.dao.DaytourOtherDao;
 import com.smi.travel.datalayer.view.dao.GuideCommissionReportDao;
 import com.smi.travel.datalayer.view.dao.GuideJobDao;
@@ -27,6 +28,7 @@ import com.smi.travel.datalayer.view.dao.RefundAirReportDao;
 import com.smi.travel.datalayer.view.dao.StaffSummaryDao;
 import com.smi.travel.datalayer.view.dao.TaxInvoiceEmailReportDao;
 import com.smi.travel.datalayer.view.dao.TaxInvoiceReportDao;
+import com.smi.travel.datalayer.view.dao.TaxInvoiceSummaryReportDao;
 import com.smi.travel.datalayer.view.dao.TicketFareReportDao;
 import com.smi.travel.datalayer.view.dao.TicketOrderDao;
 import com.smi.travel.datalayer.view.dao.TicketSaleProfitVolumnDao;
@@ -70,6 +72,8 @@ public class ReportService {
     private InvoiceReportDao invoiceReportDao;
     private RefundAirReportDao refundAirReportDao;
     private TicketFareReportDao ticketFareReportDao;
+    private TaxInvoiceSummaryReportDao taxInvoiceSummaryReportDao;
+    private CreditNoteSummaryReportDao creditNoteSummaryReportDao;
     
     public List getInvoiceMonthly(String BillFrom,String BillTo,String ClientName,String Payment,String Accno,String vattype,String from,String to,String department){
         return invoiceReportDao.getInvoiceMonthly(BillFrom, BillTo, ClientName, Payment, Accno, vattype, from, to, department);
@@ -174,6 +178,10 @@ public class ReportService {
      public List getReceipt(String receiptId,int option){
         return receiptDao.getReceipt(receiptId,option);
     }
+     
+    public List getReceiptSummary(String receiptId,int option){
+        return receiptDao.getReceiptSummary(receiptId,option);
+    }
     
     public List getReceiveList(String datefrom,String dateto,String user,String agentid){
         return receiveListDao.getReceiveList(datefrom, agentid, dateto, dateto, dateto, agentid, user);
@@ -207,6 +215,14 @@ public class ReportService {
     
     public List getTicketFareReport(){        
         return ticketFareReportDao.getTicketFareReport();
+    }
+    
+    public List getTaxInvoiceSummaryReport(){
+        return taxInvoiceSummaryReportDao.getTaxInvoiceSummaryReport();
+    }
+    
+    public List getCreditNoteSummaryReport(){
+        return creditNoteSummaryReportDao.getCreditNoteSummaryReport(null, null, null);
     }
 
     public HotelVoucherDao getHotelVoucherdao() {
@@ -314,7 +330,7 @@ public class ReportService {
     }
 
     public List getInvoiceSummary(String ticketfrom, String tickettype, String startdate, String enddate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return invoiceSummaryDao.getInvoiceSummary(ticketfrom, tickettype, startdate, enddate);
     }
 
     public ReceiptDao getReceiptDao() {
@@ -332,14 +348,15 @@ public class ReportService {
     public ReceiveListDao getReceiveListDao() {
         return receiveListDao;
     }
-    
-    public void setInvoiceSummaryDao(InvoiceSummaryDao invoiceSummaryDao) {
-        this.invoiceSummaryDao = invoiceSummaryDao;
-    }
-    
+
     public InvoiceSummaryDao getInvoiceSummaryDao() {
         return invoiceSummaryDao;
     }
+
+    public void setInvoiceSummaryDao(InvoiceSummaryDao invoiceSummaryDao) {
+        this.invoiceSummaryDao = invoiceSummaryDao;
+    }
+   
 
     public void setInvoiceEmaildao(InvoiceEmailDao invoiceEmaildao) {
         this.invoiceEmaildao = invoiceEmaildao;
@@ -412,5 +429,22 @@ public class ReportService {
     public void setTicketFareReportDao(TicketFareReportDao ticketFareReportDao) {
         this.ticketFareReportDao = ticketFareReportDao;
     }
+
+    public TaxInvoiceSummaryReportDao getTaxInvoiceSummaryReportDao() {
+        return taxInvoiceSummaryReportDao;
+    }
+
+    public void setTaxInvoiceSummaryReportDao(TaxInvoiceSummaryReportDao taxInvoiceSummaryReportDao) {
+        this.taxInvoiceSummaryReportDao = taxInvoiceSummaryReportDao;
+    }
+
+    public CreditNoteSummaryReportDao getCreditNoteSummaryReportDao() {
+        return creditNoteSummaryReportDao;
+    }
+
+    public void setCreditNoteSummaryReportDao(CreditNoteSummaryReportDao creditNoteSummaryReportDao) {
+        this.creditNoteSummaryReportDao = creditNoteSummaryReportDao;
+    }
+    
     
 }

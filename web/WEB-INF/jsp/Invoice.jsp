@@ -22,6 +22,7 @@
 <c:set var="create" value="${requestScope['thisdate']}" />
 <c:set var="showvat" value="false" />
 <c:set var="typeBooking" value="" />
+<c:set var="textVoid" value="" />
 <section class="content-header" >
     <h1>
         Finance & Cashier - Invoice
@@ -63,52 +64,55 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Void Success </strong> 
             </div>
+            <c:if test="${invoice.MFinanceItemstatus.id == '2'}">        
+                 <c:set var="textVoid" value="VOID" />
+            </c:if>
             <div class="row" style="padding-left: 15px">  
                 <div class="col-sm-6 " style="padding-right: 15px">
                     <c:choose>
                         <c:when test="${fn:contains(page , 'OT')}">
                             <c:set var="typeInvoice" value="O/T" />
                             <c:set var="typeBooking" value="O" />
-                            <h4><b>Invoice Temp Outbound</b></h4>
+                            <h4><b>Invoice Temp Outbound  <font style="color: red;"> ${textVoid}</font></b></h4>
                         </c:when>
                         <c:when test="${fn:contains(page , 'OV')}">
                             <c:set var="typeInvoice" value="O/V" />
                             <c:set var="typeBooking" value="O" />
                             <c:set var="showvat" value="true" />
-                            <h4><b>Invoice Vat Outbound</b></h4>
+                            <h4><b>Invoice Vat Outbound <font style="color: red;"> ${textVoid}</font></b></h4>
                         </c:when>
                         <c:when test="${fn:contains(page , 'WT')}">
                             <c:set var="typeInvoice" value="W/T" />
                             <c:set var="typeBooking" value="I" />
-                            <h4><b>Invoice Temp Wendy</b></h4>
+                            <h4><b>Invoice Temp Wendy <font style="color: red;"> ${textVoid}</font></b></h4>
                         </c:when>
                         <c:when test="${fn:contains(page , 'WV')}">
                             <c:set var="typeInvoice" value="W/V" />
                             <c:set var="typeBooking" value="I" />
                             <c:set var="showvat" value="true" />
-                            <h4><b>Invoice Vat Wendy</b></h4>
+                            <h4><b>Invoice Vat Wendy <font style="color: red;"> ${textVoid}</font></b></h4>
                         </c:when>
                         <c:when test="${fn:contains(page , 'WN')}">
                             <c:set var="typeInvoice" value="W/N" />
                             <c:set var="typeBooking" value="W" />
-                            <h4><b>Invoice No Vat Wendy</b></h4>
+                            <h4><b>Invoice No Vat Wendy <font style="color: red;"> ${textVoid}</font></b></h4>
                         </c:when> 
                         <c:when test="${fn:contains(page , 'ON')}">
                             <c:set var="typeInvoice" value="O/N" />
                             <c:set var="typeBooking" value="O" />
-                            <h4><b>Invoice No Vat Outbound</b></h4>
+                            <h4><b>Invoice No Vat Outbound <font style="color: red;"> ${textVoid}</font></b></h4>
                         </c:when> 
                         <c:when test="${fn:contains(page , 'WA')}">
                             <c:set var="typeInvoice" value="W/A" />
                             <c:set var="invType" value="Air Ticket" />
                             <c:set var="typeBooking" value="I" />
-                            <h4><b>Invoice Air Ticket Wendy</b></h4>
+                            <h4><b>Invoice Air Ticket Wendy <font style="color: red;"> ${textVoid}</font></b></h4>
                         </c:when> 
                         <c:when test="${fn:contains(page , 'OA')}">
                             <c:set var="typeInvoice" value="O/A" />
                             <c:set var="invType" value="Air Ticket" />
                             <c:set var="typeBooking" value="O" />
-                            <h4><b>Invoice Air Ticket Outbound</b></h4>
+                            <h4><b>Invoice Air Ticket Outbound <font style="color: red;"> ${textVoid}</font></b></h4>
                         </c:when> 
                     </c:choose> 
                     <input type="text" class="hidden" value="${typeInvoice}" id="InputInvoiceType" name="InputInvoiceType">
@@ -263,7 +267,7 @@
                                 <!--<option value="" >--select--</option>-->
                                 <c:forEach var="item" items="${listTermPay}" >
                                     <c:set var="selectTerm" value="" />
-                                    <c:if test="${item.id == invoice.MAccpay.id}">
+                                    <c:if test="${item.id == invoice.MAccTerm.id}">
                                         <c:set var="selectTerm" value="selected" />
                                     </c:if>
                                     <option value="${item.id}" ${selectTerm}>${item.name}</option>
@@ -655,10 +659,12 @@
                                                 <c:if test="${roleName =='YES'}">        
                                                     <c:set var="isEnableVoid" value="" />
                                                     <c:set var="isSaveVoid" value="disabled='true'" />
+                                                    <c:set var="textVoid" value="VOID" />
                                                 </c:if>
                                                 <c:if test="${roleName =='NO'}">        
                                                     <c:set var="isEnableVoid" value="disabled='true'" />
                                                     <c:set var="isSaveVoid" value="disabled='true'" />
+                                                    <c:set var="textVoid" value="VOID" />
                                                 </c:if>
                                             </c:if>
                                             <c:if test="${invoice.MFinanceItemstatus.id == '2'}">        
@@ -666,10 +672,12 @@
                                                 <c:if test="${roleName =='YES'}">        
                                                     <c:set var="isEnableVoid" value="" />
                                                     <c:set var="isSaveVoid" value="disabled='true'" />
+                                                    <c:set var="textVoid" value="VOID" />
                                                 </c:if>
                                                 <c:if test="${roleName =='NO'}">        
                                                     <c:set var="isEnableVoid" value="disabled='true'" />
                                                     <c:set var="isSaveVoid" value="disabled='true'" />
+                                                    <c:set var="textVoid" value="VOID" />
                                                 </c:if>
                                             </c:if>
                                             <c:if test="${result =='cancelvoid'}">        
@@ -678,7 +686,7 @@
                                             <c:if test="${invoice.MFinanceItemstatus.id == '1'}">        
                                                 <c:set var="isDisableVoid" value="" />
                                             </c:if>
-                                            <button type="button" class="btn btn-primary" onclick="EnableVoidInvoice();" data-toggle="modal" data-target="#EnableVoid" id="enableVoidButton" name="enableVoidButton"  ${isEnableVoid} >
+                                           <button type="button" class="btn btn-primary" onclick="EnableVoidInvoice();" data-toggle="modal" data-target="#EnableVoid" id="enableVoidButton" name="enableVoidButton"  ${isEnableVoid} >
                                                 <span id="SpanEnableVoid" class="glyphicon glyphicon-ok" ></span>Cancel
                                             </button>
                                             
@@ -847,8 +855,8 @@
                     <div class="col-md-7">
                         <select id="selectPayment" name="selectPayment" class="form-control">
                             <option value="0">Not show</option>
-                            <option value="4">Payment Bank Siam commercial bank PCL</option>
-                            <option value="1">Payment Bank Bangkok bank PCL</option>
+                            <option value="SCB2">Payment Bank Siam commercial bank PCL</option>
+                            <option value="BBL">Payment Bank Bangkok bank PCL</option>
                         </select>
                     </div>
                 </div>
@@ -1070,4 +1078,5 @@
 <input type="hidden" id="resultText" name="resultText" value="${result}">
 <input type="hidden" id="typeBooking" name="typeBooking" value="${typeBooking}">
 <input type="hidden" id="typePrint" name="typePrint" value="">
+<input type="hidden" value="${textVoid}">
 <script type="text/javascript" src="js/Invoice.js"></script>

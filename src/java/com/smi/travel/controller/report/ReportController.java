@@ -59,6 +59,7 @@ public class ReportController extends SMITravelController {
     private static final String OtherVouncherEmail = "otherVouncherEmail";
     private static final String ReceiptEmail = "ReceiptEmail";
     private static final String ReceiptReport = "ReceiptReport";
+    private static final String ReceiptSummaryReport = "ReceiptSummaryReport";
     private static final String ReceiveList = "ReceiveList";
     private static final String InvoiceEmail = "InvoiceEmail";
     private static final String InvoiceReport = "InvoiceReport";
@@ -68,7 +69,9 @@ public class ReportController extends SMITravelController {
     private static final String InvoiceMonthly = "InvoiceMonthlyReport";
     private static final String RefundAirReport = "RefundAirReport";
     private static final String TicketFareReport = "TicketFareReport";
-
+    private static final String TaxInvoiceSummaryReport = "TaxInvoiceSummaryReport";
+    private static final String CreditNoteSummaryReport = "CreditNoteSummaryReport";
+    
     private DataSource datasource;
     private static final Logger LOG = Logger.getLogger(ReportController.class.getName());
     private ReportService reportservice;
@@ -177,6 +180,8 @@ public class ReportController extends SMITravelController {
             data = reportservice.getReceiptEmail(receiveId,option);
         } else if (ReceiptReport.equalsIgnoreCase(name)) {
             data = reportservice.getReceipt(receiveId,option);
+        } else if (ReceiptSummaryReport.equalsIgnoreCase(name)) {
+            data = reportservice.getReceiptSummary("1",1);
         } else if (ReceiveList.equalsIgnoreCase(name)) {
             data = reportservice.getDaytourOtherReport(refno, status);
         } else if (InvoiceEmail.equalsIgnoreCase(name)) {
@@ -195,6 +200,10 @@ public class ReportController extends SMITravelController {
             data = reportservice.getRefundAirReport(refundId);
         }else if(TicketFareReport.equalsIgnoreCase(name)){
             data = reportservice.getTicketFareReport();
+        }else if(TaxInvoiceSummaryReport.equalsIgnoreCase(name)){
+            data = reportservice.getTaxInvoiceSummaryReport();
+        }else if(CreditNoteSummaryReport.equalsIgnoreCase(name)){
+            data = reportservice.getCreditNoteSummaryReport();
         }
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);

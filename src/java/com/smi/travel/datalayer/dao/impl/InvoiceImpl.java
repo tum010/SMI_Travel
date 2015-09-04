@@ -40,13 +40,13 @@ public class InvoiceImpl implements InvoiceDao{
     private static final String DELETE_INVOICEDETAIL_QUERY ="DELETE FROM InvoiceDetail ind where ind.id = :invoiceDetailID";
     private static final String SEARCH_INVOICE_TYPE = "FROM Invoice inv where inv.department = :invoiceDepartment and inv.invType = :invoiceType  and inv.invNo  LIKE :invoiceNo  ORDER BY inv.invNo DESC LIMIT 1";
     private static final String GET_INVOICE_FROMNO = "FROM Invoice inv where inv.invNo = :invoiceNo and inv.department = :department and inv.invType = :invType";
-    private static final String GET_INVOICE_FOR_TAX_INVOICE = "FROM Invoice inv where inv.invNo = :invoiceNo and inv.department = :department";
+    private static final String GET_INVOICE_FOR_TAX_INVOICE = "FROM Invoice inv where inv.invNo = :invoiceNo and inv.department = :department and inv.invType = 'V'";
     private static final String GET_BILLDESC = "from InvoiceDetail inv WHERE inv.billableDesc.id = :billableDescId";
     private static final String GET_BILLDESC_FILTER = "from InvoiceDetail inv WHERE inv.billableDesc.id = :billableDescId and inv.id != :invdID";
     private static final String GET_BILL_AMOUNT = "from BillableDesc bill where bill.id = :descid";
     
     @Override
-    public String insertInvoice(Invoice invoice) {
+    public synchronized String insertInvoice(Invoice invoice) {
         String result = "";
         Session session = this.sessionFactory.openSession();
         try { 
@@ -269,7 +269,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setDueDate(invoiceList.get(0).getDueDate());
             invoice.setIsGroup(invoiceList.get(0).getIsGroup());
             invoice.setIsLock(invoiceList.get(0).getIsLock());
-            invoice.setMAccpay(invoiceList.get(0).getMAccpay());
+            invoice.setMAccTerm(invoiceList.get(0).getMAccTerm());
             invoice.setMFinanceItemstatus(invoiceList.get(0).getMFinanceItemstatus());
             invoice.setRemark(invoiceList.get(0).getRemark());
             invoice.setStaff(invoiceList.get(0).getStaff());
@@ -336,7 +336,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setDueDate(invoiceList.get(0).getDueDate());
             invoice.setIsGroup(invoiceList.get(0).getIsGroup());
             invoice.setIsLock(invoiceList.get(0).getIsLock());
-            invoice.setMAccpay(invoiceList.get(0).getMAccpay());
+            invoice.setMAccTerm(invoiceList.get(0).getMAccTerm());
             invoice.setMFinanceItemstatus(invoiceList.get(0).getMFinanceItemstatus());
             invoice.setRemark(invoiceList.get(0).getRemark());
             invoice.setStaff(invoiceList.get(0).getStaff());
@@ -347,7 +347,7 @@ public class InvoiceImpl implements InvoiceDao{
     }
 
     @Override
-    public List<Invoice> getSearchInvoice(String fromData, String toDate, String department, String type) {
+    public List<Invoice> getSearchInvoice(String fromData, String toDate, String department, String type,String agent) {
         System.out.println("From Date : " + fromData + ":");
         System.out.println("To Date : " + toDate + ":");
         System.out.println("Department : " + department + ":");
@@ -355,7 +355,7 @@ public class InvoiceImpl implements InvoiceDao{
         Session session = this.sessionFactory.openSession();
         String query = "";
         int AndQuery = 0;
-        if("".equals(department)  && "".equals(type)  && "".equals(fromData)  && "".equals(toDate)){
+        if("".equals(department)  && "".equals(type)  && "".equals(fromData)  && "".equals(toDate) && "".equals(agent)){
             query = "FROM Invoice st " ; 
         }else{
             query = "FROM Invoice st where" ;
@@ -373,7 +373,15 @@ public class InvoiceImpl implements InvoiceDao{
                AndQuery = 1;
                query += " st.invType = '" + type + "'";
            }
-           
+        }
+        
+        if(agent != null && (!"".equalsIgnoreCase(agent))){
+            if(AndQuery == 1){
+                query += " and st.invTo = '" + agent + "'";
+           }else{
+               AndQuery = 1;
+               query += " st.invTo = '" + agent + "'";
+           }
         }
         
         if ((fromData != null )&&(!"".equalsIgnoreCase(fromData))) {
@@ -388,7 +396,7 @@ public class InvoiceImpl implements InvoiceDao{
                
             }
         }
-        
+        query += "  ORDER BY st.invDate DESC";
         System.out.println("query : " + query);
         List<Invoice> list = session.createQuery(query).list();
         return list;
@@ -412,8 +420,8 @@ public class InvoiceImpl implements InvoiceDao{
                     invoiceView.setInvoiceDate(invoiceDate);
                     invoiceView.setName(listInvoice.get(i).getInvName());
                     invoiceView.setAddress(listInvoice.get(i).getInvAddress());
-                    if(listInvoice.get(i).getMAccpay() != null){
-                        invoiceView.setTermPayName(listInvoice.get(i).getMAccpay().getName()); 
+                    if(listInvoice.get(i).getMAccTerm() != null){
+                        invoiceView.setTermPayName(listInvoice.get(i).getMAccTerm().getName()); 
                     }
                                    
                 
@@ -455,7 +463,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setDueDate(invoiceList.get(0).getDueDate());
             invoice.setIsGroup(invoiceList.get(0).getIsGroup());
             invoice.setIsLock(invoiceList.get(0).getIsLock());
-            invoice.setMAccpay(invoiceList.get(0).getMAccpay());
+            invoice.setMAccTerm(invoiceList.get(0).getMAccTerm());
             invoice.setMFinanceItemstatus(invoiceList.get(0).getMFinanceItemstatus());
             invoice.setRemark(invoiceList.get(0).getRemark());
             invoice.setStaff(invoiceList.get(0).getStaff());
@@ -514,7 +522,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setDueDate(invoiceList.get(0).getDueDate());
             invoice.setIsGroup(invoiceList.get(0).getIsGroup());
             invoice.setIsLock(invoiceList.get(0).getIsLock());
-            invoice.setMAccpay(invoiceList.get(0).getMAccpay());
+            invoice.setMAccTerm(invoiceList.get(0).getMAccTerm());
             invoice.setMFinanceItemstatus(invoiceList.get(0).getMFinanceItemstatus());
             invoice.setRemark(invoiceList.get(0).getRemark());
             invoice.setStaff(invoiceList.get(0).getStaff());
@@ -548,7 +556,7 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setDueDate(invoiceList.get(0).getDueDate());
             invoice.setIsGroup(invoiceList.get(0).getIsGroup());
             invoice.setIsLock(invoiceList.get(0).getIsLock());
-            invoice.setMAccpay(invoiceList.get(0).getMAccpay());
+            invoice.setMAccTerm(invoiceList.get(0).getMAccTerm());
             invoice.setMFinanceItemstatus(invoiceList.get(0).getMFinanceItemstatus());
             invoice.setRemark(invoiceList.get(0).getRemark());
             invoice.setStaff(invoiceList.get(0).getStaff());
@@ -648,7 +656,6 @@ public class InvoiceImpl implements InvoiceDao{
         this.sessionFactory.close();
         session.close();
         return result;
-        
     }
     
     @Override
@@ -685,8 +692,8 @@ public class InvoiceImpl implements InvoiceDao{
     @Override
     public String updateInvoiceDetail(Invoice invoice) {
         String result = "";
+        Session session = this.sessionFactory.openSession();
         try {
-            Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.update(invoice);
             
@@ -706,7 +713,10 @@ public class InvoiceImpl implements InvoiceDao{
         } catch (Exception ex) {
             transaction.rollback();
             ex.printStackTrace();
+            this.sessionFactory.close();
+            session.close();
             result = "update fail";
+            
         }
         return  result;
     }

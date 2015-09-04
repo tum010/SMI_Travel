@@ -6,14 +6,13 @@
 
 package com.smi.travel.datalayer.view.dao;
 
-import com.smi.travel.datalayer.view.entity.ReceiptView;
+import com.smi.travel.datalayer.report.model.TaxInvoiceSummaryReport;
 import java.util.List;
 
 /**
  *
  * @author chonnasith
  */
-public interface ReceiptDao {
-    public List getReceipt(String receiptId,int option);
-    public List getReceiptSummary(String receiptId,int option);
+public interface TaxInvoiceSummaryReportDao {
+    public List getTaxInvoiceSummaryReport();    
 }

@@ -73,6 +73,7 @@
                 <input type="hidden" name="vat" id="vat" value="">
                 <input type="hidden" name="flagSearch" id="flagSearch" value="${flagSearch}">
                 <input type="hidden" name="paytoTemp"  id="paytoTemp" value="${paymentAirticket.payTo}">
+                <input type="hidden" name="ticketNoList" id="ticketNoList" value="">
                 <div class="panel panel-default">
                     <div class="panel-body"  style="padding-right: 0px;" style="width: 100%">
                         <div class="col-xs-12">
@@ -138,13 +139,12 @@
                             <div class="col-xs-1 text-right"  style="width: 165px">
                                 <label class="control-label text-right">Pay To</label>
                             </div>
-                            <div class="col-xs-1" style="width: 300px;padding-top:6px " >
+                            <div class="col-xs-1" style="width: 170px;padding-top:6px " >
                                 <c:set var="checkA" value="" />
                                 <c:if test="${paymentAirticket.payTo == 'A'}">
                                     <c:set var="checkA" value="checked" />
-                                </c:if>  
-                                <input type="radio" name="payto"  id="paytoA" value="A" ${checkA}/>&nbsp;Airline&nbsp;&nbsp;
-
+                                </c:if>
+                                <input type="radio" name="payto"  id="paytoA" value="A" ${checkA}/>&nbsp;Airline
                                 <c:set var="checkC" value="" />
                                 <c:if test="${paymentAirticket.payTo == 'C'}">
                                     <c:set var="checkC" value="checked" />
@@ -665,6 +665,22 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
+<!--Add Refund MODAL-->
+<div class="modal fade" id="NotRefundNoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Not Refund No</h4>
+            </div>
+            <div class="modal-body" id="notRefundNoAlert">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>               
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 <c:if test="${! empty requestScope['saveresult']}">
     <c:if test="${requestScope['saveresult'] =='save successful'}">        
         <script language="javascript">
@@ -742,7 +758,7 @@ for(var i = 0; i < rad.length; i++) {
         if($('#searchPaymentNoFlag').val() == "dummy"){
             $('#textAlertPaymentNo').show();
         }     
-        
+         
         $('#inputDateFrom').datetimepicker().on('dp.change', function (e) {
             $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'dateFrom');
             var dateTo = $('#dateTo').val();
@@ -783,7 +799,7 @@ for(var i = 0; i < rad.length; i++) {
                         }
                     }
                 },
-                apCode: {
+                apCode: { 
                     validators: {
                         notEmpty: {
                             message: 'A/P Code is required'
@@ -971,6 +987,11 @@ for(var i = 0; i < rad.length; i++) {
         if($('#optionSave').val() == "1"){
             clearData();
         }
+        
+        if($('#paytoTemp').val() === ""){
+           document.getElementById("paytoA").checked = true;
+           $('#paytoTemp').val('A');
+        }
     });
 
 function refundnoValidate(){
@@ -1152,7 +1173,7 @@ function addAction(){
     var i = 1;
     for (i = 1; i < tablelength; i++) { 
         var refund = $("#refundNoRow"+i).val();
-        var refundNumber = refund.toString();
+        var refundNumber = refund;
         if(refundNumber != ""){
             if(refundNo == refundNumber){
                 duplicate = 2;
@@ -1172,7 +1193,9 @@ function addAction(){
 
 function addRefundNo(){
     $('#AddRefundNoModal').modal('hide');
+    getTicketNoFromTicketFare();
     var refundNo = $("#refundNo").val();
+    var ticketNoList = $("#ticketNoList").val();
     if(refundNo == ""){
         if(!$('#refundnopanel').hasClass('has-feedback')) {
             $('#refundnopanel').addClass('has-feedback');
@@ -1183,12 +1206,25 @@ function addRefundNo(){
         var rowCount = $('#RefundTicketTable tr').length;
         var servletName = 'PaymentAirTicketServlet';
         var servicesName = 'AJAXBean';
-        var param = 'action=' + 'text' +
+        var payto = $("#paytoTemp").val();
+        
+        if(payto == 'A'){
+            var param = 'action=' + 'text' +
                 '&servletName=' + servletName +
                 '&servicesName=' + servicesName +
                 '&refundNo=' + refundNo +
                 '&rowCount=' + rowCount +
+                '&ticketNoList=' + ticketNoList +
                 '&type=' + 'addRefund';
+        }else if (payto == 'C'){
+            var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&refundNo=' + refundNo +
+                '&rowCount=' + rowCount +
+                '&ticketNoList=' + 'customer' +
+                '&type=' + 'addRefund';
+        }
         CallAjaxAdd(param);
     }
 }
@@ -1203,16 +1239,33 @@ function CallAjaxAdd(param) {
             cache: false,
             data: param,
             success: function (msg) {
-            //RefundTicketTable
+                var ticketnotadd = msg.split("|");
+                var i = 1;
+                var check = 0;
+                var tickettemp = "";
+                var datarefund = ticketnotadd[0].replace("[", "");
+                
+                for( i ; i < ticketnotadd.length ; i++) {
+                    tickettemp += ticketnotadd[i].replace("]", "") + " ";
+                    check = 1;
+                }
+                
+                if(check == 1){
+                    $("#notRefundNoAlert").text('Ticket No : '+ tickettemp + " not available");
+                    $('#NotRefundNoModal').modal('show');
+                }
+                //RefundTicketTable
                 try {
                     if(msg == "null"){
                         alert('Refund no. not available');
                     }else{
-                        $("#RefundTicketTable tbody").append(msg);
-                        calculateTotalAmountRefund();
-                        calculateTotalRefundVat();
-                        calculateTotalPayment();
-                        calculateAmount();
+                        if(datarefund != ""){
+                            $("#RefundTicketTable tbody").append(msg);
+                            calculateTotalAmountRefund();
+                            calculateTotalRefundVat();
+                            calculateTotalPayment();
+                            calculateAmount();
+                        }
                     }
                     $("#ajaxload").addClass("hidden");
                 } catch (e) {
@@ -1614,7 +1667,7 @@ function clearData(){
 }
 
 function validateSaveButton(){
-        var totalPayment = replaceAll(",","",$('#totalPayment').val()); 
+    var totalPayment = replaceAll(",","",$('#totalPayment').val()); 
     if (totalPayment == ""){
         totalPayment = 0;
     }
@@ -1626,14 +1679,28 @@ function validateSaveButton(){
         $('#textAlertTotalPayment').hide();
     }
     
-    if($("#invoiceSupCode").val() != "" & $("#apCode").val() != "" && payment > 0){
+    if($("#invoiceSupCode").val() != "" & $("#apCode").val() != "" && (payment > 0 || payment == 0)){
         $("#ButtonSave").removeAttr("disabled");
         $("#ButtonSaveAndNew").removeAttr("disabled");
         $("#ButtonSearch").removeAttr("disabled");
+        $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'apCode'); 
+        $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'invoiceSupCode');
     }else{
         $("#ButtonSave").attr("disabled", "disabled");
         $("#ButtonSaveAndNew").attr("disabled", "disabled");
         $("#ButtonSearch").attr("disabled", "disabled");
     }
+}
+
+function getTicketNoFromTicketFare() {
+    var temp = 0;
+    var ticeketList = "";
+    var tableTicket = document.getElementById('TicketFareTable');
+    for (var r = 1, n = tableTicket.rows.length; r < n; r++) {
+        temp = tableTicket.rows[r].cells[1].innerHTML;
+        ticeketList += temp + ",";
+    }
+    
+    document.getElementById("ticketNoList").value = ticeketList;
 }
 </script>

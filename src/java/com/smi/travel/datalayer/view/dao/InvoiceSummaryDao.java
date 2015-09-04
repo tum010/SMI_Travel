@@ -13,4 +13,5 @@ import java.util.List;
  */
 public interface InvoiceSummaryDao {
     public List getInvoiceSummary(String ticketfrom,String tickettype,String startdate,String enddate,String billto,String  passenger,String username);
+    public List getInvoiceSummary(String ticketfrom,String tickettype,String startdate,String enddate);
 }

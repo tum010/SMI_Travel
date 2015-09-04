@@ -2,7 +2,6 @@ package com.smi.travel.controller;
 import com.smi.travel.datalayer.entity.BillableDesc;
 import com.smi.travel.datalayer.entity.Invoice;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
-import com.smi.travel.datalayer.entity.MAccpay;
 import com.smi.travel.datalayer.entity.MAccterm;
 import com.smi.travel.datalayer.entity.MBilltype;
 import com.smi.travel.datalayer.entity.MCurrency;
@@ -18,7 +17,6 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
@@ -34,11 +32,11 @@ public class InvoiceController extends SMITravelController {
     private static final ModelAndView Invoice_REFRESH = new ModelAndView(new RedirectView("Invoice.smi", true));
     private UtilityService utilityService;
     private InvoiceService invoiceService;
-    Invoice invoice = new Invoice();
+    Invoice invoice = null;
     List<InvoiceDetail> listInvoiceDetail = new LinkedList<InvoiceDetail>();
     SystemUser staff = new SystemUser();
     MFinanceItemstatus mStatus = new MFinanceItemstatus();
-    MAccpay type = new MAccpay();
+    MAccterm type = new MAccterm();
     UtilityFunction utilty = new UtilityFunction();
 //    private UtilityFunction utilty; test
     
@@ -142,6 +140,8 @@ public class InvoiceController extends SMITravelController {
        
         // Save Invoice And Update
         if("save".equals(action)){
+//            invoice = new Invoice();
+            invoice.setId(invoiceId);
             invoice = setValueInvoice(action, user.getUsername(), invoiceType, invoiceId, invoiceTo, invoiceName, invoiceAddress, isGroup, termPay, dueDate, department, staffCode, staffName, staffId, arCode, remark, invoiceNo, InputInvDate, request,subDepartment);
             String checkOverFlow = invoiceService.checkOverflowValueOfInvoice(invoice.getInvoiceDetails());
             if("okMoney".equals(checkOverFlow)){
@@ -267,6 +267,8 @@ public class InvoiceController extends SMITravelController {
         }else if("new".equals(action)){
             request.setAttribute("invoice",null);
             request.setAttribute("listInvoiceDetail", null);
+            result = "NEW";
+            request.setAttribute("result", result);
         }
         request.setAttribute("thisdate", utilty.convertDateToString(new Date()));
         request.setAttribute("page", callPageFrom);
@@ -340,6 +342,8 @@ public class InvoiceController extends SMITravelController {
             }
             if(!"".equals(invoiceId) && invoiceId != null){
                 invoice.setId(invoiceId);
+            }else{
+                invoice.setId(null);
             }
           
             if(invoiceTo != null){
@@ -362,7 +366,7 @@ public class InvoiceController extends SMITravelController {
             }
             if(termPay != null && !termPay.equals("")){
                 type.setId(termPay);
-                invoice.setMAccpay(type);
+                invoice.setMAccTerm(type);
             }
             
             if(dueDate != null){

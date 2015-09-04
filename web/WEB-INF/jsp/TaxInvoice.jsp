@@ -48,11 +48,13 @@
            <strong>Tax invoice no not found!.</strong> 
         </div>
         </c:if>
+        <c:set var="voidTaxInvoice" value="" />
         <c:if test="${taxInvoice.MFinanceItemstatus.id == '2'}">
-        <div id="textAlertTaxInvoiceVoid"  style="" class="alert alert-danger alert-dismissible" role="alert">
+            <c:set var="voidTaxInvoice" value="VOID" />
+<!--        <div id="textAlertTaxInvoiceVoid"  style="" class="alert alert-danger alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-           <strong>Tax invoice void!.</strong> 
-        </div>
+           <strong>Tax invoice void!.</strong>          
+        </div>-->
         </c:if>    
         <c:if test="${requestScope['result_text'] =='cost much over'}">
         <div id="textAlertCostOver"  style="" class="alert alert-danger alert-dismissible" role="alert">
@@ -70,13 +72,13 @@
             <div class="col-sm-6 " style="padding-right: 15px">
 		<c:choose>
                     <c:when test="${fn:contains(page , 'W')}">
-                        <h4><b>Tax Invoice Wendy</b></h4>
+                        <h4><b>Tax Invoice Wendy <font style="color: red">${voidTaxInvoice}</font></b></h4>
                     </c:when>
                     <c:when test="${fn:contains(page , 'O')}">
-                        <h4><b>Tax Invoice Outbound</b></h4>
+                        <h4><b>Tax Invoice Outbound <font style="color: red">${voidTaxInvoice}</font></b></h4>
                     </c:when> 
                     <c:when test="${fn:contains(page , 'I')}">
-                        <h4><b>Tax Invoice Inbound</b></h4>
+                        <h4><b>Tax Invoice Inbound <font style="color: red">${voidTaxInvoice}</font></b></h4>
                     </c:when> 
 		</c:choose> 
             </div>
@@ -267,14 +269,14 @@
                                                     <th style="width: 1%" class="hidden">Id</th>
                                                     <th style="width: 10%" >Product</th>
                                                     <th style="width: 10%" >Ref No</th>
-                                                    <th style="width: 10%">Description</th>
+                                                    <th style="width: 19%">Description</th>
                                                     <th style="width: 10%" >Cost</th>
-                                                    <th style="width: 10%" >Cur</th>
+                                                    <th style="width: 8%" >Cur</th>
                                                     <th style="width: 5%" onclick="checkVatAll()"><u>Is vat</u></th>
-                                                    <th style="width: 10%" >Vat</th>
+                                                    <th style="width: 5%" >Vat</th>
                                                     <th style="width: 10%" >Gross</th>
                                                     <th style="width: 10%">Amount</th>
-                                                    <th style="width: 10%">Cur</th>
+                                                    <th style="width: 8%">Cur</th>
                                                     <th style="width: 4%">Action</th>
                                                 </tr>
                                             </thead>
@@ -788,6 +790,7 @@
         $('.date').datetimepicker();
         $('.datemask').mask('0000-00-00');
         $(".money").mask('000,000,000.00', {reverse: true});
+        $(".money2").mask('#,##0.00;-#,##0.00', {reverse: true});
         $('.spandate').click(function() {
             var position = $(this).offset();
             console.log("positon :" + position.top);
@@ -1657,36 +1660,39 @@
     }
     
     function clearScreen(){
-        $("#department").val("");
-        $("#invoiceNo").val("");
-        $("#TaxInvId").val("");
-        $("#TaxInvNo").val("");
-        $("#InvToDate").val("${requestScope['defaultInvToDate']}");
-        $("#TaxInvTo").val("");
-        $("#InvToName").val("");
-        $("#InvToAddress").val("");
-        $("#ARCode").val("");
-        $("#Remark").val("");
-        $("#TextAmount").val("");
-        $("#TotalAmount").val("");
-        $("#taxInvStatus").val("");
-        $("#createDate").val("");
-        $("#createBy").val("");
-        $("#countTaxInvoice").val("1");              
-        $('#InvoiceListTable > tbody  > tr').each(function() {
-            $(this).remove();
-        });       
-        $('#TaxInvoiceTable > tbody  > tr').each(function() {
-            $(this).remove();
-        });
-        $("#textAlertDivSave").addClass("hidden");
-        $("#textAlertDivNotSave").addClass("hidden");
-        $("#textAlertDivFindNotFound").addClass("hidden");
-        $("#textAlertTaxInvoiceVoid").addClass("hidden");
-        $("#textAlertCostOver").addClass("hidden");
-        $("#textAlertAmountOver").addClass("hidden");
-        AddRowTaxInvoiceTable();
-        CalculateAmountTotal();
+//        $("#department").val("");
+//        $("#invoiceNo").val("");
+//        $("#TaxInvId").val("");
+//        $("#TaxInvNo").val("");
+//        $("#InvToDate").val("${requestScope['defaultInvToDate']}");
+//        $("#TaxInvTo").val("");
+//        $("#InvToName").val("");
+//        $("#InvToAddress").val("");
+//        $("#ARCode").val("");
+//        $("#Remark").val("");
+//        $("#TextAmount").val("");
+//        $("#TotalAmount").val("");
+//        $("#taxInvStatus").val("");
+//        $("#createDate").val("");
+//        $("#createBy").val("");
+//        $("#countTaxInvoice").val("1");              
+//        $('#InvoiceListTable > tbody  > tr').each(function() {
+//            $(this).remove();
+//        });       
+//        $('#TaxInvoiceTable > tbody  > tr').each(function() {
+//            $(this).remove();
+//        });
+//        $("#textAlertDivSave").addClass("hidden");
+//        $("#textAlertDivNotSave").addClass("hidden");
+//        $("#textAlertDivFindNotFound").addClass("hidden");
+//        $("#textAlertTaxInvoiceVoid").addClass("hidden");
+//        $("#textAlertCostOver").addClass("hidden");
+//        $("#textAlertAmountOver").addClass("hidden");
+//        AddRowTaxInvoiceTable();
+//        CalculateAmountTotal();
+          var action = document.getElementById("action");
+          action.value = "new";
+          document.getElementById('TaxInvoiceForm').submit();
     }
     
     function DisableVoidInvoice(){

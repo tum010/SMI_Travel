@@ -9,7 +9,10 @@ package com.smi.travel.datalayer.view.dao.impl;
 import com.smi.travel.datalayer.view.dao.ReceiptDao;
 import com.smi.travel.datalayer.view.entity.ReceiptView;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import org.hibernate.Hibernate;
@@ -136,6 +139,47 @@ public class ReceiptImpl implements ReceiptDao{
         return data;
     }
 
+    @Override
+    public List getReceiptSummary(String receiptId, int option) {
+        
+        List data = new ArrayList();
+        ReceiptView receiptView = new ReceiptView();
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("dd-MM-yyyy");
+        receiptView.setSystemdate(String.valueOf(df.format(new Date())));
+        receiptView.setUser("PJ-ADMINISTRATOR");
+        receiptView.setFrom(String.valueOf(df.format(new Date())));
+        receiptView.setTo(String.valueOf(df.format(new Date())));
+        receiptView.setDepartment("OUTBOUND");
+        
+        receiptView.setRecdate(String.valueOf(df.format(new Date())));
+        receiptView.setReceivedate(String.valueOf(df.format(new Date())));
+        receiptView.setRecfrom("S00001");
+        receiptView.setRecname("AAAAAAAAAAAAAAAAAAAAAA");
+        receiptView.setRecdetail("TEST TEST");
+        receiptView.setInvno("WN01010101");
+        receiptView.setInvamount("100.01");
+        receiptView.setDiff("200.02");
+        receiptView.setRecamount("300.03");
+        receiptView.setPayby("Customer");
+        receiptView.setCash("100000");
+        receiptView.setChq("100000");
+        receiptView.setCreditcard("10000");
+        receiptView.setBanktransfer("12000");
+        receiptView.setWt("10000");
+        receiptView.setCashminus("5000");
+        for(int i= 0 ; i<30 ; i++){
+            receiptView.setNo(String.valueOf(i));
+            receiptView.setRecno("1509000"+i);
+            data.add(receiptView);
+        }
+
+        return data;
+    }
+    
+    
+    
+    
     public SessionFactory getSessionFactory() {
         return sessionFactory;
     }
@@ -151,5 +195,6 @@ public class ReceiptImpl implements ReceiptDao{
     public void setUtilityFunction(UtilityFunction utilityFunction) {
         this.utilityFunction = utilityFunction;
     }
+
 
 }

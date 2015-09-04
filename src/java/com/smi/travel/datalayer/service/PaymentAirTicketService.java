@@ -51,8 +51,8 @@ public class PaymentAirTicketService {
         return paymentairticketdao.getListTicketFare(from,to,by,airAgentId,invoiceSubCode);
     }
 
-    public String addRefundAirTicket(String refundNo,String rowCount){
-        return paymentairticketdao.addRefundAirTicket(refundNo,rowCount);
+    public String addRefundAirTicket(String refundNo,String rowCount,String ticketNoList){
+        return paymentairticketdao.addRefundAirTicket(refundNo,rowCount,ticketNoList);
     }
     
     public String validateSavePaymentAir(PaymentAirticket payAir){

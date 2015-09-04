@@ -619,8 +619,9 @@ public class AJAXBean extends AbstractBean implements
             if ("addRefund".equalsIgnoreCase(type)) {
                 String refundNo = map.get("refundNo").toString();
                 String rowCount = map.get("rowCount").toString();
+                String ticketNoList = map.get("ticketNoList").toString();
                 System.out.println("rowCount ::: " + rowCount);
-                result = paymentairticketdao.addRefundAirTicket(refundNo, rowCount);
+                result = paymentairticketdao.addRefundAirTicket(refundNo, rowCount,ticketNoList);
                 if (result == null) {
                     result = "null";
                 }
@@ -879,7 +880,7 @@ public class AJAXBean extends AbstractBean implements
                         + "<input type='hidden' name='invoiceId" + row + "' id='invoiceId" + row + "' value='" + invDetailId + "'>"
                         + "<td class='text-center'>" + product + "</td>"
                         + "<td>" + description + "</td>"
-                        + "<td class='money' style=\"text-align:right;\">" + cost + "</td>"
+                        + "<td class='money2' style=\"text-align:right;\">" + cost + "</td>"
                         + "<td style=\"text-align:center;\">" + curCost + "</td>"
                         + "<td class='money' style=\"text-align:right;\">" + amount + "</td>"
                         + "<td style=\"text-align:center;\">" + curAmount + "</td>"
@@ -959,7 +960,7 @@ public class AJAXBean extends AbstractBean implements
             String displaydesTemp = "";
             if ("1".equals(product)) {
                 displaydescription = billTypeName;
-            } else if ("2".equals(product)) {
+            } else if ("2".equals(product) || "8".equals(product)) {
                 displaydescription += billTypeName + " #-- ";
                 displaydesTemp = billableDao.getDescriptionInvoiceOthersFromRefId(refItemId);
                 String[] parts = displaydesTemp.split("\\|");
@@ -1083,7 +1084,7 @@ public class AJAXBean extends AbstractBean implements
 
             if ("1".equals(product)) {
                 displaydescription = billTypeName;
-            } else if ("2".equals(product)) {
+            } else if ("2".equals(product) || "8".equals(product)) {
                 if (!"".equals(refItemId)) {
                     displaydescription += billTypeName + " #-- ";
                     displaydesTemp = billableDao.getDescriptionInvoiceOthers(refItemId);
@@ -1548,8 +1549,8 @@ public class AJAXBean extends AbstractBean implements
         }
 
         result += bill.getMaster().getBookingType() + "||";
-        result += bill.getBillTo() + "," + bill.getBillName() + "," + bill.getBillAddress() + "," + term
-                + "," + bill.getMaster().getStaff().getId() + "," + bill.getMaster().getStaff().getName() + "," + bill.getMaster().getStaff().getUsername() + "," + dateDue + "," + "||";
+        result += bill.getBillTo() + "//" + bill.getBillName() + "//" + bill.getBillAddress() + "//" + term
+                + "//" + bill.getMaster().getStaff().getId() + "//" + bill.getMaster().getStaff().getName() + "//" + bill.getMaster().getStaff().getUsername() + "//" + dateDue + "//" + "||";
         List<BillableDesc> billdeescList = bill.getBillableDescs();
         int count = 0;
         NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);

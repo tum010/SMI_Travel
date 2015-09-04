@@ -11,6 +11,9 @@
 <c:set var="todate" value="${requestScope['todate']}" />
 <c:set var="department" value="${requestScope['department']}" />
 <c:set var="type" value="${requestScope['type']}" />
+<c:set var="agent" value="${requestScope['agent']}" />
+<c:set var="agentName" value="${requestScope['agentName']}" />
+<c:set var="listAgent" value="${requestScope['listAgent']}" />
 
 <section class="content-header" >
     <h1>
@@ -134,15 +137,29 @@
                 </div>
                 <div class="col-xs-12 form-group"></div>        
                 <div class="col-xs-12 form-group">
-                    <div class="col-xs-10 text-right">                        
+                    <input type="hidden" class="form-control" id="InvToId" name="InvToId" value="" />
+                    <div class="col-md-1 text-right"  style="padding-left: 15px;">
+                        <label class="control-label">Agent </lable>
                     </div>
-                    <div class="col-md-1 text-right " style="padding: 0px 20px 0px 0px">
+                    <div class="col-md-3 form-group text-left" style="padding-left:15px;width: 160px;"> 
+                        <div class="input-group" id="gr" >
+                            <input type="text" class="form-control" id="InvTo" name="InvTo" value="${agent}" />
+                            <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#AgentModal">
+                                <span class="glyphicon-search glyphicon"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-2 form-group text-left" style="width: 200px;">
+                        <input name="InvToName" id="InvToName" type="text" class="form-control" value="${agentName}" readonly=""/>
+                    </div>
+                    <div class="col-md-4 "  ></div>
+                    <div class="col-md-1 text-right " style="padding: 0px 30px 0px 0px;">
                         <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="search()" class="btn btn-primary btn-primary ">
                             <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
                         </button>                                          
                     </div>                   
                     <div class="col-md-1 text-right " style="padding: 0px 0px 0px 0px">
-                        <button type="button" onclick="printVoucher('');" class="btn btn-default">
+                        <button type="button" onclick="printInvoiceSummary();" class="btn btn-default">
                             <span id="SpanPrint" class="glyphicon glyphicon-print"></span> Print
                         </button>
                     </div>    
@@ -223,7 +240,45 @@
         </div>
     </div>
 </div>        
-                                        
+<div class="modal fade" id="AgentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Agent</h4>
+            </div>
+            <div class="modal-body">
+                <!--Bill To List Table-->
+                <div style="text-align: right"> <i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i> Search : <input type="text" style="width: 175px" id="searchInvoiceFrom" name="searchInvoiceFrom"/> </div> 
+                <table class="display" id="AgentTable">
+                    <thead>                        
+                        <tr class="datatable-header">
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th class="hidden">Address</th>
+                            <th class="hidden">Tel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="item" items="${listAgent}">
+                            <tr onclick="setBillValue('${item.billTo}', '${item.billName}', '${item.address}', '${item.term}', '${item.pay}');">                                
+                                <td class="item-billto">${item.billTo}</td>
+                                <td class="item-name">${item.billName}</td>                                
+                                <td class="item-address hidden">${item.address}</td>
+                                <td class="item-tel hidden">${item.tel}</td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <div  class="text-right">
+                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog --> <!-- /.modal-dialog -->
+</div>                                       
 <!--Script-->
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {

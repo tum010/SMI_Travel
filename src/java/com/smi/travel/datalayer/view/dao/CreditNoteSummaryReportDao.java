@@ -6,14 +6,12 @@
 
 package com.smi.travel.datalayer.view.dao;
 
-import com.smi.travel.datalayer.view.entity.ReceiptView;
+import com.smi.travel.datalayer.report.model.CreditNoteSummaryReport;
 import java.util.List;
-
 /**
  *
  * @author chonnasith
  */
-public interface ReceiptDao {
-    public List getReceipt(String receiptId,int option);
-    public List getReceiptSummary(String receiptId,int option);
+public interface CreditNoteSummaryReportDao {
+    public List getCreditNoteSummaryReport(String from,String to,String department);
 }

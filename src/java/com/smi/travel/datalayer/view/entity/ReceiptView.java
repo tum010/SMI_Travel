@@ -41,6 +41,31 @@ public class ReceiptView {
     private String creditflag;
     private String textmoney;
     
+    //Receipt Summary
+    private String systemdate;
+    private String user;
+    private String from;
+    private String to;
+    private String department;
+    private String no;
+//    private String recno;
+//    private String recdate;
+    private String receivedate;
+    private String recfrom;
+    private String recname;
+    private String recdetail;
+    private String invno;
+    private String invamount;
+    private String diff;
+    private String recamount;
+    private String payby;
+//    private String cash;
+    private String chq;
+    private String creditcard;
+    private String banktransfer;
+    private String wt;
+    private String cashminus;
+    
     public String getId() {
         return id;
     }
@@ -256,5 +281,167 @@ public class ReceiptView {
     public void setTextmoney(String textmoney) {
         this.textmoney = textmoney;
     }
+
+    public String getSystemdate() {
+        return systemdate;
+    }
+
+    public void setSystemdate(String systemdate) {
+        this.systemdate = systemdate;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    public String getTo() {
+        return to;
+    }
+
+    public void setTo(String to) {
+        this.to = to;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getNo() {
+        return no;
+    }
+
+    public void setNo(String no) {
+        this.no = no;
+    }
+
+    public String getReceivedate() {
+        return receivedate;
+    }
+
+    public void setReceivedate(String receivedate) {
+        this.receivedate = receivedate;
+    }
+
+    public String getRecfrom() {
+        return recfrom;
+    }
+
+    public void setRecfrom(String recfrom) {
+        this.recfrom = recfrom;
+    }
+
+    public String getRecname() {
+        return recname;
+    }
+
+    public void setRecname(String recname) {
+        this.recname = recname;
+    }
+
+    public String getRecdetail() {
+        return recdetail;
+    }
+
+    public void setRecdetail(String recdetail) {
+        this.recdetail = recdetail;
+    }
+
+    public String getInvno() {
+        return invno;
+    }
+
+    public void setInvno(String invno) {
+        this.invno = invno;
+    }
+
+    public String getInvamount() {
+        return invamount;
+    }
+
+    public void setInvamount(String invamount) {
+        this.invamount = invamount;
+    }
+
+    public String getDiff() {
+        return diff;
+    }
+
+    public void setDiff(String diff) {
+        this.diff = diff;
+    }
+
+    public String getRecamount() {
+        return recamount;
+    }
+
+    public void setRecamount(String recamount) {
+        this.recamount = recamount;
+    }
+
+    public String getPayby() {
+        return payby;
+    }
+
+    public void setPayby(String payby) {
+        this.payby = payby;
+    }
+
+    public String getChq() {
+        return chq;
+    }
+
+    public void setChq(String chq) {
+        this.chq = chq;
+    }
+
+    public String getCreditcard() {
+        return creditcard;
+    }
+
+    public void setCreditcard(String creditcard) {
+        this.creditcard = creditcard;
+    }
+
+    public String getBanktransfer() {
+        return banktransfer;
+    }
+
+    public void setBanktransfer(String banktransfer) {
+        this.banktransfer = banktransfer;
+    }
+
+    public String getWt() {
+        return wt;
+    }
+
+    public void setWt(String wt) {
+        this.wt = wt;
+    }
+
+    public String getCashminus() {
+        return cashminus;
+    }
+
+    public void setCashminus(String cashminus) {
+        this.cashminus = cashminus;
+    }
+
+   
 
 }

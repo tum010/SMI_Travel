@@ -110,7 +110,7 @@
                         <button type="submit" id="ButtonSearch" name="ButtonSearch" onclick="searchAction()" style="height:34px" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search </button>
                     </div>
                     <div class="col-xs-1 text-left" >
-                        <button type="submit" id="ButtonPrint" name="ButtonPrint" class="btn btn-default"><i class="glyphicon glyphicon-print"></i> Print </button>
+                        <button type="button" id="ButtonPrint" onclick="printReceiptSummary()" name="ButtonPrint" class="btn btn-default"><i class="glyphicon glyphicon-print"></i> Print </button>
                     </div>
                 </div>
             </form>
@@ -189,9 +189,9 @@
             });
         });
         
-        $('#ButtonPrint').on('click', function() {
-            alert('Print');
-        });
+//        $('#ButtonPrint').on('click', function() {
+//            alert('Print');
+//        });
         
         
         //validate date
@@ -256,5 +256,8 @@ function searchAction(){
     var action = document.getElementById('action');
     action.value = 'search';
 }
-    
+
+function printReceiptSummary(){
+   window.open("report.smi?name=ReceiptSummaryReport&receiveId=1");
+}
 </script>
