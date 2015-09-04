@@ -113,8 +113,8 @@ public class ReceiptController extends SMITravelController {
         }
         util = new UtilityFunction();
         String result = "";
-        request.setAttribute(PRODUCTROWCOUNT, "0");
-        request.setAttribute(CREDITROWCOUNT, "0");
+        request.setAttribute(PRODUCTROWCOUNT, "1");
+        request.setAttribute(CREDITROWCOUNT, "1");
         request.setAttribute(SEARCHRECEIPT,"notdummy");
         //Role User
         String roleName = user.getRole().getName();

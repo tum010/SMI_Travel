@@ -1087,7 +1087,7 @@ public class AJAXBean extends AbstractBean implements
             } else if ("2".equals(product) || "8".equals(product)) {
                 if (!"".equals(refItemId)) {
                     displaydescription += billTypeName + " #-- ";
-                    displaydesTemp = billableDao.getDescriptionInvoiceOthers(refItemId);
+                    displaydesTemp = billableDao.getDescriptionInvoiceOthersFromRefId(refItemId);
                     String[] parts = displaydesTemp.split("\\|");
                     displaydescription += parts[4] + " : " + parts[5];
                 }
@@ -1098,7 +1098,7 @@ public class AJAXBean extends AbstractBean implements
             } else if ("6".equals(product)) {
                 if (!"".equals(refItemId)) {
                     displaydescription += billTypeName + " ";
-                    displaydesTemp = billableDao.getDescriptionInvoiceDayTour(refItemId);
+                    displaydesTemp = billableDao.getDescriptionInvoiceDayTourFromRefId(refItemId);
                     String[] parts = displaydesTemp.split("\\|");
                     displaydescription += parts[5] + " : " + parts[6];
                 }
