@@ -221,8 +221,8 @@ public class ReportService {
         return taxInvoiceSummaryReportDao.getTaxInvoiceSummaryReport(from, to, department, systemuser);
     }
     
-    public List getCreditNoteSummaryReport(){
-        return creditNoteSummaryReportDao.getCreditNoteSummaryReport(null, null, null);
+    public List getCreditNoteSummaryReport(String from, String to, String department, String systemuser){
+        return creditNoteSummaryReportDao.getCreditNoteSummaryReport(from, to, department, systemuser);
     }
 
     public HotelVoucherDao getHotelVoucherdao() {

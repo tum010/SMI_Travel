@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TaxInvoiceSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b94d16a0-fd3d-420a-829f-b2613a057a63">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="232"/>
-	<property name="ireport.y" value="182"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="884"/>
+	<property name="ireport.y" value="133"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="user" class="java.lang.String"/>
 	<field name="from" class="java.lang.String"/>
@@ -45,7 +45,7 @@
 	<variable name="totalvoidpage" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[($F{status}.equalsIgnoreCase("VOID")) ? new BigDecimal($F{amount}) : new BigDecimal("0")]]></variableExpression>
 	</variable>
-	<group name="departmentGroup" keepTogether="true">
+	<group name="departmentGroup" isReprintHeaderOnEachPage="true" keepTogether="true">
 		<groupExpression><![CDATA[$F{department}]]></groupExpression>
 		<groupHeader>
 			<band height="50">
@@ -493,21 +493,21 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{taxname}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="330" y="0" width="91" height="17" uuid="b19b5f7f-7283-4d38-938f-6393b47ade53"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{taxdetail}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="424" y="0" width="64" height="17" uuid="21db2806-09b5-4588-beca-c5cd176550c1"/>
 				<textElement markup="none">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{invoiceno}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="492" y="0" width="64" height="17" uuid="4644a97d-10bb-4d3a-927d-1cbe8e148327"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14"/>
@@ -543,49 +543,46 @@
 				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="0" width="1" height="17" uuid="ba58cdb5-fe19-42ed-9864-d84bd4e4f13d"/>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="17" uuid="ba58cdb5-fe19-42ed-9864-d84bd4e4f13d"/>
 			</line>
 			<line>
-				<reportElement x="21" y="0" width="1" height="17" uuid="cc92dece-4999-4191-9fbd-ba0429702352"/>
+				<reportElement stretchType="RelativeToBandHeight" x="21" y="0" width="1" height="17" uuid="cc92dece-4999-4191-9fbd-ba0429702352"/>
 			</line>
 			<line>
-				<reportElement x="77" y="0" width="1" height="17" uuid="06ffc837-e11d-4a23-ad90-8873049d0905"/>
+				<reportElement stretchType="RelativeToBandHeight" x="77" y="0" width="1" height="17" uuid="06ffc837-e11d-4a23-ad90-8873049d0905"/>
 			</line>
 			<line>
-				<reportElement x="133" y="0" width="1" height="17" uuid="54d85cc9-f0f1-4294-983f-e7dabfe6069d"/>
+				<reportElement stretchType="RelativeToBandHeight" x="133" y="0" width="1" height="17" uuid="54d85cc9-f0f1-4294-983f-e7dabfe6069d"/>
 			</line>
 			<line>
-				<reportElement x="181" y="0" width="1" height="17" uuid="5edc64f9-5270-4fae-8289-9cf6f5ca2edc"/>
+				<reportElement stretchType="RelativeToBandHeight" x="181" y="0" width="1" height="17" uuid="5edc64f9-5270-4fae-8289-9cf6f5ca2edc"/>
 			</line>
 			<line>
-				<reportElement x="326" y="0" width="1" height="17" uuid="f42c11a5-567b-4fbe-a6b0-3461cd34ba87"/>
+				<reportElement stretchType="RelativeToBandHeight" x="326" y="0" width="1" height="17" uuid="f42c11a5-567b-4fbe-a6b0-3461cd34ba87"/>
 			</line>
 			<line>
-				<reportElement x="420" y="0" width="1" height="17" uuid="5664b211-7b1f-4de9-96e6-7e5ab5cc9577"/>
+				<reportElement stretchType="RelativeToBandHeight" x="420" y="0" width="1" height="17" uuid="5664b211-7b1f-4de9-96e6-7e5ab5cc9577"/>
 			</line>
 			<line>
-				<reportElement x="487" y="0" width="1" height="17" uuid="75e013ef-d90a-45af-b122-8ac464a6fb70"/>
+				<reportElement stretchType="RelativeToBandHeight" x="487" y="0" width="1" height="17" uuid="75e013ef-d90a-45af-b122-8ac464a6fb70"/>
 			</line>
 			<line>
-				<reportElement x="556" y="0" width="1" height="17" uuid="9f79eba1-2ac8-4e6f-92f0-15d85c486215"/>
+				<reportElement stretchType="RelativeToBandHeight" x="556" y="0" width="1" height="17" uuid="9f79eba1-2ac8-4e6f-92f0-15d85c486215"/>
 			</line>
 			<line>
-				<reportElement x="624" y="0" width="1" height="17" uuid="7d4bb691-ce33-4354-82da-e7a7861ff54e"/>
+				<reportElement stretchType="RelativeToBandHeight" x="624" y="0" width="1" height="17" uuid="7d4bb691-ce33-4354-82da-e7a7861ff54e"/>
 			</line>
 			<line>
-				<reportElement x="760" y="0" width="1" height="17" uuid="1b078409-3a96-46f2-9696-e54634f923ca"/>
+				<reportElement stretchType="RelativeToBandHeight" x="760" y="0" width="1" height="17" uuid="1b078409-3a96-46f2-9696-e54634f923ca"/>
 			</line>
 			<line>
-				<reportElement x="692" y="0" width="1" height="17" uuid="0a95d9ff-8ec0-4172-8d67-e392421e81e0"/>
+				<reportElement stretchType="RelativeToBandHeight" x="692" y="0" width="1" height="17" uuid="0a95d9ff-8ec0-4172-8d67-e392421e81e0"/>
 			</line>
 			<line>
-				<reportElement x="802" y="0" width="1" height="17" uuid="7bd3443a-41d4-4616-9c8c-b137ae168088"/>
+				<reportElement stretchType="RelativeToBandHeight" x="802" y="0" width="1" height="17" uuid="7bd3443a-41d4-4616-9c8c-b137ae168088"/>
 			</line>
 			<line>
-				<reportElement x="1" y="16" width="801" height="1" uuid="60acc4cc-57e5-46ec-b005-15605c9cb8ce"/>
-			</line>
-			<line>
-				<reportElement x="0" y="0" width="801" height="1" uuid="b08a4a7c-b43c-4b75-9e50-d7db0b527b9b"/>
+				<reportElement positionType="Float" x="1" y="16" width="801" height="1" uuid="60acc4cc-57e5-46ec-b005-15605c9cb8ce"/>
 			</line>
 		</band>
 	</detail>

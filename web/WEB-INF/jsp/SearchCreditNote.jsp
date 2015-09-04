@@ -64,6 +64,7 @@
                             </div>
                             <div class="col-md-2 form-group" style="margin-left: 20px">
                                  <select class="form-control" id="department" name="department" style="width: 100px">
+                                     <option value="">Choose</option>
                                     <option value="W">Wendy</option>
                                     <option value="O">Outbound</option>
                                     <option value="I">Inbound</option>
@@ -210,6 +211,9 @@ function searchAction() {
 }
 
 function printCreditNoteSummaryReport(){
-    window.open("report.smi?name=CreditNoteSummaryReport");
+    var fromdate = document.getElementById("dateFrom").value;
+    var todate= document.getElementById("dateTo").value;
+    var department = document.getElementById("department").value;
+    window.open("report.smi?name=CreditNoteSummaryReport&fromdate="+fromdate+"&todate="+todate+"&department="+department);
 }
 </script>
