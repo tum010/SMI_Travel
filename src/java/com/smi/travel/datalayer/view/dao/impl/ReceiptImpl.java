@@ -198,7 +198,7 @@ public class ReceiptImpl implements ReceiptDao{
         SimpleDateFormat df = new SimpleDateFormat();
         df.applyPattern("dd-MM-yyyy");
         SimpleDateFormat dateformat = new SimpleDateFormat();
-        dateformat.applyPattern("dd-MM-yyyy HH:mm");
+        dateformat.applyPattern("dd-MM-yyyy hh:mm");
         int i = 1;
         for(Object[] recSum : QueryList){
             ReceiptView receiptView = new ReceiptView();

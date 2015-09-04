@@ -238,7 +238,7 @@ public class ReceiptController extends SMITravelController {
                     receiptDetail.setInvoiceDetail(invoiceDetail);
                 }
                 
-                if(StringUtils.isNotEmpty(billDescId) || StringUtils.isNotEmpty(paymentId)){
+//                if(StringUtils.isNotEmpty(billDescId) || StringUtils.isNotEmpty(paymentId)){
                     List<InvoiceDetail>  invoiceDetailList = null;
                     if(StringUtils.isNotEmpty(billDescId)){
                         invoiceDetailList = invoiceService.getInvoiceDetailFromBillableDescId(billDescId);
@@ -288,8 +288,16 @@ public class ReceiptController extends SMITravelController {
                        invoiceDetail.setVat(receiptDetail.getVat());
                        invoiceDetail.setIsVat(receiptDetail.getIsVat());
                        listInvoiceDetail.add(invoiceDetail);
-
-                       invoice.setInvoiceDetails(listInvoiceDetail);
+                       
+                        if( (receiveProduct!="" && receiveProduct!=null) || 
+                            (receiveDes!="" && receiveDes!=null) || 
+                            (receiveCost!="" && receiveCost!=null) || 
+                            (receiveCurCost!="" && receiveCurCost!=null) || 
+                            (receiveAmount!="" && receiveAmount!=null) || 
+                            (receiveCurrency!="" && receiveCurrency!=null)){
+                            invoice.setInvoiceDetails(listInvoiceDetail);
+                        }
+                       
                        String invoiceNo = invoiceService.saveInvoiceDetail(invoice);
                        if("fail".equals(invoiceNo)){
                            System.out.println(" SAVE INVOICE FAIL ");
@@ -315,9 +323,7 @@ public class ReceiptController extends SMITravelController {
                            receiptDetail.setCurAmount("THB");
                        }
                    }
-                }
-
-                
+//                }
                 if( (receiveProduct!="" && receiveProduct!=null) || 
                     (receiveDes!="" && receiveDes!=null) || 
                     (receiveCost!="" && receiveCost!=null) || 

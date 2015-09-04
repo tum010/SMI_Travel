@@ -911,7 +911,7 @@ public class AJAXBean extends AbstractBean implements
         String refItemId = "";
         String billTypeName = "";
 
-        int No = 0;
+        int No = 1;
         String receiveFrom = invoice.getInvTo();
         String receiveName = invoice.getInvName();
         String receiveAddress = invoice.getInvAddress();
@@ -930,7 +930,6 @@ public class AJAXBean extends AbstractBean implements
             return html.toString();
         }
         for (int i = 0; i < invoiceDetaill.size(); i++) {
-            No = i + 1;
             invId = invoiceDetaill.get(i).getId();
             description = invoiceDetaill.get(i).getDescription();
             amountinvoice = invoiceDetaill.get(i).getAmount().compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : invoiceDetaill.get(i).getAmount();
@@ -996,6 +995,7 @@ public class AJAXBean extends AbstractBean implements
                         + "<td><center><a href=\"#/inv\"><span onclick=\"addProduct('" + product + "','" + description + "','" + cost + "','" + cur + "','" + isVat + "','" + vat + "','" + amount + "','" + currency + "','" + invId + "','','','','1','" + displaydescription + "','" + invNo + "' )\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
                 html.append(newrow);
+                No++;
             } else {
                 String newrow = "";
                 newrow += "<tr>"
@@ -1025,7 +1025,7 @@ public class AJAXBean extends AbstractBean implements
         BigDecimal cost = new BigDecimal(0);
         BigDecimal amountinvoice = new BigDecimal(0);
         BigDecimal costinvoice = new BigDecimal(0);
-        int No = 0;
+        int No = 1;
 
 //        String displaydescription = "";
         String refItemId = "";
@@ -1053,7 +1053,6 @@ public class AJAXBean extends AbstractBean implements
             return html.toString();
         }
         for (int i = 0; i < billableDescs.size(); i++) {
-            No = i + 1;
             billableDescId = billableDescs.get(i).getId();
             description = billableDescs.get(i).getDetail();
             BigDecimal amounttemp = new BigDecimal(billableDescs.get(i).getPrice());
@@ -1122,6 +1121,7 @@ public class AJAXBean extends AbstractBean implements
                         + "<td><center><a href=\"#/ref\"><span onclick=\"addProduct('" + product + "','" + description + "','" + cost + "','" + cur + "','','','" + amount + "','" + currency + "','','" + billableDescId + "','','','2','" + displaydescription + "','" + refNo + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
                 html.append(newrow);
+                No++;
             } else {
                 String newrow = "";
                 newrow += "<tr>"
@@ -1132,7 +1132,6 @@ public class AJAXBean extends AbstractBean implements
                         + "<input type='hidden' name='mAccPayBillable' id='mAccPayBillable' value='" + mAccPay + "'>"
                         + "</tr>";
                 html.append(newrow);
-
             }
         }
         return html.toString();
