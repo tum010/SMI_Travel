@@ -739,14 +739,15 @@ public class AJAXBean extends AbstractBean implements
                 JSONObject obj = new JSONObject(convertInvoiceToMap(taxInv));
                 result = obj.toJSONString();
 
-            } else if (CREDITNOTE.equalsIgnoreCase(servletName)) {
-                if ("delete".equalsIgnoreCase(type)) {
-                    String cnDetailId = map.get("cnDetailId").toString();
-                    if (cnDetailId != null && !cnDetailId.equals("")) {
-                        result = creditNoteDao.DeleteCreditNoteDetail(cnDetailId);
-                    }
+            } 
+        }else if (CREDITNOTE.equalsIgnoreCase(servletName)) {
+            if ("delete".equalsIgnoreCase(type)) {
+                String cnDetailId = map.get("cnDetailId").toString();
+                if (cnDetailId != null && !cnDetailId.equals("")) {
+                    result = creditNoteDao.DeleteCreditNoteDetail(cnDetailId);
                 }
             }
+            
         }
 
         return result;
