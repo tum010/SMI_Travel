@@ -164,10 +164,20 @@
                                                 </c:forEach>
                                             </select>
                                         </td>
-                                        <td style="text-align:center"><input type="text" name="taxAmount" class="form-control text-right decimal" value="${creditNoteDetail.amount}"/></td>
-                                        <td style="text-align:center"><input type="text" name="taxReal" class="form-control text-right decimal" value="${creditNoteDetail.realamount}"/></td>
-                                        <td style="text-align:center"><input type="text" name="taxVat" class="form-control text-right decimal" value="${creditNoteDetail.vat}" readonly/></td>
-                                        <td style="text-align:center"><input type="text" name="taxDesc" class="form-control" value="${creditNoteDetail.description}"/></td>
+                                        <td style="text-align:center">
+                                            <input type="hidden" name="taxAmount" value="${creditNoteDetail.amount}"/>
+                                            <input type="text" id="taxAmount" class="form-control text-right decimal" value="${creditNoteDetail.amount}"/>
+                                        </td>
+                                        <td style="text-align:center">
+                                            <input type="hidden" name="taxReal" value="${creditNoteDetail.realamount}"/>
+                                            <input type="text" id="taxReal" class="form-control text-right decimal" value="${creditNoteDetail.realamount}"/>
+                                        </td>
+                                        <td style="text-align:center">
+                                            <input type="hidden" name="taxVat" value="${creditNoteDetail.vat}" readonly/>
+                                            <input type="text" id="taxVat" class="form-control text-right decimal" value="${creditNoteDetail.vat}" readonly/>
+                                        </td>
+                                        <td style="text-align:center">
+                                            <input type="text" name="taxDesc" class="form-control" value="${creditNoteDetail.description}"/></td>
                                         <td class="text-center">
                                             <a id="ButtonRemove${varRefundAirline.count}" data-toggle="modal" data-target="#DeleteRefundAirline" onclick="show('${creditNoteDetail.taxInvoice.taxNo}')">
                                                 <i id="IRemove${varRefundAirline.count}" class="glyphicon glyphicon-list "></i>
@@ -330,9 +340,18 @@
                         </c:forEach>
                     </select>
                 </td>
-                <td style="text-align:center"><input type="text" name="taxAmount" class="form-control text-right decimal" /></td>
-                <td style="text-align:center"><input type="text" name="taxReal" class="form-control text-right decimal"/></td>
-                <td style="text-align:center"><input type="text" name="taxVat" class="form-control text-right decimal" readonly/></td>
+                <td style="text-align:center">
+                    <input type="hidden" name="taxAmount"/>
+                    <input type="text" id="taxAmount" class="form-control text-right decimal" />
+                </td>
+                <td style="text-align:center">
+                    <input type="hidden" name="taxReal"/>
+                    <input type="text" id="taxReal" class="form-control text-right decimal" />
+                </td>
+                <td style="text-align:center">
+                    <input type="hidden" name="taxVat"/>
+                    <input type="text" id="taxVat" class="form-control text-right decimal" readonly/>
+                </td>
                 <td style="text-align:center"><input type="text" name="taxDesc" class="form-control" /></td>
                 <td class="text-center">
                     <a id="ButtonRemove${varRefundAirline.count}" name="btnDetail" data-toggle="modal" data-target="#DeleteRefundAirline" onclick="hide()">

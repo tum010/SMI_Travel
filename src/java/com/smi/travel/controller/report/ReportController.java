@@ -122,7 +122,12 @@ public class ReportController extends SMITravelController {
         String refundId = request.getParameter("refundId");
         String typeInvoice = request.getParameter("type");
         String agent = request.getParameter("agent");
-
+        String systemuser = request.getParameter("systemuser");
+        String dateFrom = request.getParameter("dateFrom");
+        String dateTo = request.getParameter("dateTo");
+        String departmentRec = request.getParameter("departmentRec");
+        String recType = request.getParameter("recType");
+        
         Map model = new HashMap();
         List data = new ArrayList();
         int PrintMethod = 0; // 0 = bean 1 = pass parameter
@@ -182,7 +187,7 @@ public class ReportController extends SMITravelController {
         } else if (ReceiptReport.equalsIgnoreCase(name)) {
             data = reportservice.getReceipt(receiveId,option);
         } else if (ReceiptSummaryReport.equalsIgnoreCase(name)) {
-            data = reportservice.getReceiptSummary("1",1);
+            data = reportservice.getReceiptSummary(dateFrom,dateTo,departmentRec,recType,user.getUsername()+"-"+user.getRole().getName());
         } else if (ReceiveList.equalsIgnoreCase(name)) {
             data = reportservice.getDaytourOtherReport(refno, status);
         } else if (InvoiceEmail.equalsIgnoreCase(name)) {
@@ -202,7 +207,7 @@ public class ReportController extends SMITravelController {
         }else if(TicketFareReport.equalsIgnoreCase(name)){
             data = reportservice.getTicketFareReport();
         }else if(TaxInvoiceSummaryReport.equalsIgnoreCase(name)){
-            data = reportservice.getTaxInvoiceSummaryReport();
+            data = reportservice.getTaxInvoiceSummaryReport(from, to, department, systemuser);
         }else if(CreditNoteSummaryReport.equalsIgnoreCase(name)){
             data = reportservice.getCreditNoteSummaryReport();
         }

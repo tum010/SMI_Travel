@@ -168,19 +168,17 @@ public class TaxInvoice   {
     }
 
     public Object getAmountExcludeVat() {
-        BigDecimal sumAmount = new BigDecimal("0.00");
+        BigDecimal sumAmount = new BigDecimal("0.0000");
         for (Iterator detailList = this.getTaxInvoiceDetails().iterator(); detailList.hasNext();) {
             TaxInvoiceDetail detail = (TaxInvoiceDetail)detailList.next();
             BigDecimal amount = detail.getAmount();
-            BigDecimal vat = new BigDecimal("0.00");
+            BigDecimal vat = new BigDecimal("0.0000");
             if(detail.getVat() != null){
                 vat = detail.getVat();
             }
-            BigDecimal hundred = new BigDecimal("100.00");
+            BigDecimal hundred = new BigDecimal("100.0000");
             sumAmount = sumAmount.add(amount.multiply(hundred).divide(vat.add(hundred), BigDecimal.ROUND_HALF_UP));
-            System.out.println(amount.toString() + "*100/(" + vat.toString() + "+100) = " +
-                    amount.multiply(hundred).divide(vat.add(hundred), BigDecimal.ROUND_HALF_UP).toString());
-            System.out.println(sumAmount);
+
         }
         return sumAmount;
     }

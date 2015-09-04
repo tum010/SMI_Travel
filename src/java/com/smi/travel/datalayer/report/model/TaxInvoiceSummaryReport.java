@@ -11,6 +11,7 @@ package com.smi.travel.datalayer.report.model;
  * @author chonnasith
  */
 public class TaxInvoiceSummaryReport {
+    private String id;
     private String systemdate;
     private String user;
     private String from;
@@ -28,6 +29,7 @@ public class TaxInvoiceSummaryReport {
     private String amount;
     private String status;
     private String department;
+    private String departmentshow;
 
     public String getSystemdate() {
         return systemdate;
@@ -163,5 +165,21 @@ public class TaxInvoiceSummaryReport {
 
     public void setDepartment(String department) {
         this.department = department;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getDepartmentshow() {
+        return departmentshow;
+    }
+
+    public void setDepartmentshow(String departmentshow) {
+        this.departmentshow = departmentshow;
     }
 }
