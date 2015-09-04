@@ -121,7 +121,12 @@ public class ReportController extends SMITravelController {
         String departmentInvoice  = request.getParameter("departmentInvoice");
         String sign = request.getParameter("sign");
         String refundId = request.getParameter("refundId");
-
+        
+        String dateFrom = request.getParameter("dateFrom");
+        String dateTo = request.getParameter("dateTo");
+        String departmentRec = request.getParameter("departmentRec");
+        String recType = request.getParameter("recType");
+        
         Map model = new HashMap();
         List data = new ArrayList();
         int PrintMethod = 0; // 0 = bean 1 = pass parameter
@@ -181,7 +186,7 @@ public class ReportController extends SMITravelController {
         } else if (ReceiptReport.equalsIgnoreCase(name)) {
             data = reportservice.getReceipt(receiveId,option);
         } else if (ReceiptSummaryReport.equalsIgnoreCase(name)) {
-            data = reportservice.getReceiptSummary("1",1);
+            data = reportservice.getReceiptSummary(dateFrom,dateTo,departmentRec,recType,user.getUsername()+"-"+user.getRole().getName());
         } else if (ReceiveList.equalsIgnoreCase(name)) {
             data = reportservice.getDaytourOtherReport(refno, status);
         } else if (InvoiceEmail.equalsIgnoreCase(name)) {

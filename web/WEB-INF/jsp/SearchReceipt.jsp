@@ -258,6 +258,11 @@ function searchAction(){
 }
 
 function printReceiptSummary(){
-   window.open("report.smi?name=ReceiptSummaryReport&receiveId=1");
+    var recType = document.getElementById('recType').value;
+    var department = document.getElementById('department').value;
+    var inputToDate = document.getElementById('inputToDate').value;
+    var inputFromDate = document.getElementById('inputFromDate').value;
+    
+    window.open("report.smi?name=ReceiptSummaryReport&dateFrom="+inputFromDate+"&dateTo="+inputToDate+"&departmentRec="+department+"&recType="+recType);
 }
 </script>

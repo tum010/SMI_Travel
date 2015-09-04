@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.view.dao.impl;
 
+import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.view.dao.ReceiptDao;
 import com.smi.travel.datalayer.view.entity.ReceiptView;
 import com.smi.travel.util.UtilityFunction;
@@ -140,40 +141,136 @@ public class ReceiptImpl implements ReceiptDao{
     }
 
     @Override
-    public List getReceiptSummary(String receiptId, int option) {
+    public List getReceiptSummary(String dateFrom,String dateTo,String departmentRec,String recType,String username){
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        String query = "SELECT * FROM `receipt_summary` where";
+        int checkQuery = 0;
+        String prefix ="";
         
-        List data = new ArrayList();
-        ReceiptView receiptView = new ReceiptView();
-        SimpleDateFormat df = new SimpleDateFormat();
-        df.applyPattern("dd-MM-yyyy");
-        receiptView.setSystemdate(String.valueOf(df.format(new Date())));
-        receiptView.setUser("PJ-ADMINISTRATOR");
-        receiptView.setFrom(String.valueOf(df.format(new Date())));
-        receiptView.setTo(String.valueOf(df.format(new Date())));
-        receiptView.setDepartment("OUTBOUND");
-        
-        receiptView.setRecdate(String.valueOf(df.format(new Date())));
-        receiptView.setReceivedate(String.valueOf(df.format(new Date())));
-        receiptView.setRecfrom("S00001");
-        receiptView.setRecname("AAAAAAAAAAAAAAAAAAAAAA");
-        receiptView.setRecdetail("TEST TEST");
-        receiptView.setInvno("WN01010101");
-        receiptView.setInvamount("100.01");
-        receiptView.setDiff("200.02");
-        receiptView.setRecamount("300.03");
-        receiptView.setPayby("Customer");
-        receiptView.setCash("100000");
-        receiptView.setChq("100000");
-        receiptView.setCreditcard("10000");
-        receiptView.setBanktransfer("12000");
-        receiptView.setWt("10000");
-        receiptView.setCashminus("5000");
-        for(int i= 0 ; i<30 ; i++){
-            receiptView.setNo(String.valueOf(i));
-            receiptView.setRecno("1509000"+i);
-            data.add(receiptView);
+        if(((dateFrom != null) &&(!"".equalsIgnoreCase(dateFrom))) &&((dateTo != null) &&(!"".equalsIgnoreCase(dateTo)))){
+            query += " recdate >= '" +dateFrom +"' and recdate <= '"+dateTo +"' ";
+            checkQuery = 1;
+        }else if((dateFrom != null) &&(!"".equalsIgnoreCase(dateFrom))){
+            checkQuery = 1;
+            query +=  " recdate >= '" +dateFrom +"'";
+
+        }else if((dateTo != null) &&(!"".equalsIgnoreCase(dateTo))){
+            checkQuery = 1;
+            query += " recdate <= '" +dateTo +"'";
         }
 
+        if((departmentRec != null) &&(!"".equalsIgnoreCase(departmentRec))){
+            if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+            query += prefix+" department = '"+departmentRec+"'";
+        }
+
+        if((recType != null) &&(!"".equalsIgnoreCase(recType))){
+            if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+            query += prefix+ " rectype = '"+recType+"'";
+        }
+        
+        if(checkQuery == 0){query = query.replaceAll("Where", "");}
+        System.out.println("query : "+query);
+        
+        List<Object[]> QueryList =  session.createSQLQuery(query)
+                                    .addScalar("recno",Hibernate.STRING)
+                                    .addScalar("recdate",Hibernate.STRING)
+                                    .addScalar("receivedate",Hibernate.STRING)
+                                    .addScalar("recfrom",Hibernate.STRING)
+                                    .addScalar("recname",Hibernate.STRING)
+                                    .addScalar("rectype",Hibernate.STRING)
+                                    .addScalar("department",Hibernate.STRING)
+                                    .addScalar("recdetail",Hibernate.STRING)
+                                    .addScalar("invno",Hibernate.STRING)
+                                    .addScalar("invamount",Hibernate.STRING)
+                                    .addScalar("diff",Hibernate.STRING)
+                                    .addScalar("recamount",Hibernate.STRING)
+                                    .addScalar("payby",Hibernate.STRING)
+                                    .addScalar("cash",Hibernate.STRING)
+                                    .addScalar("chq",Hibernate.STRING)
+                                    .addScalar("credit",Hibernate.STRING)
+                                    .addScalar("banktransfer",Hibernate.STRING)
+                                    .addScalar("wt",Hibernate.STRING)
+                                    .addScalar("cashminus",Hibernate.STRING)
+                                    .list();
+        List data = new ArrayList();
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("dd-MM-yyyy");
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MM-yyyy HH:mm");
+        int i = 1;
+        for(Object[] recSum : QueryList){
+            ReceiptView receiptView = new ReceiptView();
+            receiptView.setSystemdate(String.valueOf(dateformat.format(new Date())));
+            receiptView.setUser(username);
+            receiptView.setFrom(String.valueOf(df.format(util.convertStringToDate(dateFrom))));
+            receiptView.setTo(String.valueOf(df.format(util.convertStringToDate(dateTo))));
+            
+            if("Wendy".equals(String.valueOf(recSum[6]))){
+                receiptView.setDepartment("WENDY");
+            }else if("Inbound".equals(String.valueOf(recSum[6]))){
+                receiptView.setDepartment("INBOUND");
+            }else if("Outbound".equals(String.valueOf(recSum[6]))){
+                receiptView.setDepartment("OUTBOUND");
+            }
+            
+            receiptView.setRecno((("null".equals(String.valueOf(recSum[0])) ? "" : String.valueOf(recSum[0]))));
+            receiptView.setRecdate((("null".equals(String.valueOf(recSum[1])) ? "" : String.valueOf(df.format(util.convertStringToDate(String.valueOf(recSum[1])))))));
+            receiptView.setReceivedate((("null".equals(String.valueOf(recSum[2])) ? "" : String.valueOf(df.format(util.convertStringToDate(String.valueOf(recSum[2])))))));
+            receiptView.setRecfrom((("null".equals(String.valueOf(recSum[3])) ? "" : String.valueOf(recSum[3]))));
+            receiptView.setRecname((("null".equals(String.valueOf(recSum[4])) ? "" : String.valueOf(recSum[4]))));
+            receiptView.setRecdetail((("null".equals(String.valueOf(recSum[7])) ? "" : String.valueOf(recSum[7]))));
+            receiptView.setInvno((("null".equals(String.valueOf(recSum[8])) ? "" : String.valueOf(recSum[8]))));
+            receiptView.setInvamount((("0.00".equals(String.valueOf(recSum[9])) ? "0" : String.valueOf(recSum[9]))));
+            receiptView.setDiff((("0.00".equals(String.valueOf(recSum[10])) ? "0" : String.valueOf(recSum[10]))));
+            receiptView.setRecamount((("0.00".equals(String.valueOf(recSum[11])) ? "0" : String.valueOf(recSum[11]))));
+            receiptView.setPayby((("null".equals(String.valueOf(recSum[12])) ? "" : String.valueOf(recSum[12]))));
+            receiptView.setCash((("0.00".equals(String.valueOf(recSum[13])) ? "0" : String.valueOf(recSum[13]))));
+            receiptView.setChq((("0.00".equals(String.valueOf(recSum[14])) ? "0" : String.valueOf(recSum[14]))));
+            receiptView.setCreditcard((("0.00".equals(String.valueOf(recSum[15])) ? "0" : String.valueOf(recSum[15]))));
+            receiptView.setBanktransfer((("0.00".equals(String.valueOf(recSum[16])) ? "0" : String.valueOf(recSum[16]))));
+            receiptView.setWt((("0.00".equals(String.valueOf(recSum[17])) ? "0" : String.valueOf(recSum[17]))));
+            receiptView.setCashminus((("0.00".equals(String.valueOf(recSum[18])) ? "0" : String.valueOf(recSum[18]))));
+            receiptView.setNo(String.valueOf(i));
+            data.add(receiptView);
+            i++;
+        }
+        
+//        ReceiptView receiptView = new ReceiptView();
+
+//        receiptView.setSystemdate(String.valueOf(df.format(new Date())));
+//        receiptView.setUser("PJ-ADMINISTRATOR");
+//        receiptView.setFrom(String.valueOf(df.format(new Date())));
+//        receiptView.setTo(String.valueOf(df.format(new Date())));
+//        receiptView.setDepartment("OUTBOUND");
+//        
+//        receiptView.setRecdate(String.valueOf(df.format(new Date())));
+//        receiptView.setReceivedate(String.valueOf(df.format(new Date())));
+//        receiptView.setRecfrom("S00001");
+//        receiptView.setRecname("AAAAAAAAAAAAAAAAAAAAAA");
+//        receiptView.setRecdetail("TEST TEST");
+//        receiptView.setInvno("WN01010101");
+//        receiptView.setInvamount("100.01");
+//        receiptView.setDiff("200.02");
+//        receiptView.setRecamount("300.03");
+//        receiptView.setPayby("Customer");
+//        receiptView.setCash("100000");
+//        receiptView.setChq("100000");
+//        receiptView.setCreditcard("10000");
+//        receiptView.setBanktransfer("12000");
+//        receiptView.setWt("10000");
+//        receiptView.setCashminus("5000");
+//        for(int i= 0 ; i<30 ; i++){
+//            receiptView.setNo(String.valueOf(i));
+//            receiptView.setRecno("1509000"+i);
+//            data.add(receiptView);
+//        }
+        if(data.isEmpty()) {
+            return null;
+        }
+        
+        session.close();
         return data;
     }
     
