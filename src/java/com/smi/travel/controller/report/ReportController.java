@@ -121,6 +121,7 @@ public class ReportController extends SMITravelController {
         String departmentInvoice  = request.getParameter("departmentInvoice");
         String sign = request.getParameter("sign");
         String refundId = request.getParameter("refundId");
+        String systemuser = request.getParameter("systemuser");
 
         Map model = new HashMap();
         List data = new ArrayList();
@@ -201,7 +202,7 @@ public class ReportController extends SMITravelController {
         }else if(TicketFareReport.equalsIgnoreCase(name)){
             data = reportservice.getTicketFareReport();
         }else if(TaxInvoiceSummaryReport.equalsIgnoreCase(name)){
-            data = reportservice.getTaxInvoiceSummaryReport();
+            data = reportservice.getTaxInvoiceSummaryReport(from, to, department, systemuser);
         }else if(CreditNoteSummaryReport.equalsIgnoreCase(name)){
             data = reportservice.getCreditNoteSummaryReport();
         }

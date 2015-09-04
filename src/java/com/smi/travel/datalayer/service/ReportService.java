@@ -217,8 +217,8 @@ public class ReportService {
         return ticketFareReportDao.getTicketFareReport();
     }
     
-    public List getTaxInvoiceSummaryReport(){
-        return taxInvoiceSummaryReportDao.getTaxInvoiceSummaryReport();
+    public List getTaxInvoiceSummaryReport(String from, String to, String department, String systemuser){
+        return taxInvoiceSummaryReportDao.getTaxInvoiceSummaryReport(from, to, department, systemuser);
     }
     
     public List getCreditNoteSummaryReport(){

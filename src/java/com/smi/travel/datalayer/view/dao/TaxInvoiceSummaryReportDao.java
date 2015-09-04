@@ -14,5 +14,5 @@ import java.util.List;
  * @author chonnasith
  */
 public interface TaxInvoiceSummaryReportDao {
-    public List getTaxInvoiceSummaryReport();    
+    public List getTaxInvoiceSummaryReport(String from, String to, String department, String systemuser);    
 }
