@@ -371,8 +371,10 @@
     </bean>
     
     <bean id="GenerateReport" class="com.smi.travel.report.GenerateReport">
-          <property name="reportpath" value="C:\\Users\\Surachai\\Documents\\NetBeansProjects\\SMI_Travel_nokey\\web\\WEB-INF\\report\\"></property>
-          <property name="exportpath" value="D:\\report\\"></property>
+          <!--<property name="reportpath" value="C:\\Users\\Surachai\\Documents\\NetBeansProjects\\SMI_Travel_nokey\\web\\WEB-INF\\report\\"></property>-->
+          <!--<property name="exportpath" value="D:\\report\\"></property>-->
+          <property name="reportpath" value="C:\\Program Files\\apache-tomcat-7.0.56\\webapps\\SMITravel\\WEB-INF\\report\\"></property>
+          <property name="exportpath" value="C:\\Users\\Administrator\\Desktop\\report\\"></property>
     </bean>
        
     <!-- Component Bean -->
