@@ -13,6 +13,10 @@
 <c:set var="itemStatus" value="${requestScope['itemStatus']}" />
 <c:set var="payStatus" value="${requestScope['payStatus']}" />
 <c:set var="expire" value="${requestScope['expire']}" />
+<c:set var="adddate" value="${requestScope['adddate']}" />
+<c:set var="productid" value="${requestScope['productid']}" />
+<c:set var="proName" value="${requestScope['proName']}" />
+<c:set var="proCode" value="${requestScope['proCode']}" />
 
 <section class="content-header" >
     <h1>
@@ -39,18 +43,49 @@
             <div class="col-xs-12 ">
                 <div class="col-xs-1 text-right" style="width: 130px;"> 
                     <label class="control-label">Product</lable>
-                </div> 
-                <input name="InputId" id="InputId" type="hidden" class="form-control" value="${stockClass.product.id}" />
+                </div>
+                <c:set var="setProductId" value="" />
+                <c:if test="${productid != ''}">
+                    <c:set var="setProductId" value="${setProductId}" />
+                </c:if> 
+                <c:if test="${productid == ''}">
+                     <c:set var="setProductId" value="${stockClass.product.id}" />
+                </c:if>
+                
+                <c:set var="setProductCode" value="" />
+                <c:if test="${proCode != ''}">
+                    <c:set var="setProductCode" value="${proCode}" />
+                </c:if> 
+                <c:if test="${proCode == ''}">
+                     <c:set var="setProductCode" value="${stockClass.product.code}" />
+                </c:if>
+                
+                <c:set var="setProductName" value="" />
+                <c:if test="${proName != ''}">
+                    <c:set var="setProductName" value="${proName}" />
+                </c:if> 
+                <c:if test="${proName == ''}">
+                     <c:set var="setProductName" value="${stockClass.product.name}" />
+                </c:if>
+                
+                <c:set var="setProductAdd" value="" />
+                <c:if test="${adddate != ''}">
+                    <c:set var="setProductAdd" value="${adddate}" />
+                </c:if> 
+                <c:if test="${adddate == ''}">
+                     <c:set var="setProductAdd" value="${stockClass.createDate}" />
+                </c:if>
+                <input name="InputId" id="InputId" type="hidden" class="form-control" value="${setProductId}" />
                 <div class="col-md-2 form-group text-left" > 
                     <div class="input-group" id="gr" >
-                        <input type="text" class="form-control" id="InputProductId" name="InputProductId" value="${stockClass.product.code}" />
+                        <input type="text" class="form-control" id="InputProductId" name="InputProductId" value="${setProductCode}" />
                         <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#SearchProduct">
                             <span class="glyphicon-search glyphicon"></span>
                         </span>
                     </div>
                 </div>
                 <div class="col-md-2 form-group text-left" > 
-                    <input name="InputProductName" id="InputProductName" type="text" class="form-control" value="${stockClass.product.name}" readonly="" />
+                    <input name="InputProductName" id="InputProductName" type="text" class="form-control" value="${setProductName}" readonly="" />
                 </div>
                 <div class="col-xs-1 text-right" style="width: 100px;padding-right: 10px;padding-left: 0px;">
                     <label class="control-label">Pay Status</lable>
@@ -92,7 +127,7 @@
             </div>
             <div class="col-md-3 form-group text-left" style="width: 170px;" >
                 <div class='input-group date' >
-                    <input name="InputStockDate" id="InputStockDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${stockClass.createDate}" />
+                    <input name="InputStockDate" id="InputStockDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${setProductAdd}" />
                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
             </div>
