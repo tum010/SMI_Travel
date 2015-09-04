@@ -179,8 +179,8 @@ public class ReportService {
         return receiptDao.getReceipt(receiptId,option);
     }
      
-    public List getReceiptSummary(String receiptId,int option){
-        return receiptDao.getReceiptSummary(receiptId,option);
+    public List getReceiptSummary(String dateFrom,String dateTo,String departmentRec,String recType,String username){
+        return receiptDao.getReceiptSummary(dateFrom,dateTo,departmentRec,recType,username);
     }
     
     public List getReceiveList(String datefrom,String dateto,String user,String agentid){

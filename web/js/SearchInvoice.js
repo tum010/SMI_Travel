@@ -34,9 +34,9 @@ $(document).ready(function () {
         }
         else {
             ReceiveFromTable.$('tr.row_selected').removeClass('row_selected');
-//            var staff_code = $(this).find("td").eq(0).html();
+            var staff_code = $(this).find("td").eq(1).html();
 //            alert("Herree" + staff_code);
-//            $("#ARCode").val(staff_code);
+            $("#InvToName").val(staff_code);
             $(this).addClass('row_selected');
         }
     });

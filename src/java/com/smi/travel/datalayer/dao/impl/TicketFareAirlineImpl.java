@@ -603,6 +603,8 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
             Initialname = ticketFare.getMInitialname().getName();
         }
         //AirticketPassenger.airticketAirline.airticketPnr.airticketBooking.master.bookingType
+
+        
         String BookingType = "";
         if(ticketFare.getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster() != null){
             if(! "null".equals(ticketFare.getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType())
@@ -612,6 +614,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         }
         List<AirticketFlight> FlightList = new ArrayList<AirticketFlight>(ticketFare.getAirticketAirline().getAirticketFlights());
         String rounting = "";
+        int price = 0;
         for(int i =0;i<FlightList.size();i++){
             System.out.println(FlightList.get(i).getSourceCode()+"-"+FlightList.get(i).getDesCode());
             String source = FlightList.get(i).getSourceCode();
@@ -625,14 +628,25 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                     rounting += "-" + des;
                 }
             }
-            
+            if(ticketFare.getMPricecategory() != null){
+                String passType = ticketFare.getMPricecategory().getName();
+                if(passType.equalsIgnoreCase("ADULT")){
+                    price += FlightList.get(i).getAdPrice();
+                }else if(passType.equalsIgnoreCase("CHILD")){
+                    price += FlightList.get(i).getChPrice();
+                }else if(passType.equalsIgnoreCase("INFANT")){
+                    price += FlightList.get(i).getInPrice();
+                }
+            }
         }
+        //check price
+        System.out.println("price : "+price);
         result.put("Id",ticketFare.getId()); 
         result.put("TicketNo",TicketNo); 
         result.put("TicketDate", ticketFare.getAirticketAirline().getTicketDate());
-        result.put("Dept", BookingType.equalsIgnoreCase("O")? "O":"W");
+        result.put("Dept", BookingType.equalsIgnoreCase("O")? "Outbound":"Wendy");
         result.put("Passenger", Initialname+" " + ticketFare.getLastName() +" "+ticketFare.getFirstName());
-        result.put("Total", ticketFare.getTicketFare()+ticketFare.getTicketTax());
+        result.put("Total", price+ticketFare.getTicketTax());
         result.put("Sector", rounting);
         session.close();
         this.sessionFactory.close();
@@ -709,15 +723,23 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         owner = airticketPassList.get(0).getAirticketAirline().getAirticketPnr().getAirticketBooking() != null ? airticketPassList.get(0).getAirticketAirline().getAirticketPnr().getAirticketBooking().getStaffByOwnerBy().getName() : "";
         if(airticketPassList.get(0).getAirticketAirline() != null){
             List<AirticketFlight> flightList = new ArrayList<AirticketFlight>(airticketPassList.get(0).getAirticketAirline().getAirticketFlights());
-            if("ADULT".equals(priceType)){
-                invamount = flightList.get(0).getAdPrice() + flightList.get(0).getAdTax();
-            }else if("CHILD".equals(priceType)){
-                invamount = flightList.get(0).getChPrice() + flightList.get(0).getChTax();
-            }else if("INFANT".equals(priceType)){
-                invamount = flightList.get(0).getInPrice() + flightList.get(0).getInTax();
+            if(!flightList.isEmpty()){
+                if("ADULT".equals(priceType)){
+                    if("".equalsIgnoreCase(String.valueOf(flightList.get(0).getAdPrice())) && "".equalsIgnoreCase(String.valueOf(flightList.get(0).getAdTax()))){
+                        invamount = flightList.get(0).getAdPrice() + flightList.get(0).getAdTax();
+                    }
+                }else if("CHILD".equals(priceType)){
+                    if("".equalsIgnoreCase(String.valueOf(flightList.get(0).getChPrice())) && "".equalsIgnoreCase(String.valueOf(flightList.get(0).getChTax()))){
+                        invamount = flightList.get(0).getChPrice() + flightList.get(0).getChTax();
+                    }
+                }else if("INFANT".equals(priceType)){
+                    if("".equalsIgnoreCase(String.valueOf(flightList.get(0).getInPrice())) && "".equalsIgnoreCase(String.valueOf(flightList.get(0).getInTax()))){
+                        invamount = flightList.get(0).getInPrice() + flightList.get(0).getInTax();
+                    }
+                }
+                System.out.println(" invamount " + invamount);
+                routing = util.GetRounting(flightList);
             }
-            System.out.println(" invamount " + invamount);
-            routing = util.GetRounting(flightList);
         }
         if(airticketPassList.get(0).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster() != null) {
             String masterId = airticketPassList.get(0).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId();
