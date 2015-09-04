@@ -170,7 +170,7 @@ public class ReceiptImpl implements ReceiptDao{
             query += prefix+ " rectype = '"+recType+"'";
         }
         
-        if(checkQuery == 0){query = query.replaceAll("Where", "");}
+        if(checkQuery == 0){query = query.replaceAll("where", "");}
         System.out.println("query : "+query);
         
         List<Object[]> QueryList =  session.createSQLQuery(query)
@@ -204,8 +204,16 @@ public class ReceiptImpl implements ReceiptDao{
             ReceiptView receiptView = new ReceiptView();
             receiptView.setSystemdate(String.valueOf(dateformat.format(new Date())));
             receiptView.setUser(username);
-            receiptView.setFrom(String.valueOf(df.format(util.convertStringToDate(dateFrom))));
-            receiptView.setTo(String.valueOf(df.format(util.convertStringToDate(dateTo))));
+            if((dateFrom != null) && (!"".equalsIgnoreCase(dateFrom))){
+                receiptView.setFrom(String.valueOf(df.format(util.convertStringToDate(dateFrom))));
+            }else{
+                receiptView.setFrom("");
+            }
+            if((dateTo != null) && (!"".equalsIgnoreCase(dateTo))){
+                receiptView.setTo(String.valueOf(df.format(util.convertStringToDate(dateTo))));
+            }else{
+                receiptView.setTo("");
+            }
             
             if("Wendy".equals(String.valueOf(recSum[6]))){
                 receiptView.setDepartment("WENDY");

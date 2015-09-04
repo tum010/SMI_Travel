@@ -215,9 +215,9 @@
                         inputFromDate: {
                             trigger: 'focus keyup change',
                             validators: {
-                                notEmpty: {
-                                    message: 'The Date From is required'
-                                },
+//                                notEmpty: {
+//                                    message: 'The Date From is required'
+//                                },
                                 date: {
                                     format: 'YYYY-MM-DD',
                                     max: 'inputToDate',
@@ -228,9 +228,9 @@
                         inputToDate: {
                             trigger: 'focus keyup change',
                             validators: {
-                                notEmpty: {
-                                    message: 'The Date To is required'
-                                },
+//                                notEmpty: {
+//                                    message: 'The Date To is required'
+//                                },
                                 date: {
                                     format: 'YYYY-MM-DD',
                                     min: 'inputFromDate',
