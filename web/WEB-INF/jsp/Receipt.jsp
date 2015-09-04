@@ -325,7 +325,7 @@
                                         <option value="">--- Status ---</option> 
                                         <c:forEach var="table" items="${statusList}" >
                                             <c:set var="select" value="" />
-                                            <c:set var="selectedId" value="${receipt.MAccpay.id}" />
+                                            <c:set var="selectedId" value="${receipt.MAccTerm.id}" />
                                             <c:if test="${table.id == selectedId}">
                                                 <c:set var="select" value="selected" />
                                             </c:if>

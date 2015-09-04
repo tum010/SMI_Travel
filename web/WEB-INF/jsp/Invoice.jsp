@@ -267,7 +267,7 @@
                                 <!--<option value="" >--select--</option>-->
                                 <c:forEach var="item" items="${listTermPay}" >
                                     <c:set var="selectTerm" value="" />
-                                    <c:if test="${item.id == invoice.MAccpay.id}">
+                                    <c:if test="${item.id == invoice.MAccTerm.id}">
                                         <c:set var="selectTerm" value="selected" />
                                     </c:if>
                                     <option value="${item.id}" ${selectTerm}>${item.name}</option>

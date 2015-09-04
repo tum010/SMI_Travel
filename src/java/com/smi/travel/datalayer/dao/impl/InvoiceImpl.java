@@ -355,7 +355,7 @@ public class InvoiceImpl implements InvoiceDao{
         Session session = this.sessionFactory.openSession();
         String query = "";
         int AndQuery = 0;
-        if("".equals(department)  && "".equals(type)  && "".equals(fromData)  && "".equals(toDate)){
+        if("".equals(department)  && "".equals(type)  && "".equals(fromData)  && "".equals(toDate) && "".equals(agent)){
             query = "FROM Invoice st " ; 
         }else{
             query = "FROM Invoice st where" ;
@@ -396,7 +396,7 @@ public class InvoiceImpl implements InvoiceDao{
                
             }
         }
-        
+        query += "  ORDER BY st.invDate DESC";
         System.out.println("query : " + query);
         List<Invoice> list = session.createQuery(query).list();
         return list;

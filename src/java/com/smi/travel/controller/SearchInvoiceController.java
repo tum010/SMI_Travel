@@ -46,15 +46,15 @@ public class SearchInvoiceController extends SMITravelController {
                 listView = invoiceService.SearchInvoiceView(listInvoice);
                 if (listView != null) {
                     request.setAttribute("listInvoice", listView);
-                    request.setAttribute("fromdate", fromdate);
-                    request.setAttribute("todate", todate);
-                    request.setAttribute("department", department);
-                    request.setAttribute("type", type);
-                    request.setAttribute("agent", agent);
-                    request.setAttribute("agentName", agentName);
                 }else{
                     request.setAttribute("listInvoice", null);
                 }
+                request.setAttribute("fromdate", fromdate);
+                request.setAttribute("todate", todate);
+                request.setAttribute("department", department);
+                request.setAttribute("type", type);
+                request.setAttribute("agent", agent);
+                request.setAttribute("agentName", agentName);
             }
         
         }
