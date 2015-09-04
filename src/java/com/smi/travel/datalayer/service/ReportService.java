@@ -222,7 +222,7 @@ public class ReportService {
     }
     
     public List getCreditNoteSummaryReport(){
-        return creditNoteSummaryReportDao.getCreditNoteSummaryReport();
+        return creditNoteSummaryReportDao.getCreditNoteSummaryReport(null, null, null);
     }
 
     public HotelVoucherDao getHotelVoucherdao() {

@@ -31,9 +31,25 @@ public class TaxInvoiceSummaryReportImpl implements TaxInvoiceSummaryReportDao {
     
     @Override
     public List getTaxInvoiceSummaryReport() {
-        List data = new ArrayList();
-        TaxInvoiceSummaryReport taxInvoiceSummaryReport = new TaxInvoiceSummaryReport();
-        data.add(taxInvoiceSummaryReport);
+        List data = new ArrayList<TaxInvoiceSummaryReport>();
+        BigDecimal a = new BigDecimal(1000);
+        DecimalFormat df = new DecimalFormat("###,###.00");
+        for(int i=0;i<25;i++){
+            TaxInvoiceSummaryReport taxInvoiceSummaryReport = new TaxInvoiceSummaryReport();
+            taxInvoiceSummaryReport.setDepartment("Inbound");
+            taxInvoiceSummaryReport.setNo(String.valueOf(i));
+            taxInvoiceSummaryReport.setAmount("1000");
+            taxInvoiceSummaryReport.setGross("1000");
+            taxInvoiceSummaryReport.setVat("10");
+            data.add(taxInvoiceSummaryReport);
+        }
+        for(int i=0;i<25;i++){
+            TaxInvoiceSummaryReport taxInvoiceSummaryReport = new TaxInvoiceSummaryReport();
+            taxInvoiceSummaryReport.setDepartment("Outbound");
+            taxInvoiceSummaryReport.setNo(String.valueOf(i));
+            taxInvoiceSummaryReport.setAmount("1000");
+            data.add(taxInvoiceSummaryReport);
+        }
         return data;
     }
 
