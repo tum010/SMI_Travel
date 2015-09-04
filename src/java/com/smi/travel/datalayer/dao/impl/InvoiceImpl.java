@@ -226,7 +226,7 @@ public class InvoiceImpl implements InvoiceDao{
     }
 
     @Override
-    public String DeleteInvoiceDetail(String InvoiceDetailId) {
+    public synchronized String DeleteInvoiceDetail(String InvoiceDetailId) {
         String result = "";
         try {
             Session session = this.sessionFactory.openSession();
