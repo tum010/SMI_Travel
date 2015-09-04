@@ -12,7 +12,6 @@ import com.smi.travel.datalayer.report.model.TicketOrder;
 import com.smi.travel.datalayer.service.ReportService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -121,6 +120,8 @@ public class ReportController extends SMITravelController {
         String departmentInvoice  = request.getParameter("departmentInvoice");
         String sign = request.getParameter("sign");
         String refundId = request.getParameter("refundId");
+        String typeInvoice = request.getParameter("type");
+        String agent = request.getParameter("agent");
 
         Map model = new HashMap();
         List data = new ArrayList();
@@ -155,7 +156,7 @@ public class ReportController extends SMITravelController {
         } else if (TicketProfitSummary.equalsIgnoreCase(name)) {
             data = reportservice.getTicketProfitVolumn(ticketfrom, tickettype, startdate, enddate);
         } else if (InvoiceSummary.equalsIgnoreCase(name)) {
-            data = reportservice.getInvoiceSummary(ticketfrom, tickettype, startdate, enddate);
+            data = reportservice.getInvoiceSummary(from, to, department, typeInvoice,agent);
         } else if (GuideJob.equalsIgnoreCase(name)) {
             data = reportservice.getGuildJobReport(tourDate, tourCode, user.getName());
         } else if (TransferJob.equalsIgnoreCase(name)) {
