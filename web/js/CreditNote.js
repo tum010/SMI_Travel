@@ -66,14 +66,19 @@ function addRow() {
         });
     });
 
-    $("input[name='taxReal']").each(function () {
+    $("input[id='taxReal']").each(function () {
         $(this).off();
         $(this).on("keyup", function (event) {
             var keycode = (event.keyCode ? event.keyCode : event.which);
             if (keycode == '13') {
                 var realAmount = this.value.replace(",", "");
+                var realAmountHidden = $(this).parent().parent().find("[name='taxReal']");
+                realAmountHidden.val(realAmount);
                 var vatAmount = $(this).parent().parent().find("[name='taxVat']");
-                vatAmount.val(realAmount -(realAmount * 100 / (vat + 100)));
+                var vatAmountID = $(this).parent().parent().find("[id='taxVat']");
+                var calVat = realAmount -(realAmount * 100 / (vat + 100));
+                vatAmount.val(calVat);
+                vatAmountID.val(calVat);
             }
         });
     });
@@ -131,6 +136,7 @@ function getTaxInv(input) {
 
                     var taxDate = $(input).parent().parent().find("[name='taxDate']");
                     var amount = $(input).parent().parent().find("[name='taxAmount']");
+                    var amountId = $(input).parent().parent().find("[id='taxAmount']");
                     var desc = $(input).parent().parent().find("[name='taxDesc']");
                     var taxId = $(input).parent().parent().find("[name='taxId']");
                     var btnDetail = $(input).parent().parent().find("[name='btnDetail']");
@@ -139,6 +145,7 @@ function getTaxInv(input) {
                     $("#address").val(tax.taxAddress);
                     taxDate.val(tax.taxDate);
                     amount.val(tax.taxAmount);
+                    amountId.val(tax.taxAmount)
                     desc.val(tax.taxDesc);
                     taxId.val(tax.taxId);
                     btnDetail.attr('onclick', "show('" + ticketNo + "')");
