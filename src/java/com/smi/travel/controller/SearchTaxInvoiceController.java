@@ -1,4 +1,5 @@
 package com.smi.travel.controller;
+import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.TaxInvoiceService;
 import com.smi.travel.datalayer.view.entity.TaxInvoiceView;
 import com.smi.travel.master.controller.SMITravelController;
@@ -21,6 +22,13 @@ public class SearchTaxInvoiceController extends SMITravelController {
         String inputFromDate = request.getParameter("InputFromDate");
         String inputToDate = request.getParameter("InputToDate");
         String department = request.getParameter("Department");
+        
+        SystemUser user = (SystemUser) session.getAttribute("USER");
+        String idRole = user.getRole().getId();
+        String username = user.getUsername();
+        request.setAttribute("idRole", idRole);
+        String roleName = user.getRole().getName();
+        request.setAttribute("user", username+" - "+roleName);
         
         List<TaxInvoiceView> taxInvoiceViewList = new ArrayList<TaxInvoiceView>();
         if("search".equalsIgnoreCase(action)){

@@ -29,10 +29,10 @@ public class InvoiceSummary {
     private String staff;
     private String status;
     private String invdepartment;
-    private Double sumnet;
-    private Double sumvat;
-    private Double sumamount;
-    private Double sumprofit;
+//    private Double sumnet;
+//    private Double sumvat;
+//    private Double sumamount;
+//    private Double sumprofit;
     private String username;
     private String systemdate;
 
@@ -44,9 +44,9 @@ public class InvoiceSummary {
         this.username = username;
     }
 
-    public Double getSumvat() {
-        return sumvat;
-    }
+//    public Double getSumvat() {
+//        return sumvat;
+//    }
 
     public String getSystemdate() {
         return systemdate;
@@ -108,21 +108,21 @@ public class InvoiceSummary {
         this.status = status;
     }
 
-    public void setSumamount(Double sumamount) {
-        this.sumamount = sumamount;
-    }
-
-    public void setSumnet(Double sumnet) {
-        this.sumnet = sumnet;
-    }
-
-    public void setSumprofit(Double sumprofit) {
-        this.sumprofit = sumprofit;
-    }
-
-    public void setSumvat(Double sumvat) {
-        this.sumvat = sumvat;
-    }
+//    public void setSumamount(Double sumamount) {
+//        this.sumamount = sumamount;
+//    }
+//
+//    public void setSumnet(Double sumnet) {
+//        this.sumnet = sumnet;
+//    }
+//
+//    public void setSumprofit(Double sumprofit) {
+//        this.sumprofit = sumprofit;
+//    }
+//
+//    public void setSumvat(Double sumvat) {
+//        this.sumvat = sumvat;
+//    }
 
     public void setTermpay(String termpay) {
         this.termpay = termpay;
@@ -176,17 +176,17 @@ public class InvoiceSummary {
         return status;
     }
 
-    public Double getSumamount() {
-        return sumamount;
-    }
-
-    public Double getSumnet() {
-        return sumnet;
-    }
-
-    public Double getSumprofit() {
-        return sumprofit;
-    }
+//    public Double getSumamount() {
+//        return sumamount;
+//    }
+//
+//    public Double getSumnet() {
+//        return sumnet;
+//    }
+//
+//    public Double getSumprofit() {
+//        return sumprofit;
+//    }
 
     public void setDepartment(String department) {
         this.department = department;

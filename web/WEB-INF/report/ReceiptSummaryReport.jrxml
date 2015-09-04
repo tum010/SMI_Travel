@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="058d4e5f-08d6-4dca-b53c-91fb30f0f189">
-	<property name="ireport.zoom" value="1.6105100000000188"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="2.143588810000028"/>
+	<property name="ireport.x" value="747"/>
+	<property name="ireport.y" value="67"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="user" class="java.lang.String"/>
 	<field name="from" class="java.lang.String"/>
@@ -29,15 +29,37 @@
 	<variable name="totalamount" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[new BigDecimal($F{recamount})]]></variableExpression>
 	</variable>
-	<variable name="totalwait" class="java.lang.String"/>
+	<variable name="totalwait" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[($F{payby} != null && !"null".equals($F{payby}) && "wait".equals($F{payby})) ?
+new BigDecimal($F{recamount}) : new BigDecimal("0.00")]]></variableExpression>
+	</variable>
 	<variable name="totalvoid" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[]]></variableExpression>
+		<variableExpression><![CDATA[($F{payby} != null && !"null".equals($F{payby}) && "void".equals($F{payby})) ?
+new BigDecimal($F{recamount}) : new BigDecimal("0.00")]]></variableExpression>
 	</variable>
 	<variable name="totalinv" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[new BigDecimal($F{invamount})]]></variableExpression>
 	</variable>
 	<variable name="totaldiff" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[new BigDecimal($F{diff})]]></variableExpression>
+	</variable>
+	<variable name="totalcash" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{cash})]]></variableExpression>
+	</variable>
+	<variable name="totalchq" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{chq})]]></variableExpression>
+	</variable>
+	<variable name="totalcreditcard" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{creditcard})]]></variableExpression>
+	</variable>
+	<variable name="totalbanktransfer" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{banktransfer})]]></variableExpression>
+	</variable>
+	<variable name="totalwt" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{wt})]]></variableExpression>
+	</variable>
+	<variable name="totalcashminus" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{cashminus})]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -52,7 +74,7 @@
 				<text><![CDATA[RECEIPT LIST   ]]></text>
 			</staticText>
 			<textField pattern="">
-				<reportElement x="575" y="26" width="82" height="14" uuid="8f30d792-5111-4182-85c4-2d0caccf6c3b"/>
+				<reportElement x="638" y="26" width="69" height="14" uuid="8f30d792-5111-4182-85c4-2d0caccf6c3b"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
@@ -66,14 +88,14 @@
 				<text><![CDATA[http://www.wendytour.com]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="689" y="28" width="25" height="14" uuid="0becdf6f-2007-43ee-b3ec-489b93d2bd87"/>
+				<reportElement x="713" y="28" width="25" height="14" uuid="0becdf6f-2007-43ee-b3ec-489b93d2bd87"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[by :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="727" y="40" width="71" height="14" uuid="84a6c9be-c03e-43b8-90ba-e18247b0bd67"/>
+				<reportElement x="754" y="40" width="44" height="14" uuid="84a6c9be-c03e-43b8-90ba-e18247b0bd67"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
@@ -87,7 +109,7 @@
 				<text><![CDATA[Tel: +66(0)-2162201 Fax: +66(0)-216-2202]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="602" y="42" width="41" height="14" uuid="f78c5acf-3cd6-4c08-9660-678228e3f33e"/>
+				<reportElement x="654" y="42" width="41" height="14" uuid="f78c5acf-3cd6-4c08-9660-678228e3f33e"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
@@ -108,28 +130,28 @@
 				<text><![CDATA[Wangmai, Phatumwan, Bangkok 10330]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="715" y="42" width="11" height="14" uuid="1da2611f-67a7-46c3-8f79-5ee250e51a79"/>
+				<reportElement x="743" y="42" width="11" height="14" uuid="1da2611f-67a7-46c3-8f79-5ee250e51a79"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[To]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="714" y="26" width="84" height="14" uuid="275225b1-e837-4159-96b6-4e20a97a458b"/>
+				<reportElement x="729" y="26" width="69" height="14" uuid="275225b1-e837-4159-96b6-4e20a97a458b"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{user}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="749" y="70" width="49" height="14" uuid="b7000ec4-d551-442f-9228-00cc2979a3df"/>
+				<reportElement x="779" y="70" width="19" height="14" uuid="b7000ec4-d551-442f-9228-00cc2979a3df"/>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="643" y="40" width="71" height="14" uuid="9a32ccb9-b7f9-4ba5-b110-242e3b473d71"/>
+				<reportElement x="694" y="40" width="46" height="14" uuid="9a32ccb9-b7f9-4ba5-b110-242e3b473d71"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
@@ -147,21 +169,21 @@
 				<text><![CDATA[e-mail: yoyaku@wendytour.com]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="680" y="55" width="48" height="14" uuid="ad5450ad-dd39-4412-a784-65c870b1f997"/>
+				<reportElement x="706" y="58" width="48" height="14" uuid="ad5450ad-dd39-4412-a784-65c870b1f997"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Department :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="533" y="28" width="44" height="14" uuid="617b80fe-7476-4a29-821d-eb1c2edc2d97"/>
+				<reportElement x="603" y="28" width="44" height="14" uuid="617b80fe-7476-4a29-821d-eb1c2edc2d97"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Print on:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="674" y="70" width="72" height="14" uuid="6f5a804e-4a15-4db1-8d23-b4e5653205b7"/>
+				<reportElement x="744" y="70" width="42" height="14" uuid="6f5a804e-4a15-4db1-8d23-b4e5653205b7"/>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
@@ -175,7 +197,7 @@
 				<text><![CDATA[9th Floor, Siam at Siam Hotel Building 865 Rama 1 Rd.,]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="727" y="55" width="71" height="14" uuid="31485027-4540-4afb-a938-3fe698b28cf2"/>
+				<reportElement x="750" y="55" width="48" height="14" uuid="31485027-4540-4afb-a938-3fe698b28cf2"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
@@ -416,21 +438,21 @@
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{invamount} != null && !"null".equals($F{invamount}) && $F{invamount}.length() > 0) ? new BigDecimal($F{invamount}) : "0.00"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{invamount} != null && !"null".equals($F{invamount}) && $F{invamount}.length() > 0) ? new BigDecimal($F{invamount}) : new BigDecimal("0")]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
 				<reportElement x="598" y="-1" width="64" height="16" uuid="68214f0d-92cf-4e58-a363-8806ca2e9a64"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{diff} != null && !"null".equals($F{diff}) && $F{diff}.length() > 0) ? new BigDecimal($F{diff}) : "0.00"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{diff} != null && !"null".equals($F{diff}) && $F{diff}.length() > 0) ? new BigDecimal($F{diff}) : new BigDecimal("0")]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
 				<reportElement x="665" y="-1" width="64" height="16" uuid="b2856ba0-bb76-4b18-b06d-f081d2c5370c"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{recamount} != null && !"null".equals($F{recamount}) && $F{recamount}.length() > 0) ? new BigDecimal($F{recamount}) : "0.00"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{recamount} != null && !"null".equals($F{recamount}) && $F{recamount}.length() > 0) ? new BigDecimal($F{recamount}) : new BigDecimal("0")]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="736" y="-1" width="66" height="16" uuid="4c013882-e168-4645-8ff6-4a54abcdb1f1"/>
@@ -443,13 +465,6 @@
 	</detail>
 	<lastPageFooter>
 		<band height="121">
-			<textField pattern="#,##0.00">
-				<reportElement x="106" y="4" width="156" height="14" uuid="13376687-4888-467a-97d4-ab124734a214"/>
-				<textElement textAlignment="Left">
-					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{cash} != null && !"null".equals($F{cash}) && $F{cash}.length() > 0) ? new BigDecimal($F{cash}) : ""]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="81" y="4" width="18" height="14" uuid="f4f7f02b-a29b-4a9a-95c2-11a332b67600"/>
 				<textElement>
@@ -499,41 +514,6 @@
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
-			<textField pattern="#,##0.00">
-				<reportElement x="106" y="21" width="156" height="14" uuid="4772c0d2-b9a0-4114-99d9-1836a58f751b"/>
-				<textElement textAlignment="Left">
-					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{chq} != null && !"null".equals($F{chq}) && $F{chq}.length() > 0) ? new BigDecimal($F{chq}) : ""]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.00">
-				<reportElement x="106" y="38" width="156" height="14" uuid="e9e24705-b85b-47d9-8dc7-13cee0fcba91"/>
-				<textElement textAlignment="Left">
-					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{creditcard} != null && !"null".equals($F{creditcard}) && $F{creditcard}.length() > 0) ? new BigDecimal($F{creditcard}) : ""]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.00">
-				<reportElement x="106" y="55" width="156" height="14" uuid="a63cd865-3cb3-44ce-bfaf-b26cc8430bcb"/>
-				<textElement textAlignment="Left">
-					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{banktransfer} != null && !"null".equals($F{banktransfer}) && $F{banktransfer}.length() > 0) ? new BigDecimal($F{banktransfer}) : ""]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.00">
-				<reportElement x="106" y="88" width="156" height="14" uuid="480ede39-deba-4578-a7ec-dc83493105b5"/>
-				<textElement textAlignment="Left">
-					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{wt} != null && !"null".equals($F{wt}) && $F{wt}.length() > 0) ? new BigDecimal($F{wt}) : ""]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.00">
-				<reportElement x="106" y="105" width="156" height="14" uuid="8e91255f-6ebd-4161-872c-7fc9eb1d43a5"/>
-				<textElement textAlignment="Left">
-					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{cashminus} != null && !"null".equals($F{cashminus}) && $F{cashminus}.length() > 0) ? new BigDecimal($F{cashminus}) : ""]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="82" y="21" width="17" height="14" uuid="ae66f535-05d4-44b5-8d44-b56f11fddee3"/>
 				<textElement>
@@ -676,6 +656,48 @@
 					<font fontName="TH SarabunPSK" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{totaldiff}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="106" y="4" width="124" height="14" uuid="c495acf2-ead1-40e6-8111-97cf68a863ac"/>
+				<textElement textAlignment="Left">
+					<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalcash}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="106" y="38" width="124" height="14" uuid="e2a1bca2-7dce-4b9b-b95b-92a5ba961baf"/>
+				<textElement textAlignment="Left">
+					<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalcreditcard}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="106" y="21" width="124" height="14" uuid="19c20288-ff21-4928-b520-b8382edcc04a"/>
+				<textElement textAlignment="Left">
+					<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalchq}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="106" y="55" width="124" height="14" uuid="a538caba-8b8e-4aac-89a3-59d39ac6a42f"/>
+				<textElement textAlignment="Left">
+					<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalbanktransfer}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="106" y="88" width="124" height="14" uuid="27f1d5de-bdcd-4abf-ab37-dd6267d7fc39"/>
+				<textElement textAlignment="Left">
+					<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalwt}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="106" y="105" width="124" height="14" uuid="b90e21ca-bf23-4ee6-867a-a65e232201bf"/>
+				<textElement textAlignment="Left">
+					<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalcashminus}]]></textFieldExpression>
 			</textField>
 		</band>
 	</lastPageFooter>

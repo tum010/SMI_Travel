@@ -89,7 +89,8 @@
                     </button>
                 </div>   
             </div>
-            <input type="hidden" id="action" name="action" value="search">        
+            <input type="hidden" id="action" name="action" value="search">
+            <input type="hidden" class="form-control" id="user" name="user" value="${requestScope['user']}"/>
             </form>
             <div class="col-xs-12 form-group"></div>        
             <div class="col-xs-12 form-group"><hr/></div>
@@ -244,15 +245,10 @@
     }
     
     function printTaxInvoiceReportSummary(){
-//         var taxInvId = "";
-//        $('#SearchTaxInvoiceTable tr.row_selected').each(function () {
-//            taxInvId = $(this).attr('id');
-//        });
-//        if(taxInvId === ""){
-//            alert("please select tax invoice to print tax invoice summary.");
-//        }else{
-//            window.open("report.smi?name=TaxInvoiceSummaryReport&taxInvId="+taxInvId+"&department="+department+"&optionPrint="+optionPrint);
-//        }
-        window.open("report.smi?name=TaxInvoiceSummaryReport");
+        var fromdate = document.getElementById("InputFromDate").value;
+        var todate= document.getElementById("InputToDate").value;
+        var department = document.getElementById("Department").value;
+        var systemuser = document.getElementById("user").value;
+        window.open("report.smi?name=TaxInvoiceSummaryReport&fromdate="+fromdate+"&todate="+todate+"&department="+department+"&systemuser="+systemuser);
     }
 </script>

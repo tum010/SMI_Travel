@@ -215,9 +215,9 @@
                         inputFromDate: {
                             trigger: 'focus keyup change',
                             validators: {
-                                notEmpty: {
-                                    message: 'The Date From is required'
-                                },
+//                                notEmpty: {
+//                                    message: 'The Date From is required'
+//                                },
                                 date: {
                                     format: 'YYYY-MM-DD',
                                     max: 'inputToDate',
@@ -228,9 +228,9 @@
                         inputToDate: {
                             trigger: 'focus keyup change',
                             validators: {
-                                notEmpty: {
-                                    message: 'The Date To is required'
-                                },
+//                                notEmpty: {
+//                                    message: 'The Date To is required'
+//                                },
                                 date: {
                                     format: 'YYYY-MM-DD',
                                     min: 'inputFromDate',
@@ -258,6 +258,11 @@ function searchAction(){
 }
 
 function printReceiptSummary(){
-   window.open("report.smi?name=ReceiptSummaryReport&receiveId=1");
+    var recType = document.getElementById('recType').value;
+    var department = document.getElementById('department').value;
+    var inputToDate = document.getElementById('inputToDate').value;
+    var inputFromDate = document.getElementById('inputFromDate').value;
+    
+    window.open("report.smi?name=ReceiptSummaryReport&dateFrom="+inputFromDate+"&dateTo="+inputToDate+"&departmentRec="+department+"&recType="+recType);
 }
 </script>

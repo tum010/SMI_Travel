@@ -169,7 +169,7 @@
                             <input type="hidden" class="form-control" id="TaxInvId" name="TaxInvId" value="${taxInvoice.id}"/>
                             <input type="hidden" class="form-control" id="TaxInvStatus" name="TaxInvStatus" value="${taxInvoice.MFinanceItemstatus.id}"/>
                             <input type="hidden" class="form-control" id="createDate" name="createDate" value="${requestScope['createDate']}"/>
-                            <input type="hidden" class="form-control" id="createBy" name="createBy" value="${taxInvoice.createBy}"/>
+                            <input type="hidden" class="form-control" id="createBy" name="createBy" value="${taxInvoice.createBy}"/>                           
                             <input type="text" style="text-transform:uppercase" class="form-control" id="TaxInvNo" name="TaxInvNo"  value="${taxInvoice.taxNo}" >
                         </div>
                         <div class="col-md-1" >
