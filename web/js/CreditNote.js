@@ -98,7 +98,7 @@ function getTaxInv(input) {
     ticketNo = input.value;
     var duplicate = false;
     $('#ItemCreditTable tbody [name="taxNo"]').each(function () {
-        if (ticketNo !== "" && ticketNo === input.value) {
+        if (this != input && ticketNo !== "" && ticketNo === input.value) {
             input.style.borderColor = "Red";
             $("#alertTextFail").html("Duplicated tax invoice no " + ticketNo);
             $("#alertFail").show();
