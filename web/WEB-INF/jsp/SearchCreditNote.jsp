@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript" src="js/SearchCreditNote.js"></script> 
+<!--<script type="text/javascript" src="js/SearchCreditNote.js"></script>--> 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -39,9 +39,9 @@
                                 <label class="control-label text-right">Form<font style="color: red">*</font>&nbsp;</label>
                             </div>
                             <div class="col-xs-1"  style="width: 170px">
-                                <div class='input-group date'>
-                                    <input id="dateFrom" name="dateFrom"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['dateFrom']}">
+                                <div class='input-group date' id="dateFrom">
+                                    <input id="iDateFrom" name="iDateFrom"  type="text" 
+                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['iDateFrom']}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
@@ -51,9 +51,9 @@
                                 <label class="control-label text-right">To<font style="color: red">*</font>&nbsp;</label>
                             </div>
                             <div class="col-xs-1"  style="width: 170px">
-                                <div class='input-group date'>
-                                    <input id="dateTo" name="dateTo"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['dateTo']}">
+                                <div class='input-group date' id="dateTo" >
+                                    <input id="iDateTo" name="iDateTo"  type="text" 
+                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['iDateTo']}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
@@ -148,6 +148,13 @@
                 $('#hdGridSelected').val($('#CreditNoteTable tbody tr.row_selected').attr("id"));
             }
         });
+        //validate date
+        $('#dateFrom').datetimepicker().on('dp.change', function (e) {
+            $('#SearchCreditNoteForm').bootstrapValidator('revalidateField', 'iDateFrom');
+        });
+        $('#dateTo').datetimepicker().on('dp.change', function (e) {
+            $('#SearchCreditNoteForm').bootstrapValidator('revalidateField', 'iDateTo');
+        });
         
         
     $("#SearchCreditNoteForm")
@@ -160,7 +167,7 @@
                     validating: 'uk-icon-refresh'
                 },
                 fields: {
-                    dateFrom: {
+                    iDateFrom: {
                         trigger: 'focus keyup change',
                         validators: {
                             notEmpty: {
@@ -168,12 +175,12 @@
                             },
                             date: {
                                 format: 'YYYY-MM-DD',
-                                max: 'dateTo',
-                                message: 'The Date From is more than date to'
+                                max: 'iDateTo',
+                                message: 'The Date From is more than  date to'
                             }
                         }
                     },
-                    dateTo: {
+                    iDateTo: {
                         trigger: 'focus keyup change',
                         validators: {
                             notEmpty: {
@@ -181,19 +188,19 @@
                             },
                             date: {
                                 format: 'YYYY-MM-DD',
-                                min: 'dateFrom',
+                                min: 'iDateFrom',
                                 message: 'The Date To is less than date from'
                             }
                         }
                     }
                 }
             }).on('success.field.fv', function (e, data) {
-                if (data.field === 'dateFrom' && data.fv.isValidField('dateTo') === false) {
-                    data.fv.revalidateField('dateTo');
+                if (data.field === 'iDateFrom' && data.fv.isValidField('iDateTo') === false) {
+                    data.fv.revalidateField('iDateTo');
                 }
 
-                if (data.field === 'IdateTo' && data.fv.isValidField('dateFrom') === false) {
-                    data.fv.revalidateField('dateFrom');
+                if (data.field === 'iDateTo' && data.fv.isValidField('iDateFrom') === false) {
+                    data.fv.revalidateField('iDateFrom');
                 }
             });
     });
@@ -201,10 +208,10 @@
 function searchAction() {
     var action = document.getElementById('action');
     action.value = 'search';
-    var dateForm = document.getElementById('dateForm');
-    dateForm.value = $("#dateForm").val();
-    var dateTo = document.getElementById('dateTo');
-    dateTo.value = $("#dateTo").val();
+    var dateForm = document.getElementById('iDateFrom');
+    dateForm.value = $("#iDateFrom").val();
+    var dateTo = document.getElementById('iDateTo');
+    dateTo.value = $("#iDateTo").val();
     var cnNo = document.getElementById('cnNo');
     cnNo.value = $("#cnNo").val();
     document.getElementById('SearchCreditNoteForm').submit();

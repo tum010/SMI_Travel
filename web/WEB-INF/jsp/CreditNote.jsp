@@ -132,7 +132,7 @@
                                 <tr class="datatable-header" >
 
 
-                                    <th style="width:10%;">No</th>
+                                    <th style="width:10%;">Tax Invoice No</th>
                                     <th style="width:15%;">Date</th>
                                     <th style="width:10%;">Product Type</th>
                                     <th style="width:12%;">Amount</th>
@@ -190,6 +190,11 @@
                                 </c:forEach>
                             </tbody>
                         </table>
+                        <div id="addRow" class="text-center hide" style="padding-top: 10px">
+                            <a class="btn btn-success" onclick="addRow(); this.hide()">
+                                <i class="glyphicon glyphicon-plus"></i> Add
+                            </a>
+                        </div>
                     </div>
                 </div> 
 
@@ -204,7 +209,7 @@
                             <table id="taxDetail" class="display" cellspacing="0" width="100%">
                                 <thead>
                                     <tr class="datatable-header" >
-                                        <th style="width:10%;">Tax Invoice No</th>
+                                        <th style="width:10%;">No</th>
                                         <th style="width:10%;">Product</th>
                                         <th style="width:10%;">Refno</th>
                                         <th style="width:10%;">Description</th>

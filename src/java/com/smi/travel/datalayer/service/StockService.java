@@ -71,4 +71,8 @@ public class StockService {
     public StockViewSummary searchStockDetail(String productId,String payStatus,String itemStatus){
         return stockDao.searchStockDetail(productId, payStatus,itemStatus);
     }
+    
+    public List<Stock> getStockById(String stockid){
+        return stockDao.getStockById(stockid);
+    }
 }

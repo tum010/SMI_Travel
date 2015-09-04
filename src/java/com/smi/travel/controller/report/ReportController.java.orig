@@ -209,7 +209,7 @@ public class ReportController extends SMITravelController {
         }else if(TaxInvoiceSummaryReport.equalsIgnoreCase(name)){
             data = reportservice.getTaxInvoiceSummaryReport(from, to, department, systemuser);
         }else if(CreditNoteSummaryReport.equalsIgnoreCase(name)){
-            data = reportservice.getCreditNoteSummaryReport(from, to, department, user.getUsername()+"-"+user.getRole().getName());
+            data = reportservice.getCreditNoteSummaryReport();
         }
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);

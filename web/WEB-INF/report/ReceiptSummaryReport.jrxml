@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="058d4e5f-08d6-4dca-b53c-91fb30f0f189">
-	<property name="ireport.zoom" value="2.143588810000028"/>
-	<property name="ireport.x" value="747"/>
-	<property name="ireport.y" value="67"/>
+	<property name="ireport.zoom" value="2.8531167061100398"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="238"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="user" class="java.lang.String"/>
 	<field name="from" class="java.lang.String"/>
@@ -342,120 +342,120 @@ new BigDecimal($F{recamount}) : new BigDecimal("0.00")]]></variableExpression>
 	<detail>
 		<band height="15" splitType="Stretch">
 			<rectangle>
-				<reportElement mode="Transparent" x="242" y="-1" width="142" height="15" uuid="cdd3ff6f-18f8-4362-9382-19b0f574cbaa"/>
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="242" y="-1" width="142" height="15" uuid="cdd3ff6f-18f8-4362-9382-19b0f574cbaa"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="73" y="-1" width="52" height="15" uuid="d8118587-7dcf-4393-af7a-4e28a94bd5a8"/>
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="73" y="-1" width="52" height="15" uuid="d8118587-7dcf-4393-af7a-4e28a94bd5a8"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="125" y="-1" width="53" height="15" uuid="9bd13f0c-8610-4af4-a906-bf7c6bf1a7c4"/>
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="125" y="-1" width="53" height="15" uuid="9bd13f0c-8610-4af4-a906-bf7c6bf1a7c4"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="462" y="-1" width="68" height="15" uuid="d133362b-268a-454f-a273-37e7d379603e"/>
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="462" y="-1" width="68" height="15" uuid="d133362b-268a-454f-a273-37e7d379603e"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="1" y="-1" width="15" height="15" uuid="dbb3ab17-aef0-4bfd-bb8a-a390490b5432"/>
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="1" y="-1" width="15" height="15" uuid="dbb3ab17-aef0-4bfd-bb8a-a390490b5432"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="16" y="-1" width="57" height="15" uuid="8dc3acca-9e6a-4ec6-967d-f6027dcc704e"/>
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="16" y="-1" width="57" height="15" uuid="8dc3acca-9e6a-4ec6-967d-f6027dcc704e"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="178" y="-1" width="64" height="15" uuid="8c38c73f-cdf1-40d8-b3f8-8cdfc47ba790"/>
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="178" y="-1" width="64" height="15" uuid="8c38c73f-cdf1-40d8-b3f8-8cdfc47ba790"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="530" y="-1" width="68" height="15" uuid="a087a034-6390-4274-a6d9-498ca61b59f7"/>
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="530" y="-1" width="68" height="15" uuid="a087a034-6390-4274-a6d9-498ca61b59f7"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="598" y="-1" width="67" height="15" uuid="305bc051-b27e-49af-ba87-3bced3d6eaac"/>
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="598" y="-1" width="67" height="15" uuid="305bc051-b27e-49af-ba87-3bced3d6eaac"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="665" y="-1" width="68" height="15" uuid="e152ef8d-63c5-4bc5-b6d8-17187bb6a7c1"/>
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="665" y="-1" width="68" height="15" uuid="e152ef8d-63c5-4bc5-b6d8-17187bb6a7c1"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="733" y="-1" width="69" height="15" uuid="a3eb6890-c1df-4939-986a-e3c8bc179e7f"/>
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="733" y="-1" width="69" height="15" uuid="a3eb6890-c1df-4939-986a-e3c8bc179e7f"/>
 			</rectangle>
-			<textField>
-				<reportElement x="1" y="-1" width="15" height="16" uuid="1e466d17-d4a2-451b-a74f-a08e51a8fdf1"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="1" y="-1" width="15" height="16" uuid="1e466d17-d4a2-451b-a74f-a08e51a8fdf1"/>
 				<textElement textAlignment="Center">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{no}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="384" y="-1" width="78" height="15" uuid="f82910ae-6ca1-4814-b604-1faa78f282e6"/>
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="384" y="-1" width="78" height="15" uuid="f82910ae-6ca1-4814-b604-1faa78f282e6"/>
 			</rectangle>
-			<textField>
-				<reportElement x="18" y="-1" width="55" height="16" uuid="c00abeb7-b524-4a48-8cd8-f5a887818803"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="18" y="-1" width="55" height="16" uuid="c00abeb7-b524-4a48-8cd8-f5a887818803"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{recno}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="127" y="-1" width="51" height="16" uuid="eea305ac-5d1d-4c0e-9101-14562c0d1597"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="127" y="-1" width="51" height="16" uuid="eea305ac-5d1d-4c0e-9101-14562c0d1597"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{receivedate}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="180" y="-1" width="62" height="16" uuid="41f88a73-5fc6-4b09-8b73-896f90276138"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="180" y="-1" width="62" height="16" uuid="41f88a73-5fc6-4b09-8b73-896f90276138"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{recfrom}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="75" y="-1" width="50" height="16" uuid="c5d87a0f-1911-4d1a-b529-ca081bb67bcc"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="75" y="-1" width="50" height="16" uuid="c5d87a0f-1911-4d1a-b529-ca081bb67bcc"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{recdate}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="245" y="-1" width="139" height="16" uuid="035ea33e-fc28-415c-aab3-87f360b037b3"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="245" y="-1" width="139" height="16" uuid="035ea33e-fc28-415c-aab3-87f360b037b3"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{recname}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="387" y="-1" width="75" height="16" uuid="502c2827-9df4-46e1-968a-bd4d3a3789e2"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="387" y="-1" width="75" height="16" uuid="502c2827-9df4-46e1-968a-bd4d3a3789e2"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{recdetail}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="465" y="-1" width="65" height="16" uuid="8632bfc7-b84f-457f-951a-37b72bd7a782"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="465" y="-1" width="65" height="16" uuid="8632bfc7-b84f-457f-951a-37b72bd7a782"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{invno}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00" isBlankWhenNull="false">
-				<reportElement x="530" y="-1" width="64" height="16" uuid="6d227a99-20f9-4d95-ba7d-dd5f6a65e96e"/>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="530" y="-1" width="64" height="16" uuid="6d227a99-20f9-4d95-ba7d-dd5f6a65e96e"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{invamount} != null && !"null".equals($F{invamount}) && $F{invamount}.length() > 0) ? new BigDecimal($F{invamount}) : new BigDecimal("0")]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00">
-				<reportElement x="598" y="-1" width="64" height="16" uuid="68214f0d-92cf-4e58-a363-8806ca2e9a64"/>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="598" y="-1" width="64" height="16" uuid="68214f0d-92cf-4e58-a363-8806ca2e9a64"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{diff} != null && !"null".equals($F{diff}) && $F{diff}.length() > 0) ? new BigDecimal($F{diff}) : new BigDecimal("0")]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00">
-				<reportElement x="665" y="-1" width="64" height="16" uuid="b2856ba0-bb76-4b18-b06d-f081d2c5370c"/>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="665" y="-1" width="64" height="16" uuid="b2856ba0-bb76-4b18-b06d-f081d2c5370c"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{recamount} != null && !"null".equals($F{recamount}) && $F{recamount}.length() > 0) ? new BigDecimal($F{recamount}) : new BigDecimal("0")]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="736" y="-1" width="66" height="16" uuid="4c013882-e168-4645-8ff6-4a54abcdb1f1"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="736" y="-1" width="66" height="16" uuid="4c013882-e168-4645-8ff6-4a54abcdb1f1"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>

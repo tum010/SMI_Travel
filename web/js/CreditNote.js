@@ -54,6 +54,8 @@ $(document).ready(function () {
 });
 
 function addRow() {
+    $("#addRow").removeClass("show");
+    $("#addRow").addClass("hide");
     var clone = $('#tempTable tbody tr:lt(2)').clone();
     $('#ItemCreditTable tbody').append(clone);
     $("input[name='taxNo']").each(function () {
@@ -177,6 +179,10 @@ function setDeletRow(btn) {
 
     } else {
         row.remove();
+        if($('#ItemCreditTable tbody tr').length < 1){
+            $("#addRow").removeClass("hide");
+            $("#addRow").addClass("show");
+        }
         $("#alertTextSuccess").html("Delete success.");
         $("#alertSuccess").show();
         $("#alertFail").hide();
@@ -209,10 +215,16 @@ function deleteCreditNotedetail() {
                     $("#alertTextSuccess").html("Delete success.");
                     $("#alertSuccess").show();
                     $("#alertFail").hide();
+                    $('#DeleteDetail').modal('hide');
+                    if($('#ItemCreditTable tbody tr').length < 1){
+                        $("#addRow").removeClass("hide");
+                        $("#addRow").addClass("show");
+                    }
                 } else {
                     $("#alertTextFail").html("Delete Fail.");
                     $("#alertFail").show();
                     $("#alertSuccess").hide();
+                    $('#DeleteDetail').modal('hide');
                 }
 
             }, error: function (msg) {

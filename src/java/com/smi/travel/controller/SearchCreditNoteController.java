@@ -15,16 +15,16 @@ public class SearchCreditNoteController extends SMITravelController {
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-        String dateFrom = request.getParameter("dateFrom");
-        String dateTo = request.getParameter("dateTo");
+        String dateFrom = request.getParameter("iDateFrom");
+        String dateTo = request.getParameter("iDateTo");
         String department = request.getParameter("department");
         String action = request.getParameter("action");
         if("search".equalsIgnoreCase(action)){
             List<CreditNoteView> creditNoteList = creditNoteService.getCreditNoteFromFilter(dateFrom, dateTo, department);
             request.setAttribute("creditNoteList", creditNoteList);
         }
-        request.setAttribute("dateFrom", dateFrom);
-        request.setAttribute("dateTo", dateTo);
+        request.setAttribute("iDateFrom", dateFrom);
+        request.setAttribute("iDateTo", dateTo);
         request.setAttribute("department", department);
         return SearchCreditNote;
     }

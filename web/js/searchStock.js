@@ -76,3 +76,7 @@ function searchAction() {
             
 //            $('#StockForm').submit();
 }
+
+function newStock(){
+     window.open('Stock.smi?action=edit');
+}

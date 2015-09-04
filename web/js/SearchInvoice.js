@@ -252,7 +252,7 @@ function printInvoiceSummary(){
     var to = $('#ToDate').val();
     var department = $('#Department').val();
     var type = $('#Type').val();
-    var department = $('#InvTo').val();
-    window.open("report.smi?name=InvoiceSummary");  
-//        window.open("report.smi?name=InvoiceSummary"+"&invoiceid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"&sign="+sign);  
+    var agent = $('#InvTo').val();
+//    windsow.open("report.smi?name=InvoiceSummary");  
+    window.open("report.smi?name=InvoiceSummary"+"&fromdate="+from+"&todate="+to+"&department="+department+"&type="+type+"&agent="+agent);  
 }

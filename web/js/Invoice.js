@@ -205,10 +205,13 @@ function validFromInvoice(){
     for(var i=1 ; i <= (counter-1);i++){
         var currency1 = $('#SelectCurrencyAmount' +i).find(":selected").text();
         for(var j=2;j<=(counter-1);j++){
-            var currency2 = $('#SelectCurrencyAmount' +j).find(":selected").text();
-            if(currency1 !== currency2){
-                rowTemp = j;
-                different++;
+            var type = $('#SelectProductType' +j).find(":selected").text();
+            if(type !== ""){
+                var currency2 = $('#SelectCurrencyAmount' +j).find(":selected").text();
+                if(currency1 !== currency2){
+                    rowTemp = j;
+                    different++;
+                }
             }
         }
     }
@@ -1166,7 +1169,7 @@ function clearScreenInvoice(){
     
 //    $('#DetailBillableTable tbody').empty();
     $('#DetailBillableTable > tbody  > tr').each(function() {
-        alert('!');
+//        alert('!');
         $(this).remove();
     });
     $('#counterTable').val('1');

@@ -55,6 +55,10 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>Receive no. not available !</strong> 
         </div>
+        <div id="textAlertDuplicateProduct"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Not add duplicate detail!</strong> 
+        </div>
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
             <div ng-include="'WebContent/FinanceAndCashier/ReceiptMenu.html'"></div>
         </div>
@@ -325,7 +329,7 @@
                                         <option value="">--- Status ---</option> 
                                         <c:forEach var="table" items="${statusList}" >
                                             <c:set var="select" value="" />
-                                            <c:set var="selectedId" value="${receipt.MAccTerm.id}" />
+                                            <c:set var="selectedId" value="${receipt.MAccpay.id}" />
                                             <c:if test="${table.id == selectedId}">
                                                 <c:set var="select" value="selected" />
                                             </c:if>
@@ -739,7 +743,7 @@
                                     <button type="submit" id="ButtonSave" name="ButtonSave" onclick="saveReceipt()" class="btn btn-success" ${isSaveVoid}><i class="fa fa-save"></i> Save</button>
                                 </div>
                                 <div class="col-md-1 text-right ">
-                                    <button type="submit" id="ButtonNew" name="ButtonNew" onclick="clearNew()" class="btn btn-success"><i class="fa fa-plus-circle"></i> New</button>
+                                    <button type="button" id="ButtonNew" name="ButtonNew" onclick="clearNew()" class="btn btn-success"><i class="fa fa-plus-circle"></i> New</button>
                                 </div>
                             </div>
                         </div>
@@ -1248,7 +1252,7 @@
         
         if($('#searchReceipt').val() == "dummy"){
             $('#textAlertReceiveNo').show();
-        }    
+        }      
 //        $(".moneyformat").mask('000,000,000', {reverse: true});
         $("#receiveNo").keyup(function (event) {
             if(event.keyCode === 13){
@@ -1805,51 +1809,7 @@ function reloadDatePicker(){
 }
 
 function clearNew(){
-    $("#receiveId").val("");
-    $("#receiveNo").val("");
-    $("#inputDate").val("");
-    $("#receiveFromId").val("");
-    $("#receiveFromCode").val("");
-    $("#receiveFromName").val("");
-    $("#receiveFromAddress").val("");
-    $("#remark").val("");
-    $("#receiveFromDate").val("");
-    $("#receiveDate").val("");
-    $("#inputStatus").val("");
-    $("#arCode").val("");
-    $("#grandTotal").val("");
-    $("#withTax").val("");
-    $("#cashAmount").val("");
-    $("#cashMAmount").val("");
-    $("#bankTransfer").val("");
-    $("#chqBank").val("");
-    $("#chqNo").val("");
-    $("#chqDate").val("");
-    $("#chqAmount").val("");
-    $("#chqBank2").val("");
-    $("#chqNo2").val("");
-    $("#chqDate2").val("");
-    $("#chqAmount2").val("");
-    $("#ReceiptListTable tbody").empty();
-    $("#CreditDetailTable tbody").empty();
-    
-    //tab search inv,ref,com
-    $("#InvoiceListTable tbody").empty();
-    $("#RefNoListTable tbody").empty();
-    $("#AircommissionTable tbody").empty();
-    $("#TourcommissionTable tbody").empty();
-    $("#invoiceNo").val("");
-    $("#refNo").val("");
-    $("#searchPaymentNoAir").val("");
-    $("#searchPaymentNoTour").val("");
-    
-    $("#ButtonSearchRefNo").removeAttr("disabled");
-    $("#ButtonSearchInvoice").removeAttr("disabled");
-    $("#searchPaymentNoAir").removeAttr("disabled");
-    $("#searchPaymentNoTour").removeAttr("disabled");
-
-    AddRowProduct(0);
-    AddRowCredit(0);
+    document.getElementById('ReceiptForm').submit();
 }
 
 function searchInvoice() {
@@ -1923,25 +1883,58 @@ function invoicenoValidate(){
     $('#invoicenopanel').removeClass('has-error');  
 }
 function addProduct(product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,checkadd,disdescription,number){
+    $('#textAlertDuplicateProduct').hide();
+    var tempCount = parseInt($("#counter").val());
+    var checkAddDuplicate = false;
     if(checkadd == 1){
         $("#ButtonSearchRefNo").attr("disabled", "disabled");
         $("#searchPaymentNoAir").attr("disabled", "disabled");
         $("#searchPaymentNoTour").attr("disabled", "disabled");
+        
+        var rowAll = tempCount;
+        for(var i =1; i<rowAll ;i++){
+            var invoiceId = $("#invId"+i).val();
+            if(invoiceId != "" && invId === invoiceId){
+                checkAddDuplicate = true;
+            } 
+        }
+        
     }else if(checkadd == 2){
         $("#ButtonSearchInvoice").attr("disabled", "disabled");
         $("#searchPaymentNoAir").attr("disabled", "disabled");
         $("#searchPaymentNoTour").attr("disabled", "disabled");
+        
+        var rowAll = tempCount;
+        for(var i =1; i<rowAll ;i++){
+            var billId = $("#billDescId"+i).val();
+            if(billId != "" && billDescId === billId){
+                checkAddDuplicate = true;
+            } 
+        }
+        
     }else if(checkadd == 3){
         $("#ButtonSearchRefNo").attr("disabled", "disabled");
         $("#ButtonSearchInvoice").attr("disabled", "disabled");
         $("#searchPaymentNoTour").attr("disabled", "disabled");
+        
+        var rowAll = tempCount;
+        for(var i =1; i<rowAll ;i++){
+            var payId = $("#paymentId"+i).val();
+            if(payId != "" && paymentId === payId){
+                checkAddDuplicate = true;
+            } 
+        }
+        
     }
-    var tempCount = parseInt($("#counter").val());
-    AddDataRowProduct(tempCount,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,disdescription,number);
+    if(!checkAddDuplicate){
+        AddDataRowProduct(tempCount,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,disdescription,number);
+    }else{
+        $('#textAlertDuplicateProduct').show();
+    }
 }
 function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,disdescription,number) {
     var rowAll = row+1;
-    for(var i =0; i<rowAll ;i++){
+    for(var i =1; i<rowAll ;i++){
         if($("#receiveProduct"+i).val() != "" 
             || $("#receiveDes"+i).val() != "" 
             || $("#receiveCost"+i).val() != "" 
@@ -2266,6 +2259,7 @@ function deleteReceiptList(id,Ccount) {
 }
 
 function DeleteRowProduct(){
+    $('#textAlertDuplicateProduct').hide();
     var cCount = document.getElementById('receiptRowDelete').value;
     var id = document.getElementById('receiptDetailIdDelete').value;    
     if(id === ''){
@@ -2299,17 +2293,17 @@ function DeleteRowProduct(){
     $('#DeleteProduct').modal('hide');
     
     var tempcount = parseInt($("#ReceiptListTable tr").length);
+    
     if(tempcount == 1){
         $("#ButtonSearchRefNo").removeAttr("disabled");
         $("#ButtonSearchInvoice").removeAttr("disabled");
         $("#searchPaymentNoAir").removeAttr("disabled");
         $("#searchPaymentNoTour").removeAttr("disabled");
     }else if(tempcount == 2){
-        $('#ReceiptListTable').dataTable().fnClearTable();
-        $('#ReceiptListTable').dataTable().fnDestroy();
-        $("#counter").val(0);
-        AddRowProduct(0);
-        var amount = document.getElementById('receiveAmount0').value;
+        $("#receiveProduct" + tempcount).parent().parent().remove();
+        $("#counter").val(1);
+        AddRowProduct(1);
+        var amount = document.getElementById('receiveAmount1').value;
         if(amount === ""){
             $("#ButtonSearchRefNo").removeAttr("disabled");
             $("#ButtonSearchInvoice").removeAttr("disabled");

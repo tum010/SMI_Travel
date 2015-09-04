@@ -359,6 +359,7 @@ public class StockImpl implements StockDao{
     public List<Stock> searchStock(String productId, Date createDate, Date EffecttiveFrom, Date EffectiveTo,String expire) {
         Session session = this.sessionFactory.openSession();
         String query = "";
+        int AndQuery = 0;
         if("".equals(productId) && createDate == null && EffecttiveFrom == null &&  EffectiveTo == null){
             query = "FROM Stock st " ;
         }else{
@@ -366,19 +367,35 @@ public class StockImpl implements StockDao{
         }
         
         if ( productId != null && (!"".equalsIgnoreCase(productId)) ) {
+             AndQuery = 1;
             query += " st.product.id = " + productId;
         }
        
         if (createDate != null ) {
-            query += " and st.createDate = '" + createDate + "'";
+            if(AndQuery == 1){
+                query += " and st.createDate = '" + createDate + "'";
+            }else{
+               AndQuery = 1;
+               query += " st.createDate = '" + createDate + "'";
+            }
         }
         
         if (EffecttiveFrom != null ) {
-            query += " and st.effectiveFrom = '" + EffecttiveFrom + "'";
+            if(AndQuery == 1){
+                query += " and st.effectiveFrom = '" + EffecttiveFrom + "'";
+            }else{
+               AndQuery = 1;
+               query += "  st.effectiveFrom = '" + EffecttiveFrom + "'";
+            }
         }
         
         if (EffectiveTo != null ) {
-            query += " and st.effectiveTo = '" + EffectiveTo + "'";
+            if(AndQuery == 1){
+                query += " and st.effectiveTo = '" + EffectiveTo + "'";
+            }else{
+               AndQuery = 1;
+               query += "  st.effectiveTo = '" + EffectiveTo + "'";
+            }  
         }
         
 //        query += "ORDER BY  st.stockDetails.code  ASC";
@@ -449,6 +466,20 @@ public class StockImpl implements StockDao{
         session.close();
         this.sessionFactory.close();
         return stockview;
+    }
+
+    @Override
+    public List<Stock> getStockById(String stockId) {
+        Session session = this.sessionFactory.openSession();
+        Stock stock = new Stock();
+        List<Stock> stockList = session.createQuery(GET_STOCK)
+                .setParameter("stockID", stockId)
+                .list();
+        if (!stockList.isEmpty()) {
+            return stockList;
+        }else{
+            return null;
+        }
     }
 
 }

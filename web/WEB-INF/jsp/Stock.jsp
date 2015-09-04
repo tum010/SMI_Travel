@@ -33,8 +33,8 @@
 </section>
 <div class ="container"  style="padding-top: 15px;padding-left: 5px;" ng-app="">
    
-    <div class="col-sm-2">
-        <div ng-include="'WebContent/Master/StockMenu.html'"></div>
+    <div class="col-sm-1">
+        <!--<div ng-include="'WebContent/Master/StockMenu.html'"></div>-->
     </div>
     <form action="Stock.smi" method="post" id="StockForm" name="StockFormName" role="form" onsubmit="">
     <div class="col-sm-10">
@@ -59,6 +59,13 @@
         <div class="row" style="padding-left: 15px">  
             <div class="col-sm-6" style="padding-right: 15px">
                 <h4><b>Stock</b></h4>
+            </div>
+            <div class="col-sm-6 text-right" style="padding-right: 15px">
+                <a href="SearchStock.smi">
+                    <button type="button"  id="ButtonSearch"  name="ButtonSearch"  class="btn btn-primary" style="width: 100px;">
+                        <span id="SpanSearch" class="glyphicon glyphicon-arrow-left"></span> Back
+                    </button>   
+                </a>
             </div>
         </div>
         <hr/>
@@ -309,6 +316,11 @@
                 </div><!-- End Row 4-->
             </div>
         </div>
+    </div>
+    <div class="col-sm-1">
+        <!--<div ng-include="'WebContent/Master/StockMenu.html'"></div>-->
+    </div>
+    </form>
                                    
 <!--Search Product-->
 <div class="modal fade" id="SearchProduct" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
