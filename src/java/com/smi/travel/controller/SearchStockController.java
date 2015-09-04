@@ -137,6 +137,15 @@ public class SearchStockController extends SMITravelController {
                 request.setAttribute("expire", expire);
             }
             
+        }else if("searchStock".equalsIgnoreCase(action)){
+            String stockid = request.getParameter("InputId");
+            List<Stock> listStock = stockService.getStockById(stockid);
+            if(listStock != null){
+                request.setAttribute("listStock", listStock);
+            }else{
+                request.setAttribute("listStock", null);
+            }
+        
         }else{
             request.setAttribute("listStock", null);
             request.setAttribute("stockSummary", null);

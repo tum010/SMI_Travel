@@ -451,4 +451,18 @@ public class StockImpl implements StockDao{
         return stockview;
     }
 
+    @Override
+    public List<Stock> getStockById(String stockId) {
+        Session session = this.sessionFactory.openSession();
+        Stock stock = new Stock();
+        List<Stock> stockList = session.createQuery(GET_STOCK)
+                .setParameter("stockID", stockId)
+                .list();
+        if (!stockList.isEmpty()) {
+            return stockList;
+        }else{
+            return null;
+        }
+    }
+
 }
