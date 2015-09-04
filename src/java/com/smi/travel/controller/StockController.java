@@ -116,6 +116,8 @@ public class StockController extends SMITravelController {
                         request.setAttribute("FromDate", effectiveFrom);
                         request.setAttribute("ToDate", effectiveTo);
                         request.setAttribute("CreateDate", createDate);
+                        ModelAndView searchstock = new ModelAndView(new RedirectView("SearchStock.smi?InputId="+stockNew.getId()+"&action=searchStock", true));
+                        return searchstock;
                     }
                 }else if(isSave.equals("update success")){ // Save is Update
                     isSave = "success";
@@ -124,6 +126,8 @@ public class StockController extends SMITravelController {
                     request.setAttribute("ToDate", effectiveTo);
                     request.setAttribute("CreateDate", createDate);
                     request.setAttribute("listStockDetail", listStockDetail);
+                    ModelAndView searchstock = new ModelAndView(new RedirectView("SearchStock.smi?InputId="+stock.getId()+"&action=searchStock", true));
+                    return searchstock;
                 }else{
                     isSave = "fail";
                 }
