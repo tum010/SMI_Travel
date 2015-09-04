@@ -1166,7 +1166,7 @@ function clearScreenInvoice(){
     
 //    $('#DetailBillableTable tbody').empty();
     $('#DetailBillableTable > tbody  > tr').each(function() {
-        alert('!');
+//        alert('!');
         $(this).remove();
     });
     $('#counterTable').val('1');
