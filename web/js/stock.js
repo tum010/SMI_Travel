@@ -465,6 +465,7 @@ function checklength(prefix,digit){
 
 function deleteItemListRow(rowId,code){
     $("#delCodeStock").text(' Are you sure to delete Item code : ' + code +'?');
+    $('#idStockDelete').val(rowId);
     resetNumberItemList();    
 
 }
@@ -475,6 +476,8 @@ function deleteStock(){
     var rowId  = document.getElementById('idStockDelete');
     var stockDetailId  = $("#stockDetailId"+rowId.value).val();   
     var rowAll = $("#StockTable tr").length;
+    
+    console.log("Row id Delete : " + rowId.value);
     
     if((stockDetailId !== "")&&(stockDetailId !== undefined)){
         rowId.value = stockDetailId ;
