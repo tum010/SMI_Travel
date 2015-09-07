@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TaxInvoiceEmailReport" language="groovy" pageWidth="594" pageHeight="421" columnWidth="524" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="346dddd2-e21a-4c7b-8d69-ccea53d38a9d">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="107"/>
-	<property name="ireport.y" value="192"/>
+	<property name="ireport.x" value="49"/>
+	<property name="ireport.y" value="0"/>
 	<field name="customer" class="java.lang.String"/>
 	<field name="address" class="java.lang.String"/>
 	<field name="cnno" class="java.lang.String"/>
@@ -29,170 +29,208 @@
 	</background>
 	<pageHeader>
 		<band height="142" splitType="Stretch">
-			<image>
-				<reportElement x="2" y="0" width="65" height="66" uuid="a6df649e-a783-44e1-b9b7-5345373d1f9a"/>
-				<imageExpression><![CDATA["resource/images/wendy-logo.jpg"]]></imageExpression>
-			</image>
+			<rectangle radius="10">
+				<reportElement x="0" y="63" width="525" height="19" backcolor="#CCCCCC" uuid="745e8d3a-a700-40f3-acaa-cec517f0aa42"/>
+			</rectangle>
 			<staticText>
-				<reportElement x="319" y="14" width="201" height="14" uuid="86a85520-0e5b-4be3-b36a-ac0b3f011262"/>
-				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[865 อาคารโรงแรมสยาม แอ็ท สยาม ชั้น 9]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="320" y="38" width="200" height="14" uuid="99710744-adcf-40bd-9ab6-09f593540b0a"/>
-				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[กรุงเทพฯ 10330]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="319" y="26" width="201" height="14" uuid="39c49f7c-a83b-4ce8-90eb-ea2fb44f6e8a"/>
-				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="12" isBold="true" isItalic="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[ถนนพระรามที่ 1 แขวงวังใหม่ เขตปทุมวัน]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="343" y="52" width="177" height="13" uuid="f44a5cf4-2a2b-4b9c-869d-622c9029a07c"/>
-				<textElement textAlignment="Right">
-					<font size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[TAX ID. NO. 0105523020132]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="319" y="-4" width="201" height="22" uuid="e2007782-00e1-462b-b63c-7f75e602c5ea"/>
-				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="18" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[บริษัทเอส. เอ็ม. ไอ. แทรเวล จำกัด]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="367" y="76" width="71" height="17" uuid="28925612-7af2-4e30-a9e8-b001ea84eaad"/>
+				<reportElement x="367" y="85" width="71" height="17" uuid="28925612-7af2-4e30-a9e8-b001ea84eaad"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Receipt No.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="438" y="110" width="13" height="17" uuid="f500f24a-ca60-4989-8467-8b7cb3b2c7fc"/>
+				<reportElement x="438" y="119" width="13" height="17" uuid="f500f24a-ca60-4989-8467-8b7cb3b2c7fc"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="367" y="93" width="71" height="17" uuid="c522b449-de56-4815-a6f1-4f2e9eb55e60"/>
+				<reportElement x="367" y="102" width="71" height="17" uuid="c522b449-de56-4815-a6f1-4f2e9eb55e60"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Date]]></text>
 			</staticText>
 			<rectangle radius="10">
-				<reportElement x="1" y="75" width="360" height="64" uuid="f2ba4db3-5790-4af3-a2dd-d42453c3e260"/>
+				<reportElement x="1" y="84" width="360" height="57" uuid="f2ba4db3-5790-4af3-a2dd-d42453c3e260"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="53" y="92" width="13" height="17" uuid="f3f954c9-0b80-4f09-8c1c-754cec41de4f"/>
+				<reportElement x="53" y="101" width="13" height="17" uuid="f3f954c9-0b80-4f09-8c1c-754cec41de4f"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="438" y="76" width="13" height="17" uuid="24ec1754-1802-40c0-a929-0cd678d869d5"/>
+				<reportElement x="438" y="85" width="13" height="17" uuid="24ec1754-1802-40c0-a929-0cd678d869d5"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<rectangle radius="10">
-				<reportElement x="366" y="75" width="156" height="64" uuid="7e29616f-763b-44d9-b620-f5a7d634f083"/>
+				<reportElement x="366" y="84" width="156" height="57" uuid="7e29616f-763b-44d9-b620-f5a7d634f083"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="3" y="92" width="50" height="17" uuid="784b7135-6efe-4d4f-9607-830c5609a21d"/>
+				<reportElement x="3" y="101" width="50" height="17" uuid="784b7135-6efe-4d4f-9607-830c5609a21d"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Address]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="53" y="75" width="13" height="17" uuid="f20c7445-f1fa-4a37-ab23-09a567bba3ac"/>
+				<reportElement x="53" y="84" width="13" height="17" uuid="f20c7445-f1fa-4a37-ab23-09a567bba3ac"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="438" y="93" width="13" height="17" uuid="69d2a176-eed4-432b-b4e1-7d901f73b067"/>
+				<reportElement x="438" y="102" width="13" height="17" uuid="69d2a176-eed4-432b-b4e1-7d901f73b067"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="3" y="75" width="50" height="17" uuid="6a5f802f-8704-4a4e-ae28-7451caabc28f"/>
+				<reportElement x="3" y="84" width="50" height="17" uuid="6a5f802f-8704-4a4e-ae28-7451caabc28f"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Customer]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="437" y="76" width="13" height="17" uuid="f70e4d80-3b6a-4e93-aad8-dcf281644513"/>
+				<reportElement x="437" y="85" width="13" height="17" uuid="f70e4d80-3b6a-4e93-aad8-dcf281644513"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="367" y="76" width="71" height="17" uuid="35fd930e-1b57-48cf-9101-09c7f44b977b"/>
+				<reportElement x="367" y="85" width="71" height="17" uuid="35fd930e-1b57-48cf-9101-09c7f44b977b"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Credit Note No.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="367" y="92" width="71" height="17" uuid="98c4195c-845a-4c23-93b5-84d33f618801"/>
+				<reportElement x="367" y="101" width="71" height="17" uuid="98c4195c-845a-4c23-93b5-84d33f618801"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Date]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="209" y="36" width="100" height="20" uuid="52a1b15b-f2c7-43aa-b397-5cd8b2a15297"/>
-				<textElement>
-					<font size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[CREDIT  NOTE]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="67" y="76" width="100" height="20" uuid="c4ac93d0-2176-419a-be45-ac9e5277301a"/>
+				<reportElement x="67" y="85" width="100" height="20" uuid="c4ac93d0-2176-419a-be45-ac9e5277301a"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{customer}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="66" y="94" width="277" height="45" uuid="097dc3e6-f519-4c14-a567-e9fcf7609276"/>
+				<reportElement x="66" y="102" width="290" height="38" uuid="097dc3e6-f519-4c14-a567-e9fcf7609276"/>
 				<textElement>
-					<font fontName="TH SarabunPSK" size="12" pdfFontName="resource/fonts/THSarabun.ttflt&gt;" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="TH SarabunPSK" size="11" pdfFontName="resource/fonts/THSarabun.ttflt&gt;" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="450" y="76" width="70" height="20" uuid="650a79ac-d792-4c60-848d-9b6c118fd5f0"/>
+				<reportElement x="450" y="85" width="70" height="20" uuid="650a79ac-d792-4c60-848d-9b6c118fd5f0"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cnno}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="450" y="92" width="70" height="20" uuid="3e78a7d4-17b9-4602-8516-ed282808f828"/>
+				<reportElement x="450" y="101" width="70" height="20" uuid="3e78a7d4-17b9-4602-8516-ed282808f828"/>
 				<textElement textAlignment="Left">
 					<font fontName="TH SarabunPSK" size="12" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cndate}]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="2" y="2" width="257" height="38" uuid="bdeee737-ab4c-4829-9743-b1a1308285f3"/>
+				<imageExpression><![CDATA["resource/images/smi-logo.gif"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="75" y="14" width="204" height="13" uuid="5bc0bccb-b1e0-461b-8c84-20c772b1cc2e"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[9th Floor, Siam At Siam Hotel Building,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="318" y="13" width="201" height="14" uuid="5fc99d23-ed75-4422-b2c2-b3cc09c799f0"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[865 อาคารโรงแรมสยาม แอ็ท สยาม ชั้น 9]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="319" y="37" width="200" height="14" uuid="cf2e370d-90ba-4813-a49b-8dc3310977d0"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[กรุงเทพฯ 10330]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="318" y="25" width="201" height="14" uuid="900e314d-b23c-4840-8354-850faa4778ac"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="12" isBold="true" isItalic="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[ถนนพระรามที่ 1 แขวงวังใหม่ เขตปทุมวัน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="342" y="51" width="177" height="13" uuid="5fbfecec-7004-43dc-8abb-7868c21ea215"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TAX ID. NO. 0105523020132]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="75" y="-1" width="204" height="17" uuid="2295ebcc-df0a-4f8a-9cdb-f690cecaecb1"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[S.M.I Travel Co., Ltd. (Head Office)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="64" width="143" height="17" uuid="6456883d-112e-4a7d-b0ed-bf347fd0641d"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="15" isBold="true" isItalic="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[CREDIT NOTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="75" y="26" width="267" height="13" uuid="29fbdd7c-cb7b-437e-9281-ed0462884c94"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[865 Rama 1 Road, Wangmai, Phatumwan, Bangkok 10330]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="-4" width="262" height="22" uuid="cc8218d8-5e27-446f-8426-7b1bf4c34e2a"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="18" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[บริษัทเอส. เอ็ม. ไอ. แทรเวล จำกัด (สำนักงานใหญ่)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="75" y="51" width="177" height="13" uuid="fa7f252c-ccb6-4eba-9c2a-9aa1f742e21c"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[E-Mail : yoyaku@wendytour.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="75" y="39" width="271" height="13" uuid="4e1c8008-e14f-48e6-9e81-eeaa2ae4ab1e"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Tel : (66-2) 216-2201 Fax : (66-2) 216-2202]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -345,6 +383,9 @@
 			</textField>
 			<line>
 				<reportElement x="428" y="4" width="1" height="90" uuid="68b997c8-7095-4198-880b-3732215552c3"/>
+			</line>
+			<line>
+				<reportElement x="315" y="115" width="200" height="1" uuid="6e9ccfd8-87b6-48c4-9692-ec55eb14c802"/>
 			</line>
 		</band>
 	</pageFooter>
