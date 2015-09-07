@@ -68,6 +68,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -777,8 +778,7 @@ public class AJAXBean extends AbstractBean implements
             String newrow = "";
             if ("U".equals(isUse)) {
                 newrow += "<tr>"
-                        + //                            "<input type='hidden' name='paymentId' id='paymentId' value='"+paymentId+"'>" +
-                        "<td class='text-center'>" + No + "</td>"
+                        + "<td class='text-center'>" + No + "</td>"
                         + "<td>" + airline + "</td>"
                         + "<td class='money'>" + commission + "</td>"
                         + "<td class='text-center'>" + isUse + "</td>"
@@ -786,8 +786,7 @@ public class AJAXBean extends AbstractBean implements
                         + "</tr>";
             } else if ("N".equals(isUse)) {
                 newrow += "<tr>"
-                        + //                            "<input type='hidden' name='paymentId' id='paymentId' value='"+paymentId+"'>" +
-                        "<td class='text-center'>" + No + "</td>"
+                        + "<td class='text-center'>" + No + "</td>"
                         + "<td>" + airline + "</td>"
                         + "<td class='money'>" + commission + "</td>"
                         + "<td class='text-center'>" + isUse + "</td>"
@@ -932,13 +931,17 @@ public class AJAXBean extends AbstractBean implements
         for (int i = 0; i < invoiceDetaill.size(); i++) {
             invId = invoiceDetaill.get(i).getId();
             description = invoiceDetaill.get(i).getDescription();
-            amountinvoice = invoiceDetaill.get(i).getAmount().compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : invoiceDetaill.get(i).getAmount();
+            if(invoiceDetaill.get(i).getAmount() != null){
+                amountinvoice = invoiceDetaill.get(i).getAmount().compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : invoiceDetaill.get(i).getAmount();
+            }
             currency = invoiceDetaill.get(i).getCurAmount();
             if (invoiceDetaill.get(i).getMbillType() != null) {
                 product = invoiceDetaill.get(i).getMbillType().getId();
                 billTypeName = invoiceDetaill.get(i).getMbillType().getName();
             }
-            costinvoice = invoiceDetaill.get(i).getCost().compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : invoiceDetaill.get(i).getCost();
+            if(invoiceDetaill.get(i).getCost() != null){
+                costinvoice = invoiceDetaill.get(i).getCost().compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : invoiceDetaill.get(i).getCost();
+            }
             cur = invoiceDetaill.get(i).getCurCost();
             isVat = String.valueOf(invoiceDetaill.get(i).getIsVat());
             vat = String.valueOf(invoiceDetaill.get(i).getVat());
@@ -1057,7 +1060,6 @@ public class AJAXBean extends AbstractBean implements
             description = billableDescs.get(i).getDetail();
             BigDecimal amounttemp = new BigDecimal(billableDescs.get(i).getPrice());
             amountinvoice = amounttemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
-
             currency = billableDescs.get(i).getCurrency() == null ? "" : billableDescs.get(i).getCurrency();
             if (billableDescs.get(i).getMBilltype() != null) {
                 product = billableDescs.get(i).getMBilltype().getId();
@@ -1690,7 +1692,7 @@ public class AJAXBean extends AbstractBean implements
         BigDecimal resultAmount = new BigDecimal(0);
         BigDecimal resultCost = new BigDecimal(0);
 
-        List<InvoiceDetail> invoiceDetailList = invoicedao.getInvoiceDetailFromBillableDescId(billdescId);
+        List<InvoiceDetail> invoiceDetailList = invoicedao.getInvoiceDetailFromBillDescId(billdescId);
         if (invoiceDetailList == null || invoiceDetailList.size() == 0) {
             value[0] = resultCost;
             value[1] = resultAmount;
@@ -1733,6 +1735,7 @@ public class AJAXBean extends AbstractBean implements
         map.put("taxAddress", tax.getTaxInvAddr());
         UtilityFunction util = new UtilityFunction();
         map.put("taxDate", util.convertDateToString(tax.getCreateDate()));
+        map.put("status", tax.getMFinanceItemstatus().getId());
         String invNo = "";
         List<Map<String, Object>> detailMapList = new ArrayList<Map<String, Object>>();
         Set set = new HashSet();

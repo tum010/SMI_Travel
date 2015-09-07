@@ -40,4 +40,5 @@ public interface InvoiceDao {
     //for save receipt 
     public String insertInvoiceDetail(Invoice invoice);
     public String updateInvoiceDetail(Invoice invoice);
+    public List<InvoiceDetail> getInvoiceDetailFromBillDescId(String billableDescId); //for ajax check invoice detail 
 }

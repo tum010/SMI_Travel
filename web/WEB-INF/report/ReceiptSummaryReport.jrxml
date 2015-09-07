@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="058d4e5f-08d6-4dca-b53c-91fb30f0f189">
-	<property name="ireport.zoom" value="2.8531167061100398"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="238"/>
+	<property name="ireport.zoom" value="4.17724816941571"/>
+	<property name="ireport.x" value="2290"/>
+	<property name="ireport.y" value="480"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="user" class="java.lang.String"/>
 	<field name="from" class="java.lang.String"/>
@@ -342,37 +342,37 @@ new BigDecimal($F{recamount}) : new BigDecimal("0.00")]]></variableExpression>
 	<detail>
 		<band height="15" splitType="Stretch">
 			<rectangle>
-				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="242" y="-1" width="142" height="15" uuid="cdd3ff6f-18f8-4362-9382-19b0f574cbaa"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="242" y="-1" width="142" height="15" isPrintWhenDetailOverflows="true" uuid="cdd3ff6f-18f8-4362-9382-19b0f574cbaa"/>
 			</rectangle>
 			<rectangle>
-				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="73" y="-1" width="52" height="15" uuid="d8118587-7dcf-4393-af7a-4e28a94bd5a8"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="73" y="-1" width="52" height="15" isPrintWhenDetailOverflows="true" uuid="d8118587-7dcf-4393-af7a-4e28a94bd5a8"/>
 			</rectangle>
 			<rectangle>
-				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="125" y="-1" width="53" height="15" uuid="9bd13f0c-8610-4af4-a906-bf7c6bf1a7c4"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="125" y="-1" width="53" height="15" isPrintWhenDetailOverflows="true" uuid="9bd13f0c-8610-4af4-a906-bf7c6bf1a7c4"/>
 			</rectangle>
 			<rectangle>
-				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="462" y="-1" width="68" height="15" uuid="d133362b-268a-454f-a273-37e7d379603e"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="462" y="-1" width="68" height="15" isPrintWhenDetailOverflows="true" uuid="d133362b-268a-454f-a273-37e7d379603e"/>
 			</rectangle>
 			<rectangle>
-				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="1" y="-1" width="15" height="15" uuid="dbb3ab17-aef0-4bfd-bb8a-a390490b5432"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="1" y="-1" width="15" height="15" isPrintWhenDetailOverflows="true" uuid="dbb3ab17-aef0-4bfd-bb8a-a390490b5432"/>
 			</rectangle>
 			<rectangle>
-				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="16" y="-1" width="57" height="15" uuid="8dc3acca-9e6a-4ec6-967d-f6027dcc704e"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="16" y="-1" width="57" height="15" isPrintWhenDetailOverflows="true" uuid="8dc3acca-9e6a-4ec6-967d-f6027dcc704e"/>
 			</rectangle>
 			<rectangle>
-				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="178" y="-1" width="64" height="15" uuid="8c38c73f-cdf1-40d8-b3f8-8cdfc47ba790"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="178" y="-1" width="64" height="15" isPrintWhenDetailOverflows="true" uuid="8c38c73f-cdf1-40d8-b3f8-8cdfc47ba790"/>
 			</rectangle>
 			<rectangle>
-				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="530" y="-1" width="68" height="15" uuid="a087a034-6390-4274-a6d9-498ca61b59f7"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="530" y="-1" width="68" height="15" isPrintWhenDetailOverflows="true" uuid="a087a034-6390-4274-a6d9-498ca61b59f7"/>
 			</rectangle>
 			<rectangle>
-				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="598" y="-1" width="67" height="15" uuid="305bc051-b27e-49af-ba87-3bced3d6eaac"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="598" y="-1" width="67" height="15" isPrintWhenDetailOverflows="true" uuid="305bc051-b27e-49af-ba87-3bced3d6eaac"/>
 			</rectangle>
 			<rectangle>
-				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="665" y="-1" width="68" height="15" uuid="e152ef8d-63c5-4bc5-b6d8-17187bb6a7c1"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="665" y="-1" width="68" height="15" isPrintWhenDetailOverflows="true" uuid="e152ef8d-63c5-4bc5-b6d8-17187bb6a7c1"/>
 			</rectangle>
 			<rectangle>
-				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="733" y="-1" width="69" height="15" uuid="a3eb6890-c1df-4939-986a-e3c8bc179e7f"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="733" y="-1" width="69" height="15" isPrintWhenDetailOverflows="true" uuid="a3eb6890-c1df-4939-986a-e3c8bc179e7f"/>
 			</rectangle>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="1" y="-1" width="15" height="16" uuid="1e466d17-d4a2-451b-a74f-a08e51a8fdf1"/>

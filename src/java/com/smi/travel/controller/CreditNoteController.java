@@ -11,6 +11,7 @@ import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,12 +26,16 @@ public class CreditNoteController extends SMITravelController {
     private static final ModelAndView CreditNote = new ModelAndView("CreditNote");
     private static final String LINKNAME = "CreditNote";
     private static final ModelAndView CreditNote_REFRESH = new ModelAndView(new RedirectView("CreditNote.smi", true));
+    private static final HashMap<String,String> type = new HashMap();
 
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        type.put("W", "Wendy");
+        type.put("I", "Inbound");
+        type.put("O", "Outbound");
         UtilityFunction utilty = new UtilityFunction();
         request.setAttribute("enableVoid", true);
-        request.setAttribute("disableVoid", false);
+        request.setAttribute("disableVoid", true);
         System.out.println("request.getRequestURI() :" + request.getRequestURI());
         String callPageFrom = utilty.getAddressUrl(request.getRequestURI()).replaceAll(LINKNAME, "");//request.getParameter("type");
         String department = "";
@@ -43,7 +48,7 @@ public class CreditNoteController extends SMITravelController {
 
         if ("search".equalsIgnoreCase(action)) {
             CreditNote creditNote = new CreditNote();
-            creditNote = creditNoteService.getCreditNote(creditNo, department);
+            creditNote = creditNoteService.getCreditNote(creditNo, type.get(department));
             if (creditNote == null) {
                 request.setAttribute("failStatus", true);
                 request.setAttribute("failMessage", "Credit note no:" + creditNo + " not available !");
@@ -56,14 +61,14 @@ public class CreditNoteController extends SMITravelController {
             String result = "fail";
             if (null != cn) {
                 if (null == cn.getId() || "".equals(cn.getId())) {
-                    cn.setDepartment(department);
+                    cn.setDepartment(type.get(department));
                     cn.setCreateBy(user.getUsername());
                     cn.setCreateDate(Calendar.getInstance().getTime());
                 }
                 result = creditNoteService.saveCreditNote(cn);
             }
             if (!"fail".equals(result)) {
-                CreditNote creditNote = creditNoteService.getCreditNote(result, department);
+                CreditNote creditNote = creditNoteService.getCreditNote(result, type.get(department));
                 request.setAttribute("creditNote", creditNote);
                 request.setAttribute("successStatus", true);
                 request.setAttribute("successMessage", "Save Success!");
@@ -86,16 +91,16 @@ public class CreditNoteController extends SMITravelController {
                 request.setAttribute("failStatus", true);
                 request.setAttribute("failMessage", method + " fail!");
             }
-            CreditNote creditNote = creditNoteService.getCreditNote(cnNo, department);
+            CreditNote creditNote = creditNoteService.getCreditNote(cnNo, type.get(department));
             request.setAttribute("creditNote", creditNote);
         }
-        CreditNote cn = (CreditNote) request.getAttribute("creditNote");
-        if (cn != null && cn.getId() != null && !"".equals(cn.getId())) {
-            if (user != null && user.getRole() != null && user.getRole().getId() != null
-                    && user.getRole().getId().equals("23")) {
-                request.setAttribute("disableVoid", true);
-            }
-        }
+//        CreditNote cn = (CreditNote) request.getAttribute("creditNote");
+//        if (cn != null && cn.getId() != null && !"".equals(cn.getId())) {
+//            if (user != null && user.getRole() != null && user.getRole().getId() != null
+//                    && user.getRole().getId().equals("23")) {
+//                request.setAttribute("disableVoid", true);
+//            }
+//        }
 
 //                    session.setAttribute("USER", UserAuthen);
         List<MPaytype> dd = getUtilityService().getListMPayType();
