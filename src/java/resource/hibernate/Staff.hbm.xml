@@ -46,6 +46,9 @@
         <property name="createDate" type="date">
             <column name="create_date" length="10" />
         </property>
+        <property name="email" type="string">
+            <column name="email" length="50" />
+        </property>
 
         <set name="tourOperationDrivers" table="tour_operation_driver" inverse="true" lazy="true" fetch="select">
             <key>

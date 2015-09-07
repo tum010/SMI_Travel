@@ -79,7 +79,7 @@ $(document).ready(function () {
             Role: {
                 validators: {
                     notEmpty: {
-                        message: 'Role is required'
+                        message: 'The Role is required'
                     }
                 }
             },
@@ -90,7 +90,6 @@ $(document).ready(function () {
                     }
                 }
             }
-
         }
     }).on('success.field.bv', function (e, data) {
         if (data.bv.isValid()) {
@@ -115,7 +114,7 @@ function searchAction() {
     $("#SearchStaff").submit();
 }
 
-function EditStaff(id, name, username, password, position, tel, car, departmentId, status, createBy, roleId) {
+function EditStaff(id, name, username, password, position, tel, car, departmentId, status, createBy, roleId, email) {
     $('#Staffform').bootstrapValidator('resetForm', true);
     $("#StaffName").val(name);
     $("#UserName").val(username);
@@ -131,9 +130,7 @@ function EditStaff(id, name, username, password, position, tel, car, departmentI
     $("#StaffID").val(id);
     $("#actionIUP").val('update');
     $("#Role").val(roleId);
-
-
-
+    $("#Email").val(email);
 }
 
 function AddStaffDefault() {
@@ -144,8 +141,18 @@ function AddStaffDefault() {
 
 }
 
-
-
-
-
-
+function checkEmail() {
+    var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    var email = document.getElementById('Email').value;
+    if(email === ''){
+        return true;
+    }
+    var recipientField = document.getElementById('Email');
+    if (!filter.test(email)) {                 
+        recipientField.style.borderColor = "Red";
+        $("#btnSave").addClass("disabled");
+    } else {
+        recipientField.style.borderColor = "Green";
+        $("#btnSave").removeClass("disabled");
+    }             
+}               

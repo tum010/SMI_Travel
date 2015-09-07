@@ -262,7 +262,7 @@
                                     <td>
                             <center> 
                                 <span id="spanEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon"      
-                                      onclick="EditStaff('${table.id}', '${table.name}', '${table.username}', '${table.password}', '${table.position}', '${table.tel}', '${table.car}', '${table.MDepartment.id}', '${table.status}', '${table.createBy}', '${table.role.id}')" data-toggle="modal" data-target="#StaffModal" >
+                                      onclick="EditStaff('${table.id}', '${table.name}', '${table.username}', '${table.password}', '${table.position}', '${table.tel}', '${table.car}', '${table.MDepartment.id}', '${table.status}', '${table.createBy}', '${table.role.id}', '${table.email}')" data-toggle="modal" data-target="#StaffModal" >
                                 </span>
                                 <span id="spanRemove${dataStatus.count}" class="glyphicon glyphicon-remove deleteicon hidden"  onclick="DeleteStaff('${table.id}', '${table.name}')"></span>
                             </center>
@@ -303,6 +303,12 @@
                         <label for="Password" class="col-sm-3 control-label" >Password <font style="color: red">*</font></label>
                         <div class="col-sm-8">   
                             <input type="password" class="form-control" maxlength="50" id="Password" name="Password"  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"> 
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Email" class="col-sm-3 control-label" >Email</label>
+                        <div class="col-sm-8">   
+                            <input type="text" class="form-control" maxlength="50" id="Email" name="Email"  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" onfocusout="checkEmail()"> 
                         </div>
                     </div>
                     <div class="form-group">
