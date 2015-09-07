@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TaxInvoiceSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b94d16a0-fd3d-420a-829f-b2613a057a63">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="884"/>
-	<property name="ireport.y" value="133"/>
+	<property name="ireport.y" value="375"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="user" class="java.lang.String"/>
 	<field name="from" class="java.lang.String"/>
@@ -48,7 +48,7 @@
 	<group name="departmentGroup" isReprintHeaderOnEachPage="true" keepTogether="true">
 		<groupExpression><![CDATA[$F{department}]]></groupExpression>
 		<groupHeader>
-			<band height="50">
+			<band height="51">
 				<staticText>
 					<reportElement x="0" y="18" width="420" height="16" backcolor="#FFFFFF" uuid="fbd29eb7-1001-4422-8f2f-c0ea9d5a0d6a"/>
 					<box>
@@ -458,90 +458,6 @@
 	</pageHeader>
 	<detail>
 		<band height="17" splitType="Stretch">
-			<textField isBlankWhenNull="true">
-				<reportElement x="1" y="0" width="19" height="17" uuid="13152da4-1f82-4483-8424-147b01488459"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH SarabunPSK" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{no}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="24" y="0" width="52" height="17" uuid="7ce3a696-d0cd-49b6-8576-eed5a1c0e25d"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{taxno}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="78" y="0" width="55" height="17" uuid="9df1d907-027a-4f04-9612-9d5b03d7bcd0"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH SarabunPSK" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{taxdate}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="134" y="0" width="48" height="17" uuid="3269411f-7497-4196-9a69-3e4acb47f690"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH SarabunPSK" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{taxto}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="184" y="0" width="141" height="17" uuid="0d8c5fc3-0e46-4966-896a-2e7ba0b9c607"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{taxname}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="330" y="0" width="91" height="17" uuid="b19b5f7f-7283-4d38-938f-6393b47ade53"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{taxdetail}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="424" y="0" width="64" height="17" uuid="21db2806-09b5-4588-beca-c5cd176550c1"/>
-				<textElement markup="none">
-					<font fontName="TH SarabunPSK" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{invoiceno}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="492" y="0" width="64" height="17" uuid="4644a97d-10bb-4d3a-927d-1cbe8e148327"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{receiptno}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="557" y="0" width="62" height="17" uuid="1abac4ba-994f-4427-bd29-a7877250b560"/>
-				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{gross} != null && !"null".equals($F{gross}) && $F{gross}.length() > 0 && !"".equalsIgnoreCase($F{gross})) ? new BigDecimal($F{gross}) : new BigDecimal("0")]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="624" y="0" width="65" height="17" uuid="7ec8796d-63c1-475c-97b4-e776082d731b"/>
-				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{vat} != null && !"null".equals($F{vat}) && $F{vat}.length() > 0 && !"".equalsIgnoreCase($F{vat})) ? new BigDecimal($F{vat}) : new BigDecimal("0")]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="693" y="0" width="63" height="17" uuid="f3fe2b03-b986-4944-b434-a04dd4fe9632"/>
-				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{amount} != null && !"null".equals($F{amount}) && $F{amount}.length() > 0 && !"".equalsIgnoreCase($F{amount})) ? new BigDecimal($F{amount}) : new BigDecimal("0")]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="761" y="0" width="42" height="17" uuid="1e8664df-8a4e-4628-b718-5f923134fa46"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH SarabunPSK" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
-			</textField>
 			<line>
 				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="17" uuid="ba58cdb5-fe19-42ed-9864-d84bd4e4f13d"/>
 			</line>
@@ -584,6 +500,90 @@
 			<line>
 				<reportElement positionType="Float" x="1" y="16" width="801" height="1" uuid="60acc4cc-57e5-46ec-b005-15605c9cb8ce"/>
 			</line>
+			<textField>
+				<reportElement x="0" y="0" width="21" height="16" uuid="cca9c37d-dd24-4a64-a689-ec57e97a30f6"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="25" y="0" width="53" height="16" uuid="de02e62d-85af-40ca-93d4-0f0be2349f94"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{taxno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="77" y="0" width="56" height="16" uuid="392f0fb4-c5d0-4cc6-a198-f1c78c077f52"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{taxdate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="133" y="0" width="48" height="16" uuid="ae5b8aa8-fe13-4095-874b-2c8e0ee86bc5"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{taxto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="186" y="0" width="140" height="16" uuid="b6f93fa2-edeb-40f8-906f-dfc110a810fc"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{taxname}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="330" y="0" width="90" height="17" uuid="c6e7ee92-8c8d-4926-9ee1-b2d89f24de07"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{taxdetail}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="424" y="0" width="63" height="16" uuid="a464e9a8-c3fa-4b5f-baa8-826094f6da70"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{invoiceno}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="491" y="0" width="65" height="17" uuid="dbb9f5d5-4990-4c5c-a7d1-5a6ee560499b"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{receiptno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="557" y="0" width="64" height="16" uuid="cc51d071-ba3b-4f6a-af7b-e6adc61c7cec"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{gross} != null && !"null".equals($F{gross}) && $F{gross}.length() > 0 && !"".equalsIgnoreCase($F{gross})) ? new BigDecimal($F{gross}) : new BigDecimal("0")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="625" y="0" width="65" height="16" uuid="f0eac28f-d8ff-451e-91a6-a09e7f24cb78"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{vat} != null && !"null".equals($F{vat}) && $F{vat}.length() > 0 && !"".equalsIgnoreCase($F{vat})) ? new BigDecimal($F{vat}) : new BigDecimal("0")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="693" y="-1" width="65" height="17" uuid="d8ffea49-df51-49ae-a272-7df4c8039358"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{amount} != null && !"null".equals($F{amount}) && $F{amount}.length() > 0 && !"".equalsIgnoreCase($F{amount})) ? new BigDecimal($F{amount}) : new BigDecimal("0")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="761" y="0" width="41" height="16" uuid="7c8c3611-8cb6-49d2-9a7e-21a565d42fb1"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<lastPageFooter>

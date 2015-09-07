@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CreditNoteSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="886f6a61-cb51-422c-a379-c72412e46d94">
-	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="506"/>
-	<property name="ireport.y" value="223"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="453"/>
+	<property name="ireport.y" value="255"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="user" class="java.lang.String"/>
 	<field name="from" class="java.lang.String"/>
@@ -35,6 +35,21 @@
 		<variableExpression><![CDATA[new BigDecimal($F{vat})]]></variableExpression>
 	</variable>
 	<variable name="totalamount" class="java.math.BigDecimal" resetType="Group" resetGroup="departmentGroup" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{amount})]]></variableExpression>
+	</variable>
+	<variable name="totalsubtotalpage" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{subtotal})]]></variableExpression>
+	</variable>
+	<variable name="totalsubrealpage" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{subtotalreal})]]></variableExpression>
+	</variable>
+	<variable name="totaldiffpage" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{differ})]]></variableExpression>
+	</variable>
+	<variable name="totalvatpage" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{vat})]]></variableExpression>
+	</variable>
+	<variable name="totalamountpage" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[new BigDecimal($F{amount})]]></variableExpression>
 	</variable>
 	<group name="departmentGroup" isReprintHeaderOnEachPage="true" keepTogether="true">
@@ -258,7 +273,7 @@
 					<text><![CDATA[Sub Total :]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="612" y="83" width="70" height="20" uuid="eed023ec-bffd-4489-962a-ab012718d4d3"/>
+					<reportElement x="608" y="83" width="74" height="20" uuid="eed023ec-bffd-4489-962a-ab012718d4d3"/>
 					<textElement textAlignment="Right">
 						<font isBold="true"/>
 					</textElement>
@@ -618,4 +633,98 @@
 			</line>
 		</band>
 	</detail>
+	<lastPageFooter>
+		<band height="100">
+			<staticText>
+				<reportElement x="5" y="2" width="795" height="16" backcolor="#FFFFFF" uuid="09371d7a-ed14-4ef8-a09b-009251d3cfb3"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.5" lineColor="#CCCCFF"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total All Department]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="1" y="2" width="801" height="14" forecolor="#000000" uuid="683d076f-dca6-4401-87c1-0ddad1b97ad3"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="683" y="64" width="115" height="17" uuid="5443b18b-78b6-40be-b519-dc44b59737e9"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalvatpage}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="595" y="34" width="88" height="20" uuid="5727683a-c6c7-4d67-a0ca-8466a2a5580b"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sub Total (Real) :]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="685" y="34" width="115" height="17" uuid="847cb754-c4dd-4dcb-8393-0072be03f467"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalsubrealpage}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="613" y="18" width="70" height="20" uuid="1f85dd94-5b9a-4ba4-aff7-eabd77c1a155"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sub Total :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="609" y="80" width="74" height="20" uuid="de7e6a75-161a-4b2c-a70d-94d340652ddb"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Amount :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="633" y="65" width="50" height="20" uuid="09e83369-a73b-49ef-9542-47e1c4de7186"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Vat :]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="685" y="18" width="115" height="17" uuid="60872e01-69ff-4892-85e4-b18070cbfb8f"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalsubtotalpage}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="595" y="50" width="88" height="20" uuid="a4909b72-e23c-445f-85bc-39d9ec363304"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Difference Total :]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="683" y="82" width="115" height="17" uuid="34bffc3e-d9a9-4a5b-8895-f27aa79fd3f8"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalamountpage}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="683" y="49" width="115" height="17" uuid="2569acce-1481-4450-960a-04dd3686479d"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totaldiffpage}]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
 </jasperReport>
