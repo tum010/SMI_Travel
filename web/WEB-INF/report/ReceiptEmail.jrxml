@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptEmail" language="groovy" pageWidth="595" pageHeight="421" columnWidth="525" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="0038deea-02d3-4a9f-8925-fb54dc3fc533">
-	<property name="ireport.zoom" value="1.996500000000013"/>
-	<property name="ireport.x" value="68"/>
-	<property name="ireport.y" value="74"/>
+	<property name="ireport.zoom" value="4.707642565081533"/>
+	<property name="ireport.x" value="664"/>
+	<property name="ireport.y" value="127"/>
 	<field name="recto" class="java.lang.String"/>
 	<field name="recadd" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -75,7 +75,7 @@
 				<text><![CDATA[กรุงเทพฯ 10330]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="320" y="-7" width="201" height="22" uuid="6694bdb7-a2ed-41e4-9d9c-3d7abc1fd55c"/>
+				<reportElement x="260" y="-7" width="201" height="22" uuid="6694bdb7-a2ed-41e4-9d9c-3d7abc1fd55c"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="18" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -89,7 +89,7 @@
 				<text><![CDATA[9th Floor, Siam At Siam Hotel Building,]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="71" y="-4" width="149" height="17" uuid="46ee1292-f2e6-41a9-92c2-e44b1e638856"/>
+				<reportElement x="71" y="-4" width="121" height="17" uuid="46ee1292-f2e6-41a9-92c2-e44b1e638856"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -282,6 +282,20 @@
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="431" y="-4" width="94" height="22" uuid="57a33c54-3169-4cd6-8891-94fdb3c5c7b4"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[(สำนักงานใหญ่)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="189" y="-2" width="88" height="17" uuid="b3046d71-189a-403f-8de4-6c8cc5d9711b"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[(Head Office)]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
