@@ -1692,7 +1692,7 @@ public class AJAXBean extends AbstractBean implements
         BigDecimal resultAmount = new BigDecimal(0);
         BigDecimal resultCost = new BigDecimal(0);
 
-        List<InvoiceDetail> invoiceDetailList = invoicedao.getInvoiceDetailFromBillableDescId(billdescId);
+        List<InvoiceDetail> invoiceDetailList = invoicedao.getInvoiceDetailFromBillDescId(billdescId);
         if (invoiceDetailList == null || invoiceDetailList.size() == 0) {
             value[0] = resultCost;
             value[1] = resultAmount;

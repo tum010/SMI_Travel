@@ -228,8 +228,6 @@ public class ReceiptImpl implements ReceiptDao{
             receiptView.setReceivedate((("null".equals(String.valueOf(recSum[2])) ? "" : String.valueOf(df.format(util.convertStringToDate(String.valueOf(recSum[2])))))));
             receiptView.setRecfrom((("null".equals(String.valueOf(recSum[3])) ? "" : String.valueOf(recSum[3]))));
             receiptView.setRecname((("null".equals(String.valueOf(recSum[4])) ? "" : String.valueOf(recSum[4]))));
-            receiptView.setRecdetail((("null".equals(String.valueOf(recSum[7])) ? "" : String.valueOf(recSum[7]).replaceAll(",", " ,").trim())));
-            receiptView.setInvno((("null".equals(String.valueOf(recSum[8])) ? "" : String.valueOf(recSum[8]).replaceAll(",", ",\\\n").trim())));
             receiptView.setInvamount((("0.00".equals(String.valueOf(recSum[9])) ? "0" : String.valueOf(recSum[9]))));
             receiptView.setDiff((("0.00".equals(String.valueOf(recSum[10])) ? "0" : String.valueOf(recSum[10]))));
             receiptView.setRecamount((("0.00".equals(String.valueOf(recSum[11])) ? "0" : String.valueOf(recSum[11]))));
@@ -240,7 +238,13 @@ public class ReceiptImpl implements ReceiptDao{
             receiptView.setBanktransfer((("0.00".equals(String.valueOf(recSum[16])) ? "0" : String.valueOf(recSum[16]))));
             receiptView.setWt((("0.00".equals(String.valueOf(recSum[17])) ? "0" : String.valueOf(recSum[17]))));
             receiptView.setCashminus((("0.00".equals(String.valueOf(recSum[18])) ? "0" : String.valueOf(recSum[18]))));
-            receiptView.setNo(String.valueOf(i)); 
+            receiptView.setNo(String.valueOf(i));
+            
+            String recdetail = checkRecDetail(util.ConvertString(recSum[7]));
+            receiptView.setRecdetail(recdetail);
+            
+            String invNo = checkInvoiceNo(util.ConvertString(recSum[8]));
+            receiptView.setInvno(invNo);
             
             data.add(receiptView);
             i++;
@@ -254,6 +258,63 @@ public class ReceiptImpl implements ReceiptDao{
         return data;
     }
     
+    private String checkInvoiceNo(String invoiceNoList) {
+        String result = "";
+        String[] recNoList = invoiceNoList.split("\\,");
+        List<String> invChkList = new ArrayList<String>();
+        for(int i=0;i<recNoList.length;i++){
+            String invNo1 = recNoList[i];
+            int match = 0;
+            if(!invChkList.isEmpty()){
+                for(int j=0;j<invChkList.size();j++){
+                    String invNo2 = invChkList.get(j);
+                    if(invNo1.equalsIgnoreCase(invNo2)){
+                        match++;
+                        j = invChkList.size();
+                    }
+                }
+                if(match == 0){
+                    result += "\n";
+                    invChkList.add(invNo1);
+                    result += invNo1;
+                }
+            } else {
+                invChkList.add(invNo1);
+                result += invNo1;
+            }           
+        }
+        
+        return result;
+    }
+    
+    private String checkRecDetail(String recDetailList) {
+        String result = "";
+        String[] recDeList = recDetailList.split("\\,");
+        List<String> recDeChkList = new ArrayList<String>();
+        for(int i=0;i<recDeList.length;i++){
+            String detail = recDeList[i];
+            int match = 0;
+            if(!recDeChkList.isEmpty()){
+                for(int j=0;j<recDeChkList.size();j++){
+                    String detail2 = recDeChkList.get(j);
+                    if(detail.equalsIgnoreCase(detail2)){
+                        match++;
+                        j = recDeChkList.size();
+                    }
+                }
+                if(match == 0){
+                    result += ",";
+                    recDeChkList.add(detail);
+                    result += detail;
+                }
+            } else {
+                recDeChkList.add(detail);
+                result += detail;
+            }           
+        }
+        
+        return result;
+    }
     
     
     

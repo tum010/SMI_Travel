@@ -60,9 +60,9 @@ public class ReceiptService {
        return receiptDao.getReceiptfromReceiptId(recId);
     }
     
-    public List<ReceiptDetail> getReceiptDetailFromInvDetailId(String invDetailId){
-        return receiptDao.getReceiptDetailFromInvDetailId(invDetailId);
-    }
+//    public List<ReceiptDetail> getReceiptDetailFromInvDetailId(String invDetailId){
+//        return receiptDao.getReceiptDetailFromInvDetailId(invDetailId);
+//    }
     
     public List<ReceiptDetailView> getReceiptDetailViewFromInvDetailId(String invDetailId){
         return receiptDao.getReceiptDetailViewFromInvDetailId(invDetailId);
