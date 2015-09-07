@@ -41,7 +41,8 @@ $(document).ready(function () {
         var result = true;
         $('#CreditNoteForm').bootstrapValidator('revalidateField', 'name');
         $('#CreditNoteForm').bootstrapValidator('revalidateField', 'inputDate');
-        if ($("#inputDate").val() === "" || $("#name").val() === "") {
+        $('#CreditNoteForm').bootstrapValidator('revalidateField', 'address');
+        if ($("#inputDate").val() === "" || $("#name").val() === "" || $("#address").val() === "") {
             return;
         }
         var action = document.getElementById('action');
@@ -135,26 +136,32 @@ function getTaxInv(input) {
                 success: function (msg) {
                     console.log("getAutoListBillto ==" + msg);
                     var tax = JSON.parse(msg);
-
-                    var taxDate = $(input).parent().parent().find("[name='taxDate']");
-                    var amount = $(input).parent().parent().find("[name='taxAmount']");
-                    var amountId = $(input).parent().parent().find("[id='taxAmount']");
-                    var desc = $(input).parent().parent().find("[name='taxDesc']");
-                    var taxId = $(input).parent().parent().find("[name='taxId']");
-                    var btnDetail = $(input).parent().parent().find("[name='btnDetail']");
-                    $("#apCode").val(tax.taxTo);
-                    $("#name").val(tax.taxName);
-                    $("#address").val(tax.taxAddress);
-                    taxDate.val(tax.taxDate);
-                    amount.val(tax.taxAmount);
-                    amountId.val(tax.taxAmount)
-                    desc.val(tax.taxDesc);
-                    taxId.val(tax.taxId);
-                    btnDetail.attr('onclick', "show('" + ticketNo + "')");
-                    var index = $(input).parent().parent().index();
-                    var count = $('#ItemCreditTable tbody tr').length;
-                    if (index == (count - 1)) {
-                        addRow();
+                    if(tax.status === 1){
+                        var taxDate = $(input).parent().parent().find("[name='taxDate']");
+                        var amount = $(input).parent().parent().find("[name='taxAmount']");
+                        var amountId = $(input).parent().parent().find("[id='taxAmount']");
+                        var desc = $(input).parent().parent().find("[name='taxDesc']");
+                        var taxId = $(input).parent().parent().find("[name='taxId']");
+                        var btnDetail = $(input).parent().parent().find("[name='btnDetail']");
+                        $("#apCode").val(tax.taxTo);
+                        $("#name").val(tax.taxName);
+                        $("#address").val(tax.taxAddress);
+                        taxDate.val(tax.taxDate);
+                        amount.val(tax.taxAmount);
+                        amountId.val(tax.taxAmount)
+                        desc.val(tax.taxDesc);
+                        taxId.val(tax.taxId);
+                        btnDetail.attr('onclick', "show('" + ticketNo + "')");
+                        var index = $(input).parent().parent().index();
+                        var count = $('#ItemCreditTable tbody tr').length;
+                        if (index == (count - 1)) {
+                            addRow();
+                        }
+                    }else{
+                        
+                        $("#alertTextFail").html("Tax invoice no " + ticketNo + " has been void!");
+                        $("#alertFail").show();
+                        $("#alertSuccess").hide();
                     }
                 }, error: function (msg) {
                     input.style.borderColor = "Red";
@@ -345,6 +352,14 @@ function validFrom() {
                         validators: {
                             notEmpty: {
                                 message: 'Please fill date'
+                            }
+                        }
+                    },
+                    address: {
+                        trigger: 'keyup change',
+                        validators: {
+                            notEmpty: {
+                                message: 'Please fill address'
                             }
                         }
                     }

@@ -1733,6 +1733,7 @@ public class AJAXBean extends AbstractBean implements
         map.put("taxAddress", tax.getTaxInvAddr());
         UtilityFunction util = new UtilityFunction();
         map.put("taxDate", util.convertDateToString(tax.getCreateDate()));
+        map.put("status", tax.getMFinanceItemstatus().getId());
         String invNo = "";
         List<Map<String, Object>> detailMapList = new ArrayList<Map<String, Object>>();
         Set set = new HashSet();

@@ -110,7 +110,7 @@
                 <div class="row">
                     <div class="col-xs-12 form-group">
                         <div class="col-xs-1 text-right"  style="width: 120px">
-                            <label class="control-label text-right">Address </label>
+                            <label class="control-label text-right">Address <font style="color: red">*</font></label>
                         </div>
                         <div class="col-xs-1" style="width: 200px">
                             <div class="input-group">                                    
