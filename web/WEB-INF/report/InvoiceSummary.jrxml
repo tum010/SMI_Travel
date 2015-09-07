@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceSummary2" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ce5d0eb5-af68-44b4-b287-253094472c71">
 	<property name="ireport.zoom" value="1.464100000000001"/>
-	<property name="ireport.x" value="407"/>
-	<property name="ireport.y" value="72"/>
+	<property name="ireport.x" value="451"/>
+	<property name="ireport.y" value="24"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="username" class="java.lang.String"/>
 	<field name="invfrom" class="java.lang.String"/>
@@ -201,7 +201,7 @@
 					<text><![CDATA[Gross]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="526" y="27" width="37" height="32" uuid="60dba456-02fa-43ea-84d3-08892192fa7c"/>
+					<reportElement x="526" y="27" width="50" height="32" uuid="60dba456-02fa-43ea-84d3-08892192fa7c"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -214,7 +214,7 @@
 					<text><![CDATA[Vat]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="563" y="27" width="48" height="32" uuid="4c30537f-bc94-4db9-b1c1-95edb4742a65"/>
+					<reportElement x="576" y="27" width="58" height="32" uuid="4c30537f-bc94-4db9-b1c1-95edb4742a65"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -227,7 +227,7 @@
 					<text><![CDATA[Amount]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="611" y="27" width="65" height="32" uuid="4d70bd6e-e2bd-4dc3-a1e6-57bbc2a276ae"/>
+					<reportElement x="634" y="27" width="42" height="32" uuid="4d70bd6e-e2bd-4dc3-a1e6-57bbc2a276ae"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -302,12 +302,12 @@
 					</textElement>
 					<text><![CDATA[Total Net :]]></text>
 				</staticText>
-				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<textField pattern="#,##0.00" isBlankWhenNull="true">
 					<reportElement x="652" y="7" width="136" height="20" uuid="a4179d9b-eda0-4b38-b101-97261be1a605"/>
 					<textElement verticalAlignment="Middle">
 						<font fontName="TH SarabunPSK" size="12" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{totalnet}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{totalnet} != null && !"null".equals($V{totalnet}) && $V{totalnet}.length() > 0 && !"".equalsIgnoreCase($V{totalnet})) ? new BigDecimal($V{totalnet}) : new BigDecimal("0")]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="587" y="24" width="59" height="20" uuid="9f7b53a3-2f45-4471-8dab-a8fb9dc5ba4f"/>
@@ -316,12 +316,12 @@
 					</textElement>
 					<text><![CDATA[Vat :]]></text>
 				</staticText>
-				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<textField pattern="#,##0.00" isBlankWhenNull="true">
 					<reportElement x="652" y="24" width="136" height="20" uuid="4a16eafd-c3bb-467e-800b-82f9a32aafef"/>
 					<textElement verticalAlignment="Middle">
 						<font fontName="TH SarabunPSK" size="12" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{totalvat}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{totalvat} != null && !"null".equals($V{totalvat}) && $V{totalvat}.length() > 0 && !"".equalsIgnoreCase($V{totalvat})) ? new BigDecimal($V{totalvat}) : new BigDecimal("0")]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="587" y="41" width="59" height="20" uuid="03f50e86-8244-4e9c-a8b2-77eff217723d"/>
@@ -330,12 +330,12 @@
 					</textElement>
 					<text><![CDATA[Total Amount :]]></text>
 				</staticText>
-				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<textField pattern="#,##0.00" isBlankWhenNull="true">
 					<reportElement x="652" y="41" width="136" height="20" uuid="ecb83bf4-4df5-421d-9c0f-723b5fcb57b3"/>
 					<textElement verticalAlignment="Middle">
 						<font fontName="TH SarabunPSK" size="12" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{totalamount}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{totalamount} != null && !"null".equals($V{totalamount}) && $V{totalamount}.length() > 0 && !"".equalsIgnoreCase($V{totalamount})) ? new BigDecimal($V{totalamount}) : new BigDecimal("0")]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="587" y="59" width="59" height="20" uuid="18f9e966-2c86-46a0-a3fe-f892a26e75e9"/>
@@ -344,12 +344,12 @@
 					</textElement>
 					<text><![CDATA[Total Profit :]]></text>
 				</staticText>
-				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<textField pattern="#,##0.00" isBlankWhenNull="true">
 					<reportElement x="652" y="59" width="136" height="20" uuid="87174f1b-44c8-4a00-b3b5-2942c762fc79"/>
 					<textElement verticalAlignment="Middle">
 						<font fontName="TH SarabunPSK" size="12" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{totalprofit}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{totalprofit} != null && !"null".equals($V{totalprofit}) && $V{totalprofit}.length() > 0 && !"".equalsIgnoreCase($V{totalprofit})) ? new BigDecimal($V{totalprofit}) : new BigDecimal("0")]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -413,42 +413,35 @@
 				<text><![CDATA[Invoice Report]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="656" y="33" width="44" height="14" uuid="76b9b769-929f-43a5-9720-0112e8225af9"/>
-				<textElement>
+				<reportElement x="668" y="33" width="48" height="14" uuid="76b9b769-929f-43a5-9720-0112e8225af9"/>
+				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Print on:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="611" y="70" width="131" height="14" uuid="122fa1d1-4313-4379-8fdd-a4824f3d7ebc"/>
+				<reportElement x="665" y="70" width="131" height="14" uuid="122fa1d1-4313-4379-8fdd-a4824f3d7ebc"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Page           "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Report">
-				<reportElement x="747" y="70" width="49" height="14" uuid="d47b48a3-1048-42ec-a745-6f41c4fd4e7c"/>
-				<textElement textAlignment="Left">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Page : "+$V{PAGE_NUMBER}+" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="656" y="51" width="44" height="14" uuid="ec56269a-1c07-4cb2-9d1d-bdc029bbea19"/>
-				<textElement>
+				<reportElement x="668" y="51" width="48" height="14" uuid="ec56269a-1c07-4cb2-9d1d-bdc029bbea19"/>
+				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Print by :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="712" y="51" width="84" height="14" uuid="f3be6bba-dba8-4863-96f2-b9927da0d910"/>
+				<reportElement x="716" y="51" width="80" height="14" uuid="f3be6bba-dba8-4863-96f2-b9927da0d910"/>
 				<textElement textAlignment="Right">
 					<font fontName="SansSerif" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{username}]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
-				<reportElement x="712" y="33" width="82" height="15" uuid="81d7a0cd-c3e6-4821-9b5a-8ee38f1bf562"/>
+				<reportElement x="716" y="33" width="78" height="15" uuid="81d7a0cd-c3e6-4821-9b5a-8ee38f1bf562"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
@@ -534,7 +527,7 @@
 				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="192" y="0" width="107" height="20" isPrintWhenDetailOverflows="true" uuid="a23eb9ba-b6ae-43f6-bac2-88e7b34dafbc"/>
 			</rectangle>
 			<textField>
-				<reportElement x="192" y="0" width="103" height="20" uuid="4461d846-6dab-4e03-b24e-595bb907659e"/>
+				<reportElement x="196" y="0" width="103" height="20" uuid="4461d846-6dab-4e03-b24e-595bb907659e"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<leftPen lineWidth="0.0"/>
@@ -547,7 +540,7 @@
 				<textFieldExpression><![CDATA[  $F{invname}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="299" y="0" width="81" height="20" isPrintWhenDetailOverflows="true" uuid="276a8160-7b8e-497c-8c4d-bd1422d02556"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="299" y="0" width="82" height="20" isPrintWhenDetailOverflows="true" uuid="276a8160-7b8e-497c-8c4d-bd1422d02556"/>
 			</rectangle>
 			<textField>
 				<reportElement x="303" y="0" width="77" height="20" uuid="af5f1d6a-afc7-4317-9ea1-31d9837f76fb"/>
@@ -592,13 +585,13 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{gross}  ]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{gross} != null && !"null".equals($F{gross}) && $F{gross}.length() > 0 && !"".equalsIgnoreCase($F{gross})) ? new BigDecimal($F{gross}) : new BigDecimal("0")]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="526" y="0" width="37" height="20" isPrintWhenDetailOverflows="true" uuid="ae1ec18b-19de-405e-ab84-c5d02f34f3d2"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="526" y="0" width="50" height="20" isPrintWhenDetailOverflows="true" uuid="ae1ec18b-19de-405e-ab84-c5d02f34f3d2"/>
 			</rectangle>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="526" y="0" width="33" height="20" uuid="79adfb0b-c64b-43c3-9dc9-2fd65f791d3f"/>
+				<reportElement x="526" y="0" width="47" height="20" uuid="79adfb0b-c64b-43c3-9dc9-2fd65f791d3f"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<leftPen lineWidth="0.0"/>
@@ -608,13 +601,13 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{vat}  ]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{vat} != null && !"null".equals($F{vat}) && $F{vat}.length() > 0 && !"".equalsIgnoreCase($F{vat})) ? new BigDecimal($F{vat}) : new BigDecimal("0")  ]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="563" y="0" width="48" height="20" isPrintWhenDetailOverflows="true" uuid="47a7bb4c-b703-44bc-800c-80d20b3abc7a"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="576" y="0" width="58" height="20" isPrintWhenDetailOverflows="true" uuid="47a7bb4c-b703-44bc-800c-80d20b3abc7a"/>
 			</rectangle>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="563" y="0" width="43" height="20" uuid="571ddd46-1ba1-40d5-b408-2d2f78b37ef8"/>
+				<reportElement x="576" y="0" width="55" height="20" uuid="571ddd46-1ba1-40d5-b408-2d2f78b37ef8"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<leftPen lineWidth="0.0"/>
@@ -624,13 +617,13 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{amount}  ]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{amount} != null && !"null".equals($F{amount}) && $F{amount}.length() > 0 && !"".equalsIgnoreCase($F{amount})) ? new BigDecimal($F{amount}) : new BigDecimal("0") ]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="611" y="0" width="64" height="20" isPrintWhenDetailOverflows="true" uuid="17a78552-6623-4d5b-8b1f-fca9a50fc933"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="634" y="0" width="42" height="20" isPrintWhenDetailOverflows="true" uuid="17a78552-6623-4d5b-8b1f-fca9a50fc933"/>
 			</rectangle>
 			<textField>
-				<reportElement x="615" y="0" width="61" height="20" uuid="853b9407-c352-4953-9a84-8abbaf562ad6"/>
+				<reportElement x="638" y="0" width="37" height="20" uuid="853b9407-c352-4953-9a84-8abbaf562ad6"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<leftPen lineWidth="0.0"/>
