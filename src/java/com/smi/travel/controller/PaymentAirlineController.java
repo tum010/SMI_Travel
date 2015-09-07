@@ -51,6 +51,7 @@ public class PaymentAirlineController extends SMITravelController {
     private static final String SETCALCULATEREFUND = "setCalculateRefund";
     private static final String OPTIONSAVE = "optionSave";
     private static final String SEARCHPAYMENTNOFLAG = "searchPaymentNoFlag";
+    private static final String CREDITROWCOUNT = "creditRowCount";
     private UtilityService utilityService; 
     private PaymentAirTicketService paymentAirTicketService;
     UtilityFunction util;
@@ -88,7 +89,7 @@ public class PaymentAirlineController extends SMITravelController {
         // Add PayTo radio
         String payto = request.getParameter("payto");
         
-        
+        request.setAttribute(CREDITROWCOUNT, "1");
         request.setAttribute(TICKETFARECOUNT,"0");
         request.setAttribute(FLAGSEARCG,"0");
         request.setAttribute(SETCALCULATETICKET,0);
@@ -160,7 +161,7 @@ public class PaymentAirlineController extends SMITravelController {
             paymentAirticket.setInvoiceSup(invoiceSupCode);
             paymentAirticket.setApCode(apCode);
             paymentAirticket.setDetail(detail);
-            paymentAirticket.setCreditNote(creditNote);
+//            paymentAirticket.setCreditNote(creditNote);
             paymentAirticket.setDebitNote(debitNote);
             paymentAirticket.setChqNo(chqNo); 
             paymentAirticket.setCreateBy(user.getUsername());
@@ -178,11 +179,11 @@ public class PaymentAirlineController extends SMITravelController {
                 paymentAirticket.setAgentAmount(new BigDecimal(0)); 
             }
             
-            if(StringUtils.isNotEmpty(creditAmount)){
-                paymentAirticket.setCreditAmount(new BigDecimal(String.valueOf(creditAmount.replaceAll(",","")))); 
-            }else{
-                paymentAirticket.setCreditAmount(new BigDecimal(0)); 
-            }
+//            if(StringUtils.isNotEmpty(creditAmount)){
+//                paymentAirticket.setCreditAmount(new BigDecimal(String.valueOf(creditAmount.replaceAll(",","")))); 
+//            }else{
+//                paymentAirticket.setCreditAmount(new BigDecimal(0)); 
+//            }
             
             if(StringUtils.isNotEmpty(debitAmount)){
                 paymentAirticket.setDebitAmount(new BigDecimal(String.valueOf(debitAmount.replaceAll(",","")))); 
@@ -350,7 +351,7 @@ public class PaymentAirlineController extends SMITravelController {
             paymentAirticket.setInvoiceSup(invoiceSupCode);
             paymentAirticket.setApCode(apCode);
             paymentAirticket.setDetail(detail);
-            paymentAirticket.setCreditNote(creditNote);
+//            paymentAirticket.setCreditNote(creditNote);
             paymentAirticket.setDebitNote(debitNote);
             paymentAirticket.setChqNo(chqNo); 
             paymentAirticket.setCreateBy(user.getUsername());
@@ -368,11 +369,11 @@ public class PaymentAirlineController extends SMITravelController {
                 paymentAirticket.setAgentAmount(new BigDecimal(0)); 
             }
 
-            if(StringUtils.isNotEmpty(creditAmount)){
-                paymentAirticket.setCreditAmount(new BigDecimal(String.valueOf(creditAmount.replaceAll(",","")))); 
-            }else{
-                paymentAirticket.setCreditAmount(new BigDecimal(0)); 
-            }
+//            if(StringUtils.isNotEmpty(creditAmount)){
+//                paymentAirticket.setCreditAmount(new BigDecimal(String.valueOf(creditAmount.replaceAll(",","")))); 
+//            }else{
+//                paymentAirticket.setCreditAmount(new BigDecimal(0)); 
+//            }
             
             if(StringUtils.isNotEmpty(debitAmount)){
                 paymentAirticket.setDebitAmount(new BigDecimal(String.valueOf(debitAmount.replaceAll(",","")))); 
