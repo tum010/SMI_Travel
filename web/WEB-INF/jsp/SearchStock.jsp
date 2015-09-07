@@ -13,10 +13,9 @@
 <c:set var="itemStatus" value="${requestScope['itemStatus']}" />
 <c:set var="payStatus" value="${requestScope['payStatus']}" />
 <c:set var="expire" value="${requestScope['expire']}" />
-<c:set var="adddate" value="${requestScope['adddate']}" />
-<c:set var="productid" value="${requestScope['productid']}" />
-<c:set var="proName" value="${requestScope['proName']}" />
-<c:set var="proCode" value="${requestScope['proCode']}" />
+<c:set var="createDate" value="${requestScope['createDate']}" />
+<c:set var="EffecttiveFrom" value="${requestScope['EffecttiveFrom']}" />
+<c:set var="EffectiveTo" value="${requestScope['EffectiveTo']}" />
 
 <section class="content-header" >
     <h1>
@@ -44,48 +43,42 @@
                 <div class="col-xs-1 text-right" style="width: 130px;"> 
                     <label class="control-label">Product</lable>
                 </div>
-                <c:set var="setProductId" value="" />
-                <c:if test="${productid != ''}">
-                    <c:set var="setProductId" value="${setProductId}" />
-                </c:if> 
-                <c:if test="${productid == ''}">
-                     <c:set var="setProductId" value="${stockClass.product.id}" />
-                </c:if>
-                
-                <c:set var="setProductCode" value="" />
-                <c:if test="${proCode != ''}">
-                    <c:set var="setProductCode" value="${proCode}" />
-                </c:if> 
-                <c:if test="${proCode == ''}">
-                     <c:set var="setProductCode" value="${stockClass.product.code}" />
-                </c:if>
-                
-                <c:set var="setProductName" value="" />
-                <c:if test="${proName != ''}">
-                    <c:set var="setProductName" value="${proName}" />
-                </c:if> 
-                <c:if test="${proName == ''}">
-                     <c:set var="setProductName" value="${stockClass.product.name}" />
-                </c:if>
                 
                 <c:set var="setProductAdd" value="" />
-                <c:if test="${adddate != ''}">
-                    <c:set var="setProductAdd" value="${adddate}" />
+                <c:if test="${createDate != ''}">
+                    <c:set var="setProductAdd" value="${createDate}" />
                 </c:if> 
-                <c:if test="${adddate == ''}">
+                <c:if test="${createDate == ''}">
                      <c:set var="setProductAdd" value="${stockClass.createDate}" />
                 </c:if>
-                <input name="InputId" id="InputId" type="hidden" class="form-control" value="${setProductId}" />
+                
+                <c:set var="setFrom" value="" />
+                <c:if test="${EffecttiveFrom != ''}">
+                    <c:set var="setFrom" value="${EffecttiveFrom}" />
+                </c:if> 
+                <c:if test="${EffecttiveFrom == ''}">
+                     <c:set var="setFrom" value="${stockClass.effectiveFrom}" />
+                </c:if>
+                
+                <c:set var="setTo" value="" />
+                <c:if test="${EffectiveTo != ''}">
+                    <c:set var="setTo" value="${EffectiveTo}" />
+                </c:if> 
+                <c:if test="${EffectiveTo == ''}">
+                     <c:set var="setTo" value="${stockClass.effectiveTo}" />
+                </c:if>
+                
+                <input name="InputId" id="InputId" type="hidden" class="form-control" value="${stockClass.product.id}" />
                 <div class="col-md-2 form-group text-left" > 
                     <div class="input-group" id="gr" >
-                        <input type="text" class="form-control" id="InputProductId" name="InputProductId" value="${setProductCode}" />
+                        <input type="text" class="form-control" id="InputProductId" name="InputProductId" value="${stockClass.product.code}" />
                         <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#SearchProduct">
                             <span class="glyphicon-search glyphicon"></span>
                         </span>
                     </div>
                 </div>
                 <div class="col-md-2 form-group text-left" > 
-                    <input name="InputProductName" id="InputProductName" type="text" class="form-control" value="${setProductName}" readonly="" />
+                    <input name="InputProductName" id="InputProductName" type="text" class="form-control" value="${stockClass.product.name}" readonly="" />
                 </div>
                 <div class="col-xs-1 text-right" style="width: 100px;padding-right: 10px;padding-left: 0px;">
                     <label class="control-label">Pay Status</lable>
@@ -136,7 +129,7 @@
             </div>
             <div class="col-md-2 form-group text-left" style="padding-left: 8px;"> 
                 <div class='input-group date' >
-                    <input name="InputEffectiveFromDate" id="InputEffectiveFromDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${stockClass.effectiveFrom}" />
+                    <input name="InputEffectiveFromDate" id="InputEffectiveFromDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${setFrom}" />
                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
             </div>
@@ -145,7 +138,7 @@
             </div>
             <div class="col-md-2 form-group text-left" style="padding-left: 6px;"> 
                 <div class='input-group date' >
-                    <input name="InputInputEffectiveToDate" id="InputInputEffectiveToDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${stockClass.effectiveTo}" />
+                    <input name="InputInputEffectiveToDate" id="InputInputEffectiveToDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${setTo}" />
                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
             </div>
@@ -444,8 +437,7 @@
 <script type="text/javascript">
 $(document).ready(function () {
     $('.date').datetimepicker();
-    
-     $(".datemask").mask('00-00-0000', {reverse: true});
+    $(".datemask").mask('0000-00-00', {reverse: true});
      $('.spandate').click(function() {
             var position = $(this).offset();
             console.log("positon :" + position.top);
