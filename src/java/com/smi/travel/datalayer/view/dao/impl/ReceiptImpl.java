@@ -228,8 +228,8 @@ public class ReceiptImpl implements ReceiptDao{
             receiptView.setReceivedate((("null".equals(String.valueOf(recSum[2])) ? "" : String.valueOf(df.format(util.convertStringToDate(String.valueOf(recSum[2])))))));
             receiptView.setRecfrom((("null".equals(String.valueOf(recSum[3])) ? "" : String.valueOf(recSum[3]))));
             receiptView.setRecname((("null".equals(String.valueOf(recSum[4])) ? "" : String.valueOf(recSum[4]))));
-            receiptView.setRecdetail((("null".equals(String.valueOf(recSum[7])) ? "" : String.valueOf(recSum[7]))));
-            receiptView.setInvno((("null".equals(String.valueOf(recSum[8])) ? "" : String.valueOf(recSum[8]))));
+            receiptView.setRecdetail((("null".equals(String.valueOf(recSum[7])) ? "" : String.valueOf(recSum[7]).replaceAll(",", " ,").trim())));
+            receiptView.setInvno((("null".equals(String.valueOf(recSum[8])) ? "" : String.valueOf(recSum[8]).replaceAll(",", ",\\\n").trim())));
             receiptView.setInvamount((("0.00".equals(String.valueOf(recSum[9])) ? "0" : String.valueOf(recSum[9]))));
             receiptView.setDiff((("0.00".equals(String.valueOf(recSum[10])) ? "0" : String.valueOf(recSum[10]))));
             receiptView.setRecamount((("0.00".equals(String.valueOf(recSum[11])) ? "0" : String.valueOf(recSum[11]))));
@@ -240,7 +240,8 @@ public class ReceiptImpl implements ReceiptDao{
             receiptView.setBanktransfer((("0.00".equals(String.valueOf(recSum[16])) ? "0" : String.valueOf(recSum[16]))));
             receiptView.setWt((("0.00".equals(String.valueOf(recSum[17])) ? "0" : String.valueOf(recSum[17]))));
             receiptView.setCashminus((("0.00".equals(String.valueOf(recSum[18])) ? "0" : String.valueOf(recSum[18]))));
-            receiptView.setNo(String.valueOf(i));            
+            receiptView.setNo(String.valueOf(i)); 
+            
             data.add(receiptView);
             i++;
         }
