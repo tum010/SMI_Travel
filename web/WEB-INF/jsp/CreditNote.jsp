@@ -275,7 +275,7 @@
                                             </button>
                                         </div>
                                         <div class="col-md-1 text-right ">
-                                            <button type="button" onclick="" class="btn btn-success">
+                                            <button type="button" onclick="" id="buttonNew" class="btn btn-success">
                                                 <span id="SpanNew" class="fa fa-plus-circle"></span> New 
                                             </button>
                                         </div>

@@ -139,7 +139,7 @@
                                     <td align="center">${table.recTo}</td>
                                     <td align="center">${table.recName}</td>
                                     <td align="center">${table.invoiceNo}</td>
-                                    <td align="center">${table.amount}</td>
+                                    <td align="right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.amount}" /></td>
                                     <td align="center">${table.termPay}</td>
                                     <td align="center">${table.department}</td>
                                     <td> 
