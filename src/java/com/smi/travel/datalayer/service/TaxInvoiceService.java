@@ -51,6 +51,10 @@ public class TaxInvoiceService {
     public String checkInvoiceDetailValue(String id, BigDecimal cost, BigDecimal amount) {
         return taxInvoiceDao.checkInvoiceDetailValue(id,cost,amount);
     }
+
+    public String checkCreditNote(String id) {
+        return taxInvoiceDao.checkCreditNote(id);
+    }
     
     
 }

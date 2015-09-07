@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TaxInvoiceEmailReport" language="groovy" pageWidth="594" pageHeight="421" columnWidth="524" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="346dddd2-e21a-4c7b-8d69-ccea53d38a9d">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="38"/>
-	<property name="ireport.y" value="124"/>
+	<property name="ireport.x" value="72"/>
+	<property name="ireport.y" value="48"/>
 	<field name="customer" class="java.lang.String"/>
 	<field name="address" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -30,10 +30,6 @@
 	</background>
 	<pageHeader>
 		<band height="152" splitType="Stretch">
-			<image>
-				<reportElement x="2" y="0" width="65" height="66" uuid="a6df649e-a783-44e1-b9b7-5345373d1f9a"/>
-				<imageExpression><![CDATA["resource/images/wendy-logo.jpg"]]></imageExpression>
-			</image>
 			<rectangle radius="10">
 				<reportElement x="-1" y="66" width="525" height="18" backcolor="#CCCCCC" uuid="25b396a9-ec82-4dc3-adb4-07116b97b1c1"/>
 			</rectangle>
@@ -73,18 +69,18 @@
 				<text><![CDATA[TAX ID. NO. 0105523020132]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="70" y="-1" width="149" height="17" uuid="b9b48eba-8b55-4c85-9587-4e34e4ac418d"/>
+				<reportElement x="69" y="0" width="204" height="17" uuid="b9b48eba-8b55-4c85-9587-4e34e4ac418d"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[S.M.I Travel Co., Ltd.]]></text>
+				<text><![CDATA[S.M.I Travel Co., Ltd. (Head Office)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="198" y="66" width="143" height="17" uuid="9d649f59-8370-4543-b670-8c95b5b98211"/>
 				<textElement textAlignment="Center">
 					<font fontName="TH SarabunPSK" size="15" isBold="true" isItalic="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[TAX INVOICE/ ใบเสร็จรับเงิน]]></text>
+				<text><![CDATA[TAX INVOICE/ ใบกำกับภาษี]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="70" y="27" width="267" height="13" uuid="9fa65484-26d7-4188-a002-779b9986c466"/>
@@ -94,21 +90,21 @@
 				<text><![CDATA[865 Rama 1 Road, Wangmai, Phatumwan, Bangkok 10330]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="319" y="-4" width="201" height="22" uuid="e2007782-00e1-462b-b63c-7f75e602c5ea"/>
+				<reportElement x="261" y="-3" width="262" height="22" uuid="e2007782-00e1-462b-b63c-7f75e602c5ea"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="18" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[บริษัทเอส. เอ็ม. ไอ. แทรเวล จำกัด]]></text>
+				<text><![CDATA[บริษัทเอส. เอ็ม. ไอ. แทรเวล จำกัด (สำนักงานใหญ่)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="81" y="55" width="177" height="13" uuid="24dab500-099a-47d7-918e-06999f11fae4"/>
+				<reportElement x="71" y="52" width="177" height="13" uuid="24dab500-099a-47d7-918e-06999f11fae4"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[E-Mail : yoyaku@wendytour.com]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="81" y="43" width="271" height="13" uuid="9996e25f-2bc9-4108-bbc9-31e40761b1ec"/>
+				<reportElement x="71" y="40" width="271" height="13" uuid="9996e25f-2bc9-4108-bbc9-31e40761b1ec"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
@@ -302,6 +298,10 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{taxdate}]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="1" y="3" width="257" height="38" uuid="8dd2bc10-3c7b-4387-abf1-b629aa73a3a3"/>
+				<imageExpression><![CDATA["resource/images/smi-logo.gif"]]></imageExpression>
+			</image>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -410,9 +410,9 @@
 				<text><![CDATA[Original]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="310" y="75" width="211" height="17" uuid="99754846-144b-47ea-a2d1-a9508637aeb7"/>
+				<reportElement x="310" y="83" width="211" height="17" uuid="99754846-144b-47ea-a2d1-a9508637aeb7"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font fontName="TH SarabunPSK" size="13" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{user}]]></textFieldExpression>
 			</textField>
@@ -460,6 +460,9 @@
 			</textField>
 			<line>
 				<reportElement x="429" y="4" width="1" height="63" uuid="6d727a17-b994-4ded-b201-00ed773da56c"/>
+			</line>
+			<line>
+				<reportElement x="310" y="85" width="210" height="1" uuid="756c3c16-945d-4ce6-a5d4-162bae18ffe9"/>
 			</line>
 		</band>
 	</pageFooter>

@@ -29,4 +29,5 @@ public interface TaxInvoiceDao {
     public List<TaxInvoiceView> SearchTaxInvoiceFromFilter(String From,String To,String Department);
     public TaxInvoice getTaxInvoiceByTaxNo(String invoiceNo);
     public String checkInvoiceDetailValue(String id, BigDecimal cost, BigDecimal amount);
+    public String checkCreditNote(String id);
 }
