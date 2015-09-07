@@ -173,10 +173,24 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
                 .addScalar("department", Hibernate.STRING)
                 .addScalar("to", Hibernate.STRING)
                 .list();
-        
+        int count = 1;
         for (Object[] B : InvoiceSummaryList) {
             InvoiceSummary sum = new InvoiceSummary();
-            sum.setInvtype(util.ConvertString(B[0]));
+            sum.setNo(count);
+            if("N".equals(util.ConvertString(B[0]))){
+                sum.setInvtype("Invoice No Vat");
+            }else if("A".equals(util.ConvertString(B[0]))){
+                sum.setInvtype("Invoice Air Ticket");
+            }else if("T".equals(util.ConvertString(B[0]))){
+                sum.setInvtype("Temporary Invoice");
+            }else if("V".equals(util.ConvertString(B[0]))){
+                sum.setInvtype("Invoice Vat");
+            }else if("".equals(util.ConvertString(B[0]))){
+                sum.setInvtype("All");
+            }else{
+                sum.setInvtype("");
+            }
+            
             sum.setInvno(util.ConvertString(B[1]));
             sum.setInvdate((Date)B[2]);
             sum.setInvname(util.ConvertString(B[3]));
@@ -197,9 +211,15 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
             sum.setAmountcur(util.ConvertString(B[9]));
             sum.setStaff(util.ConvertString(B[10]));
             sum.setStatus(util.ConvertString(B[11]));
-            sum.setInvdepartment(util.ConvertString(B[12]));
-            sum.setTo(util.ConvertString(B[13]));
+            if(util.ConvertString(B[12]) != null && !"".equals(util.ConvertString(B[12]))){
+                sum.setInvdepartment(util.ConvertString(B[12]));
+            }else if("".equals(util.ConvertString(B[12]))){
+                sum.setInvdepartment("All");
+            }else{
+                sum.setInvdepartment("");
+            }
             
+            sum.setTo(util.ConvertString(B[13]));
             sum.setInvfrom(util.convertStringToDate(fromData));
             sum.setInvto(util.convertStringToDate(toDate));
             sum.setDepartment(department);         
@@ -207,6 +227,7 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
             sum.setUsername(util.ConvertString(B[10]));
           
             data.add(sum);
+            count++;
         }
         
         session.close();
