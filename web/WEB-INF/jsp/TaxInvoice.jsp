@@ -68,6 +68,12 @@
            <strong>Save Unsuccess Amount Much Over!.</strong> 
         </div>
         </c:if>
+        <c:if test="${requestScope['result_text'] =='disableVoid unsuccess'}">
+        <div id="textAlertAmountOver"  style="" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Cannot void Tax invoice. It use in credit note no ${requestScope['cnNoList']}</strong> 
+        </div>
+        </c:if>
         <div class="row" style="padding-left: 15px">  
             <div class="col-sm-6 " style="padding-right: 15px">
 		<c:choose>
@@ -178,7 +184,7 @@
                             </button>
                         </div>
                         <div class="col-xs-2 text-right">
-                            <label class="control-label" for="">Invoice date<font style="color: red">*</font></lable>
+                            <label class="control-label" for="">Tax Invoice date<font style="color: red">*</font></lable>
                         </div>
                         <div class="col-md-2 form-group">
                             <div class='input-group date' id='InputDatePicker'>
@@ -220,7 +226,7 @@
                     </div>
                     <div class="col-xs-12 ">
                         <div class="col-md-2 text-left">
-                            <label class="control-label" for="">Address </lable>
+                            <label class="control-label" for="">Address<font style="color: red">*</font></lable>
                         </div>
                         <div class="col-md-1 form-group" style="width: 585px">
                             <textarea  rows="3" cols="100" id="InvToAddress" name="InvToAddress" class="form-control" value="" >${taxInvoice.taxInvAddr}</textarea>
@@ -363,15 +369,15 @@
                         <div role="tabpanel" class="tab-pane  active" id="infoRemark">
                             <div class="panel panel-default">                              
                                 <div class="panel-body">
-                                    <div class="col-xs-12 ">
+<!--                                    <div class="col-xs-12 ">
                                         <div class="col-sm-1">
                                             <label class="control-label" for="">Remark&nbsp;</lable>                                         
                                         </div>
                                         <div class="col-sm-6" style="padding-left: 50px">
                                             <textarea  rows="3" cols="200" id="Remark" name="Remark" class="form-control" value="">${taxInvoice.remark}</textarea>
                                         </div>
-                                    </div>
-                                    <div class="col-xs-12 form-group"></div>
+                                    </div>-->
+<!--                                    <div class="col-xs-12 form-group"></div>-->
                                     <div class="col-xs-12 ">
                                         <div class="col-sm-1">
                                             <label class="control-label" for="">Text&nbsp;Amount&nbsp;:</lable>                                         
@@ -443,25 +449,13 @@
                                             </c:if>
                                             <c:if test="${result =='void'}">        
                                                 <c:set var="isDisableVoid" value="style='display: none;'" />
-                                                <c:if test="${roleName =='YES'}">        
-                                                    <c:set var="isEnableVoid" value="" />
-                                                    <c:set var="isSaveVoid" value="disabled='true'" />
-                                                </c:if>
-                                                <c:if test="${roleName =='NO'}">        
-                                                    <c:set var="isEnableVoid" value="disabled='true'" />
-                                                    <c:set var="isSaveVoid" value="disabled='true'" />
-                                                </c:if>
+                                                <c:set var="isEnableVoid" value="" />
+                                                <c:set var="isSaveVoid" value="disabled='true'" />                                                
                                             </c:if>
                                             <c:if test="${taxInvoice.MFinanceItemstatus.id == '2'}">        
-                                                <c:set var="isDisableVoid" value="style='display: none;'" />
-                                                <c:if test="${roleName =='YES'}">        
-                                                    <c:set var="isEnableVoid" value="" />
-                                                    <c:set var="isSaveVoid" value="disabled='true'" />
-                                                </c:if>
-                                                <c:if test="${roleName =='NO'}">        
-                                                    <c:set var="isEnableVoid" value="disabled='true'" />
-                                                    <c:set var="isSaveVoid" value="disabled='true'" />
-                                                </c:if>
+                                                <c:set var="isDisableVoid" value="style='display: none;'" />                                             
+                                                <c:set var="isEnableVoid" value="" />
+                                                <c:set var="isSaveVoid" value="disabled='true'" />
                                             </c:if>
                                             <c:if test="${result =='cancelvoid'}">        
                                                 <c:set var="isDisableVoid" value="" />
@@ -469,7 +463,7 @@
                                             <c:if test="${taxInvoice.MFinanceItemstatus.id == '1'}">        
                                                 <c:set var="isDisableVoid" value="" />
                                             </c:if>
-                                            <button type="button" class="btn btn-primary" onclick="EnableVoidInvoice();" data-toggle="modal" data-target="#EnableVoid" id="enableVoidButton" name="enableVoidButton"  ${isEnableVoid} >
+                                            <button type="button" class="btn btn-primary" onclick="EnableVoidInvoice();" data-toggle="modal" data-target="#EnableVoid" id="enableVoidButton" name="enableVoidButton"  ${isEnableVoid}>
                                                 <span id="SpanEnableVoid" class="glyphicon glyphicon-ok" ></span> Cancel Void
                                             </button>
                                             
@@ -877,6 +871,13 @@
                     validators: {
                         notEmpty: {
                             message: 'The Invoice Date is required'
+                        }
+                    }
+                },
+                InvToAddress: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The Address is required'
                         }
                     }
                 }
@@ -1302,8 +1303,26 @@
     function AddProduct(id,product,description,cost,curCost,amount,curAmount,isVat,refNo){
         var count = parseInt($("#countTaxInvoice").val());
         var row = parseInt(count)+1;
-        AddDataRowProduct(row,count,id,product,description,cost,curCost,amount,curAmount,isVat,refNo);
-
+        var match = CheckInvoiceProduct(id,count);
+        console.log(match);
+        if(match === 0){
+            AddDataRowProduct(row,count,id,product,description,cost,curCost,amount,curAmount,isVat,refNo);
+        }    
+    }
+    
+    function CheckInvoiceProduct(id,count){
+        var row = parseInt(count);
+        var match = 0;
+        for(var i=1;i<row;i++){
+            var invoiceDetailId = document.getElementById("invoiceDetailId"+i);
+            if(invoiceDetailId !== null){
+                if(invoiceDetailId.value === id){
+                    match++;
+                    i = row;
+                }
+            }
+        }        
+        return match;
     }
     
     function AddDataRowProduct(row,count,id,product,description,cost,curCost,amount,curAmount,isVat,refNo) {
