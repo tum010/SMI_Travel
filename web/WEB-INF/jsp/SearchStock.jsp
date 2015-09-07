@@ -33,14 +33,6 @@
 <!--        <div ng-include="'WebContent/Master/StockMenu.html'"></div>-->
     </div>
     <div class="col-sm-10">
-        <div class="row" style="padding-left: 15px">  
-            <div class="col-sm-6" style="padding-right: 15px">
-                <h4><b>Search Stock</b></h4>
-            </div>
-        </div>
-        <hr/>
-        <div class="row" >
-            <!--Alert Save -->
         <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Save Success!</strong> 
@@ -57,6 +49,15 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Max length More 50!!</strong> 
         </div>
+        <div class="row" style="padding-left: 15px">  
+            <div class="col-sm-6" style="padding-right: 15px">
+                <h4><b>Search Stock</b></h4>
+            </div>
+        </div>
+        <hr/>
+        <div class="row" >
+            <!--Alert Save -->
+        
             <div class="col-xs-12 ">
                 <div class="col-xs-1 text-right" style="width: 130px;"> 
                     <label class="control-label">Product</lable>
