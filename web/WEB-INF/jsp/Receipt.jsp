@@ -484,12 +484,7 @@
                             </c:forEach>
                         </select>
                         <div id="tr_ProductDetailAddRow" class="text-center hide" style="padding-top: 10px">
-                            <a class="btn btn-success" onclick="AddRowProduct()">
-                                <i class="glyphicon glyphicon-plus"></i> Add
-                            </a>
-                        </div>
-                        <div id="tr_CreditDetailAddRow" class="text-center hide" style="padding-top: 10px">
-                            <a class="btn btn-success" onclick="AddRowCredit()">
+                            <a class="btn btn-success" onclick="AddRowProduct(1)">
                                 <i class="glyphicon glyphicon-plus"></i> Add
                             </a>
                         </div>
@@ -650,7 +645,11 @@
                                         </c:forEach>
                                     </tbody>
                                 </table>
-                          
+                                <div id="tr_CreditDetailAddRow" class="text-center hide" style="padding-top: 10px">
+                                    <a class="btn btn-success" onclick="AddRowCredit(1)">
+                                        <i class="glyphicon glyphicon-plus"></i> Add
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2270,7 +2269,7 @@ function DeleteRowProduct(){
                     $("#tr_ProductDetailAddRow").removeClass("hide");
                     $("#tr_ProductDetailAddRow").addClass("show");
                 }
-                AddRowProduct();
+//                AddRowProduct();
             },
             error: function () {
                 console.log("error");
