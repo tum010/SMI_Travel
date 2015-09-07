@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptEmail" language="groovy" pageWidth="595" pageHeight="421" columnWidth="525" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="0038deea-02d3-4a9f-8925-fb54dc3fc533">
 	<property name="ireport.zoom" value="1.996500000000013"/>
-	<property name="ireport.x" value="49"/>
-	<property name="ireport.y" value="350"/>
+	<property name="ireport.x" value="68"/>
+	<property name="ireport.y" value="74"/>
 	<field name="recto" class="java.lang.String"/>
 	<field name="recadd" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -50,8 +50,8 @@
 				<reportElement x="0" y="63" width="525" height="18" backcolor="#CCCCCC" uuid="ddf02aa2-9924-429a-8a60-73ff6dc127c2"/>
 			</rectangle>
 			<image>
-				<reportElement x="3" y="-3" width="65" height="66" uuid="443c3a7f-285b-4053-828f-5bb02b82d58a"/>
-				<imageExpression><![CDATA["resource/images/wendy-logo.jpg"]]></imageExpression>
+				<reportElement x="0" y="-4" width="67" height="65" uuid="443c3a7f-285b-4053-828f-5bb02b82d58a"/>
+				<imageExpression><![CDATA["resource/images/smi-logo.gif"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="71" y="36" width="271" height="13" uuid="507c2d8f-6be9-4960-a112-79016be2c5bd"/>
@@ -408,9 +408,9 @@
 				<text><![CDATA[Witholding Tax : ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="396" y="-1" width="41" height="17" uuid="75618c8a-bf11-40f3-bc4b-f394bcc6a0e2"/>
+				<reportElement x="396" y="-6" width="41" height="29" uuid="75618c8a-bf11-40f3-bc4b-f394bcc6a0e2"/>
 				<textElement>
-					<font fontName="TH SarabunPSK" size="15" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+					<font fontName="TH SarabunPSK" size="20" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Total]]></text>
 			</staticText>
@@ -429,9 +429,9 @@
 				<text><![CDATA[Date : ]]></text>
 			</staticText>
 			<textField pattern="#,##0.00">
-				<reportElement x="444" y="-2" width="73" height="18" uuid="2a496a9c-ee13-4ad3-ab36-4696317e98c3"/>
+				<reportElement x="444" y="-3" width="73" height="29" uuid="2a496a9c-ee13-4ad3-ab36-4696317e98c3"/>
 				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="15" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[(!"null".equals($F{totalamount}) && $F{totalamount} != "null" && $F{totalamount}.length() > 0) ? Double.valueOf($F{totalamount}) : ""]]></textFieldExpression>
 			</textField>
@@ -513,7 +513,7 @@
 			<textField>
 				<reportElement x="80" y="59" width="216" height="17" uuid="a6b4d6e5-94ab-4651-b350-9b1a3e1ebbfc"/>
 				<textElement textAlignment="Left">
-					<font fontName="TH SarabunPSK" size="13" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+					<font fontName="TH SarabunPSK" size="15" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{textmoney}]]></textFieldExpression>
 			</textField>
@@ -556,8 +556,7 @@
 				<textElement textAlignment="Left">
 					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[(!"null".equals($F{cash}) && $F{cash}.length() > 0) ? new BigDecimal($F{cash}) : ""
-]]></textFieldExpression>
+				<textFieldExpression><![CDATA[(!"null".equals($F{cash}) && $F{cash}.length() > 0) ? new BigDecimal($F{cash}) : ""]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
