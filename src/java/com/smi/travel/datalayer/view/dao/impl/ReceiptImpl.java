@@ -240,40 +240,11 @@ public class ReceiptImpl implements ReceiptDao{
             receiptView.setBanktransfer((("0.00".equals(String.valueOf(recSum[16])) ? "0" : String.valueOf(recSum[16]))));
             receiptView.setWt((("0.00".equals(String.valueOf(recSum[17])) ? "0" : String.valueOf(recSum[17]))));
             receiptView.setCashminus((("0.00".equals(String.valueOf(recSum[18])) ? "0" : String.valueOf(recSum[18]))));
-            receiptView.setNo(String.valueOf(i));
+            receiptView.setNo(String.valueOf(i));            
             data.add(receiptView);
             i++;
         }
-        
-//        ReceiptView receiptView = new ReceiptView();
 
-//        receiptView.setSystemdate(String.valueOf(df.format(new Date())));
-//        receiptView.setUser("PJ-ADMINISTRATOR");
-//        receiptView.setFrom(String.valueOf(df.format(new Date())));
-//        receiptView.setTo(String.valueOf(df.format(new Date())));
-//        receiptView.setDepartment("OUTBOUND");
-//        
-//        receiptView.setRecdate(String.valueOf(df.format(new Date())));
-//        receiptView.setReceivedate(String.valueOf(df.format(new Date())));
-//        receiptView.setRecfrom("S00001");
-//        receiptView.setRecname("AAAAAAAAAAAAAAAAAAAAAA");
-//        receiptView.setRecdetail("TEST TEST");
-//        receiptView.setInvno("WN01010101");
-//        receiptView.setInvamount("100.01");
-//        receiptView.setDiff("200.02");
-//        receiptView.setRecamount("300.03");
-//        receiptView.setPayby("Customer");
-//        receiptView.setCash("100000");
-//        receiptView.setChq("100000");
-//        receiptView.setCreditcard("10000");
-//        receiptView.setBanktransfer("12000");
-//        receiptView.setWt("10000");
-//        receiptView.setCashminus("5000");
-//        for(int i= 0 ; i<30 ; i++){
-//            receiptView.setNo(String.valueOf(i));
-//            receiptView.setRecno("1509000"+i);
-//            data.add(receiptView);
-//        }
         if(data.isEmpty()) {
             return null;
         }

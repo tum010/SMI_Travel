@@ -238,7 +238,7 @@ public class ReceiptController extends SMITravelController {
                     receiptDetail.setInvoiceDetail(invoiceDetail);
                 }
                 
-//                if(StringUtils.isNotEmpty(billDescId) || StringUtils.isNotEmpty(paymentId)){
+                if(StringUtils.isEmpty(invId) || "".equals(invId)){
                     List<InvoiceDetail>  invoiceDetailList = null;
                     if(StringUtils.isNotEmpty(billDescId)){
                         invoiceDetailList = invoiceService.getInvoiceDetailFromBillableDescId(billDescId);
@@ -323,7 +323,7 @@ public class ReceiptController extends SMITravelController {
                            receiptDetail.setCurAmount("THB");
                        }
                    }
-//                }
+                }
                 if( (receiveProduct!="" && receiveProduct!=null) || 
                     (receiveDes!="" && receiveDes!=null) || 
                     (receiveCost!="" && receiveCost!=null) || 
