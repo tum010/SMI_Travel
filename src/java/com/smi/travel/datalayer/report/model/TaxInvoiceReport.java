@@ -28,6 +28,7 @@ public class TaxInvoiceReport {
     private String grandtotal;
     private String user;
     private String textamount;
+    private String curamount;
 
     public String getCustomer() {
         return customer;
@@ -149,31 +150,27 @@ public class TaxInvoiceReport {
         this.textamount = textamount;
     }
 
-    /**
-     * @return the id
-     */
     public String getId() {
         return id;
     }
 
-    /**
-     * @param id the id to set
-     */
     public void setId(String id) {
         this.id = id;
     }
 
-    /**
-     * @return the nondescription
-     */
     public String getNondescription() {
         return nondescription;
     }
 
-    /**
-     * @param nondescription the nondescription to set
-     */
     public void setNondescription(String nondescription) {
         this.nondescription = nondescription;
+    }
+
+    public String getCuramount() {
+        return curamount;
+    }
+
+    public void setCuramount(String curamount) {
+        this.curamount = curamount;
     }
 }

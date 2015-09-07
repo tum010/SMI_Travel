@@ -108,6 +108,7 @@ public class TaxInvoiceController extends SMITravelController {
         String checkInvoiceDetail = "";
         String page = "";
         String result = "";
+        String creditNoteUse = "";
         if("W".equalsIgnoreCase(callPageFrom)){
             page = "Wendy";
         } else if("O".equalsIgnoreCase(callPageFrom)){
@@ -202,7 +203,8 @@ public class TaxInvoiceController extends SMITravelController {
             taxInvoice.setTaxInvAddr(invToAddress);
             taxInvoice.setArCode(arCode);
             taxInvoice.setRemark(remark); 
-            taxInvoice.setTaxNo(taxInvNo);               
+            taxInvoice.setTaxNo(taxInvNo);
+            taxInvoice.setDepartment(department);
             taxInvoice.setCreateBy(createBy);
             
             Date invToDateConvert = new Date();
@@ -252,10 +254,18 @@ public class TaxInvoiceController extends SMITravelController {
             invToDateConvert = utilty.convertStringToDate(invToDate);
             taxInvoice.setTaxInvDate(invToDateConvert);
             
+            creditNoteUse = taxInvoiceService.checkCreditNote(taxInvoice.getId());
+            System.out.println("creditNoteUse : "+creditNoteUse);
             MFinanceItemstatus mFinanceItemstatus = new MFinanceItemstatus();
-            mFinanceItemstatus.setId("2");
-            mFinanceItemstatus.setName("VOID");
-            taxInvoice.setMFinanceItemstatus(mFinanceItemstatus);
+            if("success".equalsIgnoreCase(creditNoteUse)){               
+                mFinanceItemstatus.setId("2");
+                mFinanceItemstatus.setName("VOID");
+                taxInvoice.setMFinanceItemstatus(mFinanceItemstatus);
+            } else {
+                mFinanceItemstatus.setId("1");
+                mFinanceItemstatus.setName("NORMAL");
+                taxInvoice.setMFinanceItemstatus(mFinanceItemstatus);
+            }   
             
             invToDateConvert = utilty.convertStringToDate(createDate);
             taxInvoice.setCreateDate(invToDateConvert);
@@ -266,7 +276,9 @@ public class TaxInvoiceController extends SMITravelController {
             }
             
             if("success".equalsIgnoreCase(checkInvoiceDetail)){
-                result = taxInvoiceService.saveInvoice(taxInvoice);
+                if("success".equalsIgnoreCase(creditNoteUse)){
+                    result = taxInvoiceService.saveInvoice(taxInvoice);
+                }    
             } else {
                 result = checkInvoiceDetail;
             }
@@ -280,7 +292,8 @@ public class TaxInvoiceController extends SMITravelController {
             if("success".equalsIgnoreCase(result)){
                 request.setAttribute(RESULTTEXT, "disableVoid success");
             } else {
-                request.setAttribute(RESULTTEXT, "disableVoid success");
+                request.setAttribute(RESULTTEXT, "disableVoid unsuccess");
+                request.setAttribute("cnNoList", creditNoteUse);
             }
                        
         } else if("edit".equalsIgnoreCase(action)){

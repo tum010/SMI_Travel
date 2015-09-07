@@ -7,6 +7,7 @@
 package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.TaxInvoiceDao;
+import com.smi.travel.datalayer.entity.CreditNoteDetail;
 import com.smi.travel.datalayer.entity.ReceiptDetail;
 import com.smi.travel.datalayer.entity.TaxInvoice;
 import com.smi.travel.datalayer.entity.TaxInvoiceDetail;
@@ -371,7 +372,7 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
     @Override
     public List<TaxInvoiceDetail> getTaxInvoiceDetailFromInvDetailId(String invDetailId) {
         Session session = this.sessionFactory.openSession();
-        String query = " from TaxInvoiceDetail t WHERE t.invoiceDetail.id = :invDetailId";
+        String query = " from TaxInvoiceDetail t WHERE t.invoiceDetail.id = :invDetailId and t.taxInvoice.MFinanceItemstatus.name = 'NORMAL'";
         List<TaxInvoiceDetail> taxInvoiceDetailList = session.createQuery(query).setParameter("invDetailId", invDetailId).list();
         if(taxInvoiceDetailList.isEmpty()){
             return null;
@@ -387,6 +388,49 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
         Session session = this.sessionFactory.openSession();
         String query = " from InvoiceDetail i WHERE t.invoiceDetail.id = :invDetailId";
         
+        return result;
+    }
+
+    @Override
+    public String checkCreditNote(String id) {
+        String result = "";
+        System.out.println("Tax Invoice Id : "+id);
+        Session session = this.sessionFactory.openSession();
+        String query = " from CreditNoteDetail c WHERE c.taxInvoice.id = :taxInvId and c.creditNote.MFinanceItemstatus.name = 'NORMAL'";
+        List<CreditNoteDetail> creditNoteDetailList = session.createQuery(query).setParameter("taxInvId", id).list();
+        if(creditNoteDetailList.isEmpty()){
+            result = "success";
+            return result;
+        }       
+        
+        List<String> cnNoChkList = new ArrayList<String>();
+        for(int i=0;i<creditNoteDetailList.size();i++){
+            int match = 0;
+            CreditNoteDetail creditNoteDetail = new CreditNoteDetail();
+            creditNoteDetail = creditNoteDetailList.get(i);
+            String cnNo1 = creditNoteDetail.getCreditNote().getCnNo();
+            System.out.println("cnNo1 : "+cnNo1);
+            if(!cnNoChkList.isEmpty()){
+                for(int j=0;j<cnNoChkList.size();j++){
+                    String cnNo2 = cnNoChkList.get(j);
+                    if(cnNo1.equalsIgnoreCase(cnNo2)){
+                        match++;
+                        j = cnNoChkList.size();
+                    }
+                }
+                if(match == 0){
+                    result += ",";
+                    result += cnNo1;
+                    cnNoChkList.add(cnNo1);
+                }
+            } else {
+                result = cnNo1;
+                cnNoChkList.add(cnNo1);
+            }          
+        }
+        session.close();
+        this.sessionFactory.close();
+        System.out.println("Result : "+result);
         return result;
     }
 }

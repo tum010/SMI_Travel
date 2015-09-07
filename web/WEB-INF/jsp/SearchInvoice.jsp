@@ -14,6 +14,7 @@
 <c:set var="agent" value="${requestScope['agent']}" />
 <c:set var="agentName" value="${requestScope['agentName']}" />
 <c:set var="listAgent" value="${requestScope['listAgent']}" />
+<c:set var="result" value="${requestScope['result']}" />
 
 <section class="content-header" >
     <h1>
@@ -349,4 +350,5 @@
     });
     });   
 </script>
+
 <script type="text/javascript" src="js/SearchInvoice.js"></script> 

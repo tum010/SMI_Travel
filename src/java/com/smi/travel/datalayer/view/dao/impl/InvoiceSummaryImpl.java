@@ -118,42 +118,43 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
             query = "SELECT * FROM invoice_summary st where" ;
         }
         
+        System.out.println("Attribute : " + fromData + " : " + toDate + " : " + department + " : " + type + " : " + agent);
         if ( department != null && (!"".equalsIgnoreCase(department)) ) {
             AndQuery = 1;
-            query += " department = '" + department + "'";
+            query += " st.department = '" + department + "'";
         }
        
         if (type != null && (!"".equalsIgnoreCase(type)) ) {
            if(AndQuery == 1){
-                query += " and type = '" + type + "'";
+                query += " and st.type = '" + type + "'";
            }else{
                AndQuery = 1;
-               query += " type = '" + type + "'";
+               query += " st.type = '" + type + "'";
            }
         }
         
         if(agent != null && (!"".equalsIgnoreCase(agent))){
             if(AndQuery == 1){
-                query += " and to = '" + agent + "'";
+                query += " and st.to = '" + agent + "'";
            }else{
                AndQuery = 1;
-               query += " to = '" + agent + "'";
+               query += " st.to = '" + agent + "'";
            }
         }
         
         if ((fromData != null )&&(!"".equalsIgnoreCase(fromData))) {
             if ((toDate != null )&&(!"".equalsIgnoreCase(toDate))) {
                 if(AndQuery == 1){
-                     query += " and invdate  BETWEEN  '" + fromData + "' AND '" + toDate + "' ";
+                     query += " and st.invdate  BETWEEN  '" + fromData + "' AND '" + toDate + "' ";
                 }else{
                     AndQuery = 1;
-                     query += " invdate  BETWEEN  '" + fromData + "' AND '" + toDate + "' ";
+                     query += " st.invdate  BETWEEN  '" + fromData + "' AND '" + toDate + "' ";
                 }
                 
                
             }
         }
-        query += "  ORDER BY invdate DESC";
+        query += "  ORDER BY st.invdate DESC";
         System.out.println("Query : "+query);
         int no = 0;
         List<Object[]> InvoiceSummaryList = session.createSQLQuery(query )
@@ -171,11 +172,26 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
                 .addScalar("status", Hibernate.STRING)
                 .addScalar("department", Hibernate.STRING)
                 .addScalar("to", Hibernate.STRING)
+                .addScalar("profit", Hibernate.DOUBLE)
                 .list();
-        
+        int count = 1;
         for (Object[] B : InvoiceSummaryList) {
             InvoiceSummary sum = new InvoiceSummary();
-            sum.setInvtype(util.ConvertString(B[0]));
+            sum.setNo(count);
+            if("N".equals(util.ConvertString(B[0]))){
+                sum.setInvtype("Invoice No Vat");
+            }else if("A".equals(util.ConvertString(B[0]))){
+                sum.setInvtype("Invoice Air Ticket");
+            }else if("T".equals(util.ConvertString(B[0]))){
+                sum.setInvtype("Temporary Invoice");
+            }else if("V".equals(util.ConvertString(B[0]))){
+                sum.setInvtype("Invoice Vat");
+            }else if("".equals(util.ConvertString(B[0]))){
+                sum.setInvtype("All");
+            }else{
+                sum.setInvtype("");
+            }
+            
             sum.setInvno(util.ConvertString(B[1]));
             sum.setInvdate((Date)B[2]);
             sum.setInvname(util.ConvertString(B[3]));
@@ -193,19 +209,31 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
                 Double amount = Double.parseDouble(util.ConvertString(B[8]));
                 sum.setAmount(amount);
             }
+            
+            if(B[14] != null){
+                Double profit = Double.parseDouble(util.ConvertString(B[14]));
+                sum.setProfit(profit);
+            }
             sum.setAmountcur(util.ConvertString(B[9]));
             sum.setStaff(util.ConvertString(B[10]));
             sum.setStatus(util.ConvertString(B[11]));
-            sum.setInvdepartment(util.ConvertString(B[12]));
-            sum.setTo(util.ConvertString(B[13]));
+            if(util.ConvertString(B[12]) != null && !"".equals(util.ConvertString(B[12]))){
+                sum.setInvdepartment(util.ConvertString(B[12]));
+            }else if("".equals(util.ConvertString(B[12]))){
+                sum.setInvdepartment("All");
+            }else{
+                sum.setInvdepartment("");
+            }
             
+            sum.setTo(util.ConvertString(B[13]));
             sum.setInvfrom(util.convertStringToDate(fromData));
             sum.setInvto(util.convertStringToDate(toDate));
             sum.setDepartment(department);         
             sum.setSystemdate(util.convertDateToString(new Date()));
             sum.setUsername(util.ConvertString(B[10]));
-          
+
             data.add(sum);
+            count++;
         }
         
         session.close();

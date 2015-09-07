@@ -12,6 +12,7 @@ import java.util.Date;
  * @author Kanokporn
  */
 public class InvoiceSummary {
+    private int no;
     private Date invfrom;
     private Date invto;
     private String invtype;
@@ -29,12 +30,17 @@ public class InvoiceSummary {
     private String staff;
     private String status;
     private String invdepartment;
-//    private Double sumnet;
-//    private Double sumvat;
-//    private Double sumamount;
-//    private Double sumprofit;
     private String username;
     private String systemdate;
+    private Double profit;
+
+    public void setNo(int no) {
+        this.no = no;
+    }
+
+    public int getNo() {
+        return no;
+    }
 
     public void setSystemdate(String systemdate) {
         this.systemdate = systemdate;
@@ -215,18 +221,19 @@ public class InvoiceSummary {
         return invtype;
     }
 
-    /**
-     * @return the invfrom
-     */
     public Date getInvfrom() {
         return invfrom;
     }
 
-    /**
-     * @param invfrom the invfrom to set
-     */
     public void setInvfrom(Date invfrom) {
         this.invfrom = invfrom;
     }
 
+    public void setProfit(Double profit) {
+        this.profit = profit;
+    }
+
+    public Double getProfit() {
+        return profit;
+    }
 }

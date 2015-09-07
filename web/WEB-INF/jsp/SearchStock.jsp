@@ -16,6 +16,7 @@
 <c:set var="createDate" value="${requestScope['createDate']}" />
 <c:set var="EffecttiveFrom" value="${requestScope['EffecttiveFrom']}" />
 <c:set var="EffectiveTo" value="${requestScope['EffectiveTo']}" />
+<c:set var="result" value="${requestScope['result']}" />
 
 <section class="content-header" >
     <h1>
@@ -32,6 +33,22 @@
 <!--        <div ng-include="'WebContent/Master/StockMenu.html'"></div>-->
     </div>
     <div class="col-sm-10">
+        <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Save Success!</strong> 
+        </div>
+        <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Save Not Success!</strong> 
+        </div>
+        <div id="textAlertMoreOne"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Duplicate Data in table !!</strong> 
+        </div>
+        <div id="checklengthCode"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Max length More 50!!</strong> 
+        </div>
         <div class="row" style="padding-left: 15px">  
             <div class="col-sm-6" style="padding-right: 15px">
                 <h4><b>Search Stock</b></h4>
@@ -39,6 +56,8 @@
         </div>
         <hr/>
         <div class="row" >
+            <!--Alert Save -->
+        
             <div class="col-xs-12 ">
                 <div class="col-xs-1 text-right" style="width: 130px;"> 
                     <label class="control-label">Product</lable>
@@ -128,7 +147,7 @@
                 <label class="control-label">Effective From</lable>
             </div>
             <div class="col-md-2 form-group text-left" style="padding-left: 8px;"> 
-                <div class='input-group date' >
+                <div class='input-group date' id="DateFrom">
                     <input name="InputEffectiveFromDate" id="InputEffectiveFromDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${setFrom}" />
                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
@@ -137,7 +156,7 @@
                 <label class="control-label">Effective To</lable>
             </div>
             <div class="col-md-2 form-group text-left" style="padding-left: 6px;"> 
-                <div class='input-group date' >
+                <div class='input-group date' id="DateTo">
                     <input name="InputInputEffectiveToDate" id="InputInputEffectiveToDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${setTo}" />
                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
@@ -489,7 +508,71 @@ $(document).ready(function () {
         "bLengthChange": false,
         "iDisplayLength": 10
     });
+    
+    $("#SearchStockForm")
+            .bootstrapValidator({
+                framework: 'bootstrap',
+                feedbackIcons: {
+                    valid: 'uk-icon-check',
+                    invalid: 'uk-icon-times',
+                    validating: 'uk-icon-refresh'
+                },
+                fields: {
+                    InputEffectiveFromDate: {
+                        trigger: 'focus keyup change',
+                            validators: {
+                                date: {
+                                    format: 'YYYY-MM-DD',
+                                    max: 'InputInputEffectiveToDate',
+                                    message: 'The Date From is not a valid'
+                                }
+                            }
+                    },
+                    InputInputEffectiveToDate: {
+                        trigger: 'focus keyup change',
+                            validators: {
+                                date: {
+                                    format: 'YYYY-MM-DD',
+                                    min: 'InputEffectiveFromDate',
+                                    message: 'The Date To is not a valid'
+                                }
+                            }
+                    }
+                }
+            }).on('success.field.fv', function (e, data) {
+                alert("1");
+                if (data.field === 'InputEffectiveFromDate' && data.fv.isValidField('InputInputEffectiveToDate') === false) {
+                        data.fv.revalidateField('InputInputEffectiveToDate');
+                    }
+
+                    if (data.field === 'InputInputEffectiveToDate' && data.fv.isValidField('InputEffectiveFromDate') === false) {
+                        data.fv.revalidateField('InputEffectiveFromDate');
+                    }
+            });
+    $('#DateFrom').datetimepicker().on('dp.change', function (e) {
+        $('#SearchStockForm').bootstrapValidator('revalidateField', 'InputEffectiveFromDate');
+    });
+    $('#DateTo').datetimepicker().on('dp.change', function (e) {
+        $('#SearchStockForm').bootstrapValidator('revalidateField', 'InputInputEffectiveToDate');
+    });
 });
 
 </script>
+<c:if test="${! empty result}">
+    <c:if test="${result =='success'}">        
+        <script language="javascript">
+            $('#textAlertDivSave').show();
+        </script>
+    </c:if>
+    <c:if test="${result =='fail'}">        
+        <script language="javascript">
+           $('#textAlertDivNotSave').show();
+        </script>
+    </c:if>
+    <c:if test="${result =='moreOne'}">        
+        <script language="javascript">
+           $('#textAlertMoreOne').show();
+        </script>
+    </c:if>
+</c:if>
 <script type="text/javascript" src="js/searchStock.js"></script>

@@ -2,15 +2,12 @@ package com.smi.travel.controller;
 import com.smi.travel.datalayer.entity.MStockStatus;
 import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.datalayer.entity.Stock;
-import com.smi.travel.datalayer.entity.StockDetail;
 import com.smi.travel.datalayer.service.MStaffService;
 import com.smi.travel.datalayer.service.StockService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.StockViewSummary;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -154,9 +151,7 @@ public class SearchStockController extends SMITravelController {
             String adddate = request.getParameter("createDate");
             String EffectFrom = request.getParameter("EffecttiveFrom");
             String EffectTo = request.getParameter("EffectiveTo");
-//            String date[];
-//            date = adddate.split("-");
-//            adddate = date[2] +"-" +date[1] + "-"+date[0];
+            String result = request.getParameter("result");
             System.out.println("Date Search Stock :" + adddate);
             System.out.println("Stock id View : "+ stockid);
             List<Stock> listStock = stockService.getStockById(stockid);
@@ -170,6 +165,19 @@ public class SearchStockController extends SMITravelController {
                 stock.setCreateDate(listStock.get(0).getCreateDate());
                 stock.setEffectiveFrom(listStock.get(0).getEffectiveFrom());
                 stock.setEffectiveTo(listStock.get(0).getEffectiveTo());
+                
+                // Stock Detail 
+                StockViewSummary stockDataDetail = stockService.searchStockDetail(stockid, "", "");
+                System.out.println("Stock View Summary : " + stockDataDetail.getId() + " " +stockDataDetail.getProductName() );
+                if(stockDataDetail != null){
+                    System.out.println("set summary");
+                    request.setAttribute("stockSummary", stockDataDetail);
+                    request.setAttribute("stockSumDetail", stockDataDetail.getItemList());
+                }else{
+                    request.setAttribute("stockSummary", null);
+                    request.setAttribute("stockSumDetail", null);
+                }
+                
                 request.setAttribute("listStock", listStock);
                 request.setAttribute("stock", stock);
                 request.setAttribute("productid", productid);
@@ -178,6 +186,7 @@ public class SearchStockController extends SMITravelController {
                 request.setAttribute("createDate", adddate);
                 request.setAttribute("EffecttiveFrom", EffectFrom);
                 request.setAttribute("EffectiveTo", EffectTo);
+                request.setAttribute("result", result);
             }else{
                 request.setAttribute("listStock", null);
             }

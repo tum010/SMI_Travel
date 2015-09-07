@@ -5,7 +5,6 @@
 
 <script type="text/javascript" src="js/jquery.mask.min.js"></script>
 
-<c:set var="result" value="${requestScope['result']}" />
 <c:set var="ListProductStock" value="${requestScope['ListProductStock']}" />
 <c:set var="ListStaffStock" value="${requestScope['ListStaffStock']}" />
 <c:set var="getType" value="${requestScope['getType']}" />
@@ -39,23 +38,7 @@
     <form action="Stock.smi" method="post" id="StockForm" name="StockFormName" role="form" onsubmit="">
     <div class="col-sm-10">
         <input type="hidden" id="idStockDelete" name= "idStockDelete" value="1" />
-        <!--Alert Save -->
-        <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Save Success!</strong> 
-        </div>
-        <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Save Not Success!</strong> 
-        </div>
-        <div id="textAlertMoreOne"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Duplicate Data in table !!</strong> 
-        </div>
-        <div id="checklengthCode"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Max length More 50!!</strong> 
-        </div>
+        
         <div class="row" style="padding-left: 15px">  
             <div class="col-sm-6" style="padding-right: 15px">
                 <h4><b>Stock</b></h4>
@@ -423,23 +406,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<c:if test="${! empty result}">
-    <c:if test="${result =='success'}">        
-        <script language="javascript">
-            $('#textAlertDivSave').show();
-        </script>
-    </c:if>
-    <c:if test="${result =='fail'}">        
-        <script language="javascript">
-           $('#textAlertDivNotSave').show();
-        </script>
-    </c:if>
-    <c:if test="${result =='moreOne'}">        
-        <script language="javascript">
-           $('#textAlertMoreOne').show();
-        </script>
-    </c:if>
-</c:if>
+
 <script>
     var select = "";
     $(document).ready(function () {
