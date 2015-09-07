@@ -59,11 +59,11 @@
                             </div>
                         </div>
                         <div class="col-xs-6 form-group" style="padding-top: 15px">
-                            <div class="col-xs-1 text-right" style="width: 80px">
+                            <div class="col-xs-1 text-right" style="width: 100px">
                                 <label class="control-label text-right">Department</label>
                             </div>
-                            <div class="col-md-2 form-group" style="margin-left: 20px">
-                                 <select class="form-control" id="department" name="department" style="width: 100px">
+                            <div class="col-md-1 form-group" style="width: 130px">
+                                 <select class="form-control" id="department" name="department">
                                      <option value="">Choose</option>
                                     <option value="W">Wendy</option>
                                     <option value="O">Outbound</option>
@@ -75,7 +75,7 @@
                                     <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
                                 </button>                                
                             </div>
-                            <div class="col-md-1 text-right " style="padding: 0px 0px 0px 0px">
+                            <div class="col-md-1 text-right " style="padding: 0px 0px 0px 10px">
                                 <button type="button" onclick="printCreditNoteSummaryReport();" class="btn btn-default">
                                     <span id="SpanPrint" class="glyphicon glyphicon-print"></span> Print
                                 </button>                                
@@ -221,7 +221,6 @@ function printCreditNoteSummaryReport(){
     var dateFrom = document.getElementById("dateFrom").value;
     var dateTo= document.getElementById("dateTo").value;
     var department = document.getElementById("department").value;
-    alert(dateFrom);
     window.open("report.smi?name=CreditNoteSummaryReport&dateFrom="+dateFrom+"&dateTo="+dateTo+"&department="+department);
 }
 </script>
