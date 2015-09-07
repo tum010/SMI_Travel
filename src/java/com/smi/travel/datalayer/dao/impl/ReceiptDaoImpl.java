@@ -394,7 +394,7 @@ import org.hibernate.Transaction;
     @Override
     public List<ReceiptDetail> getReceiptDetailFromInvDetailId(String invDetailId) {
         Session session = this.sessionFactory.openSession();
-        List<ReceiptDetail> list = session.createQuery("from ReceiptDetail d WHERE d.invoiceDetail.id = :invDetailId").setParameter("invDetailId", invDetailId).list();
+        List<ReceiptDetail> list = session.createQuery("from ReceiptDetail d WHERE d.invoiceDetail.id = :invDetailId and d.receipt.MFinanceItemstatus = '1'").setParameter("invDetailId", invDetailId).list();
         if(list.isEmpty()){
             System.out.println("ReceiptDetail empty ");
             return null;

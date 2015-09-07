@@ -11,6 +11,7 @@ package com.smi.travel.datalayer.report.model;
  * @author chonnasith
  */
 public class CreditNoteSummaryReport {
+    private String id;
     private String systemdate;
     private String user;
     private String from;
@@ -29,6 +30,7 @@ public class CreditNoteSummaryReport {
     private String vat;
     private String amount;
     private String status;
+    private String departmentshow;
 
     public String getSystemdate() {
         return systemdate;
@@ -172,5 +174,21 @@ public class CreditNoteSummaryReport {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getDepartmentshow() {
+        return departmentshow;
+    }
+
+    public void setDepartmentshow(String departmentshow) {
+        this.departmentshow = departmentshow;
     }
 }

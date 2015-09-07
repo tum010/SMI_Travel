@@ -40,11 +40,8 @@ public class TaxInvoiceSummaryReportImpl implements TaxInvoiceSummaryReportDao {
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList<TaxInvoiceSummaryReport>();
         
-        String systemDate = "";
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar cal = Calendar.getInstance();
-        Date date = new Date();
-        systemDate = dateFormat.format(cal.getTime());              
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MMM-yyyy HH:mm:ss");         
         
         String departmentshow = "ALL";
         StringBuffer query = new StringBuffer(" SELECT * FROM `taxinvoice_summary` ");
@@ -93,7 +90,7 @@ public class TaxInvoiceSummaryReportImpl implements TaxInvoiceSummaryReportDao {
             taxInvoiceSummaryReport.setTaxname(util.ConvertString(B[4]));                           
             taxInvoiceSummaryReport.setStatus(util.ConvertString(B[11]));
             taxInvoiceSummaryReport.setDepartment(util.ConvertString(B[12]));
-            taxInvoiceSummaryReport.setSystemdate(systemDate);
+            taxInvoiceSummaryReport.setSystemdate(String.valueOf(dateformat.format(new Date())));
             taxInvoiceSummaryReport.setFrom(from);
             taxInvoiceSummaryReport.setTo(to);
             taxInvoiceSummaryReport.setUser(systemuser);
@@ -145,7 +142,7 @@ public class TaxInvoiceSummaryReportImpl implements TaxInvoiceSummaryReportDao {
                     }
                 }
                 if(match == 0){
-                    result += ",";
+                    result += "\n";
                     invNoChkList.add(invNo1);
                     result += invNo1;
                 }
@@ -174,7 +171,7 @@ public class TaxInvoiceSummaryReportImpl implements TaxInvoiceSummaryReportDao {
                     }
                 }
                 if(match == 0){
-                    result += ",";
+                    result += "\n";
                     recNoChkList.add(recNo1);
                     result += recNo1;
                 }

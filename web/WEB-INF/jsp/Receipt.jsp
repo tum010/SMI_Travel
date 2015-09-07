@@ -706,25 +706,13 @@
                                     </c:if>
                                     <c:if test="${result =='void'}">        
                                         <c:set var="isDisableVoid" value="style='display: none;'" />
-                                        <c:if test="${roleName =='YES'}">        
-                                            <c:set var="isEnableVoid" value="" />
-                                            <c:set var="isSaveVoid" value="disabled='true'" />
-                                        </c:if>
-                                        <c:if test="${roleName =='NO'}">        
-                                            <c:set var="isEnableVoid" value="disabled='true'" />
-                                            <c:set var="isSaveVoid" value="disabled='true'" />
-                                        </c:if>
+                                        <c:set var="isEnableVoid" value="" />
+                                        <c:set var="isSaveVoid" value="disabled='true'" />
                                     </c:if>
                                     <c:if test="${receipt.MFinanceItemstatus.id == '2'}">        
                                         <c:set var="isDisableVoid" value="style='display: none;'" />
-                                        <c:if test="${roleName =='YES'}">        
-                                            <c:set var="isEnableVoid" value="" />
-                                            <c:set var="isSaveVoid" value="disabled='true'" />
-                                        </c:if>
-                                        <c:if test="${roleName =='NO'}">        
-                                            <c:set var="isEnableVoid" value="disabled='true'" />
-                                            <c:set var="isSaveVoid" value="disabled='true'" />
-                                        </c:if>
+                                        <c:set var="isEnableVoid" value="" />
+                                        <c:set var="isSaveVoid" value="disabled='true'" />
                                     </c:if>
                                     <c:if test="${result =='cancelvoid'}">        
                                         <c:set var="isDisableVoid" value="" />
