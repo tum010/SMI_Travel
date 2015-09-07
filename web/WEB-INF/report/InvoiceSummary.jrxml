@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceSummary2" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ce5d0eb5-af68-44b4-b287-253094472c71">
 	<property name="ireport.zoom" value="1.464100000000001"/>
 	<property name="ireport.x" value="451"/>
-	<property name="ireport.y" value="24"/>
+	<property name="ireport.y" value="72"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="username" class="java.lang.String"/>
 	<field name="invfrom" class="java.lang.String"/>
@@ -23,6 +23,7 @@
 	<field name="invdepartment" class="java.lang.String"/>
 	<field name="detail" class="java.lang.String"/>
 	<field name="no" class="java.lang.String"/>
+	<field name="profit" class="java.lang.String"/>
 	<variable name="totalnet" class="java.lang.String" resetType="Group" resetGroup="invoicesummary" calculation="Sum">
 		<variableExpression><![CDATA[$F{gross}]]></variableExpression>
 	</variable>
@@ -32,7 +33,9 @@
 	<variable name="totalamount" class="java.lang.String" resetType="Group" resetGroup="invoicesummary" calculation="Sum">
 		<variableExpression><![CDATA[$F{amount}]]></variableExpression>
 	</variable>
-	<variable name="totalprofit" class="java.lang.String"/>
+	<variable name="totalprofit" class="java.lang.String" calculation="Sum">
+		<variableExpression><![CDATA[$F{profit}]]></variableExpression>
+	</variable>
 	<variable name="no" class="java.lang.Number" resetType="None" calculation="System">
 		<initialValueExpression><![CDATA[1]]></initialValueExpression>
 	</variable>
