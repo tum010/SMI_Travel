@@ -50,7 +50,8 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
                 .addScalar("total",Hibernate.BIG_DECIMAL)
                 .addScalar("vat",Hibernate.BIG_DECIMAL)
                 .addScalar("grandtotal",Hibernate.BIG_DECIMAL)
-                .addScalar("user",Hibernate.STRING)            
+                .addScalar("user",Hibernate.STRING)
+                .addScalar("curamount",Hibernate.STRING)   
                 .list();
         
         String invdescTemp = "";
@@ -68,15 +69,21 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
             taxInvoiceView.setDescription(util.ConvertString(B[8]));
             taxInvoiceView.setNondescription(util.ConvertString(B[9]));
             taxInvoiceView.setInvoice(util.ConvertString(B[10]));
+            taxInvoiceView.setGrandtotal(df.format(B[14]));
+            taxInvoiceView.setUser(util.ConvertString(B[15]));
+            taxInvoiceView.setCuramount(util.ConvertString(B[16]));
+            String curamount = "";
+            if("THB".equalsIgnoreCase(util.ConvertString(B[16]))){
+                curamount = "BAHT";
+            } else {
+                curamount = util.ConvertString(B[16]);
+            }
             if(B[12] != null){
                 taxInvoiceView.setTotal(df.format(B[12]));
             }
             if(B[13] != null){
                 taxInvoiceView.setVat(df.format(B[13]));
-            }
-            
-            taxInvoiceView.setGrandtotal(df.format(B[14]));
-            taxInvoiceView.setUser(util.ConvertString(B[15]));
+            }                        
             if(B[11] != null){
                 taxInvoiceView.setAmount(df.format(B[11]));
             }
@@ -85,7 +92,7 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
             String[] totals = total.split(",");
             int totalWord = 0;
             totalWord = Integer.parseInt(String.valueOf(totals[0]));
-            taxInvoiceView.setTextamount(utilityFunction.convert(totalWord)+" BAHT");
+            taxInvoiceView.setTextamount(utilityFunction.convert(totalWord)+" "+curamount);
             
             if(option == 1){
                 taxInvoiceView.setDescription(taxInvoiceView.getNondescription());
