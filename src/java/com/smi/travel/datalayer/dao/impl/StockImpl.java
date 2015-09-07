@@ -356,8 +356,9 @@ public class StockImpl implements StockDao{
     }
 
     @Override
-    public List<Stock> searchStock(String productId, Date createDate, Date EffecttiveFrom, Date EffectiveTo,String expire) {
+    public List<Stock> searchStock(String productId, String createDate, String EffecttiveFrom, String EffectiveTo,String expire) {
         Session session = this.sessionFactory.openSession();
+        UtilityFunction utility = new UtilityFunction();
         String query = "";
         int AndQuery = 0;
         if("".equals(productId) && createDate == null && EffecttiveFrom == null &&  EffectiveTo == null){
@@ -371,7 +372,7 @@ public class StockImpl implements StockDao{
             query += " st.product.id = " + productId;
         }
        
-        if (createDate != null ) {
+        if (createDate != null && (!"".equalsIgnoreCase(createDate)) ) {
             if(AndQuery == 1){
                 query += " and st.createDate = '" + createDate + "'";
             }else{
@@ -379,8 +380,9 @@ public class StockImpl implements StockDao{
                query += " st.createDate = '" + createDate + "'";
             }
         }
+        System.out.println("Add Date : " + createDate);
         
-        if (EffecttiveFrom != null ) {
+        if (EffecttiveFrom != null  && (!"".equalsIgnoreCase(EffecttiveFrom)) ) {
             if(AndQuery == 1){
                 query += " and st.effectiveFrom = '" + EffecttiveFrom + "'";
             }else{
@@ -389,7 +391,7 @@ public class StockImpl implements StockDao{
             }
         }
         
-        if (EffectiveTo != null ) {
+        if (EffectiveTo != null && (!"".equalsIgnoreCase(EffectiveTo)) ) {
             if(AndQuery == 1){
                 query += " and st.effectiveTo = '" + EffectiveTo + "'";
             }else{
@@ -475,6 +477,7 @@ public class StockImpl implements StockDao{
         List<Stock> stockList = session.createQuery(GET_STOCK)
                 .setParameter("stockID", stockId)
                 .list();
+        System.out.println("Size Stock View : " + stockList.size());
         if (!stockList.isEmpty()) {
             return stockList;
         }else{

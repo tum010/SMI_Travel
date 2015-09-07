@@ -9,6 +9,7 @@ import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.StockViewSummary;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,6 +40,7 @@ public class SearchStockController extends SMITravelController {
         Date create = utility.convertStringToDate(createDate);
         Date from = utility.convertStringToDate(EffecttiveFrom);
         Date to = utility.convertStringToDate(EffectiveTo);
+        System.out.println("Date View Create : " + createDate + "  From : " + EffecttiveFrom +"  To : " + EffectiveTo +" : ");
             // Serach Product Stock
             List<Product> listProductStock =  stockService.getListStockProduct();
             request.setAttribute("ListProductStock", listProductStock);
@@ -79,10 +81,13 @@ public class SearchStockController extends SMITravelController {
                 stock.setEffectiveTo(to);
             }
             // Search Stock
-            List<Stock> listStock = stockService.searchStock(productId, create, from, to,expire);
+            List<Stock> listStock = stockService.searchStock(productId, createDate, EffecttiveFrom, EffectiveTo,expire);
             if(listStock != null){
                 request.setAttribute("stock", stock);
                 request.setAttribute("listStock", listStock);
+                request.setAttribute("createDate", createDate);
+                request.setAttribute("EffecttiveFrom", EffecttiveFrom);
+                request.setAttribute("EffectiveTo", EffectiveTo);
             }
             request.setAttribute("payStatus", pStatus);
             request.setAttribute("itemStatus", iStatus);
@@ -94,7 +99,7 @@ public class SearchStockController extends SMITravelController {
             String itemStatus =  request.getParameter("SelectItemStatus");
             // Search Stock
             StockViewSummary stockDataDetail = stockService.searchStockDetail(stockId, status, itemStatus);
-            
+            System.out.println("Stock View Summary : " + stockDataDetail.getId() + " " +stockDataDetail.getProductName() );
             if(stockDataDetail != null){
                 System.out.println("set summary");
                  request.setAttribute("stockSummary", stockDataDetail);
@@ -130,11 +135,15 @@ public class SearchStockController extends SMITravelController {
                 stock.setEffectiveTo(to);
             }
             // Search Stock Detail
-            List<Stock> listStock = stockService.searchStock(productId, create, from, to,expire);
+            List<Stock> listStock = stockService.searchStock(productId, createDate, EffecttiveFrom, EffectiveTo,expire);
+            System.out.println("List Stock View :" + listStock.size());
             if(listStock != null){
                 request.setAttribute("stock", stock);
                 request.setAttribute("listStock", listStock);
                 request.setAttribute("expire", expire);
+                request.setAttribute("createDate", createDate);
+                request.setAttribute("EffecttiveFrom", EffecttiveFrom);
+                request.setAttribute("EffectiveTo", EffectiveTo);
             }
             
         }else if("searchStock".equalsIgnoreCase(action)){
@@ -143,13 +152,32 @@ public class SearchStockController extends SMITravelController {
             String proCode = request.getParameter("productCode");
             String proName = request.getParameter("productName");
             String adddate = request.getParameter("createDate");
+            String EffectFrom = request.getParameter("EffecttiveFrom");
+            String EffectTo = request.getParameter("EffectiveTo");
+//            String date[];
+//            date = adddate.split("-");
+//            adddate = date[2] +"-" +date[1] + "-"+date[0];
+            System.out.println("Date Search Stock :" + adddate);
+            System.out.println("Stock id View : "+ stockid);
             List<Stock> listStock = stockService.getStockById(stockid);
             if(listStock != null){
+                Stock stock = new Stock();
+                Product product = new Product();
+                product.setId(listStock.get(0).getProduct().getId());
+                product.setCode(listStock.get(0).getProduct().getCode());
+                product.setName(listStock.get(0).getProduct().getName());
+                stock.setProduct(product);
+                stock.setCreateDate(listStock.get(0).getCreateDate());
+                stock.setEffectiveFrom(listStock.get(0).getEffectiveFrom());
+                stock.setEffectiveTo(listStock.get(0).getEffectiveTo());
                 request.setAttribute("listStock", listStock);
+                request.setAttribute("stock", stock);
                 request.setAttribute("productid", productid);
                 request.setAttribute("proCode", proCode);
                 request.setAttribute("proName", proName);
-                request.setAttribute("adddate", adddate);
+                request.setAttribute("createDate", adddate);
+                request.setAttribute("EffecttiveFrom", EffectFrom);
+                request.setAttribute("EffectiveTo", EffectTo);
             }else{
                 request.setAttribute("listStock", null);
             }
@@ -160,6 +188,19 @@ public class SearchStockController extends SMITravelController {
         }           
         return SearchStock;
     }
+    
+//    private Date convertDate(Date stockDate){
+//        UtilityFunction utility = new UtilityFunction();
+////        String day = utility.convertDateToString(stockDate);
+////        System.out.println("String date (day): " + day);
+//        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+//	String date = sdf.format(stockDate);
+//        System.out.println("String date : " + date);
+//        Date dateNew = new Date();
+//        dateNew = utility.convertStringToDate(date);
+//        System.out.println("String dateNew : " + dateNew);
+//        return dateNew;
+//    }
 
     public StockService getStockService() {
         return stockService;
