@@ -118,42 +118,43 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
             query = "SELECT * FROM invoice_summary st where" ;
         }
         
+        System.out.println("Attribute : " + fromData + " : " + toDate + " : " + department + " : " + type + " : " + agent);
         if ( department != null && (!"".equalsIgnoreCase(department)) ) {
             AndQuery = 1;
-            query += " department = '" + department + "'";
+            query += " st.department = '" + department + "'";
         }
        
         if (type != null && (!"".equalsIgnoreCase(type)) ) {
            if(AndQuery == 1){
-                query += " and type = '" + type + "'";
+                query += " and st.type = '" + type + "'";
            }else{
                AndQuery = 1;
-               query += " type = '" + type + "'";
+               query += " st.type = '" + type + "'";
            }
         }
         
         if(agent != null && (!"".equalsIgnoreCase(agent))){
             if(AndQuery == 1){
-                query += " and to = '" + agent + "'";
+                query += " and st.to = '" + agent + "'";
            }else{
                AndQuery = 1;
-               query += " to = '" + agent + "'";
+               query += " st.to = '" + agent + "'";
            }
         }
         
         if ((fromData != null )&&(!"".equalsIgnoreCase(fromData))) {
             if ((toDate != null )&&(!"".equalsIgnoreCase(toDate))) {
                 if(AndQuery == 1){
-                     query += " and invdate  BETWEEN  '" + fromData + "' AND '" + toDate + "' ";
+                     query += " and st.invdate  BETWEEN  '" + fromData + "' AND '" + toDate + "' ";
                 }else{
                     AndQuery = 1;
-                     query += " invdate  BETWEEN  '" + fromData + "' AND '" + toDate + "' ";
+                     query += " st.invdate  BETWEEN  '" + fromData + "' AND '" + toDate + "' ";
                 }
                 
                
             }
         }
-        query += "  ORDER BY invdate DESC";
+        query += "  ORDER BY st.invdate DESC";
         System.out.println("Query : "+query);
         int no = 0;
         List<Object[]> InvoiceSummaryList = session.createSQLQuery(query )

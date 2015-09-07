@@ -116,7 +116,7 @@ public class StockController extends SMITravelController {
                         request.setAttribute("FromDate", effectiveFrom);
                         request.setAttribute("ToDate", effectiveTo);
                         request.setAttribute("CreateDate", createDate);
-                        ModelAndView searchstock = new ModelAndView(new RedirectView("SearchStock.smi?InputId="+stockNew.getId()+"&action=searchStock&productId="+stockNew.getProduct().getId()+"&productCode="+stockNew.getProduct().getCode()+"&productName="+stockNew.getProduct().getName()+"&createDate="+stockNew.getCreateDate()+"&EffecttiveFrom="+stockNew.getEffectiveFrom()+"&EffectiveTo="+stockNew.getEffectiveTo(), true));
+                        ModelAndView searchstock = new ModelAndView(new RedirectView("SearchStock.smi?InputId="+stockNew.getId()+"&action=searchStock&productId="+stockNew.getProduct().getId()+"&productCode="+stockNew.getProduct().getCode()+"&productName="+stockNew.getProduct().getName()+"&createDate="+stockNew.getCreateDate()+"&EffecttiveFrom="+stockNew.getEffectiveFrom()+"&EffectiveTo="+stockNew.getEffectiveTo()+"&result="+isSave, true));
                         return searchstock;
                     }
                 }else if(isSave.equals("update success")){ // Save is Update
@@ -126,7 +126,7 @@ public class StockController extends SMITravelController {
                     request.setAttribute("ToDate", effectiveTo);
                     request.setAttribute("CreateDate", createDate);
                     request.setAttribute("listStockDetail", listStockDetail);
-                    ModelAndView searchstock = new ModelAndView(new RedirectView("SearchStock.smi?InputId="+stock.getId()+"&action=searchStock&productId="+stock.getProduct().getId()+"&productCode="+stock.getProduct().getCode()+"&productName="+stock.getProduct().getName()+"&createDate="+createDate+"&EffecttiveFrom="+effectiveFrom+"&EffectiveTo="+effectiveTo, true));
+                    ModelAndView searchstock = new ModelAndView(new RedirectView("SearchStock.smi?InputId="+stock.getId()+"&action=searchStock&productId="+stock.getProduct().getId()+"&productCode="+stock.getProduct().getCode()+"&productName="+stock.getProduct().getName()+"&createDate="+createDate+"&EffecttiveFrom="+effectiveFrom+"&EffectiveTo="+effectiveTo+"&result="+isSave, true));
                     return searchstock;
                 }else{
                     isSave = "fail";

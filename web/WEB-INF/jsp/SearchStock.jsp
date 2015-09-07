@@ -16,6 +16,7 @@
 <c:set var="createDate" value="${requestScope['createDate']}" />
 <c:set var="EffecttiveFrom" value="${requestScope['EffecttiveFrom']}" />
 <c:set var="EffectiveTo" value="${requestScope['EffectiveTo']}" />
+<c:set var="result" value="${requestScope['result']}" />
 
 <section class="content-header" >
     <h1>
@@ -39,6 +40,23 @@
         </div>
         <hr/>
         <div class="row" >
+            <!--Alert Save -->
+        <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Save Success!</strong> 
+        </div>
+        <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Save Not Success!</strong> 
+        </div>
+        <div id="textAlertMoreOne"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Duplicate Data in table !!</strong> 
+        </div>
+        <div id="checklengthCode"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Max length More 50!!</strong> 
+        </div>
             <div class="col-xs-12 ">
                 <div class="col-xs-1 text-right" style="width: 130px;"> 
                     <label class="control-label">Product</lable>
@@ -492,4 +510,21 @@ $(document).ready(function () {
 });
 
 </script>
+<c:if test="${! empty result}">
+    <c:if test="${result =='success'}">        
+        <script language="javascript">
+            $('#textAlertDivSave').show();
+        </script>
+    </c:if>
+    <c:if test="${result =='fail'}">        
+        <script language="javascript">
+           $('#textAlertDivNotSave').show();
+        </script>
+    </c:if>
+    <c:if test="${result =='moreOne'}">        
+        <script language="javascript">
+           $('#textAlertMoreOne').show();
+        </script>
+    </c:if>
+</c:if>
 <script type="text/javascript" src="js/searchStock.js"></script>
