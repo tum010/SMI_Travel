@@ -29,7 +29,7 @@ public class PaymentAirticket  {
      private String chqNo;
      private BigDecimal chqAmount;
      private BigDecimal ticketInsurance;
-     private String creditNote;
+//     private String creditNote;
      private String debitNote;
      private String createBy;
      private String department;
@@ -37,7 +37,7 @@ public class PaymentAirticket  {
      private Integer isExport;
      private BigDecimal totalAmount;
      private BigDecimal debitAmount;
-     private BigDecimal creditAmount;
+//     private BigDecimal creditAmount;
      private List paymentAirticketRefunds = new LinkedList<PaymentAirticketRefund>();
      private List paymentAirticketFares = new LinkedList<PaymentAirticketFare>();
      
@@ -59,7 +59,7 @@ public class PaymentAirticket  {
        this.chqNo = chqNo;
        this.chqAmount = chqAmount;
        this.ticketInsurance = ticketInsurance;
-       this.creditNote = creditNote;
+//       this.creditNote = creditNote;
        this.debitNote = debitNote;
        this.createBy = createBy;
        this.createDate = createDate;
@@ -69,7 +69,7 @@ public class PaymentAirticket  {
        this.department = department;
        this.totalAmount = totalAmount; 
        this.debitAmount = debitAmount;
-       this.creditAmount = creditAmount;
+//       this.creditAmount = creditAmount;
     }
    
     public String getId() {
@@ -184,13 +184,13 @@ public class PaymentAirticket  {
     public void setTicketInsurance(BigDecimal ticketInsurance) {
         this.ticketInsurance = ticketInsurance;
     }
-    public String getCreditNote() {
-        return this.creditNote;
-    }
-    
-    public void setCreditNote(String creditNote) {
-        this.creditNote = creditNote;
-    }
+//    public String getCreditNote() {
+//        return this.creditNote;
+//    }
+//    
+//    public void setCreditNote(String creditNote) {
+//        this.creditNote = creditNote;
+//    }
     public String getDebitNote() {
         return this.debitNote;
     }
@@ -261,13 +261,13 @@ public class PaymentAirticket  {
         this.debitAmount = debitAmount;
     }
 
-    public BigDecimal getCreditAmount() {
-        return creditAmount;
-    }
-
-    public void setCreditAmount(BigDecimal creditAmount) {
-        this.creditAmount = creditAmount;
-    }
+//    public BigDecimal getCreditAmount() {
+//        return creditAmount;
+//    }
+//
+//    public void setCreditAmount(BigDecimal creditAmount) {
+//        this.creditAmount = creditAmount;
+//    }
 
 
     

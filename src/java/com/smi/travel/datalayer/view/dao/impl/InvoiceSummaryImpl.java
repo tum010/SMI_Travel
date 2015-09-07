@@ -172,6 +172,7 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
                 .addScalar("status", Hibernate.STRING)
                 .addScalar("department", Hibernate.STRING)
                 .addScalar("to", Hibernate.STRING)
+                .addScalar("profit", Hibernate.DOUBLE)
                 .list();
         int count = 1;
         for (Object[] B : InvoiceSummaryList) {
@@ -208,6 +209,11 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
                 Double amount = Double.parseDouble(util.ConvertString(B[8]));
                 sum.setAmount(amount);
             }
+            
+            if(B[14] != null){
+                Double profit = Double.parseDouble(util.ConvertString(B[14]));
+                sum.setProfit(profit);
+            }
             sum.setAmountcur(util.ConvertString(B[9]));
             sum.setStaff(util.ConvertString(B[10]));
             sum.setStatus(util.ConvertString(B[11]));
@@ -225,7 +231,7 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
             sum.setDepartment(department);         
             sum.setSystemdate(util.convertDateToString(new Date()));
             sum.setUsername(util.ConvertString(B[10]));
-          
+
             data.add(sum);
             count++;
         }
