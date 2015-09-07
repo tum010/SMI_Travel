@@ -49,6 +49,12 @@ $(document).ready(function () {
         action.value = 'save';
         document.getElementById('CreditNoteForm').submit();
     });
+    
+    $("#buttonNew").click(function (){
+        var action = document.getElementById('action');
+        action.value = 'new';
+        document.getElementById('CreditNoteForm').submit();
+    });
 
     addRow();
     validFrom();
