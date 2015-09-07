@@ -218,9 +218,10 @@ function searchAction() {
 }
 
 function printCreditNoteSummaryReport(){
-    var fromdate = document.getElementById("dateFrom").value;
-    var todate= document.getElementById("dateTo").value;
+    var dateFrom = document.getElementById("dateFrom").value;
+    var dateTo= document.getElementById("dateTo").value;
     var department = document.getElementById("department").value;
-    window.open("report.smi?name=CreditNoteSummaryReport&fromdate="+fromdate+"&todate="+todate+"&department="+department);
+    alert(dateFrom);
+    window.open("report.smi?name=CreditNoteSummaryReport&dateFrom="+dateFrom+"&dateTo="+dateTo+"&department="+department);
 }
 </script>
