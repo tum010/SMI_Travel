@@ -1839,10 +1839,14 @@ function CallAjaxSearchInvoice(param) {
                     if(msg == "null"){
                         $('#InvoiceListTable').dataTable().fnClearTable();
                         $('#InvoiceListTable').dataTable().fnDestroy();
+                        document.getElementById("receiveFromCode").value = '';
+                        document.getElementById("receiveFromName").value = '';
+                        document.getElementById("receiveFromAddress").value = '';
+                        document.getElementById("arCode").value = '';
                     }else{
                         $('#InvoiceListTable').dataTable().fnClearTable();
                         $('#InvoiceListTable').dataTable().fnDestroy();
-                        $("#InvoiceListTable tbody").append(msg);
+                        $("#InvoiceListTable tbody").empty().append(msg);
                         
                         document.getElementById("receiveFromCode").value = $("#receiveFromInvoice").val();
                         document.getElementById("receiveFromName").value = $("#receiveNameInvoice").val();

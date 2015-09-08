@@ -918,12 +918,10 @@ public class AJAXBean extends AbstractBean implements
         System.out.println("invoiceDetaill.size() " + String.valueOf(invoiceDetaill.size()));
         if (invoiceDetaill == null || invoiceDetaill.size() == 0) {
             String newrow = "";
-            newrow += "<tr>"
-                    + "<input type='hidden' name='receiveFromInvoice' id='receiveFromInvoice' value='" + receiveFrom + "'>"
+            newrow += "<input type='hidden' name='receiveFromInvoice' id='receiveFromInvoice' value='" + receiveFrom + "'>"
                     + "<input type='hidden' name='receiveNameInvoice' id='receiveNameInvoice' value='" + receiveName + "'>"
                     + "<input type='hidden' name='receiveAddressInvoice' id='receiveAddressInvoice' value='" + receiveAddress + "'>"
-                    + "<input type='hidden' name='arcodeInvoice' id='arcodeInvoice' value='" + arcode + "'>"
-                    + "</tr>";
+                    + "<input type='hidden' name='arcodeInvoice' id='arcodeInvoice' value='" + arcode + "'>";
             html.append(newrow);
             return html.toString();
         }
@@ -963,11 +961,16 @@ public class AJAXBean extends AbstractBean implements
             if ("1".equals(product)) {
                 displaydescription = billTypeName;
             } else if ("2".equals(product) || "8".equals(product)) {
-                displaydescription += billTypeName + " #-- ";
-                displaydesTemp = billableDao.getDescriptionInvoiceOthersFromRefId(refItemId);
-                String[] parts = displaydesTemp.split("\\|");
-                displaydescription += parts[4] + " : " + parts[5];
-                System.out.println("displaydescription" + displaydescription);
+                if (!"".equals(refItemId)) {
+                    displaydescription += billTypeName + " #-- ";
+                    displaydesTemp = billableDao.getDescriptionInvoiceOthersFromRefId(refItemId);
+                    System.out.println("displaydesTemp" + displaydesTemp);
+                    if(displaydesTemp != null && !"".equalsIgnoreCase(displaydesTemp)){
+                        String[] parts = displaydesTemp.split("\\|");
+                        displaydescription += parts[4] + " : " + parts[5];
+
+                    }
+                }
             } else if ("3".equals(product)) {
                 displaydescription = billTypeName;
             } else if ("4".equals(product)) {
@@ -976,9 +979,11 @@ public class AJAXBean extends AbstractBean implements
                 if (!"".equals(refItemId)) {
                     displaydescription += billTypeName + " ";
                     displaydesTemp = billableDao.getDescriptionInvoiceDayTourFromRefId(refItemId);
-                    String[] parts = displaydesTemp.split("\\|");
-                    displaydescription += parts[5] + " : " + parts[6];
-                    System.out.println("displaydescription" + displaydescription);
+                    if(displaydesTemp != null && !"".equalsIgnoreCase(displaydesTemp)){
+                        String[] parts = displaydesTemp.split("\\|");
+                        displaydescription += parts[5] + " : " + parts[6];
+                        System.out.println("displaydescription" + displaydescription);
+                    }
                 }
             }
 
@@ -1000,12 +1005,11 @@ public class AJAXBean extends AbstractBean implements
                 No++;
             } else {
                 String newrow = "";
-                newrow += "<tr>"
-                        + "<input type='hidden' name='receiveFromInvoice' id='receiveFromInvoice' value='" + receiveFrom + "'>"
+                newrow +=  "<input type='hidden' name='receiveFromInvoice' id='receiveFromInvoice' value='" + receiveFrom + "'>"
                         + "<input type='hidden' name='receiveNameInvoice' id='receiveNameInvoice' value='" + receiveName + "'>"
                         + "<input type='hidden' name='receiveAddressInvoice' id='receiveAddressInvoice' value='" + receiveAddress + "'>"
                         + "<input type='hidden' name='arcodeInvoice' id='arcodeInvoice' value='" + arcode + "'>"
-                        + "</tr>";
+                        ;
                 html.append(newrow);
 
             }
@@ -1045,12 +1049,12 @@ public class AJAXBean extends AbstractBean implements
         }
         if (billableDescs == null || billableDescs.size() == 0) {
             String newrow = "";
-            newrow += "<tr>"
-                    + "<input type='hidden' name='receiveFromBillable' id='receiveFromBillable' value='" + receiveFrom + "'>"
+            newrow += 
+                    "<input type='hidden' name='receiveFromBillable' id='receiveFromBillable' value='" + receiveFrom + "'>"
                     + "<input type='hidden' name='receiveNameBillable' id='receiveNameBillable' value='" + receiveName + "'>"
                     + "<input type='hidden' name='receiveAddressBillable' id='receiveAddressBillable' value='" + receiveAddress + "'>"
                     + "<input type='hidden' name='arcodeBillable' id='arcodeBillable' value='" + arcode + "'>"
-                    + "</tr>";
+                    ;
             html.append(newrow);
             return html.toString();
         }
@@ -1089,8 +1093,10 @@ public class AJAXBean extends AbstractBean implements
                 if (!"".equals(refItemId)) {
                     displaydescription += billTypeName + " #-- ";
                     displaydesTemp = billableDao.getDescriptionInvoiceOthersFromRefId(refItemId);
+                    if(displaydesTemp != null && !"".equalsIgnoreCase(displaydesTemp)){
                     String[] parts = displaydesTemp.split("\\|");
-                    displaydescription += parts[4] + " : " + parts[5];
+                        displaydescription += parts[4] + " : " + parts[5];
+                    }
                 }
             } else if ("3".equals(product)) {
                 displaydescription = billTypeName;
@@ -1100,8 +1106,10 @@ public class AJAXBean extends AbstractBean implements
                 if (!"".equals(refItemId)) {
                     displaydescription += billTypeName + " ";
                     displaydesTemp = billableDao.getDescriptionInvoiceDayTourFromRefId(refItemId);
-                    String[] parts = displaydesTemp.split("\\|");
-                    displaydescription += parts[5] + " : " + parts[6];
+                    if(displaydesTemp != null && !"".equalsIgnoreCase(displaydesTemp)){
+                        String[] parts = displaydesTemp.split("\\|");
+                        displaydescription += parts[5] + " : " + parts[6];
+                    }
                 }
             }
 
@@ -1125,13 +1133,13 @@ public class AJAXBean extends AbstractBean implements
                 No++;
             } else {
                 String newrow = "";
-                newrow += "<tr>"
-                        + "<input type='hidden' name='receiveFromBillable' id='receiveFromBillable' value='" + receiveFrom + "'>"
+                newrow += 
+                        "<input type='hidden' name='receiveFromBillable' id='receiveFromBillable' value='" + receiveFrom + "'>"
                         + "<input type='hidden' name='receiveNameBillable' id='receiveNameBillable' value='" + receiveName + "'>"
                         + "<input type='hidden' name='receiveAddressBillable' id='receiveAddressBillable' value='" + receiveAddress + "'>"
                         + "<input type='hidden' name='arcodeBillable' id='arcodeBillable' value='" + arcode + "'>"
                         + "<input type='hidden' name='mAccPayBillable' id='mAccPayBillable' value='" + mAccPay + "'>"
-                        + "</tr>";
+                        ;
                 html.append(newrow);
             }
         }

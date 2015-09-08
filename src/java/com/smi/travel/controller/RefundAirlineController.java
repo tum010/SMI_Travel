@@ -6,6 +6,7 @@ import com.smi.travel.datalayer.entity.RefundAirticket;
 import com.smi.travel.datalayer.entity.RefundAirticketDetail;
 import com.smi.travel.datalayer.service.RefundAirlineService;
 import com.smi.travel.datalayer.service.UtilityService;
+import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
@@ -35,10 +36,14 @@ public class RefundAirlineController extends SMITravelController {
         request.setAttribute("agent", agent);
         List user = getUtilityService().getUserList();
         request.setAttribute("user", user);
+        String refundByCode = "";
+        List customer = getUtilityService().getListCustomerAgentInfo();
+        request.setAttribute("cust", customer);
         if ("search".equalsIgnoreCase(action)) {
             try {
                 RefundAirticket refundAirticket = getRefundAirlineService().getRefundAirTicketFromRefundNo(refundNo);
                 request.setAttribute("refundAirline", refundAirticket);
+                refundByCode = refundAirticket.getRefundBy();
                 if(refundAirticket == null){
                     request.setAttribute("failStatus", true);
                     request.setAttribute("failMessage", "Refund no." + refundNo + " not available !");
@@ -49,6 +54,7 @@ public class RefundAirlineController extends SMITravelController {
         } else if ("save".equalsIgnoreCase(action) || "saveAndNew".equalsIgnoreCase(action)) {
             try {
                 RefundAirticket refundAirticket = maprequest(request);
+                refundByCode = refundAirticket.getRefundBy();
                 request.setAttribute("refundAirline", refundAirticket);
                 refundNo = getRefundAirlineService().saveRefundAirTicket(refundAirticket);
                 if (!"fail".equals(refundNo)) {
@@ -62,6 +68,13 @@ public class RefundAirlineController extends SMITravelController {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+            }
+        }
+        if(null != refundByCode &&refundByCode != ""){
+            List<CustomerAgentInfo> refundByList = getUtilityService().SearchListCustomerAgentInfo(refundByCode);
+            if(null != refundByList && refundByList.size() > 0){
+                CustomerAgentInfo refundBy = refundByList.get(0);
+                request.setAttribute("refundByName", refundBy.getBillName());
             }
         }
         return RefundAirline;
@@ -108,6 +121,7 @@ public class RefundAirlineController extends SMITravelController {
             String agenName = request.getParameter("agentName");
             String remark = request.getParameter("remark");
             String refundBy = request.getParameter("refundBy");
+            String receiveBy = request.getParameter("receiveBy");
             String receiveDate = request.getParameter("receiveDate");
 
             airticket.setId(refundId);
@@ -115,6 +129,7 @@ public class RefundAirlineController extends SMITravelController {
             airticket.setRefundDate(uf.convertStringToDate(refundDate));
             airticket.setReceiveDate(uf.convertStringToDate(receiveDate));
             airticket.setRefundBy(refundBy);
+            airticket.setReceiveBy(receiveBy);
             airticket.setRemark(remark);
             Agent agent = new Agent();
             agent.setId(agentId);
