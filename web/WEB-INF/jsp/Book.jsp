@@ -133,7 +133,7 @@
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label for="Country">Pay By</label>
-                                <select class="form-control" id="payBy" name="payBy"  value="${requestScope['payBy']}" onchange="bankTrasferField()">
+                                <select class="form-control disabled" id="payBy" name="payBy"  value="${requestScope['payBy']}" onchange="bankTrasferField()">
                                     <option value=""> </option>                               
                                     <c:forEach var="table" items="${BookpaybyList}">
                                         <c:set var="select" value="" />
@@ -145,14 +145,14 @@
                                 </select>    
                             </div>
                         </div>
-                        <c:set var="bankTransferField" value="hidden"/>
+                        <c:set var="bankTransferField" value="disabled"/>
                         <c:if test="${requestScope['payBy'] == '4'}">
                             <c:set var="bankTransferField" value=""/>
                         </c:if>
-                        <div id="bankTransferField" class="col-md-2 ${bankTransferField}">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label for="Country">Bank Transfer</label>
-                                <select class="form-control" id="bankTransfer" name="bankTransfer"  value="${requestScope['bankTransfer']}">
+                                <select class="form-control" id="bankTransfer" name="bankTransfer" value="${requestScope['bankTransfer']}" ${bankTransferField}>
                                     <option value=""> </option>                               
                                     <c:forEach var="table" items="${BookbanktransferList}">
                                         <c:set var="select" value="" />
@@ -685,11 +685,10 @@
     
     function bankTrasferField(){
         var payBy = document.getElementById("payBy").value;
-        console.log(payBy);
         if(payBy === '4'){
-            $("#bankTransferField").removeClass("hidden");
+            $('#bankTransfer').removeAttr('disabled');           
         } else {
-            $("#bankTransferField").addClass("hidden");
+            $('#bankTransfer').attr('disabled', 'disabled');
         }
     }
 
