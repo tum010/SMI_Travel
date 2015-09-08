@@ -49,7 +49,7 @@ public class SendEmailController extends SMITravelController {
     private static final String SENDCC = "sendCc"; 
     private static final String SUBJECT = "subject";  
     private static final String MESSAGE = "message";       
-    private static final String SIGN = "sign";    
+    private static final String SIGN = "sign"; 
     
     private JavaMailSender mailSender;
     private ReportService reportservice;
@@ -86,6 +86,9 @@ public class SendEmailController extends SMITravelController {
         SystemUser user = (SystemUser) session.getAttribute("USER");
         String username = user.getUsername();
         String[] path = reportservice.getPartReport();
+        if(cc == null){
+            cc = user.getEmail();
+        }
 
         if ((recipientAddress != null) && (!"".equalsIgnoreCase(recipientAddress))) {
             if (InvoiceReport.equalsIgnoreCase(name)) {

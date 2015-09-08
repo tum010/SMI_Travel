@@ -49,9 +49,6 @@
         <property name="ticketInsurance" type="big_decimal">
             <column name="ticket_insurance" precision="10" />
         </property>
-        <property name="creditNote" type="string">
-            <column name="credit_note" length="50" />
-        </property>
         <property name="debitNote" type="string">
             <column name="debit_note" length="50" />
         </property>
@@ -73,10 +70,6 @@
         <property name="DebitAmount" type="big_decimal">
             <column name="debit_amount" precision="10"/>
         </property>
-        <property name="CreditAmount" type="big_decimal">
-            <column name="credit_amount" precision="10"/>
-        </property>
-
         <bag name="paymentAirticketRefunds" table="payment_airticket_refund" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="paymane_air_id" />
@@ -88,6 +81,12 @@
                 <column name="payment_air_id" />
             </key>
             <one-to-many class="com.smi.travel.datalayer.entity.PaymentAirticketFare" />
+        </bag>
+        <bag name="paymentAirCredits" table="payment_air_credit" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="payment_air_id" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.PaymentAirCredit" />
         </bag>
     </class>
 </hibernate-mapping>

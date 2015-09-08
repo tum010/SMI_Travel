@@ -17,6 +17,7 @@
 <c:set var="paymentAirRefund" value="${requestScope['paymentAirRefund']}" />
 <c:set var="flagSearch" value="${requestScope['flagSearch']}" /> 
 <c:set var="addRefundList" value="${requestScope['addRefundList']}" />
+<c:set var="creditList" value="${requestScope['creditList']}" />
 <section class="content-header" >
     <h1>
         Checking - Air Ticket
@@ -74,6 +75,12 @@
                 <input type="hidden" name="flagSearch" id="flagSearch" value="${flagSearch}">
                 <input type="hidden" name="paytoTemp"  id="paytoTemp" value="${paymentAirticket.payTo}">
                 <input type="hidden" name="ticketNoList" id="ticketNoList" value="">
+                <input type="hidden" class="form-control" id="countRowCredit" name="countRowCredit" value="${requestScope['creditRowCount']}" />
+                <input type="hidden" name="creditIdDelete" id="creditIdDelete" value="">
+                <input type="hidden" name="creditRowDelete" id="creditRowDelete" value="">
+                <input type="hidden" name="checksearchticket" id="checksearchticket" value="">
+                <input type="hidden" name="sumCommissionRefund" id="sumCommissionRefund" value="">
+                <input type="hidden" name="sumCommissionTicket" id="sumCommissionTicket" value="">
                 <div class="panel panel-default">
                     <div class="panel-body"  style="padding-right: 0px;" style="width: 100%">
                         <div class="col-xs-12">
@@ -357,7 +364,7 @@
                                         <td align="left"> <c:out value="${table.ticketNo}" /></td>
                                         <td align="left"> <c:out value="${table.department}" /></td>
                                         <td align="center"> <c:out value="${table.route}" /></td>
-                                        <td align="right" class="moneyformat">${table.commisssion}</td>
+                                        <td align="right" class="money">${table.commisssion}</td>
                                         <td class="money">${table.amount}</td>
                                         <td class="money">${table.payCus}</td>
                                         <td> 
@@ -397,6 +404,55 @@
                 </div>
                             
                 <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Credit Note</h4>
+                    </div> 
+                    <div class="panel-body" style="width: 100%;">    
+                        <table class="display" id="CreditDetailTable">
+                            <thead class="datatable-header">
+                                <tr>
+                                    <th style="width:10%;">No</th>
+                                    <th style="width:35%;">Credit Note</th>
+                                    <th style="width:35%;">Credit Amount</th>
+                                    <th style="width:20;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="table" items="${creditList}" varStatus="i">
+                                    <tr>
+                                        <!--<input type="hidden" name="paymentAirId${i.count}" id="paymentAirId${i.count}" value="${table.paymentAirticket.id}">-->
+                                        <input type="hidden" name="creditId${i.count}" id="creditId${i.count}" value="${table.id}">
+                                        <td align="center">${i.count}</td>
+                                        <td><input maxlength="255" id="creditNote${i.count}" name="creditNote${i.count}" type="text" class="form-control" value="${table.creditNote}"></td>
+                                        <td><input maxlength="10" id="creditAmount${i.count}"  name="creditAmount${i.count}"  type="text" class="form-control text-right"  value="${table.creditAmount}" onkeyup="insertCommas(this)"></td>
+                                        <td> 
+                                            <center> 
+                                                <a class="remCF"><span id="SpanRemove${i.count}" onclick="deleteCreditList('${table.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
+                                            </center>
+                                        </td>                                     
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                        
+                        <div id="tr_CreditDetailAddRow" class="text-center hide" style="padding-top: 10px">
+                            <a class="btn btn-success" onclick="AddRowCredit(1)">
+                                <i class="glyphicon glyphicon-plus"></i> Add
+                            </a>
+                        </div>     
+                        <div class="col-xs-12 form-group" style="padding-top: 15px">
+                                <div class="col-xs-1 text-right"  style="width: 820px">
+                                <label class="control-label text-right">Total Credit Amount</label>
+                            </div>
+                            <div class="col-xs-1"  style="width: 170px">
+                                <div class="input-group">                                    
+                                    <input type="text" class="form-control money" id="totalCreditAmount" name="totalCreditAmount" readonly="" value="" />
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+                <div class="panel panel-default">
 <!--                    <div class="panel-heading">
                         <h4 class="panel-title">Ticket Detail</h4>
                     </div> -->
@@ -408,33 +464,6 @@
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
                                     <input id="agentAmount" name="agentAmount" type="text" class="form-control numerical" style="text-align: right" maxlength="12" onkeyup="insertCommas(this)" value="${paymentAirticket.agentAmount}" >
-                                </div>
-                            </div>
-                            <div class="col-xs-1 text-right"  style="width: 155px">
-                                <label class="control-label text-right">Credit Note </label>
-                            </div>
-                            <div class="col-xs-1" style="width: 200px">
-                                <div class="input-group">                                    
-                                    <input id="creditNote" name="creditNote" type="text" class="form-control" maxlength="50" value="${paymentAirticket.creditNote}">
-                                </div>
-                            </div>
-                            <div class="col-xs-1 text-right"  style="width: 140px">
-                                <label class="control-label text-right">Credit Amount </label>
-                            </div>
-                            <div class="col-xs-1" style="width: 200px">
-                                <div class="input-group">                                    
-                                    <input id="creditAmount" name="creditAmount" type="text" class="form-control numerical" maxlength="12" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.creditAmount}">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-xs-12" style="padding-top: 15px">
-                            <div class="col-xs-1 text-right"  style="width: 150px">
-                                <label class="control-label text-right">Commission Vat </label>
-                            </div>
-                            <div class="col-xs-1"  style="width: 200px">
-                                <div class="input-group">                                    
-                                    <input id="commissionVat" name="commissionVat" type="text" maxlength="12" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 155px">
@@ -452,17 +481,19 @@
                                 <div class="input-group">                                    
                                     <input id="debitAmount" name="debitAmount" type="text" maxlength="8" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.debitAmount}">
                                 </div>
-                            </div>
+                            </div>    
                         </div>
+                        
                         <div class="col-xs-12" style="padding-top: 15px">
                             <div class="col-xs-1 text-right"  style="width: 150px">
-                                <label class="control-label text-right">Cash </label>
+                                <label class="control-label text-right">Commission Vat </label>
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="cash" name="cash" type="text" class="form-control numerical" maxlength="12" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.cash}">
+                                    <input id="commissionVat" name="commissionVat" type="text" maxlength="12" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="">
                                 </div>
                             </div>
+
                             <div class="col-xs-1 text-right"  style="width: 155px">
                                 <label class="control-label text-right">Withholding Tax </label>
                             </div>
@@ -471,8 +502,15 @@
                                     <input id="withholdingTax" name="withholdingTax" type="text" maxlength="12" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.witholdingTax}" >
                                 </div>
                             </div>
+                            <div class="col-xs-1 text-right"  style="width: 140px">
+                                <label class="control-label text-right">Cash </label>
+                            </div>
+                            <div class="col-xs-1"  style="width: 200px">
+                                <div class="input-group">                                    
+                                    <input id="cash" name="cash" type="text" class="form-control numerical" maxlength="12" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.cash}">
+                                </div>
+                            </div>
                         </div>
-                        
                         <div class="col-xs-12" style="padding-top: 15px">
                             <div class="col-xs-1 text-right"  style="width: 150px">
                                 <label class="control-label text-right">Chq No </label>
@@ -681,6 +719,25 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
+
+<!--DELETE MODAL-->
+<div class="modal fade" id="DeleteCreditNote" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Credit Note</h4>
+            </div>
+            <div class="modal-body" id="delCredit">
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" onclick="DeleteRowCredit()" class="btn btn-danger">Delete</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>               
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 <c:if test="${! empty requestScope['saveresult']}">
     <c:if test="${requestScope['saveresult'] =='save successful'}">        
         <script language="javascript">
@@ -712,6 +769,7 @@
                 $("#vat").val(${vat});
                 calculateTotalAmount();
                 calculateTotalCommission();
+                calculateWithodingTax();
                 calculateTotalPayment();
                 calculateAmount();
             });
@@ -725,12 +783,38 @@
                 $("#vat").val(${vat});
                 calculateTotalAmountRefund();
                 calculateTotalRefundVat();
+                calculateWithodingTax();
                 calculateTotalPayment();
                 calculateAmount();
             });
         </script>
     </c:if>
-</c:if>             
+</c:if>
+<c:if test="${! empty requestScope['setCalculateCredit']}">
+    <c:if test="${requestScope['setCalculateCredit'] == 1 }">        
+        <script language="javascript">
+            $(document).ready(function() {
+                $("#vat").val(${vat});
+                var detaillength = $("#CreditDetailTable tr").length ;
+                if(detaillength > 1) {
+                    for(var i = 1;i<detaillength;i++){
+                        if( $('#creditAmount'+i).val() != "" ){
+                            var creditAmount = replaceAll(",","",$('#creditAmount'+i).val()); 
+                            if (creditAmount == ""){
+                                creditAmount = 0;
+                            }
+                            creditAmount = parseFloat(creditAmount); 
+                            document.getElementById("creditAmount"+i).value = formatNumber(creditAmount);
+                        }
+                    }
+                }
+                calculateTotalCreditAmount();
+                calculateTotalPayment();
+                calculateAmount();
+            });
+        </script>
+    </c:if>
+</c:if>    
 <script>
 var rad = document.PaymentAirlineForm.payto;
 var prev = null;
@@ -958,7 +1042,9 @@ for(var i = 0; i < rad.length; i++) {
         });    
         $("#debitAmount").focusout(function(){
             setFormatCurrency();
-            setDataCurrency();        
+            setDataCurrency();
+            calculateTotalPayment();
+            calculateAmount();
         });
         $("#amount").focusout(function(){
             setFormatCurrency();
@@ -968,22 +1054,16 @@ for(var i = 0; i < rad.length; i++) {
         $("#withholdingTax").focusout(function(){
             setFormatCurrency();
             setDataCurrency();
+            calculateTotalPayment();
             calculateAmount();
         });
         
         //calculate TotalPayment
-        $("#creditAmount").focusout(function(){
-            setFormatCurrency();
-            setDataCurrency();
-            calculateTotalPayment();
-            calculateAmount();
-        });
         setFormatCurrency();
         setDataCurrency();
-
         calculateTotalPayment();
         calculateAmount();
-        
+  
         if($('#optionSave').val() == "1"){
             clearData();
         }
@@ -992,6 +1072,48 @@ for(var i = 0; i < rad.length; i++) {
            document.getElementById("paytoA").checked = true;
            $('#paytoTemp').val('A');
         }
+        
+        // +++++++++++++++++++++ Credit Detail Table +++++++++++++++++++++ //
+        AddRowCredit(parseInt($("#countRowCredit").val()));
+
+        $("#CreditDetailTable").on("keyup", function() {
+            var rowAll = $("#CreditDetailTable tr").length;
+            $("td").keyup(function() {
+                if ($(this).find("input").val() != '') {
+                    var colIndex = $(this).parent().children().index($(this));
+                    var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
+                    rowAll = $("#CreditDetailTable tr").length;
+                    //console.log('Row: ' + rowIndex + ', Column: ' + colIndex + ', All Row ' + rowAll);
+                    if (rowIndex == rowAll) {
+                        AddRowCredit(parseInt($("#countRowCredit").val()));
+                    }
+                    if (rowAll < 2) {
+                        $("#tr_CreditDetailAddRow").removeClass("hide");
+                        $("#tr_CreditDetailAddRow").addClass("show");
+                    }
+                 }
+            });
+        });
+        
+        $("#CreditDetailTable").on("change", "select:last", function () {
+            var row = parseInt($("#countRowCredit").val());
+            AddRowCredit(row);
+        });
+        
+        $("#CreditDetailTable").on('click', '.newRemCF', function () {
+            $(this).parent().parent().remove();
+                var rowAll = $("#CreditDetailTable tr").length;
+                if (rowAll < 2) {
+                    $("#tr_CreditDetailAddRow").removeClass("hide");
+                    $("#tr_CreditDetailAddRow").addClass("show");
+            }
+        });
+        
+        $("#tr_CreditDetailAddRow a").click(function () {
+            $(this).parent().removeClass("show");
+            $(this).parent().addClass("hide");
+        });
+        
     });
 
 function refundnoValidate(){
@@ -1022,13 +1144,6 @@ function setFormatCurrency(){
     var agentAmount = parseFloat(agentAmount); 
     document.getElementById("agentAmount").value = formatNumber(agentAmount);
     
-    var creditAmount = replaceAll(",","",$('#creditAmount').val()); 
-    if (creditAmount == ""){
-        creditAmount = 0;
-    }
-    var creditAmount = parseFloat(creditAmount); 
-    document.getElementById("creditAmount").value = formatNumber(creditAmount);
-    
     var debitAmount = replaceAll(",","",$('#debitAmount').val()); 
     if (debitAmount == ""){
         debitAmount = 0;
@@ -1058,13 +1173,7 @@ function setDataCurrency(){
     if (debitAmount == "" || debitAmount == 0){
         document.getElementById("debitAmount").value = ""; 
     }
-    
-    
-    var creditAmount = replaceAll(",","",$('#creditAmount').val()); 
-    if (creditAmount == "" || creditAmount == 0){
-        document.getElementById("creditAmount").value = ""; 
-    }
-    
+      
     var amount = replaceAll(",","",$('#amount').val()); 
     if (amount == "" || amount == 0){
         document.getElementById("amount").value = "";  
@@ -1084,6 +1193,7 @@ function searchPaymentNo() {
 }
 
 function searchTicketFare(){
+    $('#checksearchticket').val("1");
     var flagSearch = $("#flagSearch").val();
     if(flagSearch == "1"){
         $("#searchTicketFare").text('Are you sure to sarch ticket fare');
@@ -1121,10 +1231,7 @@ function searchTicketFareCF() {
     payBy.value = $("#payBy").val();
     var agentAmount = document.getElementById('agentAmount');
     agentAmount.value = $("#agentAmount").val();
-    var creditNote = document.getElementById('creditNote'); 
-    creditNote.value = $("#creditNote").val();
-    var creditAmount = document.getElementById('creditAmount');
-    creditAmount.value = $("#creditAmount").val();
+
     var commissionVat = document.getElementById('commissionVat');
     commissionVat.value = $("#commissionVat").val();
     var debitNote = document.getElementById('debitNote');
@@ -1193,9 +1300,7 @@ function addAction(){
 
 function addRefundNo(){
     $('#AddRefundNoModal').modal('hide');
-    getTicketNoFromTicketFare();
     var refundNo = $("#refundNo").val();
-    var ticketNoList = $("#ticketNoList").val();
     if(refundNo == ""){
         if(!$('#refundnopanel').hasClass('has-feedback')) {
             $('#refundnopanel').addClass('has-feedback');
@@ -1209,6 +1314,15 @@ function addRefundNo(){
         var payto = $("#paytoTemp").val();
         
         if(payto == 'A'){
+            var ticket = $('#TicketFareTable tr').length;
+            if(ticket == '2'){
+                if( $('#checksearchticket').val() === "1" ){
+                    getTicketNoFromTicketFare();
+                }
+            }else{
+                getTicketNoFromTicketFare();
+            }
+            var ticketNoList = $("#ticketNoList").val();
             var param = 'action=' + 'text' +
                 '&servletName=' + servletName +
                 '&servicesName=' + servicesName +
@@ -1263,6 +1377,7 @@ function CallAjaxAdd(param) {
                             $("#RefundTicketTable tbody").append(msg);
                             calculateTotalAmountRefund();
                             calculateTotalRefundVat();
+                            calculateWithodingTax();
                             calculateTotalPayment();
                             calculateAmount();
                         }
@@ -1301,10 +1416,7 @@ function saveAction(optionsave){
         payBy.value = $("#payBy").val();
         var agentAmount = document.getElementById('agentAmount');
         agentAmount.value = $("#agentAmount").val();
-        var creditNote = document.getElementById('creditNote'); 
-        creditNote.value = $("#creditNote").val();
-        var creditAmount = document.getElementById('creditAmount');
-        creditAmount.value = $("#creditAmount").val();
+
         var commissionVat = document.getElementById('commissionVat');
         commissionVat.value = $("#commissionVat").val();
         var debitNote = document.getElementById('debitNote');
@@ -1363,6 +1475,7 @@ function DeleteRowTicket(){
     if($("#TicketFareTable tr").length > 1){
         calculateTotalAmount();
         calculateTotalCommission();
+        calculateWithodingTax();
         calculateTotalPayment();
         calculateAmount();
     }else{
@@ -1380,6 +1493,7 @@ function DeleteRowTicket(){
             if($("#TicketFareTable tr").length > 1){
                 calculateTotalAmount();
                 calculateTotalCommission();
+                calculateWithodingTax();
                 calculateTotalPayment();
                 calculateAmount();
             }else{
@@ -1413,6 +1527,7 @@ function DeleteRowRefund(){
     if($("#RefundTicketTable tr").length > 1){
         calculateTotalAmountRefund();
         calculateTotalRefundVat();
+        calculateWithodingTax();
         calculateTotalPayment();
         calculateAmount();
     }else{
@@ -1430,6 +1545,7 @@ function DeleteRowRefund(){
             if($("#RefundTicketTable tr").length > 1){
                 calculateTotalAmountRefund();
                 calculateTotalRefundVat();
+                calculateWithodingTax();
                 calculateTotalPayment();
                 calculateAmount();
             }else{
@@ -1485,22 +1601,35 @@ function calculateTotalPayment() {
     if (totalRefundVat == ""){
         totalRefundVat = 0;
     }
-    
-    var credit = replaceAll(",","",$('#creditAmount').val()); 
+    var credit = replaceAll(",","",$('#totalCreditAmount').val()); 
     if (credit == ""){
         credit = 0;
+    }
+    
+    var debit = replaceAll(",","",$('#debitAmount').val()); 
+    if (debit == ""){
+        debit = 0;
+    }
+    
+    var withtax = replaceAll(",","",$('#withholdingTax').val()); 
+    if (withtax == ""){
+        withtax = 0;
     }
     
     var amountTotal = parseFloat(totalAmount); 
     var comTotal = parseFloat(totalCommission);
     var refundTotal = parseFloat(totalRefund);
     var refundVat = parseFloat(totalRefundVat);
-    var creditAmount = parseFloat(credit);
+    var sumcreditAmount = parseFloat(credit);
+    var debitAmount = parseFloat(debit);
+    var withholdingTax = parseFloat(withtax);
     
     var payto = $("#paytoTemp").val();
-    if(payto == 'A'){
+
+    if(payto == 'A' || payto == ''){
 //      Total Payment = Total Amount - TotalComission - Total Refund + Total Amount Refund Vat - Credit Amount
-        var totalPayment = amountTotal - comTotal - refundTotal + refundVat - creditAmount;
+//      Total Payment = Total Amount - TotalComission - Total Refund + Total Amount Refund Vat – Sum(Credit Amount)  +Debit + With Tax
+        var totalPayment = amountTotal - comTotal - refundTotal + refundVat - sumcreditAmount + debitAmount + withholdingTax;
         document.getElementById("totalPayment").value = formatNumber(totalPayment);
     }else if (payto == 'C'){
         var refundTable = $("#RefundTicketTable tr").length;
@@ -1516,96 +1645,131 @@ function calculateTotalPayCus(){
     var temp = 0;
     var paycusTemp = parseFloat(0);
     var table = document.getElementById('RefundTicketTable');
-    for (var r = 1, n = table.rows.length; r < n; r++) {
-        temp = table.rows[r].cells[6].innerHTML;
-        temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
-        if(temp == '') {
-            temp = 0;
-        }
-        temp = replaceAll(",","",temp.toString());
-        var value = parseFloat(temp) ;
-        var paycus = paycusTemp + value ;
-        paycusTemp = paycus;
+    var tableLenght = $("#RefundTicketTable tr").length;
+    if(tableLenght > 1){
+        for (var r = 1, n = table.rows.length; r < n; r++) {
+            temp = table.rows[r].cells[6].innerHTML;
+            temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
+            if(temp == '') {
+                temp = 0;
+            }
+            temp = replaceAll(",","",temp.toString());
+            var value = parseFloat(temp) ;
+            var paycus = paycusTemp + value ;
+            paycusTemp = paycus;
 
+        }
+        document.getElementById("totalPayment").value = formatNumber(paycus);
     }
-    document.getElementById("totalPayment").value = formatNumber(paycus);
 }
 
 function calculateTotalRefundVat() {
-//  Total Amount Refund  vat = vat * Total Amount Refund / 100
+//  Total Amount Refund vat = (sum(AirlineComission) * vat/100 ) +  sum(AirlineComission)
+    var temp = 0;
+    var comTemp = parseFloat(0);
+    var table = document.getElementById('RefundTicketTable');
+    var tableLenght = $("#RefundTicketTable tr").length;
+    if(tableLenght > 1){
+        for (var r = 1, n = table.rows.length; r < n; r++) {
+            temp = table.rows[r].cells[4].innerHTML;
+            temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
+            if(temp == '') {
+                temp = 0;
+            }
+            temp = replaceAll(",","",temp.toString());
+            var value = parseFloat(temp) ;
+            var comSum = comTemp + value ;
+            comTemp = comSum;
+
+        } 
+        document.getElementById("sumCommissionRefund").value = formatNumber(comTemp);
+    }
     var vatValue = replaceAll(",","",$('#vat').val()); 
     if (vatValue == ""){
         vatValue = 0;
     }
-    var totalRefund = replaceAll(",","",$('#totalAmountRefund').val()); 
-    if (totalRefund == ""){
-        totalRefund = 0;
-    }
-    
     var vat = parseFloat(vatValue); 
-    var refundTotal = parseFloat(totalRefund);
-    
-    
-    var totalRefundVat = refundTotal * (vat / 100);
+    var totalRefundVat = comSum * ( 1 + (vat / 100));
     document.getElementById("totalAmountRefundVat").value = formatNumber(totalRefundVat);
+    calculateWithodingTax();
+    calculateTotalPayment();
+    calculateAmount();
 }
 
 function calculateTotalCommission() {
     var temp = 0;
     var commissionTemp = parseFloat(0);
     var tableTicket = document.getElementById('TicketFareTable');
-    for (var r = 1, n = tableTicket.rows.length; r < n; r++) {
-        temp = tableTicket.rows[r].cells[6].innerHTML;
-        temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
-        if(temp == '') {
-            temp = 0;
-        }
-        temp = replaceAll(",","",temp.toString()); 
-        var valueCom = parseFloat(temp) ;
-        var commission = commissionTemp + valueCom ;
-        commissionTemp = commission;
+    var tableLenght = $("#TicketFareTable tr").length;
+    if(tableLenght > 1){
+        for (var r = 1, n = tableTicket.rows.length; r < n; r++) {
+            temp = tableTicket.rows[r].cells[6].innerHTML;
+            temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
+            if(temp == '') {
+                temp = 0;
+            }
+            temp = replaceAll(",","",temp.toString()); 
+            var valueCom = parseFloat(temp) ;
+            var commission = commissionTemp + valueCom ;
+            commissionTemp = commission;
 
-        }
-        
-    document.getElementById("totalCommissionTicketFare").value = formatNumber(commission);
+            }
+        document.getElementById("sumCommissionTicket").value = formatNumber(commission);
+        document.getElementById("totalCommissionTicketFare").value = formatNumber(commission);
+    }
+    calculateWithodingTax();
+    calculateTotalPayment();
+    calculateAmount();
 }
 
 function calculateTotalAmount(){
     var temp = 0;
     var amountTemp = parseFloat(0);
     var tableTicket = document.getElementById('TicketFareTable');
-    for (var r = 1, n = tableTicket.rows.length; r < n; r++) {
-        temp = tableTicket.rows[r].cells[7].innerHTML;
-        temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
-        if(temp == '') {
-            temp = 0;
-        }
-        temp = replaceAll(",","",temp.toString()); 
-        var value = parseFloat(temp) ;
-        var amount = amountTemp + value ;
-        amountTemp = amount;
+    var tableLenght = $("#TicketFareTable tr").length;
+    if(tableLenght > 1){
+        for (var r = 1, n = tableTicket.rows.length; r < n; r++) {
+            temp = tableTicket.rows[r].cells[7].innerHTML;
+            temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
+            if(temp == '') {
+                temp = 0;
+            }
+            temp = replaceAll(",","",temp.toString()); 
+            var value = parseFloat(temp) ;
+            var amount = amountTemp + value ;
+            amountTemp = amount;
 
+        }
+        document.getElementById("totalAmountTicketFare").value = formatNumber(amount);
     }
-    document.getElementById("totalAmountTicketFare").value = formatNumber(amount);
+    calculateWithodingTax();
+    calculateTotalPayment();
+    calculateAmount();
 }
 
 function calculateTotalAmountRefund(){
     var temp = 0;
     var refundTemp = parseFloat(0);
-    var table = document.getElementById('RefundTicketTable');
-    for (var r = 1, n = table.rows.length; r < n; r++) {
-        temp = table.rows[r].cells[5].innerHTML;
-        temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
-        if(temp == '') {
-            temp = 0;
-        }
-        temp = replaceAll(",","",temp.toString());
-        var value = parseFloat(temp) ;
-        var refund = refundTemp + value ;
-        refundTemp = refund;
+    var table = document.getElementById('RefundTicketTable'); 
+    var tableLenght = $("#RefundTicketTable tr").length;
+    if(tableLenght > 1){
+        for (var r = 1, n = table.rows.length; r < n; r++) {
+            temp = table.rows[r].cells[5].innerHTML;
+            temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
+            if(temp == '') {
+                temp = 0;
+            }
+            temp = replaceAll(",","",temp.toString());
+            var value = parseFloat(temp) ;
+            var refund = refundTemp + value ;
+            refundTemp = refund;
 
+        }
+        document.getElementById("totalAmountRefund").value = formatNumber(refund);
     }
-    document.getElementById("totalAmountRefund").value = formatNumber(refund);
+    calculateWithodingTax();
+    calculateTotalPayment();
+    calculateAmount();
 }
 
 
@@ -1645,8 +1809,6 @@ function clearData(){
     $("#detail").val("");
     $("#payBy").val("");
     $("#agentAmount").val("");
-    $("#creditNote").val("");
-    $("#creditAmount").val("");
     $("#commissionVat").val("");
     $("#debitNote").val("");
     $("#cash").val("");
@@ -1700,7 +1862,131 @@ function getTicketNoFromTicketFare() {
         temp = tableTicket.rows[r].cells[1].innerHTML;
         ticeketList += temp + ",";
     }
-    
+
     document.getElementById("ticketNoList").value = ticeketList;
+}
+
+function AddRowCredit(row) {
+    $("#CreditDetailTable tbody").append(
+        '<tr style="higth 100px">' +
+        '<td class="text-center">' + row + '</td>' +
+        '<td><input maxlength="20" id="creditNote' + row + '" name="creditNote' + row + '" type="text" class="form-control" ></td>' +
+        '<td><input id="creditAmount' + row + '" name="creditAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)"></td>' +
+        '<td class="text-center">' +
+        '<a class="remCF" onclick="deleteCreditList(\'\', \''+row+'\')">  '+
+        '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
+        '</tr>'
+    );
+    
+    $("#creditAmount"+row).focusout(function(){
+        var creditAmount = replaceAll(",","",$('#creditAmount'+row).val()); 
+        if (creditAmount == ""){
+            creditAmount = 0;
+        }
+        creditAmount = parseFloat(creditAmount); 
+        document.getElementById("creditAmount"+row).value = formatNumber(creditAmount);
+
+        if (creditAmount == "" || creditAmount == 0){
+            document.getElementById("creditAmount"+row).value = "";
+        }
+        calculateTotalCreditAmount();
+    }); 
+        
+    var tempCount = parseInt($("#countRowCredit").val()) + 1;
+    $("#countRowCredit").val(tempCount);
+    
+}
+function calculateTotalCreditAmount(){
+    var temp = 0;
+    var i = 1;
+    var amountTemp = parseFloat(0);
+    var tableProduct = $("#CreditDetailTable tr").length;
+    if(tableProduct > 1){
+        for (i ; i < tableProduct ; i++) {
+            temp = document.getElementById("creditAmount" + i);
+            if(temp !== null){
+                temp = temp.value;
+                if(temp == '') {
+                    temp = 0;
+                }
+                temp = replaceAll(",","",temp.toString());
+                var value = parseFloat(temp) ;
+                var amount = amountTemp + value ;
+                amountTemp = amount;
+            }
+        }
+        document.getElementById("totalCreditAmount").value = formatNumber(amount);
+    }
+    calculateTotalPayment();
+}
+
+function calculateWithodingTax(){
+    var sumCommissionTicket = replaceAll(",","",$('#sumCommissionTicket').val()); 
+    if (sumCommissionTicket == ""){
+        sumCommissionTicket = 0;
+    }    
+    
+    var sumCommissionRefund = replaceAll(",","",$('#sumCommissionRefund').val()); 
+    if (sumCommissionRefund == ""){
+        sumCommissionRefund = 0;
+    }    
+    var sumCommRefund = parseFloat(sumCommissionRefund);
+    var sumcomm = parseFloat(sumCommissionTicket);
+    
+    var withholdingTax = (sumcomm - sumCommRefund) * 0.03;
+//    With Tax = Ticket Comission – ComRefund * 3%
+    document.getElementById("withholdingTax").value = formatNumber(withholdingTax);
+}
+function deleteCreditList(id,Ccount) {
+    document.getElementById('creditIdDelete').value = id;
+    document.getElementById('creditRowDelete').value = Ccount;
+    $("#delCredit").text('Are you sure delete this credit ?');
+    $('#DeleteCreditNote').modal('show');
+}
+
+function DeleteRowCredit(){
+    var cCount = document.getElementById('creditRowDelete').value;
+    var id = document.getElementById('creditIdDelete').value;
+    if(id === ''){
+        var countrow=1;
+        $("#creditNote" + cCount).parent().parent().remove();
+        var rowAll = $("#CreditDetailTable tr").length;
+        if (rowAll <= 1) {
+            $("#tr_CreditDetailAddRow").removeClass("hide");
+            $("#tr_CreditDetailAddRow").addClass("show");
+        }
+        $('#CreditDetailTable tr:gt(0) ').each(function() {
+            $(this).find('td:eq(0)').html(countrow) ; 
+            countrow = countrow+1;
+            $("#countRowCredit").val(countrow);
+        });
+        calculateTotalCreditAmount();
+    }else {
+        $.ajax({
+            url: 'PaymentAirline.smi?action=deleteCredit',
+            type: 'get',
+            data: {creditIdDelete: id},
+            success: function () {
+                var countrow=1;
+                $("#creditNote" + cCount).parent().parent().remove();
+                var rowAll = $("#CreditDetailTable tr").length;
+                if (rowAll <= 1) {
+                    $("#tr_CreditDetailAddRow").removeClass("hide");
+                    $("#tr_CreditDetailAddRow").addClass("show");
+                }
+                $('#CreditDetailTable tr:gt(0) ').each(function() {
+                    $(this).find('td:eq(0)').html(countrow) ; 
+                    countrow = countrow+1;
+                    $("#countRowCredit").val(countrow);
+                });
+                calculateTotalCreditAmount();
+            },
+            error: function () {
+                console.log("error");
+                result =0;
+            }
+        }); 
+    }
+    $('#DeleteCreditNote').modal('hide');
 }
 </script>

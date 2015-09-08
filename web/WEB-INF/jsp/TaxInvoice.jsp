@@ -430,7 +430,7 @@
                                                 <span id="buttonEmail" class="glyphicon glyphicon-send" ></span> SendEmail 
                                             </button>
                                         </div>
-                                        <div class="col-md-1 text-left" style="width: 170px">
+                                        <div class="col-md-1 text-left hidden" style="width: 170px">
                                             <c:set var="copy" value="" />
                                             <c:if test="${(taxInvoice.id == '') || (taxInvoice.id == null) }">        
                                                 <c:set var="copy" value="disabled='true'" />
@@ -490,6 +490,7 @@
             <input type="hidden" id="action" name="action" value="save">
             </form>
     </div>
+</div>                                                
 
 <!--Disable Modal-->
 <div class="modal fade" id="DisableVoid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

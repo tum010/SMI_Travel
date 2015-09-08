@@ -81,4 +81,12 @@ public class InvoiceService {
             return invoiceDao.insertInvoiceDetail(invoice);
         }
     }
+    
+    public String checkReceipt(String refno){
+        return  invoiceDao.checkRecipt(refno);
+    }
+    
+    public String checkTaxInvoice(String refno){
+        return  invoiceDao.taxInvoice(refno);
+    }
 }

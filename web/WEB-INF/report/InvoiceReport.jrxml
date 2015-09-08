@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="59f0ec99-8109-4367-975c-dc17aad92f4d">
 	<property name="ireport.zoom" value="1.3660269107301415"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="240"/>
+	<property name="ireport.y" value="48"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
@@ -30,6 +30,7 @@
 	<field name="taxid" class="java.lang.String"/>
 	<field name="taxbranch" class="java.lang.String"/>
 	<field name="sign" class="java.lang.String"/>
+	<field name="duedate" class="java.lang.String"/>
 	<background>
 		<band height="802">
 			<line>
@@ -79,7 +80,7 @@
 				<textFieldExpression><![CDATA[$F{invno}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="365" y="117" width="156" height="39" uuid="2fd6f740-c5ef-493e-825b-b6da3cab3e10">
+				<reportElement x="366" y="102" width="156" height="39" uuid="2fd6f740-c5ef-493e-825b-b6da3cab3e10">
 					<printWhenExpression><![CDATA[$F{showstaff}.equalsIgnoreCase("1")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -95,11 +96,11 @@
 				<textFieldExpression><![CDATA[$F{invdate}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="365" y="102" width="156" height="17" uuid="b7236a3d-0b9e-41ed-9c45-0246c5d69129"/>
+				<reportElement x="366" y="153" width="156" height="17" uuid="b7236a3d-0b9e-41ed-9c45-0246c5d69129"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{refno}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{duedate}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="365" y="86" width="20" height="24" uuid="619d73fa-6ad4-4f30-bdfa-2683ef315d32"/>
@@ -118,7 +119,7 @@
 				<text><![CDATA[C/O]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="364" y="156" width="157" height="20" uuid="95356f8d-551c-4d8a-9da6-bf640398d28c"/>
+				<reportElement x="366" y="133" width="157" height="20" uuid="95356f8d-551c-4d8a-9da6-bf640398d28c"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>

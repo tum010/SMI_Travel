@@ -5,6 +5,7 @@ import com.smi.travel.datalayer.entity.Customer;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.BookingAirticketService;
+import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.service.WorkSpaceService;
 import com.smi.travel.datalayer.view.entity.BookingView;
 import com.smi.travel.master.controller.SMITravelController;
@@ -26,6 +27,9 @@ public class BookController extends SMITravelController {
     private WorkSpaceService workspaceService;
     private static final String DATALIST = "booking_list";
     private static final String STATUSLIST = "booking_status";
+    private static final String PAYBYLIST = "payby_list";
+    private static final String BANKTRANSFERLIST = "banktrasfer_list";
+    private UtilityService utilservice;
     
 
     @Override
@@ -39,6 +43,11 @@ public class BookController extends SMITravelController {
         String status = request.getParameter("status");
         String pnr = request.getParameter("pnr");
         String ticketNo = request.getParameter("ticketNo");
+        String payBy = request.getParameter("payBy");
+        String bankTransfer = "";
+        if("4".equalsIgnoreCase(payBy)){
+            bankTransfer = request.getParameter("bankTransfer");
+        }
         SystemUser user = (SystemUser) session.getAttribute("USER");
         List<BookingView> bookinglist = new LinkedList<BookingView>();
         UtilityFunction util = new UtilityFunction();
@@ -54,10 +63,10 @@ public class BookController extends SMITravelController {
         }
         
         if("search".equalsIgnoreCase(action)){
-            bookinglist = workspaceService.getListBooking(refno,PassFirst,PassLast,username,departmentid,Bookdate,status,pnr,ticketNo);
+            bookinglist = workspaceService.getListBooking(refno,PassFirst,PassLast,username,departmentid,Bookdate,status,pnr,ticketNo,payBy,bankTransfer);
             request.setAttribute("Bookdate", Bookdate);
         }else{
-            bookinglist = workspaceService.getListBooking(refno,PassFirst,PassLast,user.getUsername(),departmentid,Bookdate,status,pnr,ticketNo);
+            bookinglist = workspaceService.getListBooking(refno,PassFirst,PassLast,user.getUsername(),departmentid,Bookdate,status,pnr,ticketNo,payBy,bankTransfer);
             //request.setAttribute("Bookdate", util.convertDateToString(thisDate));
             
         }
@@ -68,6 +77,8 @@ public class BookController extends SMITravelController {
         }  
         request.setAttribute(DATALIST,bookinglist);
         request.setAttribute(STATUSLIST,workspaceService.getListBookStatus());
+        request.setAttribute(PAYBYLIST, utilservice.getListMAccpay());
+        request.setAttribute(BANKTRANSFERLIST, utilservice.getListBank());
         request.setAttribute("refno", refno);
         request.setAttribute("PassFirst", PassFirst);
         request.setAttribute("PassLast", PassLast);
@@ -75,6 +86,8 @@ public class BookController extends SMITravelController {
         request.setAttribute("status", status);
         request.setAttribute("pnr", pnr);
         request.setAttribute("ticketNo", ticketNo);
+        request.setAttribute("payBy", payBy);
+        request.setAttribute("bankTransfer", bankTransfer);
         return Book;
     }
 
@@ -85,6 +98,13 @@ public class BookController extends SMITravelController {
     public void setWorkspaceService(WorkSpaceService workspaceService) {
         this.workspaceService = workspaceService;
     }
-    
-    
+
+    public UtilityService getUtilservice() {
+        return utilservice;
+    }
+
+    public void setUtilservice(UtilityService utilservice) {
+        this.utilservice = utilservice;
+    }
+        
 }

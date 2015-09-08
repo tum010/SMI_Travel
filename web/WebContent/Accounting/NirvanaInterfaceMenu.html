@@ -1,0 +1,53 @@
+<ul id="NirvanaInterFaceMenu" class="nav nav-list" style="top: 0px;  background-color: #FAFEFA;border: solid 1px #0063DC">
+    <li>
+        <a href="APMonitor.smi" id="ap-monitor">
+            <i class="menu-icon fa fa-angle-up"></i>
+            <span class="menu-text">AP Monitor</span>
+        </a>
+        <b class="arrow"></b>
+    </li>
+    
+    <li>
+        <a href="ARMonitor.smi" id="ar-monitor">
+            <i class="menu-icon fa fa-angle-down"></i>
+            <span class="menu-text">AR Monitor<strong></strong> </span>
+
+        </a>
+    </li>
+
+    <li>
+        <a href="CollectionMonitor.smi" id="collection-monitor">
+            <i class="menu-icon fa fa-check"></i>
+            <span class="menu-text">Collection<strong></strong> </span>
+        </a>
+        <b class="arrow"></b>
+    </li>
+</ul>
+
+<script>
+    $(document).ready(function () {
+        // use datetimepicker
+        $('.date').datetimepicker();
+        $('.spandate').click(function () {
+            var position = $(this).offset();
+            console.log("positon :" + position.top);
+            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+
+        });
+
+       $('table tbody').on('click', 'tr', function () {
+            $(this).addClass('row_selected').siblings().removeClass('row_selected');
+           
+        });
+
+        var path = location.pathname;
+        var name = path.split("/");
+        //console.log(name[2]);
+        str = name[2].split(".");
+        //console.log(str[0]);
+        sub = str[0].substr(0, 9);
+        //console.log(sub);
+        var $select = $('a[href*="' + sub + '"]');
+        $("#NirvanaInterFaceMenu").find($select).css('background-color', '#ccc');
+    });
+</script>

@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.dao.impl;
 import com.smi.travel.datalayer.dao.PaymentAirTicketDao;
 import com.smi.travel.datalayer.entity.MAirlineAgent;
 import com.smi.travel.datalayer.entity.MRunningCode;
+import com.smi.travel.datalayer.entity.PaymentAirCredit;
 import com.smi.travel.datalayer.entity.PaymentAirticket;
 import com.smi.travel.datalayer.entity.PaymentAirticketFare;
 import com.smi.travel.datalayer.entity.PaymentAirticketRefund;
@@ -57,6 +58,14 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                 }
             }
             
+            List<PaymentAirCredit> paymentAirCredits = payAir.getPaymentAirCredits();
+            
+            if(paymentAirCredits != null){
+                for(int i = 0; i < paymentAirCredits.size(); i++){
+                   session.save(paymentAirCredits.get(i));
+                }
+            }
+            
             transaction.commit();
             session.close();
             this.sessionFactory.close();
@@ -95,6 +104,18 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                         session.save(paymentAirticketRefunds.get(i));
                     } else {
                         session.update(paymentAirticketRefunds.get(i));
+                    }             
+                }
+            }
+            
+            List<PaymentAirCredit> paymentAirCredits = payAir.getPaymentAirCredits();
+            
+            if(paymentAirCredits != null){
+                for(int i = 0; i < paymentAirCredits.size(); i++){
+                    if(paymentAirCredits.get(i).getId() == null){
+                        session.save(paymentAirCredits.get(i));
+                    } else {
+                        session.update(paymentAirCredits.get(i));
                     }             
                 }
             }
@@ -661,6 +682,71 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
 
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
+    }
+
+    @Override
+    public List<PaymentAirCredit> getPaymentAirCreditByPaymentAirId(String paymentAirId) {
+        String query = "from PaymentAirCredit pay where pay.paymentAirticket.id = :paymentAirId";
+        Session session = this.sessionFactory.openSession();
+        List<PaymentAirCredit> list = session.createQuery(query).setParameter("paymentAirId", paymentAirId).list();
+
+        if (list.isEmpty()){
+            return null;
+        }
+        
+        session.close();
+        this.sessionFactory.close();
+        return list;
+    }
+
+    @Override
+    public String DeletePaymentAirCredit(String paymentAirId, String paymentCreditId) {
+        String result = "";
+        PaymentAirCredit paymentAirCredit = new PaymentAirCredit();
+        List<PaymentAirCredit> paymentAirCreditList = new ArrayList<PaymentAirCredit>();
+        Session session = this.sessionFactory.openSession();
+        if(paymentAirId.isEmpty() || "".equals(paymentAirId)){
+            String query = "from PaymentAirCredit pay where pay.id = :paymentCreditId";
+            paymentAirCreditList = session.createQuery(query).setParameter("paymentCreditId", paymentCreditId).list();
+            System.out.println(" Delete paymentAirCreditList size (1) "+paymentAirCreditList.size());
+            if (paymentAirCreditList.isEmpty()) {
+                return null;
+            }else{
+                paymentAirCredit =  paymentAirCreditList.get(0);
+                try {
+                    transaction = session.beginTransaction();
+                    session.delete(paymentAirCredit);
+                    transaction.commit();
+                    result = "success";
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    result = "fail";
+                }
+            }
+        } else { 
+            String query = "from PaymentAirCredit pay where pay.id = :paymentCreditId and pay.paymentAirticket.id =:paymentAirId ";
+            paymentAirCreditList = session.createQuery(query).setParameter("paymentCreditId", paymentCreditId).setParameter("paymentAirId", paymentAirId).list();
+            System.out.println(" Delete ReceiptDetailList size "+paymentAirCreditList.size());
+            if (paymentAirCreditList.isEmpty()) {
+                return null;
+            }else{
+                for(int i = 0; i < paymentAirCreditList.size(); i++){
+                    paymentAirCredit = paymentAirCreditList.get(i);
+                    try {
+                        transaction = session.beginTransaction();
+                        session.delete(paymentAirCredit);
+                        transaction.commit();
+                        result = "success";
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        result = "fail";
+                    }
+                }
+            }
+        }
+        session.close();
+        this.sessionFactory.close();
+        return result;
     }
 
 }
