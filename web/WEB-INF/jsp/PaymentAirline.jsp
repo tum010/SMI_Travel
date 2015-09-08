@@ -81,7 +81,6 @@
                 <input type="hidden" name="checksearchticket" id="checksearchticket" value="">
                 <input type="hidden" name="sumCommissionRefund" id="sumCommissionRefund" value="">
                 <input type="hidden" name="sumCommissionTicket" id="sumCommissionTicket" value="">
-                
                 <div class="panel panel-default">
                     <div class="panel-body"  style="padding-right: 0px;" style="width: 100%">
                         <div class="col-xs-12">
@@ -1904,15 +1903,17 @@ function calculateTotalCreditAmount(){
     var tableProduct = $("#CreditDetailTable tr").length;
     if(tableProduct > 1){
         for (i ; i < tableProduct ; i++) {
-            temp = $("#creditAmount"+i).val();
-            temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
-            if(temp == '') {
-                temp = 0;
+            temp = document.getElementById("creditAmount" + i);
+            if(temp !== null){
+                temp = temp.value;
+                if(temp == '') {
+                    temp = 0;
+                }
+                temp = replaceAll(",","",temp.toString());
+                var value = parseFloat(temp) ;
+                var amount = amountTemp + value ;
+                amountTemp = amount;
             }
-            temp = replaceAll(",","",temp.toString());
-            var value = parseFloat(temp) ;
-            var amount = amountTemp + value ;
-            amountTemp = amount;
         }
         document.getElementById("totalCreditAmount").value = formatNumber(amount);
     }
@@ -1959,29 +1960,33 @@ function DeleteRowCredit(){
             countrow = countrow+1;
             $("#countRowCredit").val(countrow);
         });
+        calculateTotalCreditAmount();
+    }else {
+        $.ajax({
+            url: 'PaymentAirline.smi?action=deleteCredit',
+            type: 'get',
+            data: {creditIdDelete: id},
+            success: function () {
+                var countrow=1;
+                $("#creditNote" + cCount).parent().parent().remove();
+                var rowAll = $("#CreditDetailTable tr").length;
+                if (rowAll <= 1) {
+                    $("#tr_CreditDetailAddRow").removeClass("hide");
+                    $("#tr_CreditDetailAddRow").addClass("show");
+                }
+                $('#CreditDetailTable tr:gt(0) ').each(function() {
+                    $(this).find('td:eq(0)').html(countrow) ; 
+                    countrow = countrow+1;
+                    $("#countRowCredit").val(countrow);
+                });
+                calculateTotalCreditAmount();
+            },
+            error: function () {
+                console.log("error");
+                result =0;
+            }
+        }); 
     }
-    
-    
-    
-//    else {
-//        $.ajax({
-//            url: '${callPage}?action=deleteReceiptCredit',
-//            type: 'get',
-//            data: {receiptCreditIdDelete: id},
-//            success: function () {
-//                $("#creditBank" + cCount).parent().parent().remove();
-//                var rowAll = $("#CreditDetailTable tr").length;
-//                if (rowAll <= 1) {
-//                    $("#tr_CreditDetailAddRow").removeClass("hide");
-//                    $("#tr_CreditDetailAddRow").addClass("show");
-//                }
-//            },
-//            error: function () {
-//                console.log("error");
-//                result =0;
-//            }
-//        }); 
-//    }    
     $('#DeleteCreditNote').modal('hide');
 }
 </script>

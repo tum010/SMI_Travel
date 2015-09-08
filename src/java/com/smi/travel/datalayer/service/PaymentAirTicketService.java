@@ -72,6 +72,9 @@ public class PaymentAirTicketService {
         return paymentairticketdao.getPaymentAirCreditByPaymentAirId(paymentAirId);
     }
     
+    public String DeletePaymentAirCredit(String paymentAirId,String paymentCreditId){
+        return paymentairticketdao.DeletePaymentAirCredit(paymentAirId,paymentCreditId);
+    }
     public PaymentAirTicketDao getPaymentairticketdao() {
         return paymentairticketdao;
     }
