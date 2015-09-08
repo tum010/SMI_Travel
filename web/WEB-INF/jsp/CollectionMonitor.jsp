@@ -90,7 +90,12 @@
                     </c:if>                             
                     </div>               
                 </div>
-                <div class="col-xs-1" style="width: 245px"></div>
+                <div class="col-xs-1" style="width: 165px"></div>
+                <div class="col-xs-1 " style="width: 80px">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <span id="btnPrintCollection" class="glyphicon glyphicon-print" ></span> Print
+                    </button>
+                </div>          
                 <div class="col-xs-1">
                     <button type="submit"  id="btnSearchAR"  name="btnSearchCollection" class="btn btn-primary btn-primary">
                         <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
@@ -102,11 +107,10 @@
                         <thead>
                             <tr class="datatable-header">
                                 <th class="hidden">Id</th>
-                                <th style="width: 1%" onclick="selectAll()"><u>All</u></th>
                                 <th style="width: 1%" >No</th>
                                 <th style="width: 12%">Receipt</th>
                                 <th style="width: 12%">Inv No.</th>
-                                <th style="width: 10%">AR Code</th>
+                                <th style="width: 11%">AR Code</th>
                                 <th style="width: 20%">Inv To</th>
                                 <th style="width: 12%">Acc Code</th>
                                 <th style="width: 15%">Inv Amount</th>
@@ -117,9 +121,6 @@
                         <tbody>               
                             <tr>
                                 <td class="hidden">1</td>
-                                <td align="center">
-                                    <input class="form-control" type="checkbox" id="selectAll1" name="selectAll1" value="1">
-                                </td>
                                 <td align="center">1</td>
                                 <td>150814</td>
                                 <td>150814</td>
@@ -133,17 +134,7 @@
                         </tbody>
                     </table>    
                 </div>
-            </div>
-            <div class="col-xs-12"><br></div>
-            <div class="col-xs-12">
-                <div class="col-xs-1 text-right" style="width: 880px"></div>               
-                <div class="col-xs-1 text-right" style="width: 90px">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        <span id="btnPrintCollection" class="glyphicon glyphicon-print" ></span> Print
-                    </button>
-                </div>               
-            </div>
-            <div class="col-xs-12"><br></div>
+            </div>         
         </form>
     </div>
 </div>
@@ -178,78 +169,5 @@
             }
         });
     });
-
-    function selectAll(){
-        var row = $('#collectionDataListTable tr').length;     
-        var check = 0;
-        var unCheck = 0;
-        for(var i=1;i<row;i++){          
-            var selectAll = document.getElementById("selectAll"+i);
-            if(selectAll !== null && selectAll !== ''){
-                if(document.getElementById("selectAll"+i).checked){
-                    check++;
-                } else {
-                    unCheck++;
-                }
-            }   
-        }
-
-        if(check > unCheck){
-            for(var i=1;i<row;i++){
-                var selectAll = document.getElementById("selectAll"+i);
-                if(selectAll !== null && selectAll !== ''){
-                    if(document.getElementById("selectAll"+i).checked){
-
-                    } else { 
-                        document.getElementById("selectAll"+i).checked = true;                   
-                    }    
-                }   
-            }
-        }
-
-        if(check < unCheck){
-            for(var i=1;i<row;i++){
-                var selectAll = document.getElementById("selectAll"+i);
-                if(selectAll !== null && selectAll !== ''){
-                    document.getElementById("selectAll"+i).checked = false;
-                }   
-            }
-        }
-
-        if(check === 0 && unCheck !== 0){
-            for(var i=1;i<row;i++){
-                var selectAll = document.getElementById("selectAll"+i);
-                if(selectAll !== null && selectAll !== ''){
-                    if(document.getElementById("selectAll"+i).checked){
-
-                    } else { 
-                        document.getElementById("selectAll"+i).checked = true;
-
-                    }
-                }    
-            }    
-        }
-
-        if(check !== 0 && unCheck === 0){
-            for(var i=1;i<row;i++){
-                var selectAll = document.getElementById("selectAll"+i);
-                if(selectAll !== null && selectAll !== ''){
-                    document.getElementById("selectAll"+i).checked = false;
-                }   
-            }
-        }
-
-        if(check === unCheck){
-            for(var i=1;i<row;i++){
-                var selectAll = document.getElementById("selectAll"+i);
-                if(selectAll !== null && selectAll !== ''){
-                    if(document.getElementById("selectAll"+i).checked){
-
-                    } else { 
-                        document.getElementById("selectAll"+i).checked = true;                        
-                    }    
-                }             
-            }            
-        }
-    }
+    
 </script>
