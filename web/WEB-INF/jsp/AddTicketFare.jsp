@@ -94,7 +94,7 @@
                             <label class="control-label text-right">Ticket&nbsp;Type&nbsp;</label>
                         </div>
                         <div class="col-xs-1" style="width: 200px">
-                            <select id="ticketType" name="ticketType" class="form-control selectize" >
+                            <select id="ticketType" name="ticketType" class="form-control selectize" onchange="calculateVat()">
                                 <option value="">--- Type ---</option> 
                                 <c:choose>
                                     <c:when test="${requestScope['TicketType'] == 'B'}">
@@ -571,7 +571,8 @@
                                     <th style="width:15%;">Invoice Date</th>
                                     <th style="width:20%;">Department</th>
                                     <th style="width:15%;">Due Date</th>
-                                    <th style="width:30%;">Sale Staff</th>
+                                    <th style="width:15%;">Sale Staff</th>
+                                    <th style="width:15%;">Amount Invoice</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -585,7 +586,7 @@
                                         <td align="center">${table.department}</td>
                                         <td align="center">${table.dueDate}</td>
                                         <td align="center">${table.staffName}</td>
-                                    </tr>
+                                        <td class="money">${table.amountInvoice}</td>
                                 </c:forEach>
                             </tbody>
                         </table>
@@ -1428,15 +1429,14 @@ function clearData(){
     $("#flightPanel").addClass('hidden');
 }
 function calculateVat() {
-
-    //Diff Vat = Inv Amount - Fare - Tax - Ins (ค่า Diff vat สามารถติดลบได้)
+//Diff Vat = Inv Amount - Fare - Tax - Ins (ค่า Diff vat สามารถติดลบได้)
+//    Diffvat = INV Amount – Fare – Tax – Insurance – Ticcom
     var ticketType = document.getElementById('ticketType').value;
     if(ticketType == "A" || ticketType == "B"){
         var invAmount = replaceAll(",","",$('#invoiceAmount').val()); 
         if (invAmount == ""){
             invAmount = 0;
         }
-
         var ticketfare = replaceAll(",","",$('#ticketFare').val()); 
         if (ticketfare == ""){
             ticketfare = 0;
@@ -1451,12 +1451,17 @@ function calculateVat() {
         if (ticketins == ""){
             ticketins = 0;
         }
-      
+        
+        var ticketCommission = replaceAll(",","",$('#ticketCommission').val()); 
+        if (ticketCommission == ""){
+            ticketCommission = 0;
+        }
        var inv = parseFloat(invAmount); 
        var fare = parseFloat(ticketfare);
        var tax = parseFloat(tickettax);
        var ins = parseFloat(ticketins);
-       var diffvat = inv - fare - tax - ins;
+       var ticketComm = parseFloat(ticketCommission);
+       var diffvat = inv - fare - tax - ins - ticketComm;
        document.getElementById("diffVat").value = formatNumber(diffvat);
     }
 }

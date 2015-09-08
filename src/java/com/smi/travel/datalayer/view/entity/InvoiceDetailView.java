@@ -24,6 +24,7 @@ public class InvoiceDetailView {
     private String owner;
     private String routing;
     private String invoiceId;
+    private BigDecimal amountInvoice;
     
     public String getId() {
         return id;
@@ -111,6 +112,14 @@ public class InvoiceDetailView {
 
     public void setInvoiceId(String invoiceId) {
         this.invoiceId = invoiceId;
+    }
+
+    public BigDecimal getAmountInvoice() {
+        return amountInvoice;
+    }
+
+    public void setAmountInvoice(BigDecimal amountInvoice) {
+        this.amountInvoice = amountInvoice;
     }
    
     
