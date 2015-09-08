@@ -220,7 +220,7 @@ public class InvoiceController extends SMITravelController {
                 checkReciptAndTaxInvoice = 0;
                 request.setAttribute("checkRecipt", "noReceipt");
             }
-            if(checkReciptAndTaxInvoice == 0){
+            if(checkReciptAndTaxInvoice == 0){ 
                 invoice = setValueInvoice(action, user.getUsername(), invoiceType, invoiceId, invoiceTo, invoiceName, invoiceAddress, isGroup, termPay, dueDate, department, staffCode, staffName, staffId, arCode, remark, invoiceNo, InputInvDate, request,subDepartment);
                 result = invoiceService.saveInvoice(invoice);
                 if(result.equals("update success")){

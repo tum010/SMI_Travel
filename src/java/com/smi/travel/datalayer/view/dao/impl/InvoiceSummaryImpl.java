@@ -242,7 +242,12 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
             sum.setTo(util.ConvertString(B[13]));
             sum.setInvfrom(util.convertStringToDate(fromData));
             sum.setInvto(util.convertStringToDate(toDate));
-            sum.setDepartment(department);         
+            if(department != null && !"".equals(department)){
+                sum.setDepartment(department);     
+            }else if("".equals(department)){
+                sum.setDepartment("All");     
+            }
+                
             sum.setSystemdate(util.convertDateToString(new Date()));
             sum.setUsername(util.ConvertString(B[10]));
 
