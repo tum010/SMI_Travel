@@ -115,8 +115,11 @@
                         </a>
                     </div>
                 </div>
-
-                <div class="collapsing" id="collapseExample${advanced.search}" aria-expanded="false">
+                <c:set var="advancedSearch" value="collapsing" />
+                <c:if test="${((requestScope['pnr'] != '') && (requestScope['pnr'] != null)) || ((requestScope['ticketNo'] != '') && (requestScope['ticketNo'] != null)) || ((requestScope['payBy'] != '') && (requestScope['payBy'] != null))}">
+                    <c:set var="advancedSearch" value="accordion-body collapse in" />
+                </c:if>
+                <div class="${advancedSearch}" id="collapseExample${advanced.search}" aria-expanded="false">
                     <div class="col-md-11">
                         <div class="col-md-2">
                             <div class="form-group">
