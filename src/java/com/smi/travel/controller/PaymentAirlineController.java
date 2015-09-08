@@ -268,73 +268,144 @@ public class PaymentAirlineController extends SMITravelController {
             int RowCredit = Integer.parseInt(countRowCredit);
             if (StringUtils.isNotEmpty(paymentId)){ //Update
                 paymentAirticket.setId(paymentId);
-            }    
-            //save or update payment air ticket fare
-            if(paymentAirticket.getPaymentAirticketFares() == null){
-                paymentAirticket.setPaymentAirticketFares(new ArrayList<PaymentAirticketFare>());
-            }
-            for (int i = 1; i < Rows  ; i++) {
-                String paymentAirFareId = request.getParameter("tableId" + i);
-                    System.out.println("tableId "+i+"::::"+ paymentAirFareId);
-                    PaymentAirticketFare paymentAirticketFare = new PaymentAirticketFare();
-                    TicketFareAirline ticketFareAirline = new TicketFareAirline();
-                    //payment air id
-                    paymentAirticketFare.setPaymentAirticket(paymentAirticket);
-                    //ticket fare id
-                    ticketFareAirline.setId(paymentAirFareId);
-                    paymentAirticketFare.setTicketFareAirline(ticketFareAirline);
-                    paymentAirticket.getPaymentAirticketFares().add(paymentAirticketFare);
-                    request.setAttribute(SETCALCULATETICKET,1);
-            }
-            //delete PaymentAirRefund 
-            List<RefundAirticketDetailView> refundAirticketDetailViewTemp = new ArrayList<RefundAirticketDetailView>();
-            refundAirticketDetailViewTemp = paymentAirTicketService.getRefundDetailByPaymentAirId(paymentId);
-            if(refundAirticketDetailViewTemp != null){
-                paymentAirTicketService.DeletePaymentAirRefund(paymentId,null,2);
-            }
-            //save or update payment air ticket refund
-            if(paymentAirticket.getPaymentAirticketRefunds() == null){
-                paymentAirticket.setPaymentAirticketRefunds(new ArrayList<PaymentAirticketRefund>());
-            }
-            for (int i = 1; i < RowRefund  ; i++) {
-                String refundDetailId = request.getParameter("tableRefundId" + i);
-                System.out.println("tableRefundId "+i+"::::"+ refundDetailId);
-                    System.out.println("tableRefundId check"+i+"::::"+ refundDetailId);
-                    PaymentAirticketRefund paymentAirticketRefund = new PaymentAirticketRefund();
-                    RefundAirticketDetail refundAirticketDetail = new RefundAirticketDetail();
-                    //payment air id
-                    paymentAirticketRefund.setPaymentAirticket(paymentAirticket);
-                    //ticket fare id
-                    refundAirticketDetail.setId(refundDetailId);
-                    paymentAirticketRefund.setRefundAirticketDetail(refundAirticketDetail);
-                    paymentAirticket.getPaymentAirticketRefunds().add(paymentAirticketRefund);
-                    request.setAttribute(SETCALCULATEREFUND,1);
-            }
-            //save or update payment air credit
-            if(paymentAirticket.getPaymentAirCredits() == null){
-                paymentAirticket.setPaymentAirCredits(new ArrayList<PaymentAirCredit>());
-            }
-            for (int i = 1; i < RowCredit  ; i++) {
-                String creditId = request.getParameter("creditId" + i);
-                String creditNote = request.getParameter("creditNote" + i);
-                String creditAmount = request.getParameter("creditAmount" + i);
-                System.out.println("tableCreditId "+i+"::::"+ creditId);
-                System.out.println("creditNote "+i+"::::"+ creditNote);
-                System.out.println("creditAmount "+i+"::::"+ creditAmount);
-                PaymentAirCredit paymentAirCredit = new PaymentAirCredit();
-                //payment air id
-                paymentAirCredit.setPaymentAirticket(paymentAirticket);
-                //ticket credit id
-                paymentAirCredit.setId(creditId);
-                paymentAirCredit.setCreditNote(creditNote);
-                if(StringUtils.isNotEmpty(creditAmount)){
-                    paymentAirCredit.setCreditAmount(new BigDecimal(String.valueOf(creditAmount.replaceAll(",","")))); 
-                }else{
-                    paymentAirCredit.setCreditAmount(new BigDecimal(0)); 
-                }
                 
-                if(!"".equalsIgnoreCase(creditNote) || !"".equalsIgnoreCase(creditAmount)){
-                    paymentAirticket.getPaymentAirCredits().add(paymentAirCredit);
+                //save or update payment air ticket fare
+                if(paymentAirticket.getPaymentAirticketFares() == null){
+                    paymentAirticket.setPaymentAirticketFares(new ArrayList<PaymentAirticketFare>());
+                }
+                for (int i = 1; i < Rows  ; i++) {
+                    String paymentAirFareId = request.getParameter("tableId" + i);
+                        System.out.println("tableId "+i+"::::"+ paymentAirFareId);
+                        PaymentAirticketFare paymentAirticketFare = new PaymentAirticketFare();
+                        TicketFareAirline ticketFareAirline = new TicketFareAirline();
+                        //payment air id
+                        paymentAirticketFare.setPaymentAirticket(paymentAirticket);
+                        //ticket fare id
+                        ticketFareAirline.setId(paymentAirFareId);
+                        paymentAirticketFare.setTicketFareAirline(ticketFareAirline);
+                        paymentAirticket.getPaymentAirticketFares().add(paymentAirticketFare);
+                        request.setAttribute(SETCALCULATETICKET,1);
+                }
+                //delete PaymentAirRefund 
+                List<RefundAirticketDetailView> refundAirticketDetailViewTemp = new ArrayList<RefundAirticketDetailView>();
+                refundAirticketDetailViewTemp = paymentAirTicketService.getRefundDetailByPaymentAirId(paymentId);
+                if(refundAirticketDetailViewTemp != null){
+                    paymentAirTicketService.DeletePaymentAirRefund(paymentId,null,2);
+                }
+                //save or update payment air ticket refund
+                if(paymentAirticket.getPaymentAirticketRefunds() == null){
+                    paymentAirticket.setPaymentAirticketRefunds(new ArrayList<PaymentAirticketRefund>());
+                }
+                for (int i = 1; i < RowRefund  ; i++) {
+                    String refundDetailId = request.getParameter("tableRefundId" + i);
+                    System.out.println("tableRefundId "+i+"::::"+ refundDetailId);
+                        System.out.println("tableRefundId check"+i+"::::"+ refundDetailId);
+                        PaymentAirticketRefund paymentAirticketRefund = new PaymentAirticketRefund();
+                        RefundAirticketDetail refundAirticketDetail = new RefundAirticketDetail();
+                        //payment air id
+                        paymentAirticketRefund.setPaymentAirticket(paymentAirticket);
+                        //ticket fare id
+                        refundAirticketDetail.setId(refundDetailId);
+                        paymentAirticketRefund.setRefundAirticketDetail(refundAirticketDetail);
+                        paymentAirticket.getPaymentAirticketRefunds().add(paymentAirticketRefund);
+                        request.setAttribute(SETCALCULATEREFUND,1);
+                }
+                //save or update payment air credit
+                if(paymentAirticket.getPaymentAirCredits() == null){
+                    paymentAirticket.setPaymentAirCredits(new ArrayList<PaymentAirCredit>());
+                }
+                for (int i = 1; i < RowCredit  ; i++) {
+                    String creditId = request.getParameter("creditId" + i);
+                    String creditNote = request.getParameter("creditNote" + i);
+                    String creditAmount = request.getParameter("creditAmount" + i);
+                    System.out.println("tableCreditId "+i+"::::"+ creditId);
+                    System.out.println("creditNote "+i+"::::"+ creditNote);
+                    System.out.println("creditAmount "+i+"::::"+ creditAmount);
+                    PaymentAirCredit paymentAirCredit = new PaymentAirCredit();
+                    //payment air id
+                    paymentAirCredit.setPaymentAirticket(paymentAirticket);
+                    //ticket credit id
+                    paymentAirCredit.setId(creditId);
+                    paymentAirCredit.setCreditNote(creditNote);
+                    if(StringUtils.isNotEmpty(creditAmount)){
+                        paymentAirCredit.setCreditAmount(new BigDecimal(String.valueOf(creditAmount.replaceAll(",","")))); 
+                    }else{
+                        paymentAirCredit.setCreditAmount(new BigDecimal(0)); 
+                    }
+
+                    if(!"".equalsIgnoreCase(creditNote) || !"".equalsIgnoreCase(creditAmount)){
+                        paymentAirticket.getPaymentAirCredits().add(paymentAirCredit);
+                    }
+                }
+            }else{
+                //save payment air ticket fare
+                if(paymentAirticket.getPaymentAirticketFares() == null){
+                    paymentAirticket.setPaymentAirticketFares(new ArrayList<PaymentAirticketFare>());
+                }
+                for (int i = 1; i < Rows  ; i++) {
+                    String paymentAirFareId = request.getParameter("tableId" + i);
+                    System.out.println("tableId "+i+"::::"+ paymentAirFareId);
+                    if(paymentAirFareId != null){
+                        
+                        PaymentAirticketFare paymentAirticketFare = new PaymentAirticketFare();
+                        TicketFareAirline ticketFareAirline = new TicketFareAirline();
+                        paymentAirticketFare.setPaymentAirticket(paymentAirticket);
+                        ticketFareAirline.setId(paymentAirFareId);
+                        ticketFareAirline.setAgentId(null);
+                        ticketFareAirline.setMAirlineAgent(null);
+//                        ticketFareAirline.setMPaymentDoctype(null);
+                        ticketFareAirline.setMaster(null);
+                        paymentAirticketFare.setTicketFareAirline(ticketFareAirline);
+                        paymentAirticket.getPaymentAirticketFares().add(paymentAirticketFare);
+                        request.setAttribute(SETCALCULATETICKET,1);
+                    }
+                }
+                //save payment air ticket refund
+                if(paymentAirticket.getPaymentAirticketRefunds() == null){
+                    paymentAirticket.setPaymentAirticketRefunds(new ArrayList<PaymentAirticketRefund>());
+                }
+                for (int i = 1; i < RowRefund  ; i++) {
+                    String refundDetailId = request.getParameter("tableRefundId" + i);
+                    System.out.println("tableRefundId "+i+"::::"+ refundDetailId);
+                    if(refundDetailId != null){
+                        System.out.println("tableRefundId check"+i+"::::"+ refundDetailId);
+                        PaymentAirticketRefund paymentAirticketRefund = new PaymentAirticketRefund();
+                        RefundAirticketDetail refundAirticketDetail = new RefundAirticketDetail();
+                        //payment air id
+                        paymentAirticketRefund.setPaymentAirticket(paymentAirticket);
+                        //ticket fare id
+                        refundAirticketDetail.setId(refundDetailId);
+                        paymentAirticketRefund.setRefundAirticketDetail(refundAirticketDetail);
+                        paymentAirticket.getPaymentAirticketRefunds().add(paymentAirticketRefund);
+                        request.setAttribute(SETCALCULATEREFUND,1);
+                    }
+                }
+                //save payment air credit
+                if(paymentAirticket.getPaymentAirCredits() == null){
+                    paymentAirticket.setPaymentAirCredits(new ArrayList<PaymentAirCredit>());
+                }
+                for (int i = 1; i < RowCredit  ; i++) {
+                    String creditId = request.getParameter("creditId" + i);
+                    String creditNote = request.getParameter("creditNote" + i);
+                    String creditAmount = request.getParameter("creditAmount" + i);
+                    System.out.println("tableCreditId "+i+"::::"+ creditId);
+                    System.out.println("creditNote "+i+"::::"+ creditNote);
+                    System.out.println("creditAmount "+i+"::::"+ creditAmount);
+//                    if(creditId != null){
+                    PaymentAirCredit paymentAirCredit = new PaymentAirCredit();
+                    //payment air id
+                    paymentAirCredit.setPaymentAirticket(paymentAirticket);
+                    //ticket credit id
+                    paymentAirCredit.setId(creditId);
+                    paymentAirCredit.setCreditNote(creditNote);
+                    if(StringUtils.isNotEmpty(creditAmount)){
+                        paymentAirCredit.setCreditAmount(new BigDecimal(String.valueOf(creditAmount.replaceAll(",","")))); 
+                    }else{
+                        paymentAirCredit.setCreditAmount(new BigDecimal(0)); 
+                    }
+                    if(!"".equalsIgnoreCase(creditNote) || !"".equalsIgnoreCase(creditAmount)){
+                        paymentAirticket.getPaymentAirCredits().add(paymentAirCredit);
+                    }
                 }
             }
 
