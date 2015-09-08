@@ -37,7 +37,7 @@ public class LoginController extends SMITravelController {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         log.info("process running");
-
+        
         if (action != null) {
             if (action.equalsIgnoreCase("login")) {
                 SystemUser user = new SystemUser();
@@ -73,6 +73,7 @@ public class LoginController extends SMITravelController {
                         String[] daytourMenu = null;
                         String[] financeMenu = null;
                         String[] reportMenu = null;
+                        String[] accountmenu = null;
                         String[] checkingMenu = null;
                         if (menuActivate != null) {
                             masterMenu = activateMenu(menuActivate, 1);
@@ -81,18 +82,17 @@ public class LoginController extends SMITravelController {
                             financeMenu = activateMenu(menuActivate, 4);
                             reportMenu = activateMenu(menuActivate, 5);
                             checkingMenu = activateMenu(menuActivate, 6);
+                            accountmenu = activateMenu(menuActivate, 7);
                         }
                         Arrays.sort(masterMenu);
                         Arrays.sort(reportMenu);
-                        for(int i=0;i<financeMenu.length;i++){
-                            System.out.println("checking :"+financeMenu[i]);
-                        }
                         
                         session.setAttribute("mastermenu", masterMenu);
                         session.setAttribute("bookingmenu", bookingMenu);
                         session.setAttribute("daytourmenu", daytourMenu);
                         session.setAttribute("financemenu", financeMenu);
                         session.setAttribute("reportmenu", reportMenu);
+                        session.setAttribute("accountmenu", accountmenu);
                         session.setAttribute("checkingMenu", checkingMenu);
                     } else {
                         request.setAttribute("ResultLogin", "User have not role.Please contact admin to assign role.");

@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.dao.impl;
 import com.smi.travel.datalayer.dao.PaymentAirTicketDao;
 import com.smi.travel.datalayer.entity.MAirlineAgent;
 import com.smi.travel.datalayer.entity.MRunningCode;
+import com.smi.travel.datalayer.entity.PaymentAirCredit;
 import com.smi.travel.datalayer.entity.PaymentAirticket;
 import com.smi.travel.datalayer.entity.PaymentAirticketFare;
 import com.smi.travel.datalayer.entity.PaymentAirticketRefund;
@@ -57,6 +58,14 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                 }
             }
             
+            List<PaymentAirCredit> paymentAirCredits = payAir.getPaymentAirCredits();
+            
+            if(paymentAirCredits != null){
+                for(int i = 0; i < paymentAirCredits.size(); i++){
+                   session.save(paymentAirCredits.get(i));
+                }
+            }
+            
             transaction.commit();
             session.close();
             this.sessionFactory.close();
@@ -95,6 +104,18 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                         session.save(paymentAirticketRefunds.get(i));
                     } else {
                         session.update(paymentAirticketRefunds.get(i));
+                    }             
+                }
+            }
+            
+            List<PaymentAirCredit> paymentAirCredits = payAir.getPaymentAirCredits();
+            
+            if(paymentAirCredits != null){
+                for(int i = 0; i < paymentAirCredits.size(); i++){
+                    if(paymentAirCredits.get(i).getId() == null){
+                        session.save(paymentAirCredits.get(i));
+                    } else {
+                        session.update(paymentAirCredits.get(i));
                     }             
                 }
             }
@@ -661,6 +682,21 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
 
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
+    }
+
+    @Override
+    public List<PaymentAirCredit> getPaymentAirCreditByPaymentAirId(String paymentAirId) {
+        String query = "from PaymentAirCredit pay where pay.paymentAirticket.id = :paymentAirId";
+        Session session = this.sessionFactory.openSession();
+        List<PaymentAirCredit> list = session.createQuery(query).setParameter("paymentAirId", paymentAirId).list();
+
+        if (list.isEmpty()){
+            return null;
+        }
+        
+        session.close();
+        this.sessionFactory.close();
+        return list;
     }
 
 }

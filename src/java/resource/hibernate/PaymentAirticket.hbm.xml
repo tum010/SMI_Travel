@@ -82,5 +82,11 @@
             </key>
             <one-to-many class="com.smi.travel.datalayer.entity.PaymentAirticketFare" />
         </bag>
+        <bag name="paymentAirCredits" table="payment_air_credit" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="payment_air_id" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.PaymentAirCredit" />
+        </bag>
     </class>
 </hibernate-mapping>

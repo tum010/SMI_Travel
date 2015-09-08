@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 7, 2015 5:55:36 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.PaymentAirCredit" table="payment_air_credit" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="paymentAirticket" class="com.smi.travel.datalayer.entity.PaymentAirticket" fetch="select">
+            <column name="payment_air_id" />
+        </many-to-one>
+        <property name="creditNote" type="string">
+            <column name="credit_note" />
+        </property>
+        <property name="creditAmount" type="big_decimal">
+            <column name="credit_amount" precision="10" />
+        </property>
+    </class>
+</hibernate-mapping>

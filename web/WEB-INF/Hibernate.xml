@@ -140,6 +140,7 @@ http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
                                 <value>resource/hibernate/CreditNote.hbm.xml</value>
                                 <value>resource/hibernate/CreditNoteDetail.hbm.xml</value>
                                 <value>resource/hibernate/TicketFareInvoice.hbm.xml</value>
+                                <value>resource/hibernate/PaymentAirCredit.hbm.xml</value>
 			</list>
 		</property>
 

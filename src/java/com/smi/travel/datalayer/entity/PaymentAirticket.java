@@ -38,9 +38,10 @@ public class PaymentAirticket  {
      private BigDecimal totalAmount;
      private BigDecimal debitAmount;
 //     private BigDecimal creditAmount;
-     private List paymentAirticketRefunds = new LinkedList<PaymentAirticketRefund>();
-     private List paymentAirticketFares = new LinkedList<PaymentAirticketFare>();
-     
+    private List paymentAirticketRefunds = new LinkedList<PaymentAirticketRefund>();
+    private List paymentAirticketFares = new LinkedList<PaymentAirticketFare>();
+    private List paymentAirCredits = new LinkedList<PaymentAirCredit>();
+    
     public PaymentAirticket() {
     }
 
@@ -269,9 +270,13 @@ public class PaymentAirticket  {
 //        this.creditAmount = creditAmount;
 //    }
 
+    public List getPaymentAirCredits() {
+        return paymentAirCredits;
+    }
 
-    
-    
+    public void setPaymentAirCredits(List paymentAirCredits) {
+        this.paymentAirCredits = paymentAirCredits;
+    }
 
 }
 

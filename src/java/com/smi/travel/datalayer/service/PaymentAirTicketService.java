@@ -6,6 +6,7 @@
 package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.dao.PaymentAirTicketDao;
+import com.smi.travel.datalayer.entity.PaymentAirCredit;
 import com.smi.travel.datalayer.entity.PaymentAirticket;
 import com.smi.travel.datalayer.entity.PaymentAirticketFare;
 import com.smi.travel.datalayer.entity.PaymentAirticketRefund;
@@ -65,6 +66,10 @@ public class PaymentAirTicketService {
     
     public List<RefundAirticketDetailView> getRefundDetailByPaymentAirId(String paymentAirId){
         return paymentairticketdao.getRefundDetailByPaymentAirId(paymentAirId);
+    }
+    
+    public List<PaymentAirCredit> getPaymentAirCreditByPaymentAirId(String paymentAirId){
+        return paymentairticketdao.getPaymentAirCreditByPaymentAirId(paymentAirId);
     }
     
     public PaymentAirTicketDao getPaymentairticketdao() {

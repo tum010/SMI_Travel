@@ -7,6 +7,8 @@
 <c:set var="financemenu" value="${sessionScope['financemenu']}" />
 <c:set var="reportmenu" value="${sessionScope['reportmenu']}" />
 <c:set var="checkingmenu" value="${sessionScope['checkingMenu']}" />
+<c:set var="accountmenu" value="${sessionScope['accountmenu']}" />
+
 <nav class="navbar " style="margin-bottom: 5px; height: 25px;" role="navigation">
 	<div class="navbar-header">
 		<a class="navbar-brand" style="padding: 0px" href="#"> <img
@@ -62,6 +64,7 @@
 							var daytourMenuList = '<c:forEach var="name" items="${daytourmenu}"><c:out value="${name}" />:</c:forEach>';
 							var CheckingMenuList = '<c:forEach var="name" items="${checkingmenu}"><c:out value="${name}" />:</c:forEach>';
 							var FinanceMenuList = '<c:forEach var="name" items="${financemenu}"><c:out value="${name}" />:</c:forEach>';
+                                                        var AccountMenuList = '<c:forEach var="name" items="${accountmenu}"><c:out value="${name}" />:</c:forEach>';
 							var masterMenu = [
 									"<li><a id='menu-mairticket' href='Mairticket.smi'> Air ticket</a></li>",
 									"<li><a id='menu-mcity' href='MCity.smi'> Others</a></li>",
@@ -103,7 +106,8 @@
 									"<li><a href='SearchTaxInvoice.smi'> Tax Invoice</a></li>",
 									"<li><a href='ReceiveTable.smi'> Receive Table</a></li>",
 									"<li><a href='LockUnlockBooking.smi'>Lock And UnLock Booking</a></li>" ];
-
+                                                        var AccountMenu = [
+									"<li><a href='APMonitor.smi'> Nirvana Interface </a></li>"];                
 							var menuString = getActiveMenuString(
 									masterMenuList, masterMenu);
 							document.getElementById("menuMaster").innerHTML = menuString;
@@ -129,6 +133,12 @@
 							var financeMenuString = getActiveMenuString(
 									FinanceMenuList, FinanceMenu);
 							document.getElementById("financeMenu").innerHTML = financeMenuString;
+                                                        
+                                                        var accountMenuString = getActiveMenuString(
+									AccountMenuList, AccountMenu);
+							document.getElementById("accountMenu").innerHTML = accountMenuString;
+                                                        
+                                                        
 
 						});
 		function getActiveMenuString(activeList, menuList) {
@@ -186,6 +196,13 @@
 
 
 				</ul></li>
+                        <li class="dropdown"><a href="#" class="dropdown-header"
+				data-toggle="dropdown"> <span class="glyphicon glyphicon-usd"></span>
+					Accounting <span class="caret"></span></a>
+				<ul class="dropdown-menu" role="menu" id="accountMenu">
+
+
+				</ul></li>        
 			<li class="">
 				<!--<a href="AirTicketMonthReport.smi" >Report</a>--> <a href="#"
 				class="dropdown-header" data-toggle="dropdown"> <span
