@@ -38,6 +38,7 @@ public class InvoiceReport {
     private String taxid;
     private String taxbranch;
     private String sign;
+    private String duedate;
 
     public String getInvto() {
         return invto;
@@ -254,6 +255,14 @@ public class InvoiceReport {
 
     public String getSign() {
         return sign;
+    }
+
+    public void setDuedate(String duedate) {
+        this.duedate = duedate;
+    }
+
+    public String getDuedate() {
+        return duedate;
     }
     
 }

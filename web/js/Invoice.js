@@ -831,6 +831,7 @@ function addInvoiceDetail(rowId){
             checkDuplicateInvoiceDetail(id,rowId);
             console.log("Duplicate : " + isDuplicateInvoiceDetail);
             if(isDuplicateInvoiceDetail === 0){
+                $('#textAlertDuplicate').hide();
                 $("#DetailBillableTable tr:last").remove(); 
                 // Search Description
                 var servletName = 'InvoiceServlet';
@@ -848,7 +849,8 @@ function addInvoiceDetail(rowId){
                 CalculateGrandTotal(countTable);
                 calculateGross(countTable);
             }else if (isDuplicateInvoiceDetail !== 0){
-                alert("Duplicate");
+//                alert("Duplicate");
+                $('#textAlertDuplicate').show();
             }
         }
         count++;       
@@ -1154,7 +1156,7 @@ $(document).ready(function () {
         $('#textAlertDivNotSave').show();
     }else if(bla === "NEW"){
         clearInvoice();
-    }
+    } 
 });
 
 function clearScreenInvoice(){
