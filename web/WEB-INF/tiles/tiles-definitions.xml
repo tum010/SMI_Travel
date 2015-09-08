@@ -550,6 +550,11 @@
         <put-attribute name="title" value="Nirvana Interface : AR Monitor" />
         <put-attribute name="body" value="/WEB-INF/jsp/ARMonitor.jsp" />
     </definition>
+    
+    <definition name="CollectionMonitor" extends="baseLayout">
+        <put-attribute name="title" value="Nirvana Interface:Collection monitor" />
+        <put-attribute name="body" value="/WEB-INF/jsp/CollectionMonitor.jsp" />
+    </definition>
     <!--<add data>-->
     
     <definition name="SendMail" extends="baseLayout">
