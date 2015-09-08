@@ -188,7 +188,7 @@ public class StockController extends SMITravelController {
             String otherBookingId = request.getParameter("otherBookingId" + i );
             String staffId = request.getParameter("staffId"+i);
             String pickupDate = request.getParameter("pickupDate"+i);
-            Integer  payStatusItemListInt = new Integer(pay);
+            Integer  payStatusItemListInt = utility.convertStringToInteger(pay);
 //            mStockStatus.setName("NEW");
             mStockStatus.setId(items);
             mPriceCategory.setId(typeitem);
