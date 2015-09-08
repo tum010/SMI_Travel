@@ -25,6 +25,7 @@ import com.smi.travel.datalayer.view.entity.InvoiceDetailView;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -702,11 +703,14 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         String owner = "";
         String routing = "";
         int invamount = 0;
+        
         List<InvoiceDetail> invoiceDetailList = new ArrayList<InvoiceDetail>();
+        List<InvoiceDetail> invoiceDetailTempList = new ArrayList<InvoiceDetail>();
         List<InvoiceDetailView> invoiceDetailViewList = new ArrayList<InvoiceDetailView>();
         System.out.println("ticketNo : "+ticketNo);
         String AirticketPassengerQuery  = "from AirticketPassenger pass where pass.series1||pass.series2||pass.series3 = :ticketNo";
         String InvoiceDetailQuery  = "from InvoiceDetail invd where invd.billableDesc.billable.master.id = :masterId and invd.billableDesc.MBilltype.name = 'Air Ticket' GROUP BY invd.invoice.id";
+        String InvDetailQuery  = "from InvoiceDetail invd where  invd.invoice.id = :invoiceId";
         Session session = this.sessionFactory.openSession();
         List<AirticketPassenger> airticketPassList = session.createQuery(AirticketPassengerQuery).setParameter("ticketNo", ticketNo).list();
         
@@ -745,6 +749,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
             String masterId = airticketPassList.get(0).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId();
             System.out.println(" masterId " + masterId);
             invoiceDetailList = session.createQuery(InvoiceDetailQuery).setParameter("masterId", masterId).list();
+            
         }
         
         if (invoiceDetailList.isEmpty()) {
@@ -757,7 +762,6 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
             invoiceDetailViewList.add(invoiceDetailView);
             return invoiceDetailViewList;
         }
-        
         for (int i = 0; i < invoiceDetailList.size() ; i++) {
             InvoiceDetailView invoiceDetailView = new InvoiceDetailView();
             invoiceDetailView.setOwner(owner);
@@ -765,6 +769,14 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
             invoiceDetailView.setInvAmount(new BigDecimal(String.valueOf(invamount)));
 //            invoiceDetailView.setId(invoiceDetailList.get(i).getId());
             if(invoiceDetailList.get(i).getInvoice() != null){
+                BigDecimal invamounttemp = new BigDecimal(0);
+                invoiceDetailTempList = session.createQuery(InvDetailQuery).setParameter("invoiceId", invoiceDetailList.get(i).getInvoice().getId()).list();
+                for (int j = 0; j < invoiceDetailTempList.size() ; j++) {
+                    if(invoiceDetailTempList.get(i).getAmount() != null){
+                        invamounttemp = invamounttemp.add(invoiceDetailTempList.get(i).getAmount());
+                        invoiceDetailView.setAmountInvoice(invamounttemp);
+                    }
+                }
                 invoiceDetailView.setInvoiceId(invoiceDetailList.get(i).getInvoice().getId());
                 invoiceDetailView.setInvNo(invoiceDetailList.get(i).getInvoice().getInvNo());
                 invoiceDetailView.setInvDate(invoiceDetailList.get(i).getInvoice().getInvDate());
@@ -772,7 +784,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                 invoiceDetailView.setDueDate(invoiceDetailList.get(i).getInvoice().getDueDate());
                 invoiceDetailView.setStaffName(invoiceDetailList.get(i).getInvoice().getStaff() != null ? invoiceDetailList.get(i).getInvoice().getStaff().getName() : "");
                 invoiceDetailView.setCredit(invoiceDetailList.get(i).getInvoice().getMAccTerm() != null ? invoiceDetailList.get(i).getInvoice().getMAccTerm().getName() : "");
-
+                
                 invoiceDetailViewList.add(invoiceDetailView);
             }
         }
