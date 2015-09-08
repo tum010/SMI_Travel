@@ -240,7 +240,7 @@ public class InvoiceImpl implements InvoiceDao{
         }else{
             checkReciptAndTaxInvoice = 0;
         }
-        if(checkReciptAndTaxInvoice != 0){
+        if(checkReciptAndTaxInvoice == 0){
             try {
                 Session session = this.sessionFactory.openSession();
                 transaction = session.beginTransaction();
