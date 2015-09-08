@@ -589,6 +589,7 @@ function CallAjaxDeleteBill(param,row) {
                 if(msg === 'success'){
                     console.log("Delete Detail");
                     $("#BillDescription" + row).parent().parent().remove();
+                    $('#textAlertInvoiceNotEmpty').hide();
                 }else if(msg === 'notDeleteReciptAndTax'){
                     $('#textAlertInvoiceNotEmpty').show();
                 }
