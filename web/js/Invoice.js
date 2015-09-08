@@ -584,7 +584,9 @@ function CallAjaxDeleteBill(param,row) {
             cache: false,
             data: param,
             success: function(msg) {
+                console.log("Message : " + msg);
                 if(msg === 'success'){
+                    console.log("Delete Detail");
                     $("#BillDescription" + row).parent().parent().remove();
                 }
                 $("#ajaxload").addClass("hidden");

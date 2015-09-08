@@ -55,92 +55,88 @@
 	</div>
 
 	<script type="text/javascript" charset="utf-8">
-		$(document)
-				.ready(
-						function() {
-							var masterMenuList = '<c:forEach var="name" items="${mastermenu}"><c:out value="${name}" />:</c:forEach>';
-							var reportMenuList = '<c:forEach var="name" items="${reportmenu}"><c:out value="${name}" />:</c:forEach>';
-							var bookingMenuList = '<c:forEach var="name" items="${bookingmenu}"><c:out value="${name}" />:</c:forEach>';
-							var daytourMenuList = '<c:forEach var="name" items="${daytourmenu}"><c:out value="${name}" />:</c:forEach>';
-							var CheckingMenuList = '<c:forEach var="name" items="${checkingmenu}"><c:out value="${name}" />:</c:forEach>';
-							var FinanceMenuList = '<c:forEach var="name" items="${financemenu}"><c:out value="${name}" />:</c:forEach>';
-                                                        var AccountMenuList = '<c:forEach var="name" items="${accountmenu}"><c:out value="${name}" />:</c:forEach>';
-							var masterMenu = [
-									"<li><a id='menu-mairticket' href='Mairticket.smi'> Air ticket</a></li>",
-									"<li><a id='menu-mcity' href='MCity.smi'> Others</a></li>",
-									"<li><a id='menu-mhotel' href='MHotel.smi'> Hotel</a></li>",
-									"<li><a id='menu-mproduct' href='Product.smi'> Product</a></li>",
-									"<li><a id='menu-mplace' href='Place.smi'> Place</a></li>",
-									"<li><a id='menu-magent' href='Agent.smi'> Agent</a></li>",
-									"<li><a id='menu-mstaff' href='MStaff.smi'>Staff</a></li>",
-									"<li><a id='menu-mgalileo' href='MGalileo.smi'>Configure Galileo</a></li>",
-									"<li><a id='menu-mamadeus' href='MAmadeus.smi'>Configure Amadeus</a></li>",
-									"<li><a id='menu-mdaytour' href='MDaytour.smi'>Tour</a></li>",
-									"<li><a id='menu-mcommission' href='MCommission.smi'>Commission</a></li>",
-									"<li><a id='menu-mbank' href='MBank.smi'>Bank</a></li>",
-									"<li><a id='menu-maccountcode' href='MAccountCode.smi'>Account Code</a></li>",
-                                                                        "<li><a id='menu-maparcode' href='APARCode.smi'>AP/AR Code</a></li>",         
-									"<li><a id='menu-stock' href='SearchStock.smi'>Stock</a></li>",
-									"<li><a id='menu-DefineVar' href='DefineVar.smi'>Define Variable</a></li>",
-								//	"<li><a id='menu-maccount' href='MAccountCode.smi'>Account</a></li>",
-									"<li><a id='menu-mpackage' href='MPackage.smi'>Package</a></li>" ];
+		$(document).ready(
+                    function() {
+                            var masterMenuList = '<c:forEach var="name" items="${mastermenu}"><c:out value="${name}" />:</c:forEach>';
+                            var reportMenuList = '<c:forEach var="name" items="${reportmenu}"><c:out value="${name}" />:</c:forEach>';
+                            var bookingMenuList = '<c:forEach var="name" items="${bookingmenu}"><c:out value="${name}" />:</c:forEach>';
+                            var daytourMenuList = '<c:forEach var="name" items="${daytourmenu}"><c:out value="${name}" />:</c:forEach>';
+                            var CheckingMenuList = '<c:forEach var="name" items="${checkingmenu}"><c:out value="${name}" />:</c:forEach>';
+                            var FinanceMenuList = '<c:forEach var="name" items="${financemenu}"><c:out value="${name}" />:</c:forEach>';
+                            var AccountMenuList = '<c:forEach var="name" items="${accountmenu}"><c:out value="${name}" />:</c:forEach>';
+                            var masterMenu = [
+                                            "<li><a id='menu-mairticket' href='Mairticket.smi'> Air ticket</a></li>",
+                                            "<li><a id='menu-mcity' href='MCity.smi'> Others</a></li>",
+                                            "<li><a id='menu-mhotel' href='MHotel.smi'> Hotel</a></li>",
+                                            "<li><a id='menu-mproduct' href='Product.smi'> Product</a></li>",
+                                            "<li><a id='menu-mplace' href='Place.smi'> Place</a></li>",
+                                            "<li><a id='menu-magent' href='Agent.smi'> Agent</a></li>",
+                                            "<li><a id='menu-mstaff' href='MStaff.smi'>Staff</a></li>",
+                                            "<li><a id='menu-mgalileo' href='MGalileo.smi'>Configure Galileo</a></li>",
+                                            "<li><a id='menu-mamadeus' href='MAmadeus.smi'>Configure Amadeus</a></li>",
+                                            "<li><a id='menu-mdaytour' href='MDaytour.smi'>Tour</a></li>",
+                                            "<li><a id='menu-mcommission' href='MCommission.smi'>Commission</a></li>",
+                                            "<li><a id='menu-mbank' href='MBank.smi'>Bank</a></li>",
+                                            "<li><a id='menu-maccountcode' href='MAccountCode.smi'>Account Code</a></li>",
+                                            "<li><a id='menu-maparcode' href='APARCode.smi'>AP/AR Code</a></li>",         
+                                            "<li><a id='menu-stock' href='SearchStock.smi'>Stock</a></li>",
+                                            "<li><a id='menu-DefineVar' href='DefineVar.smi'>Define Variable</a></li>",
+                                    //	"<li><a id='menu-maccount' href='MAccountCode.smi'>Account</a></li>",
+                                            "<li><a id='menu-mpackage' href='MPackage.smi'>Package</a></li>" ];
 
-							var bookingMenu = [ "<li><a href='Book.smi'> Booking</a></li>" ];
-							var daytourMenu = [ "<li><a href='DaytourOperationDetail.smi'> Day Tour</a></li>"
-							//  ,"<li><a href='DaytourOperationOther.smi'> Other</a></li>"
-							];
-							var reportMenu = [
-									"<li><a href='AirTicketMonthReport.smi'> AirTicket</a></li>",
-									"<li><a href='HotelSumReport.smi'> Hotel</a></li>",
-									"<li><a href=''>Land</a></li>",
-									"<li><a href=''>Others</a></li>",
-                                                                        "<li><a href='InvoiceMonthly.smi'>Finance And Account</a></li>"];
-							var CheckingMenu = [
-									"<li><a href='PaymentTourHotel.smi'> PackageTour/Hotel </a></li>",
-									"<li><a href='AddTicketFare.smi'> AirTicket </a></li>",
-									"<li><a href='PaymentOutbound.smi'> Outbound </a></li>" ];
-							var FinanceMenu = [
-									"<li><a href='SearchInvoice.smi'> Invoice</a></li>",
-									"<li><a href='SearchCreditNote.smi'> Credit Note</a></li>",
-									"<li><a href='SearchReceipt.smi'> Receipt</a></li>",
-									"<li><a href='SearchTaxInvoice.smi'> Tax Invoice</a></li>",
-									"<li><a href='ReceiveTable.smi'> Receive Table</a></li>",
-									"<li><a href='LockUnlockBooking.smi'>Lock And UnLock Booking</a></li>" ];
-                                                        var AccountMenu = [
-									"<li><a href='APMonitor.smi'> Nirvana Interface </a></li>"];                
-							var menuString = getActiveMenuString(
-									masterMenuList, masterMenu);
-							document.getElementById("menuMaster").innerHTML = menuString;
+                            var bookingMenu = [ "<li><a href='Book.smi'> Booking</a></li>" ];
+                            var daytourMenu = [ "<li><a href='DaytourOperationDetail.smi'> Day Tour</a></li>"
+                            //  ,"<li><a href='DaytourOperationOther.smi'> Other</a></li>"
+                            ];
+                            var reportMenu = [
+                                            "<li><a href='AirTicketMonthReport.smi'> AirTicket</a></li>",
+                                            "<li><a href='HotelSumReport.smi'> Hotel</a></li>",
+                                            "<li><a href=''>Land</a></li>",
+                                            "<li><a href=''>Others</a></li>",
+                                            "<li><a href='InvoiceMonthly.smi'>Finance And Account</a></li>"];
+                            var CheckingMenu = [
+                                            "<li><a href='PaymentTourHotel.smi'> PackageTour/Hotel </a></li>",
+                                            "<li><a href='AddTicketFare.smi'> AirTicket </a></li>",
+                                            "<li><a href='PaymentOutbound.smi'> Outbound </a></li>" ];
+                            var FinanceMenu = [
+                                            "<li><a href='SearchInvoice.smi'> Invoice</a></li>",
+                                            "<li><a href='SearchCreditNote.smi'> Credit Note</a></li>",
+                                            "<li><a href='SearchReceipt.smi'> Receipt</a></li>",
+                                            "<li><a href='SearchTaxInvoice.smi'> Tax Invoice</a></li>",
+                                            "<li><a href='ReceiveTable.smi'> Receive Table</a></li>",
+                                            "<li><a href='LockUnlockBooking.smi'>Lock And UnLock Booking</a></li>" ];
+                            var AccountMenu = [
+                                            "<li><a href='APMonitor.smi'> Nirvana Interface </a></li>"];                
+                            var menuString = getActiveMenuString(
+                                            masterMenuList, masterMenu);
+                            document.getElementById("menuMaster").innerHTML = menuString;
 
-							var bookingMenuString = getActiveMenuString(
-									bookingMenuList, bookingMenu);
-							document.getElementById("bookingMenu").innerHTML = bookingMenuString;
+                            var bookingMenuString = getActiveMenuString(
+                                            bookingMenuList, bookingMenu);
+                            document.getElementById("bookingMenu").innerHTML = bookingMenuString;
 
-							var daytourMenuString = getActiveMenuString(
-									daytourMenuList, daytourMenu);
-							document.getElementById("daytourMenu").innerHTML = daytourMenuString
-									+ "<li><a href='DaytourOperationDetail.smi?action=edit'> Day Tour</a></li>";
+                            var daytourMenuString = getActiveMenuString(
+                                            daytourMenuList, daytourMenu);
+                            document.getElementById("daytourMenu").innerHTML = daytourMenuString
+                                            + "<li><a href='DaytourOperationDetail.smi?action=edit'> Day Tour</a></li>";
 
-							var reportMenuString = getActiveMenuString(
-									reportMenuList, reportMenu);
-							document.getElementById("reportMenu").innerHTML = reportMenuString;
+                            var reportMenuString = getActiveMenuString(
+                                            reportMenuList, reportMenu);
+                            document.getElementById("reportMenu").innerHTML = reportMenuString;
 
-							var checkingMenuString = getActiveMenuString(
-									CheckingMenuList, CheckingMenu);
+                            var checkingMenuString = getActiveMenuString(
+                                            CheckingMenuList, CheckingMenu);
 
-							document.getElementById("checkingMenu").innerHTML = checkingMenuString;
+                            document.getElementById("checkingMenu").innerHTML = checkingMenuString;
 
-							var financeMenuString = getActiveMenuString(
-									FinanceMenuList, FinanceMenu);
-							document.getElementById("financeMenu").innerHTML = financeMenuString;
-                                                        
-                                                        var accountMenuString = getActiveMenuString(
-									AccountMenuList, AccountMenu);
-							document.getElementById("accountMenu").innerHTML = accountMenuString;
-                                                        
-                                                        
+                            var financeMenuString = getActiveMenuString(
+                                            FinanceMenuList, FinanceMenu);
+                            document.getElementById("financeMenu").innerHTML = financeMenuString;
 
-						});
+                            var accountMenuString = getActiveMenuString(
+                                            AccountMenuList, AccountMenu);
+                            document.getElementById("accountMenu").innerHTML = accountMenuString;    
+                    });
 		function getActiveMenuString(activeList, menuList) {
 			var menuString = "";
 			var activeMenu = activeList.split(':');
