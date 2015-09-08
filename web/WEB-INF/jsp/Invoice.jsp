@@ -655,7 +655,7 @@
                                             </button>
                                         </div>
                                         
-                                        <div class="col-md-2 text-right " >
+                                        <div class="col-md-2 text-right hidden" >
                                             <button type="button" class="btn btn-success" id="copyButton" onclick="printInvoice('email')" data-toggle="modal" data-target="#CopyModal">
                                                 <span id="buttonCopy" class="glyphicon glyphicon-file" ></span> Copy 
                                             </button>

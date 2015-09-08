@@ -12,6 +12,6 @@ import java.util.List;
  * @author Kanokporn
  */
 public interface InvoiceSummaryDao {
-    public List getInvoiceSummary(String ticketfrom,String tickettype,String startdate,String enddate,String billto,String  passenger,String username);
+//    public List getInvoiceSummary(String ticketfrom,String tickettype,String startdate,String enddate,String billto,String  passenger,String username);
     public List getInvoiceSummary(String from, String to, String department, String type,String agent);
 }
