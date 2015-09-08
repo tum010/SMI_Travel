@@ -145,9 +145,9 @@ public class PaymentAirlineController extends SMITravelController {
                     List<PaymentAirCredit> payPaymentAirCredits = paymentAirTicketService.getPaymentAirCreditByPaymentAirId(paymentAirticket.getId());
                     if(payPaymentAirCredits != null){
                         request.setAttribute(SETCALCULATECREDIT,1);
+                        request.setAttribute(CREDITROWCOUNT,payPaymentAirCredits.size()+1);
                     }  
                     request.setAttribute(CREDITLIST,payPaymentAirCredits);
-                    request.setAttribute(CREDITROWCOUNT,payPaymentAirCredits.size()+1);
                     request.setAttribute(SEARCHPAYMENTNOFLAG,"notdummy");
                 }else{
                     request.setAttribute(SEARCHPAYMENTNOFLAG,"dummy");
@@ -253,9 +253,10 @@ public class PaymentAirlineController extends SMITravelController {
             List<PaymentAirCredit> payPaymentAirCredits = paymentAirTicketService.getPaymentAirCreditByPaymentAirId(paymentId);
             if(payPaymentAirCredits != null){
                 request.setAttribute(SETCALCULATECREDIT,1);
+                request.setAttribute(CREDITROWCOUNT,payPaymentAirCredits.size()+1);
             }  
             request.setAttribute(CREDITLIST,payPaymentAirCredits);
-            request.setAttribute(CREDITROWCOUNT,payPaymentAirCredits.size()+1);
+            
             request.setAttribute(PAYNO,paymentNo);
         }else if("save".equalsIgnoreCase(action)){
            
@@ -439,9 +440,10 @@ public class PaymentAirlineController extends SMITravelController {
                     List<PaymentAirCredit> payPaymentAirCredits = paymentAirTicketService.getPaymentAirCreditByPaymentAirId(paymentAirticket.getId());
                     if(payPaymentAirCredits != null){
                         request.setAttribute(SETCALCULATECREDIT,1);
+                        request.setAttribute(CREDITROWCOUNT,payPaymentAirCredits.size()+1);
                     }  
                     request.setAttribute(CREDITLIST,payPaymentAirCredits);
-                    request.setAttribute(CREDITROWCOUNT,payPaymentAirCredits.size()+1);
+                    
                 }else{
                     request.setAttribute(SETCALCULATETICKET,0);
                     request.setAttribute(SETCALCULATEREFUND,0);
