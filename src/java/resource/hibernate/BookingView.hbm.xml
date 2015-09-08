@@ -57,6 +57,12 @@
         <property name="ticketNo" type="string">
             <column name="ticket_no" />
         </property>
+        <property name="payBy" type="string">
+            <column name="payby" />
+        </property>
+        <property name="accId" type="string">
+            <column name="accid" />
+        </property>       
     </class>
         
 </hibernate-mapping>
