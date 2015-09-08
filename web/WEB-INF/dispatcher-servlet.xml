@@ -130,6 +130,8 @@
                                 <prop key="CreditNoteI.smi">CreditNoteController</prop>
                                 <prop key="SearchCreditNote.smi">SearchCreditNoteController</prop>
                                 <prop key="InvoiceMonthly.smi">InvoiceMonthlyController</prop>
+                                <prop key="APMonitor.smi">APMonitorController</prop>
+                                <prop key="ARMonitor.smi">ARMonitorController</prop>
 				<!-- add mapping url -->
 			</props>
 		</property>
@@ -562,6 +564,13 @@
     <bean id="InvoiceMonthlyController" class="com.smi.travel.controller.InvoiceMonthlyController">
         <property name="utilityService" ref="UtilityService" />
     </bean>
+    <bean id="APMonitorController" class="com.smi.travel.controller.APMonitorController">
+        
+    </bean>
+    <bean id="ARMonitorController" class="com.smi.travel.controller.ARMonitorController">
+ 
+    </bean>
+    
 	<!-- add bean id controller -->
 
 	<bean id="monitorGalileo" class="com.smi.travel.monitor.MonitorGalileo"
