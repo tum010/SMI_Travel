@@ -14,5 +14,5 @@ import java.util.List;
  * @author Surachai
  */
 public interface BookingViewDao {
-    public List<BookingView> getBookingList(String refno,String passFirst,String passLast,String username,String departmentID,String Bookdate,String status,String pnr,String ticketNo);
+    public List<BookingView> getBookingList(String refno,String passFirst,String passLast,String username,String departmentID,String Bookdate,String status,String pnr,String ticketNo,String payBy,String bankTransfer);
 }
