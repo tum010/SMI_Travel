@@ -584,8 +584,13 @@ function CallAjaxDeleteBill(param,row) {
             cache: false,
             data: param,
             success: function(msg) {
+                console.log("Message : " + msg);
+                $('#resultText').val(msg);
                 if(msg === 'success'){
+                    console.log("Delete Detail");
                     $("#BillDescription" + row).parent().parent().remove();
+                }else if(msg === 'notDeleteReciptAndTax'){
+                    $('#textAlertInvoiceNotEmpty').show();
                 }
                 $("#ajaxload").addClass("hidden");
 
@@ -1156,6 +1161,8 @@ $(document).ready(function () {
         $('#textAlertDivNotSave').show();
     }else if(bla === "NEW"){
         clearInvoice();
+    }else if(bla === "notDeleteReciptAndTax"){
+        $("#textAlertInvoiceNotEmpty").show();
     } 
 });
 

@@ -8,6 +8,7 @@
 <script type="text/javascript" src="js/jquery.mask.min.js"></script>
 <script type="text/javascript" src="js/jquery.inputmask.js"></script>
 <script type="text/javascript" src="js/jquery.inputmask.numeric.extensions.js"></script>
+<script type="text/javascript" src="js/selectize.js"></script>
 <link href="css/jquery-ui.css" rel="stylesheet">
 <style type="text/css">
     table tr:nth-child(4n) {background: #EEE}
@@ -101,26 +102,34 @@
                         <div class="col-xs-1"  style="width: 150px">
                             <div class="input-group" id="refundByValidate">
                                 <input type="text" class="form-control" id="refundBy" name="refundBy" value="${refundAirline.refundBy}" />
-                                <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#RefundUserModal">
+                                <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#refundCustModal">
                                     <span class="glyphicon-search glyphicon"></span>
                                 </span>
                             </div>
                         </div>
                         <div class="col-xs-1" style="width: 200px">
                             <div class="input-group">
-                                <input id="refundByName" name="refundByName" type="text" class="form-control"  readonly="">
+                                <input id="refundByName" name="refundByName" type="text" class="form-control" value="${refundByName}" readonly="">
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-6 form-group">
-                        <div class="col-xs-1 text-right"  style="width: 140px">
-                            <label class="control-label text-right">Remark </label>
+                        <div class="col-xs-1 text-right" style="width: 140px">
+                            <label class="control-label text-right">Receive By </label>
+                        </div>
+                        <div class="col-xs-1"  style="width: 150px">
+                            <div class="input-group" id="receiveByValidate">
+                                <input type="text" class="form-control" id="receiveBy" name="receiveBy" value="${refundAirline.receiveBy}" />
+                                <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#receiveUserModal">
+                                    <span class="glyphicon-search glyphicon"></span>
+                                </span>
+                            </div>
                         </div>
                         <div class="col-xs-1" style="width: 200px">
-                            <div class="input-group">                                    
-                                <textarea rows="3" class="form-control" id="remark" name="remark" maxlength="255" style="width: 228%">${refundAirline.remark}</textarea>  
+                            <div class="input-group">
+                                <input id="receiveByName" name="receiveByName" type="text" class="form-control"  readonly="">
                             </div>
                         </div>
                     </div>
@@ -133,6 +142,18 @@
                                 <input id="inputReceiveDate" name="receiveDate"  type="text" 
                                        class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${refundAirline.receiveDate}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+                <div class="row">
+                    <div class="col-xs-6 form-group">
+                        <div class="col-xs-1 text-right"  style="width: 140px">
+                            <label class="control-label text-right">Remark </label>
+                        </div>
+                        <div class="col-xs-1" style="width: 200px">
+                            <div class="input-group">                                    
+                                <textarea rows="3" class="form-control" id="remark" name="remark" maxlength="255" style="width: 228%">${refundAirline.remark}</textarea>  
                             </div>
                         </div>
                     </div>
@@ -212,9 +233,9 @@
 
                 <div class="col-xs-12 text-center" style="padding-top: 10px">
                     <!--<div class="col-md-2 text-right ">-->
-                        <button type="button" onclick="window.open('report.smi?name=RefundAirReport&refundId=${refundAirline.id}')" class="btn btn-default">
-                            <span id="SpanPrintPackage" class="glyphicon glyphicon-print"></span> Print
-                        </button>
+                    <button type="button" onclick="window.open('report.smi?name=RefundAirReport&refundId=${refundAirline.id}')" class="btn btn-default">
+                        <span id="SpanPrintPackage" class="glyphicon glyphicon-print"></span> Print
+                    </button>
                     <!--</div>-->
                     <button  id="buttonSave" name="ButtonSave" class="btn btn-success" value="save"><i class="fa fa-save"></i> Save</button>
                     <button id="ButtonSaveAndNew" name="ButtonSaveAndNew" class="btn btn-success"><i class="fa fa-save"></i> Save &amp; New</button>
@@ -273,15 +294,15 @@
     </div><!-- /.modal-dialog -->
 </div>
 <!--Modal  User-->
-<div class="modal fade" id="RefundUserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="receiveUserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title"  id="Titlemodel">Refund User</h4>
+                <h4 class="modal-title"  id="Titlemodel">Receive User</h4>
             </div>
             <div class="modal-body">
-                <table class="display" id="RefundUserTable">
+                <table class="display" id="receiveUserTable">
                     <thead class="datatable-header">                     
                         <tr>
                             <th class="hidden">ID</th>
@@ -315,7 +336,48 @@
             </div>
             <div class="modal-footer">
                 <div class="text-right">
-                    <button id="RefundUserModalClose" type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                    <button id="receiveUserModalClose" type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!--Modal  Customer-->
+<div class="modal fade" id="refundCustModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Refund By</h4>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: right"> 
+                    <i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i> Search : <input type="text" style="width: 175px" id="searchCustFrom" name="searchCustFrom"/> 
+                </div> 
+                <table class="display" id="refundCustTable">
+                    <thead >   
+                        <tr class="datatable-header">
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th class="hidden">Address</th>
+                            <th class="hidden">Tel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="item" items="${cust}">
+                            <tr onclick="setBillValue('${item.billTo}', '${item.billName}', '${item.address}', '${item.term}', '${item.pay}');">
+                                <td class="item-billto">${item.billTo}</td>
+                                <td class="item-name">${item.billName}</td>                                
+                                <td class="item-address hidden">${item.address}</td>
+                                <td class="item-tel hidden">${item.tel}</td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <div class="text-right">
+                    <button id="rrefundCustModalClose" type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->
@@ -397,10 +459,19 @@
             "bLengthChange": false,
             "iDisplayLength": 10
         });
-        var RefundUserTable = $('#RefundUserTable').dataTable({bJQueryUI: true,
+        var receiveUserTable = $('#receiveUserTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
             "bFilter": true,
+            "bPaginate": true,
+            "bInfo": false,
+            "bLengthChange": false,
+            "iDisplayLength": 10
+        });
+        var refundCustTable = $('#refundCustTable').dataTable({bJQueryUI: true,
+            "sPaginationType": "full_numbers",
+            "bAutoWidth": false,
+            "bFilter": false,
             "bPaginate": true,
             "bInfo": false,
             "bLengthChange": false,

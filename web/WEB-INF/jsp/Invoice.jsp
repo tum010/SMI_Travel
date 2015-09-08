@@ -73,6 +73,10 @@
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <strong>Cannot void invoice. It use in receipt no ${invoice.invNo}</strong> 
 </div>
+<div id="textAlertInvoiceNotEmpty"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Invoice Not Empty</strong> 
+</div>
             <form action="Invoice${page}.smi" method="post" id="InvoiceForm" role="form" onsubmit="return validFromInvoice();">
             <div id="textAlertDisable"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -573,7 +577,7 @@
                                                 <td class="hidden"><input type="text" value="${ind.amount}" id="InputAmountLocalTemp${taxdesc.count}" onfocusout="changeFormatAmountLocalTempNumber(${taxdesc.count})" name="InputAmountLocalTemp${taxdesc.count}"  ></td>
                                                 <td align="center" >
                                                     <span  class="glyphicon glyphicon-th-list" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail('${taxdesc.count}')" id="InputDescription${taxdesc.count}"></span>
-                                                    <span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('${taxdesc.count}','${ind.description}')" data-toggle="modal" data-target="#DelDetailBill" >  </span>        
+                                                    <span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('${taxdesc.count}','${ind.id}')" data-toggle="modal" data-target="#DelDetailBill" >  </span>        
                                                 </td>
                                                 <td class="hidden">
                                                     <c:set var="displayDescriptionTemp" value="${fn:trim(ind.displayDescription)}" />

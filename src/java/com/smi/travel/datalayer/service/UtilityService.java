@@ -352,5 +352,8 @@ public class UtilityService {
         this.defineVardao = defineVardao;
     }
     
+    public List<CustomerAgentInfo> SearchListCustomerAgentInfo(String name) {
+        return customeragentinfodao.SearchListCustomerAgentInfo(name);
+    }
     
 }
