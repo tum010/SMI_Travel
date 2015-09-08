@@ -24,6 +24,7 @@ public class SystemUser {
      private Date createDate;
      private String apCode;
      private String arCode;
+     private String email;
      private Set tourOperationDrivers = new HashSet(0);
      private Set masters = new HashSet(0);
      private Set tourOperationDescsForGuide2 = new HashSet(0);
@@ -234,6 +235,12 @@ public class SystemUser {
         this.airticketBookingsForOwnerBy = airticketBookingsForOwnerBy;
     }
 
-    
-    
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+   
 }
