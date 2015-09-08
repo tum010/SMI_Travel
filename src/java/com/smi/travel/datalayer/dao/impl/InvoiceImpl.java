@@ -226,22 +226,38 @@ public class InvoiceImpl implements InvoiceDao{
     }
 
     @Override
-    public synchronized String DeleteInvoiceDetail(String InvoiceDetailId) {
+    public  synchronized String DeleteInvoiceDetail(String InvoiceDetailId) {
         String result = "";
-        try {
-            Session session = this.sessionFactory.openSession();
-            transaction = session.beginTransaction();
-            Query query = session.createQuery(DELETE_INVOICEDETAIL_QUERY);
-            query.setParameter("invoiceDetailID", InvoiceDetailId);
-            System.out.println("row delete : "+query.executeUpdate());
-            transaction.commit();
-            session.close();
-            this.sessionFactory.close();
-            result = "success";
-        } catch (Exception ex) {
-            transaction.rollback();
-            ex.printStackTrace();
-            result = "fail";
+        int checkReciptAndTaxInvoice = 0;
+        if("yesTaxinvoice".equals(checkTaxInvoiceDelete(InvoiceDetailId))){
+            checkReciptAndTaxInvoice++; 
+        }else{
+            checkReciptAndTaxInvoice = 0;
+        }
+        // check Recipt
+        if("yesReceipt".equals(checkReciptDelete(InvoiceDetailId))){
+            checkReciptAndTaxInvoice++;
+        }else{
+            checkReciptAndTaxInvoice = 0;
+        }
+        if(checkReciptAndTaxInvoice != 0){
+            try {
+                Session session = this.sessionFactory.openSession();
+                transaction = session.beginTransaction();
+                Query query = session.createQuery(DELETE_INVOICEDETAIL_QUERY);
+                query.setParameter("invoiceDetailID", InvoiceDetailId);
+                System.out.println("row delete : "+query.executeUpdate());
+                transaction.commit();
+                session.close();
+                this.sessionFactory.close();
+                result = "success";
+            } catch (Exception ex) {
+                transaction.rollback();
+                ex.printStackTrace();
+                result = "fail";
+            }
+        }else{
+            result ="notDeleteReciptAndTax";
         }
         return result;
     }
@@ -758,6 +774,39 @@ public class InvoiceImpl implements InvoiceDao{
         Session session = this.sessionFactory.openSession();
         List<TaxInvoiceDetail> list = session.createQuery("from TaxInvoiceDetail tax where tax.invoiceDetail.invoice.invNo =:invno and   tax.taxInvoice.MFinanceItemstatus.id  != 2")
                 .setParameter("invno", refNo)
+                .list();
+        if(list.isEmpty()){
+            isCheck = "noTaxinvoice";
+        }else{
+            isCheck = "yesTaxinvoice";
+        }
+        session.close();
+        this.sessionFactory.close();
+        return isCheck;
+    }
+    
+    
+    private String checkReciptDelete(String id) {
+        String isCheck ="";
+        Session session = this.sessionFactory.openSession();
+        List<ReceiptDetail> list = session.createQuery("from ReceiptDetail rec where rec.invoiceDetail.id =:id  and   rec.receipt.MFinanceItemstatus.id  != 2")
+                .setParameter("id", id)
+                .list();
+        if(list.isEmpty()){
+            isCheck = "noReceipt";
+        }else{
+            isCheck = "yesReceipt";
+        }
+        session.close();
+        this.sessionFactory.close();
+        return isCheck;
+    }
+
+    private String checkTaxInvoiceDelete(String id) {
+         String isCheck ="";
+        Session session = this.sessionFactory.openSession();
+        List<TaxInvoiceDetail> list = session.createQuery("from TaxInvoiceDetail tax where tax.invoiceDetail.id =:id and  tax.taxInvoice.MFinanceItemstatus.id  != 2")
+                .setParameter("id", id)
                 .list();
         if(list.isEmpty()){
             isCheck = "noTaxinvoice";
