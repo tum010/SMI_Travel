@@ -136,17 +136,10 @@
             </div>
             <div class="col-xs-12"><br></div>
             <div class="col-xs-12">
-                <div class="col-xs-1 text-right" style="width: 585px"></div>
-                <div class="col-xs-1" style="width: 200px">
-                    <select class="form-control" id="arReport" name="arReport">
-                        <option value=""> </option>
-                        <option value="">Collection Report</option>
-                        <option value="">Change AR Report</option>
-                    </select>
-                </div>
-                <div class="col-xs-1 text-right" style="width: 90px">
+                <div class="col-xs-1 text-right" style="width: 665px"></div>
+                <div class="col-xs-1 text-right" style="width: 210px">
                     <button type="button" class="btn btn-default" data-dismiss="modal">
-                        <span id="btnDownloadAP" class="glyphicon glyphicon-print" ></span> Print
+                        <span id="btnDownloadAP" class="glyphicon glyphicon-print" ></span> Print Change AR Report
                     </button>
                 </div>
                 <div class="col-xs-1 text-right" style="">
