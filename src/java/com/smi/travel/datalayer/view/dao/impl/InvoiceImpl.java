@@ -5,7 +5,6 @@
  */
 
 package com.smi.travel.datalayer.view.dao.impl;
-import com.smi.travel.datalayer.entity.Invoice;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.report.model.InvoiceMonthly;
 import com.smi.travel.datalayer.report.model.InvoiceReport;
@@ -71,6 +70,8 @@ public class InvoiceImpl implements InvoiceReportDao{
                 .addScalar("invno", Hibernate.STRING)
                 .addScalar("tax_no", Hibernate.STRING)
                 .addScalar("branch", Hibernate.STRING)
+                .addScalar("duedate", Hibernate.STRING)
+                .addScalar("currency", Hibernate.STRING)
                 .list();
         
         for (Object[] B : QueryInvoiceList) {
@@ -87,6 +88,7 @@ public class InvoiceImpl implements InvoiceReportDao{
             invoice.setBankid(BankId);
             invoice.setTaxid(util.ConvertString(B[14]));
             invoice.setTaxbranch(util.ConvertString(B[15]));
+            invoice.setDuedate(util.ConvertString(B[16]));
             if(B[1] != null){
                 invoice.setInvdate(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format((Date)B[1]));
             }
@@ -113,7 +115,7 @@ public class InvoiceImpl implements InvoiceReportDao{
             System.out.println("B9 : " + B[9]);
             String text = util.ConvertString(B[9]);
             System.out.println("Text B[9] : " +text);
-            text = convertGrantotal(text);
+            text = convertGrantotal(text,util.ConvertString(B[17]));
             System.out.println("Text Amount Last : " + text);
             invoice.setTextmoney(text);
             
@@ -134,7 +136,7 @@ public class InvoiceImpl implements InvoiceReportDao{
         return data;
     }
     
-    private String convertGrantotal(String grand){
+    private String convertGrantotal(String grand,String currency){
         String text = "";
         Long numLong = null;
         int dot = grand.indexOf('.');
@@ -155,6 +157,12 @@ public class InvoiceImpl implements InvoiceReportDao{
                 System.out.println("Text Amount : " + text);
             }
         }
+        
+        if("THB".equals(currency)){
+            currency = "BATH" ;
+        }
+        
+        text += " " + currency;
         System.out.println("Text Amount Total : " + text);
         return text;
     }

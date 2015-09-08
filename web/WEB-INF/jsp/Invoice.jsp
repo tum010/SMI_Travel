@@ -20,6 +20,8 @@
 <c:set var="roleName" value="${requestScope['roleName']}" />
 <c:set var="page" value="${requestScope['page']}" />
 <c:set var="create" value="${requestScope['thisdate']}" />
+<c:set var="checkRecipt" value="${requestScope['checkRecipt']}" />
+<c:set var="checkTaxinvoice" value="${requestScope['checkTaxinvoice']}" />
 <c:set var="showvat" value="false" />
 <c:set var="typeBooking" value="" />
 <c:set var="textVoid" value="" />
@@ -55,9 +57,21 @@
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <strong>Not have Invoice In Page!!</strong> 
 </div>
+<div id="textAlertDuplicate"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Duplicate</strong> 
+</div>
 <div id="textAlertMoney"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <strong>Money more than Billable, Please Input money</strong> 
+</div>
+<div id="textAlertTaxinvoice"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Cannot void invoice. It use in tax invoice no ${invoice.invNo}</strong> 
+</div>
+<div id="textAlertRecipt"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Cannot void invoice. It use in receipt no ${invoice.invNo}</strong> 
 </div>
             <form action="Invoice${page}.smi" method="post" id="InvoiceForm" role="form" onsubmit="return validFromInvoice();">
             <div id="textAlertDisable"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
@@ -656,20 +670,22 @@
                                             </c:if>
                                             <c:if test="${result =='void'}">        
                                                 <c:set var="isDisableVoid" value="style='display: none;'" />
-                                                <c:if test="${roleName =='YES'}">        
-                                                    <c:set var="isEnableVoid" value="" />
-                                                    <c:set var="isSaveVoid" value="disabled='true'" />
-                                                    <c:set var="textVoid" value="VOID" />
-                                                </c:if>
-                                                <c:if test="${roleName =='NO'}">        
-                                                    <c:set var="isEnableVoid" value="disabled='true'" />
-                                                    <c:set var="isSaveVoid" value="disabled='true'" />
-                                                    <c:set var="textVoid" value="VOID" />
-                                                </c:if>
+                                                <c:set var="isEnableVoid" value="style='display: block;'" />
+                                                <%--<c:if test="${roleName =='YES'}">--%>        
+                                                    <%--<c:set var="isEnableVoid" value="" />--%>
+                                                    <%--<c:set var="isSaveVoid" value="disabled='true'" />--%>
+                                                    <%--<c:set var="textVoid" value="VOID" />--%>
+                                                <%--</c:if>--%>
+                                                <%--<c:if test="${roleName =='NO'}">--%>        
+                                                    <%--<c:set var="isEnableVoid" value="disabled='true'" />--%>
+                                                    <%--<c:set var="isSaveVoid" value="disabled='true'" />--%>
+                                                    <%--<c:set var="textVoid" value="VOID" />--%>
+                                                <%--</c:if>--%>
                                             </c:if>
                                             <c:if test="${invoice.MFinanceItemstatus.id == '2'}">        
                                                 <c:set var="isDisableVoid" value="style='display: none;'" />
-                                                <c:if test="${roleName =='YES'}">        
+                                                <c:set var="isEnableVoid" value="style='display: block;'" />
+                                                <%--<c:if test="${roleName =='YES'}">        
                                                     <c:set var="isEnableVoid" value="" />
                                                     <c:set var="isSaveVoid" value="disabled='true'" />
                                                     <c:set var="textVoid" value="VOID" />
@@ -678,7 +694,7 @@
                                                     <c:set var="isEnableVoid" value="disabled='true'" />
                                                     <c:set var="isSaveVoid" value="disabled='true'" />
                                                     <c:set var="textVoid" value="VOID" />
-                                                </c:if>
+                                                </c:if>--%>
                                             </c:if>
                                             <c:if test="${result =='cancelvoid'}">        
                                                 <c:set var="isDisableVoid" value="" />
@@ -1063,12 +1079,26 @@
         <c:forEach var="ty" items="${listType}">
             selectType += "<option value='${ty.id}' ><c:out value='${ty.name}' /></option>";
         </c:forEach>
+        
+        var recipt = $('#checkRecipt').val();
+        if(recipt === "yesReceipt"){
+            console.log("C");
+            $('#textAlertRecipt').show();
+        }else if(recipt === "noReceipt"){
+             $('#textAlertRecipt').hide();
+        }
+        var taxin = $('#checkTaxinvoice').val();
+        if(taxin === "yesTaxinvoice"){
+            $('#textAlertTaxinvoice').show();
+        }else if(taxin === "noTaxinvoice"){
+             $('#textAlertTaxinvoice').hide();
+        }
     }); 
 </script>
 <c:if test="${defaultData != null}">        
-        <script language="javascript">
-           defaultD = ${defaultData.value};
-        </script>
+    <script language="javascript">
+       defaultD = ${defaultData.value};
+    </script>
 </c:if>
 <input type="hidden" id="showvat" name="showvat" value="${showvat}">      
 <input type="hidden" id="type" name="type" value="${param.type}">
@@ -1076,6 +1106,8 @@
 <input type="hidden" id="roleName" name="roleName" value="${roleName}">
 <input type="hidden" id="InputDescriptionDetailId" name="InputDescriptionDetailId" value="">
 <input type="hidden" id="resultText" name="resultText" value="${result}">
+<input type="hidden" id="checkTaxinvoice" name="checkTaxinvoice" value="${checkTaxinvoice}">
+<input type="hidden" id="checkRecipt" name="checkRecipt" value="${checkRecipt}">
 <input type="hidden" id="typeBooking" name="typeBooking" value="${typeBooking}">
 <input type="hidden" id="typePrint" name="typePrint" value="">
 <input type="hidden" value="${textVoid}">

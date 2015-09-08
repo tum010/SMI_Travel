@@ -36,6 +36,8 @@ public interface InvoiceDao {
     public Invoice searchInvoiceFromInvoiceNumber(String InvoiceNumber,String department,String invType);
     public Invoice searchInvoiceForTaxInvoice(String InvoiceNumber,String department);
     public String checkOverflowValueOfInvoice(List<InvoiceDetail> invoiceDetail);
+    public String checkRecipt(String refNo);
+    public String taxInvoice(String refNo);
     
     //for save receipt 
     public String insertInvoiceDetail(Invoice invoice);

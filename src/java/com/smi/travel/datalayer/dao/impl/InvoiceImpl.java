@@ -10,11 +10,11 @@ import com.smi.travel.datalayer.dao.InvoiceDao;
 import com.smi.travel.datalayer.entity.BillableDesc;
 import com.smi.travel.datalayer.entity.Invoice;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
-import com.smi.travel.datalayer.entity.Stock;
+import com.smi.travel.datalayer.entity.ReceiptDetail;
+import com.smi.travel.datalayer.entity.TaxInvoiceDetail;
 import com.smi.travel.datalayer.view.entity.InvoiceView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -41,7 +41,7 @@ public class InvoiceImpl implements InvoiceDao{
     private static final String SEARCH_INVOICE_TYPE = "FROM Invoice inv where inv.department = :invoiceDepartment and inv.invType = :invoiceType  and inv.invNo  LIKE :invoiceNo  ORDER BY inv.invNo DESC LIMIT 1";
     private static final String GET_INVOICE_FROMNO = "FROM Invoice inv where inv.invNo = :invoiceNo and inv.department = :department and inv.invType = :invType and inv.MFinanceItemstatus = '1'";
     private static final String GET_INVOICE_FOR_TAX_INVOICE = "FROM Invoice inv where inv.invNo = :invoiceNo and inv.department = :department and inv.invType = 'V' and inv.MFinanceItemstatus.name = 'NORMAL'";
-    private static final String GET_BILLDESC = "from InvoiceDetail inv WHERE inv.billableDesc.id = :billableDescId";
+    private static final String GET_BILLDESC = "from InvoiceDetail inv WHERE inv.billableDesc.id = :billableDescId  and inv.invoice.MFinanceItemstatus.id = 2";
     private static final String GET_BILLDESC_FILTER = "from InvoiceDetail inv WHERE inv.billableDesc.id = :billableDescId and inv.id != :invdID";
     private static final String GET_BILL_AMOUNT = "from BillableDesc bill where bill.id = :descid";
     
@@ -733,5 +733,39 @@ public class InvoiceImpl implements InvoiceDao{
         session.close();
         this.sessionFactory.close();
         return list;
+    }
+
+    @Override
+    public String checkRecipt(String refNo) {
+        String isCheck ="";
+        Session session = this.sessionFactory.openSession();
+        List<ReceiptDetail> list = session.createQuery("from ReceiptDetail rec where rec.invoiceDetail.invoice.invNo =:invno  and   rec.receipt.MFinanceItemstatus.id  != 2")
+                .setParameter("invno", refNo)
+                .list();
+        if(list.isEmpty()){
+            isCheck = "noReceipt";
+        }else{
+            isCheck = "yesReceipt";
+        }
+        session.close();
+        this.sessionFactory.close();
+        return isCheck;
+    }
+
+    @Override
+    public String taxInvoice(String refNo) {
+         String isCheck ="";
+        Session session = this.sessionFactory.openSession();
+        List<TaxInvoiceDetail> list = session.createQuery("from TaxInvoiceDetail tax where tax.invoiceDetail.invoice.invNo =:invno and   tax.taxInvoice.MFinanceItemstatus.id  != 2")
+                .setParameter("invno", refNo)
+                .list();
+        if(list.isEmpty()){
+            isCheck = "noTaxinvoice";
+        }else{
+            isCheck = "yesTaxinvoice";
+        }
+        session.close();
+        this.sessionFactory.close();
+        return isCheck;
     }
 }
