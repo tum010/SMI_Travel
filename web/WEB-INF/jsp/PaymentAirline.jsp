@@ -17,6 +17,7 @@
 <c:set var="paymentAirRefund" value="${requestScope['paymentAirRefund']}" />
 <c:set var="flagSearch" value="${requestScope['flagSearch']}" /> 
 <c:set var="addRefundList" value="${requestScope['addRefundList']}" />
+<c:set var="creditList" value="${requestScope['creditList']}" />
 <section class="content-header" >
     <h1>
         Checking - Air Ticket
@@ -418,7 +419,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                
+                                <c:forEach var="table" items="${creditList}" varStatus="i">
+                                    <tr>
+                                        <!--<input type="hidden" name="paymentAirId${i.count}" id="paymentAirId${i.count}" value="${table.paymentAirticket.id}">-->
+                                        <input type="hidden" name="creditId${i.count}" id="creditId${i.count}" value="${table.id}">
+                                        <td align="center">${i.count}</td>
+                                        <td><input maxlength="255" id="creditNote${i.count}" name="creditNote${i.count}" type="text" class="form-control" value="${table.creditNote}"></td>
+                                        <td><input maxlength="10" id="creditAmount${i.count}"  name="creditAmount${i.count}"  type="text" class="form-control text-right"  value="${table.creditAmount}" onkeyup="insertCommas(this)"></td>
+                                        <td> 
+                                            <center> 
+                                                <a class="remCF"><span id="SpanRemove${i.count}" onclick="deleteCreditList('${table.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
+                                            </center>
+                                        </td>                                     
+                                    </tr>
+                                </c:forEach>
                             </tbody>
                         </table>
                         
@@ -453,17 +467,6 @@
                                     <input id="agentAmount" name="agentAmount" type="text" class="form-control numerical" style="text-align: right" maxlength="12" onkeyup="insertCommas(this)" value="${paymentAirticket.agentAmount}" >
                                 </div>
                             </div>
-                        </div>
-                        
-                        <div class="col-xs-12" style="padding-top: 15px">
-                            <div class="col-xs-1 text-right"  style="width: 150px">
-                                <label class="control-label text-right">Commission Vat </label>
-                            </div>
-                            <div class="col-xs-1"  style="width: 200px">
-                                <div class="input-group">                                    
-                                    <input id="commissionVat" name="commissionVat" type="text" maxlength="12" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="">
-                                </div>
-                            </div>
                             <div class="col-xs-1 text-right"  style="width: 155px">
                                 <label class="control-label text-right">Debit Note </label>
                             </div>
@@ -479,17 +482,19 @@
                                 <div class="input-group">                                    
                                     <input id="debitAmount" name="debitAmount" type="text" maxlength="8" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.debitAmount}">
                                 </div>
-                            </div>
+                            </div>    
                         </div>
+                        
                         <div class="col-xs-12" style="padding-top: 15px">
                             <div class="col-xs-1 text-right"  style="width: 150px">
-                                <label class="control-label text-right">Cash </label>
+                                <label class="control-label text-right">Commission Vat </label>
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
-                                    <input id="cash" name="cash" type="text" class="form-control numerical" maxlength="12" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.cash}">
+                                    <input id="commissionVat" name="commissionVat" type="text" maxlength="12" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="">
                                 </div>
                             </div>
+
                             <div class="col-xs-1 text-right"  style="width: 155px">
                                 <label class="control-label text-right">Withholding Tax </label>
                             </div>
@@ -498,8 +503,15 @@
                                     <input id="withholdingTax" name="withholdingTax" type="text" maxlength="12" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.witholdingTax}" >
                                 </div>
                             </div>
+                            <div class="col-xs-1 text-right"  style="width: 140px">
+                                <label class="control-label text-right">Cash </label>
+                            </div>
+                            <div class="col-xs-1"  style="width: 200px">
+                                <div class="input-group">                                    
+                                    <input id="cash" name="cash" type="text" class="form-control numerical" maxlength="12" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.cash}">
+                                </div>
+                            </div>
                         </div>
-                        
                         <div class="col-xs-12" style="padding-top: 15px">
                             <div class="col-xs-1 text-right"  style="width: 150px">
                                 <label class="control-label text-right">Chq No </label>
@@ -758,6 +770,7 @@
                 $("#vat").val(${vat});
                 calculateTotalAmount();
                 calculateTotalCommission();
+                calculateWithodingTax();
                 calculateTotalPayment();
                 calculateAmount();
             });
@@ -771,12 +784,38 @@
                 $("#vat").val(${vat});
                 calculateTotalAmountRefund();
                 calculateTotalRefundVat();
+                calculateWithodingTax();
                 calculateTotalPayment();
                 calculateAmount();
             });
         </script>
     </c:if>
-</c:if>             
+</c:if>
+<c:if test="${! empty requestScope['setCalculateCredit']}">
+    <c:if test="${requestScope['setCalculateCredit'] == 1 }">        
+        <script language="javascript">
+            $(document).ready(function() {
+                $("#vat").val(${vat});
+                var detaillength = $("#CreditDetailTable tr").length ;
+                if(detaillength > 1) {
+                    for(var i = 1;i<detaillength;i++){
+                        if( $('#creditAmount'+i).val() != "" ){
+                            var creditAmount = replaceAll(",","",$('#creditAmount'+i).val()); 
+                            if (creditAmount == ""){
+                                creditAmount = 0;
+                            }
+                            creditAmount = parseFloat(creditAmount); 
+                            document.getElementById("creditAmount"+i).value = formatNumber(creditAmount);
+                        }
+                    }
+                }
+                calculateTotalCreditAmount();
+                calculateTotalPayment();
+                calculateAmount();
+            });
+        </script>
+    </c:if>
+</c:if>    
 <script>
 var rad = document.PaymentAirlineForm.payto;
 var prev = null;
@@ -1339,6 +1378,7 @@ function CallAjaxAdd(param) {
                             $("#RefundTicketTable tbody").append(msg);
                             calculateTotalAmountRefund();
                             calculateTotalRefundVat();
+                            calculateWithodingTax();
                             calculateTotalPayment();
                             calculateAmount();
                         }
@@ -1436,6 +1476,7 @@ function DeleteRowTicket(){
     if($("#TicketFareTable tr").length > 1){
         calculateTotalAmount();
         calculateTotalCommission();
+        calculateWithodingTax();
         calculateTotalPayment();
         calculateAmount();
     }else{
@@ -1453,6 +1494,7 @@ function DeleteRowTicket(){
             if($("#TicketFareTable tr").length > 1){
                 calculateTotalAmount();
                 calculateTotalCommission();
+                calculateWithodingTax();
                 calculateTotalPayment();
                 calculateAmount();
             }else{
@@ -1486,6 +1528,7 @@ function DeleteRowRefund(){
     if($("#RefundTicketTable tr").length > 1){
         calculateTotalAmountRefund();
         calculateTotalRefundVat();
+        calculateWithodingTax();
         calculateTotalPayment();
         calculateAmount();
     }else{
@@ -1503,6 +1546,7 @@ function DeleteRowRefund(){
             if($("#RefundTicketTable tr").length > 1){
                 calculateTotalAmountRefund();
                 calculateTotalRefundVat();
+                calculateWithodingTax();
                 calculateTotalPayment();
                 calculateAmount();
             }else{
@@ -1587,7 +1631,6 @@ function calculateTotalPayment() {
 //      Total Payment = Total Amount - TotalComission - Total Refund + Total Amount Refund Vat - Credit Amount
 //      Total Payment = Total Amount - TotalComission - Total Refund + Total Amount Refund Vat – Sum(Credit Amount)  +Debit + With Tax
         var totalPayment = amountTotal - comTotal - refundTotal + refundVat - sumcreditAmount + debitAmount + withholdingTax;
-        alert(totalPayment);
         document.getElementById("totalPayment").value = formatNumber(totalPayment);
     }else if (payto == 'C'){
         var refundTable = $("#RefundTicketTable tr").length;
@@ -1603,19 +1646,22 @@ function calculateTotalPayCus(){
     var temp = 0;
     var paycusTemp = parseFloat(0);
     var table = document.getElementById('RefundTicketTable');
-    for (var r = 1, n = table.rows.length; r < n; r++) {
-        temp = table.rows[r].cells[6].innerHTML;
-        temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
-        if(temp == '') {
-            temp = 0;
-        }
-        temp = replaceAll(",","",temp.toString());
-        var value = parseFloat(temp) ;
-        var paycus = paycusTemp + value ;
-        paycusTemp = paycus;
+    var tableLenght = $("#RefundTicketTable tr").length;
+    if(tableLenght > 1){
+        for (var r = 1, n = table.rows.length; r < n; r++) {
+            temp = table.rows[r].cells[6].innerHTML;
+            temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
+            if(temp == '') {
+                temp = 0;
+            }
+            temp = replaceAll(",","",temp.toString());
+            var value = parseFloat(temp) ;
+            var paycus = paycusTemp + value ;
+            paycusTemp = paycus;
 
+        }
+        document.getElementById("totalPayment").value = formatNumber(paycus);
     }
-    document.getElementById("totalPayment").value = formatNumber(paycus);
 }
 
 function calculateTotalRefundVat() {
@@ -1623,20 +1669,22 @@ function calculateTotalRefundVat() {
     var temp = 0;
     var comTemp = parseFloat(0);
     var table = document.getElementById('RefundTicketTable');
-    for (var r = 1, n = table.rows.length; r < n; r++) {
-        temp = table.rows[r].cells[4].innerHTML;
-        temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
-        if(temp == '') {
-            temp = 0;
-        }
-        temp = replaceAll(",","",temp.toString());
-        var value = parseFloat(temp) ;
-        var comSum = comTemp + value ;
-        comTemp = comSum;
+    var tableLenght = $("#RefundTicketTable tr").length;
+    if(tableLenght > 1){
+        for (var r = 1, n = table.rows.length; r < n; r++) {
+            temp = table.rows[r].cells[4].innerHTML;
+            temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
+            if(temp == '') {
+                temp = 0;
+            }
+            temp = replaceAll(",","",temp.toString());
+            var value = parseFloat(temp) ;
+            var comSum = comTemp + value ;
+            comTemp = comSum;
 
-    } 
-    document.getElementById("sumCommissionRefund").value = formatNumber(comTemp);
-    
+        } 
+        document.getElementById("sumCommissionRefund").value = formatNumber(comTemp);
+    }
     var vatValue = replaceAll(",","",$('#vat').val()); 
     if (vatValue == ""){
         vatValue = 0;
@@ -1645,65 +1693,84 @@ function calculateTotalRefundVat() {
     var totalRefundVat = comSum * ( 1 + (vat / 100));
     document.getElementById("totalAmountRefundVat").value = formatNumber(totalRefundVat);
     calculateWithodingTax();
+    calculateTotalPayment();
+    calculateAmount();
 }
 
 function calculateTotalCommission() {
     var temp = 0;
     var commissionTemp = parseFloat(0);
     var tableTicket = document.getElementById('TicketFareTable');
-    for (var r = 1, n = tableTicket.rows.length; r < n; r++) {
-        temp = tableTicket.rows[r].cells[6].innerHTML;
-        temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
-        if(temp == '') {
-            temp = 0;
-        }
-        temp = replaceAll(",","",temp.toString()); 
-        var valueCom = parseFloat(temp) ;
-        var commission = commissionTemp + valueCom ;
-        commissionTemp = commission;
+    var tableLenght = $("#TicketFareTable tr").length;
+    if(tableLenght > 1){
+        for (var r = 1, n = tableTicket.rows.length; r < n; r++) {
+            temp = tableTicket.rows[r].cells[6].innerHTML;
+            temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
+            if(temp == '') {
+                temp = 0;
+            }
+            temp = replaceAll(",","",temp.toString()); 
+            var valueCom = parseFloat(temp) ;
+            var commission = commissionTemp + valueCom ;
+            commissionTemp = commission;
 
-        }
-        
-    document.getElementById("totalCommissionTicketFare").value = formatNumber(commission);
+            }
+        document.getElementById("sumCommissionTicket").value = formatNumber(commission);
+        document.getElementById("totalCommissionTicketFare").value = formatNumber(commission);
+    }
+    calculateWithodingTax();
+    calculateTotalPayment();
+    calculateAmount();
 }
 
 function calculateTotalAmount(){
     var temp = 0;
     var amountTemp = parseFloat(0);
     var tableTicket = document.getElementById('TicketFareTable');
-    for (var r = 1, n = tableTicket.rows.length; r < n; r++) {
-        temp = tableTicket.rows[r].cells[7].innerHTML;
-        temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
-        if(temp == '') {
-            temp = 0;
-        }
-        temp = replaceAll(",","",temp.toString()); 
-        var value = parseFloat(temp) ;
-        var amount = amountTemp + value ;
-        amountTemp = amount;
+    var tableLenght = $("#TicketFareTable tr").length;
+    if(tableLenght > 1){
+        for (var r = 1, n = tableTicket.rows.length; r < n; r++) {
+            temp = tableTicket.rows[r].cells[7].innerHTML;
+            temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
+            if(temp == '') {
+                temp = 0;
+            }
+            temp = replaceAll(",","",temp.toString()); 
+            var value = parseFloat(temp) ;
+            var amount = amountTemp + value ;
+            amountTemp = amount;
 
+        }
+        document.getElementById("totalAmountTicketFare").value = formatNumber(amount);
     }
-    document.getElementById("totalAmountTicketFare").value = formatNumber(amount);
     calculateWithodingTax();
+    calculateTotalPayment();
+    calculateAmount();
 }
 
 function calculateTotalAmountRefund(){
     var temp = 0;
     var refundTemp = parseFloat(0);
-    var table = document.getElementById('RefundTicketTable');
-    for (var r = 1, n = table.rows.length; r < n; r++) {
-        temp = table.rows[r].cells[5].innerHTML;
-        temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
-        if(temp == '') {
-            temp = 0;
-        }
-        temp = replaceAll(",","",temp.toString());
-        var value = parseFloat(temp) ;
-        var refund = refundTemp + value ;
-        refundTemp = refund;
+    var table = document.getElementById('RefundTicketTable'); 
+    var tableLenght = $("#RefundTicketTable tr").length;
+    if(tableLenght > 1){
+        for (var r = 1, n = table.rows.length; r < n; r++) {
+            temp = table.rows[r].cells[5].innerHTML;
+            temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
+            if(temp == '') {
+                temp = 0;
+            }
+            temp = replaceAll(",","",temp.toString());
+            var value = parseFloat(temp) ;
+            var refund = refundTemp + value ;
+            refundTemp = refund;
 
+        }
+        document.getElementById("totalAmountRefund").value = formatNumber(refund);
     }
-    document.getElementById("totalAmountRefund").value = formatNumber(refund);
+    calculateWithodingTax();
+    calculateTotalPayment();
+    calculateAmount();
 }
 
 
@@ -1796,7 +1863,7 @@ function getTicketNoFromTicketFare() {
         temp = tableTicket.rows[r].cells[1].innerHTML;
         ticeketList += temp + ",";
     }
-    
+
     document.getElementById("ticketNoList").value = ticeketList;
 }
 
@@ -1835,44 +1902,36 @@ function calculateTotalCreditAmount(){
     var i = 1;
     var amountTemp = parseFloat(0);
     var tableProduct = $("#CreditDetailTable tr").length;
-    for (i ; i < tableProduct ; i++) {
-        temp = $("#creditAmount"+i).val();
-        temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
-        if(temp == '') {
-            temp = 0;
+    if(tableProduct > 1){
+        for (i ; i < tableProduct ; i++) {
+            temp = $("#creditAmount"+i).val();
+            temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
+            if(temp == '') {
+                temp = 0;
+            }
+            temp = replaceAll(",","",temp.toString());
+            var value = parseFloat(temp) ;
+            var amount = amountTemp + value ;
+            amountTemp = amount;
         }
-        temp = replaceAll(",","",temp.toString());
-        var value = parseFloat(temp) ;
-        var amount = amountTemp + value ;
-        amountTemp = amount;
+        document.getElementById("totalCreditAmount").value = formatNumber(amount);
     }
-    document.getElementById("totalCreditAmount").value = formatNumber(amount);
     calculateTotalPayment();
 }
 
 function calculateWithodingTax(){
-    var temp = 0;
-    var commTemp = parseFloat(0);
-    var tableTicket = document.getElementById('TicketFareTable');
-    for (var r = 1, n = tableTicket.rows.length; r < n; r++) {
-        temp = tableTicket.rows[r].cells[6].innerHTML;
-        temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
-        if(temp == ''){
-            temp = 0;
-        }
-        temp = replaceAll(",","",temp.toString()); 
-        var value = parseFloat(temp) ;
-        var sumcomm = commTemp + value ;
-        commTemp = sumcomm;
-    }
-    document.getElementById("sumCommissionTicket").value = formatNumber(sumcomm);
+    var sumCommissionTicket = replaceAll(",","",$('#sumCommissionTicket').val()); 
+    if (sumCommissionTicket == ""){
+        sumCommissionTicket = 0;
+    }    
     
     var sumCommissionRefund = replaceAll(",","",$('#sumCommissionRefund').val()); 
     if (sumCommissionRefund == ""){
         sumCommissionRefund = 0;
     }    
     var sumCommRefund = parseFloat(sumCommissionRefund);
-
+    var sumcomm = parseFloat(sumCommissionTicket);
+    
     var withholdingTax = (sumcomm - sumCommRefund) * 0.03;
 //    With Tax = Ticket Comission – ComRefund * 3%
     document.getElementById("withholdingTax").value = formatNumber(withholdingTax);

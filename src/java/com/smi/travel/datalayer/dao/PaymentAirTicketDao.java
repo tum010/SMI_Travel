@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.dao;
 
+import com.smi.travel.datalayer.entity.PaymentAirCredit;
 import com.smi.travel.datalayer.entity.PaymentAirticket;
 import com.smi.travel.datalayer.entity.PaymentAirticketFare;
 import com.smi.travel.datalayer.entity.RefundAirticketDetailView;
@@ -38,5 +39,5 @@ public interface PaymentAirTicketDao {
     public String validateSavePaymentAir(PaymentAirticket payAir);
     public List<TicketFareView> getTicketFareViewsByPaymentAirId(String paymentAirId);
     public List<RefundAirticketDetailView> getRefundDetailByPaymentAirId(String paymentAirId);
-    
+    public List<PaymentAirCredit> getPaymentAirCreditByPaymentAirId(String paymentAirId);
 }
