@@ -2420,15 +2420,17 @@ function calculateGrandTotal(){
     var amountTemp = parseFloat(0);
     var tableProduct = $("#ReceiptListTable tr").length;
     for (i ; i < tableProduct ; i++) {
-        temp = $("#receiveAmount"+i).val();
-        temp = (temp.trim) ? temp.trim() : temp.replace(/^\s+/,'');
-        if(temp == '') {
-            temp = 0;
-        }
-        temp = replaceAll(",","",temp.toString());
-        var value = parseFloat(temp) ;
-        var amount = amountTemp + value ;
-        amountTemp = amount;
+        temp = document.getElementById("receiveAmount" + i);
+        if(temp !== null){
+            temp = temp.value;
+            if(temp == '') {
+                temp = 0;
+            }
+            temp = replaceAll(",","",temp.toString());
+            var value = parseFloat(temp) ;
+            var amount = amountTemp + value ;
+            amountTemp = amount;
+        }   
     }
     document.getElementById("grandTotal").value = formatNumber(amount);
 }

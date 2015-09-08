@@ -544,6 +544,14 @@ public class PaymentAirlineController extends SMITravelController {
             } else {
                 request.setAttribute(DELETERESULT, "delete unsuccessful");
             }
+        }else if("deleteCredit".equalsIgnoreCase(action)) {
+            String creditIdDelete = request.getParameter("creditIdDelete");
+            result = paymentAirTicketService.DeletePaymentAirCredit("",creditIdDelete);
+            if (result == "success"){
+                request.setAttribute(DELETERESULT, "delete successful");
+            } else {
+                request.setAttribute(DELETERESULT, "delete unsuccessful");
+            }
         }
         
 //      request.setAttribute(PAYNO,paymentNo);
