@@ -689,6 +689,9 @@
             $('#bankTransfer').removeAttr('disabled');           
         } else {
             $('#bankTransfer').attr('disabled', 'disabled');
+            $('[name=bankTransfer] option').filter(function() { 
+                return ($(this).val() === '');
+            }).prop('selected', true);      
         }
     }
 
