@@ -18,7 +18,7 @@ public class InvoiceSummary {
     private String invtype;
     private String department;
     private String invno;
-    private Date invdate;
+    private String invdate;
     private String to;
     private String invname;
     private String termpay;
@@ -90,7 +90,7 @@ public class InvoiceSummary {
         this.gross = gross;
     }
 
-    public void setInvdate(Date invdate) {
+    public void setInvdate(String invdate) {
         this.invdate = invdate;
     }
 
@@ -158,7 +158,7 @@ public class InvoiceSummary {
         return gross;
     }
 
-    public Date getInvdate() {
+    public String getInvdate() {
         return invdate;
     }
 

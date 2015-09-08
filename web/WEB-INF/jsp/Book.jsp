@@ -14,7 +14,9 @@
 <c:set var="dataList" value="${requestScope['booking_list']}" />
 <c:set var="userdepartment" value="${requestScope['userdepartment']}" />
 <c:set var="booking_date" value="${requestScope['booking_date']}" />
-<c:set var="BookstatusList" value="${requestScope['booking_status']}" />
+<c:set var="BookstatusList" value="${requestScope['booking_status']}" /> 
+<c:set var="BookpaybyList" value="${requestScope['payby_list']}" />
+<c:set var="BookbanktransferList" value="${requestScope['banktrasfer_list']}" />
 
 <section class="content-header" >
     <h1>
@@ -128,6 +130,40 @@
                                 <input type="text"  class="form-control" id="ticketNo" name="ticketNo"  value="${requestScope['ticketNo']}" >
                             </div>
                         </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="Country">Pay By</label>
+                                <select class="form-control disabled" id="payBy" name="payBy"  value="${requestScope['payBy']}" onchange="bankTrasferField()">
+                                    <option value=""> </option>                               
+                                    <c:forEach var="table" items="${BookpaybyList}">
+                                        <c:set var="select" value="" />
+                                        <c:if test="${table.id == requestScope['payBy']}">
+                                            <c:set var="select" value="selected" />
+                                        </c:if>
+                                        <option value='${table.id}' ${select}>${table.name}</option>
+                                    </c:forEach>
+                                </select>    
+                            </div>
+                        </div>
+                        <c:set var="bankTransferField" value="disabled"/>
+                        <c:if test="${requestScope['payBy'] == '4'}">
+                            <c:set var="bankTransferField" value=""/>
+                        </c:if>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="Country">Bank Transfer</label>
+                                <select class="form-control" id="bankTransfer" name="bankTransfer" value="${requestScope['bankTransfer']}" ${bankTransferField}>
+                                    <option value=""> </option>                               
+                                    <c:forEach var="table" items="${BookbanktransferList}">
+                                        <c:set var="select" value="" />
+                                        <c:if test="${table.id == requestScope['bankTransfer']}">
+                                            <c:set var="select" value="selected" />
+                                        </c:if>
+                                        <option value='${table.id}' ${select}>${table.code} (${table.accNo})</option>
+                                    </c:forEach>
+                                </select>    
+                            </div>
+                        </div>        
                     </div>
                 </div>
                  
@@ -646,6 +682,18 @@
     $("#Passenger").load("WebContent/Book/Passenger.jsp");
     $("#History").load("WebContent/Book/History.jsp");
     $("#Billable").load("WebContent/Book/Billable.jsp");
+    
+    function bankTrasferField(){
+        var payBy = document.getElementById("payBy").value;
+        if(payBy === '4'){
+            $('#bankTransfer').removeAttr('disabled');           
+        } else {
+            $('#bankTransfer').attr('disabled', 'disabled');
+            $('[name=bankTransfer] option').filter(function() { 
+                return ($(this).val() === '');
+            }).prop('selected', true);      
+        }
+    }
 
 </script>
 

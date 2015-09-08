@@ -31,6 +31,8 @@ public class BookingView {
     private String remark;
     private String email;
     private String ticketNo;
+    private String payBy;
+    private String accId;
     
     public BookingView(){
         
@@ -176,9 +178,20 @@ public class BookingView {
         this.email = email;
     }
 
-    
-    
-    
-    
-    
+    public String getPayBy() {
+        return payBy;
+    }
+
+    public void setPayBy(String payBy) {
+        this.payBy = payBy;
+    }
+
+    public String getAccId() {
+        return accId;
+    }
+
+    public void setAccId(String accId) {
+        this.accId = accId;
+    }
+      
 }

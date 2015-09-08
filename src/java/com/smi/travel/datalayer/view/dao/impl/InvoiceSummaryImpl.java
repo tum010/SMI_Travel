@@ -8,6 +8,8 @@ package com.smi.travel.datalayer.view.dao.impl;
 import com.smi.travel.datalayer.report.model.InvoiceSummary;
 import com.smi.travel.datalayer.view.dao.InvoiceSummaryDao;
 import com.smi.travel.util.UtilityFunction;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -71,7 +73,7 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
             sum.setDetail("Test");
             sum.setGross(200.40);
             sum.setInvfrom(new Date());
-            sum.setInvdate(new Date());
+//            sum.setInvdate(new Date());
             sum.setInvdepartment("Wendy");
             sum.setInvname("SATO");
             sum.setInvno("A0000030");
@@ -193,7 +195,19 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
             }
             
             sum.setInvno(util.ConvertString(B[1]));
-            sum.setInvdate((Date)B[2]);
+            if(!"".equals(util.ConvertString(B[2]))){
+                String dayy[] = util.ConvertString(B[2]).split("-");
+                System.out.println("Date : " + util.ConvertString(B[2]));
+                String date = ""+dayy[2]+"-"+dayy[1]+"-"+dayy[0];
+                try {
+                    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                    Date dateBefore = df.parse(date);
+                    sum.setInvdate(new SimpleDateFormat("dd/MM/yyyy", new Locale("us", "us")).format(dateBefore));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+            
             sum.setInvname(util.ConvertString(B[3]));
             sum.setTermpay(util.ConvertString(B[4]));
             sum.setDetail(util.ConvertString(B[5]));
