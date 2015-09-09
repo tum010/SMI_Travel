@@ -4,6 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="mpaytype_list" value="${requestScope['mpaytype_list']}" />
+<c:set var="data_list" value="${requestScope['data_list']}" />
 <section class="content-header" >
     <h1>
         Nirvana Interface
@@ -157,22 +158,24 @@
                                 <th style="width: 5%">Status</th>
                              </tr>
                         </thead>
-                        <tbody>               
+                        <tbody>
+                            <c:forEach var="data_list" items="${data_list}" varStatus="i">
                             <tr>
-                                <td class="hidden">1</td>
+                                <td class="hidden"></td>
                                 <td align="center">
-                                    <input class="form-control" type="checkbox" id="selectAll1" name="selectAll1" value="1">
+                                    <input class="form-control" type="checkbox" id="selectAll${i.count}" name="selectAll${i.count}" value="1">
                                 </td>
-                                <td align="center">1</td>
-                                <td>150814</td>
-                                <td>150814</td>
-                                <td>150814</td>
-                                <td>150814</td>
-                                <td align="right" class="money">1000000</td>
-                                <td align="right" class="money">1000000</td>
-                                <td align="center">THB</td>
-                                <td align="center">NORMAL</td>
+                                <td align="center">${i.count}</td>
+                                <td></td>
+                                <td></td>
+                                <td>${data_list.vendorname}</td>
+                                <td>${data_list.vendorid}</td>
+                                <td align="right" class="money"></td>
+                                <td align="right" class="money"></td>
+                                <td align="center">${data_list.currencyid}</td>
+                                <td align="center"></td>
                             </tr>
+                            </c:forEach>
                         </tbody>
                     </table>    
                 </div>
@@ -232,7 +235,9 @@
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
             "bFilter": false,
-            "bInfo": false
+            "bInfo": false,
+            "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+            "iDisplayLength": 50
         });
         
         $('#apDataListTable tbody').on('click', 'tr', function () {
@@ -254,6 +259,9 @@
     
     function confirmExport(){
         $("#apExportModal").modal("hide");
+        var action = document.getElementById("action");
+        action.value = "export";
+        document.getElementById("apMonitorForm").submit();
     }
     
     function selectAll(){
