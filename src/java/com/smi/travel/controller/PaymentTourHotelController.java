@@ -89,6 +89,7 @@ public class PaymentTourHotelController extends SMITravelController {
         String crateDate = request.getParameter("crateDate");
         String paymentId = request.getParameter("paymentId");
         String tourDescId = request.getParameter("tourDescId");
+        String isExport = request.getParameter("isExport");
         
         SystemUser user = (SystemUser) session.getAttribute("USER");
         String idRole = user.getRole().getId();
@@ -105,7 +106,7 @@ public class PaymentTourHotelController extends SMITravelController {
         
         Date date = Calendar.getInstance().getTime();
         SimpleDateFormat dateformat = new SimpleDateFormat();
-        dateformat.applyPattern("dd-MM-yyyy HH:mm:ss");
+        dateformat.applyPattern("yyyy-MM-dd HH:mm:ss");
         String updateDate = dateformat.format(date);
 
         if ("add".equalsIgnoreCase(action)) {
@@ -203,7 +204,8 @@ public class PaymentTourHotelController extends SMITravelController {
                 paymentWendy.setRemark(InputRemark);
                 paymentWendy.setChqNo(InputChqNo);
                 paymentWendy.setCreateDate(utilfunction.convertStringToDate(crateDate));
-                paymentWendy.setUpdateDate(new Date());
+                paymentWendy.setUpdateDate(utilfunction.convertStringToDate(updateDate));
+                paymentWendy.setIsExport(Integer.parseInt(isExport));
                 System.out.println("Update Date : "+updateDate);
                 
                 if(account != null){
@@ -241,11 +243,14 @@ public class PaymentTourHotelController extends SMITravelController {
                 }
                 
                 TourOperationDesc tourOperationDesc = new TourOperationDesc();
-                tourOperationDesc.setId(tourDescId);
-                paymentWendy.setTourOperationDesc(tourOperationDesc);
+                if(tourDescId!=""){                    
+                    tourOperationDesc.setId(tourDescId);
+                    paymentWendy.setTourOperationDesc(tourOperationDesc);
+                } else {
+                    paymentWendy.setTourOperationDesc(null);
+                }   
                 
-                paymentWendy.setCreateBy(user.getUsername());                              
-                paymentWendy.setIsExport(0);
+                paymentWendy.setCreateBy(user.getUsername());                                             
                 
                 String result = paymentTourHotelService.UpdatePaymentWendy(paymentWendy);
                 request.setAttribute("paymentId", paymentId);
@@ -279,6 +284,7 @@ public class PaymentTourHotelController extends SMITravelController {
             InputChqNo = paymentWendy.getChqNo();
             InputChqAmount = String.valueOf(paymentWendy.getChqAmount());
             crateDate = String.valueOf(paymentWendy.getCreateDate());
+            isExport = String.valueOf(paymentWendy.getIsExport());
             
             if(paymentWendy.getTourOperationDesc() != null){
                 tourDescId = String.valueOf(paymentWendy.getTourOperationDesc().getId());
@@ -331,6 +337,7 @@ public class PaymentTourHotelController extends SMITravelController {
             request.setAttribute("InputChqAmount", InputChqAmount);
             request.setAttribute("crateDate", crateDate);
             request.setAttribute("tourDescId", tourDescId);
+            request.setAttribute("isExport", isExport);
             request.setAttribute(PRODUCTDETAILLIST, paymentDetailWendyList);
             request.setAttribute(PAYMENHOTELTCOUNT, size);
             //request.setAttribute("btnSave", "update");
@@ -521,7 +528,12 @@ public class PaymentTourHotelController extends SMITravelController {
         } else {
             itemPayment = paymentWendy.getMAccpay().getId();
         }
-            
+        
+        int isExport = 0;
+        if(paymentWendy.getIsExport()!=null){
+            isExport = paymentWendy.getIsExport();
+        } 
+        
         InvoiceSupplier invoiceSupplierData = paymentTourHotelService.getDataInvoiceSuppiler(InputInvoiceSupCode);
         String InputInvoiceSupId = invoiceSupplierData.getId();
         String InputInvoiceSupName = invoiceSupplierData.getName();
@@ -544,6 +556,7 @@ public class PaymentTourHotelController extends SMITravelController {
         request.setAttribute("InputCurrency", InputCurrency);
         request.setAttribute("itemPayment", itemPayment);
         request.setAttribute("InputRemark", InputRemark);
+        request.setAttribute("isExport", String.valueOf(isExport));
 //        request.setAttribute("InputCash", InputCash);
 //        request.setAttribute("InputChqNo", InputChqNo);
 //        request.setAttribute("InputChqAmount", InputChqAmount);

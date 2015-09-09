@@ -30,10 +30,16 @@ public class APMonitorController extends SMITravelController {
         String apFromDate = request.getParameter("apFromDate");
         String apToDate = request.getParameter("apToDate");
         
-//        if("search".equalsIgnoreCase(action)){
-//            List<APNirvana> apNirvanaList = apNirvanaService.SearchApNirvanaFromFilter(apPayment, apType, apStatus, apFromDate, apToDate);
-//            request.setAttribute(DATALIST, apNirvanaList);
-//        }
+        if("search".equalsIgnoreCase(action)){
+            List<APNirvana> apNirvanaList = apNirvanaService.SearchApNirvanaFromFilter(apPayment, apType, apStatus, apFromDate, apToDate);
+            request.setAttribute(DATALIST, apNirvanaList);
+        } else if("export".equalsIgnoreCase(action)){
+            List<APNirvana> apNirvanaList = apNirvanaService.SearchApNirvanaFromFilter(apPayment, apType, apStatus, apFromDate, apToDate);
+            String result = apNirvanaService.ExportAPFileInterface(apNirvanaList);
+            if("success".equalsIgnoreCase(result)){
+                String update = apNirvanaService.UpdateStatusAPInterface(apNirvanaList);
+            }
+        }
         
         request.setAttribute("apPayment", apPayment);
         request.setAttribute("apType", apType);
