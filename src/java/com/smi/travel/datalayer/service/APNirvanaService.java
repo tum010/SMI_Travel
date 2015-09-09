@@ -18,6 +18,14 @@ public class APNirvanaService {
     private APNirvanaDao apNirvanaDao;
     
     public List<APNirvana> SearchApNirvanaFromFilter(String paymentType,String producttype,String status,String from,String to) {
-        return this.apNirvanaDao.SearchApNirvanaFromFilter(paymentType, producttype, status, from, to);
+        return this.getApNirvanaDao().SearchApNirvanaFromFilter(paymentType, producttype, status, from, to);
+    }
+
+    public APNirvanaDao getApNirvanaDao() {
+        return apNirvanaDao;
+    }
+
+    public void setApNirvanaDao(APNirvanaDao apNirvanaDao) {
+        this.apNirvanaDao = apNirvanaDao;
     }
 }
