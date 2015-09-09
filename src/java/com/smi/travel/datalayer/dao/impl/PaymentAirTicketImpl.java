@@ -16,8 +16,11 @@ import com.smi.travel.datalayer.entity.RefundAirticketDetail;
 import com.smi.travel.datalayer.entity.RefundAirticketDetailView;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
+import com.smi.travel.util.UtilityFunction;
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -31,15 +34,17 @@ import org.hibernate.Transaction;
 public class PaymentAirTicketImpl implements PaymentAirTicketDao {
     private SessionFactory sessionFactory;
     private Transaction transaction;
+    private UtilityFunction utilityFunction;
     
     @Override
     public String InsertPaymentAir(PaymentAirticket payAir) {
         String result = "";
         try {
-            Session session = this.sessionFactory.openSession();
-            transaction = session.beginTransaction();
+            Session session = this.getSessionFactory().openSession();
+            setTransaction(session.beginTransaction());
             result = gennaratePaymentRunning();
             payAir.setPayNo(result);
+            payAir.setIsExport(0);
             session.save(payAir);
             
             List<PaymentAirticketFare> paymentAirticketFares = payAir.getPaymentAirticketFares();
@@ -66,9 +71,9 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                 }
             }
             
-            transaction.commit();
+            getTransaction().commit();
             session.close();
-            this.sessionFactory.close();
+            this.getSessionFactory().close();
         } catch (Exception ex) {
             ex.printStackTrace();
             result = null;
@@ -79,10 +84,12 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
 
     @Override
     public String UpdatePaymentAir(PaymentAirticket payAir) {
+        UtilityFunction util = new UtilityFunction();
         String result = "";
         try {
-            Session session = this.sessionFactory.openSession();
-            transaction = session.beginTransaction();
+            Session session = this.getSessionFactory().openSession();
+            setTransaction(session.beginTransaction());
+            payAir.setUpdateDate(new Date());
             session.update(payAir);
             List<PaymentAirticketFare> paymentAirticketFares = payAir.getPaymentAirticketFares();
             
@@ -120,9 +127,9 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                 }
             }
             
-            transaction.commit();
+            getTransaction().commit();
             session.close();
-            this.sessionFactory.close();
+            this.getSessionFactory().close();
             result = "success";
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -146,16 +153,16 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
         }
         
         try {
-            Session session = this.sessionFactory.openSession();
-            transaction = session.beginTransaction();
+            Session session = this.getSessionFactory().openSession();
+            setTransaction(session.beginTransaction());
             session.delete(payAir);
-            transaction.commit();
+            getTransaction().commit();
             session.close();
-            this.sessionFactory.close();
+            this.getSessionFactory().close();
             result = "success";
         } catch (Exception ex) {
             ex.printStackTrace();
-            transaction.rollback();
+            getTransaction().rollback();
             result = "fail";
         }
         System.out.println("result::"+result);
@@ -167,7 +174,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
         String result = "";
         PaymentAirticketFare paymentAirticketFare = new PaymentAirticketFare();
         List<PaymentAirticketFare> PaymentAirticketFareList = new ArrayList<PaymentAirticketFare>();
-        Session session = this.sessionFactory.openSession();
+        Session session = this.getSessionFactory().openSession();
         if(option == 1){
             String query = "from PaymentAirticketFare pay where pay.paymentAirticket.id = :paymentAirId and pay.ticketFareAirline.id =:ticketFareId ";
             PaymentAirticketFareList = session.createQuery(query).setParameter("ticketFareId", ticketFareId).setParameter("paymentAirId", paymentAirId).list();
@@ -177,9 +184,9 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             }else{
                 paymentAirticketFare =  PaymentAirticketFareList.get(0);
                 try {
-                    transaction = session.beginTransaction();
+                    setTransaction(session.beginTransaction());
                     session.delete(paymentAirticketFare);
-                    transaction.commit();
+                    getTransaction().commit();
                     result = "success";
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -198,9 +205,9 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                 for(int i = 0; i < PaymentAirticketFareList.size(); i++){
                     paymentAirticketFare =  PaymentAirticketFareList.get(i);
                     try {
-                        transaction = session.beginTransaction();
+                        setTransaction(session.beginTransaction());
                         session.delete(paymentAirticketFare);
-                        transaction.commit();
+                        getTransaction().commit();
                         result = "success";
                     } catch (Exception ex) {
                         ex.printStackTrace();
@@ -210,7 +217,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             }
         }
         session.close();
-        this.sessionFactory.close();
+        this.getSessionFactory().close();
         return result;
     }
 
@@ -219,7 +226,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
         String result = "";
         PaymentAirticketRefund paymentAirticketRefund = new PaymentAirticketRefund();
         List<PaymentAirticketRefund> paymentAirticketRefundList = new ArrayList<PaymentAirticketRefund>();
-        Session session = this.sessionFactory.openSession();
+        Session session = this.getSessionFactory().openSession();
         if(option == 1){
             String query = "from PaymentAirticketRefund pay where pay.paymentAirticket.id = :paymentAirId and pay.refundAirticketDetail.id =:refundDetailId ";
             paymentAirticketRefundList = session.createQuery(query).setParameter("paymentAirId", paymentAirId).setParameter("refundDetailId", refundDetailId).list();
@@ -229,9 +236,9 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             }else{
                 paymentAirticketRefund =  paymentAirticketRefundList.get(0);
                 try {
-                    transaction = session.beginTransaction();
+                    setTransaction(session.beginTransaction());
                     session.delete(paymentAirticketRefund);
-                    transaction.commit();
+                    getTransaction().commit();
                     result = "success";
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -250,9 +257,9 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                 for(int i = 0; i < paymentAirticketRefundList.size(); i++){
                     paymentAirticketRefund =  paymentAirticketRefundList.get(i);
                     try {
-                        transaction = session.beginTransaction();
+                        setTransaction(session.beginTransaction());
                         session.delete(paymentAirticketRefund);
-                        transaction.commit();
+                        getTransaction().commit();
                         result = "success";
                     } catch (Exception ex) {
                         ex.printStackTrace();
@@ -262,7 +269,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             }
         }
         session.close();
-        this.sessionFactory.close();
+        this.getSessionFactory().close();
         return result;
     }
 
@@ -270,7 +277,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
     public PaymentAirticket getPaymentAirTicketFromPayno(String payNo) {
         PaymentAirticket paymentAirticket = new PaymentAirticket();
         String query = "from PaymentAirticket pay where pay.payNo = :payNo";
-        Session session = this.sessionFactory.openSession();
+        Session session = this.getSessionFactory().openSession();
         List<PaymentAirticket> paymentAirticketList = session.createQuery(query).setParameter("payNo", payNo).list();
         session.close();
         if (paymentAirticketList.isEmpty()) {
@@ -283,7 +290,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
 
     @Override
     public List<TicketFareView> getListTicketFare(String from, String to, String by, String airAgentId,String invoiceSubCode) {
-        Session session = this.sessionFactory.openSession();
+        Session session = this.getSessionFactory().openSession();
         String query ="from TicketFareAirline t where";
         String queryOperation = "";
         String Prefix_Subfix ="";
@@ -371,13 +378,13 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
         }
         System.out.println("listView " + listView.size());
         session.close();
-        this.sessionFactory.close();
+        this.getSessionFactory().close();
         return listView; 
     }
 
     public String gennaratePaymentRunning(){
         String hql = "from MRunningCode run where run.type =  :type";
-        Session session = this.sessionFactory.openSession();
+        Session session = this.getSessionFactory().openSession();
         List<MRunningCode> list = session.createQuery(hql).setParameter("type", "PA").list();
         if (list.isEmpty()) {
             return null;
@@ -395,13 +402,13 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
         int result = query.executeUpdate();
         
         session.close();
-        this.sessionFactory.close();
+        this.getSessionFactory().close();
         return code;
     }
     
     private boolean IsExistPaymentAirticketFare(String paymentAirId) {
         boolean result;
-        Session session = this.sessionFactory.openSession();
+        Session session = this.getSessionFactory().openSession();
         List<PaymentAirticketFare> list = session.createQuery("from PaymentAirticketFare p WHERE p.paymentAirticket.id = :paymentAirId").setParameter("paymentAirId", paymentAirId).list();
         if (list.isEmpty()) {
             result = false;
@@ -409,13 +416,13 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             result = true;
         }
         session.close();
-        this.sessionFactory.close();
+        this.getSessionFactory().close();
         return result;
     }
     
     private boolean IsExistPaymentAirticketRefund(String paymentAirId) {
         boolean result;
-        Session session = this.sessionFactory.openSession();
+        Session session = this.getSessionFactory().openSession();
         List<PaymentAirticketRefund> list = session.createQuery("from PaymentAirticketRefund p WHERE p.paymentAirticket.id = :paymentAirId").setParameter("paymentAirId", paymentAirId).list();
         if(list.isEmpty()){
             result = false;
@@ -423,7 +430,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             result = true;
         }
         session.close();
-        this.sessionFactory.close();
+        this.getSessionFactory().close();
         return result;
     }
     
@@ -431,7 +438,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
     public String validateSavePaymentAir(PaymentAirticket payAir) {
         String result = "";
         String query = "from PaymentAirticket pay where pay.payNo = :payNo";
-        Session session = this.sessionFactory.openSession();
+        Session session = this.getSessionFactory().openSession();
         List<PaymentAirticket> paymentAirticketList = session.createQuery(query).setParameter("payNo",payAir.getPayNo()).list();
         System.out.println("query : "+query );
         if (paymentAirticketList.isEmpty()){
@@ -443,7 +450,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             result = UpdatePaymentAir(payAir);
         }        
         session.close();
-        this.sessionFactory.close();
+        this.getSessionFactory().close();
         return result;
     }
 
@@ -451,7 +458,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
     public String addRefundAirTicket(String refundNo,String rowCount,String ticketNoList) {
         String result ="";
         String query = "from RefundAirticketDetail r where r.refundAirticket.refundNo = :refundNo";
-        Session session = this.sessionFactory.openSession();
+        Session session = this.getSessionFactory().openSession();
         List<RefundAirticketDetail> refundAirticketDetails = session.createQuery(query).setParameter("refundNo", refundNo).list();
         
         if (refundAirticketDetails.isEmpty()) {
@@ -460,7 +467,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             result =  buildRefundTicketHTML(refundAirticketDetails , rowCount ,ticketNoList);
         }
         session.close();
-        this.sessionFactory.close();
+        this.getSessionFactory().close();
         return result;        
     }
     
@@ -579,7 +586,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
     public List<TicketFareView> getTicketFareViewsByPaymentAirId(String paymentAirId) {
         PaymentAirticketFare paymentAirticketFare = new PaymentAirticketFare();
         String query = "from PaymentAirticketFare pay where pay.paymentAirticket.id = :paymentAirId";
-        Session session = this.sessionFactory.openSession();
+        Session session = this.getSessionFactory().openSession();
         System.out.println(" paymentAirId "+paymentAirId);
         List<TicketFareView> listView = new ArrayList<TicketFareView>();
         List<PaymentAirticketFare> PaymentAirticketFareList = session.createQuery(query).setParameter("paymentAirId", paymentAirId).list();
@@ -620,14 +627,14 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             }
         }
         session.close();
-        this.sessionFactory.close();
+        this.getSessionFactory().close();
         return listView;
     }
 
     @Override
     public List<RefundAirticketDetailView> getRefundDetailByPaymentAirId(String paymentAirId) {
         String query = "from PaymentAirticketRefund pay where pay.paymentAirticket.id = :paymentAirId";
-        Session session = this.sessionFactory.openSession();
+        Session session = this.getSessionFactory().openSession();
         System.out.println(" paymentAirId " +paymentAirId);
         List<RefundAirticketDetailView> listView = new ArrayList<RefundAirticketDetailView>();
         List<PaymentAirticketRefund> PaymentAirticketRefundList = session.createQuery(query).setParameter("paymentAirId", paymentAirId).list();
@@ -664,7 +671,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             }
         }
         session.close();
-        this.sessionFactory.close();
+        this.getSessionFactory().close();
         return listView;
     }
     
@@ -687,7 +694,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
     @Override
     public List<PaymentAirCredit> getPaymentAirCreditByPaymentAirId(String paymentAirId) {
         String query = "from PaymentAirCredit pay where pay.paymentAirticket.id = :paymentAirId";
-        Session session = this.sessionFactory.openSession();
+        Session session = this.getSessionFactory().openSession();
         List<PaymentAirCredit> list = session.createQuery(query).setParameter("paymentAirId", paymentAirId).list();
 
         if (list.isEmpty()){
@@ -695,7 +702,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
         }
         
         session.close();
-        this.sessionFactory.close();
+        this.getSessionFactory().close();
         return list;
     }
 
@@ -704,7 +711,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
         String result = "";
         PaymentAirCredit paymentAirCredit = new PaymentAirCredit();
         List<PaymentAirCredit> paymentAirCreditList = new ArrayList<PaymentAirCredit>();
-        Session session = this.sessionFactory.openSession();
+        Session session = this.getSessionFactory().openSession();
         if(paymentAirId.isEmpty() || "".equals(paymentAirId)){
             String query = "from PaymentAirCredit pay where pay.id = :paymentCreditId";
             paymentAirCreditList = session.createQuery(query).setParameter("paymentCreditId", paymentCreditId).list();
@@ -714,9 +721,9 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             }else{
                 paymentAirCredit =  paymentAirCreditList.get(0);
                 try {
-                    transaction = session.beginTransaction();
+                    setTransaction(session.beginTransaction());
                     session.delete(paymentAirCredit);
-                    transaction.commit();
+                    getTransaction().commit();
                     result = "success";
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -733,9 +740,9 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                 for(int i = 0; i < paymentAirCreditList.size(); i++){
                     paymentAirCredit = paymentAirCreditList.get(i);
                     try {
-                        transaction = session.beginTransaction();
+                        setTransaction(session.beginTransaction());
                         session.delete(paymentAirCredit);
-                        transaction.commit();
+                        getTransaction().commit();
                         result = "success";
                     } catch (Exception ex) {
                         ex.printStackTrace();
@@ -745,8 +752,16 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             }
         }
         session.close();
-        this.sessionFactory.close();
+        this.getSessionFactory().close();
         return result;
+    }
+
+    public UtilityFunction getUtilityFunction() {
+        return utilityFunction;
+    }
+
+    public void setUtilityFunction(UtilityFunction utilityFunction) {
+        this.utilityFunction = utilityFunction;
     }
 
 }
