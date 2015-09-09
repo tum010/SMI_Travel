@@ -21,6 +21,7 @@ import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
@@ -116,6 +117,10 @@ public class ReceiptController extends SMITravelController {
         request.setAttribute(PRODUCTROWCOUNT, "1");
         request.setAttribute(CREDITROWCOUNT, "1");
         request.setAttribute(SEARCHRECEIPT,"notdummy");
+        
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("yyyy-MM-dd");
+        request.setAttribute(RECEIPTDATE,String.valueOf(df.format(new Date())));
         //Role User
         String roleName = user.getRole().getName();
         System.out.println("roleName"+roleName);

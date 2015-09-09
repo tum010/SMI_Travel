@@ -102,6 +102,11 @@ public class PaymentTourHotelController extends SMITravelController {
         
         List<String> RefNoList =  paymentTourHotelService.getMasterAll();       
         request.setAttribute(REFNOLIST, RefNoList);
+        
+        Date date = Calendar.getInstance().getTime();
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MM-yyyy HH:mm:ss");
+        String updateDate = dateformat.format(date);
 
         if ("add".equalsIgnoreCase(action)) {
             
@@ -118,8 +123,7 @@ public class PaymentTourHotelController extends SMITravelController {
                 paymentWendy.setDetail(Detail);                
                 paymentWendy.setRemark(InputRemark);
                 paymentWendy.setCurrency(InputCurrency);           
-                paymentWendy.setChqNo(InputChqNo);
-                Date date = Calendar.getInstance().getTime();
+                paymentWendy.setChqNo(InputChqNo);               
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 String createDate = sdf.format(date);
                 paymentWendy.setCreateDate(utilfunction.convertStringToDate(createDate));
@@ -199,6 +203,8 @@ public class PaymentTourHotelController extends SMITravelController {
                 paymentWendy.setRemark(InputRemark);
                 paymentWendy.setChqNo(InputChqNo);
                 paymentWendy.setCreateDate(utilfunction.convertStringToDate(crateDate));
+                paymentWendy.setUpdateDate(new Date());
+                System.out.println("Update Date : "+updateDate);
                 
                 if(account != null){
                     paymentWendy.setAccount(utilfunction.convertStringToInteger(account));
