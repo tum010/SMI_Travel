@@ -37,6 +37,8 @@ public class PaymentAirticket  {
      private Integer isExport;
      private BigDecimal totalAmount;
      private BigDecimal debitAmount;
+     private Date updateDate;
+     private Date exportDate;
 //     private BigDecimal creditAmount;
     private List paymentAirticketRefunds = new LinkedList<PaymentAirticketRefund>();
     private List paymentAirticketFares = new LinkedList<PaymentAirticketFare>();
@@ -276,6 +278,22 @@ public class PaymentAirticket  {
 
     public void setPaymentAirCredits(List paymentAirCredits) {
         this.paymentAirCredits = paymentAirCredits;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    public Date getExportDate() {
+        return exportDate;
+    }
+
+    public void setExportDate(Date exportDate) {
+        this.exportDate = exportDate;
     }
 
 }
