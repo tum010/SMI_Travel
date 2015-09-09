@@ -55,7 +55,11 @@
                     <label class="control-label" for="">Type</lable>
                 </div>
                 <div class="col-xs-1" style="width: 200px">
-                    <select class="form-control" id="apType" name="apType">
+                    <c:set var="air" value="" />
+                        <c:if test="${'A' == requestScope['apPayment']}">
+                            <c:set var="air" value="disabled" />
+                        </c:if>
+                    <select class="form-control" id="apType" name="apType" ${air}>
                         <option value=""> </option>
                         <c:forEach var="mpaytype_list" items="${mpaytype_list}">
                             <c:set var="select" value="" />

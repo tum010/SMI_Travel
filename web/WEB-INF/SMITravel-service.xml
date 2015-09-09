@@ -297,7 +297,7 @@
     </bean>
     
     <bean id="APNirvanaService" class="com.smi.travel.datalayer.service.APNirvanaService">
-        <property name="apNirvanaDao" ref="APNirvanaDao" />
+<!--        <property name="apNirvanaDao" ref="APNirvanaDao" />-->
     </bean>
     
     <!--<add data>-->
