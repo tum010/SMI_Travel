@@ -35,16 +35,25 @@ public class ARMonitorController extends SMITravelController {
             request.setAttribute("listType", null);
         }
         
-        // Search
-//        if("searchAr".equals(action)){
-//           List<ARNirvana> listAr = new LinkedList<>();
-//           listAr = arMonitorService.SearchArNirvanaFromFilter(invoiceType, departmnt, type, from, to, status);
-//           if(listAr != null){
-//               request.setAttribute("listAr", listAr);
-//           }else{
-//               request.setAttribute("listAr", null);
-//           }
-//        }
+         //Search
+        if("searchAr".equals(action)){
+           List<ARNirvana> listAr = new LinkedList<>();
+           listAr = arMonitorService.SearchArNirvanaFromFilter(invoiceType, departmnt, type, from, to, status);
+           if(listAr != null){
+               request.setAttribute("listAr", listAr);
+           }else{
+               request.setAttribute("listAr", null);
+           }
+        }else if("export".equals(action)){
+            List<ARNirvana> listAr = new LinkedList<>();
+           listAr = arMonitorService.SearchArNirvanaFromFilter(invoiceType, departmnt, type, from, to, status);
+           if(listAr != null){
+               
+               request.setAttribute("listAr", listAr);
+           }else{
+               request.setAttribute("listAr", null);
+           }
+        }
         return ARMonitor;
     }
 

@@ -1,5 +1,4 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript" src="js/ARMonitor.js"></script> 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -15,7 +14,7 @@
         <li class="active"><a href="#"></a>AR Monitor</li>
     </ol>
 </section>
-<input type="hidden" value="search" id="action" name="action">
+
 <div class ="container"  style="padding-top: 15px;padding-left: 5px;" ng-app="">
     <!-- side bar -->
     <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
@@ -29,12 +28,13 @@
             <div class="col-xs-12 form-group"><hr/></div>
         </div>
         <form action="ARMonitor.smi" method="post" id="arMonitorForm" role="form" autocomplete="off">
+            <input type="hidden" value="searchAr" id="action" name="action">
             <div class="col-xs-12">
                 <div class="col-xs-1 text-left" style="width: 120px">
                     <label class="control-label" for="">Invoice Type</lable>
                 </div>
                 <div class="col-xs-1" style="width: 200px">
-                    <select class="form-control" id="invoiceType" name="invoiceType">
+                    <select class="form-control" id="department" name="department">
                         <option value="">--Select--</option>
                         <option value="Wendy">Wendy </option>
                         <option value="Outbound">Outbound </option>
@@ -46,7 +46,7 @@
                     <label class="control-label" for="">Department </lable>
                 </div>
                 <div class="col-xs-1" style="width: 200px">
-                    <select class="form-control" id="department" name="department">
+                    <select class="form-control" id="invoiceType" name="invoiceType">
                         <option value="">--Select--</option>
                         <option value="V">Vat </option>
                         <option value="N">No Vat </option>
@@ -120,7 +120,7 @@
             <div class="col-xs-12">
                 <div class="col-xs-10"></div>
                 <div class="col-xs-1">
-                    <button type="submit"  id="btnSearchAR"  name="btnSearchAR" class="btn btn-primary btn-primary">
+                    <button type="submit"  id="btnSearchAR"  name="btnSearchAR"  onclick="searchArmonitor()"  class="btn btn-primary btn-primary">
                         <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
                     </button>
                 </div>
@@ -147,17 +147,17 @@
                             <tr>
                                 <td class="hidden">1</td>
                                 <td align="center">
-                                    <input class="form-control" type="checkbox" id="selectAll1" name="selectAll1" value="1">
+                                    <input class="form-control" type="checkbox" id="selectAll${countar.count}" name="selectAll${countar.count}" value="${countar.count}">
                                 </td>
                                 <td align="center">${countar.count}</td>
-                                <td>150814</td>
-                                <td>150814</td>
-                                <td>150814</td>
-                                <td>150814</td>
-                                <td align="right" class="money">1000000</td>
-                                <td align="right" class="money">1000000</td>
-                                <td align="center">THB</td>
-                                <td align="center">NORMAL</td>
+                                <td>${ar_nirvana.intreference}</td>
+                                <td>${ar_nirvana.customerid}</td>
+                                <td>${ar_nirvana.customername}</td>
+                                <td>${ar_nirvana.salesaccount1}</td>
+                                <td align="right" class="money">${ar_nirvana.aramt -  ar_nirvana.vatamt}</td>
+                                <td align="right" class="money">${ar_nirvana.aramt}</td>
+                                <td align="center">${ar_nirvana.currencyid}</td>
+                                <td align="center">${ar_nirvana.status}</td>
                             </tr>
                             </c:forEach>
                         </tbody>
@@ -241,8 +241,16 @@
     
     function confirmExport(){
         $("#arExportModal").modal("hide");
+        var action = $('#action').val();
+        action.value = 'export';
+        document.getElementById('arMonitorForm').submit();
     }
     
+    function searchArmonitor(){
+        var action = $('#action').val();
+        action.value = 'searchAr';
+        document.getElementById('arMonitorForm').submit();
+    }
     function selectAll(){
         var row = $('#arDataListTable tr').length;     
         var check = 0;
@@ -257,8 +265,9 @@
                 }
             }   
         }
-
+        alert("Check : " + check + "  Un : " + unCheck + " Row : " + row);
         if(check > unCheck){
+            alert("1");
             for(var i=1;i<row;i++){
                 var selectAll = document.getElementById("selectAll"+i);
                 if(selectAll !== null && selectAll !== ''){
@@ -272,6 +281,7 @@
         }
 
         if(check < unCheck){
+            alert("2");
             for(var i=1;i<row;i++){
                 var selectAll = document.getElementById("selectAll"+i);
                 if(selectAll !== null && selectAll !== ''){
@@ -281,6 +291,7 @@
         }
 
         if(check === 0 && unCheck !== 0){
+            alert("3");
             for(var i=1;i<row;i++){
                 var selectAll = document.getElementById("selectAll"+i);
                 if(selectAll !== null && selectAll !== ''){
@@ -295,6 +306,7 @@
         }
 
         if(check !== 0 && unCheck === 0){
+            alert("4");
             for(var i=1;i<row;i++){
                 var selectAll = document.getElementById("selectAll"+i);
                 if(selectAll !== null && selectAll !== ''){
@@ -304,6 +316,7 @@
         }
 
         if(check === unCheck){
+            alert("5");
             for(var i=1;i<row;i++){
                 var selectAll = document.getElementById("selectAll"+i);
                 if(selectAll !== null && selectAll !== ''){
