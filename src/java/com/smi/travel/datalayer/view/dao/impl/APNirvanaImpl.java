@@ -11,8 +11,10 @@ import com.smi.travel.datalayer.view.entity.APNirvana;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -32,31 +34,54 @@ public class APNirvanaImpl implements APNirvanaDao{
 
     @Override
     public String UpdateStatusAPInterface(List<APNirvana> APList) {
-        String result = "";
-//        try {
-//            Session session = this.getSessionFactory().openSession();
-//            setTransaction(session.beginTransaction());
-//            
-//            for (int i = 0; i < APList.size(); i++) {
-//                APNirvana apNirvana = APList.get(i);
-//                if(true){
-//                    
-//                } else {
-//                    
-//                }
-//                session.update(APList.get(i));
-//            }
-//
-//            getTransaction().commit();
-//            session.close();
-//            this.getSessionFactory().close();
-//            result = "success";
-//        } catch (Exception ex) {
-//            getTransaction().rollback();
-//            ex.printStackTrace();
-//            result = "fail";
-//        }
-        return  result;
+        int result = 0;
+        try {
+            Session session = this.getSessionFactory().openSession();
+            setTransaction(session.beginTransaction());
+            
+            for (int i = 0; i < APList.size(); i++) {
+                APNirvana apNirvana = APList.get(i);
+                String paymentId = apNirvana.getPayment_id();
+                String paymentType = apNirvana.getPaymenttype();
+                Date date = new Date();
+                if("W".equalsIgnoreCase(paymentType)){
+                    String hql = "update PaymentWendy pay set pay.isExport = 1 , pay.exportDate = :date where pay.id = :paymentId";
+                    try {
+                        Query query = session.createQuery(hql);
+                        query.setParameter("paymentId", paymentId);
+                        query.setParameter("date", date);
+                        System.out.println(" query " + query);
+                        result = query.executeUpdate();
+                        System.out.println("Rows affected: " + result);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        result = 0;
+                    }                                   
+                } else if("A".equalsIgnoreCase(paymentType)){
+                    String hql = "update PaymentAirticket air set air.isExport = 1 , air.exportDate = :date where air.id = :paymentId";
+                    try {
+                        Query query = session.createQuery(hql);
+                        query.setParameter("paymentId", paymentId);
+                        query.setParameter("date", date);
+                        System.out.println(" query " + query);
+                        result = query.executeUpdate();
+                        System.out.println("Rows affected: " + result);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        result = 0;
+                    }
+                }
+            }                    
+            getTransaction().commit();
+            session.close();
+            this.getSessionFactory().close();
+            result = 1;
+        } catch (Exception ex) {
+            getTransaction().rollback();
+            ex.printStackTrace();
+            result = 0;
+        }
+        return  String.valueOf(result);
     }
 
     @Override
@@ -77,6 +102,9 @@ public class APNirvanaImpl implements APNirvanaDao{
             haveCondition = true;
         }
         if ((status != null) && (!"".equalsIgnoreCase(status))) {
+            if("N".equalsIgnoreCase(status)){status = "New";}
+            if("E".equalsIgnoreCase(status)){status = "Export";}
+            if("C".equalsIgnoreCase(status)){status = "Change";}
             query.append(haveCondition ? " and" : " where");
             query.append(" `ar_nirvana`.itf_status = '" + status + "'");
             haveCondition = true;
@@ -179,16 +207,22 @@ public class APNirvanaImpl implements APNirvanaDao{
             .addScalar("taxid",Hibernate.STRING)
             .addScalar("vendor_branch",Hibernate.INTEGER)
             .addScalar("company_branch",Hibernate.INTEGER)
+            .addScalar("itf_status",Hibernate.STRING)
+            .addScalar("payment_id",Hibernate.STRING)
+            .addScalar("paymenttype",Hibernate.STRING)    
             .list();
         
         for (Object[] B : QueryList) {
             APNirvana apNirvana = new APNirvana();
             apNirvana.setIntreference(util.ConvertString(B[1]));
-            apNirvana.setCurrencyid(util.ConvertString(B[9]));
             apNirvana.setVendorid(util.ConvertString(B[2]));
             apNirvana.setVendorname(util.ConvertString(B[3]));
-            apNirvana.setPuraccount1(util.ConvertString(B[29]));
-            apNirvana.setBasevatamt((B[12])!=null ? new BigDecimal(util.ConvertString(B[12])) : new BigDecimal("0.00"));
+            apNirvana.setCurrencyid(util.ConvertString(B[8]));
+            apNirvana.setBasevatamt((B[11])!=null ? new BigDecimal(util.ConvertString(B[11])) : new BigDecimal("0.00"));            
+            apNirvana.setPuraccount1(util.ConvertString(B[28]));
+            apNirvana.setItf_status(util.ConvertString(B[85]));
+            apNirvana.setPayment_id(util.ConvertString(B[86]));
+            apNirvana.setPaymenttype(util.ConvertString(B[87]));
             apNirvanaList.add(apNirvana);
         }    
         

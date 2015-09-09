@@ -100,6 +100,9 @@ public class APNirvana {
     private String taxid;
     private Integer vendor_branch;
     private Integer company_branch;
+    private String itf_status;
+    private String payment_id;
+    private String paymenttype;
 
     public String getRefinvoiceno() {
         return refinvoiceno;
@@ -1249,5 +1252,47 @@ public class APNirvana {
      */
     public void setCompany_branch(Integer company_branch) {
         this.company_branch = company_branch;
+    }
+
+    /**
+     * @return the itf_status
+     */
+    public String getItf_status() {
+        return itf_status;
+    }
+
+    /**
+     * @param itf_status the itf_status to set
+     */
+    public void setItf_status(String itf_status) {
+        this.itf_status = itf_status;
+    }
+
+    /**
+     * @return the payment_id
+     */
+    public String getPayment_id() {
+        return payment_id;
+    }
+
+    /**
+     * @param payment_id the payment_id to set
+     */
+    public void setPayment_id(String payment_id) {
+        this.payment_id = payment_id;
+    }
+
+    /**
+     * @return the paymenttype
+     */
+    public String getPaymenttype() {
+        return paymenttype;
+    }
+
+    /**
+     * @param paymenttype the paymenttype to set
+     */
+    public void setPaymenttype(String paymenttype) {
+        this.paymenttype = paymenttype;
     }
 }

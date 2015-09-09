@@ -28,6 +28,18 @@
         </div>
         <form action="APMonitor.smi" method="post" id="apMonitorForm" role="form" autocomplete="off">
             <div class="col-xs-12">
+                <c:if test="${requestScope['update'] =='1'}">                                            
+                    <div id="textAlertDivSave"  style="" class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Update Status Success!</strong> 
+                    </div>
+                </c:if>
+                <c:if test="${requestScope['update'] =='0'}">
+                <div id="textAlertDivNotSave"  style="" class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                   <strong>Update Status Unsuccess!</strong> 
+                </div>
+                </c:if>
                 <div class="col-xs-1 text-left">
                     <label class="control-label" for="">Payment</lable>
                 </div>
@@ -141,7 +153,7 @@
                 </div>
                 <div class="col-xs-12"><br></div>  
                 <div class="col-xs-12">
-                    <input type="hidden" id="apCount" name="apCount" value="1"/>
+                    <input type="hidden" id="apCount" name="apCount" value="${data_list.size()}"/>
                     <table id="apDataListTable" class="display" cellspacing="0" width="100%">
                         <thead>
                             <tr class="datatable-header">
@@ -161,25 +173,35 @@
                         <tbody>
                             <c:forEach var="data_list" items="${data_list}" varStatus="i">
                             <tr>
-                                <td class="hidden"></td>
+                                <td class="hidden">
+                                    <input type="hidden" id="paymentId${i.count}" name="paymentId${i.count}" value="${data_list.payment_id}"/> 
+                                    <input type="hidden" id="paymentType${i.count}" name="paymentType${i.count}" value="${data_list.paymenttype}"/>
+                                </td>                              
                                 <td align="center">
-                                    <input class="form-control" type="checkbox" id="selectAll${i.count}" name="selectAll${i.count}" value="1">
+                                    <c:choose>
+                                        <c:when test="${data_list.itf_status == 'New'}">
+                                            <input class="form-control" type="checkbox" id="selectAll${i.count}" name="selectAll${i.count}" value="1"/>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <input class="form-control" type="checkbox" id="selectAll" name="selectAll" value="" disabled=""/>
+                                        </c:otherwise>
+                                    </c:choose>                                  
                                 </td>
                                 <td align="center">${i.count}</td>
                                 <td></td>
-                                <td></td>
-                                <td>${data_list.vendorname}</td>
                                 <td>${data_list.vendorid}</td>
-                                <td align="right" class="money"></td>
+                                <td>${data_list.vendorname}</td>
+                                <td>${data_list.puraccount1}</td>
+                                <td align="right" class="money">${data_list.basevatamt}</td>
                                 <td align="right" class="money"></td>
                                 <td align="center">${data_list.currencyid}</td>
-                                <td align="center"></td>
+                                <td align="center">${data_list.itf_status}</td>
                             </tr>
                             </c:forEach>
                         </tbody>
                     </table>    
                 </div>
-            </div>
+            </div>            
             <div class="col-xs-12"><br></div>
             <div class="col-xs-12">
                 <div class="col-xs-1 text-right" style="width: 665px"></div>
