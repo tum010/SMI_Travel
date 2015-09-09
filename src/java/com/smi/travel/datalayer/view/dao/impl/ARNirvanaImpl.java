@@ -10,13 +10,19 @@ import com.smi.travel.datalayer.view.dao.ARNirvanaDao;
 import com.smi.travel.datalayer.view.entity.ARNirvana;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import net.sourceforge.jtds.jdbc.DateTime;
 import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+//import org.joda.time.format.DateTimeFormat;
+//import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -149,7 +155,8 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
                 .addScalar("artrans", Hibernate.STRING)
                 .addScalar("cust_taxid", Hibernate.STRING)
                 .addScalar("cust_branch", Hibernate.INTEGER)
-                .addScalar("company_branch", Hibernate.INTEGER)  
+                .addScalar("company_branch", Hibernate.INTEGER)
+                .addScalar("inv_id", Hibernate.INTEGER)
                 .list();
         for (Object[] B : ARNirvanaList) {
             ARNirvana ar = new ARNirvana();
@@ -211,8 +218,11 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             ar.setCust_taxid(util.ConvertString(B[54]));
             ar.setCust_branch((Integer) B[55]);
             ar.setCompany_branch((Integer) B[56]);
+            ar.setInvid((Integer) B[57]);
             data.add(ar);
         }
+        session.close();
+        this.sessionFactory.close();
         return data;
     }
 
@@ -223,7 +233,36 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
 
     @Override
     public String UpdateStatusARInterface(List<ARNirvana> APList) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        UtilityFunction utilty =  new UtilityFunction();
+        String isUpdate ="";
+        try {
+            Session session = this.sessionFactory.openSession();
+            transaction = session.beginTransaction();
+           
+            for (int i = 0; i < APList.size(); i++) {
+                if (APList.get(i).getIntreference() == null) {
+//                    session.save(APList.get(i));
+                } else {
+                    Calendar cal = Calendar.getInstance();
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String strDate = sdf.format(cal.getTime());
+                    String hql = "update Invoice inv set inv.isExport = 1,inv.exportDate = '"+ strDate+"'  where  inv.id = " + APList.get(i).getInvid();
+                    Query query = session.createQuery(hql);
+                    int result = query.executeUpdate();
+                    System.out.println("Query Update : " + result + ":" + query);
+                }
+            }
+
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+            isUpdate = "updatesuccess";
+        } catch (Exception ex) {
+            transaction.rollback();
+            ex.printStackTrace();
+            isUpdate = "updatefail";
+        }
+        return isUpdate;
     }
 
     public SessionFactory getSessionFactory() {

@@ -72,7 +72,7 @@ public class ARNirvana {
     private String cust_taxid;
     private Integer cust_branch;
     private Integer company_branch;
-    
+    private Integer invid;
     
 
     /**
@@ -871,6 +871,14 @@ public class ARNirvana {
      */
     public void setCompany_branch(Integer company_branch) {
         this.company_branch = company_branch;
+    }
+
+    public void setInvid(Integer invid) {
+        this.invid = invid;
+    }
+
+    public Integer getInvid() {
+        return invid;
     }
     
     

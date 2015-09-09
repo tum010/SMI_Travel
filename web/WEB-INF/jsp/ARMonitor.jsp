@@ -240,9 +240,10 @@
     }
     
     function confirmExport(){
+        alert("EXX");
         $("#arExportModal").modal("hide");
-        var action = $('#action').val();
-        action.value = 'export';
+//        var action = $('#action').val();
+        $('#action').val('export');
         document.getElementById('arMonitorForm').submit();
     }
     
