@@ -566,7 +566,8 @@
         <property name="utilityService" ref="UtilityService" />
     </bean>
     <bean id="APMonitorController" class="com.smi.travel.controller.APMonitorController">
-        
+        <property name="apNirvanaService" ref="APNirvanaService" />
+        <property name="utilservice" ref="UtilityService" />
     </bean>
     <bean id="ARMonitorController" class="com.smi.travel.controller.ARMonitorController">
  
