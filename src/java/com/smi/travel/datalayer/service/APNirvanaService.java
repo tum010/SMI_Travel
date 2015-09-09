@@ -18,7 +18,15 @@ public class APNirvanaService {
     private APNirvanaDao apNirvanaDao;
     
     public List<APNirvana> SearchApNirvanaFromFilter(String paymentType,String producttype,String status,String from,String to) {
-        return this.getApNirvanaDao().SearchApNirvanaFromFilter(paymentType, producttype, status, from, to);
+        return apNirvanaDao.SearchApNirvanaFromFilter(paymentType, producttype, status, from, to);
+    }
+    
+    public String ExportAPFileInterface(List<APNirvana> APList) {
+        return apNirvanaDao.ExportAPFileInterface(APList);
+    }
+    
+    public String UpdateStatusAPInterface(List<APNirvana> apNirvanaList) {
+        return apNirvanaDao.UpdateStatusAPInterface(apNirvanaList);
     }
 
     public APNirvanaDao getApNirvanaDao() {
@@ -28,4 +36,5 @@ public class APNirvanaService {
     public void setApNirvanaDao(APNirvanaDao apNirvanaDao) {
         this.apNirvanaDao = apNirvanaDao;
     }
+   
 }

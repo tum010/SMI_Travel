@@ -9,6 +9,7 @@ package com.smi.travel.datalayer.view.dao.impl;
 import com.smi.travel.datalayer.view.dao.ARNirvanaDao;
 import com.smi.travel.datalayer.view.entity.ARNirvana;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,9 +41,9 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
         int AndQuery = 0;
         
         if("".equals(invtype)  && "".equals(department)  && "".equals(billtype)  && "".equals(from) && "".equals(to) && "".equals(status)){
-            query = "FROM ap_nirvana ar " ; 
+            query = "SELECT * FROM ap_nirvana ar " ; 
         }else{
-            query = "FROM ap_nirvana ar where" ;
+            query = "SELECT * FROM ap_nirvana ar where" ;
         }
         
         if ( department != null && (!"".equalsIgnoreCase(department)) ) {
@@ -83,15 +84,20 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
         
         if(status != null && (!"".equalsIgnoreCase(status))){
             if(AndQuery == 1){
-                query += " and status = '" + status + "'";
+                query += " and itf_status = '" + status + "'";
            }else{
                AndQuery = 1;
-               query += " status = '" + status + "'";
+               query += " itf_status = '" + status + "'";
            }
         }
-        query += "  ORDER BY st.invDate DESC";
+        query += "  ORDER BY invdate  DESC";
         System.out.println("query : " + query);
         List<Object[]> ARNirvanaList = session.createSQLQuery(query )
+                .addScalar("invtype", Hibernate.STRING)
+                .addScalar("department", Hibernate.STRING)
+                .addScalar("producttype", Hibernate.STRING)
+                .addScalar("invdate", Hibernate.DATE)
+                .addScalar("itf_status", Hibernate.STRING)
                 .addScalar("intreference", Hibernate.STRING)
                 .addScalar("salesmanid", Hibernate.STRING)
                 .addScalar("customerid", Hibernate.STRING)
@@ -99,130 +105,113 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
                 .addScalar("divisionid", Hibernate.STRING)
                 .addScalar("projectid", Hibernate.STRING)
                 .addScalar("transcode", Hibernate.STRING)
-                .addScalar("transdate", Hibernate.STRING)
-                .addScalar("duedate", Hibernate.STRING)
+                .addScalar("transdate", Hibernate.DATE)
+                .addScalar("duedate", Hibernate.DATE)
                 .addScalar("currencyid", Hibernate.STRING)
-                .addScalar("homerate", Hibernate.STRING)
-                .addScalar("foreignrate", Hibernate.STRING)
-                .addScalar("salesamt", Hibernate.STRING)
-                .addScalar("saleshmamt", Hibernate.STRING)
-                .addScalar("vatamt", Hibernate.STRING)
-                .addScalar("vathmamt", Hibernate.STRING)
-                .addScalar("aramt", Hibernate.STRING)
-                .addScalar("arhmamt", Hibernate.STRING)
+                .addScalar("homerate", Hibernate.BIG_DECIMAL)
+                .addScalar("foreignrate", Hibernate.BIG_DECIMAL)
+                .addScalar("salesamt", Hibernate.BIG_DECIMAL)
+                .addScalar("saleshmamt", Hibernate.BIG_DECIMAL)
+                .addScalar("vatamt", Hibernate.BIG_DECIMAL)
+                .addScalar("vathmamt", Hibernate.BIG_DECIMAL)
+                .addScalar("aramt", Hibernate.BIG_DECIMAL)
+                .addScalar("arhmamt", Hibernate.BIG_DECIMAL)
                 .addScalar("vatflag", Hibernate.STRING)
                 .addScalar("vatid", Hibernate.STRING)
                 .addScalar("whtflag", Hibernate.STRING)
                 .addScalar("whtid", Hibernate.STRING)
-                .addScalar("basewhtamt", Hibernate.STRING)
-                .addScalar("basewhthmamt", Hibernate.STRING)
-                .addScalar("whtamt", Hibernate.STRING)
-                .addScalar("whthmamt", Hibernate.STRING)
-                .addScalar("year", Hibernate.STRING)
-                .addScalar("period", Hibernate.STRING)
+                .addScalar("basewhtamt", Hibernate.BIG_DECIMAL)
+                .addScalar("basewhthmamt", Hibernate.BIG_DECIMAL)
+                .addScalar("whtamt", Hibernate.BIG_DECIMAL)
+                .addScalar("whthmamt", Hibernate.BIG_DECIMAL)
+                .addScalar("year", Hibernate.INTEGER)
+                .addScalar("period", Hibernate.INTEGER)
                 .addScalar("note", Hibernate.STRING)
                 .addScalar("salesaccount1", Hibernate.STRING)
                 .addScalar("salesdivision1", Hibernate.STRING)
                 .addScalar("salesproject1", Hibernate.STRING)
-                .addScalar("salesamt1", Hibernate.STRING)
-                .addScalar("saleshmamt1", Hibernate.STRING)
+                .addScalar("salesamt1", Hibernate.BIG_DECIMAL)
+                .addScalar("saleshmamt1", Hibernate.BIG_DECIMAL)
                 .addScalar("salesaccount2", Hibernate.STRING)
                 .addScalar("salesdivision2", Hibernate.STRING)
                 .addScalar("salesproject2", Hibernate.STRING)
-                .addScalar("salesamt2", Hibernate.STRING)
-                .addScalar("saleshmamt2", Hibernate.STRING)
+                .addScalar("salesamt2", Hibernate.BIG_DECIMAL)
+                .addScalar("saleshmamt2", Hibernate.BIG_DECIMAL)
                 .addScalar("salesaccount3", Hibernate.STRING)
                 .addScalar("salesdivision3", Hibernate.STRING)
                 .addScalar("salesproject3", Hibernate.STRING)
-                .addScalar("salesamt3", Hibernate.STRING)
-                .addScalar("saleshmamt3", Hibernate.STRING)
+                .addScalar("salesamt3", Hibernate.BIG_DECIMAL)
+                .addScalar("saleshmamt3", Hibernate.BIG_DECIMAL)
                 .addScalar("service", Hibernate.STRING)
                 .addScalar("araccount", Hibernate.STRING)
                 .addScalar("prefix", Hibernate.STRING)
-                .addScalar("documentno", Hibernate.STRING)
+                .addScalar("documentno", Hibernate.INTEGER)
                 .addScalar("artrans", Hibernate.STRING)
                 .addScalar("cust_taxid", Hibernate.STRING)
-                .addScalar("cust_branch", Hibernate.STRING)
-                .addScalar("company_branch", Hibernate.STRING)
-                       
+                .addScalar("cust_branch", Hibernate.INTEGER)
+                .addScalar("company_branch", Hibernate.INTEGER)  
                 .list();
-        int count = 1;
         for (Object[] B : ARNirvanaList) {
             ARNirvana ar = new ARNirvana();
-//            sum.setNo(count);
-//            if("N".equals(util.ConvertString(B[0]))){
-//                sum.setInvtype("Invoice No Vat");
-//            }else if("A".equals(util.ConvertString(B[0]))){
-//                sum.setInvtype("Invoice Air Ticket");
-//            }else if("T".equals(util.ConvertString(B[0]))){
-//                sum.setInvtype("Temporary Invoice");
-//            }else if("V".equals(util.ConvertString(B[0]))){
-//                sum.setInvtype("Invoice Vat");
-//            }else if("".equals(util.ConvertString(B[0]))){
-//                sum.setInvtype("All");
-//            }else{
-//                sum.setInvtype("");
-//            }
-//            
-//            sum.setInvno(util.ConvertString(B[1]));
-//            if(!"".equals(util.ConvertString(B[2]))){
-//                String dayy[] = util.ConvertString(B[2]).split("-");
-//                System.out.println("Date : " + util.ConvertString(B[2]));
-//                String date = ""+dayy[2]+"-"+dayy[1]+"-"+dayy[0];
-//                try {
-//                    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-//                    Date dateBefore = df.parse(date);
-//                    sum.setInvdate(new SimpleDateFormat("dd/MM/yyyy", new Locale("us", "us")).format(dateBefore));
-//                } catch (ParseException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//            
-//            sum.setInvname(util.ConvertString(B[3]));
-//            sum.setTermpay(util.ConvertString(B[4]));
-//            sum.setDetail(util.ConvertString(B[5]));
-//            if(B[6] != null){
-//                Double gross = Double.parseDouble(util.ConvertString(B[6]));
-//                sum.setGross(gross);
-//            }
-//            if(B[7] != null){
-//                Double vat = Double.parseDouble(util.ConvertString(B[7]));
-//                sum.setVat(vat);
-//            }
-//            if(B[8] != null){
-//                Double amount = Double.parseDouble(util.ConvertString(B[8]));
-//                sum.setAmount(amount);
-//            }
-//            
-//            if(B[14] != null){
-//                Double profit = Double.parseDouble(util.ConvertString(B[14]));
-//                sum.setProfit(profit);
-//            }
-//            sum.setAmountcur(util.ConvertString(B[9]));
-//            sum.setStaff(util.ConvertString(B[10]));
-//            sum.setStatus(util.ConvertString(B[11]));
-//            if(util.ConvertString(B[12]) != null && !"".equals(util.ConvertString(B[12]))){
-//                sum.setInvdepartment(util.ConvertString(B[12]));
-//            }else if("".equals(util.ConvertString(B[12]))){
-//                sum.setInvdepartment("All");
-//            }else{
-//                sum.setInvdepartment("");
-//            }
-//            
-//            sum.setTo(util.ConvertString(B[13]));
-//            sum.setInvfrom(util.convertStringToDate(fromData));
-//            sum.setInvto(util.convertStringToDate(toDate));
-//            if(department != null && !"".equals(department)){
-//                sum.setDepartment(department);     
-//            }else if("".equals(department)){
-//                sum.setDepartment("All");     
-//            }
-//                
-//            sum.setSystemdate(util.convertDateToString(new Date()));
-//            sum.setUsername(util.ConvertString(B[10]));
-//
-//            data.add(sum);
-            count++;
+            ar.setInvtype(util.ConvertString(B[0]));
+            ar.setDepartment(util.ConvertString(B[1]));
+            ar.setProducttype(util.ConvertString(B[2]));
+            
+            ar.setInvdate(util.convertStringToDate(util.ConvertString(B[3])));
+            ar.setStatus(util.ConvertString(B[4]));
+            ar.setIntreference(util.ConvertString(B[5]));
+            ar.setSalesmanid(util.ConvertString(B[6]));
+            ar.setCustomerid(util.ConvertString(B[7]));
+            ar.setCustomername(util.ConvertString(B[8]));
+            ar.setDivisionid(util.ConvertString(B[9]));
+            ar.setProjectid(util.ConvertString(B[10]));
+            ar.setTranscode(util.ConvertString(B[11]));
+            ar.setTransdate(util.convertStringToDate(util.ConvertString(B[12])));
+            ar.setDuedate(util.convertStringToDate(util.ConvertString(B[13])));
+            ar.setCurrencyid(util.ConvertString(B[14]));
+            ar.setHomerate((BigDecimal) B[15]);
+            ar.setForeignrate((BigDecimal) B[16]);
+            ar.setSalesamt((BigDecimal) B[17]);
+            ar.setSaleshmamt((BigDecimal) B[18]);
+            ar.setVatamt((BigDecimal) B[19]);
+            ar.setVathmamt((BigDecimal) B[20]);
+            ar.setAramt((BigDecimal) B[21]);
+            ar.setArhmamt((BigDecimal) B[22]);
+            ar.setVatflag(util.ConvertString(B[23]));
+            ar.setVatid(util.ConvertString(B[24]));
+            ar.setWhtflag(util.ConvertString(B[25]));
+            ar.setWhtid(util.ConvertString(B[26]));
+            ar.setBasewhtamt((BigDecimal) B[27]);
+            ar.setBasewhtmamt((BigDecimal) B[28]);
+            ar.setWhtamt((BigDecimal) B[29]);
+            ar.setWhthmamt((BigDecimal) B[30]);
+            ar.setYear((Integer) B[31]);
+            ar.setPeriod((Integer) B[32]);
+            ar.setNote(util.ConvertString(B[33]));
+            ar.setSalesaccount1(util.ConvertString(B[34]));
+            ar.setSalesdivision1(util.ConvertString(B[35]));
+            ar.setSalesproject1(util.ConvertString(B[36]));
+            ar.setSalesamt1((BigDecimal) B[37]);
+            ar.setSaleshmamt((BigDecimal) B[38]);
+            ar.setSalesaccount2(util.ConvertString(B[39]));
+            ar.setSalesdivision2(util.ConvertString(B[40]));
+            ar.setSalesproject2(util.ConvertString(B[41]));
+            ar.setSalesamt2((BigDecimal) B[42]);
+            ar.setSaleshmamt2((BigDecimal) B[43]);
+            ar.setSalesaccount3(util.ConvertString(B[44]));
+            ar.setSalesdivision3(util.ConvertString(B[45]));
+            ar.setSalesproject3(util.ConvertString(B[46]));
+            ar.setSalesamt3((BigDecimal) B[47]);
+            ar.setSaleshmamt3((BigDecimal) B[48]);
+            ar.setService(util.ConvertString(B[49]));
+            ar.setAraccount(util.ConvertString(B[50]));
+            ar.setPrefix(util.ConvertString(B[51]));
+            ar.setDocumentno((Integer) B[52]);
+            ar.setArtrans(util.ConvertString(B[53]));
+            ar.setCust_taxid(util.ConvertString(B[54]));
+            ar.setCust_branch((Integer) B[55]);
+            ar.setCompany_branch((Integer) B[56]);
+            data.add(ar);
         }
         return data;
     }
