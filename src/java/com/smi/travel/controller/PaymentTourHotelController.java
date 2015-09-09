@@ -106,7 +106,7 @@ public class PaymentTourHotelController extends SMITravelController {
         
         Date date = Calendar.getInstance().getTime();
         SimpleDateFormat dateformat = new SimpleDateFormat();
-        dateformat.applyPattern("dd-MM-yyyy HH:mm:ss");
+        dateformat.applyPattern("yyyy-MM-dd HH:mm:ss");
         String updateDate = dateformat.format(date);
 
         if ("add".equalsIgnoreCase(action)) {
@@ -204,7 +204,7 @@ public class PaymentTourHotelController extends SMITravelController {
                 paymentWendy.setRemark(InputRemark);
                 paymentWendy.setChqNo(InputChqNo);
                 paymentWendy.setCreateDate(utilfunction.convertStringToDate(crateDate));
-                paymentWendy.setUpdateDate(new Date());
+                paymentWendy.setUpdateDate(utilfunction.convertStringToDate(updateDate));
                 paymentWendy.setIsExport(Integer.parseInt(isExport));
                 System.out.println("Update Date : "+updateDate);
                 
