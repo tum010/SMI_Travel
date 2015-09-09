@@ -3,6 +3,9 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<c:set var="listType" value="${requestScope['listType']}" />
+<c:set var="listAr" value="${requestScope['listAr']}" />
 <section class="content-header" >
     <h1>
         Nirvana Interface
@@ -12,6 +15,7 @@
         <li class="active"><a href="#"></a>AR Monitor</li>
     </ol>
 </section>
+<input type="hidden" value="search" id="action" name="action">
 <div class ="container"  style="padding-top: 15px;padding-left: 5px;" ng-app="">
     <!-- side bar -->
     <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
@@ -26,12 +30,27 @@
         </div>
         <form action="ARMonitor.smi" method="post" id="arMonitorForm" role="form" autocomplete="off">
             <div class="col-xs-12">
-                <div class="col-xs-1 text-left">
-                    <label class="control-label" for="">Receive</lable>
+                <div class="col-xs-1 text-left" style="width: 120px">
+                    <label class="control-label" for="">Invoice Type</lable>
                 </div>
-                <div class="col-xs-1" style="width: 240px">
-                    <select class="form-control" id="arReceive" name="arReceive">
-                        <option value=""> </option>
+                <div class="col-xs-1" style="width: 200px">
+                    <select class="form-control" id="invoiceType" name="invoiceType">
+                        <option value="">--Select--</option>
+                        <option value="Wendy">Wendy </option>
+                        <option value="Outbound">Outbound </option>
+                        <option value="Inbound">Inbound </option>
+                    </select>
+                </div>
+                <!--<div class="col-xs-1" style="width: 50px"></div>-->
+                <div class="col-xs-1 text-left">
+                    <label class="control-label" for="">Department </lable>
+                </div>
+                <div class="col-xs-1" style="width: 200px">
+                    <select class="form-control" id="department" name="department">
+                        <option value="">--Select--</option>
+                        <option value="V">Vat </option>
+                        <option value="N">No Vat </option>
+                        <option value="T">Temp </option>
                     </select>
                 </div>
                 <div class="col-xs-1" style="width: 50px"></div>
@@ -40,25 +59,19 @@
                 </div>
                 <div class="col-xs-1" style="width: 200px">
                     <select class="form-control" id="arType" name="arType">
-                        <option value=""> </option>
+                        <option value="">--Select--</option>
+                        <c:forEach var="type" items="${listType}" varStatus="count">
+                            <option value="${type.id}">${type.name} </option>
+                        </c:forEach>
                     </select>
                 </div>
-                <div class="col-xs-1" style="width: 50px"></div>
-                <div class="col-xs-1 text-left">
-                    <label class="control-label" for="">Status</lable>
-                </div>
-                <div class="col-xs-1" style="width: 200px">
-                    <select class="form-control" id="arStatus" name="arStatus">
-                        <option value=""> </option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-xs-12"><br></div>
-            <div class="col-xs-12">
-                <div class="col-xs-1 text-left">
+            </div><br><br>
+            <div class="col-xs-12"></div>
+            <div class="col-xs-12"> <!--Row 2 -->
+                <div class="col-xs-1 text-left" style="width: 120px">
                     <label class="control-label" for="">From</lable>
                 </div>
-                <div class="col-xs-1" style="width: 170px">
+                <div class="col-xs-1" style="width: 200px">
                     <div class='input-group date' id='InputFromDate'>
                     <c:if test='${taxInvoice.taxInvDate != null}'>
                         <input id="arFromDate" name="arFromDate"  type="text" 
@@ -70,13 +83,13 @@
                             class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                
                     </c:if>                             
-                    </div>               
+                    </div>  
                 </div>
-                <div class="col-xs-1" style="width: 120px"></div>
+                <!--<div class="col-xs-1" style="width: 50px"></div>-->
                 <div class="col-xs-1 text-left">
                     <label class="control-label">To</lable>
                 </div>
-                <div class="col-xs-1" style="width: 170px">
+                <div class="col-xs-1" style="width: 200px">
                     <div class='input-group date' id='InputToDate'>
                     <c:if test='${taxInvoice.taxInvDate != null}'>
                         <input id="arToDate" name="arToDate"  type="text" 
@@ -88,9 +101,24 @@
                             class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                
                     </c:if>                             
-                    </div>               
+                    </div>   
                 </div>
-                <div class="col-xs-1" style="width: 245px"></div>
+                <div class="col-xs-1" style="width: 50px"></div>
+                <div class="col-xs-1 text-left">
+                    <label class="control-label" for="">Status</lable>
+                </div>
+                <div class="col-xs-1" style="width: 200px">
+                    <select class="form-control" id="arStatus" name="arStatus">
+                        <option value="">--Select--</option>
+                        <option value="N">New </option>
+                        <option value="E">Export </option>
+                        <option value="C">Change </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-xs-12"><br></div>
+            <div class="col-xs-12">
+                <div class="col-xs-10"></div>
                 <div class="col-xs-1">
                     <button type="submit"  id="btnSearchAR"  name="btnSearchAR" class="btn btn-primary btn-primary">
                         <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
@@ -114,13 +142,14 @@
                                 <th style="width: 5%">Status</th>
                              </tr>
                         </thead>
-                        <tbody>               
+                        <tbody>
+                            <c:forEach var="ar_nirvana" items="${listAr}" varStatus="countar">
                             <tr>
                                 <td class="hidden">1</td>
                                 <td align="center">
                                     <input class="form-control" type="checkbox" id="selectAll1" name="selectAll1" value="1">
                                 </td>
-                                <td align="center">1</td>
+                                <td align="center">${countar.count}</td>
                                 <td>150814</td>
                                 <td>150814</td>
                                 <td>150814</td>
@@ -130,6 +159,7 @@
                                 <td align="center">THB</td>
                                 <td align="center">NORMAL</td>
                             </tr>
+                            </c:forEach>
                         </tbody>
                     </table>    
                 </div>

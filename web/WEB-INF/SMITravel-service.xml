@@ -296,5 +296,8 @@
         <property name="creditNoteDao" ref="CreditNoteDao" />
     </bean>
     
+     <bean id="ARMonitorService" class="com.smi.travel.datalayer.service.ARMonitorService">
+        <property name="arNirvanaDao" ref="ARNirvanaDao" />
+    </bean>
     <!--<add data>-->
 </beans>

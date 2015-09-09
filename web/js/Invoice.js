@@ -1209,3 +1209,10 @@ function copyInvoice(){
     action.value = 'copyInvoice';
     document.getElementById('InvoiceForm').submit();
 }
+
+function setBillValue(billto, billname, address, term, pay) {
+    $("#InvTo").val(billto);
+    $("#InvName").val(billname);
+    $("#InvToAddress").val(address);
+    $("#InvToModal").modal('hide');
+}

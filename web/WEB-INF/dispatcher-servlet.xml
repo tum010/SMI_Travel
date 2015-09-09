@@ -569,7 +569,8 @@
         
     </bean>
     <bean id="ARMonitorController" class="com.smi.travel.controller.ARMonitorController">
- 
+        <property name="utilityService" ref="UtilityService" />
+        <property name="arMonitorService" ref="ARMonitorService" />
     </bean>
     
     <bean id="CollectionMonitorController" class="com.smi.travel.controller.CollectionMonitorController">
