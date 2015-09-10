@@ -828,8 +828,8 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                 BigDecimal invamounttemp = new BigDecimal(0);
                 invoiceDetailTempList = session.createQuery(InvDetailQuery).setParameter("invoiceId", invoiceDetailList.get(i).getInvoice().getId()).list();
                 for (int j = 0; j < invoiceDetailTempList.size() ; j++) {
-                    if(invoiceDetailTempList.get(i).getAmount() != null){
-                        invamounttemp = invamounttemp.add(invoiceDetailTempList.get(i).getAmount());
+                    if(invoiceDetailTempList.get(j).getAmount() != null){
+                        invamounttemp = invamounttemp.add(invoiceDetailTempList.get(j).getAmount());
                         invoiceDetailView.setAmountInvoice(invamounttemp);
                     }
                 }
