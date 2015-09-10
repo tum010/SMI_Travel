@@ -25,6 +25,9 @@ import org.springframework.web.servlet.view.document.AbstractExcelView;
  */
 public class ExportDataToExcelView extends AbstractExcelView {
     private static final String TicketFareReport = "TicketFareReport";
+    private static final String TicketFareAirlineReport = "TicketFareAirlineReport";
+    private static final String TicketFareInvoicReport = "TicketFareInvoicReport";
+    private static final String TicketFareAgentReport = "TicketFareAgentReport";
     @Override
     protected void buildExcelDocument(Map model, HSSFWorkbook workbook,
             HttpServletRequest request, HttpServletResponse response)
@@ -36,6 +39,15 @@ public class ExportDataToExcelView extends AbstractExcelView {
         if(name.equalsIgnoreCase(TicketFareReport)){
              System.out.println("gen report");
              genreport(workbook, (List) model.get(name));
+        }else if(name.equalsIgnoreCase(TicketFareAirlineReport)){
+             System.out.println("gen report");
+//             genreport(workbook, (List) model.get(name));
+        }else if(name.equalsIgnoreCase(TicketFareInvoicReport)){
+             System.out.println("gen report");
+//             genreport(workbook, (List) model.get(name));
+        }else if(name.equalsIgnoreCase(TicketFareAgentReport)){
+             System.out.println("gen report");
+//             genreport(workbook, (List) model.get(name));
         }
        
     }

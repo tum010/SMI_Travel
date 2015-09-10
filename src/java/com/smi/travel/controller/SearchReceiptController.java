@@ -27,24 +27,11 @@ public class SearchReceiptController extends SMITravelController {
         String inputFromDate = request.getParameter("inputFromDate");
         String inputToDate = request.getParameter("inputToDate");
         String departtemp = "";
-
         if ("search".equalsIgnoreCase(action)) {
             List<ReceiptSearchView>  receiptSearchViews = receiptService.getReceiptViewFromFilter(inputFromDate, inputToDate, department, recType);
             if(receiptSearchViews != null){
                 request.setAttribute(RECEIPTSEARCHLIST,receiptSearchViews);
             } 
-            if("Wendy".equals(department)){
-                departtemp = "W";
-            }else if("Inbound".equals(department)){
-                departtemp = "I";
-            }else if("Outbound".equals(department)){
-                departtemp = "O";
-            }
-            
-            String page = "";
-            page = "Receipt"+departtemp+recType+".smi";
-            System.out.println(" page " + page);
-            request.setAttribute(PAGE,page);
         }
 
         request.setAttribute(RECTYPE,recType);
