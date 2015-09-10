@@ -31,7 +31,58 @@ public class TicketFareReportImpl implements TicketFareReportDao {
     
     @Override
     public List getTicketFareReport() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List data = new ArrayList<TicketFareReport>();
+        List<Object[]> QueryList =  session.createSQLQuery("select * from `ticket_fare_airline_view` ")
+                .addScalar("air",Hibernate.STRING)
+                .addScalar("docno",Hibernate.STRING)
+                .addScalar("issuedate",Hibernate.STRING)
+                .addScalar("department",Hibernate.STRING)
+                .addScalar("staff",Hibernate.STRING)
+                .addScalar("termpay",Hibernate.STRING)
+                .addScalar("tax",Hibernate.STRING)
+                .addScalar("actcom",Hibernate.STRING)
+                .addScalar("ins",Hibernate.STRING)
+                .addScalar("netsale",Hibernate.STRING)
+                .addScalar("vat",Hibernate.STRING)
+                .addScalar("invno",Hibernate.STRING)
+                .addScalar("invamount",Hibernate.STRING)
+                .addScalar("balance",Hibernate.STRING)
+                .addScalar("passenger",Hibernate.STRING)
+                .addScalar("agent",Hibernate.STRING)
+                .addScalar("ticketcom",Hibernate.STRING)
+                .addScalar("saleprice",Hibernate.STRING)
+                .addScalar("agentcom",Hibernate.STRING)
+                .addScalar("profit",Hibernate.STRING)
+                .list();
+        
+        for (Object[] B : QueryList) {
+            TicketFareReport ticketFareReport = new TicketFareReport();
+            ticketFareReport.setAir(util.ConvertString(B[0]));
+            ticketFareReport.setDocno(util.ConvertString(B[1]));
+            ticketFareReport.setIssuedate(util.ConvertString(B[2]));
+            ticketFareReport.setDepartment(util.ConvertString(B[3]));
+            ticketFareReport.setStaff(util.ConvertString(B[4]));
+            ticketFareReport.setTermpay(util.ConvertString(B[5]));
+            ticketFareReport.setTax(util.ConvertString(B[6]));
+            ticketFareReport.setActcom(util.ConvertString(B[7]));
+            ticketFareReport.setIns(util.ConvertString(B[8]));
+            ticketFareReport.setNetsale(util.ConvertString(B[9]));
+            ticketFareReport.setVat(util.ConvertString(B[10]));
+            ticketFareReport.setInvno(util.ConvertString(B[11]));
+            ticketFareReport.setInvamount(util.ConvertString(B[12]));
+            ticketFareReport.setBalance(util.ConvertString(B[13]));
+            ticketFareReport.setPassenger(util.ConvertString(B[14]));
+            ticketFareReport.setAgent(util.ConvertString(B[15]));
+            ticketFareReport.setTicketcom(util.ConvertString(B[16]));
+            ticketFareReport.setSaleprice(util.ConvertString(B[17]));
+            ticketFareReport.setAgentcom(util.ConvertString(B[18]));
+            ticketFareReport.setProfit(util.ConvertString(B[19]));
+            data.add(ticketFareReport);
+        }
+        
+        return data;
     }
 
     public SessionFactory getSessionFactory() {
