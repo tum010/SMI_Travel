@@ -143,10 +143,22 @@
                                     <td align="center">${table.termPay}</td>
                                     <td align="center">${table.department}</td>
                                     <td> 
-                                        <center> 
-                                            <a  href="${callPage}?Id=${table.recId}">
-                                                <span class="glyphicon glyphicon-edit editicon"  ></span>
-                                            </a>
+                                        <center>
+                                            <c:if test="${table.department == 'Wendy'}">
+                                                <a  href="ReceiptW${table.recType}.smi?Id=${table.recId}">
+                                                    <span class="glyphicon glyphicon-edit editicon"  ></span>
+                                                </a>
+                                            </c:if>
+                                            <c:if test="${table.department == 'Inbound'}">
+                                                <a  href="ReceiptI${table.recType}.smi?Id=${table.recId}">
+                                                    <span class="glyphicon glyphicon-edit editicon"  ></span>
+                                                </a>
+                                            </c:if>
+                                            <c:if test="${table.department == 'Outbound'}">
+                                                <a  href="ReceiptO${table.recType}.smi?Id=${table.recId}">
+                                                    <span class="glyphicon glyphicon-edit editicon"  ></span>
+                                                </a>
+                                            </c:if>
                                         </center> 
                                     </td>    
                                 </tr>

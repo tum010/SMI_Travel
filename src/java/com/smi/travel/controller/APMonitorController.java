@@ -36,28 +36,27 @@ public class APMonitorController extends SMITravelController {
             List<APNirvana> apNirvanaList = apNirvanaService.SearchApNirvanaFromFilter(apPayment, apType, apStatus, apFromDate, apToDate);
             request.setAttribute(DATALIST, apNirvanaList);
         } else if("export".equalsIgnoreCase(action)){
-//            List<APNirvana> apNirvanaList = apNirvanaService.SearchApNirvanaFromFilter(apPayment, apType, apStatus, apFromDate, apToDate);
             List<APNirvana> apNirvanaData = new ArrayList<APNirvana>();
-            String result = apNirvanaService.ExportAPFileInterface(apNirvanaData);           
-            if("success".equalsIgnoreCase(result)){
-                int count = Integer.parseInt(apCount);
-                for(int i=1;i<=count;i++){
-                    String isSelect = request.getParameter("selectAll"+i);
-                    if("1".equalsIgnoreCase(isSelect)){
-                        APNirvana apNirvana = new APNirvana();
-                        String paymentId = request.getParameter("paymentId"+i);
-                        String paymentType = request.getParameter("paymentType"+i);
-                        apNirvana.setPayment_id(paymentId);
-                        apNirvana.setPaymenttype(paymentType);
-                        apNirvanaData.add(apNirvana);
-                    }
+            int count = Integer.parseInt(apCount);
+            for(int i=1;i<=count;i++){
+                String isSelect = request.getParameter("selectAll"+i);
+                if("1".equalsIgnoreCase(isSelect)){
+                    APNirvana apNirvana = new APNirvana();
+                    String paymentId = request.getParameter("paymentId"+i);
+                    String paymentType = request.getParameter("paymentType"+i);
+                    apNirvana.setPayment_id(paymentId);
+                    apNirvana.setPaymenttype(paymentType);
+                    apNirvanaData.add(apNirvana);
                 }
+            }
+            String result = apNirvanaService.ExportAPFileInterface(apNirvanaData);           
+            if("success".equalsIgnoreCase(result)){             
                 String update = apNirvanaService.UpdateStatusAPInterface(apNirvanaData);
-                System.out.println("Update Result : "+update);
-                List<APNirvana> apNirvanaList = apNirvanaService.SearchApNirvanaFromFilter(apPayment, apType, apStatus, apFromDate, apToDate);
-                request.setAttribute(DATALIST, apNirvanaList);
+                System.out.println("Update Result : "+update);                
                 request.setAttribute("update", update);
             }
+            List<APNirvana> apNirvanaList = apNirvanaService.SearchApNirvanaFromFilter(apPayment, apType, apStatus, apFromDate, apToDate);
+            request.setAttribute(DATALIST, apNirvanaList);
         }
         
         request.setAttribute("apPayment", apPayment);

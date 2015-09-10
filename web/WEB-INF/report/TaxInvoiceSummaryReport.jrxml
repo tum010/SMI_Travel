@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TaxInvoiceSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b94d16a0-fd3d-420a-829f-b2613a057a63">
 	<property name="ireport.zoom" value="1.652892561983471"/>
-	<property name="ireport.x" value="613"/>
+	<property name="ireport.x" value="582"/>
 	<property name="ireport.y" value="185"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="user" class="java.lang.String"/>
@@ -556,21 +556,21 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{receiptno}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="557" y="0" width="64" height="16" uuid="cc51d071-ba3b-4f6a-af7b-e6adc61c7cec"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{gross} != null && !"null".equals($F{gross}) && $F{gross}.length() > 0 && !"".equalsIgnoreCase($F{gross})) ? new BigDecimal($F{gross}) : new BigDecimal("0")]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="625" y="0" width="65" height="16" uuid="f0eac28f-d8ff-451e-91a6-a09e7f24cb78"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{vat} != null && !"null".equals($F{vat}) && $F{vat}.length() > 0 && !"".equalsIgnoreCase($F{vat})) ? new BigDecimal($F{vat}) : new BigDecimal("0")]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="693" y="-1" width="65" height="17" uuid="d8ffea49-df51-49ae-a272-7df4c8039358"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="14"/>

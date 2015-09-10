@@ -213,8 +213,8 @@ public class ReportService {
         return refundAirReportDao.getRefundAir(refundId);
     }
     
-    public List getTicketFareReport(){        
-        return ticketFareReportDao.getTicketFareReport();
+    public List getTicketFareReport(String ticketType,String ticketBuy,String airline,String airlineCode,String dateFrom,String dateTo,String department,String staff,String termPay){      
+        return ticketFareReportDao.getTicketFareReport(ticketType,ticketBuy,airline,airlineCode,dateFrom,dateTo,department,staff,termPay);
     }
     
     public List getTaxInvoiceSummaryReport(String from, String to, String department, String systemuser){

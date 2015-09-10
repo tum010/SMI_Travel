@@ -77,19 +77,21 @@ public class CreditNoteSummaryReportImpl implements CreditNoteSummaryReportDao{
                 .list();
         
         int no = 1;
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("dd-MM-yyyy");
         for (Object[] B : QueryList) {
             CreditNoteSummaryReport creditNoteSummaryReport = new CreditNoteSummaryReport();
             creditNoteSummaryReport.setNo(String.valueOf(no));
             creditNoteSummaryReport.setId(util.ConvertString(B[0]));
             creditNoteSummaryReport.setNoteno(util.ConvertString(B[1]));
-            creditNoteSummaryReport.setNotedate(util.ConvertString(B[2]));
+            creditNoteSummaryReport.setNotedate((("null".equals(String.valueOf(B[2])) ? "" : String.valueOf(df.format(util.convertStringToDate(String.valueOf(B[2])))))));
             creditNoteSummaryReport.setNotefrom(util.ConvertString(B[3]));
             creditNoteSummaryReport.setNotename(util.ConvertString(B[4]));           
             creditNoteSummaryReport.setStatus(util.ConvertString(B[12]));
             creditNoteSummaryReport.setDepartment(util.ConvertString(B[13]));
             creditNoteSummaryReport.setSystemdate(String.valueOf(dateformat.format(new Date())));
-            creditNoteSummaryReport.setFrom(from);
-            creditNoteSummaryReport.setTo(to);
+            creditNoteSummaryReport.setFrom(!"".equalsIgnoreCase(from) ? String.valueOf(df.format(util.convertStringToDate(from))) : "");
+            creditNoteSummaryReport.setTo(!"".equalsIgnoreCase(to) ? String.valueOf(df.format(util.convertStringToDate(to))) : "");
             creditNoteSummaryReport.setUser(systemuser);
             creditNoteSummaryReport.setDepartmentshow(departmentshow);
             
