@@ -555,6 +555,11 @@
         <put-attribute name="title" value="Nirvana Interface:Collection monitor" />
         <put-attribute name="body" value="/WEB-INF/jsp/CollectionMonitor.jsp" />
     </definition>
+    
+    <definition name="TicketFareSummaryReport" extends="baseLayout">
+        <put-attribute name="title" value="CheckingTicket:List Ticket Fare Summary" />
+        <put-attribute name="body" value="/WEB-INF/jsp/TicketFareSummaryReport.jsp" />
+    </definition>
     <!--<add data>-->
     
     <definition name="SendMail" extends="baseLayout">

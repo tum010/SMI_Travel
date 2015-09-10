@@ -133,6 +133,7 @@
                                 <prop key="APMonitor.smi">APMonitorController</prop>
                                 <prop key="ARMonitor.smi">ARMonitorController</prop>
                 <prop key="CollectionMonitor.smi">CollectionMonitorController</prop>
+                <prop key="TicketFareSummaryReport.smi">TicketFareSummaryReportController</prop>
 				<!-- add mapping url -->
 			</props>
 		</property>
@@ -577,6 +578,9 @@
     <bean id="CollectionMonitorController" class="com.smi.travel.controller.CollectionMonitorController">
         
     </bean>
+    <bean id="TicketFareSummaryReportController" class="com.smi.travel.controller.TicketFareSummaryReportController">
+        
+    </bean>
 	<!-- add bean id controller -->
 
 	<bean id="monitorGalileo" class="com.smi.travel.monitor.MonitorGalileo"
@@ -597,8 +601,9 @@
 			 <!--<value>S:/BackupPNR/error/</value>--> 
 		</constructor-arg>
 		<constructor-arg index="3" type="java.lang.String">
-			 <!--<value>D:/iCONEXT/SMI/PNR/swap/</value>--> 
-                         <value>C:/Users/Administrator/Desktop/PNR/galileo/swap/</value> 
+			 <value>D:/iCONEXT/SMI/PNR/swap/</value> 
+                         <!--<value>C:/Users/Administrator/Desktop/PNR/galileo/swap/</value>--> 
+                         <!--<value>S:/swap/</value>-->
 		</constructor-arg>
 		<property name="mGalileoService" ref="MGalileoService" />
 		<property name="mAirticketService" ref="MAirticketService" />
@@ -625,6 +630,7 @@
 		<constructor-arg index="3" type="java.lang.String">
 			 <!--<value>D:/iCONEXT/SMI/PNR/swap/</value>--> 
                          <value>C:/Users/Administrator/Desktop/PNR/amadeus/swap/</value> 
+                         <!--<value>T:/swap/</value>-->
 		</constructor-arg>
 		<property name="mAmadeusService" ref="MAmadeusService" />
 		<property name="mAirticketService" ref="MAirticketService" />
