@@ -13,18 +13,17 @@ function printTicketFareSummary(){
     var from = document.getElementById("startdate").value;
     var to = document.getElementById("enddate").value;
     var department = document.getElementById("department").value;
-    var salebyId = document.getElementById("salebyId").value;
+    var salebyUser = document.getElementById("salebyUser").value;
     var termPay = document.getElementById("termPay").value;
-//    alert("reportType = "+reportType 
-//            + " , ticketType = "+ticketType
-//            + " , ticketBuy = "+ticketBuy
-//            + " , airline = "+airline
-//            + " , airlineCode = "+airlineCode
-//            + " , from = "+from
-//            + " , to = "+to
-//            + " , department = "+department
-//            + " , salebyId = "+salebyId
-//            + " , termPay = "+termPay);
+
+    if(reportType == 1){
+        window.open("Excel.smi?name=TicketFareAirlineReport&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&dateFrom=" + from + "&dateTo=" + to + "&department=" + department + "&staff=" + salebyUser + "&termPay=" + termPay);
+    }else if(reportType == 2){
+        window.open("Excel.smi?name=TicketFareInvoicReport&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&dateFrom=" + from + "&dateTo=" + to + "&department=" + department + "&staff=" + salebyUser + "&termPay=" + termPay);
+    }else if(reportType == 3){
+        window.open("Excel.smi?name=TicketFareAgentReport&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&dateFrom=" + from + "&dateTo=" + to + "&department=" + department + "&staff=" + salebyUser + "&termPay=" + termPay);
+    }
+
 }
 
 $(document).ready(function() {

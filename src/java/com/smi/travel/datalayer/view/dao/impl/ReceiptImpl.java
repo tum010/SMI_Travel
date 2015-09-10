@@ -215,12 +215,14 @@ public class ReceiptImpl implements ReceiptDao{
                 receiptView.setTo("");
             }
             
-            if("Wendy".equals(String.valueOf(recSum[6]))){
+            if("Wendy".equals(String.valueOf(departmentRec))){
                 receiptView.setDepartment("WENDY");
-            }else if("Inbound".equals(String.valueOf(recSum[6]))){
+            }else if("Inbound".equals(String.valueOf(departmentRec))){
                 receiptView.setDepartment("INBOUND");
-            }else if("Outbound".equals(String.valueOf(recSum[6]))){
+            }else if("Outbound".equals(String.valueOf(departmentRec))){
                 receiptView.setDepartment("OUTBOUND");
+            }else{
+                receiptView.setDepartment("ALL");
             }
             
             receiptView.setRecno((("null".equals(String.valueOf(recSum[0])) ? "" : String.valueOf(recSum[0]))));

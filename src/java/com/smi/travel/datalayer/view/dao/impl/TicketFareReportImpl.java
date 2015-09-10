@@ -30,11 +30,66 @@ public class TicketFareReportImpl implements TicketFareReportDao {
     private UtilityFunction utilityFunction;
     
     @Override
-    public List getTicketFareReport() {
+    public List getTicketFareReport(String ticketType,String ticketBuy,String airline,String airlineCode,String dateFrom,String dateTo,String department,String staff,String termPay){
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList<TicketFareReport>();
-        List<Object[]> QueryList =  session.createSQLQuery("select * from `ticket_fare_airline_view` ")
+
+        String query = "SELECT * FROM `ticket_fare_airline_view` where";
+        
+        int checkQuery = 0;
+        String prefix ="";
+        
+        if(((dateFrom != null) &&(!"".equalsIgnoreCase(dateFrom))) &&((dateTo != null) &&(!"".equalsIgnoreCase(dateTo)))){
+            query += " issuedate >= '" +dateFrom +"' and issuedate <= '"+dateTo +"' ";
+            checkQuery = 1;
+        }else if((dateFrom != null) &&(!"".equalsIgnoreCase(dateFrom))){
+            checkQuery = 1;
+            query +=  " issuedate >= '" +dateFrom +"'";
+
+        }else if((dateTo != null) &&(!"".equalsIgnoreCase(dateTo))){
+            checkQuery = 1;
+            query += " issuedate <= '" +dateTo +"'";
+        }
+        
+        if((ticketType != null) &&(!"".equalsIgnoreCase(ticketType))){
+            if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+            query += prefix+" tickettype = '"+ticketType+"'";
+        }
+
+        if((ticketBuy != null) &&(!"".equalsIgnoreCase(ticketBuy))){
+            if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+            query += prefix+ " ticketbuy = '"+ticketBuy+"'";
+        }
+        
+        if((airline != null) &&(!"".equalsIgnoreCase(airline))){
+            if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+            query += prefix+" airagent = '"+airline+"'";
+        }
+
+        if((airlineCode != null) &&(!"".equalsIgnoreCase(airlineCode))){
+            if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+            query += prefix+ " air = '"+airlineCode+"'";
+        }
+        if((department != null) &&(!"".equalsIgnoreCase(department))){
+            if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+            query += prefix+" department = '"+department+"'";
+        }
+
+        if((staff != null) &&(!"".equalsIgnoreCase(staff))){
+            if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+            query += prefix+ " staff = '"+staff+"'";
+        }
+        
+        if((termPay != null) &&(!"".equalsIgnoreCase(termPay))){
+            if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+            query += prefix+ " termpay = '"+termPay+"'";
+        }
+        
+        if(checkQuery == 0){query = query.replaceAll("where", "");}
+        System.out.println("query : "+query);
+        
+        List<Object[]> QueryList =  session.createSQLQuery(query)
                 .addScalar("air",Hibernate.STRING)
                 .addScalar("docno",Hibernate.STRING)
                 .addScalar("issuedate",Hibernate.STRING)
