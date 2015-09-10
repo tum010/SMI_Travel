@@ -15,6 +15,7 @@ public class InvoiceSummary {
     private int no;
     private Date invfrom;
     private Date invto;
+    private String headertype;
     private String invtype;
     private String department;
     private String invno;
@@ -34,6 +35,15 @@ public class InvoiceSummary {
     private String systemdate;
     private Double profit;
 
+    public void setHeadertype(String headertype) {
+        this.headertype = headertype;
+    }
+
+    public String getHeadertype() {
+        return headertype;
+    }
+
+   
     public void setNo(int no) {
         this.no = no;
     }
