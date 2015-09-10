@@ -579,7 +579,7 @@
         
     </bean>
     <bean id="TicketFareSummaryReportController" class="com.smi.travel.controller.TicketFareSummaryReportController">
-        
+        <property name="utilityService" ref="UtilityService" />
     </bean>
 	<!-- add bean id controller -->
 
@@ -637,10 +637,10 @@
 		<property name="bookingAirticketService" ref="BookingAirticket" />
 	</bean>
 
-        <task:scheduled-tasks> 
+<!--        <task:scheduled-tasks> 
             <task:scheduled ref="monitorAmadeus" method="run" fixed-delay="5000" /> 
             <task:scheduled ref="monitorGalileo" method="run" fixed-delay="5000" /> 
-        </task:scheduled-tasks>  
+        </task:scheduled-tasks>  -->
 
 	<bean id="MProductTypeController"
 		class="com.smi.travel.masterdata.controller.MProductTypeController">
@@ -673,8 +673,8 @@
 		<property name="lockUnlockBookingService" ref="LockUnlockBookingService" />
 	</bean>
         
-	<mvc:annotation-driven />
+<!--	<mvc:annotation-driven />
 	<context:annotation-config />
-	<context:component-scan base-package="com.smi.travel.controller,com.smi.travel.**.controller" />
+	<context:component-scan base-package="com.smi.travel.controller,com.smi.travel.**.controller" />-->
    
 </beans>
