@@ -74,6 +74,7 @@ public class InvoiceController extends SMITravelController {
            department =  callPageFrom.substring(0,1);
            invoiceType   =  callPageFrom.substring(1);
         }
+        request.setAttribute("invoiceType", invoiceType);
         System.out.println("invoiceType : "+invoiceType);
         System.out.println("department : "+department);
         
