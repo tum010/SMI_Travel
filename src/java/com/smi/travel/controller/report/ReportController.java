@@ -211,7 +211,7 @@ public class ReportController extends SMITravelController {
         }else if(RefundAirReport.equalsIgnoreCase(name)){
             data = reportservice.getRefundAirReport(refundId);
         }else if(TicketFareReport.equalsIgnoreCase(name)){
-            data = reportservice.getTicketFareReport();
+//            data = reportservice.getTicketFareReport();
         }else if(TaxInvoiceSummaryReport.equalsIgnoreCase(name)){
             data = reportservice.getTaxInvoiceSummaryReport(from, to, department, systemuser);
         }else if(CreditNoteSummaryReport.equalsIgnoreCase(name)){
