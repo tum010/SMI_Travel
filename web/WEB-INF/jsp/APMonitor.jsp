@@ -188,12 +188,12 @@
                                     </c:choose>                                  
                                 </td>
                                 <td align="center">${i.count}</td>
-                                <td></td>
+                                <td>${data_list.intreference}</td>
                                 <td>${data_list.vendorid}</td>
                                 <td>${data_list.vendorname}</td>
                                 <td>${data_list.puraccount1}</td>
+                                <td align="right" class="money">${data_list.vatamt}</td>
                                 <td align="right" class="money">${data_list.basevatamt}</td>
-                                <td align="right" class="money"></td>
                                 <td align="center">${data_list.currencyid}</td>
                                 <td align="center">${data_list.itf_status}</td>
                             </tr>

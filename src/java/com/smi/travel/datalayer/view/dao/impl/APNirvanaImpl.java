@@ -209,7 +209,7 @@ public class APNirvanaImpl implements APNirvanaDao{
             .addScalar("company_branch",Hibernate.INTEGER)
             .addScalar("itf_status",Hibernate.STRING)
             .addScalar("payment_id",Hibernate.STRING)
-            .addScalar("paymenttype",Hibernate.STRING)    
+            .addScalar("paymenttype",Hibernate.STRING)    //87
             .list();
         
         for (Object[] B : QueryList) {
@@ -218,7 +218,8 @@ public class APNirvanaImpl implements APNirvanaDao{
             apNirvana.setVendorid(util.ConvertString(B[2]));
             apNirvana.setVendorname(util.ConvertString(B[3]));
             apNirvana.setCurrencyid(util.ConvertString(B[8]));
-            apNirvana.setBasevatamt((B[11])!=null ? new BigDecimal(util.ConvertString(B[11])) : new BigDecimal("0.00"));            
+            apNirvana.setBasevatamt((B[11])!=null ? new BigDecimal(util.ConvertString(B[11])) : new BigDecimal("0.00"));
+            apNirvana.setVatamt((B[13])!=null ? new BigDecimal(util.ConvertString(B[13])) : new BigDecimal("0.00"));            
             apNirvana.setPuraccount1(util.ConvertString(B[28]));
             apNirvana.setItf_status(util.ConvertString(B[85]));
             apNirvana.setPayment_id(util.ConvertString(B[86]));
