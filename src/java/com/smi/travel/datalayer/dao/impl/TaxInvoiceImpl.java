@@ -253,14 +253,9 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
                     if(taxInvoiceDetail.getAmount() != null){
                         amount = taxInvoiceDetail.getAmount();           
                         vat = taxInvoiceDetail.getVat();
-                        System.out.println("Amount :"+amount);
-                        gross = ((amount.multiply(onehundred)).divide((vat.add(onehundred)), 4));
-                        System.out.println("Multiply : "+vat.add(onehundred));
-                        System.out.println("Divide : "+amount.multiply(onehundred));
-                        System.out.println("Result : "+amount.multiply(onehundred).divide((vat.add(onehundred)), 4));
-                        System.out.println("Gross : "+gross);
+
+                        gross = ((amount.multiply(onehundred)).divide((vat.add(onehundred)), 4, RoundingMode.HALF_UP));                       
                         vat = amount.subtract(gross);
-                        System.out.println("Vat : "+vat);
 
                         totalAmount = totalAmount.add(amount);
                         totalGross = totalGross.add(gross);
@@ -327,15 +322,10 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
                 }                           
             }
             taxInvoiceView.setTotalAmount(totalAmount.setScale(2, RoundingMode.HALF_UP));
-//            System.out.println("Gross : "+ totalGross);
-//            System.out.println("Gross Round Up : "+ totalGross.setScale(4, RoundingMode.HALF_UP));
-//            System.out.println("Vat : "+ totalVat);
-//            System.out.println("Vat Round Up : "+ totalVat.setScale(4, RoundingMode.HALF_UP));
             taxInvoiceView.setTotalGross(totalGross.setScale(2, RoundingMode.HALF_UP));
             taxInvoiceView.setTotalVat(totalVat.setScale(2, RoundingMode.HALF_UP));           
             taxInvoiceView.setInvoiceNo(totalInvoiceNo);
-            taxInvoiceView.setReceiptNo(totalReceiptNo);
-            
+            taxInvoiceView.setReceiptNo(totalReceiptNo);            
             taxInvoiceViewList.add(taxInvoiceView);
         }
         
