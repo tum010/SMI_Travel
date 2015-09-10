@@ -9,6 +9,7 @@ package com.smi.travel.datalayer.dao;
 import com.smi.travel.datalayer.entity.Function;
 import com.smi.travel.datalayer.entity.MAccpay;
 import com.smi.travel.datalayer.entity.MAccterm;
+import com.smi.travel.datalayer.entity.MAirline;
 import com.smi.travel.datalayer.entity.MAirlineAgent;
 import com.smi.travel.datalayer.entity.MBilltype;
 import com.smi.travel.datalayer.entity.MBookingstatus;
@@ -62,5 +63,5 @@ public interface MListItemDao {
     public List<MPaytype> getListMPayType();
     public List<MStockStatus> getListMStockStatus();
     public List<MCreditBank> getListCreditBank();
-    
+    public List<MAirline> getListMAirlineCode();
 }

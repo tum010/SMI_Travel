@@ -213,7 +213,6 @@
                             </c:choose>
                         <th style="width: 15%">Create Date</th>
                         <th style="width: 5%">By</th>
-                       
                         <th style="width: 5%">Action</th>
                     </tr>
                 </thead>
