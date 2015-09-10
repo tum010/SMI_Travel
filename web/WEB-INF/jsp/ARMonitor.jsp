@@ -5,6 +5,12 @@
 
 <c:set var="listType" value="${requestScope['listType']}" />
 <c:set var="listAr" value="${requestScope['listAr']}" />
+<c:set var="invoiceType" value="${requestScope['invoiceType']}" />
+<c:set var="departmnt" value="${requestScope['departmnt']}" />
+<c:set var="type" value="${requestScope['type']}" />
+<c:set var="from" value="${requestScope['from']}" />
+<c:set var="to" value="${requestScope['to']}" />
+<c:set var="status" value="${requestScope['status']}" />
 <section class="content-header" >
     <h1>
         Nirvana Interface
@@ -34,11 +40,23 @@
                     <label class="control-label" for="">Invoice Type</lable>
                 </div>
                 <div class="col-xs-1" style="width: 200px">
-                    <select class="form-control" id="department" name="department">
+                    <c:set var="selectInvoiceTypeVat" value="" />
+                    <c:set var="selectInvoiceTypeNoVat" value="" />
+                    <c:set var="selectInvoiceTypeTemp" value="" />
+                    <c:if test="${invoiceType == 'V'}">
+                        <c:set var="selectInvoiceTypeVat" value="selected" />
+                    </c:if>
+                    <c:if test="${invoiceType == 'N'}">
+                        <c:set var="selectInvoiceTypeNoVat" value="selected" />
+                    </c:if>
+                    <c:if test="${invoiceType == 'T'}">
+                        <c:set var="selectInvoiceTypeTemp" value="selected" />
+                    </c:if>
+                    <select class="form-control" id="invoiceType" name="invoiceType">
                         <option value="">--Select--</option>
-                        <option value="Wendy">Wendy </option>
-                        <option value="Outbound">Outbound </option>
-                        <option value="Inbound">Inbound </option>
+                        <option value="V" ${selectInvoiceTypeVat}>Vat </option>
+                        <option value="N" ${selectInvoiceTypeNoVat}>No Vat </option>
+                        <option value="T" ${selectInvoiceTypeTemp}>Temp </option>
                     </select>
                 </div>
                 <!--<div class="col-xs-1" style="width: 50px"></div>-->
@@ -46,11 +64,23 @@
                     <label class="control-label" for="">Department </lable>
                 </div>
                 <div class="col-xs-1" style="width: 200px">
-                    <select class="form-control" id="invoiceType" name="invoiceType">
+                    <c:set var="selectDepartWendy" value="" />
+                    <c:set var="selectDepartOutbound" value="" />
+                    <c:set var="selectDepartInbound" value="" />
+                    <c:if test="${departmnt == 'Wendy'}">
+                        <c:set var="selectDepartWendy" value="selected" />
+                    </c:if>
+                    <c:if test="${departmnt == 'Outbound'}">
+                        <c:set var="selectDepartOutbound" value="selected" />
+                    </c:if>
+                    <c:if test="${departmnt == 'Inbound'}">
+                        <c:set var="selectDepartInbound" value="selected" />
+                    </c:if>
+                    <select class="form-control" id="department" name="department">
                         <option value="">--Select--</option>
-                        <option value="V">Vat </option>
-                        <option value="N">No Vat </option>
-                        <option value="T">Temp </option>
+                        <option value="Wendy" ${selectDepartWendy}>Wendy </option>
+                        <option value="Outbound" ${selectDepartOutbound}>Outbound </option>
+                        <option value="Inbound" ${selectDepartInbound}>Inbound </option>
                     </select>
                 </div>
                 <div class="col-xs-1" style="width: 50px"></div>
@@ -61,7 +91,11 @@
                     <select class="form-control" id="arType" name="arType">
                         <option value="">--Select--</option>
                         <c:forEach var="type" items="${listType}" varStatus="count">
-                            <option value="${type.id}">${type.name} </option>
+                            <c:set var="selectARtype" value="" />
+                            <c:if test="${type == type.id}">
+                                <c:set var="selectARtype" value="selected" />
+                            </c:if>
+                            <option value="${type.id}" ${selectARtype}>${type.name} </option>
                         </c:forEach>
                     </select>
                 </div>
@@ -73,12 +107,12 @@
                 </div>
                 <div class="col-xs-1" style="width: 200px">
                     <div class='input-group date' id='InputFromDate'>
-                    <c:if test='${taxInvoice.taxInvDate != null}'>
+                    <c:if test='${from != null}'>
                         <input id="arFromDate" name="arFromDate"  type="text" 
-                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${from}">
                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>        
                     </c:if>
-                    <c:if test='${taxInvoice.taxInvDate == null}'>
+                    <c:if test='${from == null}'>
                         <input id="arFromDate" name="arFromDate"  type="text" 
                             class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                
@@ -91,12 +125,12 @@
                 </div>
                 <div class="col-xs-1" style="width: 200px">
                     <div class='input-group date' id='InputToDate'>
-                    <c:if test='${taxInvoice.taxInvDate != null}'>
+                    <c:if test='${to != null}'>
                         <input id="arToDate" name="arToDate"  type="text" 
-                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${to}">
                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>        
                     </c:if>
-                    <c:if test='${taxInvoice.taxInvDate == null}'>
+                    <c:if test='${to == null}'>
                         <input id="arToDate" name="arToDate"  type="text" 
                             class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                
@@ -108,11 +142,23 @@
                     <label class="control-label" for="">Status</lable>
                 </div>
                 <div class="col-xs-1" style="width: 200px">
+                    <c:set var="selectNew" value="" />
+                    <c:set var="selectExport" value="" />
+                    <c:set var="selectChange" value="" />
+                    <c:if test="${status == 'New'}">
+                        <c:set var="selectNew" value="selected" />
+                    </c:if>
+                    <c:if test="${status == 'Export'}">
+                        <c:set var="selectExport" value="selected" />
+                    </c:if>
+                    <c:if test="${status == 'Change'}">
+                        <c:set var="selectChange" value="selected" />
+                    </c:if>
                     <select class="form-control" id="arStatus" name="arStatus">
                         <option value="">--Select--</option>
-                        <option value="N">New </option>
-                        <option value="E">Export </option>
-                        <option value="C">Change </option>
+                        <option value="New" ${selectNew}>New </option>
+                        <option value="Export" ${selectExport}>Export </option>
+                        <option value="Change" ${selectChange}>Change </option>
                     </select>
                 </div>
             </div>
@@ -266,9 +312,9 @@
                 }
             }   
         }
-        alert("Check : " + check + "  Un : " + unCheck + " Row : " + row);
+//        alert("Check : " + check + "  Un : " + unCheck + " Row : " + row);
         if(check > unCheck){
-            alert("1");
+//            alert("1");
             for(var i=1;i<row;i++){
                 var selectAll = document.getElementById("selectAll"+i);
                 if(selectAll !== null && selectAll !== ''){
@@ -282,7 +328,7 @@
         }
 
         if(check < unCheck){
-            alert("2");
+//            alert("2");
             for(var i=1;i<row;i++){
                 var selectAll = document.getElementById("selectAll"+i);
                 if(selectAll !== null && selectAll !== ''){
@@ -292,7 +338,7 @@
         }
 
         if(check === 0 && unCheck !== 0){
-            alert("3");
+//            alert("3");
             for(var i=1;i<row;i++){
                 var selectAll = document.getElementById("selectAll"+i);
                 if(selectAll !== null && selectAll !== ''){
@@ -307,7 +353,7 @@
         }
 
         if(check !== 0 && unCheck === 0){
-            alert("4");
+//            alert("4");
             for(var i=1;i<row;i++){
                 var selectAll = document.getElementById("selectAll"+i);
                 if(selectAll !== null && selectAll !== ''){
@@ -317,7 +363,7 @@
         }
 
         if(check === unCheck){
-            alert("5");
+//            alert("5");
             for(var i=1;i<row;i++){
                 var selectAll = document.getElementById("selectAll"+i);
                 if(selectAll !== null && selectAll !== ''){

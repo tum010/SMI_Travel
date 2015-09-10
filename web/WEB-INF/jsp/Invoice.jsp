@@ -25,6 +25,7 @@
 <c:set var="showvat" value="false" />
 <c:set var="typeBooking" value="" />
 <c:set var="textVoid" value="" />
+<c:set var="invoiceType" value="${requestScope['invoiceType']}" />
 <section class="content-header" >
     <h1>
         Finance & Cashier - Invoice
@@ -1115,4 +1116,5 @@
 <input type="hidden" id="typeBooking" name="typeBooking" value="${typeBooking}">
 <input type="hidden" id="typePrint" name="typePrint" value="">
 <input type="hidden" value="${textVoid}">
+<input type="hidden" id="invoiceType" name="invoiceType" value="${invoiceType}">
 <script type="text/javascript" src="js/Invoice.js"></script>

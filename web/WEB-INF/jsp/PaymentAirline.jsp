@@ -1930,10 +1930,19 @@ function calculateWithodingTax(){
     if (sumCommissionRefund == ""){
         sumCommissionRefund = 0;
     }    
+    
+    var vatValue = replaceAll(",","",$('#vat').val()); 
+    if (vatValue == ""){
+        vatValue = 0;
+    }
+    var vat = parseFloat(vatValue); 
+    
     var sumCommRefund = parseFloat(sumCommissionRefund);
     var sumcomm = parseFloat(sumCommissionTicket);
     
-    var withholdingTax = (sumcomm - sumCommRefund) * 0.03;
+    
+    
+    var withholdingTax = ( (sumcomm*(1-(vat/100)))  - (sumCommRefund*(1-(vat/100))) ) * 0.03;
 //    With Tax = Ticket Comission – ComRefund * 3%
     document.getElementById("withholdingTax").value = formatNumber(withholdingTax);
 }

@@ -527,10 +527,19 @@ function printInvoiceNew(){
     var payment = $('#selectPayment').val();
     var type = $('#typePrint').val(); 
     var sign = $('#SelectSign').val();
+    var invoiceType = $('#invoiceType').val();
     if(type === 'print'){
-        window.open("report.smi?name="+typePrint+"&invoiceid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"&sign="+sign);   
+        if(invoiceType === 'T'){
+            window.open("report.smi?name=InvoiceTemp&invoiceid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"&sign="+sign); 
+        }else{
+            window.open("report.smi?name="+typePrint+"&invoiceid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"&sign="+sign); 
+        }
     }else if(type === 'email'){
-        window.open("SendMail.smi?reportname=Invoice&reportid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"&sign="+sign);   
+        if(invoiceType === 'T'){
+            window.open("report.smi?name=InvoiceTemp&invoiceid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"&sign="+sign); 
+        }else{
+            window.open("SendMail.smi?reportname=Invoice&reportid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"&sign="+sign);   
+        }
     }
 }
 
