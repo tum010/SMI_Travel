@@ -6,9 +6,11 @@
 
 package com.smi.travel.controller.excel;
 
+import com.smi.travel.datalayer.report.model.TicketFareReport;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,29 +24,45 @@ import org.springframework.web.servlet.view.document.AbstractExcelView;
  * @author Jittima
  */
 public class ExportDataToExcelView extends AbstractExcelView {
-
+    private static final String TicketFareReport = "TicketFareReport";
     @Override
     protected void buildExcelDocument(Map model, HSSFWorkbook workbook,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        response.setHeader("Content-disposition", "attachment; filename=" + "exported.xls");
-
+        String name = (String) model.get("name");
+        System.out.println("name : "+name);
+        response.setHeader("Content-disposition", "attachment; filename=" + name+".xls");
         
-         Map<String,String> revenueData = (Map<String,String>) model.get("revenueData");
-         //create a wordsheet
-         HSSFSheet sheet = workbook.createSheet("Revenue Report");
+        if(name.equalsIgnoreCase(TicketFareReport)){
+             System.out.println("gen report");
+             genreport(workbook, (List) model.get(name));
+        }
+       
+    }
+    
  
+    
+    public void genreport(HSSFWorkbook workbook,List TicketFare){
+        //create a wordsheet
+         HSSFSheet sheet = workbook.createSheet("Revenue Report");
+         
          HSSFRow header = sheet.createRow(0);
-         header.createCell(0).setCellValue("Month");
-         header.createCell(1).setCellValue("Revenue");
+         header.createCell(0).setCellValue("Docno");
+         header.createCell(1).setCellValue("Air");
  
          int rowNum = 1;
-         for (Map.Entry<String, String> entry : revenueData.entrySet()) {
+         
          //create the row data
-         HSSFRow row = sheet.createRow(rowNum++);
-         row.createCell(0).setCellValue(entry.getKey());
-         row.createCell(1).setCellValue(entry.getValue());
-         }
+          for(int i=0;i<TicketFare.size();i++){
+             TicketFareReport data = (TicketFareReport)TicketFare.get(i);
+             HSSFRow row = sheet.createRow(rowNum + i);
+             row.createCell(0).setCellValue(data.getDocno());
+             row.createCell(1).setCellValue(data.getAir());
+          }
+        
+         
     }
+    
+   
 
 }
