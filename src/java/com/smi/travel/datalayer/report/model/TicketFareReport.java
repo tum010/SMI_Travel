@@ -19,6 +19,10 @@ public class TicketFareReport {
     private String headdepartment;
     private String headstaff;
     private String headtermpay;
+    private String printondate;
+    private String printby;
+    
+    
     private String air;
     private String docno;
     private String issuedate;
@@ -39,7 +43,8 @@ public class TicketFareReport {
     private String saleprice;
     private String agentcom;
     private String profit;
-
+    private String invdate;
+    
     public String getTickettype() {
         return tickettype;
     }
@@ -262,5 +267,29 @@ public class TicketFareReport {
 
     public void setProfit(String profit) {
         this.profit = profit;
+    }
+
+    public String getPrintondate() {
+        return printondate;
+    }
+
+    public void setPrintondate(String printondate) {
+        this.printondate = printondate;
+    }
+
+    public String getPrintby() {
+        return printby;
+    }
+
+    public void setPrintby(String printby) {
+        this.printby = printby;
+    }
+
+    public String getInvdate() {
+        return invdate;
+    }
+
+    public void setInvdate(String invdate) {
+        this.invdate = invdate;
     }
 }

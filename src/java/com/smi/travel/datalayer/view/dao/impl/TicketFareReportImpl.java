@@ -30,7 +30,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
     private UtilityFunction utilityFunction;
     
     @Override
-    public List getTicketFareReport(String ticketType,String ticketBuy,String airline,String airlineCode,String dateFrom,String dateTo,String department,String staff,String termPay){
+    public List getTicketFareReport(String ticketType,String ticketBuy,String airline,String airlineCode,String dateFrom,String dateTo,String department,String staff,String termPay,String printby){
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList<TicketFareReport>();
@@ -55,16 +55,22 @@ public class TicketFareReportImpl implements TicketFareReportDao {
         if((ticketType != null) &&(!"".equalsIgnoreCase(ticketType))){
             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
             query += prefix+" tickettype = '"+ticketType+"'";
+        }else{
+            ticketType = "ALL";
         }
 
         if((ticketBuy != null) &&(!"".equalsIgnoreCase(ticketBuy))){
             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
             query += prefix+ " ticketbuy = '"+ticketBuy+"'";
+        }else{
+            ticketBuy = "ALL";
         }
         
         if((airline != null) &&(!"".equalsIgnoreCase(airline))){
             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
             query += prefix+" airagent = '"+airline+"'";
+        }else{
+            airline = "ALL";
         }
 
         if((airlineCode != null) &&(!"".equalsIgnoreCase(airlineCode))){
@@ -74,16 +80,22 @@ public class TicketFareReportImpl implements TicketFareReportDao {
         if((department != null) &&(!"".equalsIgnoreCase(department))){
             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
             query += prefix+" department = '"+department+"'";
+        }else{
+            department = "ALL";
         }
 
         if((staff != null) &&(!"".equalsIgnoreCase(staff))){
             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
             query += prefix+ " staff = '"+staff+"'";
+        }else{
+            staff = "ALL";
         }
         
         if((termPay != null) &&(!"".equalsIgnoreCase(termPay))){
             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
             query += prefix+ " termpay = '"+termPay+"'";
+        }else{
+            termPay = "ALL";
         }
         
         if(checkQuery == 0){query = query.replaceAll("where", "");}
@@ -110,10 +122,27 @@ public class TicketFareReportImpl implements TicketFareReportDao {
                 .addScalar("saleprice",Hibernate.STRING)
                 .addScalar("agentcom",Hibernate.STRING)
                 .addScalar("profit",Hibernate.STRING)
+                .addScalar("invdate",Hibernate.STRING)
                 .list();
+        
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("dd-MM-yyyy hh:mm");
+        
         
         for (Object[] B : QueryList) {
             TicketFareReport ticketFareReport = new TicketFareReport();
+            //set header
+            ticketFareReport.setTickettype(ticketType);
+            ticketFareReport.setTicketbuy(ticketBuy);
+            ticketFareReport.setAirline(airline);
+            ticketFareReport.setFrom(dateFrom);
+            ticketFareReport.setTo(dateTo);
+            ticketFareReport.setHeaddepartment(department);
+            ticketFareReport.setHeadstaff(staff);
+            ticketFareReport.setHeadtermpay(termPay);
+            ticketFareReport.setPrintby(printby);
+            ticketFareReport.setPrintondate(String.valueOf(df.format(new Date())));
+            //set data
             ticketFareReport.setAir(util.ConvertString(B[0]));
             ticketFareReport.setDocno(util.ConvertString(B[1]));
             ticketFareReport.setIssuedate(util.ConvertString(B[2]));
@@ -134,6 +163,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
             ticketFareReport.setSaleprice(util.ConvertString(B[17]));
             ticketFareReport.setAgentcom(util.ConvertString(B[18]));
             ticketFareReport.setProfit(util.ConvertString(B[19]));
+            ticketFareReport.setInvdate(util.ConvertString(B[20]));
             data.add(ticketFareReport);
         }
         
