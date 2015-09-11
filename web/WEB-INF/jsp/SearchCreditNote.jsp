@@ -7,6 +7,7 @@
 <script type="text/javascript" src="js/selectize.js"></script>
 <link href="css/selectize.bootstrap3.css" rel="stylesheet">
 <link href="css/jquery-ui.css" rel="stylesheet">
+<c:set var="mFinanceItemStatus_List" value="${requestScope['mFinanceItemStatus_List']}" />
 <section class="content-header" >
     <h1>
         Finance & Cashier - Credit Note
@@ -39,10 +40,10 @@
                                 <label class="control-label text-right">Form<font style="color: red">*</font>&nbsp;</label>
                             </div>
                             <div class="col-xs-1"  style="width: 170px">
-                                <div class='input-group date' id="dateFrom">
+                                <div class='input-group date fromdate' id="dateFrom">
                                     <input id="iDateFrom" name="iDateFrom"  type="text" 
                                        class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['iDateFrom']}">
-                                    <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    <span class="input-group-addon spandate" id="InputFromDateSpan1"><span class="glyphicon glyphicon-calendar" id="InputFromDateSpan2"></span></span>
                                 </div>
                             </div>
                         </div>
@@ -51,10 +52,10 @@
                                 <label class="control-label text-right">To<font style="color: red">*</font>&nbsp;</label>
                             </div>
                             <div class="col-xs-1"  style="width: 170px">
-                                <div class='input-group date' id="dateTo" >
+                                <div class='input-group date todate' id="dateTo" >
                                     <input id="iDateTo" name="iDateTo"  type="text" 
                                        class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['iDateTo']}">
-                                    <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    <span class="input-group-addon spandate" id="InputToDateSpan1"><span class="glyphicon glyphicon-calendar" id="InputToDateSpan2"></span></span>
                                 </div>
                             </div>
                         </div>
@@ -70,16 +71,34 @@
                                     <option value="I">Inbound</option>
                                 </select>    
                             </div>
+                            <div class="col-xs-1 text-right" style="width: 100px">
+                                <label class="control-label text-right">Status</label>
+                            </div>
+                            <div class="col-md-1 form-group" style="padding: 0px 0px 0px 0px;width: 130px">
+                                <select class="form-control" id="status" name="status">
+                                    <option value="">Choose</option>
+                                    <c:forEach var="mFinanceList" items="${mFinanceItemStatus_List}" varStatus="i">
+                                        <c:set var="select" value="" />
+                                        <c:if test="${mFinanceList.id == requestScope['status']}">
+                                            <c:set var="select" value="selected" />
+                                        </c:if>
+                                        <option  value="${mFinanceList.id}" ${select}>${mFinanceList.name}</option>
+                                    </c:forEach>
+                                </select>    
+                            </div>                                           
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <div class="col-md-1 form-group" style="width: 720px"></div>
                             <div class="col-md-1 text-right " style="padding: 0px 0px 0px 0px ; width: 160px">
                                 <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="" class="btn btn-primary btn-primary ">
                                     <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
                                 </button>                                
                             </div>
                             <div class="col-md-1 text-right " style="padding: 0px 0px 0px 10px">
-                                <button type="button" onclick="printCreditNoteSummaryReport();" class="btn btn-default">
+                                <button id="ButtonPrint" type="button" onclick="printCreditNoteSummaryReport();" class="btn btn-default">
                                     <span id="SpanPrint" class="glyphicon glyphicon-print"></span> Print
                                 </button>                                
-                            </div>
+                            </div>            
                         </div>
                     </div>
                 </div>
@@ -97,7 +116,8 @@
                                     <th style="width:10%;">Department</th>
                                     <th style="width:10%;">Sub Total</th>
                                     <th style="width:10%;">Grand Total</th>
-                                    <th style="width:10%;">Action</th>
+                                    <th style="width:9%;">Status</th>
+                                    <th style="width:1%;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -105,11 +125,12 @@
                                 <tr>
                                     <td align="center">${creditNote.cnno}</td>
                                     <td align="center">${creditNote.cndate}</td>
-                                    <td align="center">${creditNote.cnname}</td>
-                                    <td align="center">${creditNote.apCode}</td>
+                                    <td>${creditNote.cnname}</td>
+                                    <td>${creditNote.apCode}</td>
                                     <td align="center">${creditNote.department}</td>
                                     <td align="right">${creditNote.subtotal}</td>
                                     <td align="right">${creditNote.grandTotal}</td>
+                                    <td align="center">${creditNote.status}</td>
                                     <td> 
                                         <center> 
                                             <a  href="CreditNote${fn:substring(creditNote.department,0,1)}.smi?action=search&cnNo=${creditNote.cnno}">
@@ -203,6 +224,13 @@
                     data.fv.revalidateField('iDateFrom');
                 }
             });
+            
+        $('.fromdate').datetimepicker().change(function(){                          
+            checkFromDateField();
+        });
+        $('.todate').datetimepicker().change(function(){                          
+            checkToDateField();
+        });          
     });
 
 function searchAction() {
@@ -221,6 +249,100 @@ function printCreditNoteSummaryReport(){
     var fromdate = document.getElementById("iDateFrom").value;
     var todate= document.getElementById("iDateTo").value;
     var department = document.getElementById("department").value;
-    window.open("report.smi?name=CreditNoteSummaryReport&fromdate="+fromdate+"&todate="+todate+"&department="+department);
+    if((fromdate === '') || (todate === '')){
+        validateDate();
+    } else {
+        window.open("report.smi?name=CreditNoteSummaryReport&fromdate="+fromdate+"&todate="+todate+"&department="+department);
+    }   
+}
+
+function checkFromDateField(){
+    var inputFromDate = document.getElementById("iDateFrom");
+    var InputToDate = document.getElementById("iDateTo");
+    if(inputFromDate.value === ''){          
+        var InputFromDateSpan1 = document.getElementById("InputFromDateSpan1");
+        inputFromDate.style.borderColor = "red";
+        InputFromDateSpan1.style.borderColor = "red";
+        $("#InputFromDateSpan1").addClass("alert-danger");
+        $("#InputFromDateSpan2").addClass("alert-danger");
+        if((inputFromDate.style.borderColor === "red") && (InputToDate.style.borderColor === "red")){
+            $("#ButtonPrint").addClass("disabled");
+        }           
+    } else {
+        var InputFromDateSpan1 = document.getElementById("InputFromDateSpan1");
+        inputFromDate.style.borderColor = "green";
+        InputFromDateSpan1.style.borderColor = "green";
+        $("#InputFromDateSpan1").removeClass("alert-danger");
+        $("#InputFromDateSpan2").removeClass("alert-danger");
+        $("#ButtonPrint").removeClass("disabled");
+        checkDateValue("from","");
+    }      
+}
+    
+function checkToDateField(){
+    var InputToDate = document.getElementById("iDateTo");
+    var inputFromDate = document.getElementById("iDateFrom");
+    if(InputToDate.value === ''){
+        var InputToDateSpan1 = document.getElementById("InputToDateSpan1");
+        InputToDate.style.borderColor = "red";
+        InputToDateSpan1.style.borderColor = "red";
+        $("#InputToDateSpan1").addClass("alert-danger");
+        $("#InputToDateSpan2").addClass("alert-danger");
+        if((inputFromDate.style.borderColor === "red") && (InputToDate.style.borderColor === "red")){
+            $("#ButtonPrint").addClass("disabled");
+        }    
+    }else{
+        var InputToDateSpan1 = document.getElementById("InputToDateSpan1");
+        InputToDate.style.borderColor = "green";
+        InputToDateSpan1.style.borderColor = "green";
+        $("#InputToDateSpan1").removeClass("alert-danger");
+        $("#InputToDateSpan2").removeClass("alert-danger");
+        $("#ButtonPrint").removeClass("disabled");
+        checkDateValue("to","");
+    }               
+}
+    
+function checkDateValue(date){
+    var inputFromDate = document.getElementById("iDateFrom");
+    var InputToDate = document.getElementById("iDateTo");
+    if((inputFromDate.value !== '') && (InputToDate.value !== '')){
+        var fromDate = (inputFromDate.value).split('-');
+        var toDate = (InputToDate.value).split('-');
+        if((parseInt(fromDate[0])) >= (parseInt(toDate[0]))){
+            if((parseInt(fromDate[1])) >= (parseInt(toDate[1]))){
+                if((parseInt(fromDate[2])) > (parseInt(toDate[2]))){
+                    validateDate(date,"over");
+                }
+            }
+        }       
+    }
+}
+    
+function validateDate(date,option){
+    var inputFromDate = document.getElementById("iDateFrom");
+    var InputFromDateSpan1 = document.getElementById("InputFromDateSpan1");
+    var InputToDate = document.getElementById("iDateTo");
+    var InputToDateSpan1 = document.getElementById("InputToDateSpan1");
+    if(option === 'over'){
+        if(date === 'from'){
+            inputFromDate.style.borderColor = "red";
+            InputFromDateSpan1.style.borderColor = "red";     
+        }
+        if(date === 'to'){
+            InputToDate.style.borderColor = "red";
+            InputToDateSpan1.style.borderColor = "red";
+        }           
+        $("#ButtonPrint").addClass("disabled");
+    } else {
+        inputFromDate.style.borderColor = "red";
+        InputFromDateSpan1.style.borderColor = "red";
+        $("#InputFromDateSpan1").addClass("alert-danger");
+        $("#InputFromDateSpan2").addClass("alert-danger");        
+        InputToDate.style.borderColor = "red";
+        InputToDateSpan1.style.borderColor = "red";
+        $("#InputToDateSpan1").addClass("alert-danger");
+        $("#InputToDateSpan2").addClass("alert-danger");
+        $("#ButtonPrint").addClass("disabled");
+    }        
 }
 </script>

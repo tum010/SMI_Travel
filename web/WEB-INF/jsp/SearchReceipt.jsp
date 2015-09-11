@@ -5,6 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="receiptSearchList" value="${requestScope['receiptSearchList']}" />
 <c:set var="callPage" value="${requestScope['callPage']}" />
+<c:set var="mFinanceItemStatus_List" value="${requestScope['mFinanceItemStatus_List']}" />
 <section class="content-header" >
     <h1>
         Finance & Cashier - Receipt
@@ -33,26 +34,26 @@
             <form action="SearchReceipt.smi" method="post" id="SearchReceiptForm" name="SearchReceiptForm" role="form">
                 <div class="col-xs-12">
                     <div class="col-xs-1 text-right"  style="width: 80px">
-                        <label class="control-label text-right">From </label>
+                        <label class="control-label text-right">From<font style="color: red">*</font></label>
                     </div>
                     <div class="col-xs-1"  style="width: 170px">
                         <div class=" form-group"> 
-                            <div class='input-group date' id="DateFrom">
+                            <div class='input-group date fromdate' id="DateFrom">
                                 <input id="inputFromDate" name="inputFromDate"  type="text" 
                                    class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['inputFromDate']}">
-                                <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                                <span class="input-group-addon spandate" id="InputFromDateSpan1"><span class="glyphicon glyphicon-calendar" id="InputFromDateSpan2"></span></span>
                             </div>
                         </div>
                     </div>
                     <div class="col-xs-1 text-right"  style="width: 80px">
-                        <label class="control-label text-right">To </label>
+                        <label class="control-label text-right">To<font style="color: red">*</font></label>
                     </div>
                     <div class="col-xs-1"  style="width: 170px">
                         <div class=" form-group"> 
-                            <div class='input-group date' id="DateTo">
+                            <div class='input-group date todate' id="DateTo">
                                 <input id="inputToDate" name="inputToDate"  type="text" 
                                    class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['inputToDate']}">
-                                <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                                <span class="input-group-addon spandate" id="InputToDateSpan1"><span class="glyphicon glyphicon-calendar" id="InputToDateSpan2"></span></span>
                             </div>
                         </div>        
                     </div>
@@ -101,18 +102,36 @@
                             </c:choose>
                             <option value="V" ${selectedVat}>Vat</option>
                         </select>
-                    </div>   
+                    </div>
+                    <div class="col-xs-1 text-right" style="width: 40px">
+                        <label class="control-label text-right">Status </label>
+                    </div>          
+                    <div class="col-md-1 form-group" style="padding: 0px 0px 0px 30px;width: 150px">
+                        <select class="form-control" id="status" name="status">
+                            <option value="">----</option>
+                            <c:forEach var="mFinanceList" items="${mFinanceItemStatus_List}" varStatus="i">
+                                <c:set var="select" value="" />
+                                <c:if test="${mFinanceList.id == requestScope['status']}">
+                                    <c:set var="select" value="selected" />
+                                </c:if>
+                                <option  value="${mFinanceList.id}" ${select}>${mFinanceList.name}</option>
+                            </c:forEach>
+                        </select>    
+                    </div>                   
                     <input type="hidden" id="dateFromSearch" name="InputDateFrom" >                        
                     <input type="hidden" id="dateToSearch" name="InputDateTo" > 
                     <!--<input type="hidden" id="ticketId" name="ticketId" >-->
-                    <input type="hidden" name="action" id="action" value="">    
+                    <input type="hidden" name="action" id="action" value="">                       
+                </div>
+                <div class="col-xs-12">
+                    <div class="col-xs-1" style="width: 885px"></div>
                     <div class="col-xs-1 text-left" >
                         <button type="submit" id="ButtonSearch" name="ButtonSearch" onclick="searchAction()" style="height:34px" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search </button>
                     </div>
                     <div class="col-xs-1 text-left" >
                         <button type="button" id="ButtonPrint" onclick="printReceiptSummary()" name="ButtonPrint" class="btn btn-default"><i class="glyphicon glyphicon-print"></i> Print </button>
-                    </div>
-                </div>
+                    </div>      
+                </div>        
             </form>
             <!--Table-->
             <div class="row">
@@ -128,7 +147,8 @@
                                 <th style="width:10%;">Amount</th>
                                 <th style="width:7%;">Term Pay</th>
                                 <th style="width:7%;">Department</th>
-                                <th style="width:7%;">Action</th>
+                                <th style="width:7%;">Status</th>
+                                <th style="width:1%;">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -136,12 +156,13 @@
                                 <tr>
                                     <td align="center">${table.recNo}</td>
                                     <td align="center">${table.recDate}</td>
-                                    <td align="center">${table.recTo}</td>
-                                    <td align="center">${table.recName}</td>
-                                    <td align="center">${table.invoiceNo}</td>
+                                    <td>${table.recTo}</td>
+                                    <td>${table.recName}</td>
+                                    <td>${table.invoiceNo}</td>
                                     <td align="right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.amount}" /></td>
                                     <td align="center">${table.termPay}</td>
                                     <td align="center">${table.department}</td>
+                                    <td align="center">${table.status}</td>
                                     <td> 
                                         <center>
                                             <c:if test="${table.department == 'Wendy'}">
@@ -261,7 +282,12 @@
                     }
                 });
 
-
+        $('.fromdate').datetimepicker().change(function(){                          
+            checkFromDateField();
+        });
+        $('.todate').datetimepicker().change(function(){                          
+            checkToDateField();
+        });        
     });
 
 function searchAction(){
@@ -274,7 +300,100 @@ function printReceiptSummary(){
     var department = document.getElementById('department').value;
     var inputToDate = document.getElementById('inputToDate').value;
     var inputFromDate = document.getElementById('inputFromDate').value;
+    if((inputToDate === '') || (inputFromDate === '')){
+        validateDate();
+    } else {
+        window.open("report.smi?name=ReceiptSummaryReport&dateFrom="+inputFromDate+"&dateTo="+inputToDate+"&departmentRec="+department+"&recType="+recType);
+    }   
+}
+
+function checkFromDateField(){
+    var inputFromDate = document.getElementById("inputFromDate");
+    var InputToDate = document.getElementById("inputToDate");
+    if(inputFromDate.value === ''){          
+        var InputFromDateSpan1 = document.getElementById("InputFromDateSpan1");
+        inputFromDate.style.borderColor = "red";
+        InputFromDateSpan1.style.borderColor = "red";
+        $("#InputFromDateSpan1").addClass("alert-danger");
+        $("#InputFromDateSpan2").addClass("alert-danger");
+        if((inputFromDate.style.borderColor === "red") && (InputToDate.style.borderColor === "red")){
+            $("#ButtonPrint").addClass("disabled");
+        }           
+    } else {
+        var InputFromDateSpan1 = document.getElementById("InputFromDateSpan1");
+        inputFromDate.style.borderColor = "green";
+        InputFromDateSpan1.style.borderColor = "green";
+        $("#InputFromDateSpan1").removeClass("alert-danger");
+        $("#InputFromDateSpan2").removeClass("alert-danger");
+        $("#ButtonPrint").removeClass("disabled");
+        checkDateValue("from","");
+    }      
+}
     
-    window.open("report.smi?name=ReceiptSummaryReport&dateFrom="+inputFromDate+"&dateTo="+inputToDate+"&departmentRec="+department+"&recType="+recType);
+function checkToDateField(){
+    var InputToDate = document.getElementById("inputToDate");
+    var inputFromDate = document.getElementById("inputFromDate");
+    if(InputToDate.value === ''){
+        var InputToDateSpan1 = document.getElementById("InputToDateSpan1");
+        InputToDate.style.borderColor = "red";
+        InputToDateSpan1.style.borderColor = "red";
+        $("#InputToDateSpan1").addClass("alert-danger");
+        $("#InputToDateSpan2").addClass("alert-danger");
+        if((inputFromDate.style.borderColor === "red") && (InputToDate.style.borderColor === "red")){
+            $("#ButtonPrint").addClass("disabled");
+        }    
+    }else{
+        var InputToDateSpan1 = document.getElementById("InputToDateSpan1");
+        InputToDate.style.borderColor = "green";
+        InputToDateSpan1.style.borderColor = "green";
+        $("#InputToDateSpan1").removeClass("alert-danger");
+        $("#InputToDateSpan2").removeClass("alert-danger");
+        $("#ButtonPrint").removeClass("disabled");
+        checkDateValue("to","");
+    }               
+}
+    
+function checkDateValue(date){
+    var inputFromDate = document.getElementById("inputFromDate");
+    var InputToDate = document.getElementById("inputToDate");
+    if((inputFromDate.value !== '') && (InputToDate.value !== '')){
+        var fromDate = (inputFromDate.value).split('-');
+        var toDate = (InputToDate.value).split('-');
+        if((parseInt(fromDate[0])) >= (parseInt(toDate[0]))){
+            if((parseInt(fromDate[1])) >= (parseInt(toDate[1]))){
+                if((parseInt(fromDate[2])) > (parseInt(toDate[2]))){
+                    validateDate(date,"over");
+                }
+            }
+        }       
+    }
+}
+    
+function validateDate(date,option){
+    var inputFromDate = document.getElementById("inputFromDate");
+    var InputFromDateSpan1 = document.getElementById("InputFromDateSpan1");
+    var InputToDate = document.getElementById("inputToDate");
+    var InputToDateSpan1 = document.getElementById("InputToDateSpan1");
+    if(option === 'over'){
+        if(date === 'from'){
+            inputFromDate.style.borderColor = "red";
+            InputFromDateSpan1.style.borderColor = "red";     
+        }
+        if(date === 'to'){
+            InputToDate.style.borderColor = "red";
+            InputToDateSpan1.style.borderColor = "red";
+        }           
+        $("#ButtonPrint").addClass("disabled");
+    } else {
+        inputFromDate.style.borderColor = "red";
+        InputFromDateSpan1.style.borderColor = "red";
+        $("#InputFromDateSpan1").addClass("alert-danger");
+        $("#InputFromDateSpan2").addClass("alert-danger");        
+        InputToDate.style.borderColor = "red";
+        InputToDateSpan1.style.borderColor = "red";
+        $("#InputToDateSpan1").addClass("alert-danger");
+        $("#InputToDateSpan2").addClass("alert-danger");
+        $("#ButtonPrint").addClass("disabled");
+    }        
 }
 </script>

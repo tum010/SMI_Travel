@@ -206,7 +206,7 @@ public class CreditNoteImpl implements CreditNoteDao {
     }
 
     @Override
-    public List<CreditNoteView> getCreditNoteFromFilter(String from, String to, String Department) {
+    public List<CreditNoteView> getCreditNoteFromFilter(String from, String to, String Department, String status) {
          String query = "from CreditNote cn Where";
          int checkQuery = 0;
          String prefix ="";
@@ -225,6 +225,11 @@ public class CreditNoteImpl implements CreditNoteDao {
          if((Department != null) &&(!"".equalsIgnoreCase(Department))){
              if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
              query += prefix+" cn.department = '"+Department+"'";
+         }
+         
+         if((status != null) &&(!"".equalsIgnoreCase(status))){
+             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+             query += prefix+" cn.MFinanceItemstatus.id = '"+status+"'";
          }
          
          if(checkQuery == 0){query = query.replaceAll("Where", "");}
@@ -252,6 +257,7 @@ public class CreditNoteImpl implements CreditNoteDao {
         noteview.setCnno(notedetail.getCnNo());
         noteview.setCndate(util.convertDateToString(notedetail.getCnDate()));
         noteview.setDepartment(notedetail.getDepartment());
+        noteview.setStatus(notedetail.getMFinanceItemstatus().getName());
         List<CreditNoteDetail> detaillist =  notedetail.getCreditNoteDetails();
         BigDecimal subtotal = new BigDecimal(0);
         BigDecimal grandtotal = new BigDecimal(0);

@@ -23,7 +23,7 @@ public interface CreditNoteDao {
     public String DeleteCreditNoteDetail(String CreditNoteDetailId);//Delete from CreditNoteDetail cn where cn.id = :CreditNoteDetailId
     public String UpdateFinanceStatusCreditNote(String CNId, String status);
     public String gennarateTaxInvoiceNo(Date createDate);
-    public List<CreditNoteView> getCreditNoteFromFilter(String from,String to,String Department);
+    public List<CreditNoteView> getCreditNoteFromFilter(String from,String to,String Department,String status);
     // UPDATE CreditNote cn set cn.MFinanceItemstatus.id = :status  WHERE cn.id = :CNId
     //public TaxInvoiceView SearchTaxInvoiceFromFilter(String from,String To,String Department);
 }

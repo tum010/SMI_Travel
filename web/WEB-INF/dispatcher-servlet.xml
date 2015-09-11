@@ -524,6 +524,7 @@
             <property name="invoiceService" ref="InvoiceService" />
 	</bean>
 	<bean id="SearchReceiptController" class="com.smi.travel.controller.SearchReceiptController">
+            <property name="utilservice" ref="UtilityService" />
             <property name="receiptService" ref="ReceiptService" />
 	</bean>
 	<bean id="TaxInvoiceController" class="com.smi.travel.controller.TaxInvoiceController">
@@ -541,27 +542,29 @@
 
 
 	<bean id="StockController" class="com.smi.travel.controller.StockController">
-		<property name="stockService" ref="StockService" />
-		<property name="mStaffService" ref="MStaffService" />
-		<property name="utilityService" ref="UtilityService" />
+            <property name="stockService" ref="StockService" />
+            <property name="mStaffService" ref="MStaffService" />
+            <property name="utilityService" ref="UtilityService" />
 	</bean>
+        
 	<bean id="SearchStockController" class="com.smi.travel.controller.SearchStockController">
-		<property name="stockService" ref="StockService" />
-		<property name="mStaffService" ref="MStaffService" />
-		<property name="utilityService" ref="UtilityService" />
+            <property name="stockService" ref="StockService" />
+            <property name="mStaffService" ref="MStaffService" />
+            <property name="utilityService" ref="UtilityService" />
 	</bean>
-	<bean id="DefineVarController"
-		class="com.smi.travel.masterdata.controller.DefineVarController">
-		<property name="defineVarService" ref="DefineVarService"></property>
+        
+	<bean id="DefineVarController" class="com.smi.travel.masterdata.controller.DefineVarController">
+            <property name="defineVarService" ref="DefineVarService"></property>
 	</bean>
 
 	<bean id="CreditNoteController" class="com.smi.travel.controller.CreditNoteController">
-		<property name="creditNoteService" ref="CreditNoteService"></property>
-		<property name="utilityService" ref="UtilityService"></property>
+            <property name="creditNoteService" ref="CreditNoteService"></property>
+            <property name="utilityService" ref="UtilityService"></property>
 	</bean>
 
 	<bean id="SearchCreditNoteController" class="com.smi.travel.controller.SearchCreditNoteController">
-		<property name="creditNoteService" ref="CreditNoteService"></property>
+            <property name="utilservice" ref="UtilityService" />    
+            <property name="creditNoteService" ref="CreditNoteService"></property>
 	</bean>
         
      
