@@ -132,8 +132,9 @@
                                 <prop key="InvoiceMonthly.smi">InvoiceMonthlyController</prop>
                                 <prop key="APMonitor.smi">APMonitorController</prop>
                                 <prop key="ARMonitor.smi">ARMonitorController</prop>
-                <prop key="CollectionMonitor.smi">CollectionMonitorController</prop>
-                <prop key="TicketFareSummaryReport.smi">TicketFareSummaryReportController</prop>
+                                <prop key="CollectionMonitor.smi">CollectionMonitorController</prop>
+                                <prop key="TicketFareSummaryReport.smi">TicketFareSummaryReportController</prop>
+                                <prop key="TicketketFareSumAgentStaff.smi">TicketketFareSumAgentStaffController</prop>
 				<!-- add mapping url -->
 			</props>
 		</property>
@@ -581,6 +582,9 @@
     <bean id="TicketFareSummaryReportController" class="com.smi.travel.controller.TicketFareSummaryReportController">
         <property name="utilityService" ref="UtilityService" />
     </bean>
+    <bean id="TicketketFareSumAgentStaffController" class="com.smi.travel.controller.TicketketFareSumAgentStaffController">
+        
+    </bean>
 	<!-- add bean id controller -->
 
 	<bean id="monitorGalileo" class="com.smi.travel.monitor.MonitorGalileo"
@@ -601,8 +605,8 @@
 			 <!--<value>S:/BackupPNR/error/</value>--> 
 		</constructor-arg>
 		<constructor-arg index="3" type="java.lang.String">
-			 <value>D:/iCONEXT/SMI/PNR/swap/</value> 
-                         <!--<value>C:/Users/Administrator/Desktop/PNR/galileo/swap/</value>--> 
+			 <!--<value>D:/iCONEXT/SMI/PNR/swap/</value>--> 
+                         <value>C:/Users/Administrator/Desktop/PNR/galileo/swap/</value> 
                          <!--<value>S:/swap/</value>-->
 		</constructor-arg>
 		<property name="mGalileoService" ref="MGalileoService" />
