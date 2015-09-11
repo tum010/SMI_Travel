@@ -37,17 +37,19 @@
         <div class="col-sm-10">
             <div class="row" style="padding-left: 15px">  
                 <div class="col-sm-6 " style="padding-right: 15px">
+                    <c:set var="type" value=""/>
                     <c:choose>
                         <c:when test="${fn:contains(page , 'W')}">
-                            <h4><b>Credit Note Wendy</b></h4>
+                            <c:set var="type" value="Wendy"/>
                         </c:when>
                         <c:when test="${fn:contains(page , 'O')}">
-                            <h4><b>Credit Note Outbound</b></h4>
+                            <c:set var="type" value="Outbound"/>
                         </c:when>     
                         <c:when test="${fn:contains(page , 'I')}">
-                            <h4><b>Credit Note Inbound</b></h4>
+                            <c:set var="type" value="Inbound"/>
                         </c:when> 
                     </c:choose> 
+                    <h4><b>Credit Note ${type} <font style="color: red;">${creditNote.MFinanceItemstatus.id == '2' ? 'VOID' : ''}</font></b></h4>
                 </div>
             </div>
             <hr/>
