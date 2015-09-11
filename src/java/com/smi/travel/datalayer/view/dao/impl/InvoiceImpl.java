@@ -12,6 +12,7 @@ import com.smi.travel.datalayer.view.dao.InvoiceReportDao;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -267,21 +268,37 @@ public class InvoiceImpl implements InvoiceReportDao{
         UtilityFunction util = new UtilityFunction();  
         Date thisdate = new Date();
         List data = new ArrayList();
-        String querydata = "SELECT * FROM `invoice_monthly_view`";
-        String query = "SELECT * FROM `invoice_monthly_view` invm Where";
+        String querydata = "";
+        String query = "";
         int checkQuery = 0;
         String prefix ="";
-        if(((from != null) &&(!"".equalsIgnoreCase(from))) &&((to != null) &&(!"".equalsIgnoreCase(to)))){
-             query += " invm.invdate >= '" +from +"' and invm.invdate <= '"+to +"' ";
-             checkQuery = 1;
-        }else if((from != null) &&(!"".equalsIgnoreCase(from))){
-             checkQuery = 1;
-             query +=  " invm.invdate >= '" +from +"'";   
-        }else if((to != null) &&(!"".equalsIgnoreCase(to))){
-             checkQuery = 1;
-             query += " invm.invdate <= '" +to +"'";
+        if( !"".equals(BillTo)  || !"".equals(vattype) || !"".equals(from) || !"".equals(to) || !"".equals(department)){
+            query = "SELECT * FROM `invoice_monthly_view` invm Where";
+        }else{
+            query = "SELECT * FROM `invoice_monthly_view` invm";
         }
-         
+        
+        if ((from != null )&&(!"".equalsIgnoreCase(from))) {
+            if ((to != null )&&(!"".equalsIgnoreCase(to))) {
+                if(checkQuery == 1){
+                     query += " and invm.invdate  BETWEEN  '" + from + "' AND '" + to + "' ";
+                }else{
+                    checkQuery = 1;
+                     query += " invm.invdate  BETWEEN  '" + from + "' AND '" + to + "' ";
+                }
+            }
+        }
+//        if(((from != null) &&(!"".equalsIgnoreCase(from))) &&((to != null) &&(!"".equalsIgnoreCase(to)))){
+//             query += " invm.invdate >= '" +from +"' and invm.invdate <= '"+to +"' ";
+//             checkQuery = 1;
+//        }else if((from != null) &&(!"".equalsIgnoreCase(from))){
+//             checkQuery = 1;
+//             query +=  " invm.invdate >= '" +from +"'";   
+//        }else if((to != null) &&(!"".equalsIgnoreCase(to))){
+//             checkQuery = 1;
+//             query += " invm.invdate <= '" +to +"'";
+//        }
+//         
          
          if((BillTo != null) &&(!"".equalsIgnoreCase(BillTo))){
              if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
@@ -297,10 +314,10 @@ public class InvoiceImpl implements InvoiceReportDao{
          }
          
         
-        if(checkQuery == 0){query = query.replaceAll("Where", "");}
+//        if(checkQuery == 0){query = query.replaceAll("Where", "");}
          System.out.println("query : "+query);
          
-        List<Object[]> QueryInvoiceMounthList = session.createSQLQuery(querydata)      
+        List<Object[]> QueryInvoiceMounthList = session.createSQLQuery(query)      
                 .addScalar("invname", Hibernate.STRING)
                 .addScalar("invno", Hibernate.STRING)
                 .addScalar("invdate", Hibernate.DATE)
@@ -324,7 +341,19 @@ public class InvoiceImpl implements InvoiceReportDao{
             invM.setDepartment(util.ConvertString(B[7]));
             invM.setDetail(util.ConvertString(B[3]));
             invM.setHeaddepartment(department);
-            invM.setInvdate(util.SetFormatDate(thisdate, "dd MMM yyyy"));
+            if(!"".equals(util.ConvertString(B[2]))){
+                String dayy[] = util.ConvertString(B[2]).split("-");
+                System.out.println("Date : " + util.ConvertString(B[2]));
+                String date = ""+dayy[2]+"-"+dayy[1]+"-"+dayy[0];
+                try {
+                    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                    Date dateBefore = df.parse(date);
+                    invM.setInvdate(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(dateBefore));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+//            invM.setInvdate(util.SetFormatDate(util.ConvertString(B[2]), "dd MMM yyyy"));
             invM.setInvname(util.ConvertString(B[0]));
             invM.setInvno(util.ConvertString(B[1]));
             invM.setJpy((BigDecimal) (B[5]));

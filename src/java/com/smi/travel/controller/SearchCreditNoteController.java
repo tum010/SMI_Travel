@@ -1,5 +1,7 @@
 package com.smi.travel.controller;
+import com.smi.travel.datalayer.entity.MFinanceItemstatus;
 import com.smi.travel.datalayer.service.CreditNoteService;
+import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.CreditNoteView;
 import com.smi.travel.master.controller.SMITravelController;
 import java.util.List;
@@ -11,21 +13,27 @@ import org.springframework.web.servlet.view.RedirectView;
 public class SearchCreditNoteController extends SMITravelController {
     private static final ModelAndView SearchCreditNote = new ModelAndView("SearchCreditNote");
     private static final ModelAndView SearchCreditNote_REFRESH = new ModelAndView(new RedirectView("SearchCreditNote.smi", true));
+    private static final String MFinanceItemstatusList = "mFinanceItemStatus_List";
     private CreditNoteService creditNoteService;
+    private UtilityService utilservice;
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        List<MFinanceItemstatus> mFinanceItemstatusList = getUtilservice().getListMFinanceItemstatus();
+        request.setAttribute(MFinanceItemstatusList, mFinanceItemstatusList);
         String dateFrom = request.getParameter("iDateFrom");
         String dateTo = request.getParameter("iDateTo");
         String department = request.getParameter("department");
         String action = request.getParameter("action");
+        String status = request.getParameter("status");
         if("search".equalsIgnoreCase(action)){
-            List<CreditNoteView> creditNoteList = creditNoteService.getCreditNoteFromFilter(dateFrom, dateTo, department);
+            List<CreditNoteView> creditNoteList = creditNoteService.getCreditNoteFromFilter(dateFrom, dateTo, department, status);
             request.setAttribute("creditNoteList", creditNoteList);
         }
         request.setAttribute("iDateFrom", dateFrom);
         request.setAttribute("iDateTo", dateTo);
         request.setAttribute("department", department);
+        request.setAttribute("status", status);
         return SearchCreditNote;
     }
 
@@ -41,5 +49,13 @@ public class SearchCreditNoteController extends SMITravelController {
      */
     public void setCreditNoteService(CreditNoteService creditNoteService) {
         this.creditNoteService = creditNoteService;
+    }
+
+    public UtilityService getUtilservice() {
+        return utilservice;
+    }
+
+    public void setUtilservice(UtilityService utilservice) {
+        this.utilservice = utilservice;
     }
 }
