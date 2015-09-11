@@ -587,7 +587,7 @@
         
     </bean>
     <bean id="BillAirAgentController" class="com.smi.travel.controller.BillAirAgentController">
-        
+        <property name="utilityService" ref="UtilityService" />
     </bean>
 	<!-- add bean id controller -->
 
