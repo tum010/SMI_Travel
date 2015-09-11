@@ -190,7 +190,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
         String prefix ="";
         
         if(((issuedateFrom != null) &&(!"".equalsIgnoreCase(issuedateFrom))) &&((issuedateTo != null) &&(!"".equalsIgnoreCase(issuedateTo)))){
-            query += " `fare`.`issuedate` >= '" +issuedateFrom +"' and `fare`.`issuedate` <= '"+issuedateTo +"' ";
+            query += " `fare`.`issue_date` >= '" +issuedateFrom +"' and `fare`.`issue_date` <= '"+issuedateTo +"' ";
             checkQuery = 1;
         }else if((issuedateFrom != null) &&(!"".equalsIgnoreCase(issuedateFrom))){
             checkQuery = 1;
@@ -213,47 +213,47 @@ public class TicketFareReportImpl implements TicketFareReportDao {
         
         if((ticketType != null) &&(!"".equalsIgnoreCase(ticketType))){
             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
-            query += prefix+" fare.ticket_type = '"+ticketType+"'";
+            query += prefix+" `fare`.`ticket_type` = '"+ticketType+"'";
         }else{
             ticketType = "ALL";
         }
 
         if((ticketBuy != null) &&(!"".equalsIgnoreCase(ticketBuy))){
             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
-            query += prefix+ " fare.ticket_buy = '"+ticketBuy+"'";
+            query += prefix+ " `fare`.`ticket_buy` = '"+ticketBuy+"'";
         }else{
             ticketBuy = "ALL";
         }
         
         if((airline != null) &&(!"".equalsIgnoreCase(airline))){
             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
-            query += prefix+" fare.airline_agent_id = '"+airline+"'";
+            query += prefix+" `fare`.`airline_agent_id` = '"+airline+"'";
         }else{
             airline = "ALL";
         }
 
         if((airlineCode != null) &&(!"".equalsIgnoreCase(airlineCode))){
             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
-            query += prefix+ " SUBSTR(fare.ticket_no,1,3) = '"+airlineCode+"'";
+            query += prefix+ " SUBSTR(`fare`.`ticket_no,1,3`) = '"+airlineCode+"'";
         }
         
         if((department != null) &&(!"".equalsIgnoreCase(department))){
             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
-            query += prefix+" fare.department = '"+department+"'";
+            query += prefix+" `fare`.`department` = '"+department+"'";
         }else{
             department = "ALL";
         }
 
         if((staff != null) &&(!"".equalsIgnoreCase(staff))){
             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
-            query += prefix+ " fare.owner = '"+staff+"'";
+            query += prefix+ " `fare`.`owner` = '"+staff+"'";
         }else{
             staff = "ALL";
         }
         
         if((termPay != null) &&(!"".equalsIgnoreCase(termPay))){
             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
-            query += prefix+ " inv.term_pay = '"+termPay+"'";
+            query += prefix+ " `inv`.`term_pay` = '"+termPay+"'";
         }else{
             termPay = "ALL";
         }
