@@ -692,7 +692,7 @@
                                 <div class="col-md-2 text-right"> 
                                 </div>
                                 <div class="col-md-1 text-right">                                    
-                                    <button type="button" class="btn btn-default" onclick="copyReceipt()">
+                                    <button type="button" class="btn btn-default hidden" onclick="copyReceipt()">
                                         <span id="ButtonCopy" class="glyphicon glyphicon-copyright-mark" ></span> Copy 
                                     </button>
                                 </div>

@@ -59,23 +59,23 @@
                     <select class="form-control" id="Department" name="Department">
                         <option value="">Choose</option>
                             <c:choose>
-                                <c:when test="${requestScope['department'] == 'Inbound'}">
-                                    <c:set var="select" value="selected" />
+                                <c:when test="${requestScope['department'] == 'Wendy'}">
+                                    <c:set var="select1" value="selected" />
                                 </c:when>
                             </c:choose>
-                        <option value="Wendy" ${select}>Wendy</option>                      
+                        <option value="Wendy" ${select1}>Wendy</option>                      
                             <c:choose>
                                 <c:when test="${requestScope['department'] == 'Outbound'}">
-                                    <c:set var="select" value="selected" />
+                                    <c:set var="select2" value="selected" />
                                 </c:when>
                             </c:choose>
-                        <option value="Outbound" ${select}>Outbound</option>
+                        <option value="Outbound" ${select2}>Outbound</option>
                             <c:choose>
-                                <c:when test="${requestScope['department'] == 'Wendy'}">
-                                    <c:set var="select" value="selected" />
+                                <c:when test="${requestScope['department'] == 'Inbound'}">
+                                    <c:set var="select3" value="selected" />
                                 </c:when>
                             </c:choose>
-                         <option value="Inbound" ${select}>Inbound</option>
+                         <option value="Inbound" ${select3}>Inbound</option>
                     </select>    
                 </div>
                 <div class="col-md-2 text-right " style="padding: 0px 0px 0px 0px">

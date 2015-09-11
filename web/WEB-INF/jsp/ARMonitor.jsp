@@ -1,8 +1,16 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript" src="js/ARMonitor.js"></script> 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<c:set var="listType" value="${requestScope['listType']}" />
+<c:set var="listAr" value="${requestScope['listAr']}" />
+<c:set var="invoiceType" value="${requestScope['invoiceType']}" />
+<c:set var="departmnt" value="${requestScope['departmnt']}" />
+<c:set var="type" value="${requestScope['type']}" />
+<c:set var="from" value="${requestScope['from']}" />
+<c:set var="to" value="${requestScope['to']}" />
+<c:set var="status" value="${requestScope['status']}" />
 <section class="content-header" >
     <h1>
         Nirvana Interface
@@ -12,6 +20,7 @@
         <li class="active"><a href="#"></a>AR Monitor</li>
     </ol>
 </section>
+
 <div class ="container"  style="padding-top: 15px;padding-left: 5px;" ng-app="">
     <!-- side bar -->
     <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
@@ -25,13 +34,53 @@
             <div class="col-xs-12 form-group"><hr/></div>
         </div>
         <form action="ARMonitor.smi" method="post" id="arMonitorForm" role="form" autocomplete="off">
+            <input type="hidden" value="searchAr" id="action" name="action">
             <div class="col-xs-12">
-                <div class="col-xs-1 text-left">
-                    <label class="control-label" for="">Receive</lable>
+                <div class="col-xs-1 text-left" style="width: 120px">
+                    <label class="control-label" for="">Invoice Type</lable>
                 </div>
-                <div class="col-xs-1" style="width: 240px">
-                    <select class="form-control" id="arReceive" name="arReceive">
-                        <option value=""> </option>
+                <div class="col-xs-1" style="width: 200px">
+                    <c:set var="selectInvoiceTypeVat" value="" />
+                    <c:set var="selectInvoiceTypeNoVat" value="" />
+                    <c:set var="selectInvoiceTypeTemp" value="" />
+                    <c:if test="${invoiceType == 'V'}">
+                        <c:set var="selectInvoiceTypeVat" value="selected" />
+                    </c:if>
+                    <c:if test="${invoiceType == 'N'}">
+                        <c:set var="selectInvoiceTypeNoVat" value="selected" />
+                    </c:if>
+                    <c:if test="${invoiceType == 'T'}">
+                        <c:set var="selectInvoiceTypeTemp" value="selected" />
+                    </c:if>
+                    <select class="form-control" id="invoiceType" name="invoiceType">
+                        <option value="">--Select--</option>
+                        <option value="V" ${selectInvoiceTypeVat}>Vat </option>
+                        <option value="N" ${selectInvoiceTypeNoVat}>No Vat </option>
+                        <option value="T" ${selectInvoiceTypeTemp}>Temp </option>
+                    </select>
+                </div>
+                <!--<div class="col-xs-1" style="width: 50px"></div>-->
+                <div class="col-xs-1 text-left">
+                    <label class="control-label" for="">Department </lable>
+                </div>
+                <div class="col-xs-1" style="width: 200px">
+                    <c:set var="selectDepartWendy" value="" />
+                    <c:set var="selectDepartOutbound" value="" />
+                    <c:set var="selectDepartInbound" value="" />
+                    <c:if test="${departmnt == 'Wendy'}">
+                        <c:set var="selectDepartWendy" value="selected" />
+                    </c:if>
+                    <c:if test="${departmnt == 'Outbound'}">
+                        <c:set var="selectDepartOutbound" value="selected" />
+                    </c:if>
+                    <c:if test="${departmnt == 'Inbound'}">
+                        <c:set var="selectDepartInbound" value="selected" />
+                    </c:if>
+                    <select class="form-control" id="department" name="department">
+                        <option value="">--Select--</option>
+                        <option value="Wendy" ${selectDepartWendy}>Wendy </option>
+                        <option value="Outbound" ${selectDepartOutbound}>Outbound </option>
+                        <option value="Inbound" ${selectDepartInbound}>Inbound </option>
                     </select>
                 </div>
                 <div class="col-xs-1" style="width: 50px"></div>
@@ -40,59 +89,84 @@
                 </div>
                 <div class="col-xs-1" style="width: 200px">
                     <select class="form-control" id="arType" name="arType">
-                        <option value=""> </option>
+                        <option value="">--Select--</option>
+                        <c:forEach var="type" items="${listType}" varStatus="count">
+                            <c:set var="selectARtype" value="" />
+                            <c:if test="${type == type.id}">
+                                <c:set var="selectARtype" value="selected" />
+                            </c:if>
+                            <option value="${type.id}" ${selectARtype}>${type.name} </option>
+                        </c:forEach>
                     </select>
+                </div>
+            </div><br><br>
+            <div class="col-xs-12"></div>
+            <div class="col-xs-12"> <!--Row 2 -->
+                <div class="col-xs-1 text-left" style="width: 120px">
+                    <label class="control-label" for="">From</lable>
+                </div>
+                <div class="col-xs-1" style="width: 200px">
+                    <div class='input-group date' id='InputFromDate'>
+                    <c:if test='${from != null}'>
+                        <input id="arFromDate" name="arFromDate"  type="text" 
+                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${from}">
+                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>        
+                    </c:if>
+                    <c:if test='${from == null}'>
+                        <input id="arFromDate" name="arFromDate"  type="text" 
+                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                
+                    </c:if>                             
+                    </div>  
+                </div>
+                <!--<div class="col-xs-1" style="width: 50px"></div>-->
+                <div class="col-xs-1 text-left">
+                    <label class="control-label">To</lable>
+                </div>
+                <div class="col-xs-1" style="width: 200px">
+                    <div class='input-group date' id='InputToDate'>
+                    <c:if test='${to != null}'>
+                        <input id="arToDate" name="arToDate"  type="text" 
+                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${to}">
+                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>        
+                    </c:if>
+                    <c:if test='${to == null}'>
+                        <input id="arToDate" name="arToDate"  type="text" 
+                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                
+                    </c:if>                             
+                    </div>   
                 </div>
                 <div class="col-xs-1" style="width: 50px"></div>
                 <div class="col-xs-1 text-left">
                     <label class="control-label" for="">Status</lable>
                 </div>
                 <div class="col-xs-1" style="width: 200px">
+                    <c:set var="selectNew" value="" />
+                    <c:set var="selectExport" value="" />
+                    <c:set var="selectChange" value="" />
+                    <c:if test="${status == 'New'}">
+                        <c:set var="selectNew" value="selected" />
+                    </c:if>
+                    <c:if test="${status == 'Export'}">
+                        <c:set var="selectExport" value="selected" />
+                    </c:if>
+                    <c:if test="${status == 'Change'}">
+                        <c:set var="selectChange" value="selected" />
+                    </c:if>
                     <select class="form-control" id="arStatus" name="arStatus">
-                        <option value=""> </option>
+                        <option value="">--Select--</option>
+                        <option value="New" ${selectNew}>New </option>
+                        <option value="Export" ${selectExport}>Export </option>
+                        <option value="Change" ${selectChange}>Change </option>
                     </select>
                 </div>
             </div>
             <div class="col-xs-12"><br></div>
             <div class="col-xs-12">
-                <div class="col-xs-1 text-left">
-                    <label class="control-label" for="">From</lable>
-                </div>
-                <div class="col-xs-1" style="width: 170px">
-                    <div class='input-group date' id='InputFromDate'>
-                    <c:if test='${taxInvoice.taxInvDate != null}'>
-                        <input id="arFromDate" name="arFromDate"  type="text" 
-                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
-                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>        
-                    </c:if>
-                    <c:if test='${taxInvoice.taxInvDate == null}'>
-                        <input id="arFromDate" name="arFromDate"  type="text" 
-                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
-                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                
-                    </c:if>                             
-                    </div>               
-                </div>
-                <div class="col-xs-1" style="width: 120px"></div>
-                <div class="col-xs-1 text-left">
-                    <label class="control-label">To</lable>
-                </div>
-                <div class="col-xs-1" style="width: 170px">
-                    <div class='input-group date' id='InputToDate'>
-                    <c:if test='${taxInvoice.taxInvDate != null}'>
-                        <input id="arToDate" name="arToDate"  type="text" 
-                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
-                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>        
-                    </c:if>
-                    <c:if test='${taxInvoice.taxInvDate == null}'>
-                        <input id="arToDate" name="arToDate"  type="text" 
-                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
-                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                
-                    </c:if>                             
-                    </div>               
-                </div>
-                <div class="col-xs-1" style="width: 245px"></div>
+                <div class="col-xs-10"></div>
                 <div class="col-xs-1">
-                    <button type="submit"  id="btnSearchAR"  name="btnSearchAR" class="btn btn-primary btn-primary">
+                    <button type="submit"  id="btnSearchAR"  name="btnSearchAR"  onclick="searchArmonitor()"  class="btn btn-primary btn-primary">
                         <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
                     </button>
                 </div>
@@ -114,39 +188,34 @@
                                 <th style="width: 5%">Status</th>
                              </tr>
                         </thead>
-                        <tbody>               
+                        <tbody>
+                            <c:forEach var="ar_nirvana" items="${listAr}" varStatus="countar">
                             <tr>
                                 <td class="hidden">1</td>
                                 <td align="center">
-                                    <input class="form-control" type="checkbox" id="selectAll1" name="selectAll1" value="1">
+                                    <input class="form-control" type="checkbox" id="selectAll${countar.count}" name="selectAll${countar.count}" value="${countar.count}">
                                 </td>
-                                <td align="center">1</td>
-                                <td>150814</td>
-                                <td>150814</td>
-                                <td>150814</td>
-                                <td>150814</td>
-                                <td align="right" class="money">1000000</td>
-                                <td align="right" class="money">1000000</td>
-                                <td align="center">THB</td>
-                                <td align="center">NORMAL</td>
+                                <td align="center">${countar.count}</td>
+                                <td>${ar_nirvana.intreference}</td>
+                                <td>${ar_nirvana.customerid}</td>
+                                <td>${ar_nirvana.customername}</td>
+                                <td>${ar_nirvana.salesaccount1}</td>
+                                <td align="right" class="money">${ar_nirvana.aramt -  ar_nirvana.vatamt}</td>
+                                <td align="right" class="money">${ar_nirvana.aramt}</td>
+                                <td align="center">${ar_nirvana.currencyid}</td>
+                                <td align="center">${ar_nirvana.status}</td>
                             </tr>
+                            </c:forEach>
                         </tbody>
                     </table>    
                 </div>
             </div>
             <div class="col-xs-12"><br></div>
             <div class="col-xs-12">
-                <div class="col-xs-1 text-right" style="width: 585px"></div>
-                <div class="col-xs-1" style="width: 200px">
-                    <select class="form-control" id="arReport" name="arReport">
-                        <option value=""> </option>
-                        <option value="">Collection Report</option>
-                        <option value="">Change AR Report</option>
-                    </select>
-                </div>
-                <div class="col-xs-1 text-right" style="width: 90px">
+                <div class="col-xs-1 text-right" style="width: 665px"></div>
+                <div class="col-xs-1 text-right" style="width: 210px">
                     <button type="button" class="btn btn-default" data-dismiss="modal">
-                        <span id="btnDownloadAP" class="glyphicon glyphicon-print" ></span> Print
+                        <span id="btnDownloadAP" class="glyphicon glyphicon-print" ></span> Print Change AR Report
                     </button>
                 </div>
                 <div class="col-xs-1 text-right" style="">
@@ -217,9 +286,18 @@
     }
     
     function confirmExport(){
+        alert("EXX");
         $("#arExportModal").modal("hide");
+//        var action = $('#action').val();
+        $('#action').val('export');
+        document.getElementById('arMonitorForm').submit();
     }
     
+    function searchArmonitor(){
+        var action = $('#action').val();
+        action.value = 'searchAr';
+        document.getElementById('arMonitorForm').submit();
+    }
     function selectAll(){
         var row = $('#arDataListTable tr').length;     
         var check = 0;
@@ -234,8 +312,9 @@
                 }
             }   
         }
-
+//        alert("Check : " + check + "  Un : " + unCheck + " Row : " + row);
         if(check > unCheck){
+//            alert("1");
             for(var i=1;i<row;i++){
                 var selectAll = document.getElementById("selectAll"+i);
                 if(selectAll !== null && selectAll !== ''){
@@ -249,6 +328,7 @@
         }
 
         if(check < unCheck){
+//            alert("2");
             for(var i=1;i<row;i++){
                 var selectAll = document.getElementById("selectAll"+i);
                 if(selectAll !== null && selectAll !== ''){
@@ -258,6 +338,7 @@
         }
 
         if(check === 0 && unCheck !== 0){
+//            alert("3");
             for(var i=1;i<row;i++){
                 var selectAll = document.getElementById("selectAll"+i);
                 if(selectAll !== null && selectAll !== ''){
@@ -272,6 +353,7 @@
         }
 
         if(check !== 0 && unCheck === 0){
+//            alert("4");
             for(var i=1;i<row;i++){
                 var selectAll = document.getElementById("selectAll"+i);
                 if(selectAll !== null && selectAll !== ''){
@@ -281,6 +363,7 @@
         }
 
         if(check === unCheck){
+//            alert("5");
             for(var i=1;i<row;i++){
                 var selectAll = document.getElementById("selectAll"+i);
                 if(selectAll !== null && selectAll !== ''){

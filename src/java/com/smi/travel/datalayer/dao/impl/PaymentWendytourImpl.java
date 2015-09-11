@@ -17,6 +17,7 @@ import com.smi.travel.datalayer.view.entity.PaymentWendytourView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import org.hibernate.Hibernate;
@@ -68,10 +69,10 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
     @Override
     public String UpdatePaymentWendy(PaymentWendy payment) {
         String result = "fail";
-        Session session = this.sessionFactory.openSession();
         try {
-            
+            Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
+            payment.setUpdateDate(new Date());
             session.update(payment);
             
             List<PaymentDetailWendy> paymentDetailWendy = payment.getPaymentDetailWendies();
@@ -92,8 +93,8 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
             this.sessionFactory.close();
             result = "success";
         } catch (Exception ex) {
-            transaction.rollback();
-            session.close();
+//            transaction.rollback();
+//            session.close();
             this.sessionFactory.close();
             System.out.println("Fail !!!!!");
             ex.printStackTrace();

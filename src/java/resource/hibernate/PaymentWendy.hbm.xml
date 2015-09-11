@@ -62,6 +62,12 @@
         <property name="isExport" type="java.lang.Integer">
             <column name="is_export" />
         </property>
+        <property name="updateDate" type="timestamp">
+            <column name="update_date" length="19" />
+        </property>
+        <property name="exportDate" type="timestamp">
+            <column name="export_date" length="19" />
+        </property>
         <bag name="paymentDetailWendies" table="payment_detail_wendy" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="pay_wendy_id" />

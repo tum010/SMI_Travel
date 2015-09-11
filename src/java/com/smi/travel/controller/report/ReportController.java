@@ -62,6 +62,8 @@ public class ReportController extends SMITravelController {
     private static final String ReceiveList = "ReceiveList";
     private static final String InvoiceEmail = "InvoiceEmail";
     private static final String InvoiceReport = "InvoiceReport";
+    private static final String InvoiceTemp = "InvoiceTemp";
+    private static final String InvoiceTempReport = "InvoiceTempReport";
     private static final String TaxInvoiceReport = "TaxInvoiceReport";
     private static final String TaxInvoiceEmailReport = "TaxInvoiceEmailReport";
     private static final String CreditNoteReport = "CreditNoteReport";
@@ -194,6 +196,10 @@ public class ReportController extends SMITravelController {
             data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign);
         } else if (InvoiceReport.equalsIgnoreCase(name)) {
             data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign);
+        }else if (InvoiceTemp.equalsIgnoreCase(name)) {
+            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign);
+        } else if (InvoiceTempReport.equalsIgnoreCase(name)) {
+            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign);
         } else if (TaxInvoiceReport.equalsIgnoreCase(name)) {
             data = reportservice.getTaxInvoice(taxInvId, option);
         } else if (TaxInvoiceEmailReport.equalsIgnoreCase(name)) {
@@ -205,7 +211,7 @@ public class ReportController extends SMITravelController {
         }else if(RefundAirReport.equalsIgnoreCase(name)){
             data = reportservice.getRefundAirReport(refundId);
         }else if(TicketFareReport.equalsIgnoreCase(name)){
-            data = reportservice.getTicketFareReport();
+//            data = reportservice.getTicketFareReport();
         }else if(TaxInvoiceSummaryReport.equalsIgnoreCase(name)){
             data = reportservice.getTaxInvoiceSummaryReport(from, to, department, systemuser);
         }else if(CreditNoteSummaryReport.equalsIgnoreCase(name)){

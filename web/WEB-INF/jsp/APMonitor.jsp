@@ -3,6 +3,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="mpaytype_list" value="${requestScope['mpaytype_list']}" />
+<c:set var="data_list" value="${requestScope['data_list']}" />
 <section class="content-header" >
     <h1>
         Nirvana Interface
@@ -26,12 +28,39 @@
         </div>
         <form action="APMonitor.smi" method="post" id="apMonitorForm" role="form" autocomplete="off">
             <div class="col-xs-12">
+                <c:if test="${requestScope['update'] =='1'}">                                            
+                    <div id="textAlertDivSave"  style="" class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Update Status Success!</strong> 
+                    </div>
+                </c:if>
+                <c:if test="${requestScope['update'] =='0'}">
+                <div id="textAlertDivNotSave"  style="" class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                   <strong>Update Status Unsuccess!</strong> 
+                </div>
+                </c:if>
                 <div class="col-xs-1 text-left">
                     <label class="control-label" for="">Payment</lable>
                 </div>
                 <div class="col-xs-1" style="width: 240px">
-                    <select class="form-control" id="apPayment" name="apPayment">
+                    <select class="form-control" id="apPayment" name="apPayment" onchange="apPaymentAir()">
                         <option value=""> </option>
+                        <c:set var="A" value="" />
+                        <c:if test="${'A' == requestScope['apPayment']}">
+                            <c:set var="A" value="selected" />
+                        </c:if>
+                        <option value="A" ${A}>Air Ticket</option>
+                        <c:set var="W" value="" />
+                        <c:if test="${'W' == requestScope['apPayment']}">
+                            <c:set var="W" value="selected" />
+                        </c:if>
+                        <option value="W" ${W}>Wendy</option>
+                        <c:set var="O" value="" />
+                        <c:if test="${'O' == requestScope['apPayment']}">
+                            <c:set var="O" value="selected" />
+                        </c:if>
+                        <option value="O" ${O}>Outbound</option>
                     </select>
                 </div>
                 <div class="col-xs-1" style="width: 50px"></div>
@@ -39,8 +68,19 @@
                     <label class="control-label" for="">Type</lable>
                 </div>
                 <div class="col-xs-1" style="width: 200px">
-                    <select class="form-control" id="apType" name="apType">
+                    <c:set var="air" value="" />
+                        <c:if test="${'A' == requestScope['apPayment']}">
+                            <c:set var="air" value="disabled" />
+                        </c:if>
+                    <select class="form-control" id="apType" name="apType" ${air}>
                         <option value=""> </option>
+                        <c:forEach var="mpaytype_list" items="${mpaytype_list}">
+                            <c:set var="select" value="" />
+                            <c:if test="${mpaytype_list.id == requestScope['apType']}">
+                                <c:set var="select" value="selected" />
+                            </c:if>
+                            <option value="<c:out value="${mpaytype_list.id}" />" ${select}><c:out value="${mpaytype_list.name}" /></option>                                         
+                        </c:forEach>
                     </select>
                 </div>
                 <div class="col-xs-1" style="width: 50px"></div>
@@ -50,6 +90,21 @@
                 <div class="col-xs-1" style="width: 200px">
                     <select class="form-control" id="apStatus" name="apStatus">
                         <option value=""> </option>
+                        <c:set var="A" value="" />
+                        <c:if test="${'N' == requestScope['apStatus']}">
+                            <c:set var="N" value="selected" />
+                        </c:if>
+                        <option value="N" ${N}>New</option>
+                        <c:set var="E" value="" />
+                        <c:if test="${'E' == requestScope['apStatus']}">
+                            <c:set var="E" value="selected" />
+                        </c:if>
+                        <option value="E" ${E}>Export</option>
+                        <c:set var="C" value="" />
+                        <c:if test="${'C' == requestScope['apStatus']}">
+                            <c:set var="C" value="selected" />
+                        </c:if>
+                        <option value="C" ${C}>Change</option>
                     </select>
                 </div>
             </div>
@@ -67,7 +122,7 @@
                     </c:if>
                     <c:if test='${taxInvoice.taxInvDate == null}'>
                         <input id="apFromDate" name="apFromDate"  type="text" 
-                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['apFromDate']}">
                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                
                     </c:if>                             
                     </div>               
@@ -85,7 +140,7 @@
                     </c:if>
                     <c:if test='${taxInvoice.taxInvDate == null}'>
                         <input id="apToDate" name="apToDate"  type="text" 
-                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['apToDate']}">
                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                
                     </c:if>                             
                     </div>               
@@ -98,7 +153,7 @@
                 </div>
                 <div class="col-xs-12"><br></div>  
                 <div class="col-xs-12">
-                    <input type="hidden" id="apCount" name="apCount" value="1"/>
+                    <input type="hidden" id="apCount" name="apCount" value="${data_list.size()}"/>
                     <table id="apDataListTable" class="display" cellspacing="0" width="100%">
                         <thead>
                             <tr class="datatable-header">
@@ -115,26 +170,38 @@
                                 <th style="width: 5%">Status</th>
                              </tr>
                         </thead>
-                        <tbody>               
+                        <tbody>
+                            <c:forEach var="data_list" items="${data_list}" varStatus="i">
                             <tr>
-                                <td class="hidden">1</td>
+                                <td class="hidden">
+                                    <input type="hidden" id="paymentId${i.count}" name="paymentId${i.count}" value="${data_list.payment_id}"/> 
+                                    <input type="hidden" id="paymentType${i.count}" name="paymentType${i.count}" value="${data_list.paymenttype}"/>
+                                </td>                              
                                 <td align="center">
-                                    <input class="form-control" type="checkbox" id="selectAll1" name="selectAll1" value="1">
+                                    <c:choose>
+                                        <c:when test="${data_list.itf_status == 'New'}">
+                                            <input class="form-control" type="checkbox" id="selectAll${i.count}" name="selectAll${i.count}" value="1"/>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <input class="form-control" type="checkbox" id="selectAll" name="selectAll" value="" disabled=""/>
+                                        </c:otherwise>
+                                    </c:choose>                                  
                                 </td>
-                                <td align="center">1</td>
-                                <td>150814</td>
-                                <td>150814</td>
-                                <td>150814</td>
-                                <td>150814</td>
-                                <td align="right" class="money">1000000</td>
-                                <td align="right" class="money">1000000</td>
-                                <td align="center">THB</td>
-                                <td align="center">NORMAL</td>
+                                <td align="center">${i.count}</td>
+                                <td>${data_list.intreference}</td>
+                                <td>${data_list.vendorid}</td>
+                                <td>${data_list.vendorname}</td>
+                                <td>${data_list.puraccount1}</td>
+                                <td align="right" class="money">${data_list.vatamt}</td>
+                                <td align="right" class="money">${data_list.basevatamt}</td>
+                                <td align="center">${data_list.currencyid}</td>
+                                <td align="center">${data_list.itf_status}</td>
                             </tr>
+                            </c:forEach>
                         </tbody>
                     </table>    
                 </div>
-            </div>
+            </div>            
             <div class="col-xs-12"><br></div>
             <div class="col-xs-12">
                 <div class="col-xs-1 text-right" style="width: 665px"></div>
@@ -149,6 +216,7 @@
                     </button>
                 </div>    
             </div>
+            <input type="hidden" id="action" name="action" value="search"/>
         </form>
     </div>
 </div> 
@@ -189,7 +257,9 @@
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
             "bFilter": false,
-            "bInfo": false
+            "bInfo": false,
+            "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+            "iDisplayLength": 50
         });
         
         $('#apDataListTable tbody').on('click', 'tr', function () {
@@ -211,6 +281,9 @@
     
     function confirmExport(){
         $("#apExportModal").modal("hide");
+        var action = document.getElementById("action");
+        action.value = "export";
+        document.getElementById("apMonitorForm").submit();
     }
     
     function selectAll(){
@@ -284,6 +357,18 @@
                     }    
                 }             
             }            
+        }
+    }
+    
+    function apPaymentAir(){
+        var apPayment = document.getElementById("apPayment").value;
+        if(apPayment !== 'A'){
+            $('#apType').removeAttr('disabled');           
+        } else {
+            $('#apType').attr('disabled', 'disabled');
+            $('[name=apType] option').filter(function() { 
+                return ($(this).val() === '');
+            }).prop('selected', true);      
         }
     }
 </script>

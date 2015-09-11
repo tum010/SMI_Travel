@@ -88,7 +88,7 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
                
             }
         }
-        query += "  ORDER BY st.invdate DESC";
+      //  query += "  ORDER BY st.invdate DESC";
         System.out.println("Query : "+query);
         int no = 0;
         List<Object[]> InvoiceSummaryList = session.createSQLQuery(query )
@@ -112,19 +112,7 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
         for (Object[] B : InvoiceSummaryList) {
             InvoiceSummary sum = new InvoiceSummary();
             sum.setNo(count);
-            if("N".equals(util.ConvertString(B[0]))){
-                sum.setInvtype("Invoice No Vat");
-            }else if("A".equals(util.ConvertString(B[0]))){
-                sum.setInvtype("Invoice Air Ticket");
-            }else if("T".equals(util.ConvertString(B[0]))){
-                sum.setInvtype("Temporary Invoice");
-            }else if("V".equals(util.ConvertString(B[0]))){
-                sum.setInvtype("Invoice Vat");
-            }else if("".equals(util.ConvertString(B[0]))){
-                sum.setInvtype("All");
-            }else{
-                sum.setInvtype("");
-            }
+            sum.setInvtype(util.ConvertString(B[0]));
             
             sum.setInvno(util.ConvertString(B[1]));
             if(!"".equals(util.ConvertString(B[2]))){
@@ -182,7 +170,18 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
                 
             sum.setSystemdate(util.convertDateToString(new Date()));
             sum.setUsername(util.ConvertString(B[10]));
-
+            if("N".equals(type)){
+                sum.setHeadertype("Invoice No Vat");
+            }else if("A".equals(type)){
+                sum.setHeadertype("Invoice Air Ticket");
+            }else if("T".equals(type)){
+                sum.setHeadertype("Temporary Invoice");
+            }else if("V".equals(type)){
+                sum.setHeadertype("Invoice Vat");
+            }else if("".equals(type)){
+                sum.setHeadertype("All");
+            }
+//            sum.setHeadertype(type);
             data.add(sum);
             count++;
         }

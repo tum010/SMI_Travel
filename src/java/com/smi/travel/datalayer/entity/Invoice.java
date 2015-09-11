@@ -27,12 +27,15 @@ public class Invoice {
      private String createBy;
      private Date createDate;
      private String subDepartment;
+     private Date updateDate;
+     private Date exportDate;
+     private Integer isExport;
      private List invoiceDetails = new LinkedList<InvoiceDetail>();
 
     public Invoice() {
     }
 
-    public Invoice(MAccterm MAccTerm, MFinanceItemstatus MFinanceItemstatus, SystemUser staff, String invNo, String invTo, String invName, String invAddress, Date dueDate, String deparement, String arcode, String remark, String invType, Integer isGroup, Integer isLock, String createBy, Date createDate, String subDepartment,Date invDate, List invoiceDetails) {
+    public Invoice(MAccterm MAccTerm, MFinanceItemstatus MFinanceItemstatus, SystemUser staff, String invNo, String invTo, String invName, String invAddress, Date dueDate, String deparement, String arcode, String remark, String invType, Integer isGroup, Integer isLock, String createBy, Date createDate, String subDepartment,Date invDate,Date updateDate,Date exportDate,Integer isExport, List invoiceDetails) {
        this.MAccTerm = MAccTerm;
        this.MFinanceItemstatus = MFinanceItemstatus;
        this.staff = staff;
@@ -52,6 +55,9 @@ public class Invoice {
        this.createDate = createDate;
        this.subDepartment = subDepartment;
        this.invoiceDetails = invoiceDetails;
+       this.updateDate = updateDate;
+       this.exportDate = exportDate;
+       this.isExport = isExport;
     }
    
     public String getId() {
@@ -209,9 +215,29 @@ public class Invoice {
         this.MAccTerm = MAccTerm;
     }
 
+    public Date getUpdateDate() {
+        return updateDate;
+    }
 
+    public Integer getIsExport() {
+        return isExport;
+    }
 
+    public Date getExportDate() {
+        return exportDate;
+    }
 
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    public void setIsExport(Integer isExport) {
+        this.isExport = isExport;
+    }
+
+    public void setExportDate(Date exportDate) {
+        this.exportDate = exportDate;
+    }
 
 }
 

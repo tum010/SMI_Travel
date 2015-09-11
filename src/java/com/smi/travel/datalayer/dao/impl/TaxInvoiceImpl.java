@@ -14,6 +14,7 @@ import com.smi.travel.datalayer.entity.TaxInvoiceDetail;
 import com.smi.travel.datalayer.view.entity.TaxInvoiceView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -253,7 +254,7 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
                         amount = taxInvoiceDetail.getAmount();           
                         vat = taxInvoiceDetail.getVat();
 
-                        gross = ((amount.multiply(onehundred)).divide((vat.add(onehundred)), 2));
+                        gross = ((amount.multiply(onehundred)).divide((vat.add(onehundred)), 4, RoundingMode.HALF_UP));                       
                         vat = amount.subtract(gross);
 
                         totalAmount = totalAmount.add(amount);
@@ -320,12 +321,11 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
                     }                
                 }                           
             }
-            taxInvoiceView.setTotalAmount(totalAmount);
-            taxInvoiceView.setTotalGross(totalGross);
-            taxInvoiceView.setTotalVat(totalVat);           
+            taxInvoiceView.setTotalAmount(totalAmount.setScale(2, RoundingMode.HALF_UP));
+            taxInvoiceView.setTotalGross(totalGross.setScale(2, RoundingMode.HALF_UP));
+            taxInvoiceView.setTotalVat(totalVat.setScale(2, RoundingMode.HALF_UP));           
             taxInvoiceView.setInvoiceNo(totalInvoiceNo);
-            taxInvoiceView.setReceiptNo(totalReceiptNo);
-            
+            taxInvoiceView.setReceiptNo(totalReceiptNo);            
             taxInvoiceViewList.add(taxInvoiceView);
         }
         

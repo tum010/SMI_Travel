@@ -80,19 +80,21 @@ public class TaxInvoiceSummaryReportImpl implements TaxInvoiceSummaryReportDao {
                 .list();
         
         int no = 1;
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("dd-MM-yyyy");
         for (Object[] B : QueryList) {
             TaxInvoiceSummaryReport taxInvoiceSummaryReport = new TaxInvoiceSummaryReport();
             taxInvoiceSummaryReport.setNo(String.valueOf(no));
             taxInvoiceSummaryReport.setId(util.ConvertString(B[0]));
             taxInvoiceSummaryReport.setTaxno(util.ConvertString(B[1]));
-            taxInvoiceSummaryReport.setTaxdate(util.ConvertString(B[2]));
+            taxInvoiceSummaryReport.setTaxdate((("null".equals(String.valueOf(B[2])) ? "" : String.valueOf(df.format(util.convertStringToDate(String.valueOf(B[2])))))));
             taxInvoiceSummaryReport.setTaxto(util.ConvertString(B[3]));
             taxInvoiceSummaryReport.setTaxname(util.ConvertString(B[4]));                           
             taxInvoiceSummaryReport.setStatus(util.ConvertString(B[11]));
             taxInvoiceSummaryReport.setDepartment(util.ConvertString(B[12]));
             taxInvoiceSummaryReport.setSystemdate(String.valueOf(dateformat.format(new Date())));
-            taxInvoiceSummaryReport.setFrom(from);
-            taxInvoiceSummaryReport.setTo(to);
+            taxInvoiceSummaryReport.setFrom(!"".equalsIgnoreCase(from) ? String.valueOf(df.format(util.convertStringToDate(from))) : "");
+            taxInvoiceSummaryReport.setTo(!"".equalsIgnoreCase(to) ? String.valueOf(df.format(util.convertStringToDate(to))) : "");
             taxInvoiceSummaryReport.setUser(systemuser);
             taxInvoiceSummaryReport.setDepartmentshow(departmentshow);
             

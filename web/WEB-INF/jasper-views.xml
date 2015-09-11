@@ -134,6 +134,16 @@
 	   <property name="url" value="/WEB-INF/report/InvoiceReport.jrxml"/>
 	</bean>
         
+        <bean id="InvoiceTemp"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/InvoiceTempReport.jrxml"/>
+	</bean>
+        
+        <bean id="InvoiceTempReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/InvoiceTempReport.jrxml"/>
+	</bean>
+        
         <bean id="TaxInvoiceReport"
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/TaxInvoiceReport.jrxml"/>
@@ -172,5 +182,10 @@
         <bean id="CreditNoteSummaryReport"
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/CreditNoteSummaryReport.jrxml"/>
-	</bean>        
+	</bean>
+        
+         <bean id="TicketFareReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsXlsView">
+	   <property name="url" value="/WEB-INF/report/TicketFareAirlineReport.jrxml"/>
+	</bean>                   
 </beans>

@@ -32,13 +32,15 @@ public class PaymentWendy   {
      private Date createDate;
      private Integer isExport;
      private String currency;
+     private Date updateDate;
+     private Date exportDate;
      private List paymentDetailWendies = new LinkedList<PaymentDetailWendy>();
 
     public PaymentWendy() {
     }
 
 
-    public PaymentWendy( MPaymentDoctype MPaymentDoctype, MAccpay MAccpay, MItemstatus MItemstatus, String payNo, Date payDate, Integer account, String invoiceSup, String apCode, String detail, String remark, String chqNo, BigDecimal cash, BigDecimal chqAmount, String createBy, Date createDate, List paymentDetailWendies,Integer isExport,String currency,TourOperationDesc tourOperationDesc) {
+    public PaymentWendy( MPaymentDoctype MPaymentDoctype, MAccpay MAccpay, MItemstatus MItemstatus, String payNo, Date payDate, Integer account, String invoiceSup, String apCode, String detail, String remark, String chqNo, BigDecimal cash, BigDecimal chqAmount, String createBy, Date createDate, List paymentDetailWendies,Integer isExport,String currency,TourOperationDesc tourOperationDesc, Date updateDate, Date exportDate) {
        this.MPaymentDoctype = MPaymentDoctype;
        this.MAccpay = MAccpay;
        this.MItemstatus = MItemstatus;
@@ -58,6 +60,8 @@ public class PaymentWendy   {
        this.isExport =isExport;
        this.currency = currency;
        this.tourOperationDesc =  tourOperationDesc;
+       this.updateDate = updateDate;
+       this.exportDate = exportDate;
     }
    
     public String getId() {
@@ -205,8 +209,21 @@ public class PaymentWendy   {
         this.currency = currency;
     }
 
+    public Date getUpdateDate() {
+        return updateDate;
+    }
 
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
 
+    public Date getExportDate() {
+        return exportDate;
+    }
+
+    public void setExportDate(Date exportDate) {
+        this.exportDate = exportDate;
+    }
 
 }
 

@@ -74,6 +74,7 @@ public class InvoiceController extends SMITravelController {
            department =  callPageFrom.substring(0,1);
            invoiceType   =  callPageFrom.substring(1);
         }
+        request.setAttribute("invoiceType", invoiceType);
         System.out.println("invoiceType : "+invoiceType);
         System.out.println("department : "+department);
         
@@ -142,6 +143,9 @@ public class InvoiceController extends SMITravelController {
         if("save".equals(action)){
 //            invoice = new Invoice();
             invoice.setId(invoiceId);
+            if(invoiceId != null && !"".equals(invoiceId)){
+               action = "update";
+            }
             invoice = setValueInvoice(action, user.getUsername(), invoiceType, invoiceId, invoiceTo, invoiceName, invoiceAddress, isGroup, termPay, dueDate, department, staffCode, staffName, staffId, arCode, remark, invoiceNo, InputInvDate, request,subDepartment);
             String checkOverFlow = invoiceService.checkOverflowValueOfInvoice(invoice.getInvoiceDetails());
             if("okMoney".equals(checkOverFlow)){
@@ -348,6 +352,21 @@ public class InvoiceController extends SMITravelController {
             // Create Date
             invoice.setCreateDate(date);
            
+            if("save".equals(action)){
+                invoice.setIsExport(0);
+            }
+            
+           DateFormat dateFormat2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	   Date date2 = new Date();
+	   System.out.println("Date 2 : "+dateFormat2.format(date2));
+           String updateDate = dateFormat2.format(date2);
+           System.out.println("String Date 2 : "+dateFormat2.format(date2));
+           date2 = utilty.convertStringToDateS(updateDate);
+            if("update".equals(action)){
+//               invoice.setUpdateDate(date2);
+                invoice.setUpdateDate(new Date());
+            }
+            
             // Status
             if("disableVoid".equals(action)){
                 mStatus.setId("2");

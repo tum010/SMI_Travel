@@ -16,8 +16,11 @@ import com.smi.travel.datalayer.entity.RefundAirticketDetail;
 import com.smi.travel.datalayer.entity.RefundAirticketDetailView;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
+import com.smi.travel.util.UtilityFunction;
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -31,6 +34,7 @@ import org.hibernate.Transaction;
 public class PaymentAirTicketImpl implements PaymentAirTicketDao {
     private SessionFactory sessionFactory;
     private Transaction transaction;
+    private UtilityFunction utilityFunction;
     
     @Override
     public String InsertPaymentAir(PaymentAirticket payAir) {
@@ -40,6 +44,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             transaction = session.beginTransaction();
             result = gennaratePaymentRunning();
             payAir.setPayNo(result);
+            payAir.setIsExport(0);
             session.save(payAir);
             
             List<PaymentAirticketFare> paymentAirticketFares = payAir.getPaymentAirticketFares();
@@ -79,10 +84,12 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
 
     @Override
     public String UpdatePaymentAir(PaymentAirticket payAir) {
+        UtilityFunction util = new UtilityFunction();
         String result = "";
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
+            payAir.setUpdateDate(new Date());
             session.update(payAir);
             List<PaymentAirticketFare> paymentAirticketFares = payAir.getPaymentAirticketFares();
             
@@ -155,7 +162,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             result = "success";
         } catch (Exception ex) {
             ex.printStackTrace();
-            transaction.rollback();
+            getTransaction().rollback();
             result = "fail";
         }
         System.out.println("result::"+result);
@@ -747,6 +754,14 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
         session.close();
         this.sessionFactory.close();
         return result;
+    }
+
+    public UtilityFunction getUtilityFunction() {
+        return utilityFunction;
+    }
+
+    public void setUtilityFunction(UtilityFunction utilityFunction) {
+        this.utilityFunction = utilityFunction;
     }
 
 }

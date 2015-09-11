@@ -9,6 +9,7 @@ import com.smi.travel.datalayer.dao.MListItemDao;
 import com.smi.travel.datalayer.entity.Function;
 import com.smi.travel.datalayer.entity.MAccpay;
 import com.smi.travel.datalayer.entity.MAccterm;
+import com.smi.travel.datalayer.entity.MAirline;
 import com.smi.travel.datalayer.entity.MAirlineAgent;
 import com.smi.travel.datalayer.entity.MBilltype;
 import com.smi.travel.datalayer.entity.MBookingstatus;
@@ -448,5 +449,24 @@ public class MListItemImpl implements MListItemDao {
         return MCreditBankList; 
     }
 
+    @Override
+    public List<MAirline> getListMAirlineCode() {
+        String query = "from MAirline ma where ma.code3Letter  IS NOT NULL";
+        Session session = this.sessionFactory.openSession();
+        List<MAirline> MAirline = session.createQuery(query).list();
+        System.out.print("MCreditBankList " + MAirline.size());
+        if (MAirline.isEmpty()) {
+            return null;
+        }else{
+            for (int i = 0; i < MAirline.size(); i++) {
+                System.out.println("Code Airline : " + MAirline.get(i).getCode());
+            }
+        }
+        session.close();
+        this.sessionFactory.close();
+        return MAirline; 
+    }
+
+    
   
 }

@@ -160,6 +160,7 @@
         <property name="creditNoteSummaryReportDao" ref="CreditNoteSummaryReportDao" />
         <property name="invoiceSummaryDao" ref="InvoiceSummaryDao" />
         <property name="refundAirReportDao" ref="RefundAirReportDao" />
+        <property name="ticketFareReportDao" ref="TicketFareReportDao" />
     </bean> 
     
     
@@ -294,6 +295,14 @@
     
     <bean id="CreditNoteService" class="com.smi.travel.datalayer.service.CreditNoteService">
         <property name="creditNoteDao" ref="CreditNoteDao" />
+    </bean>
+    
+    <bean id="ARMonitorService" class="com.smi.travel.datalayer.service.ARMonitorService">
+        <property name="arNirvanaDao" ref="ARNirvanaDao" />
+    </bean>
+    
+    <bean id="APNirvanaService" class="com.smi.travel.datalayer.service.APNirvanaService">
+        <property name="apNirvanaDao" ref="APNirvanaDao" />
     </bean>
     
     <!--<add data>-->

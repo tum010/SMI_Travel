@@ -133,6 +133,7 @@
                                 <prop key="APMonitor.smi">APMonitorController</prop>
                                 <prop key="ARMonitor.smi">ARMonitorController</prop>
                 <prop key="CollectionMonitor.smi">CollectionMonitorController</prop>
+                <prop key="TicketFareSummaryReport.smi">TicketFareSummaryReportController</prop>
 				<!-- add mapping url -->
 			</props>
 		</property>
@@ -566,14 +567,19 @@
         <property name="utilityService" ref="UtilityService" />
     </bean>
     <bean id="APMonitorController" class="com.smi.travel.controller.APMonitorController">
-        
+        <property name="apNirvanaService" ref="APNirvanaService" />
+        <property name="utilservice" ref="UtilityService" />
     </bean>
     <bean id="ARMonitorController" class="com.smi.travel.controller.ARMonitorController">
- 
+        <property name="utilityService" ref="UtilityService" />
+        <property name="arMonitorService" ref="ARMonitorService" />
     </bean>
     
     <bean id="CollectionMonitorController" class="com.smi.travel.controller.CollectionMonitorController">
         
+    </bean>
+    <bean id="TicketFareSummaryReportController" class="com.smi.travel.controller.TicketFareSummaryReportController">
+        <property name="utilityService" ref="UtilityService" />
     </bean>
 	<!-- add bean id controller -->
 
@@ -595,8 +601,9 @@
 			 <!--<value>S:/BackupPNR/error/</value>--> 
 		</constructor-arg>
 		<constructor-arg index="3" type="java.lang.String">
-			 <!--<value>D:/iCONEXT/SMI/PNR/swap/</value>--> 
-                         <value>C:/Users/Administrator/Desktop/PNR/galileo/swap/</value> 
+			 <value>D:/iCONEXT/SMI/PNR/swap/</value> 
+                         <!--<value>C:/Users/Administrator/Desktop/PNR/galileo/swap/</value>--> 
+                         <!--<value>S:/swap/</value>-->
 		</constructor-arg>
 		<property name="mGalileoService" ref="MGalileoService" />
 		<property name="mAirticketService" ref="MAirticketService" />
@@ -623,16 +630,17 @@
 		<constructor-arg index="3" type="java.lang.String">
 			 <!--<value>D:/iCONEXT/SMI/PNR/swap/</value>--> 
                          <value>C:/Users/Administrator/Desktop/PNR/amadeus/swap/</value> 
+                         <!--<value>T:/swap/</value>-->
 		</constructor-arg>
 		<property name="mAmadeusService" ref="MAmadeusService" />
 		<property name="mAirticketService" ref="MAirticketService" />
 		<property name="bookingAirticketService" ref="BookingAirticket" />
 	</bean>
 
-        <task:scheduled-tasks> 
+<!--        <task:scheduled-tasks> 
             <task:scheduled ref="monitorAmadeus" method="run" fixed-delay="5000" /> 
             <task:scheduled ref="monitorGalileo" method="run" fixed-delay="5000" /> 
-        </task:scheduled-tasks>  
+        </task:scheduled-tasks>  -->
 
 	<bean id="MProductTypeController"
 		class="com.smi.travel.masterdata.controller.MProductTypeController">
@@ -651,6 +659,7 @@
 
 	<bean id="ExportDataToExcelController"
 		class="com.smi.travel.controller.excel.ExportDataToExcelController">
+            <property name="reportservice" ref="ReportService" />
 	</bean>
 
 	<bean id="Mail" class="com.smi.travel.util.Mail">
@@ -664,8 +673,8 @@
 		<property name="lockUnlockBookingService" ref="LockUnlockBookingService" />
 	</bean>
         
-	<mvc:annotation-driven />
+<!--	<mvc:annotation-driven />
 	<context:annotation-config />
-	<context:component-scan base-package="com.smi.travel.controller,com.smi.travel.**.controller" />
+	<context:component-scan base-package="com.smi.travel.controller,com.smi.travel.**.controller" />-->
    
 </beans>
