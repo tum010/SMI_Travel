@@ -135,6 +135,7 @@
                                 <prop key="CollectionMonitor.smi">CollectionMonitorController</prop>
                                 <prop key="TicketFareSummaryReport.smi">TicketFareSummaryReportController</prop>
                                 <prop key="TicketFareSumAgentStaff.smi">TicketFareSumAgentStaffController</prop>
+                                <prop key="BillAirAgent.smi">BillAirAgentController</prop>
 				<!-- add mapping url -->
 			</props>
 		</property>
@@ -531,6 +532,7 @@
             <property name="taxInvoiceService" ref="TaxInvoiceService" />
 	</bean>
 	<bean id="SearchTaxInvoiceController" class="com.smi.travel.controller.SearchTaxInvoiceController">
+            <property name="utilservice" ref="UtilityService" />
             <property name="taxInvoiceService" ref="TaxInvoiceService" />
 	</bean>
 	<bean id="ReceiveTableController" class="com.smi.travel.controller.ReceiveTableController">
@@ -584,6 +586,9 @@
     </bean>
     <bean id="TicketFareSumAgentStaffController" class="com.smi.travel.controller.TicketFareSumAgentStaffController">
         <property name="utilityService" ref="UtilityService" />
+    </bean>
+    <bean id="BillAirAgentController" class="com.smi.travel.controller.BillAirAgentController">
+        
     </bean>
 	<!-- add bean id controller -->
 

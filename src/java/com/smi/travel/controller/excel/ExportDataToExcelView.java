@@ -635,8 +635,6 @@ public class ExportDataToExcelView extends AbstractExcelView {
         }
     }
 
-
-
     public HSSFFont getHeaderFont(HSSFFont font) {
 
         font.setFontHeightInPoints((short) 30);
