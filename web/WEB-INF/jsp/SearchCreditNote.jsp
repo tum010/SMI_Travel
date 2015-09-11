@@ -112,7 +112,7 @@
                                     <td align="right">${creditNote.grandTotal}</td>
                                     <td> 
                                         <center> 
-                                            <a  href="CreditNote${creditNote.department}.smi?action=search&cnNo=${creditNote.cnno}">
+                                            <a  href="CreditNote${fn:substring(creditNote.department,0,1)}.smi?action=search&cnNo=${creditNote.cnno}">
                                                 <span class="glyphicon glyphicon-edit editicon"  ></span>
                                             </a>
                                         </center>
