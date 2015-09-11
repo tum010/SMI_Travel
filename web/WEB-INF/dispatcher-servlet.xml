@@ -134,7 +134,7 @@
                                 <prop key="ARMonitor.smi">ARMonitorController</prop>
                                 <prop key="CollectionMonitor.smi">CollectionMonitorController</prop>
                                 <prop key="TicketFareSummaryReport.smi">TicketFareSummaryReportController</prop>
-                                <prop key="TicketketFareSumAgentStaff.smi">TicketketFareSumAgentStaffController</prop>
+                                <prop key="TicketFareSumAgentStaff.smi">TicketFareSumAgentStaffController</prop>
 				<!-- add mapping url -->
 			</props>
 		</property>
@@ -582,8 +582,8 @@
     <bean id="TicketFareSummaryReportController" class="com.smi.travel.controller.TicketFareSummaryReportController">
         <property name="utilityService" ref="UtilityService" />
     </bean>
-    <bean id="TicketketFareSumAgentStaffController" class="com.smi.travel.controller.TicketketFareSumAgentStaffController">
-        
+    <bean id="TicketFareSumAgentStaffController" class="com.smi.travel.controller.TicketFareSumAgentStaffController">
+        <property name="utilityService" ref="UtilityService" />
     </bean>
 	<!-- add bean id controller -->
 

@@ -177,7 +177,24 @@ public class TicketFareReportImpl implements TicketFareReportDao {
         
         return data;
     }
-
+    @Override
+    public List getTicketFareSumAgentStaff(String ticketType, String ticketBuy, String airline, String airlineCode, String department, String staff, String termPay, String printby, String issuedateFrom, String issuedateTo, String invdateFrom, String invdateTo, String groupBy) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List data = new ArrayList<TicketFareReport>();
+        
+        String TicketSummary = "select `agt`.`name` AS `agentname`,`agt`.`id` AS `agentid`,`fare`.`owner` AS `owner`,(select sum(`fare`.`inv_amount`) from `invoice_detail` `invd` where (`invd`.`invoice_id` = `inv`.`id`)) AS `invamount`,`fare`.`department` AS `department`,sum(ifnull(`fare`.`ticket_commission`,0)) AS `ticcom`,sum(ifnull(`fare`.`sale_price`,0)) AS `saleprice`,sum(ifnull(`fare`.`agent_commission`,0)) AS `agentcom`,sum((ifnull(`fare`.`ticket_commission`,0) - ifnull(`fare`.`agent_commission`,0))) AS `profit`,count(`fare`.`ticket_commission`) AS `pax` from (((`ticket_fare_airline` `fare` join `agent` `agt` on((`agt`.`id` = `fare`.`agent_id`))) left join `ticket_fare_invoice` `finv` on((`finv`.`ticket_fare_id` = `fare`.`id`))) left join `invoice` `inv` on((`inv`.`id` = `finv`.`invoice_id`))) ";
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        return data;
+    }
     public SessionFactory getSessionFactory() {
         return sessionFactory;
     }
@@ -193,5 +210,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
     public void setUtilityFunction(UtilityFunction utilityFunction) {
         this.utilityFunction = utilityFunction;
     }
+
+
    
 }
