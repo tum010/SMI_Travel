@@ -238,10 +238,8 @@ public class ExportDataToExcelView extends AbstractExcelView {
                  sheet.autoSizeColumn(j);
              }
         }
-        
-        
-        
     }
+    
     public void genTicketFareAirlineReport(HSSFWorkbook wb, List TicketFare) {
 
         String sheetName = "Sheet1";// name of sheet
