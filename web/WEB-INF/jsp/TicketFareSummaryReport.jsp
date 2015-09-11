@@ -36,7 +36,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-6 control-label text-right" >Report Type<font style="color: red">*</font></label>
+                                <label class="col-md-6 control-label text-right" >Report Type</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <select name="reportType" id="reportType"  class="form-control">
@@ -53,7 +53,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-6 control-label text-right" >Ticket Type<font style="color: red">*</font></label>
+                                <label class="col-md-6 control-label text-right" >Ticket Type</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <select name="ticketType" id="ticketType"  class="form-control">
@@ -70,7 +70,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-6 control-label text-right" >Ticket Buy<font style="color: red">*</font></label>
+                                <label class="col-md-6 control-label text-right" >Ticket Buy</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <select name="ticketBuy" id="ticketBuy" class="form-control">
@@ -86,7 +86,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-6 control-label text-right" >Airline<font style="color: red">*</font></label>
+                                <label class="col-md-6 control-label text-right" >Airline</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <select name="airline" id="airline"  class="form-control">
@@ -104,7 +104,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-6 control-label text-right" >Airline Code<font style="color: red">*</font></label>
+                                <label class="col-md-6 control-label text-right" >Airline Code</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <select name="airlineCode" id="airlineCode"  class="form-control">
@@ -118,7 +118,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group" id="fromdatepanel">
-                                <label class="col-md-6 control-label text-right">From<font style="color: red">*</font></label>
+                                <label class="col-md-6 control-label text-right">From</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date' id='fromdate'>
@@ -134,7 +134,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group" id="todatepanel">
-                                <label class="col-md-6 control-label text-right">To<font style="color: red">*</font></label>
+                                <label class="col-md-6 control-label text-right">To</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date' id='todate'>
@@ -150,7 +150,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-6 control-label text-right" >Department<font style="color: red">*</font></label>
+                                <label class="col-md-6 control-label text-right" >Department</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <select name="department" id="department"  class="form-control">
@@ -167,7 +167,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-6 control-label text-right" >Sale By<font style="color: red">*</font></label>
+                                <label class="col-md-6 control-label text-right" >Sale By</label>
                                 <div class="col-md-3 form-group">  
                                     <div class="input-group">
                                         <input type="hidden" class="form-control" id="salebyId" name="salebyId" value=""/>
@@ -186,7 +186,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-6 control-label text-right" >Term Pay<font style="color: red">*</font></label>
+                                <label class="col-md-6 control-label text-right" >Term Pay</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <select name="termPay" id="termPay"  class="form-control">
@@ -265,13 +265,13 @@
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
         $('.date').datetimepicker({
+            
         });
         
-        $('span').click(function() {
+        $('span').click(function(){
             var position = $(this).offset();
             console.log("positon :" + position.top);
             $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
-
         });
         
         $("#TicketFareSummaryReport").bootstrapValidator({
@@ -304,6 +304,16 @@
                     }
                 }
             }
+        });
+        
+        //validate date
+        $('#fromdate').datetimepicker().on('dp.change', function (e) {
+            $('#TicketFareSummaryReport').bootstrapValidator('revalidateField', 'startdate');
+            $('#TicketFareSummaryReport').bootstrapValidator('revalidateField', 'enddate');
+        });
+        $('#todate').datetimepicker().on('dp.change', function (e) {
+            $('#TicketFareSummaryReport').bootstrapValidator('revalidateField', 'startdate');
+            $('#TicketFareSummaryReport').bootstrapValidator('revalidateField', 'enddate');
         });
 
     });

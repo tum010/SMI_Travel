@@ -217,6 +217,10 @@ public class ReportService {
         return ticketFareReportDao.getTicketFareReport(ticketType,ticketBuy,airline,airlineCode,dateFrom,dateTo,department,staff,termPay,printby);
     }
     
+    public List getTicketFareSumAgentStaff(String ticketType,String ticketBuy,String airline,String airlineCode,String department,String staff,String termPay,String printby,String issuedateFrom,String issuedateTo,String invdateFrom,String invdateTo,String groupBy){
+        return ticketFareReportDao.getTicketFareSumAgentStaff(ticketType, ticketBuy, airline, airlineCode, department, staff, termPay, printby, issuedateFrom, issuedateTo, invdateFrom, invdateTo,groupBy);
+    }
+
     public List getTaxInvoiceSummaryReport(String from, String to, String department, String systemuser){
         return taxInvoiceSummaryReportDao.getTaxInvoiceSummaryReport(from, to, department, systemuser);
     }
