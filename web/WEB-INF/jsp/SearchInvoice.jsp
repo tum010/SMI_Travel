@@ -333,9 +333,9 @@
                     }
                 }
             }).on('success.field.fv', function (e, data) {
-                alert("1");
+//                alert("1");
                 if (data.field === 'FromDate' && data.fv.isValidField('ToDate') === false) {
-                        data.fv.revalidateField('InputToDate');
+                        data.fv.revalidateField('ToDate');
                     }
 
                     if (data.field === 'ToDate' && data.fv.isValidField('FromDate') === false) {
