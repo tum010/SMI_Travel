@@ -329,8 +329,8 @@ public class ExportDataToExcelView extends AbstractExcelView {
         if(!"".equalsIgnoreCase(dataheader.getFrom())){
         cell062.setCellValue(dataheader.getFrom() + " to " + dataheader.getTo());
         cell062.setCellStyle(styleC22);
-        sheet.addMergedRegion(CellRangeAddress.valueOf("E6:F6"));
         }
+        sheet.addMergedRegion(CellRangeAddress.valueOf("E6:F6"));
         // Row 7
         HSSFRow row07 = sheet.createRow(6);
         HSSFCell cell071 = row07.createCell(0);
@@ -409,7 +409,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
              TicketFareReport data = (TicketFareReport)TicketFare.get(i);
              HSSFRow row = sheet.createRow(count + i);
              row.createCell(0).setCellValue(data.getInvno());
-             row.createCell(1).setCellValue(data.getIssuedate());
+             row.createCell(1).setCellValue(data.getInvdate());
              row.createCell(2).setCellValue(data.getDepartment());
              row.createCell(3).setCellValue(data.getStaff());
              row.createCell(4).setCellValue(data.getTermpay());
@@ -593,10 +593,6 @@ public class ExportDataToExcelView extends AbstractExcelView {
                  sheet.autoSizeColumn(j);
              }
         }
-        
-       
-        
-      
     }
 
 
