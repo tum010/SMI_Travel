@@ -658,7 +658,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell1.setCellValue("List Ticket Summary By Staff");
         styleC1.setFont(getHeaderFont(wb.createFont()));
         cell1.setCellStyle(styleC1);
-        sheet.addMergedRegion(CellRangeAddress.valueOf("A1:F1"));
+        sheet.addMergedRegion(CellRangeAddress.valueOf("A1:G1"));
         
         // Set align Text
         HSSFCellStyle styleC21 = wb.createCellStyle();
@@ -879,9 +879,9 @@ public class ExportDataToExcelView extends AbstractExcelView {
 //                row.createCell(13).setCellValue(String.valueOf(invamountTotal));
 //             }
 //             
-//             for(int j =0;j<13;j++){
-//                 sheet.autoSizeColumn(j);
-//             }
+             for(int j =0;j<13;j++){
+                 sheet.autoSizeColumn(j);
+             }
 //        }
     }
     
