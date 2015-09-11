@@ -58,6 +58,12 @@ public class ExportDataToExcelView extends AbstractExcelView {
     private void genTicketFareAgentReport(HSSFWorkbook wb, List TicketAgent) {
         String sheetName = "Sheet1";// name of sheet
         HSSFSheet sheet = wb.createSheet(sheetName);
+        
+        TicketFareReport dataheader = new TicketFareReport();
+        
+        if(TicketAgent != null){
+            dataheader = (TicketFareReport)TicketAgent.get(0);
+        }
 
         // set Header Report (Row 1)
         HSSFCellStyle styleC1 = wb.createCellStyle();
@@ -80,14 +86,14 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell21.setCellValue("Print By : ");
         cell21.setCellStyle(styleC21);
         HSSFCell cell22 = row2.createCell(1);
-        cell22.setCellValue("MS.BUSABA SUEBN ");
+        cell22.setCellValue(dataheader.getPrintby());
         cell22.setCellStyle(styleC22);
         sheet.addMergedRegion(CellRangeAddress.valueOf("B2:D2"));
         HSSFCell cell23 = row2.createCell(4);
         cell23.setCellValue("Air Line : ");
         cell23.setCellStyle(styleC21);
         HSSFCell cell24 = row2.createCell(5);
-        cell24.setCellValue("ALL");
+        cell24.setCellValue(dataheader.getAirline());
         cell24.setCellStyle(styleC22);
         
         // Row 3
@@ -96,14 +102,14 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell31.setCellValue("Department : ");
         cell31.setCellStyle(styleC21);
         HSSFCell cell32 = row3.createCell(1);
-        cell32.setCellValue("ALL ");
+        cell32.setCellValue(dataheader.getHeaddepartment());
         cell32.setCellStyle(styleC22);
         sheet.addMergedRegion(CellRangeAddress.valueOf("B3:D3"));
         HSSFCell cell33 = row3.createCell(4);
-        cell33.setCellValue("Ticket Buy : ");
+        cell33.setCellValue("Ticket Type : ");
         cell33.setCellStyle(styleC21);
         HSSFCell cell34 = row3.createCell(5);
-        cell34.setCellValue("Compa");
+        cell34.setCellValue(dataheader.getTickettype());
         cell34.setCellStyle(styleC22);
 
         // Row 4
@@ -112,14 +118,14 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell41.setCellValue("Term Pay : ");
         cell41.setCellStyle(styleC21);
         HSSFCell cell42 = row4.createCell(1);
-        cell42.setCellValue("ALL ");
+        cell42.setCellValue(dataheader.getHeadtermpay());
         cell42.setCellStyle(styleC22);
         sheet.addMergedRegion(CellRangeAddress.valueOf("B4:D4"));
         HSSFCell cell43 = row4.createCell(4);
-        cell43.setCellValue("Ticket Type : ");
+        cell43.setCellValue("Ticket Buy : ");
         cell43.setCellStyle(styleC21);
         HSSFCell cell44 = row4.createCell(5);
-        cell44.setCellValue("Domes");
+        cell44.setCellValue(dataheader.getTicketbuy());
         cell44.setCellStyle(styleC22);
 
         // Row 5
@@ -129,7 +135,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell51.setCellStyle(styleC21);
         sheet.addMergedRegion(CellRangeAddress.valueOf("A5:E5"));
         HSSFCell cell52 = row5.createCell(5);
-        cell52.setCellValue("ALL ");
+        cell52.setCellValue(dataheader.getHeadstaff());
         cell52.setCellStyle(styleC22);
         
          // Header Table
