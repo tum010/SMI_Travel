@@ -560,6 +560,16 @@
         <put-attribute name="title" value="CheckingTicket:List Ticket Fare Summary" />
         <put-attribute name="body" value="/WEB-INF/jsp/TicketFareSummaryReport.jsp" />
     </definition>
+    
+    <definition name="TicketketFareSumAgentStaff" extends="baseLayout">
+        <put-attribute name="title" value="Checking Ticket : List Ticket Summary By Agent and Staff" />
+        <put-attribute name="body" value="/WEB-INF/jsp/TicketketFareSumAgentStaff.jsp" />
+    </definition>
+    
+    <definition name="BillAirAgent" extends="baseLayout">
+        <put-attribute name="title" value="Checking AirTicket : Billng Air Agent Report" />
+        <put-attribute name="body" value="/WEB-INF/jsp/BillAirAgent.jsp" />
+    </definition>
     <!--<add data>-->
     
     <definition name="SendMail" extends="baseLayout">

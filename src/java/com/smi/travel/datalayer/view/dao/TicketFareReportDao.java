@@ -13,5 +13,5 @@ import java.util.List;
  * @author chonnasith
  */
 public interface TicketFareReportDao {
-    public List getTicketFareReport(String ticketType,String ticketBuy,String airline,String airlineCode,String dateFrom,String dateTo,String department,String staff,String termPay);
+    public List getTicketFareReport(String ticketType,String ticketBuy,String airline,String airlineCode,String dateFrom,String dateTo,String department,String staff,String termPay,String printby);
 }
