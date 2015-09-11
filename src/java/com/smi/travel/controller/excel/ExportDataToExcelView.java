@@ -217,6 +217,26 @@ public class ExportDataToExcelView extends AbstractExcelView {
       
     }
 
+
+
+    public HSSFFont getHeaderFont(HSSFFont font) {
+
+        font.setFontHeightInPoints((short) 30);
+        font.setFontName("Calibri");
+        font.setItalic(true);
+
+        return font;
+    }
+
+    public HSSFFont getHeaderTable(HSSFFont font) {
+
+        font.setFontHeightInPoints((short) 10);
+        font.setFontName("Calibri");
+        font.setBoldweight((short) 3);
+
+        return font;
+    }
+
     public HSSFFont getDetailFont(HSSFFont font) {
 
         font.setFontHeightInPoints((short) 10);
