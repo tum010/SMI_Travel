@@ -8,7 +8,6 @@ package com.smi.travel.datalayer.view.dao.impl;
 import com.smi.travel.datalayer.report.model.InvoiceSummary;
 import com.smi.travel.datalayer.view.dao.InvoiceSummaryDao;
 import com.smi.travel.util.UtilityFunction;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
