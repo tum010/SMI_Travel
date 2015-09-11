@@ -327,10 +327,15 @@ public class ExportDataToExcelView extends AbstractExcelView {
         sheet.addMergedRegion(CellRangeAddress.valueOf("A6:D6"));
         HSSFCell cell062 = row06.createCell(4);
         if(!"".equalsIgnoreCase(dataheader.getFrom())){
-        cell062.setCellValue(dataheader.getFrom() + " to " + dataheader.getTo());
+        cell062.setCellValue(dataheader.getFrom());
         cell062.setCellStyle(styleC22);
         }
-        sheet.addMergedRegion(CellRangeAddress.valueOf("E6:F6"));
+        HSSFCell cell063 = row06.createCell(5);
+        if(!"".equalsIgnoreCase(dataheader.getTo())){
+        cell063.setCellValue("to  " + dataheader.getTo());
+        cell063.setCellStyle(styleC22);
+        }
+        
         // Row 7
         HSSFRow row07 = sheet.createRow(6);
         HSSFCell cell071 = row07.createCell(0);
@@ -406,22 +411,51 @@ public class ExportDataToExcelView extends AbstractExcelView {
         //Detail of Table
         int count = 9 ;
         for(int i=0;i<TicketFare.size();i++){
-             TicketFareReport data = (TicketFareReport)TicketFare.get(i);
-             HSSFRow row = sheet.createRow(count + i);
-             row.createCell(0).setCellValue(data.getInvno());
-             row.createCell(1).setCellValue(data.getInvdate());
-             row.createCell(2).setCellValue(data.getDepartment());
-             row.createCell(3).setCellValue(data.getStaff());
-             row.createCell(4).setCellValue(data.getTermpay());
-             row.createCell(5).setCellValue(data.getPassenger());
-             row.createCell(6).setCellValue(data.getAir());
-             row.createCell(7).setCellValue(data.getDocno());
-             row.createCell(8).setCellValue(data.getIssuedate());
-             row.createCell(9).setCellValue(data.getNetsale());
-             row.createCell(10).setCellValue(data.getTax());
-             row.createCell(11).setCellValue(data.getIns());
-             row.createCell(12).setCellValue(data.getActcom());
-             row.createCell(13).setCellValue(data.getInvamount());
+            TicketFareReport data = (TicketFareReport)TicketFare.get(i);
+            HSSFRow row = sheet.createRow(count + i);
+            row.createCell(0).setCellValue(data.getInvno());
+            row.createCell(1).setCellValue(data.getInvdate());
+            row.createCell(2).setCellValue(data.getDepartment());
+            row.createCell(3).setCellValue(data.getStaff());
+            row.createCell(4).setCellValue(data.getTermpay());
+            row.createCell(5).setCellValue(data.getPassenger());
+            row.createCell(6).setCellValue(data.getAir());
+            row.createCell(7).setCellValue(data.getDocno());
+            row.createCell(8).setCellValue(data.getIssuedate());
+            row.createCell(9).setCellValue(data.getNetsale());
+            row.createCell(10).setCellValue(data.getTax());
+            row.createCell(11).setCellValue(data.getIns());
+            row.createCell(12).setCellValue(data.getActcom());
+            row.createCell(13).setCellValue(data.getInvamount());
+             
+             
+            if(i == (TicketFare.size()-1)){
+                row = sheet.createRow(count + i + 1);
+                BigDecimal netsalesTotal = new BigDecimal("0.00");
+                BigDecimal taxTotal = new BigDecimal("0.00");
+                BigDecimal insTotal = new BigDecimal("0.00");
+                BigDecimal actcommTotal = new BigDecimal("0.00");
+                BigDecimal invamountTotal = new BigDecimal("0.00");
+                for(int k=0;k<TicketFare.size();k++){
+                    TicketFareReport sum = (TicketFareReport)TicketFare.get(k);
+                    BigDecimal netsales = new BigDecimal(!"".equalsIgnoreCase(sum.getNetsale()) ? sum.getNetsale() : "0.00");
+                    BigDecimal tax = new BigDecimal(!"".equalsIgnoreCase(sum.getTax()) ? sum.getTax() : "0.00");
+                    BigDecimal ins = new BigDecimal(!"".equalsIgnoreCase(sum.getIns()) ? sum.getIns() : "0.00");
+                    BigDecimal actcomm = new BigDecimal(!"".equalsIgnoreCase(sum.getActcom()) ? sum.getActcom() : "0.00");
+                    BigDecimal invamount = new BigDecimal(!"".equalsIgnoreCase(sum.getInvamount()) ? sum.getInvamount() : "0.00");
+                    netsalesTotal = netsalesTotal.add(netsales);
+                    taxTotal = taxTotal.add(tax);
+                    insTotal = insTotal.add(ins);
+                    actcommTotal = actcommTotal.add(actcomm);
+                    invamountTotal = invamountTotal.add(invamount);
+                }  
+                row.createCell(9).setCellValue(String.valueOf(netsalesTotal));
+                row.createCell(10).setCellValue(String.valueOf(taxTotal));
+                row.createCell(11).setCellValue(String.valueOf(insTotal));
+                row.createCell(12).setCellValue(String.valueOf(actcommTotal));
+                row.createCell(13).setCellValue(String.valueOf(invamountTotal));
+             }
+             
              for(int j =0;j<13;j++){
                  sheet.autoSizeColumn(j);
              }

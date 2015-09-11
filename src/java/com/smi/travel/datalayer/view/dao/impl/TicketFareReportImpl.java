@@ -127,6 +127,8 @@ public class TicketFareReportImpl implements TicketFareReportDao {
         
         SimpleDateFormat df = new SimpleDateFormat();
         df.applyPattern("dd-MM-yyyy hh:mm");
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MM-yyyy");
         if("wendy".equalsIgnoreCase(department)){
             department = "WENDY";
         }else if("inbound".equalsIgnoreCase(department)){
@@ -141,8 +143,8 @@ public class TicketFareReportImpl implements TicketFareReportDao {
             ticketFareReport.setTickettype(ticketType);
             ticketFareReport.setTicketbuy(ticketBuy);
             ticketFareReport.setAirline(airline);
-            ticketFareReport.setFrom(dateFrom);
-            ticketFareReport.setTo(dateTo);
+            ticketFareReport.setFrom("".equals(String.valueOf(dateFrom)) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(dateFrom))));
+            ticketFareReport.setTo("".equals(String.valueOf(dateTo)) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(dateTo))));
             ticketFareReport.setHeaddepartment(department);
             ticketFareReport.setHeadstaff(staff);
             ticketFareReport.setHeadtermpay(termPay);
@@ -151,7 +153,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
             //set data
             ticketFareReport.setAir(util.ConvertString(B[0]));
             ticketFareReport.setDocno(util.ConvertString(B[1]));
-            ticketFareReport.setIssuedate(util.ConvertString(B[2]));
+            ticketFareReport.setIssuedate("null".equals(String.valueOf(B[2])) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(B[2])))));
             ticketFareReport.setDepartment(util.ConvertString(B[3]));
             ticketFareReport.setStaff(util.ConvertString(B[4]));
             ticketFareReport.setTermpay(util.ConvertString(B[5]));
@@ -169,7 +171,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
             ticketFareReport.setSaleprice(util.ConvertString(B[17]));
             ticketFareReport.setAgentcom(util.ConvertString(B[18]));
             ticketFareReport.setProfit(util.ConvertString(B[19]));
-            ticketFareReport.setInvdate(util.ConvertString(B[20]));
+            ticketFareReport.setInvdate("null".equals(String.valueOf(B[20])) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(B[20])))));
             data.add(ticketFareReport);
         }
         
