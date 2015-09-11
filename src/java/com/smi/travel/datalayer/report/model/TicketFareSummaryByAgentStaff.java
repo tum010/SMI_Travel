@@ -21,11 +21,12 @@ public class TicketFareSummaryByAgentStaff {
     private String agentcom;
     private String profit;
     private String pax;
+    
     private String printby;
     private String airline;
     private String headdepartment;
     private String headtickettype;
-    private String headticketby;
+    private String headticketbuy;
     private String headsale;
     private String issuefrom;
     private String issueto;
@@ -148,14 +149,14 @@ public class TicketFareSummaryByAgentStaff {
         this.headtickettype = headtickettype;
     }
 
-    public String getHeadticketby() {
-        return headticketby;
+    public String getHeadticketbuy() {
+        return headticketbuy;
     }
 
-    public void setHeadticketby(String headticketby) {
-        this.headticketby = headticketby;
+    public void setHeadticketbuy(String headticketbuy) {
+        this.headticketbuy = headticketbuy;
     }
-
+    
     public String getHeadsale() {
         return headsale;
     }
@@ -211,6 +212,7 @@ public class TicketFareSummaryByAgentStaff {
     public void setTermpay(String termpay) {
         this.termpay = termpay;
     }
-    
+
+
     
 }
