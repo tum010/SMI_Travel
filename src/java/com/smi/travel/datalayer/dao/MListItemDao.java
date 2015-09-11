@@ -17,6 +17,7 @@ import com.smi.travel.datalayer.entity.MBranch;
 import com.smi.travel.datalayer.entity.MCreditBank;
 import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MDepartment;
+import com.smi.travel.datalayer.entity.MFinanceItemstatus;
 import com.smi.travel.datalayer.entity.MFlight;
 import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.entity.MItemstatus;
@@ -64,4 +65,5 @@ public interface MListItemDao {
     public List<MStockStatus> getListMStockStatus();
     public List<MCreditBank> getListCreditBank();
     public List<MAirline> getListMAirlineCode();
+    public List<MFinanceItemstatus> getListMFinanceItemstatus();
 }
