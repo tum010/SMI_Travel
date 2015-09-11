@@ -32,8 +32,8 @@ public class TaxInvoiceService {
         return taxInvoiceDao.getTaxInvoiceFromTaxInvNo(TaxInvNo,Page);
     }
     
-    public List<TaxInvoiceView> SearchTaxInvoiceFromFilter(String From,String To,String Department){
-        return taxInvoiceDao.SearchTaxInvoiceFromFilter(From,To,Department);
+    public List<TaxInvoiceView> SearchTaxInvoiceFromFilter(String From,String To,String Department,String Status){
+        return taxInvoiceDao.SearchTaxInvoiceFromFilter(From,To,Department,Status);
     }
 
     public TaxInvoiceDao getTaxInvoiceDao() {

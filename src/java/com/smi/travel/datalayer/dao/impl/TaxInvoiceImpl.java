@@ -168,7 +168,7 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
     }
 
     @Override
-    public List<TaxInvoiceView> SearchTaxInvoiceFromFilter(String from, String To, String Department) {
+    public List<TaxInvoiceView> SearchTaxInvoiceFromFilter(String from, String To, String Department, String Status) {
         StringBuffer query = new StringBuffer("from TaxInvoice taxInv ");
         boolean haveCondition = false;
         if ((from != null) && (!"".equalsIgnoreCase(from))) {
@@ -184,6 +184,11 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
         if ((Department != null) && (!"".equalsIgnoreCase(Department))) {
             query.append(haveCondition ? " and" : " where");
             query.append(" taxInv.department = '" + Department + "'");
+            haveCondition = true;
+        }
+        if ((Status != null) && (!"".equalsIgnoreCase(Status))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" taxInv.MFinanceItemstatus.id = '" + Status + "'");
             haveCondition = true;
         }
         
