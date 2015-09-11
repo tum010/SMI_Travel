@@ -532,6 +532,7 @@
             <property name="taxInvoiceService" ref="TaxInvoiceService" />
 	</bean>
 	<bean id="SearchTaxInvoiceController" class="com.smi.travel.controller.SearchTaxInvoiceController">
+            <property name="utilservice" ref="UtilityService" />
             <property name="taxInvoiceService" ref="TaxInvoiceService" />
 	</bean>
 	<bean id="ReceiveTableController" class="com.smi.travel.controller.ReceiveTableController">

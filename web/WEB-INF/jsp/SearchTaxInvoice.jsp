@@ -8,6 +8,7 @@
 <link href="css/selectize.bootstrap3.css" rel="stylesheet">
 <link href="css/jquery-ui.css" rel="stylesheet">
 <c:set var="taxInvoiceView_List" value="${requestScope['taxInvoiceView_List']}" />
+<c:set var="mFinanceItemStatus_List" value="${requestScope['mFinanceItemStatus_List']}" />
 <section class="content-header" >
     <h1>
         Finance & Cashier - Tax Invoice
@@ -33,23 +34,23 @@
             <form action="SearchTaxInvoice.smi" method="post" id="TaxInvoiceSearchForm" name="TaxInvoiceSearchForm" role="form">
             <div class="col-xs-12 ">
                 <div class="col-xs-1 text-right">
-                    <label class="control-label" for="">From<font style="color: red"></font>&nbsp;</lable>
+                    <label class="control-label" for="">From<font style="color: red">*</font>&nbsp;</lable>
                 </div>
                 <div class="col-md-2 form-group"> 
-                    <div class='input-group date' id="FromDate">
-                        <input id="InputFromDate" name="InputFromDate"  type="text" 
+                    <div class='input-group date fromdate' id="FromDate">
+                        <input id="InputFromDate" name="InputFromDate"  type="text" onfocusout="checkDate()"
                             class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['inputFromDate']}">
-                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                                         
+                        <span class="input-group-addon spandate" id="InputFromDateSpan1"><span class="glyphicon glyphicon-calendar" id="InputFromDateSpan2"></span></span>                                                         
                     </div>
                 </div>
                 <div class="col-xs-1 text-right">
-                    <label class="control-label" for="">To<font style="color: red"></font>&nbsp;</lable>
+                    <label class="control-label" for="">To<font style="color: red">*</font>&nbsp;</lable>
                 </div>
                 <div class="col-md-2 form-group"> 
-                    <div class='input-group date' id='ToDate'>                    
+                    <div class='input-group date todate' id='ToDate'>                    
                         <input id="InputToDate" name="InputToDate"  type="text" 
                             class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['inputToDate']}">
-                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                                       
+                        <span class="input-group-addon spandate" id="InputToDateSpan1"><span class="glyphicon glyphicon-calendar" id="InputToDateSpan2"></span></span>                                                       
                     </div>
                 </div>
                 <div class="col-xs-1 text-right" style="padding: 0px 0px 0px 20px">
@@ -78,17 +79,35 @@
                          <option value="Inbound" ${select3}>Inbound</option>
                     </select>    
                 </div>
-                <div class="col-md-2 text-right " style="padding: 0px 0px 0px 0px">
+                <div class="col-xs-1 text-right" style="padding: 0px 0px 0px 20px">
+                    <label class="control-label" for="">Status<font style="color: red"></font></lable>
+                </div>    
+                <div class="col-md-2 form-group" style="padding: 0px 0px 0px 30px">
+                    <select class="form-control" id="Status" name="Status">
+                        <option value="">Choose</option>
+                        <c:forEach var="mFinanceList" items="${mFinanceItemStatus_List}" varStatus="i">
+                            <c:set var="select" value="" />
+                            <c:if test="${mFinanceList.id == requestScope['status']}">
+                                <c:set var="select" value="selected" />
+                            </c:if>
+                            <option  value="${mFinanceList.id}" ${select}>${mFinanceList.name}</option>
+                        </c:forEach>
+                    </select>    
+                </div>                    
+            </div>
+            <div class="col-xs-12 ">
+                <div class="col-xs-1" style="width: 755px"></div>
+                 <div class="col-md-2 text-right " style="padding: 0px 0px 0px 0px">
                     <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="" class="btn btn-primary btn-primary ">
                         <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
                     </button>                                          
                 </div>
                 <div class="col-md-1 text-right " style="padding: 0px 0px 0px 0px">
-                    <button type="button" onclick="printTaxInvoiceReportSummary();" class="btn btn-default">
+                    <button type="button" id="btnPrint" onclick="printTaxInvoiceReportSummary();" class="btn btn-default">
                         <span id="SpanPrint" class="glyphicon glyphicon-print"></span> Print
                     </button>
-                </div>   
-            </div>
+                </div>          
+            </div>        
             <input type="hidden" id="action" name="action" value="search">
             <input type="hidden" class="form-control" id="user" name="user" value="${requestScope['user']}"/>
             </form>
@@ -202,6 +221,9 @@
                         InputFromDate: {
                             trigger: 'focus keyup change',
                             validators: {
+                                notEmpty: {
+                                    message: 'The Date From is required'
+                                },
                                 date: {
                                     format: 'YYYY-MM-DD',
                                     max: 'InputToDate',
@@ -212,6 +234,9 @@
                         InputToDate: {
                             trigger: 'focus keyup change',
                             validators: {
+                                notEmpty: {
+                                    message: 'The Date From is required'
+                                },
                                 date: {
                                     format: 'YYYY-MM-DD',
                                     min: 'InputFromDate',
@@ -229,7 +254,14 @@
                 data.fv.revalidateField('InputFromDate');
             }
         });
-               
+        
+        $('.fromdate').datetimepicker().change(function(){                          
+            checkFromDateField();
+        });
+        $('.todate').datetimepicker().change(function(){                          
+            checkToDateField();
+        });
+        
     });   
     
     function EditTaxInvoice(taxId,taxNo,department){
@@ -249,6 +281,102 @@
         var todate= document.getElementById("InputToDate").value;
         var department = document.getElementById("Department").value;
         var systemuser = document.getElementById("user").value;
-        window.open("report.smi?name=TaxInvoiceSummaryReport&fromdate="+fromdate+"&todate="+todate+"&department="+department+"&systemuser="+systemuser);
+        if((fromdate === '') || (todate === '')){
+           validateDate();
+        } else {
+            window.open("report.smi?name=TaxInvoiceSummaryReport&fromdate="+fromdate+"&todate="+todate+"&department="+department+"&systemuser="+systemuser);
+        }    
+    }
+  
+    function checkFromDateField(){
+        var inputFromDate = document.getElementById("InputFromDate");
+        var InputToDate = document.getElementById("InputToDate");
+        if(inputFromDate.value === ''){          
+            var InputFromDateSpan1 = document.getElementById("InputFromDateSpan1");
+            inputFromDate.style.borderColor = "red";
+            InputFromDateSpan1.style.borderColor = "red";
+            $("#InputFromDateSpan1").addClass("alert-danger");
+            $("#InputFromDateSpan2").addClass("alert-danger");
+            if((inputFromDate.style.borderColor === "red") && (InputToDate.style.borderColor === "red")){
+                $("#btnPrint").addClass("disabled");
+            }           
+        } else {
+            var InputFromDateSpan1 = document.getElementById("InputFromDateSpan1");
+            inputFromDate.style.borderColor = "green";
+            InputFromDateSpan1.style.borderColor = "green";
+            $("#InputFromDateSpan1").removeClass("alert-danger");
+            $("#InputFromDateSpan2").removeClass("alert-danger");
+            $("#btnPrint").removeClass("disabled");
+            checkDateValue("from","");
+        }      
+    }
+    
+    function checkToDateField(){
+        var InputToDate = document.getElementById("InputToDate");
+        var inputFromDate = document.getElementById("InputFromDate");
+        if(InputToDate.value === ''){
+            var InputToDateSpan1 = document.getElementById("InputToDateSpan1");
+            InputToDate.style.borderColor = "red";
+            InputToDateSpan1.style.borderColor = "red";
+            $("#InputToDateSpan1").addClass("alert-danger");
+            $("#InputToDateSpan2").addClass("alert-danger");
+            if((inputFromDate.style.borderColor === "red") && (InputToDate.style.borderColor === "red")){
+                $("#btnPrint").addClass("disabled");
+            }    
+        }else{
+            var InputToDateSpan1 = document.getElementById("InputToDateSpan1");
+            InputToDate.style.borderColor = "green";
+            InputToDateSpan1.style.borderColor = "green";
+            $("#InputToDateSpan1").removeClass("alert-danger");
+            $("#InputToDateSpan2").removeClass("alert-danger");
+            $("#btnPrint").removeClass("disabled");
+            checkDateValue("to","");
+        }               
+    }
+    
+    function checkDateValue(date){
+        var inputFromDate = document.getElementById("InputFromDate");
+        var InputToDate = document.getElementById("InputToDate");
+        if((inputFromDate.value !== '') && (InputToDate.value !== '')){
+            var fromDate = (inputFromDate.value).split('-');
+            var toDate = (InputToDate.value).split('-');
+            if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
+                validateDate(date,"over");
+            }
+            if((parseInt(fromDate[1])) > (parseInt(toDate[1]))){
+                validateDate(date,"over");
+            }
+            if((parseInt(fromDate[2])) > (parseInt(toDate[2]))){
+                validateDate(date,"over");
+            }
+        }
+    }
+    
+    function validateDate(date,option){
+        var inputFromDate = document.getElementById("InputFromDate");
+        var InputFromDateSpan1 = document.getElementById("InputFromDateSpan1");
+        var InputToDate = document.getElementById("InputToDate");
+        var InputToDateSpan1 = document.getElementById("InputToDateSpan1");
+        if(option === 'over'){
+            if(date === 'from'){
+                inputFromDate.style.borderColor = "red";
+                InputFromDateSpan1.style.borderColor = "red";     
+            }
+            if(date === 'to'){
+                InputToDate.style.borderColor = "red";
+                InputToDateSpan1.style.borderColor = "red";
+            }           
+            $("#btnPrint").addClass("disabled");
+        } else {
+            inputFromDate.style.borderColor = "red";
+            InputFromDateSpan1.style.borderColor = "red";
+            $("#InputFromDateSpan1").addClass("alert-danger");
+            $("#InputFromDateSpan2").addClass("alert-danger");        
+            InputToDate.style.borderColor = "red";
+            InputToDateSpan1.style.borderColor = "red";
+            $("#InputToDateSpan1").addClass("alert-danger");
+            $("#InputToDateSpan2").addClass("alert-danger");
+            $("#btnPrint").addClass("disabled");
+        }        
     }
 </script>
