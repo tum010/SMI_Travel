@@ -23,6 +23,7 @@ public class ReceiptSearchView {
     private String termPay;
     private String department;
     private String recType;
+    private String status;
 
     public String getRecId() {
         return recId;
@@ -104,8 +105,12 @@ public class ReceiptSearchView {
         this.recType = recType;
     }
 
+    public String getStatus() {
+        return status;
+    }
 
-    
-    
-    
+    public void setStatus(String status) {
+        this.status = status;
+    }
+   
 }

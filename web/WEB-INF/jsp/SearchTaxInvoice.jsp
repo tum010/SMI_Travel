@@ -143,8 +143,8 @@
                                     <td align="center">${i.count}</td>
                                     <td align="center">${taxInvoice.taxNo}</td>
                                     <td align="center">${taxInvoice.taxDate}</td>
-                                    <td align="center">${taxInvoice.taxTo}</td>
-                                    <td align="center">${taxInvoice.name}</td>
+                                    <td>${taxInvoice.taxTo}</td>
+                                    <td>${taxInvoice.name}</td>
                                     <td>${taxInvoice.detail}</td>
                                     <td>${taxInvoice.invoiceNo}</td>
                                     <td>${taxInvoice.receiptNo}</td>
@@ -340,15 +340,13 @@
         if((inputFromDate.value !== '') && (InputToDate.value !== '')){
             var fromDate = (inputFromDate.value).split('-');
             var toDate = (InputToDate.value).split('-');
-            if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
-                validateDate(date,"over");
-            }
-            if((parseInt(fromDate[1])) > (parseInt(toDate[1]))){
-                validateDate(date,"over");
-            }
-            if((parseInt(fromDate[2])) > (parseInt(toDate[2]))){
-                validateDate(date,"over");
-            }
+            if((parseInt(fromDate[0])) >= (parseInt(toDate[0]))){
+                if((parseInt(fromDate[1])) >= (parseInt(toDate[1]))){
+                    if((parseInt(fromDate[2])) > (parseInt(toDate[2]))){
+                        validateDate(date,"over");
+                    }
+                }
+            }       
         }
     }
     
