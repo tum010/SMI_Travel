@@ -19,6 +19,7 @@ public class CreditNoteView {
     private String department;
     private String subtotal;
     private String grandTotal;
+    private String status;
 
     public String getId() {
         return id;
@@ -82,6 +83,14 @@ public class CreditNoteView {
 
     public void setGrandTotal(String grandTotal) {
         this.grandTotal = grandTotal;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }
