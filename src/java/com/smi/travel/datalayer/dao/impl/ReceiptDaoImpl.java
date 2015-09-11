@@ -430,7 +430,7 @@ import org.hibernate.Transaction;
     }
     
     @Override
-    public List<ReceiptSearchView> getReceiptViewFromFilter(String from, String to, String Department, String type) {
+    public List<ReceiptSearchView> getReceiptViewFromFilter(String from, String to, String Department, String type, String status) {
          Session session = this.sessionFactory.openSession();
          String query = "from Receipt rec Where";
          int checkQuery = 0;
@@ -455,6 +455,11 @@ import org.hibernate.Transaction;
          if((type != null) &&(!"".equalsIgnoreCase(type))){
              if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
              query += prefix+ " rec.recType = '"+type+"'";
+         }
+         
+         if((status != null) &&(!"".equalsIgnoreCase(status))){
+             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+             query += prefix+ " rec.MFinanceItemstatus.id = '"+status+"'";
          }
          
          if(checkQuery == 0){query = query.replaceAll("Where", "");}
@@ -484,6 +489,7 @@ import org.hibernate.Transaction;
         view.setRecType(detail.getRecType());
         view.setDepartment(detail.getDepartment());
         view.setRecDate(detail.getRecDate());
+        view.setStatus(detail.getMFinanceItemstatus().getName());
         String InvoiceNo ="";
         BigDecimal amount = new BigDecimal(0);
         for(int i=0;i<detail.getReceiptDetails().size();i++){
