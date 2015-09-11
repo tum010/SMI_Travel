@@ -127,7 +127,13 @@ public class TicketFareReportImpl implements TicketFareReportDao {
         
         SimpleDateFormat df = new SimpleDateFormat();
         df.applyPattern("dd-MM-yyyy hh:mm");
-        
+        if("wendy".equalsIgnoreCase(department)){
+            department = "WENDY";
+        }else if("inbound".equalsIgnoreCase(department)){
+            department = "INBOUND";
+        }else if("outbound".equalsIgnoreCase(department)){
+            department = "OUTBOUND";
+        }
         
         for (Object[] B : QueryList) {
             TicketFareReport ticketFareReport = new TicketFareReport();
