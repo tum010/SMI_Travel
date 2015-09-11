@@ -21,6 +21,20 @@ public class TicketFareSummaryByAgentStaff {
     private String agentcom;
     private String profit;
     private String pax;
+    private String printby;
+    private String airline;
+    private String headdepartment;
+    private String headtickettype;
+    private String headticketby;
+    private String headsale;
+    private String issuefrom;
+    private String issueto;
+    private String invdatefrom;
+    private String invdateto;
+    private String printon;
+    private String termpay;
+
+    
 
     public String getAgentname() {
         return agentname;
@@ -101,4 +115,102 @@ public class TicketFareSummaryByAgentStaff {
     public void setPax(String pax) {
         this.pax = pax;
     }
+
+    public String getPrintby() {
+        return printby;
+    }
+
+    public void setPrintby(String printby) {
+        this.printby = printby;
+    }
+
+    public String getAirline() {
+        return airline;
+    }
+
+    public void setAirline(String airline) {
+        this.airline = airline;
+    }
+
+    public String getHeaddepartment() {
+        return headdepartment;
+    }
+
+    public void setHeaddepartment(String headdepartment) {
+        this.headdepartment = headdepartment;
+    }
+
+    public String getHeadtickettype() {
+        return headtickettype;
+    }
+
+    public void setHeadtickettype(String headtickettype) {
+        this.headtickettype = headtickettype;
+    }
+
+    public String getHeadticketby() {
+        return headticketby;
+    }
+
+    public void setHeadticketby(String headticketby) {
+        this.headticketby = headticketby;
+    }
+
+    public String getHeadsale() {
+        return headsale;
+    }
+
+    public void setHeadsale(String headsale) {
+        this.headsale = headsale;
+    }
+
+    public String getIssuefrom() {
+        return issuefrom;
+    }
+
+    public void setIssuefrom(String issuefrom) {
+        this.issuefrom = issuefrom;
+    }
+
+    public String getIssueto() {
+        return issueto;
+    }
+
+    public void setIssueto(String issueto) {
+        this.issueto = issueto;
+    }
+
+    public String getInvdatefrom() {
+        return invdatefrom;
+    }
+
+    public void setInvdatefrom(String invdatefrom) {
+        this.invdatefrom = invdatefrom;
+    }
+
+    public String getInvdateto() {
+        return invdateto;
+    }
+
+    public void setInvdateto(String invdateto) {
+        this.invdateto = invdateto;
+    }
+
+    public String getPrinton() {
+        return printon;
+    }
+
+    public void setPrinton(String printon) {
+        this.printon = printon;
+    }
+
+    public String getTermpay() {
+        return termpay;
+    }
+
+    public void setTermpay(String termpay) {
+        this.termpay = termpay;
+    }
+    
+    
 }
