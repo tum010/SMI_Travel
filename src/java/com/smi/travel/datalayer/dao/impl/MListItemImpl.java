@@ -17,6 +17,7 @@ import com.smi.travel.datalayer.entity.MBranch;
 import com.smi.travel.datalayer.entity.MCreditBank;
 import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MDepartment;
+import com.smi.travel.datalayer.entity.MFinanceItemstatus;
 import com.smi.travel.datalayer.entity.MFlight;
 import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.entity.MItemstatus;
@@ -465,6 +466,20 @@ public class MListItemImpl implements MListItemDao {
         session.close();
         this.sessionFactory.close();
         return MAirline; 
+    }
+
+    @Override
+    public List<MFinanceItemstatus> getListMFinanceItemstatus() {
+        String query = "from MFinanceItemstatus";
+        Session session = this.sessionFactory.openSession();
+        List<MFinanceItemstatus> mFinanceItemstatusList = session.createQuery(query).list();
+        System.out.print("mFinanceItemstatusList " + mFinanceItemstatusList.size());
+        if (mFinanceItemstatusList.isEmpty()) {
+            return null;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return mFinanceItemstatusList; 
     }
 
     

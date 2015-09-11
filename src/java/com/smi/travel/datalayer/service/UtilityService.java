@@ -29,6 +29,7 @@ import com.smi.travel.datalayer.entity.MCity;
 import com.smi.travel.datalayer.entity.MCreditBank;
 import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MDefaultData;
+import com.smi.travel.datalayer.entity.MFinanceItemstatus;
 import com.smi.travel.datalayer.entity.MFlight;
 import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.entity.MItemstatus;
@@ -246,7 +247,10 @@ public class UtilityService {
     public List<MCreditBank> getListCreditBank(){
         return listitemdao.getListCreditBank();
     }
-             
+    
+    public List<MFinanceItemstatus> getListMFinanceItemstatus(){
+        return listitemdao.getListMFinanceItemstatus();
+    }
     
     public MasterDao getMasterdao() {
         return masterdao;
@@ -263,6 +267,7 @@ public class UtilityService {
     public void setListitemdao(MListItemDao listitemdao) {
         this.listitemdao = listitemdao;
     }
+    
 
     public AirticketBookingDao getAirticketdao() {
         return airticketdao;

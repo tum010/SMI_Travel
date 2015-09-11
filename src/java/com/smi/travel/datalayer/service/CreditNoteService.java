@@ -57,8 +57,8 @@ public class CreditNoteService {
         return this.creditNoteDao.UpdateFinanceStatusCreditNote(cnId, status);
     }
 
-    public List<CreditNoteView> getCreditNoteFromFilter(String dateFrom, String dateTo, String department) {
-        return this.creditNoteDao.getCreditNoteFromFilter(dateFrom, dateTo, department);
+    public List<CreditNoteView> getCreditNoteFromFilter(String dateFrom, String dateTo, String department, String status) {
+        return this.creditNoteDao.getCreditNoteFromFilter(dateFrom, dateTo, department, status);
     }
     
 }

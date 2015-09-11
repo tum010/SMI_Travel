@@ -29,6 +29,8 @@ public class ExportDataToExcelController  extends SMITravelController{
     private static final String TicketFareAirlineReport = "TicketFareAirlineReport";
     private static final String TicketFareInvoicReport = "TicketFareInvoicReport";
     private static final String TicketFareAgentReport = "TicketFareAgentReport";
+    private static final String TicketFareSummaryByStaff = "TicketFareSummaryByStaff";
+    private static final String TicketFareSummaryByAgent = "TicketFareSummaryByAgent";
     private static final String ReportName = "name";
     private static final String ParaMeter = "parameter";
     @Override
@@ -44,9 +46,16 @@ public class ExportDataToExcelController  extends SMITravelController{
         String department = request.getParameter("department");
         String staff = request.getParameter("staff");
         String termPay = request.getParameter("termPay");   
+        
+        String issuedateFrom = request.getParameter("issuedateFrom");   
+        String issuedateTo = request.getParameter("issuedateTo");   
+        String invdateFrom = request.getParameter("invdateFrom");   
+        String invdateTo = request.getParameter("invdateTo"); 
+        
         SystemUser user = (SystemUser) session.getAttribute("USER");
         String printby = user.getRole().getName(); 
         List data  = new ArrayList();
+        
         if(TicketFareReport.equalsIgnoreCase(name)){
             System.out.println("get excel data");
             data = reportservice.getTicketFareReport(ticketType,ticketBuy,airline,airlineCode,dateFrom,dateTo,department,staff,termPay,printby);
@@ -60,6 +69,12 @@ public class ExportDataToExcelController  extends SMITravelController{
         }else if(TicketFareAgentReport.equalsIgnoreCase(name)){
             System.out.println("get excel data");
             data = reportservice.getTicketFareReport(ticketType,ticketBuy,airline,airlineCode,dateFrom,dateTo,department,staff,termPay,printby);
+        }else if(TicketFareSummaryByStaff.equalsIgnoreCase(name)){
+            System.out.println("get excel data staff");
+            data = reportservice.getTicketFareSumAgentStaff(ticketType, ticketBuy, airline, airlineCode, department, staff, termPay, printby, issuedateFrom, issuedateTo, invdateFrom, invdateTo,"staff");
+        }else if(TicketFareSummaryByAgent.equalsIgnoreCase(name)){
+            System.out.println("get excel data agent");
+            data = reportservice.getTicketFareSumAgentStaff(ticketType, ticketBuy, airline, airlineCode, department, staff, termPay, printby, issuedateFrom, issuedateTo, invdateFrom, invdateTo,"agent");
         }
 		
         return new ModelAndView("ExportDataToExcelView",name,data).addObject(ReportName, name);

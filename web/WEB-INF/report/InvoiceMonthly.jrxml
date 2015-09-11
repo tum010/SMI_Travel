@@ -465,7 +465,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{invno}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="77" y="0" width="51" height="21" uuid="8215df2e-c206-47f4-9ce9-75bad7c32c2d"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14"/>

@@ -1,6 +1,8 @@
 package com.smi.travel.controller;
+import com.smi.travel.datalayer.entity.MFinanceItemstatus;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.TaxInvoiceService;
+import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.TaxInvoiceView;
 import com.smi.travel.master.controller.SMITravelController;
 import java.util.ArrayList;
@@ -15,13 +17,17 @@ public class SearchTaxInvoiceController extends SMITravelController {
     private static final ModelAndView SearchTaxInvoice_REFRESH = new ModelAndView(new RedirectView("SearchTaxInvoice.smi", true));
     private TaxInvoiceService taxInvoiceService;
     private static final String DATALIST = "taxInvoiceView_List";
-    
+    private static final String MFinanceItemstatusList = "mFinanceItemStatus_List";
+    private UtilityService utilservice;
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        List<MFinanceItemstatus> mFinanceItemstatusList = getUtilservice().getListMFinanceItemstatus();
+        request.setAttribute(MFinanceItemstatusList, mFinanceItemstatusList);
         String action = request.getParameter("action");
         String inputFromDate = request.getParameter("InputFromDate");
         String inputToDate = request.getParameter("InputToDate");
         String department = request.getParameter("Department");
+        String status = request.getParameter("Status");
         
         SystemUser user = (SystemUser) session.getAttribute("USER");
         String idRole = user.getRole().getId();
@@ -32,13 +38,14 @@ public class SearchTaxInvoiceController extends SMITravelController {
         
         List<TaxInvoiceView> taxInvoiceViewList = new ArrayList<TaxInvoiceView>();
         if("search".equalsIgnoreCase(action)){
-            taxInvoiceViewList = taxInvoiceService.SearchTaxInvoiceFromFilter(inputFromDate, inputToDate, department);
+            taxInvoiceViewList = taxInvoiceService.SearchTaxInvoiceFromFilter(inputFromDate, inputToDate, department, status);
         }
         
         request.setAttribute(DATALIST, taxInvoiceViewList);
         request.setAttribute("inputFromDate", inputFromDate);
         request.setAttribute("inputToDate", inputToDate);
         request.setAttribute("department", department);
+        request.setAttribute("status", status);
         
         return SearchTaxInvoice;
     }
@@ -49,5 +56,13 @@ public class SearchTaxInvoiceController extends SMITravelController {
 
     public void setTaxInvoiceService(TaxInvoiceService taxInvoiceService) {
         this.taxInvoiceService = taxInvoiceService;
+    }
+
+    public UtilityService getUtilservice() {
+        return utilservice;
+    }
+
+    public void setUtilservice(UtilityService utilservice) {
+        this.utilservice = utilservice;
     }
 }

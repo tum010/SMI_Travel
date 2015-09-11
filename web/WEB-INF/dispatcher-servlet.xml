@@ -134,7 +134,7 @@
                                 <prop key="ARMonitor.smi">ARMonitorController</prop>
                                 <prop key="CollectionMonitor.smi">CollectionMonitorController</prop>
                                 <prop key="TicketFareSummaryReport.smi">TicketFareSummaryReportController</prop>
-                                <prop key="TicketketFareSumAgentStaff.smi">TicketketFareSumAgentStaffController</prop>
+                                <prop key="TicketFareSumAgentStaff.smi">TicketFareSumAgentStaffController</prop>
                                 <prop key="BillAirAgent.smi">BillAirAgentController</prop>
 				<!-- add mapping url -->
 			</props>
@@ -524,6 +524,7 @@
             <property name="invoiceService" ref="InvoiceService" />
 	</bean>
 	<bean id="SearchReceiptController" class="com.smi.travel.controller.SearchReceiptController">
+            <property name="utilservice" ref="UtilityService" />
             <property name="receiptService" ref="ReceiptService" />
 	</bean>
 	<bean id="TaxInvoiceController" class="com.smi.travel.controller.TaxInvoiceController">
@@ -532,6 +533,7 @@
             <property name="taxInvoiceService" ref="TaxInvoiceService" />
 	</bean>
 	<bean id="SearchTaxInvoiceController" class="com.smi.travel.controller.SearchTaxInvoiceController">
+            <property name="utilservice" ref="UtilityService" />
             <property name="taxInvoiceService" ref="TaxInvoiceService" />
 	</bean>
 	<bean id="ReceiveTableController" class="com.smi.travel.controller.ReceiveTableController">
@@ -540,27 +542,29 @@
 
 
 	<bean id="StockController" class="com.smi.travel.controller.StockController">
-		<property name="stockService" ref="StockService" />
-		<property name="mStaffService" ref="MStaffService" />
-		<property name="utilityService" ref="UtilityService" />
+            <property name="stockService" ref="StockService" />
+            <property name="mStaffService" ref="MStaffService" />
+            <property name="utilityService" ref="UtilityService" />
 	</bean>
+        
 	<bean id="SearchStockController" class="com.smi.travel.controller.SearchStockController">
-		<property name="stockService" ref="StockService" />
-		<property name="mStaffService" ref="MStaffService" />
-		<property name="utilityService" ref="UtilityService" />
+            <property name="stockService" ref="StockService" />
+            <property name="mStaffService" ref="MStaffService" />
+            <property name="utilityService" ref="UtilityService" />
 	</bean>
-	<bean id="DefineVarController"
-		class="com.smi.travel.masterdata.controller.DefineVarController">
-		<property name="defineVarService" ref="DefineVarService"></property>
+        
+	<bean id="DefineVarController" class="com.smi.travel.masterdata.controller.DefineVarController">
+            <property name="defineVarService" ref="DefineVarService"></property>
 	</bean>
 
 	<bean id="CreditNoteController" class="com.smi.travel.controller.CreditNoteController">
-		<property name="creditNoteService" ref="CreditNoteService"></property>
-		<property name="utilityService" ref="UtilityService"></property>
+            <property name="creditNoteService" ref="CreditNoteService"></property>
+            <property name="utilityService" ref="UtilityService"></property>
 	</bean>
 
 	<bean id="SearchCreditNoteController" class="com.smi.travel.controller.SearchCreditNoteController">
-		<property name="creditNoteService" ref="CreditNoteService"></property>
+            <property name="utilservice" ref="UtilityService" />    
+            <property name="creditNoteService" ref="CreditNoteService"></property>
 	</bean>
         
      
@@ -583,11 +587,11 @@
     <bean id="TicketFareSummaryReportController" class="com.smi.travel.controller.TicketFareSummaryReportController">
         <property name="utilityService" ref="UtilityService" />
     </bean>
-    <bean id="TicketketFareSumAgentStaffController" class="com.smi.travel.controller.TicketketFareSumAgentStaffController">
-        
+    <bean id="TicketFareSumAgentStaffController" class="com.smi.travel.controller.TicketFareSumAgentStaffController">
+        <property name="utilityService" ref="UtilityService" />
     </bean>
     <bean id="BillAirAgentController" class="com.smi.travel.controller.BillAirAgentController">
-        
+        <property name="utilityService" ref="UtilityService" />
     </bean>
 	<!-- add bean id controller -->
 

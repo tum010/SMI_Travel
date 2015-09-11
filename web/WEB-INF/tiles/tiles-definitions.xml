@@ -561,9 +561,9 @@
         <put-attribute name="body" value="/WEB-INF/jsp/TicketFareSummaryReport.jsp" />
     </definition>
     
-    <definition name="TicketketFareSumAgentStaff" extends="baseLayout">
+    <definition name="TicketFareSumAgentStaff" extends="baseLayout">
         <put-attribute name="title" value="Checking Ticket : List Ticket Summary By Agent and Staff" />
-        <put-attribute name="body" value="/WEB-INF/jsp/TicketketFareSumAgentStaff.jsp" />
+        <put-attribute name="body" value="/WEB-INF/jsp/TicketFareSumAgentStaff.jsp" />
     </definition>
     
     <definition name="BillAirAgent" extends="baseLayout">

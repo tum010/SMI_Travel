@@ -1,5 +1,7 @@
 package com.smi.travel.controller;
+import com.smi.travel.datalayer.entity.MFinanceItemstatus;
 import com.smi.travel.datalayer.service.ReceiptService;
+import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.ReceiptSearchView;
 import com.smi.travel.master.controller.SMITravelController;
 import java.util.List;
@@ -16,19 +18,25 @@ public class SearchReceiptController extends SMITravelController {
     private static final String DEPARTMENT = "department";
     private static final String FROMDATE = "inputFromDate";
     private static final String TODATE = "inputToDate";
+    private static final String STATUS = "status";
     private static final String RECEIPTSEARCHLIST = "receiptSearchList";
     private static final String PAGE = "callPage";
+    private static final String MFinanceItemstatusList = "mFinanceItemStatus_List";
     private ReceiptService receiptService;
+    private UtilityService utilservice;
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        List<MFinanceItemstatus> mFinanceItemstatusList = getUtilservice().getListMFinanceItemstatus();
+        request.setAttribute(MFinanceItemstatusList, mFinanceItemstatusList);
         String action = request.getParameter("action");
         String recType = request.getParameter("recType");
         String department = request.getParameter("department");
         String inputFromDate = request.getParameter("inputFromDate");
         String inputToDate = request.getParameter("inputToDate");
+        String status = request.getParameter("status");
         String departtemp = "";
         if ("search".equalsIgnoreCase(action)) {
-            List<ReceiptSearchView>  receiptSearchViews = receiptService.getReceiptViewFromFilter(inputFromDate, inputToDate, department, recType);
+            List<ReceiptSearchView>  receiptSearchViews = receiptService.getReceiptViewFromFilter(inputFromDate, inputToDate, department, recType, status);
             if(receiptSearchViews != null){
                 request.setAttribute(RECEIPTSEARCHLIST,receiptSearchViews);
             } 
@@ -38,6 +46,7 @@ public class SearchReceiptController extends SMITravelController {
         request.setAttribute(DEPARTMENT,department);
         request.setAttribute(FROMDATE,inputFromDate);
         request.setAttribute(TODATE,inputToDate);
+        request.setAttribute(STATUS,status);
         return SearchReceipt;
     }
 
@@ -47,5 +56,13 @@ public class SearchReceiptController extends SMITravelController {
 
     public void setReceiptService(ReceiptService receiptService) {
         this.receiptService = receiptService;
+    }
+
+    public UtilityService getUtilservice() {
+        return utilservice;
+    }
+
+    public void setUtilservice(UtilityService utilservice) {
+        this.utilservice = utilservice;
     }
 }

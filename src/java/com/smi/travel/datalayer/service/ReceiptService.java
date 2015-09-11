@@ -52,8 +52,8 @@ public class ReceiptService {
     public List<ReceiptCredit> getReceiptCreditFromReceiptId(String receiptId){
         return receiptDao.getReceiptCreditFromReceiptId(receiptId);
     }
-    public List<ReceiptSearchView> getReceiptViewFromFilter(String from ,String to,String Department,String type){
-        return receiptDao.getReceiptViewFromFilter(from, to, Department, type);
+    public List<ReceiptSearchView> getReceiptViewFromFilter(String from ,String to,String Department,String type,String status){
+        return receiptDao.getReceiptViewFromFilter(from, to, Department, type, status);
     }
     
     public Receipt getReceiptfromReceiptId(String recId){
