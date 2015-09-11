@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceSummary2" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ce5d0eb5-af68-44b4-b287-253094472c71">
 	<property name="ireport.zoom" value="1.464100000000001"/>
-	<property name="ireport.x" value="451"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="497"/>
+	<property name="ireport.y" value="114"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="username" class="java.lang.String"/>
 	<field name="invfrom" class="java.lang.String"/>
@@ -14,27 +14,27 @@
 	<field name="to" class="java.lang.String"/>
 	<field name="invname" class="java.lang.String"/>
 	<field name="termpay" class="java.lang.String"/>
-	<field name="vat" class="java.lang.String"/>
-	<field name="gross" class="java.lang.String"/>
-	<field name="amount" class="java.lang.String"/>
+	<field name="vat" class="java.math.BigDecimal"/>
+	<field name="gross" class="java.math.BigDecimal"/>
+	<field name="amount" class="java.math.BigDecimal"/>
 	<field name="amountcur" class="java.lang.String"/>
 	<field name="staff" class="java.lang.String"/>
 	<field name="status" class="java.lang.String"/>
 	<field name="invdepartment" class="java.lang.String"/>
 	<field name="detail" class="java.lang.String"/>
 	<field name="no" class="java.lang.String"/>
-	<field name="profit" class="java.lang.String"/>
+	<field name="profit" class="java.math.BigDecimal"/>
 	<field name="headertype" class="java.lang.String"/>
-	<variable name="totalnet" class="java.lang.String" resetType="Group" resetGroup="invoicesummary" calculation="Sum">
+	<variable name="totalnet" class="java.math.BigDecimal" resetType="Group" resetGroup="invoicesummary" calculation="Sum">
 		<variableExpression><![CDATA[$F{gross}]]></variableExpression>
 	</variable>
-	<variable name="totalvat" class="java.lang.String" resetType="Group" resetGroup="invoicesummary" incrementType="Group" incrementGroup="invoicesummary" calculation="Sum">
+	<variable name="totalvat" class="java.math.BigDecimal" resetType="Group" resetGroup="invoicesummary" calculation="Sum">
 		<variableExpression><![CDATA[$F{vat}]]></variableExpression>
 	</variable>
-	<variable name="totalamount" class="java.lang.String" resetType="Group" resetGroup="invoicesummary" calculation="Sum">
+	<variable name="totalamount" class="java.math.BigDecimal" resetType="Group" resetGroup="invoicesummary" calculation="Sum">
 		<variableExpression><![CDATA[$F{amount}]]></variableExpression>
 	</variable>
-	<variable name="totalprofit" class="java.lang.String" calculation="Sum">
+	<variable name="totalprofit" class="java.math.BigDecimal" resetType="Group" resetGroup="invoicesummary" calculation="Sum">
 		<variableExpression><![CDATA[$F{profit}]]></variableExpression>
 	</variable>
 	<variable name="no" class="java.lang.Number" resetType="None" calculation="System">
@@ -311,7 +311,7 @@
 					<textElement verticalAlignment="Middle">
 						<font fontName="TH SarabunPSK" size="12" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[($V{totalnet} != null && !"null".equals($V{totalnet}) && $V{totalnet}.length() > 0 && !"".equalsIgnoreCase($V{totalnet})) ? new BigDecimal($V{totalnet}) : new BigDecimal("0")]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{totalnet} != null && !"null".equals($V{totalnet})  ) ? new BigDecimal($V{totalnet}) : new BigDecimal("0")]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="587" y="24" width="59" height="20" uuid="9f7b53a3-2f45-4471-8dab-a8fb9dc5ba4f"/>
@@ -325,7 +325,7 @@
 					<textElement verticalAlignment="Middle">
 						<font fontName="TH SarabunPSK" size="12" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[($V{totalvat} != null && !"null".equals($V{totalvat}) && $V{totalvat}.length() > 0 && !"".equalsIgnoreCase($V{totalvat})) ? new BigDecimal($V{totalvat}) : new BigDecimal("0")]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{totalvat} != null && !"null".equals($V{totalvat})  ) ? new BigDecimal($V{totalvat}) : new BigDecimal("0")]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="587" y="41" width="59" height="20" uuid="03f50e86-8244-4e9c-a8b2-77eff217723d"/>
@@ -339,7 +339,6 @@
 					<textElement verticalAlignment="Middle">
 						<font fontName="TH SarabunPSK" size="12" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[($V{totalamount} != null && !"null".equals($V{totalamount}) && $V{totalamount}.length() > 0 && !"".equalsIgnoreCase($V{totalamount})) ? new BigDecimal($V{totalamount}) : new BigDecimal("0")]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="587" y="59" width="59" height="20" uuid="18f9e966-2c86-46a0-a3fe-f892a26e75e9"/>
@@ -349,11 +348,18 @@
 					<text><![CDATA[Total Profit :]]></text>
 				</staticText>
 				<textField pattern="#,##0.00" isBlankWhenNull="true">
-					<reportElement x="652" y="59" width="136" height="20" uuid="87174f1b-44c8-4a00-b3b5-2942c762fc79"/>
-					<textElement verticalAlignment="Middle">
+					<reportElement x="652" y="44" width="136" height="15" uuid="b4d7d6d2-ddc0-4cd5-ac5c-115c81cc7733"/>
+					<textElement>
 						<font fontName="TH SarabunPSK" size="12" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[($V{totalprofit} != null && !"null".equals($V{totalprofit}) && $V{totalprofit}.length() > 0 && !"".equalsIgnoreCase($V{totalprofit})) ? new BigDecimal($V{totalprofit}) : new BigDecimal("0")]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{totalamount} != null && !"null".equals($V{totalamount})  ) ? new BigDecimal($V{totalamount}) : new BigDecimal("0")]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00" isBlankWhenNull="true">
+					<reportElement x="652" y="61" width="136" height="18" uuid="85d005b9-22c3-4c1f-b09e-baa4d6f848a2"/>
+					<textElement>
+						<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{totalprofit} != null && !"null".equals($V{totalprofit})  ) ? new BigDecimal($V{totalprofit}) : new BigDecimal("0")]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -589,7 +595,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{gross} != null && !"null".equals($F{gross}) && $F{gross}.length() > 0 && !"".equalsIgnoreCase($F{gross})) ? new BigDecimal($F{gross}) : new BigDecimal("0")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{gross} != null && !"null".equals($F{gross}) ) ? new BigDecimal($F{gross}) : new BigDecimal("0")]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="540" y="0" width="50" height="20" isPrintWhenDetailOverflows="true" uuid="ae1ec18b-19de-405e-ab84-c5d02f34f3d2"/>
@@ -605,7 +611,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{vat} != null && !"null".equals($F{vat}) && $F{vat}.length() > 0 && !"".equalsIgnoreCase($F{vat})) ? new BigDecimal($F{vat}) : new BigDecimal("0")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{vat} != null && !"null".equals($F{vat}) ) ? new BigDecimal($F{vat}) : new BigDecimal("0")]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="590" y="0" width="58" height="20" isPrintWhenDetailOverflows="true" uuid="47a7bb4c-b703-44bc-800c-80d20b3abc7a"/>
@@ -621,7 +627,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{amount} != null && !"null".equals($F{amount}) && $F{amount}.length() > 0 && !"".equalsIgnoreCase($F{amount})) ? new BigDecimal($F{amount}) : new BigDecimal("0")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{amount} != null && !"null".equals($F{amount}) ) ? new BigDecimal($F{amount}) : new BigDecimal("0")]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="648" y="0" width="42" height="20" isPrintWhenDetailOverflows="true" uuid="17a78552-6623-4d5b-8b1f-fca9a50fc933"/>
