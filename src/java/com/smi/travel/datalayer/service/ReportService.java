@@ -228,6 +228,10 @@ public class ReportService {
     public List getCreditNoteSummaryReport(String from, String to, String department, String systemuser){
         return creditNoteSummaryReportDao.getCreditNoteSummaryReport(from, to, department, systemuser);
     }
+    
+    public List getBillAirAgentReport(String from, String to, String department, String systemuser){
+        return creditNoteSummaryReportDao.getCreditNoteSummaryReport(from, to, department, systemuser);
+    }
 
     public HotelVoucherDao getHotelVoucherdao() {
         return hotelVoucherdao;

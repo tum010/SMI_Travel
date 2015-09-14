@@ -31,6 +31,7 @@ public class ExportDataToExcelController  extends SMITravelController{
     private static final String TicketFareAgentReport = "TicketFareAgentReport";
     private static final String TicketFareSummaryByStaff = "TicketFareSummaryByStaff";
     private static final String TicketFareSummaryByAgent = "TicketFareSummaryByAgent";
+    private static final String BillAirTicket = "BillAirTicket";
     private static final String ReportName = "name";
     private static final String ParaMeter = "parameter";
     @Override
@@ -73,6 +74,9 @@ public class ExportDataToExcelController  extends SMITravelController{
             System.out.println("get excel data staff");
             data = reportservice.getTicketFareSumAgentStaff(ticketType, ticketBuy, airline, airlineCode, department, staff, termPay, printby, issuedateFrom, issuedateTo, invdateFrom, invdateTo,"staff");
         }else if(TicketFareSummaryByAgent.equalsIgnoreCase(name)){
+            System.out.println("get excel data agent");
+            data = reportservice.getTicketFareSumAgentStaff(ticketType, ticketBuy, airline, airlineCode, department, staff, termPay, printby, issuedateFrom, issuedateTo, invdateFrom, invdateTo,"agent");
+        }else if(BillAirTicket.equalsIgnoreCase(name)){
             System.out.println("get excel data agent");
             data = reportservice.getTicketFareSumAgentStaff(ticketType, ticketBuy, airline, airlineCode, department, staff, termPay, printby, issuedateFrom, issuedateTo, invdateFrom, invdateTo,"agent");
         }
