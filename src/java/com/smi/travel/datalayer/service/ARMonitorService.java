@@ -7,6 +7,7 @@ package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.view.dao.ARNirvanaDao;
 import com.smi.travel.datalayer.view.entity.ARNirvana;
+import com.smi.travel.report.GenerateReport;
 import java.util.List;
 
 /**
@@ -15,6 +16,7 @@ import java.util.List;
  */
 public class ARMonitorService {
     private ARNirvanaDao arNirvanaDao;
+    private GenerateReport genreport;
     
     public List<ARNirvana> SearchArNirvanaFromFilter(String invtype,String department,String billtype,String from,String to,String status){
         return arNirvanaDao.SearchArNirvanaFromFilter(invtype, department, billtype, from, to, status);
@@ -35,6 +37,20 @@ public class ARMonitorService {
     public void setArNirvanaDao(ARNirvanaDao arNirvanaDao) {
         this.arNirvanaDao = arNirvanaDao;
     }
+    
+    public String GetPartCsvExport(){
+        return genreport.getExportnvncsvpath();
+    }
+
+    public GenerateReport getGenreport() {
+        return genreport;
+    }
+
+    public void setGenreport(GenerateReport genreport) {
+        this.genreport = genreport;
+    }
+    
+    
     
     
 }
