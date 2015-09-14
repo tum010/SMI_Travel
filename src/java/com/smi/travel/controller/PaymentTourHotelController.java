@@ -355,37 +355,9 @@ public class PaymentTourHotelController extends SMITravelController {
         
         return PaymentTourHotel;
     }
-
-    /**
-     * @return the utilservice
-     */
-    public UtilityService getUtilservice() {
-        return utilservice;
-    }
-
-    /**
-     * @param utilservice the utilservice to set
-     */
-    public void setUtilservice(UtilityService utilservice) {
-        this.utilservice = utilservice;
-    }
-
-    /**
-     * @return the paymentTourHotelService
-     */
-    public PaymentTourHotelService getPaymentTourHotelService() {
-        return paymentTourHotelService;
-    }
-
-    /**
-     * @param paymentTourHotelService the paymentTourHotelService to set
-     */
-    public void setPaymentTourHotelService(PaymentTourHotelService paymentTourHotelService) {
-        this.paymentTourHotelService = paymentTourHotelService;
-    }
-
+   
     private void setPaymentDetailWendy(HttpServletRequest request, String counter, PaymentWendy paymentWendy) {
-        util = new UtilityFunction();
+        UtilityFunction utilfunction = new UtilityFunction();
         int Rows = Integer.parseInt(counter);
         if(paymentWendy.getPaymentDetailWendies() == null){
             paymentWendy.setPaymentDetailWendies(new ArrayList<PaymentDetailWendy>());
@@ -405,6 +377,8 @@ public class PaymentTourHotelController extends SMITravelController {
             String isVat = request.getParameter("isVat" + i);
             String vat = request.getParameter("vat" + i);
             String gross = request.getParameter("gross" + i);
+            String exportDate = request.getParameter("exportDate" + i);
+            String isExport = request.getParameter("isExport" + i);
             
             if((product!="" && product!=null) || (refNo!="" && refNo!=null) || (invNo!="" && invNo!=null) || (code!="" && code!=null) || (type!="" && type!=null) || (amount!="" && amount!=null) || (description!="" && description!=null)){
                 
@@ -430,6 +404,16 @@ public class PaymentTourHotelController extends SMITravelController {
                     BigDecimal grossRe = new BigDecimal(gross.replaceAll(",",""));
                     System.out.println("amount" + i + ":" + grossRe);
                     paymentDetailWendy.setGross(grossRe);
+                }
+                
+                if(exportDate!="" && exportDate!=null){
+                    paymentDetailWendy.setExportDate(utilfunction.convertStringToDateTime(exportDate));
+                }
+                
+                if(isExport!="" && isExport!=null){
+                    paymentDetailWendy.setIsExport(Integer.parseInt(isExport));
+                } else {
+                    paymentDetailWendy.setIsExport(0);
                 }
                 
                 if(paymentDetailWendyId!=null && paymentDetailWendyId!=""){
@@ -565,4 +549,20 @@ public class PaymentTourHotelController extends SMITravelController {
 //        request.setAttribute("btnSave", "update");
     }
 
+    public UtilityService getUtilservice() {
+        return utilservice;
+    }
+
+    public void setUtilservice(UtilityService utilservice) {
+        this.utilservice = utilservice;
+    }
+
+    public PaymentTourHotelService getPaymentTourHotelService() {
+        return paymentTourHotelService;
+    }
+
+    public void setPaymentTourHotelService(PaymentTourHotelService paymentTourHotelService) {
+        this.paymentTourHotelService = paymentTourHotelService;
+    }
+    
 }
