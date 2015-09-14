@@ -316,20 +316,17 @@ function checkFromDateField(){
         var InputFromDateSpan1 = document.getElementById("InputFromDateSpan1");
         inputFromDate.style.borderColor = "red";
         InputFromDateSpan1.style.borderColor = "red";
-        $("#InputFromDateSpan1").addClass("alert-danger");
-        $("#InputFromDateSpan2").addClass("alert-danger");
         if((inputFromDate.style.borderColor === "red") && (InputToDate.style.borderColor === "red")){
+            $('#SearchReceiptForm').bootstrapValidator('revalidateField', 'inputToDate');
+            $('#SearchReceiptForm').bootstrapValidator('revalidateField', 'inputFromDate');
             $("#ButtonPrint").addClass("disabled");
-        }           
+        }
     } else {
-        var InputFromDateSpan1 = document.getElementById("InputFromDateSpan1");
-        inputFromDate.style.borderColor = "green";
-        InputFromDateSpan1.style.borderColor = "green";
-        $("#InputFromDateSpan1").removeClass("alert-danger");
-        $("#InputFromDateSpan2").removeClass("alert-danger");
+        $('#SearchReceiptForm').bootstrapValidator('revalidateField', 'inputToDate');
+        $('#SearchReceiptForm').bootstrapValidator('revalidateField', 'inputFromDate');
         $("#ButtonPrint").removeClass("disabled");
         checkDateValue("from","");
-    }      
+    }
 }
     
 function checkToDateField(){
@@ -339,20 +336,17 @@ function checkToDateField(){
         var InputToDateSpan1 = document.getElementById("InputToDateSpan1");
         InputToDate.style.borderColor = "red";
         InputToDateSpan1.style.borderColor = "red";
-        $("#InputToDateSpan1").addClass("alert-danger");
-        $("#InputToDateSpan2").addClass("alert-danger");
         if((inputFromDate.style.borderColor === "red") && (InputToDate.style.borderColor === "red")){
+            $('#SearchReceiptForm').bootstrapValidator('revalidateField', 'inputToDate');
+            $('#SearchReceiptForm').bootstrapValidator('revalidateField', 'inputFromDate');
             $("#ButtonPrint").addClass("disabled");
         }    
     }else{
-        var InputToDateSpan1 = document.getElementById("InputToDateSpan1");
-        InputToDate.style.borderColor = "green";
-        InputToDateSpan1.style.borderColor = "green";
-        $("#InputToDateSpan1").removeClass("alert-danger");
-        $("#InputToDateSpan2").removeClass("alert-danger");
+        $('#SearchReceiptForm').bootstrapValidator('revalidateField', 'inputToDate');
+        $('#SearchReceiptForm').bootstrapValidator('revalidateField', 'inputFromDate');
         $("#ButtonPrint").removeClass("disabled");
         checkDateValue("to","");
-    }               
+    }       
 }
     
 function checkDateValue(date){
@@ -379,25 +373,21 @@ function validateDate(date,option){
     var InputToDate = document.getElementById("inputToDate");
     var InputToDateSpan1 = document.getElementById("InputToDateSpan1");
     if(option === 'over'){
+
         if(date === 'from'){
-            inputFromDate.style.borderColor = "red";
-            InputFromDateSpan1.style.borderColor = "red";     
+            $('#SearchReceiptForm').bootstrapValidator('revalidateField', 'inputToDate');
+            $('#SearchReceiptForm').bootstrapValidator('revalidateField', 'inputFromDate');
         }
         if(date === 'to'){
-            InputToDate.style.borderColor = "red";
-            InputToDateSpan1.style.borderColor = "red";
+            $('#SearchReceiptForm').bootstrapValidator('revalidateField', 'inputToDate');
+            $('#SearchReceiptForm').bootstrapValidator('revalidateField', 'inputFromDate');
         }           
         $("#ButtonPrint").addClass("disabled");
     } else {
-        inputFromDate.style.borderColor = "red";
-        InputFromDateSpan1.style.borderColor = "red";
-        $("#InputFromDateSpan1").addClass("alert-danger");
-        $("#InputFromDateSpan2").addClass("alert-danger");        
-        InputToDate.style.borderColor = "red";
-        InputToDateSpan1.style.borderColor = "red";
-        $("#InputToDateSpan1").addClass("alert-danger");
-        $("#InputToDateSpan2").addClass("alert-danger");
+        $('#SearchReceiptForm').bootstrapValidator('revalidateField', 'inputToDate');
+        $('#SearchReceiptForm').bootstrapValidator('revalidateField', 'inputFromDate');
         $("#ButtonPrint").addClass("disabled");
-    }        
+    }
+
 }
 </script>
