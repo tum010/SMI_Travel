@@ -299,10 +299,12 @@
     
     <bean id="ARMonitorService" class="com.smi.travel.datalayer.service.ARMonitorService">
         <property name="arNirvanaDao" ref="ARNirvanaDao" />
+        <property name="genreport" ref="GenerateReport" />
     </bean>
     
     <bean id="APNirvanaService" class="com.smi.travel.datalayer.service.APNirvanaService">
         <property name="apNirvanaDao" ref="APNirvanaDao" />
+        <property name="genreport" ref="GenerateReport" />
     </bean>
     
     <!--<add data>-->

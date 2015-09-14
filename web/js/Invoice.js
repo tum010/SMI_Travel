@@ -35,7 +35,12 @@
         else {
             ReceiveFromTable.$('tr.row_selected').removeClass('row_selected');
             var staff_code = $(this).find("td").eq(0).html();
+            var staff_name = $(this).find("td").eq(1).html();
+            var staff_dress = $(this).find("td").eq(2).html();
 //            alert("Herree" + staff_code);
+            $("#InvTo").val(staff_code);
+            $("#InvToName").val(staff_name);
+            $("#InvToAddress").val(staff_dress);
             $("#ARCode").val(staff_code);
             $(this).addClass('row_selected');
         }

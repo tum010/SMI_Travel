@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TaxInvoiceEmailReport" language="groovy" pageWidth="594" pageHeight="421" columnWidth="524" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="346dddd2-e21a-4c7b-8d69-ccea53d38a9d">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="72"/>
-	<property name="ireport.y" value="48"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="816"/>
 	<field name="customer" class="java.lang.String"/>
 	<field name="address" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -20,18 +20,22 @@
 	<field name="textamount" class="java.lang.String"/>
 	<background>
 		<band height="351" splitType="Stretch">
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="162" y="124" width="179" height="150" uuid="0cf3ca0e-a93f-423e-98f3-6c9f0f8aedc4"/>
+				<imageExpression><![CDATA["resource/images/wendy_watermark_s_2.JPG"]]></imageExpression>
+			</image>
 			<rectangle>
-				<reportElement x="0" y="155" width="430" height="103" uuid="89be47d7-e946-4426-b7df-00c929c9ac06"/>
+				<reportElement mode="Transparent" x="0" y="168" width="430" height="86" uuid="89be47d7-e946-4426-b7df-00c929c9ac06"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="430" y="155" width="95" height="103" uuid="a52cf726-a2f0-45e8-88b1-beafd1d92571"/>
+				<reportElement mode="Transparent" x="430" y="168" width="95" height="86" uuid="a52cf726-a2f0-45e8-88b1-beafd1d92571"/>
 			</rectangle>
 		</band>
 	</background>
 	<pageHeader>
 		<band height="152" splitType="Stretch">
 			<rectangle radius="10">
-				<reportElement x="-1" y="66" width="525" height="18" backcolor="#CCCCCC" uuid="25b396a9-ec82-4dc3-adb4-07116b97b1c1"/>
+				<reportElement mode="Opaque" x="-1" y="66" width="525" height="18" backcolor="#CCCCCC" uuid="25b396a9-ec82-4dc3-adb4-07116b97b1c1"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="70" y="15" width="204" height="13" uuid="22f8d2bd-a091-418d-999b-9bc3fcd237ca"/>
@@ -139,7 +143,7 @@
 				<text><![CDATA[Date]]></text>
 			</staticText>
 			<rectangle radius="10">
-				<reportElement x="1" y="86" width="360" height="64" uuid="f2ba4db3-5790-4af3-a2dd-d42453c3e260"/>
+				<reportElement mode="Transparent" x="1" y="86" width="360" height="64" uuid="f2ba4db3-5790-4af3-a2dd-d42453c3e260"/>
 			</rectangle>
 			<textField>
 				<reportElement x="65" y="86" width="73" height="17" uuid="198fff98-f3dc-4fa0-afc3-8017207186b5"/>
@@ -256,13 +260,6 @@
 				</textElement>
 				<text><![CDATA[Customer]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="219" y="135" width="73" height="15" uuid="4607b518-2427-4163-825a-848a8f1b9c42"/>
-				<textElement textAlignment="Left">
-					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{fax}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="438" y="121" width="13" height="17" uuid="70855f41-e291-4572-8d5e-3ce2e460dd7d"/>
 				<textElement>
@@ -307,10 +304,10 @@
 	<columnHeader>
 		<band height="17" splitType="Stretch">
 			<rectangle>
-				<reportElement x="430" y="2" width="95" height="13" uuid="85b7b372-7ad0-4351-8a07-893935152f0f"/>
+				<reportElement mode="Transparent" x="430" y="2" width="95" height="13" uuid="85b7b372-7ad0-4351-8a07-893935152f0f"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="0" y="2" width="430" height="13" uuid="257d14c2-324e-4f32-b9b0-5a830cf59cb0"/>
+				<reportElement mode="Transparent" x="0" y="2" width="430" height="13" uuid="257d14c2-324e-4f32-b9b0-5a830cf59cb0"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="189" y="0" width="83" height="16" uuid="41ae57c3-6a3b-40c4-b4d2-665f902a517d"/>
@@ -377,7 +374,7 @@
 	<pageFooter>
 		<band height="100" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="4" width="525" height="63" uuid="6bafc228-be08-4040-b83a-248c83fa1375"/>
+				<reportElement mode="Transparent" x="0" y="4" width="525" height="63" uuid="6bafc228-be08-4040-b83a-248c83fa1375"/>
 			</rectangle>
 			<rectangle radius="10">
 				<reportElement x="70" y="70" width="230" height="25" backcolor="#CCCCCC" uuid="0640d416-a194-40fb-89f0-672e06741932"/>

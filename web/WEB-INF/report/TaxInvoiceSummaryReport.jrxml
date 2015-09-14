@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TaxInvoiceSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b94d16a0-fd3d-420a-829f-b2613a057a63">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TaxInvoiceSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="b94d16a0-fd3d-420a-829f-b2613a057a63">
 	<property name="ireport.zoom" value="1.652892561983471"/>
-	<property name="ireport.x" value="582"/>
-	<property name="ireport.y" value="185"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="241"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="user" class="java.lang.String"/>
 	<field name="from" class="java.lang.String"/>
@@ -44,6 +44,9 @@
 	</variable>
 	<variable name="totalvoidpage" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[($F{status}.equalsIgnoreCase("VOID")) ? new BigDecimal($F{amount}) : new BigDecimal("0")]]></variableExpression>
+	</variable>
+	<variable name="countNo" class="java.lang.Integer" resetType="Group" resetGroup="departmentGroup" calculation="DistinctCount">
+		<variableExpression><![CDATA[($V{countNo}==null?0:$V{countNo}+1)]]></variableExpression>
 	</variable>
 	<group name="departmentGroup" isReprintHeaderOnEachPage="true" keepTogether="true">
 		<groupExpression><![CDATA[$F{department}]]></groupExpression>
@@ -270,7 +273,7 @@
 					</textElement>
 					<text><![CDATA[Total Void :]]></text>
 				</staticText>
-				<textField>
+				<textField pattern="#,##0.00">
 					<reportElement x="214" y="47" width="96" height="17" uuid="07892560-b97c-4f1a-aacd-1b53d11701af"/>
 					<textElement textAlignment="Right">
 						<font fontName="TH SarabunPSK" size="14"/>
@@ -505,7 +508,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{no}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{countNo}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="25" y="0" width="53" height="16" uuid="de02e62d-85af-40ca-93d4-0f0be2349f94"/>
@@ -657,7 +660,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$V{totalgrosspage}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement x="215" y="57" width="96" height="17" uuid="f696f2d4-1594-456a-9a71-ce75e3e43c6a"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="14"/>

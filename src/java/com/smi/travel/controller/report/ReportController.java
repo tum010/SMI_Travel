@@ -189,7 +189,7 @@ public class ReportController extends SMITravelController {
         } else if (ReceiptReport.equalsIgnoreCase(name)) {
             data = reportservice.getReceipt(receiveId,option);
         } else if (ReceiptSummaryReport.equalsIgnoreCase(name)) {
-            data = reportservice.getReceiptSummary(dateFrom,dateTo,departmentRec,recType,user.getUsername()+"-"+user.getRole().getName());
+            data = reportservice.getReceiptSummary(dateFrom,dateTo,departmentRec,recType,status,user.getUsername()+"-"+user.getRole().getName());
         } else if (ReceiveList.equalsIgnoreCase(name)) {
             data = reportservice.getDaytourOtherReport(refno, status);
         } else if (InvoiceEmail.equalsIgnoreCase(name)) {
@@ -213,9 +213,9 @@ public class ReportController extends SMITravelController {
         }else if(TicketFareReport.equalsIgnoreCase(name)){
 //            data = reportservice.getTicketFareReport();
         }else if(TaxInvoiceSummaryReport.equalsIgnoreCase(name)){
-            data = reportservice.getTaxInvoiceSummaryReport(from, to, department, systemuser);
+            data = reportservice.getTaxInvoiceSummaryReport(from, to, department, status, systemuser);
         }else if(CreditNoteSummaryReport.equalsIgnoreCase(name)){
-            data = reportservice.getCreditNoteSummaryReport(from, to, department, user.getUsername()+"-"+user.getRole().getName());
+            data = reportservice.getCreditNoteSummaryReport(from, to, department, status, user.getUsername()+"-"+user.getRole().getName());
         }
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);

@@ -49,6 +49,12 @@
         <property name="isVat" type="java.lang.Integer">
             <column name="is_vat" />
         </property>
+        <property name="exportDate" type="timestamp">
+            <column name="export_date" length="20" />
+        </property>
+        <property name="isExport" type="java.lang.Integer">
+            <column name="is_export"  />
+        </property>
         <bag name="invoiceDocuments" table="invoice_document" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="invoice_detail_id" not-null="true" />

@@ -41,7 +41,7 @@ public class InvoiceImpl implements InvoiceDao{
     private static final String SEARCH_INVOICE_TYPE = "FROM Invoice inv where inv.department = :invoiceDepartment and inv.invType = :invoiceType  and inv.invNo  LIKE :invoiceNo  ORDER BY inv.invNo DESC LIMIT 1";
     private static final String GET_INVOICE_FROMNO = "FROM Invoice inv where inv.invNo = :invoiceNo and inv.department = :department and inv.invType = :invType and inv.MFinanceItemstatus = '1'";
     private static final String GET_INVOICE_FOR_TAX_INVOICE = "FROM Invoice inv where inv.invNo = :invoiceNo and inv.department = :department and inv.invType = 'V' and inv.MFinanceItemstatus.name = 'NORMAL'";
-    private static final String GET_BILLDESC = "from InvoiceDetail inv WHERE inv.billableDesc.id = :billableDescId  and inv.invoice.MFinanceItemstatus.id = 2";
+    private static final String GET_BILLDESC = "from InvoiceDetail inv WHERE inv.billableDesc.id = :billableDescId  and inv.invoice.MFinanceItemstatus.id != 2";
     private static final String GET_BILLDESC_FILTER = "from InvoiceDetail inv WHERE inv.billableDesc.id = :billableDescId and inv.id != :invdID";
     private static final String GET_BILL_AMOUNT = "from BillableDesc bill where bill.id = :descid";
     

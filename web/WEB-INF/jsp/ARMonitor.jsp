@@ -191,7 +191,7 @@
                         <tbody>
                             <c:forEach var="ar_nirvana" items="${listAr}" varStatus="countar">
                             <tr>
-                                <td class="hidden">1</td>
+                                <td class="hidden"><input class="form-control" type="text" id="inputId${countar.count}" name="inputId${countar.count}" value="${ar_nirvana.id}"></td>
                                 <td align="center">
                                     <input class="form-control" type="checkbox" id="selectAll${countar.count}" name="selectAll${countar.count}" value="${countar.count}">
                                 </td>
@@ -286,7 +286,7 @@
     }
     
     function confirmExport(){
-        alert("EXX");
+//        alert("EXX");
         $("#arExportModal").modal("hide");
 //        var action = $('#action').val();
         $('#action').val('export');

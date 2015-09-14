@@ -213,7 +213,7 @@ public class InvoiceController extends SMITravelController {
                 checkReciptAndTaxInvoice++;
                 request.setAttribute("checkTaxinvoice", "yesTaxinvoice");
             }else{
-                checkReciptAndTaxInvoice = 0;
+                checkReciptAndTaxInvoice += 0;
                 request.setAttribute("checkTaxinvoice", "noTaxinvoice");
             }
             // check Recipt
@@ -221,7 +221,7 @@ public class InvoiceController extends SMITravelController {
                 checkReciptAndTaxInvoice++;
                 request.setAttribute("checkRecipt", "yesReceipt");
             }else{
-                checkReciptAndTaxInvoice = 0;
+                checkReciptAndTaxInvoice += 0;
                 request.setAttribute("checkRecipt", "noReceipt");
             }
             if(checkReciptAndTaxInvoice == 0){ 
@@ -235,6 +235,9 @@ public class InvoiceController extends SMITravelController {
                 }
             }else{
                 invoice = setValueInvoice("", user.getUsername(), invoiceType, invoiceId, invoiceTo, invoiceName, invoiceAddress, isGroup, termPay, dueDate, department, staffCode, staffName, staffId, arCode, remark, invoiceNo, InputInvDate, request,subDepartment);
+                mStatus.setId("1");
+                mStatus.setName("NORMAL");
+                invoice.setMFinanceItemstatus(mStatus);
                 request.setAttribute("listInvoiceDetail", listInvoiceDetail);
                 request.setAttribute("invoice", invoice);
             }
@@ -351,11 +354,7 @@ public class InvoiceController extends SMITravelController {
             date = utilty.convertStringToDate(createDate);
             // Create Date
             invoice.setCreateDate(date);
-           
-            if("save".equals(action)){
-                invoice.setIsExport(0);
-            }
-            
+          
            DateFormat dateFormat2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 	   Date date2 = new Date();
 	   System.out.println("Date 2 : "+dateFormat2.format(date2));
@@ -493,7 +492,7 @@ public class InvoiceController extends SMITravelController {
                 invoice.setSubDepartment(subDepartment);
             }
             
-            listInvoiceDetail = setInvoiceDetailList(request, invoice);
+            listInvoiceDetail = setInvoiceDetailList(request, invoice,action);
             if(listInvoiceDetail != null){
                 invoice.setInvoiceDetails(listInvoiceDetail);
             }
@@ -544,7 +543,7 @@ public class InvoiceController extends SMITravelController {
         return invoiceNum;
     }
     
-    public List<InvoiceDetail> setInvoiceDetailList(HttpServletRequest request,Invoice invoice){
+    public List<InvoiceDetail> setInvoiceDetailList(HttpServletRequest request,Invoice invoice,String action){
         List<InvoiceDetail> listInvoiceDetail = new LinkedList<InvoiceDetail>();
         
         String invoiceDetailRows = request.getParameter("counterTable");
@@ -647,6 +646,13 @@ public class InvoiceController extends SMITravelController {
             }else{
                  listInvoiceDetail.remove(invoiceDetail);
              }
+             if("update".equals(action)){
+//               invoice.setUpdateDate(date2);
+                invoiceDetail.setIsExport(1);
+            }else{
+                invoiceDetail.setIsExport(0);
+             }
+            
          }
          
         return listInvoiceDetail;

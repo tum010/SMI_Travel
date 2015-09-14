@@ -28,8 +28,7 @@ public class Invoice {
      private Date createDate;
      private String subDepartment;
      private Date updateDate;
-     private Date exportDate;
-     private Integer isExport;
+
      private List invoiceDetails = new LinkedList<InvoiceDetail>();
 
     public Invoice() {
@@ -56,8 +55,7 @@ public class Invoice {
        this.subDepartment = subDepartment;
        this.invoiceDetails = invoiceDetails;
        this.updateDate = updateDate;
-       this.exportDate = exportDate;
-       this.isExport = isExport;
+
     }
    
     public String getId() {
@@ -219,26 +217,10 @@ public class Invoice {
         return updateDate;
     }
 
-    public Integer getIsExport() {
-        return isExport;
-    }
-
-    public Date getExportDate() {
-        return exportDate;
-    }
-
+    
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
     }
-
-    public void setIsExport(Integer isExport) {
-        this.isExport = isExport;
-    }
-
-    public void setExportDate(Date exportDate) {
-        this.exportDate = exportDate;
-    }
-
 }
 
 

@@ -300,10 +300,12 @@ function printReceiptSummary(){
     var department = document.getElementById('department').value;
     var inputToDate = document.getElementById('inputToDate').value;
     var inputFromDate = document.getElementById('inputFromDate').value;
+    var status = document.getElementById("status");
+    var strStatus = status.options[status.selectedIndex].text;
     if((inputToDate === '') || (inputFromDate === '')){
         validateDate();
     } else {
-        window.open("report.smi?name=ReceiptSummaryReport&dateFrom="+inputFromDate+"&dateTo="+inputToDate+"&departmentRec="+department+"&recType="+recType);
+        window.open("report.smi?name=ReceiptSummaryReport&dateFrom="+inputFromDate+"&dateTo="+inputToDate+"&departmentRec="+department+"&recType="+recType+"&comfirm="+strStatus);
     }   
 }
 
@@ -356,22 +358,18 @@ function checkToDateField(){
 function checkDateValue(date){
     var inputFromDate = document.getElementById("inputFromDate");
     var InputToDate = document.getElementById("inputToDate");
-    var over = 0;
     if((inputFromDate.value !== '') && (InputToDate.value !== '')){
         var fromDate = (inputFromDate.value).split('-');
         var toDate = (InputToDate.value).split('-');
         if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
-            over++;
-        }
-        if((parseInt(fromDate[1])) > (parseInt(toDate[1]))){
-            over++;
-        }
-        if((parseInt(fromDate[2])) > (parseInt(toDate[2]))){
-            over++;
-        }           
-        if(over !== 0){
             validateDate(date,"over");
         }
+        if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))){
+            validateDate(date,"over");
+        }
+        if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) >= (parseInt(toDate[1]))) && (parseInt(fromDate[2])) > (parseInt(toDate[2]))){
+            validateDate(date,"over");
+        }          
     }
 }
     

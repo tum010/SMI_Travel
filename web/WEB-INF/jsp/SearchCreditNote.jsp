@@ -249,10 +249,12 @@ function printCreditNoteSummaryReport(){
     var fromdate = document.getElementById("iDateFrom").value;
     var todate= document.getElementById("iDateTo").value;
     var department = document.getElementById("department").value;
+    var status = document.getElementById("status");
+    var strStatus = status.options[status.selectedIndex].text;
     if((fromdate === '') || (todate === '')){
         validateDate();
     } else {
-        window.open("report.smi?name=CreditNoteSummaryReport&fromdate="+fromdate+"&todate="+todate+"&department="+department);
+        window.open("report.smi?name=CreditNoteSummaryReport&fromdate="+fromdate+"&todate="+todate+"&department="+department+"&comfirm="+strStatus);
     }   
 }
 
@@ -305,24 +307,18 @@ function checkToDateField(){
 function checkDateValue(date){
     var inputFromDate = document.getElementById("iDateFrom");
     var InputToDate = document.getElementById("iDateTo");
-    var over = 0;
     if((inputFromDate.value !== '') && (InputToDate.value !== '')){
         var fromDate = (inputFromDate.value).split('-');
         var toDate = (InputToDate.value).split('-');      
-        if((parseInt(fromDate[0])) >= (parseInt(toDate[0]))){
-            if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
-                over++;
-            }
-            if((parseInt(fromDate[1])) > (parseInt(toDate[1]))){
-                over++;
-            }
-            if((parseInt(fromDate[2])) > (parseInt(toDate[2]))){
-                over++;
-            }           
-            if(over !== 0){
-                validateDate(date,"over");
-            }
-        }       
+        if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
+            validateDate(date,"over");
+        }
+        if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))){
+            validateDate(date,"over");
+        }
+        if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) >= (parseInt(toDate[1]))) && (parseInt(fromDate[2])) > (parseInt(toDate[2]))){
+            validateDate(date,"over");
+        }           
     }
 }
     

@@ -13,5 +13,5 @@ import java.util.List;
  * @author chonnasith
  */
 public interface CreditNoteSummaryReportDao {
-    public List getCreditNoteSummaryReport(String from, String to, String department, String systemuser);
+    public List getCreditNoteSummaryReport(String from, String to, String department, String status, String systemuser);
 }
