@@ -20,7 +20,8 @@ public class RefundAirReport {
     private String refunddate;
     private String receiveby;
     private String receivedate;
-    private String ticketamount;
+    private String totalreceive;
+    private String totalpay;
     private String address;
     
     public String getRefundno() {
@@ -111,14 +112,23 @@ public class RefundAirReport {
         this.receivedate = receivedate;
     }
 
-    public String getTicketamount() {
-        return ticketamount;
+    public String getTotalreceive() {
+        return totalreceive;
     }
 
-    public void setTicketamount(String ticketamount) {
-        this.ticketamount = ticketamount;
+    public void setTotalreceive(String totalreceive) {
+        this.totalreceive = totalreceive;
     }
 
+    public String getTotalpay() {
+        return totalpay;
+    }
+
+    public void setTotalpay(String totalpay) {
+        this.totalpay = totalpay;
+    }
+
+    
     public String getAddress() {
         return address;
     }
