@@ -31,7 +31,11 @@ public class ReceiptDetailView {
     private String curAmount;
     private String airlineCode;
     private String remark;
-
+    private String payment;
+    private BigDecimal billAmount;
+    private BigDecimal recAmount;
+    private String currency;
+    
     public String getId() {
         return id;
     }
@@ -159,6 +163,40 @@ public class ReceiptDetailView {
     public void setRemark(String remark) {
         this.remark = remark;
     }
+
+    public String getPayment() {
+        return payment;
+    }
+
+    public void setPayment(String payment) {
+        this.payment = payment;
+    }
+
+    public BigDecimal getBillAmount() {
+        return billAmount;
+    }
+
+    public void setBillAmount(BigDecimal billAmount) {
+        this.billAmount = billAmount;
+    }
+
+    public BigDecimal getRecAmount() {
+        return recAmount;
+    }
+
+    public void setRecAmount(BigDecimal recAmount) {
+        this.recAmount = recAmount;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+
     
     
 }

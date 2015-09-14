@@ -21,8 +21,10 @@ import com.smi.travel.datalayer.entity.Passenger;
 import com.smi.travel.datalayer.service.AgentService;
 import com.smi.travel.datalayer.service.BillableService;
 import com.smi.travel.datalayer.service.BookingAirticketService;
+import com.smi.travel.datalayer.service.ReceiptService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
+import com.smi.travel.datalayer.view.entity.ReceiptDetailView;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.text.ParseException;
@@ -55,7 +57,7 @@ public class BillableController extends SMITravelController {
     private BillableService billableService;
     private UtilityService utilservice;
     private AgentService agentService;
-
+    private ReceiptService receiptService;
     private static final String ACTION = "action";
     private static final String Bookiing_Size = "BookingSize";
     private static final String BillableList = "BillableList";
@@ -69,6 +71,7 @@ public class BillableController extends SMITravelController {
     private static final String TransectionResult = "result";
     private static final String MBankList = "MBankList";
     private static final String LockUnlockBooking = "LockUnlockBooking";
+    private static final String ReceiptDetailList = "ReceiptDetailList";
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         int result = 0;
@@ -185,7 +188,7 @@ public class BillableController extends SMITravelController {
                 billable.setPassenger(leader);
                 request.setAttribute(ACTION, "insert");
             }
-
+            
             List<BillableDesc> billableDesc = billable.getBillableDescs();
             //billableDesc = SortBillDescList(billableDesc);
             List<BillableDesc> billableDescNopay = billableService.getListBillableNopay(refNo);
@@ -207,7 +210,11 @@ public class BillableController extends SMITravelController {
             } else {
                 request.setAttribute(BillableDesc, billableDesc);
             }
-
+            // List Receipt Detail
+            if(!billable.getId().isEmpty()){
+                List<ReceiptDetailView> receiptView = receiptService.getReceiptDetailViewFromBillableId(billable.getId());
+                request.setAttribute(ReceiptDetailList, receiptView);
+            }
             setDefaultBill(master,billable);
             request.setAttribute(BillableList, billable);
 
@@ -504,5 +511,13 @@ public class BillableController extends SMITravelController {
             }
         }
         return null;
+    }
+
+    public ReceiptService getReceiptService() {
+        return receiptService;
+    }
+
+    public void setReceiptService(ReceiptService receiptService) {
+        this.receiptService = receiptService;
     }
 }

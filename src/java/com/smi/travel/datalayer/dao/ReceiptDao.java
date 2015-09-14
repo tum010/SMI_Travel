@@ -38,4 +38,5 @@ public interface ReceiptDao {
     
     public Receipt getReceiptfromReceiptId(String recId); // search Receipt ---> edit receipt
     public List<ReceiptDetailView> getReceiptDetailViewFromInvDetailId(String invDetailId);
+    public List<ReceiptDetailView> getReceiptDetailViewFromBillableId(String billableId);
 }

@@ -161,6 +161,7 @@
         <property name="invoiceSummaryDao" ref="InvoiceSummaryDao" />
         <property name="refundAirReportDao" ref="RefundAirReportDao" />
         <property name="ticketFareReportDao" ref="TicketFareReportDao" />
+        <property name="billAirAgentDao" ref="BillAirAgentDao" />
     </bean> 
     
     
