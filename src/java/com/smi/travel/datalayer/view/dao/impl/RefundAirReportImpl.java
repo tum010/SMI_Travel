@@ -34,6 +34,8 @@ public class RefundAirReportImpl implements RefundAirReportDao{
         Session session = this.sessionFactory.openSession();
         List data = new ArrayList();
         BigDecimal SumTicketAmount = new BigDecimal(0);
+        BigDecimal SumReceive = new BigDecimal(0);
+        BigDecimal SumPayCus = new BigDecimal(0);
          List<Object[]> QueryRefundList = session.createSQLQuery("SELECT * FROM `refund_ticket_view` where refundid = " + refundId)
                  .addScalar("refundno", Hibernate.STRING)
                  .addScalar("ticketdate", Hibernate.DATE)
@@ -48,6 +50,8 @@ public class RefundAirReportImpl implements RefundAirReportDao{
                  .addScalar("receivedate", Hibernate.DATE)
                  .addScalar("ticketamount", Hibernate.BIG_DECIMAL)
                  .addScalar("address", Hibernate.STRING)
+                 .addScalar("totalreceive", Hibernate.BIG_DECIMAL)
+                 .addScalar("totalpay", Hibernate.BIG_DECIMAL)
                  .list();
         for (Object[] B : QueryRefundList) {
              RefundAirReport report = new RefundAirReport();
@@ -65,12 +69,16 @@ public class RefundAirReportImpl implements RefundAirReportDao{
              //report.setTicketamount(util.setFormatMoney(B[11]));
              report.setAddress(util.ConvertString(B[12]));
              SumTicketAmount = SumTicketAmount.add((BigDecimal) B[11]);
+             SumReceive = SumReceive.add((BigDecimal) B[13]);
+             SumPayCus = SumPayCus.add((BigDecimal) B[14]);
              data.add(report);
             
         }
         for(int i=0;i<data.size();i++){
             RefundAirReport temp = (RefundAirReport) data.get(i);
-            temp.setTicketamount(util.setFormatMoney(SumTicketAmount));
+            //temp.setTicketamount(util.setFormatMoney(SumTicketAmount));
+            temp.setTotalreceive(util.setFormatMoney(SumReceive));
+            temp.setTotalpay(util.setFormatMoney(SumPayCus));
             data.set(0, temp);
             
         }
