@@ -157,6 +157,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
                 .addScalar("cust_branch", Hibernate.INTEGER)
                 .addScalar("company_branch", Hibernate.INTEGER)
                 .addScalar("inv_id", Hibernate.INTEGER)
+                .addScalar("receive_detail_id", Hibernate.INTEGER)
                 .list();
         for (Object[] B : ARNirvanaList) {
             ARNirvana ar = new ARNirvana();
@@ -219,6 +220,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             ar.setCust_branch((Integer) B[55]);
             ar.setCompany_branch((Integer) B[56]);
             ar.setInvid((Integer) B[57]);
+            ar.setId((Integer) B[58]);
             data.add(ar);
         }
         session.close();
