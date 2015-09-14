@@ -47,7 +47,6 @@ public class TicketFareReportImpl implements TicketFareReportDao {
         }else if((dateFrom != null) &&(!"".equalsIgnoreCase(dateFrom))){
             checkQuery = 1;
             query +=  " issuedate >= '" +dateFrom +"'";
-
         }else if((dateTo != null) &&(!"".equalsIgnoreCase(dateTo))){
             checkQuery = 1;
             query += " issuedate <= '" +dateTo +"'";
@@ -78,6 +77,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
             query += prefix+ " air = '"+airlineCode+"'";
         }
+        
         if((department != null) &&(!"".equalsIgnoreCase(department))){
             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
             query += prefix+" department = '"+department+"'";
@@ -130,12 +130,49 @@ public class TicketFareReportImpl implements TicketFareReportDao {
         df.applyPattern("dd-MM-yyyy hh:mm");
         SimpleDateFormat dateformat = new SimpleDateFormat();
         dateformat.applyPattern("dd-MM-yyyy");
+        
         if("wendy".equalsIgnoreCase(department)){
             department = "WENDY";
         }else if("inbound".equalsIgnoreCase(department)){
             department = "INBOUND";
         }else if("outbound".equalsIgnoreCase(department)){
             department = "OUTBOUND";
+        }
+        
+        if("1".equalsIgnoreCase(termPay)){
+            termPay = "cash on demand";
+        }else if("2".equalsIgnoreCase(termPay)){
+            termPay = "credit 7 days";
+        }else if("3".equalsIgnoreCase(termPay)){
+            termPay = "credit 14 days";
+        }else if("4".equalsIgnoreCase(termPay)){
+            termPay = "credit card";
+        }else if("5".equalsIgnoreCase(termPay)){
+            termPay = "credit 30 days";
+        }else if("6".equalsIgnoreCase(termPay)){
+            termPay = "post date cheque";
+        }else if("7".equalsIgnoreCase(termPay)){
+            termPay = "credit 15 days";
+        }
+			
+        if("1".equalsIgnoreCase(airline)){
+            airline = "IATA";
+        }else if("2".equalsIgnoreCase(airline)){
+            airline = "TG";
+        }
+			
+	if("C".equalsIgnoreCase(ticketBuy)){
+            ticketBuy = "IN";
+        }else if("O".equalsIgnoreCase(ticketBuy)){
+            ticketBuy = "OUT";
+        }
+			
+	if("B".equalsIgnoreCase(ticketType)){
+            ticketType = "BSP";
+        }else if("D".equalsIgnoreCase(ticketType)){
+            ticketType = "DOMESTIC";
+        }else if("A".equalsIgnoreCase(ticketType)){
+            ticketType = "AGENT";
         }
         
         for (Object[] B : QueryList) {
@@ -182,7 +219,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
     public List getTicketFareSumAgentStaff(String ticketType, String ticketBuy, String airline, String airlineCode, String department, String staff, String termPay, String printby, String issuedateFrom, String issuedateTo, String invdateFrom, String invdateTo, String groupBy) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
-        List data = new ArrayList<TicketFareReport>();
+        List data = new ArrayList<TicketFareSummaryByAgentStaff>();
         
         String query = "select `agt`.`name` AS `agentname`,`agt`.`id` AS `agentid`,`fare`.`owner` AS `owner`,(select sum(`fare`.`inv_amount`) from `invoice_detail` `invd` where (`invd`.`invoice_id` = `inv`.`id`)) AS `invamount`,`fare`.`department` AS `department`,sum(ifnull(`fare`.`ticket_commission`,0)) AS `ticcom`,sum(ifnull(`fare`.`sale_price`,0)) AS `saleprice`,sum(ifnull(`fare`.`agent_commission`,0)) AS `agentcom`,sum((ifnull(`fare`.`ticket_commission`,0) - ifnull(`fare`.`agent_commission`,0))) AS `profit`,count(`fare`.`ticket_commission`) AS `pax` from (((`ticket_fare_airline` `fare` join `agent` `agt` on((`agt`.`id` = `fare`.`agent_id`))) left join `ticket_fare_invoice` `finv` on((`finv`.`ticket_fare_id` = `fare`.`id`))) left join `invoice` `inv` on((`inv`.`id` = `finv`.`invoice_id`))) TEMPS";
         
@@ -297,6 +334,43 @@ public class TicketFareReportImpl implements TicketFareReportDao {
         }else if("outbound".equalsIgnoreCase(department)){
             department = "OUTBOUND";
         }
+        
+        if("1".equalsIgnoreCase(termPay)){
+            termPay = "cash on demand";
+        }else if("2".equalsIgnoreCase(termPay)){
+            termPay = "credit 7 days";
+        }else if("3".equalsIgnoreCase(termPay)){
+            termPay = "credit 14 days";
+        }else if("4".equalsIgnoreCase(termPay)){
+            termPay = "credit card";
+        }else if("5".equalsIgnoreCase(termPay)){
+            termPay = "credit 30 days";
+        }else if("6".equalsIgnoreCase(termPay)){
+            termPay = "post date cheque";
+        }else if("7".equalsIgnoreCase(termPay)){
+            termPay = "credit 15 days";
+        }
+			
+        if("1".equalsIgnoreCase(airline)){
+            airline = "IATA";
+        }else if("2".equalsIgnoreCase(airline)){
+            airline = "TG";
+        }
+			
+	if("C".equalsIgnoreCase(ticketBuy)){
+            ticketBuy = "IN";
+        }else if("O".equalsIgnoreCase(ticketBuy)){
+            ticketBuy = "OUT";
+        }
+			
+	if("B".equalsIgnoreCase(ticketType)){
+            ticketType = "BSP";
+        }else if("D".equalsIgnoreCase(ticketType)){
+            ticketType = "DOMESTIC";
+        }else if("A".equalsIgnoreCase(ticketType)){
+            ticketType = "AGENT";
+        }
+        
         for (Object[] B : QueryList) {
             TicketFareSummaryByAgentStaff ticket = new TicketFareSummaryByAgentStaff();
            //set header
