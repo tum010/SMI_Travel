@@ -179,8 +179,8 @@ public class ReportService {
         return receiptDao.getReceipt(receiptId,option);
     }
      
-    public List getReceiptSummary(String dateFrom,String dateTo,String departmentRec,String recType,String username){
-        return receiptDao.getReceiptSummary(dateFrom,dateTo,departmentRec,recType,username);
+    public List getReceiptSummary(String dateFrom,String dateTo,String departmentRec,String recType,String status,String username){
+        return receiptDao.getReceiptSummary(dateFrom,dateTo,departmentRec,recType,status,username);
     }
     
     public List getReceiveList(String datefrom,String dateto,String user,String agentid){
@@ -221,17 +221,17 @@ public class ReportService {
         return ticketFareReportDao.getTicketFareSumAgentStaff(ticketType, ticketBuy, airline, airlineCode, department, staff, termPay, printby, issuedateFrom, issuedateTo, invdateFrom, invdateTo,groupBy);
     }
 
-    public List getTaxInvoiceSummaryReport(String from, String to, String department, String systemuser){
-        return taxInvoiceSummaryReportDao.getTaxInvoiceSummaryReport(from, to, department, systemuser);
+    public List getTaxInvoiceSummaryReport(String from, String to, String department, String status, String systemuser){
+        return taxInvoiceSummaryReportDao.getTaxInvoiceSummaryReport(from, to, department, status, systemuser);
     }
     
-    public List getCreditNoteSummaryReport(String from, String to, String department, String systemuser){
-        return creditNoteSummaryReportDao.getCreditNoteSummaryReport(from, to, department, systemuser);
+    public List getCreditNoteSummaryReport(String from, String to, String department, String status, String systemuser){
+        return creditNoteSummaryReportDao.getCreditNoteSummaryReport(from, to, department, status, systemuser);
     }
     
-    public List getBillAirAgentReport(String from, String to, String department, String systemuser){
-        return creditNoteSummaryReportDao.getCreditNoteSummaryReport(from, to, department, systemuser);
-    }
+//    public List getBillAirAgentReport(String from, String to, String department, String systemuser){
+//        return creditNoteSummaryReportDao.getCreditNoteSummaryReport(from, to, department, systemuser);
+//    }
 
     public HotelVoucherDao getHotelVoucherdao() {
         return hotelVoucherdao;

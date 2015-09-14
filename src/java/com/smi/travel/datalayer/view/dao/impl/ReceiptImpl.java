@@ -141,7 +141,7 @@ public class ReceiptImpl implements ReceiptDao{
     }
 
     @Override
-    public List getReceiptSummary(String dateFrom,String dateTo,String departmentRec,String recType,String username){
+    public List getReceiptSummary(String dateFrom,String dateTo,String departmentRec,String recType,String status,String username){
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         String query = "SELECT * FROM `receipt_summary` where";
@@ -168,6 +168,11 @@ public class ReceiptImpl implements ReceiptDao{
         if((recType != null) &&(!"".equalsIgnoreCase(recType))){
             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
             query += prefix+ " rectype = '"+recType+"'";
+        }
+        
+        if((status != null) &&(!"".equalsIgnoreCase(status))){
+            if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+            query += prefix+ " status = '"+status+"'";
         }
         
         if(checkQuery == 0){query = query.replaceAll("where", "");}
