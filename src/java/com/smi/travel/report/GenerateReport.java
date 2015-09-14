@@ -23,6 +23,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 public class GenerateReport {
     private String reportpath;
     private String exportpath;
+    private String exportnvncsvpath;
     
     public GenerateReport(){
 
@@ -59,6 +60,14 @@ public class GenerateReport {
 
     public void setExportpath(String exportpath) {
         this.exportpath = exportpath;
+    }
+
+    public String getExportnvncsvpath() {
+        return exportnvncsvpath;
+    }
+
+    public void setExportnvncsvpath(String exportnvncsvpath) {
+        this.exportnvncsvpath = exportnvncsvpath;
     }
     
     

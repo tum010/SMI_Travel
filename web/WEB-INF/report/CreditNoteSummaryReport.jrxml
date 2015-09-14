@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CreditNoteSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="886f6a61-cb51-422c-a379-c72412e46d94">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="453"/>
-	<property name="ireport.y" value="255"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="111"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="user" class="java.lang.String"/>
 	<field name="from" class="java.lang.String"/>
@@ -51,6 +51,9 @@
 	</variable>
 	<variable name="totalamountpage" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[new BigDecimal($F{amount})]]></variableExpression>
+	</variable>
+	<variable name="countNo" class="java.lang.Integer" resetType="Group" resetGroup="departmentGroup" calculation="DistinctCount">
+		<variableExpression><![CDATA[($V{countNo}==null?0:$V{countNo}+1)]]></variableExpression>
 	</variable>
 	<group name="departmentGroup" isReprintHeaderOnEachPage="true" keepTogether="true">
 		<groupExpression><![CDATA[$F{department}]]></groupExpression>
@@ -531,7 +534,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{no}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{countNo}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="187" y="0" width="118" height="17" uuid="a3c00df7-59b6-4bea-8185-ceb6ca6b95d1"/>

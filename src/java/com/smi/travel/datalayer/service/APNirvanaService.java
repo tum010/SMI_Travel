@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.view.dao.APNirvanaDao;
 import com.smi.travel.datalayer.view.entity.APNirvana;
+import com.smi.travel.report.GenerateReport;
 import java.util.List;
 
 /**
@@ -16,6 +17,7 @@ import java.util.List;
  */
 public class APNirvanaService {
     private APNirvanaDao apNirvanaDao;
+    private GenerateReport genreport;
     
     public List<APNirvana> SearchApNirvanaFromFilter(String paymentType,String producttype,String status,String from,String to) {
         return apNirvanaDao.SearchApNirvanaFromFilter(paymentType, producttype, status, from, to);
@@ -36,5 +38,19 @@ public class APNirvanaService {
     public void setApNirvanaDao(APNirvanaDao apNirvanaDao) {
         this.apNirvanaDao = apNirvanaDao;
     }
+    
+    public String GetPartCsvExport(){
+        return genreport.getExportnvncsvpath();
+    }
+
+    public GenerateReport getGenreport() {
+        return genreport;
+    }
+
+    public void setGenreport(GenerateReport genreport) {
+        this.genreport = genreport;
+    }
+    
+    
    
 }

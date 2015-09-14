@@ -35,7 +35,7 @@ public class TaxInvoiceSummaryReportImpl implements TaxInvoiceSummaryReportDao {
     private UtilityFunction utilityFunction;
     
     @Override
-    public List getTaxInvoiceSummaryReport(String from, String to, String department, String systemuser) {
+    public List getTaxInvoiceSummaryReport(String from, String to, String department, String status, String systemuser) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList<TaxInvoiceSummaryReport>();
@@ -54,6 +54,11 @@ public class TaxInvoiceSummaryReportImpl implements TaxInvoiceSummaryReportDao {
         if ((to != null) && (!"".equalsIgnoreCase(to))) {
             query.append(haveCondition ? " and" : " where");
             query.append(" `taxinvoice_summary`.taxdate <= '" + to + "'");
+            haveCondition = true;
+        }
+        if ((status != null) && (!"".equalsIgnoreCase(status))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" `taxinvoice_summary`.status = '" + status + "'");
             haveCondition = true;
         }
         if ((department != null) && (!"".equalsIgnoreCase(department))) {

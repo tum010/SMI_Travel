@@ -31,7 +31,7 @@ public class CreditNoteSummaryReportImpl implements CreditNoteSummaryReportDao{
     private UtilityFunction utilityFunction;
     
     @Override
-    public List getCreditNoteSummaryReport(String from, String to, String department, String systemuser) {
+    public List getCreditNoteSummaryReport(String from, String to, String department, String status, String systemuser) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList<CreditNoteSummaryReport>();
@@ -50,6 +50,11 @@ public class CreditNoteSummaryReportImpl implements CreditNoteSummaryReportDao{
         if ((to != null) && (!"".equalsIgnoreCase(to))) {
             query.append(haveCondition ? " and" : " where");
             query.append(" `creditnote_summary`.notedate <= '" + to + "'");
+            haveCondition = true;
+        }
+        if ((status != null) && (!"".equalsIgnoreCase(status))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" `creditnote_summary`.status = '" + status + "'");
             haveCondition = true;
         }
         if ((department != null) && (!"".equalsIgnoreCase(department))) {
