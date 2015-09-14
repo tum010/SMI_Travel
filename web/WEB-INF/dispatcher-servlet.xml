@@ -325,6 +325,7 @@
 		<property name="BillableService" ref="BillableService" />
 		<property name="utilservice" ref="UtilityService" />
 		<property name="agentService" ref="AgentService" />
+                <property name="receiptService" ref="ReceiptService" />
 	</bean>
 	<bean id="HistoryController" class="com.smi.travel.controller.HistoryController">
 		<property name="bookingAirticketService" ref="BookingAirticket" />
