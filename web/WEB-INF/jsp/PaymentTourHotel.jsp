@@ -369,6 +369,8 @@
                                 <th style="width: 15%">Description</th>
                                 <th style="width: 8%">A/C</th>
                                 <th style="width: 1%">Action</th>
+                                <th class="hidden">Export Date</th>
+                                <th class="hidden">Is Export</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -426,6 +428,8 @@
                                             <span class="glyphicon glyphicon-remove deleteicon" ></span>
                                         </c:if>
                                     </td>
+                                    <td class="hidden"> <input id="exportDate${i.count}" name="exportDate${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.exportDate}"> </td>
+                                    <td class="hidden"> <input id="isExport${i.count}" name="isExport${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.isExport}"> </td>
                                 </tr>                       
                             </c:forEach> 
                         </tbody>
@@ -458,6 +462,8 @@
                                 <th style="width: 11%">Amount</th>
                                 <th style="width: 16%">Description</th>
                                 <th style="width: 4%">A/C</th>
+                                <th class="hidden">Export Date</th>
+                                <th class="hidden">Is Export</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -517,6 +523,8 @@
                                     <td class="hidden"> <input style="width: ${Description}" id="description${i.count}" name="description${i.count}" maxlength ="255"  type="text" class="form-control" value="${pl.description}"> </td>                                   
                                     <td align="center">${pl.accCode}</td>
                                     <td class="hidden"> <input style="width: ${AC}" id="ac${i.count}" name="ac${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.accCode}" readonly=""> </td>
+                                    <td class="hidden"> <input id="exportDate${i.count}" name="exportDate${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.exportDate}"> </td>
+                                    <td class="hidden"> <input id="isExport${i.count}" name="isExport${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.isExport}"> </td>
                                 </tr>                       
                             </c:forEach> 
                         </tbody>
@@ -989,6 +997,8 @@
                 '<td class="text-center">' +
                 '<a class="remCF" onclick="deletelist(\'\', \''+row+'\')">  '+
                 '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
+                '<td class="hidden"> <input id="exportDate' + row + '" name="exportDate' + row + '" maxlength ="15"  type="text" class="form-control"> </td>' +
+                '<td class="hidden"> <input id="isExport' + row + '" name="isExport' + row + '" maxlength ="15"  type="text" class="form-control"> </td>' +
                 '</tr>'
             );
             $("#select_product_list option").clone().appendTo("#select-product" + row);

@@ -1796,6 +1796,8 @@ function reloadDatePicker(){
 }
 
 function clearNew(){
+    var action = document.getElementById('action');
+    action.value = 'new';
     document.getElementById('ReceiptForm').submit();
 }
 
