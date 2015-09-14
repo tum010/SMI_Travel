@@ -94,10 +94,14 @@ public class ReportService {
     }
     
     public String[]  getPartReport(){
-        String[] path = new String[2];
+        String[] path = new String[3];
         path[0] = genreport.getExportpath();
         path[1] = genreport.getReportpath();
         return path;
+    }
+    
+    public String  getCsvPartReport(){
+        return genreport.getExportnvncsvpath();
     }
     
     public List getTicketSaleVolumn(String ticketFrom,String ticketType,String startDate,String endDate){
