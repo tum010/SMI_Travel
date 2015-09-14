@@ -286,7 +286,7 @@
     }
     
     function confirmExport(){
-        alert("EXX");
+//        alert("EXX");
         $("#arExportModal").modal("hide");
 //        var action = $('#action').val();
         $('#action').val('export');

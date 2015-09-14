@@ -47,9 +47,9 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
         int AndQuery = 0;
         
         if("".equals(invtype)  && "".equals(department)  && "".equals(billtype)  && "".equals(from) && "".equals(to) && "".equals(status)){
-            query = "SELECT * FROM ap_nirvana ar " ; 
+            query = "SELECT * FROM ar_nirvana ar " ; 
         }else{
-            query = "SELECT * FROM ap_nirvana ar where" ;
+            query = "SELECT * FROM ar_nirvana ar where" ;
         }
         
         if ( department != null && (!"".equalsIgnoreCase(department)) ) {
@@ -246,7 +246,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
                     Calendar cal = Calendar.getInstance();
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String strDate = sdf.format(cal.getTime());
-                    String hql = "update Invoice inv set inv.isExport = 1,inv.exportDate = '"+ strDate+"'  where  inv.id = " + APList.get(i).getInvid();
+                    String hql = "update InvoiceDetail inv set inv.isExport = 1,inv.exportDate = '"+ strDate+"'  where  inv.invoice.id = " + APList.get(i).getInvid();
                     Query query = session.createQuery(hql);
                     int result = query.executeUpdate();
                     System.out.println("Query Update : " + result + ":" + query);

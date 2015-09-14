@@ -1,10 +1,7 @@
 package com.smi.travel.datalayer.entity;
 // Generated Jul 20, 2015 5:19:24 PM by Hibernate Tools 4.3.1
-
-
-import com.smi.travel.datalayer.entity.BillableDesc;
-import com.smi.travel.datalayer.entity.MPaytype;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,6 +25,8 @@ public class InvoiceDetail {
      private BigDecimal vat;
      private BigDecimal gross;
      private Integer isVat;
+     private Date exportDate;
+     private Integer isExport;
      private String displayDescription;
      private List invoiceDocuments = new LinkedList<InvoiceDocument>();
      private List receiptDetails = new LinkedList<ReceiptDetail>();
@@ -40,7 +39,7 @@ public class InvoiceDetail {
     public InvoiceDetail(Invoice invoice) {
         this.invoice = invoice;
     }
-    public InvoiceDetail(BillableDesc billableDesc, Invoice invoice, MBilltype mbillType, String description, BigDecimal cost, BigDecimal costLocal, String curCost, BigDecimal amount, BigDecimal amountLocal, String curAmount, BigDecimal vat, Integer isVat, List invoiceDocuments,BigDecimal gross,String displayDescription,List receiptDetails ) {
+    public InvoiceDetail(BillableDesc billableDesc, Invoice invoice, MBilltype mbillType, String description, BigDecimal cost, BigDecimal costLocal, String curCost, BigDecimal amount, BigDecimal amountLocal, String curAmount, BigDecimal vat, Integer isVat, List invoiceDocuments,BigDecimal gross,String displayDescription,Date exportDate,Integer isExport,List receiptDetails ) {
        this.billableDesc = billableDesc;
        this.invoice = invoice;
        this.mbillType = mbillType;
@@ -56,6 +55,8 @@ public class InvoiceDetail {
        this.displayDescription = displayDescription;
        this.invoiceDocuments = invoiceDocuments;
        this.receiptDetails = receiptDetails;
+       this.exportDate = exportDate;
+       this.isExport = isExport;
     }
    
     public String getId() {
@@ -74,7 +75,22 @@ public class InvoiceDetail {
         this.displayDescription = displayDescription;
     }
     
-    
+    public Integer getIsExport() {
+        return isExport;
+    }
+
+    public Date getExportDate() {
+        return exportDate;
+    }
+
+     public void setIsExport(Integer isExport) {
+        this.isExport = isExport;
+    }
+
+    public void setExportDate(Date exportDate) {
+        this.exportDate = exportDate;
+    }
+
     
     public BillableDesc getBillableDesc() {
         return this.billableDesc;
