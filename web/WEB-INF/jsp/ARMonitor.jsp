@@ -103,9 +103,9 @@
             <div class="col-xs-12"></div>
             <div class="col-xs-12"> <!--Row 2 -->
                 <div class="col-xs-1 text-left" style="width: 120px">
-                    <label class="control-label" for="">From</lable>
+                    <label class="control-label" for="">From<font style="color: red">*</font></lable>
                 </div>
-                <div class="col-xs-1" style="width: 200px">
+                <div class="col-xs-1 form-group" style="width: 200px">
                     <div class='input-group date' id='InputFromDate'>
                     <c:if test='${from != null}'>
                         <input id="arFromDate" name="arFromDate"  type="text" 
@@ -121,9 +121,9 @@
                 </div>
                 <!--<div class="col-xs-1" style="width: 50px"></div>-->
                 <div class="col-xs-1 text-left">
-                    <label class="control-label">To</lable>
+                    <label class="control-label">To<font style="color: red">*</font></lable>
                 </div>
-                <div class="col-xs-1" style="width: 200px">
+                <div class="col-xs-1 form-group" style="width: 200px">
                     <div class='input-group date' id='InputToDate'>
                     <c:if test='${to != null}'>
                         <input id="arToDate" name="arToDate"  type="text" 
@@ -265,7 +265,10 @@
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
             "bFilter": false,
-            "bInfo": false
+            "bInfo": false,
+            "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+            "iDisplayLength": 50,
+            "bSort": false
         });
         
         $('#arDataListTable tbody').on('click', 'tr', function () {
@@ -277,6 +280,59 @@
                 table.$('tr.row_selected').removeClass('row_selected');
                 $(this).addClass('row_selected');
                 $('#hdGridSelected').val($('#arDataListTable tbody tr.row_selected').attr("id"));
+            }
+        });
+        
+        $('#InputFromDate').datetimepicker().on('dp.change', function (e) {
+            $('#arMonitorForm').bootstrapValidator('revalidateField', 'arFromDate');
+        });
+        $('#InputToDate').datetimepicker().on('dp.change', function (e) {
+            $('#arMonitorForm').bootstrapValidator('revalidateField', 'arToDate');
+        });
+        
+        $("#arMonitorForm").bootstrapValidator({
+                    framework: 'bootstrap',
+    //                container: 'tooltip',
+                    feedbackIcons: {
+                        valid: 'uk-icon-check',
+                        invalid: 'uk-icon-times',
+                        validating: 'uk-icon-refresh'
+                    },
+                    fields: {
+                        arFromDate: {
+                            trigger: 'focus keyup change',
+                            validators: {
+                                notEmpty: {
+                                    message: 'The Date From is required'
+                                },
+                                date: {
+                                    format: 'YYYY-MM-DD',
+                                    max: 'arToDate',
+                                    message: 'The Date From is not a valid'
+                                }
+                            }
+                        },
+                        arToDate: {
+                            trigger: 'focus keyup change',
+                            validators: {
+                                notEmpty: {
+                                    message: 'The Date From is required'
+                                },
+                                date: {
+                                    format: 'YYYY-MM-DD',
+                                    min: 'arFromDate',
+                                    message: 'The Date To is not a valid'
+                                }
+                            }
+                        }
+                    }
+                }).on('success.field.fv', function (e, data) {
+            if (data.field === 'arFromDate' && data.fv.isValidField('arToDate') === false) {
+                data.fv.revalidateField('arToDate');
+            }
+
+            if (data.field === 'arToDate' && data.fv.isValidField('arFromDate') === false) {
+                data.fv.revalidateField('arFromDate');
             }
         });
     });
@@ -296,7 +352,7 @@
     function searchArmonitor(){
         var action = $('#action').val();
         action.value = 'searchAr';
-        document.getElementById('arMonitorForm').submit();
+//        document.getElementById('arMonitorForm').submit();
     }
     function selectAll(){
         var row = $('#arDataListTable tr').length;     

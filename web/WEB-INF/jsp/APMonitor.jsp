@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript" src="js/APMonitor.js"></script> 
+<!--<script type="text/javascript" src="js/APMonitor.js"></script> -->
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -111,9 +111,9 @@
             <div class="col-xs-12"><br></div>
             <div class="col-xs-12">
                 <div class="col-xs-1 text-left">
-                    <label class="control-label" for="">From</lable>
+                    <label class="control-label" for="">From<font style="color: red">*</font></lable>
                 </div>
-                <div class="col-xs-1" style="width: 170px">
+                <div class="col-xs-1 form-group" style="width: 170px">
                     <div class='input-group date' id='InputFromDate'>
                     <c:if test='${taxInvoice.taxInvDate != null}'>
                         <input id="apFromDate" name="apFromDate"  type="text" 
@@ -129,9 +129,9 @@
                 </div>
                 <div class="col-xs-1" style="width: 120px"></div>
                 <div class="col-xs-1 text-left">
-                    <label class="control-label">To</lable>
+                    <label class="control-label">To<font style="color: red">*</font></lable>
                 </div>
-                <div class="col-xs-1" style="width: 170px">
+                <div class="col-xs-1 form-group" style="width: 170px">
                     <div class='input-group date' id='InputToDate'>
                     <c:if test='${taxInvoice.taxInvDate != null}'>
                         <input id="apToDate" name="apToDate"  type="text" 
@@ -151,7 +151,7 @@
                         <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
                     </button>
                 </div>
-                <div class="col-xs-12"><br></div>  
+                <div class="col-xs-12"><br></div>
                 <div class="col-xs-12">
                     <input type="hidden" id="apCount" name="apCount" value="${data_list.size()}"/>
                     <table id="apDataListTable" class="display" cellspacing="0" width="100%">
@@ -174,7 +174,7 @@
                             <c:forEach var="data_list" items="${data_list}" varStatus="i">
                             <tr>
                                 <td class="hidden">
-                                    <input type="hidden" id="paymentId${i.count}" name="paymentId${i.count}" value="${data_list.payment_id}"/> 
+                                    <input type="hidden" id="paymentDetailId${i.count}" name="paymentDetailId${i.count}" value="${data_list.payment_detail_id}"/> 
                                     <input type="hidden" id="paymentType${i.count}" name="paymentType${i.count}" value="${data_list.paymenttype}"/>
                                 </td>                              
                                 <td align="center">
@@ -259,7 +259,8 @@
             "bFilter": false,
             "bInfo": false,
             "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-            "iDisplayLength": 50
+            "iDisplayLength": 50,
+            "bSort": false
         });
         
         $('#apDataListTable tbody').on('click', 'tr', function () {
@@ -273,6 +274,60 @@
                 $('#hdGridSelected').val($('#apDataListTable tbody tr.row_selected').attr("id"));
             }
         });
+        
+        $('#InputFromDate').datetimepicker().on('dp.change', function (e) {
+            $('#apMonitorForm').bootstrapValidator('revalidateField', 'apFromDate');
+        });
+        $('#InputToDate').datetimepicker().on('dp.change', function (e) {
+            $('#apMonitorForm').bootstrapValidator('revalidateField', 'apToDate');
+        });
+        
+        $("#apMonitorForm").bootstrapValidator({
+                    framework: 'bootstrap',
+    //                container: 'tooltip',
+                    feedbackIcons: {
+                        valid: 'uk-icon-check',
+                        invalid: 'uk-icon-times',
+                        validating: 'uk-icon-refresh'
+                    },
+                    fields: {
+                        apFromDate: {
+                            trigger: 'focus keyup change',
+                            validators: {
+                                notEmpty: {
+                                    message: 'The Date From is required'
+                                },
+                                date: {
+                                    format: 'YYYY-MM-DD',
+                                    max: 'apToDate',
+                                    message: 'The Date From is not a valid'
+                                }
+                            }
+                        },
+                        apToDate: {
+                            trigger: 'focus keyup change',
+                            validators: {
+                                notEmpty: {
+                                    message: 'The Date From is required'
+                                },
+                                date: {
+                                    format: 'YYYY-MM-DD',
+                                    min: 'apFromDate',
+                                    message: 'The Date To is not a valid'
+                                }
+                            }
+                        }
+                    }
+                }).on('success.field.fv', function (e, data) {
+            if (data.field === 'apFromDate' && data.fv.isValidField('apToDate') === false) {
+                data.fv.revalidateField('apToDate');
+            }
+
+            if (data.field === 'apToDate' && data.fv.isValidField('apFromDate') === false) {
+                data.fv.revalidateField('apFromDate');
+            }
+        });
+        
     });
     
     function exportAP(){

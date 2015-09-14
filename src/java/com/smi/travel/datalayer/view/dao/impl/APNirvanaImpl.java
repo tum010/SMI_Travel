@@ -46,7 +46,7 @@ public class APNirvanaImpl implements APNirvanaDao{
                 String paymentType = apNirvana.getPaymenttype();
                 Date date = new Date();
                 if("W".equalsIgnoreCase(paymentType)){
-                    String hql = "update PaymentWendy pay set pay.isExport = 1 , pay.exportDate = :date where pay.id = :paymentId";
+                    String hql = "update PaymentDetailWendy pay set pay.isExport = 1 , pay.exportDate = :date where pay.id = :paymentId";
                     try {
                         Query query = session.createQuery(hql);
                         query.setParameter("paymentId", paymentId);
@@ -112,12 +112,12 @@ public class APNirvanaImpl implements APNirvanaDao{
         }
         if ((from != null) && (!"".equalsIgnoreCase(from))) {
             query.append(haveCondition ? " and" : " where");
-            query.append(" `ap_nirvana`.create_date >= '" + from + "'");
+            query.append(" `ap_nirvana`.createdate >= '" + from + "'");
             haveCondition = true;
         }
         if ((to != null) && (!"".equalsIgnoreCase(to))) {
             query.append(haveCondition ? " and" : " where");
-            query.append(" `ap_nirvana`.create_date <= '" + to + "'");
+            query.append(" `ap_nirvana`.createdate <= '" + to + "'");
             haveCondition = true;
         }
         
@@ -210,7 +210,8 @@ public class APNirvanaImpl implements APNirvanaDao{
             .addScalar("company_branch",Hibernate.INTEGER)
             .addScalar("itf_status",Hibernate.STRING)
             .addScalar("payment_id",Hibernate.STRING)
-            .addScalar("paymenttype",Hibernate.STRING)    //87
+            .addScalar("paymenttype",Hibernate.STRING)    
+            .addScalar("payment_detail_id", Hibernate.STRING) //88
             .list();
         
         for (Object[] B : QueryList) {
@@ -222,9 +223,9 @@ public class APNirvanaImpl implements APNirvanaDao{
             apNirvana.setBasevatamt((B[11])!=null ? new BigDecimal(util.ConvertString(B[11])) : new BigDecimal("0.00"));
             apNirvana.setVatamt((B[13])!=null ? new BigDecimal(util.ConvertString(B[13])) : new BigDecimal("0.00"));            
             apNirvana.setPuraccount1(util.ConvertString(B[28]));
-            apNirvana.setItf_status(util.ConvertString(B[85]));
-            apNirvana.setPayment_id(util.ConvertString(B[86]));
+            apNirvana.setItf_status(util.ConvertString(B[85]));            
             apNirvana.setPaymenttype(util.ConvertString(B[87]));
+            apNirvana.setPayment_detail_id(util.ConvertString(B[88]));
             apNirvanaList.add(apNirvana);
         }    
         
