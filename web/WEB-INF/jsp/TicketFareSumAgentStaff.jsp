@@ -119,7 +119,7 @@
                                 <label class="col-md-6 control-label text-right">Issue Date From</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
-                                        <div class='input-group date' id='fromdate'>
+                                        <div class='input-group date fromDate' id='fromdate'>
                                             <input type='text' id="startdate" name="startdate" class="form-control" data-date-format="YYYY-MM-DD"/>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -135,7 +135,7 @@
                                 <label class="col-md-6 control-label text-right">To</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
-                                        <div class='input-group date' id='todate'>
+                                        <div class='input-group date toDate' id='todate'>
                                             <input type='text' id="enddate" name="enddate"  class="form-control" data-date-format="YYYY-MM-DD" />
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -151,7 +151,7 @@
                                 <label class="col-md-6 control-label text-right">Invoice Date From</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
-                                        <div class='input-group date' id='frominvdate'>
+                                        <div class='input-group date fromInvDate' id='frominvdate'>
                                             <input type='text' id="startinvdate" name="startinvdate" class="form-control" data-date-format="YYYY-MM-DD"/>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -167,7 +167,7 @@
                                 <label class="col-md-6 control-label text-right">To</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
-                                        <div class='input-group date' id='toinvdate'>
+                                        <div class='input-group date toInvDate' id='toinvdate'>
                                             <input type='text' id="endinvdate" name="endinvdate"  class="form-control" data-date-format="YYYY-MM-DD" />
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -316,6 +316,9 @@
                 startdate: {
                     trigger: 'focus keyup change',
                     validators: {
+                        notEmpty: {
+                                   message: 'The Issue Date From is required'
+                        },
                         date: {
                             format: 'YYYY-MM-DD',
                             max: 'enddate',
@@ -326,6 +329,9 @@
                 enddate: {
                     trigger: 'focus keyup change',
                     validators: {
+                        notEmpty: {
+                            message: 'The Issue Date To is required'
+                        },
                         date: {
                             format: 'YYYY-MM-DD',
                             min: 'startdate',
@@ -359,10 +365,12 @@
         $('#fromdate').datetimepicker().on('dp.change', function (e) {
             $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'startdate');
             $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'enddate');
+            checkFromDateField();
         });
         $('#todate').datetimepicker().on('dp.change', function (e) {
             $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'startdate');
             $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'enddate');
+            checkToDateField();
         });
 	$('#frominvdate').datetimepicker().on('dp.change', function (e) {
             $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'startinvdate');
@@ -450,12 +458,81 @@
         var department = document.getElementById("department").value;
         var salebyUser = document.getElementById("salebyUser").value;
         var termPay = document.getElementById("termPay").value;
-
-        if(reportType == 1){
-            window.open("Excel.smi?name=TicketFareSummaryByStaff&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&issuedateFrom=" + issuefrom + "&issuedateTo=" + issueto + "&department=" + department + "&staff=" + salebyUser + "&termPay=" + termPay + "&invdateFrom=" + invfrom + "&invdateTo=" + invto);
-        }else if(reportType == 2){
-            window.open("Excel.smi?name=TicketFareSummaryByAgent&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&issuedateFrom=" + issuefrom + "&issuedateTo=" + issueto + "&department=" + department + "&staff=" + salebyUser + "&termPay=" + termPay + "&invdateFrom=" + invfrom + "&invdateTo=" + invto);
-        }
-
+        if((issuefrom === '') || (issueto === '')){
+            validateDate();
+        } else {
+            if(reportType == 1){
+                window.open("Excel.smi?name=TicketFareSummaryByStaff&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&issuedateFrom=" + issuefrom + "&issuedateTo=" + issueto + "&department=" + department + "&staff=" + salebyUser + "&termPay=" + termPay + "&invdateFrom=" + invfrom + "&invdateTo=" + invto);
+            }else if(reportType == 2){
+                window.open("Excel.smi?name=TicketFareSummaryByAgent&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&issuedateFrom=" + issuefrom + "&issuedateTo=" + issueto + "&department=" + department + "&staff=" + salebyUser + "&termPay=" + termPay + "&invdateFrom=" + invfrom + "&invdateTo=" + invto);
+            }        
+        }   
     }
+    
+function checkFromDateField(){
+    var InputToDate = document.getElementById("enddate");
+    var inputFromDate = document.getElementById("startdate");
+    if(inputFromDate.value === '' || InputToDate.value === ''){        
+        $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'startdate');
+        $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'enddate');
+        $("#printbutton").addClass("disabled");
+    } else {
+        $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'startdate');
+        $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'enddate');
+        $("#printbutton").removeClass("disabled");
+        checkDateValue("from","");
+    }
+}
+    
+function checkToDateField(){
+    var InputToDate = document.getElementById("enddate");
+    var inputFromDate = document.getElementById("startdate");
+    if(inputFromDate.value === '' || InputToDate.value === ''){ 
+        $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'enddate');
+        $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'startdate');
+        $("#printbutton").addClass("disabled");
+    }else{
+        $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'enddate');
+        $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'startdate');
+        
+        $("#printbutton").removeClass("disabled");
+        checkDateValue("to","");
+    }       
+}
+
+function checkDateValue(date){
+    var inputFromDate = document.getElementById("startdate");
+    var InputToDate = document.getElementById("enddate");
+    if((inputFromDate.value !== '') && (InputToDate.value !== '')){
+        var fromDate = (inputFromDate.value).split('-');
+        var toDate = (InputToDate.value).split('-');
+        if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
+            validateDate(date,"over");
+        }
+        if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))){
+            validateDate(date,"over");
+        }
+        if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) >= (parseInt(toDate[1]))) && (parseInt(fromDate[2])) > (parseInt(toDate[2]))){
+            validateDate(date,"over");
+        }          
+    }
+}
+    
+function validateDate(date,option){
+    if(option === 'over'){
+        if(date === 'from'){
+           $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'startdate');
+           $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'enddate');
+        }
+        if(date === 'to'){
+           $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'startdate');
+           $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'enddate');
+        }           
+        $("#printbutton").addClass("disabled");
+    } else {
+        $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'startdate');
+        $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'enddate');
+        $("#printbutton").addClass("disabled");
+    }
+}
 </script>

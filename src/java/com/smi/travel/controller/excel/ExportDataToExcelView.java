@@ -836,19 +836,6 @@ public class ExportDataToExcelView extends AbstractExcelView {
         String sheetName = "Sheet1";// name of sheet
         HSSFSheet sheet = wb.createSheet(sheetName);
         TicketFareSummaryByAgentStaff dataheader = new TicketFareSummaryByAgentStaff();
-        
-        if(ticketSumByStaff != null){
-            dataheader = (TicketFareSummaryByAgentStaff)ticketSumByStaff.get(0);
-        }
-        // set Header Report (Row 1)
-        HSSFCellStyle styleC1 = wb.createCellStyle();
-        HSSFRow row1 = sheet.createRow(0);
-        HSSFCell cell1 = row1.createCell(0);
-        cell1.setCellValue("List Ticket Summary By Staff");
-        styleC1.setFont(getHeaderFont(wb.createFont()));
-        cell1.setCellStyle(styleC1);
-        sheet.addMergedRegion(CellRangeAddress.valueOf("A1:G1"));
-        
         // Set align Text
         HSSFCellStyle styleC21 = wb.createCellStyle();
         styleC21.setAlignment(styleC21.ALIGN_RIGHT);
@@ -857,6 +844,18 @@ public class ExportDataToExcelView extends AbstractExcelView {
         HSSFCellStyle styleC23 = wb.createCellStyle();
         styleC23.setAlignment(styleC22.ALIGN_CENTER);
         
+        if(!ticketSumByStaff.isEmpty()){
+            dataheader = (TicketFareSummaryByAgentStaff)ticketSumByStaff.get(0);
+        
+        // set Header Report (Row 1)
+        HSSFCellStyle styleC1 = wb.createCellStyle();
+        HSSFRow row1 = sheet.createRow(0);
+        HSSFCell cell1 = row1.createCell(0);
+        cell1.setCellValue("List Ticket Summary By Staff");
+        styleC1.setFont(getHeaderFont(wb.createFont()));
+        cell1.setCellStyle(styleC1);
+        sheet.addMergedRegion(CellRangeAddress.valueOf("A1:G1"));
+ 
         // Row 2
         HSSFRow row2 = sheet.createRow(1);
         HSSFCell cell21 = row2.createCell(0);
@@ -959,7 +958,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell82.setCellValue(dataheader.getOwner());
         cell82.setCellStyle(styleC22);
         sheet.addMergedRegion(CellRangeAddress.valueOf("E8:F8"));
-        
+        }
         // Header Table
         HSSFCellStyle styleC3 = wb.createCellStyle();
         styleC3.setFont(getHeaderTable(wb.createFont()));
@@ -1284,9 +1283,16 @@ public class ExportDataToExcelView extends AbstractExcelView {
         HSSFSheet sheet = wb.createSheet(sheetName);
         TicketFareSummaryByAgentStaff dataheader = new TicketFareSummaryByAgentStaff();
         
-        if(ticketSumByAgent != null){
+        // Set align Text
+        HSSFCellStyle styleC21 = wb.createCellStyle();
+        styleC21.setAlignment(styleC21.ALIGN_RIGHT);
+        HSSFCellStyle styleC22 = wb.createCellStyle();
+        styleC22.setAlignment(styleC22.ALIGN_LEFT);
+        HSSFCellStyle styleC23 = wb.createCellStyle();
+        styleC23.setAlignment(styleC22.ALIGN_CENTER);
+        
+        if(!ticketSumByAgent.isEmpty()){
             dataheader = (TicketFareSummaryByAgentStaff)ticketSumByAgent.get(0);
-        }
         
         // set Header Report (Row 1)
         HSSFCellStyle styleC1 = wb.createCellStyle();
@@ -1296,14 +1302,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         styleC1.setFont(getHeaderFont(wb.createFont()));
         cell1.setCellStyle(styleC1);
         sheet.addMergedRegion(CellRangeAddress.valueOf("A1:G1"));
-        
-        // Set align Text
-        HSSFCellStyle styleC21 = wb.createCellStyle();
-        styleC21.setAlignment(styleC21.ALIGN_RIGHT);
-        HSSFCellStyle styleC22 = wb.createCellStyle();
-        styleC22.setAlignment(styleC22.ALIGN_LEFT);
-        HSSFCellStyle styleC23 = wb.createCellStyle();
-        styleC23.setAlignment(styleC22.ALIGN_CENTER);
+
         
         // Row 2
         HSSFRow row2 = sheet.createRow(1);
@@ -1407,7 +1406,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell82.setCellValue(dataheader.getPrinton());
         cell82.setCellStyle(styleC22);
         sheet.addMergedRegion(CellRangeAddress.valueOf("E8:F8"));
-
+        }
         // Header Table
         HSSFCellStyle styleC3 = wb.createCellStyle();
         styleC3.setFont(getHeaderTable(wb.createFont()));

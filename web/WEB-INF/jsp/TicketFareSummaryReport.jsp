@@ -118,7 +118,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group" id="fromdatepanel">
-                                <label class="col-md-6 control-label text-right">From</label>
+                                <label class="col-md-6 control-label text-right">From<font style="color: red">*</font></label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date' id='fromdate'>
@@ -134,7 +134,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group" id="todatepanel">
-                                <label class="col-md-6 control-label text-right">To</label>
+                                <label class="col-md-6 control-label text-right">To<font style="color: red">*</font></label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date' id='todate'>
@@ -207,7 +207,7 @@
                                 <label class="col-md-6 control-label text-right" for="rept"></label>
                                 <div class="col-md-6">  
                                     <div class="form-group">
-                                        <button type="button" onclick="printTicketFareSummary();" class="btn btn-success"><span class="glyphicon glyphicon-print"></span> Print</button>
+                                        <button type="button" id="printbutton"  name="printbutton"  onclick="printTicketFareSummary();" class="btn btn-success"><span class="glyphicon glyphicon-print"></span> Print</button>
                                     </div>
                                 </div>   
                             </div>
@@ -285,6 +285,9 @@
                 startdate: {
                     trigger: 'focus keyup change',
                     validators: {
+                        notEmpty: {
+                            message: 'The Date From is required'
+                        },
                         date: {
                             format: 'YYYY-MM-DD',
                             max: 'enddate',
@@ -295,7 +298,9 @@
                 enddate: {
                     trigger: 'focus keyup change',
                     validators: {
-
+                        notEmpty: {
+                            message: 'The Date To is required'
+                        },
                         date: {
                             format: 'YYYY-MM-DD',
                             min: 'startdate',
@@ -310,11 +315,15 @@
         $('#fromdate').datetimepicker().on('dp.change', function (e) {
             $('#TicketFareSummaryReport').bootstrapValidator('revalidateField', 'startdate');
             $('#TicketFareSummaryReport').bootstrapValidator('revalidateField', 'enddate');
+            checkFromDateField();
         });
         $('#todate').datetimepicker().on('dp.change', function (e) {
             $('#TicketFareSummaryReport').bootstrapValidator('revalidateField', 'startdate');
             $('#TicketFareSummaryReport').bootstrapValidator('revalidateField', 'enddate');
+            checkToDateField();
         });
 
     });
+    
+
 </script>
