@@ -140,9 +140,8 @@ function getTaxInv(input) {
                     $("#dataload").removeClass("hidden");
                 },
                 success: function (msg) {
-                    console.log("getAutoListBillto ==" + msg);
                     var tax = JSON.parse(msg);
-                    if(tax.status === 1){
+                    if(tax.status === "1"){
                         var taxDate = $(input).parent().parent().find("[name='taxDate']");
                         var amount = $(input).parent().parent().find("[name='taxAmount']");
                         var amountId = $(input).parent().parent().find("[id='taxAmount']");
