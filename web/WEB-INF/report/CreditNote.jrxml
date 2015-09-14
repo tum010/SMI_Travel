@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TaxInvoiceEmailReport" language="groovy" pageWidth="594" pageHeight="421" columnWidth="524" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="346dddd2-e21a-4c7b-8d69-ccea53d38a9d">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="49"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="843"/>
 	<field name="customer" class="java.lang.String"/>
 	<field name="address" class="java.lang.String"/>
 	<field name="cnno" class="java.lang.String"/>
@@ -19,11 +19,15 @@
 	<field name="textamount" class="java.lang.String"/>
 	<background>
 		<band height="351" splitType="Stretch">
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="177" y="105" width="179" height="150" uuid="b2f903e0-3ff6-4530-af6b-b953b7de9987"/>
+				<imageExpression><![CDATA["resource/images/wendy_watermark_s_2.JPG"]]></imageExpression>
+			</image>
 			<rectangle>
-				<reportElement x="0" y="144" width="429" height="82" uuid="89be47d7-e946-4426-b7df-00c929c9ac06"/>
+				<reportElement mode="Transparent" x="0" y="144" width="429" height="82" uuid="89be47d7-e946-4426-b7df-00c929c9ac06"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="429" y="144" width="96" height="82" uuid="a52cf726-a2f0-45e8-88b1-beafd1d92571"/>
+				<reportElement mode="Transparent" x="429" y="144" width="96" height="82" uuid="a52cf726-a2f0-45e8-88b1-beafd1d92571"/>
 			</rectangle>
 		</band>
 	</background>
@@ -33,28 +37,14 @@
 				<reportElement x="0" y="63" width="525" height="19" backcolor="#CCCCCC" uuid="745e8d3a-a700-40f3-acaa-cec517f0aa42"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="367" y="85" width="71" height="17" uuid="28925612-7af2-4e30-a9e8-b001ea84eaad"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Receipt No.]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="438" y="119" width="13" height="17" uuid="f500f24a-ca60-4989-8467-8b7cb3b2c7fc"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="367" y="102" width="71" height="17" uuid="c522b449-de56-4815-a6f1-4f2e9eb55e60"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Date]]></text>
-			</staticText>
 			<rectangle radius="10">
-				<reportElement x="1" y="84" width="360" height="57" uuid="f2ba4db3-5790-4af3-a2dd-d42453c3e260"/>
+				<reportElement mode="Transparent" x="1" y="84" width="360" height="57" uuid="f2ba4db3-5790-4af3-a2dd-d42453c3e260"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="53" y="101" width="13" height="17" uuid="f3f954c9-0b80-4f09-8c1c-754cec41de4f"/>
@@ -71,7 +61,7 @@
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<rectangle radius="10">
-				<reportElement x="366" y="84" width="156" height="57" uuid="7e29616f-763b-44d9-b620-f5a7d634f083"/>
+				<reportElement mode="Transparent" x="366" y="84" width="156" height="57" uuid="7e29616f-763b-44d9-b620-f5a7d634f083"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="3" y="101" width="50" height="17" uuid="784b7135-6efe-4d4f-9607-830c5609a21d"/>
@@ -236,10 +226,10 @@
 	<columnHeader>
 		<band height="17" splitType="Stretch">
 			<rectangle>
-				<reportElement x="429" y="2" width="96" height="13" uuid="85b7b372-7ad0-4351-8a07-893935152f0f"/>
+				<reportElement mode="Transparent" x="429" y="2" width="96" height="13" uuid="85b7b372-7ad0-4351-8a07-893935152f0f"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="0" y="2" width="429" height="13" uuid="257d14c2-324e-4f32-b9b0-5a830cf59cb0"/>
+				<reportElement mode="Transparent" x="0" y="2" width="429" height="13" uuid="257d14c2-324e-4f32-b9b0-5a830cf59cb0"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="189" y="0" width="83" height="16" uuid="41ae57c3-6a3b-40c4-b4d2-665f902a517d"/>
@@ -278,7 +268,7 @@
 	<pageFooter>
 		<band height="130" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="4" width="525" height="73" uuid="6bafc228-be08-4040-b83a-248c83fa1375"/>
+				<reportElement mode="Transparent" x="0" y="4" width="525" height="73" uuid="6bafc228-be08-4040-b83a-248c83fa1375"/>
 			</rectangle>
 			<textField>
 				<reportElement x="310" y="113" width="211" height="17" uuid="99754846-144b-47ea-a2d1-a9508637aeb7"/>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptEmail" language="groovy" pageWidth="595" pageHeight="421" columnWidth="525" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="0038deea-02d3-4a9f-8925-fb54dc3fc533">
-	<property name="ireport.zoom" value="4.707642565081533"/>
-	<property name="ireport.x" value="664"/>
-	<property name="ireport.y" value="127"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="32"/>
+	<property name="ireport.y" value="759"/>
 	<field name="recto" class="java.lang.String"/>
 	<field name="recadd" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -28,12 +28,16 @@
 	<field name="invdesc" class="java.lang.String"/>
 	<field name="totalamount" class="java.lang.String"/>
 	<background>
-		<band height="250">
+		<band height="275">
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="173" y="115" width="179" height="150" uuid="c884f60c-6abb-4bc3-ab4d-51ec8592a8e1"/>
+				<imageExpression><![CDATA["resource/images/wendy_watermark_s_2.JPG"]]></imageExpression>
+			</image>
 			<rectangle>
-				<reportElement x="0" y="157" width="429" height="72" uuid="1c4af645-ae69-4603-bda4-e7c0d100feb0"/>
+				<reportElement mode="Transparent" x="0" y="157" width="429" height="72" uuid="1c4af645-ae69-4603-bda4-e7c0d100feb0"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="429" y="157" width="96" height="72" uuid="e375ee91-2287-4e8c-b972-814ce1c75fd7"/>
+				<reportElement mode="Transparent" x="429" y="157" width="96" height="72" uuid="e375ee91-2287-4e8c-b972-814ce1c75fd7"/>
 			</rectangle>
 			<textField pattern="#,##0.00">
 				<reportElement x="352" y="-223" width="44" height="14" uuid="abeb5a26-e0e4-40a1-8a6f-b23162d9dde9"/>
@@ -124,10 +128,10 @@
 				<text><![CDATA[TAX ID. NO. 0105523020132]]></text>
 			</staticText>
 			<rectangle radius="10">
-				<reportElement x="364" y="84" width="161" height="64" uuid="235d0ab1-060f-44f8-b70f-71c28973aa32"/>
+				<reportElement mode="Transparent" x="364" y="84" width="161" height="64" uuid="235d0ab1-060f-44f8-b70f-71c28973aa32"/>
 			</rectangle>
 			<rectangle radius="10">
-				<reportElement x="0" y="84" width="361" height="64" uuid="ee81fd89-af56-4d2e-b258-8ebbdb77e385"/>
+				<reportElement mode="Transparent" x="0" y="84" width="361" height="64" uuid="ee81fd89-af56-4d2e-b258-8ebbdb77e385"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="199" y="63" width="143" height="17" uuid="168f0bb7-abee-4b4f-a734-f2bf56db7180"/>
@@ -302,10 +306,10 @@
 	<columnHeader>
 		<band height="15" splitType="Stretch">
 			<rectangle>
-				<reportElement x="429" y="1" width="96" height="13" uuid="b0a9f9ce-1e06-42e1-8f42-e6a663d0ffcf"/>
+				<reportElement mode="Transparent" x="429" y="1" width="96" height="13" uuid="b0a9f9ce-1e06-42e1-8f42-e6a663d0ffcf"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="0" y="1" width="429" height="13" uuid="a76b5ef4-3306-4b01-b049-b6315eca1962"/>
+				<reportElement mode="Transparent" x="0" y="1" width="429" height="13" uuid="a76b5ef4-3306-4b01-b049-b6315eca1962"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="189" y="-1" width="83" height="16" uuid="b9ca6e7c-56b9-4fa3-ad03-3200fba2110f"/>

@@ -90,16 +90,16 @@ public class APNirvanaImpl implements APNirvanaDao{
        UtilityFunction util = new UtilityFunction();
        List<APNirvana> apNirvanaList = new ArrayList<APNirvana>();
        Session session = this.getSessionFactory().openSession();
-       StringBuffer query = new StringBuffer(" SELECT * FROM `ar_nirvana` ");
+       StringBuffer query = new StringBuffer(" SELECT * FROM `ap_nirvana` ");
         boolean haveCondition = false;
         if ((paymentType != null) && (!"".equalsIgnoreCase(paymentType))) {
             query.append(haveCondition ? " and" : " where");
-            query.append(" `ar_nirvana`.paymenttype = '" + paymentType + "'");
+            query.append(" `ap_nirvana`.paymenttype = '" + paymentType + "'");
             haveCondition = true;
         }
         if ((productType != null) && (!"".equalsIgnoreCase(productType))) {
             query.append(haveCondition ? " and" : " where");
-            query.append(" `ar_nirvana`.producttype = '" + productType + "'");
+            query.append(" `ap_nirvana`.producttype = '" + productType + "'");
             haveCondition = true;
         }
         if ((status != null) && (!"".equalsIgnoreCase(status))) {
@@ -107,17 +107,17 @@ public class APNirvanaImpl implements APNirvanaDao{
             if("E".equalsIgnoreCase(status)){status = "Export";}
             if("C".equalsIgnoreCase(status)){status = "Change";}
             query.append(haveCondition ? " and" : " where");
-            query.append(" `ar_nirvana`.itf_status = '" + status + "'");
+            query.append(" `ap_nirvana`.itf_status = '" + status + "'");
             haveCondition = true;
         }
         if ((from != null) && (!"".equalsIgnoreCase(from))) {
             query.append(haveCondition ? " and" : " where");
-            query.append(" `ar_nirvana`.create_date >= '" + from + "'");
+            query.append(" `ap_nirvana`.create_date >= '" + from + "'");
             haveCondition = true;
         }
         if ((to != null) && (!"".equalsIgnoreCase(to))) {
             query.append(haveCondition ? " and" : " where");
-            query.append(" `ar_nirvana`.create_date <= '" + to + "'");
+            query.append(" `ap_nirvana`.create_date <= '" + to + "'");
             haveCondition = true;
         }
         
