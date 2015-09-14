@@ -32,7 +32,6 @@ public class GenerateReport {
     public String printReport(String reportName,String exportfile,JRDataSource dataSource){
         System.out.println("reportpath "+reportpath);
         System.out.println("exportpath "+exportpath);
-        System.out.println("exportnvncsvpath "+exportnvncsvpath);
         JasperPrint jprint;
         String result = "";
             try {

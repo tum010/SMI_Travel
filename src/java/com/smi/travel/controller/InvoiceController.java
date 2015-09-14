@@ -213,7 +213,7 @@ public class InvoiceController extends SMITravelController {
                 checkReciptAndTaxInvoice++;
                 request.setAttribute("checkTaxinvoice", "yesTaxinvoice");
             }else{
-                checkReciptAndTaxInvoice = 0;
+                checkReciptAndTaxInvoice += 0;
                 request.setAttribute("checkTaxinvoice", "noTaxinvoice");
             }
             // check Recipt
@@ -221,7 +221,7 @@ public class InvoiceController extends SMITravelController {
                 checkReciptAndTaxInvoice++;
                 request.setAttribute("checkRecipt", "yesReceipt");
             }else{
-                checkReciptAndTaxInvoice = 0;
+                checkReciptAndTaxInvoice += 0;
                 request.setAttribute("checkRecipt", "noReceipt");
             }
             if(checkReciptAndTaxInvoice == 0){ 
@@ -235,6 +235,9 @@ public class InvoiceController extends SMITravelController {
                 }
             }else{
                 invoice = setValueInvoice("", user.getUsername(), invoiceType, invoiceId, invoiceTo, invoiceName, invoiceAddress, isGroup, termPay, dueDate, department, staffCode, staffName, staffId, arCode, remark, invoiceNo, InputInvDate, request,subDepartment);
+                mStatus.setId("1");
+                mStatus.setName("NORMAL");
+                invoice.setMFinanceItemstatus(mStatus);
                 request.setAttribute("listInvoiceDetail", listInvoiceDetail);
                 request.setAttribute("invoice", invoice);
             }
