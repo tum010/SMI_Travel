@@ -6,13 +6,10 @@
 package com.smi.travel.controller.excel;
 
 import com.smi.travel.datalayer.entity.SystemUser;
-import com.smi.travel.datalayer.report.model.TicketFareReport;
 import com.smi.travel.datalayer.service.ReportService;
 import com.smi.travel.master.controller.SMITravelController;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -31,7 +28,7 @@ public class ExportDataToExcelController  extends SMITravelController{
     private static final String TicketFareAgentReport = "TicketFareAgentReport";
     private static final String TicketFareSummaryByStaff = "TicketFareSummaryByStaff";
     private static final String TicketFareSummaryByAgent = "TicketFareSummaryByAgent";
-    private static final String BillAirTicket = "BillAirTicket";
+    private static final String BillAirAgent = "BillAirAgent";
     private static final String ReportName = "name";
     private static final String ParaMeter = "parameter";
     @Override
@@ -76,9 +73,9 @@ public class ExportDataToExcelController  extends SMITravelController{
         }else if(TicketFareSummaryByAgent.equalsIgnoreCase(name)){
             System.out.println("get excel data agent");
             data = reportservice.getTicketFareSumAgentStaff(ticketType, ticketBuy, airline, airlineCode, department, staff, termPay, printby, issuedateFrom, issuedateTo, invdateFrom, invdateTo,"agent");
-        }else if(BillAirTicket.equalsIgnoreCase(name)){
+        }else if(BillAirAgent.equalsIgnoreCase(name)){
             System.out.println("get excel data agent");
-            data = reportservice.getTicketFareSumAgentStaff(ticketType, ticketBuy, airline, airlineCode, department, staff, termPay, printby, issuedateFrom, issuedateTo, invdateFrom, invdateTo,"agent");
+            data = reportservice.getBillAirAgentReport();
         }
 		
         return new ModelAndView("ExportDataToExcelView",name,data).addObject(ReportName, name);
