@@ -42,7 +42,7 @@
                 <input type="text" class="hidden" id="action" name="action" value="">
                 <div class="col-xs-12 ">
                     <div class="col-xs-1 text-right">
-                        <label class="control-label" for="">From</lable>
+                        <label class="control-label" for="">From<font style="color: red">*</font></lable>
                     </div>
                     <div class="col-md-2 form-group"> 
                         <div class='input-group date' id="DateFrom">
@@ -61,7 +61,7 @@
                         </div>
                     </div>
                     <div class="col-xs-1 text-right">
-                        <label class="control-label" for="">To &nbsp;</lable>
+                        <label class="control-label" for="">To <font style="color: red">*</font>&nbsp;</lable>
                     </div>
                     <div class="col-md-2 form-group"> 
                         <div class='input-group date' id="DateTo">
@@ -318,6 +318,8 @@
                                     format: 'YYYY-MM-DD',
                                     max: 'ToDate',
                                     message: 'The Date From is not a valid'
+                                },notEmpty: {
+                                    message: 'The Date From is required'
                                 }
                             }
                     },
@@ -328,6 +330,8 @@
                                     format: 'YYYY-MM-DD',
                                     min: 'FromDate',
                                     message: 'The Date To is not a valid'
+                                },notEmpty: {
+                                    message: 'The Date From is required'
                                 }
                             }
                     }

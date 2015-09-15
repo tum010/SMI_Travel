@@ -16,11 +16,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.CellRangeAddress;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormat;
+import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.taglibs.standard.tag.common.core.Util;
 import org.springframework.web.servlet.view.document.AbstractExcelView;
 
@@ -527,12 +531,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
     private void getBillAirAgentReport(HSSFWorkbook wb, List BillAirAgent) {
         String sheetName = "Sheet1";// name of sheet
         HSSFSheet sheet = wb.createSheet(sheetName);
-        
-        BillAirAgent dataheader = new BillAirAgent();
-        
-        if(BillAirAgent != null){
-            dataheader = (BillAirAgent) BillAirAgent.get(0);
-        }
+       
         // set Header Report (Row 1)
         HSSFCellStyle styleC1 = wb.createCellStyle();
         HSSFRow row1 = sheet.createRow(0);
@@ -547,6 +546,9 @@ public class ExportDataToExcelView extends AbstractExcelView {
         styleC21.setAlignment(styleC21.ALIGN_RIGHT);
         HSSFCellStyle styleC22 = wb.createCellStyle();
         styleC22.setAlignment(styleC22.ALIGN_LEFT);
+        HSSFCellStyle styleNumber = wb.createCellStyle();
+        styleNumber.setDataFormat(HSSFDataFormat.getBuiltinFormat("#,##0.00"));
+        
 
         // Row 2
         HSSFRow row2 = sheet.createRow(1);
@@ -656,123 +658,143 @@ public class ExportDataToExcelView extends AbstractExcelView {
             cell73.setCellValue("Receive");
             cell73.setCellStyle(styleC3);
             sheet.autoSizeColumn(11);
-
-
+            
         //Detail of Table
         List<BillAirAgent> listAgent = BillAirAgent;
+        for (int r = 0 ; r < listAgent.size(); r++) {
+            System.out.println("Size " + (r)+" : " + listAgent.get(r).getAgentname() );
+        }
+        
         int count = 9 + listAgent.size();
         int start = 10;
         int end = 0;
         int num = 0;
-        for (int r = 9 ; r < listAgent.size(); r++) {
-            BillAirAgent data = (BillAirAgent)BillAirAgent.get(num);
-            if(num <= (listAgent.size())){
-		if(num != 0){ // Check not row first
+
+	for (int r = 9 ; r < count; r++) {
+            if(num <= (listAgent.size()-1)){
+                if(num != 0){ // Check not row first
                     String temp = listAgent.get(num-1).getAgentname();
-			if(temp.equals(listAgent.get(num).getAgentname())){ // equal type	
-                            if(num  != (listAgent.size()-1)){ // check not last row
-				HSSFRow row = sheet.createRow(r);
-                                row.createCell(0).setCellValue(data.getInvno());
-                                row.createCell(1).setCellValue(data.getInvdate());
-                                row.createCell(2).setCellValue(data.getCustomer());
-                                row.createCell(3).setCellValue(data.getTicketno());
-                                row.createCell(4).setCellValue(data.getRounting());
-                                row.createCell(5).setCellValue(data.getSaleprice());
-                                row.createCell(6).setCellValue(data.getNet());
-                                row.createCell(7).setCellValue(data.getService());
-                                row.createCell(8).setCellValue("");
-                                row.createCell(9).setCellValue(data.getAmountair());
-                                row.createCell(10).setCellValue(data.getCompay());
-                                row.createCell(11).setCellValue(data.getCompayvat());
-                                row.createCell(12).setCellValue(data.getReceive());
-                                sheet.autoSizeColumn(13);
-                                num++; 
-                            }else{ // last row
-                                end = r+1;					 
-                                System.out.println("Start : " + start +  " End  : " + end);
-                                System.out.println("Last");
-                                HSSFRow row = sheet.createRow(r);
-                                row.createCell(0).setCellValue(data.getInvno());
-                                row.createCell(1).setCellValue(data.getInvdate());
-                                row.createCell(2).setCellValue(data.getCustomer());
-                                row.createCell(3).setCellValue(data.getTicketno());
-                                row.createCell(4).setCellValue(data.getRounting());
-                                row.createCell(5).setCellValue(data.getSaleprice());
-                                row.createCell(6).setCellValue(data.getNet());
-                                row.createCell(7).setCellValue(data.getService());
-                                row.createCell(8).setCellValue("");
-                                row.createCell(9).setCellValue(data.getAmountair());
-                                row.createCell(10).setCellValue(data.getCompay());
-                                row.createCell(11).setCellValue(data.getCompayvat());
-                                row.createCell(12).setCellValue(data.getReceive());
-                                sheet.autoSizeColumn(13);
-                                num++;
-                                
-                                HSSFRow row01 = sheet.createRow(r+1);
-                                row01.createCell(6).setCellValue("00000");
-                                row01.createCell(8).setCellValue("22222");
-                                row01.createCell(10).setCellValue("44444");
-                                HSSFRow row11 = sheet.createRow(r+2);
-                                row11.createCell(7).setCellValue("11111");
-                                row11.createCell(9).setCellValue("33333");
-                                row11.createCell(11).setCellValue("55555");
-                                end = r+1;
-                            }
-			}else{ // not equal type
-                            end = r;					 
-                            System.out.println("Start : " + start +  " End  : " + end);
-                            start = end + 4;
+                    if(temp.equals(listAgent.get(num).getAgentname())){ // equal type	
+                        System.out.println("Num : " + num + " Last Row : " + (listAgent.size()-1));
+                        if(num  != (listAgent.size()-1)){ // check not last row
                             HSSFRow row = sheet.createRow(r);
-                            row.createCell(6).setCellValue("00000");
-                            row.createCell(8).setCellValue("22222");
-                            row.createCell(10).setCellValue("44444");
-                            HSSFRow row11 = sheet.createRow(r+1);
-                            row11.createCell(7).setCellValue("11111");
-                            row11.createCell(9).setCellValue("33333");
-                            row11.createCell(11).setCellValue("55555");
-                            
-                            HSSFRow row12 = sheet.createRow(r+3);
-                            row12.createCell(0).setCellValue(data.getInvno());
-                            row12.createCell(1).setCellValue(data.getInvdate());
-                            row12.createCell(2).setCellValue(data.getCustomer());
-                            row12.createCell(3).setCellValue(data.getTicketno());
-                            row12.createCell(4).setCellValue(data.getRounting());
-                            row12.createCell(5).setCellValue(data.getSaleprice());
-                            row12.createCell(6).setCellValue(data.getNet());
-                            row12.createCell(7).setCellValue(data.getService());
-                            row12.createCell(8).setCellValue("");
-                            row12.createCell(9).setCellValue(data.getAmountair());
-                            row12.createCell(10).setCellValue(data.getCompay());
-                            row12.createCell(11).setCellValue(data.getCompayvat());
-                            row12.createCell(12).setCellValue(data.getReceive());                         
+                            createCell(row,listAgent,num);
                             sheet.autoSizeColumn(13);
-                            num++;				 
-                            count = count + 3;
-                            r = r + 3;
-			}
+                            num++; 
+                        }else{ // last row
+                            end = r+1;					
+                            System.out.println("Num : " + num + " Last Row : " + (listAgent.size()-1));
+                            System.out.println("Start : " + start +  " End  : " + end);
+                            System.out.println("Last");
+                            HSSFRow row = sheet.createRow(r);
+                            createCell(row,listAgent,num);                                                    
+                            sheet.autoSizeColumn(13);
+                            num++;
+
+                            // total
+                            int rowstart = r+1;
+                            int rowend = r+2;
+                            variableTotal(start,end,rowstart,rowend,sheet);
+                        }
+                    }else{ // not equal type
+                        if(num  == (listAgent.size()-1)){ // check  last row
+                            end = r+1;					
+                            System.out.println("Num : " + num + " Last Row : " + (listAgent.size()-1));
+                            System.out.println("Start : " + start +  " End  : " + end);
+                            System.out.println("Last");
+                            HSSFRow row = sheet.createRow(r);
+                            createCell(row,listAgent,num);                                                    
+                            sheet.autoSizeColumn(13);
+                            num++;
+                                // total
+                                int rowstart = r+1;
+                                int rowend = r+2;
+                                variableTotal(start,end,rowstart,rowend,sheet);
+                                end = r+1;
+                            }else{                                          
+                                end = r;					 
+                                System.out.println("Start : " + start +  " End  : " + end);
+                                System.out.println("Num : " + num + " Last Row : " + (listAgent.size()-1));
+                                // total
+                                int rowstart = r;
+                                int rowend = r+1;
+                                variableTotal(start,end,rowstart,rowend,sheet);
+                                
+                                // Start New Row (Group)
+                                start = end + 5;
+                                HSSFRow row0 = sheet.createRow(r+3);
+                                row0.createCell(0).setCellValue(listAgent.get(num).getAgentname());
+                                String add = "A"+(r+4)+":M"+(r+4)+"";
+                                System.out.println("Add : " + add);
+                                sheet.addMergedRegion(CellRangeAddress.valueOf(add));
+                                HSSFRow row12 = sheet.createRow(r+4);
+                                createCell(row12,listAgent,num);
+                                sheet.autoSizeColumn(13);
+                                num++;				 
+                                count = count + 4;
+                                r = r + 4;
+                            }
+                        }
                     }else{ // row first
-			HSSFRow row = sheet.createRow(r);
-                        row.createCell(0).setCellValue(data.getInvno());
-                        row.createCell(1).setCellValue(data.getInvdate());
-                        row.createCell(2).setCellValue(data.getCustomer());
-                        row.createCell(3).setCellValue(data.getTicketno());
-                        row.createCell(4).setCellValue(data.getRounting());
-                        row.createCell(5).setCellValue(data.getSaleprice());
-                        row.createCell(6).setCellValue(data.getNet());
-                        row.createCell(7).setCellValue(data.getService());
-                        row.createCell(8).setCellValue("");
-                        row.createCell(9).setCellValue(data.getAmountair());
-                        row.createCell(10).setCellValue(data.getCompay());
-                        row.createCell(11).setCellValue(data.getCompayvat());
-                        row.createCell(12).setCellValue(data.getReceive());                               
+                        System.out.println("Num : " + num + " Last Row : " + (listAgent.size()-1));
+                        
+                        HSSFRow row0 = sheet.createRow(r);
+                        row0.createCell(0).setCellValue(listAgent.get(num).getAgentname());
+                        String add = "A"+(r+1)+":M"+(r+1)+"";
+                        System.out.println("Add : " + add);
+                        sheet.addMergedRegion(CellRangeAddress.valueOf(add));
+                        
+                        HSSFRow row = sheet.createRow(r+1);
+                        createCell(row,listAgent,num); 
                         sheet.autoSizeColumn(13);
-                        num++;
+                        num = num + 1;
+                        count = count + 1;
+                        r = r + 1;
                     }
-		}   
-            }   
-        for(int j =0;j<13;j++){
-            sheet.autoSizeColumn(j);
-        }
+            }
+            for(int i =0 ; i < listAgent.size() ; i++){
+                sheet.autoSizeColumn(i);
+            }
+	}
+    }
+    
+    private void variableTotal(int start, int end, int row1, int row2,HSSFSheet sheet){
+        // total
+        String sumSaleprice = "SUM(F" + start+":F"+end+")";
+        String sumNet = "SUM(G" + start+":G"+end+")";
+        String sumService = "SUM(H" + start+":H"+end+")";
+        String sumVat = "SUM(I" + start+":I"+end+")";
+        String sumAmountAir = "SUM(J" + start+":J"+end+")";
+        String sumCompay = "SUM(K" + start+":K"+end+")";
+        String sumVatCompay = "SUM(L" + start+":L"+end+")";
+        String sumReceive = "SUM(M" + start+":M"+end+")";
+
+        HSSFRow row = sheet.createRow(row1);
+            row.createCell(5).setCellFormula(sumSaleprice);
+            row.createCell(7).setCellFormula(sumService);
+            row.createCell(9).setCellFormula(sumAmountAir);
+            row.createCell(11).setCellFormula(sumVatCompay);
+        HSSFRow row11 = sheet.createRow(row2);
+            row11.createCell(6).setCellFormula(sumNet);
+            row11.createCell(8).setCellFormula(sumVat);
+            row11.createCell(10).setCellFormula(sumCompay);
+            row11.createCell(12).setCellFormula(sumReceive);
+    }
+    
+    private void createCell(HSSFRow row,List<BillAirAgent> listAgent,int num){
+        row.createCell(0).setCellValue(listAgent.get(num).getInvno());
+        row.createCell(1).setCellValue(listAgent.get(num).getInvdate());
+        row.createCell(2).setCellValue(listAgent.get(num).getCustomer());
+        row.createCell(3).setCellValue(listAgent.get(num).getTicketno());
+        row.createCell(4).setCellValue(listAgent.get(num).getRounting());
+        row.createCell(5).setCellValue(new BigDecimal(listAgent.get(num).getSaleprice()).doubleValue());
+        row.createCell(6).setCellValue(new BigDecimal(listAgent.get(num).getNet()).doubleValue());
+        row.createCell(7).setCellValue(new BigDecimal(listAgent.get(num).getService()).doubleValue());
+        row.createCell(8).setCellValue("");
+        row.createCell(9).setCellValue(new BigDecimal(listAgent.get(num).getAmountair()).doubleValue());
+        row.createCell(10).setCellValue(new BigDecimal(listAgent.get(num).getCompay()).doubleValue());
+        row.createCell(11).setCellValue(new BigDecimal(listAgent.get(num).getCompayvat()).doubleValue());
+        row.createCell(12).setCellValue(new BigDecimal(listAgent.get(num).getReceive()).doubleValue()); 
     }
     
     public void genTicketFareAirlineReport(HSSFWorkbook wb, List TicketFare) {

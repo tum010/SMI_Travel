@@ -13,8 +13,8 @@ import java.util.Date;
  */
 public class InvoiceSummary {
     private int no;
-    private Date invfrom;
-    private Date invto;
+    private String invfrom;
+    private String invto;
     private String headertype;
     private String invtype;
     private String department;
@@ -209,10 +209,10 @@ public class InvoiceSummary {
     }
 
  
-
-    public void setInvto(Date invto) {
-        this.invto = invto;
-    }
+//
+//    public void setInvto(Date invto) {
+//        this.invto = invto;
+//    }
 
     public void setInvtype(String invtype) {
         this.invtype = invtype;
@@ -223,21 +223,21 @@ public class InvoiceSummary {
     }
 
 
-    public Date getInvto() {
-        return invto;
-    }
+//    public Date getInvto() {
+//        return invto;
+//    }
 
     public String getInvtype() {
         return invtype;
     }
 
-    public Date getInvfrom() {
-        return invfrom;
-    }
-
-    public void setInvfrom(Date invfrom) {
-        this.invfrom = invfrom;
-    }
+//    public Date getInvfrom() {
+//        return invfrom;
+//    }
+//
+//    public void setInvfrom(Date invfrom) {
+//        this.invfrom = invfrom;
+//    }
 
     public void setProfit(Double profit) {
         this.profit = profit;
@@ -246,4 +246,22 @@ public class InvoiceSummary {
     public Double getProfit() {
         return profit;
     }
+
+    public void setInvfrom(String invfrom) {
+        this.invfrom = invfrom;
+    }
+
+    public void setInvto(String invto) {
+        this.invto = invto;
+    }
+
+    public String getInvfrom() {
+        return invfrom;
+    }
+
+    public String getInvto() {
+        return invto;
+    }
+    
+    
 }
