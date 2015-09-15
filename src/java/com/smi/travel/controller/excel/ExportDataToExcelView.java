@@ -261,10 +261,17 @@ public class ExportDataToExcelView extends AbstractExcelView {
         String sheetName = "Sheet1";// name of sheet
         HSSFSheet sheet = wb.createSheet(sheetName);
         TicketFareReport dataheader = new TicketFareReport();
+        // Set align Text
+        HSSFCellStyle styleC21 = wb.createCellStyle();
+        styleC21.setAlignment(styleC21.ALIGN_RIGHT);
+        HSSFCellStyle styleC22 = wb.createCellStyle();
+        styleC22.setAlignment(styleC22.ALIGN_LEFT);
+        HSSFCellStyle styleC23 = wb.createCellStyle();
+        styleC23.setAlignment(styleC22.ALIGN_CENTER);
         
-        if(TicketFare != null){
+        if(!TicketFare.isEmpty()){
             dataheader = (TicketFareReport)TicketFare.get(0);
-        }
+        
         // set Header Report (Row 1)
         HSSFCellStyle styleC1 = wb.createCellStyle();
         HSSFRow row1 = sheet.createRow(0);
@@ -274,11 +281,6 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell1.setCellStyle(styleC1);
         sheet.addMergedRegion(CellRangeAddress.valueOf("A1:F1"));
         
-        // Set align Text
-        HSSFCellStyle styleC21 = wb.createCellStyle();
-        styleC21.setAlignment(styleC21.ALIGN_RIGHT);
-        HSSFCellStyle styleC22 = wb.createCellStyle();
-        styleC22.setAlignment(styleC22.ALIGN_LEFT);
 
         
         // Row 2
@@ -367,9 +369,12 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell072.setCellStyle(styleC22);
         sheet.addMergedRegion(CellRangeAddress.valueOf("E7:F7"));
         
+        }
         // Header Table
         HSSFCellStyle styleC3 = wb.createCellStyle();
         styleC3.setFont(getHeaderTable(wb.createFont()));
+        styleC3.setAlignment(styleC3.ALIGN_CENTER);
+        
         HSSFRow row6 = sheet.createRow(8);
         HSSFCell cell61 = row6.createCell(0);
         cell61.setCellValue("Inv. No.");
@@ -441,13 +446,37 @@ public class ExportDataToExcelView extends AbstractExcelView {
             row.createCell(5).setCellValue(data.getPassenger());
             row.createCell(6).setCellValue(data.getAir());
             row.createCell(7).setCellValue(data.getDocno());
-            row.createCell(8).setCellValue(data.getIssuedate());
-            row.createCell(9).setCellValue(data.getNetsale());
-            row.createCell(10).setCellValue(data.getTax());
-            row.createCell(11).setCellValue(data.getIns());
-            row.createCell(12).setCellValue(data.getActcom());
-            row.createCell(13).setCellValue(data.getInvamount());
-             
+            //set data 
+            HSSFCell celldata01 = row.createCell(8);
+            celldata01.setCellValue(data.getIssuedate());
+            celldata01.setCellStyle(styleC23);
+            
+            HSSFCell celldata02 = row.createCell(9);
+            celldata02.setCellValue(data.getNetsale());
+            celldata02.setCellStyle(styleC21);
+            
+            HSSFCell celldata03 = row.createCell(10);
+            celldata03.setCellValue(data.getTax());
+            celldata03.setCellStyle(styleC21);
+            
+            HSSFCell celldata04 = row.createCell(11);
+            celldata04.setCellValue(data.getIns());
+            celldata04.setCellStyle(styleC21);
+            
+            HSSFCell celldata05 = row.createCell(12);
+            celldata05.setCellValue(data.getActcom());
+            celldata05.setCellStyle(styleC21);
+            
+            HSSFCell celldata06 = row.createCell(13);
+            celldata06.setCellValue(data.getInvamount());
+            celldata06.setCellStyle(styleC21);
+
+//            row.createCell(8).setCellValue(data.getIssuedate());
+//            row.createCell(9).setCellValue(data.getNetsale());
+//            row.createCell(10).setCellValue(data.getTax());
+//            row.createCell(11).setCellValue(data.getIns());
+//            row.createCell(12).setCellValue(data.getActcom());
+//            row.createCell(13).setCellValue(data.getInvamount());
              
             if(i == (TicketFare.size()-1)){
                 row = sheet.createRow(count + i + 1);
@@ -469,11 +498,28 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     actcommTotal = actcommTotal.add(actcomm);
                     invamountTotal = invamountTotal.add(invamount);
                 }  
-                row.createCell(9).setCellValue(String.valueOf(netsalesTotal));
-                row.createCell(10).setCellValue(String.valueOf(taxTotal));
-                row.createCell(11).setCellValue(String.valueOf(insTotal));
-                row.createCell(12).setCellValue(String.valueOf(actcommTotal));
-                row.createCell(13).setCellValue(String.valueOf(invamountTotal));
+                
+        
+                HSSFCell cellTotal01 = row.createCell(9);
+                cellTotal01.setCellValue(String.valueOf(netsalesTotal));
+                cellTotal01.setCellStyle(styleC21);
+                HSSFCell cellTotal02 = row.createCell(10);
+                cellTotal02.setCellValue(String.valueOf(taxTotal));
+                cellTotal02.setCellStyle(styleC21);
+                HSSFCell cellTotal03 = row.createCell(11);
+                cellTotal03.setCellValue(String.valueOf(insTotal));
+                cellTotal03.setCellStyle(styleC21);
+                HSSFCell cellTotal04 = row.createCell(12);
+                cellTotal04.setCellValue(String.valueOf(actcommTotal));
+                cellTotal04.setCellStyle(styleC21);
+                HSSFCell cellTotal05 = row.createCell(13);
+                cellTotal05.setCellValue(String.valueOf(invamountTotal));
+                cellTotal05.setCellStyle(styleC21);
+//                row.createCell(9).setCellValue(String.valueOf(netsalesTotal));
+//                row.createCell(10).setCellValue(String.valueOf(taxTotal));
+//                row.createCell(11).setCellValue(String.valueOf(insTotal));
+//                row.createCell(12).setCellValue(String.valueOf(actcommTotal));
+//                row.createCell(13).setCellValue(String.valueOf(invamountTotal));
              }
              
              for(int j =0;j<13;j++){

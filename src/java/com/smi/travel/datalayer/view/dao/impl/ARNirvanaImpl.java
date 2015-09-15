@@ -229,7 +229,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
     }
 
     @Override
-    public String ExportARFileInterface(List<ARNirvana> APList) {
+    public String ExportARFileInterface(List<ARNirvana> APList,String pathfile) {
         return "success";
     }
 

@@ -23,8 +23,8 @@ public class APNirvanaService {
         return apNirvanaDao.SearchApNirvanaFromFilter(paymentType, producttype, status, from, to);
     }
     
-    public String ExportAPFileInterface(List<APNirvana> APList) {
-        return apNirvanaDao.ExportAPFileInterface(APList);
+    public String ExportAPFileInterface(List<APNirvana> APList,String pathfile) {
+        return apNirvanaDao.ExportAPFileInterface(APList, pathfile);
     }
     
     public String UpdateStatusAPInterface(List<APNirvana> apNirvanaList) {
@@ -39,8 +39,8 @@ public class APNirvanaService {
         this.apNirvanaDao = apNirvanaDao;
     }
     
-    public String GetPartCsvExport(){
-        return genreport.getExportnvncsvpath();
+    public String GetPartFileExport(){
+        return genreport.getExportnvnappath();
     }
 
     public GenerateReport getGenreport() {

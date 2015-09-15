@@ -28,7 +28,7 @@ public class APNirvanaImpl implements APNirvanaDao{
     private Transaction transaction;
 
     @Override
-    public String ExportAPFileInterface(List<APNirvana> APList) {
+    public String ExportAPFileInterface(List<APNirvana> APList,String pathfile) {
         
         return "success";
     }

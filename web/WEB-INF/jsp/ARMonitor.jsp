@@ -36,6 +36,22 @@
         <form action="ARMonitor.smi" method="post" id="arMonitorForm" role="form" autocomplete="off">
             <input type="hidden" value="searchAr" id="action" name="action">
             <div class="col-xs-12">
+                <c:if test="${requestScope['update'] =='updatesuccess'}">                                            
+                    <div id="textAlertDivSave"  style="" class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Update Status Success!</strong> 
+                    </div>
+                </c:if>
+                <c:if test="${requestScope['update'] =='updatefail'}">
+                <div id="textAlertDivSave"  style="" class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                   <strong>Update Status Unsuccess!</strong> 
+                </div>
+                </c:if>
+                <div id="textAlertDivNotChoose"  style="display: none" class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" aria-label="Close" onclick="hideDiv()"><span aria-hidden="true">&times;</span></button>
+                   <strong>Please choose the ar monitor list.!</strong> 
+                </div>
                 <div class="col-xs-1 text-left" style="width: 120px">
                     <label class="control-label" for="">Invoice Type</lable>
                 </div>
@@ -172,7 +188,7 @@
                 </div>
                 <div class="col-xs-12"><br></div>  
                 <div class="col-xs-12">
-                    <table id="arDataListTable" class="display" cellspacing="0" width="100%">
+                    <table id="arDataListTable" class="display paginated" cellspacing="0" width="100%">
                         <thead>
                             <tr class="datatable-header">
                                 <th class="hidden">Id</th>
@@ -238,7 +254,8 @@
                 <h4 class="modal-title"  id="Titlemodel">Export AR</h4>
             </div>
             <div class="modal-body" id="copyReceiptModal" >
-                <label class="text-right">Are you sure to ar to nirvana ?</label>                                  
+                <label class="text-right">Are you sure to ar to nirvana ?</label>
+                <input type="hidden" id="chooseAR" name="chooseAR" value=""/>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" onclick="confirmExport()">
@@ -268,7 +285,8 @@
             "bInfo": false,
             "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
             "iDisplayLength": 50,
-            "bSort": false
+            "bSort": false,
+            "bPaginate": false
         });
         
         $('#arDataListTable tbody').on('click', 'tr', function () {
@@ -335,18 +353,70 @@
                 data.fv.revalidateField('arFromDate');
             }
         });
+        
+        $('table.paginated').each(function() {
+            var currentPage = 0;
+            var numPerPage = 50;
+            var $table = $(this);
+            $table.bind('repaginate', function() {
+                $table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
+            });
+            $table.trigger('repaginate');
+            var numRows = $table.find('tbody tr').length;
+            var numPages = Math.ceil(numRows / numPerPage);
+            var $pager = $('<div class="col-xs-12 text-right"><font style="color: #499DD5">Page</font>&nbsp;</div>');
+            var $br = $('<div class="col-xs-12"><br></div>');
+            for (var page = 0; page < numPages; page++) {
+                $('<font style="color: #499DD5"><span class="page-number glyphicon"></span></font>').text(" " + (page + 1) + "  ").bind('click', {
+                    newPage: page
+                }, function(event) {
+                    currentPage = event.data['newPage'];
+                    $table.trigger('repaginate');
+                    $(this).addClass('active').siblings().removeClass('active');
+                }).appendTo($pager).addClass('clickable');
+            }
+            $br.insertAfter($table).addClass('active');
+            $pager.insertAfter($table).find('span.page-number:first').addClass('active');            
+        });
+               
     });
     
     function exportAR(){
+        var row = $('#arDataListTable tr').length;     
+        var check = 0;
+        for(var i=1;i<=row;i++){          
+            var selectAll = document.getElementById("selectAll"+i);
+            if(selectAll !== null && selectAll !== ''){
+                if(document.getElementById("selectAll"+i).checked){
+                    check++;
+                }    
+            }   
+        }
+        if(check === 0){
+            document.getElementById("chooseAR").value = "false";
+        } else {
+            document.getElementById("chooseAR").value = "true";
+        }
+        $("#textAlertDivSave").hide();
+        $('#textAlertDivNotChoose').hide();
         $("#arExportModal").modal("show");
     }
     
     function confirmExport(){
-//        alert("EXX");
+//        alert("EXX");       
         $("#arExportModal").modal("hide");
-//        var action = $('#action').val();
-        $('#action').val('export');
-        document.getElementById('arMonitorForm').submit();
+        var chooseAR = document.getElementById("chooseAR").value;
+        if(chooseAR === 'true'){
+//            var action = $('#action').val();
+            $('#action').val('export');
+            document.getElementById('arMonitorForm').submit();
+        } else {
+            $('#textAlertDivNotChoose').show();
+        }    
+    }
+    
+    function hideDiv(){
+        $('#textAlertDivNotChoose').hide();
     }
     
     function searchArmonitor(){

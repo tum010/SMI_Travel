@@ -476,11 +476,13 @@ public class AddTicketFareController extends SMITravelController {
                         }
                     }
                 }else{
-                    for(int i = 0; i < invoiceDetailViewList.size() ; i++) {
-                        BigDecimal invAmounttemp = invoiceDetailViewList.get(i).getInvAmount();
-                        invAmount = invAmounttemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
-                        staffowner =  invoiceDetailViewList.get(i).getOwner();
-                        ticketflightrouting = invoiceDetailViewList.get(i).getRouting();
+                    if(invoiceDetailViewList != null){
+                        for(int i = 0; i < invoiceDetailViewList.size() ; i++) {
+                            BigDecimal invAmounttemp = invoiceDetailViewList.get(i).getInvAmount();
+                            invAmount = invAmounttemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                            staffowner =  invoiceDetailViewList.get(i).getOwner();
+                            ticketflightrouting = invoiceDetailViewList.get(i).getRouting();
+                        }
                     }
                 }
                 System.out.println(" invAmount " + invAmount);
