@@ -373,13 +373,16 @@
                 <table class="display" id="ReceiptDetailTable">
                     <thead class="datatable-header">
                         <tr style="width:100%">
-                            <th style="width:20%">Bill-Description</th>
-                            <th style="width:15%">Receipt No</th>
+                            <th style="width:15%">Bill-Description</th>
+                            <th style="width:10%">Rec No</th>
+                            <th style="width:10%">Rec Date</th>
+                            <th style="width:15%">Rec Name</th>
+                            <th style="width:5%">Rec Type</th>
                             <th style="width:15%">Payment</th>
-                            <th style="width:15%">Bill Amount</th>
-                            <th style="width:10%">Cur</th>
-                            <th style="width:15%">Rec Amount</th>
-                            <th style="width:10%">Cur</th>
+                            <th style="width:10%">Bill Amount</th>
+                            <th style="width:5%">Cur</th>
+                            <th style="width:10%">Rec Amount</th>
+                            <th style="width:5%">Cur</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -387,6 +390,9 @@
                         <tr>
                             <td>${table.billDescription}</td>
                             <td>${table.receiptNo}</td>
+                            <td align="center">${table.receiptDate}</td>
+                            <td>${table.receiptName}</td>
+                            <td align="center">${table.receiptType}</td>
                             <td>${table.payment}</td>
                             <td align="right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.billAmount}" /></td>
                             <td align="center">${table.currency}</td>
