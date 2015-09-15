@@ -26,81 +26,133 @@
         </div>
         <form action="CollectionMonitor.smi" method="post" id="collectionMonitorForm" role="form" autocomplete="off">
             <div class="col-xs-12">
-                <div class="col-xs-1 text-left">
-                    <label class="control-label" for="">Receive</lable>
+                <div class="col-xs-1 text-right"  style="width: 100px">
+                    <label class="control-label" for="">Department</lable>
                 </div>
-                <div class="col-xs-1" style="width: 240px">
-                    <select class="form-control" id="collectionReceive" name="collectionReceive">
-                        <option value=""> </option>
+                <div class="col-xs-1" style="width: 200px">
+                    <select id="collectionDepartment" name="collectionDepartment" class="form-control selectize">
+                        <option value="">-- ALL --</option> 
+                        <c:choose>
+                            <c:when test="${requestScope['collectionDepartment'] == 'Wendy'}">
+                                <c:set var="selectedWendy" value="selected" />
+                            </c:when>
+                        </c:choose>
+                        <option value="Wendy" ${selectedWendy}>Wendy</option>
+                        
+                         <c:choose>
+                            <c:when test="${requestScope['collectionDepartment'] == 'Inbound'}">
+                                <c:set var="selectedInbound" value="selected" />
+                            </c:when>
+                        </c:choose>
+                        <option value="Inbound" ${selectedInbound}>Inbound</option>
+                        
+                        <c:choose>
+                            <c:when test="${requestScope['collectionDepartment'] == 'Outbound'}">
+                                <c:set var="selectedOutbound" value="selected" />
+                            </c:when>
+                        </c:choose>
+                        <option value="Outbound" ${selectedOutbound}>Outbound</option>
                     </select>
                 </div>
-                <div class="col-xs-1" style="width: 50px"></div>
-                <div class="col-xs-1 text-left">
+                <div class="col-xs-1 text-right"  style="width: 100px">
                     <label class="control-label" for="">Type</lable>
                 </div>
                 <div class="col-xs-1" style="width: 200px">
-                    <select class="form-control" id="collectionType" name="collectionType">
-                        <option value=""> </option>
+                    <select id="collectionType" name="collectionType" class="form-control selectize">
+                        <option value="">-- ALL --</option> 
+                        <c:choose>
+                            <c:when test="${requestScope['collectionType'] == 'V'}">
+                                <c:set var="selectedVat" value="selected" />
+                            </c:when>
+                        </c:choose>
+                        <option value="V" ${selectedVat}>Vat</option>
+                         <c:choose>
+                            <c:when test="${requestScope['collectionType'] == 'T'}">
+                                <c:set var="selectedTemp" value="selected" />
+                            </c:when>
+                        </c:choose>
+                        <option value="T" ${selectedTemp}>Temp</option>
                     </select>
                 </div>
-                <div class="col-xs-1" style="width: 50px"></div>
-                <div class="col-xs-1 text-left">
+                <div class="col-xs-1 text-right" style="width: 120px">
                     <label class="control-label" for="">Status</lable>
                 </div>
                 <div class="col-xs-1" style="width: 200px">
-                    <select class="form-control" id="collectionStatus" name="collectionStatus">
-                        <option value=""> </option>
+                   <select id="collectionStatus" name="collectionStatus" class="form-control selectize">
+                        <option value="">-- ALL --</option> 
+                        <c:choose>
+                            <c:when test="${requestScope['collectionStatus'] == 'CLEAR'}">
+                                <c:set var="selectedClear" value="selected" />
+                            </c:when>
+                        </c:choose>
+                        <option value="CLEAR" ${selectedClear}>CLEAR</option>
+                         <c:choose>
+                            <c:when test="${requestScope['collectionStatus'] == 'UNCLEAR'}">
+                                <c:set var="selectedUnclear" value="selected" />
+                            </c:when>
+                        </c:choose>
+                        <option value="UNCLEAR" ${selectedUnclear}>UNCLEAR</option>
                     </select>
                 </div>
             </div>
             <div class="col-xs-12"><br></div>
             <div class="col-xs-12">
-                <div class="col-xs-1 text-left">
+                <div class="col-xs-1 text-right" style="width: 100px">
                     <label class="control-label" for="">From</lable>
                 </div>
-                <div class="col-xs-1" style="width: 170px">
+                <div class="col-xs-1"  style="width: 200px">
                     <div class='input-group date' id='InputFromDate'>
                     <c:if test='${taxInvoice.taxInvDate != null}'>
                         <input id="collectionFromDate" name="collectionFromDate"  type="text" 
-                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['collectionFromDate']}">
                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>        
                     </c:if>
                     <c:if test='${taxInvoice.taxInvDate == null}'>
                         <input id="collectionFromDate" name="collectionFromDate"  type="text" 
-                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['collectionFromDate']}">
                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                
                     </c:if>                             
                     </div>               
                 </div>
-                <div class="col-xs-1" style="width: 120px"></div>
-                <div class="col-xs-1 text-left">
+                <!--<div class="col-xs-1" style="width: 120px"></div>-->
+                <div class="col-xs-1 text-right" style="width: 100px">
                     <label class="control-label">To</lable>
                 </div>
-                <div class="col-xs-1" style="width: 170px">
+                <div class="col-xs-1" style="width: 200px">
                     <div class='input-group date' id='InputToDate'>
                     <c:if test='${taxInvoice.taxInvDate != null}'>
                         <input id="collectionToDate" name="collectionToDate"  type="text" 
-                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['collectionToDate']}">
                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>        
                     </c:if>
                     <c:if test='${taxInvoice.taxInvDate == null}'>
                         <input id="collectionToDate" name="collectionToDate"  type="text" 
-                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['collectionToDate']}">
                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                
                     </c:if>                             
                     </div>               
                 </div>
-                <div class="col-xs-1" style="width: 165px"></div>
+                <div class="col-xs-1 text-right" style="width: 120px">
+                    <label class="control-label" for="">Invoice No</lable>
+                </div>
+                <div class="col-xs-1" style="width: 200px">
+                    <input id="collectionInvNo" name="collectionInvNo"  type="text" class="form-control " value="${requestScope['collectionInvNo']}">
+                </div>
+            </div>
+            <div class="col-xs-12"><br></div>
+            <div class="col-xs-12">
+                <div class="col-xs-1" style="width: 720px"></div>
                 <div class="col-xs-1 " style="width: 80px">
                     <button type="button" class="btn btn-default" data-dismiss="modal">
                         <span id="btnPrintCollection" class="glyphicon glyphicon-print" ></span> Print
                     </button>
                 </div>          
                 <div class="col-xs-1">
-                    <button type="submit"  id="btnSearchAR"  name="btnSearchCollection" class="btn btn-primary btn-primary">
+                    <button type="submit"  id="btnSearch"  name="btnSearch" onclick="searchAction()" class="btn btn-primary btn-primary">
                         <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
                     </button>
                 </div>
+                <input type="hidden" name="action" id="action" value="">
                 <div class="col-xs-12"><br></div>  
                 <div class="col-xs-12">
                     <table id="collectionDataListTable" class="display" cellspacing="0" width="100%">
@@ -110,13 +162,15 @@
                                 <th style="width: 1%" >No</th>
                                 <th style="width: 12%">Receipt</th>
                                 <th style="width: 12%">Inv No.</th>
-                                <th style="width: 11%">AR Code</th>
-                                <th style="width: 20%">Inv To</th>
-                                <th style="width: 12%">Acc Code</th>
+                                <th style="width: 10%">AR Code</th>
+                                <th style="width: 15%">Inv To</th>
+                                <th style="width: 10%">Acc Code</th>
                                 <th style="width: 15%">Inv Amount</th>
+                                <th style="width: 15%">Diff</th>
                                 <th style="width: 15%">Rec Amount</th>
                                 <th style="width: 2%">Cur</th>
-                             </tr>
+                                <th style="width: 15%">Status</th>
+                            </tr>
                         </thead>
                         <tbody>               
                             <tr>
@@ -129,7 +183,9 @@
                                 <td>150814</td>
                                 <td align="right" class="money">1000000</td>
                                 <td align="right" class="money">1000000</td>
+                                <td align="right" class="money">1000000</td>
                                 <td align="center">THB</td>
+                                <td align="center" >Clear</td>
                             </tr>
                         </tbody>
                     </table>    
@@ -169,5 +225,8 @@
             }
         });
     });
-    
+    function searchAction(){
+        var action = document.getElementById('action');
+        action.value = 'search';
+    }
 </script>
