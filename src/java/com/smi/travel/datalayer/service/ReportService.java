@@ -97,9 +97,7 @@ public class ReportService {
         return path;
     }
     
-    public String  getCsvPartReport(){
-        return genreport.getExportnvncsvpath();
-    }
+
     
     public List getTicketSaleVolumn(String ticketFrom,String ticketType,String startDate,String endDate){
         return ticketsaleprofitVolumnDao.getTicketSaleVolumn(ticketFrom, ticketType, startDate, endDate);
