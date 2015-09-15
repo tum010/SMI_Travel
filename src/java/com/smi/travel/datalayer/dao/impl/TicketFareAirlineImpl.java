@@ -759,7 +759,8 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         String owner = "";
         String routing = "";
         int invamount = 0;
-        
+        int price = 0;
+        int tax = 0;
         List<InvoiceDetail> invoiceDetailList = new ArrayList<InvoiceDetail>();
         List<InvoiceDetail> invoiceDetailTempList = new ArrayList<InvoiceDetail>();
         List<InvoiceDetailView> invoiceDetailViewList = new ArrayList<InvoiceDetailView>();
@@ -785,17 +786,17 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
             List<AirticketFlight> flightList = new ArrayList<AirticketFlight>(airticketPassList.get(0).getAirticketAirline().getAirticketFlights());
             if(!flightList.isEmpty()){
                 if("ADULT".equals(priceType)){
-                    if(!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getAdPrice())) && !"".equalsIgnoreCase(String.valueOf(flightList.get(0).getAdTax()))){
-                        invamount = flightList.get(0).getAdPrice() + flightList.get(0).getAdTax();
-                    }
+                    price = (!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getAdPrice())) ? flightList.get(0).getAdPrice() : 0 );
+                    tax = (!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getAdTax())) ? flightList.get(0).getAdTax() : 0 );
+                    invamount = price + tax;
                 }else if("CHILD".equals(priceType)){
-                    if(!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getChPrice())) && !"".equalsIgnoreCase(String.valueOf(flightList.get(0).getChTax()))){
-                        invamount = flightList.get(0).getChPrice() + flightList.get(0).getChTax();
-                    }
+                    price = (!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getChPrice())) ? flightList.get(0).getChPrice() : 0 );
+                    tax = (!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getChTax())) ? flightList.get(0).getChTax() : 0 );
+                    invamount = price + tax;
                 }else if("INFANT".equals(priceType)){
-                    if(!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getInPrice())) && !"".equalsIgnoreCase(String.valueOf(flightList.get(0).getInTax()))){
-                        invamount = flightList.get(0).getInPrice() + flightList.get(0).getInTax();
-                    }
+                    price = (!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getInPrice())) ? flightList.get(0).getInPrice() : 0 );
+                    tax = (!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getInTax())) ? flightList.get(0).getInTax() : 0 );
+                    invamount = price + tax;
                 }
                 System.out.println(" invamount " + invamount);
                 routing = util.GetRounting(flightList);

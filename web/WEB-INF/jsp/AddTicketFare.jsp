@@ -1002,6 +1002,7 @@
         $("#ticketCommission").focusout(function(){
             setFormatCurrency();
             setDataCurrency();
+            calculateVat();
         });
         
         $("#airlineCharge").focusout(function(){
