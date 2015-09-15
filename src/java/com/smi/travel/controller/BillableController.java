@@ -206,15 +206,14 @@ public class BillableController extends SMITravelController {
 
             if (billable != null) {
                 request.setAttribute(BillableDesc, billableDesc);
+                // List Receipt Detail
+                List<ReceiptDetailView> receiptView = receiptService.getReceiptDetailViewFromBillableId(billable.getId());
+                request.setAttribute(ReceiptDetailList, receiptView);
                 // request.setAttribute(BillableDesc,billable.getBillableDescs());
             } else {
                 request.setAttribute(BillableDesc, billableDesc);
             }
-            // List Receipt Detail
-            if(!billable.getId().isEmpty()){
-                List<ReceiptDetailView> receiptView = receiptService.getReceiptDetailViewFromBillableId(billable.getId());
-                request.setAttribute(ReceiptDetailList, receiptView);
-            }
+      
             setDefaultBill(master,billable);
             request.setAttribute(BillableList, billable);
 
