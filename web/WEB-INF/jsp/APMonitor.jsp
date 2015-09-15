@@ -35,11 +35,15 @@
                     </div>
                 </c:if>
                 <c:if test="${requestScope['update'] =='0'}">
-                <div id="textAlertDivNotSave"  style="" class="alert alert-danger alert-dismissible" role="alert">
+                <div id="textAlertDivSave"  style="" class="alert alert-danger alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                    <strong>Update Status Unsuccess!</strong> 
                 </div>
                 </c:if>
+                <div id="textAlertDivNotChoose"  style="display: none" class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" aria-label="Close" onclick="hideDiv()"><span aria-hidden="true">&times;</span></button>
+                   <strong>Please choose the ap monitor list.!</strong> 
+                </div>
                 <div class="col-xs-1 text-left">
                     <label class="control-label" for="">Payment</lable>
                 </div>
@@ -154,7 +158,7 @@
                 <div class="col-xs-12"><br></div>
                 <div class="col-xs-12">
                     <input type="hidden" id="apCount" name="apCount" value="${data_list.size()}"/>
-                    <table id="apDataListTable" class="display" cellspacing="0" width="100%">
+                    <table id="apDataListTable" class="display paginated" cellspacing="0" width="100%">
                         <thead>
                             <tr class="datatable-header">
                                 <th class="hidden">Id</th>
@@ -180,10 +184,10 @@
                                 <td align="center">
                                     <c:choose>
                                         <c:when test="${data_list.itf_status == 'New'}">
-                                            <input class="form-control" type="checkbox" id="selectAll${i.count}" name="selectAll${i.count}" value="1"/>
+                                            <input type="checkbox" class="form-control" id="selectAll${i.count}" name="selectAll${i.count}" value="1"/>
                                         </c:when>
                                         <c:otherwise>
-                                            <input class="form-control" type="checkbox" id="selectAll" name="selectAll" value="" disabled=""/>
+                                            <input type="checkbox" class="form-control" id="selectAll" name="selectAll" value="" disabled=""/>
                                         </c:otherwise>
                                     </c:choose>                                  
                                 </td>
@@ -230,7 +234,8 @@
                 <h4 class="modal-title"  id="Titlemodel">Export AP</h4>
             </div>
             <div class="modal-body" id="copyReceiptModal" >
-                <label class="text-right">Are you sure to ap to nirvana ?</label>                                  
+                <label class="text-right">Are you sure to ap to nirvana ?</label>
+                <input type="hidden" id="chooseAP" name="chooseAP" value=""/>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" onclick="confirmExport()">
@@ -260,7 +265,8 @@
             "bInfo": false,
             "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
             "iDisplayLength": 50,
-            "bSort": false
+            "bSort": false,
+            "bPaginate": false
         });
         
         $('#apDataListTable tbody').on('click', 'tr', function () {
@@ -328,24 +334,75 @@
             }
         });
         
+        $('table.paginated').each(function() {
+            var currentPage = 0;
+            var numPerPage = 50;
+            var $table = $(this);
+            $table.bind('repaginate', function() {
+                $table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
+            });
+            $table.trigger('repaginate');
+            var numRows = $table.find('tbody tr').length;
+            var numPages = Math.ceil(numRows / numPerPage);
+            var $pager = $('<div class="col-xs-12 text-right"><font style="color: #499DD5">Page</font>&nbsp;</div>');
+            var $br = $('<div class="col-xs-12"><br></div>');
+            for (var page = 0; page < numPages; page++) {
+                $('<font style="color: #499DD5"><span class="page-number glyphicon"></span></font>').text(" " + (page + 1) + "  ").bind('click', {
+                    newPage: page
+                }, function(event) {
+                    currentPage = event.data['newPage'];
+                    $table.trigger('repaginate');
+                    $(this).addClass('active').siblings().removeClass('active');
+                }).appendTo($pager).addClass('clickable');
+            }
+            $br.insertAfter($table).addClass('active');
+            $pager.insertAfter($table).find('span.page-number:first').addClass('active');            
+        });
+        
     });
     
     function exportAP(){
+        var row = $('#apDataListTable tr').length;
+        var check = 0;
+        for(var i=1;i<=row;i++){          
+            var selectAll = document.getElementById("selectAll"+i);
+            if(selectAll !== null && selectAll !== ''){
+                if(document.getElementById("selectAll"+i).checked){
+                    check++;
+                }    
+            }   
+        }
+        if(check === 0){
+            document.getElementById("chooseAP").value = "false";
+        } else {
+            document.getElementById("chooseAP").value = "true";
+        }
+        $("#textAlertDivSave").hide();
+        $('#textAlertDivNotChoose').hide();
         $("#apExportModal").modal("show");
     }
     
     function confirmExport(){
         $("#apExportModal").modal("hide");
-        var action = document.getElementById("action");
-        action.value = "export";
-        document.getElementById("apMonitorForm").submit();
+        var chooseAP = document.getElementById("chooseAP").value;
+        if(chooseAP === 'true'){
+            var action = document.getElementById("action");
+            action.value = "export";
+            document.getElementById("apMonitorForm").submit();
+        } else {
+            $('#textAlertDivNotChoose').show();
+        }        
+    }
+    
+    function hideDiv(){
+        $('#textAlertDivNotChoose').hide();
     }
     
     function selectAll(){
-        var row = $('#apDataListTable tr').length;     
+        var row = $('#apDataListTable tr').length;
         var check = 0;
         var unCheck = 0;
-        for(var i=1;i<row;i++){          
+        for(var i=1;i<=row;i++){          
             var selectAll = document.getElementById("selectAll"+i);
             if(selectAll !== null && selectAll !== ''){
                 if(document.getElementById("selectAll"+i).checked){
