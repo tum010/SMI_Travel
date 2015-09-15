@@ -39,8 +39,8 @@ public class APNirvanaService {
         this.apNirvanaDao = apNirvanaDao;
     }
     
-    public String GetPartCsvExport(){
-        return genreport.getExportnvncsvpath();
+    public String GetPartFileExport(){
+        return genreport.getExportnvnappath();
     }
 
     public GenerateReport getGenreport() {

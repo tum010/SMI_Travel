@@ -38,8 +38,8 @@ public class ARMonitorService {
         this.arNirvanaDao = arNirvanaDao;
     }
     
-    public String GetPartCsvExport(){
-        return genreport.getExportnvncsvpath();
+    public String GetPartFileExport(){
+        return genreport.getExportnvnarpath();
     }
 
     public GenerateReport getGenreport() {
