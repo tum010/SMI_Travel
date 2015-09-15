@@ -22,8 +22,8 @@ public class ARMonitorService {
         return arNirvanaDao.SearchArNirvanaFromFilter(invtype, department, billtype, from, to, status);
     }
     
-    public String ExportARFileInterface(List<ARNirvana> APList){
-        return arNirvanaDao.ExportARFileInterface(APList);
+    public String ExportARFileInterface(List<ARNirvana> APList,String pathfile){
+        return arNirvanaDao.ExportARFileInterface(APList,pathfile);
     }
     
     public String UpdateStatusARInterface(List<ARNirvana> APList){
