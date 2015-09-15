@@ -546,9 +546,12 @@ public class ExportDataToExcelView extends AbstractExcelView {
         styleC21.setAlignment(styleC21.ALIGN_RIGHT);
         HSSFCellStyle styleC22 = wb.createCellStyle();
         styleC22.setAlignment(styleC22.ALIGN_LEFT);
+        HSSFDataFormat currency = wb.createDataFormat();
+        // Set align Text
         HSSFCellStyle styleNumber = wb.createCellStyle();
-        styleNumber.setDataFormat(HSSFDataFormat.getBuiltinFormat("#,##0.00"));
-        
+        styleNumber.setAlignment(styleC21.ALIGN_RIGHT);
+        styleNumber.setDataFormat(currency.getFormat("#,##0.00"));
+//        styleNumber.setDataFormat(creationHelper.createDataFormat().getFormat("#,##0"));
 
         // Row 2
         HSSFRow row2 = sheet.createRow(1);
@@ -678,7 +681,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                         System.out.println("Num : " + num + " Last Row : " + (listAgent.size()-1));
                         if(num  != (listAgent.size()-1)){ // check not last row
                             HSSFRow row = sheet.createRow(r);
-                            createCell(row,listAgent,num);
+                            createCell(row,listAgent,num,styleNumber);
                             sheet.autoSizeColumn(13);
                             num++; 
                         }else{ // last row
@@ -687,7 +690,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                             System.out.println("Start : " + start +  " End  : " + end);
                             System.out.println("Last");
                             HSSFRow row = sheet.createRow(r);
-                            createCell(row,listAgent,num);                                                    
+                            createCell(row,listAgent,num,styleNumber);                                                    
                             sheet.autoSizeColumn(13);
                             num++;
 
@@ -703,7 +706,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                             System.out.println("Start : " + start +  " End  : " + end);
                             System.out.println("Last");
                             HSSFRow row = sheet.createRow(r);
-                            createCell(row,listAgent,num);                                                    
+                            createCell(row,listAgent,num,styleNumber);                                                    
                             sheet.autoSizeColumn(13);
                             num++;
                                 // total
@@ -728,7 +731,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                                 System.out.println("Add : " + add);
                                 sheet.addMergedRegion(CellRangeAddress.valueOf(add));
                                 HSSFRow row12 = sheet.createRow(r+4);
-                                createCell(row12,listAgent,num);
+                                createCell(row12,listAgent,num,styleNumber);
                                 sheet.autoSizeColumn(13);
                                 num++;				 
                                 count = count + 4;
@@ -745,7 +748,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                         sheet.addMergedRegion(CellRangeAddress.valueOf(add));
                         
                         HSSFRow row = sheet.createRow(r+1);
-                        createCell(row,listAgent,num); 
+                        createCell(row,listAgent,num,styleNumber); 
                         sheet.autoSizeColumn(13);
                         num = num + 1;
                         count = count + 1;
@@ -781,13 +784,15 @@ public class ExportDataToExcelView extends AbstractExcelView {
             row11.createCell(12).setCellFormula(sumReceive);
     }
     
-    private void createCell(HSSFRow row,List<BillAirAgent> listAgent,int num){
+    private void createCell(HSSFRow row,List<BillAirAgent> listAgent,int num,HSSFCellStyle styleNumber){
+        
         row.createCell(0).setCellValue(listAgent.get(num).getInvno());
         row.createCell(1).setCellValue(listAgent.get(num).getInvdate());
         row.createCell(2).setCellValue(listAgent.get(num).getCustomer());
         row.createCell(3).setCellValue(listAgent.get(num).getTicketno());
         row.createCell(4).setCellValue(listAgent.get(num).getRounting());
         row.createCell(5).setCellValue(new BigDecimal(listAgent.get(num).getSaleprice()).doubleValue());
+//        row.createCell(5).setCellStyle(styleNumber);
         row.createCell(6).setCellValue(new BigDecimal(listAgent.get(num).getNet()).doubleValue());
         row.createCell(7).setCellValue(new BigDecimal(listAgent.get(num).getService()).doubleValue());
         row.createCell(8).setCellValue("");
