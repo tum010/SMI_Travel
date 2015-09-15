@@ -35,6 +35,7 @@ public class ReceiptDetailView {
     private BigDecimal billAmount;
     private BigDecimal recAmount;
     private String currency;
+    private String billDescription;
     
     public String getId() {
         return id;
@@ -194,6 +195,14 @@ public class ReceiptDetailView {
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    public String getBillDescription() {
+        return billDescription;
+    }
+
+    public void setBillDescription(String billDescription) {
+        this.billDescription = billDescription;
     }
 
 

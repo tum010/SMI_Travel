@@ -368,8 +368,34 @@
                         <textarea id="description" maxlength="100" name="description" class="form-control" >${billable.remark}</textarea>
                     </div>
                 </div>
-                    
-
+                <div class="row" style="margin-top: 10px">
+                </div> 
+                <table class="display" id="ReceiptDetailTable">
+                    <thead class="datatable-header">
+                        <tr style="width:100%">
+                            <th style="width:20%">Bill-Description</th>
+                            <th style="width:15%">Receipt No</th>
+                            <th style="width:15%">Payment</th>
+                            <th style="width:15%">Bill Amount</th>
+                            <th style="width:10%">Cur</th>
+                            <th style="width:15%">Rec Amount</th>
+                            <th style="width:10%">Cur</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="table" items="${ReceiptDetailList}" varStatus="Counter">
+                        <tr>
+                            <td>${table.billDescription}</td>
+                            <td>${table.receiptNo}</td>
+                            <td>${table.payment}</td>
+                            <td align="right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.billAmount}" /></td>
+                            <td align="center">${table.currency}</td>
+                            <td align="right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.recAmount}" /></td>
+                            <td align="center">${table.curAmount}</td>
+                        </tr>
+                        </c:forEach>    
+                    </tbody>
+                </table>    
                 <div class="text-center" style="padding-top: 10px">
                     <c:if test="${lockUnlockBooking == 0}">
                         <button id="ButtonSave" name="ButtonSave" type="submit" onclick class="btn btn-success" ><span id="SpanButtonSave" class="fa fa-save"></span> Save</button>

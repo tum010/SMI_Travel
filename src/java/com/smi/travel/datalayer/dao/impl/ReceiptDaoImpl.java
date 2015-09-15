@@ -619,6 +619,7 @@ import org.hibernate.Transaction;
                         billamount = amounttemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
                         receiptDetailView.setBillAmount(billamount);
                         receiptDetailView.setCurrency(billDesc.get(j).getCurrency());
+                        receiptDetailView.setBillDescription(billDesc.get(j).getDetail());
                     }
                 }
             }
