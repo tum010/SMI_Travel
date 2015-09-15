@@ -785,15 +785,15 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
             List<AirticketFlight> flightList = new ArrayList<AirticketFlight>(airticketPassList.get(0).getAirticketAirline().getAirticketFlights());
             if(!flightList.isEmpty()){
                 if("ADULT".equals(priceType)){
-                    if("".equalsIgnoreCase(String.valueOf(flightList.get(0).getAdPrice())) && "".equalsIgnoreCase(String.valueOf(flightList.get(0).getAdTax()))){
+                    if(!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getAdPrice())) && !"".equalsIgnoreCase(String.valueOf(flightList.get(0).getAdTax()))){
                         invamount = flightList.get(0).getAdPrice() + flightList.get(0).getAdTax();
                     }
                 }else if("CHILD".equals(priceType)){
-                    if("".equalsIgnoreCase(String.valueOf(flightList.get(0).getChPrice())) && "".equalsIgnoreCase(String.valueOf(flightList.get(0).getChTax()))){
+                    if(!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getChPrice())) && !"".equalsIgnoreCase(String.valueOf(flightList.get(0).getChTax()))){
                         invamount = flightList.get(0).getChPrice() + flightList.get(0).getChTax();
                     }
                 }else if("INFANT".equals(priceType)){
-                    if("".equalsIgnoreCase(String.valueOf(flightList.get(0).getInPrice())) && "".equalsIgnoreCase(String.valueOf(flightList.get(0).getInTax()))){
+                    if(!"".equalsIgnoreCase(String.valueOf(flightList.get(0).getInPrice())) && !"".equalsIgnoreCase(String.valueOf(flightList.get(0).getInTax()))){
                         invamount = flightList.get(0).getInPrice() + flightList.get(0).getInTax();
                     }
                 }
