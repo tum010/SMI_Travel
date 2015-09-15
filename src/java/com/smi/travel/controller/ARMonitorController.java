@@ -54,7 +54,7 @@ public class ARMonitorController extends SMITravelController {
             List<ARNirvana> listAr = new LinkedList<>();
            listAr = arMonitorService.SearchArNirvanaFromFilter(invoiceType, departmnt, type, from, to, status);
            if(listAr != null){
-               String isExport = arMonitorService.ExportARFileInterface(listAr);
+               String isExport = arMonitorService.ExportARFileInterface(listAr,arMonitorService.GetPartFileExport());
                if("success".equals(isExport)){
                    String isUpdate = arMonitorService.UpdateStatusARInterface(listAr);
                    System.out.println("Update ??? : " + isUpdate);
