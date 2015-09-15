@@ -602,6 +602,9 @@ import org.hibernate.Transaction;
             
             if(list.get(i).getReceipt() != null){
                 receiptDetailView.setReceiptNo(list.get(i).getReceipt() != null ? list.get(i).getReceipt().getRecNo(): "");
+                receiptDetailView.setReceiptDate(list.get(i).getReceipt().getRecDate());
+                receiptDetailView.setReceiptName(list.get(i).getReceipt().getRecName() != null ? list.get(i).getReceipt().getRecName() : "");
+                receiptDetailView.setReceiptType(list.get(i).getReceipt().getRecType() != null ? list.get(i).getReceipt().getRecType() : "");
                 receiptDetailView.setPayment(list.get(i).getReceipt().getMAccpay() != null ? list.get(i).getReceipt().getMAccpay().getName() : "");
                 
             }
