@@ -242,7 +242,6 @@ public class APNirvanaImpl implements APNirvanaDao {
             getTransaction().commit();
             session.close();
             this.getSessionFactory().close();
-            result = 1;
         } catch (Exception ex) {
             getTransaction().rollback();
             ex.printStackTrace();
