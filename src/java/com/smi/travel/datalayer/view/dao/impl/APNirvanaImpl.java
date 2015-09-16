@@ -208,14 +208,14 @@ public class APNirvanaImpl implements APNirvanaDao {
 
             for (int i = 0; i < APList.size(); i++) {
                 APNirvana apNirvana = APList.get(i);
-                String paymentId = apNirvana.getPayment_id();
+                String paymentDetailId = apNirvana.getPayment_detail_id();
                 String paymentType = apNirvana.getPaymenttype();
                 Date date = new Date();
                 if ("W".equalsIgnoreCase(paymentType)) {
-                    String hql = "update PaymentDetailWendy pay set pay.isExport = 1 , pay.exportDate = :date where pay.id = :paymentId";
+                    String hql = "update PaymentDetailWendy pay set pay.isExport = 1 , pay.exportDate = :date where pay.id = :paymentDetailId";
                     try {
                         Query query = session.createQuery(hql);
-                        query.setParameter("paymentId", paymentId);
+                        query.setParameter("paymentDetailId", paymentDetailId);
                         query.setParameter("date", date);
                         System.out.println(" query " + query);
                         result = query.executeUpdate();
@@ -225,10 +225,10 @@ public class APNirvanaImpl implements APNirvanaDao {
                         result = 0;
                     }
                 } else if ("A".equalsIgnoreCase(paymentType)) {
-                    String hql = "update PaymentAirticket air set air.isExport = 1 , air.exportDate = :date where air.id = :paymentId";
+                    String hql = "update PaymentAirticket air set air.isExport = 1 , air.exportDate = :date where air.id = :paymentDetailId";
                     try {
                         Query query = session.createQuery(hql);
-                        query.setParameter("paymentId", paymentId);
+                        query.setParameter("paymentDetailId", paymentDetailId);
                         query.setParameter("date", date);
                         System.out.println(" query " + query);
                         result = query.executeUpdate();
