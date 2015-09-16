@@ -63,7 +63,7 @@ public class APNirvanaImpl implements APNirvanaDao {
             "company_branch"};
 
     @Override
-    public String ExportAPFileInterface(List<APNirvana> APList,String pathfile) {
+    public String ExportAPFileInterface(List<APNirvana> APList,String pathFile) {
         FileWriter fileWriter = null;
 
         CSVPrinter csvFilePrinter = null;
@@ -75,7 +75,7 @@ public class APNirvanaImpl implements APNirvanaDao {
         try {
             SimpleDateFormat folderName = new SimpleDateFormat("yyMMdd");
             SimpleDateFormat fileName = new SimpleDateFormat("HHmmss");
-            File folder = new File(filePath + folderName.format(Calendar.getInstance().getTime()));
+            File folder = new File(pathFile + folderName.format(Calendar.getInstance().getTime()));
             if(!folder.exists() && !folder.isDirectory()){
                 folder.mkdirs();
             }
@@ -397,7 +397,7 @@ public class APNirvanaImpl implements APNirvanaDao {
             apNirvana.setPuraccount1(util.ConvertString(B[28]));
             apNirvana.setItf_status(util.ConvertString(B[85]));            
             apNirvana.setPaymenttype(util.ConvertString(B[87]));
-            apNirvana.setPaymentDetailId(util.ConvertString(B[88]));
+            apNirvana.setPayment_detail_id(util.ConvertString(B[88]));
             apNirvanaList.add(apNirvana);
         }
 
@@ -450,7 +450,7 @@ public class APNirvanaImpl implements APNirvanaDao {
             if (i != 0) {
                 query.append(" OR ");
             }
-            query.append("( payment_detail_id = " + ap.getPaymentDetailId()+ " AND paymenttype = '" + ap.getPaymenttype() + "' )");
+            query.append("( payment_detail_id = " + ap.getPayment_detail_id()+ " AND paymenttype = '" + ap.getPaymenttype() + "' )");
         }
         
         SQLQuery sQLQuery = session.createSQLQuery(query.toString()).addEntity(APNirvana.class);
