@@ -161,6 +161,7 @@
         <property name="invoiceSummaryDao" ref="InvoiceSummaryDao" />
         <property name="refundAirReportDao" ref="RefundAirReportDao" />
         <property name="ticketFareReportDao" ref="TicketFareReportDao" />
+        <property name="billAirAgentDao" ref="BillAirAgentDao" />
     </bean> 
     
     
@@ -307,5 +308,8 @@
         <property name="genreport" ref="GenerateReport" />
     </bean>
     
+    <bean id="CollectionNirvanaService" class="com.smi.travel.datalayer.service.CollectionNirvanaService">
+        <property name="collectionNirvanaDao" ref="CollectionNirvanaDao" />
+    </bean>
     <!--<add data>-->
 </beans>

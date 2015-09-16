@@ -65,39 +65,39 @@
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="15">
+			<band height="21">
 				<textField pattern=" #,##0.00" isBlankWhenNull="true">
-					<reportElement x="200" y="0" width="61" height="13" uuid="60e2efdd-298b-4cb4-aece-08c15682c434"/>
+					<reportElement x="200" y="0" width="61" height="21" uuid="60e2efdd-298b-4cb4-aece-08c15682c434"/>
 					<textElement textAlignment="Right">
-						<font fontName="SansSerif" size="8"/>
+						<font fontName="TH SarabunPSK" size="14"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalthb}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="143" y="0" width="57" height="13" uuid="a8208b61-f01f-4eaf-9f7b-e5deb5f5af5c"/>
 					<textElement textAlignment="Right">
-						<font size="8"/>
+						<font fontName="TH SarabunPSK" size="14"/>
 					</textElement>
 					<text><![CDATA[Total :  ]]></text>
 				</staticText>
 				<textField pattern=" #,##0.00" isBlankWhenNull="true">
-					<reportElement x="264" y="0" width="57" height="13" uuid="27bd829e-d277-4ee9-81ac-e67bb5d4dc16"/>
+					<reportElement x="264" y="0" width="57" height="21" uuid="27bd829e-d277-4ee9-81ac-e67bb5d4dc16"/>
 					<textElement textAlignment="Right">
-						<font size="8"/>
+						<font fontName="TH SarabunPSK" size="14"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totaljpy}]]></textFieldExpression>
 				</textField>
 				<textField pattern=" #,##0.00" isBlankWhenNull="true">
-					<reportElement x="324" y="0" width="60" height="13" uuid="f91d6539-b748-425d-9701-1382759cf0ba"/>
+					<reportElement x="324" y="0" width="60" height="21" uuid="f91d6539-b748-425d-9701-1382759cf0ba"/>
 					<textElement textAlignment="Right">
-						<font size="8"/>
+						<font fontName="TH SarabunPSK" size="14"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalusd}]]></textFieldExpression>
 				</textField>
 				<textField pattern=" #,##0.00" isBlankWhenNull="true">
-					<reportElement x="423" y="0" width="62" height="13" uuid="7fefa16e-aa2e-4ceb-bb2d-d09dc8f72d2e"/>
+					<reportElement x="423" y="0" width="66" height="21" uuid="7fefa16e-aa2e-4ceb-bb2d-d09dc8f72d2e"/>
 					<textElement textAlignment="Right">
-						<font size="8"/>
+						<font fontName="TH SarabunPSK" size="14"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalamount}]]></textFieldExpression>
 				</textField>
@@ -109,52 +109,6 @@
 	</background>
 	<pageHeader>
 		<band height="152">
-			<staticText>
-				<reportElement x="79" y="17" width="221" height="22" uuid="75b1df1d-c958-4991-92a3-23ea7f387417"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[9th Floor, Siam at Siam Hotel Building 865 Rama 1 Rd.,]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="79" y="47" width="221" height="12" uuid="5e199784-9613-43be-bbb9-c283b59ecf78"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[Tel: +66(0)-2162201 Fax: +66(0)-216-2202]]></text>
-			</staticText>
-			<image>
-				<reportElement x="9" y="4" width="65" height="48" uuid="e5553856-ff15-4379-af06-58f2505e3e4f"/>
-				<imageExpression><![CDATA["resource/images/smi-logo.gif"]]></imageExpression>
-			</image>
-			<staticText>
-				<reportElement x="79" y="71" width="158" height="13" uuid="cdd0ca4a-e7e5-4e6c-9873-5412d9772d58"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[e-mail: yoyaku@wendytour.com]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="79" y="4" width="149" height="13" uuid="1ac3ab84-49ae-4cac-8a77-e3e2ea724fee"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[S.M.I TRAVEL CO., LTD]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="79" y="59" width="158" height="15" uuid="a3c5ec92-d9fb-4bb3-a8e1-bebf4a89dd75"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[http://www.wendytour.com]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="79" y="27" width="221" height="12" uuid="223b15c0-9123-4970-94fd-9c72e2af457b"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[Wangmai, Phatumwan, Bangkok 10330]]></text>
-			</staticText>
 			<staticText>
 				<reportElement x="375" y="2" width="168" height="25" uuid="4bbe5945-5d10-47f9-be48-9e11c7b922a8"/>
 				<textElement textAlignment="Right">
@@ -400,6 +354,59 @@
 				</textElement>
 				<text><![CDATA[Department]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="376" y="76" width="57" height="13" uuid="48d34c23-091f-46e7-ae18-ce818a8eee25"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Tax ID :  ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="433" y="76" width="109" height="13" uuid="581e6776-590d-4be7-b681-bd340d75ddb6"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[0105523020132]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="101" y="23" width="204" height="14" uuid="78fad1d2-beb1-4564-a6bf-6162f897715f"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[9th Floor, Siam At Siam Hotel Building,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="101" y="33" width="267" height="13" uuid="f0af9509-49a7-462b-9076-146aefc161b7"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[865 Rama 1 Road, Wangmai, Phatumwan, Bangkok 10330]]></text>
+			</staticText>
+			<image>
+				<reportElement x="10" y="9" width="87" height="80" uuid="a2dcbc36-b8dc-4d01-9544-8ee2bc531aa8"/>
+				<imageExpression><![CDATA["resource/images/smi-logo.gif"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="101" y="9" width="121" height="17" uuid="dce810b2-dc41-4585-adfa-67986984d6c6"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[S.M.I Travel Co., Ltd.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="101" y="43" width="271" height="13" uuid="27f99e0f-5512-47ad-8b60-be4c7efe734d"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Tel : (66-2) 216-2201 Fax : (66-2) 216-2202]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="102" y="53" width="177" height="13" uuid="000ba9dc-af2b-4d66-a8a6-f11e3e2cccac"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[E-Mail : yoyaku@wendytour.com]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<detail>
@@ -500,14 +507,14 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{usd}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="390" y="0" width="44" height="21" uuid="56093851-832c-49c4-a4a4-7c2ac5100346"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{recno}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="433" y="0" width="52" height="21" uuid="ca2b1fd9-be17-44cf-8fc9-31203b6c7df9"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="14"/>

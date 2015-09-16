@@ -6,11 +6,9 @@
 
 package com.smi.travel.datalayer.service;
 
-import com.smi.travel.datalayer.report.model.HotelVoucher;
-import com.smi.travel.datalayer.report.model.InvoiceSummary;
-import com.smi.travel.datalayer.report.model.LandVoucher;
 import com.smi.travel.datalayer.view.dao.AgentCommissionReportDao;
 import com.smi.travel.datalayer.view.dao.AirlineSummaryDao;
+import com.smi.travel.datalayer.view.dao.BillAirAgentDao;
 import com.smi.travel.datalayer.view.dao.CreditNoteReportDao;
 import com.smi.travel.datalayer.view.dao.CreditNoteSummaryReportDao;
 import com.smi.travel.datalayer.view.dao.DaytourOtherDao;
@@ -34,10 +32,8 @@ import com.smi.travel.datalayer.view.dao.TicketOrderDao;
 import com.smi.travel.datalayer.view.dao.TicketSaleProfitVolumnDao;
 import com.smi.travel.datalayer.view.dao.TicketSummaryDao;
 import com.smi.travel.datalayer.view.dao.TransferJobReportDao;
-import com.smi.travel.datalayer.view.entity.ReceiptView;
 import com.smi.travel.report.GenerateReport;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import net.sf.jasperreports.engine.JRDataSource;
 
@@ -74,6 +70,7 @@ public class ReportService {
     private TicketFareReportDao ticketFareReportDao;
     private TaxInvoiceSummaryReportDao taxInvoiceSummaryReportDao;
     private CreditNoteSummaryReportDao creditNoteSummaryReportDao;
+    private BillAirAgentDao  billAirAgentDao;
     
     public List getInvoiceMonthly(String BillFrom,String BillTo,String ClientName,String Payment,String Accno,String vattype,String from,String to,String department){
         return invoiceReportDao.getInvoiceMonthly(BillFrom, BillTo, ClientName, Payment, Accno, vattype, from, to, department);
@@ -100,9 +97,7 @@ public class ReportService {
         return path;
     }
     
-    public String  getCsvPartReport(){
-        return genreport.getExportnvncsvpath();
-    }
+
     
     public List getTicketSaleVolumn(String ticketFrom,String ticketType,String startDate,String endDate){
         return ticketsaleprofitVolumnDao.getTicketSaleVolumn(ticketFrom, ticketType, startDate, endDate);
@@ -233,9 +228,9 @@ public class ReportService {
         return creditNoteSummaryReportDao.getCreditNoteSummaryReport(from, to, department, status, systemuser);
     }
     
-//    public List getBillAirAgentReport(String from, String to, String department, String systemuser){
-//        return creditNoteSummaryReportDao.getCreditNoteSummaryReport(from, to, department, systemuser);
-//    }
+    public List getBillAirAgentReport(){
+        return billAirAgentDao.getBillAirAgentReport();
+    }
 
     public HotelVoucherDao getHotelVoucherdao() {
         return hotelVoucherdao;
@@ -456,6 +451,14 @@ public class ReportService {
 
     public void setCreditNoteSummaryReportDao(CreditNoteSummaryReportDao creditNoteSummaryReportDao) {
         this.creditNoteSummaryReportDao = creditNoteSummaryReportDao;
+    }
+
+    public void setBillAirAgentDao(BillAirAgentDao billAirAgentDao) {
+        this.billAirAgentDao = billAirAgentDao;
+    }
+
+    public BillAirAgentDao getBillAirAgentDao() {
+        return billAirAgentDao;
     }
     
     

@@ -133,7 +133,7 @@ public class ReceiptController extends SMITravelController {
         }
         
         if("new".equalsIgnoreCase(action)){
-
+            System.out.println(" CLEAR DATA ");
         }else if ("edit".equalsIgnoreCase(action)){
             
         }else if ("searchReceiveNo".equalsIgnoreCase(action)) {

@@ -54,10 +54,11 @@ public class ARMonitorController extends SMITravelController {
             List<ARNirvana> listAr = new LinkedList<>();
            listAr = arMonitorService.SearchArNirvanaFromFilter(invoiceType, departmnt, type, from, to, status);
            if(listAr != null){
-               String isExport = arMonitorService.ExportARFileInterface(listAr);
+               String isExport = arMonitorService.ExportARFileInterface(listAr,arMonitorService.GetPartFileExport());
                if("success".equals(isExport)){
                    String isUpdate = arMonitorService.UpdateStatusARInterface(listAr);
                    System.out.println("Update ??? : " + isUpdate);
+                   request.setAttribute("update", isUpdate);
                }
                request.setAttribute("listAr", listAr);
            }else{
@@ -68,7 +69,7 @@ public class ARMonitorController extends SMITravelController {
             request.setAttribute("type", type);
             request.setAttribute("from", from);
             request.setAttribute("to", to);
-            request.setAttribute("status", status);
+            request.setAttribute("status", status);            
         }
         return ARMonitor;
     }

@@ -73,6 +73,7 @@ public class ARNirvana {
     private Integer cust_branch;
     private Integer company_branch;
     private Integer invid;
+    private Integer id;
     
 
     /**
@@ -879,6 +880,20 @@ public class ARNirvana {
 
     public Integer getInvid() {
         return invid;
+    }
+
+    /**
+     * @return the id
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Integer id) {
+        this.id = id;
     }
     
     

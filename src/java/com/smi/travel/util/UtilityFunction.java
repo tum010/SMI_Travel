@@ -93,6 +93,32 @@ public class UtilityFunction {
         
         return resultDate;
     }
+    
+    public Date convertStringToDateTime(String day) {
+        Date resultDate = new Date();
+        try {
+            if ((day != null) && (!"".equalsIgnoreCase(day))) {
+                day = day.replaceAll(" ", "-");
+                day = day.replaceAll(":", "-");
+//                day = day.replaceAll(".", "-");
+                resultDate.setYear(Integer.parseInt(day.split("-")[0]) - 1900);
+                System.out.println("Integer.parseInt(day.split(\"-\")[0]) - 1900 : "+(Integer.parseInt(day.split("-")[0]) - 1900));
+                resultDate.setMonth(Integer.parseInt(day.split("-")[1]) - 1);
+                System.out.println("Integer.parseInt(day.split(\"-\")[1]) - 1 : "+(Integer.parseInt(day.split("-")[1]) - 1));
+                resultDate.setDate(Integer.parseInt(day.split("-")[2]));
+                System.out.println("Integer.parseInt(day.split(\"-\")[2]) : "+(Integer.parseInt(day.split("-")[2])));
+                resultDate.setHours(Integer.parseInt(day.split("-")[3]));
+                resultDate.setMinutes(Integer.parseInt(day.split("-")[4]));
+//                resultDate.setSeconds(Integer.parseInt(day.split("-")[5]));
+            } else {
+                return null;
+            }
+        } catch (Exception ex) {
+            return null;
+        }
+
+        return resultDate;
+    }
 
     public String StringUtilReplaceChar(String input) {
         if (input == null) {

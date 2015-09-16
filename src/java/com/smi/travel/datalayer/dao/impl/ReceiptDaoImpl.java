@@ -7,6 +7,7 @@
 package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.ReceiptDao;
+import com.smi.travel.datalayer.entity.BillableDesc;
 import com.smi.travel.datalayer.entity.Receipt;
 import com.smi.travel.datalayer.entity.ReceiptCredit;
 import com.smi.travel.datalayer.entity.ReceiptDetail;
@@ -14,6 +15,7 @@ import com.smi.travel.datalayer.view.entity.ReceiptDetailView;
 import com.smi.travel.datalayer.view.entity.ReceiptSearchView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -585,5 +587,50 @@ import org.hibernate.Transaction;
         return receiptDetailViewList;
     }
 
+    @Override
+    public List<ReceiptDetailView> getReceiptDetailViewFromBillableId(String billableId) {
+        Session session = this.sessionFactory.openSession();
+        List<ReceiptDetailView> receiptDetailViewList = new ArrayList<ReceiptDetailView>();
+        List<ReceiptDetail> list = session.createQuery("from ReceiptDetail rec where  rec.invoiceDetail.billableDesc.billable.id = :billableId").setParameter("billableId", billableId).list();
+        if(list.isEmpty()){
+            System.out.println("ReceiptDetail empty ");
+            return null;
+        }
+        String billDescId = "";
+        for (int i = 0; i < list.size() ; i++) {
+            ReceiptDetailView receiptDetailView = new ReceiptDetailView();
+            
+            if(list.get(i).getReceipt() != null){
+                receiptDetailView.setReceiptNo(list.get(i).getReceipt() != null ? list.get(i).getReceipt().getRecNo(): "");
+                receiptDetailView.setReceiptDate(list.get(i).getReceipt().getRecDate());
+                receiptDetailView.setReceiptName(list.get(i).getReceipt().getRecName() != null ? list.get(i).getReceipt().getRecName() : "");
+                receiptDetailView.setReceiptType(list.get(i).getReceipt().getRecType() != null ? list.get(i).getReceipt().getRecType() : "");
+                receiptDetailView.setPayment(list.get(i).getReceipt().getMAccpay() != null ? list.get(i).getReceipt().getMAccpay().getName() : "");
+                
+            }
+            receiptDetailView.setRecAmount(list.get(i).getAmount() != null ? list.get(i).getAmount() : BigDecimal.ZERO);
+            receiptDetailView.setCurAmount(list.get(i).getCurAmount() != null ? list.get(i).getCurAmount() : "");
+            if(list.get(i).getInvoiceDetail() != null && list.get(i).getInvoiceDetail().getBillableDesc() != null){
+                billDescId = list.get(i).getInvoiceDetail().getBillableDesc().getId();
+            }
+            BigDecimal billamount = new BigDecimal(BigInteger.ZERO);
+            if(!"".equalsIgnoreCase(billDescId)){
+                List<BillableDesc> billDesc = session.createQuery("from BillableDesc bill where  bill.id = :billDescId").setParameter("billDescId", billDescId).list();
+                if(!billDesc.isEmpty()){
+                    for (int j = 0; j < billDesc.size() ; j++) {
+                        BigDecimal amounttemp = new BigDecimal(billDesc.get(j).getPrice());
+                        billamount = amounttemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                        receiptDetailView.setBillAmount(billamount);
+                        receiptDetailView.setCurrency(billDesc.get(j).getCurrency());
+                        receiptDetailView.setBillDescription(billDesc.get(j).getDetail());
+                    }
+                }
+            }
+            receiptDetailViewList.add(receiptDetailView);
+        }
+        session.close();
+        this.sessionFactory.close();
+        return receiptDetailViewList;    
+    }
     
 }

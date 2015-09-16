@@ -104,7 +104,7 @@ public class APNirvana {
     private String itf_status;
     private String payment_id;
     private String paymenttype;
-    private String paymentDetailId;
+    private String payment_detail_id;
 
     public String getRefinvoiceno() {
         return refinvoiceno;
@@ -1299,17 +1299,17 @@ public class APNirvana {
     }
 
     /**
-     * @return the paymentDetailId
+     * @return the payment_detail_id
      */
-    public String getPaymentDetailId() {
-        return paymentDetailId;
+    public String getPayment_detail_id() {
+        return payment_detail_id;
     }
 
     /**
-     * @param paymentDetailId the paymentDetailId to set
+     * @param payment_detail_id the payment_detail_id to set
      */
-    public void setPaymentDetailId(String paymentDetailId) {
-        this.paymentDetailId = paymentDetailId;
+    public void setPayment_detail_id(String payment_detail_id) {
+        this.payment_detail_id = payment_detail_id;
     }
 
     /**

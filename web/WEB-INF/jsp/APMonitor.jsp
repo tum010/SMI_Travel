@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript" src="js/APMonitor.js"></script> 
+<!--<script type="text/javascript" src="js/APMonitor.js"></script> -->
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -35,11 +35,15 @@
                     </div>
                 </c:if>
                 <c:if test="${requestScope['update'] =='0'}">
-                <div id="textAlertDivNotSave"  style="" class="alert alert-danger alert-dismissible" role="alert">
+                <div id="textAlertDivSave"  style="" class="alert alert-danger alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                    <strong>Update Status Unsuccess!</strong> 
                 </div>
                 </c:if>
+                <div id="textAlertDivNotChoose"  style="display: none" class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" aria-label="Close" onclick="hideDiv()"><span aria-hidden="true">&times;</span></button>
+                   <strong>Please choose the ap monitor list.!</strong> 
+                </div>
                 <div class="col-xs-1 text-left">
                     <label class="control-label" for="">Payment</lable>
                 </div>
@@ -111,9 +115,9 @@
             <div class="col-xs-12"><br></div>
             <div class="col-xs-12">
                 <div class="col-xs-1 text-left">
-                    <label class="control-label" for="">From</lable>
+                    <label class="control-label" for="">From<font style="color: red">*</font></lable>
                 </div>
-                <div class="col-xs-1" style="width: 170px">
+                <div class="col-xs-1 form-group" style="width: 170px">
                     <div class='input-group date' id='InputFromDate'>
                     <c:if test='${taxInvoice.taxInvDate != null}'>
                         <input id="apFromDate" name="apFromDate"  type="text" 
@@ -129,9 +133,9 @@
                 </div>
                 <div class="col-xs-1" style="width: 120px"></div>
                 <div class="col-xs-1 text-left">
-                    <label class="control-label">To</lable>
+                    <label class="control-label">To<font style="color: red">*</font></lable>
                 </div>
-                <div class="col-xs-1" style="width: 170px">
+                <div class="col-xs-1 form-group" style="width: 170px">
                     <div class='input-group date' id='InputToDate'>
                     <c:if test='${taxInvoice.taxInvDate != null}'>
                         <input id="apToDate" name="apToDate"  type="text" 
@@ -151,10 +155,10 @@
                         <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
                     </button>
                 </div>
-                <div class="col-xs-12"><br></div>  
+                <div class="col-xs-12"><br></div>
                 <div class="col-xs-12">
                     <input type="hidden" id="apCount" name="apCount" value="${data_list.size()}"/>
-                    <table id="apDataListTable" class="display" cellspacing="0" width="100%">
+                    <table id="apDataListTable" class="display paginated" cellspacing="0" width="100%">
                         <thead>
                             <tr class="datatable-header">
                                 <th class="hidden">Id</th>
@@ -174,17 +178,17 @@
                             <c:forEach var="data_list" items="${data_list}" varStatus="i">
                             <tr>
                                 <td class="hidden">
-                                    <input type="hidden" id="paymentId${i.count}" name="paymentId${i.count}" value="${data_list.payment_id}"/> 
+                                    <input type="hidden" id="paymentDetailId${i.count}" name="paymentDetailId${i.count}" value="${data_list.payment_detail_id}"/> 
                                     <input type="hidden" id="paymentDetailId${i.count}" name="paymentDetailId${i.count}" value="${data_list.paymentDetailId}"/> 
                                     <input type="hidden" id="paymentType${i.count}" name="paymentType${i.count}" value="${data_list.paymenttype}"/>
                                 </td>                              
                                 <td align="center">
                                     <c:choose>
                                         <c:when test="${data_list.itf_status == 'New'}">
-                                            <input class="form-control" type="checkbox" id="selectAll${i.count}" name="selectAll${i.count}" value="1"/>
+                                            <input type="checkbox" class="form-control" id="selectAll${i.count}" name="selectAll${i.count}" value="1"/>
                                         </c:when>
                                         <c:otherwise>
-                                            <input class="form-control" type="checkbox" id="selectAll" name="selectAll" value="" disabled=""/>
+                                            <input type="checkbox" class="form-control" id="selectAll" name="selectAll" value="" disabled=""/>
                                         </c:otherwise>
                                     </c:choose>                                  
                                 </td>
@@ -231,7 +235,8 @@
                 <h4 class="modal-title"  id="Titlemodel">Export AP</h4>
             </div>
             <div class="modal-body" id="copyReceiptModal" >
-                <label class="text-right">Are you sure to ap to nirvana ?</label>                                  
+                <label class="text-right">Are you sure to ap to nirvana ?</label>
+                <input type="hidden" id="chooseAP" name="chooseAP" value=""/>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" onclick="confirmExport()">
@@ -260,7 +265,9 @@
             "bFilter": false,
             "bInfo": false,
             "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-            "iDisplayLength": 50
+            "iDisplayLength": 50,
+            "bSort": false,
+            "bPaginate": false
         });
         
         $('#apDataListTable tbody').on('click', 'tr', function () {
@@ -274,24 +281,149 @@
                 $('#hdGridSelected').val($('#apDataListTable tbody tr.row_selected').attr("id"));
             }
         });
+        
+        $('#InputFromDate').datetimepicker().on('dp.change', function (e) {
+            $('#apMonitorForm').bootstrapValidator('revalidateField', 'apFromDate');
+        });
+        $('#InputToDate').datetimepicker().on('dp.change', function (e) {
+            $('#apMonitorForm').bootstrapValidator('revalidateField', 'apToDate');
+        });
+        
+        $("#apMonitorForm").bootstrapValidator({
+                    framework: 'bootstrap',
+    //                container: 'tooltip',
+                    feedbackIcons: {
+                        valid: 'uk-icon-check',
+                        invalid: 'uk-icon-times',
+                        validating: 'uk-icon-refresh'
+                    },
+                    fields: {
+                        apFromDate: {
+                            trigger: 'focus keyup change',
+                            validators: {
+                                notEmpty: {
+                                    message: 'The Date From is required'
+                                },
+                                date: {
+                                    format: 'YYYY-MM-DD',
+                                    max: 'apToDate',
+                                    message: 'The Date From is not a valid'
+                                }
+                            }
+                        },
+                        apToDate: {
+                            trigger: 'focus keyup change',
+                            validators: {
+                                notEmpty: {
+                                    message: 'The Date From is required'
+                                },
+                                date: {
+                                    format: 'YYYY-MM-DD',
+                                    min: 'apFromDate',
+                                    message: 'The Date To is not a valid'
+                                }
+                            }
+                        }
+                    }
+                }).on('success.field.fv', function (e, data) {
+            if (data.field === 'apFromDate' && data.fv.isValidField('apToDate') === false) {
+                data.fv.revalidateField('apToDate');
+            }
+
+            if (data.field === 'apToDate' && data.fv.isValidField('apFromDate') === false) {
+                data.fv.revalidateField('apFromDate');
+            }
+        });
+        
+        $('table.paginated').each(function() {
+            var currentPage = 0;
+            var numPerPage = 50;
+            var $table = $(this);
+            $table.bind('repaginate', function() {
+                $table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
+            });
+            $table.trigger('repaginate');
+            var numRows = $table.find('tbody tr').length;
+            var numPages = Math.ceil(numRows / numPerPage);
+            var $pager = $('<div class="col-xs-12 text-right"><font style="color: #499DD5"></font>&nbsp;</div>');
+            var $br = $('<div class="col-xs-12"><br></div>');
+            for (var page = 0; page < numPages; page++) {
+                if(page === 0){
+                    $('<font style="color: #499DD5"><span class="page-number glyphicon"></span></font>').text(" " + "First" + "  ").bind('click', {
+                    newPage: page
+                    }, function(event) {
+                        currentPage = event.data['newPage'];
+                        $table.trigger('repaginate');
+                        $(this).addClass('active').siblings().removeClass('active');
+                    }).appendTo($pager).addClass('clickable');
+                }
+                                             
+                $('<font style="color: #499DD5"><span class="page-number glyphicon"></span></font>').text(" " + (page + 1) + " ").bind('click', {
+                    newPage: page
+                }, function(event) {
+                    currentPage = event.data['newPage'];
+                    $table.trigger('repaginate');
+                    $(this).addClass('active').siblings().removeClass('active');
+                }).appendTo($pager).addClass('clickable');
+                
+                if(page === (numPages - 1)){
+                    $('<font style="color: #499DD5"><span class="page-number glyphicon"></span></font>').text(" " + "Last" + "  ").bind('click', {
+                    newPage: page
+                    }, function(event) {
+                        currentPage = event.data['newPage'];
+                        $table.trigger('repaginate');
+                        $(this).addClass('active').siblings().removeClass('active');
+                    }).appendTo($pager).addClass('clickable');
+                }
+            }
+            $br.insertAfter($table).addClass('active');
+            $pager.insertAfter($table).find('span.page-number:first').addClass('active');            
+        });
+        
     });
     
     function exportAP(){
+        var row = $('#apDataListTable tr').length;
+        var check = 0;
+        for(var i=1;i<=row;i++){          
+            var selectAll = document.getElementById("selectAll"+i);
+            if(selectAll !== null && selectAll !== ''){
+                if(document.getElementById("selectAll"+i).checked){
+                    check++;
+                }    
+            }   
+        }
+        if(check === 0){
+            document.getElementById("chooseAP").value = "false";
+        } else {
+            document.getElementById("chooseAP").value = "true";
+        }
+        $("#textAlertDivSave").hide();
+        $('#textAlertDivNotChoose').hide();
         $("#apExportModal").modal("show");
     }
     
     function confirmExport(){
         $("#apExportModal").modal("hide");
-        var action = document.getElementById("action");
-        action.value = "export";
-        document.getElementById("apMonitorForm").submit();
+        var chooseAP = document.getElementById("chooseAP").value;
+        if(chooseAP === 'true'){
+            var action = document.getElementById("action");
+            action.value = "export";
+            document.getElementById("apMonitorForm").submit();
+        } else {
+            $('#textAlertDivNotChoose').show();
+        }        
+    }
+    
+    function hideDiv(){
+        $('#textAlertDivNotChoose').hide();
     }
     
     function selectAll(){
-        var row = $('#apDataListTable tr').length;     
+        var row = $('#apDataListTable tr').length;
         var check = 0;
         var unCheck = 0;
-        for(var i=1;i<row;i++){          
+        for(var i=1;i<=row;i++){          
             var selectAll = document.getElementById("selectAll"+i);
             if(selectAll !== null && selectAll !== ''){
                 if(document.getElementById("selectAll"+i).checked){

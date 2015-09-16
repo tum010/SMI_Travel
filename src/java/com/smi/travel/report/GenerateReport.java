@@ -23,7 +23,8 @@ import net.sf.jasperreports.engine.JasperPrint;
 public class GenerateReport {
     private String reportpath;
     private String exportpath;
-    private String exportnvncsvpath;
+    private String exportnvnarpath;
+    private String exportnvnappath;
     
     public GenerateReport(){
 
@@ -62,13 +63,22 @@ public class GenerateReport {
         this.exportpath = exportpath;
     }
 
-    public String getExportnvncsvpath() {
-        return exportnvncsvpath;
+    public String getExportnvnarpath() {
+        return exportnvnarpath;
     }
 
-    public void setExportnvncsvpath(String exportnvncsvpath) {
-        this.exportnvncsvpath = exportnvncsvpath;
+    public void setExportnvnarpath(String exportnvnarpath) {
+        this.exportnvnarpath = exportnvnarpath;
     }
-    
+
+    public String getExportnvnappath() {
+        return exportnvnappath;
+    }
+
+    public void setExportnvnappath(String exportnvnappath) {
+        this.exportnvnappath = exportnvnappath;
+    }
+
+   
     
 }

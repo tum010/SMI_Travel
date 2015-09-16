@@ -108,6 +108,7 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
                 .addScalar("profit", Hibernate.DOUBLE)
                 .list();
         int count = 1;
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         for (Object[] B : InvoiceSummaryList) {
             InvoiceSummary sum = new InvoiceSummary();
             sum.setNo(count);
@@ -119,7 +120,7 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
                 System.out.println("Date : " + util.ConvertString(B[2]));
                 String date = ""+dayy[2]+"-"+dayy[1]+"-"+dayy[0];
                 try {
-                    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+
                     Date dateBefore = df.parse(date);
                     sum.setInvdate(new SimpleDateFormat("dd/MM/yyyy", new Locale("us", "us")).format(dateBefore));
                 } catch (ParseException e) {
@@ -159,8 +160,30 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
             }
             
             sum.setTo(util.ConvertString(B[13]));
-            sum.setInvfrom(util.convertStringToDate(fromData));
-            sum.setInvto(util.convertStringToDate(toDate));
+            if(!"".equals(fromData) && fromData != null){
+                String dayy[] = fromData.split("-");
+                System.out.println("Date From : " + fromData);
+                String date = ""+dayy[2]+"-"+dayy[1]+"-"+dayy[0];
+                try {
+
+                    Date dateBefore = df.parse(date);
+                    sum.setInvfrom(new SimpleDateFormat("dd/MM/yyyy", new Locale("us", "us")).format(dateBefore));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(!"".equals(toDate) && toDate != null){
+                String dayy[] = toDate.split("-");
+                System.out.println("Date From : " + toDate);
+                String date = ""+dayy[2]+"-"+dayy[1]+"-"+dayy[0];
+                try {
+
+                    Date dateBefore = df.parse(date);
+                    sum.setInvto(new SimpleDateFormat("dd/MM/yyyy", new Locale("us", "us")).format(dateBefore));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
             if(department != null && !"".equals(department)){
                 sum.setDepartment(department);     
             }else if("".equals(department)){

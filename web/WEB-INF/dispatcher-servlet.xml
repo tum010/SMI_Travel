@@ -325,6 +325,7 @@
 		<property name="BillableService" ref="BillableService" />
 		<property name="utilservice" ref="UtilityService" />
 		<property name="agentService" ref="AgentService" />
+                <property name="receiptService" ref="ReceiptService" />
 	</bean>
 	<bean id="HistoryController" class="com.smi.travel.controller.HistoryController">
 		<property name="bookingAirticketService" ref="BookingAirticket" />
@@ -582,8 +583,10 @@
     </bean>
     
     <bean id="CollectionMonitorController" class="com.smi.travel.controller.CollectionMonitorController">
-        
+        <property name="collectionNirvanaService" ref="CollectionNirvanaService" />
+        <property name="utilityService" ref="UtilityService" />
     </bean>
+    
     <bean id="TicketFareSummaryReportController" class="com.smi.travel.controller.TicketFareSummaryReportController">
         <property name="utilityService" ref="UtilityService" />
     </bean>
