@@ -14,6 +14,7 @@ import java.util.Date;
  * @author Surachai
  */
 public class APNirvana {
+    private String rowid;
     private String refinvoiceno;
     private String intreference;
     private String vendorid;
@@ -1309,5 +1310,19 @@ public class APNirvana {
      */
     public void setPayment_detail_id(String payment_detail_id) {
         this.payment_detail_id = payment_detail_id;
+    }
+
+    /**
+     * @return the rowid
+     */
+    public String getRowid() {
+        return rowid;
+    }
+
+    /**
+     * @param rowid the rowid to set
+     */
+    public void setRowid(String rowid) {
+        this.rowid = rowid;
     }
 }

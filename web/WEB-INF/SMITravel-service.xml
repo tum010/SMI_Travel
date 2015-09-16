@@ -308,5 +308,8 @@
         <property name="genreport" ref="GenerateReport" />
     </bean>
     
+    <bean id="CollectionNirvanaService" class="com.smi.travel.datalayer.service.CollectionNirvanaService">
+        <property name="collectionNirvanaDao" ref="CollectionNirvanaDao" />
+    </bean>
     <!--<add data>-->
 </beans>
