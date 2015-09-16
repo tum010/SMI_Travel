@@ -1194,16 +1194,48 @@ public class ExportDataToExcelView extends AbstractExcelView {
         // Set align Text
         HSSFCellStyle styleC21 = wb.createCellStyle();
         styleC21.setAlignment(styleC21.ALIGN_RIGHT);
-        styleC21.setDataFormat(currency.getFormat("#,##0.00"));
         HSSFCellStyle styleC22 = wb.createCellStyle();
         styleC22.setAlignment(styleC22.ALIGN_LEFT);
         HSSFCellStyle styleC23 = wb.createCellStyle();
         styleC23.setAlignment(styleC22.ALIGN_CENTER);
+        
+
+        
         HSSFCellStyle styleC25 = wb.createCellStyle();
+        styleC25.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC25.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC25.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC25.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         styleC25.setDataFormat(currency.getFormat("#,##0.00"));
+        
         HSSFCellStyle styleC26 = wb.createCellStyle();
+        styleC26.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC26.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC26.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC26.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         styleC26.setDataFormat(currency.getFormat("#,##0"));
         styleC26.setAlignment(styleC22.ALIGN_CENTER);
+
+        HSSFCellStyle styleC27 = wb.createCellStyle();
+        styleC27.setAlignment(styleC27.ALIGN_RIGHT);
+        styleC27.setDataFormat(currency.getFormat("#,##0.00"));
+        
+        HSSFCellStyle styleC28 = wb.createCellStyle();
+        styleC28.setAlignment(styleC28.ALIGN_CENTER);
+        styleC28.setDataFormat(currency.getFormat("#,##0"));
+        
+        HSSFCellStyle styleC29 = wb.createCellStyle();
+        styleC29.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC29.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC29.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC29.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        
+        HSSFCellStyle styleC30 = wb.createCellStyle();
+        styleC30.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC30.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC30.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC30.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleC30.setAlignment(styleC22.ALIGN_CENTER);
         
         if(!ticketSumByStaff.isEmpty()){
             dataheader = (TicketFareSummaryByAgentStaff)ticketSumByStaff.get(0);
@@ -1323,6 +1355,10 @@ public class ExportDataToExcelView extends AbstractExcelView {
         // Header Table
         HSSFCellStyle styleC3 = wb.createCellStyle();
         styleC3.setFont(getHeaderTable(wb.createFont()));
+        styleC3.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC3.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC3.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC3.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         styleC3.setAlignment(styleC3.ALIGN_CENTER);
         
         // Detail of Table
@@ -1356,9 +1392,11 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     String totalProfit = "SUM(H" + ktemp+":H"+(count + i)+")";
                     
                     // Set align Text
+                    HSSFCell cellTotal0 = row.createCell(0);
+                    cellTotal0.setCellStyle(styleC29);
                     HSSFCell cellTotal = row.createCell(1);
                     cellTotal.setCellValue("Total");
-                    cellTotal.setCellStyle(styleC23);
+                    cellTotal.setCellStyle(styleC30);
                     HSSFCell cellTotal02 = row.createCell(2);
                     cellTotal02.setCellFormula(totalPax);
                     cellTotal02.setCellStyle(styleC26);
@@ -1434,10 +1472,10 @@ public class ExportDataToExcelView extends AbstractExcelView {
             HSSFRow row = sheet.createRow(count + i);
             HSSFCell celldata01 = row.createCell(0);
             celldata01.setCellValue(data.getAgentname());
-            celldata01.setCellStyle(styleC22);
+            celldata01.setCellStyle(styleC29);
             HSSFCell celldata02 = row.createCell(1);
             celldata02.setCellValue(data.getDepartment());
-            celldata02.setCellStyle(styleC22);
+            celldata02.setCellStyle(styleC29);
             HSSFCell celldata03 = row.createCell(2);
             celldata03.setCellValue("".equalsIgnoreCase(String.valueOf(data.getPax())) ? 0 : new BigDecimal(data.getPax()).doubleValue()); 
             celldata03.setCellStyle(styleC26);
@@ -1521,10 +1559,11 @@ public class ExportDataToExcelView extends AbstractExcelView {
 //                    totalAgentComm = totalAgentComm.add(agentcomm);
 //                    totalProfit = totalProfit.add(profit);
 //                }
-                
+                HSSFCell celldatas0 = rows.createCell(0);
+                celldatas0.setCellStyle(styleC29);
                 HSSFCell celldatas01 = rows.createCell(1);
                 celldatas01.setCellValue("Total");
-                celldatas01.setCellStyle(styleC23);
+                celldatas01.setCellStyle(styleC30);
                 HSSFCell celldatas02 = rows.createCell(2);
                 celldatas02.setCellFormula(totalPax);
                 celldatas02.setCellStyle(styleC26);
@@ -1551,22 +1590,22 @@ public class ExportDataToExcelView extends AbstractExcelView {
                 celldataOut01.setCellStyle(styleC22);
                 HSSFCell celldataOut02 = rows.createCell(2);
                 celldataOut02.setCellValue("".equalsIgnoreCase(String.valueOf(totalPaxOut)) ? 0 : new BigDecimal(totalPaxOut).doubleValue());
-                celldataOut02.setCellStyle(styleC26);
+                celldataOut02.setCellStyle(styleC27);
                 HSSFCell celldataOut03 = rows.createCell(3);
                 celldataOut03.setCellValue("".equalsIgnoreCase(String.valueOf(totalInvAmountOut)) ? 0 : totalInvAmountOut.doubleValue());
-                celldataOut03.setCellStyle(styleC25);
+                celldataOut03.setCellStyle(styleC28);
                 HSSFCell celldataOut04 = rows.createCell(4);
                 celldataOut04.setCellValue("".equalsIgnoreCase(String.valueOf(totalTiccomOut)) ? 0 : totalTiccomOut.doubleValue());
-                celldataOut04.setCellStyle(styleC25);
+                celldataOut04.setCellStyle(styleC28);
                 HSSFCell celldataOut05 = rows.createCell(5);
                 celldataOut05.setCellValue("".equalsIgnoreCase(String.valueOf(totalSalePriceOut)) ? 0 : totalSalePriceOut.doubleValue());
-                celldataOut05.setCellStyle(styleC25);
+                celldataOut05.setCellStyle(styleC28);
                 HSSFCell celldataOut06 = rows.createCell(6);
                 celldataOut06.setCellValue("".equalsIgnoreCase(String.valueOf(totalAgentCommOut)) ? 0 : totalAgentCommOut.doubleValue());
-                celldataOut06.setCellStyle(styleC25);
+                celldataOut06.setCellStyle(styleC28);
                 HSSFCell celldataOut07 = rows.createCell(7);
                 celldataOut07.setCellValue("".equalsIgnoreCase(String.valueOf(totalProfitOut)) ? 0 : totalProfitOut.doubleValue());
-                celldataOut07.setCellStyle(styleC25);
+                celldataOut07.setCellStyle(styleC28);
 
                 rows = sheet.createRow(count+1+i);
                 HSSFCell celldataWen01 = rows.createCell(1);
@@ -1574,22 +1613,22 @@ public class ExportDataToExcelView extends AbstractExcelView {
                 celldataWen01.setCellStyle(styleC22);
                 HSSFCell celldataWen02 = rows.createCell(2);
                 celldataWen02.setCellValue("".equalsIgnoreCase(String.valueOf(totalPaxWendy)) ? 0 : new BigDecimal(totalPaxWendy).doubleValue());
-                celldataWen02.setCellStyle(styleC26);
+                celldataWen02.setCellStyle(styleC27);
                 HSSFCell celldataWen03 = rows.createCell(3);
                 celldataWen03.setCellValue("".equalsIgnoreCase(String.valueOf(totalInvAmountWendy)) ? 0 : totalInvAmountWendy.doubleValue());
-                celldataWen03.setCellStyle(styleC25);
+                celldataWen03.setCellStyle(styleC28);
                 HSSFCell celldataWen04 = rows.createCell(4);
                 celldataWen04.setCellValue("".equalsIgnoreCase(String.valueOf(totalTiccomWendy)) ? 0 : totalTiccomWendy.doubleValue());
-                celldataWen04.setCellStyle(styleC25);
+                celldataWen04.setCellStyle(styleC28);
                 HSSFCell celldataWen05 = rows.createCell(5);
                 celldataWen05.setCellValue("".equalsIgnoreCase(String.valueOf(totalSalePriceWendy)) ? 0 : totalSalePriceWendy.doubleValue());
-                celldataWen05.setCellStyle(styleC25);
+                celldataWen05.setCellStyle(styleC28);
                 HSSFCell celldataWen06 = rows.createCell(6);
                 celldataWen06.setCellValue("".equalsIgnoreCase(String.valueOf(totalAgentCommWendy)) ? 0 : totalAgentCommWendy.doubleValue());
-                celldataWen06.setCellStyle(styleC25);
+                celldataWen06.setCellStyle(styleC28);
                 HSSFCell celldataWen07 = rows.createCell(7);
                 celldataWen07.setCellValue("".equalsIgnoreCase(String.valueOf(totalProfitWendy)) ? 0 : totalProfitWendy.doubleValue());
-                celldataWen07.setCellStyle(styleC25);
+                celldataWen07.setCellStyle(styleC28);
                 
 
 //                int totalPaxWI = 0;
@@ -1618,22 +1657,22 @@ public class ExportDataToExcelView extends AbstractExcelView {
                 celldataWI01.setCellStyle(styleC22);
                 HSSFCell celldataWI02 = rows.createCell(2);
                 celldataWI02.setCellFormula(totalPaxWI);
-                celldataWI02.setCellStyle(styleC26);
+                celldataWI02.setCellStyle(styleC27);
                 HSSFCell celldataWI03 = rows.createCell(3);
                 celldataWI03.setCellFormula(totalInvAmountWI);
-                celldataWI03.setCellStyle(styleC25);
+                celldataWI03.setCellStyle(styleC28);
                 HSSFCell celldataWI04 = rows.createCell(4);
                 celldataWI04.setCellFormula(totalTiccomWI);
-                celldataWI04.setCellStyle(styleC25);
+                celldataWI04.setCellStyle(styleC28);
                 HSSFCell celldataWI05 = rows.createCell(5);
                 celldataWI05.setCellFormula(totalSalePriceWI);
-                celldataWI05.setCellStyle(styleC25);
+                celldataWI05.setCellStyle(styleC28);
                 HSSFCell celldataWI06 = rows.createCell(6);
                 celldataWI06.setCellFormula(totalAgentCommWI);
-                celldataWI06.setCellStyle(styleC25);
+                celldataWI06.setCellStyle(styleC28);
                 HSSFCell celldataWI07 = rows.createCell(7);
                 celldataWI07.setCellFormula(totalProfitWI);
-                celldataWI07.setCellStyle(styleC25);
+                celldataWI07.setCellStyle(styleC28);
                 
             }
             for(int j =0;j<8;j++){
@@ -1651,16 +1690,48 @@ public class ExportDataToExcelView extends AbstractExcelView {
         // Set align Text
         HSSFCellStyle styleC21 = wb.createCellStyle();
         styleC21.setAlignment(styleC21.ALIGN_RIGHT);
-        styleC21.setDataFormat(currency.getFormat("#,##0.00"));
         HSSFCellStyle styleC22 = wb.createCellStyle();
         styleC22.setAlignment(styleC22.ALIGN_LEFT);
         HSSFCellStyle styleC23 = wb.createCellStyle();
         styleC23.setAlignment(styleC22.ALIGN_CENTER);
+        
+
+        
         HSSFCellStyle styleC25 = wb.createCellStyle();
+        styleC25.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC25.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC25.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC25.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         styleC25.setDataFormat(currency.getFormat("#,##0.00"));
+        
         HSSFCellStyle styleC26 = wb.createCellStyle();
+        styleC26.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC26.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC26.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC26.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         styleC26.setDataFormat(currency.getFormat("#,##0"));
         styleC26.setAlignment(styleC22.ALIGN_CENTER);
+
+        HSSFCellStyle styleC27 = wb.createCellStyle();
+        styleC27.setAlignment(styleC27.ALIGN_RIGHT);
+        styleC27.setDataFormat(currency.getFormat("#,##0.00"));
+        
+        HSSFCellStyle styleC28 = wb.createCellStyle();
+        styleC28.setAlignment(styleC28.ALIGN_CENTER);
+        styleC28.setDataFormat(currency.getFormat("#,##0"));
+        
+        HSSFCellStyle styleC29 = wb.createCellStyle();
+        styleC29.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC29.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC29.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC29.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        
+        HSSFCellStyle styleC30 = wb.createCellStyle();
+        styleC30.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC30.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC30.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC30.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleC30.setAlignment(styleC22.ALIGN_CENTER);
         
         if(!ticketSumByAgent.isEmpty()){
             dataheader = (TicketFareSummaryByAgentStaff)ticketSumByAgent.get(0);
@@ -1783,7 +1854,10 @@ public class ExportDataToExcelView extends AbstractExcelView {
         HSSFCellStyle styleC3 = wb.createCellStyle();
         styleC3.setFont(getHeaderTable(wb.createFont()));
         styleC3.setAlignment(styleC3.ALIGN_CENTER);
-        
+        styleC3.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC3.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC3.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC3.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         // Detail of Table
         String temp = "";
         int count = 9;
@@ -1815,9 +1889,11 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     String totalProfit = "SUM(H" + ktemp+":H"+(count + i)+")";
                     
                     // Set align Text
+                    HSSFCell cellTotal0 = row.createCell(0);
+                    cellTotal0.setCellStyle(styleC29);
                     HSSFCell cellTotal = row.createCell(1);
                     cellTotal.setCellValue("Total");
-                    cellTotal.setCellStyle(styleC23);
+                    cellTotal.setCellStyle(styleC30);
                     HSSFCell cellTotal02 = row.createCell(2);
                     cellTotal02.setCellFormula(totalPax);
                     cellTotal02.setCellStyle(styleC26);
@@ -1893,10 +1969,10 @@ public class ExportDataToExcelView extends AbstractExcelView {
             HSSFRow row = sheet.createRow(count + i);
             HSSFCell celldata01 = row.createCell(0);
             celldata01.setCellValue(data.getOwner());
-            celldata01.setCellStyle(styleC22);
+            celldata01.setCellStyle(styleC29);
             HSSFCell celldata02 = row.createCell(1);
             celldata02.setCellValue(data.getDepartment());
-            celldata02.setCellStyle(styleC22);
+            celldata02.setCellStyle(styleC29);
             HSSFCell celldata03 = row.createCell(2);
             celldata03.setCellValue("".equalsIgnoreCase(String.valueOf(data.getPax())) ? 0 : new BigDecimal(data.getPax()).doubleValue()); 
             celldata03.setCellStyle(styleC26);
@@ -1957,10 +2033,12 @@ public class ExportDataToExcelView extends AbstractExcelView {
                 String totalSalePrice = "SUM(F" + ktemp+":F"+(count + i + 1)+")";
                 String totalAgentComm = "SUM(G" + ktemp+":G"+(count + i + 1)+")";
                 String totalProfit = "SUM(H" + ktemp+":H"+(count + i + 1)+")";
-
+                
+                HSSFCell celldatas0 = rows.createCell(0);
+                celldatas0.setCellStyle(styleC29);
                 HSSFCell celldatas01 = rows.createCell(1);
                 celldatas01.setCellValue("Total");
-                celldatas01.setCellStyle(styleC23);
+                celldatas01.setCellStyle(styleC30);
                 HSSFCell celldatas02 = rows.createCell(2);
                 celldatas02.setCellFormula(totalPax);
                 celldatas02.setCellStyle(styleC26);
@@ -1987,22 +2065,22 @@ public class ExportDataToExcelView extends AbstractExcelView {
                 celldataOut01.setCellStyle(styleC22);
                 HSSFCell celldataOut02 = rows.createCell(2);
                 celldataOut02.setCellValue("".equalsIgnoreCase(String.valueOf(totalPaxOut)) ? 0 : new BigDecimal(totalPaxOut).doubleValue());
-                celldataOut02.setCellStyle(styleC26);
+                celldataOut02.setCellStyle(styleC28);
                 HSSFCell celldataOut03 = rows.createCell(3);
                 celldataOut03.setCellValue("".equalsIgnoreCase(String.valueOf(totalInvAmountOut)) ? 0 : totalInvAmountOut.doubleValue());
-                celldataOut03.setCellStyle(styleC25);
+                celldataOut03.setCellStyle(styleC27);
                 HSSFCell celldataOut04 = rows.createCell(4);
                 celldataOut04.setCellValue("".equalsIgnoreCase(String.valueOf(totalTiccomOut)) ? 0 : totalTiccomOut.doubleValue());
-                celldataOut04.setCellStyle(styleC25);
+                celldataOut04.setCellStyle(styleC27);
                 HSSFCell celldataOut05 = rows.createCell(5);
                 celldataOut05.setCellValue("".equalsIgnoreCase(String.valueOf(totalSalePriceOut)) ? 0 : totalSalePriceOut.doubleValue());
-                celldataOut05.setCellStyle(styleC25);
+                celldataOut05.setCellStyle(styleC27);
                 HSSFCell celldataOut06 = rows.createCell(6);
                 celldataOut06.setCellValue("".equalsIgnoreCase(String.valueOf(totalAgentCommOut)) ? 0 : totalAgentCommOut.doubleValue());
-                celldataOut06.setCellStyle(styleC25);
+                celldataOut06.setCellStyle(styleC27);
                 HSSFCell celldataOut07 = rows.createCell(7);
                 celldataOut07.setCellValue("".equalsIgnoreCase(String.valueOf(totalProfitOut)) ? 0 : totalProfitOut.doubleValue());
-                celldataOut07.setCellStyle(styleC25);
+                celldataOut07.setCellStyle(styleC27);
 
                 rows = sheet.createRow(count+1+i);
                 HSSFCell celldataWen01 = rows.createCell(1);
@@ -2010,22 +2088,22 @@ public class ExportDataToExcelView extends AbstractExcelView {
                 celldataWen01.setCellStyle(styleC22);
                 HSSFCell celldataWen02 = rows.createCell(2);
                 celldataWen02.setCellValue("".equalsIgnoreCase(String.valueOf(totalPaxWendy)) ? 0 : new BigDecimal(totalPaxWendy).doubleValue());
-                celldataWen02.setCellStyle(styleC26);
+                celldataWen02.setCellStyle(styleC28);
                 HSSFCell celldataWen03 = rows.createCell(3);
                 celldataWen03.setCellValue("".equalsIgnoreCase(String.valueOf(totalInvAmountWendy)) ? 0 : totalInvAmountWendy.doubleValue());
-                celldataWen03.setCellStyle(styleC25);
+                celldataWen03.setCellStyle(styleC27);
                 HSSFCell celldataWen04 = rows.createCell(4);
                 celldataWen04.setCellValue("".equalsIgnoreCase(String.valueOf(totalTiccomWendy)) ? 0 : totalTiccomWendy.doubleValue());
-                celldataWen04.setCellStyle(styleC25);
+                celldataWen04.setCellStyle(styleC27);
                 HSSFCell celldataWen05 = rows.createCell(5);
                 celldataWen05.setCellValue("".equalsIgnoreCase(String.valueOf(totalSalePriceWendy)) ? 0 : totalSalePriceWendy.doubleValue());
-                celldataWen05.setCellStyle(styleC25);
+                celldataWen05.setCellStyle(styleC27);
                 HSSFCell celldataWen06 = rows.createCell(6);
                 celldataWen06.setCellValue("".equalsIgnoreCase(String.valueOf(totalAgentCommWendy)) ? 0 : totalAgentCommWendy.doubleValue());
-                celldataWen06.setCellStyle(styleC25);
+                celldataWen06.setCellStyle(styleC27);
                 HSSFCell celldataWen07 = rows.createCell(7);
                 celldataWen07.setCellValue("".equalsIgnoreCase(String.valueOf(totalProfitWendy)) ? 0 : totalProfitWendy.doubleValue());
-                celldataWen07.setCellStyle(styleC25);
+                celldataWen07.setCellStyle(styleC27);
 
                 rows = sheet.createRow(count+2+i);
                 String totalPaxWI = "SUM(C" +(count+i+1)+":C"+(count+i+2)+")";
@@ -2040,22 +2118,22 @@ public class ExportDataToExcelView extends AbstractExcelView {
                 celldataWI01.setCellStyle(styleC22);
                 HSSFCell celldataWI02 = rows.createCell(2);
                 celldataWI02.setCellFormula(totalPaxWI);
-                celldataWI02.setCellStyle(styleC26);
+                celldataWI02.setCellStyle(styleC28);
                 HSSFCell celldataWI03 = rows.createCell(3);
                 celldataWI03.setCellFormula(totalInvAmountWI);
-                celldataWI03.setCellStyle(styleC25);
+                celldataWI03.setCellStyle(styleC27);
                 HSSFCell celldataWI04 = rows.createCell(4);
                 celldataWI04.setCellFormula(totalTiccomWI);
-                celldataWI04.setCellStyle(styleC25);
+                celldataWI04.setCellStyle(styleC27);
                 HSSFCell celldataWI05 = rows.createCell(5);
                 celldataWI05.setCellFormula(totalSalePriceWI);
-                celldataWI05.setCellStyle(styleC25);
+                celldataWI05.setCellStyle(styleC27);
                 HSSFCell celldataWI06 = rows.createCell(6);
                 celldataWI06.setCellFormula(totalAgentCommWI);
-                celldataWI06.setCellStyle(styleC25);
+                celldataWI06.setCellStyle(styleC27);
                 HSSFCell celldataWI07 = rows.createCell(7);
                 celldataWI07.setCellFormula(totalProfitWI);
-                celldataWI07.setCellStyle(styleC25);
+                celldataWI07.setCellStyle(styleC27);
                 
             }
             for(int j =0;j<8;j++){
