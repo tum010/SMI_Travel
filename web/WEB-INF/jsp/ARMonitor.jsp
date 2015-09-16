@@ -364,9 +364,19 @@
             $table.trigger('repaginate');
             var numRows = $table.find('tbody tr').length;
             var numPages = Math.ceil(numRows / numPerPage);
-            var $pager = $('<div class="col-xs-12 text-right"><font style="color: #499DD5">Page</font>&nbsp;</div>');
+            var $pager = $('<div class="col-xs-12 text-right"><font style="color: #499DD5"></font>&nbsp;</div>');
             var $br = $('<div class="col-xs-12"><br></div>');
             for (var page = 0; page < numPages; page++) {
+                if(page === 0){
+                    $('<font style="color: #499DD5"><span class="page-number glyphicon"></span></font>').text(" " + "First" + "  ").bind('click', {
+                    newPage: page
+                    }, function(event) {
+                        currentPage = event.data['newPage'];
+                        $table.trigger('repaginate');
+                        $(this).addClass('active').siblings().removeClass('active');
+                    }).appendTo($pager).addClass('clickable');
+                }
+                
                 $('<font style="color: #499DD5"><span class="page-number glyphicon"></span></font>').text(" " + (page + 1) + "  ").bind('click', {
                     newPage: page
                 }, function(event) {
@@ -374,6 +384,16 @@
                     $table.trigger('repaginate');
                     $(this).addClass('active').siblings().removeClass('active');
                 }).appendTo($pager).addClass('clickable');
+                
+                if(page === (numPages - 1)){
+                    $('<font style="color: #499DD5"><span class="page-number glyphicon"></span></font>').text(" " + "Last" + "  ").bind('click', {
+                    newPage: page
+                    }, function(event) {
+                        currentPage = event.data['newPage'];
+                        $table.trigger('repaginate');
+                        $(this).addClass('active').siblings().removeClass('active');
+                    }).appendTo($pager).addClass('clickable');
+                }
             }
             $br.insertAfter($table).addClass('active');
             $pager.insertAfter($table).find('span.page-number:first').addClass('active');            
