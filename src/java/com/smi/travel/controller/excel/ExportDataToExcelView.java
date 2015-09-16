@@ -75,6 +75,19 @@ public class ExportDataToExcelView extends AbstractExcelView {
         
         TicketFareReport dataheader = new TicketFareReport();
         
+        HSSFDataFormat currency = wb.createDataFormat();
+        // Set align Text
+        HSSFCellStyle styleC21 = wb.createCellStyle();
+        styleC21.setAlignment(styleC21.ALIGN_RIGHT);
+        styleC21.setDataFormat(currency.getFormat("#,##0.00"));
+        HSSFCellStyle styleC22 = wb.createCellStyle();
+        styleC22.setAlignment(styleC22.ALIGN_LEFT);
+        HSSFCellStyle styleC23 = wb.createCellStyle();
+        styleC23.setAlignment(styleC22.ALIGN_CENTER);
+        
+//        HSSFCellStyle styleC25 = wb.createCellStyle();
+//        styleC25.setDataFormat(currency.getFormat("#,##0.00"));
+        
         if(TicketAgent != null){
             dataheader = (TicketFareReport)TicketAgent.get(0);
         }
@@ -87,12 +100,6 @@ public class ExportDataToExcelView extends AbstractExcelView {
         styleC1.setFont(getHeaderFont(wb.createFont()));
         cell1.setCellStyle(styleC1);
         sheet.addMergedRegion(CellRangeAddress.valueOf("A1:F1"));
-        
-        // Set align Text
-        HSSFCellStyle styleC21 = wb.createCellStyle();
-        styleC21.setAlignment(styleC21.ALIGN_RIGHT);
-        HSSFCellStyle styleC22 = wb.createCellStyle();
-        styleC22.setAlignment(styleC22.ALIGN_LEFT);
 
         // Row 2
         HSSFRow row2 = sheet.createRow(1);
@@ -219,37 +226,83 @@ public class ExportDataToExcelView extends AbstractExcelView {
              row.createCell(4).setCellValue(data.getDepartment());
              row.createCell(5).setCellValue(data.getStaff());
              row.createCell(6).setCellValue(data.getTermpay());
-             row.createCell(7).setCellValue(data.getInvamount());
-             row.createCell(8).setCellValue(data.getTicketcom());
-             row.createCell(9).setCellValue(data.getSaleprice());
-             row.createCell(10).setCellValue(data.getAgentcom());
-             row.createCell(11).setCellValue(data.getProfit());
+             HSSFCell cell7 = row.createCell(7);
+                cell7.setCellValue(!"".equalsIgnoreCase(data.getInvamount()) ? new BigDecimal(data.getInvamount()).doubleValue() : 0);
+                cell7.setCellStyle(styleC21);
+//             row.createCell(7).setCellValue(!"".equalsIgnoreCase(data.getInvamount()) ? new BigDecimal(data.getInvamount()).doubleValue() : 0);
+             HSSFCell cell8 = row.createCell(8);
+                cell8.setCellValue(!"".equalsIgnoreCase(data.getTicketcom()) ? new BigDecimal(data.getTicketcom()).doubleValue() : 0);
+                cell8.setCellStyle(styleC21);   
+//             row.createCell(8).setCellValue(!"".equalsIgnoreCase(data.getTicketcom()) ? new BigDecimal(data.getTicketcom()).doubleValue() : 0);
+             HSSFCell cell9 = row.createCell(9);
+                cell9.setCellValue(!"".equalsIgnoreCase(data.getSaleprice()) ? new BigDecimal(data.getSaleprice()).doubleValue() : 0);
+                cell9.setCellStyle(styleC21);      
+//             row.createCell(9).setCellValue(!"".equalsIgnoreCase(data.getSaleprice()) ? new BigDecimal(data.getSaleprice()).doubleValue() : 0);
+            HSSFCell cell10 = row.createCell(10);
+                cell10.setCellValue(!"".equalsIgnoreCase(data.getAgentcom()) ? new BigDecimal(data.getAgentcom()).doubleValue() : 0);
+                cell10.setCellStyle(styleC21);      
+//             row.createCell(10).setCellValue(!"".equalsIgnoreCase(data.getAgentcom()) ? new BigDecimal(data.getAgentcom()).doubleValue() : 0);
+            HSSFCell cell11 = row.createCell(11);
+                cell11.setCellValue(!"".equalsIgnoreCase(data.getProfit()) ? new BigDecimal(data.getProfit()).doubleValue() : 0);
+                cell11.setCellStyle(styleC21);          
+//             row.createCell(11).setCellValue(!"".equalsIgnoreCase(data.getProfit()) ? new BigDecimal(data.getProfit()).doubleValue() : 0);
              if(i == (TicketAgent.size()-1)){
                 row = sheet.createRow(count + i + 1);
-                row.createCell(6).setCellValue("Total");               
-                BigDecimal invAmountTotal = new BigDecimal("0.00");
-                BigDecimal ticketCommTotal = new BigDecimal("0.00");
-                BigDecimal salePriceTotal = new BigDecimal("0.00");
-                BigDecimal agentCommTotal = new BigDecimal("0.00");
-                BigDecimal profitTotal = new BigDecimal("0.00");
-                for(int k=0;k<TicketAgent.size();k++){
-                    TicketFareReport sum = (TicketFareReport)TicketAgent.get(k);
-                    BigDecimal invAmount = new BigDecimal(!"".equalsIgnoreCase(sum.getInvamount()) ? sum.getInvamount() : "0.00");
-                    BigDecimal ticketComm = new BigDecimal(!"".equalsIgnoreCase(sum.getTicketcom()) ? sum.getTicketcom() : "0.00");
-                    BigDecimal salePrice = new BigDecimal(!"".equalsIgnoreCase(sum.getSaleprice()) ? sum.getSaleprice() : "0.00");
-                    BigDecimal agentComm = new BigDecimal(!"".equalsIgnoreCase(sum.getAgentcom()) ? sum.getAgentcom() : "0.00");
-                    BigDecimal profit = new BigDecimal(!"".equalsIgnoreCase(sum.getProfit()) ? sum.getProfit() : "0.00");
-                    invAmountTotal = invAmountTotal.add(invAmount);
-                    ticketCommTotal = ticketCommTotal.add(ticketComm);
-                    salePriceTotal = salePriceTotal.add(salePrice);
-                    agentCommTotal = agentCommTotal.add(agentComm);
-                    profitTotal = profitTotal.add(profit);
-                }  
-                row.createCell(7).setCellValue(String.valueOf(invAmountTotal));
-                row.createCell(8).setCellValue(String.valueOf(ticketCommTotal));
-                row.createCell(9).setCellValue(String.valueOf(salePriceTotal));
-                row.createCell(10).setCellValue(String.valueOf(agentCommTotal));
-                row.createCell(11).setCellValue(String.valueOf(profitTotal));
+                String sumInvAmount = "SUM(H" + 10+":H"+(count + i + 1)+")";
+                String sumTicketComm = "SUM(I" + 10+":I"+(count + i + 1)+")";
+                String sumSalePrice = "SUM(J" + 10+":J"+(count + i + 1)+")";
+                String sumAgentComm = "SUM(K" + 10+":K"+(count + i + 1)+")";
+                String sumProfit = "SUM(L" + 10+":L"+(count + i + 1)+")";
+                
+                row.createCell(6).setCellValue("Total");
+                HSSFCell cell77 = row.createCell(7);
+                    cell77.setCellFormula(sumInvAmount);
+                    cell77.setCellStyle(styleC21);
+                HSSFCell cell88 = row.createCell(8);
+                    cell88.setCellFormula(sumTicketComm);
+                    cell88.setCellStyle(styleC21);
+                HSSFCell cell99 = row.createCell(9);
+                    cell99.setCellFormula(sumSalePrice);
+                    cell99.setCellStyle(styleC21);
+                HSSFCell cell1010 = row.createCell(10);
+                    cell1010.setCellFormula(sumAgentComm);
+                    cell1010.setCellStyle(styleC21);
+                HSSFCell cell1111 = row.createCell(11);
+                    cell1111.setCellFormula(sumProfit);
+                    cell1111.setCellStyle(styleC21);  
+
+                    
+//                row.createCell(7).setCellFormula(sumInvAmount);
+//                row.createCell(8).setCellFormula(sumTicketComm);
+//                row.createCell(9).setCellFormula(sumSalePrice);
+//                row.createCell(10).setCellFormula(sumAgentComm);
+//                row.createCell(11).setCellFormula(sumProfit);
+
+//                row = sheet.createRow(count + i + 1);
+//                row.createCell(6).setCellValue("Total");               
+//                BigDecimal invAmountTotal = new BigDecimal("0.00");
+//                BigDecimal ticketCommTotal = new BigDecimal("0.00");
+//                BigDecimal salePriceTotal = new BigDecimal("0.00");
+//                BigDecimal agentCommTotal = new BigDecimal("0.00");
+//                BigDecimal profitTotal = new BigDecimal("0.00");
+//                for(int k=0;k<TicketAgent.size();k++){
+//                    TicketFareReport sum = (TicketFareReport)TicketAgent.get(k);
+//                    BigDecimal invAmount = new BigDecimal(!"".equalsIgnoreCase(sum.getInvamount()) ? sum.getInvamount() : "0.00");
+//                    BigDecimal ticketComm = new BigDecimal(!"".equalsIgnoreCase(sum.getTicketcom()) ? sum.getTicketcom() : "0.00");
+//                    BigDecimal salePrice = new BigDecimal(!"".equalsIgnoreCase(sum.getSaleprice()) ? sum.getSaleprice() : "0.00");
+//                    BigDecimal agentComm = new BigDecimal(!"".equalsIgnoreCase(sum.getAgentcom()) ? sum.getAgentcom() : "0.00");
+//                    BigDecimal profit = new BigDecimal(!"".equalsIgnoreCase(sum.getProfit()) ? sum.getProfit() : "0.00");
+//                    invAmountTotal = invAmountTotal.add(invAmount);
+//                    ticketCommTotal = ticketCommTotal.add(ticketComm);
+//                    salePriceTotal = salePriceTotal.add(salePrice);
+//                    agentCommTotal = agentCommTotal.add(agentComm);
+//                    profitTotal = profitTotal.add(profit);
+//                }  
+//                row.createCell(7).setCellValue(String.valueOf(invAmountTotal));
+//                row.createCell(8).setCellValue(String.valueOf(ticketCommTotal));
+//                row.createCell(9).setCellValue(String.valueOf(salePriceTotal));
+//                row.createCell(10).setCellValue(String.valueOf(agentCommTotal));
+//                row.createCell(11).setCellValue(String.valueOf(profitTotal));
              }
              for(int j =0;j<13;j++){
                  sheet.autoSizeColumn(j);
