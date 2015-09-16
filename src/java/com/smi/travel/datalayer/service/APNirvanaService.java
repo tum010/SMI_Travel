@@ -24,7 +24,7 @@ public class APNirvanaService {
     }
     
     public String ExportAPFileInterface(List<APNirvana> APList) {
-        return apNirvanaDao.ExportAPFileInterface(APList);
+        return apNirvanaDao.ExportAPFileInterface(APList, this.GetPartCsvExport());
     }
     
     public String UpdateStatusAPInterface(List<APNirvana> apNirvanaList) {

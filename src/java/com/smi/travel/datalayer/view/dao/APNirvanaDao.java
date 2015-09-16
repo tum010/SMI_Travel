@@ -14,7 +14,7 @@ import java.util.List;
  * @author Surachai
  */
 public interface APNirvanaDao {
-    public String ExportAPFileInterface(List<APNirvana> APList);
+    public String ExportAPFileInterface(List<APNirvana> APList, String filePath);
     public String UpdateStatusAPInterface(List<APNirvana> APList);
     public List<APNirvana> SearchApNirvanaFromFilter(String paymentType,String producttype,String status,String from,String to);
 }

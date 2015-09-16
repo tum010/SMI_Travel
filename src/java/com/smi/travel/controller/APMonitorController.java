@@ -42,9 +42,9 @@ public class APMonitorController extends SMITravelController {
                 String isSelect = request.getParameter("selectAll"+i);
                 if("1".equalsIgnoreCase(isSelect)){
                     APNirvana apNirvana = new APNirvana();
-                    String paymentId = request.getParameter("paymentId"+i);
+                    String paymentDetailId = request.getParameter("paymentDetailId"+i);
                     String paymentType = request.getParameter("paymentType"+i);
-                    apNirvana.setPayment_id(paymentId);
+                    apNirvana.setPaymentDetailId(paymentDetailId);
                     apNirvana.setPaymenttype(paymentType);
                     apNirvanaData.add(apNirvana);
                 }

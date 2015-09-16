@@ -175,6 +175,7 @@
                             <tr>
                                 <td class="hidden">
                                     <input type="hidden" id="paymentId${i.count}" name="paymentId${i.count}" value="${data_list.payment_id}"/> 
+                                    <input type="hidden" id="paymentDetailId${i.count}" name="paymentDetailId${i.count}" value="${data_list.paymentDetailId}"/> 
                                     <input type="hidden" id="paymentType${i.count}" name="paymentType${i.count}" value="${data_list.paymenttype}"/>
                                 </td>                              
                                 <td align="center">
