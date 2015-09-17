@@ -515,6 +515,17 @@ public class APNirvanaImpl implements APNirvanaDao {
                 .addScalar("currencyid", Hibernate.STRING)
                 .list();
         List result = new ArrayList<APNirvana>();
+        if(QueryList.isEmpty()){
+            SimpleDateFormat dateformat = new SimpleDateFormat();
+            dateformat.applyPattern("dd-MM-yyyy HH:mm:ss");
+            APNirvana apNirvana = new APNirvana();
+            apNirvana.setUser(printby);
+            apNirvana.setSystemdate(String.valueOf(dateformat.format(new Date())));
+            apNirvana.setDatefrom(from);
+            apNirvana.setDateto(to);
+            result.add(apNirvana);
+            return result;
+        }
         boolean header = true;
         for (Object[] B : QueryList) {
             APNirvana apNirvana = new APNirvana();

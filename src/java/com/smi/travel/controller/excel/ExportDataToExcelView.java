@@ -3097,6 +3097,8 @@ public class ExportDataToExcelView extends AbstractExcelView {
         
         HSSFDataFormat currency = wb.createDataFormat();
         // Set align Text
+        HSSFCellStyle styleC20 = wb.createCellStyle();
+        styleC20.setAlignment(styleC20.ALIGN_CENTER);
         HSSFCellStyle styleC21 = wb.createCellStyle();
         styleC21.setAlignment(styleC21.ALIGN_RIGHT);
         HSSFCellStyle styleC22 = wb.createCellStyle();
@@ -3137,9 +3139,17 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell31.setCellValue("Report of : ");
         cell31.setCellStyle(styleC21);
         HSSFCell cell32 = row3.createCell(1);
-        cell32.setCellValue(dataheader.getDatefrom() +" To "+ dataheader.getDateto());
+        cell32.setCellValue(dataheader.getDatefrom());
         cell32.setCellStyle(styleC22);
-        sheet.addMergedRegion(CellRangeAddress.valueOf("B3:D3"));
+        if(!"".equalsIgnoreCase(dataheader.getDateto())){
+            HSSFCell cell33 = row3.createCell(2);
+            cell33.setCellValue("To");
+            cell33.setCellStyle(styleC20);
+            HSSFCell cell34 = row3.createCell(3);
+            cell34.setCellValue(dataheader.getDateto());
+            cell34.setCellStyle(styleC22);
+        }    
+//        sheet.addMergedRegion(CellRangeAddress.valueOf("B3:D3"));
 
         // Row 4
         HSSFRow row4 = sheet.createRow(3);

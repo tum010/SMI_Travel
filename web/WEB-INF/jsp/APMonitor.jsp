@@ -118,7 +118,7 @@
                     <label class="control-label" for="">From<font style="color: red">*</font></lable>
                 </div>
                 <div class="col-xs-1 form-group" style="width: 170px">
-                    <div class='input-group date' id='InputFromDate'>
+                    <div class='input-group date fromdate' id='InputFromDate'>
                     <c:if test='${taxInvoice.taxInvDate != null}'>
                         <input id="apFromDate" name="apFromDate"  type="text" 
                             class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
@@ -136,7 +136,7 @@
                     <label class="control-label">To<font style="color: red">*</font></lable>
                 </div>
                 <div class="col-xs-1 form-group" style="width: 170px">
-                    <div class='input-group date' id='InputToDate'>
+                    <div class='input-group date todate' id='InputToDate'>
                     <c:if test='${taxInvoice.taxInvDate != null}'>
                         <input id="apToDate" name="apToDate"  type="text" 
                             class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
@@ -331,7 +331,14 @@
 
             if (data.field === 'apToDate' && data.fv.isValidField('apFromDate') === false) {
                 data.fv.revalidateField('apFromDate');
-            }
+            }                         
+        });
+        
+        $('.fromdate').datetimepicker().change(function(){                          
+            checkFromDateField();
+        });
+        $('.todate').datetimepicker().change(function(){                          
+            checkToDateField();
         });
         
         $('table.paginated').each(function() {
@@ -514,12 +521,66 @@
         if((dateFrom !== '') && (dateTo !== '')){
             window.open("Excel.smi?name=ApReport&payment=" + payment + "&ticketType=" + ticketType + "&status=" + status + "&dateFrom=" + dateFrom + "&dateTo=" + dateTo);
         } else {
-            if(dateFrom === ''){
+            validateDate();         
+        }
+    }
+    
+    function checkFromDateField(){
+        var inputFromDate = document.getElementById("apFromDate");
+        if(inputFromDate.value === ''){          
+            $('#apMonitorForm').bootstrapValidator('revalidateField', 'apFromDate');
+            $("#btnDownloadAP").addClass("disabled");         
+        } else {
+            $("#btnDownloadAP").removeClass("disabled");
+            checkDateValue("from","");
+        }      
+    }
+    
+    function checkToDateField(){
+        var InputToDate = document.getElementById("apToDate");
+        if(InputToDate.value === ''){
+            $('#apMonitorForm').bootstrapValidator('revalidateField', 'apToDate');
+            $("#btnDownloadAP").addClass("disabled"); 
+        }else{
+            $("#btnDownloadAP").removeClass("disabled");
+            checkDateValue("to","");
+        }               
+    }
+    
+    function checkDateValue(date){
+        var inputFromDate = document.getElementById("apFromDate");
+        var InputToDate = document.getElementById("apToDate");
+        if((inputFromDate.value !== '') && (InputToDate.value !== '')){
+            var fromDate = (inputFromDate.value).split('-');
+            var toDate = (InputToDate.value).split('-');      
+            if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
+                validateDate(date,"over");
+            }else if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))){
+                validateDate(date,"over");
+            }else if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) >= (parseInt(toDate[1]))) && (parseInt(fromDate[2])) > (parseInt(toDate[2]))){
+                validateDate(date,"over");
+            }else{
                 $('#apMonitorForm').bootstrapValidator('revalidateField', 'apFromDate');
-            }
-            if(dateTo === ''){
                 $('#apMonitorForm').bootstrapValidator('revalidateField', 'apToDate');
             }           
+        }
+    }
+    
+    function validateDate(date,option){
+        if(option === 'over'){
+            if(date === 'from'){
+                $('#apMonitorForm').bootstrapValidator('revalidateField', 'apFromDate');
+                $('#apMonitorForm').bootstrapValidator('revalidateField', 'apToDate');
+            }
+            if(date === 'to'){
+                $('#apMonitorForm').bootstrapValidator('revalidateField', 'apFromDate');
+                $('#apMonitorForm').bootstrapValidator('revalidateField', 'apToDate');
+            }           
+            $("#btnDownloadAP").addClass("disabled");
+        } else {
+            $('#apMonitorForm').bootstrapValidator('revalidateField', 'apFromDate');
+            $('#apMonitorForm').bootstrapValidator('revalidateField', 'apToDate');
+            $("#btnDownloadAP").addClass("disabled");
         }
     }
 </script>
