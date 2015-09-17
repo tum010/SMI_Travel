@@ -430,4 +430,8 @@ public class UtilityFunction {
         return name;
     }
     
+    public static String getObjectString(Object object){
+        return object == null ? "" : object.toString();
+    }
+    
 }
