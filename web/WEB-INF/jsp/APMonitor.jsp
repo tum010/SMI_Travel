@@ -42,7 +42,7 @@
                 </c:if>
                 <div id="textAlertDivNotChoose"  style="display: none" class="alert alert-danger alert-dismissible" role="alert">
                     <button type="button" class="close" aria-label="Close" onclick="hideDiv()"><span aria-hidden="true">&times;</span></button>
-                   <strong>Please choose the ap monitor list.!</strong> 
+                    <strong id="message"></strong> 
                 </div>
                 <div class="col-xs-1 text-left">
                     <label class="control-label" for="">Payment</lable>
@@ -210,8 +210,8 @@
             <div class="col-xs-12">
                 <div class="col-xs-1 text-right" style="width: 665px"></div>
                 <div class="col-xs-1 text-right" style="width: 210px">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        <span id="btnDownloadAP" class="glyphicon glyphicon-print" ></span> Print Change AP Report 
+                    <button id="btnDownloadAP"  type="button" class="btn btn-default" data-dismiss="modal" onclick="printChangeApReport()">
+                        <span class="glyphicon glyphicon-print" ></span> Print Change AP Report 
                     </button>
                 </div>
                 <div class="col-xs-1 text-left" style="">
@@ -410,6 +410,7 @@
             action.value = "export";
             document.getElementById("apMonitorForm").submit();
         } else {
+            document.getElementById("message").innerHTML = 'Please choose the ap monitor list.!';
             $('#textAlertDivNotChoose').show();
         }        
     }
@@ -501,6 +502,24 @@
             $('[name=apType] option').filter(function() { 
                 return ($(this).val() === '');
             }).prop('selected', true);      
+        }
+    }
+    
+    function printChangeApReport(){
+        var payment = document.getElementById("apPayment").value;
+        var ticketType = document.getElementById("apType").value;
+        var status = document.getElementById("apStatus").value;
+        var dateFrom = document.getElementById("apFromDate").value;
+        var dateTo = document.getElementById("apToDate").value;
+        if((dateFrom !== '') && (dateTo !== '')){
+            window.open("Excel.smi?name=ApReport&payment=" + payment + "&ticketType=" + ticketType + "&status=" + status + "&dateFrom=" + dateFrom + "&dateTo=" + dateTo);
+        } else {
+            if(dateFrom === ''){
+                $('#apMonitorForm').bootstrapValidator('revalidateField', 'apFromDate');
+            }
+            if(dateTo === ''){
+                $('#apMonitorForm').bootstrapValidator('revalidateField', 'apToDate');
+            }           
         }
     }
 </script>

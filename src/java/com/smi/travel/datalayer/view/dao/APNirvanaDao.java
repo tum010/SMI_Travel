@@ -17,4 +17,5 @@ public interface APNirvanaDao {
     public String ExportAPFileInterface(List<APNirvana> APList,String pathfile);
     public String UpdateStatusAPInterface(List<APNirvana> APList);
     public List<APNirvana> SearchApNirvanaFromFilter(String paymentType,String producttype,String status,String from,String to);
+    public List getApNirvanaReport(String paymentType, String producttype, String status, String from, String to, String printby);
 }

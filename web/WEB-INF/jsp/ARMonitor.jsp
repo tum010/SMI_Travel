@@ -283,10 +283,11 @@
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
             "bFilter": false,
-            "bPaginate": true,
+            "bPaginate": false,
             "bInfo": false,
             "bLengthChange": false,
-            "iDisplayLength": 10
+            "iDisplayLength": 10,
+            "bSort": false,
         });
         
         $('#arDataListTable tbody').on('click', 'tr', function () {

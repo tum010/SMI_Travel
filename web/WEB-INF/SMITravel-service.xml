@@ -164,6 +164,7 @@
         <property name="billAirAgentDao" ref="BillAirAgentDao" />
         <property name="arNirvanaDao" ref="ARNirvanaDao" />
         <property name="collectionNirvanaDao" ref="CollectionNirvanaDao" />
+        <property name="apNirvanaDao" ref="APNirvanaDao" />
     </bean> 
     
     

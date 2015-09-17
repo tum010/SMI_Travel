@@ -8,6 +8,7 @@ package com.smi.travel.controller.excel;
 import com.smi.travel.datalayer.report.model.BillAirAgent;
 import com.smi.travel.datalayer.report.model.TicketFareReport;
 import com.smi.travel.datalayer.report.model.TicketFareSummaryByAgentStaff;
+import com.smi.travel.datalayer.view.entity.APNirvana;
 import com.smi.travel.datalayer.view.entity.ARNirvana;
 import com.smi.travel.datalayer.view.entity.CollectionNirvana;
 import java.math.BigDecimal;
@@ -47,6 +48,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
     private static final String ChangeARReport = "ChangeARReport";
     private static final String BillAirAgentSummary = "BillAirAgentSummary";
     private static final String CollectionReport = "CollectionReport";
+    private static final String ApReport = "ApReport";  
     @Override
     protected void buildExcelDocument(Map model, HSSFWorkbook workbook,
             HttpServletRequest request, HttpServletResponse response)
@@ -82,6 +84,9 @@ public class ExportDataToExcelView extends AbstractExcelView {
         }else if(name.equalsIgnoreCase(CollectionReport)){
             System.out.println("gen report CollectionReport");
             genCollectionReport(workbook, (List) model.get(name));
+        }else if(name.equalsIgnoreCase(ApReport)){
+            System.out.println("gen report ApReport");
+            getApReport(workbook, (List) model.get(name));
         }
 
     }
@@ -3083,4 +3088,209 @@ public class ExportDataToExcelView extends AbstractExcelView {
            no ++;
       }
   }
+    
+   private void getApReport(HSSFWorkbook wb, List ApNirvana) {
+        String sheetName = "Sheet1";// name of sheet
+        HSSFSheet sheet = wb.createSheet(sheetName);
+        
+        APNirvana dataheader = new APNirvana();
+        
+        HSSFDataFormat currency = wb.createDataFormat();
+        // Set align Text
+        HSSFCellStyle styleC21 = wb.createCellStyle();
+        styleC21.setAlignment(styleC21.ALIGN_RIGHT);
+        HSSFCellStyle styleC22 = wb.createCellStyle();
+        styleC22.setAlignment(styleC22.ALIGN_LEFT);       
+        
+        if(ApNirvana != null){
+            dataheader = (APNirvana)ApNirvana.get(0);
+        }
+        
+        // set Header Report (Row 1)
+        HSSFCellStyle styleC1 = wb.createCellStyle();
+        HSSFRow row1 = sheet.createRow(0);
+        HSSFCell cellStart = row1.createCell(0);
+        cellStart.setCellValue("Change Ap Report");
+        styleC1.setFont(getHeaderFont(wb.createFont()));
+        cellStart.setCellStyle(styleC1);
+        sheet.addMergedRegion(CellRangeAddress.valueOf("A1:F1"));
+        
+        // Row 2
+        HSSFRow row2 = sheet.createRow(1);
+        HSSFCell cell21 = row2.createCell(0);
+        cell21.setCellValue("Print On : ");
+        cell21.setCellStyle(styleC21);
+        HSSFCell cell22 = row2.createCell(1);
+        cell22.setCellValue(dataheader.getSystemdate());
+        cell22.setCellStyle(styleC22);
+        sheet.addMergedRegion(CellRangeAddress.valueOf("B2:D2"));
+        HSSFCell cell23 = row2.createCell(4);
+        cell23.setCellValue("By : ");
+        cell23.setCellStyle(styleC21);
+        HSSFCell cell24 = row2.createCell(5);
+        cell24.setCellValue(dataheader.getUser());
+        cell24.setCellStyle(styleC22);
+        
+        // Row 3
+        HSSFRow row3 = sheet.createRow(2);
+        HSSFCell cell31 = row3.createCell(0);
+        cell31.setCellValue("Report of : ");
+        cell31.setCellStyle(styleC21);
+        HSSFCell cell32 = row3.createCell(1);
+        cell32.setCellValue(dataheader.getDatefrom() +" To "+ dataheader.getDateto());
+        cell32.setCellStyle(styleC22);
+        sheet.addMergedRegion(CellRangeAddress.valueOf("B3:D3"));
+
+        // Row 4
+        HSSFRow row4 = sheet.createRow(3);
+        HSSFCell cell41 = row4.createCell(0);
+        cell41.setCellValue("Department : ");
+        cell41.setCellStyle(styleC21);
+        HSSFCell cell42 = row4.createCell(1);
+        cell42.setCellValue(dataheader.getDepartmentheader());
+        cell42.setCellStyle(styleC22);
+        sheet.addMergedRegion(CellRangeAddress.valueOf("B4:D4"));        
+
+        // Row 5
+        HSSFRow row5 = sheet.createRow(4);
+        HSSFCell cell51 = row5.createCell(0);
+        cell51.setCellValue("Page : ");
+        cell51.setCellStyle(styleC21);       
+        HSSFCell cell52 = row5.createCell(5);
+        cell52.setCellValue("");
+        cell52.setCellStyle(styleC22);
+        sheet.addMergedRegion(CellRangeAddress.valueOf("B5:D5"));
+        
+         // Header Table
+        HSSFCellStyle styleC3Center = wb.createCellStyle();
+        styleC3Center.setFont(getHeaderTable(wb.createFont()));
+        styleC3Center.setAlignment(styleC3Center.ALIGN_CENTER);
+        styleC3Center.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleC3Center.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC3Center.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC3Center.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        HSSFRow row6 = sheet.createRow(8);
+        HSSFCell cell61 = row6.createCell(0);
+        cell61.setCellValue("No.");
+        cell61.setCellStyle(styleC3Center);
+        sheet.autoSizeColumn(0);
+        HSSFCell cell62 = row6.createCell(1);
+        cell62.setCellValue("Pay No.");
+        cell62.setCellStyle(styleC3Center);
+        sheet.autoSizeColumn(1);
+        HSSFCell cell63 = row6.createCell(2);
+        cell63.setCellValue("Ap Code");
+        sheet.autoSizeColumn(2);
+        cell63.setCellStyle(styleC3Center);
+        HSSFCell cell64 = row6.createCell(3);
+        cell64.setCellValue("Invoice Sup");
+        cell64.setCellStyle(styleC3Center);
+        sheet.autoSizeColumn(3);
+        HSSFCell cell65 = row6.createCell(4);
+        cell65.setCellValue("Acc Code");
+        cell65.setCellStyle(styleC3Center);
+        sheet.autoSizeColumn(4);
+        HSSFCell cell66 = row6.createCell(5);
+        cell66.setCellValue("Cur");
+        cell66.setCellStyle(styleC3Center);
+        sheet.autoSizeColumn(5);
+        
+        HSSFCellStyle styleC3Right = wb.createCellStyle();
+        styleC3Right.setFont(getHeaderTable(wb.createFont()));
+        styleC3Right.setAlignment(styleC3Right.ALIGN_RIGHT);
+        styleC3Right.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleC3Right.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC3Right.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC3Right.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        HSSFCell cell67 = row6.createCell(6);
+        cell67.setCellValue("Gross");
+        cell67.setCellStyle(styleC3Right);
+        sheet.autoSizeColumn(6);
+        HSSFCell cell68 = row6.createCell(7);
+        cell68.setCellValue("Amount");
+        cell68.setCellStyle(styleC3Right);
+        sheet.autoSizeColumn(7);
+        
+        //Detail of Table
+        int count = 9 ;
+        HSSFCellStyle styleC23 = wb.createCellStyle();
+        styleC23.setAlignment(styleC22.ALIGN_CENTER);
+        styleC23.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC23.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        HSSFCellStyle styleC24 = wb.createCellStyle();
+        styleC24.setAlignment(styleC24.ALIGN_LEFT);
+        styleC24.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC24.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        HSSFCellStyle styleC25 = wb.createCellStyle();
+        styleC25.setAlignment(styleC25.ALIGN_RIGHT);
+        styleC25.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC25.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC25.setDataFormat(currency.getFormat("#,##0.00"));
+        for(int i=0;i<ApNirvana.size();i++){
+             APNirvana data = (APNirvana)ApNirvana.get(i);
+             HSSFRow row = sheet.createRow(count + i);
+             HSSFCell cell0 = row.createCell(0);
+                cell0.setCellValue(i+1);
+                cell0.setCellStyle(styleC23);
+             HSSFCell cell1 = row.createCell(1);
+                cell1.setCellValue(data.getIntreference());
+                cell1.setCellStyle(styleC24);
+             HSSFCell cell2 = row.createCell(2);
+                cell2.setCellValue(data.getVendorid());
+                cell2.setCellStyle(styleC24);
+             HSSFCell cell3 = row.createCell(3);
+                cell3.setCellValue(data.getVendorname());
+                cell3.setCellStyle(styleC24);
+             HSSFCell cell4 = row.createCell(4);
+                cell4.setCellValue(data.getPuraccount1());
+                cell4.setCellStyle(styleC24);
+             HSSFCell cell5 = row.createCell(5);
+                cell5.setCellValue(data.getCurrencyid());
+                cell5.setCellStyle(styleC23);   
+             HSSFCell cell6 = row.createCell(6);
+                cell6.setCellValue((data.getVatamt() != null) ? data.getVatamt().doubleValue() : new BigDecimal("0").doubleValue());
+                cell6.setCellStyle(styleC25);
+             HSSFCell cell7 = row.createCell(7);
+                cell7.setCellValue((data.getBasevatamt() != null) ? data.getBasevatamt().doubleValue() : new BigDecimal("0").doubleValue());
+                cell7.setCellStyle(styleC25);
+             
+             
+             if(i == (ApNirvana.size()-1)){
+                row = sheet.createRow(count + i + 1);
+                for(int k=0;k<5;k++){
+                    HSSFCellStyle styleSum = wb.createCellStyle();
+                    styleSum.setAlignment(styleC24.ALIGN_RIGHT);
+                    styleSum.setBorderTop(HSSFCellStyle.BORDER_THIN);
+                    styleSum.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+                    HSSFCell cellSum = row.createCell(k);                   
+                    if(k == 0){styleSum.setBorderLeft(HSSFCellStyle.BORDER_THIN);}
+                    cellSum.setCellStyle(styleSum);
+                }
+                HSSFCellStyle styleSum = wb.createCellStyle();
+                styleSum.setAlignment(styleSum.ALIGN_RIGHT);
+                styleSum.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+                styleSum.setBorderRight(HSSFCellStyle.BORDER_THIN);
+                styleSum.setBorderTop(HSSFCellStyle.BORDER_THIN);
+                styleSum.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+                styleSum.setDataFormat(currency.getFormat("#,##0.00"));
+                
+                String sumGross = "SUM(G" + 10+":G"+(count + i + 1)+")";
+                String sumAmount = "SUM(H" + 10+":H"+(count + i + 1)+")";
+                
+                HSSFCell cell5Sum = row.createCell(5);
+                    cell5Sum.setCellValue("Total");
+                    cell5Sum.setCellStyle(styleSum);
+                HSSFCell cell6Sum = row.createCell(6);
+                    cell6Sum.setCellFormula(sumGross);
+                    cell6Sum.setCellStyle(styleSum);
+                HSSFCell cell7Sum = row.createCell(7);
+                    cell7Sum.setCellFormula(sumAmount);
+                    cell7Sum.setCellStyle(styleSum);
+                
+             }
+             for(int j =0;j<13;j++){
+                 sheet.autoSizeColumn(j);
+             }
+        }     
+    } 
 }

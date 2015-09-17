@@ -261,6 +261,9 @@
         </property> 
         <property name="company_branch" type="integer">
             <column name="company_branch"/>
-        </property> 
+        </property>
+        <property name="payment_detail_id" type="string">
+            <column name="payment_detail_id"/>
+        </property>  
     </class>
 </hibernate-mapping>

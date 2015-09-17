@@ -35,6 +35,7 @@ public class ExportDataToExcelController  extends SMITravelController{
     private static final String BillAirAgentSummary = "BillAirAgentSummary";
     private static final String ChangeARReport = "ChangeARReport";
     private static final String CollectionReport = "CollectionReport";
+    private static final String ApReport = "ApReport";
     private static final String ReportName = "name";
     private static final String ParaMeter = "parameter";
     @Override
@@ -106,6 +107,11 @@ public class ExportDataToExcelController  extends SMITravelController{
             String invno = request.getParameter("invno");
             System.out.println("get excel data collection report");
             data = reportservice.getCollectionNirvanaFromFilter(department, type, status, from, to, invno, printby); 
+        }else if(ApReport.equals(name)){
+            status = request.getParameter("status");
+            String payment = request.getParameter("payment");
+            System.out.println("get excel data ap nirvana");
+            data = reportservice.getApNirvanaReport(payment, ticketType, status, dateFrom, dateTo, printby);
         }
 		
         return new ModelAndView("ExportDataToExcelView",name,data).addObject(ReportName, name);

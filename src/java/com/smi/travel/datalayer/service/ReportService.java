@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.service;
 
+import com.smi.travel.datalayer.view.dao.APNirvanaDao;
 import com.smi.travel.datalayer.view.dao.ARNirvanaDao;
 import com.smi.travel.datalayer.view.dao.AgentCommissionReportDao;
 import com.smi.travel.datalayer.view.dao.AirlineSummaryDao;
@@ -77,6 +78,7 @@ public class ReportService {
     private BillAirAgentDao  billAirAgentDao;
     private ARNirvanaDao arNirvanaDao;
     private CollectionNirvanaDao collectionNirvanaDao;
+    private APNirvanaDao apNirvanaDao;
     
     public List getInvoiceMonthly(String BillFrom,String BillTo,String ClientName,String Payment,String Accno,String vattype,String from,String to,String department){
         return invoiceReportDao.getInvoiceMonthly(BillFrom, BillTo, ClientName, Payment, Accno, vattype, from, to, department);
@@ -240,6 +242,10 @@ public class ReportService {
     
     public List<CollectionNirvana> getCollectionNirvanaFromFilter(String department,String type,String status,String from,String to,String invno,String printby){
         return collectionNirvanaDao.getCollectionNirvanaFromFilter(department, type, status, from, to, invno, printby);
+    }
+    
+    public List getApNirvanaReport(String paymentType,String producttype,String status,String from,String to,String printby) {
+        return getApNirvanaDao().getApNirvanaReport(paymentType, producttype, status, from, to, printby);
     }
     
     public List getBillAirAgentReport(){
@@ -494,6 +500,12 @@ public class ReportService {
     public void setCollectionNirvanaDao(CollectionNirvanaDao collectionNirvanaDao) {
         this.collectionNirvanaDao = collectionNirvanaDao;
     }
-    
-    
+
+    public APNirvanaDao getApNirvanaDao() {
+        return apNirvanaDao;
+    }
+
+    public void setApNirvanaDao(APNirvanaDao apNirvanaDao) {
+        this.apNirvanaDao = apNirvanaDao;
+    }      
 }
