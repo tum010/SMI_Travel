@@ -13,5 +13,5 @@ import java.util.List;
  * @author Jittima
  */
 public interface CollectionNirvanaDao {
-    public List<CollectionNirvana> SearchCollectionNirvanaFromFilter(String department,String type,String status,String from,String to,String invno);
+    public List<CollectionNirvana> getCollectionNirvanaFromFilter(String department,String type,String status,String from,String to,String invno,String printby);
 }

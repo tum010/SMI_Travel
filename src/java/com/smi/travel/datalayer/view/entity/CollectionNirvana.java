@@ -26,7 +26,16 @@ public class CollectionNirvana {
     private String department;
     private String type;
     private Date invdate;
-
+    
+    private String systemdate;
+    private String user;
+    private String from;
+    private String to;
+    private String no;
+    private String headerdepartment;
+//    private String status;
+    
+    
     public String getInvno() {
         return invno;
     }
@@ -129,6 +138,54 @@ public class CollectionNirvana {
 
     public void setInvdate(Date invdate) {
         this.invdate = invdate;
+    }
+
+    public String getSystemdate() {
+        return systemdate;
+    }
+
+    public void setSystemdate(String systemdate) {
+        this.systemdate = systemdate;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    public String getTo() {
+        return to;
+    }
+
+    public void setTo(String to) {
+        this.to = to;
+    }
+
+    public String getNo() {
+        return no;
+    }
+
+    public void setNo(String no) {
+        this.no = no;
+    }
+
+    public String getHeaderdepartment() {
+        return headerdepartment;
+    }
+
+    public void setHeaderdepartment(String headerdepartment) {
+        this.headerdepartment = headerdepartment;
     }
     
     
