@@ -13,4 +13,5 @@ import java.util.List;
  */
 public interface BillAirAgentDao {
     public List getBillAirAgentReport();
+    public List getBillAirAgentReportSummary();
 }

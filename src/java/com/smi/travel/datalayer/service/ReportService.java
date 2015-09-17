@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.service;
 
+import com.smi.travel.datalayer.view.dao.ARNirvanaDao;
 import com.smi.travel.datalayer.view.dao.AgentCommissionReportDao;
 import com.smi.travel.datalayer.view.dao.AirlineSummaryDao;
 import com.smi.travel.datalayer.view.dao.BillAirAgentDao;
@@ -32,6 +33,7 @@ import com.smi.travel.datalayer.view.dao.TicketOrderDao;
 import com.smi.travel.datalayer.view.dao.TicketSaleProfitVolumnDao;
 import com.smi.travel.datalayer.view.dao.TicketSummaryDao;
 import com.smi.travel.datalayer.view.dao.TransferJobReportDao;
+import com.smi.travel.datalayer.view.entity.ARNirvana;
 import com.smi.travel.report.GenerateReport;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +73,7 @@ public class ReportService {
     private TaxInvoiceSummaryReportDao taxInvoiceSummaryReportDao;
     private CreditNoteSummaryReportDao creditNoteSummaryReportDao;
     private BillAirAgentDao  billAirAgentDao;
+    private ARNirvanaDao arNirvanaDao;
     
     public List getInvoiceMonthly(String BillFrom,String BillTo,String ClientName,String Payment,String Accno,String vattype,String from,String to,String department){
         return invoiceReportDao.getInvoiceMonthly(BillFrom, BillTo, ClientName, Payment, Accno, vattype, from, to, department);
@@ -228,8 +231,16 @@ public class ReportService {
         return creditNoteSummaryReportDao.getCreditNoteSummaryReport(from, to, department, status, systemuser);
     }
     
+    public List<ARNirvana> SearchArNirvanaFromFilter(String invtype,String department,String billtype,String from,String to,String status){
+        return arNirvanaDao.SearchArNirvanaFromFilter(invtype, department, billtype, from, to, status);
+    }
+    
     public List getBillAirAgentReport(){
         return billAirAgentDao.getBillAirAgentReport();
+    }
+    
+    public List getBillAirAgentReportSummary(){
+        return billAirAgentDao.getBillAirAgentReportSummary();
     }
 
     public HotelVoucherDao getHotelVoucherdao() {
@@ -459,6 +470,14 @@ public class ReportService {
 
     public BillAirAgentDao getBillAirAgentDao() {
         return billAirAgentDao;
+    }
+
+    public ARNirvanaDao getArNirvanaDao() {
+        return arNirvanaDao;
+    }
+
+    public void setArNirvanaDao(ARNirvanaDao arNirvanaDao) {
+        this.arNirvanaDao = arNirvanaDao;
     }
     
     

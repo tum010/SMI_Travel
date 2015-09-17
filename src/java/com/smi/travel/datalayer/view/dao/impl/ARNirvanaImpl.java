@@ -46,42 +46,42 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
         String query = "";
         int AndQuery = 0;
         
-        if("".equals(invtype)  && "".equals(department)  && "".equals(billtype)  && "".equals(from) && "".equals(to) && "".equals(status)){
-            query = "SELECT * FROM ar_nirvana ar " ; 
+        if(invtype != null  && department != null  &&  billtype != null  && from != null && to != null && status != null){
+            query = "SELECT * FROM ar_nirvana ar where" ; 
         }else{
-            query = "SELECT * FROM ar_nirvana ar where" ;
+            query = "SELECT * FROM ar_nirvana ar " ;
         }
         
         if ( department != null && (!"".equalsIgnoreCase(department)) ) {
             AndQuery = 1;
-            query += " department = '" + department + "'";
+            query += " ar.department = '" + department + "'";
         }
        
         if (invtype != null && (!"".equalsIgnoreCase(invtype)) ) {
            if(AndQuery == 1){
-                query += " and invtype = '" + invtype + "'";
+                query += " and ar.invtype = '" + invtype + "'";
            }else{
                AndQuery = 1;
-               query += " invtype = '" + invtype + "'";
+               query += " ar.invtype = '" + invtype + "'";
            }
         }
         
         if(billtype != null && (!"".equalsIgnoreCase(billtype))){
             if(AndQuery == 1){
-                query += " and producttype = '" + billtype + "'";
+                query += " and ar.producttype = '" + billtype + "'";
            }else{
                AndQuery = 1;
-               query += " producttype = '" + billtype + "'";
+               query += " ar.producttype = '" + billtype + "'";
            }
         }
         
         if ((from != null )&&(!"".equalsIgnoreCase(from))) {
             if ((to != null )&&(!"".equalsIgnoreCase(to))) {
                 if(AndQuery == 1){
-                     query += " and invdate  BETWEEN  '" + from + "' AND '" + to + "' ";
+                     query += " and ar.invdate  BETWEEN  '" + from + "' AND '" + to + "' ";
                 }else{
                     AndQuery = 1;
-                     query += " invdate  BETWEEN  '" + from + "' AND '" + to + "' ";
+                     query += " ar.invdate  BETWEEN  '" + from + "' AND '" + to + "' ";
                 }
                 
                
@@ -90,13 +90,13 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
         
         if(status != null && (!"".equalsIgnoreCase(status))){
             if(AndQuery == 1){
-                query += " and itf_status = '" + status + "'";
+                query += " and ar.itf_status = '" + status + "'";
            }else{
                AndQuery = 1;
-               query += " itf_status = '" + status + "'";
+               query += " ar.itf_status = '" + status + "'";
            }
         }
-        query += "  ORDER BY invdate  DESC";
+        query += "  ORDER BY ar.invdate  DESC";
         System.out.println("query : " + query);
         List<Object[]> ARNirvanaList = session.createSQLQuery(query )
                 .addScalar("invtype", Hibernate.STRING)
