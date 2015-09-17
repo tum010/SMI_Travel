@@ -669,7 +669,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         }
         
         int count = 9 + listAgent.size();
-        int start = 10;
+        int start = 11;
         int end = 0;
         int num = 0;
 
@@ -697,7 +697,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                             // total
                             int rowstart = r+1;
                             int rowend = r+2;
-                            variableTotal(start,end,rowstart,rowend,sheet);
+                            variableTotal(start,end,rowstart,rowend,sheet,styleNumber);
                         }
                     }else{ // not equal type
                         if(num  == (listAgent.size()-1)){ // check  last row
@@ -712,7 +712,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                                 // total
                                 int rowstart = r+1;
                                 int rowend = r+2;
-                                variableTotal(start,end,rowstart,rowend,sheet);
+                                variableTotal(start,end,rowstart,rowend,sheet,styleNumber);
                                 end = r+1;
                             }else{                                          
                                 end = r;					 
@@ -721,7 +721,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                                 // total
                                 int rowstart = r;
                                 int rowend = r+1;
-                                variableTotal(start,end,rowstart,rowend,sheet);
+                                variableTotal(start,end,rowstart,rowend,sheet,styleNumber);
                                 
                                 // Start New Row (Group)
                                 start = end + 5;
@@ -761,7 +761,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
 	}
     }
     
-    private void variableTotal(int start, int end, int row1, int row2,HSSFSheet sheet){
+    private void variableTotal(int start, int end, int row1, int row2,HSSFSheet sheet,HSSFCellStyle styleNumber){
         // total
         String sumSaleprice = "SUM(F" + start+":F"+end+")";
         String sumNet = "SUM(G" + start+":G"+end+")";
@@ -773,33 +773,65 @@ public class ExportDataToExcelView extends AbstractExcelView {
         String sumReceive = "SUM(M" + start+":M"+end+")";
 
         HSSFRow row = sheet.createRow(row1);
-            row.createCell(5).setCellFormula(sumSaleprice);
-            row.createCell(7).setCellFormula(sumService);
-            row.createCell(9).setCellFormula(sumAmountAir);
-            row.createCell(11).setCellFormula(sumVatCompay);
-        HSSFRow row11 = sheet.createRow(row2);
-            row11.createCell(6).setCellFormula(sumNet);
-            row11.createCell(8).setCellFormula(sumVat);
-            row11.createCell(10).setCellFormula(sumCompay);
-            row11.createCell(12).setCellFormula(sumReceive);
+        HSSFCell cell5 = row.createCell(5);
+            cell5.setCellFormula(sumSaleprice);
+            cell5.setCellStyle(styleNumber);     
+        HSSFCell cell7 = row.createCell(7);
+            cell7.setCellFormula(sumService);
+            cell7.setCellStyle(styleNumber);
+        HSSFCell cell9 = row.createCell(9);
+            cell9.setCellFormula(sumAmountAir);
+            cell9.setCellStyle(styleNumber);
+        HSSFCell cell11 = row.createCell(11);
+            cell11.setCellFormula(sumVatCompay);
+            cell11.setCellStyle(styleNumber);
+            
+        HSSFRow row11 = sheet.createRow(row2);;
+        HSSFCell cell6 = row11.createCell(6);
+            cell6.setCellFormula(sumNet);
+            cell6.setCellStyle(styleNumber);
+        HSSFCell cell8 = row11.createCell(8);
+            cell8.setCellFormula(sumVat);
+            cell8.setCellStyle(styleNumber);
+        HSSFCell cell10 = row11.createCell(10);
+            cell10.setCellFormula(sumCompay);
+            cell10.setCellStyle(styleNumber);
+        HSSFCell cell12 = row11.createCell(12);
+            cell12.setCellFormula(sumReceive);
+            cell12.setCellStyle(styleNumber);
     }
     
     private void createCell(HSSFRow row,List<BillAirAgent> listAgent,int num,HSSFCellStyle styleNumber){
-        
+        HSSFCellStyle style = styleNumber;
         row.createCell(0).setCellValue(listAgent.get(num).getInvno());
         row.createCell(1).setCellValue(listAgent.get(num).getInvdate());
         row.createCell(2).setCellValue(listAgent.get(num).getCustomer());
         row.createCell(3).setCellValue(listAgent.get(num).getTicketno());
         row.createCell(4).setCellValue(listAgent.get(num).getRounting());
-        row.createCell(5).setCellValue(new BigDecimal(listAgent.get(num).getSaleprice()).doubleValue());
-//        row.createCell(5).setCellStyle(styleNumber);
-        row.createCell(6).setCellValue(new BigDecimal(listAgent.get(num).getNet()).doubleValue());
-        row.createCell(7).setCellValue(new BigDecimal(listAgent.get(num).getService()).doubleValue());
-        row.createCell(8).setCellValue("");
-        row.createCell(9).setCellValue(new BigDecimal(listAgent.get(num).getAmountair()).doubleValue());
-        row.createCell(10).setCellValue(new BigDecimal(listAgent.get(num).getCompay()).doubleValue());
-        row.createCell(11).setCellValue(new BigDecimal(listAgent.get(num).getCompayvat()).doubleValue());
-        row.createCell(12).setCellValue(new BigDecimal(listAgent.get(num).getReceive()).doubleValue()); 
+        HSSFCell cell5 = row.createCell(5);
+            cell5.setCellValue(new BigDecimal(listAgent.get(num).getSaleprice()).longValue());
+            cell5.setCellStyle(style);
+        HSSFCell cell6 = row.createCell(6);
+            cell6.setCellValue(new BigDecimal(listAgent.get(num).getNet()).doubleValue());
+            cell6.setCellStyle(style);
+        HSSFCell cell7 = row.createCell(7);
+            cell7.setCellValue(new BigDecimal(listAgent.get(num).getService()).doubleValue());
+            cell7.setCellStyle(style);
+        HSSFCell cell8 = row.createCell(8);
+            cell8.setCellValue("");
+            cell8.setCellStyle(style);
+        HSSFCell cell9 = row.createCell(9);
+            cell9.setCellValue(new BigDecimal(listAgent.get(num).getAmountair()).doubleValue());
+            cell9.setCellStyle(style);
+        HSSFCell cell10 = row.createCell(10);
+            cell10.setCellValue(new BigDecimal(listAgent.get(num).getCompay()).doubleValue());
+            cell10.setCellStyle(style);
+        HSSFCell cell11 = row.createCell(11);
+            cell11.setCellValue(new BigDecimal(listAgent.get(num).getCompayvat()).doubleValue());
+            cell11.setCellStyle(style);
+        HSSFCell cell12 = row.createCell(12);
+            cell12.setCellValue(new BigDecimal(listAgent.get(num).getReceive()).doubleValue());
+            cell12.setCellStyle(style);
     }
     
     public void genTicketFareAirlineReport(HSSFWorkbook wb, List TicketFare) {
