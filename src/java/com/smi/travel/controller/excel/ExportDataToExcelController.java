@@ -21,7 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 public class ExportDataToExcelController  extends SMITravelController{
     
-    private ReportService reportservice; 
+    private ReportService reportservice;
     private static final String TicketFareReport = "TicketFareReport";
     private static final String TicketFareAirlineReport = "TicketFareAirlineReport";
     private static final String TicketFareInvoicReport = "TicketFareInvoicReport";
@@ -29,6 +29,7 @@ public class ExportDataToExcelController  extends SMITravelController{
     private static final String TicketFareSummaryByStaff = "TicketFareSummaryByStaff";
     private static final String TicketFareSummaryByAgent = "TicketFareSummaryByAgent";
     private static final String BillAirAgent = "BillAirAgent";
+    private static final String CollectionReport = "CollectionReport";
     private static final String ReportName = "name";
     private static final String ParaMeter = "parameter";
     @Override
@@ -49,6 +50,13 @@ public class ExportDataToExcelController  extends SMITravelController{
         String issuedateTo = request.getParameter("issuedateTo");   
         String invdateFrom = request.getParameter("invdateFrom");   
         String invdateTo = request.getParameter("invdateTo"); 
+        
+        //Collectipn Report
+        String type = request.getParameter("type");
+        String status = request.getParameter("status");
+        String from = request.getParameter("inputFromDate");
+        String to = request.getParameter("inputToDate");
+        String invno = request.getParameter("invno");
         
         SystemUser user = (SystemUser) session.getAttribute("USER");
         String printby = user.getRole().getName(); 
@@ -76,6 +84,9 @@ public class ExportDataToExcelController  extends SMITravelController{
         }else if(BillAirAgent.equalsIgnoreCase(name)){
             System.out.println("get excel data agent");
             data = reportservice.getBillAirAgentReport();
+        }else if(CollectionReport.equalsIgnoreCase(name)){
+            System.out.println("get excel data collection report");
+            data = reportservice.getCollectionNirvanaFromFilter(department, type, status, from, to, invno, printby); 
         }
 		
         return new ModelAndView("ExportDataToExcelView",name,data).addObject(ReportName, name);

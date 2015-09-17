@@ -10,7 +10,9 @@ import com.smi.travel.datalayer.view.entity.CollectionNirvana;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -26,7 +28,7 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
     private Transaction transaction;
     private UtilityFunction utilityFunction;
     @Override
-    public List<CollectionNirvana> SearchCollectionNirvanaFromFilter(String department, String type, String status, String dateFrom, String dateTo, String invno) {
+    public List<CollectionNirvana> getCollectionNirvanaFromFilter(String department, String type, String status, String dateFrom, String dateTo, String invno,String printby) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         
@@ -51,6 +53,8 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
         if((department != null) &&(!"".equalsIgnoreCase(department))){
             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
             query += prefix+" department = '"+department+"'";
+        }else{
+            department = "ALL";
         }
 
         if((type != null) &&(!"".equalsIgnoreCase(type))){
@@ -87,6 +91,13 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
                                 .addScalar("invdate",Hibernate.DATE)
                                 .list();
         
+        List data = new ArrayList();
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("dd-MM-yyyy");
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MM-yyyy hh:mm");
+        int count = 1;
+        
         for(Object[] CN : QueryList){
             CollectionNirvana collectionNirvana = new CollectionNirvana();
             collectionNirvana.setInvno(util.ConvertString(CN[0]));
@@ -111,6 +122,20 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
             collectionNirvana.setDepartment(util.ConvertString(CN[10]));
             collectionNirvana.setType(util.ConvertString(CN[11]));
             collectionNirvana.setInvdate(util.convertStringToDate(util.ConvertString(CN[12])));
+            
+            collectionNirvana.setSystemdate(String.valueOf(dateformat.format(new Date())));
+            collectionNirvana.setUser(printby);
+            if((dateFrom != null) && (!"".equalsIgnoreCase(dateFrom))){
+                collectionNirvana.setFrom(String.valueOf(df.format(util.convertStringToDate(dateFrom))));
+            }else{
+                collectionNirvana.setFrom("");
+            }
+            if((dateTo != null) && (!"".equalsIgnoreCase(dateTo))){
+                collectionNirvana.setTo(String.valueOf(df.format(util.convertStringToDate(dateTo))));
+            }else{
+                collectionNirvana.setTo("");
+            }
+            collectionNirvana.setHeaderdepartment(department);
             collectionNirvanaList.add(collectionNirvana);
         }
         

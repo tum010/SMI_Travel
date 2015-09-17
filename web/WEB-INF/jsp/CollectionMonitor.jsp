@@ -35,24 +35,24 @@
                     <label class="control-label" for="">Department</lable>
                 </div>
                 <div class="col-xs-1" style="width: 200px">
-                    <select id="collectionDepartment" name="collectionDepartment" class="form-control selectize">
+                    <select id="department" name="department" class="form-control selectize">
                         <option value="">-- ALL --</option> 
                         <c:choose>
-                            <c:when test="${requestScope['collectionDepartment'] == 'Wendy'}">
+                            <c:when test="${requestScope['department'] == 'Wendy'}">
                                 <c:set var="selectedWendy" value="selected" />
                             </c:when>
                         </c:choose>
                         <option value="Wendy" ${selectedWendy}>Wendy</option>
                         
                          <c:choose>
-                            <c:when test="${requestScope['collectionDepartment'] == 'Inbound'}">
+                            <c:when test="${requestScope['department'] == 'Inbound'}">
                                 <c:set var="selectedInbound" value="selected" />
                             </c:when>
                         </c:choose>
                         <option value="Inbound" ${selectedInbound}>Inbound</option>
                         
                         <c:choose>
-                            <c:when test="${requestScope['collectionDepartment'] == 'Outbound'}">
+                            <c:when test="${requestScope['department'] == 'Outbound'}">
                                 <c:set var="selectedOutbound" value="selected" />
                             </c:when>
                         </c:choose>
@@ -63,28 +63,28 @@
                     <label class="control-label" for="">Type</lable>
                 </div>
                 <div class="col-xs-1" style="width: 200px">
-                    <select id="collectionType" name="collectionType" class="form-control selectize">
+                    <select id="type" name="type" class="form-control selectize">
                         <option value="">-- ALL --</option> 
                         <c:choose>
-                            <c:when test="${requestScope['collectionType'] == 'V'}">
+                            <c:when test="${requestScope['type'] == 'V'}">
                                 <c:set var="selectedVat" value="selected" />
                             </c:when>
                         </c:choose>
                         <option value="V" ${selectedVat}>Vat</option>
                         <c:choose>
-                            <c:when test="${requestScope['collectionType'] == 'N'}">
+                            <c:when test="${requestScope['type'] == 'N'}">
                                 <c:set var="selectedNoVat" value="selected" />
                             </c:when>
                         </c:choose>
                         <option value="N" ${selectedNoVat}>No Vat</option>
                         <c:choose>
-                            <c:when test="${requestScope['collectionType'] == 'T'}">
+                            <c:when test="${requestScope['type'] == 'T'}">
                                 <c:set var="selectedTemp" value="selected" />
                             </c:when>
                         </c:choose>
                         <option value="T" ${selectedTemp}>Temp</option>
                         <c:choose>
-                            <c:when test="${requestScope['collectionType'] == 'A'}">
+                            <c:when test="${requestScope['type'] == 'A'}">
                                 <c:set var="selectedTicket" value="selected" />
                             </c:when>
                         </c:choose>
@@ -95,16 +95,16 @@
                     <label class="control-label" for="">Status</lable>
                 </div>
                 <div class="col-xs-1" style="width: 200px">
-                   <select id="collectionStatus" name="collectionStatus" class="form-control selectize">
+                   <select id="status" name="status" class="form-control selectize">
                         <option value="">-- ALL --</option> 
                         <c:choose>
-                            <c:when test="${requestScope['collectionStatus'] == 'CLEAR'}">
+                            <c:when test="${requestScope['status'] == 'CLEAR'}">
                                 <c:set var="selectedClear" value="selected" />
                             </c:when>
                         </c:choose>
                         <option value="CLEAR" ${selectedClear}>CLEAR</option>
                          <c:choose>
-                            <c:when test="${requestScope['collectionStatus'] == 'UNCLEAR'}">
+                            <c:when test="${requestScope['status'] == 'UNCLEAR'}">
                                 <c:set var="selectedUnclear" value="selected" />
                             </c:when>
                         </c:choose>
@@ -143,14 +143,14 @@
                     <label class="control-label" for="">Invoice No</lable>
                 </div>
                 <div class="col-xs-1" style="width: 200px">
-                    <input id="collectionInvNo" name="collectionInvNo"  type="text" class="form-control " value="${requestScope['collectionInvNo']}">
+                    <input id="invno" name="invno"  type="text" class="form-control " value="${requestScope['invno']}">
                 </div>
             </div>
             <div class="col-xs-12"><br></div>
             <div class="col-xs-12">
                 <div class="col-xs-1" style="width: 720px"></div>
                 <div class="col-xs-1 " style="width: 80px">
-                    <button type="button" id="ButtonPrint" name="ButtonPrint" class="btn btn-default" data-dismiss="modal">
+                    <button type="button" id="ButtonPrint" name="ButtonPrint" onclick="printCollectionReport()"class="btn btn-default" data-dismiss="modal">
                         <span id="btnPrintCollection" class="glyphicon glyphicon-print" ></span> Print
                     </button>
                 </div>          
@@ -303,6 +303,21 @@
     function searchAction(){
         var action = document.getElementById('action');
         action.value = 'search';
+    }
+    
+    function printCollectionReport(){
+        var department = document.getElementById('department').value;
+        var type = document.getElementById('type').value;
+        var status = document.getElementById('status').value;
+        var inputFromDate = document.getElementById('inputFromDate').value;
+        var inputToDate = document.getElementById("inputToDate").value;
+        var invno = document.getElementById("invno").value;
+//        var strStatus = status.options[status.selectedIndex].text;
+        if((inputToDate === '') || (inputFromDate === '')){
+            validateDate();
+        } else {
+            window.open("Excel.smi?name=CollectionReport&department="+department+"&type="+type+"&status="+status+"&inputFromDate="+inputFromDate+"&inputToDate="+inputToDate+"&invno="+invno);
+        }   
     }
     
     function checkFromDateField(){

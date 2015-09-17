@@ -8,6 +8,7 @@ package com.smi.travel.controller.excel;
 import com.smi.travel.datalayer.report.model.BillAirAgent;
 import com.smi.travel.datalayer.report.model.TicketFareReport;
 import com.smi.travel.datalayer.report.model.TicketFareSummaryByAgentStaff;
+import com.smi.travel.datalayer.view.entity.CollectionNirvana;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.LinkedList;
@@ -40,6 +41,8 @@ public class ExportDataToExcelView extends AbstractExcelView {
     private static final String TicketFareSummaryByStaff = "TicketFareSummaryByStaff";
     private static final String TicketFareSummaryByAgent = "TicketFareSummaryByAgent";
     private static final String BillAirAgent = "BillAirAgent";
+    private static final String CollectionReport = "CollectionReport";
+    
     @Override
     protected void buildExcelDocument(Map model, HSSFWorkbook workbook,
             HttpServletRequest request, HttpServletResponse response)
@@ -66,6 +69,9 @@ public class ExportDataToExcelView extends AbstractExcelView {
         }else if(name.equalsIgnoreCase(BillAirAgent)){
             System.out.println("gen report TicketFareSummaryByAgent");
             getBillAirAgentReport(workbook, (List) model.get(name));
+        }else if(name.equalsIgnoreCase(CollectionReport)){
+            System.out.println("gen report CollectionReport");
+            genCollectionReport(workbook, (List) model.get(name));
         }
 
     }
@@ -2173,7 +2179,272 @@ public class ExportDataToExcelView extends AbstractExcelView {
             }
         }
     }
-    
+    public void genCollectionReport(HSSFWorkbook wb, List collectionNirvanaList) {
+        String sheetName = "Sheet1";// name of sheet
+        HSSFSheet sheet = wb.createSheet(sheetName);
+        CollectionNirvana dataheader = new CollectionNirvana();
+        
+        HSSFDataFormat currency = wb.createDataFormat();
+        // Set align Text
+        HSSFCellStyle styleC21 = wb.createCellStyle();
+        styleC21.setAlignment(styleC21.ALIGN_RIGHT);
+        HSSFCellStyle styleC22 = wb.createCellStyle();
+        styleC22.setAlignment(styleC22.ALIGN_LEFT);
+        HSSFCellStyle styleC23 = wb.createCellStyle();
+        styleC23.setAlignment(styleC22.ALIGN_CENTER);
+
+        HSSFCellStyle styleC25 = wb.createCellStyle();
+        styleC25.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC25.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC25.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC25.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleC25.setDataFormat(currency.getFormat("#,##0.00"));
+        
+        HSSFCellStyle styleC26 = wb.createCellStyle();
+        styleC26.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC26.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC26.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC26.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleC26.setDataFormat(currency.getFormat("#,##0"));
+        styleC26.setAlignment(styleC22.ALIGN_CENTER);
+
+        HSSFCellStyle styleC27 = wb.createCellStyle();
+        styleC27.setAlignment(styleC27.ALIGN_RIGHT);
+        styleC27.setDataFormat(currency.getFormat("#,##0.00"));
+        
+        HSSFCellStyle styleC28 = wb.createCellStyle();
+        styleC28.setAlignment(styleC28.ALIGN_CENTER);
+        styleC28.setDataFormat(currency.getFormat("#,##0"));
+        
+        HSSFCellStyle styleC29 = wb.createCellStyle();
+        styleC29.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC29.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC29.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC29.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        
+        HSSFCellStyle styleC30 = wb.createCellStyle();
+        styleC30.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC30.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC30.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC30.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleC30.setAlignment(styleC22.ALIGN_CENTER);
+        
+        if(!collectionNirvanaList.isEmpty()){
+            dataheader = (CollectionNirvana)collectionNirvanaList.get(0);
+        
+            // set Header Report (Row 1)
+            HSSFCellStyle styleC1 = wb.createCellStyle();
+            HSSFRow row1 = sheet.createRow(0);
+            HSSFCell cell1 = row1.createCell(0);
+            cell1.setCellValue("COLLECTION REPORT");
+            styleC1.setFont(getHeaderFont(wb.createFont()));
+            cell1.setCellStyle(styleC1);
+            sheet.addMergedRegion(CellRangeAddress.valueOf("A1:E1"));
+
+            // Row 2
+            HSSFRow row2 = sheet.createRow(1);
+            HSSFCell cell21 = row2.createCell(0);
+            cell21.setCellValue("Print On : ");
+            cell21.setCellStyle(styleC21);
+            HSSFCell cell22 = row2.createCell(1);
+            cell22.setCellValue(dataheader.getSystemdate());
+            cell22.setCellStyle(styleC22);
+//            sheet.addMergedRegion(CellRangeAddress.valueOf("B2:C2"));
+            HSSFCell cell23 = row2.createCell(2);
+            cell23.setCellValue("By : " +dataheader.getUser());
+            cell23.setCellStyle(styleC22);
+//            HSSFCell cell24 = row2.createCell(3);
+//            cell24.setCellValue(dataheader.getUser());
+//            cell24.setCellStyle(styleC22);
+            
+            // Row 3
+            HSSFRow row3 = sheet.createRow(2);
+            HSSFCell cell31 = row3.createCell(0);
+            cell31.setCellValue("Report of : ");
+            cell31.setCellStyle(styleC21);
+            HSSFCell cell32 = row3.createCell(1);
+            if(!"".equalsIgnoreCase(dataheader.getFrom())){
+            cell32.setCellValue(dataheader.getFrom());
+            cell32.setCellStyle(styleC22);
+//            sheet.addMergedRegion(CellRangeAddress.valueOf("B3:C3"));
+            }
+//            HSSFCell cell33 = row3.createCell(2);
+//            cell33.setCellValue("To : ");
+//            cell33.setCellStyle(styleC21);
+            HSSFCell cell34 = row3.createCell(2);
+            if(!"".equalsIgnoreCase(dataheader.getTo())){
+            cell34.setCellValue("To : "+dataheader.getTo());
+            cell34.setCellStyle(styleC22);
+            }
+            
+            // Row 4
+            HSSFRow row4 = sheet.createRow(3);
+            HSSFCell cell41 = row4.createCell(0);
+            cell41.setCellValue("Department : ");
+            cell41.setCellStyle(styleC21);
+            HSSFCell cell42 = row4.createCell(1);
+            cell42.setCellValue(dataheader.getHeaderdepartment());
+            cell42.setCellStyle(styleC22);
+//            sheet.addMergedRegion(CellRangeAddress.valueOf("B4:C4"));
+        }
+        
+        // Header Table
+        HSSFCellStyle styleC3 = wb.createCellStyle();
+        styleC3.setFont(getHeaderTable(wb.createFont()));
+        styleC3.setAlignment(styleC3.ALIGN_CENTER);
+        styleC3.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleC3.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC3.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC3.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        
+        HSSFRow row6 = sheet.createRow(5);
+        HSSFCell cell61 = row6.createCell(0);
+        cell61.setCellValue("No");
+        cell61.setCellStyle(styleC3);
+        sheet.autoSizeColumn(0);
+        HSSFCell cell62 = row6.createCell(1);
+        cell62.setCellValue("Inv No");
+        cell62.setCellStyle(styleC3);
+        sheet.autoSizeColumn(1);
+        HSSFCell cell63 = row6.createCell(2);
+        cell63.setCellValue("Receipt No");
+        sheet.autoSizeColumn(2);
+        cell63.setCellStyle(styleC3);
+        HSSFCell cell64 = row6.createCell(3);
+        cell64.setCellValue("Ar Code");
+        cell64.setCellStyle(styleC3);
+        sheet.autoSizeColumn(3);
+        HSSFCell cell65 = row6.createCell(4);
+        cell65.setCellValue("Inv To");
+        cell65.setCellStyle(styleC3);
+        sheet.autoSizeColumn(4);
+        HSSFCell cell66 = row6.createCell(5);
+        cell66.setCellValue("Acc Code");
+        cell66.setCellStyle(styleC3);
+        sheet.autoSizeColumn(5);
+        HSSFCell cell67 = row6.createCell(6);
+        cell67.setCellValue("Inv Amount");
+        cell67.setCellStyle(styleC3);
+        sheet.autoSizeColumn(6);
+        HSSFCell cell68 = row6.createCell(7);
+        cell68.setCellValue("Diff");
+        cell68.setCellStyle(styleC3);
+        sheet.autoSizeColumn(7);
+        HSSFCell cell69 = row6.createCell(8);
+        cell69.setCellValue("Rec Amount");
+        cell69.setCellStyle(styleC3);
+        sheet.autoSizeColumn(8);
+        HSSFCell cell70 = row6.createCell(9);
+        cell70.setCellValue("Cur");
+        cell70.setCellStyle(styleC3);
+        sheet.autoSizeColumn(9);
+        HSSFCell cell71 = row6.createCell(10);
+        cell71.setCellValue("Status");
+        cell71.setCellStyle(styleC3);
+        sheet.autoSizeColumn(10);
+
+        //Detail of Table
+        int count = 6 ;
+        int no = 1;
+        for(int i=0;i<collectionNirvanaList.size();i++){
+            CollectionNirvana data = (CollectionNirvana)collectionNirvanaList.get(i);
+            HSSFRow row = sheet.createRow(count + i);
+            
+            HSSFCell celldata0 = row.createCell(0);
+            celldata0.setCellValue(String.valueOf(no));
+            celldata0.setCellStyle(styleC30);
+            
+            HSSFCell celldata1 = row.createCell(1);
+            celldata1.setCellValue(String.valueOf(data.getInvno()));
+            celldata1.setCellStyle(styleC29);
+            
+            HSSFCell celldata2 = row.createCell(2);
+            celldata2.setCellValue(String.valueOf(data.getRecno()));
+            celldata2.setCellStyle(styleC29);
+            
+            HSSFCell celldata3 = row.createCell(3);
+            celldata3.setCellValue(String.valueOf(data.getArcode()));
+            celldata3.setCellStyle(styleC29);
+            
+            HSSFCell celldata4 = row.createCell(4);
+            celldata4.setCellValue(String.valueOf(data.getInvto()));
+            celldata4.setCellStyle(styleC29);
+            
+            HSSFCell celldata5 = row.createCell(5);
+            celldata5.setCellValue(String.valueOf(data.getAcccode()));
+            celldata5.setCellStyle(styleC29);
+            
+            HSSFCell celldata6 = row.createCell(6);
+            celldata6.setCellValue("".equalsIgnoreCase(String.valueOf(data.getInvamount())) ? 0 : (data.getInvamount()).doubleValue());
+            celldata6.setCellStyle(styleC25);
+            
+            HSSFCell celldata7 = row.createCell(7);
+            celldata7.setCellValue("".equalsIgnoreCase(String.valueOf(data.getDiff())) ? 0 : (data.getDiff()).doubleValue());
+            celldata7.setCellStyle(styleC25);
+  
+            HSSFCell celldata8 = row.createCell(8);
+            celldata8.setCellValue("".equalsIgnoreCase(String.valueOf(data.getRecamount())) ? 0 : (data.getRecamount()).doubleValue());
+            celldata8.setCellStyle(styleC25);
+            
+            HSSFCell celldata9 = row.createCell(9);
+            celldata9.setCellValue(String.valueOf(data.getCur()));
+            celldata9.setCellStyle(styleC30);
+            
+            HSSFCell celldata10 = row.createCell(10);
+            celldata10.setCellValue(String.valueOf(data.getCollectionStatus()));
+            celldata10.setCellStyle(styleC30);
+//            
+//            if(i == (TicketFare.size()-1)){
+//                row = sheet.createRow(count + i + 1);
+//                for(int k=0;k<8;k++){
+//                    HSSFCellStyle styleSum = wb.createCellStyle();
+//                    styleSum.setAlignment(styleC24.ALIGN_RIGHT);
+//                    styleSum.setBorderTop(HSSFCellStyle.BORDER_THIN);
+//                    styleSum.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+//                    HSSFCell cellSum = row.createCell(k);                   
+//                    if(k == 0){styleSum.setBorderLeft(HSSFCellStyle.BORDER_THIN);}
+//                    cellSum.setCellStyle(styleSum);
+//                }
+//                HSSFCellStyle styleSum = wb.createCellStyle();
+//                styleSum.setAlignment(styleSum.ALIGN_RIGHT);
+//                styleSum.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+//                styleSum.setBorderRight(HSSFCellStyle.BORDER_THIN);
+//                styleSum.setBorderTop(HSSFCellStyle.BORDER_THIN);
+//                styleSum.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+//                styleSum.setDataFormat(currency.getFormat("#,##0.00"));
+//                
+//                String netsalesTotal = "SUM(J" + 10+":J"+(count + i + 1)+")";
+//                String taxTotal = "SUM(K" + 10+":K"+(count + i + 1)+")";
+//                String insTotal = "SUM(L" + 10+":L"+(count + i + 1)+")";
+//                String actcommTotal = "SUM(M" + 10+":M"+(count + i + 1)+")";
+//                String invamountTotal = "SUM(N" + 10+":N"+(count + i + 1)+")";
+//
+//                HSSFCell cellTotal00 = row.createCell(8);
+//                cellTotal00.setCellValue("Total");
+//                cellTotal00.setCellStyle(styleSum);                
+//                HSSFCell cellTotal01 = row.createCell(9);
+//                cellTotal01.setCellFormula(netsalesTotal);
+//                cellTotal01.setCellStyle(styleSum);
+//                HSSFCell cellTotal02 = row.createCell(10);
+//                cellTotal02.setCellFormula(taxTotal);
+//                cellTotal02.setCellStyle(styleSum);
+//                HSSFCell cellTotal03 = row.createCell(11);
+//                cellTotal03.setCellFormula(insTotal);
+//                cellTotal03.setCellStyle(styleSum);
+//                HSSFCell cellTotal04 = row.createCell(12);
+//                cellTotal04.setCellFormula(actcommTotal);
+//                cellTotal04.setCellStyle(styleSum);
+//                HSSFCell cellTotal05 = row.createCell(13);
+//                cellTotal05.setCellFormula(invamountTotal);
+//                cellTotal05.setCellStyle(styleSum);
+//             }
+             
+             for(int j =0;j<13;j++){
+                 sheet.autoSizeColumn(j);
+             }
+             no ++;
+        }
+    }
     public HSSFFont getHeaderFont(HSSFFont font) {
 
         font.setFontHeightInPoints((short) 30);
