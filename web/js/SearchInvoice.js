@@ -65,6 +65,13 @@ $(document).ready(function () {
                 showflag=1;
             }
     });
+    
+    $('.fromdate').datetimepicker().change(function(){                          
+        checkFromDateField();
+    });
+    $('.todate').datetimepicker().change(function(){                          
+        checkToDateField();
+    });
 });
 
 function setBillValue(billto, billname, address, term, pay) {
@@ -209,12 +216,13 @@ function CallAjaxAuto(param){
                     }
             });
             
-             $('#DateFrom').datetimepicker().on('dp.change', function (e) {
+            $('#DateFrom').datetimepicker().on('dp.change', function (e) {
                 $('#SearchInvoiceForm').bootstrapValidator('revalidateField', 'FromDate');
             });
             $('#DateTo').datetimepicker().on('dp.change', function (e) {
                 $('#SearchInvoiceForm').bootstrapValidator('revalidateField', 'ToDate');
             });
+            
  }
  
  function search(){
@@ -253,6 +261,69 @@ function printInvoiceSummary(){
     var department = $('#Department').val();
     var type = $('#Type').val();
     var agent = $('#InvTo').val();
-//    windsow.open("report.smi?name=InvoiceSummary");  
-    window.open("report.smi?name=InvoiceSummary"+"&fromdate="+from+"&todate="+to+"&department="+department+"&type="+type+"&agent="+agent);  
+//    windsow.open("report.smi?name=InvoiceSummary");
+    if((from === '') || (to === '')){
+        validateDate();
+    } else {
+        window.open("report.smi?name=InvoiceSummary"+"&fromdate="+from+"&todate="+to+"&department="+department+"&type="+type+"&agent="+agent);  
+    }   
+}
+
+function checkFromDateField(){
+    var inputFromDate = document.getElementById("FromDate");
+    if(inputFromDate.value === ''){          
+        $('#SearchInvoiceForm').bootstrapValidator('revalidateField', 'FromDate');
+        $("#btnPrint").addClass("disabled");         
+    } else {
+        $("#btnPrint").removeClass("disabled");
+        checkDateValue("from","");
+    }      
+}
+    
+function checkToDateField(){
+    var InputToDate = document.getElementById("ToDate");
+    if(InputToDate.value === ''){
+        $('#SearchInvoiceForm').bootstrapValidator('revalidateField', 'ToDate');
+        $("#btnPrint").addClass("disabled");  
+    }else{
+        $("#btnPrint").removeClass("disabled");
+        checkDateValue("to","");
+    }               
+}
+
+function checkDateValue(date){
+    var inputFromDate = document.getElementById("FromDate");
+    var InputToDate = document.getElementById("ToDate");
+    if((inputFromDate.value !== '') && (InputToDate.value !== '')){
+        var fromDate = (inputFromDate.value).split('-');
+        var toDate = (InputToDate.value).split('-');      
+        if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
+            validateDate(date,"over");
+        }else if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))){
+            validateDate(date,"over");
+        }else if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) >= (parseInt(toDate[1]))) && (parseInt(fromDate[2])) > (parseInt(toDate[2]))){
+            validateDate(date,"over");
+        }else{
+            $('#SearchInvoiceForm').bootstrapValidator('revalidateField', 'FromDate');
+            $('#SearchInvoiceForm').bootstrapValidator('revalidateField', 'ToDate');
+        }           
+    }
+}
+
+function validateDate(date,option){
+    if(option === 'over'){
+        if(date === 'from'){
+            $('#SearchInvoiceForm').bootstrapValidator('revalidateField', 'FromDate');
+            $('#SearchInvoiceForm').bootstrapValidator('revalidateField', 'ToDate');
+        }
+        if(date === 'to'){
+            $('#SearchInvoiceForm').bootstrapValidator('revalidateField', 'FromDate');
+            $('#SearchInvoiceForm').bootstrapValidator('revalidateField', 'ToDate');
+        }           
+        $("#btnPrint").addClass("disabled");
+    } else {
+        $('#SearchInvoiceForm').bootstrapValidator('revalidateField', 'FromDate');
+        $('#SearchInvoiceForm').bootstrapValidator('revalidateField', 'ToDate');
+        $("#btnPrint").addClass("disabled");
+    }
 }
