@@ -1,5 +1,9 @@
 package com.smi.travel.controller;
+import com.smi.travel.datalayer.service.CollectionNirvanaService;
+import com.smi.travel.datalayer.service.UtilityService;
+import com.smi.travel.datalayer.view.entity.CollectionNirvana;
 import com.smi.travel.master.controller.SMITravelController;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -14,30 +18,58 @@ public class CollectionMonitorController extends SMITravelController {
     private static final String DATEFROM = "collectionFromDate";
     private static final String DATETO = "collectionToDate";
     private static final String INVNO = "collectionInvNo";
+    private static final String CollectionList = "CollectionList";
+    private CollectionNirvanaService collectionNirvanaService;
+    private UtilityService utilityService;
+    
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String action = request.getParameter("action");
-        String collectionDepartment = request.getParameter("collectionDepartment");
-        String collectionType = request.getParameter("collectionType");
-        String collectionStatus = request.getParameter("collectionStatus");
-        String collectionFromDate = request.getParameter("collectionFromDate");
-        String collectionToDate = request.getParameter("collectionToDate");
-        String collectionInvNo = request.getParameter("collectionInvNo");
+        String department = request.getParameter("collectionDepartment");
+        String type = request.getParameter("collectionType");
+        String status = request.getParameter("collectionStatus");
+        String from = request.getParameter("inputFromDate");
+        String to = request.getParameter("inputToDate");
+        String invNo = request.getParameter("collectionInvNo");
         
-        request.setAttribute(DEPARTMENT,collectionDepartment);
-        request.setAttribute(TYPE,collectionType);
-        request.setAttribute(STATUS,collectionStatus);
-        request.setAttribute(DATEFROM,collectionFromDate);
-        request.setAttribute(DATETO,collectionToDate);
-        request.setAttribute(INVNO,collectionInvNo);
+        request.setAttribute(DEPARTMENT,department);
+        request.setAttribute(TYPE,type);
+        request.setAttribute(STATUS,status);
+        request.setAttribute(DATEFROM,from);
+        request.setAttribute(DATETO,to);
+        request.setAttribute(INVNO,invNo);
         
-        System.out.println(" action " + action);
-        System.out.println(" collectionDepartment " + collectionDepartment);
-        System.out.println(" collectionType " + collectionType);
-        System.out.println(" collectionStatus " + collectionStatus);
-        System.out.println(" collectionFromDate " + collectionFromDate);
-        System.out.println(" collectionToDate " + collectionToDate);
-        System.out.println(" collectionInvNo " + collectionInvNo);
+        if ("search".equalsIgnoreCase(action)){
+            List<CollectionNirvana>  collectionNirvanas = collectionNirvanaService.SearchCollectionNirvanaFromFilter(department, type, status, from, to, invNo);
+            if(collectionNirvanas != null){
+                request.setAttribute(CollectionList,collectionNirvanas);
+            } 
+        }
+//        System.out.println(" action " + action);
+//        System.out.println(" collectionDepartment " + collectionDepartment);
+//        System.out.println(" collectionType " + collectionType);
+//        System.out.println(" collectionStatus " + collectionStatus);
+//        System.out.println(" collectionFromDate " + inputFromDate);
+//        System.out.println(" collectionToDate " + inputToDate);
+//        System.out.println(" collectionInvNo " + collectionInvNo);
+        
+        
         return CollectionMonitor;
+    }
+
+    public CollectionNirvanaService getCollectionNirvanaService() {
+        return collectionNirvanaService;
+    }
+
+    public void setCollectionNirvanaService(CollectionNirvanaService collectionNirvanaService) {
+        this.collectionNirvanaService = collectionNirvanaService;
+    }
+
+    public UtilityService getUtilityService() {
+        return utilityService;
+    }
+
+    public void setUtilityService(UtilityService utilityService) {
+        this.utilityService = utilityService;
     }
 }

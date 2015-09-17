@@ -378,6 +378,10 @@
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
     
+    <bean id="CollectionNirvanaDao" class="com.smi.travel.datalayer.view.dao.impl.CollectionNirvanaImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
     <bean id="TicketFareReportDao" class="com.smi.travel.datalayer.view.dao.impl.TicketFareReportImpl">
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>

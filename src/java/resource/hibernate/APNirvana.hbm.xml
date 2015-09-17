@@ -1,0 +1,266 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.view.entity.APNirvana" table="ap_nirvana" catalog="smitravel">     
+        <id name="rowid" type="string" />
+        <property name="refinvoiceno" type="string">
+            <column name="refinvoiceno"/>
+        </property>   
+        <property name="intreference" type="string">
+            <column name="intreference"/>
+        </property>   
+        <property name="vendorid" type="string">
+            <column name="vendorid"/>
+        </property>
+        <property name="vendorname" type="string">
+            <column name="vendorname"/>
+        </property> 
+        <property name="divisionid" type="string">
+            <column name="divisionid"/>
+        </property> 
+        <property name="projectid" type="string">
+            <column name="projectid"/>
+        </property> 
+        <property name="transcode" type="string">
+            <column name="transcode"/>
+        </property> 
+<!--        <property name="transdate" type="string">
+            <column name="transdate"/>
+        </property> -->
+        <property name="duedate" type="date">
+            <column name="duedate"/>
+        </property> 
+        <property name="currencyid" type="string">
+            <column name="currencyid"/>
+        </property> 
+        <property name="homerate" type="big_decimal">
+            <column name="homerate"/>
+        </property> 
+        <property name="foreignrate" type="big_decimal">
+            <column name="foreignrate"/>
+        </property> 
+        <property name="basevatamt" type="big_decimal">
+            <column name="basevatamt"/>
+        </property> 
+        <property name="basevathmamt" type="big_decimal">
+            <column name="basevathmamt"/>
+        </property> 
+        <property name="vatamt" type="big_decimal">
+            <column name="vatamt"/>
+        </property> 
+        <property name="vathmamt" type="big_decimal">
+            <column name="vathmamt"/>
+        </property> 
+        <property name="transamt" type="big_decimal">
+            <column name="transamt"/>
+        </property> 
+        <property name="transhmamt" type="big_decimal">
+            <column name="transhmamt"/>
+        </property> 
+        <property name="vatflag" type="string">
+            <column name="vatflag"/>
+        </property> 
+        <property name="vatid" type="string">
+            <column name="vatid"/>
+        </property> 
+        <property name="whtflag" type="string">
+            <column name="whtflag"/>
+        </property> 
+        <property name="whtid" type="string">
+            <column name="whtid"/>
+        </property> 
+        <property name="basewhtamt" type="big_decimal">
+            <column name="basewhtamt"/>
+        </property> 
+        <property name="basewhthmamt" type="big_decimal">
+            <column name="basewhthmamt"/>
+        </property> 
+        <property name="whtamt" type="big_decimal">
+            <column name="whtamt"/>
+        </property> 
+        <property name="whthmamt" type="big_decimal">
+            <column name="whthmamt"/>
+        </property> 
+        <property name="year" type="integer">
+            <column name="year"/>
+        </property> 
+        <property name="period" type="integer">
+            <column name="period"/>
+        </property> 
+        <property name="note" type="string">
+            <column name="note"/>
+        </property> 
+        <property name="puraccount1" type="string">
+            <column name="puraccount1"/>
+        </property> 
+        <property name="purdivision1" type="string">
+            <column name="purdivision1"/>
+        </property> 
+        <property name="purproject1" type="string">
+            <column name="purproject1"/>
+        </property> 
+        <property name="puramt1" type="big_decimal">
+            <column name="puramt1"/>
+        </property> 
+        <property name="purhmamt1" type="big_decimal">
+            <column name="purhmamt1"/>
+        </property> 
+        <property name="puraccount2" type="string">
+            <column name="puraccount2"/>
+        </property> 
+        <property name="purdivision2" type="string">
+            <column name="purdivision2"/>
+        </property> 
+        <property name="purproject2" type="string">
+            <column name="purproject2"/>
+        </property> 
+        <property name="puramt2" type="big_decimal">
+            <column name="puramt2"/>
+        </property> 
+        <property name="purhmamt2" type="big_decimal">
+            <column name="purhmamt2"/>
+        </property> 
+        <property name="puraccount3" type="string">
+            <column name="puraccount3"/>
+        </property> 
+        <property name="purdivision3" type="string">
+            <column name="purdivision3"/>
+        </property> 
+        <property name="purproject3" type="string">
+            <column name="purproject3"/>
+        </property> 
+        <property name="puramt3" type="big_decimal">
+            <column name="puramt3"/>
+        </property> 
+        <property name="purhmamt3" type="big_decimal">
+            <column name="purhmamt3"/>
+        </property> 
+        <property name="puraccount4" type="string">
+            <column name="puraccount4"/>
+        </property> 
+        <property name="purdivision4" type="string">
+            <column name="purdivision4"/>
+        </property> 
+        <property name="purproject4" type="string">
+            <column name="purproject4"/>
+        </property> 
+        <property name="puramt4" type="big_decimal">
+            <column name="puramt4"/>
+        </property> 
+        <property name="purhmamt4" type="big_decimal">
+            <column name="purhmamt4"/>
+        </property> 
+        <property name="puraccount5" type="string">
+            <column name="puraccount5"/>
+        </property> 
+        <property name="purdivision5" type="string">
+            <column name="purdivision5"/>
+        </property> 
+        <property name="purproject5" type="string">
+            <column name="purproject5"/>
+        </property> 
+        <property name="puramt5" type="big_decimal">
+            <column name="puramt5"/>
+        </property> 
+        <property name="purhmamt5" type="big_decimal">
+            <column name="purhmamt5"/>
+        </property> 
+        <property name="puraccount6" type="string">
+            <column name="puraccount6"/>
+        </property> 
+        <property name="purdivision6" type="string">
+            <column name="purdivision6"/>
+        </property> 
+        <property name="purproject6" type="string">
+            <column name="purproject6"/>
+        </property> 
+        <property name="puramt6" type="big_decimal">
+            <column name="puramt6"/>
+        </property> 
+        <property name="purhmamt6" type="big_decimal">
+            <column name="purhmamt6"/>
+        </property> 
+        <property name="puraccount7" type="string">
+            <column name="puraccount7"/>
+        </property> 
+        <property name="purdivision7" type="string">
+            <column name="purdivision7"/>
+        </property> 
+        <property name="purproject7" type="string">
+            <column name="purproject7"/>
+        </property> 
+        <property name="puramt7" type="big_decimal">
+            <column name="puramt7"/>
+        </property> 
+        <property name="purhmamt7" type="big_decimal">
+            <column name="purhmamt7"/>
+        </property> 
+        <property name="puraccount8" type="string">
+            <column name="puraccount8"/>
+        </property> 
+        <property name="purdivision8" type="string">
+            <column name="purdivision8"/>
+        </property> 
+        <property name="purproject8" type="string">
+            <column name="purproject8"/>
+        </property> 
+        <property name="puramt8" type="big_decimal">
+            <column name="puramt8"/>
+        </property> 
+        <property name="purhmamt8" type="big_decimal">
+            <column name="purhmamt8"/>
+        </property> 
+        <property name="puraccount9" type="string">
+            <column name="puraccount9"/>
+        </property> 
+        <property name="purdivision9" type="string">
+            <column name="purdivision9"/>
+        </property> 
+        <property name="purproject9" type="string">
+            <column name="purproject9"/>
+        </property> 
+        <property name="puramt9" type="big_decimal">
+            <column name="puramt9"/>
+        </property> 
+        <property name="purhmamt9" type="big_decimal">
+            <column name="purhmamt9"/>
+        </property> 
+        <property name="puraccount10" type="string">
+            <column name="puraccount10"/>
+        </property> 
+        <property name="purdivision10" type="string">
+            <column name="purdivision10"/>
+        </property> 
+        <property name="purproject10" type="string">
+            <column name="purproject10"/>
+        </property> 
+        <property name="puramt10" type="big_decimal">
+            <column name="puramt10"/>
+        </property> 
+        <property name="purhmamt10" type="big_decimal">
+            <column name="purhmamt10"/>
+        </property> 
+        <property name="service" type="string">
+            <column name="service"/>
+        </property> 
+        <property name="apaccount" type="string">
+            <column name="apaccount"/>
+        </property> 
+        <property name="prefix" type="string">
+            <column name="prefix"/>
+        </property> 
+        <property name="voucherno" type="integer">
+            <column name="voucherno"/>
+        </property> 
+        <property name="Taxid" type="string">
+            <column name="Taxid"/>
+        </property> 
+        <property name="vendor_branch" type="integer">
+            <column name="vendor_branch"/>
+        </property> 
+        <property name="company_branch" type="integer">
+            <column name="company_branch"/>
+        </property> 
+    </class>
+</hibernate-mapping>
