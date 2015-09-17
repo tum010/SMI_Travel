@@ -10,6 +10,7 @@ import com.smi.travel.datalayer.view.dao.ARNirvanaDao;
 import com.smi.travel.datalayer.view.dao.AgentCommissionReportDao;
 import com.smi.travel.datalayer.view.dao.AirlineSummaryDao;
 import com.smi.travel.datalayer.view.dao.BillAirAgentDao;
+import com.smi.travel.datalayer.view.dao.CollectionNirvanaDao;
 import com.smi.travel.datalayer.view.dao.CreditNoteReportDao;
 import com.smi.travel.datalayer.view.dao.CreditNoteSummaryReportDao;
 import com.smi.travel.datalayer.view.dao.DaytourOtherDao;
@@ -34,6 +35,7 @@ import com.smi.travel.datalayer.view.dao.TicketSaleProfitVolumnDao;
 import com.smi.travel.datalayer.view.dao.TicketSummaryDao;
 import com.smi.travel.datalayer.view.dao.TransferJobReportDao;
 import com.smi.travel.datalayer.view.entity.ARNirvana;
+import com.smi.travel.datalayer.view.entity.CollectionNirvana;
 import com.smi.travel.report.GenerateReport;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +76,7 @@ public class ReportService {
     private CreditNoteSummaryReportDao creditNoteSummaryReportDao;
     private BillAirAgentDao  billAirAgentDao;
     private ARNirvanaDao arNirvanaDao;
+    private CollectionNirvanaDao collectionNirvanaDao;
     
     public List getInvoiceMonthly(String BillFrom,String BillTo,String ClientName,String Payment,String Accno,String vattype,String from,String to,String department){
         return invoiceReportDao.getInvoiceMonthly(BillFrom, BillTo, ClientName, Payment, Accno, vattype, from, to, department);
@@ -233,6 +236,10 @@ public class ReportService {
     
     public List<ARNirvana> SearchArNirvanaFromFilter(String invtype,String department,String billtype,String from,String to,String status){
         return arNirvanaDao.SearchArNirvanaFromFilter(invtype, department, billtype, from, to, status);
+    }
+    
+    public List<CollectionNirvana> getCollectionNirvanaFromFilter(String department,String type,String status,String from,String to,String invno,String printby){
+        return collectionNirvanaDao.getCollectionNirvanaFromFilter(department, type, status, from, to, invno, printby);
     }
     
     public List getBillAirAgentReport(){
@@ -478,6 +485,14 @@ public class ReportService {
 
     public void setArNirvanaDao(ARNirvanaDao arNirvanaDao) {
         this.arNirvanaDao = arNirvanaDao;
+    }
+
+    public CollectionNirvanaDao getCollectionNirvanaDao() {
+        return collectionNirvanaDao;
+    }
+
+    public void setCollectionNirvanaDao(CollectionNirvanaDao collectionNirvanaDao) {
+        this.collectionNirvanaDao = collectionNirvanaDao;
     }
     
     
