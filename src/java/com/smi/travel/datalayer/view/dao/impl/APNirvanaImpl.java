@@ -663,4 +663,102 @@ public class APNirvanaImpl implements APNirvanaDao {
 
     }
 
+    @Override
+    public List getApNirvanaReport(String paymentType, String productType, String status, String from, String to, String printby) {
+        UtilityFunction util = new UtilityFunction();
+        Session session = this.getSessionFactory().openSession();
+        StringBuffer query = new StringBuffer(" SELECT `ap_nirvana`.* FROM `ap_nirvana` ");
+        boolean haveCondition = false;
+        if ((paymentType != null) && (!"".equalsIgnoreCase(paymentType))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" `ap_nirvana`.paymenttype = '" + paymentType + "'");
+            haveCondition = true;
+        }
+        if ((productType != null) && (!"".equalsIgnoreCase(productType))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" `ap_nirvana`.producttype = '" + productType + "'");
+            haveCondition = true;
+        }
+        if ((status != null) && (!"".equalsIgnoreCase(status))) {
+            if ("N".equalsIgnoreCase(status)) {
+                status = "New";
+            }
+            if ("E".equalsIgnoreCase(status)) {
+                status = "Export";
+            }
+            if ("C".equalsIgnoreCase(status)) {
+                status = "Change";
+            }
+            query.append(haveCondition ? " and" : " where");
+            query.append(" `ap_nirvana`.itf_status = '" + status + "'");
+            haveCondition = true;
+        }
+        if ((from != null) && (!"".equalsIgnoreCase(from))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" `ap_nirvana`.createdate >= '" + from + "'");
+            haveCondition = true;
+        }
+        if ((to != null) && (!"".equalsIgnoreCase(to))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" `ap_nirvana`.createdate <= '" + to + "'");
+            haveCondition = true;
+        }
+        
+//        SQLQuery sQLQuery = session.createSQLQuery(query.toString()).addEntity(APNirvana.class);
+//        List result = new ArrayList<APNirvana>();
+//        List result = sQLQuery.list();
+        List<Object[]> QueryList = session.createSQLQuery(query.toString())
+                .addScalar("intreference", Hibernate.STRING)
+                .addScalar("vendorid", Hibernate.STRING)
+                .addScalar("vendorname", Hibernate.STRING)
+                .addScalar("puraccount1", Hibernate.STRING)
+                .addScalar("vatamt", Hibernate.BIG_DECIMAL)
+                .addScalar("basevatamt", Hibernate.BIG_DECIMAL)
+                .addScalar("currencyid", Hibernate.STRING)
+                .list();
+        List result = new ArrayList<APNirvana>();
+        if(QueryList.isEmpty()){
+            SimpleDateFormat dateformat = new SimpleDateFormat();
+            dateformat.applyPattern("dd-MM-yyyy HH:mm:ss");
+            APNirvana apNirvana = new APNirvana();
+            apNirvana.setUser(printby);
+            apNirvana.setSystemdate(String.valueOf(dateformat.format(new Date())));
+            apNirvana.setDatefrom(from);
+            apNirvana.setDateto(to);
+            result.add(apNirvana);
+            return result;
+        }
+        boolean header = true;
+        for (Object[] B : QueryList) {
+            APNirvana apNirvana = new APNirvana();
+            apNirvana.setIntreference(util.ConvertString(B[0]));
+            apNirvana.setVendorid(util.ConvertString(B[1]));
+            apNirvana.setVendorname(util.ConvertString(B[2]));
+            apNirvana.setPuraccount1(util.ConvertString(B[3]));
+            apNirvana.setCurrencyid(util.ConvertString(B[6]));
+            apNirvana.setVatamt((B[4]) != null ? new BigDecimal(util.ConvertString(B[4])) : new BigDecimal("0.00"));
+            apNirvana.setBasevatamt((B[5]) != null ? new BigDecimal(util.ConvertString(B[5])) : new BigDecimal("0.00"));
+            if(header){
+                SimpleDateFormat dateformat = new SimpleDateFormat();
+                dateformat.applyPattern("dd-MM-yyyy HH:mm:ss");         
+                apNirvana.setUser(printby);
+                apNirvana.setSystemdate(String.valueOf(dateformat.format(new Date())));
+                apNirvana.setDatefrom(from);
+                apNirvana.setDateto(to);
+                header = false;
+            }
+            result.add(apNirvana);
+        }
+        
+//        APNirvana dataheader = new APNirvana();
+//        dataheader = (APNirvana) result.get(0);
+//        dataheader.setDatefrom(from);
+//        dataheader.setDateto(to);
+//        result.set(0, dataheader);
+        
+        this.sessionFactory.close();
+        session.close();
+        return result;
+    }
+
 }

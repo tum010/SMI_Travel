@@ -260,22 +260,10 @@ function printCreditNoteSummaryReport(){
 
 function checkFromDateField(){
     var inputFromDate = document.getElementById("iDateFrom");
-    var InputToDate = document.getElementById("iDateTo");
     if(inputFromDate.value === ''){          
-        var InputFromDateSpan1 = document.getElementById("InputFromDateSpan1");
-        inputFromDate.style.borderColor = "red";
-        InputFromDateSpan1.style.borderColor = "red";
-        $("#InputFromDateSpan1").addClass("alert-danger");
-        $("#InputFromDateSpan2").addClass("alert-danger");
-        if((inputFromDate.style.borderColor === "red") && (InputToDate.style.borderColor === "red")){
-            $("#ButtonPrint").addClass("disabled");
-        }           
+        $('#SearchCreditNoteForm').bootstrapValidator('revalidateField', 'iDateFrom');
+        $("#ButtonPrint").addClass("disabled");         
     } else {
-        var InputFromDateSpan1 = document.getElementById("InputFromDateSpan1");
-        inputFromDate.style.borderColor = "green";
-        InputFromDateSpan1.style.borderColor = "green";
-        $("#InputFromDateSpan1").removeClass("alert-danger");
-        $("#InputFromDateSpan2").removeClass("alert-danger");
         $("#ButtonPrint").removeClass("disabled");
         checkDateValue("from","");
     }      
@@ -283,22 +271,10 @@ function checkFromDateField(){
     
 function checkToDateField(){
     var InputToDate = document.getElementById("iDateTo");
-    var inputFromDate = document.getElementById("iDateFrom");
     if(InputToDate.value === ''){
-        var InputToDateSpan1 = document.getElementById("InputToDateSpan1");
-        InputToDate.style.borderColor = "red";
-        InputToDateSpan1.style.borderColor = "red";
-        $("#InputToDateSpan1").addClass("alert-danger");
-        $("#InputToDateSpan2").addClass("alert-danger");
-        if((inputFromDate.style.borderColor === "red") && (InputToDate.style.borderColor === "red")){
-            $("#ButtonPrint").addClass("disabled");
-        }    
+        $('#SearchCreditNoteForm').bootstrapValidator('revalidateField', 'iDateTo');
+        $("#ButtonPrint").addClass("disabled"); 
     }else{
-        var InputToDateSpan1 = document.getElementById("InputToDateSpan1");
-        InputToDate.style.borderColor = "green";
-        InputToDateSpan1.style.borderColor = "green";
-        $("#InputToDateSpan1").removeClass("alert-danger");
-        $("#InputToDateSpan2").removeClass("alert-danger");
         $("#ButtonPrint").removeClass("disabled");
         checkDateValue("to","");
     }               
@@ -312,41 +288,32 @@ function checkDateValue(date){
         var toDate = (InputToDate.value).split('-');      
         if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
             validateDate(date,"over");
-        }
-        if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))){
+        }else if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))){
             validateDate(date,"over");
-        }
-        if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) >= (parseInt(toDate[1]))) && (parseInt(fromDate[2])) > (parseInt(toDate[2]))){
+        }else if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) >= (parseInt(toDate[1]))) && (parseInt(fromDate[2])) > (parseInt(toDate[2]))){
             validateDate(date,"over");
+        }else{
+            $('#SearchCreditNoteForm').bootstrapValidator('revalidateField', 'iDateFrom');
+            $('#SearchCreditNoteForm').bootstrapValidator('revalidateField', 'iDateTo');
         }           
     }
 }
     
 function validateDate(date,option){
-    var inputFromDate = document.getElementById("iDateFrom");
-    var InputFromDateSpan1 = document.getElementById("InputFromDateSpan1");
-    var InputToDate = document.getElementById("iDateTo");
-    var InputToDateSpan1 = document.getElementById("InputToDateSpan1");
     if(option === 'over'){
         if(date === 'from'){
-            inputFromDate.style.borderColor = "red";
-            InputFromDateSpan1.style.borderColor = "red";     
+            $('#SearchCreditNoteForm').bootstrapValidator('revalidateField', 'iDateFrom');
+            $('#SearchCreditNoteForm').bootstrapValidator('revalidateField', 'iDateTo');
         }
         if(date === 'to'){
-            InputToDate.style.borderColor = "red";
-            InputToDateSpan1.style.borderColor = "red";
+            $('#SearchCreditNoteForm').bootstrapValidator('revalidateField', 'iDateFrom');
+            $('#SearchCreditNoteForm').bootstrapValidator('revalidateField', 'iDateTo');
         }           
         $("#ButtonPrint").addClass("disabled");
     } else {
-        inputFromDate.style.borderColor = "red";
-        InputFromDateSpan1.style.borderColor = "red";
-        $("#InputFromDateSpan1").addClass("alert-danger");
-        $("#InputFromDateSpan2").addClass("alert-danger");        
-        InputToDate.style.borderColor = "red";
-        InputToDateSpan1.style.borderColor = "red";
-        $("#InputToDateSpan1").addClass("alert-danger");
-        $("#InputToDateSpan2").addClass("alert-danger");
+        $('#SearchCreditNoteForm').bootstrapValidator('revalidateField', 'iDateFrom');
+        $('#SearchCreditNoteForm').bootstrapValidator('revalidateField', 'iDateTo');
         $("#ButtonPrint").addClass("disabled");
-    }        
+    }
 }
 </script>

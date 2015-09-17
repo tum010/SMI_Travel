@@ -6,9 +6,12 @@
 package com.smi.travel.controller.excel;
 
 import com.smi.travel.datalayer.entity.SystemUser;
+import com.smi.travel.datalayer.service.ARMonitorService;
 import com.smi.travel.datalayer.service.ReportService;
+import com.smi.travel.datalayer.view.entity.ARNirvana;
 import com.smi.travel.master.controller.SMITravelController;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,6 +32,10 @@ public class ExportDataToExcelController  extends SMITravelController{
     private static final String TicketFareSummaryByStaff = "TicketFareSummaryByStaff";
     private static final String TicketFareSummaryByAgent = "TicketFareSummaryByAgent";
     private static final String BillAirAgent = "BillAirAgent";
+    private static final String BillAirAgentSummary = "BillAirAgentSummary";
+    private static final String ChangeARReport = "ChangeARReport";
+    private static final String CollectionReport = "CollectionReport";
+    private static final String ApReport = "ApReport";
     private static final String ReportName = "name";
     private static final String ParaMeter = "parameter";
     @Override
@@ -49,6 +56,15 @@ public class ExportDataToExcelController  extends SMITravelController{
         String issuedateTo = request.getParameter("issuedateTo");   
         String invdateFrom = request.getParameter("invdateFrom");   
         String invdateTo = request.getParameter("invdateTo"); 
+
+        
+        //Ar Monitor
+        String invoiceType = request.getParameter("invoiceType");
+        String departmnt = request.getParameter("department");
+        String type = request.getParameter("arType");
+        String from = request.getParameter("arFromDate");
+        String to = request.getParameter("arToDate");
+        String status = request.getParameter("arStatus");
         
         SystemUser user = (SystemUser) session.getAttribute("USER");
         String printby = user.getRole().getName(); 
@@ -76,6 +92,26 @@ public class ExportDataToExcelController  extends SMITravelController{
         }else if(BillAirAgent.equalsIgnoreCase(name)){
             System.out.println("get excel data agent");
             data = reportservice.getBillAirAgentReport();
+        }else if(ChangeARReport.equalsIgnoreCase(name)){
+            System.out.println("get excel data agent");
+            data = reportservice.SearchArNirvanaFromFilter(invoiceType, departmnt, type, from, to, status);
+        }else if(BillAirAgentSummary.equalsIgnoreCase(name)){
+            System.out.println("get excel data agent");
+            data = reportservice.getBillAirAgentReportSummary();
+        }else if(CollectionReport.equalsIgnoreCase(name)){
+            //Collectipn Report
+            type = request.getParameter("type");
+            status = request.getParameter("status");
+            from = request.getParameter("inputFromDate");
+            to = request.getParameter("inputToDate");
+            String invno = request.getParameter("invno");
+            System.out.println("get excel data collection report");
+            data = reportservice.getCollectionNirvanaFromFilter(department, type, status, from, to, invno, printby); 
+        }else if(ApReport.equals(name)){
+            status = request.getParameter("status");
+            String payment = request.getParameter("payment");
+            System.out.println("get excel data ap nirvana");
+            data = reportservice.getApNirvanaReport(payment, ticketType, status, dateFrom, dateTo, printby);
         }
 		
         return new ModelAndView("ExportDataToExcelView",name,data).addObject(ReportName, name);
@@ -89,7 +125,4 @@ public class ExportDataToExcelController  extends SMITravelController{
     public void setReportservice(ReportService reportservice) {
         this.reportservice = reportservice;
     }
-    
-    
-
 }

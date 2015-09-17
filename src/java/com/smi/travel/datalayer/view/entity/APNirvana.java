@@ -15,6 +15,11 @@ import java.util.Date;
  */
 public class APNirvana {
     private String rowid;
+    private String systemdate;
+    private String user;
+    private String datefrom;
+    private String dateto;
+    private String departmentheader;
     private String refinvoiceno;
     private String intreference;
     private String vendorid;
@@ -1324,5 +1329,75 @@ public class APNirvana {
      */
     public void setRowid(String rowid) {
         this.rowid = rowid;
+    }
+
+    /**
+     * @return the systemdate
+     */
+    public String getSystemdate() {
+        return systemdate;
+    }
+
+    /**
+     * @param systemdate the systemdate to set
+     */
+    public void setSystemdate(String systemdate) {
+        this.systemdate = systemdate;
+    }
+
+    /**
+     * @return the user
+     */
+    public String getUser() {
+        return user;
+    }
+
+    /**
+     * @param user the user to set
+     */
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    /**
+     * @return the datefrom
+     */
+    public String getDatefrom() {
+        return datefrom;
+    }
+
+    /**
+     * @param datefrom the datefrom to set
+     */
+    public void setDatefrom(String datefrom) {
+        this.datefrom = datefrom;
+    }
+
+    /**
+     * @return the dateto
+     */
+    public String getDateto() {
+        return dateto;
+    }
+
+    /**
+     * @param dateto the dateto to set
+     */
+    public void setDateto(String dateto) {
+        this.dateto = dateto;
+    }
+
+    /**
+     * @return the departmentheader
+     */
+    public String getDepartmentheader() {
+        return departmentheader;
+    }
+
+    /**
+     * @param departmentheader the departmentheader to set
+     */
+    public void setDepartmentheader(String departmentheader) {
+        this.departmentheader = departmentheader;
     }
 }

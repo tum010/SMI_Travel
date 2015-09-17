@@ -12,12 +12,12 @@ import org.springframework.web.servlet.view.RedirectView;
 public class CollectionMonitorController extends SMITravelController {
     private static final ModelAndView CollectionMonitor = new ModelAndView("CollectionMonitor");
     private static final ModelAndView CollectionMonitor_REFRESH = new ModelAndView(new RedirectView("CollectionMonitor.smi", true));
-    private static final String TYPE = "collectionType";
-    private static final String DEPARTMENT = "collectionDepartment";
-    private static final String STATUS = "collectionStatus";
+    private static final String TYPE = "type";
+    private static final String DEPARTMENT = "department";
+    private static final String STATUS = "status";
     private static final String DATEFROM = "collectionFromDate";
     private static final String DATETO = "collectionToDate";
-    private static final String INVNO = "collectionInvNo";
+    private static final String INVNO = "invno";
     private static final String CollectionList = "CollectionList";
     private CollectionNirvanaService collectionNirvanaService;
     private UtilityService utilityService;
@@ -25,22 +25,22 @@ public class CollectionMonitorController extends SMITravelController {
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String action = request.getParameter("action");
-        String department = request.getParameter("collectionDepartment");
-        String type = request.getParameter("collectionType");
-        String status = request.getParameter("collectionStatus");
+        String department = request.getParameter("department");
+        String type = request.getParameter("type");
+        String status = request.getParameter("status");
         String from = request.getParameter("inputFromDate");
         String to = request.getParameter("inputToDate");
-        String invNo = request.getParameter("collectionInvNo");
+        String invno = request.getParameter("invno");
         
         request.setAttribute(DEPARTMENT,department);
         request.setAttribute(TYPE,type);
         request.setAttribute(STATUS,status);
         request.setAttribute(DATEFROM,from);
         request.setAttribute(DATETO,to);
-        request.setAttribute(INVNO,invNo);
+        request.setAttribute(INVNO,invno);
         
         if ("search".equalsIgnoreCase(action)){
-            List<CollectionNirvana>  collectionNirvanas = collectionNirvanaService.SearchCollectionNirvanaFromFilter(department, type, status, from, to, invNo);
+            List<CollectionNirvana>  collectionNirvanas = collectionNirvanaService.getCollectionNirvanaFromFilter(department, type, status, from, to, invno, "");
             if(collectionNirvanas != null){
                 request.setAttribute(CollectionList,collectionNirvanas);
             } 

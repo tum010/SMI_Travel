@@ -6,9 +6,12 @@
 
 package com.smi.travel.datalayer.service;
 
+import com.smi.travel.datalayer.view.dao.APNirvanaDao;
+import com.smi.travel.datalayer.view.dao.ARNirvanaDao;
 import com.smi.travel.datalayer.view.dao.AgentCommissionReportDao;
 import com.smi.travel.datalayer.view.dao.AirlineSummaryDao;
 import com.smi.travel.datalayer.view.dao.BillAirAgentDao;
+import com.smi.travel.datalayer.view.dao.CollectionNirvanaDao;
 import com.smi.travel.datalayer.view.dao.CreditNoteReportDao;
 import com.smi.travel.datalayer.view.dao.CreditNoteSummaryReportDao;
 import com.smi.travel.datalayer.view.dao.DaytourOtherDao;
@@ -32,6 +35,8 @@ import com.smi.travel.datalayer.view.dao.TicketOrderDao;
 import com.smi.travel.datalayer.view.dao.TicketSaleProfitVolumnDao;
 import com.smi.travel.datalayer.view.dao.TicketSummaryDao;
 import com.smi.travel.datalayer.view.dao.TransferJobReportDao;
+import com.smi.travel.datalayer.view.entity.ARNirvana;
+import com.smi.travel.datalayer.view.entity.CollectionNirvana;
 import com.smi.travel.report.GenerateReport;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +76,9 @@ public class ReportService {
     private TaxInvoiceSummaryReportDao taxInvoiceSummaryReportDao;
     private CreditNoteSummaryReportDao creditNoteSummaryReportDao;
     private BillAirAgentDao  billAirAgentDao;
+    private ARNirvanaDao arNirvanaDao;
+    private CollectionNirvanaDao collectionNirvanaDao;
+    private APNirvanaDao apNirvanaDao;
     
     public List getInvoiceMonthly(String BillFrom,String BillTo,String ClientName,String Payment,String Accno,String vattype,String from,String to,String department){
         return invoiceReportDao.getInvoiceMonthly(BillFrom, BillTo, ClientName, Payment, Accno, vattype, from, to, department);
@@ -228,8 +236,24 @@ public class ReportService {
         return creditNoteSummaryReportDao.getCreditNoteSummaryReport(from, to, department, status, systemuser);
     }
     
+    public List<ARNirvana> SearchArNirvanaFromFilter(String invtype,String department,String billtype,String from,String to,String status){
+        return arNirvanaDao.SearchArNirvanaFromFilter(invtype, department, billtype, from, to, status);
+    }
+    
+    public List<CollectionNirvana> getCollectionNirvanaFromFilter(String department,String type,String status,String from,String to,String invno,String printby){
+        return collectionNirvanaDao.getCollectionNirvanaFromFilter(department, type, status, from, to, invno, printby);
+    }
+    
+    public List getApNirvanaReport(String paymentType,String producttype,String status,String from,String to,String printby) {
+        return getApNirvanaDao().getApNirvanaReport(paymentType, producttype, status, from, to, printby);
+    }
+    
     public List getBillAirAgentReport(){
         return billAirAgentDao.getBillAirAgentReport();
+    }
+    
+    public List getBillAirAgentReportSummary(){
+        return billAirAgentDao.getBillAirAgentReportSummary();
     }
 
     public HotelVoucherDao getHotelVoucherdao() {
@@ -460,6 +484,28 @@ public class ReportService {
     public BillAirAgentDao getBillAirAgentDao() {
         return billAirAgentDao;
     }
-    
-    
+
+    public ARNirvanaDao getArNirvanaDao() {
+        return arNirvanaDao;
+    }
+
+    public void setArNirvanaDao(ARNirvanaDao arNirvanaDao) {
+        this.arNirvanaDao = arNirvanaDao;
+    }
+
+    public CollectionNirvanaDao getCollectionNirvanaDao() {
+        return collectionNirvanaDao;
+    }
+
+    public void setCollectionNirvanaDao(CollectionNirvanaDao collectionNirvanaDao) {
+        this.collectionNirvanaDao = collectionNirvanaDao;
+    }
+
+    public APNirvanaDao getApNirvanaDao() {
+        return apNirvanaDao;
+    }
+
+    public void setApNirvanaDao(APNirvanaDao apNirvanaDao) {
+        this.apNirvanaDao = apNirvanaDao;
+    }      
 }

@@ -292,22 +292,10 @@
   
     function checkFromDateField(){
         var inputFromDate = document.getElementById("InputFromDate");
-        var InputToDate = document.getElementById("InputToDate");
         if(inputFromDate.value === ''){          
-            var InputFromDateSpan1 = document.getElementById("InputFromDateSpan1");
-            inputFromDate.style.borderColor = "red";
-            InputFromDateSpan1.style.borderColor = "red";
-            $("#InputFromDateSpan1").addClass("alert-danger");
-            $("#InputFromDateSpan2").addClass("alert-danger");
-            if((inputFromDate.style.borderColor === "red") && (InputToDate.style.borderColor === "red")){
-                $("#btnPrint").addClass("disabled");
-            }           
+            $('#TaxInvoiceSearchForm').bootstrapValidator('revalidateField', 'InputFromDate');
+            $("#btnPrint").addClass("disabled");         
         } else {
-            var InputFromDateSpan1 = document.getElementById("InputFromDateSpan1");
-            inputFromDate.style.borderColor = "green";
-            InputFromDateSpan1.style.borderColor = "green";
-            $("#InputFromDateSpan1").removeClass("alert-danger");
-            $("#InputFromDateSpan2").removeClass("alert-danger");
             $("#btnPrint").removeClass("disabled");
             checkDateValue("from","");
         }      
@@ -315,22 +303,10 @@
     
     function checkToDateField(){
         var InputToDate = document.getElementById("InputToDate");
-        var inputFromDate = document.getElementById("InputFromDate");
         if(InputToDate.value === ''){
-            var InputToDateSpan1 = document.getElementById("InputToDateSpan1");
-            InputToDate.style.borderColor = "red";
-            InputToDateSpan1.style.borderColor = "red";
-            $("#InputToDateSpan1").addClass("alert-danger");
-            $("#InputToDateSpan2").addClass("alert-danger");
-            if((inputFromDate.style.borderColor === "red") && (InputToDate.style.borderColor === "red")){
-                $("#btnPrint").addClass("disabled");
-            }    
+            $('#TaxInvoiceSearchForm').bootstrapValidator('revalidateField', 'InputToDate');
+            $("#btnPrint").addClass("disabled");  
         }else{
-            var InputToDateSpan1 = document.getElementById("InputToDateSpan1");
-            InputToDate.style.borderColor = "green";
-            InputToDateSpan1.style.borderColor = "green";
-            $("#InputToDateSpan1").removeClass("alert-danger");
-            $("#InputToDateSpan2").removeClass("alert-danger");
             $("#btnPrint").removeClass("disabled");
             checkDateValue("to","");
         }               
@@ -344,41 +320,32 @@
             var toDate = (InputToDate.value).split('-');
             if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
                 validateDate(date,"over");
-            }
-            if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))){
+            }else if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))){
                 validateDate(date,"over");
-            }
-            if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) >= (parseInt(toDate[1]))) && (parseInt(fromDate[2])) > (parseInt(toDate[2]))){
+            }else if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) >= (parseInt(toDate[1]))) && (parseInt(fromDate[2])) > (parseInt(toDate[2]))){
                 validateDate(date,"over");
+            }else{
+                $('#TaxInvoiceSearchForm').bootstrapValidator('revalidateField', 'InputFromDate');
+                $('#TaxInvoiceSearchForm').bootstrapValidator('revalidateField', 'InputToDate');
             }          
         }
     }
     
     function validateDate(date,option){
-        var inputFromDate = document.getElementById("InputFromDate");
-        var InputFromDateSpan1 = document.getElementById("InputFromDateSpan1");
-        var InputToDate = document.getElementById("InputToDate");
-        var InputToDateSpan1 = document.getElementById("InputToDateSpan1");
         if(option === 'over'){
             if(date === 'from'){
-                inputFromDate.style.borderColor = "red";
-                InputFromDateSpan1.style.borderColor = "red";     
+                $('#TaxInvoiceSearchForm').bootstrapValidator('revalidateField', 'InputFromDate');
+                $('#TaxInvoiceSearchForm').bootstrapValidator('revalidateField', 'InputToDate');
             }
             if(date === 'to'){
-                InputToDate.style.borderColor = "red";
-                InputToDateSpan1.style.borderColor = "red";
+                $('#TaxInvoiceSearchForm').bootstrapValidator('revalidateField', 'InputFromDate');
+                $('#TaxInvoiceSearchForm').bootstrapValidator('revalidateField', 'InputToDate');
             }           
             $("#btnPrint").addClass("disabled");
         } else {
-            inputFromDate.style.borderColor = "red";
-            InputFromDateSpan1.style.borderColor = "red";
-            $("#InputFromDateSpan1").addClass("alert-danger");
-            $("#InputFromDateSpan2").addClass("alert-danger");        
-            InputToDate.style.borderColor = "red";
-            InputToDateSpan1.style.borderColor = "red";
-            $("#InputToDateSpan1").addClass("alert-danger");
-            $("#InputToDateSpan2").addClass("alert-danger");
+            $('#TaxInvoiceSearchForm').bootstrapValidator('revalidateField', 'InputFromDate');
+            $('#TaxInvoiceSearchForm').bootstrapValidator('revalidateField', 'InputToDate');
             $("#btnPrint").addClass("disabled");
-        }        
+        }
     }
 </script>

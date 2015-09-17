@@ -16,8 +16,8 @@ import java.util.List;
 public class CollectionNirvanaService {
     private CollectionNirvanaDao collectionNirvanaDao;
     
-    public List<CollectionNirvana> SearchCollectionNirvanaFromFilter(String department,String type,String status,String from,String to,String invno){
-        return collectionNirvanaDao.SearchCollectionNirvanaFromFilter(department, type, status, from, to, invno);
+    public List<CollectionNirvana> getCollectionNirvanaFromFilter(String department,String type,String status,String from,String to,String invno,String printby){
+        return collectionNirvanaDao.getCollectionNirvanaFromFilter(department, type, status, from, to, invno, printby);
     }
 
     public CollectionNirvanaDao getCollectionNirvanaDao() {

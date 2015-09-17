@@ -230,7 +230,7 @@
             <div class="col-xs-12">
                 <div class="col-xs-1 text-right" style="width: 665px"></div>
                 <div class="col-xs-1 text-right" style="width: 210px">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="changeARReport()">
                         <span id="btnDownloadAP" class="glyphicon glyphicon-print" ></span> Print Change AR Report
                     </button>
                 </div>
@@ -278,15 +278,16 @@
 
         });
         $(".money").mask('000,000,000.00', {reverse: true});
+        
         var table = $('#arDataListTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
             "bFilter": false,
+            "bPaginate": false,
             "bInfo": false,
-            "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-            "iDisplayLength": 50,
+            "bLengthChange": false,
+            "iDisplayLength": 10,
             "bSort": false,
-            "bPaginate": false
         });
         
         $('#arDataListTable tbody').on('click', 'tr', function () {
@@ -420,6 +421,10 @@
         $("#textAlertDivSave").hide();
         $('#textAlertDivNotChoose').hide();
         $("#arExportModal").modal("show");
+    }
+    
+    function changeARReport(){
+        window.open("Excel.smi?name=ChangeARReport"); 
     }
     
     function confirmExport(){

@@ -45,7 +45,7 @@
                         <label class="control-label" for="">From<font style="color: red">*</font></lable>
                     </div>
                     <div class="col-md-2 form-group"> 
-                        <div class='input-group date' id="DateFrom">
+                        <div class='input-group date fromdate' id="DateFrom">
                             <c:if test='${fromdate != null}'>
                                 <input id="FromDate" name="FromDate"  type="text" 
                                    class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${fromdate}">
@@ -64,7 +64,7 @@
                         <label class="control-label" for="">To <font style="color: red">*</font>&nbsp;</lable>
                     </div>
                     <div class="col-md-2 form-group"> 
-                        <div class='input-group date' id="DateTo">
+                        <div class='input-group date todate' id="DateTo">
                             <c:if test='${todate != null}'>
                                 <input id="ToDate" name="ToDate"  type="text" 
                                    class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${todate}">
@@ -160,7 +160,7 @@
                         </button>                                          
                     </div>                   
                     <div class="col-md-1 text-right " style="padding: 0px 0px 0px 0px">
-                        <button type="button" onclick="printInvoiceSummary();" class="btn btn-default">
+                        <button id="btnPrint" type="button" onclick="printInvoiceSummary();" class="btn btn-default">
                             <span id="SpanPrint" class="glyphicon glyphicon-print"></span> Print
                         </button>
                     </div>    
