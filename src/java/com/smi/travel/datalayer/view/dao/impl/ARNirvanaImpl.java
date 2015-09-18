@@ -7,17 +7,24 @@
 package com.smi.travel.datalayer.view.dao.impl;
 
 import com.smi.travel.datalayer.view.dao.ARNirvanaDao;
+import com.smi.travel.datalayer.view.entity.APNirvana;
 import com.smi.travel.datalayer.view.entity.ARNirvana;
 import com.smi.travel.util.UtilityFunction;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import net.sourceforge.jtds.jdbc.DateTime;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -31,6 +38,19 @@ import org.hibernate.Transaction;
 public class ARNirvanaImpl implements  ARNirvanaDao{
     private SessionFactory sessionFactory;
     private Transaction transaction;
+    private static final String[] FILE_HEADER
+            = {"intreference", "salesmanid", "customerid", "customername", "divisionid", 
+                "projectid", "transcode", "transdate", "duedate", "currencyid", 
+                "homerate", "foreignrate", "salesamt", "saleshmamt", "vatamt", 
+                "vathmamt", "aramt", "arhmamt", "vatflag", "vatid", 
+                "whtflag", "whtid", "basewhtamt", "basewhthmamt", "whtamt", 
+                "whthmamt", "year", "period", "note", "salesaccount1", 
+                "salesdivision1", "salesproject1", "salesamt1", "saleshmamt1", "salesaccount2", 
+                "salesdivision2", "salesproject2", "salesamt2", "saleshmamt2", "salesaccount3", 
+                "salesdivision3", "salesproject3", "salesamt3", "saleshmamt3", "service", 
+                "araccount", "prefix", "documentno", "artrans", "cust_taxid", 
+                "cust_branch", "company_branch"};
+    
     @Override
     public List<ARNirvana> SearchArNirvanaFromFilter(String invtype, String department, String billtype, String from, String to, String status) {
         System.out.println("Invoice Type : " + invtype + ":");
@@ -190,7 +210,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             ar.setWhtflag(util.ConvertString(B[25]));
             ar.setWhtid(util.ConvertString(B[26]));
             ar.setBasewhtamt((BigDecimal) B[27]);
-            ar.setBasewhtmamt((BigDecimal) B[28]);
+            ar.setBasewhthmamt((BigDecimal) B[28]);
             ar.setWhtamt((BigDecimal) B[29]);
             ar.setWhthmamt((BigDecimal) B[30]);
             ar.setYear((Integer) B[31]);
@@ -229,8 +249,152 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
     }
 
     @Override
-    public String ExportARFileInterface(List<ARNirvana> APList,String pathfile) {
-        return "success";
+    public String ExportARFileInterface(List<ARNirvana> ARList,String pathfile) {
+        
+        String status = "";
+        List<ARNirvana> arDataList = this.SearchArNirvanaFromPaymentDetailId(ARList);
+        SimpleDateFormat folderName = new SimpleDateFormat("yyMMdd");
+        SimpleDateFormat fileName = new SimpleDateFormat("HHmmss");
+        File folder = new File(pathfile + folderName.format(Calendar.getInstance().getTime()));
+        if (!folder.exists() && !folder.isDirectory()) {
+            folder.mkdirs();
+        }
+        String fullFileName = folder.getAbsolutePath() + "\\AP" + fileName.format(Calendar.getInstance().getTime());
+
+        try {
+            HSSFWorkbook workbook = new HSSFWorkbook();
+            HSSFSheet sheet = workbook.createSheet();
+            int rownum = 0;
+            HSSFRow headerRow = sheet.createRow(rownum++);
+            for (int i = 0; i < FILE_HEADER.length; i++) {
+                HSSFCell cell = headerRow.createCell(i);
+                cell.setCellValue(FILE_HEADER[i]);
+            }
+
+            for (ARNirvana ar : arDataList) {
+                HSSFRow dataRow = sheet.createRow(rownum++);
+                int cellnum = 0;
+                HSSFCell cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getIntreference());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getSalesmanid());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getCustomerid());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getCustomername());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getDivisionid());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getProjectid());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getTranscode());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getTransdate());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getDuedate());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getCurrencyid());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ar.getHomerate()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ar.getForeignrate()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ar.getSalesamt()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ar.getSaleshmamt()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ar.getVatamt()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ar.getVathmamt()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ar.getAramt()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ar.getArhmamt()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getVatflag());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getVatid());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getWhtflag());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getWhtid());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ar.getBasewhtamt()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ar.getBasewhthmamt()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ar.getWhtamt()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ar.getWhthmamt()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getYear());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getPeriod());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getNote());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getSalesaccount1());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getSalesdivision1());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getSalesproject1());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ar.getSalesamt1()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ar.getSaleshmamt1()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getSalesaccount2());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getSalesdivision2());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getSalesproject2());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ar.getSalesamt2()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ar.getSaleshmamt2()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getSalesaccount3());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getSalesdivision3());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getSalesproject3());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ar.getSalesamt3()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ar.getSaleshmamt3()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getService());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getAraccount());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getPrefix());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getDocumentno());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getArtrans());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getCust_taxid());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getCust_branch());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ar.getCompany_branch());
+               
+            }
+
+            FileOutputStream out = new FileOutputStream(new File(fullFileName + ".xls"));
+            workbook.write(out);
+            out.close();
+            status = "success";
+        } catch (Exception e) {
+            e.printStackTrace();
+            for (ARNirvana ar : ARList) {
+                if(!"".equals(status)){
+                    status += ", ";
+                }
+                status += ar.getReceive_detail_id();
+            }
+        }
+        return status;
     }
 
     @Override
@@ -281,6 +445,23 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
 
     public Transaction getTransaction() {
         return transaction;
+    }
+
+    private List<ARNirvana> SearchArNirvanaFromPaymentDetailId(List<ARNirvana> ARList) {
+           Session session = this.getSessionFactory().openSession();
+        StringBuffer query = new StringBuffer(" SELECT '' as rowid, ar.* FROM `ar_nirvana` ar WHERE  receive_detail_id in (");
+        for (int i = 0; i < ARList.size(); i++) {
+            query.append(i == 0 ? "" : ",");
+            query.append(ARList.get(i).getReceive_detail_id());
+        }
+        query.append(")");
+
+        SQLQuery sQLQuery = session.createSQLQuery(query.toString()).addEntity(ARNirvana.class);
+        List result = sQLQuery.list();
+
+        this.sessionFactory.close();
+        session.close();
+        return result;
     }
     
 }

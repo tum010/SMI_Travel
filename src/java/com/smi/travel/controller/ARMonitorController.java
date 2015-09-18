@@ -51,8 +51,18 @@ public class ARMonitorController extends SMITravelController {
             request.setAttribute("to", to);
             request.setAttribute("status", status);
         }else if("export".equals(action)){
+            String arCount = request.getParameter("arCount");
             List<ARNirvana> listAr = new LinkedList<>();
-           listAr = arMonitorService.SearchArNirvanaFromFilter(invoiceType, departmnt, type, from, to, status);
+            int count = Integer.parseInt(arCount);
+            for(int i=1;i<=count;i++){
+                String isSelect = request.getParameter("selectAll"+i);
+                if("1".equalsIgnoreCase(isSelect)){
+                    ARNirvana ar = new ARNirvana();
+                    String inputId = request.getParameter("inputId"+i);
+                    ar.setReceive_detail_id(inputId);
+                    listAr.add(ar);
+                }
+            }
            if(listAr != null){
                String isExport = arMonitorService.ExportARFileInterface(listAr,arMonitorService.GetPartFileExport());
                if("success".equals(isExport)){

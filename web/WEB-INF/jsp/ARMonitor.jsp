@@ -188,6 +188,7 @@
                 </div>
                 <div class="col-xs-12"><br></div>  
                 <div class="col-xs-12">
+                    <input type="hidden" id="apCount" name="arCount" value="${listAr.size()}"/>
                     <table id="arDataListTable" class="display paginated" cellspacing="0" width="100%">
                         <thead>
                             <tr class="datatable-header">

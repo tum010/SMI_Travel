@@ -70,7 +70,8 @@ public class APNirvanaImpl implements APNirvanaDao {
 
     @Override
     public String ExportAPFileInterface(List<APNirvana> APList, String pathFile) {
-
+        
+        String status = "";
         List<APNirvana> apDataList = this.SearchApNirvanaFromPaymentDetailId(APList);
         SimpleDateFormat folderName = new SimpleDateFormat("yyMMdd");
         SimpleDateFormat fileName = new SimpleDateFormat("HHmmss");
@@ -394,11 +395,17 @@ public class APNirvanaImpl implements APNirvanaDao {
             FileOutputStream out = new FileOutputStream(new File(fullFileName + ".xls"));
             workbook.write(out);
             out.close();
-
+            status = "success";
         } catch (Exception e) {
             e.printStackTrace();
+            for (APNirvana ap : APList) {
+                if(!"".equals(status)){
+                    status += ", ";
+                }
+                status += ap.getPayment_detail_id();
+            }
         }
-        return "success";
+        return status;
     }
 
     @Override
@@ -642,8 +649,6 @@ public class APNirvanaImpl implements APNirvanaDao {
     }
 
     public List<APNirvana> SearchApNirvanaFromPaymentDetailId(List<APNirvana> APList) {
-        UtilityFunction util = new UtilityFunction();
-        List<APNirvana> apNirvanaList = new ArrayList<APNirvana>();
         Session session = this.getSessionFactory().openSession();
         StringBuffer query = new StringBuffer(" SELECT '' as rowid, ap.* FROM `ap_nirvana` ap WHERE ");
         for (int i = 0; i < APList.size(); i++) {

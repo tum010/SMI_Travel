@@ -100,5 +100,6 @@
     <mapping resource="resource/hibernate/MFlightservice.hbm.xml"/>
     <mapping resource="resource/hibernate/PaymentAirCredit.hbm.xml"/>
     <mapping resource="resource/hibernate/APNirvana.hbm.xml"/>
+    <mapping resource="resource/hibernate/ARNirvana.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

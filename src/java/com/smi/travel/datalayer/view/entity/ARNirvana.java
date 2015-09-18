@@ -43,7 +43,7 @@ public class ARNirvana {
     private String whtflag;
     private String whtid;
     private BigDecimal basewhtamt;
-    private BigDecimal basewhtmamt;
+    private BigDecimal basewhthmamt;
     private BigDecimal whtamt;
     private BigDecimal whthmamt;
     private Integer year;
@@ -53,7 +53,7 @@ public class ARNirvana {
     private String salesdivision1;
     private String salesproject1;
     private BigDecimal salesamt1;
-    private BigDecimal salehmamt1;
+    private BigDecimal saleshmamt1;
     private String  salesaccount2;
     private String salesdivision2;
     private String salesproject2;
@@ -74,7 +74,8 @@ public class ARNirvana {
     private Integer company_branch;
     private Integer invid;
     private Integer id;
-    
+    private String receive_detail_id;
+    private String rowid;
 
     /**
      * @return the invtype
@@ -469,17 +470,17 @@ public class ARNirvana {
     }
 
     /**
-     * @return the basewhtmamt
+     * @return the basewhthmamt
      */
-    public BigDecimal getBasewhtmamt() {
-        return basewhtmamt;
+    public BigDecimal getBasewhthmamt() {
+        return basewhthmamt;
     }
 
     /**
-     * @param basewhtmamt the basewhtmamt to set
+     * @param basewhthmamt the basewhthmamt to set
      */
-    public void setBasewhtmamt(BigDecimal basewhtmamt) {
-        this.basewhtmamt = basewhtmamt;
+    public void setBasewhthmamt(BigDecimal basewhthmamt) {
+        this.basewhthmamt = basewhthmamt;
     }
 
     /**
@@ -609,17 +610,17 @@ public class ARNirvana {
     }
 
     /**
-     * @return the salehmamt1
+     * @return the saleshmamt1
      */
-    public BigDecimal getSalehmamt1() {
-        return salehmamt1;
+    public BigDecimal getSaleshmamt1() {
+        return saleshmamt1;
     }
 
     /**
-     * @param salehmamt1 the salehmamt1 to set
+     * @param saleshmamt1 the saleshmamt1 to set
      */
-    public void setSalehmamt1(BigDecimal salehmamt1) {
-        this.salehmamt1 = salehmamt1;
+    public void setSaleshmamt1(BigDecimal saleshmamt1) {
+        this.saleshmamt1 = saleshmamt1;
     }
 
     /**
@@ -894,6 +895,34 @@ public class ARNirvana {
      */
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    /**
+     * @return the receive_detail_id
+     */
+    public String getReceive_detail_id() {
+        return receive_detail_id;
+    }
+
+    /**
+     * @param receive_detail_id the receive_detail_id to set
+     */
+    public void setReceive_detail_id(String receive_detail_id) {
+        this.receive_detail_id = receive_detail_id;
+    }
+
+    /**
+     * @return the rowid
+     */
+    public String getRowid() {
+        return rowid;
+    }
+
+    /**
+     * @param rowid the rowid to set
+     */
+    public void setRowid(String rowid) {
+        this.rowid = rowid;
     }
     
     
