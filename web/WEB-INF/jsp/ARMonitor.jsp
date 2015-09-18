@@ -425,7 +425,31 @@
     }
     
     function changeARReport(){
-        window.open("Excel.smi?name=ChangeARReport"); 
+        var from = $('#arFromDate').val();
+        var to = $('#arToDate').val();
+        if((from === '') || (to === '')){
+            validateDate();
+        } else {
+            window.open("Excel.smi?name=ChangeARReport"); 
+        }   
+    }
+    
+    function validateDate(date,option){
+        if(option === 'over'){
+            if(date === 'from'){
+                $('#arMonitorForm').bootstrapValidator('revalidateField', 'arFromDate');
+                $('#arMonitorForm').bootstrapValidator('revalidateField', 'arToDate');
+            }
+            if(date === 'to'){
+                $('#arMonitorForm').bootstrapValidator('revalidateField', 'arFromDate');
+                $('#arMonitorForm').bootstrapValidator('revalidateField', 'arToDate');
+            }           
+            $("#btnDownloadAP").addClass("disabled");
+        } else {
+            $('#arMonitorForm').bootstrapValidator('revalidateField', 'arFromDate');
+            $('#arMonitorForm').bootstrapValidator('revalidateField', 'arToDate');
+            $("#btnDownloadAP").addClass("disabled");
+        }
     }
     
     function confirmExport(){

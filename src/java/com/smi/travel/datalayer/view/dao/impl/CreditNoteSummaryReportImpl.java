@@ -53,6 +53,7 @@ public class CreditNoteSummaryReportImpl implements CreditNoteSummaryReportDao{
             haveCondition = true;
         }
         if ((status != null) && (!"".equalsIgnoreCase(status))) {
+            if("NORMAL".equalsIgnoreCase(status)){status = "";}
             query.append(haveCondition ? " and" : " where");
             query.append(" `creditnote_summary`.status = '" + status + "'");
             haveCondition = true;

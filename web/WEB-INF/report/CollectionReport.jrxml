@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CollectionReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="83a38d83-9900-4464-a418-cbdc9b5b02f2">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="96"/>
+	<field name="datefrom" class="java.lang.String"/>
+	<field name="dateto" class="java.lang.String"/>
+	<field name="department" class="java.lang.String"/>
+	<field name="systemdate" class="java.lang.String"/>
+	<field name="no" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="detail" class="java.lang.String"/>
+	<field name="totalamount" class="java.lang.String"/>
+	<field name="remark" class="java.lang.String"/>
+	<field name="ocash" class="java.lang.String"/>
+	<field name="ochq" class="java.lang.String"/>
+	<field name="ocredit" class="java.lang.String"/>
+	<field name="obanktransfer" class="java.lang.String"/>
+	<field name="icash" class="java.lang.String"/>
+	<field name="ichq" class="java.lang.String"/>
+	<field name="icredit" class="java.lang.String"/>
+	<field name="ibanktransfer" class="java.lang.String"/>
+	<field name="chq" class="java.lang.String"/>
+	<field name="cash" class="java.lang.String"/>
+	<field name="creditcard" class="java.lang.String"/>
+	<field name="banktransfer" class="java.lang.String"/>
+	<variable name="countNo" class="java.lang.Integer" resetType="Column" calculation="Count">
+		<variableExpression><![CDATA[($V{countNo}==null?0:$V{countNo}+1)]]></variableExpression>
+	</variable>
+	<variable name="totalAmountPage" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[($F{totalamount} != null && !"null".equals($F{totalamount}) && $F{totalamount}.length() > 0) ? new BigDecimal($F{totalamount}) : "0.00"]]></variableExpression>
+	</variable>
+	<variable name="totalcash" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[($F{cash} != null && !"null".equals($F{cash}) && $F{cash}.length() > 0) ? new BigDecimal($F{cash}) : "0.00"]]></variableExpression>
+	</variable>
+	<variable name="totalchq" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[($F{chq} != null && !"null".equals($F{chq}) && $F{chq}.length() > 0) ? new BigDecimal($F{chq}) : "0.00"]]></variableExpression>
+	</variable>
+	<variable name="totalcredit" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[($F{creditcard} != null && !"null".equals($F{creditcard}) && $F{creditcard}.length() > 0) ? new BigDecimal($F{creditcard}) : "0.00"]]></variableExpression>
+	</variable>
+	<variable name="totalbanktransfer" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[($F{banktransfer} != null && !"null".equals($F{banktransfer}) && $F{banktransfer}.length() > 0) ? new BigDecimal($F{banktransfer}) : "0.00"]]></variableExpression>
+	</variable>
+	<variable name="grandtotal" class="java.math.BigDecimal" resetType="Column" calculation="Sum"/>
+	<pageHeader>
+		<band height="67" splitType="Stretch">
+			<staticText>
+				<reportElement x="179" y="3" width="191" height="21" uuid="2e9302cc-5ca8-41e1-8e6f-596ee4a0803d"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[S.M.I TRAVEL CO., LTD.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="179" y="24" width="191" height="21" uuid="0f50179a-4998-49c5-90e1-7de9205e23d7"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[COLLECTION REPORT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="179" y="44" width="36" height="21" uuid="db0b206f-7a32-47d5-b5c6-b51384d42b7e"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="286" y="44" width="11" height="21" uuid="634e7174-32dd-4edd-af8e-cf2c19c81b1c"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="215" y="45" width="71" height="20" uuid="84a2d28b-eb15-48dc-847c-ac45b5b8f02a"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{datefrom}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="297" y="45" width="73" height="20" uuid="94c91b6c-e27f-4b43-a732-8a6df27dd4b7"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dateto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="439" y="10" width="48" height="14" uuid="d1563953-03f1-4cde-a5bb-1fcd7d46db90"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Department :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="439" y="27" width="48" height="14" uuid="047de8d5-2fb5-4dd9-9f15-fa6bebf63d10"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Print Date :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="439" y="45" width="48" height="14" uuid="618b0d36-6a43-4624-9d46-ce3510000e6f"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Page :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="513" y="45" width="13" height="14" uuid="9aee8912-f8f3-4bc8-9840-04741922d660"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[of]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="490" y="45" width="22" height="15" uuid="135c3120-7a66-45c1-88d0-83a193050f0d"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="527" y="45" width="18" height="15" uuid="ea1e8493-68f8-4e72-b4ff-a42861e34685"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="490" y="10" width="64" height="14" uuid="95aa02dc-65d6-49ea-ba95-f445d004a847"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{department}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="490" y="27" width="64" height="14" uuid="6a7121d8-9ca8-4894-8a89-363eb0c22ee3"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{systemdate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="1" width="24" height="20" uuid="2ce7ba82-6d09-457b-82ec-f5f5cbc87d1d"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="1" width="131" height="20" uuid="c6662635-0e84-42d3-b345-73f322cf0cec"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="155" y="1" width="167" height="20" uuid="9bd8393c-aa45-4bb7-becb-c991ac839fa5"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Detail]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="322" y="1" width="100" height="20" uuid="af1f9a12-5163-4c0f-a9eb-91ded2e84e92"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="422" y="1" width="133" height="20" uuid="76cb891f-ef52-45f7-90d0-083bd265d76e"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Remarks]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="24" height="20" uuid="a07ed3c0-1193-4d95-96ed-8c62c5d9ec72"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{countNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="26" y="0" width="129" height="20" uuid="403a1e96-3bc8-465a-a948-275ebf791261"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="158" y="0" width="164" height="20" uuid="4d460d00-2c03-4abc-ad1d-edd77ef9ad3a"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{detail}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="322" y="0" width="96" height="20" uuid="a946a37a-6afe-4541-be31-66ffcf506ac0"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{totalamount} != null && !"null".equals($F{totalamount}) && $F{totalamount}.length() > 0 && !"".equalsIgnoreCase($F{totalamount})) ? new BigDecimal($F{totalamount}) : new BigDecimal("0.00")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="427" y="0" width="128" height="20" uuid="b179875f-7704-4a84-bd8a-45865bc017e4"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{remark}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" x="0" y="19" width="555" height="1" uuid="930152e6-9e9c-4e17-b6d6-259ef7c36eee"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="20" uuid="b4b5a603-9730-4561-97a9-26efc4c59a55"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="23" y="0" width="1" height="20" uuid="6e698649-b09b-4069-a40d-ac3156eee90e"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="155" y="0" width="1" height="20" uuid="a0e86355-8ea6-4fe5-9cde-a0f8a39074e8"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="321" y="0" width="1" height="20" uuid="cc9f19c6-2c1d-40b6-8f2d-2c49b299da21"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="421" y="0" width="1" height="20" uuid="453a95a1-55e6-467c-b49f-c2fa81f90b0d"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="554" y="0" width="1" height="20" uuid="f8819dac-073c-4ddc-ad0e-665908b173dc"/>
+			</line>
+		</band>
+	</detail>
+	<lastPageFooter>
+		<band height="207">
+			<rectangle>
+				<reportElement x="1" y="1" width="553" height="20" uuid="54fe9250-bf31-47d7-b644-f72566df37ec"/>
+			</rectangle>
+			<staticText>
+				<reportElement mode="Transparent" x="274" y="1" width="48" height="20" uuid="74644e8b-9f30-4a66-8c0f-873b0ba3e1a1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="322" y="1" width="96" height="20" uuid="c64a3629-3c5d-4cb4-ae6e-0c8212002822"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalAmountPage}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Opaque" x="1" y="23" width="553" height="181" uuid="fada78ea-f2a4-4fc4-9f64-cc028c8ce52c"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement x="43" y="33" width="470" height="20" uuid="840af7ab-79e3-4365-9ff9-a1d751c0d5ef"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement x="43" y="53" width="470" height="20" uuid="240b2a93-0333-40a2-88c9-409c47f5ce01"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement x="44" y="73" width="470" height="20" uuid="4c3c8b52-a15c-4614-9901-7c2de127cfa9"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement x="44" y="93" width="470" height="20" uuid="49b52165-3195-4def-bf72-553bc0c031eb"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="50" y="33" width="27" height="20" uuid="53f1d941-96ee-4f9c-bed1-49b9c9fccd45"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Cash]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="53" width="27" height="20" uuid="b1c18aa9-7881-4012-b190-35820ea75ad4"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[CHQ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="73" width="57" height="20" uuid="f9d246c5-dae5-4067-af6b-25df0b970dff"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Credit Card]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="93" width="76" height="20" uuid="f05d6ff1-06a8-4fb6-9be8-18d6d182f2c9"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Bank Transfer]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="130" y="33" width="100" height="20" uuid="3c981e2c-5cf5-452e-979a-d868ad833297"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{ocash} != null && !"null".equals($F{ocash}) && $F{ocash}.length() > 0 && !"".equalsIgnoreCase($F{ocash})) ? new BigDecimal($F{ocash}) : new BigDecimal("0.00")]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="130" y="53" width="100" height="20" uuid="c17f466e-4df0-4dfd-b22d-d88187efa8ad"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{ochq} != null && !"null".equals($F{ochq}) && $F{ochq}.length() > 0 && !"".equalsIgnoreCase($F{ochq})) ? new BigDecimal($F{ochq}) : new BigDecimal("0.00")]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="130" y="73" width="100" height="20" uuid="e9c7b427-86e8-489f-b5d8-70896ec9d8b9"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{ocredit} != null && !"null".equals($F{ocredit}) && $F{ocredit}.length() > 0 && !"".equalsIgnoreCase($F{ocredit})) ? new BigDecimal($F{ocredit}) : new BigDecimal("0.00")]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="130" y="93" width="100" height="20" uuid="df2c6f27-42bb-4afb-8abe-cd8389882353"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{obanktransfer} != null && !"null".equals($F{obanktransfer}) && $F{obanktransfer}.length() > 0 && !"".equalsIgnoreCase($F{obanktransfer})) ? new BigDecimal($F{obanktransfer}) : new BigDecimal("0.00")]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="238" y="33" width="8" height="20" uuid="e498fae4-a55a-4fa1-b4bb-6b43407dccd7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="238" y="93" width="8" height="20" uuid="9faa201c-8f46-4de9-a4b7-b2be06e1a49c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="238" y="73" width="8" height="20" uuid="6bc6c038-6c25-4358-b47f-6ada452e24fd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="238" y="53" width="8" height="20" uuid="59cf3057-9e24-4cab-b07d-ba525efb2f7b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="351" y="33" width="48" height="20" uuid="31dd7c7e-9782-4b5d-bf1c-90bc5885064b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="351" y="53" width="48" height="20" uuid="d66918af-84ab-4480-a92a-f4d9a36853b5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="351" y="73" width="48" height="20" uuid="84936604-908b-4f46-98b1-3c9827bfeaad"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="351" y="93" width="48" height="20" uuid="a457ec08-7163-4082-b797-9559ac43a42e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="404" y="33" width="100" height="20" uuid="911f2d0a-21e1-4d92-951e-899c6804da93"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{icash} != null && !"null".equals($F{icash}) && $F{icash}.length() > 0 && !"".equalsIgnoreCase($F{icash})) ? new BigDecimal($F{icash}) : new BigDecimal("0.00")]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="404" y="53" width="100" height="20" uuid="ee402beb-501e-4be1-ae3c-92dbf184d2fb"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{ichq} != null && !"null".equals($F{ichq}) && $F{ichq}.length() > 0 && !"".equalsIgnoreCase($F{ichq})) ? new BigDecimal($F{ichq}) : new BigDecimal("0.00")]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="404" y="73" width="100" height="20" uuid="e65eb748-fb45-40c7-bd1a-ab12883016ff"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{icredit} != null && !"null".equals($F{icredit}) && $F{icredit}.length() > 0 && !"".equalsIgnoreCase($F{icredit})) ? new BigDecimal($F{icredit}) : new BigDecimal("0.00")]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="404" y="93" width="100" height="20" uuid="8e49cfb1-be3c-491e-9e24-447fbf880105"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{ibanktransfer} != null && !"null".equals($F{ibanktransfer}) && $F{ibanktransfer}.length() > 0 && !"".equalsIgnoreCase($F{ibanktransfer})) ? new BigDecimal($F{ibanktransfer}) : new BigDecimal("0.00")]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="251" y="33" width="100" height="20" uuid="50a2aac2-5200-497a-845f-a97a725d4801"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalcash}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="251" y="53" width="100" height="20" uuid="25e94190-341b-43c1-b46b-1941aab27b87"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalchq}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="251" y="73" width="100" height="20" uuid="983ca34c-1a9a-4e65-80d7-32ac93b39c6e"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalcredit}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="251" y="93" width="100" height="20" uuid="4a684513-2440-4fe0-8038-4ed19a491bff"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalbanktransfer}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="321" y="120" width="78" height="20" uuid="b0efe7ff-007c-41ba-8d0a-dc369408aadb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Grand Total]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="404" y="120" width="100" height="20" uuid="f23974df-baa6-4c51-aef0-e92e771f1f1c"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{grandtotal}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="144" width="553" height="1" uuid="ca2163f3-9a1d-4f27-96bc-e0b89dba55c0"/>
+			</line>
+			<staticText>
+				<reportElement x="3" y="147" width="60" height="20" uuid="e118dc49-2914-4b8b-b23c-433eba32af21"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Prepare by]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="174" width="53" height="20" uuid="1f683726-f9a3-4e7e-b8de-45bd95a076ed"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Check by]]></text>
+			</staticText>
+			<line>
+				<reportElement x="69" y="160" width="178" height="1" uuid="c6bb3594-4e3e-4b04-9599-cbaa817b00c7"/>
+			</line>
+			<line>
+				<reportElement x="69" y="188" width="178" height="1" uuid="d2ab4764-be58-482b-b200-78579ea68a09"/>
+			</line>
+			<staticText>
+				<reportElement x="69" y="161" width="177" height="14" uuid="23a86e0c-710f-4686-9098-b69acdbc1757"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[(Cashier)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="69" y="189" width="177" height="14" uuid="d4715550-784c-4f4f-a552-4d59d19a9b02"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[(Accountant)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="297" y="175" width="66" height="20" uuid="8fab0f06-ecbb-42a0-897c-405fbb2b4125"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Approved by]]></text>
+			</staticText>
+			<line>
+				<reportElement x="367" y="187" width="178" height="1" uuid="4e529f86-6ea0-4416-b059-079858dd0e25"/>
+			</line>
+			<staticText>
+				<reportElement x="368" y="187" width="177" height="14" uuid="fa0b0d85-7451-4dad-aeca-675e0523279d"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[(Manager)]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+</jasperReport>

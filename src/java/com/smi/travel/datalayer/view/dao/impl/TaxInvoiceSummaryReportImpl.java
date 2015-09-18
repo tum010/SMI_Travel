@@ -57,6 +57,7 @@ public class TaxInvoiceSummaryReportImpl implements TaxInvoiceSummaryReportDao {
             haveCondition = true;
         }
         if ((status != null) && (!"".equalsIgnoreCase(status))) {
+            if("NORMAL".equalsIgnoreCase(status)){status = "";}
             query.append(haveCondition ? " and" : " where");
             query.append(" `taxinvoice_summary`.status = '" + status + "'");
             haveCondition = true;

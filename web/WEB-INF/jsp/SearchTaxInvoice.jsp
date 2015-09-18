@@ -185,8 +185,8 @@
         var table = $('#SearchTaxInvoiceTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
-            "bFilter": false,
-            "bInfo": false
+            "bFilter": false
+//            "aaSorting": [[ 0, "desc" ]]
         });
         
         $('#SearchTaxInvoiceTable tbody').on('click', 'tr', function () {
@@ -283,6 +283,9 @@
         var systemuser = document.getElementById("user").value;
         var status = document.getElementById("Status");
         var strStatus = status.options[status.selectedIndex].text;
+        if(strStatus === 'Choose'){
+            strStatus = "";
+        }
         if((fromdate === '') || (todate === '')){
            validateDate();
         } else {
