@@ -302,6 +302,9 @@ function printReceiptSummary(){
     var inputFromDate = document.getElementById('inputFromDate').value;
     var status = document.getElementById("status");
     var strStatus = status.options[status.selectedIndex].text;
+    if(strStatus === '----'){
+        strStatus = "";
+    }
     if((inputToDate === '') || (inputFromDate === '')){
         validateDate();
     } else {

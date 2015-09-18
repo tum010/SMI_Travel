@@ -251,6 +251,9 @@ function printCreditNoteSummaryReport(){
     var department = document.getElementById("department").value;
     var status = document.getElementById("status");
     var strStatus = status.options[status.selectedIndex].text;
+    if(strStatus === 'Choose'){
+        strStatus = "";
+    }
     if((fromdate === '') || (todate === '')){
         validateDate();
     } else {

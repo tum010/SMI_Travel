@@ -44,9 +44,6 @@ public class TaxInvoiceSummaryReportImpl implements TaxInvoiceSummaryReportDao {
         dateformat.applyPattern("dd-MMM-yyyy HH:mm:ss");         
         
         String departmentshow = "ALL";
-        if(("Choose".equalsIgnoreCase(status))){
-            status = "";
-        }
         StringBuffer query = new StringBuffer(" SELECT * FROM `taxinvoice_summary` ");
         boolean haveCondition = false;
         if ((from != null) && (!"".equalsIgnoreCase(from))) {
