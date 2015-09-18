@@ -44,7 +44,7 @@ public class TaxInvoiceSummaryReportImpl implements TaxInvoiceSummaryReportDao {
         dateformat.applyPattern("dd-MMM-yyyy HH:mm:ss");         
         
         String departmentshow = "ALL";
-        if(("Choose".equalsIgnoreCase(status)) || ("NORMAL".equalsIgnoreCase(status))){
+        if(("Choose".equalsIgnoreCase(status))){
             status = "";
         }
         StringBuffer query = new StringBuffer(" SELECT * FROM `taxinvoice_summary` ");
@@ -60,6 +60,7 @@ public class TaxInvoiceSummaryReportImpl implements TaxInvoiceSummaryReportDao {
             haveCondition = true;
         }
         if ((status != null) && (!"".equalsIgnoreCase(status))) {
+            if("NORMAL".equalsIgnoreCase(status)){status = "";}
             query.append(haveCondition ? " and" : " where");
             query.append(" `taxinvoice_summary`.status = '" + status + "'");
             haveCondition = true;
