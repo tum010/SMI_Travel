@@ -66,10 +66,29 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
         String query = "";
         int AndQuery = 0;
         
-        if(invtype != null  && department != null  &&  billtype != null  && from != null && to != null && status != null){
-            query = "SELECT * FROM ar_nirvana ar where" ; 
+        if("undefined".equals(invtype)){
+            invtype = null;
+        }
+        if("undefined".equals(department)){
+            department = null;
+        }
+        if("undefined".equals(billtype)){
+            billtype = null;
+        }
+        if("undefined".equals(from)){
+            from = null;
+        }
+        if("undefined".equals(to)){
+            to = null;
+        }
+        if("undefined".equals(status)){
+            status = null;
+        }
+        
+        if(invtype == null  && department == null  &&  billtype == null  && from == null && to == null && status == null){
+            query = "SELECT * FROM ar_nirvana ar " ; 
         }else{
-            query = "SELECT * FROM ar_nirvana ar " ;
+            query = "SELECT * FROM ar_nirvana ar  where " ;
         }
         
         if ( department != null && (!"".equalsIgnoreCase(department)) ) {

@@ -129,6 +129,7 @@ public class ReportController extends SMITravelController {
         String dateTo = request.getParameter("dateTo");
         String departmentRec = request.getParameter("departmentRec");
         String recType = request.getParameter("recType");
+        String statusInvoice = request.getParameter("status");
         
         Map model = new HashMap();
         List data = new ArrayList();
@@ -163,7 +164,7 @@ public class ReportController extends SMITravelController {
         } else if (TicketProfitSummary.equalsIgnoreCase(name)) {
             data = reportservice.getTicketProfitVolumn(ticketfrom, tickettype, startdate, enddate);
         } else if (InvoiceSummary.equalsIgnoreCase(name)) {
-            data = reportservice.getInvoiceSummary(from, to, department, typeInvoice,agent);
+            data = reportservice.getInvoiceSummary(from, to, department, typeInvoice,agent,statusInvoice);
         } else if (GuideJob.equalsIgnoreCase(name)) {
             data = reportservice.getGuildJobReport(tourDate, tourCode, user.getName());
         } else if (TransferJob.equalsIgnoreCase(name)) {

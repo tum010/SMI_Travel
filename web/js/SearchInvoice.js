@@ -261,11 +261,12 @@ function printInvoiceSummary(){
     var department = $('#Department').val();
     var type = $('#Type').val();
     var agent = $('#InvTo').val();
+    var status = $('#status').val();
 //    windsow.open("report.smi?name=InvoiceSummary");
     if((from === '') || (to === '')){
         validateDate();
     } else {
-        window.open("report.smi?name=InvoiceSummary"+"&fromdate="+from+"&todate="+to+"&department="+department+"&type="+type+"&agent="+agent);  
+        window.open("report.smi?name=InvoiceSummary"+"&fromdate="+from+"&todate="+to+"&department="+department+"&type="+type+"&agent="+agent+"&status="+status);  
     }   
 }
 

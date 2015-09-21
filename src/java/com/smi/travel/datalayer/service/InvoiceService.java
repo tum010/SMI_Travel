@@ -19,15 +19,15 @@ public class InvoiceService {
     private InvoiceDao invoiceDao;
     
     public String saveInvoice(Invoice invoice){
-        if(invoice.getId() != null){
+        if(invoice.getId() != null && !"".equals(invoice.getId())){
             return invoiceDao.updateInvoice(invoice);
         }else{
             return invoiceDao.insertInvoice(invoice);
         }
     }
     
-    public List<Invoice> SearchInvoice(String fromData,String toDate ,String department,String type,String agent){
-       return  invoiceDao.getSearchInvoice(fromData, toDate , department,type,agent);
+    public List<Invoice> SearchInvoice(String fromData,String toDate ,String department,String type,String agent,String status){
+       return  invoiceDao.getSearchInvoice(fromData, toDate , department,type,agent,status);
     }
             
     public Invoice searchInvoiceNo(String invoiceId,String department,String invoiceType){

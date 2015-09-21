@@ -14,6 +14,7 @@
 <c:set var="agent" value="${requestScope['agent']}" />
 <c:set var="agentName" value="${requestScope['agentName']}" />
 <c:set var="listAgent" value="${requestScope['listAgent']}" />
+<c:set var="status" value="${requestScope['status']}" />
 <c:set var="result" value="${requestScope['result']}" />
 
 <section class="content-header" >
@@ -153,7 +154,27 @@
                     <div class="col-md-2 form-group text-left" style="width: 200px;">
                         <input name="InvToName" id="InvToName" type="text" class="form-control" value="${agentName}" readonly=""/>
                     </div>
-                    <div class="col-md-4 "  ></div>
+                    <div class="col-xs-1 text-right" style="padding: 0px 0px 0px 20px">
+                        <label class="control-label" for="">Status</lable>
+                    </div>
+                    <div class="col-md-2 form-group" style="padding: 0px 0px 0px 30px">
+                        <select class="form-control" id="status" name="status">
+                            <option value="">--choose--</option>
+                            <c:set var="statusN" value="" />
+                            <c:set var="statusV" value="" />
+                                <c:choose>
+                                    <c:when test="${status == '1'}">
+                                    <c:set var="statusN" value="selected" />
+                                    </c:when>
+                                     <c:when test="${status == '2'}">
+                                        <c:set var="statusV" value="selected" />
+                                    </c:when>                                  
+                                </c:choose>>     
+                            <option value="1" ${statusN}>Normal</option>
+                            <option value="2" ${statusV}>Void</option>
+                        </select>    
+                    </div>
+                    <div class="col-md-1 "  ></div>
                     <div class="col-md-1 text-right " style="padding: 0px 30px 0px 0px;">
                         <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="search()" class="btn btn-primary btn-primary ">
                             <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search

@@ -37,7 +37,7 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
 //    
 
     @Override
-    public List getInvoiceSummary(String fromData, String toDate, String department, String type,String agent) {
+    public List getInvoiceSummary(String fromData, String toDate, String department, String type,String agent,String statusInvoice) {
         List<InvoiceSummary> listInovicSummary = new LinkedList<InvoiceSummary>();
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
@@ -45,6 +45,11 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
         List data = new ArrayList();
         String query = "";
         int AndQuery = 0;
+        if("1".equals(statusInvoice)){
+            statusInvoice = "NORMAL";
+        }else if("2".equals(statusInvoice)){
+            statusInvoice = "VOID";
+        }
         if("".equals(department)  && "".equals(type)  && "".equals(fromData)  && "".equals(toDate) && "".equals(agent)){
             query = "SELECT * FROM invoice_summary st " ; 
         }else{
@@ -72,6 +77,15 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
            }else{
                AndQuery = 1;
                query += " st.to = '" + agent + "'";
+           }
+        }
+        
+        if(statusInvoice != null && (!"".equalsIgnoreCase(statusInvoice))){
+            if(AndQuery == 1){
+                query += " and st.status = '" + statusInvoice + "'";
+           }else{
+               AndQuery = 1;
+               query += " st.status = '" + statusInvoice + "'";
            }
         }
         
