@@ -3008,7 +3008,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
           cell42.setCellValue(dataheader.getHeaderdepartment());
           cell42.setCellStyle(styleC22);
 //            sheet.addMergedRegion(CellRangeAddress.valueOf("B4:C4"));
-      }
+     
 
       // Header Table
       HSSFCellStyle styleC3 = wb.createCellStyle();
@@ -3064,7 +3064,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
       cell71.setCellValue("Status");
       cell71.setCellStyle(styleC3);
       sheet.autoSizeColumn(10);
-
+      }
       //Detail of Table
       int count = 6 ;
       int no = 1;
