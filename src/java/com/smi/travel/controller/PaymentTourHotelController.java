@@ -274,7 +274,7 @@ public class PaymentTourHotelController extends SMITravelController {
             
             paymentId = paymentWendy.getId();
             InputPayNo = paymentWendy.getPayNo();
-            itemStatus = paymentWendy.getMItemstatus().getId();
+            itemStatus = (paymentWendy.getMItemstatus() != null ? paymentWendy.getMItemstatus().getId() : "");
             InputPayDate = String.valueOf(paymentWendy.getPayDate());                       
             InputInvoiceSupCode = paymentWendy.getInvoiceSup();
             Detail = paymentWendy.getDetail();
