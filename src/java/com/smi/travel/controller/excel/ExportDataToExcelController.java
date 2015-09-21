@@ -91,7 +91,7 @@ public class ExportDataToExcelController  extends SMITravelController{
             data = reportservice.getTicketFareSumAgentStaff(ticketType, ticketBuy, airline, airlineCode, department, staff, termPay, printby, issuedateFrom, issuedateTo, invdateFrom, invdateTo,"agent");
         }else if(BillAirAgent.equalsIgnoreCase(name)){
             System.out.println("get excel data agent");
-            data = reportservice.getBillAirAgentReport();
+            data = reportservice.getBillAirAgentReportSummary();
         }else if(ChangeARReport.equalsIgnoreCase(name)){
             System.out.println("get excel data agent");
             data = reportservice.SearchArNirvanaFromFilter(invoiceType, departmnt, type, from, to, status);
