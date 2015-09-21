@@ -416,7 +416,7 @@ function setGuideName(name,no){
     
     if(no === 'ready'){
         var name1 = document.getElementById('InputGuideName1').value;
-        var name2 = document.getElementById('InputGuideName2').value;              
+        var name2 = document.getElementById('InputGuideName2').value;             
         var guideName = document.getElementById('guideName').value;
         $('#InvoiceSupGuideBill')
             .find('option')
@@ -455,7 +455,7 @@ function setGuideName(name,no){
                 document.getElementById('textAlertDivGuideName').innerHTML = 'Guide Bill is not match. Invoice sup is "' +guideName+ '".!!!';
             }          
         }
-        
+        var MDname = document.getElementById("MDname");
         if((MDname.value === 'tour')){
             $('#InvoiceSupGuideBillShow')
                 .find('option')
