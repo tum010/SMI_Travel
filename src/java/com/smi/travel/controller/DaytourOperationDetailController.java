@@ -10,6 +10,7 @@ import com.smi.travel.datalayer.entity.MPaytype;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.PaymentDetailWendy;
 import com.smi.travel.datalayer.entity.PaymentWendy;
+import com.smi.travel.datalayer.entity.PaymentWendyReference;
 import com.smi.travel.datalayer.entity.Place;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.entity.TourOperationDesc;
@@ -240,7 +241,7 @@ public class DaytourOperationDetailController extends SMITravelController {
 //        if("1".equalsIgnoreCase(confirmGuideBill)){
 //            setGuideBill(request, session, tourOperationDesc); 
 //        }
-        setGuideBill(request, session, tourOperationDesc); 
+        setGuideBill(request, session, tourOperationDesc, daytourBookings); 
         return result;
     }
 
@@ -377,16 +378,21 @@ public class DaytourOperationDetailController extends SMITravelController {
         for (int i = 0; i < row; i++) {
             String id = request.getParameter("refBookId" + (i + 1));
             String pu = request.getParameter("InputPu" + (i + 1));
+            String masterId = request.getParameter("masterId" + (i+1));
+            Master master = new Master();
+            master.setId(masterId);
             daytourBookingDetail.get(i).setId(id);
             daytourBookingDetail.get(i).setPickupOrder(util.convertStringToInteger(pu));
+            daytourBookingDetail.get(i).setMaster(master);
         }
         return daytourBookingDetail;
     }
     
-    private String setGuideBill(HttpServletRequest request, HttpSession session, TourOperationDesc tourOperationDesc) {
+    private String setGuideBill(HttpServletRequest request, HttpSession session, TourOperationDesc tourOperationDesc, List<DaytourBooking> daytourBookings) {
         String PayNoGuideBillId = request.getParameter("PayNoGuideBillId");
         String PayNoGuideBill = request.getParameter("PayNoGuideBill");
         String PaymentWendyDetailId = request.getParameter("PaymentWendyDetailId");
+        String refCode = request.getParameter("refCode");
         
         String status = request.getParameter("StatusGuideBill");
         String amount = request.getParameter("AmountGuideBill");
@@ -443,9 +449,10 @@ public class DaytourOperationDetailController extends SMITravelController {
         if((!"".equalsIgnoreCase(amount)) && (amount != null)){
             BigDecimal amountRe = new BigDecimal(amount.replaceAll(",",""));
             paymentDetailWendy.setAmount(amountRe);
-        }    
-        
-        String result = "";
+        }
+       
+        String result = "";            
+        String option = "daytour";
         if(("".equalsIgnoreCase(PayNoGuideBillId)) && ("".equalsIgnoreCase(PaymentWendyDetailId))){
             Date date = Calendar.getInstance().getTime();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -453,8 +460,21 @@ public class DaytourOperationDetailController extends SMITravelController {
             paymentWendy.setCreateDate(utilfunction.convertStringToDate(createDate));
             paymentWendy.setCreateBy(user.getUsername());
             paymentWendy.getPaymentDetailWendies().add(paymentDetailWendy);
-            result = paymentTourHotelService.InsertPaymentWendy(paymentWendy);
-            
+            result = paymentTourHotelService.InsertPaymentWendy(paymentWendy,option);
+            if(!"fail".equalsIgnoreCase(result)){
+                if(daytourBookings.size() > 0){
+                    for(int i=0;i<daytourBookings.size();i++){
+                        List<PaymentDetailWendy> list = new ArrayList<PaymentDetailWendy>();
+                        list = paymentWendy.getPaymentDetailWendies();
+                        PaymentWendyReference paymentWendyReference = new PaymentWendyReference();
+                        paymentWendyReference.setPaymentDetailWendy(paymentDetailWendy);
+                        paymentWendyReference.setMaster(daytourBookings.get(i).getMaster());
+                        String resultReference = paymentTourHotelService.InsertPaymentWendyReference(paymentWendyReference);
+                        System.out.println("Result Reference : "+resultReference);
+                    }
+                }          
+            }
+           
         } else {
             String createDate = request.getParameter("createDate");
             String createBy = request.getParameter("createBy");
@@ -469,8 +489,12 @@ public class DaytourOperationDetailController extends SMITravelController {
                 paymentDetailWendy.setId(PaymentWendyDetailId);
             }
             
+            if((!"".equalsIgnoreCase(refCode)) && (refCode != null)){
+                paymentDetailWendy.setRefCode(refCode);
+            }
+            
             paymentWendy.getPaymentDetailWendies().add(paymentDetailWendy);
-            result = paymentTourHotelService.UpdatePaymentWendy(paymentWendy);
+            result = paymentTourHotelService.UpdatePaymentWendy(paymentWendy,option);
             if("success".equalsIgnoreCase(result)){
                 result = PayNoGuideBill;
             } else {

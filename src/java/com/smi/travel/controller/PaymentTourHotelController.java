@@ -165,8 +165,9 @@ public class PaymentTourHotelController extends SMITravelController {
      
                 paymentWendy.setCreateBy(user.getUsername());
                 paymentWendy.setIsExport(0);
-
-                String result = paymentTourHotelService.InsertPaymentWendy(paymentWendy);
+                
+                String option = "";
+                String result = paymentTourHotelService.InsertPaymentWendy(paymentWendy,option);
                 System.out.println("result : " + result);
 
                 if(result == "fail"){
@@ -251,8 +252,8 @@ public class PaymentTourHotelController extends SMITravelController {
                 }   
                 
                 paymentWendy.setCreateBy(user.getUsername());                                             
-                
-                String result = paymentTourHotelService.UpdatePaymentWendy(paymentWendy);
+                String option = "";
+                String result = paymentTourHotelService.UpdatePaymentWendy(paymentWendy,option);
                 request.setAttribute("paymentId", paymentId);
                 request.setAttribute("payNo", InputPayNo);
                 request.setAttribute("resultText", result);

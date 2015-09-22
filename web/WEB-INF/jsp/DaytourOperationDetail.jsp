@@ -379,6 +379,7 @@
                                                                 <input type="text" id="InputPu${status.count}" name="InputPu${status.count}" class="form-control money" value="${dayTourDetai.pickupOrder}" />
                                                                 <input type="hidden" id="countPu${status.count}" name="countPu"  value="${status.count}" />
                                                                 <input type="hidden" id="refBookId${status.count}" name="refBookId${status.count}"  value="${dayTourDetai.id}" />
+                                                                <input type="hidden" id="masterId${status.count}" name="masterId${status.count}"  value="${dayTourDetai.master.id}" />
                                                             </td>
                                                             <c:set var="refno1" value="${fn:substring(dayTourDetai.master.referenceNo, 0, 2)}" />
                                                             <c:set var="refno2" value="${fn:substring(dayTourDetai.master.referenceNo, 2,7)}" />
@@ -711,6 +712,7 @@
                                                                 <input type="text" id="InputPu${status.count}" name="InputPu${status.count}" class="form-control money" value="${dayTourDetai.pickupOrder}" readonly=""/>
                                                                 <input type="hidden" id="countPu${status.count}" name="countPu"  value="${status.count}" />
                                                                 <input type="hidden" id="refBookId${status.count}" name="refBookId${status.count}"  value="${dayTourDetai.id}" />
+                                                                <input type="hidden" id="masterId${status.count}" name="masterId${status.count}"  value="${dayTourDetai.master.id}" />
                                                             </td>
                                                             <c:set var="refno1" value="${fn:substring(dayTourDetai.master.referenceNo, 0, 2)}" />
                                                             <c:set var="refno2" value="${fn:substring(dayTourDetai.master.referenceNo, 2,7)}" />
@@ -902,7 +904,7 @@
                                     <div id="GuideBillForm">
                                         <div class="col-xs-12 form-group">
                                             <div class="col-xs-1">
-                                                <label class="control-label">Payno</label>
+                                                <label class="control-label">Payno</label>                                                                                  
                                             </div>
                                             <div class="col-xs-1" style="width: 250px">                                       
                                                 <input class="form-control" type="text" id="PayNoGuideBill" name="PayNoGuideBill" value="${paymentWendyList.payNo}" readonly="">
@@ -1190,6 +1192,7 @@
                             <input class="form-control" type="hidden" id="PaymentWendyDetailId" name="PaymentWendyDetailId" value="${paymentWendyDetailList.id}" readonly="">
                             <input class="form-control" type="hidden" id="createBy" name="createBy" value="${paymentWendyList.createBy}" readonly="">
                             <input class="form-control" type="hidden" id="createDate" name="createDate" value="${paymentWendyList.createDate}" readonly="">
+                            <input class="form-control" type="hidden" id="refCode" name="refCode" value="${paymentWendyDetailList.refCode}" readonly="">
                             
                             <div class="col-xs-12 form-group"><hr/></div>  
                             <div class="text-center" style="padding-top: 10px">

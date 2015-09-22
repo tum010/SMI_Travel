@@ -9,6 +9,7 @@ import com.smi.travel.datalayer.dao.PaymentWendytourDao;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.PaymentDetailWendy;
 import com.smi.travel.datalayer.entity.PaymentWendy;
+import com.smi.travel.datalayer.entity.PaymentWendyReference;
 import com.smi.travel.datalayer.entity.TourOperationDesc;
 import com.smi.travel.datalayer.view.dao.InvoiceSuppilerDao;
 import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
@@ -61,8 +62,8 @@ public class PaymentTourHotelService {
         return this.paymentWendytourDao.DeletePaymentWendy(paymentWendy);
     }
 
-    public String InsertPaymentWendy(PaymentWendy payment) {
-        return this.paymentWendytourDao.InsertPaymentWendy(payment);
+    public String InsertPaymentWendy(PaymentWendy payment,String option) {
+        return this.paymentWendytourDao.InsertPaymentWendy(payment,option);
     }    
     
     public String DeletePaymentWendyDetail(PaymentDetailWendy DetailID) {
@@ -85,8 +86,8 @@ public class PaymentTourHotelService {
         return this.paymentWendytourDao.getPaymentDetailWendyList(paymentId);
     }
     
-    public String UpdatePaymentWendy(PaymentWendy payment) {
-        return this.paymentWendytourDao.UpdatePaymentWendy(payment);
+    public String UpdatePaymentWendy(PaymentWendy payment,String option) {
+        return this.paymentWendytourDao.UpdatePaymentWendy(payment,option);
     }
 
     public String getAccountCode(String PayType) {
@@ -104,4 +105,8 @@ public class PaymentTourHotelService {
     public PaymentWendy getPaymentWendyFromDayTourOperation(TourOperationDesc paymentWendy) {
         return this.paymentWendytourDao.getPaymentWendyFromDayTourOperation(paymentWendy);
     }        
+
+    public String InsertPaymentWendyReference(PaymentWendyReference paymentWendyReference) {
+        return this.paymentWendytourDao.InsertPaymentWendyReference(paymentWendyReference);
+    }
 }
