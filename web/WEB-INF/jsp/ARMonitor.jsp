@@ -284,9 +284,9 @@
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
             "bFilter": false,
-            "bPaginate": false,
+            "bPaginate": true,
             "bInfo": false,
-            "bLengthChange": false,
+            "bLengthChange": true,
             "iDisplayLength": 10,
             "bSort": false,
         });
@@ -425,12 +425,16 @@
     }
     
     function changeARReport(){
-        var from = $('#arFromDate').val();
-        var to = $('#arToDate').val();
-        if((from === '') || (to === '')){
+        var invoiceType = $('invoiceType').val();
+        var department = $('department').val();
+        var arType = $('arType').val();
+        var arStatus  = $('arStatus').val();
+        var arFromDate = $('#arFromDate').val();
+        var arToDate = $('#arToDate').val();
+        if((arFromDate === '') || (arToDate === '')){
             validateDate();
         } else {
-            window.open("Excel.smi?name=ChangeARReport"); 
+            window.open("Excel.smi?name=ChangeARReport&invoiceType="+invoiceType+"&department="+department+"&arType="+arType+"&arStatus="+arStatus+"&arFromDate="+arFromDate+"&arToDate="+arToDate); 
         }   
     }
     

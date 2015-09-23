@@ -363,11 +363,12 @@ public class InvoiceImpl implements InvoiceDao{
     }
 
     @Override
-    public List<Invoice> getSearchInvoice(String fromData, String toDate, String department, String type,String agent) {
+    public List<Invoice> getSearchInvoice(String fromData, String toDate, String department, String type,String agent,String status) {
         System.out.println("From Date : " + fromData + ":");
         System.out.println("To Date : " + toDate + ":");
         System.out.println("Department : " + department + ":");
         System.out.println("Type : " + type + ":");
+        System.out.println("Status : " + status + ":");
         Session session = this.sessionFactory.openSession();
         String query = "";
         int AndQuery = 0;
@@ -397,6 +398,15 @@ public class InvoiceImpl implements InvoiceDao{
            }else{
                AndQuery = 1;
                query += " st.invTo = '" + agent + "'";
+           }
+        }
+        
+        if(status != null && (!"".equalsIgnoreCase(status))){
+            if(AndQuery == 1){
+                query += " and st.MFinanceItemstatus.id = " + status + "";
+           }else{
+               AndQuery = 1;
+               query += " st.MFinanceItemstatus.id = " + status + "";
            }
         }
         
@@ -654,7 +664,7 @@ public class InvoiceImpl implements InvoiceDao{
                 InvoiceCost = InvoiceCost.add(detail.getCost());
                 System.out.println("SumInvoiceCost : "+InvoiceCost +"SumInvoicePrice : "+InvoicePrice);
                 System.out.println("Compare price : "+price.compareTo(InvoicePrice));
-                    if((price.compareTo(InvoicePrice) == -1)||(cost.compareTo(InvoiceCost) == -1)){
+                    if((price.compareTo(InvoicePrice) == -1)){
                         result = "moreMoney";
                     }else{
                         result = "okMoney";

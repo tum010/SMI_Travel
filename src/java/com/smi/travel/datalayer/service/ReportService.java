@@ -360,8 +360,8 @@ public class ReportService {
         return daytourOtherdao;
     }
 
-    public List getInvoiceSummary(String from, String to, String department, String type,String agent) {
-        return invoiceSummaryDao.getInvoiceSummary(from, to, department, type,agent);
+    public List getInvoiceSummary(String from, String to, String department, String type,String agent,String statusInvoice) {
+        return invoiceSummaryDao.getInvoiceSummary(from, to, department, type,agent,statusInvoice);
     }
 
     public ReceiptDao getReceiptDao() {

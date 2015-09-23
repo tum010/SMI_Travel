@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptEmail" language="groovy" pageWidth="595" pageHeight="421" columnWidth="525" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="0038deea-02d3-4a9f-8925-fb54dc3fc533">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="32"/>
-	<property name="ireport.y" value="759"/>
+	<property name="ireport.zoom" value="1.3636363636363635"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="512"/>
 	<field name="recto" class="java.lang.String"/>
 	<field name="recadd" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -34,10 +34,10 @@
 				<imageExpression><![CDATA["resource/images/wendy_watermark_s_2.JPG"]]></imageExpression>
 			</image>
 			<rectangle>
-				<reportElement mode="Transparent" x="0" y="157" width="429" height="72" uuid="1c4af645-ae69-4603-bda4-e7c0d100feb0"/>
+				<reportElement mode="Transparent" x="0" y="163" width="429" height="72" uuid="1c4af645-ae69-4603-bda4-e7c0d100feb0"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="429" y="157" width="96" height="72" uuid="e375ee91-2287-4e8c-b972-814ce1c75fd7"/>
+				<reportElement mode="Transparent" x="429" y="163" width="96" height="72" uuid="e375ee91-2287-4e8c-b972-814ce1c75fd7"/>
 			</rectangle>
 			<textField pattern="#,##0.00">
 				<reportElement x="352" y="-223" width="44" height="14" uuid="abeb5a26-e0e4-40a1-8a6f-b23162d9dde9"/>

@@ -28,6 +28,7 @@ public class SearchInvoiceController extends SMITravelController {
         String action = request.getParameter("action");
         String agent = request.getParameter("InvTo");
         String agentName = request.getParameter("InvToName");
+        String status = request.getParameter("status");
         
         //List Agent
         List<CustomerAgentInfo> listCustomerAgentInfo = new ArrayList<CustomerAgentInfo>();
@@ -41,7 +42,7 @@ public class SearchInvoiceController extends SMITravelController {
         if("search".equals(action)){
             List<Invoice> listInvoice = new LinkedList<Invoice>();
             List<InvoiceView> listView = new LinkedList<InvoiceView>();
-            listInvoice = invoiceService.SearchInvoice(fromdate, todate, department, type,agent);
+            listInvoice = invoiceService.SearchInvoice(fromdate, todate, department, type,agent,status);
             if(listInvoice != null){
                 listView = invoiceService.SearchInvoiceView(listInvoice);
                 if (listView != null) {
@@ -55,6 +56,7 @@ public class SearchInvoiceController extends SMITravelController {
                 request.setAttribute("type", type);
                 request.setAttribute("agent", agent);
                 request.setAttribute("agentName", agentName);
+                request.setAttribute("status", status);
             }
         
         }
