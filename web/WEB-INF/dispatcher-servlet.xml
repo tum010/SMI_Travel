@@ -136,6 +136,7 @@
                                 <prop key="TicketFareSummaryReport.smi">TicketFareSummaryReportController</prop>
                                 <prop key="TicketFareSumAgentStaff.smi">TicketFareSumAgentStaffController</prop>
                                 <prop key="BillAirAgent.smi">BillAirAgentController</prop>
+                                <prop key="TicketFareSummaryAirline.smi">TicketFareSummaryAirlineController</prop>
 				<!-- add mapping url -->
 			</props>
 		</property>
@@ -596,29 +597,32 @@
     <bean id="BillAirAgentController" class="com.smi.travel.controller.BillAirAgentController">
         <property name="utilityService" ref="UtilityService" />
     </bean>
+    <bean id="TicketFareSummaryAirlineController" class="com.smi.travel.controller.TicketFareSummaryAirlineController">
+       
+    </bean>
 	<!-- add bean id controller -->
 
 	<bean id="monitorGalileo" class="com.smi.travel.monitor.MonitorGalileo"
 		init-method="init">
 		<constructor-arg index="0" type="java.lang.String">
 			<!--<value>C:/Users/Administrator/Desktop/PNR/galileo/</value>--> 
-			 <!--<value>D:/iCONEXT/SMI/PNR/gali/</value>--> 
-			 <value>S:/BackupPNR/</value> 
+			 <value>D:/iCONEXT/SMI/PNR/gali/</value> 
+			 <!--<value>S:/BackupPNR/</value>--> 
 		</constructor-arg>
 		<constructor-arg index="1" type="java.lang.String">
 			<!--<value>C:/Users/Administrator/Desktop/PNR/galileo/archived/</value>--> 
-			 <!--<value>D:/iCONEXT/SMI/PNR/archived/</value>--> 
-			 <value>S:/BackupPNR/archived/</value>
+			 <value>D:/iCONEXT/SMI/PNR/archived/</value> 
+			 <!--<value>S:/BackupPNR/archived/</value>-->
 		</constructor-arg>
 		<constructor-arg index="2" type="java.lang.String">
 			<!--<value>C:/Users/Administrator/Desktop/PNR/galileo/error/</value>-->
-			 <!--<value>D:/iCONEXT/SMI/PNR/error/</value>--> 
-			 <value>S:/BackupPNR/error/</value> 
+			 <value>D:/iCONEXT/SMI/PNR/error/</value> 
+			 <!--<value>S:/BackupPNR/error/</value>--> 
 		</constructor-arg>
 		<constructor-arg index="3" type="java.lang.String">
-			 <!--<value>D:/iCONEXT/SMI/PNR/swap/</value>--> 
+			 <value>D:/iCONEXT/SMI/PNR/swap/</value> 
                          <!--<value>C:/Users/Administrator/Desktop/PNR/galileo/swap/</value>--> 
-                         <value>S:/swap/</value>
+                         <!--<value>S:/swap/</value>-->
 		</constructor-arg>
 		<property name="mGalileoService" ref="MGalileoService" />
 		<property name="mAirticketService" ref="MAirticketService" />
@@ -629,23 +633,23 @@
 		init-method="init">
 		<constructor-arg index="0" type="java.lang.String">
 			<!--<value>C:/Users/Administrator/Desktop/PNR/amadeus/</value>-->
-			 <!--<value>D:/iCONEXT/SMI/PNR/ama/</value>--> 
-			 <value>T:/BackupPNR/</value> 
+			 <value>D:/iCONEXT/SMI/PNR/ama/</value> 
+			 <!--<value>T:/BackupPNR/</value>--> 
 		</constructor-arg>
 		<constructor-arg index="1" type="java.lang.String">
 			<!--<value>C:/Users/Administrator/Desktop/PNR/amadeus/archived/</value>--> 
-			 <!--<value>D:/iCONEXT/SMI/PNR/archived/</value>--> 
-			 <value>T:/BackupPNR/archived/</value> 
+			 <value>D:/iCONEXT/SMI/PNR/archived/</value> 
+			 <!--<value>T:/BackupPNR/archived/</value>--> 
 		</constructor-arg>
 		<constructor-arg index="2" type="java.lang.String">
 			<!--<value>C:/Users/Administrator/Desktop/PNR/amadeus/error/</value>-->
-			 <!--<value>D:/iCONEXT/SMI/PNR/error/</value>--> 
-			 <value>T:/BackupPNR/error/</value> 
+			 <value>D:/iCONEXT/SMI/PNR/error/</value> 
+			 <!--<value>T:/BackupPNR/error/</value>--> 
 		</constructor-arg>
 		<constructor-arg index="3" type="java.lang.String">
-			 <!--<value>D:/iCONEXT/SMI/PNR/swap/</value>--> 
+			 <value>D:/iCONEXT/SMI/PNR/swap/</value> 
                          <!--<value>C:/Users/Administrator/Desktop/PNR/amadeus/swap/</value>--> 
-                         <value>T:/swap/</value>
+                         <!--<value>T:/swap/</value>-->
 		</constructor-arg>
 		<property name="mAmadeusService" ref="MAmadeusService" />
 		<property name="mAirticketService" ref="MAirticketService" />

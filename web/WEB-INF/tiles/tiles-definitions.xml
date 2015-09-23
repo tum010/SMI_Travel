@@ -570,6 +570,11 @@
         <put-attribute name="title" value="Checking AirTicket : Billng Air Agent Report" />
         <put-attribute name="body" value="/WEB-INF/jsp/BillAirAgent.jsp" />
     </definition>
+    
+    <definition name="TicketFareSummaryAirline" extends="baseLayout">
+        <put-attribute name="title" value="Checking Airticket : Ticket Summary Airline" />
+        <put-attribute name="body" value="/WEB-INF/jsp/TicketFareSummaryAirline.jsp" />
+    </definition>
     <!--<add data>-->
     
     <definition name="SendMail" extends="baseLayout">
