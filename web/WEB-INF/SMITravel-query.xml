@@ -392,9 +392,9 @@
     
     <bean id="GenerateReport" class="com.smi.travel.report.GenerateReport">
           <property name="exportpath" value="D:\\report\\"></property>
-          <!--<property name="reportpath" value="C:\\Program Files\\apache-tomcat-7.0.56\\webapps\\SMITravel\\WEB-INF\\report\\"></property>-->
+          <property name="reportpath" value="C:\\Program Files\\apache-tomcat-7.0.56\\webapps\\SMITravel\\WEB-INF\\report\\"></property>
           <!--<property name="exportpath" value="C:\\Users\\Administrator\\Desktop\\report\\"></property>-->
-          <property name="reportpath" value="D:\\apache-tomcat-7.0.56\\webapps\\SMITravel\\WEB-INF\\report\\"></property>
+          <!--<property name="reportpath" value="D:\\apache-tomcat-7.0.56\\webapps\\SMITravel\\WEB-INF\\report\\"></property>-->
          <property name="exportnvnarpath" value="D:\\report\\nirvana\\ar\\"></property>
          <property name="exportnvnappath" value="D:\\report\\nirvana\\ap\\"></property>
     </bean>
