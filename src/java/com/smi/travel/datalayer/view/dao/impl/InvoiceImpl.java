@@ -158,6 +158,10 @@ public class InvoiceImpl implements InvoiceReportDao{
                 System.out.println("Text Amount : " + text);
             }
         }
+        String firstText = text.substring(0,1);
+        String lastText  = text.substring(1);
+        text = firstText.toUpperCase() +"" + lastText;
+        System.out.println("Money New : " + text);
         
         if("THB".equals(currency)){
             currency = "baht only" ;
