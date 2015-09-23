@@ -457,8 +457,8 @@ public class TaxInvoiceController extends SMITravelController {
                         BigDecimal cost1 = taxInvoiceDetail1.getCost();
                         BigDecimal amount1 = taxInvoiceDetail1.getAmount();
 
-                        costTotal = costTotal.add(cost1);
-                        amountTotal = amountTotal.add(amount1);
+                        costTotal = costTotal.add(cost1==null ? new BigDecimal(0):cost1);
+                        amountTotal = amountTotal.add(amount1==null ? new BigDecimal(0):amount1);
 
                         for(int j=i+1;j<taxInvDetailList.size();j++){
                             if(taxInvDetailList.get(j).getInvoiceDetail() != null){
