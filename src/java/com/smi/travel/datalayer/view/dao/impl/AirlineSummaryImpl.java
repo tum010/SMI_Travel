@@ -8,8 +8,10 @@ package com.smi.travel.datalayer.view.dao.impl;
 import com.smi.travel.datalayer.report.model.AirlineSummary;
 import com.smi.travel.datalayer.report.model.StaffSummary;
 import com.smi.travel.datalayer.view.dao.AirlineSummaryDao;
+import com.smi.travel.datalayer.view.entity.SummaryAirline;
 import org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -111,5 +113,85 @@ public class AirlineSummaryImpl implements AirlineSummaryDao {
         }
         Query += " group by at.air;";
         return Query;
+    }
+
+    @Override
+    public List listSummaryAirline() {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List data = new ArrayList<SummaryAirline>();
+        String query = "SELECT * FROM `ticket_summary_rounting_detail`";
+        
+        List<Object[]> QueryList =  session.createSQLQuery(query)
+                .addScalar("routing",Hibernate.STRING)
+                .addScalar("pax",Hibernate.INTEGER)
+                .addScalar("netsales",Hibernate.BIG_DECIMAL)
+                .addScalar("tax",Hibernate.BIG_DECIMAL)
+                .addScalar("ins",Hibernate.BIG_DECIMAL)
+                .addScalar("comms",Hibernate.BIG_DECIMAL)
+                .addScalar("amountwendy",Hibernate.BIG_DECIMAL)
+                .addScalar("amountinbound",Hibernate.BIG_DECIMAL)
+                .addScalar("diff",Hibernate.BIG_DECIMAL)             
+                .list();
+        for (Object[] B : QueryList) {
+            SummaryAirline summaryAirline = new SummaryAirline();
+            summaryAirline.setRouting(util.ConvertString(B[0]));
+            
+            summaryAirline.setInvoicedatefrom(new Date());
+            summaryAirline.setInvoicedateto(new Date());
+            summaryAirline.setPrinton("");
+            summaryAirline.setPrintby("");
+            summaryAirline.setRoutingdetail("");
+            summaryAirline.setTyperouting("");
+            summaryAirline.setPassenger("");
+            summaryAirline.setAir("");
+            summaryAirline.setSalestaff("");
+            summaryAirline.setAgentname("");
+            summaryAirline.setDepartment("");
+            summaryAirline.setTermpay("");
+            
+            if(B[1] != null && !"".equals(B[1])){
+                summaryAirline.setPax((Integer) B[1]);
+            }else{
+                summaryAirline.setPax(0);
+            }
+            if(B[2] != null && !"".equals(B[2])){
+                summaryAirline.setNetsale((BigDecimal) B[2]);
+            }else{
+                summaryAirline.setNetsale(new BigDecimal(0.0));
+            }
+            if(B[3] != null && !"".equals(B[3])){
+                summaryAirline.setTax((BigDecimal) B[3]);
+            }else{
+               summaryAirline.setTax(new BigDecimal(0.0));
+            }
+            if(B[4] != null && !"".equals(B[4])){
+                summaryAirline.setIns((BigDecimal) B[4]);
+            }else{
+                summaryAirline.setIns(new BigDecimal(0.0));
+            }
+            if(B[5] != null && !"".equals(B[5])){
+                summaryAirline.setComms((BigDecimal) B[5]);
+            }else{
+                summaryAirline.setComms(new BigDecimal(0.0));
+            }
+            if(B[6] != null && !"".equals(B[6])){
+                summaryAirline.setAmountwendy((BigDecimal) B[6]);
+            }else{
+                summaryAirline.setAmountwendy(new BigDecimal(0.0));
+            }
+            if(B[7] != null && !"".equals(B[7])){
+                summaryAirline.setAmountinbound((BigDecimal) B[7]);
+            }else{
+                summaryAirline.setAmountinbound(new BigDecimal(0.0));
+            }
+            if(B[8] != null && !"".equals(B[8])){
+                summaryAirline.setDiff((BigDecimal) B[8]);
+            }else{
+                summaryAirline.setDiff(new BigDecimal(0.0));
+            }
+            data.add(summaryAirline);
+        }
+        return data;
     }
 }

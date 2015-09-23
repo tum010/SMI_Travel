@@ -14,4 +14,5 @@ import java.util.List;
  */
 public interface AirlineSummaryDao {
     public List getAirlineSummary(String ticketfrom,String tickettype,String startdate,String enddate,String username);
+    public List listSummaryAirline();
 }

@@ -508,4 +508,8 @@ public class ReportService {
     public void setApNirvanaDao(APNirvanaDao apNirvanaDao) {
         this.apNirvanaDao = apNirvanaDao;
     }      
+    
+    public  List listSummaryAirline(){
+        return airlinesummaryDao.listSummaryAirline();
+    }
 }

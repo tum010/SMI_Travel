@@ -598,7 +598,7 @@
         <property name="utilityService" ref="UtilityService" />
     </bean>
     <bean id="TicketFareSummaryAirlineController" class="com.smi.travel.controller.TicketFareSummaryAirlineController">
-       
+        <property name="utilityService" ref="UtilityService" />
     </bean>
 	<!-- add bean id controller -->
 
