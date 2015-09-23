@@ -387,11 +387,11 @@
 				<imageExpression><![CDATA["resource/images/smi-logo.gif"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="101" y="9" width="121" height="17" uuid="dce810b2-dc41-4585-adfa-67986984d6c6"/>
+				<reportElement x="101" y="9" width="223" height="17" uuid="dce810b2-dc41-4585-adfa-67986984d6c6"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[S.M.I Travel Co., Ltd.]]></text>
+				<text><![CDATA[S.M.I Travel Co., Ltd. (Head Office)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="101" y="43" width="271" height="13" uuid="27f99e0f-5512-47ad-8b60-be4c7efe734d"/>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceEmail" language="groovy" pageWidth="595" pageHeight="842" columnWidth="522" leftMargin="45" rightMargin="28" topMargin="59" bottomMargin="56" uuid="573bfe06-de4f-4adc-b5b3-76cb68d89d08">
 	<property name="ireport.zoom" value="1.4641000000000022"/>
-	<property name="ireport.x" value="43"/>
-	<property name="ireport.y" value="89"/>
+	<property name="ireport.x" value="89"/>
+	<property name="ireport.y" value="77"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
@@ -69,57 +69,11 @@
 				<reportElement x="0" y="78" width="520" height="38" uuid="d1acf633-729b-4e59-9114-b9f8707e5179"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="72" y="50" width="158" height="15" uuid="629878ba-148b-420b-9baa-5a40e2450bc5"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[http://www.wendytour.com]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="72" y="17" width="221" height="22" uuid="cc656dd8-d1ad-49f2-9d9a-491826ddc3e2"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[9th Floor, Siam at Siam Hotel Building 865 Rama 1 Rd.,]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="72" y="27" width="221" height="12" uuid="e8746e1c-b142-4a37-bc53-a9bd6bebca80"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[Wangmai, Phatumwan, Bangkok 10330]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="72" y="4" width="149" height="13" uuid="9dd03a51-b3f3-4d5b-955f-941ec0580def"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[S.M.I TRAVEL CO., LTD]]></text>
-			</staticText>
-			<image>
-				<reportElement x="2" y="4" width="65" height="48" uuid="b31426ce-ada8-4b35-92c8-9b7c1c8a212f"/>
-				<imageExpression><![CDATA["resource/images/smi-logo.gif"]]></imageExpression>
-			</image>
-			<staticText>
-				<reportElement x="72" y="38" width="221" height="12" uuid="a7c40a8a-2503-4349-99f6-6364974e3b62"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[Tel: +66(0)-2162201 Fax: +66(0)-216-2202]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="72" y="62" width="158" height="13" uuid="90bf85d3-0294-4a14-86f7-ee0c7107bdb8"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[e-mail: yoyaku@wendytour.com]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="319" y="1" width="201" height="22" uuid="681eb829-3566-4836-b668-7cf3acfe1fe1"/>
+				<reportElement x="271" y="1" width="249" height="22" uuid="681eb829-3566-4836-b668-7cf3acfe1fe1"/>
 				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="18" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[บริษัทเอส. เอ็ม. ไอ. แทรเวล จำกัด]]></text>
+				<text><![CDATA[บริษัทเอส. เอ็ม. ไอ. แทรเวล จำกัด (สำนักงานใหญ่)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="319" y="20" width="201" height="14" uuid="83617fe0-2b88-4b80-a879-17b39421a364"/>
@@ -344,6 +298,45 @@
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[TAX ID. NO. 0105523020132]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="96" y="17" width="204" height="14" uuid="4fa5de57-54ec-4c51-b231-48ae6615587f"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[9th Floor, Siam At Siam Hotel Building,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="96" y="27" width="267" height="13" uuid="72a0952e-7659-4dd4-941b-a1678a17d920"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[865 Rama 1 Road, Wangmai, Phatumwan, Bangkok 10330]]></text>
+			</staticText>
+			<image>
+				<reportElement x="5" y="3" width="87" height="77" uuid="7539c375-f065-49a9-b3c2-f53fed48816e"/>
+				<imageExpression><![CDATA["resource/images/smi-logo.gif"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="96" y="3" width="223" height="17" uuid="fb1b39d3-10cc-4f4f-a0bf-249ff2ad282d"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[S.M.I Travel Co., Ltd. (Head Office)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="96" y="37" width="271" height="13" uuid="25e3d06b-5e2b-434c-a56e-ed3423660ae6"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Tel : (66-2) 216-2201 Fax : (66-2) 216-2202]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="97" y="47" width="177" height="13" uuid="7dc1e6f1-fcba-4810-b801-f982c9e555cc"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[E-Mail : yoyaku@wendytour.com]]></text>
 			</staticText>
 		</band>
 	</pageHeader>

@@ -160,7 +160,7 @@ public class InvoiceImpl implements InvoiceReportDao{
         }
         
         if("THB".equals(currency)){
-            currency = "BATH" ;
+            currency = "BAHT" ;
         }
         
         text += " " + currency;
