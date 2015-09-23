@@ -87,7 +87,7 @@ function addRow() {
                 var vatAmountID = $(this).parent().parent().find("[id='taxVat']");
                 var calVat = realAmount -(realAmount * 100 / (vat + 100));
                 vatAmount.val(calVat);
-                vatAmountID.val(calVat);
+                vatAmountID.val(Math.round(calVat * 100)/100);
             }
         });
     });
