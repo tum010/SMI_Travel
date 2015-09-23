@@ -74,7 +74,7 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
             taxInvoiceView.setCuramount(util.ConvertString(B[16]));
             String curamount = "";
             if("THB".equalsIgnoreCase(util.ConvertString(B[16]))){
-                curamount = "BAHT";
+                curamount = "baht only";
             } else {
                 curamount = util.ConvertString(B[16]);
             }
@@ -92,7 +92,11 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
             String[] totals = total.split(",");
             int totalWord = 0;
             totalWord = Integer.parseInt(String.valueOf(totals[0]));
-            taxInvoiceView.setTextamount(utilityFunction.convert(totalWord)+" "+curamount);
+            String wordAmount = utilityFunction.convert(totalWord);
+            String first = (wordAmount.substring(0, 1)).toUpperCase();
+            wordAmount = wordAmount.substring(1);
+            wordAmount = first+wordAmount;
+            taxInvoiceView.setTextamount(wordAmount+" "+curamount);
             
             if(option == 1){
                 taxInvoiceView.setDescription(taxInvoiceView.getNondescription());
