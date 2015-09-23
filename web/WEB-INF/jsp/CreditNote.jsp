@@ -176,7 +176,7 @@
                                         </td>
                                         <td style="text-align:center">
                                             <input type="hidden" name="taxVat" value="${creditNoteDetail.vat}" readonly/>
-                                            <input type="text" id="taxVat" class="form-control text-right decimal" value="${creditNoteDetail.vat}" readonly/>
+                                            <input type="text" id="taxVat" class="form-control text-right decimal" value="${creditNoteDetail.vat2Digits}" readonly/>
                                         </td>
                                         <td style="text-align:center">
                                             <input type="text" name="taxDesc" class="form-control" value="${creditNoteDetail.description}"/></td>
