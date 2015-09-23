@@ -31,8 +31,6 @@ public class InvoiceMonthly {
     private String systemdate;
     private String headdepartment;
     
-    
-
     public String getInvname() {
         return invname;
     }
@@ -171,8 +169,4 @@ public class InvoiceMonthly {
         this.headdepartment = headdepartment;
     }
 
-    
-    
-    
-    
 }

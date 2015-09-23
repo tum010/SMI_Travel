@@ -277,7 +277,7 @@ public class InvoiceImpl implements InvoiceReportDao{
         int checkQuery = 0;
         String prefix ="";
         if( !"".equals(BillTo)  || !"".equals(vattype) || !"".equals(from) || !"".equals(to) || !"".equals(department)){
-            query = "SELECT * FROM `invoice_monthly_view` invm Where";
+            query = "SELECT * FROM `invoice_monthly_view` invm  Where";
         }else{
             query = "SELECT * FROM `invoice_monthly_view` invm";
         }
@@ -317,7 +317,11 @@ public class InvoiceImpl implements InvoiceReportDao{
              query += prefix+" invm.department = '"+department+"'";
          }
          
-        
+        if(checkQuery == 0){
+            query += " where invm.invstatus != 2 ";
+        }else{
+            query += " and  invm.invstatus  != 2 ";
+        }
 //        if(checkQuery == 0){query = query.replaceAll("Where", "");}
          System.out.println("query : "+query);
          

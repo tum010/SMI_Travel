@@ -128,14 +128,14 @@
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[ "Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
 				<reportElement x="433" y="28" width="110" height="13" uuid="26c670d5-c782-4e23-a209-3cfcbec41fa8"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{systemdate}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[ $F{systemdate}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="391" y="40" width="42" height="12" uuid="13c33f46-e094-4475-88f4-c3eb8aa535b2"/>
@@ -225,14 +225,14 @@
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{type}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[ $F{type}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="433" y="52" width="100" height="13" uuid="fa3c1002-a99f-4767-b297-e353f241d76b"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{headdepartment}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[ $F{headdepartment}]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement x="9" y="139" width="534" height="13" backcolor="#E6E6E6" uuid="c1967ecd-7cf1-4bc1-a311-d6b6448e4bb7"/>
@@ -366,7 +366,7 @@
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[0105523020132]]></textFieldExpression>
+				<textFieldExpression><![CDATA[ 0105523020132]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="101" y="23" width="220" height="14" uuid="78fad1d2-beb1-4564-a6bf-6162f897715f"/>

@@ -169,7 +169,7 @@
                         <div class="col-md-8">
                             <div class="form-group">
                                 <div class="col-sm-10 text-right">
-                                    <button type="submit"  class="btn btn-success"><span class="glyphicon glyphicon-print"></span> Print</button>
+                                    <button type="submit"  class="btn btn-success"><span class="glyphicon glyphicon-print" id="btnDownloadAP"></span> Print</button>
                                 </div>
                                 <div class="col-sm-2 text-left">
                                     <button type="button" onclick="" class="btn btn-warning"><span class="glyphicon glyphicon-print"></span> Cancel</button>
@@ -439,6 +439,8 @@
                                     format: 'YYYY-MM-DD',
                                     max: 'todate',
                                     message: 'The Date From is not a valid'
+                                },notEmpty: {
+                                    message: 'The Date From is required'
                                 }
                             }
                     },
@@ -449,6 +451,8 @@
                                     format: 'YYYY-MM-DD',
                                     min: 'fromdate',
                                     message: 'The Date To is not a valid'
+                                },notEmpty: {
+                                    message: 'The Date From is required'
                                 }
                             }
                     }

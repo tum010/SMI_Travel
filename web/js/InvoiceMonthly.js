@@ -14,5 +14,27 @@ function printInvoiceMonthly(){
     var from  = $("#fromdate").val();
     var to  = $("#todate").val();
     var departmentInvoice = $('#departmentInvoice').val();
-   window.open("report.smi?name=InvoiceMonthlyReport&billFromName="+BillFrom+"&clientCode="+ClientTo+"&clientName="+ClientName+"&payment="+Payment+"&accNo="+Accno+"&vatType="+vattype+"&fromdate="+from+"&todate="+to+"&departmentInvoice="+departmentInvoice);   
+    if((from === '') || (to === '')){
+        validateDate();
+    } else {
+        window.open("report.smi?name=InvoiceMonthlyReport&billFromName="+BillFrom+"&clientCode="+ClientTo+"&clientName="+ClientName+"&payment="+Payment+"&accNo="+Accno+"&vatType="+vattype+"&fromdate="+from+"&todate="+to+"&departmentInvoice="+departmentInvoice);   
+    }
 }
+
+function validateDate(date,option){
+        if(option === 'over'){
+            if(date === 'from'){
+                $('#InvoiceMonthlyFrom').bootstrapValidator('revalidateField', 'fromdate');
+                $('#InvoiceMonthlyFrom').bootstrapValidator('revalidateField', 'todate');
+            }
+            if(date === 'to'){
+                $('#InvoiceMonthlyFrom').bootstrapValidator('revalidateField', 'fromdate');
+                $('#InvoiceMonthlyFrom').bootstrapValidator('revalidateField', 'todate');
+            }           
+            $("#btnDownloadAP").addClass("disabled");
+        } else {
+            $('#InvoiceMonthlyFrom').bootstrapValidator('revalidateField', 'fromdate');
+            $('#InvoiceMonthlyFrom').bootstrapValidator('revalidateField', 'todate');
+            $("#btnDownloadAP").addClass("disabled");
+        }
+    }
