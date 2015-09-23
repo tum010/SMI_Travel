@@ -97,7 +97,8 @@ public class ReceiptImpl implements ReceiptDao{
             String[] totals = total.split(",");
             int totalWord = 0;
             totalWord = Integer.parseInt(String.valueOf(totals[0]));
-            receiptView.setTextmoney(utilityFunction.convert(totalWord)+" BAHT");
+            String textmoney = (utilityFunction.convert(totalWord)+"  baht only");
+            receiptView.setTextmoney(textmoney.substring(0,1).toUpperCase() + textmoney.substring(1));
 
             if(option == 1){
                 receiptView.setDescription(receiptView.getNondescription());

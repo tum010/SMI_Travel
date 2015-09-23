@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="058d4e5f-08d6-4dca-b53c-91fb30f0f189">
 	<property name="ireport.zoom" value="1.6105100000000228"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="102"/>
+	<property name="ireport.y" value="0"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="user" class="java.lang.String"/>
 	<field name="from" class="java.lang.String"/>
@@ -123,11 +123,11 @@ new BigDecimal($F{recamount}) : new BigDecimal("0.00")]]></variableExpression>
 				<text><![CDATA[S.M.I TRAVEL CO., LTD]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="105" y="27" width="177" height="14" uuid="f337a380-60ef-42dd-87f6-399afcbbbae7"/>
+				<reportElement x="105" y="27" width="191" height="14" uuid="f337a380-60ef-42dd-87f6-399afcbbbae7"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[Wangmai, Phatumwan, Bangkok 10330]]></text>
+				<text><![CDATA[Wangmai, Phatumwan, Bangkok 10330 THAILAND.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="743" y="42" width="11" height="14" uuid="1da2611f-67a7-46c3-8f79-5ee250e51a79"/>
@@ -194,7 +194,7 @@ new BigDecimal($F{recamount}) : new BigDecimal("0.00")]]></variableExpression>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[9th Floor, Siam at Siam Hotel Building 865 Rama 1 Rd.,]]></text>
+				<text><![CDATA[9th Floor, Siam at Siam Hotel Building, 865 Rama1 Road,]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="750" y="55" width="48" height="14" uuid="31485027-4540-4afb-a938-3fe698b28cf2"/>

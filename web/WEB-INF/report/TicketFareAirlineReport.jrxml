@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TicketFareAirlineReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5efe24ec-735b-42b1-9bff-5a6f41c2ba83">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="15"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.6105100000000008"/>
+	<property name="ireport.x" value="176"/>
+	<property name="ireport.y" value="30"/>
 	<field name="tickettype" class="java.lang.String"/>
 	<field name="ticketbuy" class="java.lang.String"/>
 	<field name="airline" class="java.lang.String"/>
@@ -49,14 +49,14 @@
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[9th Floor, Siam at Siam Hotel Building 865 Rama 1 Rd.,]]></text>
+				<text><![CDATA[9th Floor, Siam at Siam Hotel Building, 865 Rama1 Road,]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="75" y="28" width="221" height="12" uuid="ba3e43cc-a589-48ce-9325-e79440f6d02a"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[Wangmai, Phatumwan, Bangkok 10330]]></text>
+				<text><![CDATA[Wangmai, Phatumwan, Bangkok 10330 THAILAND.]]></text>
 			</staticText>
 			<image>
 				<reportElement x="5" y="5" width="65" height="48" uuid="b4965034-d8b5-4858-ab93-49f2464c16d8"/>
