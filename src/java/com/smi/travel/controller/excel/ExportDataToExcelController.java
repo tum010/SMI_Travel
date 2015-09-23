@@ -38,6 +38,8 @@ public class ExportDataToExcelController  extends SMITravelController{
     private static final String ApReport = "ApReport";
     private static final String ReportName = "name";
     private static final String ParaMeter = "parameter";
+    private static final String SummaryAirline = "SummaryAirline";
+    
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String output =  request.getParameter("output");
@@ -110,8 +112,12 @@ public class ExportDataToExcelController  extends SMITravelController{
         }else if(ApReport.equals(name)){
             status = request.getParameter("status");
             String payment = request.getParameter("payment");
-            System.out.println("get excel data ap nirvana");
+            System.out.println("get excel data ap ApReport");
             data = reportservice.getApNirvanaReport(payment, ticketType, status, dateFrom, dateTo, printby);
+        }
+        else if(SummaryAirline.equals(name)){
+            System.out.println("get excel data ap SummaryAirline");
+            data = reportservice.listSummaryAirline();
         }
 		
         return new ModelAndView("ExportDataToExcelView",name,data).addObject(ReportName, name);
