@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TaxInvoiceEmailReport" language="groovy" pageWidth="594" pageHeight="421" columnWidth="524" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="346dddd2-e21a-4c7b-8d69-ccea53d38a9d">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="816"/>
+	<property name="ireport.x" value="81"/>
+	<property name="ireport.y" value="0"/>
 	<field name="customer" class="java.lang.String"/>
 	<field name="address" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -38,18 +38,18 @@
 				<reportElement mode="Opaque" x="-1" y="66" width="525" height="18" backcolor="#CCCCCC" uuid="25b396a9-ec82-4dc3-adb4-07116b97b1c1"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="70" y="15" width="204" height="13" uuid="22f8d2bd-a091-418d-999b-9bc3fcd237ca"/>
+				<reportElement x="70" y="15" width="249" height="13" uuid="22f8d2bd-a091-418d-999b-9bc3fcd237ca"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
-				<text><![CDATA[9th Floor, Siam At Siam Hotel Building,]]></text>
+				<text><![CDATA[9th Floor, Siam at Siam Hotel Building, 865 Rama 1 Road,]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="319" y="14" width="201" height="14" uuid="86a85520-0e5b-4be3-b36a-ac0b3f011262"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[865 อาคารโรงแรมสยาม แอ็ท สยาม ชั้น 9]]></text>
+				<text><![CDATA[865 อาคาร โรงแรมสยาม แอ็ท สยาม ชั้น 9]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="320" y="38" width="200" height="14" uuid="99710744-adcf-40bd-9ab6-09f593540b0a"/>
@@ -63,7 +63,7 @@
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12" isBold="true" isItalic="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[ถนนพระรามที่ 1 แขวงวังใหม่ เขตปทุมวัน]]></text>
+				<text><![CDATA[ถนนพระราม 1 แขวงวังใหม่ เขตปทุมวัน]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="343" y="52" width="177" height="13" uuid="f44a5cf4-2a2b-4b9c-869d-622c9029a07c"/>
@@ -87,28 +87,28 @@
 				<text><![CDATA[TAX INVOICE/ ใบกำกับภาษี]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="70" y="27" width="267" height="13" uuid="9fa65484-26d7-4188-a002-779b9986c466"/>
+				<reportElement x="70" y="27" width="249" height="13" uuid="9fa65484-26d7-4188-a002-779b9986c466"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
-				<text><![CDATA[865 Rama 1 Road, Wangmai, Phatumwan, Bangkok 10330]]></text>
+				<text><![CDATA[Wangmai, Phatumwan, Bangkok 10330 THAILAND.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="261" y="-3" width="262" height="22" uuid="e2007782-00e1-462b-b63c-7f75e602c5ea"/>
 				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="18" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[บริษัทเอส. เอ็ม. ไอ. แทรเวล จำกัด (สำนักงานใหญ่)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="71" y="52" width="177" height="13" uuid="24dab500-099a-47d7-918e-06999f11fae4"/>
+				<reportElement x="70" y="51" width="177" height="13" uuid="24dab500-099a-47d7-918e-06999f11fae4"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[E-Mail : yoyaku@wendytour.com]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="71" y="40" width="271" height="13" uuid="9996e25f-2bc9-4108-bbc9-31e40761b1ec"/>
+				<reportElement x="70" y="39" width="248" height="13" uuid="9996e25f-2bc9-4108-bbc9-31e40761b1ec"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
