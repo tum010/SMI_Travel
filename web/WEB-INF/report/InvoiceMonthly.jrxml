@@ -369,18 +369,18 @@
 				<textFieldExpression><![CDATA[0105523020132]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="101" y="23" width="204" height="14" uuid="78fad1d2-beb1-4564-a6bf-6162f897715f"/>
+				<reportElement x="101" y="23" width="220" height="14" uuid="78fad1d2-beb1-4564-a6bf-6162f897715f"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[9th Floor, Siam At Siam Hotel Building,]]></text>
+				<text><![CDATA[9th Floor, Siam at Siam Hotel Building, 865 Rama1 Road,]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="101" y="33" width="267" height="13" uuid="f0af9509-49a7-462b-9076-146aefc161b7"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[865 Rama 1 Road, Wangmai, Phatumwan, Bangkok 10330]]></text>
+				<text><![CDATA[Wangmai, Phatumwan, Bangkok 10330 THAILAND.]]></text>
 			</staticText>
 			<image>
 				<reportElement x="10" y="9" width="87" height="80" uuid="a2dcbc36-b8dc-4d01-9544-8ee2bc531aa8"/>

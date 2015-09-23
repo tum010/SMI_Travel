@@ -160,7 +160,7 @@ public class InvoiceImpl implements InvoiceReportDao{
         }
         
         if("THB".equals(currency)){
-            currency = "BAHT" ;
+            currency = "baht only" ;
         }
         
         text += " " + currency;
@@ -169,7 +169,7 @@ public class InvoiceImpl implements InvoiceReportDao{
     }
     
     private String changPoint(String point){
-        String text = " POINT ";
+        String text = " point ";
         String one = point.substring(0,1);
         String two = point.substring(1,2);
         System.out.println("Point SubString : " + one + " : " + two );
@@ -180,25 +180,25 @@ public class InvoiceImpl implements InvoiceReportDao{
             if (array[i] != null && array[i] != "") {
                 System.out.println("Array : "+array[i]+":");
                 if ("0".equals(array[i])) {
-                        text += "ZERO ";
+                        text += "zero ";
                 } else if ("1".equals(array[i])) {
-                        text += "ONE ";
+                        text += "one ";
                 } else if ("2".equals(array[i])) {
-                        text += "TWO ";
+                        text += "two ";
                 } else if ("3".equals(array[i])) {
-                        text += "THREE ";
+                        text += "three ";
                 } else if ("4".equals(array[i])) {
-                        text += "FOUR";
+                        text += "four ";
                 } else if ("5".equals(array[i])) {
-                        text += "FIVE ";
+                        text += "five ";
                 } else if ("6".equals(array[i])) {
-                        text += "SIX ";
+                        text += "six ";
                 } else if ("7".equals(array[i])) {
-                        text += "SEVEN ";
+                        text += "seven ";
                 } else if ("8".equals(array[i])) {
-                        text += "EIGHT ";
+                        text += "eight ";
                 } else if ("9".equals(array[i])) {
-                        text += "NINE ";
+                        text += "nine ";
                 }
             }
         }
