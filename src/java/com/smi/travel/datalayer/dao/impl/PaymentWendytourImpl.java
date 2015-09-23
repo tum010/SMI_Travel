@@ -11,12 +11,15 @@ import com.smi.travel.datalayer.entity.MRunningCode;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.PaymentDetailWendy;
 import com.smi.travel.datalayer.entity.PaymentWendy;
+import com.smi.travel.datalayer.entity.PaymentWendyReference;
 import com.smi.travel.datalayer.entity.TourOperationDesc;
 import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
 import com.smi.travel.datalayer.view.entity.PaymentWendytourView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -36,14 +39,25 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
     private static final int MAX_ROW = 200;
     
     @Override
-    public String InsertPaymentWendy(PaymentWendy payment) {
+    public String InsertPaymentWendy(PaymentWendy payment,String option) {
         
         String result = "fail";
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();    
-            String runningCode = gennaratePaymentRunning("PW");
+            String runningCode = gennaratePaymentRunning("PW");           
             payment.setPayNo(runningCode);
+            if("daytour".equalsIgnoreCase(option)){
+                Date date = Calendar.getInstance().getTime();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+                String refCode = sdf.format(date);
+                refCode = refCode.substring(2);
+                List<PaymentDetailWendy> paymentDetailWendyList = new ArrayList<PaymentDetailWendy>();
+                paymentDetailWendyList = payment.getPaymentDetailWendies();
+                PaymentDetailWendy paymentDetailWendy = new PaymentDetailWendy();
+                paymentDetailWendy = paymentDetailWendyList.get(0);
+                paymentDetailWendy.setRefCode("PW"+refCode+runningCode);
+            }
             session.save(payment);    
             List<PaymentDetailWendy> paymentDetailWendy = payment.getPaymentDetailWendies();
             
@@ -67,7 +81,7 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
     }
 
     @Override
-    public String UpdatePaymentWendy(PaymentWendy payment) {
+    public String UpdatePaymentWendy(PaymentWendy payment,String option) {
         String result = "fail";
         try {
             Session session = this.sessionFactory.openSession();
@@ -459,6 +473,26 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
 
         result = List.get(0);
         return result;
+    }
+
+    @Override
+    public String InsertPaymentWendyReference(PaymentWendyReference paymentWendyReference) {
+        String result = "fail";
+        try {
+            Session session = this.sessionFactory.openSession();
+            transaction = session.beginTransaction();                
+            session.save(paymentWendyReference);                
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+            result = "success";
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            result = "fail";
+        }
+         
+        return result;    
     }
     
 }

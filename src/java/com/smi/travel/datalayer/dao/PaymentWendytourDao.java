@@ -9,6 +9,7 @@ package com.smi.travel.datalayer.dao;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.PaymentDetailWendy;
 import com.smi.travel.datalayer.entity.PaymentWendy;
+import com.smi.travel.datalayer.entity.PaymentWendyReference;
 import com.smi.travel.datalayer.entity.TourOperationDesc;
 import com.smi.travel.datalayer.view.entity.PaymentWendytourView;
 import java.util.List;
@@ -18,8 +19,8 @@ import java.util.List;
  * @author Surachai
  */
 public interface PaymentWendytourDao {
-    public String InsertPaymentWendy(PaymentWendy payment);
-    public String UpdatePaymentWendy(PaymentWendy payment);
+    public String InsertPaymentWendy(PaymentWendy payment,String option);
+    public String UpdatePaymentWendy(PaymentWendy payment,String option);
     public String DeletePaymentWendy(PaymentWendy payment);
     public String DeletePaymentWendyDetail(PaymentDetailWendy DetailID);
     public PaymentWendy SearchPaymentWendyFromPayno(String payno);
@@ -34,4 +35,6 @@ public interface PaymentWendytourDao {
     public PaymentWendy getInvoiceSupCodeByGuideName(String guideName);
     public String getGuideName(PaymentWendy paymentWendy);
     public PaymentWendy getPaymentWendyFromDayTourOperation(TourOperationDesc paymentWendy);
+
+    public String InsertPaymentWendyReference(PaymentWendyReference paymentWendyReference);
 }
