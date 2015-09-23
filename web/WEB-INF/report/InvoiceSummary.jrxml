@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceSummary2" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ce5d0eb5-af68-44b4-b287-253094472c71">
 	<property name="ireport.zoom" value="1.1000000000000005"/>
-	<property name="ireport.x" value="120"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="username" class="java.lang.String"/>
@@ -372,52 +372,6 @@
 	</background>
 	<pageHeader>
 		<band height="105" splitType="Stretch">
-			<image>
-				<reportElement x="7" y="5" width="326" height="50" uuid="f7b41413-be0a-4eea-9550-b71707115ade"/>
-				<imageExpression><![CDATA["resource/images/smi-logo.gif"]]></imageExpression>
-			</image>
-			<staticText>
-				<reportElement x="98" y="5" width="111" height="15" uuid="519e8b3e-9caa-4b37-8db8-75539b33bf0a"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[S.M.I TRAVEL CO., LTD]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="98" y="18" width="461" height="24" uuid="bb4dab23-5ed2-407c-970a-471e683122d1"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[9th Floor, Siam at Siam Hotel Building 865 Rama 1 Rd.,]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="98" y="28" width="177" height="14" uuid="eba8ec67-a687-460b-b39c-a8c0bd575dd3"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[Wangmai, Phatumwan, Bangkok 10330]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="98" y="48" width="177" height="14" uuid="022cb655-662b-4b72-9a6f-8fc0c72167b4"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[Tel: +66(0)-2162201 Fax: +66(0)-216-2202]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="98" y="60" width="145" height="17" uuid="281268e5-260c-4a69-9a67-91107e0b64ea"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[http://www.wendytour.com]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="98" y="72" width="145" height="15" uuid="96c36c89-bd48-428e-9579-e60b977f4c5e"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[e-mail: yoyaku@wendytour.com]]></text>
-			</staticText>
 			<staticText>
 				<reportElement x="438" y="5" width="358" height="27" uuid="7993861e-1c32-485a-bcd0-db5168235b39"/>
 				<textElement textAlignment="Right">
@@ -469,6 +423,45 @@
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Page : "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="101" y="24" width="204" height="14" uuid="9c3c91af-d87d-4837-85ef-d8975dd8a403"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[9th Floor, Siam At Siam Hotel Building,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="101" y="34" width="267" height="13" uuid="fc809133-8230-4cbe-ba49-ec9469b332ab"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[865 Rama 1 Road, Wangmai, Phatumwan, Bangkok 10330]]></text>
+			</staticText>
+			<image>
+				<reportElement x="10" y="10" width="87" height="77" uuid="4bd5ad8b-ca6f-46f6-b32c-e758ee003696"/>
+				<imageExpression><![CDATA["resource/images/smi-logo.gif"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="101" y="10" width="223" height="17" uuid="ec9a369a-e98d-4eee-8b46-a8d60edf279c"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[S.M.I Travel Co., Ltd. (Head Office)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="101" y="44" width="271" height="13" uuid="15f2c0ef-9601-4199-979f-a35b9e8e98d1"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Tel : (66-2) 216-2201 Fax : (66-2) 216-2202]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="102" y="54" width="177" height="13" uuid="6ebf7eb6-b392-41e4-80a3-121378daad44"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[E-Mail : yoyaku@wendytour.com]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<detail>
