@@ -602,7 +602,7 @@
         <property name="utilityService" ref="UtilityService" />
     </bean>
     <bean id="TicketSummaryCostIncomeController" class="com.smi.travel.controller.TicketSummaryCostIncomeController">
-        
+        <property name="utilityService" ref="UtilityService" />
     </bean>
 	<!-- add bean id controller -->
 
