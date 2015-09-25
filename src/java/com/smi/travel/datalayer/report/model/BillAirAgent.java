@@ -30,6 +30,9 @@ public class BillAirAgent {
     private String compayvat;
     private String amountair;
     private String receive;
+    private String agentcom;
+    private String agentcomrefund;
+    private String paycusrefund;
 
     /**
      * @return the agentname
@@ -309,6 +312,48 @@ public class BillAirAgent {
      */
     public void setReceive(String receive) {
         this.receive = receive;
+    }
+
+    /**
+     * @return the agentcom
+     */
+    public String getAgentcom() {
+        return agentcom;
+    }
+
+    /**
+     * @param agentcom the agentcom to set
+     */
+    public void setAgentcom(String agentcom) {
+        this.agentcom = agentcom;
+    }
+
+    /**
+     * @return the agentcomrefund
+     */
+    public String getAgentcomrefund() {
+        return agentcomrefund;
+    }
+
+    /**
+     * @param agentcomrefund the agentcomrefund to set
+     */
+    public void setAgentcomrefund(String agentcomrefund) {
+        this.agentcomrefund = agentcomrefund;
+    }
+
+    /**
+     * @return the paycusrefund
+     */
+    public String getPaycusrefund() {
+        return paycusrefund;
+    }
+
+    /**
+     * @param paycusrefund the paycusrefund to set
+     */
+    public void setPaycusrefund(String paycusrefund) {
+        this.paycusrefund = paycusrefund;
     }
     
     

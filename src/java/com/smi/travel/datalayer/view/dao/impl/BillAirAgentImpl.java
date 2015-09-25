@@ -155,6 +155,9 @@ public class BillAirAgentImpl implements BillAirAgentDao{
                 .addScalar("compayvat",Hibernate.STRING)
                 .addScalar("amountair",Hibernate.STRING)
                 .addScalar("receive",Hibernate.STRING)
+                .addScalar("agentcom",Hibernate.STRING)
+                .addScalar("agentcomrefund",Hibernate.STRING)
+                .addScalar("paycusrefund",Hibernate.STRING)
                 .list();
         for (Object[] B : QueryList) {
             BillAirAgent bil = new BillAirAgent();
@@ -209,6 +212,21 @@ public class BillAirAgentImpl implements BillAirAgentDao{
                 bil.setReceive(util.ConvertString(B[19]));
             }else{
                 bil.setReceive("0.00");
+            }
+            if(util.ConvertString(B[20]) != null && !"".equals(util.ConvertString(B[20]))){
+                bil.setAgentcom(util.ConvertString(B[20]));
+            }else{
+                bil.setAgentcom("0.00");
+            }
+            if(util.ConvertString(B[21]) != null && !"".equals(util.ConvertString(B[21]))){
+                bil.setAgentcomrefund(util.ConvertString(B[21]));
+            }else{
+                bil.setAgentcomrefund("0.00");
+            }
+            if(util.ConvertString(B[22]) != null && !"".equals(util.ConvertString(B[22]))){
+                bil.setPaycusrefund(util.ConvertString(B[22]));
+            }else{
+                bil.setPaycusrefund("0.00");
             }
             data.add(bil);
         }
