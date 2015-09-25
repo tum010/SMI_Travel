@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.service;
 
+import com.smi.travel.datalayer.dao.PaymentAirTicketDao;
 import com.smi.travel.datalayer.view.dao.APNirvanaDao;
 import com.smi.travel.datalayer.view.dao.ARNirvanaDao;
 import com.smi.travel.datalayer.view.dao.AgentCommissionReportDao;
@@ -79,6 +80,7 @@ public class ReportService {
     private ARNirvanaDao arNirvanaDao;
     private CollectionNirvanaDao collectionNirvanaDao;
     private APNirvanaDao apNirvanaDao;
+    private PaymentAirTicketDao paymentAirTicketDao;
     
     public List getInvoiceMonthly(String BillFrom,String BillTo,String ClientName,String Payment,String Accno,String vattype,String from,String to,String department){
         return invoiceReportDao.getInvoiceMonthly(BillFrom, BillTo, ClientName, Payment, Accno, vattype, from, to, department);
@@ -511,5 +513,17 @@ public class ReportService {
     
     public  List listSummaryAirline(){
         return airlinesummaryDao.listSummaryAirline();
+    }
+
+    public void setPaymentAirTicketDao(PaymentAirTicketDao paymentAirTicketDao) {
+        this.paymentAirTicketDao = paymentAirTicketDao;
+    }
+
+    public PaymentAirTicketDao getPaymentAirTicketDao() {
+        return paymentAirTicketDao;
+    }
+    
+    public List getPaymentAirViewReport(String payno){
+        return paymentAirTicketDao.getPaymentAirViewReport(payno);
     }
 }

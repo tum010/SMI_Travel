@@ -15,6 +15,7 @@ import com.smi.travel.datalayer.entity.PaymentAirticketRefund;
 import com.smi.travel.datalayer.entity.RefundAirticketDetail;
 import com.smi.travel.datalayer.entity.RefundAirticketDetailView;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
+import com.smi.travel.datalayer.view.entity.PaymentAirView;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigInteger;
@@ -22,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -762,6 +764,68 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
 
     public void setUtilityFunction(UtilityFunction utilityFunction) {
         this.utilityFunction = utilityFunction;
+    }
+
+    @Override
+    public List<PaymentAirView> getPaymentAirViewReport(String payno) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        Date thisDate = new Date();
+        List data = new ArrayList();
+        String query="";
+        int AndQuery = 0;
+        if(payno == null  && "".equals(payno)){
+            query = "SELECT * FROM paymentair_view  pa " ; 
+        }else{
+            query = "SELECT * FROM paymentair_view  pa  where " ;
+        }
+        
+        if(payno != null && (!"".equalsIgnoreCase(payno))){
+            if(AndQuery == 1){
+                query += " and pa.payno = '" + payno + "'";
+           }else{
+               AndQuery = 1;
+               query += " pa.payno = '" + payno + "'";
+           }
+        }
+
+        System.out.println("Query : " + query);
+
+        List<Object[]> QueryStaffList = session.createSQLQuery(query)
+                .addScalar("payno", Hibernate.STRING)
+                .addScalar("totalpay", Hibernate.STRING)
+                .addScalar("totalcom", Hibernate.STRING)
+                .addScalar("cash", Hibernate.STRING)
+                .addScalar("chqno", Hibernate.STRING)
+                .addScalar("amount", Hibernate.STRING)
+                .addScalar("refund", Hibernate.STRING)
+                .addScalar("comrefund", Hibernate.STRING)
+                .addScalar("withtax", Hibernate.STRING)
+                .addScalar("creditnote", Hibernate.STRING)
+                .addScalar("debitnote", Hibernate.STRING)
+                .list();
+ 
+        
+        for (Object[] B : QueryStaffList) {
+            PaymentAirView payment = new PaymentAirView();
+            payment.setPayno(util.ConvertString(B[0]));
+            payment.setTotalpay(B[1]== null ? "" :util.ConvertString(B[1]));
+            payment.setTotalcom(B[2]== null ? "" :util.ConvertString(B[2]));
+            payment.setCash(B[3]== null ? "" :util.ConvertString(B[3]));
+            payment.setChqno(B[4]== null ? "" :util.ConvertString(B[4]));
+            payment.setAmount(B[5]== null ? "" :util.ConvertString(B[5]));
+            payment.setRefund(B[6]== null ? "" :util.ConvertString(B[6]));
+            payment.setComrefund(B[7]== null ? "" :util.ConvertString(B[7]));
+            
+            payment.setWithtax(B[8]== null ? "" :util.ConvertString(B[8]));
+            payment.setCreditnote(B[9]== null ? "" :util.ConvertString(B[9]));
+            payment.setDebitnote(B[10]== null ? "" :util.ConvertString(B[10]));
+            data.add(payment);
+        }
+        
+        session.close();
+        this.sessionFactory.close();
+        return data;
     }
 
 }

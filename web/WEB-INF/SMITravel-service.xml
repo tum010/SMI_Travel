@@ -165,6 +165,8 @@
         <property name="arNirvanaDao" ref="ARNirvanaDao" />
         <property name="collectionNirvanaDao" ref="CollectionNirvanaDao" />
         <property name="apNirvanaDao" ref="APNirvanaDao" />
+        <property name="paymentAirTicketDao" ref="PaymentAirTicketDao" />
+
     </bean> 
     
     

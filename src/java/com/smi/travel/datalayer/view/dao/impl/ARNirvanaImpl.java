@@ -169,7 +169,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
                 .addScalar("basewhthmamt", Hibernate.BIG_DECIMAL)
                 .addScalar("whtamt", Hibernate.BIG_DECIMAL)
                 .addScalar("whthmamt", Hibernate.BIG_DECIMAL)
-                .addScalar("year", Hibernate.INTEGER)
+                .addScalar("period", Hibernate.INTEGER)
                 .addScalar("period", Hibernate.INTEGER)
                 .addScalar("note", Hibernate.STRING)
                 .addScalar("salesaccount1", Hibernate.STRING)

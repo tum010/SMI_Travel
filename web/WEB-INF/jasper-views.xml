@@ -187,5 +187,9 @@
          <bean id="TicketFareReport"
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsXlsView">
 	   <property name="url" value="/WEB-INF/report/TicketFareAirlineReport.jrxml"/>
-	</bean>                   
+	</bean>
+        <bean id="PaymentAirlineReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/PaymentAirlineReport.jrxml"/>
+	</bean>               
 </beans>

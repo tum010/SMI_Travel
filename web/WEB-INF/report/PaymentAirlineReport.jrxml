@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PaymentAirlineReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4d2fe6ff-f331-48e0-bee1-d99e57a64a42">
+	<property name="ireport.zoom" value="1.2100000000000009"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="48"/>
+	<style name="style1"/>
+	<field name="payno" class="java.lang.String"/>
+	<field name="totalpay" class="java.lang.String"/>
+	<field name="totalcom" class="java.lang.String"/>
+	<field name="cash" class="java.lang.String"/>
+	<field name="chqno" class="java.lang.String"/>
+	<field name="amount" class="java.lang.String"/>
+	<field name="refund" class="java.lang.String"/>
+	<field name="comrefund" class="java.lang.String"/>
+	<field name="withtax" class="java.lang.String"/>
+	<field name="creditnote" class="java.lang.String"/>
+	<field name="debitnote" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<columnHeader>
+		<band height="44" splitType="Stretch">
+			<staticText>
+				<reportElement x="135" y="7" width="301" height="36" uuid="1e4bad2e-8c95-4a83-a94b-1e9a53c58c03"/>
+				<textElement textAlignment="Justified">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Payment Airline Summary]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="200" splitType="Stretch">
+			<staticText>
+				<reportElement x="11" y="8" width="59" height="13" backcolor="#FFFFFF" uuid="a8e71404-6f3e-468f-a4e9-3a27fc51372f"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Payment No. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="26" width="147" height="13" backcolor="#FFFFFF" uuid="f2b9424b-3499-48cf-9112-4c729d558495"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Pay :   ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="39" width="147" height="13" backcolor="#FFFFFF" uuid="da067994-0c8c-4191-b9d4-f5c4de9dc904"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Commission :   ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="52" width="147" height="13" backcolor="#FFFFFF" uuid="3d377841-4d7c-4fd7-8fe1-4afa13595d46"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cash :   ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="65" width="147" height="13" backcolor="#FFFFFF" uuid="1affdf37-50a8-4f89-87e0-fea99ccf7648"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cheque No :   ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="78" width="147" height="13" backcolor="#FFFFFF" uuid="c5e5f634-7c86-4773-b0f7-bc2face0b435"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount :   ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="91" width="147" height="13" backcolor="#FFFFFF" uuid="4c289556-40d2-4cba-88e7-79553a1789a3"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Refund :   ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="104" width="147" height="13" backcolor="#FFFFFF" uuid="c48441a3-9fa5-49d2-ba25-aaa183d30872"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Commission Refund :   ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="117" width="147" height="13" backcolor="#FFFFFF" uuid="1fc99809-6dfb-4599-97d9-5014a02bdfd3"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Withholding Tax :   ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="130" width="147" height="13" backcolor="#FFFFFF" uuid="0eec9c19-d8f7-4c92-9d6a-8b59856f79da"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Credit Note :   ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="144" width="147" height="13" backcolor="#FFFFFF" uuid="52214ddb-4544-417d-8c52-4bcdf0b76ecd"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Debit Note :   ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="70" y="8" width="60" height="13" uuid="db660c06-48c9-4706-b418-b8b30f6b4a4f"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{payno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="157" y="144" width="151" height="13" uuid="b90e5edf-467a-44b3-ad59-3fbf58f69f45"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{debitnote}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="157" y="26" width="151" height="13" uuid="11d46f1e-cbee-4995-9f95-702d003a720e"/>
+				<box>
+					<pen lineWidth="0.0" lineColor="#CCCCCC"/>
+					<topPen lineWidth="0.0" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="0.0" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="0.0" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="0.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalpay}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="157" y="39" width="151" height="13" uuid="b81c01f5-5504-4c3d-87f9-d4496c7c46d0"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalcom}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="157" y="52" width="151" height="13" uuid="43f4182d-6f39-47de-993e-f15835940c1a"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cash}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="157" y="65" width="151" height="13" uuid="71dca289-162d-4198-83ce-f216e229bae3"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{chqno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="157" y="78" width="151" height="13" uuid="c911c26c-2a22-4df0-a3da-04ec081a6291"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="157" y="91" width="151" height="13" uuid="ab04c578-828f-4c3d-8644-a45e4c0193fb"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{refund}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="157" y="104" width="151" height="13" uuid="ff1656e9-0ffd-4b6e-8a84-8a6e66e30b5c"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{comrefund}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="157" y="117" width="151" height="13" uuid="431ce8bc-15eb-48d8-b530-53583623df8a"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{withtax}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="157" y="130" width="151" height="13" uuid="fd2c2fdc-07b3-430c-83ef-c0e0fdb99252"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{creditnote}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="11" y="21" width="534" height="1" uuid="8bb1737c-5794-49b4-b6f6-0864bd3c9112"/>
+				<graphicElement>
+					<pen lineWidth="1.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

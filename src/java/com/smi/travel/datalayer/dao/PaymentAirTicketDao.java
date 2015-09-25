@@ -10,6 +10,7 @@ import com.smi.travel.datalayer.entity.PaymentAirCredit;
 import com.smi.travel.datalayer.entity.PaymentAirticket;
 import com.smi.travel.datalayer.entity.PaymentAirticketFare;
 import com.smi.travel.datalayer.entity.RefundAirticketDetailView;
+import com.smi.travel.datalayer.view.entity.PaymentAirView;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
 import java.util.List;
 
@@ -41,4 +42,5 @@ public interface PaymentAirTicketDao {
     public List<TicketFareView> getTicketFareViewsByPaymentAirId(String paymentAirId);
     public List<RefundAirticketDetailView> getRefundDetailByPaymentAirId(String paymentAirId);
     public List<PaymentAirCredit> getPaymentAirCreditByPaymentAirId(String paymentAirId);
+    public List<PaymentAirView> getPaymentAirViewReport(String payno);
 }
