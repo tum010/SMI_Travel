@@ -1464,6 +1464,24 @@ function calculateVat() {
        var ticketComm = parseFloat(ticketCommission);
        var diffvat = inv - fare - tax - ins - ticketComm;
        document.getElementById("diffVat").value = formatNumber(diffvat);
+    } else if(ticketType == "D"){
+        var invAmount = replaceAll(",","",$('#invoiceAmount').val()); 
+        if (invAmount == ""){
+            invAmount = 0;
+        }
+        var ticketfare = replaceAll(",","",$('#ticketFare').val()); 
+        if (ticketfare == ""){
+            ticketfare = 0;
+        }
+        var ticketins = replaceAll(",","",$('#ticketIns').val()); 
+        if (ticketins == ""){
+            ticketins = 0;
+        }
+        var inv = parseFloat(invAmount); 
+        var fare = parseFloat(ticketfare);
+        var ins = parseFloat(ticketins);
+        var diffvat = inv - fare - ins;
+        document.getElementById("diffVat").value = formatNumber(diffvat);
     }
 }
 function replaceAll(find, replace, str) {
