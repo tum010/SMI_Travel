@@ -575,6 +575,11 @@
         <put-attribute name="title" value="Checking Airticket : Ticket Summary Airline" />
         <put-attribute name="body" value="/WEB-INF/jsp/TicketFareSummaryAirline.jsp" />
     </definition>
+    
+    <definition name="TicketSummaryCostIncome" extends="baseLayout">
+        <put-attribute name="title" value="Checking Airticket:Ticket Summary Cost Income" />
+        <put-attribute name="body" value="/WEB-INF/jsp/TicketSummaryCostIncome.jsp" />
+    </definition>
     <!--<add data>-->
     
     <definition name="SendMail" extends="baseLayout">
