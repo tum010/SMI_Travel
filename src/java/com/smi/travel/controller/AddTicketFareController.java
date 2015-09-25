@@ -61,6 +61,7 @@ public class AddTicketFareController extends SMITravelController {
     private static final String INVOICEDATE = "invoiceDate";
     private static final String INVOICENO = "invoiceNo";
     private static final String INVOICECREDIT = "invoiceCredit";
+    private static final String INVOICECREDITVALUE = "invoiceCreditValue";
     private static final String DUEDATE = "dueDate";
     private UtilityService utilityService;
     private TicketFareAirlineService ticketFareAirlineService;
@@ -129,6 +130,7 @@ public class AddTicketFareController extends SMITravelController {
         String invNo = "" ;
         String invDate = "" ;
         String invcredit = "" ;
+        String invcreditvalue = "";
         String staffowner = "" ;
         String ticketflightrouting = "";
         
@@ -460,6 +462,7 @@ public class AddTicketFareController extends SMITravelController {
                         invNo = invoiceDetailViewList.get(i).getInvNo();
                         invDate = String.valueOf(invoiceDetailViewList.get(i).getInvDate());
                         invcredit =  invoiceDetailViewList.get(i).getCredit();
+                        invcreditvalue = invoiceDetailViewList.get(i).getCreditValue();
                         staffowner =  invoiceDetailViewList.get(i).getOwner();
                         ticketflightrouting = invoiceDetailViewList.get(i).getRouting();
                         receiptDetailViewListTemp = receiptService.getReceiptDetailViewFromInvDetailId(invoiceDetailViewList.get(i).getId());
@@ -489,6 +492,7 @@ public class AddTicketFareController extends SMITravelController {
                 request.setAttribute(INVOICENO, invNo);
                 request.setAttribute(INVOICEDATE, invDate);
                 request.setAttribute(INVOICECREDIT, invcredit);
+                request.setAttribute(INVOICECREDITVALUE, invcreditvalue);
                 request.setAttribute(RECEIPTDETAILLIST, receiptDetailViewList);
                 if(bookingFlights == null){
                     airticketFlightView = ticketFareAirlineService.getListAirticketFlightFromTicketNo(ticketNo);
