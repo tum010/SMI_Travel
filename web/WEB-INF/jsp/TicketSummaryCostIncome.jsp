@@ -50,7 +50,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group" id="fromdatepanel">
-                                <label class="col-md-6 control-label text-right">Invoice Date From<font style="color: red">*</font></label>
+                                <label class="col-md-6 control-label text-right">Invoice Date From<font style="color: red"></font></label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date fromdate' id='DateFrom'>
@@ -66,7 +66,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group" id="todatepanel">
-                                <label class="col-md-6 control-label text-right">Invoice Date To<font style="color: red">*</font></label>
+                                <label class="col-md-6 control-label text-right">Invoice Date To<font style="color: red"></font></label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date todate' id='DateTo'>
@@ -262,6 +262,7 @@
                 invalid: 'uk-icon-times',
                 validating: 'uk-icon-refresh'
             },
+            excluded: ':enabled', 
             fields: {
                 invoiceFromDate: {
                     trigger: 'focus keyup change',
@@ -270,8 +271,6 @@
                             format: 'YYYY-MM-DD',
                             max: 'invoiceToDate',
                             message: 'The Date From is not a valid'
-                        },notEmpty: {
-                            message: 'The Date To is required'
                         }
                     }
                 },
@@ -282,8 +281,6 @@
                             format: 'YYYY-MM-DD',
                             min: 'invoiceFromDate',
                             message: 'The Date To is not a valid'
-                        },notEmpty: {
-                            message: 'The Date To is required'
                         }
                     }
                 },
@@ -419,10 +416,12 @@
         var invoiceToDate = document.getElementById('invoiceToDate').value;
         var issueFrom = document.getElementById('issueFrom').value;
         var issueTo = document.getElementById('issueTo').value;
-        if((invoiceFromDate === '') || (invoiceToDate === '')){
-           validateDate(); 
+        if((invoiceFromDate !== '') && (invoiceToDate !== '')){
+           alert('success');
+        } else if((issueFrom !== '') && (issueTo !== '')){
+           alert('success');
         } else {
-            alert('success');
+           validateDate();  
         }
     }
     
@@ -542,6 +541,8 @@
         } else {
             $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceFromDate');
             $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceToDate');
+            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
+            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
             $("#printbutton").addClass("disabled");
         }
     }
