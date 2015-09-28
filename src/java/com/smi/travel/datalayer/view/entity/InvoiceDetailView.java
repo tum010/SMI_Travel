@@ -25,6 +25,7 @@ public class InvoiceDetailView {
     private String routing;
     private String invoiceId;
     private BigDecimal amountInvoice;
+    private String creditValue;
     
     public String getId() {
         return id;
@@ -121,6 +122,12 @@ public class InvoiceDetailView {
     public void setAmountInvoice(BigDecimal amountInvoice) {
         this.amountInvoice = amountInvoice;
     }
-   
-    
+
+    public String getCreditValue() {
+        return creditValue;
+    }
+
+    public void setCreditValue(String creditValue) {
+        this.creditValue = creditValue;
+    }     
 }
