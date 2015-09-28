@@ -195,14 +195,15 @@
                                 <th class="hidden">Id</th>
                                 <th style="width: 1%" onclick="selectAll()"><u>All</u></th>
                                 <th style="width: 1%" >No</th>
-                                <th style="width: 12%">Inv No.</th>
-                                <th style="width: 12%">AR Code</th>
+                                <th style="width: 10%">Inv No.</th>
+                                <th style="width: 9%">AR Code</th>
                                 <th style="width: 26%">Inv To</th>
                                 <th style="width: 12%">Acc Code</th>
                                 <th style="width: 15%">Gross</th>
+                                <th style="width: 7%">Vat</th>
                                 <th style="width: 15%">Amount</th>
                                 <th style="width: 2%">Cur</th>
-                                <th style="width: 5%">Status</th>
+                                <th style="width: 4%">Status</th>
                              </tr>
                         </thead>
                         <tbody>
@@ -217,8 +218,9 @@
                                 <td>${ar_nirvana.customerid}</td>
                                 <td>${ar_nirvana.customername}</td>
                                 <td>${ar_nirvana.salesaccount1}</td>
-                                <td align="right" class="money">${ar_nirvana.aramt -  ar_nirvana.vatamt}</td>
                                 <td align="right" class="money">${ar_nirvana.aramt}</td>
+                                <td align="right" class="money">${ar_nirvana.vatamt}</td>
+                                <td align="right" class="money">${ar_nirvana.salesamt}</td>
                                 <td align="center">${ar_nirvana.currencyid}</td>
                                 <td align="center">${ar_nirvana.status}</td>
                             </tr>
@@ -284,11 +286,11 @@
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
             "bFilter": false,
-            "bPaginate": true,
             "bInfo": false,
-            "bLengthChange": true,
-            "iDisplayLength": 10,
+            "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+            "iDisplayLength": 50,
             "bSort": false,
+            "bPaginate": false
         });
         
         $('#arDataListTable tbody').on('click', 'tr', function () {
