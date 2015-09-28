@@ -81,7 +81,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-8">
-                            <div class="form-group" id="fromdatepanel">
+                            <div class="form-group" id="issuefromdatepanel">
                                 <label class="col-md-6 control-label text-right">Issue Date From<font style="color: red"></font></label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
@@ -97,7 +97,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-8">
-                            <div class="form-group" id="todatepanel">
+                            <div class="form-group" id="issuetodatepanel">
                                 <label class="col-md-6 control-label text-right">Issue Date To<font style="color: red"></font></label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
@@ -255,84 +255,95 @@
             $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
         });
         
-        $("#TicketSummaryCostIncomeForm").bootstrapValidator({
-            framework: 'bootstrap',
-            feedbackIcons: {
-                valid: 'uk-icon-check',
-                invalid: 'uk-icon-times',
-                validating: 'uk-icon-refresh'
-            },
-            excluded: ':enabled', 
-            fields: {
-                invoiceFromDate: {
-                    trigger: 'focus keyup change',
-                    validators: {
-                        date: {
-                            format: 'YYYY-MM-DD',
-                            max: 'invoiceToDate',
-                            message: 'The Date From is not a valid'
-                        }
-                    }
-                },
-                invoiceToDate: {
-                    trigger: 'focus keyup change',
-                    validators: {
-                        date: {
-                            format: 'YYYY-MM-DD',
-                            min: 'invoiceFromDate',
-                            message: 'The Date To is not a valid'
-                        }
-                    }
-                },
-                issueFrom: {
-                    trigger: 'focus keyup change',
-                    validators: {
-                        date: {
-                            format: 'YYYY-MM-DD',
-                            max: 'issueTo',
-                            message: 'The Date To is not a valid'
-                        }
-                    }
-                },
-                issueTo: {
-                    trigger: 'focus keyup change',
-                    validators: {
-                        date: {
-                            format: 'YYYY-MM-DD',
-                            min: 'issueFrom',
-                            message: 'The Date To is not a valid'
-                        }
-                    }
-                }
-            }
-        }).on('success.field.fv', function (e, data) {
-            if (data.field === 'invoiceFromDate' && data.fv.isValidField('invoiceToDate') === false) {
-                    data.fv.revalidateField('invoiceToDate');
-            }
-            if (data.field === 'invoiceToDate' && data.fv.isValidField('invoiceFromDate') === false) {
-                data.fv.revalidateField('invoiceFromDate');
-            }
-
-            if (data.field === 'issueFrom' && data.fv.isValidField('issueTo') === false) {
-                    data.fv.revalidateField('issueTo');
-            }
-            if (data.field === 'issueTo' && data.fv.isValidField('issueFrom') === false) {
-                data.fv.revalidateField('issueFrom');
-            }
-        });
-        
-        $('#DateFrom').datetimepicker().on('dp.change', function (e) {
-            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceFromDate');
-        });
-        $('#DateTo').datetimepicker().on('dp.change', function (e) {
-            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceToDate');
-        });
-        $('#DateFromIssue').datetimepicker().on('dp.change', function (e) {
-            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
-        });
-        $('#DateToIssue').datetimepicker().on('dp.change', function (e) {
-           $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
-        });
+//        $("#TicketSummaryCostIncomeForm").bootstrapValidator({
+//            framework: 'bootstrap',
+//            feedbackIcons: {
+//                valid: 'uk-icon-check',
+//                invalid: 'uk-icon-times',
+//                validating: 'uk-icon-refresh'
+//            },
+//            fields: {
+//                invoiceFromDate: {
+//                    trigger: 'focus keyup change',
+//                    validators: {
+//                        date: {
+//                            format: 'YYYY-MM-DD',
+//                            max: 'invoiceToDate',
+//                            message: 'The Date From is not a valid'
+//                        },
+//                        notEmpty: {
+//                            message: 'The Date From is required'
+//                        }
+//                    }
+//                },
+//                invoiceToDate: {
+//                    trigger: 'focus keyup change',
+//                    validators: {
+//                        date: {
+//                            format: 'YYYY-MM-DD',
+//                            min: 'invoiceFromDate',
+//                            message: 'The Date To is not a valid'
+//                        },
+//                        notEmpty: {
+//                            message: 'The Date To is required'
+//                        }
+//                    }
+//                },
+//                issueFrom: {
+//                    trigger: 'focus keyup change',
+//                    validators: {
+//                        date: {
+//                            format: 'YYYY-MM-DD',
+//                            max: 'issueTo',
+//                            message: 'The Date To is not a valid'
+//                        },
+//                        notEmpty: {
+//                            message: 'The Date Issue From is required'
+//                        }
+//                    }
+//                },
+//                issueTo: {
+//                    trigger: 'focus keyup change',
+//                    validators: {
+//                        date: {
+//                            format: 'YYYY-MM-DD',
+//                            min: 'issueFrom',
+//                            message: 'The Date To is not a valid'
+//                        },
+//                        notEmpty: {
+//                            message: 'The Date Issue To is required'
+//                        }
+//                    }
+//                }
+//            }
+//        }).on('success.field.fv', function (e, data) {
+//            if (data.field === 'invoiceFromDate' && data.fv.isValidField('invoiceToDate') === false) {
+//                    data.fv.revalidateField('invoiceToDate');
+//            }
+//            if (data.field === 'invoiceToDate' && data.fv.isValidField('invoiceFromDate') === false) {
+//                data.fv.revalidateField('invoiceFromDate');
+//            }
+//
+//            if (data.field === 'issueFrom' && data.fv.isValidField('issueTo') === false) {
+//                    data.fv.revalidateField('issueTo');
+//            }
+//            if (data.field === 'issueTo' && data.fv.isValidField('issueFrom') === false) {
+//                data.fv.revalidateField('issueFrom');
+//            }
+//        });
+//        
+//        $('#DateFrom').datetimepicker().on('dp.change', function (e) {
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceFromDate');
+//        });
+//        $('#DateTo').datetimepicker().on('dp.change', function (e) {
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceToDate');
+//        });
+//        $('#DateFromIssue').datetimepicker().on('dp.change', function (e) {
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
+//        });
+//        $('#DateToIssue').datetimepicker().on('dp.change', function (e) {
+//           $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
+//        });
         
         $('.fromdate').datetimepicker().change(function(){                          
             checkFromDateField();
@@ -428,13 +439,25 @@
     function checkFromDateField(){
         var InputToDate = document.getElementById("invoiceToDate");
         var inputFromDate = document.getElementById("invoiceFromDate");
-        if(inputFromDate.value === '' || InputToDate.value === ''){        
-            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceToDate');
-            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceFromDate');
+        if(InputToDate.value === '' && inputFromDate.value === ''){
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
+            $("#fromdatepanel").removeClass("has-error");
+            $("#todatepanel").removeClass("has-error");  
+            $("#printbutton").removeClass("disabled");
+        }else if(inputFromDate.value === '' || InputToDate.value === ''){        
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceToDate');
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceFromDate');
+            $("#fromdatepanel").addClass("has-error");
+            $("#todatepanel").addClass("has-error");
             $("#printbutton").addClass("disabled");
         } else {
-            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceToDate');
-            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceFromDate');
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceToDate');
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceFromDate');
+            $("#fromdatepanel").removeClass("has-error");
+            $("#todatepanel").removeClass("has-error");
+            $("#issuefromdatepanel").removeClass("has-error");
+            $("#issuetodatepanel").removeClass("has-error");  
             $("#printbutton").removeClass("disabled");
             checkDateValue("from","");
         }
@@ -443,13 +466,25 @@
     function checkToDateField(){
         var InputToDate = document.getElementById("invoiceToDate");
         var inputFromDate = document.getElementById("invoiceFromDate");
-        if(inputFromDate.value === '' || InputToDate.value === ''){ 
-            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceToDate');
-            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceFromDate');
+        if(InputToDate.value === '' && inputFromDate.value === ''){
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
+            $("#fromdatepanel").removeClass("has-error");
+            $("#todatepanel").removeClass("has-error");  
+            $("#printbutton").removeClass("disabled");
+        }else if(inputFromDate.value === '' || InputToDate.value === ''){ 
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceToDate');
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceFromDate');
+            $("#fromdatepanel").addClass("has-error");
+            $("#todatepanel").addClass("has-error");
             $("#printbutton").addClass("disabled");
         }else{
-            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceToDate');
-            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceFromDate');
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceToDate');
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceFromDate');
+            $("#fromdatepanel").removeClass("has-error");
+            $("#todatepanel").removeClass("has-error");
+            $("#issuefromdatepanel").removeClass("has-error");
+            $("#issuetodatepanel").removeClass("has-error");  
             $("#printbutton").removeClass("disabled");
             checkDateValue("to","");
         }       
@@ -459,16 +494,24 @@
         var issueToDate = document.getElementById("issueTo");
         var issueFromDate = document.getElementById("issueFrom");
         if(issueFromDate.value === '' && issueToDate.value === ''){
-            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
-            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
+            $("#issuefromdatepanel").removeClass("has-error");
+            $("#issuetodatepanel").removeClass("has-error");  
             $("#printbutton").removeClass("disabled");
         }else if(issueFromDate.value === '' || issueToDate.value === ''){        
-            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
-            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
+            $("#issuefromdatepanel").addClass("has-error");
+            $("#issuetodatepanel").addClass("has-error");  
             $("#printbutton").addClass("disabled");
         } else {
-            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
-            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
+            $("#fromdatepanel").removeClass("has-error");
+            $("#todatepanel").removeClass("has-error");
+            $("#issuefromdatepanel").removeClass("has-error");
+            $("#issuetodatepanel").removeClass("has-error");  
             $("#printbutton").removeClass("disabled");
             checkDateValue("issuefrom","");
         }    
@@ -478,16 +521,24 @@
         var issueToDate = document.getElementById("issueTo");
         var issueFromDate = document.getElementById("issueFrom");
         if(issueFromDate.value === '' && issueToDate.value === ''){
-            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
-            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
+            $("#issuefromdatepanel").removeClass("has-error");
+            $("#issuetodatepanel").removeClass("has-error");  
             $("#printbutton").removeClass("disabled");
         }else if(issueFromDate.value === '' || issueToDate.value === ''){ 
-            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
-            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
+            $("#issuefromdatepanel").addClass("has-error");
+            $("#issuetodatepanel").addClass("has-error"); 
             $("#printbutton").addClass("disabled");
         }else{
-            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
-            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
+            $("#fromdatepanel").removeClass("has-error");
+            $("#todatepanel").removeClass("has-error");
+            $("#issuefromdatepanel").removeClass("has-error");
+            $("#issuetodatepanel").removeClass("has-error"); 
             $("#printbutton").removeClass("disabled");
             checkDateValue("issueto","");
         }       
@@ -522,27 +573,35 @@
     function validateDate(date,option){
         if(option === 'over'){
             if(date === 'from'){
-               $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceFromDate');
-               $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceToDate');
+//               $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceFromDate');
+//               $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceToDate');
+                $("#fromdatepanel").addClass("has-error");                                 
             }
             if(date === 'to'){
-               $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceFromDate');
-               $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceToDate');
+//               $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceFromDate');
+//               $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceToDate');
+                $("#todatepanel").addClass("has-error");
             }
             if(date === 'issuefrom'){
-               $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
-               $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
+//               $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
+//               $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
+                $("#issuefromdatepanel").addClass("has-error");
             }
             if(date === 'issueto'){
-               $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
-               $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
+//               $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
+//               $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
+                $("#issuetodatepanel").addClass("has-error");
             }       
             $("#printbutton").addClass("disabled");
         } else {
-            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceFromDate');
-            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceToDate');
-            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
-            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceFromDate');
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceToDate');
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
+            $("#fromdatepanel").addClass("has-error");
+            $("#todatepanel").addClass("has-error");
+            $("#issuefromdatepanel").addClass("has-error");
+            $("#issuetodatepanel").addClass("has-error");
             $("#printbutton").addClass("disabled");
         }
     }

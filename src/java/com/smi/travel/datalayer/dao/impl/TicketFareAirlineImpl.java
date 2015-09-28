@@ -849,6 +849,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                 invoiceDetailView.setDueDate(invoiceDetailList.get(i).getInvoice().getDueDate());
                 invoiceDetailView.setStaffName(invoiceDetailList.get(i).getInvoice().getStaff() != null ? invoiceDetailList.get(i).getInvoice().getStaff().getName() : "");
                 invoiceDetailView.setCredit(invoiceDetailList.get(i).getInvoice().getMAccTerm() != null ? invoiceDetailList.get(i).getInvoice().getMAccTerm().getName() : "");
+                invoiceDetailView.setCreditValue(invoiceDetailList.get(i).getInvoice().getMAccTerm() != null ? String.valueOf(invoiceDetailList.get(i).getInvoice().getMAccTerm().getValue()) : "");
                 
                 invoiceDetailViewList.add(invoiceDetailView);
             }

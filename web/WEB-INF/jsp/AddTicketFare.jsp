@@ -401,6 +401,7 @@
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
                                     <input id="invoiceCredit" name="invoiceCredit" type="text" class="form-control" maxlength="30" readonly="" value="${requestScope['invoiceCredit']}">
+                                    <input id="invoiceCreditValue" name="invoiceCreditValue" type="hidden" class="form-control" maxlength="5" readonly="" value="${requestScope['invoiceCreditValue']}">
                                 </div>
                             </div>
                         </div>
@@ -1017,8 +1018,121 @@
             clearData();
             $("#ticketNo").val("");
         }
+        
+        $('#invoiceCreditValue').ready(function () {
+            setDuaDate();
+        });
+        
    });
-   
+
+function setDuaDate(){
+    var ticketNo = document.getElementById('ticketNo').value;
+    var dueDate = document.getElementById('dueDate').value;
+    var invoiceCredit = document.getElementById('invoiceCredit').value;
+    var creditValue = document.getElementById('invoiceCreditValue').value;
+    var invoiceDate = document.getElementById('invoiceDate').value;
+    if((ticketNo !== '') && (dueDate === '')){
+        var invdate = invoiceDate.split('-');
+        var creval = parseInt(creditValue);
+        
+        var billdate = parseInt(30/creval);
+        var billdatelist = [];
+        for(var i=0;i<billdate;i++){
+            billdatelist.push((creval*(i+1)));
+        }
+        
+        //Month
+        var month28 = [2];
+        var month30 = [4,6,9,11];
+        var month31 = [1,3,5,7,8,10,12];      
+        var month = parseInt(invdate[1]);
+        var m28 = 0;
+        var m30 = 0;
+        var m31 = 0;       
+        for(var i=0;i<month28.length;i++){
+            if(month === month28[i]){
+                m28++;
+            }
+        }
+        for(var i=0;i<month30.length;i++){
+            if(month === month30[i]){
+                m30++;
+            }
+        }
+        for(var i=0;i<month31.length;i++){
+            if(month === month31[i]){
+                m31++;
+            }
+        }
+        
+        //Day
+        var day = parseInt(invdate[2]);
+        if(m28>0){
+            
+        }
+        if(m30>0){
+            day = creval+day;
+            if(day>30){
+                day = day%30;
+                month = month+1;
+            }
+        }
+        if(m31>0){
+            day = creval+day;
+            if(day>31){
+                day = day%31;
+                month = month+1;
+            }
+        }
+        
+        m28 = 0;
+        m30 = 0;
+        m31 = 0;
+        var mshow = 0;
+        for(var i=0;i<month28.length;i++){
+            if(month === month28[i]){
+                mshow = month28[i];
+                m28++;
+            }
+        }
+        for(var i=0;i<month30.length;i++){
+            if(month === month30[i]){
+                mshow = month30[i];
+                m30++;
+            }
+        }
+        for(var i=0;i<month31.length;i++){
+            if(month === month31[i]){
+                mshow = month31[i];
+                m31++;
+            }
+        }
+              
+        var dshow = "";
+        for(var i=0;i<billdatelist.length;i++){
+            if(i === 0){
+                if((day>=1) && (day<=billdatelist[i])){
+                    dshow = billdatelist[i];
+                }
+            }
+            if((day>billdatelist[i-1]) && (day<=billdatelist[i])){
+                dshow = billdatelist[i];
+            }
+        }
+
+        var point1 = "";
+        var point2 = "";
+        if((mshow.toString()).length === 1){
+            point1 = "0";
+        }
+        if((dshow.toString()).length === 1){
+            point2 = "0";
+        }
+               
+        document.getElementById('dueDate').value = "2015-"+point1+mshow+"-"+point2+dshow;
+    }
+}
+    
 function setFormatCurrency(){    
     var ticketFare = replaceAll(",","",$('#ticketFare').val()); 
     if (ticketFare == ""){
@@ -1464,6 +1578,24 @@ function calculateVat() {
        var ticketComm = parseFloat(ticketCommission);
        var diffvat = inv - fare - tax - ins - ticketComm;
        document.getElementById("diffVat").value = formatNumber(diffvat);
+    } else if(ticketType == "D"){
+        var invAmount = replaceAll(",","",$('#invoiceAmount').val()); 
+        if (invAmount == ""){
+            invAmount = 0;
+        }
+        var ticketfare = replaceAll(",","",$('#ticketFare').val()); 
+        if (ticketfare == ""){
+            ticketfare = 0;
+        }
+        var ticketins = replaceAll(",","",$('#ticketIns').val()); 
+        if (ticketins == ""){
+            ticketins = 0;
+        }
+        var inv = parseFloat(invAmount); 
+        var fare = parseFloat(ticketfare);
+        var ins = parseFloat(ticketins);
+        var diffvat = inv - fare - ins;
+        document.getElementById("diffVat").value = formatNumber(diffvat);
     }
 }
 function replaceAll(find, replace, str) {
