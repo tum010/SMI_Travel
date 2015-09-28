@@ -386,7 +386,7 @@ public class APNirvanaImpl implements APNirvanaDao {
                 cell = dataRow.createCell(cellnum++);
                 cell.setCellValue(ap.getTaxid());
                 cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getVendor_branch());
+                cell.setCellValue(ap.getVendor_branch()== null? "0":ap.getVendor_branch().toString());
                 cell = dataRow.createCell(cellnum++);
                 cell.setCellValue(ap.getCompany_branch());
                
