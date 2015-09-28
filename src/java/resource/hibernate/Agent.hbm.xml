@@ -59,6 +59,12 @@
         <property name="detail" type="string">
             <column name="detail" length="255" />
         </property>
+        <property name="address2" type="string">
+            <column name="address2" length="255" />
+        </property>
+        <property name="address3" type="string">
+            <column name="address3" length="255" />
+        </property>
         <set name="masters" table="master" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="Agent_id" not-null="true" />
