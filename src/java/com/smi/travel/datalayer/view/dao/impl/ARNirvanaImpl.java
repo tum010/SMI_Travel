@@ -394,7 +394,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
                 cell = dataRow.createCell(cellnum++);
                 cell.setCellValue(ar.getCust_taxid());
                 cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ar.getCust_branch());
+                cell.setCellValue(ar.getCust_branch() == null ? "":ar.getCust_branch().toString());
                 cell = dataRow.createCell(cellnum++);
                 cell.setCellValue(ar.getCompany_branch());
                

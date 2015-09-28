@@ -90,6 +90,7 @@ public class PaymentTourHotelController extends SMITravelController {
         String paymentId = request.getParameter("paymentId");
         String tourDescId = request.getParameter("tourDescId");
         String isExport = request.getParameter("isExport");
+        String createBy = request.getParameter("createBy");
         
         SystemUser user = (SystemUser) session.getAttribute("USER");
         String idRole = user.getRole().getId();
@@ -124,7 +125,9 @@ public class PaymentTourHotelController extends SMITravelController {
                 paymentWendy.setDetail(Detail);                
                 paymentWendy.setRemark(InputRemark);
                 paymentWendy.setCurrency(InputCurrency);           
-                paymentWendy.setChqNo(InputChqNo);               
+                paymentWendy.setChqNo(InputChqNo);
+                paymentWendy.setCreateBy(user.getUsername());
+                paymentWendy.setIsExport(0);
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 String createDate = sdf.format(date);
                 paymentWendy.setCreateDate(utilfunction.convertStringToDate(createDate));
@@ -161,10 +164,7 @@ public class PaymentTourHotelController extends SMITravelController {
                 }                     
                 if(utilfunction.convertStringToInteger(counter) != 0){
                     setPaymentDetailWendy(request, counter, paymentWendy);
-                }
-     
-                paymentWendy.setCreateBy(user.getUsername());
-                paymentWendy.setIsExport(0);
+                }                     
                 
                 String option = "";
                 String result = paymentTourHotelService.InsertPaymentWendy(paymentWendy,option);
@@ -182,6 +182,7 @@ public class PaymentTourHotelController extends SMITravelController {
                 request.setAttribute("paymentId", paymentWendyId.getId());
                 request.setAttribute("payNo", paymentWendyId.getPayNo());
                 request.setAttribute("crateDate", paymentWendyId.getCreateDate());
+                request.setAttribute("createBy", user.getUsername());
                 if(paymentWendyId.getTourOperationDesc() != null){
                     request.setAttribute("tourDescId", paymentWendyId.getTourOperationDesc().getId());
                 }
@@ -207,6 +208,7 @@ public class PaymentTourHotelController extends SMITravelController {
                 paymentWendy.setCreateDate(utilfunction.convertStringToDate(crateDate));
                 paymentWendy.setUpdateDate(utilfunction.convertStringToDate(updateDate));
                 paymentWendy.setIsExport(Integer.parseInt(isExport));
+                paymentWendy.setCreateBy(createBy);
                 System.out.println("Update Date : "+updateDate);
                 
                 if(account != null){
@@ -250,8 +252,7 @@ public class PaymentTourHotelController extends SMITravelController {
                 } else {
                     paymentWendy.setTourOperationDesc(null);
                 }   
-                
-                paymentWendy.setCreateBy(user.getUsername());                                             
+                                                            
                 String option = "";
                 String result = paymentTourHotelService.UpdatePaymentWendy(paymentWendy,option);
                 request.setAttribute("paymentId", paymentId);
@@ -259,6 +260,7 @@ public class PaymentTourHotelController extends SMITravelController {
                 request.setAttribute("resultText", result);
                 request.setAttribute("crateDate", crateDate);
                 request.setAttribute("tourDescId", tourDescId);
+                request.setAttribute("createBy", createBy);        
                 getPaymentDetailWendy(request, InputPayNo);
             }
           
@@ -286,6 +288,7 @@ public class PaymentTourHotelController extends SMITravelController {
             InputChqAmount = String.valueOf(paymentWendy.getChqAmount());
             crateDate = String.valueOf(paymentWendy.getCreateDate());
             isExport = String.valueOf(paymentWendy.getIsExport());
+            createBy = paymentWendy.getCreateBy();
             
             if(paymentWendy.getTourOperationDesc() != null){
                 tourDescId = String.valueOf(paymentWendy.getTourOperationDesc().getId());
@@ -339,6 +342,7 @@ public class PaymentTourHotelController extends SMITravelController {
             request.setAttribute("crateDate", crateDate);
             request.setAttribute("tourDescId", tourDescId);
             request.setAttribute("isExport", isExport);
+            request.setAttribute("createBy", createBy);
             request.setAttribute(PRODUCTDETAILLIST, paymentDetailWendyList);
             request.setAttribute(PAYMENHOTELTCOUNT, size);
             //request.setAttribute("btnSave", "update");
@@ -492,6 +496,7 @@ public class PaymentTourHotelController extends SMITravelController {
 //        String InputCash = String.valueOf(paymentWendy.getCash());
 //        String InputChqNo = paymentWendy.getChqNo();
 //        String InputChqAmount = String.valueOf(paymentWendy.getChqAmount());
+        String createBy = paymentWendy.getCreateBy();
         String account = "";
         if(paymentWendy.getAccount() != null){
             account = String.valueOf(paymentWendy.getAccount());
@@ -542,6 +547,7 @@ public class PaymentTourHotelController extends SMITravelController {
         request.setAttribute("itemPayment", itemPayment);
         request.setAttribute("InputRemark", InputRemark);
         request.setAttribute("isExport", String.valueOf(isExport));
+        request.setAttribute("createBy", createBy);
 //        request.setAttribute("InputCash", InputCash);
 //        request.setAttribute("InputChqNo", InputChqNo);
 //        request.setAttribute("InputChqAmount", InputChqAmount);

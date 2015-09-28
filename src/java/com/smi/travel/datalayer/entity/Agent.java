@@ -28,6 +28,8 @@ public class Agent   {
      private String Detail;
      private String apCode;
      private String arCode;
+     private String address2;
+     private String address3;
      private Set masters = new HashSet(0);
 
     public Agent() {
@@ -38,7 +40,7 @@ public class Agent   {
         this.code = code;
         this.name = name;
     }
-    public Agent(MAccterm MAccterm,MAccpay MAccpay, MBranch MBranch, String code, String name, String address, String tel, String fax, String taxNo, String email, String remark, String warning, String branchNo, String web , Set masters,String Detail,String apCode,String arCode) {
+    public Agent(MAccterm MAccterm,MAccpay MAccpay, MBranch MBranch, String code, String name, String address, String tel, String fax, String taxNo, String email, String remark, String warning, String branchNo, String web , Set masters,String Detail,String apCode,String arCode,String address2,String address3) {
        this.MAccterm = MAccterm;
        this.MAccpay = MAccpay;
        this.MBranch = MBranch;
@@ -57,8 +59,11 @@ public class Agent   {
        this.Detail = Detail;
        this.apCode = apCode;
        this.arCode = arCode;
+       this.address2 = address2;
+       this.address3 = address3;
     }
    
+    
     public String getId() {
         return this.id;
     }
@@ -200,11 +205,22 @@ public class Agent   {
     public void setDetail(String Detail) {
         this.Detail = Detail;
     }
-    
-    
 
+    public void setAddress2(String address2) {
+        this.address2 = address2;
+    }
 
+    public void setAddress3(String address3) {
+        this.address3 = address3;
+    }
 
+    public String getAddress3() {
+        return address3;
+    }
+
+    public String getAddress2() {
+        return address2;
+    }
 
 }
 

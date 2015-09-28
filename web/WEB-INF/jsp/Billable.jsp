@@ -243,7 +243,16 @@
                                 <div class="form-group">
                                     <label for="address" class="col-sm-2 control-label text-right">Address</label>
                                     <div class="col-sm-10">
-                                        <textarea class="form-control"  rows="3" id="address" name="address" maxlength="200">${billable.billAddress}</textarea>
+                                        <c:set var="address" value=""/>
+                                        <c:choose>
+                                            <c:when test="${billable.billAddress == ''}">
+                                                <c:set var="address" value="${billable.getMaster().getAgent().getAddress()}"/>                                               
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:set var="address" value="${billable.billAddress}"/>                                              
+                                            </c:otherwise> 
+                                        </c:choose>       
+                                        <textarea class="form-control"  rows="3" id="address" name="address" maxlength="200">${address}</textarea>
                                     </div>
                                 </div>
                             </div>
