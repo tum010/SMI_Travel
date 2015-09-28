@@ -1028,7 +1028,6 @@
 function setDuaDate(){
     var ticketNo = document.getElementById('ticketNo').value;
     var dueDate = document.getElementById('dueDate').value;
-    var invoiceCredit = document.getElementById('invoiceCredit').value;
     var creditValue = document.getElementById('invoiceCreditValue').value;
     var invoiceDate = document.getElementById('invoiceDate').value;
     if((ticketNo !== '') && (dueDate === '')){
@@ -1040,7 +1039,9 @@ function setDuaDate(){
         for(var i=0;i<billdate;i++){
             billdatelist.push((creval*(i+1)));
         }
-        
+        //Year
+        var yshow = parseInt(invdate[0]);
+       
         //Month
         var month28 = [2];
         var month30 = [4,6,9,11];
@@ -1048,7 +1049,7 @@ function setDuaDate(){
         var month = parseInt(invdate[1]);
         var m28 = 0;
         var m30 = 0;
-        var m31 = 0;       
+        var m31 = 0;
         for(var i=0;i<month28.length;i++){
             if(month === month28[i]){
                 m28++;
@@ -1068,7 +1069,18 @@ function setDuaDate(){
         //Day
         var day = parseInt(invdate[2]);
         if(m28>0){
-            
+            day = creval+day;
+            if((yshow%4) === 0){
+                if(day>29){
+                    day = day%29;
+                    month = month+1;
+                }
+            }else{
+                if(day>28){
+                    day = day%28;
+                    month = month+1;
+                }
+            }
         }
         if(m30>0){
             day = creval+day;
@@ -1081,33 +1093,34 @@ function setDuaDate(){
             day = creval+day;
             if(day>31){
                 day = day%31;
-                month = month+1;
+                if(month !== 12){
+                    month = month+1;
+                } else {
+                    month = 1;
+                    yshow = parseInt(invdate[0])+1;
+                }    
             }
         }
-        
-        m28 = 0;
-        m30 = 0;
-        m31 = 0;
+
+        //Month Show
         var mshow = 0;
         for(var i=0;i<month28.length;i++){
             if(month === month28[i]){
                 mshow = month28[i];
-                m28++;
             }
         }
         for(var i=0;i<month30.length;i++){
             if(month === month30[i]){
                 mshow = month30[i];
-                m30++;
             }
         }
         for(var i=0;i<month31.length;i++){
             if(month === month31[i]){
                 mshow = month31[i];
-                m31++;
             }
         }
-              
+        
+        //Day Show    
         var dshow = "";
         for(var i=0;i<billdatelist.length;i++){
             if(i === 0){
@@ -1119,7 +1132,8 @@ function setDuaDate(){
                 dshow = billdatelist[i];
             }
         }
-
+        
+        //String Zero
         var point1 = "";
         var point2 = "";
         if((mshow.toString()).length === 1){
@@ -1128,8 +1142,9 @@ function setDuaDate(){
         if((dshow.toString()).length === 1){
             point2 = "0";
         }
-               
-        document.getElementById('dueDate').value = "2015-"+point1+mshow+"-"+point2+dshow;
+        
+        //Result
+        document.getElementById('dueDate').value = yshow+"-"+point1+mshow+"-"+point2+dshow;
     }
 }
     
