@@ -1030,7 +1030,7 @@ function setDuaDate(){
     var dueDate = document.getElementById('dueDate').value;
     var creditValue = document.getElementById('invoiceCreditValue').value;
     var invoiceDate = document.getElementById('invoiceDate').value;
-    if((ticketNo !== '') && (dueDate === '')){
+    if((ticketNo !== '') && (dueDate === '') && (creditValue !== '0') && (creditValue !== '')){
         var invdate = invoiceDate.split('-');
         var creval = parseInt(creditValue);
         
