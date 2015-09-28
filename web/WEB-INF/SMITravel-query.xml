@@ -397,6 +397,8 @@
           <!--<property name="reportpath" value="D:\\apache-tomcat-7.0.56\\webapps\\SMITravel\\WEB-INF\\report\\"></property>-->
          <property name="exportnvnarpath" value="D:\\report\\nirvana\\ar\\"></property>
          <property name="exportnvnappath" value="D:\\report\\nirvana\\ap\\"></property>
+         <!--<property name="exportnvnarpath" value="C:\\Users\\Administrator\\Desktop\\nirvana\\ar\\"></property>-->
+         <!--<property name="exportnvnappath" value="C:\\Users\\Administrator\\Desktop\\nirvana\\ap\\"></property>-->
     </bean>
        
     <!-- Component Bean -->
