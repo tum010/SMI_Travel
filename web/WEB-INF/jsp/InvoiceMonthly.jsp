@@ -119,7 +119,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-5 control-label text-right"> From </label>
+                                <label class="col-md-5 control-label text-right"> From <font style="color: red;">*</font></label>
                                 <div class="col-md-4">  
                                     <div class="form-group" id="DateFrom">
                                         <div class='input-group date'>
@@ -135,7 +135,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group" id="DateTo">
-                                <label class="col-md-5 control-label text-right"> To </label>
+                                <label class="col-md-5 control-label text-right"> To <font style="color: red;">*</font></label>
                                 <div class="col-md-4">  
                                     <div class="form-group">
                                         <div class='input-group date'>

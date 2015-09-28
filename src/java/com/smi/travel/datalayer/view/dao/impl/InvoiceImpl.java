@@ -73,6 +73,7 @@ public class InvoiceImpl implements InvoiceReportDao{
                 .addScalar("branch", Hibernate.STRING)
                 .addScalar("duedate", Hibernate.STRING)
                 .addScalar("currency", Hibernate.STRING)
+                .addScalar("address", Hibernate.STRING)
                 .list();
         
         for (Object[] B : QueryInvoiceList) {
@@ -111,6 +112,7 @@ public class InvoiceImpl implements InvoiceReportDao{
             invoice.setCo(getLeaderNameFromInvoiceID(util.ConvertString(B[12])));
             invoice.setGrtotal(df.format(B[9]));
             invoice.setUser(util.ConvertString(B[10]));
+            invoice.setAddress(util.ConvertString(B[18]));
             
             // Set Text Amount 
             System.out.println("B9 : " + B[9]);

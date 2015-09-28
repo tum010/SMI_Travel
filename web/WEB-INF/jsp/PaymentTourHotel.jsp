@@ -14,7 +14,6 @@
 <c:set var="paymentHotel_list" value="${requestScope['paymentHotel_list']}" />
 <c:set var="product_list" value="${requestScope['product_list']}" />
 <c:set var="currency_list" value="${requestScope['currency_list']}" />
-<c:set var="detail" value="${requestScope['BookDetail']}" />
 <c:set var="resultText" value="${requestScope['resultText']}" />
 <c:set var="idRole" value="${requestScope['idRole']}" />
 <c:set var="refNo_list" value="${requestScope['refNo_list']}" />
@@ -549,7 +548,7 @@
         <input type="hidden" class="form-control" id="productList_id" name="productList_id" />
         <input type="hidden" name="productCountDel" id="productCountDel">
         <input type="hidden" name="plTableId" id="plTableId">
-        <input type="hidden" value="${detail.createBy}" id="master-createBy">
+        <input type="hidden" id="createBy" name="createBy" value="${requestScope['createBy']}">
         
         <!-- Table Content -->
         <div class="panel panel-default">                    
@@ -1152,7 +1151,7 @@
     }
     
     function clearScreen(){
-        $('#paymentId, #InputPayNo, #InputPayDate, #itemPvType, #itemStatus, #InputInvoiceSupId, #InputInvoiceSupCode, #InputInvoiceSupName, #InputAPCode, #Detail, #itemPayment, #InputRemark, #InputGrandTotal, #InputCash, #InputChqNo, #InputChqAmount, #InputCurrency').val('');
+        $('#paymentId, #InputPayNo, #InputPayDate, #itemPvType, #itemStatus, #InputInvoiceSupId, #InputInvoiceSupCode, #InputInvoiceSupName, #InputAPCode, #Detail, #itemPayment, #InputRemark, #InputGrandTotal, #InputCash, #InputChqNo, #InputChqAmount, #InputCurrency, #createBy').val('');
         document.getElementById("account1").checked = false;
         document.getElementById("account2").checked = false;
         document.getElementById("InputGrandTotal").value = "0.00";

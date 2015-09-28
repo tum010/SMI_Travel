@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceEmail" language="groovy" pageWidth="595" pageHeight="842" columnWidth="522" leftMargin="45" rightMargin="28" topMargin="59" bottomMargin="56" uuid="573bfe06-de4f-4adc-b5b3-76cb68d89d08">
 	<property name="ireport.zoom" value="1.4641000000000022"/>
-	<property name="ireport.x" value="401"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="77"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
@@ -31,6 +31,7 @@
 	<field name="taxbranch" class="java.lang.String"/>
 	<field name="sign" class="java.lang.String"/>
 	<field name="duedate" class="java.lang.String"/>
+	<field name="address" class="java.lang.String"/>
 	<background>
 		<band height="727">
 			<image hAlign="Center" vAlign="Middle">
@@ -114,7 +115,7 @@
 				<text><![CDATA[TO :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="31" y="125" width="278" height="60" uuid="0b230a52-ac7b-453a-8bad-d1202b8a6f0d"/>
+				<reportElement x="31" y="125" width="278" height="18" uuid="0b230a52-ac7b-453a-8bad-d1202b8a6f0d"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -338,6 +339,13 @@
 				</textElement>
 				<text><![CDATA[E-Mail : yoyaku@wendytour.com]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="31" y="142" width="278" height="43" uuid="08c1c36e-97df-4407-9662-f18543accfdb"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
