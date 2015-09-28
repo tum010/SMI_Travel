@@ -443,11 +443,13 @@
 //            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
 //            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
             $("#fromdatepanel").removeClass("has-error");
-            $("#todatepanel").removeClass("has-error");  
+            $("#todatepanel").removeClass("has-error");
             $("#printbutton").removeClass("disabled");
         }else if(inputFromDate.value === '' || InputToDate.value === ''){        
 //            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceToDate');
-//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceFromDate');
+//            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceFromDate');           
+            $("#fromdatepanel").removeClass("has-success");
+            $("#todatepanel").removeClass("has-success");
             $("#fromdatepanel").addClass("has-error");
             $("#todatepanel").addClass("has-error");
             $("#printbutton").addClass("disabled");
@@ -457,7 +459,9 @@
             $("#fromdatepanel").removeClass("has-error");
             $("#todatepanel").removeClass("has-error");
             $("#issuefromdatepanel").removeClass("has-error");
-            $("#issuetodatepanel").removeClass("has-error");  
+            $("#issuetodatepanel").removeClass("has-error");
+            $("#fromdatepanel").addClass("has-success");
+            $("#todatepanel").addClass("has-success");
             $("#printbutton").removeClass("disabled");
             checkDateValue("from","");
         }
@@ -470,11 +474,13 @@
 //            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
 //            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
             $("#fromdatepanel").removeClass("has-error");
-            $("#todatepanel").removeClass("has-error");  
+            $("#todatepanel").removeClass("has-error");
             $("#printbutton").removeClass("disabled");
         }else if(inputFromDate.value === '' || InputToDate.value === ''){ 
 //            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceToDate');
 //            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceFromDate');
+            $("#fromdatepanel").removeClass("has-success");
+            $("#todatepanel").removeClass("has-success");
             $("#fromdatepanel").addClass("has-error");
             $("#todatepanel").addClass("has-error");
             $("#printbutton").addClass("disabled");
@@ -484,7 +490,9 @@
             $("#fromdatepanel").removeClass("has-error");
             $("#todatepanel").removeClass("has-error");
             $("#issuefromdatepanel").removeClass("has-error");
-            $("#issuetodatepanel").removeClass("has-error");  
+            $("#issuetodatepanel").removeClass("has-error");
+            $("#fromdatepanel").addClass("has-success");
+            $("#todatepanel").addClass("has-success");
             $("#printbutton").removeClass("disabled");
             checkDateValue("to","");
         }       
@@ -497,11 +505,13 @@
 //            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
 //            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
             $("#issuefromdatepanel").removeClass("has-error");
-            $("#issuetodatepanel").removeClass("has-error");  
+            $("#issuetodatepanel").removeClass("has-error");
             $("#printbutton").removeClass("disabled");
         }else if(issueFromDate.value === '' || issueToDate.value === ''){        
 //            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
 //            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
+            $("#issuefromdatepanel").removeClass("has-success");
+            $("#issuetodatepanel").removeClass("has-success");  
             $("#issuefromdatepanel").addClass("has-error");
             $("#issuetodatepanel").addClass("has-error");  
             $("#printbutton").addClass("disabled");
@@ -511,7 +521,9 @@
             $("#fromdatepanel").removeClass("has-error");
             $("#todatepanel").removeClass("has-error");
             $("#issuefromdatepanel").removeClass("has-error");
-            $("#issuetodatepanel").removeClass("has-error");  
+            $("#issuetodatepanel").removeClass("has-error");
+            $("#issuefromdatepanel").addClass("has-success");
+            $("#issuetodatepanel").addClass("has-success");
             $("#printbutton").removeClass("disabled");
             checkDateValue("issuefrom","");
         }    
@@ -524,11 +536,13 @@
 //            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
 //            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
             $("#issuefromdatepanel").removeClass("has-error");
-            $("#issuetodatepanel").removeClass("has-error");  
+            $("#issuetodatepanel").removeClass("has-error");
             $("#printbutton").removeClass("disabled");
         }else if(issueFromDate.value === '' || issueToDate.value === ''){ 
 //            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
 //            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
+            $("#issuefromdatepanel").removeClass("has-success");
+            $("#issuetodatepanel").removeClass("has-success");  
             $("#issuefromdatepanel").addClass("has-error");
             $("#issuetodatepanel").addClass("has-error"); 
             $("#printbutton").addClass("disabled");
@@ -538,7 +552,9 @@
             $("#fromdatepanel").removeClass("has-error");
             $("#todatepanel").removeClass("has-error");
             $("#issuefromdatepanel").removeClass("has-error");
-            $("#issuetodatepanel").removeClass("has-error"); 
+            $("#issuetodatepanel").removeClass("has-error");
+            $("#issuefromdatepanel").addClass("has-success");
+            $("#issuetodatepanel").addClass("has-success");
             $("#printbutton").removeClass("disabled");
             checkDateValue("issueto","");
         }       
@@ -575,21 +591,25 @@
             if(date === 'from'){
 //               $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceFromDate');
 //               $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceToDate');
+                $("#fromdatepanel").removeClass("has-success");
                 $("#fromdatepanel").addClass("has-error");                                 
             }
             if(date === 'to'){
 //               $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceFromDate');
 //               $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceToDate');
+                $("#todatepanel").removeClass("has-success");
                 $("#todatepanel").addClass("has-error");
             }
             if(date === 'issuefrom'){
 //               $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
 //               $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
+                $("#issuefromdatepanel").removeClass("has-success");
                 $("#issuefromdatepanel").addClass("has-error");
             }
             if(date === 'issueto'){
 //               $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
 //               $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
+                $("#issuetodatepanel").removeClass("has-success"); 
                 $("#issuetodatepanel").addClass("has-error");
             }       
             $("#printbutton").addClass("disabled");
@@ -598,6 +618,10 @@
 //            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'invoiceToDate');
 //            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueFrom');
 //            $('#TicketSummaryCostIncomeForm').bootstrapValidator('revalidateField', 'issueTo');
+            $("#fromdatepanel").removeClass("has-success");
+            $("#todatepanel").removeClass("has-success");
+            $("#issuefromdatepanel").removeClass("has-success");
+            $("#issuetodatepanel").removeClass("has-success"); 
             $("#fromdatepanel").addClass("has-error");
             $("#todatepanel").addClass("has-error");
             $("#issuefromdatepanel").addClass("has-error");
