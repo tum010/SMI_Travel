@@ -190,6 +190,13 @@
         changeFormatAmountLocalNumber(j);
         
     }
+    
+    var invoiceNumber = $('#InvNo').val();
+    if(invoiceNumber === ''){
+        document.getElementById("printButton").disabled = true;
+        document.getElementById("sendEmailButton").disabled = true;
+    }
+    
  }); 
  
  function searchInvoiceFromInvoiceNo(){

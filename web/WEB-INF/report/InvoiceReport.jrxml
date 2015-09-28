@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="59f0ec99-8109-4367-975c-dc17aad92f4d">
 	<property name="ireport.zoom" value="1.3660269107301415"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="48"/>
+	<property name="ireport.y" value="0"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
@@ -31,6 +31,7 @@
 	<field name="taxbranch" class="java.lang.String"/>
 	<field name="sign" class="java.lang.String"/>
 	<field name="duedate" class="java.lang.String"/>
+	<field name="address" class="java.lang.String"/>
 	<background>
 		<band height="802">
 			<line>
@@ -59,7 +60,7 @@
 	<pageHeader>
 		<band height="184" splitType="Stretch">
 			<textField>
-				<reportElement x="32" y="59" width="278" height="76" uuid="65500951-8af9-4e1c-a99c-fc83600135db"/>
+				<reportElement x="32" y="59" width="278" height="19" uuid="65500951-8af9-4e1c-a99c-fc83600135db"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -169,6 +170,13 @@
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{taxbranch}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="32" y="78" width="278" height="55" uuid="a44d120e-1afc-47d0-bc9d-e7bc4556de2c"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

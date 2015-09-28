@@ -39,6 +39,15 @@ public class InvoiceReport {
     private String taxbranch;
     private String sign;
     private String duedate;
+    private String address;
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getAddress() {
+        return address;
+    }
 
     public String getInvto() {
         return invto;
