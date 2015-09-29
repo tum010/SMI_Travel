@@ -213,15 +213,6 @@ public class APNirvanaImpl implements APNirvanaDao {
                 if(accno == Integer.parseInt(ap.getAccno())){
                     apNirvanaList.add(ap);
                     accno = Integer.parseInt(ap.getAccno());
-                    if(i ==  (apDataList.size() - 1)){
-                        folder = new File(pathFile+"\\accno"+accno+"\\ap\\" + folderName.format(Calendar.getInstance().getTime()));
-                        if (!folder.exists() && !folder.isDirectory()) {
-                            folder.mkdirs();
-                        }
-                        fullFileName = folder.getAbsolutePath() +"\\AP" + fileName.format(Calendar.getInstance().getTime());
-                        status = genReport(apNirvanaList,fullFileName,APList);
-                        System.out.println(" status " + status);
-                    }
                 }else{
                     folder = new File(pathFile+"\\accno"+accno+"\\ap\\" + folderName.format(Calendar.getInstance().getTime()));
                     if (!folder.exists() && !folder.isDirectory()) {
@@ -234,11 +225,15 @@ public class APNirvanaImpl implements APNirvanaDao {
                     apNirvanaList = new ArrayList<APNirvana>();
                     apNirvanaList.add(ap);
                     accno = Integer.parseInt(ap.getAccno());
-                    if(i ==  (apDataList.size() - 1)){
-                        fullFileName = folder.getAbsolutePath() +"\\AP" + fileName.format(Calendar.getInstance().getTime());
-                        status = genReport(apNirvanaList,fullFileName,APList);
-                        System.out.println(" status " + status);
+                }
+                if(i ==  (apDataList.size() - 1)){
+                    folder = new File(pathFile+"\\accno"+accno+"\\ap\\" + folderName.format(Calendar.getInstance().getTime()));
+                    if (!folder.exists() && !folder.isDirectory()) {
+                        folder.mkdirs();
                     }
+                    fullFileName = folder.getAbsolutePath() +"\\AP" + fileName.format(Calendar.getInstance().getTime());
+                    status = genReport(apNirvanaList,fullFileName,APList);
+                    System.out.println(" status " + status);
                 }
             }
         
@@ -989,6 +984,9 @@ public class APNirvanaImpl implements APNirvanaDao {
                 cell.setCellValue(ap.getVendor_branch()== null? "0":ap.getVendor_branch().toString());
                 cell = dataRow.createCell(cellnum++);
                 cell.setCellValue(ap.getCompany_branch());
+//                for(int j =0;j<100;j++){
+//                    sheet.autoSizeColumn(j);
+//                }
             }
 
             FileOutputStream out = new FileOutputStream(new File(fullFileName + ".xls"));

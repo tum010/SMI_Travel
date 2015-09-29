@@ -145,7 +145,7 @@
         <property name="prefix" type="string">
             <column name="prefix"/>
         </property> 
-        <property name="documentno" type="integer">
+        <property name="documentno" type="string">
             <column name="documentno"/>
         </property> 
         <property name="artrans" type="string">

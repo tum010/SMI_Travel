@@ -190,7 +190,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
                 .addScalar("service", Hibernate.STRING)
                 .addScalar("araccount", Hibernate.STRING)
                 .addScalar("prefix", Hibernate.STRING)
-                .addScalar("documentno", Hibernate.INTEGER)
+                .addScalar("documentno", Hibernate.STRING)
                 .addScalar("artrans", Hibernate.STRING)
                 .addScalar("cust_taxid", Hibernate.STRING)
                 .addScalar("cust_branch", Hibernate.INTEGER)
@@ -253,7 +253,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             ar.setService(util.ConvertString(B[49]));
             ar.setAraccount(util.ConvertString(B[50]));
             ar.setPrefix(util.ConvertString(B[51]));
-            ar.setDocumentno((Integer) B[52]);
+            ar.setDocumentno(util.ConvertString(B[52]));
             ar.setArtrans(util.ConvertString(B[53]));
             ar.setCust_taxid(util.ConvertString(B[54]));
             ar.setCust_branch((Integer) B[55]);
@@ -274,22 +274,135 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
         List<ARNirvana> arDataList = this.SearchArNirvanaFromPaymentDetailId(ARList);
         SimpleDateFormat folderName = new SimpleDateFormat("yyMMdd");
         SimpleDateFormat fileName = new SimpleDateFormat("HHmmss");
-        File folder = new File(pathfile + folderName.format(Calendar.getInstance().getTime()));
-        if (!folder.exists() && !folder.isDirectory()) {
-            folder.mkdirs();
-        }
-        String fullFileName = folder.getAbsolutePath() + "\\AR" + fileName.format(Calendar.getInstance().getTime());
+//        File folder = new File(pathfile + folderName.format(Calendar.getInstance().getTime()));
+//        if (!folder.exists() && !folder.isDirectory()) {
+//            folder.mkdirs();
+//        }
+//        String fullFileName = folder.getAbsolutePath() + "\\AR" + fileName.format(Calendar.getInstance().getTime());
+        int accno = 1 ;
+            List<ARNirvana> arNirvanaList = new ArrayList<ARNirvana>();
+            String fullFileName = "";
+            for (int i=0 ; i< arDataList.size() ; i++) {
+                ARNirvana ar = arDataList.get(i);
+                File folder = new File(pathfile+"\\accno"+accno+"\\ar\\" + folderName.format(Calendar.getInstance().getTime()));
+                if(accno == Integer.parseInt(ar.getAccno())){
+                    arNirvanaList.add(ar);
+                    accno = Integer.parseInt(ar.getAccno());
+                }else{
+                    folder = new File(pathfile+"\\accno"+accno+"\\ar\\" + folderName.format(Calendar.getInstance().getTime()));
+                    if (!folder.exists() && !folder.isDirectory()) {
+                        folder.mkdirs();
+                    }
+                    fullFileName = folder.getAbsolutePath() +"\\AR" + fileName.format(Calendar.getInstance().getTime());
+                    status = genReport(arNirvanaList,fullFileName,ARList);
+                    System.out.println(" status " + status);
+                    
+                    arNirvanaList = new ArrayList<ARNirvana>();
+                    arNirvanaList.add(ar);
+                    accno = Integer.parseInt(ar.getAccno());
+                }
+                if(i ==  (arDataList.size() - 1)){
+                    folder = new File(pathfile+"\\accno"+accno+"\\ar\\" + folderName.format(Calendar.getInstance().getTime()));
+                    if (!folder.exists() && !folder.isDirectory()) {
+                        folder.mkdirs();
+                    }
+                    fullFileName = folder.getAbsolutePath() +"\\AR" + fileName.format(Calendar.getInstance().getTime());
+                    status = genReport(arNirvanaList,fullFileName,ARList);
+                    System.out.println(" status " + status);
+                }
+            }
+        
+        return status;
+    }
 
+    @Override
+    public String UpdateStatusARInterface(List<ARNirvana> APList) {
+        UtilityFunction utilty =  new UtilityFunction();
+        String isUpdate ="";
+        try {
+            Session session = this.sessionFactory.openSession();
+            transaction = session.beginTransaction();
+           
+            for (int i = 0; i < APList.size(); i++) {
+                Calendar cal = Calendar.getInstance();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String strDate = sdf.format(cal.getTime());
+                Date date = new Date();
+                String hql = "update InvoiceDetail inv set inv.isExport = 1 , inv.exportDate = :date where inv.id = :invDetailId";
+                Query query = session.createQuery(hql);
+                query.setParameter("invDetailId", String.valueOf(APList.get(i).getInvid()));
+                query.setParameter("date", date);
+                int result = query.executeUpdate();
+                System.out.println("Query Update : " + result + ":" + query);
+                
+            }
+
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+            isUpdate = "updatesuccess";
+        } catch (Exception ex) {
+            transaction.rollback();
+            ex.printStackTrace();
+            isUpdate = "updatefail";
+        }
+        return isUpdate;
+    }
+
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
+    }
+
+    public Transaction getTransaction() {
+        return transaction;
+    }
+
+    private List<ARNirvana> SearchArNirvanaFromPaymentDetailId(List<ARNirvana> ARList) {
+//           Session session = this.getSessionFactory().openSession();
+//        StringBuffer query = new StringBuffer(" SELECT '' as rowid, ar.* FROM `ar_nirvana` ar WHERE  receive_detail_id in (");
+//        for (int i = 0; i < ARList.size(); i++) {
+//            query.append(i == 0 ? "" : ",");
+//            query.append(ARList.get(i).getReceive_detail_id());
+//        }
+//        query.append(")");
+//
+//        SQLQuery sQLQuery = session.createSQLQuery(query.toString()).addEntity(ARNirvana.class);
+//        List result = sQLQuery.list();
+//
+//        this.sessionFactory.close();
+//        session.close();
+//        return result;
+        Session session = this.getSessionFactory().openSession();
+        String query = "from ARNirvana ar where ar.rowid in (";
+        for (int i = 0; i < ARList.size(); i++) {
+            query += (i == 0 ? "" : ",");
+            query += ("'"+ARList.get(i).getReceive_detail_id()+"'");
+        }
+        query += ") order by accno , intreference asc " ;
+        System.out.println(" query :: " + query);
+        Query HqlQuery = session.createQuery(query);
+        List<ARNirvana> result = HqlQuery.list();
+       
+        this.sessionFactory.close();
+        session.close();
+        return result;
+    }
+    
+    
+    private String genReport(List<ARNirvana> arDataList , String fullFileName , List<ARNirvana> ARList){
+        String status ="";
         try {
             HSSFWorkbook workbook = new HSSFWorkbook();
             HSSFSheet sheet = workbook.createSheet();
             int rownum = 0;
-//            HSSFRow headerRow = sheet.createRow(rownum++);
-//            for (int i = 0; i < FILE_HEADER.length; i++) {
-//                HSSFCell cell = headerRow.createCell(i);
-//                cell.setCellValue(FILE_HEADER[i]);
-//            }
-
             for (ARNirvana ar : arDataList) {
                 HSSFRow dataRow = sheet.createRow(rownum++);
                 int cellnum = 0;
@@ -397,9 +510,10 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
                 cell.setCellValue(ar.getCust_branch() == null ? "":ar.getCust_branch().toString());
                 cell = dataRow.createCell(cellnum++);
                 cell.setCellValue(ar.getCompany_branch());
-               
+//                for(int j =0;j<100;j++){
+//                    sheet.autoSizeColumn(j);
+//                }
             }
-
             FileOutputStream out = new FileOutputStream(new File(fullFileName + ".xls"));
             workbook.write(out);
             out.close();
@@ -415,72 +529,4 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
         }
         return status;
     }
-
-    @Override
-    public String UpdateStatusARInterface(List<ARNirvana> APList) {
-        UtilityFunction utilty =  new UtilityFunction();
-        String isUpdate ="";
-        try {
-            Session session = this.sessionFactory.openSession();
-            transaction = session.beginTransaction();
-           
-            for (int i = 0; i < APList.size(); i++) {
-                Calendar cal = Calendar.getInstance();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String strDate = sdf.format(cal.getTime());
-                Date date = new Date();
-                String hql = "update InvoiceDetail inv set inv.isExport = 1 , inv.exportDate = :date where inv.id = :invDetailId";
-                Query query = session.createQuery(hql);
-                query.setParameter("invDetailId", String.valueOf(APList.get(i).getInvid()));
-                query.setParameter("date", date);
-                int result = query.executeUpdate();
-                System.out.println("Query Update : " + result + ":" + query);
-                
-            }
-
-            transaction.commit();
-            session.close();
-            this.sessionFactory.close();
-            isUpdate = "updatesuccess";
-        } catch (Exception ex) {
-            transaction.rollback();
-            ex.printStackTrace();
-            isUpdate = "updatefail";
-        }
-        return isUpdate;
-    }
-
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    public void setTransaction(Transaction transaction) {
-        this.transaction = transaction;
-    }
-
-    public Transaction getTransaction() {
-        return transaction;
-    }
-
-    private List<ARNirvana> SearchArNirvanaFromPaymentDetailId(List<ARNirvana> ARList) {
-           Session session = this.getSessionFactory().openSession();
-        StringBuffer query = new StringBuffer(" SELECT '' as rowid, ar.* FROM `ar_nirvana` ar WHERE  receive_detail_id in (");
-        for (int i = 0; i < ARList.size(); i++) {
-            query.append(i == 0 ? "" : ",");
-            query.append(ARList.get(i).getReceive_detail_id());
-        }
-        query.append(")");
-
-        SQLQuery sQLQuery = session.createSQLQuery(query.toString()).addEntity(ARNirvana.class);
-        List result = sQLQuery.list();
-
-        this.sessionFactory.close();
-        session.close();
-        return result;
-    }
-    
 }
