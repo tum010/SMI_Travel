@@ -245,7 +245,7 @@
                                     <div class="col-sm-10">
                                         <c:set var="address" value=""/>
                                         <c:choose>
-                                            <c:when test="${billable.billAddress == ''}">
+                                            <c:when test="${(billable.billAddress == '') || (billable.billAddress == null)}">
                                                 <c:set var="address" value="${billable.getMaster().getAgent().getAddress()}"/>                                               
                                             </c:when>
                                             <c:otherwise>
