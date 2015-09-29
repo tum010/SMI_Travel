@@ -264,6 +264,9 @@
         </property>
         <property name="payment_detail_id" type="string">
             <column name="payment_detail_id"/>
-        </property>  
+        </property>
+        <property name="accno" type="string">
+            <column name="accno"/>
+        </property> 
     </class>
 </hibernate-mapping>

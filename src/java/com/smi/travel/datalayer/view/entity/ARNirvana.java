@@ -76,7 +76,8 @@ public class ARNirvana {
     private Integer id;
     private String receive_detail_id;
     private String rowid;
-
+    private String accno;
+    
     /**
      * @return the invtype
      */
@@ -923,6 +924,14 @@ public class ARNirvana {
      */
     public void setRowid(String rowid) {
         this.rowid = rowid;
+    }
+
+    public String getAccno() {
+        return accno;
+    }
+
+    public void setAccno(String accno) {
+        this.accno = accno;
     }
     
     
