@@ -178,7 +178,7 @@
                                     <div class="input-group">
                                         <input type="hidden" class="form-control" id="agentId" name="agentId" value=""/>
                                         <input type="text" class="form-control" id="agentCode" name="agentCode" value="" />
-                                        <span class="input-group-addon" id="saleby_modal"  data-toggle="modal" data-target="#AgentModal">
+                                        <span class="input-group-addon" id="agent_modal"  data-toggle="modal" data-target="#AgentModal">
                                             <span class="glyphicon-search glyphicon"></span>
                                         </span>
                                     </div>
@@ -765,7 +765,42 @@ function printTicketSummaryAirline(){
         }   
     } else if((invFrom !== '') && (issueto !== '')){
         if(reportType == 1){
-            window.open("Excel.smi?name=TicketFareSummaryByStaff&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&issuedateFrom=" + issuefrom + "&issuedateTo=" + issueto + "&department=" + department + "&staff=" + salebyUser + "&termPay=" + termPay + "&invdateFrom=" + invfrom + "&invdateTo=" + invto);
+            window.open("Excel.smi?name=TicketFareSummaryAirlinePax&typeRouting=" + typeRouting 
+                    + "&routingDetail=" + routingDetail 
+                    + "&issuedateFrom=" + issuefrom 
+                    + "&issuedateTo=" + issueto 
+                    + "&invdateFrom=" + invFrom 
+                    + "&invdateTo=" + invTo 
+                    + "&airlineCode=" + airlineCode 
+                    + "&passenger=" + passenger
+                    + "&agentId=" + agentId 
+                    + "&department=" + department 
+                    + "&staff=" + salebyUser 
+                    + "&termPay=" + termPay);
+            window.open("Excel.smi?name=TicketFareSummaryAirlineDetail&typeRouting=" + typeRouting 
+                    + "&routingDetail=" + routingDetail 
+                    + "&issuedateFrom=" + issuefrom 
+                    + "&issuedateTo=" + issueto 
+                    + "&invdateFrom=" + invFrom 
+                    + "&invdateTo=" + invTo 
+                    + "&airlineCode=" + airlineCode 
+                    + "&passenger=" + passenger
+                    + "&agentId=" + agentId 
+                    + "&department=" + department 
+                    + "&staff=" + salebyUser 
+                    + "&termPay=" + termPay);
+            window.open("Excel.smi?name=TicketFareSummaryAirlineRouting&typeRouting=" + typeRouting 
+                    + "&routingDetail=" + routingDetail 
+                    + "&issuedateFrom=" + issuefrom 
+                    + "&issuedateTo=" + issueto 
+                    + "&invdateFrom=" + invFrom 
+                    + "&invdateTo=" + invTo 
+                    + "&airlineCode=" + airlineCode 
+                    + "&passenger=" + passenger
+                    + "&agentId=" + agentId 
+                    + "&department=" + department 
+                    + "&staff=" + salebyUser 
+                    + "&termPay=" + termPay);        
         }else if(reportType == 2){
         }   
     } else {

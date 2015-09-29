@@ -4725,7 +4725,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
 //                cellTotal07.setCellStyle(styleC25);
 //            }
 
-            for(int j =0;j<13;j++){
+            for(int j =0;j<25;j++){
                 sheet.autoSizeColumn(j);
             }
             }

@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.view.dao.impl;
 
+import com.smi.travel.datalayer.entity.Agent;
 import com.smi.travel.datalayer.view.dao.TicketFareReportDao;
 
 import com.smi.travel.datalayer.report.model.TicketFareReport;
@@ -431,7 +432,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
         }else if("pax".equalsIgnoreCase(groupBy)){
             query = "select count(`fare`.`ticket_no`) AS `pax`,(case when (`fare`.`ticket_type` = 'B') then 'BSP' when (`fare`.`ticket_type` = 'A') then 'AGENT' when (`fare`.`ticket_type` = 'D') then 'DOMESTIC' when (`fare`.`ticket_type` = 'T') then 'TG' else `fare`.`ticket_type` end) AS `paymenttype`,(case when (`fare`.`ticket_rounting` = 'I') then 'INTER' when (`fare`.`ticket_rounting` = 'D') then 'DOMESTIC' when (`fare`.`ticket_rounting` = 'C') then 'CANCELLED' end) AS `typerounting`,sum(ifnull(`fare`.`ticket_fare`,0)) AS `netsales`,sum(ifnull(`fare`.`ticket_tax`,0)) AS `tax`,sum(ifnull(`fare`.`ticket_ins`,0)) AS `ins`,sum(ifnull(`fare`.`ticket_commission`,0)) AS `comms`,(case when (`fare`.`department` = 'wendy') then `fare`.`sale_price` else NULL end) AS `amountwendy`,(case when (`fare`.`department` = 'inbound') then `fare`.`sale_price` else NULL end) AS `amountinbound`,(case when (`fare`.`department` = 'outbound') then `fare`.`sale_price` else NULL end) AS `amountoutbound` from ((((`ticket_fare_airline` `fare` join `ticket_fare_invoice` `finv` on((`finv`.`ticket_fare_id` = `fare`.`id`))) join `invoice` `inv` on((`inv`.`id`  = `finv`.`invoice_id`))) left join `m_accterm` `term` on((`term`.`id` = `inv`.`term_pay`))) left join `staff` `st` on((`st`.`name` = `fare`.`owner`))) TEMPS";
         }else if("routing".equalsIgnoreCase(groupBy)){
-            query = "select `fare`.`routing_detail` AS `routing`,count(0) AS `pax`,sum(`fare`.`ticket_fare`) AS `netsales`,sum(`fare`.`ticket_tax`) AS `tax`,sum(`fare`.`ticket_ins`) AS `ins`,sum(`fare`.`ticket_commission`) AS `comms`,(case when (`fare`.`department` = 'wendy') then sum(`fare`.`sale_price`) else 0 end) AS `amountwendy`,(case when (`fare`.`department` = 'inbound') then sum(`fare`.`sale_price`) else 0 end) AS `amountinbound`,(sum(`fare`.`sale_price`) - (((sum(`fare`.`ticket_fare`) + sum(`fare`.`ticket_tax`)) + sum(`fare`.`ticket_ins`)) + sum(`fare`.`ticket_commission`))) AS `diff` from `ticket_fare_airline` `fare`  TEMPS";
+            query = "select `fare`.`routing_detail` AS `routing`,count(0) AS `pax`,sum(`fare`.`ticket_fare`) AS `netsales`,sum(`fare`.`ticket_tax`) AS `tax`,sum(`fare`.`ticket_ins`) AS `ins`,sum(`fare`.`ticket_commission`) AS `comms`,(case when (`fare`.`department` = 'wendy') then sum(`fare`.`sale_price`) else 0 end) AS `amountwendy`,(case when (`fare`.`department` = 'inbound') then sum(`fare`.`sale_price`) else 0 end) AS `amountinbound`,(sum(`fare`.`sale_price`) - (((sum(`fare`.`ticket_fare`) + sum(`fare`.`ticket_tax`)) + sum(`fare`.`ticket_ins`)) + sum(`fare`.`ticket_commission`))) AS `diff` from ((((`ticket_fare_airline` `fare` join `ticket_fare_invoice` `finv` on((`finv`.`ticket_fare_id` = `fare`.`id`))) join `invoice` `inv` on((`inv`.`id`  = `finv`.`invoice_id`))) left join `m_accterm` `term` on((`term`.`id` = `inv`.`term_pay`))) left join `staff` `st` on((`st`.`name` = `fare`.`owner`)))  TEMPS";
         }
        
         int checkQuery = 0;
@@ -488,7 +489,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
         
         if((saleBy != null) &&(!"".equalsIgnoreCase(saleBy))){
             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
-            query += prefix+ " fare.owner = '"+saleBy+"'";
+            query += prefix+ " `st`.`username` = '"+saleBy+"'";
         }else{
             saleBy = "ALL";
         }
@@ -595,14 +596,22 @@ public class TicketFareReportImpl implements TicketFareReportDao {
             termPay = "credit 15 days";
         }
 			
-	if("I".equalsIgnoreCase(routingDetail)){
-            routingDetail = "INTER";
-        }else if("D".equalsIgnoreCase(routingDetail)){
-            routingDetail = "DOMESTIC";
-        }else if("C".equalsIgnoreCase(routingDetail)){
-            routingDetail = "CANCEL";
+	if("I".equalsIgnoreCase(typeRouting)){
+            typeRouting = "INTER";
+        }else if("D".equalsIgnoreCase(typeRouting)){
+            typeRouting = "DOMESTIC";
+        }else if("C".equalsIgnoreCase(typeRouting)){
+            typeRouting = "CANCEL";
         }
         
+        Agent agent = new Agent();
+        String queryAgent = "from Agent a where a.id= :agentid";
+        List<Agent> agentList = session.createQuery(queryAgent).setParameter("agentid", agentId).list();
+        session.close();
+        if (!agentList.isEmpty()) {
+            agent =  agentList.get(0);
+        }
+
         for (Object[] B : QueryList) {
             TicketSummaryAirlineView ticket = new TicketSummaryAirlineView();
             //set header
@@ -614,7 +623,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
             ticket.setHeaderroutingdetail(routingDetail);
             ticket.setHeaderair(airlineCode);
             ticket.setHeaderpassenger(passenger);
-            ticket.setHeaderagentname(agentId);
+            ticket.setHeaderagentname(agent.getName());
             ticket.setHeaderdepartment(department);
             ticket.setHeadersalestaff(saleBy);
             ticket.setHeadertermpay(termPay);
