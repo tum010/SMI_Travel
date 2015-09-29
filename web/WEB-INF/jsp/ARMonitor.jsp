@@ -211,7 +211,14 @@
                             <tr>
                                 <td class="hidden"><input class="form-control" type="text" id="inputId${countar.count}" name="inputId${countar.count}" value="${ar_nirvana.id}"></td>
                                 <td align="center">
-                                    <input class="form-control" type="checkbox" id="selectAll${countar.count}" name="selectAll${countar.count}" value="${countar.count}">
+                                    <c:choose>
+                                        <c:when test="${ar_nirvana.status == 'New'}">
+                                            <input type="checkbox" class="form-control" id="selectAll${countar.count}" name="selectAll${countar.count}" value="${countar.count}"/>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <input type="checkbox" class="form-control" id="selectAll" name="selectAll" value="" disabled=""/>
+                                        </c:otherwise>
+                                    </c:choose>                                  
                                 </td>
                                 <td align="center">${countar.count}</td>
                                 <td>${ar_nirvana.intreference}</td>
@@ -360,7 +367,7 @@
         
         $('table.paginated').each(function() {
             var currentPage = 0;
-            var numPerPage = 5;
+            var numPerPage = 50;
             var $table = $(this);
             $table.bind('repaginate', function() {
                 $table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
