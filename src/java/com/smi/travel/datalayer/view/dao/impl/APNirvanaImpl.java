@@ -75,11 +75,11 @@ public class APNirvanaImpl implements APNirvanaDao {
         List<APNirvana> apDataList = this.SearchApNirvanaFromPaymentDetailId(APList);
         SimpleDateFormat folderName = new SimpleDateFormat("yyMMdd");
         SimpleDateFormat fileName = new SimpleDateFormat("HHmmss");
-        File folder = new File(pathFile + folderName.format(Calendar.getInstance().getTime()));
-        if (!folder.exists() && !folder.isDirectory()) {
-            folder.mkdirs();
-        }
-        String fullFileName = folder.getAbsolutePath() + "\\AP" + fileName.format(Calendar.getInstance().getTime());
+//        File folder = new File(pathFile);
+//        if (!folder.exists() && !folder.isDirectory()) {
+//            folder.mkdirs();
+//        }
+//        String fullFileName = folder.getAbsolutePath() + "\\AP" + fileName.format(Calendar.getInstance().getTime());
 
 //        FileWriter fileWriter = null;
 //        CSVPrinter csvFilePrinter = null;
@@ -204,207 +204,239 @@ public class APNirvanaImpl implements APNirvanaDao {
 //                e.printStackTrace();
 //            }
 //        }
-        try {
-            HSSFWorkbook workbook = new HSSFWorkbook();
-            HSSFSheet sheet = workbook.createSheet();
-            int rownum = 0;
-            HSSFRow headerRow = sheet.createRow(rownum++);
-            for (int i = 0; i < FILE_HEADER.length; i++) {
-                HSSFCell cell = headerRow.createCell(i);
-                cell.setCellValue(FILE_HEADER[i]);
-            }
-
-            for (APNirvana ap : apDataList) {
-                HSSFRow dataRow = sheet.createRow(rownum++);
-                int cellnum = 0;
-                HSSFCell cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getRefinvoiceno());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getIntreference());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getVendorid());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getVendorname());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getDivisionid());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getProjectid());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getTranscode());
-                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getTransdate());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getDuedate());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getCurrencyid());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getHomerate()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getForeignrate()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getBasevatamt()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getBasevathmamt()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getVatamt()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getVathmamt()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getTransamt()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getTranshmamt()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getVatflag());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getVatid());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getWhtflag());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getWhtid());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getBasewhtamt()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getBasewhthmamt()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getWhtamt()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getWhthmamt()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getYear());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPeriod());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getNote());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPuraccount1());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPurdivision1());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPurproject1());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt1()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt1()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPuraccount2());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPurdivision2());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPurproject2());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt2()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt2()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPuraccount3());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPurdivision3());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPurproject3());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt3()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt3()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPuraccount4());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPurdivision4());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPurproject4());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt4()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt4()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPuraccount5());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPurdivision5());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPurproject5());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt5()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt5()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPuraccount6());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPurdivision6());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPurproject6());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt6()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt6()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPuraccount7());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPurdivision7());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPurproject7());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt7()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt7()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPuraccount8());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPurdivision8());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPurproject8());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt8()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt8()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPuraccount9());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPurdivision9());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPurproject9());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt9()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt9()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPuraccount10());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPurdivision10());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPurproject10());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt10()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt10()));
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getService());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getApaccount());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPrefix());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getVoucherno());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getTaxid());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getVendor_branch()== null? "0":ap.getVendor_branch().toString());
-                cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getCompany_branch());
-               
-            }
-
-            FileOutputStream out = new FileOutputStream(new File(fullFileName + ".xls"));
-            workbook.write(out);
-            out.close();
-            status = "success";
-        } catch (Exception e) {
-            e.printStackTrace();
-            for (APNirvana ap : APList) {
-                if(!"".equals(status)){
-                    status += ", ";
+            int accno = 1 ;
+            List<APNirvana> apNirvanaList = new ArrayList<APNirvana>();
+            String fullFileName = "";
+            for (int i=0 ; i< apDataList.size() ; i++) {
+                APNirvana ap = apDataList.get(i);
+                File folder = new File(pathFile+"\\accno"+accno+"\\ap\\" + folderName.format(Calendar.getInstance().getTime()));
+                if(accno == Integer.parseInt(ap.getAccno())){
+                    apNirvanaList.add(ap);
+                    accno = Integer.parseInt(ap.getAccno());
+                    if(i ==  (apDataList.size() - 1)){
+                        folder = new File(pathFile+"\\accno"+accno+"\\ap\\" + folderName.format(Calendar.getInstance().getTime()));
+                        if (!folder.exists() && !folder.isDirectory()) {
+                            folder.mkdirs();
+                        }
+                        fullFileName = folder.getAbsolutePath() +"\\AP" + fileName.format(Calendar.getInstance().getTime());
+                        status = genReport(apNirvanaList,fullFileName,APList);
+                        System.out.println(" status " + status);
+                    }
+                }else{
+                    folder = new File(pathFile+"\\accno"+accno+"\\ap\\" + folderName.format(Calendar.getInstance().getTime()));
+                    if (!folder.exists() && !folder.isDirectory()) {
+                        folder.mkdirs();
+                    }
+                    fullFileName = folder.getAbsolutePath() +"\\AP" + fileName.format(Calendar.getInstance().getTime());
+                    status = genReport(apNirvanaList,fullFileName,APList);
+                    System.out.println(" status " + status);
+                    
+                    apNirvanaList = new ArrayList<APNirvana>();
+                    apNirvanaList.add(ap);
+                    accno = Integer.parseInt(ap.getAccno());
+                    if(i ==  (apDataList.size() - 1)){
+                        fullFileName = folder.getAbsolutePath() +"\\AP" + fileName.format(Calendar.getInstance().getTime());
+                        status = genReport(apNirvanaList,fullFileName,APList);
+                        System.out.println(" status " + status);
+                    }
                 }
-                status += ap.getPayment_detail_id();
             }
-        }
+        
+//        try {
+//            HSSFWorkbook workbook = new HSSFWorkbook();
+//            HSSFSheet sheet = workbook.createSheet();
+//            int rownum = 0;
+//            int accno = 0 ;
+//            for (APNirvana ap : apDataList) {
+//                HSSFRow dataRow = sheet.createRow(rownum++);
+//                int cellnum = 0;
+//                HSSFCell cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getRefinvoiceno());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getIntreference());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getVendorid());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getVendorname());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getDivisionid());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getProjectid());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getTranscode());
+//                cell = dataRow.createCell(cellnum++);
+////                cell.setCellValue(ap.getTransdate());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getDuedate());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getCurrencyid());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getHomerate()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getForeignrate()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getBasevatamt()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getBasevathmamt()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getVatamt()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getVathmamt()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getTransamt()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getTranshmamt()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getVatflag());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getVatid());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getWhtflag());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getWhtid());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getBasewhtamt()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getBasewhthmamt()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getWhtamt()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getWhthmamt()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getYear());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPeriod());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getNote());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPuraccount1());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurdivision1());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurproject1());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt1()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt1()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPuraccount2());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurdivision2());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurproject2());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt2()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt2()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPuraccount3());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurdivision3());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurproject3());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt3()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt3()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPuraccount4());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurdivision4());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurproject4());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt4()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt4()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPuraccount5());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurdivision5());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurproject5());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt5()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt5()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPuraccount6());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurdivision6());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurproject6());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt6()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt6()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPuraccount7());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurdivision7());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurproject7());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt7()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt7()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPuraccount8());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurdivision8());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurproject8());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt8()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt8()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPuraccount9());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurdivision9());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurproject9());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt9()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt9()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPuraccount10());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurdivision10());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurproject10());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt10()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt10()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getService());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getApaccount());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPrefix());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getVoucherno());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getTaxid());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getVendor_branch()== null? "0":ap.getVendor_branch().toString());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getCompany_branch());
+//            }
+//
+//            FileOutputStream out = new FileOutputStream(new File(fullFileName + ".xls"));
+//            workbook.write(out);
+//            out.close();
+//            status = "success";
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            for (APNirvana ap : APList) {
+//                if(!"".equals(status)){
+//                    status += ", ";
+//                }
+//                status += ap.getPayment_detail_id();
+//            }
+//        }
         return status;
     }
 
@@ -652,32 +684,30 @@ public class APNirvanaImpl implements APNirvanaDao {
 
     public List<APNirvana> SearchApNirvanaFromPaymentDetailId(List<APNirvana> APList) {
         Session session = this.getSessionFactory().openSession();
-        StringBuffer query = new StringBuffer(" SELECT  ap.* FROM `ap_nirvana` ap WHERE ");
-        for (int i = 0; i < APList.size(); i++) {
-            APNirvana ap = APList.get(i);
-            if (i != 0) {
-                query.append(" OR ");
-            }
-            query.append("( payment_detail_id = " + ap.getPayment_detail_id() + " AND paymenttype = '" + ap.getPaymenttype() + "' )");
-        }
+//        StringBuffer query = new StringBuffer("");
+//        for (int i = 0; i < APList.size(); i++) {
+//            APNirvana ap = APList.get(i);
+//            if (i != 0) {
+//                query.append(" OR ");
+//            }
+//            query.append("( payment_detail_id = " + ap.getPayment_detail_id() + " AND paymenttype = '" + ap.getPaymenttype() + "' )");
+//        }
 
       //  SQLQuery sQLQuery = session.createSQLQuery(query.toString()).addEntity(APNirvana.class);
       //  List result = sQLQuery.list();
-        
-        Query HqlQuery = session.createQuery("from APNirvana ap where ap.rowid in( 'W290' ,'W291')");
- 
-        List<APNirvana> result = HqlQuery.list();
-        
-       
-        for(int i=0;i<result.size();i++){
-            System.out.println("paymentID : "+result.get(i).getPayment_detail_id());
+        String query = "from APNirvana ap where ap.rowid in (";
+        for (int i = 0; i < APList.size(); i++) {
+            query += (i == 0 ? "" : ",");
+            query += ("'W"+APList.get(i).getPayment_detail_id()+"'");
         }
-        
+        query += ") order by accno , intreference asc " ;
+        System.out.println(" query :: " + query);
+        Query HqlQuery = session.createQuery(query);
+        List<APNirvana> result = HqlQuery.list();
        
         this.sessionFactory.close();
         session.close();
         return result;
-
     }
 
     @Override
@@ -776,6 +806,205 @@ public class APNirvanaImpl implements APNirvanaDao {
         this.sessionFactory.close();
         session.close();
         return result;
+    }
+    
+    private String genReport(List<APNirvana> apDataList , String fullFileName , List<APNirvana> APList){
+      String status ="";
+     try {
+            HSSFWorkbook workbook = new HSSFWorkbook();
+            HSSFSheet sheet = workbook.createSheet();
+            int rownum = 0;
+            for (APNirvana ap : apDataList) {
+                HSSFRow dataRow = sheet.createRow(rownum++);
+                int cellnum = 0;
+                HSSFCell cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getRefinvoiceno());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getIntreference());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getVendorid());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getVendorname());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getDivisionid());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getProjectid());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getTranscode());
+                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getTransdate());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getDuedate());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getCurrencyid());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getHomerate()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getForeignrate()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getBasevatamt()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getBasevathmamt()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getVatamt()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getVathmamt()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getTransamt()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getTranshmamt()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getVatflag());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getVatid());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getWhtflag());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getWhtid());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getBasewhtamt()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getBasewhthmamt()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getWhtamt()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getWhthmamt()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getYear());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPeriod());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getNote());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPuraccount1());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPurdivision1());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPurproject1());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt1()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt1()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPuraccount2());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPurdivision2());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPurproject2());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt2()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt2()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPuraccount3());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPurdivision3());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPurproject3());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt3()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt3()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPuraccount4());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPurdivision4());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPurproject4());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt4()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt4()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPuraccount5());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPurdivision5());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPurproject5());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt5()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt5()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPuraccount6());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPurdivision6());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPurproject6());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt6()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt6()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPuraccount7());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPurdivision7());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPurproject7());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt7()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt7()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPuraccount8());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPurdivision8());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPurproject8());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt8()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt8()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPuraccount9());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPurdivision9());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPurproject9());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt9()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt9()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPuraccount10());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPurdivision10());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPurproject10());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt10()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt10()));
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getService());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getApaccount());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getPrefix());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getVoucherno());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getTaxid());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getVendor_branch()== null? "0":ap.getVendor_branch().toString());
+                cell = dataRow.createCell(cellnum++);
+                cell.setCellValue(ap.getCompany_branch());
+            }
+
+            FileOutputStream out = new FileOutputStream(new File(fullFileName + ".xls"));
+            workbook.write(out);
+            out.close();
+            status = "success";
+        } catch (Exception e) {
+            e.printStackTrace();
+            for (APNirvana ap : APList) {
+                if(!"".equals(status)){
+                    status += ", ";
+                }
+                status += ap.getPayment_detail_id();
+            }
+        }
+     return status;
     }
 
 }

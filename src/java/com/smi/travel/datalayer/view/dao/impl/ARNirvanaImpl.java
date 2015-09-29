@@ -278,17 +278,17 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
         if (!folder.exists() && !folder.isDirectory()) {
             folder.mkdirs();
         }
-        String fullFileName = folder.getAbsolutePath() + "\\AP" + fileName.format(Calendar.getInstance().getTime());
+        String fullFileName = folder.getAbsolutePath() + "\\AR" + fileName.format(Calendar.getInstance().getTime());
 
         try {
             HSSFWorkbook workbook = new HSSFWorkbook();
             HSSFSheet sheet = workbook.createSheet();
             int rownum = 0;
-            HSSFRow headerRow = sheet.createRow(rownum++);
-            for (int i = 0; i < FILE_HEADER.length; i++) {
-                HSSFCell cell = headerRow.createCell(i);
-                cell.setCellValue(FILE_HEADER[i]);
-            }
+//            HSSFRow headerRow = sheet.createRow(rownum++);
+//            for (int i = 0; i < FILE_HEADER.length; i++) {
+//                HSSFCell cell = headerRow.createCell(i);
+//                cell.setCellValue(FILE_HEADER[i]);
+//            }
 
             for (ARNirvana ar : arDataList) {
                 HSSFRow dataRow = sheet.createRow(rownum++);
