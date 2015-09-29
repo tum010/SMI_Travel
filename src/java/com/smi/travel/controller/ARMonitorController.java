@@ -62,6 +62,7 @@ public class ARMonitorController extends SMITravelController {
                     ARNirvana ar = new ARNirvana();
                     String inputId = request.getParameter("inputId"+i);
                     ar.setInvid(Integer.parseInt(inputId));
+                    ar.setReceive_detail_id(inputId);
                     listAr.add(ar);
                     System.out.println("data : "+ar);
                 }

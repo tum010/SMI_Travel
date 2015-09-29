@@ -67,7 +67,7 @@ public class ARNirvana {
     private String service;
     private String araccount;
     private String prefix;
-    private Integer documentno;
+    private String documentno;
     private String  artrans;
     private String cust_taxid;
     private Integer cust_branch;
@@ -809,14 +809,14 @@ public class ARNirvana {
     /**
      * @return the documentno
      */
-    public Integer getDocumentno() {
+    public String getDocumentno() {
         return documentno;
     }
 
     /**
      * @param documentno the documentno to set
      */
-    public void setDocumentno(Integer documentno) {
+    public void setDocumentno(String documentno) {
         this.documentno = documentno;
     }
 
