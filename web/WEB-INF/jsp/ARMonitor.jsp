@@ -218,9 +218,9 @@
                                 <td>${ar_nirvana.customerid}</td>
                                 <td>${ar_nirvana.customername}</td>
                                 <td>${ar_nirvana.salesaccount1}</td>
-                                <td align="right" class="money">${ar_nirvana.aramt}</td>
-                                <td align="right" class="money">${ar_nirvana.vatamt}</td>
                                 <td align="right" class="money">${ar_nirvana.salesamt}</td>
+                                <td align="right" class="money">${ar_nirvana.vatamt}</td>
+                                <td align="right" class="money">${ar_nirvana.aramt}</td>
                                 <td align="center">${ar_nirvana.currencyid}</td>
                                 <td align="center">${ar_nirvana.status}</td>
                             </tr>
@@ -360,7 +360,7 @@
         
         $('table.paginated').each(function() {
             var currentPage = 0;
-            var numPerPage = 50;
+            var numPerPage = 5;
             var $table = $(this);
             $table.bind('repaginate', function() {
                 $table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
@@ -368,7 +368,7 @@
             $table.trigger('repaginate');
             var numRows = $table.find('tbody tr').length;
             var numPages = Math.ceil(numRows / numPerPage);
-            var $pager = $('<div class="col-xs-12 text-right"><font style="color: #499DD5"></font>&nbsp;</div>');
+            var $pager = $('<div class="col-xs-12 text-right" id="pageNo"><font style="color: #499DD5"></font>&nbsp;</div>');
             var $br = $('<div class="col-xs-12"><br></div>');
             for (var page = 0; page < numPages; page++) {
                 if(page === 0){
@@ -400,7 +400,8 @@
                 }
             }
             $br.insertAfter($table).addClass('active');
-            $pager.insertAfter($table).find('span.page-number:first').addClass('active');            
+            $pager.insertAfter($table).find('span.page-number:first').addClass('active');
+            document.getElementById("pageNo").style.cursor="pointer";
         });
                
     });
