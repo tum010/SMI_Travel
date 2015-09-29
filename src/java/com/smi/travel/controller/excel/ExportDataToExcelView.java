@@ -4024,11 +4024,19 @@ public class ExportDataToExcelView extends AbstractExcelView {
                 String totalAmountWen = "SUM(H" + 9+":H"+(count + i + 1)+")";
                 String totalAmountIn = "SUM(I" + 9+":I"+(count + i + 1)+")";
                 
+                HSSFCellStyle styleTotal = wb.createCellStyle();
+                styleTotal.setFont(getHeaderTable(wb.createFont()));
+                styleTotal.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+                styleTotal.setBorderRight(HSSFCellStyle.BORDER_THIN);
+                styleTotal.setBorderTop(HSSFCellStyle.BORDER_THIN);
+                styleTotal.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+                styleTotal.setAlignment(styleC22.ALIGN_RIGHT);
+                
                 HSSFCell cellTotal0 = row.createCell(0);
                 cellTotal0.setCellStyle(styleC29);
                 HSSFCell cellTotal00 = row.createCell(1);
                 cellTotal00.setCellValue("Total");
-                cellTotal00.setCellStyle(styleC30);
+                cellTotal00.setCellStyle(styleTotal);
                 HSSFCell cellTotal01 = row.createCell(2);
                 cellTotal01.setCellFormula(totalPax);
                 cellTotal01.setCellStyle(styleC26);
@@ -4725,7 +4733,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
 //                cellTotal07.setCellStyle(styleC25);
 //            }
 
-            for(int j =0;j<13;j++){
+            for(int j =0;j<25;j++){
                 sheet.autoSizeColumn(j);
             }
             }
