@@ -389,6 +389,9 @@
     <bean id="BillAirAgentDao" class="com.smi.travel.datalayer.view.dao.impl.BillAirAgentImpl">
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
+    <bean id="SummaryTicketAdjustCostAndIncomeDao" class="com.smi.travel.datalayer.dao.impl.SummaryTicketAdjustCostAndIncomeImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
     
     <bean id="GenerateReport" class="com.smi.travel.report.GenerateReport">
           <property name="exportpath" value="D:\\report\\"></property>

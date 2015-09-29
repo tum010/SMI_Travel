@@ -188,7 +188,7 @@
                                 <label class="col-md-6 control-label text-right" for="rept"></label>
                                 <div class="col-md-6">  
                                     <div class="form-group">
-                                        <button type="button" id="printbutton"  name="printbutton"  class="btn btn-success"><span class="glyphicon glyphicon-print"></span> Print</button>
+                                        <button type="button" id="printbutton"  name="printbutton"  class="btn btn-success" ><span class="glyphicon glyphicon-print"></span> Print</button>
                                     </div>
                                 </div>   
                             </div> 
@@ -423,14 +423,19 @@
     });
     
     function printTicketSummaryCostIncome(){
-        var invoiceFromDate = document.getElementById('invoiceFromDate').value;
-        var invoiceToDate = document.getElementById('invoiceToDate').value;
-        var issueFrom = document.getElementById('issueFrom').value;
-        var issueTo = document.getElementById('issueTo').value;
+        var reportType = $("#reportType").val();
+        var invoiceFromDate = $("#invoiceFromDate").val();
+        var invoiceToDate = $("#invoiceToDate").val();
+        var issueFrom = $("#issueFrom").val();
+        var issueTo = $("#issueTo").val();
+        var paymentType = $("#paymentType").val();
+        var departmentt = $("#department").val();
+        var salebyUser = $("#salebyName").val();
+        var termPayt = $("#termPay").val();
         if((invoiceFromDate !== '') && (invoiceToDate !== '')){
-           alert('success');
+           window.open("Excel.smi?name=SummaryTicketAdjustCostAndIncome"+"&reportType="+reportType+"&invoiceFromDate="+invoiceFromDate+"&invoiceToDate="+invoiceToDate+"&issueFrom="+issueFrom+"&issueTo="+issueTo+"&paymentType="+paymentType+"&department="+departmentt+"&salebyUser="+salebyUser+"&termPay="+termPayt);  
         } else if((issueFrom !== '') && (issueTo !== '')){
-           alert('success');
+           window.open("Excel.smi?name=SummaryTicketAdjustCostAndIncome"+"&reportType="+reportType+"&invoiceFromDate="+invoiceFromDate+"&invoiceToDate="+invoiceToDate+"&issueFrom="+issueFrom+"&issueTo="+issueTo+"&paymentType="+paymentType+"&department="+departmentt+"&salebyUser="+salebyUser+"&termPay="+termPayt);  
         } else {
            validateDate();  
         }
@@ -628,5 +633,23 @@
             $("#issuetodatepanel").addClass("has-error");
             $("#printbutton").addClass("disabled");
         }
+    }
+    
+    function printReport(){
+        var reportType = $("#reportType").val();
+        var invoiceFromDate = $("#invoiceFromDate").val();
+        var invoiceToDate = $("#invoiceToDate").val();
+        var issueFrom = $("#issueFrom").val();
+        var issueTo = $("#issueTo").val();
+        var paymentType = $("#paymentType").val();
+        var departmentt = $("#department").val();
+        var salebyUser = $("#salebyName").val();
+        var termPayt = $("#termPay");
+        
+        if((reportType === '') || (invoiceFromDate === '') || (invoiceToDate === '') || (issueFrom === '') || (issueTo === '') || (paymentType === '') || (departmentt === '') || (salebyUser === '') || (termPayt === '')){
+            validateDate();
+        } else {
+            window.open("Excel.smi?name=SummaryTicketAdjustCostAndIncome"+"&reportType="+reportType+"&invoiceFromDate="+invoiceFromDate+"&invoiceToDate="+invoiceToDate+"&issueFrom="+issueFrom+"&issueTo="+issueTo+"&paymentType="+paymentType+"&department="+departmentt+"&salebyUser="+salebyUser+"&termPay="+termPayt);  
+        }  
     }
 </script>
