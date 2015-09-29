@@ -425,17 +425,17 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             transaction = session.beginTransaction();
            
             for (int i = 0; i < APList.size(); i++) {
-                if (APList.get(i).getIntreference() == null) {
-//                    session.save(APList.get(i));
-                } else {
-                    Calendar cal = Calendar.getInstance();
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    String strDate = sdf.format(cal.getTime());
-                    String hql = "update InvoiceDetail inv set inv.isExport = 1,inv.exportDate = '"+ strDate+"'  where  inv.invoice.id = " + APList.get(i).getInvid();
-                    Query query = session.createQuery(hql);
-                    int result = query.executeUpdate();
-                    System.out.println("Query Update : " + result + ":" + query);
-                }
+                Calendar cal = Calendar.getInstance();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String strDate = sdf.format(cal.getTime());
+                Date date = new Date();
+                String hql = "update InvoiceDetail inv set inv.isExport = 1 , inv.exportDate = :date where inv.id = :invDetailId";
+                Query query = session.createQuery(hql);
+                query.setParameter("invDetailId", String.valueOf(APList.get(i).getInvid()));
+                query.setParameter("date", date);
+                int result = query.executeUpdate();
+                System.out.println("Query Update : " + result + ":" + query);
+                
             }
 
             transaction.commit();
