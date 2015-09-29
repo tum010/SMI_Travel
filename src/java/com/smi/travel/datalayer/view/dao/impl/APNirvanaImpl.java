@@ -500,6 +500,8 @@ public class APNirvanaImpl implements APNirvanaDao {
             query.append(" `ap_nirvana`.createdate <= '" + to + "'");
             haveCondition = true;
         }
+    
+        
 
         List<Object[]> QueryList = session.createSQLQuery(query.toString())
                 .addScalar("refinvoiceno", Hibernate.STRING)
@@ -650,7 +652,7 @@ public class APNirvanaImpl implements APNirvanaDao {
 
     public List<APNirvana> SearchApNirvanaFromPaymentDetailId(List<APNirvana> APList) {
         Session session = this.getSessionFactory().openSession();
-        StringBuffer query = new StringBuffer(" SELECT '' as rowid, ap.* FROM `ap_nirvana` ap WHERE ");
+        StringBuffer query = new StringBuffer(" SELECT  ap.* FROM `ap_nirvana` ap WHERE ");
         for (int i = 0; i < APList.size(); i++) {
             APNirvana ap = APList.get(i);
             if (i != 0) {
@@ -659,9 +661,19 @@ public class APNirvanaImpl implements APNirvanaDao {
             query.append("( payment_detail_id = " + ap.getPayment_detail_id() + " AND paymenttype = '" + ap.getPaymenttype() + "' )");
         }
 
-        SQLQuery sQLQuery = session.createSQLQuery(query.toString()).addEntity(APNirvana.class);
-        List result = sQLQuery.list();
-
+      //  SQLQuery sQLQuery = session.createSQLQuery(query.toString()).addEntity(APNirvana.class);
+      //  List result = sQLQuery.list();
+        
+        Query HqlQuery = session.createQuery("from APNirvana ap where ap.rowid in( 'W290' ,'W291')");
+ 
+        List<APNirvana> result = HqlQuery.list();
+        
+       
+        for(int i=0;i<result.size();i++){
+            System.out.println("paymentID : "+result.get(i).getPayment_detail_id());
+        }
+        
+       
         this.sessionFactory.close();
         session.close();
         return result;
