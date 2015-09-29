@@ -700,7 +700,7 @@ public class APNirvanaImpl implements APNirvanaDao {
             query += (i == 0 ? "" : ",");
             query += ("'W"+APList.get(i).getPayment_detail_id()+"'");
         }
-        query += ") order by accno asc " ;
+        query += ") order by accno , intreference asc " ;
         System.out.println(" query :: " + query);
         Query HqlQuery = session.createQuery(query);
         List<APNirvana> result = HqlQuery.list();
