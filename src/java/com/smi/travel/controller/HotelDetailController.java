@@ -90,6 +90,8 @@ public class HotelDetailController extends SMITravelController {
         String Deadline = request.getParameter("deadline");
         String Flight = request.getParameter("Flight");
         String currency = request.getParameter("select-currency");
+        String currencycost = request.getParameter("select-currencycost");
+        
 
         String hotelRoomRows = request.getParameter("roomCounter");
         String hotelRequestRows = request.getParameter("requestCounter");
@@ -117,8 +119,8 @@ public class HotelDetailController extends SMITravelController {
             hotelBooking.setDeadline(util.convertStringToDate(Deadline));
             hotelBooking.setFlight(Flight);
             hotelBooking.setIsBill(util.convertStringToInteger(isBill));
-            hotelBooking.setCurCost("");
-            hotelBooking.setCurAmount("");
+            hotelBooking.setCurCost(currencycost);
+            hotelBooking.setCurAmount(currency);
             if (StringUtils.isNotEmpty(orderNo)) {
                 hotelBooking.setOrderNo(Integer.parseInt(orderNo));
             }

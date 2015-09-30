@@ -76,7 +76,7 @@ public class OtherBooking  {
        this.updateDate = updateDate;
        this.createBy = createBy;
        this.remark = remark;
-        this.curAmount = curAmount;
+       this.curAmount = curAmount;
        this.curCost = curCost;
        this.cancelDate = cancelDate;
        this.remarkTicket = remarkTicket;
