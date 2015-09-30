@@ -115,7 +115,7 @@ public class OtherDetailController extends SMITravelController {
             System.out.println("productId :"+productId);
             System.out.println("agentId :"+agentId);
             Other.setProduct(product);
-            Other.setCurrency(currency);
+            Other.setCurAmount(currency);
             
             Agent agent = new Agent();
             if((agentId != null)&&(!"".equalsIgnoreCase(agentId))){
@@ -281,7 +281,7 @@ public class OtherDetailController extends SMITravelController {
                 status = Other.getStatus().getId();
             }
             remark = Other.getRemark();
-            currency = Other.getCurrency();
+            currency = Other.getCurAmount();
             createby = Other.getCreateBy();
             status = Other.getStatus().getId();
             createdate = String.valueOf(Other.getCreateDate());

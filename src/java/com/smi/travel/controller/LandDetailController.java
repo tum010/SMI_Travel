@@ -134,7 +134,7 @@ public class LandDetailController extends SMITravelController {
             land.setDescription(Description);
             land.setCategory(Category);
             if(!"".equalsIgnoreCase(currency)){
-                land.setCurrency(currency);
+                land.setCurAmount(currency);
             }
             
             if(!"".equalsIgnoreCase(status)){
@@ -217,7 +217,7 @@ public class LandDetailController extends SMITravelController {
             okby = land.getOkBy();
             Description = land.getDescription();
             isbill = String.valueOf(land.getIsBill());
-            currency = String.valueOf(land.getCurrency());
+            currency = String.valueOf(land.getCurAmount());
             if (land.getMItemstatus() != null) {
                 status = String.valueOf(land.getMItemstatus().getId());
                 System.out.println("status : " + status);
