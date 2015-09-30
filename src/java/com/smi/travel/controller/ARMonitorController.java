@@ -61,6 +61,7 @@ public class ARMonitorController extends SMITravelController {
                 if(isSelect != null){
                     ARNirvana ar = new ARNirvana();
                     String inputId = request.getParameter("inputId"+i);
+                    ar.setInvid(Integer.parseInt(inputId));
                     ar.setReceive_detail_id(inputId);
                     listAr.add(ar);
                     System.out.println("data : "+ar);
@@ -73,7 +74,8 @@ public class ARMonitorController extends SMITravelController {
                    String isUpdate = arMonitorService.UpdateStatusARInterface(listAr);
                    System.out.println("Update ??? : " + isUpdate);
                    request.setAttribute("update", isUpdate);
-               }
+               }               
+               listAr = arMonitorService.SearchArNirvanaFromFilter(invoiceType, departmnt, type, from, to, status);
                request.setAttribute("listAr", listAr);
            }else{
                request.setAttribute("listAr", null);

@@ -118,10 +118,10 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-6 control-label text-right" >Routing Detail</label>
+                                <label class="col-md-6 control-label text-right" >Type Routing</label>
                                 <div class="col-md-6">  
                                     <div class="form-group">
-                                        <select name="routingDetail" id="routingDetail"  class="form-control">
+                                        <select name="typeRouting" id="typeRouting"  class="form-control">
                                             <option value=""  selected="selected">-- ALL --</option>
                                             <option value="I" >INTER</option>
                                             <option value="D" >DOMESTIC</option>
@@ -132,6 +132,18 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label class="col-md-6 control-label text-right" >Routing Detail</label>
+                                <div class="col-md-6">  
+                                    <div class="form-group">
+                                        <input type='text' id="routingDetail" name="routingDetail" class="form-control"/>
+                                    </div>  
+                                </div>   
+                            </div>
+                        </div>
+                    </div> 
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
@@ -166,7 +178,7 @@
                                     <div class="input-group">
                                         <input type="hidden" class="form-control" id="agentId" name="agentId" value=""/>
                                         <input type="text" class="form-control" id="agentCode" name="agentCode" value="" />
-                                        <span class="input-group-addon" id="saleby_modal"  data-toggle="modal" data-target="#AgentModal">
+                                        <span class="input-group-addon" id="agent_modal"  data-toggle="modal" data-target="#AgentModal">
                                             <span class="glyphicon-search glyphicon"></span>
                                         </span>
                                     </div>
@@ -703,23 +715,103 @@ function printTicketSummaryAirline(){
     var issueto = document.getElementById("issueTo").value;
     var invFrom = document.getElementById("invoiceFromDate").value;
     var invTo = document.getElementById("invoiceToDate").value;
+    var typeRouting = document.getElementById("typeRouting").value;
     var routingDetail = document.getElementById("routingDetail").value;
     var airlineCode = document.getElementById("airlineCode").value;
     var passenger = document.getElementById("passenger").value;
-    var agentCode = document.getElementById("agentCode").value;
+    var agentId = document.getElementById("agentId").value;
     var department = document.getElementById("department").value;
     var salebyUser = document.getElementById("salebyUser").value;
     var termPay = document.getElementById("termPay").value;
     if((invFrom !== '') && (invTo !== '')){
-        alert('success');
+        if(reportType == 1){
+            window.open("Excel.smi?name=TicketFareSummaryAirlinePax&typeRouting=" + typeRouting 
+                    + "&routingDetail=" + routingDetail 
+                    + "&issuedateFrom=" + issuefrom 
+                    + "&issuedateTo=" + issueto 
+                    + "&invdateFrom=" + invFrom 
+                    + "&invdateTo=" + invTo 
+                    + "&airlineCode=" + airlineCode 
+                    + "&passenger=" + passenger
+                    + "&agentId=" + agentId 
+                    + "&department=" + department 
+                    + "&staff=" + salebyUser 
+                    + "&termPay=" + termPay);
+            window.open("Excel.smi?name=TicketFareSummaryAirlineDetail&typeRouting=" + typeRouting 
+                    + "&routingDetail=" + routingDetail 
+                    + "&issuedateFrom=" + issuefrom 
+                    + "&issuedateTo=" + issueto 
+                    + "&invdateFrom=" + invFrom 
+                    + "&invdateTo=" + invTo 
+                    + "&airlineCode=" + airlineCode 
+                    + "&passenger=" + passenger
+                    + "&agentId=" + agentId 
+                    + "&department=" + department 
+                    + "&staff=" + salebyUser 
+                    + "&termPay=" + termPay);
+            window.open("Excel.smi?name=TicketFareSummaryAirlineRouting&typeRouting=" + typeRouting 
+                    + "&routingDetail=" + routingDetail 
+                    + "&issuedateFrom=" + issuefrom 
+                    + "&issuedateTo=" + issueto 
+                    + "&invdateFrom=" + invFrom 
+                    + "&invdateTo=" + invTo 
+                    + "&airlineCode=" + airlineCode 
+                    + "&passenger=" + passenger
+                    + "&agentId=" + agentId 
+                    + "&department=" + department 
+                    + "&staff=" + salebyUser 
+                    + "&termPay=" + termPay);
+        }else if(reportType == 2){
+        }   
     } else if((invFrom !== '') && (issueto !== '')){
-        alert('success');
+        if(reportType == 1){
+            window.open("Excel.smi?name=TicketFareSummaryAirlinePax&typeRouting=" + typeRouting 
+                    + "&routingDetail=" + routingDetail 
+                    + "&issuedateFrom=" + issuefrom 
+                    + "&issuedateTo=" + issueto 
+                    + "&invdateFrom=" + invFrom 
+                    + "&invdateTo=" + invTo 
+                    + "&airlineCode=" + airlineCode 
+                    + "&passenger=" + passenger
+                    + "&agentId=" + agentId 
+                    + "&department=" + department 
+                    + "&staff=" + salebyUser 
+                    + "&termPay=" + termPay);
+            window.open("Excel.smi?name=TicketFareSummaryAirlineDetail&typeRouting=" + typeRouting 
+                    + "&routingDetail=" + routingDetail 
+                    + "&issuedateFrom=" + issuefrom 
+                    + "&issuedateTo=" + issueto 
+                    + "&invdateFrom=" + invFrom 
+                    + "&invdateTo=" + invTo 
+                    + "&airlineCode=" + airlineCode 
+                    + "&passenger=" + passenger
+                    + "&agentId=" + agentId 
+                    + "&department=" + department 
+                    + "&staff=" + salebyUser 
+                    + "&termPay=" + termPay);
+            window.open("Excel.smi?name=TicketFareSummaryAirlineRouting&typeRouting=" + typeRouting 
+                    + "&routingDetail=" + routingDetail 
+                    + "&issuedateFrom=" + issuefrom 
+                    + "&issuedateTo=" + issueto 
+                    + "&invdateFrom=" + invFrom 
+                    + "&invdateTo=" + invTo 
+                    + "&airlineCode=" + airlineCode 
+                    + "&passenger=" + passenger
+                    + "&agentId=" + agentId 
+                    + "&department=" + department 
+                    + "&staff=" + salebyUser 
+                    + "&termPay=" + termPay);        
+        }else if(reportType == 2){
+        }   
     } else {
         validateDate();  
     }
 //    alert("reportType ::: "+reportType+
 //          "issuefrom ::: "+issuefrom+
 //          "issueto ::: "+issueto+
+//          "invoiceFromDate ::: "+invFrom+
+//          "invoiceToDate ::: "+invTo+
+//          "invoiceToDate ::: "+typeRouting+
 //          "routingDetail ::: "+routingDetail+
 //          "airlineCode ::: "+airlineCode+
 //          "passenger ::: "+passenger+
@@ -728,14 +820,5 @@ function printTicketSummaryAirline(){
 //          "salebyUser ::: "+salebyUser+
 //          "termPay ::: "+termPay      
 //                );
-//    if((issuefrom === '') || (issueto === '')){
-//        validateDate();
-//    } else {
-//        if(reportType == 1){
-//            window.open("Excel.smi?name=TicketFareSummaryByStaff&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&issuedateFrom=" + issuefrom + "&issuedateTo=" + issueto + "&department=" + department + "&staff=" + salebyUser + "&termPay=" + termPay + "&invdateFrom=" + invfrom + "&invdateTo=" + invto);
-//        }else if(reportType == 2){
-//            window.open("Excel.smi?name=TicketFareSummaryByAgent&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&issuedateFrom=" + issuefrom + "&issuedateTo=" + issueto + "&department=" + department + "&staff=" + salebyUser + "&termPay=" + termPay + "&invdateFrom=" + invfrom + "&invdateTo=" + invto);
-//        }        
-//    }   
 }
 </script>

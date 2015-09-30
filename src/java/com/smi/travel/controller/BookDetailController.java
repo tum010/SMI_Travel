@@ -75,7 +75,14 @@ public class BookDetailController extends SMITravelController {
         System.out.println("BookDetailController action=[" + action + "] refno[" + refNo + "]");
 
         SystemUser user = (SystemUser) session.getAttribute("USER");
-        List<Agent> agent = bookingDetailService.getListAgent();
+        List<Agent> agent = bookingDetailService.getListAgentForBookingDetail();
+        
+//        for(int i=0;i<agent.size();i++){
+//            Agent agentRe = new Agent();
+//            agentRe = agent.get(i);
+//            String agentAdd = (agentRe.getAddress()).replaceAll("(\r\n|\n)", " ");
+//            agentRe.setAddress(agentAdd);
+//        }
 
         if ("new".equalsIgnoreCase(action)) {
             request.setAttribute(ACTION, "init");

@@ -44,6 +44,10 @@ public class BookingDetailService {
         return agentdao.getListAgent();
     }
     
+    public List<Agent> getListAgentForBookingDetail() {
+        return agentdao.getListAgentForBookingDetail();
+    }
+    
     public Agent getAgentByName(String name){
         return agentdao.getAgentByName(name);
     }

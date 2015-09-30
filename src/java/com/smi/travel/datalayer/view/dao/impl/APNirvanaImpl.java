@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-//Test
 package com.smi.travel.datalayer.view.dao.impl;
 
 import com.smi.travel.datalayer.view.dao.APNirvanaDao;
@@ -76,11 +75,11 @@ public class APNirvanaImpl implements APNirvanaDao {
         List<APNirvana> apDataList = this.SearchApNirvanaFromPaymentDetailId(APList);
         SimpleDateFormat folderName = new SimpleDateFormat("yyMMdd");
         SimpleDateFormat fileName = new SimpleDateFormat("HHmmss");
-        File folder = new File(pathFile + folderName.format(Calendar.getInstance().getTime()));
-        if (!folder.exists() && !folder.isDirectory()) {
-            folder.mkdirs();
-        }
-        String fullFileName = folder.getAbsolutePath() + "\\AP" + fileName.format(Calendar.getInstance().getTime());
+//        File folder = new File(pathFile);
+//        if (!folder.exists() && !folder.isDirectory()) {
+//            folder.mkdirs();
+//        }
+//        String fullFileName = folder.getAbsolutePath() + "\\AP" + fileName.format(Calendar.getInstance().getTime());
 
 //        FileWriter fileWriter = null;
 //        CSVPrinter csvFilePrinter = null;
@@ -205,16 +204,611 @@ public class APNirvanaImpl implements APNirvanaDao {
 //                e.printStackTrace();
 //            }
 //        }
+            int accno = 1 ;
+            List<APNirvana> apNirvanaList = new ArrayList<APNirvana>();
+            String fullFileName = "";
+            for (int i=0 ; i< apDataList.size() ; i++) {
+                APNirvana ap = apDataList.get(i);
+                File folder = new File(pathFile+"\\accno"+accno+"\\ap\\" + folderName.format(Calendar.getInstance().getTime()));
+                if(accno == Integer.parseInt(ap.getAccno())){
+                    apNirvanaList.add(ap);
+                    accno = Integer.parseInt(ap.getAccno());
+                }else{
+                    folder = new File(pathFile+"\\accno"+accno+"\\ap\\" + folderName.format(Calendar.getInstance().getTime()));
+                    if (!folder.exists() && !folder.isDirectory()) {
+                        folder.mkdirs();
+                    }
+                    fullFileName = folder.getAbsolutePath() +"\\AP" + fileName.format(Calendar.getInstance().getTime());
+                    status = genReport(apNirvanaList,fullFileName,APList);
+                    System.out.println(" status " + status);
+                    
+                    apNirvanaList = new ArrayList<APNirvana>();
+                    apNirvanaList.add(ap);
+                    accno = Integer.parseInt(ap.getAccno());
+                }
+                if(i ==  (apDataList.size() - 1)){
+                    folder = new File(pathFile+"\\accno"+accno+"\\ap\\" + folderName.format(Calendar.getInstance().getTime()));
+                    if (!folder.exists() && !folder.isDirectory()) {
+                        folder.mkdirs();
+                    }
+                    fullFileName = folder.getAbsolutePath() +"\\AP" + fileName.format(Calendar.getInstance().getTime());
+                    status = genReport(apNirvanaList,fullFileName,APList);
+                    System.out.println(" status " + status);
+                }
+            }
+        
+//        try {
+//            HSSFWorkbook workbook = new HSSFWorkbook();
+//            HSSFSheet sheet = workbook.createSheet();
+//            int rownum = 0;
+//            int accno = 0 ;
+//            for (APNirvana ap : apDataList) {
+//                HSSFRow dataRow = sheet.createRow(rownum++);
+//                int cellnum = 0;
+//                HSSFCell cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getRefinvoiceno());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getIntreference());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getVendorid());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getVendorname());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getDivisionid());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getProjectid());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getTranscode());
+//                cell = dataRow.createCell(cellnum++);
+////                cell.setCellValue(ap.getTransdate());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getDuedate());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getCurrencyid());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getHomerate()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getForeignrate()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getBasevatamt()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getBasevathmamt()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getVatamt()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getVathmamt()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getTransamt()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getTranshmamt()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getVatflag());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getVatid());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getWhtflag());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getWhtid());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getBasewhtamt()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getBasewhthmamt()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getWhtamt()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getWhthmamt()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getYear());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPeriod());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getNote());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPuraccount1());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurdivision1());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurproject1());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt1()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt1()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPuraccount2());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurdivision2());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurproject2());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt2()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt2()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPuraccount3());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurdivision3());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurproject3());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt3()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt3()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPuraccount4());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurdivision4());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurproject4());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt4()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt4()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPuraccount5());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurdivision5());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurproject5());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt5()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt5()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPuraccount6());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurdivision6());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurproject6());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt6()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt6()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPuraccount7());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurdivision7());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurproject7());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt7()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt7()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPuraccount8());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurdivision8());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurproject8());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt8()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt8()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPuraccount9());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurdivision9());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurproject9());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt9()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt9()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPuraccount10());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurdivision10());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPurproject10());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt10()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt10()));
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getService());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getApaccount());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getPrefix());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getVoucherno());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getTaxid());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getVendor_branch()== null? "0":ap.getVendor_branch().toString());
+//                cell = dataRow.createCell(cellnum++);
+//                cell.setCellValue(ap.getCompany_branch());
+//            }
+//
+//            FileOutputStream out = new FileOutputStream(new File(fullFileName + ".xls"));
+//            workbook.write(out);
+//            out.close();
+//            status = "success";
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            for (APNirvana ap : APList) {
+//                if(!"".equals(status)){
+//                    status += ", ";
+//                }
+//                status += ap.getPayment_detail_id();
+//            }
+//        }
+        return status;
+    }
+
+    @Override
+    public String UpdateStatusAPInterface(List<APNirvana> APList) {
+        int result = 0;
         try {
+            Session session = this.getSessionFactory().openSession();
+            setTransaction(session.beginTransaction());
+
+            for (int i = 0; i < APList.size(); i++) {
+                APNirvana apNirvana = APList.get(i);
+                String paymentDetailId = apNirvana.getPayment_detail_id();
+                String paymentType = apNirvana.getPaymenttype();
+                Date date = new Date();
+                if ("W".equalsIgnoreCase(paymentType)) {
+                    String hql = "update PaymentDetailWendy pay set pay.isExport = 1 , pay.exportDate = :date where pay.id = :paymentDetailId";
+                    try {
+                        Query query = session.createQuery(hql);
+                        query.setParameter("paymentDetailId", paymentDetailId);
+                        query.setParameter("date", date);
+                        System.out.println(" query " + query);
+                        result = query.executeUpdate();
+                        System.out.println("Rows affected: " + result);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        result = 0;
+                    }
+                } else if ("A".equalsIgnoreCase(paymentType)) {
+                    String hql = "update PaymentAirticket air set air.isExport = 1 , air.exportDate = :date where air.id = :paymentDetailId";
+                    try {
+                        Query query = session.createQuery(hql);
+                        query.setParameter("paymentDetailId", paymentDetailId);
+                        query.setParameter("date", date);
+                        System.out.println(" query " + query);
+                        result = query.executeUpdate();
+                        System.out.println("Rows affected: " + result);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        result = 0;
+                    }
+                }
+            }
+            getTransaction().commit();
+            session.close();
+            this.getSessionFactory().close();
+        } catch (Exception ex) {
+            getTransaction().rollback();
+            ex.printStackTrace();
+            result = 0;
+        }
+        return String.valueOf(result);
+    }
+
+    @Override
+    public List<APNirvana> SearchApNirvanaFromFilter(String paymentType, String productType, String status, String from, String to) {
+        UtilityFunction util = new UtilityFunction();
+        List<APNirvana> apNirvanaList = new ArrayList<APNirvana>();
+        Session session = this.getSessionFactory().openSession();
+        StringBuffer query = new StringBuffer(" SELECT * FROM `ap_nirvana` ");
+        boolean haveCondition = false;
+        if ((paymentType != null) && (!"".equalsIgnoreCase(paymentType))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" `ap_nirvana`.paymenttype = '" + paymentType + "'");
+            haveCondition = true;
+        }
+        if ((productType != null) && (!"".equalsIgnoreCase(productType))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" `ap_nirvana`.producttype = '" + productType + "'");
+            haveCondition = true;
+        }
+        if ((status != null) && (!"".equalsIgnoreCase(status))) {
+            if ("N".equalsIgnoreCase(status)) {
+                status = "New";
+            }
+            if ("E".equalsIgnoreCase(status)) {
+                status = "Export";
+            }
+            if ("C".equalsIgnoreCase(status)) {
+                status = "Change";
+            }
+            query.append(haveCondition ? " and" : " where");
+            query.append(" `ap_nirvana`.itf_status = '" + status + "'");
+            haveCondition = true;
+        }
+        if ((from != null) && (!"".equalsIgnoreCase(from))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" `ap_nirvana`.createdate >= '" + from + "'");
+            haveCondition = true;
+        }
+        if ((to != null) && (!"".equalsIgnoreCase(to))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" `ap_nirvana`.createdate <= '" + to + "'");
+            haveCondition = true;
+        }
+    
+        
+
+        List<Object[]> QueryList = session.createSQLQuery(query.toString())
+                .addScalar("refinvoiceno", Hibernate.STRING)
+                .addScalar("intreference", Hibernate.STRING)
+                .addScalar("vendorid", Hibernate.STRING)
+                .addScalar("vendorname", Hibernate.STRING)
+                .addScalar("divisionid", Hibernate.STRING)
+                .addScalar("projectid", Hibernate.STRING)
+                .addScalar("transcode", Hibernate.STRING)
+                //            .addScalar("transdate",Hibernate.DATE)
+                .addScalar("duedate", Hibernate.DATE)
+                .addScalar("currencyid", Hibernate.STRING)
+                .addScalar("homerate", Hibernate.BIG_DECIMAL)
+                .addScalar("foreignrate", Hibernate.BIG_DECIMAL)
+                .addScalar("basevatamt", Hibernate.BIG_DECIMAL)
+                .addScalar("basevathmamt", Hibernate.BIG_DECIMAL)
+                .addScalar("vatamt", Hibernate.BIG_DECIMAL)
+                .addScalar("vathmamt", Hibernate.BIG_DECIMAL)
+                .addScalar("transamt", Hibernate.BIG_DECIMAL)
+                .addScalar("transhmamt", Hibernate.BIG_DECIMAL)
+                .addScalar("vatflag", Hibernate.STRING)
+                .addScalar("vatid", Hibernate.STRING)
+                .addScalar("whtflag", Hibernate.STRING)
+                .addScalar("whtid", Hibernate.STRING)
+                .addScalar("basewhtamt", Hibernate.BIG_DECIMAL)
+                .addScalar("basewhthmamt", Hibernate.BIG_DECIMAL)
+                .addScalar("whtamt", Hibernate.BIG_DECIMAL)
+                .addScalar("whthmamt", Hibernate.BIG_DECIMAL)
+                .addScalar("year", Hibernate.INTEGER)
+                .addScalar("period", Hibernate.INTEGER)
+                .addScalar("note", Hibernate.STRING)
+                .addScalar("puraccount1", Hibernate.STRING)
+                .addScalar("purdivision1", Hibernate.STRING)
+                .addScalar("purproject1", Hibernate.STRING)
+                .addScalar("puramt1", Hibernate.BIG_DECIMAL)
+                .addScalar("purhmamt1", Hibernate.BIG_DECIMAL)
+                .addScalar("puraccount2", Hibernate.STRING)
+                .addScalar("purdivision2", Hibernate.STRING)
+                .addScalar("purproject2", Hibernate.STRING)
+                .addScalar("puramt2", Hibernate.BIG_DECIMAL)
+                .addScalar("purhmamt2", Hibernate.BIG_DECIMAL)
+                .addScalar("puraccount3", Hibernate.STRING)
+                .addScalar("purdivision3", Hibernate.STRING)
+                .addScalar("purproject3", Hibernate.STRING)
+                .addScalar("puramt3", Hibernate.BIG_DECIMAL)
+                .addScalar("purhmamt3", Hibernate.BIG_DECIMAL)
+                .addScalar("puraccount4", Hibernate.STRING)
+                .addScalar("purdivision4", Hibernate.STRING)
+                .addScalar("purproject4", Hibernate.STRING)
+                .addScalar("puramt4", Hibernate.BIG_DECIMAL)
+                .addScalar("purhmamt4", Hibernate.BIG_DECIMAL)
+                .addScalar("puraccount5", Hibernate.STRING)
+                .addScalar("purdivision5", Hibernate.STRING)
+                .addScalar("purproject5", Hibernate.STRING)
+                .addScalar("puramt5", Hibernate.BIG_DECIMAL)
+                .addScalar("purhmamt5", Hibernate.BIG_DECIMAL)
+                .addScalar("puraccount6", Hibernate.STRING)
+                .addScalar("purdivision6", Hibernate.STRING)
+                .addScalar("purproject6", Hibernate.STRING)
+                .addScalar("puramt6", Hibernate.BIG_DECIMAL)
+                .addScalar("purhmamt6", Hibernate.BIG_DECIMAL)
+                .addScalar("puraccount7", Hibernate.STRING)
+                .addScalar("purdivision7", Hibernate.STRING)
+                .addScalar("purproject7", Hibernate.STRING)
+                .addScalar("puramt7", Hibernate.BIG_DECIMAL)
+                .addScalar("purhmamt7", Hibernate.BIG_DECIMAL)
+                .addScalar("puraccount8", Hibernate.STRING)
+                .addScalar("purdivision8", Hibernate.STRING)
+                .addScalar("purproject8", Hibernate.STRING)
+                .addScalar("puramt8", Hibernate.BIG_DECIMAL)
+                .addScalar("purhmamt8", Hibernate.BIG_DECIMAL)
+                .addScalar("puraccount9", Hibernate.STRING)
+                .addScalar("purdivision9", Hibernate.STRING)
+                .addScalar("purproject9", Hibernate.STRING)
+                .addScalar("puramt9", Hibernate.BIG_DECIMAL)
+                .addScalar("purhmamt9", Hibernate.BIG_DECIMAL)
+                .addScalar("puraccount10", Hibernate.STRING)
+                .addScalar("purdivision10", Hibernate.STRING)
+                .addScalar("purproject10", Hibernate.STRING)
+                .addScalar("puramt10", Hibernate.BIG_DECIMAL)
+                .addScalar("purhmamt10", Hibernate.BIG_DECIMAL)
+                .addScalar("service", Hibernate.STRING)
+                .addScalar("apaccount", Hibernate.STRING)
+                .addScalar("prefix", Hibernate.STRING)
+                .addScalar("voucherno", Hibernate.INTEGER)
+                .addScalar("taxid", Hibernate.STRING)
+                .addScalar("vendor_branch", Hibernate.INTEGER)
+                .addScalar("company_branch", Hibernate.INTEGER)
+                .addScalar("itf_status", Hibernate.STRING)
+                .addScalar("payment_id", Hibernate.STRING)
+                .addScalar("paymenttype", Hibernate.STRING)
+                .addScalar("payment_detail_id", Hibernate.STRING) //88
+                .list();
+
+        for (Object[] B : QueryList) {
+            APNirvana apNirvana = new APNirvana();
+            apNirvana.setIntreference(util.ConvertString(B[1]));
+            apNirvana.setVendorid(util.ConvertString(B[2]));
+            apNirvana.setVendorname(util.ConvertString(B[3]));
+            apNirvana.setCurrencyid(util.ConvertString(B[8]));
+            apNirvana.setBasevatamt((B[11]) != null ? new BigDecimal(util.ConvertString(B[11])) : new BigDecimal("0.00"));
+            apNirvana.setVatamt((B[13]) != null ? new BigDecimal(util.ConvertString(B[13])) : new BigDecimal("0.00"));
+            apNirvana.setPuraccount1(util.ConvertString(B[28]));
+            apNirvana.setItf_status(util.ConvertString(B[85]));
+            apNirvana.setPaymenttype(util.ConvertString(B[87]));
+            apNirvana.setPayment_detail_id(util.ConvertString(B[88]));
+            apNirvanaList.add(apNirvana);
+        }
+
+        this.sessionFactory.close();
+        session.close();
+        return apNirvanaList;
+
+    }
+
+//    private List<APNirvana> mappingAPNirvana(List<APNirvana> apNirvanaList) {
+//        List<APNirvana> mappingData = new ArrayList<APNirvana>();
+//        for(int i=0;i<apNirvanaList.size();i++){
+//            APNirvana data = new APNirvana();
+//            data = apNirvanaList.get(i);
+//            APNirvana apNirvana = new APNirvana();
+//            apNirvana.setIntreference(data.getIntreference());
+//            apNirvana.setVendorid(data.getVatid());
+//            apNirvana.setVendorname(data.getVendorname());
+//            apNirvana.setPuraccount1(data.getPuraccount1());
+//            apNirvana.setBasevatamt(data.getBasevatamt() != null ? data.getBasevatamt() : new BigDecimal("0.00"));
+//            apNirvana.setCurrencyid(data.getCurrencyid());
+//            mappingData.add(apNirvana);
+//        }
+//        
+//        return mappingData;
+//    }
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    public Transaction getTransaction() {
+        return transaction;
+    }
+
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
+    }
+
+    public List<APNirvana> SearchApNirvanaFromPaymentDetailId(List<APNirvana> APList) {
+        Session session = this.getSessionFactory().openSession();
+//        StringBuffer query = new StringBuffer("");
+//        for (int i = 0; i < APList.size(); i++) {
+//            APNirvana ap = APList.get(i);
+//            if (i != 0) {
+//                query.append(" OR ");
+//            }
+//            query.append("( payment_detail_id = " + ap.getPayment_detail_id() + " AND paymenttype = '" + ap.getPaymenttype() + "' )");
+//        }
+
+      //  SQLQuery sQLQuery = session.createSQLQuery(query.toString()).addEntity(APNirvana.class);
+      //  List result = sQLQuery.list();
+        String query = "from APNirvana ap where ap.rowid in (";
+        for (int i = 0; i < APList.size(); i++) {
+            query += (i == 0 ? "" : ",");
+            query += ("'W"+APList.get(i).getPayment_detail_id()+"'");
+        }
+        query += ") order by accno , intreference asc " ;
+        System.out.println(" query :: " + query);
+        Query HqlQuery = session.createQuery(query);
+        List<APNirvana> result = HqlQuery.list();
+       
+        this.sessionFactory.close();
+        session.close();
+        return result;
+    }
+
+    @Override
+    public List getApNirvanaReport(String paymentType, String productType, String status, String from, String to, String printby) {
+        UtilityFunction util = new UtilityFunction();
+        Session session = this.getSessionFactory().openSession();
+        StringBuffer query = new StringBuffer(" SELECT `ap_nirvana`.* FROM `ap_nirvana` ");
+        boolean haveCondition = false;
+        if ((paymentType != null) && (!"".equalsIgnoreCase(paymentType))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" `ap_nirvana`.paymenttype = '" + paymentType + "'");
+            haveCondition = true;
+        }
+        if ((productType != null) && (!"".equalsIgnoreCase(productType))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" `ap_nirvana`.producttype = '" + productType + "'");
+            haveCondition = true;
+        }
+        if ((status != null) && (!"".equalsIgnoreCase(status))) {
+            if ("N".equalsIgnoreCase(status)) {
+                status = "New";
+            }
+            if ("E".equalsIgnoreCase(status)) {
+                status = "Export";
+            }
+            if ("C".equalsIgnoreCase(status)) {
+                status = "Change";
+            }
+            query.append(haveCondition ? " and" : " where");
+            query.append(" `ap_nirvana`.itf_status = '" + status + "'");
+            haveCondition = true;
+        }
+        if ((from != null) && (!"".equalsIgnoreCase(from))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" `ap_nirvana`.createdate >= '" + from + "'");
+            haveCondition = true;
+        }
+        if ((to != null) && (!"".equalsIgnoreCase(to))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" `ap_nirvana`.createdate <= '" + to + "'");
+            haveCondition = true;
+        }
+        
+//        SQLQuery sQLQuery = session.createSQLQuery(query.toString()).addEntity(APNirvana.class);
+//        List result = new ArrayList<APNirvana>();
+//        List result = sQLQuery.list();
+        List<Object[]> QueryList = session.createSQLQuery(query.toString())
+                .addScalar("intreference", Hibernate.STRING)
+                .addScalar("vendorid", Hibernate.STRING)
+                .addScalar("vendorname", Hibernate.STRING)
+                .addScalar("puraccount1", Hibernate.STRING)
+                .addScalar("vatamt", Hibernate.BIG_DECIMAL)
+                .addScalar("basevatamt", Hibernate.BIG_DECIMAL)
+                .addScalar("currencyid", Hibernate.STRING)
+                .list();
+        List result = new ArrayList<APNirvana>();
+        if(QueryList.isEmpty()){
+            SimpleDateFormat dateformat = new SimpleDateFormat();
+            dateformat.applyPattern("dd-MM-yyyy HH:mm:ss");
+            APNirvana apNirvana = new APNirvana();
+            apNirvana.setUser(printby);
+            apNirvana.setSystemdate(String.valueOf(dateformat.format(new Date())));
+            apNirvana.setDatefrom(from);
+            apNirvana.setDateto(to);
+            result.add(apNirvana);
+            return result;
+        }
+        boolean header = true;
+        for (Object[] B : QueryList) {
+            APNirvana apNirvana = new APNirvana();
+            apNirvana.setIntreference(util.ConvertString(B[0]));
+            apNirvana.setVendorid(util.ConvertString(B[1]));
+            apNirvana.setVendorname(util.ConvertString(B[2]));
+            apNirvana.setPuraccount1(util.ConvertString(B[3]));
+            apNirvana.setCurrencyid(util.ConvertString(B[6]));
+            apNirvana.setVatamt((B[4]) != null ? new BigDecimal(util.ConvertString(B[4])) : new BigDecimal("0.00"));
+            apNirvana.setBasevatamt((B[5]) != null ? new BigDecimal(util.ConvertString(B[5])) : new BigDecimal("0.00"));
+            if(header){
+                SimpleDateFormat dateformat = new SimpleDateFormat();
+                dateformat.applyPattern("dd-MM-yyyy HH:mm:ss");         
+                apNirvana.setUser(printby);
+                apNirvana.setSystemdate(String.valueOf(dateformat.format(new Date())));
+                apNirvana.setDatefrom(from);
+                apNirvana.setDateto(to);
+                header = false;
+            }
+            result.add(apNirvana);
+        }
+        
+//        APNirvana dataheader = new APNirvana();
+//        dataheader = (APNirvana) result.get(0);
+//        dataheader.setDatefrom(from);
+//        dataheader.setDateto(to);
+//        result.set(0, dataheader);
+        
+        this.sessionFactory.close();
+        session.close();
+        return result;
+    }
+    
+    private String genReport(List<APNirvana> apDataList , String fullFileName , List<APNirvana> APList){
+      String status ="";
+     try {
             HSSFWorkbook workbook = new HSSFWorkbook();
             HSSFSheet sheet = workbook.createSheet();
             int rownum = 0;
-            HSSFRow headerRow = sheet.createRow(rownum++);
-            for (int i = 0; i < FILE_HEADER.length; i++) {
-                HSSFCell cell = headerRow.createCell(i);
-                cell.setCellValue(FILE_HEADER[i]);
-            }
-
             for (APNirvana ap : apDataList) {
                 HSSFRow dataRow = sheet.createRow(rownum++);
                 int cellnum = 0;
@@ -390,7 +984,9 @@ public class APNirvanaImpl implements APNirvanaDao {
                 cell.setCellValue(ap.getVendor_branch()== null? "0":ap.getVendor_branch().toString());
                 cell = dataRow.createCell(cellnum++);
                 cell.setCellValue(ap.getCompany_branch());
-               
+//                for(int j =0;j<100;j++){
+//                    sheet.autoSizeColumn(j);
+//                }
             }
 
             FileOutputStream out = new FileOutputStream(new File(fullFileName + ".xls"));
@@ -406,365 +1002,7 @@ public class APNirvanaImpl implements APNirvanaDao {
                 status += ap.getPayment_detail_id();
             }
         }
-        return status;
-    }
-
-    @Override
-    public String UpdateStatusAPInterface(List<APNirvana> APList) {
-        int result = 0;
-        try {
-            Session session = this.getSessionFactory().openSession();
-            setTransaction(session.beginTransaction());
-
-            for (int i = 0; i < APList.size(); i++) {
-                APNirvana apNirvana = APList.get(i);
-                String paymentDetailId = apNirvana.getPayment_detail_id();
-                String paymentType = apNirvana.getPaymenttype();
-                Date date = new Date();
-                if ("W".equalsIgnoreCase(paymentType)) {
-                    String hql = "update PaymentDetailWendy pay set pay.isExport = 1 , pay.exportDate = :date where pay.id = :paymentDetailId";
-                    try {
-                        Query query = session.createQuery(hql);
-                        query.setParameter("paymentDetailId", paymentDetailId);
-                        query.setParameter("date", date);
-                        System.out.println(" query " + query);
-                        result = query.executeUpdate();
-                        System.out.println("Rows affected: " + result);
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                        result = 0;
-                    }
-                } else if ("A".equalsIgnoreCase(paymentType)) {
-                    String hql = "update PaymentAirticket air set air.isExport = 1 , air.exportDate = :date where air.id = :paymentDetailId";
-                    try {
-                        Query query = session.createQuery(hql);
-                        query.setParameter("paymentDetailId", paymentDetailId);
-                        query.setParameter("date", date);
-                        System.out.println(" query " + query);
-                        result = query.executeUpdate();
-                        System.out.println("Rows affected: " + result);
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                        result = 0;
-                    }
-                }
-            }
-            getTransaction().commit();
-            session.close();
-            this.getSessionFactory().close();
-        } catch (Exception ex) {
-            getTransaction().rollback();
-            ex.printStackTrace();
-            result = 0;
-        }
-        return String.valueOf(result);
-    }
-
-    @Override
-    public List<APNirvana> SearchApNirvanaFromFilter(String paymentType, String productType, String status, String from, String to) {
-        UtilityFunction util = new UtilityFunction();
-        List<APNirvana> apNirvanaList = new ArrayList<APNirvana>();
-        Session session = this.getSessionFactory().openSession();
-        StringBuffer query = new StringBuffer(" SELECT * FROM `ap_nirvana` ");
-        boolean haveCondition = false;
-        if ((paymentType != null) && (!"".equalsIgnoreCase(paymentType))) {
-            query.append(haveCondition ? " and" : " where");
-            query.append(" `ap_nirvana`.paymenttype = '" + paymentType + "'");
-            haveCondition = true;
-        }
-        if ((productType != null) && (!"".equalsIgnoreCase(productType))) {
-            query.append(haveCondition ? " and" : " where");
-            query.append(" `ap_nirvana`.producttype = '" + productType + "'");
-            haveCondition = true;
-        }
-        if ((status != null) && (!"".equalsIgnoreCase(status))) {
-            if ("N".equalsIgnoreCase(status)) {
-                status = "New";
-            }
-            if ("E".equalsIgnoreCase(status)) {
-                status = "Export";
-            }
-            if ("C".equalsIgnoreCase(status)) {
-                status = "Change";
-            }
-            query.append(haveCondition ? " and" : " where");
-            query.append(" `ap_nirvana`.itf_status = '" + status + "'");
-            haveCondition = true;
-        }
-        if ((from != null) && (!"".equalsIgnoreCase(from))) {
-            query.append(haveCondition ? " and" : " where");
-            query.append(" `ap_nirvana`.createdate >= '" + from + "'");
-            haveCondition = true;
-        }
-        if ((to != null) && (!"".equalsIgnoreCase(to))) {
-            query.append(haveCondition ? " and" : " where");
-            query.append(" `ap_nirvana`.createdate <= '" + to + "'");
-            haveCondition = true;
-        }
-
-        List<Object[]> QueryList = session.createSQLQuery(query.toString())
-                .addScalar("refinvoiceno", Hibernate.STRING)
-                .addScalar("intreference", Hibernate.STRING)
-                .addScalar("vendorid", Hibernate.STRING)
-                .addScalar("vendorname", Hibernate.STRING)
-                .addScalar("divisionid", Hibernate.STRING)
-                .addScalar("projectid", Hibernate.STRING)
-                .addScalar("transcode", Hibernate.STRING)
-                //            .addScalar("transdate",Hibernate.DATE)
-                .addScalar("duedate", Hibernate.DATE)
-                .addScalar("currencyid", Hibernate.STRING)
-                .addScalar("homerate", Hibernate.BIG_DECIMAL)
-                .addScalar("foreignrate", Hibernate.BIG_DECIMAL)
-                .addScalar("basevatamt", Hibernate.BIG_DECIMAL)
-                .addScalar("basevathmamt", Hibernate.BIG_DECIMAL)
-                .addScalar("vatamt", Hibernate.BIG_DECIMAL)
-                .addScalar("vathmamt", Hibernate.BIG_DECIMAL)
-                .addScalar("transamt", Hibernate.BIG_DECIMAL)
-                .addScalar("transhmamt", Hibernate.BIG_DECIMAL)
-                .addScalar("vatflag", Hibernate.STRING)
-                .addScalar("vatid", Hibernate.STRING)
-                .addScalar("whtflag", Hibernate.STRING)
-                .addScalar("whtid", Hibernate.STRING)
-                .addScalar("basewhtamt", Hibernate.BIG_DECIMAL)
-                .addScalar("basewhthmamt", Hibernate.BIG_DECIMAL)
-                .addScalar("whtamt", Hibernate.BIG_DECIMAL)
-                .addScalar("whthmamt", Hibernate.BIG_DECIMAL)
-                .addScalar("year", Hibernate.INTEGER)
-                .addScalar("period", Hibernate.INTEGER)
-                .addScalar("note", Hibernate.STRING)
-                .addScalar("puraccount1", Hibernate.STRING)
-                .addScalar("purdivision1", Hibernate.STRING)
-                .addScalar("purproject1", Hibernate.STRING)
-                .addScalar("puramt1", Hibernate.BIG_DECIMAL)
-                .addScalar("purhmamt1", Hibernate.BIG_DECIMAL)
-                .addScalar("puraccount2", Hibernate.STRING)
-                .addScalar("purdivision2", Hibernate.STRING)
-                .addScalar("purproject2", Hibernate.STRING)
-                .addScalar("puramt2", Hibernate.BIG_DECIMAL)
-                .addScalar("purhmamt2", Hibernate.BIG_DECIMAL)
-                .addScalar("puraccount3", Hibernate.STRING)
-                .addScalar("purdivision3", Hibernate.STRING)
-                .addScalar("purproject3", Hibernate.STRING)
-                .addScalar("puramt3", Hibernate.BIG_DECIMAL)
-                .addScalar("purhmamt3", Hibernate.BIG_DECIMAL)
-                .addScalar("puraccount4", Hibernate.STRING)
-                .addScalar("purdivision4", Hibernate.STRING)
-                .addScalar("purproject4", Hibernate.STRING)
-                .addScalar("puramt4", Hibernate.BIG_DECIMAL)
-                .addScalar("purhmamt4", Hibernate.BIG_DECIMAL)
-                .addScalar("puraccount5", Hibernate.STRING)
-                .addScalar("purdivision5", Hibernate.STRING)
-                .addScalar("purproject5", Hibernate.STRING)
-                .addScalar("puramt5", Hibernate.BIG_DECIMAL)
-                .addScalar("purhmamt5", Hibernate.BIG_DECIMAL)
-                .addScalar("puraccount6", Hibernate.STRING)
-                .addScalar("purdivision6", Hibernate.STRING)
-                .addScalar("purproject6", Hibernate.STRING)
-                .addScalar("puramt6", Hibernate.BIG_DECIMAL)
-                .addScalar("purhmamt6", Hibernate.BIG_DECIMAL)
-                .addScalar("puraccount7", Hibernate.STRING)
-                .addScalar("purdivision7", Hibernate.STRING)
-                .addScalar("purproject7", Hibernate.STRING)
-                .addScalar("puramt7", Hibernate.BIG_DECIMAL)
-                .addScalar("purhmamt7", Hibernate.BIG_DECIMAL)
-                .addScalar("puraccount8", Hibernate.STRING)
-                .addScalar("purdivision8", Hibernate.STRING)
-                .addScalar("purproject8", Hibernate.STRING)
-                .addScalar("puramt8", Hibernate.BIG_DECIMAL)
-                .addScalar("purhmamt8", Hibernate.BIG_DECIMAL)
-                .addScalar("puraccount9", Hibernate.STRING)
-                .addScalar("purdivision9", Hibernate.STRING)
-                .addScalar("purproject9", Hibernate.STRING)
-                .addScalar("puramt9", Hibernate.BIG_DECIMAL)
-                .addScalar("purhmamt9", Hibernate.BIG_DECIMAL)
-                .addScalar("puraccount10", Hibernate.STRING)
-                .addScalar("purdivision10", Hibernate.STRING)
-                .addScalar("purproject10", Hibernate.STRING)
-                .addScalar("puramt10", Hibernate.BIG_DECIMAL)
-                .addScalar("purhmamt10", Hibernate.BIG_DECIMAL)
-                .addScalar("service", Hibernate.STRING)
-                .addScalar("apaccount", Hibernate.STRING)
-                .addScalar("prefix", Hibernate.STRING)
-                .addScalar("voucherno", Hibernate.INTEGER)
-                .addScalar("taxid", Hibernate.STRING)
-                .addScalar("vendor_branch", Hibernate.INTEGER)
-                .addScalar("company_branch", Hibernate.INTEGER)
-                .addScalar("itf_status", Hibernate.STRING)
-                .addScalar("payment_id", Hibernate.STRING)
-                .addScalar("paymenttype", Hibernate.STRING)
-                .addScalar("payment_detail_id", Hibernate.STRING) //88
-                .list();
-
-        for (Object[] B : QueryList) {
-            APNirvana apNirvana = new APNirvana();
-            apNirvana.setIntreference(util.ConvertString(B[1]));
-            apNirvana.setVendorid(util.ConvertString(B[2]));
-            apNirvana.setVendorname(util.ConvertString(B[3]));
-            apNirvana.setCurrencyid(util.ConvertString(B[8]));
-            apNirvana.setBasevatamt((B[11]) != null ? new BigDecimal(util.ConvertString(B[11])) : new BigDecimal("0.00"));
-            apNirvana.setVatamt((B[13]) != null ? new BigDecimal(util.ConvertString(B[13])) : new BigDecimal("0.00"));
-            apNirvana.setPuraccount1(util.ConvertString(B[28]));
-            apNirvana.setItf_status(util.ConvertString(B[85]));
-            apNirvana.setPaymenttype(util.ConvertString(B[87]));
-            apNirvana.setPayment_detail_id(util.ConvertString(B[88]));
-            apNirvanaList.add(apNirvana);
-        }
-
-        this.sessionFactory.close();
-        session.close();
-        return apNirvanaList;
-
-    }
-
-//    private List<APNirvana> mappingAPNirvana(List<APNirvana> apNirvanaList) {
-//        List<APNirvana> mappingData = new ArrayList<APNirvana>();
-//        for(int i=0;i<apNirvanaList.size();i++){
-//            APNirvana data = new APNirvana();
-//            data = apNirvanaList.get(i);
-//            APNirvana apNirvana = new APNirvana();
-//            apNirvana.setIntreference(data.getIntreference());
-//            apNirvana.setVendorid(data.getVatid());
-//            apNirvana.setVendorname(data.getVendorname());
-//            apNirvana.setPuraccount1(data.getPuraccount1());
-//            apNirvana.setBasevatamt(data.getBasevatamt() != null ? data.getBasevatamt() : new BigDecimal("0.00"));
-//            apNirvana.setCurrencyid(data.getCurrencyid());
-//            mappingData.add(apNirvana);
-//        }
-//        
-//        return mappingData;
-//    }
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    public Transaction getTransaction() {
-        return transaction;
-    }
-
-    public void setTransaction(Transaction transaction) {
-        this.transaction = transaction;
-    }
-
-    public List<APNirvana> SearchApNirvanaFromPaymentDetailId(List<APNirvana> APList) {
-        Session session = this.getSessionFactory().openSession();
-        StringBuffer query = new StringBuffer(" SELECT '' as rowid, ap.* FROM `ap_nirvana` ap WHERE ");
-        for (int i = 0; i < APList.size(); i++) {
-            APNirvana ap = APList.get(i);
-            if (i != 0) {
-                query.append(" OR ");
-            }
-            query.append("( payment_detail_id = " + ap.getPayment_detail_id() + " AND paymenttype = '" + ap.getPaymenttype() + "' )");
-        }
-
-        SQLQuery sQLQuery = session.createSQLQuery(query.toString()).addEntity(APNirvana.class);
-        List result = sQLQuery.list();
-
-        this.sessionFactory.close();
-        session.close();
-        return result;
-
-    }
-
-    @Override
-    public List getApNirvanaReport(String paymentType, String productType, String status, String from, String to, String printby) {
-        UtilityFunction util = new UtilityFunction();
-        Session session = this.getSessionFactory().openSession();
-        StringBuffer query = new StringBuffer(" SELECT `ap_nirvana`.* FROM `ap_nirvana` ");
-        boolean haveCondition = false;
-        if ((paymentType != null) && (!"".equalsIgnoreCase(paymentType))) {
-            query.append(haveCondition ? " and" : " where");
-            query.append(" `ap_nirvana`.paymenttype = '" + paymentType + "'");
-            haveCondition = true;
-        }
-        if ((productType != null) && (!"".equalsIgnoreCase(productType))) {
-            query.append(haveCondition ? " and" : " where");
-            query.append(" `ap_nirvana`.producttype = '" + productType + "'");
-            haveCondition = true;
-        }
-        if ((status != null) && (!"".equalsIgnoreCase(status))) {
-            if ("N".equalsIgnoreCase(status)) {
-                status = "New";
-            }
-            if ("E".equalsIgnoreCase(status)) {
-                status = "Export";
-            }
-            if ("C".equalsIgnoreCase(status)) {
-                status = "Change";
-            }
-            query.append(haveCondition ? " and" : " where");
-            query.append(" `ap_nirvana`.itf_status = '" + status + "'");
-            haveCondition = true;
-        }
-        if ((from != null) && (!"".equalsIgnoreCase(from))) {
-            query.append(haveCondition ? " and" : " where");
-            query.append(" `ap_nirvana`.createdate >= '" + from + "'");
-            haveCondition = true;
-        }
-        if ((to != null) && (!"".equalsIgnoreCase(to))) {
-            query.append(haveCondition ? " and" : " where");
-            query.append(" `ap_nirvana`.createdate <= '" + to + "'");
-            haveCondition = true;
-        }
-        
-//        SQLQuery sQLQuery = session.createSQLQuery(query.toString()).addEntity(APNirvana.class);
-//        List result = new ArrayList<APNirvana>();
-//        List result = sQLQuery.list();
-        List<Object[]> QueryList = session.createSQLQuery(query.toString())
-                .addScalar("intreference", Hibernate.STRING)
-                .addScalar("vendorid", Hibernate.STRING)
-                .addScalar("vendorname", Hibernate.STRING)
-                .addScalar("puraccount1", Hibernate.STRING)
-                .addScalar("vatamt", Hibernate.BIG_DECIMAL)
-                .addScalar("basevatamt", Hibernate.BIG_DECIMAL)
-                .addScalar("currencyid", Hibernate.STRING)
-                .list();
-        List result = new ArrayList<APNirvana>();
-        if(QueryList.isEmpty()){
-            SimpleDateFormat dateformat = new SimpleDateFormat();
-            dateformat.applyPattern("dd-MM-yyyy HH:mm:ss");
-            APNirvana apNirvana = new APNirvana();
-            apNirvana.setUser(printby);
-            apNirvana.setSystemdate(String.valueOf(dateformat.format(new Date())));
-            apNirvana.setDatefrom(from);
-            apNirvana.setDateto(to);
-            result.add(apNirvana);
-            return result;
-        }
-        boolean header = true;
-        for (Object[] B : QueryList) {
-            APNirvana apNirvana = new APNirvana();
-            apNirvana.setIntreference(util.ConvertString(B[0]));
-            apNirvana.setVendorid(util.ConvertString(B[1]));
-            apNirvana.setVendorname(util.ConvertString(B[2]));
-            apNirvana.setPuraccount1(util.ConvertString(B[3]));
-            apNirvana.setCurrencyid(util.ConvertString(B[6]));
-            apNirvana.setVatamt((B[4]) != null ? new BigDecimal(util.ConvertString(B[4])) : new BigDecimal("0.00"));
-            apNirvana.setBasevatamt((B[5]) != null ? new BigDecimal(util.ConvertString(B[5])) : new BigDecimal("0.00"));
-            if(header){
-                SimpleDateFormat dateformat = new SimpleDateFormat();
-                dateformat.applyPattern("dd-MM-yyyy HH:mm:ss");         
-                apNirvana.setUser(printby);
-                apNirvana.setSystemdate(String.valueOf(dateformat.format(new Date())));
-                apNirvana.setDatefrom(from);
-                apNirvana.setDateto(to);
-                header = false;
-            }
-            result.add(apNirvana);
-        }
-        
-//        APNirvana dataheader = new APNirvana();
-//        dataheader = (APNirvana) result.get(0);
-//        dataheader.setDatefrom(from);
-//        dataheader.setDateto(to);
-//        result.set(0, dataheader);
-        
-        this.sessionFactory.close();
-        session.close();
-        return result;
+     return status;
     }
 
 }

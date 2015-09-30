@@ -211,16 +211,23 @@
                             <tr>
                                 <td class="hidden"><input class="form-control" type="text" id="inputId${countar.count}" name="inputId${countar.count}" value="${ar_nirvana.id}"></td>
                                 <td align="center">
-                                    <input class="form-control" type="checkbox" id="selectAll${countar.count}" name="selectAll${countar.count}" value="${countar.count}">
+                                    <c:choose>
+                                        <c:when test="${ar_nirvana.status == 'New'}">
+                                            <input type="checkbox" class="form-control" id="selectAll${countar.count}" name="selectAll${countar.count}" value="${countar.count}"/>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <input type="checkbox" class="form-control" id="selectAll" name="selectAll" value="" disabled=""/>
+                                        </c:otherwise>
+                                    </c:choose>                                  
                                 </td>
                                 <td align="center">${countar.count}</td>
                                 <td>${ar_nirvana.intreference}</td>
                                 <td>${ar_nirvana.customerid}</td>
                                 <td>${ar_nirvana.customername}</td>
                                 <td>${ar_nirvana.salesaccount1}</td>
-                                <td align="right" class="money">${ar_nirvana.aramt}</td>
-                                <td align="right" class="money">${ar_nirvana.vatamt}</td>
                                 <td align="right" class="money">${ar_nirvana.salesamt}</td>
+                                <td align="right" class="money">${ar_nirvana.vatamt}</td>
+                                <td align="right" class="money">${ar_nirvana.aramt}</td>
                                 <td align="center">${ar_nirvana.currencyid}</td>
                                 <td align="center">${ar_nirvana.status}</td>
                             </tr>
@@ -368,7 +375,7 @@
             $table.trigger('repaginate');
             var numRows = $table.find('tbody tr').length;
             var numPages = Math.ceil(numRows / numPerPage);
-            var $pager = $('<div class="col-xs-12 text-right"><font style="color: #499DD5"></font>&nbsp;</div>');
+            var $pager = $('<div class="col-xs-12 text-right" id="pageNo"><font style="color: #499DD5"></font>&nbsp;</div>');
             var $br = $('<div class="col-xs-12"><br></div>');
             for (var page = 0; page < numPages; page++) {
                 if(page === 0){
@@ -400,7 +407,8 @@
                 }
             }
             $br.insertAfter($table).addClass('active');
-            $pager.insertAfter($table).find('span.page-number:first').addClass('active');            
+            $pager.insertAfter($table).find('span.page-number:first').addClass('active');
+            document.getElementById("pageNo").style.cursor="pointer";
         });
                
     });

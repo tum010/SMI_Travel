@@ -37,7 +37,7 @@ public class TicketFareSummaryAirlineController extends SMITravelController {
         List<MAccterm> mAcctermList = utilityService.getListMAccterm();
         request.setAttribute(TERMPAYLIST,mAcctermList);
         
-//        request.setAttribute(AIRLINECODELIST,);
+//      request.setAttribute(AIRLINECODELIST,);
         return TicketFareSummaryAirline;
     }
 
