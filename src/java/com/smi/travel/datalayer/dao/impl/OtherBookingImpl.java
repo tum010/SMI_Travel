@@ -89,22 +89,22 @@ public class OtherBookingImpl implements OtherBookingDao{
 //            transaction = session.beginTransaction();
             String date = util.convertDateToString(otherbook.getOtherDate());
             String productId = otherbook.getProduct().getId();
-            Stock stock = getStockByDate(productId, date, session);
-            if(stock == null){
+            List<Stock> stockList = getIsStock(productId, date, session);
+            if(stockList.isEmpty()){
                 result = "notStock";
                 return result;
-            }
+            }                       
             
-            List<StockDetail> stockDetailList = new ArrayList<StockDetail>();
-            String productIdChk = stock.getProduct().getId();
-            int isStock = getIsStock(productIdChk, session);
-            if(isStock == 1){
-                result = "isStock";                              
-            } else {
-                result = "notStock";
-                return result;
-            }
-                                 
+//            List<StockDetail> stockDetailList = new ArrayList<StockDetail>();
+//            String productIdChk = stockList.get(0).getProduct().getId();
+//            int isStock = getIsStock(productIdChk, session);
+//            if(isStock == 1){
+//                result = "isStock";                              
+//            } else {
+//                result = "notStock";
+//                return result;
+//            }
+//                                 
             int adultQty = otherbook.getAdQty();
             int childQty = otherbook.getChQty();
             int infantQty = otherbook.getInQty();
@@ -126,18 +126,18 @@ public class OtherBookingImpl implements OtherBookingDao{
             System.out.println("adult : "+ ad );
             System.out.println("child : "+ ch );
             System.out.println("infant : "+ inf );
-                        
-            String stockDetailId = stock.getId();
-            stockDetailList = new ArrayList<StockDetail>();
-            stockDetailList = getStockDetail(stockDetailId, session);                        
-            if(stockDetailList.isEmpty()) {
-                if(ad != adultQty){
+                                   
+//            String stockDetailId = stockList.get(0).getId();
+            List<StockDetail> stockDetailList = getStockByDate(productId, date, session);
+            List<StockDetail> stockDetailTicketList = getStockDetail(stockDetailList, adultQty, childQty, infantQty, session);                        
+            if(stockDetailTicketList.isEmpty()) {                               
+                if((ad != adultQty) && (ad < adultQty)){
                     adCancel = adultQty - ad;
                 }
-                if(ch != childQty){
+                if((ch != childQty) && (ch < childQty)){
                     chCancel = childQty - ch;
                 }
-                if(inf != infantQty){
+                if((inf != infantQty) && (inf < infantQty)){
                     infCancel = infantQty - inf;
                 }
 
@@ -226,18 +226,19 @@ public class OtherBookingImpl implements OtherBookingDao{
         return result;
     }
     
-    private Stock getStockByDate(String Id, String date, Session session) {
+    private List<StockDetail> getStockByDate(String Id, String date, Session session) {
+        List<StockDetail> stockDetailList = new ArrayList<StockDetail>();
         try {       
-            String queryDate = "from Stock s where s.effectiveFrom <= '" + date + "' and s.effectiveTo >= '" + date + "' and s.product.id = " + Id + " order by s.effectiveFrom asc ";
-            List<Stock> stockList =  session.createQuery(queryDate).list();
-            if(stockList.isEmpty()){                
-                return null;
+            String queryDate = "from StockDetail sd where sd.stock.effectiveFrom <= '" + date + "' and sd.stock.effectiveTo >= '" + date + "' and sd.stock.product.id = " + Id + " and sd.stock.product.isStock = 1 and sd.MStockStatus.id = 1 order by sd.stock.effectiveFrom asc ";
+            stockDetailList =  session.createQuery(queryDate).list();
+            if(stockDetailList.isEmpty()){                
+                return stockDetailList;
             }
-            return stockList.get(0);                       
+            return stockDetailList;                       
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return null;
+        return stockDetailList;
     }
     
     private List<Integer> getStockNumFromOtherBookID(String Id , Session session) {
@@ -272,37 +273,54 @@ public class OtherBookingImpl implements OtherBookingDao{
         return stockNum;
     }
     
-    private int getIsStock(String id, Session session) {
-        int result = 0;
+    private List<Stock> getIsStock(String id, String date, Session session) {
+        List<Stock> stockList = new ArrayList<Stock>();
         try {
-            String query = "from Product p where p.id = " + id + " and p.isStock = 1";
-            List<Product> productList = session.createQuery(query).list();
-            if(productList.isEmpty()){
-                result = 0;
-                return result;  
-            } else {
-                result = 1;
-                return result;
-            }         
+            String query = "from Stock s where s.effectiveFrom <= '" + date + "' and s.effectiveTo >= '" + date + "' and s.product.id = " + id + " and s.product.isStock = 1 order by s.effectiveFrom asc ";
+            stockList = session.createQuery(query).list();
+            if(stockList.isEmpty()){
+                return stockList;     
+            }    
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return result;
+        return stockList;
     }
     
-    private List<StockDetail> getStockDetail(String stockId, Session session) {
-        List<StockDetail> fail = new ArrayList<StockDetail>();
-        try {
-            String query = "from StockDetail s where s.stock.id = " + stockId + " and s.MStockStatus.id = 1 order by s.code ";
-            List<StockDetail> stockDetailList = session.createQuery(query).list();
-            if(stockDetailList.isEmpty()){
-                return fail;  
-            }
-            return stockDetailList;
-        } catch (Exception ex) {
-            ex.printStackTrace();
+    private List<StockDetail> getStockDetail(List<StockDetail> stockDetailList, int adultQty, int childQty, int infantQty, Session session) {
+        List<StockDetail> result = new ArrayList<StockDetail>();
+        if(stockDetailList.isEmpty()){
+            return result;
         }
-        return fail;
+        int ad = 0;
+        int ch = 0;
+        int inf = 0;
+        for(int i=0;i<stockDetailList.size();i++){
+            StockDetail stockDetail = new StockDetail();
+            stockDetail = stockDetailList.get(i);
+            String typeName = stockDetail.getTypeId().getName();
+            if("ADULT".equalsIgnoreCase(typeName)){
+                if(ad < adultQty){
+                    result.add(stockDetail);
+                    ad++;
+                }
+            } else if("CHILD".equalsIgnoreCase(typeName)){
+                if(ch < childQty){
+                    result.add(stockDetail);                        
+                    ch++;
+                }
+            } else if("INFANT".equalsIgnoreCase(typeName)){
+                if(inf < infantQty){
+                    result.add(stockDetail);
+                    inf++;
+                }
+            }
+            if((ad == adultQty) && (ch == childQty) && (inf == infantQty)){
+                i = stockDetailList.size();
+            }
+        }
+
+        return result;
     }
     
     private String addStockTicket(OtherBooking otherbook, SystemUser user, List<StockDetail> stockDetailList, int adultQty, int childQty, int infantQty, int ad, int ch, int inf, String adT, String chT, String infT) {
