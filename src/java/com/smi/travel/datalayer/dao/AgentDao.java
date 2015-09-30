@@ -21,5 +21,5 @@ public interface AgentDao {
     public int DeleteAgent(Agent agent);
     public Agent getAgentFromID(String agentID);
     public List<Agent> getListAgent();
-    public List<Agent> getListAgentForBookingDetail();
+    //test commit
 }

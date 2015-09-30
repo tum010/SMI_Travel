@@ -217,7 +217,7 @@ public class AddTicketFareController extends SMITravelController {
             }
             if (StringUtils.isNotEmpty(agentId)){
                 ticketFareAirline.setAgentId(util.convertStringToInteger(agentId));
-                agents = agentService.getAgentFromID(String.valueOf(agentId));
+                agents = getAgentService().getAgentFromID(String.valueOf(agentId));
                 request.setAttribute(SELECTEDAGENT, agents);
             }
 
@@ -429,7 +429,7 @@ public class AddTicketFareController extends SMITravelController {
             request.setAttribute(TICKETBUY, ticketFareAirline.getTicketBuy());
             request.setAttribute(TICKETROUTING, ticketFareAirline.getTicketRouting());
             request.setAttribute(ISSUEDATE, ticketFareAirline.getIssueDate());
-            agents = agentService.getAgentFromID(String.valueOf(ticketFareAirline.getAgentId()));
+            agents = getAgentService().getAgentFromID(String.valueOf(ticketFareAirline.getAgentId()));
             request.setAttribute(SELECTEDAGENT, agents);
             request.setAttribute(OVERDATE, ticketFareAirline.getOverDate());
             request.setAttribute(LITTERDATE, ticketFareAirline.getLitterDate());
@@ -602,7 +602,7 @@ public class AddTicketFareController extends SMITravelController {
                     request.setAttribute(TICKETBUY, ticketFareAirline.getTicketBuy());
                     request.setAttribute(TICKETROUTING, ticketFareAirline.getTicketRouting());
                     request.setAttribute(ISSUEDATE, ticketFareAirline.getIssueDate());
-                    agents = agentService.getAgentFromID(String.valueOf(ticketFareAirline.getAgentId()));
+                    agents = getAgentService().getAgentFromID(String.valueOf(ticketFareAirline.getAgentId()));
                     request.setAttribute(SELECTEDAGENT, agents);
                     request.setAttribute(OVERDATE, ticketFareAirline.getOverDate());
                     request.setAttribute(LITTERDATE, ticketFareAirline.getLitterDate());

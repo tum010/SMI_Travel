@@ -7,6 +7,7 @@
 package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.dao.PaymentAirTicketDao;
+import com.smi.travel.datalayer.dao.SummaryTicketAdjustCostAndIncomeDao;
 import com.smi.travel.datalayer.view.dao.APNirvanaDao;
 import com.smi.travel.datalayer.view.dao.ARNirvanaDao;
 import com.smi.travel.datalayer.view.dao.AgentCommissionReportDao;
@@ -81,6 +82,7 @@ public class ReportService {
     private CollectionNirvanaDao collectionNirvanaDao;
     private APNirvanaDao apNirvanaDao;
     private PaymentAirTicketDao paymentAirTicketDao;
+    private SummaryTicketAdjustCostAndIncomeDao summaryTicketAdjustCostAndIncomeDao;
     
     public List getInvoiceMonthly(String BillFrom,String BillTo,String ClientName,String Payment,String Accno,String vattype,String from,String to,String department){
         return invoiceReportDao.getInvoiceMonthly(BillFrom, BillTo, ClientName, Payment, Accno, vattype, from, to, department);
@@ -248,10 +250,6 @@ public class ReportService {
     
     public List getApNirvanaReport(String paymentType,String producttype,String status,String from,String to,String printby) {
         return getApNirvanaDao().getApNirvanaReport(paymentType, producttype, status, from, to, printby);
-    }
-    
-    public List getTicketFareSumAirline(String typeRouting,String routingDetail,String dateFrom,String dateTo,String invdateForm,String invdateTo,String airlineCode,String passenger,String agentId,String department,String saleBy,String termPay,String printby,String groupBy){
-        return ticketFareReportDao.getTicketFareSumAirline(typeRouting, routingDetail, dateFrom, dateTo, invdateForm, invdateTo, airlineCode, passenger, agentId, department, saleBy, termPay, printby, groupBy);
     }
     
     public List getBillAirAgentReport(){
@@ -530,4 +528,18 @@ public class ReportService {
     public List getPaymentAirViewReport(String payno){
         return paymentAirTicketDao.getPaymentAirViewReport(payno);
     }
+    
+    public List getSummaryTicketAdjustCostAndIncome(String reportType,String invoiceFromDate,String invoiceToDate,String issueFrom,String issueTo,String paymentType,String departmentt,String salebyUser,String termPayt) {
+        return summaryTicketAdjustCostAndIncomeDao.getSummaryTicketAdjustCostAndIncome(reportType, invoiceFromDate, invoiceToDate, issueFrom, issueTo, paymentType, departmentt, salebyUser, termPayt);
+    }
+
+    public SummaryTicketAdjustCostAndIncomeDao getSummaryTicketAdjustCostAndIncomeDao() {
+        return summaryTicketAdjustCostAndIncomeDao;
+    }
+
+    public void setSummaryTicketAdjustCostAndIncomeDao(SummaryTicketAdjustCostAndIncomeDao summaryTicketAdjustCostAndIncomeDao) {
+        this.summaryTicketAdjustCostAndIncomeDao = summaryTicketAdjustCostAndIncomeDao;
+    }
+    
+    
 }

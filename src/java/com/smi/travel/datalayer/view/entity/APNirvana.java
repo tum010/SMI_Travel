@@ -110,8 +110,7 @@ public class APNirvana {
     private String payment_id;
     private String paymenttype;
     private String payment_detail_id;
-    private String accno;
-    
+
     public String getRefinvoiceno() {
         return refinvoiceno;
     }
@@ -1400,13 +1399,5 @@ public class APNirvana {
      */
     public void setDepartmentheader(String departmentheader) {
         this.departmentheader = departmentheader;
-    }
-
-    public String getAccno() {
-        return accno;
-    }
-
-    public void setAccno(String accno) {
-        this.accno = accno;
     }
 }

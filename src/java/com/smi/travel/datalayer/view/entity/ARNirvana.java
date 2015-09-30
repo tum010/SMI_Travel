@@ -67,7 +67,7 @@ public class ARNirvana {
     private String service;
     private String araccount;
     private String prefix;
-    private String documentno;
+    private Integer documentno;
     private String  artrans;
     private String cust_taxid;
     private Integer cust_branch;
@@ -76,8 +76,7 @@ public class ARNirvana {
     private Integer id;
     private String receive_detail_id;
     private String rowid;
-    private String accno;
-    
+
     /**
      * @return the invtype
      */
@@ -809,14 +808,14 @@ public class ARNirvana {
     /**
      * @return the documentno
      */
-    public String getDocumentno() {
+    public Integer getDocumentno() {
         return documentno;
     }
 
     /**
      * @param documentno the documentno to set
      */
-    public void setDocumentno(String documentno) {
+    public void setDocumentno(Integer documentno) {
         this.documentno = documentno;
     }
 
@@ -924,14 +923,6 @@ public class ARNirvana {
      */
     public void setRowid(String rowid) {
         this.rowid = rowid;
-    }
-
-    public String getAccno() {
-        return accno;
-    }
-
-    public void setAccno(String accno) {
-        this.accno = accno;
     }
     
     

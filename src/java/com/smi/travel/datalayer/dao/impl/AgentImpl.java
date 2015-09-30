@@ -8,10 +8,7 @@ package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.AgentDao;
 import com.smi.travel.datalayer.entity.Agent;
-import com.smi.travel.util.UtilityFunction;
-import java.util.ArrayList;
 import java.util.List;
-import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -150,40 +147,6 @@ public class AgentImpl implements AgentDao{
         }
         return agentList;
     }
-    
-    @Override
-    public List<Agent> getListAgentForBookingDetail() {
-        int result = 0;
-        UtilityFunction util = new UtilityFunction();
-        Session session = this.sessionFactory.openSession();
-        String hql = "select a.* , REPLACE(REPLACE(a.address, CHAR(13), ''), CHAR(10), '') as addressRe from agent a ";
-        List<Object[]> queryList = session.createSQLQuery(hql)
-                .addScalar("id", Hibernate.STRING)
-                .addScalar("code", Hibernate.STRING)
-                .addScalar("name", Hibernate.STRING)
-                .addScalar("addressRe", Hibernate.STRING)
-                .addScalar("tel", Hibernate.STRING)
-                .addScalar("fax", Hibernate.STRING)
-                .list();
-        
-        List<Agent> agentList = new ArrayList<Agent>();
-        for (Object[] A : queryList) {
-            Agent agent = new Agent();
-            agent.setId(util.ConvertString(A[0]));
-            agent.setCode(util.ConvertString(A[1]));
-            agent.setName(util.ConvertString(A[2]));
-            agent.setAddress(util.ConvertString(A[3]));
-            agent.setTel(util.ConvertString(A[4]));
-            agent.setFax(util.ConvertString(A[5]));
-            agentList.add(agent);
-        }
-       
-        session.close();
-        if (agentList.isEmpty()) {
-            return null;
-        }
-        return agentList;
-    }
 
     public SessionFactory getSessionFactory() {
         return sessionFactory;
@@ -217,5 +180,5 @@ public class AgentImpl implements AgentDao{
         return agent;
     }
 
-       
+    
 }

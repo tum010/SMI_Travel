@@ -117,6 +117,9 @@ public class BookingViewImpl implements BookingViewDao{
         HqlQuery.setMaxResults(MAX_ROW);
         List<BookingView> BookingList = HqlQuery.list();
         
+        for(BookingView bv :BookingList){
+            System.out.println("Refno : "+bv.getRefno());
+        }
         if (BookingList.isEmpty()) {
             return null;
         }
