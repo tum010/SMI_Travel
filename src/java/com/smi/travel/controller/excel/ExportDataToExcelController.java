@@ -69,6 +69,8 @@ public class ExportDataToExcelController  extends SMITravelController{
         String to = request.getParameter("arToDate");
         String status = request.getParameter("arStatus");
         
+        String reportType = request.getParameter("reportType");
+        
         SystemUser user = (SystemUser) session.getAttribute("USER");
         String printby = user.getRole().getName(); 
         List data  = new ArrayList();
@@ -120,7 +122,6 @@ public class ExportDataToExcelController  extends SMITravelController{
             data = reportservice.listSummaryAirline();
         }else if(SummaryTicketAdjustCostAndIncome.equals(name)){
             System.out.println("get excel data ap SummaryTicketAdjustCostAndIncome");
-            String reportType = request.getParameter("reportType");
             String invoiceFromDate = request.getParameter("invoiceFromDate");
             String invoiceToDate = request.getParameter("invoiceToDate");
             String issueFrom = request.getParameter("issueFrom");
