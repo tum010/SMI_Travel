@@ -275,8 +275,9 @@
                                     <th>Detail</th>
                                     <th>Qty</th>
                                     <th>Cost</th>
+                                    <th>Cur</th>
                                     <th>Amount</th>
-                                    <th>Currency</th>
+                                    <th>Cur</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -288,13 +289,25 @@
                                     <td><input  type="text" class="form-control" id="row-${airdesc.count}-detail" name="row-${airdesc.count}-detail" value="${detail.detail}" maxlength="100"/></td>
                                     <td><input  type="text" class="form-control money" id="row-${airdesc.count}-qty" name="row-${airdesc.count}-qty" value="${detail.qty}" maxlength="11"/></td>
                                     <td><input  type="text" class="form-control money" id="row-${airdesc.count}-cost" name="row-${airdesc.count}-cost" value="${detail.cost}" maxlength="11"/></td>
+                                    <td>
+                                        <select id="row-${airdesc.count}-currencycost" name="row-${airdesc.count}-currencycost" class="form-control">
+                                            <option id="" value="">---------</option>
+                                            <c:forEach var="price" items="${mCurrency}" >
+                                                <c:set var="select1" value="" />
+                                                <c:if test="${detail.curCost == price.code}">
+                                                    <c:set var="select1" value="selected" />
+                                                </c:if>
+                                                <option value="<c:out value="${price.code}" />" ${select1}><c:out value="${price.code}" /></option>   
+                                            </c:forEach>
+                                        </select>                                       
+                                    </td>
                                     <td><input  type="text" class="form-control money" id="row-${airdesc.count}-amount" name="row-${airdesc.count}-amount" value="${detail.amount}" maxlength="11"/></td>
                                     <td>
                                         <select id="row-${airdesc.count}-currency" name="row-${airdesc.count}-currency" class="form-control">
                                             <option id="" value="">---------</option>
                                             <c:forEach var="price" items="${mCurrency}" >
                                                 <c:set var="select1" value="" />
-                                                <c:if test="${detail.currency == price.code}">
+                                                <c:if test="${detail.curAmount == price.code}">
                                                     <c:set var="select1" value="selected" />
                                                 </c:if>
                                                 <option value="<c:out value="${price.code}" />" ${select1}><c:out value="${price.code}" /></option>   

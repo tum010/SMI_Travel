@@ -63,6 +63,7 @@ public class OtherDetailController extends SMITravelController {
         String status = request.getParameter("status");
         String isbill = request.getParameter("isbill");
         String currency = request.getParameter("currency");
+        String currencycost = request.getParameter("currencycost");
         String createby = request.getParameter("createby");
         String createdate = request.getParameter("createdate");
         String ticketstatus = request.getParameter("ticketstatus");
@@ -104,7 +105,8 @@ public class OtherDetailController extends SMITravelController {
             request.setAttribute(BOOKINGTYPE,"o");
         }
         request.setAttribute("currency", master.getCurrency());
-        
+        request.setAttribute("currencycost", master.getCurrency());
+    
         if ("save".equalsIgnoreCase(action)) {
             OtherBooking Other = new OtherBooking();
             if(!"".equalsIgnoreCase(itemid)){
@@ -116,7 +118,7 @@ public class OtherDetailController extends SMITravelController {
             System.out.println("agentId :"+agentId);
             Other.setProduct(product);
             Other.setCurAmount(currency);
-            
+            Other.setCurCost(currencycost);
             Agent agent = new Agent();
             if((agentId != null)&&(!"".equalsIgnoreCase(agentId))){
                 System.out.println("setup agentId :"+agentId);
@@ -282,11 +284,13 @@ public class OtherDetailController extends SMITravelController {
             }
             remark = Other.getRemark();
             currency = Other.getCurAmount();
+            currencycost = Other.getCurCost();
             createby = Other.getCreateBy();
             status = Other.getStatus().getId();
             createdate = String.valueOf(Other.getCreateDate());
             isbill = String.valueOf(Other.getIsBill());
             request.setAttribute("currency", currency);
+            request.setAttribute("currencycost", currencycost);
             getTicket(request, Other.getId());
         }
                 
