@@ -248,7 +248,9 @@ public class AirTicketController extends SMITravelController {
             String qty = request.getParameter("row-" + i + "-qty");
             String cost = request.getParameter("row-" + i + "-cost");
             String amount = request.getParameter("row-" + i + "-amount");
-            String currency = request.getParameter("row-" + i + "-currency");
+            String curamount = request.getParameter("row-" + i + "-currency");
+            String curcost = request.getParameter("row-" + i + "-currencycost");
+            
             Integer qtyInt = null;
             Integer costInt = null;
             Integer amountInt = null;
@@ -274,8 +276,8 @@ public class AirTicketController extends SMITravelController {
             airDesc.setQty(qtyInt);
             airDesc.setCost(costInt);
             airDesc.setAmount(amountInt);
-            airDesc.setCurrency(currency);
-
+            airDesc.setCurAmount(curamount);
+            airDesc.setCurCost(curcost);
             if (StringUtils.isNotEmpty(airDesc.getDetail())) {
                 if (airDesc.getId() == null) {
                     airDesc.setIsBill(new Integer(0));

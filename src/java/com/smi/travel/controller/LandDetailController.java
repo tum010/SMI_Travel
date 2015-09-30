@@ -67,6 +67,7 @@ public class LandDetailController extends SMITravelController {
         String inbINQty = request.getParameter("inb_IN_Qty");
         String inbINPrice = request.getParameter("inb_IN_Price");
         String currency = request.getParameter("currency");
+        String currencycost = request.getParameter("currencycost");
         String departDate = request.getParameter("departdate");
         String arriveDate = request.getParameter("arrivedate");
         String hotel = request.getParameter("hotel");
@@ -99,6 +100,7 @@ public class LandDetailController extends SMITravelController {
             CHQty = String.valueOf(master.getChild());
             INQty = String.valueOf(master.getInfant());
             currency = master.getCurrency();
+            currencycost = master.getCurrency();
             inb_QTY = String.valueOf(master.getAdult());
             inbCHQty = String.valueOf(master.getChild());
             inbINQty = String.valueOf(master.getInfant());
@@ -134,9 +136,11 @@ public class LandDetailController extends SMITravelController {
             land.setDescription(Description);
             land.setCategory(Category);
             if(!"".equalsIgnoreCase(currency)){
-                land.setCurrency(currency);
+                land.setCurAmount(currency);
             }
-            
+            if(!"".equalsIgnoreCase(currencycost)){
+                land.setCurCost(currencycost);
+            }
             if(!"".equalsIgnoreCase(status)){
                 MItemstatus ItemStatus = new MItemstatus();
                 ItemStatus.setId(status);
@@ -217,7 +221,8 @@ public class LandDetailController extends SMITravelController {
             okby = land.getOkBy();
             Description = land.getDescription();
             isbill = String.valueOf(land.getIsBill());
-            currency = String.valueOf(land.getCurrency());
+            currency = String.valueOf(land.getCurAmount());
+            currencycost = String.valueOf(land.getCurCost());
             if (land.getMItemstatus() != null) {
                 status = String.valueOf(land.getMItemstatus().getId());
                 System.out.println("status : " + status);
@@ -273,6 +278,8 @@ public class LandDetailController extends SMITravelController {
         request.setAttribute("okby", okby);
         request.setAttribute("Description", Description);
         request.setAttribute("currency", currency);
+        request.setAttribute("currencycost", currencycost);
+        
         request.setAttribute("status", status);
         List<MCurrency> mCurrency = utilservice.getListMCurrency();
         request.setAttribute(CurrencyList, mCurrency);

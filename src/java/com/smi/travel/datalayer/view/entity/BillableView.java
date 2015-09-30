@@ -17,7 +17,8 @@ public class BillableView {
     private int price;
     private String refno;
     private String detail;
-    private String currency;
+    private String curCost;
+    private String curAmount;
     private String id;
 
     public String getBillID() {
@@ -52,15 +53,22 @@ public class BillableView {
         this.price = price;
     }
 
-    public String getCurrency() {
-        return currency;
+    public String getCurCost() {
+        return curCost;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
+    public void setCurCost(String curCost) {
+        this.curCost = curCost;
     }
 
-    
+    public String getCurAmount() {
+        return curAmount;
+    }
+
+    public void setCurAmount(String curAmount) {
+        this.curAmount = curAmount;
+    }
+
     
     public String getRefno() {
         return refno;

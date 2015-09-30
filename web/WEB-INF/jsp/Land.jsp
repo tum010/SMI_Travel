@@ -162,14 +162,14 @@
                                         <td>${table.inboundHotel} </td>
                                         <td class='moneyformat tdright'>${(table.inboundCost * table.inboundQty) + (table.inboundChCost * table.inboundChQty)+ (table.inboundInCost * table.inboundInQty)} </td>
                                         <td class='moneyformat tdright'>${(table.inboundPrice * table.inboundQty) + (table.inboundChPrice * table.inboundChQty)+ (table.inboundInPrice * table.inboundInQty)} </td>
-                                        <td class="center" >${table.currency} </td>
+                                        <td class="center" >${table.curAmount} </td>
                                     </c:when>
                                     <c:when test="${booktype == 'o'}">
                                         <td>${table.category} </td>
                                         <td>${table.description} </td>
                                         <td class='moneyformat tdright'> ${(table.outboundAdQty * table.outboundAdCost)+(table.outboundChQty * table.outboundChCost)+(table.outboundInQty * table.outboundInCost)}</td>
                                         <td class='moneyformat tdright'> ${(table.outboundAdQty * table.outboundAdPrice)+(table.outboundChQty * table.outboundChPrice)+(table.outboundInQty * table.outboundInPrice)}</td>
-                                        <td class="center">${table.currency} </td>
+                                        <td class="center">${table.curAmount} </td>
                                         <td>${table.remark} </td>
                                     </c:when>
                                 </c:choose>

@@ -45,7 +45,8 @@ public class LandBooking {
      private Integer inboundInQty;
      private Long inboundInCost;
      private Long inboundInPrice;
-     private String currency;
+     private String curAmount;
+     private String curCost;
      private Date outboundDepart;
      private Date outboundArrive;
      private String inboundHotel;
@@ -61,7 +62,7 @@ public class LandBooking {
         this.okBy = okBy;
         this.inboundQty = inboundQty;
     }
-    public LandBooking(Agent agent, MItemstatus MItemstatus, PackageTour packageTour, Master master, String okBy, String category, String description, int inboundQty, Long inboundCost, Long inboundPrice, Integer isBill, Date createDate, Integer outboundAdQty, Long outboundAdCost, Long outboundAdPrice, Integer outboundChQty, Long outboundChCost, Long outboundChPrice, Integer outboundInQty, Long outboundInCost, Long outboundInPrice,String remark,Integer inboundChQty, Long inboundChCost, Long inboundChPrice, Integer inboundInQty, Long inboundInCost, Long inboundInPrice, String currency,List landItineraries,Date outboundDepart,Date outboundArrive,String inboundHotel) {
+    public LandBooking(Agent agent, MItemstatus MItemstatus, PackageTour packageTour, Master master, String okBy, String category, String description, int inboundQty, Long inboundCost, Long inboundPrice, Integer isBill, Date createDate, Integer outboundAdQty, Long outboundAdCost, Long outboundAdPrice, Integer outboundChQty, Long outboundChCost, Long outboundChPrice, Integer outboundInQty, Long outboundInCost, Long outboundInPrice,String remark,Integer inboundChQty, Long inboundChCost, Long inboundChPrice, Integer inboundInQty, Long inboundInCost, Long inboundInPrice, String currency,List landItineraries,Date outboundDepart,Date outboundArrive,String inboundHotel,String curAmount,String curCost) {
        this.agent = agent;
        this.MItemstatus = MItemstatus;
        this.packageTour = packageTour;
@@ -89,7 +90,8 @@ public class LandBooking {
        this.inboundInQty = inboundInQty;
        this.inboundInCost = inboundInCost;
        this.inboundInPrice = inboundInPrice;
-       this.currency = currency;
+      this.curAmount = curAmount;
+       this.curCost = curCost;
        this.landItineraries = landItineraries;
        this.outboundDepart = outboundDepart;
        this.outboundArrive = outboundArrive;
@@ -319,13 +321,23 @@ public class LandBooking {
         this.inboundInPrice = inboundInPrice;
     }
 
-    public String getCurrency() {
-        return currency;
+    public String getCurAmount() {
+        return curAmount;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
+    public void setCurAmount(String curAmount) {
+        this.curAmount = curAmount;
     }
+
+    public String getCurCost() {
+        return curCost;
+    }
+
+    public void setCurCost(String curCost) {
+        this.curCost = curCost;
+    }
+
+    
 
     public Date getOutboundDepart() {
         return outboundDepart;

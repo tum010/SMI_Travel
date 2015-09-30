@@ -220,16 +220,15 @@
                                     </div>
                                 </div>
                             </div>
-                            
                             <div class="col-md-3" >
                                 <div class="form-group">
-                                    <label class="col-sm-3   control-label" for="cost">Currency</label>
-                                    <input type="hidden" class="form-control" id="selectedCurrency" name="selectedCurrency" value="${requestScope['currency']}" >                                   
+                                    <label class="col-sm-3   control-label" for="cost" style="width: 130px">Cost Currency</label>
+                                    <input type="hidden" class="form-control" id="selectedCurrencyCost" name="selectedCurrencyCost" value="${requestScope['currencycost']}" >                                   
                                     <div class="col-sm-5" style="padding-left: 20px">                                        
-                                        <select class="form-control" id="currency" name="currency">    
+                                        <select class="form-control" id="currencycost" name="currencycost">    
                                             <c:forEach var="currency" items="${currency_list}">
                                                 <c:set var="select" value="" />
-                                                <c:if test="${currency.code == requestScope['currency']}">
+                                                <c:if test="${currency.code == requestScope['currencycost']}">
                                                     <c:set var="select" value="selected" />
                                                 </c:if>
                                                 <option value="<c:out value="${currency.code}" />" ${select}><c:out value="${currency.code}" /></option>                                         
@@ -241,8 +240,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
-                            
+                           
                             <!--
                             
                             -->
@@ -270,18 +268,31 @@
                                         <input type="text" class="form-control money" id="ch_price" name="ch_price" value="${requestScope['ch_price']}" >  
                                     </div>
                                 </div>
-                            </div>                           
-                            <div class="col-md-3" >
+                            </div>
+                                    
+                           <div class="col-md-3" >
                                 <div class="form-group">
-                                    <label class="col-sm-3   control-label" for="cost">Time</label>
-                                    <div class='col-sm-7 input-group times' style="padding-left: 20px" id="arrive-time">
-                                        <input type='text' class="form-control" id="othertime" name="othertime" value="${requestScope['othertime']}"  />
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-time"></span>
-                                        </span>
+                                    <label class="col-sm-3   control-label" for="cost" style="width: 130px">Price Currency</label>
+                                    <input type="hidden" class="form-control" id="selectedCurrency" name="selectedCurrency" value="${requestScope['currency']}" >                                   
+                                    <div class="col-sm-5" style="padding-left: 20px">                                        
+                                        <select class="form-control" id="currency" name="currency">    
+                                            <c:forEach var="currency" items="${currency_list}">
+                                                <c:set var="select" value="" />
+                                                <c:if test="${currency.code == requestScope['currency']}">
+                                                    <c:set var="select" value="selected" />
+                                                </c:if>
+                                                <option value="<c:out value="${currency.code}" />" ${select}><c:out value="${currency.code}" /></option>                                         
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4 hidden">
+                                        <label class="control-label"><input onclick='calculateVatvalue();' type="checkbox" id="Vat" name="Vat" ${enableVat} ${checkVat}>  Vat</label>
                                     </div>
                                 </div>
-                            </div>
+                            </div>         
+                                    
+                                    
+
                         </div>
 
                         <div class="row">
@@ -307,17 +318,18 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3" >
                                 <div class="form-group">
-                                    <label class="col-sm-3   control-label" for="cost">Cancel</label>
-                                    <div class='col-sm-7 input-group date' style="padding-left: 20px"id="arrive-time">
-                                        <input type='text' disabled class="form-control" id="cancelDate" name="cancelDate" value="${requestScope['cancelDate']}"  />
+                                    <label class="col-sm-3   control-label" for="cost" >Time</label>
+                                    <div class='col-sm-7 input-group times' style="padding-left: 20px;width: 157px" id="arrive-time">
+                                        <input type='text' class="form-control" id="othertime" name="othertime" value="${requestScope['othertime']}"  />
                                         <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
+                                            <span class="glyphicon glyphicon-time"></span>
                                         </span>
                                     </div>
                                 </div>
-                            </div>        
+                            </div>
+                                  
                         </div> 
 
                         <div class="row">
@@ -331,7 +343,18 @@
                                     </div>   
                                 </div>
                             </div>   
-                            <div class="col-md-2 "></div>                                
+                            <div class="col-md-2 "></div>      
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="col-sm-3   control-label" for="cost">Cancel</label>
+                                    <div class='col-sm-7 input-group date' style="padding-left: 20px;width: 157px" id="arrive-time">
+                                        <input type='text' disabled class="form-control" id="cancelDate" name="cancelDate" value="${requestScope['cancelDate']}"  />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>  
                         </div>
                         <input type="hidden" class="form-control" id="action" name="action" value="save">
                         <input type="hidden" class="form-control" id="itemid" name="itemid" value="${requestScope['itemid']}">

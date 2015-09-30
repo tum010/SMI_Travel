@@ -29,7 +29,8 @@ public class HotelBooking  {
      private Integer infant;
      private String flight;
      private Date deadline;
-     private String currency;
+     private String curAmount;
+     private String curCost;
      private List hotelPassengers = new LinkedList<HotelPassenger>();
      private List hotelRooms = new LinkedList<HotelRoom>();
      private List hotelRequests = new LinkedList<HotelRequest>();
@@ -46,7 +47,7 @@ public class HotelBooking  {
         this.checkin = checkin;
         this.checkout = checkout;
     }
-    public HotelBooking(MItemstatus MItemstatus, Master master, MMeal MMeal, Hotel hotel, int orderNo, String reconfirm, String hotelRef, Integer isBill, String remark, Date checkin, Date checkout, Integer adult, Integer child, Integer infant,String currency, List hotelPassengers, List hotelRooms, List hotelRequests) {
+    public HotelBooking(MItemstatus MItemstatus, Master master, MMeal MMeal, Hotel hotel, int orderNo, String reconfirm, String hotelRef, Integer isBill, String remark, Date checkin, Date checkout, Integer adult, Integer child, Integer infant,String currency, List hotelPassengers, List hotelRooms, List hotelRequests,String curAmount,String curCost) {
        this.MItemstatus = MItemstatus;
        this.master = master;
        this.MMeal = MMeal;
@@ -63,7 +64,8 @@ public class HotelBooking  {
        this.infant = infant;
        this.deadline =deadline;
        this.flight= flight;
-       this.currency = currency;
+       this.curAmount = curAmount;
+       this.curCost = curCost;
        this.hotelPassengers = hotelPassengers;
        this.hotelRooms = hotelRooms;
        this.hotelRequests = hotelRequests;
@@ -94,13 +96,23 @@ public class HotelBooking  {
         return this.MMeal;
     }
 
-    public String getCurrency() {
-        return currency;
+    public String getCurAmount() {
+        return curAmount;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
+    public void setCurAmount(String curAmount) {
+        this.curAmount = curAmount;
     }
+
+    public String getCurCost() {
+        return curCost;
+    }
+
+    public void setCurCost(String curCost) {
+        this.curCost = curCost;
+    }
+
+    
     
     
     

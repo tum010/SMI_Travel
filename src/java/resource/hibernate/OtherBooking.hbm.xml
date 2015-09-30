@@ -89,8 +89,11 @@
         <property name="isBill" type="java.lang.Integer">
             <column name="is_bill" />
         </property>
-        <property name="currency" type="string">
-            <column name="currency" length="3" />
+        <property name="curAmount" type="string">
+            <column name="cur_amount" length="3"/>
+        </property>
+         <property name="curCost" type="string">
+            <column name="cur_cost" length="3"/>
         </property>
          <set name="coupons" table="coupon" inverse="true" lazy="true" fetch="select">
             <key>

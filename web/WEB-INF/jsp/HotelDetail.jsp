@@ -252,24 +252,43 @@
                             </div>
                         </div>
                         <div class="row form-group">
-                            <div class="col-sm-12">
-                                <label class="col-sm-1 control-label text-right"  style="margin-left: 45px;">Remarks</label>
-                                <div class="col-sm-4" style="width: 56.5%;">
-                                    <input id="remark" name="remark" class="form-control" value="${hotelBooking.remark}" maxlength="100">
-                                </div>
-                                <label class="col-sm-1 control-label text-right"  style="margin-left: 15px;">Currency</label>
-                                <div class="col-sm-1" style="width: 120px">
-                                    <select id="select-currency" name="select-currency" class="form-control">
+                            <div class="col-sm-4">
+                                <label class="col-sm-5 control-label text-right">Cost Currency</label>
+                                <div class="col-sm-6">
+                                    <select id="select-currencycost" name="select-currencycost" class="form-control">
                                         <option id="" value="">---------</option>
                                         <c:forEach var="price" items="${mCurrency}" >
                                             <c:set var="select1" value="" />
-                                            <c:if test="${hotelBooking.currency == price.code}">
+                                            <c:if test="${hotelBooking.curCost == price.code}">
                                                 <c:set var="select1" value="selected" />
                                             </c:if>
                                             <option value="<c:out value="${price.code}" />" ${select1}><c:out value="${price.code}" /></option>   
                                         </c:forEach>
                                     </select>
-                                </div>        
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <label class="col-sm-5 control-label text-right">Price Currency</label>
+                                <div class="col-sm-6">
+                                    <select id="select-currency" name="select-currency" class="form-control">
+                                    <option id="" value="">---------</option>
+                                    <c:forEach var="price" items="${mCurrency}" >
+                                        <c:set var="select1" value="" />
+                                        <c:if test="${hotelBooking.curAmount == price.code}">
+                                            <c:set var="select1" value="selected" />
+                                        </c:if>
+                                        <option value="<c:out value="${price.code}" />" ${select1}><c:out value="${price.code}" /></option>   
+                                    </c:forEach>
+                                </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-12">
+                                <label class="col-sm-1 control-label text-right"  style="margin-left: 45px;">Remarks</label>
+                                <div class="col-sm-4" style="width: 56.5%;">
+                                    <input id="remark" name="remark" class="form-control" value="${hotelBooking.remark}" maxlength="100">
+                                </div>
                             </div>
                         </div>
                     </div>

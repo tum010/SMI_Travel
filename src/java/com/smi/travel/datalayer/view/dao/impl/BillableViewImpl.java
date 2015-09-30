@@ -38,9 +38,11 @@ private SessionFactory sessionFactory;
                 .addScalar("price",Hibernate.BIG_INTEGER)
                 .addScalar("ref_no",Hibernate.STRING)
                 .addScalar("detail",Hibernate.STRING)
-                .addScalar("currency",Hibernate.STRING)
+                .addScalar("cur_amount",Hibernate.STRING)
                 .addScalar("id",Hibernate.STRING)
+                .addScalar("cur_cost",Hibernate.STRING)
                 .list();
+        
                
         List<BillableView> BillableList =  new LinkedList<BillableView>();
         for(Object[] B : QueryList){
@@ -51,7 +53,8 @@ private SessionFactory sessionFactory;
             bill.setPrice(util.convertObjectToInteger(B[3]));
             bill.setRefno(B[4].toString());
             bill.setDetail(B[5].toString());
-            bill.setCurrency(B[6].toString());  
+            bill.setCurAmount(B[6].toString());  
+            bill.setCurCost(B[8].toString());
             bill.setId(B[7].toString());       
             BillableList.add(bill);  
         }
@@ -85,7 +88,8 @@ private SessionFactory sessionFactory;
             Billdata.setCost(B.getCost());
             Billdata.setPrice(B.getPrice());
             Billdata.setDetail(B.getDetail());
-            Billdata.setCurrency(B.getCurrency());
+            Billdata.setCurrency(B.getCurAmount());
+            Billdata.setCurCost(B.getCurCost());
             BillDesc.add(Billdata);
         }
         return BillDesc;

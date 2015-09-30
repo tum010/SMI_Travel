@@ -26,8 +26,11 @@
         <property name="isBill" type="java.lang.Integer">
             <column name="is_bill" />
         </property>
-        <property name="currency" type="java.lang.String">
-            <column name="currency" />
+        <property name="curAmount" type="string">
+            <column name="cur_amount" length="3"/>
+        </property>
+         <property name="curCost" type="string">
+            <column name="cur_cost" length="3"/>
         </property>
     </class>
 </hibernate-mapping>

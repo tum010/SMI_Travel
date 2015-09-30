@@ -300,7 +300,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label" for="nameProduct">Category</label>
+                                    <label class="col-sm-3 control-label" for="nameProduct" style="width: 130px">Category</label>
                                     <div class="col-sm-7">
                                         <input type="text" maxlength="100" class="form-control " id="Category" name="Category" value='${requestScope['Category']}' >  
                                     </div>
@@ -320,7 +320,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label  class="col-sm-3 control-label" for="nameProduct">Description</label>
+                                    <label  class="col-sm-3 control-label" for="nameProduct" style="width: 130px">Description</label>
                                     <div class="col-sm-7">
                                         <input type="text" maxlength="255" class="form-control"  id="Description" name="Description" value='${requestScope['Description']}' >  
                                     </div>
@@ -351,7 +351,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                        <label class="col-sm-3 control-label" >Hotel</label>
+                                        <label class="col-sm-3 control-label" style="width: 130px">Hotel</label>
                                         <div class="col-sm-7">                             
                                             <input type="text" maxlength="255" class="form-control"  id="hotel" name="hotel" value='${requestScope['hotel']}' >  
                                         </div>
@@ -396,12 +396,12 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                        <label class="col-sm-3 control-label" >Currency</label>
+                                        <label class="col-sm-3 control-label" style="width: 130px">Cost Currency</label>
                                             <div class="col-sm-4">                             
-                                            <select class="form-control" id="currency" name="currency">
+                                            <select class="form-control" id="currencycost" name="currencycost">
                                                 <c:forEach var="currency" items="${currencyList}">
                                                     <c:set var="select" value="" />
-                                                    <c:if test="${currency.code == requestScope['currency']}">
+                                                    <c:if test="${currency.code == requestScope['currencycost']}">
                                                         <c:set var="select" value="selected" />
                                                     </c:if>
                                                     <option value="${currency.code}" ${select}>${currency.code}</option>
@@ -424,6 +424,22 @@
                                             </div>
                                             <div class="col-sm-3">
                                                 <input type="text" maxlength="10" class="form-control money" onkeyup="validateMaxCost('inb_CH_Price');"  id="inb_CH_Price" name="inb_CH_Price" value="${requestScope['inb_CH_Price']}" >  
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label" style="width: 130px">Price Currency</label>
+                                            <div class="col-sm-4">                             
+                                            <select class="form-control" id="currency" name="currency">
+                                                <c:forEach var="currency" items="${currencyList}">
+                                                    <c:set var="select" value="" />
+                                                    <c:if test="${currency.code == requestScope['currency']}">
+                                                        <c:set var="select" value="selected" />
+                                                    </c:if>
+                                                    <option value="${currency.code}" ${select}>${currency.code}</option>
+                                                </c:forEach>
+                                            </select>
                                             </div>
                                         </div>
                                     </div>

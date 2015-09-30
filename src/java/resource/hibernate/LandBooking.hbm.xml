@@ -91,8 +91,11 @@
         <property name="inboundInPrice" type="java.lang.Long">
             <column name="inbound_in_price" precision="10" scale="0" />
         </property>
-        <property name="currency" type="string">
-            <column name="currency" length="3" />
+        <property name="curAmount" type="string">
+            <column name="cur_amount" length="3"/>
+        </property>
+         <property name="curCost" type="string">
+            <column name="cur_cost" length="3"/>
         </property>
         <property name="outboundArrive" type="date">
             <column name="outbound_depart" length="10" />
