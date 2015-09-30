@@ -15,11 +15,13 @@ import com.smi.travel.datalayer.entity.BillableDesc;
 import com.smi.travel.datalayer.entity.DaytourBooking;
 import com.smi.travel.datalayer.entity.HotelBooking;
 import com.smi.travel.datalayer.entity.HotelRoom;
+import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.LandBooking;
 import com.smi.travel.datalayer.entity.LandItinerary;
 import com.smi.travel.datalayer.entity.MBilltype;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.OtherBooking;
+import com.smi.travel.datalayer.entity.TaxInvoiceDetail;
 import com.smi.travel.util.UtilityFunction;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -82,6 +84,40 @@ public class BillableImpl implements BillableDao {
         return list.get(0);
     }
     
+    @Override
+    public Billable getBillableBookingForTaxInvoice(String refNo) {
+        Session session = this.sessionFactory.openSession();
+        List<Billable> billableList = session.createQuery(BillQuery).setParameter("refno", refNo).list();
+        if (billableList.isEmpty()) {
+            return null;
+        }
+        List<InvoiceDetail> invoiceDetailListResult = new ArrayList<InvoiceDetail>();
+        for(int i=0;i<billableList.size();i++){
+            String queryInvDetail = "from InvoiceDetail invDetail where invDetail.billableDesc.id =:id ";
+            List<BillableDesc> billableDescList = new ArrayList<BillableDesc>();
+            billableDescList = billableList.get(i).getBillableDescs();
+            for(int j=0;j<billableDescList.size();j++){
+                List<InvoiceDetail> invoiceDetailList = session.createQuery(queryInvDetail).setParameter("id", billableDescList.get(j).getId()).list();
+                if(!invoiceDetailList.isEmpty()){
+                    for(int k=0;k<invoiceDetailList.size();k++){
+                        InvoiceDetail invoiceDetail = new InvoiceDetail();
+                        invoiceDetail = invoiceDetailList.get(k);
+                        invoiceDetailListResult.add(invoiceDetail);
+                    }                  
+                }
+            }                 
+        }
+        Billable billable = new Billable();
+        for(int a=0;a<invoiceDetailListResult.size();a++){
+            String queryTaxInvDetail = "from TaxInvoiceDetail taxDetail where taxDetail.invoiceDetail.billableDesc.id =:id ";
+            List<TaxInvoiceDetail> taxInvoiceDetailList = session.createQuery(queryTaxInvDetail).setParameter("id", invoiceDetailListResult.get(a).getBillableDesc().getId()).list();
+            if(taxInvoiceDetailList.isEmpty()){
+                billable = invoiceDetailListResult.get(a).getBillableDesc().getBillable();
+            }
+        }
+        session.close();
+        return billable;
+    }
 
     @Override
     public int updateBillStatusBooking(String refno, Billable bill) {
@@ -954,5 +990,5 @@ public class BillableImpl implements BillableDao {
         this.sessionFactory.close();
         System.out.println("DEscription : " + description);
         return description;
-    }
+    }   
 }

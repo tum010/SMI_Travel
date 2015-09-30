@@ -76,15 +76,18 @@
         </c:if>
         <div class="row" style="padding-left: 15px">  
             <div class="col-sm-6 " style="padding-right: 15px">
+                <c:set var="outbound" value=""/>
 		<c:choose>
                     <c:when test="${fn:contains(page , 'W')}">
                         <h4><b>Tax Invoice Wendy <font style="color: red">${voidTaxInvoice}</font></b></h4>
+                        <c:set var="outbound" value="disabled"/>
                     </c:when>
                     <c:when test="${fn:contains(page , 'O')}">
-                        <h4><b>Tax Invoice Outbound <font style="color: red">${voidTaxInvoice}</font></b></h4>
+                        <h4><b>Tax Invoice Outbound <font style="color: red">${voidTaxInvoice}</font></b></h4>                       
                     </c:when> 
                     <c:when test="${fn:contains(page , 'I')}">
                         <h4><b>Tax Invoice Inbound <font style="color: red">${voidTaxInvoice}</font></b></h4>
+                        <c:set var="outbound" value="disabled"/>
                     </c:when> 
 		</c:choose> 
             </div>
@@ -94,7 +97,101 @@
         <!--Search Invoice-->
         <div class="row" style="padding-left: 15px">  
            <div role="tabpanel">
-                <div class="tab-content">
+               <!-- Nav tabs -->                    
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#inv" aria-controls="inv" role="tab" data-toggle="tab">INV</a></li>
+                    <li role="presentation" class=""><a href="#ref" aria-controls="ref" role="tab" data-toggle="tab">REF</a></li>
+                    <h4>
+                        <a data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="margin-left: 48em" onclick="">
+                            <span id="arrowReservstion" class="arrowReservstion glyphicon glyphicon-chevron-up"></span> 
+                        </a>
+                    </h4>
+                </ul>
+               <!-- Tab BL -->
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="tab-content collapse in" id="collapseExample" aria-expanded="false">
+                            <div role="tabpanel" class="tab-pane hidden active" id="inv">
+                                <div class="col-xs-12" style="padding-top: 20px; padding-left: 50px;padding-right: 50px">
+                                    <div class="col-xs-1 text-right" style="width: 120px">
+                                        <label class="control-label text-right">Invoice No</label>
+                                    </div>
+                                    <div class="col-md-2 form-group" id="invoicenopanel" style="width: 200px">
+                                        <div class="input-group">
+                                            <input type="text" style="text-transform:uppercase" class="form-control" id="invoiceNo" name="invoiceNo" value="" onkeydown="invoiceNoValidate()">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-1  text-right" style="width: 8px"><i id="ajaxload1"  class="fa fa-spinner fa-spin hidden"></i></div>
+                                    <div class="col-xs-1 text-left"  style="width: 100px">
+                                        <button type="button"  id="btnSearchInvoiceNo"  name="btnSearchInvoiceNo" onclick="searchInvoiceNo()" class="btn btn-primary btn-sm">
+                                            <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
+                                        </button> 
+                                    </div>
+                                    <!--Invoice Table-->
+                                    <div class="row" >    
+                                        <div class="col-md-12">
+                                            <table id="InvoiceListTable" class="display" cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr class="datatable-header">
+                                                        <th style="width: 15%" >Product</th>
+                                                        <th style="width: 35%">Description</th>
+                                                        <th style="width: 20%">Cost</th>
+                                                        <th style="width: 10%">Cur</th>
+                                                        <th style="width: 20%">Amount</th>
+                                                        <th style="width: 10%">Cur</th>
+                                                        <th style="width: 1%">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>               
+
+                                                </tbody>
+                                            </table>    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Tab REF -->
+                            <div role="tabpanel" class="tab-pane hidden" id="ref">
+                                <div class="col-xs-12" style="padding-top: 20px; padding-left: 50px;padding-right: 50px">
+                                    <div class="col-xs-1 text-right" style="width: 120px">
+                                        <label class="control-label text-right">Ref No </label>
+                                    </div>
+                                    <div class="col-xs-1 form-group" style="width: 200px" id="refnopanel">
+                                        <div class="input-group">
+                                            <input id="refNo" name="refNo" type="text" class="form-control" value="" onkeydown="refnoValidate()" ${outbound}>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-1  text-right" style="width: 8px"><i id="ajaxload2"  class="fa fa-spinner fa-spin hidden"></i></div>
+                                    <div class="col-xs-1 text-left"  style="width: 100px">
+                                        <button style="height:30px" type="button"  id="btnSearchRefNo"  name="btnSearchRefNo" onclick="searchRefNo();" class="btn btn-primary btn-sm" ${outbound}><i class="fa fa-search"></i>&nbsp;Search </button>
+                                    </div>
+                                    <!--RefNo Table-->
+                                    <div class="row">
+                                        <table id="RefNoListTable" class="display" cellspacing="0" width="100%">
+                                            <thead>
+                                                <tr class="datatable-header" >
+                                                    <th style="width:1%;">No</th>
+                                                    <th style="width:20%;">Description</th>
+                                                    <th style="width:10%;">Cost</th>
+                                                    <th style="width:5%;">Cur</th>
+                                                    <th style="width:10%;">Amount</th>
+                                                    <th style="width:5%;">Cur</th>
+                                                    <th style="width:10%;">Ex Rate</th>
+                                                    <th style="width:10%;">Profit</th>
+                                                    <th style="width:1%;">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<!--                <div class="tab-content">
                     <div role="tabpanel" class="tab-pane  active" id="infoSearchInvoice">
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -141,17 +238,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>               
-<!--                                                <tr>
-                                                    <td>TEST</td>
-                                                    <td>Hello World</td>
-                                                    <td align="center">100000</td>
-                                                    <td align="center">THB</td>
-                                                    <td align="center" > 
-                                                        <center> 
-                                                            <a href=""><span class="glyphicon glyphicon-plus"></span></a>
-                                                        </center>
-                                                    </td>
-                                                    </tr>-->
+
                                                 </tbody>
                                             </table>    
                                         </div>
@@ -162,7 +249,7 @@
                         </div>                                       
                     </div>
                 </div>
-            </div>
+            </div>-->
             <div class="col-xs-12 form-group"></div>             
                 <!--Search-->  
                 
@@ -782,6 +869,7 @@
 <script language="javascript">
     $(document).ready(function () {
         var showflag = 1;
+        $("#inv,#ref").removeClass('hidden');
         $('.date').datetimepicker();
         $('.datemask').mask('0000-00-00');
         $(".money").mask('000,000,000.00', {reverse: true});
@@ -894,6 +982,12 @@
         $("#invoiceNo").keyup(function (event) {
             if (event.keyCode === 13) {
                 searchInvoiceNo();
+            }
+        });
+        
+        $("#refNo").keyup(function (event) {
+            if(event.keyCode === 13){
+               searchRefNo();
             }
         });
         
@@ -1179,7 +1273,7 @@
     
     function CallAjaxSearchInvoice(param) {
         var url = 'AJAXServlet';
-        $("#ajaxload").removeClass("hidden");
+        $("#ajaxload1").removeClass("hidden");
         try {
             $.ajax({
                 type: "POST",
@@ -1231,25 +1325,116 @@
 //                                document.getElementById("InvToDate").value = '';
 //                            }                          
                         }
-                        $("#ajaxload").addClass("hidden");
+                        $("#ajaxload1").addClass("hidden");
 
                     } catch (e) {
                         alert(e);
                     }
 
                 }, error: function (msg) {
-                     $("#ajaxload").addClass("hidden");
+                     $("#ajaxload1").addClass("hidden");
                 }
             });
         } catch (e) {
             alert('error');
         }
-    }   
+    }
+    
+    function searchRefNo() {
+        var refNo = $("#refNo").val();
+        if(refNo == ""){
+            if(!$('#refnopanel').hasClass('has-feedback')) {
+                $('#refnopanel').addClass('has-feedback');
+            }
+            $('#refnopanel').removeClass('has-success');
+            $('#refnopanel').addClass('has-error');
+        }
+        else{
+            var servletName = 'TaxInvoiceServlet';
+            var servicesName = 'AJAXBean';
+            var param = 'action=' + 'text' +
+                    '&servletName=' + servletName +
+                    '&servicesName=' + servicesName +
+                    '&refNo=' + refNo +
+                    '&type=' + 'searchRefNo';
+            CallAjaxSearchRef(param);
+        }
+    }
+
+    function CallAjaxSearchRef(param) {
+        var url = 'AJAXServlet';
+        $("#ajaxload2").removeClass("hidden");
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                success: function (msg) {
+                    try { 
+                        if(msg == "null"){
+                            $('#RefNoListTable').dataTable().fnClearTable();
+                            $('#RefNoListTable').dataTable().fnDestroy();
+                          
+                            document.getElementById("TaxInvTo").value = '';
+                            document.getElementById("InvToName").value = '';
+                            document.getElementById("InvToAddress").value = '';
+                            document.getElementById("ARCode").value = '';
+                            document.getElementById("InvToDate").value = '';
+                        }else{
+                            $('#RefNoListTable').dataTable().fnClearTable();
+                            $('#RefNoListTable').dataTable().fnDestroy();
+                            $("#RefNoListTable tbody").append(msg);
+                            
+                            if(document.getElementById("receiveTaxInvTo")!==null && ($("#receiveTaxInvTo").val()!==undefined)){
+                                document.getElementById("TaxInvTo").value = $("#receiveTaxInvTo").val();
+                            } else {
+                                document.getElementById("TaxInvTo").value = '';
+                            }
+                            if((document.getElementById("InvToName")!==null) && ($("#receiveInvToName").val()!==undefined)){
+                                document.getElementById("InvToName").value = $("#receiveInvToName").val();
+                            } else {
+                                document.getElementById("InvToName").value = '';
+                            }
+                            
+                            if((document.getElementById("InvToAddress")!==null) && ($("#receiveInvToAddress").val()!==undefined)){
+                                document.getElementById("InvToAddress").value = $("#receiveInvToAddress").val();
+                            } else {
+                               document.getElementById("InvToAddress").value = ''; 
+                            }
+                            
+                            if((document.getElementById("receiveARCode")!==null) && ($("#receiveARCode").val()!==undefined)){
+                                document.getElementById("ARCode").value = $("#receiveARCode").val();
+                            } else {
+                                document.getElementById("ARCode").value = '';
+                            }
+                            
+                        }
+                        $("#ajaxload2").addClass("hidden");
+
+                    } catch (e) {
+                        alert(e);
+                    }
+
+                }, error: function (msg) {
+                     $("#ajaxload2").addClass("hidden");
+                }
+            });
+        } catch (e) {
+            alert(e);
+        }
+    }
     
     function invoiceNoValidate(){
         $('#invoicenopanel').removeClass('has-feedback');
         $('#invoicenopanel').addClass('has-success');
         $('#invoicenopanel').removeClass('has-error');  
+    }
+    
+    function refnoValidate(){
+        $('#refnopanel').removeClass('has-feedback');
+        $('#refnopanel').addClass('has-success');
+        $('#refnopanel').removeClass('has-error');  
     }
     
     function AddRowTaxInvoiceTable(row) {
