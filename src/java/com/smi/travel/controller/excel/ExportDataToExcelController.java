@@ -39,8 +39,9 @@ public class ExportDataToExcelController  extends SMITravelController{
     private static final String ReportName = "name";
     private static final String ParaMeter = "parameter";
     private static final String SummaryAirline = "SummaryAirline";
+    private static final String TicketFareSummaryAirline = "TicketFareSummaryAirline";
     private static final String SummaryTicketAdjustCostAndIncome = "SummaryTicketAdjustCostAndIncome";
-    
+
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String output =  request.getParameter("output");
@@ -70,6 +71,13 @@ public class ExportDataToExcelController  extends SMITravelController{
         String status = request.getParameter("arStatus");
         
         String reportType = request.getParameter("reportType");
+        
+        //TicketFareSummaryAirline
+        String typeRouting = request.getParameter("typeRouting");
+        String routingDetail = request.getParameter("routingDetail");
+        String passenger = request.getParameter("passenger");
+        String agentId = request.getParameter("agentId");
+
         
         SystemUser user = (SystemUser) session.getAttribute("USER");
         String printby = user.getRole().getName(); 
@@ -120,6 +128,9 @@ public class ExportDataToExcelController  extends SMITravelController{
         }else if(SummaryAirline.equals(name)){
             System.out.println("get excel data ap SummaryAirline");
             data = reportservice.listSummaryAirline();
+        }else if(TicketFareSummaryAirline.equals(name)){
+            System.out.println("get excel data TicketFareSummaryAirline");
+            data = reportservice.getTicketFareSumAirline(typeRouting,routingDetail,issuedateFrom,issuedateTo,invdateFrom,invdateTo,airlineCode,passenger,agentId,department,staff,termPay,printby);
         }else if(SummaryTicketAdjustCostAndIncome.equals(name)){
             System.out.println("get excel data ap SummaryTicketAdjustCostAndIncome");
             String invoiceFromDate = request.getParameter("invoiceFromDate");

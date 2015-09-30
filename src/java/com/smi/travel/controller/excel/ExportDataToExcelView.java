@@ -13,7 +13,9 @@ import com.smi.travel.datalayer.view.entity.ARNirvana;
 import com.smi.travel.datalayer.view.entity.CollectionNirvana;
 import com.smi.travel.datalayer.view.entity.SummaryAirline;
 import com.smi.travel.datalayer.view.entity.SummaryTicketAdjustCostAndIncome;
+import com.smi.travel.datalayer.view.entity.TicketSummaryAirlineView;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.MathContext;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -31,6 +33,10 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.CellRangeAddress;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormat;
+import org.apache.poi.ss.usermodel.RichTextString;
+import org.apache.taglibs.standard.tag.common.core.Util;
 import org.springframework.web.servlet.view.document.AbstractExcelView;
 
 /**
@@ -49,7 +55,9 @@ public class ExportDataToExcelView extends AbstractExcelView {
     private static final String CollectionReport = "CollectionReport";
     private static final String ApReport = "ApReport";
     private static final String SummaryAirline = "SummaryAirline";
-     private static final String SummaryTicketAdjustCostAndIncome = "SummaryTicketAdjustCostAndIncome";
+    private static final String TicketFareSummaryAirline = "TicketFareSummaryAirline";
+    private static final String SummaryTicketAdjustCostAndIncome = "SummaryTicketAdjustCostAndIncome";
+    
     @Override
     protected void buildExcelDocument(Map model, HSSFWorkbook workbook,
             HttpServletRequest request, HttpServletResponse response)
@@ -91,6 +99,9 @@ public class ExportDataToExcelView extends AbstractExcelView {
         }else if(name.equalsIgnoreCase(SummaryAirline)){
             System.out.println("gen report SummaryAirline");
             getSummaryAirline(workbook, (List) model.get(name));
+        }else if(name.equalsIgnoreCase(TicketFareSummaryAirline)){
+            System.out.println("gen report TicketFareSummaryAirline");
+            genTicketFareSummaryAirlineReport(workbook, (List) model.get(name));
         }else if(name.equalsIgnoreCase(SummaryTicketAdjustCostAndIncome)){
             System.out.println("gen report SummaryTicketAdjustCostAndIncome");
             getSummaryTicketAdjustCostAndIncome(workbook, (List) model.get(name));
@@ -3757,6 +3768,571 @@ public class ExportDataToExcelView extends AbstractExcelView {
         }  
     } 
     
+    //Pax 
+    public void genTicketFareSummaryAirlineReport(HSSFWorkbook wb, List ticketSummaryAirline) {
+        String sheetName = "Sheet1";// name of sheet
+        HSSFSheet sheet = wb.createSheet(sheetName);
+        TicketSummaryAirlineView dataheader = new TicketSummaryAirlineView();
+
+        HSSFDataFormat currency = wb.createDataFormat();
+        // Set align Text
+        HSSFCellStyle styleC21 = wb.createCellStyle();
+        styleC21.setAlignment(styleC21.ALIGN_RIGHT);
+        HSSFCellStyle styleC22 = wb.createCellStyle();
+        styleC22.setAlignment(styleC22.ALIGN_LEFT);
+        HSSFCellStyle styleC23 = wb.createCellStyle();
+        styleC23.setAlignment(styleC22.ALIGN_CENTER);
+
+        HSSFCellStyle styleC25 = wb.createCellStyle();
+        styleC25.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC25.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC25.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC25.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleC25.setDataFormat(currency.getFormat("#,##0.00"));
+
+        HSSFCellStyle styleC26 = wb.createCellStyle();
+        styleC26.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC26.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC26.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC26.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleC26.setDataFormat(currency.getFormat("#,##0"));
+        styleC26.setAlignment(styleC22.ALIGN_CENTER);
+
+        HSSFCellStyle styleC27 = wb.createCellStyle();
+        styleC27.setAlignment(styleC27.ALIGN_RIGHT);
+        styleC27.setDataFormat(currency.getFormat("#,##0.00"));
+
+        HSSFCellStyle styleC28 = wb.createCellStyle();
+        styleC28.setAlignment(styleC28.ALIGN_CENTER);
+        styleC28.setDataFormat(currency.getFormat("#,##0"));
+
+        HSSFCellStyle styleC29 = wb.createCellStyle();
+        styleC29.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC29.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC29.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC29.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+
+        HSSFCellStyle styleC30 = wb.createCellStyle();
+        styleC30.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC30.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC30.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC30.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleC30.setAlignment(styleC22.ALIGN_CENTER);
+
+        if(!ticketSummaryAirline.isEmpty()){
+            dataheader = (TicketSummaryAirlineView)ticketSummaryAirline.get(0);
+
+            // set Header Report (Row 1)
+            HSSFCellStyle styleC1 = wb.createCellStyle();
+            HSSFRow row1 = sheet.createRow(0);
+            HSSFCell cell1 = row1.createCell(0);
+            cell1.setCellValue("List Summary Airline");
+            styleC1.setFont(getHeaderFont(wb.createFont()));
+            cell1.setCellStyle(styleC1);
+            sheet.addMergedRegion(CellRangeAddress.valueOf("A1:E1"));
+
+            // Row 2
+            HSSFRow row2 = sheet.createRow(1);
+            HSSFCell cell21 = row2.createCell(0);
+            cell21.setCellValue("Invoice Date : ");
+            cell21.setCellStyle(styleC21);
+            HSSFCell cell22 = row2.createCell(1);
+            cell22.setCellValue(dataheader.getHeaderdatefrom());
+            cell22.setCellStyle(styleC22);
+            //sheet.addMergedRegion(CellRangeAddress.valueOf("B2:C2"));
+            HSSFCell cell23 = row2.createCell(2);
+            if(!"".equalsIgnoreCase(dataheader.getHeaderdateto())){
+                cell23.setCellValue(" to " +dataheader.getHeaderdateto());
+                cell23.setCellStyle(styleC22);
+            }
+            HSSFCell cell24 = row2.createCell(3);
+            cell24.setCellValue("Print on : ");
+            cell24.setCellStyle(styleC21);
+            HSSFCell cell25 = row2.createCell(4);
+            cell25.setCellValue(dataheader.getHeaderprinton());
+            cell25.setCellStyle(styleC22);
+            
+            // Row 3
+            HSSFRow row3 = sheet.createRow(2);
+            HSSFCell cell31 = row3.createCell(0);
+            cell31.setCellValue("Print By : ");
+            cell31.setCellStyle(styleC21);
+            HSSFCell cell32 = row3.createCell(1);
+            cell32.setCellValue(dataheader.getHeaderprintby());
+            cell32.setCellStyle(styleC22);
+            HSSFCell cell33 = row3.createCell(3);
+            cell33.setCellValue("Routing Detail : ");
+            cell33.setCellStyle(styleC21);
+            HSSFCell cell34 = row3.createCell(4);
+            cell34.setCellValue(dataheader.getHeaderroutingdetail());
+            cell34.setCellStyle(styleC22);
+            
+            // Row 4
+            HSSFRow row4 = sheet.createRow(3);
+            HSSFCell cell41 = row4.createCell(0);
+            cell41.setCellValue("Type Routing : ");
+            cell41.setCellStyle(styleC21);
+            HSSFCell cell42 = row4.createCell(1);
+            cell42.setCellValue(dataheader.getHeadertyperouting());
+            cell42.setCellStyle(styleC22);
+            HSSFCell cell43 = row4.createCell(3);
+            cell43.setCellValue("Passenger : ");
+            cell43.setCellStyle(styleC21);
+            HSSFCell cell44 = row4.createCell(4);
+            cell44.setCellValue(dataheader.getHeaderpassenger());
+            cell44.setCellStyle(styleC22);
+            
+            // Row 5
+            HSSFRow row5 = sheet.createRow(4);
+            HSSFCell cell51 = row5.createCell(0);
+            cell51.setCellValue("Air : ");
+            cell51.setCellStyle(styleC21);
+            HSSFCell cell52 = row5.createCell(1);
+            cell52.setCellValue(dataheader.getHeaderair());
+            cell52.setCellStyle(styleC22);
+            HSSFCell cell53 = row5.createCell(3);
+            cell53.setCellValue("Sale Staff : ");
+            cell53.setCellStyle(styleC21);
+            HSSFCell cell54 = row5.createCell(4);
+            cell54.setCellValue(dataheader.getHeadersalestaff());
+            cell54.setCellStyle(styleC22);
+            
+            // Row 6
+            HSSFRow row6 = sheet.createRow(5);
+            HSSFCell cell61 = row6.createCell(0);
+            cell61.setCellValue("Agent Name : ");
+            cell61.setCellStyle(styleC21);
+            HSSFCell cell62 = row6.createCell(1);
+            cell62.setCellValue(dataheader.getHeaderagentname());
+            cell62.setCellStyle(styleC22);
+            HSSFCell cell63 = row6.createCell(3);
+            cell63.setCellValue("Department : ");
+            cell63.setCellStyle(styleC21);
+            HSSFCell cell64 = row6.createCell(4);
+            cell64.setCellValue(dataheader.getHeaderdepartment());
+            cell64.setCellStyle(styleC22);
+             
+            // Row 7
+            HSSFRow row7 = sheet.createRow(6);
+            HSSFCell cell71 = row7.createCell(0);
+            cell71.setCellValue("Term Pay : ");
+            cell71.setCellStyle(styleC21);
+            HSSFCell cell72 = row7.createCell(1);
+            cell72.setCellValue(dataheader.getHeadertermpay());
+            cell72.setCellStyle(styleC22);
+
+            // Header Table
+            HSSFCellStyle styleC3 = wb.createCellStyle();
+            styleC3.setFont(getHeaderTable(wb.createFont()));
+            styleC3.setAlignment(styleC3.ALIGN_CENTER);
+            styleC3.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+            styleC3.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+            styleC3.setBorderRight(HSSFCellStyle.BORDER_THIN);
+            styleC3.setBorderTop(HSSFCellStyle.BORDER_THIN);
+            
+            int count = 9;
+            int tempcount = 0 ;
+            int tempcount2 = 0 ;
+            int rowdetail = 0;
+            int rowrouting = 0;
+
+
+            for(int i=0;i<ticketSummaryAirline.size();i++){
+                TicketSummaryAirlineView data = (TicketSummaryAirlineView)ticketSummaryAirline.get(i);
+                
+                if("pax".equalsIgnoreCase(data.getPage())){
+                    //pax
+                    HSSFRow row8 = sheet.createRow(8);
+                    HSSFCell cell81 = row8.createCell(0);
+                    cell81.setCellValue("Pax");
+                    cell81.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(0);
+                    HSSFCell cell82 = row8.createCell(1);
+                    cell82.setCellValue("Payment Type");
+                    cell82.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(1);
+                    HSSFCell cell83 = row8.createCell(2);
+                    cell83.setCellValue("Type Routing");
+                    sheet.autoSizeColumn(2);
+                    cell83.setCellStyle(styleC3);
+                    HSSFCell cell84 = row8.createCell(3);
+                    cell84.setCellValue("Net Sales");
+                    cell84.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(3);
+                    HSSFCell cell85 = row8.createCell(4);
+                    cell85.setCellValue("Tax");
+                    cell85.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(4);
+                    HSSFCell cell86 = row8.createCell(5);
+                    cell86.setCellValue("Ins.");
+                    cell86.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(5);
+                    HSSFCell cell87 = row8.createCell(6);
+                    cell87.setCellValue("Comms");
+                    cell87.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(6);
+                    HSSFCell cell88 = row8.createCell(7);
+                    cell88.setCellValue("Amount Wendy");
+                    cell88.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(7);
+                    HSSFCell cell89 = row8.createCell(8);
+                    cell89.setCellValue("Amount Inbound");
+                    cell89.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(8);
+                    
+                    HSSFRow row = sheet.createRow(count + i);
+                    HSSFCell celldata0 = row.createCell(0);
+                    celldata0.setCellValue("".equalsIgnoreCase(String.valueOf(data.getPaxP())) ? 0 : (new BigDecimal(data.getPaxP())).doubleValue());
+                    celldata0.setCellStyle(styleC26);
+
+                    HSSFCell celldata1 = row.createCell(1);
+                    celldata1.setCellValue(String.valueOf(data.getPaymenttypeP()));
+                    celldata1.setCellStyle(styleC30);
+
+                    HSSFCell celldata2 = row.createCell(2);
+                    celldata2.setCellValue(String.valueOf(data.getTyperoutingP()));
+                    celldata2.setCellStyle(styleC30);
+
+                    HSSFCell celldata3 = row.createCell(3);
+                    celldata3.setCellValue("".equalsIgnoreCase(String.valueOf(data.getNetsalesP())) ? 0 : (new BigDecimal(data.getNetsalesP())).doubleValue());
+                    celldata3.setCellStyle(styleC25);
+
+                    HSSFCell celldata4 = row.createCell(4);
+                    celldata4.setCellValue("".equalsIgnoreCase(String.valueOf(data.getTaxP())) ? 0 : (new BigDecimal(data.getTaxP())).doubleValue());
+                    celldata4.setCellStyle(styleC25);
+
+                    HSSFCell celldata5 = row.createCell(5);
+                    celldata5.setCellValue("".equalsIgnoreCase(String.valueOf(data.getInsP())) ? 0 : (new BigDecimal(data.getInsP())).doubleValue());
+                    celldata5.setCellStyle(styleC25);
+
+                    HSSFCell celldata6 = row.createCell(6);
+                    celldata6.setCellValue("".equalsIgnoreCase(String.valueOf(data.getCommsP())) ? 0 : (new BigDecimal(data.getCommsP())).doubleValue());
+                    celldata6.setCellStyle(styleC25);
+
+                    HSSFCell celldata7 = row.createCell(7);
+                    celldata7.setCellValue("".equalsIgnoreCase(String.valueOf(data.getAmountwendyP())) ? 0 : (new BigDecimal(data.getAmountwendyP())).doubleValue());
+                    celldata7.setCellStyle(styleC25);
+
+                    HSSFCell celldata8 = row.createCell(8);
+                    celldata8.setCellValue("".equalsIgnoreCase(String.valueOf(data.getAmountinboundP())) ? 0 : (new BigDecimal(data.getAmountinboundP())).doubleValue());
+                    celldata8.setCellStyle(styleC25);
+                    tempcount = count + i + 1;
+                }
+                
+                //detail
+                if("detail".equalsIgnoreCase(data.getPage())){
+                    //Total Pax
+                    HSSFRow rowtotal = sheet.createRow(tempcount);
+                    String totalPax = "SUM(A" + 10+":A"+(tempcount)+")";
+                    String totalNet = "SUM(D" + 10+":D"+(tempcount)+")";
+                    String totalTax = "SUM(E" + 10+":E"+(tempcount)+")";
+                    String totalIns = "SUM(F" + 10+":F"+(tempcount)+")";
+                    String totalComms = "SUM(G" + 10+":G"+(tempcount)+")";
+                    String totalAmountWen = "SUM(H" + 10+":H"+(tempcount)+")";
+                    String totalAmountIn = "SUM(I" + 10+":I"+(tempcount)+")";
+
+                    HSSFCellStyle styleTotal = wb.createCellStyle();
+                    styleTotal.setFont(getHeaderTable(wb.createFont()));
+                    styleTotal.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+                    styleTotal.setBorderRight(HSSFCellStyle.BORDER_THIN);
+                    styleTotal.setBorderTop(HSSFCellStyle.BORDER_THIN);
+                    styleTotal.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+                    styleTotal.setAlignment(styleC22.ALIGN_RIGHT);
+
+                    HSSFCell cellTotal0 = rowtotal.createCell(0);
+                    cellTotal0.setCellStyle(styleC29);
+                    HSSFCell cellTotal00 = rowtotal.createCell(1);
+                    cellTotal00.setCellValue("Total");
+                    cellTotal00.setCellStyle(styleTotal);
+                    HSSFCell cellTotal01 = rowtotal.createCell(2);
+                    cellTotal01.setCellFormula(totalPax);
+                    cellTotal01.setCellStyle(styleC26);
+                    HSSFCell cellTotal02 = rowtotal.createCell(3);
+                    cellTotal02.setCellFormula(totalNet);
+                    cellTotal02.setCellStyle(styleC25);
+                    HSSFCell cellTotal03 = rowtotal.createCell(4);
+                    cellTotal03.setCellFormula(totalTax);
+                    cellTotal03.setCellStyle(styleC25);
+                    HSSFCell cellTotal04 = rowtotal.createCell(5);
+                    cellTotal04.setCellFormula(totalIns);
+                    cellTotal04.setCellStyle(styleC25);
+                    HSSFCell cellTotal05 = rowtotal.createCell(6);
+                    cellTotal05.setCellFormula(totalComms);
+                    cellTotal05.setCellStyle(styleC25);
+                    HSSFCell cellTotal06 = rowtotal.createCell(7);
+                    cellTotal06.setCellFormula(totalAmountWen);
+                    cellTotal06.setCellStyle(styleC25);
+                    HSSFCell cellTotal07 = rowtotal.createCell(8);
+                    cellTotal07.setCellFormula(totalAmountIn);
+                    cellTotal07.setCellStyle(styleC25);
+                    
+                    
+                    
+                    if(tempcount != 0){
+                        rowdetail = tempcount+3;
+                    }
+                    HSSFRow row8 = sheet.createRow(rowdetail);
+                    HSSFCell cell81 = row8.createCell(0);
+                    cell81.setCellValue("Invoice No");
+                    cell81.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(0);
+                    HSSFCell cell82 = row8.createCell(1);
+                    cell82.setCellValue("Invoice Date");
+                    cell82.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(1);
+                    HSSFCell cell83 = row8.createCell(2);
+                    cell83.setCellValue("Department");
+                    sheet.autoSizeColumn(2);
+                    cell83.setCellStyle(styleC3);
+                    HSSFCell cell84 = row8.createCell(3);
+                    cell84.setCellValue("Staff");
+                    cell84.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(3);
+                    HSSFCell cell85 = row8.createCell(4);
+                    cell85.setCellValue("Term Pay");
+                    cell85.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(4);
+                    HSSFCell cell86 = row8.createCell(5);
+                    cell86.setCellValue("Passenger");
+                    cell86.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(5);
+                    HSSFCell cell87 = row8.createCell(6);
+                    cell87.setCellValue("Type Payment");
+                    cell87.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(6);
+                    HSSFCell cell88 = row8.createCell(7);
+                    cell88.setCellValue("Type Routing");
+                    cell88.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(7);
+                    HSSFCell cell89 = row8.createCell(8);
+                    cell89.setCellValue("Routing");
+                    cell89.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(8);
+                    HSSFCell cell90 = row8.createCell(9);
+                    cell90.setCellValue("Pax");
+                    cell90.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(9);
+
+                    HSSFCell cell91 = row8.createCell(10);
+                    cell91.setCellValue("Air");
+                    cell91.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(10);
+                    HSSFCell cell92 = row8.createCell(11);
+                    cell92.setCellValue("Ticket No");
+                    cell92.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(11);
+                    HSSFCell cell93 = row8.createCell(12);
+                    cell93.setCellValue("Issue Date");
+                    cell93.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(12);
+                    HSSFCell cell94 = row8.createCell(13);
+                    cell94.setCellValue("Net Sales");
+                    cell94.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(13);
+                    HSSFCell cell95 = row8.createCell(14);
+                    cell95.setCellValue("Tax");
+                    cell95.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(14);
+                    HSSFCell cell96 = row8.createCell(15);
+                    cell96.setCellValue("Ins.");
+                    cell96.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(15);
+                    HSSFCell cell97 = row8.createCell(16);
+                    cell97.setCellValue("Comms");
+                    cell97.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(16);
+                    HSSFCell cell98 = row8.createCell(17);
+                    cell98.setCellValue("Amount Wendy");
+                    cell98.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(17);
+                    HSSFCell cell99 = row8.createCell(18);
+                    cell99.setCellValue("Amount Inbound");
+                    cell99.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(18);
+                    HSSFCell cell100 = row8.createCell(19);
+                    cell100.setCellValue("Remarks");
+                    cell100.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(19);
+                    HSSFCell cell101 = row8.createCell(20);
+                    cell101.setCellValue("Diff");
+                    cell101.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(20);
+                
+                    HSSFRow row = sheet.createRow(count + i + 4);
+                    HSSFCell celldata0 = row.createCell(0);
+
+                    celldata0.setCellValue(String.valueOf(data.getInvnoD()));
+                    celldata0.setCellStyle(styleC29);
+
+                    HSSFCell celldata1 = row.createCell(1);
+                    celldata1.setCellValue(String.valueOf(data.getInvdateD()));
+                    celldata1.setCellStyle(styleC30);
+
+                    HSSFCell celldata2 = row.createCell(2);
+                    celldata2.setCellValue(String.valueOf(data.getDepartmentD()));
+                    celldata2.setCellStyle(styleC29);
+
+                    HSSFCell celldata3 = row.createCell(3);
+                    celldata3.setCellValue(String.valueOf(data.getStaffD()));
+                    celldata3.setCellStyle(styleC29);
+
+                    HSSFCell celldata4 = row.createCell(4);
+                    celldata4.setCellValue(String.valueOf(data.getTermpayD()));
+                    celldata4.setCellStyle(styleC29);
+
+                    HSSFCell celldata5 = row.createCell(5);
+                    celldata5.setCellValue(String.valueOf(data.getPassengerD()));
+                    celldata5.setCellStyle(styleC29);
+
+                    HSSFCell celldata6 = row.createCell(6);
+                    celldata6.setCellValue(String.valueOf(data.getTypepaymentD()));
+                    celldata6.setCellStyle(styleC29);
+
+                    HSSFCell celldata7 = row.createCell(7);
+                    celldata7.setCellValue(String.valueOf(data.getTyperoutingD()));
+                    celldata7.setCellStyle(styleC29);
+
+                    HSSFCell celldata8 = row.createCell(8);
+                    celldata8.setCellValue(String.valueOf(data.getRoutingD()));
+                    celldata8.setCellStyle(styleC29);
+
+                    HSSFCell celldata9 = row.createCell(9);
+                    celldata9.setCellValue("".equalsIgnoreCase(String.valueOf(data.getPaxD())) ? 0 : (new BigDecimal(data.getPaxD())).doubleValue());
+                    celldata9.setCellStyle(styleC26);
+
+                    HSSFCell celldata10 = row.createCell(10);
+                    celldata10.setCellValue(String.valueOf(data.getAirD()));
+                    celldata10.setCellStyle(styleC30);
+
+                    HSSFCell celldata11 = row.createCell(11);
+                    celldata11.setCellValue(String.valueOf(data.getTicketnoD()));
+                    celldata11.setCellStyle(styleC29);
+
+                    HSSFCell celldata12 = row.createCell(12);
+                    celldata12.setCellValue(String.valueOf(data.getIssuedateD()));
+                    celldata12.setCellStyle(styleC29);
+
+                    HSSFCell celldata13 = row.createCell(13);
+                    celldata13.setCellValue("".equalsIgnoreCase(String.valueOf(data.getNetsalesD())) ? 0 : (new BigDecimal(data.getNetsalesD())).doubleValue());
+                    celldata13.setCellStyle(styleC25);
+
+                    HSSFCell celldata14 = row.createCell(14);
+                    celldata14.setCellValue("".equalsIgnoreCase(String.valueOf(data.getTaxD())) ? 0 : (new BigDecimal(data.getTaxD())).doubleValue());
+                    celldata14.setCellStyle(styleC25);
+
+                    HSSFCell celldata15 = row.createCell(15);
+                    celldata15.setCellValue("".equalsIgnoreCase(String.valueOf(data.getInsD())) ? 0 : (new BigDecimal(data.getInsD())).doubleValue());
+                    celldata15.setCellStyle(styleC25);
+
+                    HSSFCell celldata16 = row.createCell(16);
+                    celldata16.setCellValue("".equalsIgnoreCase(String.valueOf(data.getCommsD())) ? 0 : (new BigDecimal(data.getCommsD())).doubleValue());
+                    celldata16.setCellStyle(styleC25);
+
+                    HSSFCell celldata17 = row.createCell(17);
+                    celldata17.setCellValue("".equalsIgnoreCase(String.valueOf(data.getAmountwendyD())) ? 0 : (new BigDecimal(data.getAmountwendyD())).doubleValue());
+                    celldata17.setCellStyle(styleC25);
+
+                    HSSFCell celldata18 = row.createCell(18);
+                    celldata18.setCellValue("".equalsIgnoreCase(String.valueOf(data.getAmountinboundD())) ? 0 : (new BigDecimal(data.getAmountinboundD())).doubleValue());
+                    celldata18.setCellStyle(styleC25);
+
+                    HSSFCell celldata19 = row.createCell(19);
+                    celldata19.setCellValue(String.valueOf(data.getRemarksD()));
+                    celldata19.setCellStyle(styleC29);
+
+                    HSSFCell celldata20 = row.createCell(20);
+                    celldata20.setCellValue("".equalsIgnoreCase(String.valueOf(data.getDiffD())) ? 0 : (new BigDecimal(data.getDiffD())).doubleValue());
+                    celldata20.setCellStyle(styleC25);
+                    
+                    tempcount2 = count + i + 4;
+                }
+                
+                if("routing".equalsIgnoreCase(data.getPage())){
+                    if(tempcount2 != 0){
+                        rowrouting = tempcount2+3;
+                    }
+                    
+                    HSSFRow row8 = sheet.createRow(rowrouting);
+                    HSSFCell cell81 = row8.createCell(0);
+                    cell81.setCellValue("Routing");
+                    cell81.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(0);
+                    HSSFCell cell82 = row8.createCell(1);
+                    cell82.setCellValue("Pax");
+                    cell82.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(1);
+                    HSSFCell cell83 = row8.createCell(2);
+                    cell83.setCellValue("Net Sales");
+                    sheet.autoSizeColumn(2);
+                    cell83.setCellStyle(styleC3);
+                    HSSFCell cell84 = row8.createCell(3);
+                    cell84.setCellValue("Tax");
+                    cell84.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(3);
+                    HSSFCell cell85 = row8.createCell(4);
+                    cell85.setCellValue("Ins.");
+                    cell85.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(4);
+                    HSSFCell cell86 = row8.createCell(5);
+                    cell86.setCellValue("Comms");
+                    cell86.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(5);
+                    HSSFCell cell87 = row8.createCell(6);
+                    cell87.setCellValue("Amount Wendy");
+                    cell87.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(6);
+                    HSSFCell cell88 = row8.createCell(7);
+                    cell88.setCellValue("Amount Inbound");
+                    cell88.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(7);
+                    HSSFCell cell89 = row8.createCell(8);
+                    cell89.setCellValue("Diff");
+                    cell89.setCellStyle(styleC3);
+                    sheet.autoSizeColumn(8);
+                    
+                    
+                    HSSFRow row = sheet.createRow(count + i + 7);
+
+                    HSSFCell celldata0 = row.createCell(0);
+                    celldata0.setCellValue(String.valueOf(data.getRoutingR()));
+                    celldata0.setCellStyle(styleC29);
+
+                    HSSFCell celldata1 = row.createCell(1);
+                    celldata1.setCellValue("".equalsIgnoreCase(String.valueOf(data.getPaxR())) ? 0 : (new BigDecimal(data.getPaxR())).doubleValue());
+                    celldata1.setCellStyle(styleC26);
+
+                    HSSFCell celldata2 = row.createCell(2);
+                    celldata2.setCellValue("".equalsIgnoreCase(String.valueOf(data.getNetsalesR())) ? 0 : (new BigDecimal(data.getNetsalesR())).doubleValue());
+                    celldata2.setCellStyle(styleC25);
+
+                    HSSFCell celldata3 = row.createCell(3);
+                    celldata3.setCellValue("".equalsIgnoreCase(String.valueOf(data.getTaxR())) ? 0 : (new BigDecimal(data.getTaxR())).doubleValue());
+                    celldata3.setCellStyle(styleC25);
+
+                    HSSFCell celldata4 = row.createCell(4);
+                    celldata4.setCellValue("".equalsIgnoreCase(String.valueOf(data.getInsR())) ? 0 : (new BigDecimal(data.getInsR())).doubleValue());
+                    celldata4.setCellStyle(styleC25);
+
+                    HSSFCell celldata5 = row.createCell(5);
+                    celldata5.setCellValue("".equalsIgnoreCase(String.valueOf(data.getCommsR())) ? 0 : (new BigDecimal(data.getCommsR())).doubleValue());
+                    celldata5.setCellStyle(styleC25);
+
+                    HSSFCell celldata6 = row.createCell(6);
+                    celldata6.setCellValue("".equalsIgnoreCase(String.valueOf(data.getAmountwendyR())) ? 0 : (new BigDecimal(data.getAmountwendyR())).doubleValue());
+                    celldata6.setCellStyle(styleC25);
+
+                    HSSFCell celldata7 = row.createCell(7);
+                    celldata7.setCellValue("".equalsIgnoreCase(String.valueOf(data.getAmountinboundR())) ? 0 : (new BigDecimal(data.getAmountinboundR())).doubleValue());
+                    celldata7.setCellStyle(styleC25);
+
+                    HSSFCell celldata8 = row.createCell(8);
+                    celldata8.setCellValue("".equalsIgnoreCase(String.valueOf(data.getDiffR())) ? 0 : (new BigDecimal(data.getDiffR())).doubleValue());
+                    celldata8.setCellStyle(styleC25);
+                }
+            }
+        }
+    }
+    
     private void getSummaryTicketAdjustCostAndIncome(HSSFWorkbook wb, List summaryTicketCostIncome){
         String sheetName = "income";// name of sheet
         String sheetName1 = "income_summary";
@@ -4331,3 +4907,4 @@ public class ExportDataToExcelView extends AbstractExcelView {
             
     }
 }
+
