@@ -1,6 +1,7 @@
 package com.smi.travel.datalayer.entity;
 // Generated Dec 24, 2014 10:24:56 AM by Hibernate Tools 3.6.0
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -24,6 +25,7 @@ public class BillableDesc  {
      private String currency;
      private String curCost;
      private String refItemId;
+     private BigDecimal ExRate;
      private Date billDate;
 
      
@@ -37,7 +39,7 @@ public class BillableDesc  {
         this.price = price;
         this.isBill = isBill;
     }
-    public BillableDesc(Billable billable, MBilltype MBilltype, AirticketAirline airticketAirline, int cost, int price, int isBill, String remark,String detail,String currency,Date billDate,String refItemId,String curCost) {
+    public BillableDesc(Billable billable, MBilltype MBilltype, AirticketAirline airticketAirline, int cost, int price, int isBill, String remark,String detail,String currency,Date billDate,String refItemId,String curCost,BigDecimal ExRate) {
        this.billable = billable;
        this.MBilltype = MBilltype;
        this.airticketAirline = airticketAirline;
@@ -49,6 +51,7 @@ public class BillableDesc  {
        this.currency = currency;
        this.curCost = curCost;
        this.billDate = billDate;
+       this.ExRate = ExRate;
        this.refItemId = refItemId;
     }
    
@@ -147,6 +150,14 @@ public class BillableDesc  {
 
     public void setCurCost(String curCost) {
         this.curCost = curCost;
+    }
+
+    public BigDecimal getExRate() {
+        return ExRate;
+    }
+
+    public void setExRate(BigDecimal ExRate) {
+        this.ExRate = ExRate;
     }
 
 

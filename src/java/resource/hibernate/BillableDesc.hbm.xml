@@ -34,6 +34,9 @@
         <property name="curCost" type="string">
             <column name="cur_cost" length="3" />
         </property>
+        <property name="ExRate" type="big_decimal">
+            <column name="ex_rate" precision="10" />
+        </property>
         <property name="billDate" type="date">
             <column name="bill_date" length="10" />
         </property>
