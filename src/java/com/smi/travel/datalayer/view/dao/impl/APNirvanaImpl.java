@@ -805,6 +805,7 @@ public class APNirvanaImpl implements APNirvanaDao {
     
     private String genReport(List<APNirvana> apDataList , String fullFileName , List<APNirvana> APList){
       String status ="";
+        UtilityFunction util = new UtilityFunction();
      try {
             HSSFWorkbook workbook = new HSSFWorkbook();
             HSSFSheet sheet = workbook.createSheet();
@@ -829,7 +830,7 @@ public class APNirvanaImpl implements APNirvanaDao {
                 cell = dataRow.createCell(cellnum++);
 //                cell.setCellValue(ap.getTransdate());
                 cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getDuedate());
+                cell.setCellValue(ap.getDuedate() == null ? "":util.convertDateToString(ap.getDuedate()));
                 cell = dataRow.createCell(cellnum++);
                 cell.setCellValue(ap.getCurrencyid());
                 cell = dataRow.createCell(cellnum++);
@@ -865,9 +866,9 @@ public class APNirvanaImpl implements APNirvanaDao {
                 cell = dataRow.createCell(cellnum++);
                 cell.setCellValue(UtilityFunction.getObjectString(ap.getWhthmamt()));
                 cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getYear());
+                cell.setCellValue(ap.getYear() == null ? "":ap.getYear().toString());
                 cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getPeriod());
+                cell.setCellValue(ap.getPeriod() == null ? "":ap.getPeriod().toString());
                 cell = dataRow.createCell(cellnum++);
                 cell.setCellValue(ap.getNote());
                 cell = dataRow.createCell(cellnum++);
