@@ -39,9 +39,8 @@ public class ExportDataToExcelController  extends SMITravelController{
     private static final String ReportName = "name";
     private static final String ParaMeter = "parameter";
     private static final String SummaryAirline = "SummaryAirline";
-    private static final String TicketFareSummaryAirlinePax = "TicketFareSummaryAirlinePax";
-    private static final String TicketFareSummaryAirlineDetail = "TicketFareSummaryAirlineDetail";
-    private static final String TicketFareSummaryAirlineRouting = "TicketFareSummaryAirlineRouting";
+    private static final String TicketFareSummaryAirline = "TicketFareSummaryAirline";
+
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String output =  request.getParameter("output");
@@ -126,15 +125,9 @@ public class ExportDataToExcelController  extends SMITravelController{
         else if(SummaryAirline.equals(name)){
             System.out.println("get excel data ap SummaryAirline");
             data = reportservice.listSummaryAirline();
-        }else if(TicketFareSummaryAirlinePax.equals(name)){
+        }else if(TicketFareSummaryAirline.equals(name)){
             System.out.println("get excel data TicketFareSummaryAirlinePax");
-            data = reportservice.getTicketFareSumAirline(typeRouting,routingDetail,issuedateFrom,issuedateTo,invdateFrom,invdateTo,airlineCode,passenger,agentId,department,staff,termPay,printby,"pax");
-        }else if(TicketFareSummaryAirlineDetail.equals(name)){
-            System.out.println("get excel data TicketFareSummaryAirlineDetail");
-            data = reportservice.getTicketFareSumAirline(typeRouting,routingDetail,issuedateFrom,issuedateTo,invdateFrom,invdateTo,airlineCode,passenger,agentId,department,staff,termPay,printby,"detail");
-        }else if(TicketFareSummaryAirlineRouting.equals(name)){
-            System.out.println("get excel data TicketFareSummaryAirlineRouting");
-            data = reportservice.getTicketFareSumAirline(typeRouting,routingDetail,issuedateFrom,issuedateTo,invdateFrom,invdateTo,airlineCode,passenger,agentId,department,staff,termPay,printby,"routing");
+            data = reportservice.getTicketFareSumAirline(typeRouting,routingDetail,issuedateFrom,issuedateTo,invdateFrom,invdateTo,airlineCode,passenger,agentId,department,staff,termPay,printby);
         }
 		
         return new ModelAndView("ExportDataToExcelView",name,data).addObject(ReportName, name);

@@ -28,33 +28,53 @@ public class TicketSummaryAirlineView {
     private String headerdepartment;
     
     //routing
-    private String routing;
-    private String pax;
-    private String netsales;
-    private String tax;
-    private String ins;
-    private String comms;
-    private String amountwendy;
-    private String amountinbound;
-    private String diff;
+    private String routingR;
+    private String paxR;
+    private String netsalesR;
+    private String taxR;
+    private String insR;
+    private String commsR;
+    private String amountwendyR;
+    private String amountinboundR;
+    private String diffR;
     
     //pax
-    private String paymenttype;
-    private String typerouting;
-    private String amountoutbound;
+    private String paxP;
+    private String paymenttypeP;
+    private String typeroutingP;
+    private String netsalesP;
+    private String taxP;
+    private String insP;
+    private String commsP;
+    private String amountwendyP;
+    private String amountinboundP;
+    
+    
 
     //detail
-    private String invno;
-    private String invdate;
-    private String department;
-    private String staff;
-    private String termpay;
-    private String passenger;
-    private String typepayment;
-    private String air;
-    private String ticketno;
-    private String issuedate;
-    private String remark;
+    private String invnoD;
+    private String invdateD;
+    private String departmentD;
+    private String staffD;
+    private String termpayD;
+    private String passengerD;
+    private String typepaymentD;
+    private String typeroutingD;
+    private String routingD;
+    private String paxD;
+    private String airD;
+    private String ticketnoD;
+    private String issuedateD;
+    private String netsalesD;
+    private String taxD;
+    private String insD;
+    private String commsD;
+    private String amountwendyD;
+    private String amountinboundD;
+    private String remarksD;
+    private String diffD;
+
+    private String page;
     
     public String getHeaderdatefrom() {
         return headerdatefrom;
@@ -152,188 +172,326 @@ public class TicketSummaryAirlineView {
         this.headerdepartment = headerdepartment;
     }
 
-    public String getRouting() {
-        return routing;
+    public String getRoutingR() {
+        return routingR;
     }
 
-    public void setRouting(String routing) {
-        this.routing = routing;
+    public void setRoutingR(String routingR) {
+        this.routingR = routingR;
     }
 
-    public String getPax() {
-        return pax;
+    public String getPaxR() {
+        return paxR;
     }
 
-    public void setPax(String pax) {
-        this.pax = pax;
+    public void setPaxR(String paxR) {
+        this.paxR = paxR;
     }
 
-    public String getNetsales() {
-        return netsales;
+    public String getNetsalesR() {
+        return netsalesR;
     }
 
-    public void setNetsales(String netsales) {
-        this.netsales = netsales;
+    public void setNetsalesR(String netsalesR) {
+        this.netsalesR = netsalesR;
     }
 
-    public String getTax() {
-        return tax;
+    public String getTaxR() {
+        return taxR;
     }
 
-    public void setTax(String tax) {
-        this.tax = tax;
+    public void setTaxR(String taxR) {
+        this.taxR = taxR;
     }
 
-    public String getIns() {
-        return ins;
+    public String getInsR() {
+        return insR;
     }
 
-    public void setIns(String ins) {
-        this.ins = ins;
+    public void setInsR(String insR) {
+        this.insR = insR;
     }
 
-    public String getComms() {
-        return comms;
+    public String getCommsR() {
+        return commsR;
     }
 
-    public void setComms(String comms) {
-        this.comms = comms;
+    public void setCommsR(String commsR) {
+        this.commsR = commsR;
     }
 
-    public String getAmountwendy() {
-        return amountwendy;
+    public String getAmountwendyR() {
+        return amountwendyR;
     }
 
-    public void setAmountwendy(String amountwendy) {
-        this.amountwendy = amountwendy;
+    public void setAmountwendyR(String amountwendyR) {
+        this.amountwendyR = amountwendyR;
     }
 
-    public String getAmountinbound() {
-        return amountinbound;
+    public String getAmountinboundR() {
+        return amountinboundR;
     }
 
-    public void setAmountinbound(String amountinbound) {
-        this.amountinbound = amountinbound;
+    public void setAmountinboundR(String amountinboundR) {
+        this.amountinboundR = amountinboundR;
     }
 
-    public String getDiff() {
-        return diff;
+    public String getDiffR() {
+        return diffR;
     }
 
-    public void setDiff(String diff) {
-        this.diff = diff;
+    public void setDiffR(String diffR) {
+        this.diffR = diffR;
     }
 
-    public String getPaymenttype() {
-        return paymenttype;
+    public String getPaxP() {
+        return paxP;
     }
 
-    public void setPaymenttype(String paymenttype) {
-        this.paymenttype = paymenttype;
+    public void setPaxP(String paxP) {
+        this.paxP = paxP;
     }
 
-    public String getTyperouting() {
-        return typerouting;
+    public String getPaymenttypeP() {
+        return paymenttypeP;
     }
 
-    public void setTyperouting(String typerouting) {
-        this.typerouting = typerouting;
+    public void setPaymenttypeP(String paymenttypeP) {
+        this.paymenttypeP = paymenttypeP;
     }
 
-    public String getAmountoutbound() {
-        return amountoutbound;
+    public String getTyperoutingP() {
+        return typeroutingP;
     }
 
-    public void setAmountoutbound(String amountoutbound) {
-        this.amountoutbound = amountoutbound;
+    public void setTyperoutingP(String typeroutingP) {
+        this.typeroutingP = typeroutingP;
     }
 
-    public String getInvno() {
-        return invno;
+    public String getNetsalesP() {
+        return netsalesP;
     }
 
-    public void setInvno(String invno) {
-        this.invno = invno;
+    public void setNetsalesP(String netsalesP) {
+        this.netsalesP = netsalesP;
     }
 
-    public String getInvdate() {
-        return invdate;
+    public String getTaxP() {
+        return taxP;
     }
 
-    public void setInvdate(String invdate) {
-        this.invdate = invdate;
+    public void setTaxP(String taxP) {
+        this.taxP = taxP;
     }
 
-    public String getDepartment() {
-        return department;
+    public String getInsP() {
+        return insP;
     }
 
-    public void setDepartment(String department) {
-        this.department = department;
+    public void setInsP(String insP) {
+        this.insP = insP;
     }
 
-    public String getStaff() {
-        return staff;
+    public String getCommsP() {
+        return commsP;
     }
 
-    public void setStaff(String staff) {
-        this.staff = staff;
+    public void setCommsP(String commsP) {
+        this.commsP = commsP;
     }
 
-    public String getTermpay() {
-        return termpay;
+    public String getAmountwendyP() {
+        return amountwendyP;
     }
 
-    public void setTermpay(String termpay) {
-        this.termpay = termpay;
+    public void setAmountwendyP(String amountwendyP) {
+        this.amountwendyP = amountwendyP;
     }
 
-    public String getPassenger() {
-        return passenger;
+    public String getAmountinboundP() {
+        return amountinboundP;
     }
 
-    public void setPassenger(String passenger) {
-        this.passenger = passenger;
+    public void setAmountinboundP(String amountinboundP) {
+        this.amountinboundP = amountinboundP;
     }
 
-    public String getTypepayment() {
-        return typepayment;
+    public String getInvnoD() {
+        return invnoD;
     }
 
-    public void setTypepayment(String typepayment) {
-        this.typepayment = typepayment;
+    public void setInvnoD(String invnoD) {
+        this.invnoD = invnoD;
     }
 
-    public String getAir() {
-        return air;
+    public String getInvdateD() {
+        return invdateD;
     }
 
-    public void setAir(String air) {
-        this.air = air;
+    public void setInvdateD(String invdateD) {
+        this.invdateD = invdateD;
     }
 
-    public String getTicketno() {
-        return ticketno;
+    public String getDepartmentD() {
+        return departmentD;
     }
 
-    public void setTicketno(String ticketno) {
-        this.ticketno = ticketno;
+    public void setDepartmentD(String departmentD) {
+        this.departmentD = departmentD;
     }
 
-    public String getIssuedate() {
-        return issuedate;
+    public String getStaffD() {
+        return staffD;
     }
 
-    public void setIssuedate(String issuedate) {
-        this.issuedate = issuedate;
+    public void setStaffD(String staffD) {
+        this.staffD = staffD;
     }
 
-    public String getRemark() {
-        return remark;
+    public String getTermpayD() {
+        return termpayD;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setTermpayD(String termpayD) {
+        this.termpayD = termpayD;
     }
+
+    public String getPassengerD() {
+        return passengerD;
+    }
+
+    public void setPassengerD(String passengerD) {
+        this.passengerD = passengerD;
+    }
+
+    public String getTypepaymentD() {
+        return typepaymentD;
+    }
+
+    public void setTypepaymentD(String typepaymentD) {
+        this.typepaymentD = typepaymentD;
+    }
+
+    public String getTyperoutingD() {
+        return typeroutingD;
+    }
+
+    public void setTyperoutingD(String typeroutingD) {
+        this.typeroutingD = typeroutingD;
+    }
+
+    public String getRoutingD() {
+        return routingD;
+    }
+
+    public void setRoutingD(String routingD) {
+        this.routingD = routingD;
+    }
+
+    public String getPaxD() {
+        return paxD;
+    }
+
+    public void setPaxD(String paxD) {
+        this.paxD = paxD;
+    }
+
+    public String getAirD() {
+        return airD;
+    }
+
+    public void setAirD(String airD) {
+        this.airD = airD;
+    }
+
+    public String getTicketnoD() {
+        return ticketnoD;
+    }
+
+    public void setTicketnoD(String ticketnoD) {
+        this.ticketnoD = ticketnoD;
+    }
+
+    public String getIssuedateD() {
+        return issuedateD;
+    }
+
+    public void setIssuedateD(String issuedateD) {
+        this.issuedateD = issuedateD;
+    }
+
+    public String getNetsalesD() {
+        return netsalesD;
+    }
+
+    public void setNetsalesD(String netsalesD) {
+        this.netsalesD = netsalesD;
+    }
+
+    public String getTaxD() {
+        return taxD;
+    }
+
+    public void setTaxD(String taxD) {
+        this.taxD = taxD;
+    }
+
+    public String getInsD() {
+        return insD;
+    }
+
+    public void setInsD(String insD) {
+        this.insD = insD;
+    }
+
+    public String getCommsD() {
+        return commsD;
+    }
+
+    public void setCommsD(String commsD) {
+        this.commsD = commsD;
+    }
+
+    public String getAmountwendyD() {
+        return amountwendyD;
+    }
+
+    public void setAmountwendyD(String amountwendyD) {
+        this.amountwendyD = amountwendyD;
+    }
+
+    public String getAmountinboundD() {
+        return amountinboundD;
+    }
+
+    public void setAmountinboundD(String amountinboundD) {
+        this.amountinboundD = amountinboundD;
+    }
+
+    public String getRemarksD() {
+        return remarksD;
+    }
+
+    public void setRemarksD(String remarksD) {
+        this.remarksD = remarksD;
+    }
+
+    public String getDiffD() {
+        return diffD;
+    }
+
+    public void setDiffD(String diffD) {
+        this.diffD = diffD;
+    }
+
+    public String getPage() {
+        return page;
+    }
+
+    public void setPage(String page) {
+        this.page = page;
+    }
+    
+  
 
 }

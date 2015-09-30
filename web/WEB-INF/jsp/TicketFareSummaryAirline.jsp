@@ -725,31 +725,7 @@ function printTicketSummaryAirline(){
     var termPay = document.getElementById("termPay").value;
     if((invFrom !== '') && (invTo !== '')){
         if(reportType == 1){
-            window.open("Excel.smi?name=TicketFareSummaryAirlinePax&typeRouting=" + typeRouting 
-                    + "&routingDetail=" + routingDetail 
-                    + "&issuedateFrom=" + issuefrom 
-                    + "&issuedateTo=" + issueto 
-                    + "&invdateFrom=" + invFrom 
-                    + "&invdateTo=" + invTo 
-                    + "&airlineCode=" + airlineCode 
-                    + "&passenger=" + passenger
-                    + "&agentId=" + agentId 
-                    + "&department=" + department 
-                    + "&staff=" + salebyUser 
-                    + "&termPay=" + termPay);
-            window.open("Excel.smi?name=TicketFareSummaryAirlineDetail&typeRouting=" + typeRouting 
-                    + "&routingDetail=" + routingDetail 
-                    + "&issuedateFrom=" + issuefrom 
-                    + "&issuedateTo=" + issueto 
-                    + "&invdateFrom=" + invFrom 
-                    + "&invdateTo=" + invTo 
-                    + "&airlineCode=" + airlineCode 
-                    + "&passenger=" + passenger
-                    + "&agentId=" + agentId 
-                    + "&department=" + department 
-                    + "&staff=" + salebyUser 
-                    + "&termPay=" + termPay);
-            window.open("Excel.smi?name=TicketFareSummaryAirlineRouting&typeRouting=" + typeRouting 
+            window.open("Excel.smi?name=TicketFareSummaryAirline&typeRouting=" + typeRouting 
                     + "&routingDetail=" + routingDetail 
                     + "&issuedateFrom=" + issuefrom 
                     + "&issuedateTo=" + issueto 
@@ -763,9 +739,9 @@ function printTicketSummaryAirline(){
                     + "&termPay=" + termPay);
         }else if(reportType == 2){
         }   
-    } else if((invFrom !== '') && (issueto !== '')){
+    } else if((issuefrom !== '') && (issueto !== '')){
         if(reportType == 1){
-            window.open("Excel.smi?name=TicketFareSummaryAirlinePax&typeRouting=" + typeRouting 
+            window.open("Excel.smi?name=TicketFareSummaryAirline&typeRouting=" + typeRouting 
                     + "&routingDetail=" + routingDetail 
                     + "&issuedateFrom=" + issuefrom 
                     + "&issuedateTo=" + issueto 
@@ -777,30 +753,6 @@ function printTicketSummaryAirline(){
                     + "&department=" + department 
                     + "&staff=" + salebyUser 
                     + "&termPay=" + termPay);
-            window.open("Excel.smi?name=TicketFareSummaryAirlineDetail&typeRouting=" + typeRouting 
-                    + "&routingDetail=" + routingDetail 
-                    + "&issuedateFrom=" + issuefrom 
-                    + "&issuedateTo=" + issueto 
-                    + "&invdateFrom=" + invFrom 
-                    + "&invdateTo=" + invTo 
-                    + "&airlineCode=" + airlineCode 
-                    + "&passenger=" + passenger
-                    + "&agentId=" + agentId 
-                    + "&department=" + department 
-                    + "&staff=" + salebyUser 
-                    + "&termPay=" + termPay);
-            window.open("Excel.smi?name=TicketFareSummaryAirlineRouting&typeRouting=" + typeRouting 
-                    + "&routingDetail=" + routingDetail 
-                    + "&issuedateFrom=" + issuefrom 
-                    + "&issuedateTo=" + issueto 
-                    + "&invdateFrom=" + invFrom 
-                    + "&invdateTo=" + invTo 
-                    + "&airlineCode=" + airlineCode 
-                    + "&passenger=" + passenger
-                    + "&agentId=" + agentId 
-                    + "&department=" + department 
-                    + "&staff=" + salebyUser 
-                    + "&termPay=" + termPay);        
         }else if(reportType == 2){
         }   
     } else {

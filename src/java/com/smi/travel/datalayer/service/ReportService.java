@@ -250,8 +250,8 @@ public class ReportService {
         return getApNirvanaDao().getApNirvanaReport(paymentType, producttype, status, from, to, printby);
     }
     
-    public List getTicketFareSumAirline(String typeRouting,String routingDetail,String dateFrom,String dateTo,String invdateForm,String invdateTo,String airlineCode,String passenger,String agentId,String department,String saleBy,String termPay,String printby,String groupBy){
-        return ticketFareReportDao.getTicketFareSumAirline(typeRouting, routingDetail, dateFrom, dateTo, invdateForm, invdateTo, airlineCode, passenger, agentId, department, saleBy, termPay, printby, groupBy);
+    public List getTicketFareSumAirline(String typeRouting,String routingDetail,String dateFrom,String dateTo,String invdateForm,String invdateTo,String airlineCode,String passenger,String agentId,String department,String saleBy,String termPay,String printby){
+        return ticketFareReportDao.getTicketFareSumAirline(typeRouting, routingDetail, dateFrom, dateTo, invdateForm, invdateTo, airlineCode, passenger, agentId, department, saleBy, termPay, printby);
     }
     
     public List getBillAirAgentReport(){
