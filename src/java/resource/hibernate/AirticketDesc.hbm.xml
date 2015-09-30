@@ -26,10 +26,10 @@
         <property name="isBill" type="java.lang.Integer">
             <column name="is_bill" />
         </property>
-        <property name="curAmount" type="java.lang.String">
+        <property name="curAmount" type="string">
             <column name="cur_amount" length="3"/>
         </property>
-         <property name="curCost" type="java.lang.String">
+         <property name="curCost" type="string">
             <column name="cur_cost" length="3"/>
         </property>
     </class>

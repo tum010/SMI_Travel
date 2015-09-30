@@ -117,7 +117,8 @@ public class HotelDetailController extends SMITravelController {
             hotelBooking.setDeadline(util.convertStringToDate(Deadline));
             hotelBooking.setFlight(Flight);
             hotelBooking.setIsBill(util.convertStringToInteger(isBill));
-            hotelBooking.setCurrency(currency);
+            hotelBooking.setCurCost("");
+            hotelBooking.setCurAmount("");
             if (StringUtils.isNotEmpty(orderNo)) {
                 hotelBooking.setOrderNo(Integer.parseInt(orderNo));
             }
