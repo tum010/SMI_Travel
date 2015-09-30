@@ -274,8 +274,8 @@ public class AirTicketController extends SMITravelController {
             airDesc.setQty(qtyInt);
             airDesc.setCost(costInt);
             airDesc.setAmount(amountInt);
-            airDesc.setCurrency(currency);
-
+            airDesc.setCurAmount("");
+            airDesc.setCurCost("");
             if (StringUtils.isNotEmpty(airDesc.getDetail())) {
                 if (airDesc.getId() == null) {
                     airDesc.setIsBill(new Integer(0));

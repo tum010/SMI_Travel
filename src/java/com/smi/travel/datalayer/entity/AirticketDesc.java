@@ -16,7 +16,8 @@ public class AirticketDesc   {
      private Integer qty;
      private Integer amount;
      private Integer isBill;
-     private String currency;
+     private String curAmount;
+     private String curCost;
 
     public AirticketDesc() {
     }
@@ -26,14 +27,16 @@ public class AirticketDesc   {
         this.airticketBooking = airticketBooking;
         this.detail = detail;
     }
-    public AirticketDesc(AirticketBooking airticketBooking, String detail, Integer cost, Integer qty, Integer amount,Integer isBill, String currency) {
+    public AirticketDesc(AirticketBooking airticketBooking, String detail, Integer cost, Integer qty, Integer amount,Integer isBill ,String curAmount,String curCost) {
        this.airticketBooking = airticketBooking;
        this.detail = detail;
        this.cost = cost;
        this.qty = qty;
        this.amount = amount;
        this.isBill = isBill;
-       this.currency = currency;
+       this.curAmount = curAmount;
+       this.curCost = curCost;
+       
     }
    
     public String getId() {
@@ -90,13 +93,23 @@ public class AirticketDesc   {
         this.isBill = isBill;
     }
 
-    public String getCurrency() {
-        return currency;
+    public String getCurAmount() {
+        return curAmount;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
+    public void setCurAmount(String curAmount) {
+        this.curAmount = curAmount;
     }
+
+    public String getCurCost() {
+        return curCost;
+    }
+
+    public void setCurCost(String curCost) {
+        this.curCost = curCost;
+    }
+
+    
    
 }
 
