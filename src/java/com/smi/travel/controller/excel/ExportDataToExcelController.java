@@ -40,6 +40,7 @@ public class ExportDataToExcelController  extends SMITravelController{
     private static final String ParaMeter = "parameter";
     private static final String SummaryAirline = "SummaryAirline";
     private static final String TicketFareSummaryAirline = "TicketFareSummaryAirline";
+    private static final String SummaryTicketAdjustCostAndIncome = "SummaryTicketAdjustCostAndIncome";
 
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -69,12 +70,15 @@ public class ExportDataToExcelController  extends SMITravelController{
         String to = request.getParameter("arToDate");
         String status = request.getParameter("arStatus");
         
+        String reportType = request.getParameter("reportType");
+        
         //TicketFareSummaryAirline
         String typeRouting = request.getParameter("typeRouting");
         String routingDetail = request.getParameter("routingDetail");
         String passenger = request.getParameter("passenger");
         String agentId = request.getParameter("agentId");
 
+        
         SystemUser user = (SystemUser) session.getAttribute("USER");
         String printby = user.getRole().getName(); 
         List data  = new ArrayList();
@@ -121,13 +125,25 @@ public class ExportDataToExcelController  extends SMITravelController{
             String payment = request.getParameter("payment");
             System.out.println("get excel data ap ApReport");
             data = reportservice.getApNirvanaReport(payment, ticketType, status, dateFrom, dateTo, printby);
-        }
-        else if(SummaryAirline.equals(name)){
+        }else if(SummaryAirline.equals(name)){
             System.out.println("get excel data ap SummaryAirline");
             data = reportservice.listSummaryAirline();
         }else if(TicketFareSummaryAirline.equals(name)){
-            System.out.println("get excel data TicketFareSummaryAirlinePax");
+            System.out.println("get excel data TicketFareSummaryAirline");
             data = reportservice.getTicketFareSumAirline(typeRouting,routingDetail,issuedateFrom,issuedateTo,invdateFrom,invdateTo,airlineCode,passenger,agentId,department,staff,termPay,printby);
+        }else if(SummaryTicketAdjustCostAndIncome.equals(name)){
+            System.out.println("get excel data ap SummaryTicketAdjustCostAndIncome");
+            String invoiceFromDate = request.getParameter("invoiceFromDate");
+            String invoiceToDate = request.getParameter("invoiceToDate");
+            String issueFrom = request.getParameter("issueFrom");
+            String issueTo = request.getParameter("issueTo");
+            String paymentType = request.getParameter("paymentType");
+            String departmentt = request.getParameter("department");
+            String salebyUser = request.getParameter("salebyName");
+            String termPayt = request.getParameter("termPay");
+            System.out.println("Term : " + termPayt);
+            
+            data = reportservice.getSummaryTicketAdjustCostAndIncome(reportType, invoiceFromDate, invoiceToDate, issueFrom, issueTo, paymentType, departmentt, salebyUser, termPayt);
         }
 		
         return new ModelAndView("ExportDataToExcelView",name,data).addObject(ReportName, name);

@@ -7,6 +7,7 @@
 package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.dao.PaymentAirTicketDao;
+import com.smi.travel.datalayer.dao.SummaryTicketAdjustCostAndIncomeDao;
 import com.smi.travel.datalayer.view.dao.APNirvanaDao;
 import com.smi.travel.datalayer.view.dao.ARNirvanaDao;
 import com.smi.travel.datalayer.view.dao.AgentCommissionReportDao;
@@ -81,6 +82,7 @@ public class ReportService {
     private CollectionNirvanaDao collectionNirvanaDao;
     private APNirvanaDao apNirvanaDao;
     private PaymentAirTicketDao paymentAirTicketDao;
+    private SummaryTicketAdjustCostAndIncomeDao summaryTicketAdjustCostAndIncomeDao;
     
     public List getInvoiceMonthly(String BillFrom,String BillTo,String ClientName,String Payment,String Accno,String vattype,String from,String to,String department){
         return invoiceReportDao.getInvoiceMonthly(BillFrom, BillTo, ClientName, Payment, Accno, vattype, from, to, department);
@@ -530,4 +532,17 @@ public class ReportService {
     public List getPaymentAirViewReport(String payno){
         return paymentAirTicketDao.getPaymentAirViewReport(payno);
     }
+    
+    public SummaryTicketAdjustCostAndIncomeDao getSummaryTicketAdjustCostAndIncomeDao() {
+        return summaryTicketAdjustCostAndIncomeDao;
+    }
+
+    public List getSummaryTicketAdjustCostAndIncome(String reportType,String invoiceFromDate,String invoiceToDate,String issueFrom,String issueTo,String paymentType,String departmentt,String salebyUser,String termPayt) {
+        return summaryTicketAdjustCostAndIncomeDao.getSummaryTicketAdjustCostAndIncome(reportType, invoiceFromDate, invoiceToDate, issueFrom, issueTo, paymentType, departmentt, salebyUser, termPayt);
+    }
+
+    public void setSummaryTicketAdjustCostAndIncomeDao(SummaryTicketAdjustCostAndIncomeDao summaryTicketAdjustCostAndIncomeDao) {
+        this.summaryTicketAdjustCostAndIncomeDao = summaryTicketAdjustCostAndIncomeDao;
+    }
+    
 }
