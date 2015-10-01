@@ -123,6 +123,7 @@
                                     <th>Qty</th> -->
                                     <th>Hotel</th>
                                     <th>Total Cost</th>
+                                    <th>Cur</th> 
                                     <th>Total Price</th>
                                     <th>Cur</th> 
                                    <!-- <th>Total</th> -->
@@ -131,6 +132,7 @@
                                     <th>Category</th>
                                     <th>Description</th>
                                     <th>Total Cost</th>
+                                     <th>Cur</th>
                                     <th>Total Price</th>
                                     <th>Cur</th>
                                     <th>Remark </th>
@@ -161,6 +163,7 @@
                                         <td>${table.description} </td>
                                         <td>${table.inboundHotel} </td>
                                         <td class='moneyformat tdright'>${(table.inboundCost * table.inboundQty) + (table.inboundChCost * table.inboundChQty)+ (table.inboundInCost * table.inboundInQty)} </td>
+                                        <td class="center">${table.curCost} </td>
                                         <td class='moneyformat tdright'>${(table.inboundPrice * table.inboundQty) + (table.inboundChPrice * table.inboundChQty)+ (table.inboundInPrice * table.inboundInQty)} </td>
                                         <td class="center" >${table.curAmount} </td>
                                     </c:when>
@@ -168,6 +171,7 @@
                                         <td>${table.category} </td>
                                         <td>${table.description} </td>
                                         <td class='moneyformat tdright'> ${(table.outboundAdQty * table.outboundAdCost)+(table.outboundChQty * table.outboundChCost)+(table.outboundInQty * table.outboundInCost)}</td>
+                                        <td class="center">${table.curCost} </td>
                                         <td class='moneyformat tdright'> ${(table.outboundAdQty * table.outboundAdPrice)+(table.outboundChQty * table.outboundChPrice)+(table.outboundInQty * table.outboundInPrice)}</td>
                                         <td class="center">${table.curAmount} </td>
                                         <td>${table.remark} </td>

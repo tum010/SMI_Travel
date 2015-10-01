@@ -544,20 +544,20 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                        <label class="col-sm-3 control-label" >Currency</label>
-                                        <div class="col-sm-4">                             
-                                            <select class="form-control" id="currency" name="currency">
+                                        <label class="col-sm-3 control-label" style="width: 130px">Cost Currency</label>
+                                            <div class="col-sm-4">                             
+                                            <select class="form-control" id="currencycost" name="currencycost">
                                                 <c:forEach var="currency" items="${currencyList}">
                                                     <c:set var="select" value="" />
-                                                    <c:if test="${currency.code == requestScope['currency']}">
+                                                    <c:if test="${currency.code == requestScope['currencycost']}">
                                                         <c:set var="select" value="selected" />
                                                     </c:if>
                                                     <option value="${currency.code}" ${select}>${currency.code}</option>
                                                 </c:forEach>
                                             </select>
+                                            </div>
                                         </div>
-                                        </div>
-                                    </div>                           
+                                    </div>                        
                                 </div>
                                             
                                 <div class="row">
@@ -575,14 +575,23 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 " > 
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label" for="remark">Remark</label>
-                                            <div class="col-sm-7" >
-                                                <textarea rows="2" cols="50" class="form-control" maxlength="255" id="remark" name="remark" >${requestScope['remark']}</textarea>                                              
+                                            <label class="col-sm-3 control-label" style="width: 130px">Price Currency</label>
+                                            <div class="col-sm-4">                             
+                                            <select class="form-control" id="currency" name="currency">
+                                                <c:forEach var="currency" items="${currencyList}">
+                                                    <c:set var="select" value="" />
+                                                    <c:if test="${currency.code == requestScope['currency']}">
+                                                        <c:set var="select" value="selected" />
+                                                    </c:if>
+                                                    <option value="${currency.code}" ${select}>${currency.code}</option>
+                                                </c:forEach>
+                                            </select>
                                             </div>
                                         </div>
-                                    </div>       
+                                    </div>
+                                    
                                     
                                 </div>
                                             
@@ -601,6 +610,14 @@
                                             </div>
                                         </div>
                                     </div>
+                                              <div class="col-md-6 " > 
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label" for="remark">Remark</label>
+                                            <div class="col-sm-7" >
+                                                <textarea rows="2" cols="50" class="form-control" maxlength="255" id="remark" name="remark" >${requestScope['remark']}</textarea>                                              
+                                            </div>
+                                        </div>
+                                    </div>     
                                                                    
                                 </div>
                             </c:when>
