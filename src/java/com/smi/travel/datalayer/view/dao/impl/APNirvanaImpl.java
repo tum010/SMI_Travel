@@ -622,7 +622,7 @@ public class APNirvanaImpl implements APNirvanaDao {
                 .addScalar("paymenttype", Hibernate.STRING)
                 .addScalar("payment_detail_id", Hibernate.STRING) //88
                 .addScalar("rowid", Hibernate.STRING) //89
-//                .addScalar("payno", Hibernate.STRING) //89
+                .addScalar("payno", Hibernate.STRING) //89
                 .list();
 
         for (Object[] B : QueryList) {
