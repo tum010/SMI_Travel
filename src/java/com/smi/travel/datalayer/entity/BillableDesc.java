@@ -25,7 +25,7 @@ public class BillableDesc  {
      private String currency;
      private String curCost;
      private String refItemId;
-     private BigDecimal ExRate;
+     private BigDecimal exRate;
      private Date billDate;
 
      
@@ -39,7 +39,7 @@ public class BillableDesc  {
         this.price = price;
         this.isBill = isBill;
     }
-    public BillableDesc(Billable billable, MBilltype MBilltype, AirticketAirline airticketAirline, int cost, int price, int isBill, String remark,String detail,String currency,Date billDate,String refItemId,String curCost,BigDecimal ExRate) {
+    public BillableDesc(Billable billable, MBilltype MBilltype, AirticketAirline airticketAirline, int cost, int price, int isBill, String remark,String detail,String currency,Date billDate,String refItemId,String curCost,BigDecimal exRate) {
        this.billable = billable;
        this.MBilltype = MBilltype;
        this.airticketAirline = airticketAirline;
@@ -51,7 +51,7 @@ public class BillableDesc  {
        this.currency = currency;
        this.curCost = curCost;
        this.billDate = billDate;
-       this.ExRate = ExRate;
+       this.exRate = exRate;
        this.refItemId = refItemId;
     }
    
@@ -153,11 +153,11 @@ public class BillableDesc  {
     }
 
     public BigDecimal getExRate() {
-        return ExRate;
+        return exRate;
     }
 
-    public void setExRate(BigDecimal ExRate) {
-        this.ExRate = ExRate;
+    public void setExRate(BigDecimal exRate) {
+        this.exRate = exRate;
     }
 
 

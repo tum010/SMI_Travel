@@ -300,9 +300,11 @@
                             <th style="width:10%">Type</th>
                             <th style="width:20%">Detail</th>
                             <th style="width:7%">Cost</th>
+                            <th style="width:4%">Cur</th>
                             <th style="width:7%">Price</th>
-                            <th style="width:7%">Currency</th>
+                            <th style="width:4%">Cur</th>
                             <th style="width:7%">Status</th>
+                            <th style="width:10%">Ex. Rate</th>
                             <th style="width:17%">Bill Date</th>
                             <th style="width:20%">Remark</th>
                         </tr>
@@ -323,6 +325,7 @@
                             <td class="text-right"><input type="hidden" id="cost-${Counter.count}" name="cost-${Counter.count}" value="${b.cost}" />
                                     <div class="moneyformat">${b.cost eq 0 && b.MBilltype.id eq 6 ? '-': b.cost}</div>
                             </td>
+                            <td><input type="hidden" id="currencycost-${Counter.count}" name="currencycost-${Counter.count}" value="${b.curCost}" />${b.curCost}</td>
                             <td class="text-right"><input type="hidden" id="price-${Counter.count}" name="price-${Counter.count}" value="${b.price}" /><div class="moneyformat">${b.price }</div></td>
                             <td><input type="hidden" id="currency-${Counter.count}" name="currency-${Counter.count}" value="${b.currency}" />${b.currency} </td>
                             <td><c:if test="${b.isBill == 1}">
@@ -332,6 +335,7 @@
                                     Open
                                 </c:if>
                             </td>
+                            <td><input type="text" id="exrate-${Counter.count}" name="exrate-${Counter.count}" value="${b.exRate}" class="form-control text-right"  maxlength="7" /></td>
                             <td>      
                                
                                 <div class="input-group  datetime" id="billDescId-${Counter.count}" name="billDescId-${Counter.count}">
@@ -719,8 +723,29 @@
         //setformat();
         //$(".moneyformat").mask('000,000,000,000,000,000', {reverse: true});
         setformat();
+        
+//        var billableTable = $("#billableTable tr").length ;
+//        if(billableTable > 1) {
+//            for(var i = 1;i<billableTable;i++){
+//                if( $('#exrate-'+i).val() != "" ){
+//                    var exrate = $('#exrate-'+i).val(); 
+//                    if (exrate == ""){
+//                        exrate = 0;
+//                    }
+//                    exrate = parseFloat(exrate); 
+//                    document.getElementById("exrate-"+i).value = formatNumber(exrate);
+//                }
+//            }
+//        }
+        
     });
+    function replaceAll(find, replace, str) {
+      return str.replace(new RegExp(find, 'g'), replace);
+    }
 
+    function formatNumber(num) {
+        return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g,"$1,")
+    }
     function setformat() {
         $('.moneyformat').each(function () {
             var innerHTML = $(this).html();
@@ -728,4 +753,23 @@
         });
 
     }
+    
+//    function insertCommas(nField){
+//        if (/^0/.test(nField.value)){
+//            nField.value = nField.value.substring(0,1);
+//        }
+//        if (Number(nField.value.replace(/,/g,""))){
+//            var tmp = nField.value.replace(/,/g,"");
+//            tmp = tmp.toString().split('').reverse().join('').replace(/(\d{3})/g,'$1,').split('').reverse().join('').replace(/^,/,'');
+//            if (/\./g.test(tmp)){
+//                tmp = tmp.split(".");
+//                tmp[1] = tmp[1].replace(/\,/g,"").replace(/ /,"");
+//                nField.value = tmp[0]+"."+tmp[1]
+//            }else{
+//                nField.value = tmp.replace(/ /,"");
+//            } 
+//        }else{
+//            nField.value = nField.value.replace(/[^\d\,\.]/g,"").replace(/ /,"");
+//        }
+//    }
 </script>

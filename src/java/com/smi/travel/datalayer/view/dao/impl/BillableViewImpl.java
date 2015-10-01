@@ -53,8 +53,8 @@ private SessionFactory sessionFactory;
             bill.setPrice(util.convertObjectToInteger(B[3]));
             bill.setRefno(B[4].toString());
             bill.setDetail(B[5].toString());
-            bill.setCurAmount(B[6].toString());  
-            bill.setCurCost(B[8].toString());
+            bill.setCurAmount(String.valueOf(B[6]));  
+            bill.setCurCost(String.valueOf(B[8]));
             bill.setId(B[7].toString());       
             BillableList.add(bill);  
         }

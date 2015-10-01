@@ -27,6 +27,9 @@ import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.datalayer.view.entity.ReceiptDetailView;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -139,11 +142,16 @@ public class BillableController extends SMITravelController {
                     String remark = request.getParameter("remark-" + i);
                     String billdate = request.getParameter("billDate-"+i);
                     String refId = request.getParameter("billRefId-"+i);
-                    
+                    String exratetemp = request.getParameter("exrate-"+ i);
+                    BigDecimal exrate = new BigDecimal(BigInteger.ZERO);
+                    if(!"".equalsIgnoreCase(exratetemp)){
+                        exrate = new BigDecimal(exratetemp);
+                    }
                     Date billDate = convertStringToDate(billdate);
                     System.out.println("remark insert: " + remark);
                     System.out.println("billDate insert: " + billDate);
-                    updateRemarkByBillDescId(billForm, billDescId, remark, billDate);
+                    System.out.println("exrate insert: " + exrate);
+                    updateRemarkByBillDescId(billForm, billDescId, remark, billDate,exrate);
 
                 } else {
                     getBillDescListForm(request, billForm, i);
@@ -198,6 +206,8 @@ public class BillableController extends SMITravelController {
                 System.out.println("billableDescNopay size :" + billableDescNopay.size());
                 for (BillableDesc newBill : billableDescNopay) {
                     //  billable.getBillableDescs().add(newBill);
+                    newBill.setCurCost("null".equalsIgnoreCase(String.valueOf(newBill.getCurCost())) ? "" : newBill.getCurCost());
+                    newBill.setCurrency("null".equalsIgnoreCase(String.valueOf(newBill.getCurrency())) ? "" : newBill.getCurrency());
                     billableDesc.add(newBill);
                 }
                 System.out.println("billableDesc size :" + billable.getBillableDescs().size());
@@ -235,11 +245,16 @@ public class BillableController extends SMITravelController {
                 if (StringUtils.isNotEmpty(billDescId)) {
                     String remark = request.getParameter("remark-" + i);
                     String billdate = request.getParameter("billDate-"+ i);
+                    String exratetemp = request.getParameter("exrate-"+ i);
                     Date billDate = convertStringToDate(billdate);
-                    
-                    System.out.println("remark insert: " + remark);
-                    System.out.println("billDate insert: " + billdate);
-                    updateRemarkByBillDescId(billable, billDescId, remark, billDate);
+                    BigDecimal exrate = new BigDecimal(BigInteger.ZERO);
+                    if(!"".equalsIgnoreCase(exratetemp)){
+                        exrate = new BigDecimal(exratetemp);
+                    }
+                    System.out.println("remark update: " + remark);
+                    System.out.println("billDate update: " + billDate);
+                    System.out.println("exrate update: " + exrate);
+                    updateRemarkByBillDescId(billable, billDescId, remark, billDate,exrate);
 
                 } else {
                     billForm.setId(billable.getId());
@@ -405,6 +420,8 @@ public class BillableController extends SMITravelController {
         String detail = request.getParameter("detail-"+index);
         String billdate = request.getParameter("billDate-"+index);
         String currency = request.getParameter("currency-"+index);
+        String currencycost = request.getParameter("currencycost-"+index);
+        String exrate = request.getParameter("exrate-"+index);
         String refId = request.getParameter("billRefId-"+index);
         
         Date billDate =    convertStringToDate(billdate);
@@ -419,7 +436,11 @@ public class BillableController extends SMITravelController {
         bd.setDetail(detail);
         bd.setBillDate(billDate);
         bd.setRefItemId(refId);
-        bd.setCurrency(currency);
+        System.out.println(" currency " + currency);
+        bd.setCurrency("null".equalsIgnoreCase(String.valueOf(currency)) ? "" : currency);
+        bd.setCurCost("null".equalsIgnoreCase(String.valueOf(currencycost)) ? "" : currencycost);
+        
+//        bd.setExRate(new BigDecimal((exrate)));
         billable.getBillableDescs().add(bd);
     }
 
@@ -455,15 +476,20 @@ public class BillableController extends SMITravelController {
         this.agentService = agentService;
     }
 
-    private void updateRemarkByBillDescId(Billable billable, String billDescId, String remark,Date billDate) {
+    private void updateRemarkByBillDescId(Billable billable, String billDescId, String remark,Date billDate,BigDecimal exrate) {
         Iterator<BillableDesc> iterator = billable.getBillableDescs().iterator();
         while (iterator.hasNext()) {
             BillableDesc bd = iterator.next();
             if (billDescId.equalsIgnoreCase(bd.getId())) {
                 System.out.println("updateRemarkByBillDescId remark : " + remark);
                 System.out.println("updateRemarkByBillDescId billDate : " + billDate);
+                System.out.println("updateRemarkByBillDescId exrate : " + exrate);
                 bd.setRemark(remark);
-                
+                Double d = exrate.doubleValue();
+                BigDecimal bds = new BigDecimal(d).setScale(4, RoundingMode.HALF_EVEN);
+                d = bds.doubleValue();
+                bd.setExRate(bds);
+                System.out.println(" bd.getExRate() " + bd.getExRate());
                 bd.setBillDate(billDate);
                 return;
             }
