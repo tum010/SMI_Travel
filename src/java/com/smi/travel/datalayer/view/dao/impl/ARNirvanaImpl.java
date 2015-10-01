@@ -197,6 +197,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
                 .addScalar("company_branch", Hibernate.INTEGER)
                 .addScalar("inv_id", Hibernate.INTEGER)
                 .addScalar("receive_detail_id", Hibernate.INTEGER)
+                .addScalar("rowid", Hibernate.STRING)
                 .list();
         for (Object[] B : ARNirvanaList) {
             ARNirvana ar = new ARNirvana();
@@ -260,6 +261,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             ar.setCompany_branch((Integer) B[56]);
             ar.setInvid((Integer) B[57]);
             ar.setId((Integer) B[58]);
+            ar.setRowid(util.ConvertString(B[59]));
             data.add(ar);
         }
         session.close();
@@ -328,9 +330,21 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String strDate = sdf.format(cal.getTime());
                 Date date = new Date();
-                String hql = "update InvoiceDetail inv set inv.isExport = 1 , inv.exportDate = :date where inv.id = :invDetailId";
+                
+                String hql = "";
+                String id = "";
+                if(APList.get(i).getRowid().indexOf("TAX") != -1){
+                    id = APList.get(i).getRowid().substring(3);
+                    hql = "update TaxInvoiceDetail taxd set taxd.isExport = 1 , taxd.exportDate = :date where taxd.id = :invDetailId";
+                
+                }else{
+                    id = APList.get(i).getRowid().substring(1);
+                    hql = "update InvoiceDetail inv set inv.isExport = 1 , inv.exportDate = :date where inv.id = :invDetailId";
+                
+                }
+                
                 Query query = session.createQuery(hql);
-                query.setParameter("invDetailId", String.valueOf(APList.get(i).getInvid()));
+                query.setParameter("invDetailId", String.valueOf(id));
                 query.setParameter("date", date);
                 int result = query.executeUpdate();
                 System.out.println("Query Update : " + result + ":" + query);
@@ -384,7 +398,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
         String query = "from ARNirvana ar where ar.rowid in (";
         for (int i = 0; i < ARList.size(); i++) {
             query += (i == 0 ? "" : ",");
-            query += ("'"+ARList.get(i).getReceive_detail_id()+"'");
+            query += ("'"+ARList.get(i).getRowid()+"'");
         }
         query += ") order by accno , intreference asc " ;
         System.out.println(" query :: " + query);

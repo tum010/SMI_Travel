@@ -54,16 +54,16 @@ public class ARMonitorController extends SMITravelController {
             String arCount = request.getParameter("arCount");
             List<ARNirvana> listAr = new LinkedList<>();
             int count = Integer.parseInt(arCount);
-            System.out.println("13213dwqw");
             for(int i=1;i<=count;i++){
                 String isSelect = request.getParameter("selectAll"+i);
                 System.out.println("isSelect : "+isSelect);
                 if(isSelect != null){
                     ARNirvana ar = new ARNirvana();
                     String inputId = request.getParameter("inputId"+i);
-                    ar.setInvid(Integer.parseInt(inputId));
-                    ar.setReceive_detail_id(inputId);
+                  //  ar.setInvid(inputId);
+                    ar.setRowid(inputId);
                     listAr.add(ar);
+                    
                     System.out.println("data : "+ar);
                 }
             }
