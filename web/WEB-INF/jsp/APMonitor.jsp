@@ -193,7 +193,7 @@
                                     </c:choose>                                  
                                 </td>
                                 <td align="center">${i.count}</td>
-                                <td>${data_list.intreference}</td>
+                                <td>${data_list.payno}</td>
                                 <td>${data_list.vendorid}</td>
                                 <td>${data_list.vendorname}</td>
                                 <td>${data_list.puraccount1}</td>

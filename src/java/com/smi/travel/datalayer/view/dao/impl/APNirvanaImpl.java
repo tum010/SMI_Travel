@@ -622,6 +622,7 @@ public class APNirvanaImpl implements APNirvanaDao {
                 .addScalar("paymenttype", Hibernate.STRING)
                 .addScalar("payment_detail_id", Hibernate.STRING) //88
                 .addScalar("rowid", Hibernate.STRING) //89
+//                .addScalar("payno", Hibernate.STRING) //89
                 .list();
 
         for (Object[] B : QueryList) {
@@ -637,6 +638,7 @@ public class APNirvanaImpl implements APNirvanaDao {
             apNirvana.setPaymenttype(util.ConvertString(B[87]));
             apNirvana.setPayment_detail_id(util.ConvertString(B[88]));
             apNirvana.setRowid(util.ConvertString(B[89]));
+            apNirvana.setPayno(util.ConvertString(B[90]));
             apNirvanaList.add(apNirvana);
         }
 

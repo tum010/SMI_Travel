@@ -17,13 +17,17 @@ import com.smi.travel.datalayer.view.entity.TicketFareView;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import net.sourceforge.jtds.jdbc.DateTime;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 public class PaymentAirlineController extends SMITravelController {
@@ -42,6 +46,7 @@ public class PaymentAirlineController extends SMITravelController {
     private static final String SAVERESULT = "saveresult";
     private static final String PAYDATE = "payDate";
     private static final String DUEDATE = "dueDate";
+    private static final String EXPORTDATE = "exportDate";
     private static final String PAYNO = "payNo";
     private static final String VAT = "vat";
     private static final String TICKETFARECOUNT ="ticketFareCount";
@@ -92,6 +97,10 @@ public class PaymentAirlineController extends SMITravelController {
         // Add PayTo radio
         String payto = request.getParameter("payto");
         
+        String exportDate = request.getParameter("exportDate");
+        String isExport = request.getParameter("isExport");
+        System.out.println("  exportDate " + exportDate);
+        System.out.println("  isExport " + isExport);
         request.setAttribute(CREDITROWCOUNT, "1");
         request.setAttribute(TICKETFARECOUNT,"0");
         request.setAttribute(FLAGSEARCG,"0");
@@ -130,6 +139,8 @@ public class PaymentAirlineController extends SMITravelController {
                     request.setAttribute(PAYDATE, paymentAirticket.getPayDate());
                     request.setAttribute(DUEDATE, paymentAirticket.getDueDate());
                     request.setAttribute(PAYMENTAIRTICKET,paymentAirticket);
+                    request.setAttribute(EXPORTDATE, paymentAirticket.getExportDate());
+                    
                     ticketFareViews = paymentAirTicketService.getTicketFareViewsByPaymentAirId(paymentAirticket.getId());
                     if(ticketFareViews != null){
                         request.setAttribute(FLAGSEARCG,"1");
@@ -176,7 +187,12 @@ public class PaymentAirlineController extends SMITravelController {
             paymentAirticket.setChqNo(chqNo); 
             paymentAirticket.setCreateBy(user.getUsername());
             paymentAirticket.setCreateDate(new Date());
-            paymentAirticket.setIsExport(0);
+            paymentAirticket.setIsExport("".equalsIgnoreCase(isExport)? 0 : Integer.parseInt(isExport));
+            
+            if(!"null".equalsIgnoreCase(exportDate) && !exportDate.isEmpty()){
+                paymentAirticket.setExportDate(util.convertStringToDate(exportDate));
+                request.setAttribute(EXPORTDATE,exportDate);
+            }
             
             if(StringUtils.isNotEmpty(payBy)){
                 mAccpay.setId(payBy);
@@ -268,7 +284,24 @@ public class PaymentAirlineController extends SMITravelController {
             int RowCredit = Integer.parseInt(countRowCredit);
             if (StringUtils.isNotEmpty(paymentId)){ //Update
                 paymentAirticket.setId(paymentId);
-                
+                paymentAirticket.setIsExport("".equalsIgnoreCase(isExport)? 0 : Integer.parseInt(isExport));
+            
+                if(!"null".equalsIgnoreCase(String.valueOf(exportDate)) && !"".equalsIgnoreCase(String.valueOf(exportDate))){
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                    try
+                    {
+                        Date date = df.parse(exportDate);
+
+                        System.out.println("date : "+df.format(date));
+                        paymentAirticket.setExportDate(date);
+                    }
+                    catch (ParseException ex)
+                    {
+                        System.out.println("Exception "+ex);
+                    }
+                    
+                    request.setAttribute(EXPORTDATE,exportDate);
+                }
                 //save or update payment air ticket fare
                 if(paymentAirticket.getPaymentAirticketFares() == null){
                     paymentAirticket.setPaymentAirticketFares(new ArrayList<PaymentAirticketFare>());
@@ -426,7 +459,24 @@ public class PaymentAirlineController extends SMITravelController {
             paymentAirticket.setChqNo(chqNo); 
             paymentAirticket.setCreateBy(user.getUsername());
             paymentAirticket.setCreateDate(new Date());
-            paymentAirticket.setIsExport(0);
+            paymentAirticket.setIsExport("".equalsIgnoreCase(isExport)? 0 : Integer.parseInt(isExport));
+            
+            if(!"null".equalsIgnoreCase(String.valueOf(exportDate)) && !"".equalsIgnoreCase(String.valueOf(exportDate))){
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                    try
+                    {
+                        Date date = df.parse(exportDate);
+
+                        System.out.println("date : "+df.format(date));
+                        paymentAirticket.setExportDate(date);
+                    }
+                    catch (ParseException ex)
+                    {
+                        System.out.println("Exception "+ex);
+                    }
+                    
+                    request.setAttribute(EXPORTDATE,exportDate);
+                }
             
             if(StringUtils.isNotEmpty(payBy)){
                 mAccpay.setId(payBy);
@@ -480,7 +530,7 @@ public class PaymentAirlineController extends SMITravelController {
                 request.setAttribute(SELECTEDINVOICE, invoiceSupplier);
             }
             paymentAirticket.setPayTo(payto);
-            
+            System.out.println(" paymentAirticket.getExportDate() +++ " + paymentAirticket.getExportDate());
             result = paymentAirTicketService.validateSavePaymentAir(paymentAirticket);
             
             System.out.println("result :::" +result);

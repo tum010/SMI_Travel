@@ -111,6 +111,7 @@ public class APNirvana {
     private String paymenttype;
     private String payment_detail_id;
     private String accno;
+    private String payno;
     
     public String getRefinvoiceno() {
         return refinvoiceno;
@@ -1408,5 +1409,13 @@ public class APNirvana {
 
     public void setAccno(String accno) {
         this.accno = accno;
+    }
+
+    public String getPayno() {
+        return payno;
+    }
+
+    public void setPayno(String payno) {
+        this.payno = payno;
     }
 }
