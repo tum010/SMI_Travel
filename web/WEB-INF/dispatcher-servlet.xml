@@ -606,7 +606,7 @@
         <property name="utilityService" ref="UtilityService" />
     </bean>
     <bean id="MHostController" class="com.smi.travel.masterdata.controller.MHostController">
-        
+        <property name="MHostService" ref="MHostService" />
     </bean>
 	<!-- add bean id controller -->
 
