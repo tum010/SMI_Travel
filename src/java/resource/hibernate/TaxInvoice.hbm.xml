@@ -46,6 +46,9 @@
         <property name="department" type="string">
             <column name="department" length="20"/>
         </property>
+        <property name="updateDate" type="timestamp">
+            <column name="update_date"/>
+        </property>
         <bag name="creditNoteDetails" table="credit_note_detail" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="tax_invoice_id" />

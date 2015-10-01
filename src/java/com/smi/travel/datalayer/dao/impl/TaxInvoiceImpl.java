@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -44,11 +45,13 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
         try { 
             setTransaction(session.beginTransaction());
             String taxNo = gennarateTaxInvoiceNo(tax.getTaxInvDate(),tax.getDepartment());
-            tax.setTaxNo(taxNo);
+            tax.setTaxNo(taxNo);            
             session.save(tax);
+            System.out.println("Tax Invoice Id : "+tax.getId());
             List<TaxInvoiceDetail> taxInvoiceDetail = tax.getTaxInvoiceDetails();
             if(taxInvoiceDetail != null){
                 for (int i = 0; i < taxInvoiceDetail.size(); i++) {
+                    System.out.println("Tax Invoice Detail Id : "+taxInvoiceDetail.get(i).getInvoiceDetail().getId());
                     session.save(taxInvoiceDetail.get(i));
                 }
             }
@@ -98,7 +101,13 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
 
     @Override
     public String updateTaxInvoice(TaxInvoice tax) {
+        UtilityFunction utilfunction = new UtilityFunction();
         String result = "";
+        Date date = Calendar.getInstance().getTime();
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("yyyy-MM-dd HH:mm:ss");
+        String updateDate = dateformat.format(date);
+        tax.setUpdateDate(utilfunction.convertStringToDate(updateDate));
         try {
             Session session = this.getSessionFactory().openSession();
             setTransaction(session.beginTransaction());

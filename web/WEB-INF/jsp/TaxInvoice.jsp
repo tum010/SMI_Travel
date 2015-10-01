@@ -380,6 +380,9 @@
                                                     <td class="hidden"><input class="form-control" type="text" id="invoiceDetailId${i.count}" name="invoiceDetailId${i.count}" value="${taxDetail.invoiceDetail.id}"></td>
                                                     <td class="hidden"><input class="form-control" type="text" id="invoiceDetailCost${i.count}" name="invoiceDetailCost${i.count}" value="${taxDetail.invoiceDetail.cost}"></td>
                                                     <td class="hidden"><input class="form-control" type="text" id="invoiceDetailAmount${i.count}" name="invoiceDetailAmount${i.count}" value="${taxDetail.invoiceDetail.amount}"></td>
+                                                    <td class="hidden"><input class="form-control" type="text" id="isExport${i.count}" name="isExport${i.count}" value="${taxDetail.isExport}"></td>
+                                                    <td class="hidden"><input class="form-control" type="text" id="exportDate${i.count}" name="exportDate${i.count}" value="${taxDetail.exportDate}"></td>
+                                                    <td class="hidden"><input class="form-control" type="text" id="isProfit${i.count}" name="isProfit${i.count}" value="${taxDetail.isProfit}"></td>
                                                     <td>
                                                         <select class="form-control" name="product${i.count}" id="product${i.count}" onchange="AddrowBySelect('${i.count}')">
                                                             <option  value="" >---------</option>
@@ -1289,7 +1292,6 @@
                             document.getElementById("InvToName").value = '';
                             document.getElementById("InvToAddress").value = '';
                             document.getElementById("ARCode").value = '';
-                            document.getElementById("InvToDate").value = '';
                             
                         }else{
                             $('#InvoiceListTable').dataTable().fnClearTable();
@@ -1371,7 +1373,7 @@
                 cache: false,
                 data: param,
                 success: function (msg) {
-                    try { 
+                    try {
                         if(msg == "null"){
                             $('#RefNoListTable').dataTable().fnClearTable();
                             $('#RefNoListTable').dataTable().fnDestroy();
@@ -1385,7 +1387,7 @@
                             $('#RefNoListTable').dataTable().fnClearTable();
                             $('#RefNoListTable').dataTable().fnDestroy();
                             $("#RefNoListTable tbody").append(msg);
-                            
+
                             if(document.getElementById("receiveTaxInvTo")!==null && ($("#receiveTaxInvTo").val()!==undefined)){
                                 document.getElementById("TaxInvTo").value = $("#receiveTaxInvTo").val();
                             } else {
@@ -1413,7 +1415,7 @@
                         $("#ajaxload2").addClass("hidden");
 
                     } catch (e) {
-                        alert(e);
+                        $("#ajaxload2").addClass("hidden");
                     }
 
                 }, error: function (msg) {
@@ -1447,6 +1449,9 @@
             '<td class="hidden"><input class="form-control" type="text" id="invoiceDetailId' + row + '" name="invoiceDetailId' + row + '" value=""></td>' +
             '<td class="hidden"><input class="form-control" type="text" id="invoiceDetailCost' + row + '" name="invoiceDetailCost' + row + '" value=""></td>' +
             '<td class="hidden"><input class="form-control" type="text" id="invoiceDetailAmount' + row + '" name="invoiceDetailAmount' + row + '" value=""></td>' +
+            '<td class="hidden"><input class="form-control" type="text" id="isExport' + row + '" name="isExport' + row + '" value=""></td>' +
+            '<td class="hidden"><input class="form-control" type="text" id="exportDate' + row + '" name="exportDate' + row + '" value=""></td>' +
+            '<td class="hidden"><input class="form-control" type="text" id="isProfit' + row + '" name="isProfit' + row + '" value=""></td>' +
             '<td><select class="form-control" name="product' + row + '" id="product' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
             '<td><input class="form-control" type="text" id="refNo' + row + '" name="refNo' + row + '" value="" onfocusout="checkRefNo(\'' + row + '\')"></td>' +
             '<td><input class="form-control" type="text" id="description' + row + '" name="description' + row + '" value=""></td>' +
@@ -1492,7 +1497,18 @@
         var match = CheckInvoiceProduct(id,count);
         console.log(match);
         if(match === 0){
-            AddDataRowProduct(row,count,id,product,description,cost,curCost,amount,curAmount,isVat,refNo);
+            AddDataRowProduct(row,count,id,product,description,cost,curCost,amount,curAmount,isVat,refNo,'');
+        }    
+    }
+    
+    function AddRefNo(product,description,cost,curcost,amount,curamount,billableDescId,displaydescription,refNo){
+        var count = parseInt($("#countTaxInvoice").val());
+        var row = parseInt(count)+1;
+        var match = CheckRefNoProduct(billableDescId,count);
+        var isProfit = 1;
+        console.log(match);
+        if(match === 0){
+            AddDataRowProduct(row,count,billableDescId,product,description,cost,curcost,amount,curamount,'',refNo,isProfit);
         }    
     }
     
@@ -1511,7 +1527,22 @@
         return match;
     }
     
-    function AddDataRowProduct(row,count,id,product,description,cost,curCost,amount,curAmount,isVat,refNo) {
+    function CheckRefNoProduct(id,count){
+        var row = parseInt(count);
+        var match = 0;
+        for(var i=1;i<row;i++){
+            var invoiceDetailId = document.getElementById("invoiceDetailId"+i);
+            if(invoiceDetailId !== null){
+                if(invoiceDetailId.value === id){
+                    match++;
+                    i = row;
+                }
+            }
+        }        
+        return match;
+    }
+    
+    function AddDataRowProduct(row,count,id,product,description,cost,curCost,amount,curAmount,isVat,refNo,isProfit) {
         if (!row) {
             row = 1;
         }
@@ -1522,6 +1553,9 @@
                 '<td class="hidden"><input class="form-control" type="text" id="invoiceDetailId' + count + '" name="invoiceDetailId' + count + '" value=""></td>' +
                 '<td class="hidden"><input class="form-control" type="text" id="invoiceDetailCost' + count + '" name="invoiceDetailCost' + count + '" value=""></td>' +
                 '<td class="hidden"><input class="form-control" type="text" id="invoiceDetailAmount' + count + '" name="invoiceDetailAmount' + count + '" value=""></td>' +
+                '<td class="hidden"><input class="form-control" type="text" id="isExport' + count + '" name="isExport' + count + '" value=""></td>' +
+                '<td class="hidden"><input class="form-control" type="text" id="exportDate' + row + '" name="exportDate' + row + '" value=""></td>' +
+                '<td class="hidden"><input class="form-control" type="text" id="isProfit' + count + '" name="isProfit' + count + '" value=""></td>' +
                 '<td><select class="form-control" name="product' + count + '" id="product' + count + '" onchange="AddrowBySelect(\'' + count + '\')"><option  value="" >---------</option></select></td>' +
                 '<td><input class="form-control" type="text" id="refNo' + count + '" name="refNo' + count + '" value="" onfocusout="checkRefNo(\'' + count + '\')"></td>' +
                 '<td><input class="form-control" type="text" id="description' + count + '" name="description' + count + '" value=""></td>' +
@@ -1547,7 +1581,7 @@
             $("#select_currency_list option").clone().appendTo("#currencyCost" + count);
             $("#select_currency_list option").clone().appendTo("#currencyAmount" + count);
             
-            $("#invoiceDetailId" + count).val(id);
+            
             $("#invoiceDetailCost" + count).val(formatNumber(parseFloat(cost)));
             $("#invoiceDetailAmount" + count).val(formatNumber(parseFloat(amount)));
             $('[name=product' + count + '] option').filter(function() { 
@@ -1568,12 +1602,24 @@
                 document.getElementById('vatShow'+count).innerHTML = formatNumber(vatData);
                 CalculateGross(count);
             }
+            if(isProfit !== ''){
+                $("#invoiceDetailId" + count).val(id);
+                $("#isProfit" + count).val(isProfit);
+            } else {
+                $("#invoiceDetailId" + count).val(id);
+            }
             var vatData = parseFloat($("#vatDefault").val());
             document.getElementById('vatShow'+count).innerHTML = formatNumber(vatData);
             $("#refNo" + count).val(refNo);
             row = count + 1;
         } else {
-            $("#invoiceDetailId" + (count-1)).val(id);
+            if(isProfit !== ''){
+                $("#invoiceDetailId" + (count-1)).val(id);
+                $("#isProfit" + (count-1)).val(isProfit);
+            } else {
+                $("#invoiceDetailId" + (count-1)).val(id);
+            }
+//            $("#invoiceDetailId" + (count-1)).val(id);
             $("#invoiceDetailCost" + (count-1)).val(formatNumber(parseFloat(cost)));
             $("#invoiceDetailAmount" + (count-1)).val(formatNumber(parseFloat(amount)));
             $('[name=product' + (count-1) + '] option').filter(function() { 
@@ -1611,6 +1657,9 @@
             '<td class="hidden"><input class="form-control" type="text" id="invoiceDetailId' + row + '" name="invoiceDetailId' + row + '" value=""></td>' +
             '<td class="hidden"><input class="form-control" type="text" id="invoiceDetailCost' + row + '" name="invoiceDetailCost' + row + '" value=""></td>' +
             '<td class="hidden"><input class="form-control" type="text" id="invoiceDetailAmount' + row + '" name="invoiceDetailAmount' + row + '" value=""></td>' +
+            '<td class="hidden"><input class="form-control" type="text" id="isExport' + count + '" name="isExport' + count + '" value=""></td>' +
+            '<td class="hidden"><input class="form-control" type="text" id="exportDate' + row + '" name="exportDate' + row + '" value=""></td>' +
+            '<td class="hidden"><input class="form-control" type="text" id="isProfit' + count + '" name="isProfit' + count + '" value=""></td>' +
             '<td><select class="form-control" name="product' + row + '" id="product' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
             '<td><input class="form-control" type="text" id="refNo' + row + '" name="refNo' + row + '" value="" onfocusout="checkRefNo(\'' + row + '\')"></td>' +
             '<td><input class="form-control" type="text" id="description' + row + '" name="description' + row + '" value=""></td>' +

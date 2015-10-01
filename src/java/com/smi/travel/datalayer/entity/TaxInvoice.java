@@ -28,13 +28,14 @@ public class TaxInvoice   {
      private String remark;
      private Date createDate;
      private String department;
+     private Date updateDate;
      private List creditNoteDetails = new LinkedList<CreditNoteDetail>();
      private List taxInvoiceDetails = new LinkedList<TaxInvoiceDetail>();
 
     public TaxInvoice() {
     }
 
-    public TaxInvoice(MFinanceItemstatus MFinanceItemstatus, Passenger passenger, String taxNo, Date taxInvDate, String taxInvTo, String taxInvName, String taxInvAddr, String arCode, String invoiceType, String createBy, Date createDate, String remark, String department, List creditNoteDetails, List taxInvoiceDetails) {
+    public TaxInvoice(MFinanceItemstatus MFinanceItemstatus, Passenger passenger, String taxNo, Date taxInvDate, String taxInvTo, String taxInvName, String taxInvAddr, String arCode, String invoiceType, String createBy, Date createDate, String remark, String department, List creditNoteDetails, List taxInvoiceDetails, Date updateDate) {
        this.MFinanceItemstatus = MFinanceItemstatus;
        this.passenger = passenger;
        this.taxNo = taxNo;
@@ -50,6 +51,7 @@ public class TaxInvoice   {
        this.department = department;
        this.creditNoteDetails = creditNoteDetails;
        this.taxInvoiceDetails = taxInvoiceDetails;
+       this.updateDate = updateDate;
     }
    
     public String getId() {
@@ -181,6 +183,14 @@ public class TaxInvoice   {
 
         }
         return sumAmount;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
     }
 
 }

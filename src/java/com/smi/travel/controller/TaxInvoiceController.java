@@ -324,6 +324,9 @@ public class TaxInvoiceController extends SMITravelController {
         for(int i=1;i<=rows;i++){
             String taxDetailId = request.getParameter("taxDetailId" + i);
             String invoiceDetailId = request.getParameter("invoiceDetailId" + i);
+            String isProfit = request.getParameter("isProfit" + i);
+            String isExport = request.getParameter("isExport" + i);
+            String exportDate = request.getParameter("exportDate" + i);
             String invoiceDetailCost = request.getParameter("invoiceDetailCost" + i);
             String invoiceDetailAmount = request.getParameter("invoiceDetailAmount" + i);
             String product = request.getParameter("product" + i);
@@ -346,9 +349,11 @@ public class TaxInvoiceController extends SMITravelController {
                     taxInvoiceDetail.setId(taxDetailId);
                     taxInvoiceDetail.setCreateDate(createDate);
                     taxInvoiceDetail.setCreateBy(createBy);
+                    taxInvoiceDetail.setIsExport(Integer.parseInt(isExport));
                 } else {
                     taxInvoiceDetail.setCreateDate(date);
                     taxInvoiceDetail.setCreateBy(username);
+                    taxInvoiceDetail.setIsExport(0);
                 }
                 
                 if(invoiceDetailId!="" && invoiceDetailId!=null){
@@ -369,6 +374,14 @@ public class TaxInvoiceController extends SMITravelController {
                     }                  
                     taxInvoiceDetail.setInvoiceDetail(invoiceDetail);
                 }
+                
+                if(isProfit!="" && isProfit!=null){
+                    taxInvoiceDetail.setIsProfit(Integer.parseInt(isProfit));
+                }
+                        
+                if(exportDate!="" && exportDate!=null){
+                    taxInvoiceDetail.setExportDate(util.convertStringToDateTime(exportDate));
+                }        
                 
                 if(product!="" && product!=null){
                     mBillType.setId(product);

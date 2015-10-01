@@ -26,11 +26,14 @@ public class TaxInvoiceDetail  {
      private MBilltype mbillType;
      private Master master;
      private String description;
+     private Integer isProfit;
+     private Integer isExport;
+     private Date exportDate;
 
     public TaxInvoiceDetail() {
     }
 
-    public TaxInvoiceDetail(TaxInvoice taxInvoice, InvoiceDetail invoiceDetail, Character vatType, BigDecimal vat, BigDecimal amount, BigDecimal cost, String createBy, Date createDate, Integer isVat, String curCost, String curAmount, MBilltype mbillType, Master master, String description) {
+    public TaxInvoiceDetail(TaxInvoice taxInvoice, InvoiceDetail invoiceDetail, Character vatType, BigDecimal vat, BigDecimal amount, BigDecimal cost, String createBy, Date createDate, Integer isVat, String curCost, String curAmount, MBilltype mbillType, Master master, String description, Integer isProfit, Integer isExport, Date exportDate) {
        this.taxInvoice = taxInvoice;
        this.invoiceDetail = invoiceDetail;
        this.vatType = vatType;
@@ -45,6 +48,9 @@ public class TaxInvoiceDetail  {
        this.mbillType = mbillType;
        this.master = master;
        this.description = description;
+       this.isProfit = isProfit;
+       this.isExport = isExport;
+       this.exportDate = exportDate;
     }
    
     public String getId() {
@@ -158,6 +164,30 @@ public class TaxInvoiceDetail  {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Integer getIsProfit() {
+        return isProfit;
+    }
+
+    public void setIsProfit(Integer isProfit) {
+        this.isProfit = isProfit;
+    }
+
+    public Integer getIsExport() {
+        return isExport;
+    }
+
+    public void setIsExport(Integer isExport) {
+        this.isExport = isExport;
+    }
+
+    public Date getExportDate() {
+        return exportDate;
+    }
+
+    public void setExportDate(Date exportDate) {
+        this.exportDate = exportDate;
     }
 
 }

@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.dao;
 import com.smi.travel.datalayer.entity.Billable;
+import com.smi.travel.datalayer.entity.Invoice;
 /**
  *
  * @author Surachai
@@ -25,5 +26,6 @@ public interface BillableDao {
     public String getDescriptionInvoiceOthersFromRefId(String refId);
     public String getDescriptionInvoiceDayTourFromRefId(String refId);
     public Billable getBillableBookingForTaxInvoice(String searchRefNo);
+    public Invoice getInvoiceForTaxInvoice(String billDescId);
 
 }
