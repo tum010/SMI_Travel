@@ -113,7 +113,7 @@
                         </c:when>
                         <c:when test="${fn:contains(page , 'WN')}">
                             <c:set var="typeInvoice" value="W/N" />
-                            <c:set var="typeBooking" value="W" />
+                            <c:set var="typeBooking" value="I" />
                             <h4><b>Invoice No Vat Wendy <font style="color: red;"> ${textVoid}</font></b></h4>
                         </c:when> 
                         <c:when test="${fn:contains(page , 'ON')}">

@@ -1762,7 +1762,8 @@ public class AJAXBean extends AbstractBean implements
                 if (!billdeescList.get(i).getMBilltype().getName().equals("Air Ticket") && !billdeescList.get(i).getMBilltype().getName().equals("Air Additional")) {
                     BigDecimal[] valueresult = invoicedao.checkBillDescInuse(billdeescList.get(i).getId(), String.valueOf(billdeescList.get(i).getCost()), String.valueOf(billdeescList.get(i).getPrice()));
                     System.out.println("valueresult[1] : " + valueresult[1]);
-                    if (valueresult[1].compareTo(BigDecimal.ZERO) != 0) {
+  
+                    if (valueresult[1].compareTo(BigDecimal.ZERO) != 0 && valueresult[1].compareTo(BigDecimal.ZERO) != -1) {
 
                         System.out.println("11valueresult[1] : " + valueresult[1]);
                         String cost1 = numberFormat.format(valueresult[0]);

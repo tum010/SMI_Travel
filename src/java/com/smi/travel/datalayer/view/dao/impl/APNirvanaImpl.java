@@ -621,6 +621,8 @@ public class APNirvanaImpl implements APNirvanaDao {
                 .addScalar("payment_id", Hibernate.STRING)
                 .addScalar("paymenttype", Hibernate.STRING)
                 .addScalar("payment_detail_id", Hibernate.STRING) //88
+                .addScalar("rowid", Hibernate.STRING) //89
+                .addScalar("payno", Hibernate.STRING) //89
                 .list();
 
         for (Object[] B : QueryList) {
@@ -635,6 +637,8 @@ public class APNirvanaImpl implements APNirvanaDao {
             apNirvana.setItf_status(util.ConvertString(B[85]));
             apNirvana.setPaymenttype(util.ConvertString(B[87]));
             apNirvana.setPayment_detail_id(util.ConvertString(B[88]));
+            apNirvana.setRowid(util.ConvertString(B[89]));
+            apNirvana.setPayno(util.ConvertString(B[90]));
             apNirvanaList.add(apNirvana);
         }
 
@@ -693,7 +697,7 @@ public class APNirvanaImpl implements APNirvanaDao {
         String query = "from APNirvana ap where ap.rowid in (";
         for (int i = 0; i < APList.size(); i++) {
             query += (i == 0 ? "" : ",");
-            query += ("'W"+APList.get(i).getPayment_detail_id()+"'");
+            query += ("'"+APList.get(i).getRowid()+"'");
         }
         query += ") order by accno , intreference asc " ;
         System.out.println(" query :: " + query);

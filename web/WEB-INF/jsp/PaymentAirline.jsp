@@ -81,6 +81,7 @@
                 <input type="hidden" name="checksearchticket" id="checksearchticket" value="">
                 <input type="hidden" name="sumCommissionRefund" id="sumCommissionRefund" value="">
                 <input type="hidden" name="sumCommissionTicket" id="sumCommissionTicket" value="">
+
                 <div class="panel panel-default">
                     <div class="panel-body"  style="padding-right: 0px;" style="width: 100%">
                         <div class="col-xs-12">
@@ -89,6 +90,8 @@
                             </div>
                             <div class="col-xs-1" style="width:180px" id="paymentnopanel">
                                 <div class='input-group' id='paymentnumber'>
+                                    <input type="hidden" name="exportDate" id="exportDate" value="${requestScope['exportDate']}">
+                                    <input type="hidden" name="isExport" id="isExport" value="${paymentAirticket.isExport}">
                                     <input id="paymentId" name="paymentId" type="hidden" class="form-control" maxlength="11" value="${paymentAirticket.id}">
                                     <input id="paymentNo" name="paymentNo" type="text" style="width: 180px" maxlength="20" class="form-control" value="${requestScope['payNo']}">
                                 </div>
@@ -964,8 +967,6 @@ for(var i = 0; i < rad.length; i++) {
             validateSaveButton();
             $("#InvoiceSupModal").modal('hide');
         });
-        
-        
         var invoiceSupCode = [];
         $.each(invoiceSup, function (key, value) {
             invoiceSupCode.push(value.code);
@@ -1455,6 +1456,10 @@ function saveAction(optionsave){
         rowRefundCount.value = $('#RefundTicketTable tr').length;
         var optionSave = document.getElementById('optionSave');
         optionSave.value = $("#optionSave").val(); 
+        var exportDate = document.getElementById('exportDate');
+        exportDate.value = $("#exportDate").val();
+        var isExport = document.getElementById('isExport');
+        isExport.value = $("#isExport").val();
 }
 
 function deleteTicket(id,ticketNo,count){

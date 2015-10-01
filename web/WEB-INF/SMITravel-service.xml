@@ -316,5 +316,9 @@
     <bean id="CollectionNirvanaService" class="com.smi.travel.datalayer.service.CollectionNirvanaService">
         <property name="collectionNirvanaDao" ref="CollectionNirvanaDao" />
     </bean>
+    
+    <bean id="MHostService" class="com.smi.travel.datalayer.service.MHostService">
+        <property name="mHostDao" ref="MHostDao" />
+    </bean>
     <!--<add data>-->
 </beans>

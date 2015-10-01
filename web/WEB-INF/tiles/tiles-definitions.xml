@@ -580,6 +580,11 @@
         <put-attribute name="title" value="Checking Airticket:Ticket Summary Cost Income" />
         <put-attribute name="body" value="/WEB-INF/jsp/TicketSummaryCostIncome.jsp" />
     </definition>
+    
+    <definition name="MHost" extends="baseLayout">
+        <put-attribute name="title" value="Master : Host" />
+        <put-attribute name="body" value="/WEB-INF/jsp/MHost.jsp" />
+    </definition>
     <!--<add data>-->
     
     <definition name="SendMail" extends="baseLayout">

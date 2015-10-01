@@ -180,6 +180,7 @@
                                 <td class="hidden">
                                     <input type="hidden" id="paymentDetailId${i.count}" name="paymentDetailId${i.count}" value="${data_list.payment_detail_id}"/> 
                                     <input type="hidden" id="paymentType${i.count}" name="paymentType${i.count}" value="${data_list.paymenttype}"/>
+                                    <input type="hidden" id="rowid${i.count}" name="rowid${i.count}" value="${data_list.rowid}"/>
                                 </td>                              
                                 <td align="center">
                                     <c:choose>
@@ -192,7 +193,7 @@
                                     </c:choose>                                  
                                 </td>
                                 <td align="center">${i.count}</td>
-                                <td>${data_list.intreference}</td>
+                                <td>${data_list.payno}</td>
                                 <td>${data_list.vendorid}</td>
                                 <td>${data_list.vendorname}</td>
                                 <td>${data_list.puraccount1}</td>
