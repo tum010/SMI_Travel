@@ -5,6 +5,8 @@
  */
 package com.smi.travel.datalayer.dao;
 
+import com.smi.travel.datalayer.view.entity.ListSummaryTicketAdjustCostAndIncome;
+import com.smi.travel.datalayer.view.entity.ListTicketCommissionReceive;
 import com.smi.travel.datalayer.view.entity.SummaryTicketAdjustCostAndIncome;
 import java.util.List;
 
@@ -13,5 +15,7 @@ import java.util.List;
  * @author Kanokporn
  */
 public interface SummaryTicketAdjustCostAndIncomeDao {
-    public List<SummaryTicketAdjustCostAndIncome> getSummaryTicketAdjustCostAndIncome(String reportType,String invoiceFromDate,String invoiceToDate,String issueFrom,String issueTo,String paymentType,String departmentt,String salebyUser,String termPayt);
+    public List<ListSummaryTicketAdjustCostAndIncome> getSummaryTicketAdjustCostAndIncome(String reportType,String invoiceFromDate,String invoiceToDate,String issueFrom,String issueTo,String paymentType,String departmentt,String salebyUser,String termPayt);
+    public List<ListSummaryTicketAdjustCostAndIncome> getSummaryTicketCostAndIncome(String reportType,String invoiceFromDate,String invoiceToDate,String issueFrom,String issueTo,String paymentType,String departmentt,String salebyUser,String termPayt);
+    public List<ListTicketCommissionReceive> getTicketCommissionReceive(String reportType,String invoiceFromDate,String invoiceToDate,String issueFrom,String issueTo,String paymentType,String departmentt,String salebyUser,String termPayt);
 }
