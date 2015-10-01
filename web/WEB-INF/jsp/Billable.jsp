@@ -335,7 +335,7 @@
                                     Open
                                 </c:if>
                             </td>
-                            <td><input type="text" id="exrate-${Counter.count}" name="exrate-${Counter.count}" value="${b.exRate}" class="form-control text-right"  maxlength="7" /></td>
+                            <td><input type="text" id="exrate-${Counter.count}" name="exrate-${Counter.count}" value="${b.exRate}" class="form-control text-right numerical"  maxlength="7" /></td>
                             <td>      
                                
                                 <div class="input-group  datetime" id="billDescId-${Counter.count}" name="billDescId-${Counter.count}">
@@ -710,7 +710,15 @@
         $(".datetime").datetimepicker({
                 pickTime: false   
         });
-
+                $( ".numerical" ).on('input', function() { 
+            var value=$(this).val().replace(/[^0-9.,]*/g, '');
+            value=value.replace(/\.{2,}/g, '.');
+            value=value.replace(/\.,/g, ',');
+            value=value.replace(/\,\./g, ',');
+            value=value.replace(/\,{2,}/g, ',');
+            value=value.replace(/\.[0-9]+\./g, '.');
+            $(this).val(value)
+        });
         $('.datemask').mask('0000-00-00');
         $('.spandate').click(function () {
             var position = $(this).offset();
@@ -724,28 +732,8 @@
         //$(".moneyformat").mask('000,000,000,000,000,000', {reverse: true});
         setformat();
         
-//        var billableTable = $("#billableTable tr").length ;
-//        if(billableTable > 1) {
-//            for(var i = 1;i<billableTable;i++){
-//                if( $('#exrate-'+i).val() != "" ){
-//                    var exrate = $('#exrate-'+i).val(); 
-//                    if (exrate == ""){
-//                        exrate = 0;
-//                    }
-//                    exrate = parseFloat(exrate); 
-//                    document.getElementById("exrate-"+i).value = formatNumber(exrate);
-//                }
-//            }
-//        }
-        
     });
-    function replaceAll(find, replace, str) {
-      return str.replace(new RegExp(find, 'g'), replace);
-    }
-
-    function formatNumber(num) {
-        return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g,"$1,")
-    }
+    
     function setformat() {
         $('.moneyformat').each(function () {
             var innerHTML = $(this).html();
