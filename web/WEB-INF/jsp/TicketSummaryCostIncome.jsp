@@ -427,10 +427,31 @@
         var invoiceToDate = document.getElementById('invoiceToDate').value;
         var issueFrom = document.getElementById('issueFrom').value;
         var issueTo = document.getElementById('issueTo').value;
+        var reportType = document.getElementById('reportType').value;
+        var paymentType = document.getElementById('paymentType').value;
+        var departmentt = document.getElementById('department').value;
+        var termPayt = document.getElementById('termPay').value;
+        var salebyUser = document.getElementById('salebyUser').value;
         if((invoiceFromDate !== '') && (invoiceToDate !== '')){
-           alert('success');
+            if(reportType === '1'){
+                window.open("Excel.smi?name=SummaryTicketCostAndIncome"+"&reportType="+reportType+"&invoiceFromDate="+invoiceFromDate+"&invoiceToDate="+invoiceToDate+"&issueFrom="+issueFrom+"&issueTo="+issueTo+"&paymentType="+paymentType+"&department="+departmentt+"&salebyUser="+salebyUser+"&termPay="+termPayt);  
+            }else if(reportType === '2'){
+                window.open("Excel.smi?name=SummaryTicketAdjustCostAndIncome"+"&reportType="+reportType+"&invoiceFromDate="+invoiceFromDate+"&invoiceToDate="+invoiceToDate+"&issueFrom="+issueFrom+"&issueTo="+issueTo+"&paymentType="+paymentType+"&department="+departmentt+"&salebyUser="+salebyUser+"&termPay="+termPayt);  
+            }else if(reportType === '3'){
+                window.open("Excel.smi?name=SummaryTicketCommissionReceive"+"&reportType="+reportType+"&invoiceFromDate="+invoiceFromDate+"&invoiceToDate="+invoiceToDate+"&issueFrom="+issueFrom+"&issueTo="+issueTo+"&paymentType="+paymentType+"&department="+departmentt+"&salebyUser="+salebyUser+"&termPay="+termPayt);  
+            }else{
+                window.open("Excel.smi?name=SummaryTicketAdjustCostAndIncome"+"&reportType="+reportType+"&invoiceFromDate="+invoiceFromDate+"&invoiceToDate="+invoiceToDate+"&issueFrom="+issueFrom+"&issueTo="+issueTo+"&paymentType="+paymentType+"&department="+departmentt+"&salebyUser="+salebyUser+"&termPay="+termPayt);  
+            }
         } else if((issueFrom !== '') && (issueTo !== '')){
-           alert('success');
+            if(reportType === '1'){
+                window.open("Excel.smi?name=SummaryTicketCostAndIncome"+"&reportType="+reportType+"&invoiceFromDate="+invoiceFromDate+"&invoiceToDate="+invoiceToDate+"&issueFrom="+issueFrom+"&issueTo="+issueTo+"&paymentType="+paymentType+"&department="+departmentt+"&salebyUser="+salebyUser+"&termPay="+termPayt);  
+            }else if(reportType === '2'){
+                window.open("Excel.smi?name=SummaryTicketAdjustCostAndIncome"+"&reportType="+reportType+"&invoiceFromDate="+invoiceFromDate+"&invoiceToDate="+invoiceToDate+"&issueFrom="+issueFrom+"&issueTo="+issueTo+"&paymentType="+paymentType+"&department="+departmentt+"&salebyUser="+salebyUser+"&termPay="+termPayt);  
+            }else if(reportType === '3'){
+                window.open("Excel.smi?name=SummaryTicketCommissionReceive"+"&reportType="+reportType+"&invoiceFromDate="+invoiceFromDate+"&invoiceToDate="+invoiceToDate+"&issueFrom="+issueFrom+"&issueTo="+issueTo+"&paymentType="+paymentType+"&department="+departmentt+"&salebyUser="+salebyUser+"&termPay="+termPayt);  
+            }else{
+                window.open("Excel.smi?name=SummaryTicketAdjustCostAndIncome"+"&reportType="+reportType+"&invoiceFromDate="+invoiceFromDate+"&invoiceToDate="+invoiceToDate+"&issueFrom="+issueFrom+"&issueTo="+issueTo+"&paymentType="+paymentType+"&department="+departmentt+"&salebyUser="+salebyUser+"&termPay="+termPayt);  
+            }
         } else {
            validateDate();  
         }

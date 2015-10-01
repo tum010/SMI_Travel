@@ -545,4 +545,7 @@ public class ReportService {
         this.summaryTicketAdjustCostAndIncomeDao = summaryTicketAdjustCostAndIncomeDao;
     }
     
+     public List getTicketCommissionReceive(String reportType,String invoiceFromDate,String invoiceToDate,String issueFrom,String issueTo,String paymentType,String departmentt,String salebyUser,String termPayt) {
+        return summaryTicketAdjustCostAndIncomeDao.getTicketCommissionReceive(reportType, invoiceFromDate, invoiceToDate, issueFrom, issueTo, paymentType, departmentt, salebyUser, termPayt);
+    }
 }
