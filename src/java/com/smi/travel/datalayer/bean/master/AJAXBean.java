@@ -748,7 +748,7 @@ public class AJAXBean extends AbstractBean implements
                     if("O".equalsIgnoreCase(bill.getMaster().getBookingType())){
                         result = buildBillableListTaxHTML(bill,invoice);
                     } else {
-                        result = "null";
+                        result = bill.getMaster().getBookingType();
                     }
                     
                 }
@@ -948,7 +948,8 @@ public class AJAXBean extends AbstractBean implements
                     + "<input type='hidden' name='receiveTaxInvTo' id='receiveTaxInvTo' value='" + receiveTaxInvTo + "'>"
                     + "<input type='hidden' name='receiveInvToName' id='receiveInvToName' value='" + receiveInvToName + "'>"
                     + "<input type='hidden' name='receiveInvToAddress' id='receiveInvToAddress' value='" + receiveInvToAddress + "'>"
-                    + "<input type='hidden' name='receiveARCode' id='receiveARCode' value='" + receiveARCode + "'>";
+                    + "<input type='hidden' name='receiveARCode' id='receiveARCode' value='" + receiveARCode + "'>"
+                    + "</tr>";
             html.append(newrow);
             return html.toString();
         }
@@ -968,7 +969,7 @@ public class AJAXBean extends AbstractBean implements
 
             curamount = (billableDescs.get(i).getCurrency() == null ? "" : billableDescs.get(i).getCurrency());
 
-            BigDecimal[] value = checkInvoiceDetailFromBilldescId(billableDescId);
+            BigDecimal[] value = checkTaxInvoiceDetailFromBilldescId(invoiceDetailId);
             BigDecimal costTemp = value[0];
             BigDecimal amountTemp = value[1];
             amount = amountinvoice.subtract(amountTemp);
@@ -1046,7 +1047,8 @@ public class AJAXBean extends AbstractBean implements
                         + "<input type='hidden' name='receiveTaxInvTo' id='receiveTaxInvTo' value='" + receiveTaxInvTo + "'>"
                         + "<input type='hidden' name='receiveInvToName' id='receiveInvToName' value='" + receiveInvToName + "'>"
                         + "<input type='hidden' name='receiveInvToAddress' id='receiveInvToAddress' value='" + receiveInvToAddress + "'>"
-                        + "<input type='hidden' name='receiveARCode' id='receiveARCode' value='" + receiveARCode + "'>";
+                        + "<input type='hidden' name='receiveARCode' id='receiveARCode' value='" + receiveARCode + "'>"
+                        + "</tr>";
                 html.append(newrow);
             }
         }
@@ -1870,6 +1872,31 @@ public class AJAXBean extends AbstractBean implements
         for (int i = 0; i < invoiceDetailList.size(); i++) {
             cost = invoiceDetailList.get(i).getCost();
             amount = invoiceDetailList.get(i).getAmount();
+            resultCost = resultCost.add(cost);
+            resultAmount = resultAmount.add(amount);
+        }
+
+        value[0] = resultCost;
+        value[1] = resultAmount;
+        return value;
+    }
+    
+    public BigDecimal[] checkTaxInvoiceDetailFromBilldescId(String invoiceDetailId) {
+        BigDecimal[] value = new BigDecimal[2];
+        BigDecimal amount = new BigDecimal(0);
+        BigDecimal cost = new BigDecimal(0);
+        BigDecimal resultAmount = new BigDecimal(0);
+        BigDecimal resultCost = new BigDecimal(0);
+
+        List<TaxInvoiceDetail> taxInvoiceDetailList = taxInvoiceDao.getTaxInvoiceDetailFromBillDescId(invoiceDetailId);
+        if (taxInvoiceDetailList == null || taxInvoiceDetailList.size() == 0) {
+            value[0] = resultCost;
+            value[1] = resultAmount;
+            return value;
+        }
+        for (int i = 0; i < taxInvoiceDetailList.size(); i++) {
+            cost = taxInvoiceDetailList.get(i).getCost();
+            amount = taxInvoiceDetailList.get(i).getAmount();
             resultCost = resultCost.add(cost);
             resultAmount = resultAmount.add(amount);
         }

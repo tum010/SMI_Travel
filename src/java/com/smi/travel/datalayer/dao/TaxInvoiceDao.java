@@ -30,4 +30,5 @@ public interface TaxInvoiceDao {
     public TaxInvoice getTaxInvoiceByTaxNo(String invoiceNo);
     public String checkInvoiceDetailValue(String id, BigDecimal cost, BigDecimal amount);
     public String checkCreditNote(String id);
+    public List<TaxInvoiceDetail> getTaxInvoiceDetailFromBillDescId(String invoiceDetailId);
 }

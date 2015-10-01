@@ -126,7 +126,7 @@
                                         <button type="button"  id="btnSearchInvoiceNo"  name="btnSearchInvoiceNo" onclick="searchInvoiceNo()" class="btn btn-primary btn-sm">
                                             <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
                                         </button> 
-                                    </div>
+                                    </div>                                  
                                     <!--Invoice Table-->
                                     <div class="row" >    
                                         <div class="col-md-12">
@@ -164,6 +164,9 @@
                                     <div class="col-xs-1  text-right" style="width: 8px"><i id="ajaxload2"  class="fa fa-spinner fa-spin hidden"></i></div>
                                     <div class="col-xs-1 text-left"  style="width: 100px">
                                         <button style="height:30px" type="button"  id="btnSearchRefNo"  name="btnSearchRefNo" onclick="searchRefNo();" class="btn btn-primary btn-sm" ${outbound}><i class="fa fa-search"></i>&nbsp;Search </button>
+                                    </div>
+                                    <div class="col-md-5 ">
+                                        <div id='AlertBooking' style='display:none'><font color="red">This Ref No can get billable detail from outbound only</font></div>  
                                     </div>
                                     <!--RefNo Table-->
                                     <div class="row">
@@ -1377,16 +1380,24 @@
                         if(msg == "null"){
                             $('#RefNoListTable').dataTable().fnClearTable();
                             $('#RefNoListTable').dataTable().fnDestroy();
+                            $("#RefNoListTable tbody").append(msg);
                           
                             document.getElementById("TaxInvTo").value = '';
                             document.getElementById("InvToName").value = '';
                             document.getElementById("InvToAddress").value = '';
                             document.getElementById("ARCode").value = '';
                             document.getElementById("InvToDate").value = '';
+                            $('#AlertBooking').hide();
+                        }else if(msg == "I"){
+                            $('#RefNoListTable').dataTable().fnClearTable();
+                            $('#RefNoListTable').dataTable().fnDestroy();
+                            $("#RefNoListTable tbody").append(msg);
+                            $('#AlertBooking').show();
                         }else{
                             $('#RefNoListTable').dataTable().fnClearTable();
                             $('#RefNoListTable').dataTable().fnDestroy();
                             $("#RefNoListTable tbody").append(msg);
+                            $('#AlertBooking').hide();
 
                             if(document.getElementById("receiveTaxInvTo")!==null && ($("#receiveTaxInvTo").val()!==undefined)){
                                 document.getElementById("TaxInvTo").value = $("#receiveTaxInvTo").val();
@@ -1423,7 +1434,8 @@
                 }
             });
         } catch (e) {
-            alert(e);
+            $('#RefNoListTable').dataTable().fnClearTable();
+            $('#RefNoListTable').dataTable().fnDestroy();
         }
     }
     
