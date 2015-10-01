@@ -958,7 +958,7 @@ public class AJAXBean extends AbstractBean implements
             description = billableDescs.get(i).getDetail();
             BigDecimal amounttemp = new BigDecimal(billableDescs.get(i).getPrice());
             amountinvoice = amounttemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
-            curcost = (billableDescs.get(i).getCurCost() == null ? "" : billableDescs.get(i).getCurrency());
+            curcost = (billableDescs.get(i).getCurCost() == null ? "" : billableDescs.get(i).getCurCost());
             if (billableDescs.get(i).getMBilltype() != null) {
                 product = billableDescs.get(i).getMBilltype().getId();
                 billTypeName = billableDescs.get(i).getMBilltype().getName();
@@ -1031,12 +1031,12 @@ public class AJAXBean extends AbstractBean implements
                         + "<input type='hidden' name='receiveARCode' id='receiveARCode' value='" + receiveARCode + "'>"
                         + "<td class='text-center'>" + No + "</td>"
                         + "<td>" + description + "</td>"
-                        + "<td class='money'>" + cost + "</td>"
+                        + "<td class='text-right'>" + String.valueOf(cost) + "</td>"
                         + "<td class='text-center'>" + curcost + "</td>"
-                        + "<td class='money'>" + amount + "</td>"
+                        + "<td class='text-right'>" + String.valueOf(amount) + "</td>"
                         + "<td class='text-center'>" + curamount + "</td>"
-                        + "<td class='money'>" + exrate + "</td>"
-                        + "<td class='money'>" + profit + "</td>"
+                        + "<td class='text-right'>" + String.valueOf(exrate) + "</td>"
+                        + "<td class='text-right'>" + String.valueOf(profit) + "</td>"
                         + "<td><center><a href=\"#/ref\"><span onclick=\"AddRefNo('" + product + "','" + description + "','" + cost + "','" + curcost + "','" + amount + "','" + curamount + "','" + invoiceDetailId + "','" + displaydescription + "','" + refNo + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
                 html.append(newrow);
