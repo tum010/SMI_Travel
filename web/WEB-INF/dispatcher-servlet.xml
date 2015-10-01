@@ -138,6 +138,7 @@
                                 <prop key="BillAirAgent.smi">BillAirAgentController</prop>
                                 <prop key="TicketFareSummaryAirline.smi">TicketFareSummaryAirlineController</prop>
                                 <prop key="TicketSummaryCostIncome.smi">TicketSummaryCostIncomeController</prop>
+                                <prop key="MHost.smi">MHostController</prop>
 				<!-- add mapping url -->
 			</props>
 		</property>
@@ -603,6 +604,9 @@
     </bean>
     <bean id="TicketSummaryCostIncomeController" class="com.smi.travel.controller.TicketSummaryCostIncomeController">
         <property name="utilityService" ref="UtilityService" />
+    </bean>
+    <bean id="MHostController" class="com.smi.travel.masterdata.controller.MHostController">
+        
     </bean>
 	<!-- add bean id controller -->
 
