@@ -143,14 +143,15 @@ public class BillableController extends SMITravelController {
                     String billdate = request.getParameter("billDate-"+i);
                     String refId = request.getParameter("billRefId-"+i);
                     String exratetemp = request.getParameter("exrate-"+ i);
-                    BigDecimal exrate = new BigDecimal(BigInteger.ZERO);
+                    BigDecimal exrate = null;
                     if(!"".equalsIgnoreCase(exratetemp)){
+                        System.out.println("+++ insert exratetemp ++++ " + exratetemp);
                         exrate = new BigDecimal(exratetemp);
                     }
                     Date billDate = convertStringToDate(billdate);
-                    System.out.println("remark insert: " + remark);
-                    System.out.println("billDate insert: " + billDate);
-                    System.out.println("exrate insert: " + exrate);
+                    System.out.println("remark insert: "+ i + remark);
+                    System.out.println("billDate insert: " + i + billDate);
+                    System.out.println("exrate insert: " + i + exrate);
                     updateRemarkByBillDescId(billForm, billDescId, remark, billDate,exrate);
 
                 } else {
@@ -247,13 +248,14 @@ public class BillableController extends SMITravelController {
                     String billdate = request.getParameter("billDate-"+ i);
                     String exratetemp = request.getParameter("exrate-"+ i);
                     Date billDate = convertStringToDate(billdate);
-                    BigDecimal exrate = new BigDecimal(BigInteger.ZERO);
+                    BigDecimal exrate = null;
                     if(!"".equalsIgnoreCase(exratetemp)){
+                        System.out.println("+++ exratetemp ++++ " + exratetemp);
                         exrate = new BigDecimal(exratetemp);
                     }
-                    System.out.println("remark update: " + remark);
-                    System.out.println("billDate update: " + billDate);
-                    System.out.println("exrate update: " + exrate);
+                    System.out.println("remark update: " + i + remark);
+                    System.out.println("billDate update: " + i + billDate);
+                    System.out.println("exrate update: " + i + exrate);
                     updateRemarkByBillDescId(billable, billDescId, remark, billDate,exrate);
 
                 } else {
@@ -421,7 +423,7 @@ public class BillableController extends SMITravelController {
         String billdate = request.getParameter("billDate-"+index);
         String currency = request.getParameter("currency-"+index);
         String currencycost = request.getParameter("currencycost-"+index);
-        String exrate = request.getParameter("exrate-"+index);
+        String exratetemp = request.getParameter("exrate-"+index);
         String refId = request.getParameter("billRefId-"+index);
         
         Date billDate =    convertStringToDate(billdate);
@@ -440,7 +442,14 @@ public class BillableController extends SMITravelController {
         bd.setCurrency("null".equalsIgnoreCase(String.valueOf(currency)) ? "" : currency);
         bd.setCurCost("null".equalsIgnoreCase(String.valueOf(currencycost)) ? "" : currencycost);
         
-//        bd.setExRate(new BigDecimal((exrate)));
+        BigDecimal exrate = new BigDecimal(BigInteger.ZERO);
+        if(!"".equalsIgnoreCase(exratetemp) && !"0.0000".equalsIgnoreCase(String.valueOf(exratetemp))){
+            System.out.println("+++ getBillDescListForm exratetemp ++++ " + exratetemp);
+            exrate = new BigDecimal(exratetemp);
+            bd.setExRate(exrate);
+        }
+        
+        
         billable.getBillableDescs().add(bd);
     }
 
@@ -485,11 +494,13 @@ public class BillableController extends SMITravelController {
                 System.out.println("updateRemarkByBillDescId billDate : " + billDate);
                 System.out.println("updateRemarkByBillDescId exrate : " + exrate);
                 bd.setRemark(remark);
-                Double d = exrate.doubleValue();
-                BigDecimal bds = new BigDecimal(d).setScale(4, RoundingMode.HALF_EVEN);
-                d = bds.doubleValue();
-                bd.setExRate(bds);
-                System.out.println(" bd.getExRate() " + bd.getExRate());
+                if(!"".equalsIgnoreCase(String.valueOf(exrate)) && exrate != null){
+                    Double d = exrate.doubleValue();
+                    BigDecimal bds = new BigDecimal(d).setScale(4, RoundingMode.HALF_EVEN);
+                    d = bds.doubleValue();
+                    bd.setExRate(bds);
+                    System.out.println(" bd.getExRate() " + bd.getExRate());
+                }
                 bd.setBillDate(billDate);
                 return;
             }
