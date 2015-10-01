@@ -209,7 +209,7 @@
                         <tbody>
                             <c:forEach var="ar_nirvana" items="${listAr}" varStatus="countar">
                             <tr>
-                                <td class="hidden"><input class="form-control" type="text" id="inputId${countar.count}" name="inputId${countar.count}" value="${ar_nirvana.id}"></td>
+                                <td class="hidden"><input class="form-control" type="text" id="inputId${countar.count}" name="inputId${countar.count}" value="${ar_nirvana.rowid}"></td>
                                 <td align="center">
                                     <c:choose>
                                         <c:when test="${ar_nirvana.status == 'New'}">
