@@ -4,14 +4,20 @@ function searchAction(){
     document.getElementById('SearchHost').submit();     
 }
 
+function actionAdd(){ 
+    var action = document.getElementById('actionIUP');
+    action.value = 'save';
+    document.getElementById('Hostform').submit();     
+}
+
 function save(){
     var HostName = document.getElementById('HostName');
-    var HostStatus =  document.getElementById('HostStatus');
+    var HostCode =  document.getElementById('HostCode');
     if( HostName.value == ''){
         alert('please fill in Host Name ');
-    }else if( HostStatus.value == ''){
-        alert('please fill in Host Status');
-    }else if(!(CheckCharecter(HostName.value) && CheckCharecter(HostStatus.value))){
+    }else if( HostCode.value == ''){
+        alert('please fill in Host Codes');
+    }else if(!(CheckCharecter(HostName.value) && CheckCharecter(HostCode.value))){
          alert('data contains illegal characters.');
     }else{
         document.getElementById('Hostform').submit();
@@ -26,25 +32,28 @@ function save(){
 //    document.getElementById('actionIUP').value='add';
 //}
 //
-//function EditCurrency(id,code,name){
-//    document.getElementById('CurrencyCode').value=code;
-//    document.getElementById('CurrencyName').value=name;
-//    document.getElementById('CurrencyID').value=id;
-//    document.getElementById('actionIUP').value='update';
-//    document.getElementById("CurrencyCode").readOnly = true;
-//}
-//
-//function DeleteCurrency(id,code){
-//    var CurrencyID = document.getElementById('CurrencyID');
-//    CurrencyID.value = id;
-//     document.getElementById('delCode').innerHTML = "Are you sure to delete code : " + code + " ?";
-//}
-//
-//function Delete() {
-//    var action = document.getElementById('actionIUP');
-//    action.value = 'delete';
-//    document.getElementById('Currencyform').submit();
-//}
+function EditHost(id,code,name,address,tel,fax){
+    document.getElementById('HostCode').value=code;
+    document.getElementById('HostName').value=name;
+    document.getElementById('HostAddress').value=address;
+    document.getElementById('HostTel').value=tel;
+    document.getElementById('HostFax').value=fax;
+    document.getElementById('HostID').value=id;
+    document.getElementById('actionIUP').value='save';
+    document.getElementById("HostCode").readOnly = true;
+}
+
+function DeleteHost(id,code){
+    var HostID = document.getElementById('HostID');
+    HostID.value = id;
+    document.getElementById('delCode').innerHTML = "Are you sure to delete code : " + code + " ?";
+}
+
+function Delete() {
+    var action = document.getElementById('actionIUP');
+    action.value = 'delete';
+    document.getElementById('Hostform').submit();
+}
 
 $(document).ready(function () {
 
@@ -68,7 +77,7 @@ $(document).ready(function () {
                     }
                 }
             },
-            HostStatus: {
+            HostCode: {
                 validators: {
                     notEmpty: {
                         message: 'The host Status name is required'
