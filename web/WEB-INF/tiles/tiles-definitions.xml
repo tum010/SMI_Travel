@@ -585,6 +585,11 @@
         <put-attribute name="title" value="Master : Host" />
         <put-attribute name="body" value="/WEB-INF/jsp/MHost.jsp" />
     </definition>
+    
+    <definition name="InvoiceInbound" extends="baseLayout">
+        <put-attribute name="title" value="Finance and Cashier : Invoice" />
+        <put-attribute name="body" value="/WEB-INF/jsp/InvoiceInbound.jsp" />
+    </definition>
     <!--<add data>-->
     
     <definition name="SendMail" extends="baseLayout">

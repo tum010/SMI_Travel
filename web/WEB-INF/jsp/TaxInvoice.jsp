@@ -1516,14 +1516,14 @@
         }    
     }
     
-    function AddRefNo(product,description,cost,curcost,amount,curamount,billableDescId,displaydescription,refNo){
+    function AddRefNo(product,description,cost,curcost,amount,curamount,id,displaydescription,refNo){
         var count = parseInt($("#countTaxInvoice").val());
         var row = parseInt(count)+1;
-        var match = CheckRefNoProduct(billableDescId,count);
+        var match = CheckInvoiceProduct(id,count);
         var isProfit = 1;
         console.log(match);
         if(match === 0){
-            AddDataRowProduct(row,count,billableDescId,product,description,cost,curcost,amount,curamount,'',refNo,isProfit);
+            AddDataRowProduct(row,count,id,product,description,cost,curcost,amount,curamount,'',refNo,isProfit);
         }    
     }
     
@@ -1598,10 +1598,7 @@
             
             
             $("#invoiceDetailCost" + count).val(formatNumber(parseFloat(cost)));
-            $("#invoiceDetailAmount" + count).val(formatNumber(parseFloat(amount)));
-            $('[name=product' + count + '] option').filter(function() { 
-                return ($(this).text() === product);
-            }).prop('selected', true);
+            $("#invoiceDetailAmount" + count).val(formatNumber(parseFloat(amount)));            
             $("#description" + count).val(description);
             $("#cost" + count).val(formatNumber(parseFloat(cost)));
             $('[name=currencyCost' + count + '] option').filter(function() { 
@@ -1620,8 +1617,14 @@
             if(isProfit !== ''){
                 $("#invoiceDetailId" + count).val(id);
                 $("#isProfit" + count).val(isProfit);
+                $('[name=product' + count + '] option').filter(function() { 
+                    return ($(this).val() === product);
+                }).prop('selected', true);
             } else {
                 $("#invoiceDetailId" + count).val(id);
+                $('[name=product' + count + '] option').filter(function() { 
+                    return ($(this).text() === product);
+                }).prop('selected', true);
             }
             var vatData = parseFloat($("#vatDefault").val());
             document.getElementById('vatShow'+count).innerHTML = formatNumber(vatData);
@@ -1631,15 +1634,18 @@
             if(isProfit !== ''){
                 $("#invoiceDetailId" + (count-1)).val(id);
                 $("#isProfit" + (count-1)).val(isProfit);
+                $('[name=product' + (count-1) + '] option').filter(function() { 
+                    return ($(this).val() === product);
+                }).prop('selected', true);
             } else {
                 $("#invoiceDetailId" + (count-1)).val(id);
+                $('[name=product' + (count-1) + '] option').filter(function() { 
+                    return ($(this).text() === product);
+                }).prop('selected', true);
             }
 //            $("#invoiceDetailId" + (count-1)).val(id);
             $("#invoiceDetailCost" + (count-1)).val(formatNumber(parseFloat(cost)));
             $("#invoiceDetailAmount" + (count-1)).val(formatNumber(parseFloat(amount)));
-            $('[name=product' + (count-1) + '] option').filter(function() { 
-                return ($(this).text() === product);
-            }).prop('selected', true);
             $("#description" + (count-1)).val(description);
             $("#cost" + (count-1)).val(formatNumber(parseFloat(cost)));
             $('[name=currencyCost' + (count-1) + '] option').filter(function() { 
