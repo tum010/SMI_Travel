@@ -1380,7 +1380,7 @@
                         if(msg == "null"){
                             $('#RefNoListTable').dataTable().fnClearTable();
                             $('#RefNoListTable').dataTable().fnDestroy();
-                            $("#RefNoListTable tbody").append(msg);
+//                            $("#RefNoListTable tbody").append(msg);
                           
                             document.getElementById("TaxInvTo").value = '';
                             document.getElementById("InvToName").value = '';
@@ -1391,7 +1391,6 @@
                         }else if(msg == "I"){
                             $('#RefNoListTable').dataTable().fnClearTable();
                             $('#RefNoListTable').dataTable().fnDestroy();
-                            $("#RefNoListTable tbody").append(msg);
                             $('#AlertBooking').show();
                         }else{
                             $('#RefNoListTable').dataTable().fnClearTable();
@@ -1426,11 +1425,15 @@
                         $("#ajaxload2").addClass("hidden");
 
                     } catch (e) {
+                        $('#RefNoListTable').dataTable().fnClearTable();
+                        $('#RefNoListTable').dataTable().fnDestroy();
                         $("#ajaxload2").addClass("hidden");
                     }
 
                 }, error: function (msg) {
-                     $("#ajaxload2").addClass("hidden");
+                    $('#RefNoListTable').dataTable().fnClearTable();
+                    $('#RefNoListTable').dataTable().fnDestroy();
+                    $("#ajaxload2").addClass("hidden");
                 }
             });
         } catch (e) {

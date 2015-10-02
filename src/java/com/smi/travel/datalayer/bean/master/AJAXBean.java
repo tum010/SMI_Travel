@@ -54,6 +54,7 @@ import com.smi.travel.datalayer.view.entity.TicketAircommissionView;
 import com.smi.travel.util.Mail;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -991,7 +992,7 @@ public class AJAXBean extends AbstractBean implements
                 if(exrate == null){
                     exrate = new BigDecimal(0);
                 }
-                profit = amount.subtract(cost.multiply(exrate));
+                profit = amount.subtract(cost.multiply(exrate)).setScale(2, RoundingMode.HALF_UP);
             }
 
 //            if ("1".equals(product)) {
@@ -1031,13 +1032,13 @@ public class AJAXBean extends AbstractBean implements
                         + "<input type='hidden' name='receiveARCode' id='receiveARCode' value='" + receiveARCode + "'>"
                         + "<td class='text-center'>" + No + "</td>"
                         + "<td>" + description + "</td>"
-                        + "<td class='text-right'>" + String.valueOf(cost) + "</td>"
+                        + "<td class='text-right money'>" + cost + "</td>"
                         + "<td class='text-center'>" + curcost + "</td>"
-                        + "<td class='text-right'>" + String.valueOf(amount) + "</td>"
+                        + "<td class='text-right money'>" + amount + "</td>"
                         + "<td class='text-center'>" + curamount + "</td>"
-                        + "<td class='text-right'>" + String.valueOf(exrate) + "</td>"
-                        + "<td class='text-right'>" + String.valueOf(profit) + "</td>"
-                        + "<td><center><a href=\"#/ref\"><span onclick=\"AddRefNo('" + product + "','" + description + "','" + cost + "','" + curcost + "','" + amount + "','" + curamount + "','" + invoiceDetailId + "','" + displaydescription + "','" + refNo + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                        + "<td class='text-right money'>" + ("0".equalsIgnoreCase(String.valueOf(exrate)) ? "" : exrate) + "</td>"
+                        + "<td class='text-right money'>" + profit + "</td>"
+                        + "<td><center><a href=\"#/ref\"><span onclick=\"AddRefNo('" + product + "','" + description + "','" + cost + "','" + curcost + "','" + profit + "','" + curamount + "','" + invoiceDetailId + "','" + displaydescription + "','" + refNo + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
                 html.append(newrow);
                 No++;
