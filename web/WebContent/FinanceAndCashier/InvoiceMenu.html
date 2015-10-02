@@ -81,13 +81,30 @@
         </a>
         <b class="arrow"></b>
     </li>
+    
     <li>
-        <a href="InvoiceOA.smi" id="menu-invoicenovatWendy">
-            <i class="fa fa-ticket"></i>
-            <span class="menu-text">Invoice ticket<strong></strong> </span>
+        <a href="#">
+            <span class="menu-text"><b>Inbound</b></span>
+        </a>    
+            
+        <b class="arrow"></b>
+    </li>
+    <li>
+        <a href="InvoiceInboundPM.smi" id="menu-invoiceinboundproforma">
+            <i class="fa fa-file-text-o"></i>
+            <span class="menu-text">Proforma<strong></strong> </span>
         </a>
         <b class="arrow"></b>
     </li>
+    
+    <li>
+        <a href="InvoiceInboundRV.smi" id="menu-invoiceninboundrevenue">
+            <i class="fa fa-times"></i>
+            <span class="menu-text">Revenue<strong></strong> </span>
+        </a>
+        <b class="arrow"></b>
+    </li>
+  
 </ul>
 <input id="tempBox" type="password" style="border: none; outline: none"/>
 
@@ -112,15 +129,15 @@
             //console.log(name[2]);
             str = name[2].split(".");
             //console.log(str[0]);
-            sub = str[0].substr(0, 9);
-            console.log(sub);
-            var $select = $('a[href*="' + sub + '"]');
-            $("#InvoiceMenuLeft").find($select).css('background-color', '#ccc');           
-        
+//            sub = str[0].substr(0, 9);
+            sub2 = str[0].substr(0, 16);
+//            console.log("Sub : "+sub);
+            console.log("Sub : "+sub2);
+//            var $select = $('a[href*="' + sub + '"]');
+            var $select2 = $('a[href*="' + sub2 + '"]');
+//            $("#InvoiceMenuLeft").find($select).css('background-color', '#ccc');   
+             $("#InvoiceMenuLeft").find($select2).css('background-color', '#ccc');       
 
-        
-       
-        
         $("#InvoiceMenuLeft a").one('mouseover', function () {
 
             var action = '?action=edit';
