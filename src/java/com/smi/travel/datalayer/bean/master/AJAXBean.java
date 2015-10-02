@@ -700,7 +700,8 @@ public class AJAXBean extends AbstractBean implements
             } else if ("searchRefNo".equalsIgnoreCase(type)) {
                 String searchRefNo = map.get("refNo").toString();
                 Billable bill = billableDao.getBillableBooking(searchRefNo);
-                if ("".equals(bill.getId()) || null == bill.getId()) {
+                System.out.println(" bill.getId() " + String.valueOf(bill.getId()));
+                if ("".equals(bill.getId()) || null == bill.getId() || "null".equalsIgnoreCase(String.valueOf(bill.getId()))) {
                     result = "null";
                 } else {
                     result = buildBillableListHTML(bill);
@@ -1234,8 +1235,7 @@ public class AJAXBean extends AbstractBean implements
 
             BigDecimal costtemp = new BigDecimal(billableDescs.get(i).getCost());
             costinvoice = costtemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
-
-            cur = billableDescs.get(i).getCurrency();
+            cur = billableDescs.get(i).getCurCost() == null ? "" : billableDescs.get(i).getCurCost();
 
             BigDecimal[] value = checkInvoiceDetailFromBilldescId(billableDescId);
             BigDecimal costTemp = value[0];
