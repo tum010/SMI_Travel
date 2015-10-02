@@ -1740,6 +1740,9 @@ public class AJAXBean extends AbstractBean implements
                         if (billdeescList.get(i).getCurrency() == null) {
                             billdeescList.get(i).setCurrency("");
                         }
+                        if (billdeescList.get(i).getCurCost() == null) {
+                            billdeescList.get(i).setCurCost("");
+                        }
                         if (billdeescList.get(i).getDetail() == null) {
                             billdeescList.get(i).setDetail("");
                         }
@@ -1750,6 +1753,7 @@ public class AJAXBean extends AbstractBean implements
                                 + "<td>" + billdeescList.get(i).getMBilltype().getName() + "</td>"
                                 + "<td>" + billdeescList.get(i).getDetail() + "</td>"
                                 + "<td align=\"right\">" + cost + "</td>"
+                                + "<td align=\"center\">" + billdeescList.get(i).getCurCost() + "</td>"
                                 + "<td align=\"right\">" + price + "</td>"
                                 + "<td align=\"center\">" + billdeescList.get(i).getCurrency() + "</td>"
                                 + "<td align=\"center\"><center><a href=\"\" onclick=\"addInvoiceDetail(" + (count + 1) + ")\"><span class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
@@ -1774,6 +1778,9 @@ public class AJAXBean extends AbstractBean implements
                         if (billdeescList.get(i).getCurrency() == null) {
                             billdeescList.get(i).setCurrency("");
                         }
+                        if (billdeescList.get(i).getCurCost() == null) {
+                            billdeescList.get(i).setCurCost("");
+                        }
                         if (billdeescList.get(i).getDetail() == null) {
                             billdeescList.get(i).setDetail("");
                         }
@@ -1784,6 +1791,7 @@ public class AJAXBean extends AbstractBean implements
                                 + "<td>" + billdeescList.get(i).getMBilltype().getName() + "</td>"
                                 + "<td>" + billdeescList.get(i).getDetail() + "</td>"
                                 + "<td align=\"right\">" + cost1 + "</td>"
+                                + "<td align=\"center\">" + billdeescList.get(i).getCurCost() + "</td>"
                                 + "<td align=\"right\">" + price1 + "</td>"
                                 + "<td align=\"center\">" + billdeescList.get(i).getCurrency() + "</td>"
                                 + "<td align=\"center\"><center><a href=\"\" onclick=\"addInvoiceDetail(" + (count + 1) + ")\"><span class=\"glyphicon glyphicon-plus\"></span></a></center></td>"

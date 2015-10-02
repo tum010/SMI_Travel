@@ -303,10 +303,11 @@ function checkCurrencyCost(){
 
 var isDuplicateInvoiceDetail = 0;
 var description ="";
-function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur){
+function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur,cur_c){
 
     var selectT="";
     var selectC = "";
+    var selectCC = "";
     var showvat = $('#showvat').val();
     var check = "";
     var vatValue = '';
@@ -341,6 +342,9 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur){
     if(cur === undefined){
         cur = "";
     }
+    if(cur_c === undefined){
+        cur_c = "";
+    }
     if (!row) {
         row = 1;
     }
@@ -350,6 +354,7 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur){
     }
    selectT = selectType.replace("value='"+ prod +"'", "selected value='"+ prod+"'");
    selectC = select.replace("value='"+ cur +"'", "selected value='"+ cur+"'");
+   selectCC = select_cost.replace("value='"+ cur_c +"'", "selected value='"+ cur_c+"'");
 //    alert("D : " + des + " R : " + RefNo);
     if(des != '' || RefNo != ''){
         $("#DetailBillableTable tbody").append(
@@ -360,7 +365,7 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur){
             '<td><input type="text" class="form-control" id="BillDescriptionTemp' + row + '" name="BillDescriptionTemp' + row + '" value="" onkeyup="setDescription(' + row + ')"></td>' +
             '<td class="hidden"><input type="text" class="form-control" id="BillDescription' + row + '" name="BillDescription' + row + '" value="'+des +'" > </td>' +
             '<td><input  maxlength ="15" type="text" onfocusout="changeFormatCostNumber(' + row + ')" class="form-control numerical text-right" id="InputCost' + row + '" name="InputCost' + row + '" value="'+ cos +'" ></td>' +
-            '<td><select id="SelectCurrencyCost' + row + '" name="SelectCurrencyCost' + row + '" class="form-control">'+ selectC +'</select></td>' +
+            '<td><select id="SelectCurrencyCost' + row + '" name="SelectCurrencyCost' + row + '" class="form-control">'+ selectCC +'</select></td>' +
             '<td><input type="text" onfocusout="changeFormatCostLocalNumber(' + row + ')"  value="'+cos +'" id="InputCostLocal' + row + '" name="InputCostLocal' + row + '" class="form-control text-right"></td>' +
             '<td class="hidden"><input type="text" value="'+cos +'" id="InputCostLocalTemp' + row + '" name="InputCostLocalTemp' + row + '"></td>'+
             '<td  '+vathidden+'><input type="checkbox" '+check+' id="checkUse' + row + '" name="checkUse' + row + '"  onclick="calculateGross('+row+')"></td>'+
@@ -384,7 +389,7 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur){
             '<td><input type="text" class="form-control" id="BillDescriptionTemp' + row + '" name="BillDescriptionTemp' + row + '" value="" onkeyup="setDescription(' + row + ')"></td>' +
             '<td class="hidden"><input type="text" class="form-control" id="BillDescription' + row + '" name="BillDescription' + row + '" value="'+des +'" > </td>' +
             '<td><input  maxlength ="15" type="text" onfocusout="changeFormatCostNumber(' + row + ')" class="form-control numerical text-right" id="InputCost' + row + '" name="InputCost' + row + '" value="'+ cos +'" ></td>' +
-            '<td><select id="SelectCurrencyCost' + row + '" name="SelectCurrencyCost' + row + '" class="form-control">'+ selectC +'</select></td>' +
+            '<td><select id="SelectCurrencyCost' + row + '" name="SelectCurrencyCost' + row + '" class="form-control">'+ selectCC +'</select></td>' +
             '<td><input type="text" onfocusout="changeFormatCostLocalNumber(' + row + ')"  value="'+cos +'" id="InputCostLocal' + row + '" name="InputCostLocal' + row + '" class="form-control text-right"></td>' +
             '<td class="hidden"><input type="text" value="'+cos +'" id="InputCostLocalTemp' + row + '" name="InputCostLocalTemp' + row + '"></td>'+
             '<td  '+vathidden+'><input type="checkbox" '+check+' id="checkUse' + row + '" name="checkUse' + row + '"  onclick="calculateGross('+row+')"></td>'+
@@ -853,8 +858,9 @@ function addInvoiceDetail(rowId){
             var pro = $(this).find("td").eq(3).html();
             var des = $(this).find("td").eq(4).html();
             var cos = $(this).find("td").eq(5).html();
-            var price = $(this).find("td").eq(6).html(); 
-            var cur = $(this).find("td").eq(7).html();
+            var cur_c = $(this).find("td").eq(6).html();
+            var price = $(this).find("td").eq(7).html(); 
+            var cur = $(this).find("td").eq(8).html();
             checkDuplicateInvoiceDetail(id,rowId);
             console.log("Duplicate : " + isDuplicateInvoiceDetail);
             if(isDuplicateInvoiceDetail === 0){
@@ -871,7 +877,7 @@ function addInvoiceDetail(rowId){
                         '&type=' + 'searchInvoiceDescription';
                    CallAjaxSearchDescription(param,countTable,pro,RefNo);
                 // Send Add Row
-                AddRowDetailBillAble(countTable,prod,des,cos,id,price,RefNo,cur);
+                AddRowDetailBillAble(countTable,prod,des,cos,id,price,RefNo,cur,cur_c);
 //                alert("C : " + countTable);
                 CalculateGrandTotal(countTable);
                 calculateGross(countTable);

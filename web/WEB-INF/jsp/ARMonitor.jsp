@@ -59,6 +59,8 @@
                     <c:set var="selectInvoiceTypeVat" value="" />
                     <c:set var="selectInvoiceTypeNoVat" value="" />
                     <c:set var="selectInvoiceTypeTemp" value="" />
+                    <c:set var="selectInvoiceTypeTic" value="" />
+                    <c:set var="selectInvoiceTypeTax" value="" />
                     <c:if test="${invoiceType == 'V'}">
                         <c:set var="selectInvoiceTypeVat" value="selected" />
                     </c:if>
@@ -68,11 +70,19 @@
                     <c:if test="${invoiceType == 'T'}">
                         <c:set var="selectInvoiceTypeTemp" value="selected" />
                     </c:if>
+                    <c:if test="${invoiceType == 'A'}">
+                        <c:set var="selectInvoiceTypeTic" value="selected" />
+                    </c:if>
+                    <c:if test="${invoiceType == 'TAX'}">
+                        <c:set var="selectInvoiceTypeTax" value="selected" />
+                    </c:if>
                     <select class="form-control" id="invoiceType" name="invoiceType">
                         <option value="">--Select--</option>
                         <option value="V" ${selectInvoiceTypeVat}>Vat </option>
                         <option value="N" ${selectInvoiceTypeNoVat}>No Vat </option>
                         <option value="T" ${selectInvoiceTypeTemp}>Temp </option>
+                        <option value="A" ${selectInvoiceTypeTic}>Ticket </option>
+                        <option value="TAX" ${selectInvoiceTypeTax}>Tax </option>
                     </select>
                 </div>
                 <!--<div class="col-xs-1" style="width: 50px"></div>-->
