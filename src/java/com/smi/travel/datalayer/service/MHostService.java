@@ -20,15 +20,19 @@ public class MHostService {
         return mHostDao.getListHost(host);
     }
 
-    public int insertHost(MHost currency) {
-        return mHostDao.insertHost(currency);
+    public String saveHost(MHost host) {
+        if(host.getId() != null && !"".equals(host.getId())){
+            return mHostDao.updateHost(host);
+        }else{
+            return mHostDao.insertHost(host);
+        }
     }
 
-    public int UpdateHost(MHost currency) {
+    public String UpdateHost(MHost currency) {
         return mHostDao.updateHost(currency);
     }
 
-    public int DeleteHost(MHost currency) {
+    public String DeleteHost(MHost currency) {
         return mHostDao.DeleteHost(currency);
     }
 
@@ -42,33 +46,27 @@ public class MHostService {
     
     
     
-    public String validateHost(MHost  Vhost,String operation){
+    public String validateHost(MHost  Vhost){
         String validate = "";
-        MHost currency = new MHost();
-        currency.setCode(Vhost.getCode());
-        List<MHost> list = mHostDao.getListHost(currency);
+        MHost host = new MHost();
+        int num = 0;
+        List<MHost> list = mHostDao.searchListHost();
         if(list != null){
-            if("update".equalsIgnoreCase(operation)){
-                if(!(list.get(0).getId().equalsIgnoreCase(Vhost.getId()))){
-                    validate = "currency code already exist";
+            if(Vhost.getId() == null){
+                for (int i = 0; i < list.size(); i++) {
+                    if(list.get(i).getCode().equals(Vhost.getCode())){
+                        validate = "host code already exist";
+                        num = 1;
+                    }
+                    if(list.get(i).getName().equals(Vhost.getName())){
+                        if(num == 0){
+                            validate = "host name already exist";
+                        }else{
+                            validate = "host code and name already exist";
+                        }
+                    }
                 }
-            }else{
-                 validate = "currency code already exist";
             }
-            
-        }
-        currency.setName(null);
-        currency.setStatus(null);
-        list = mHostDao.getListHost(currency);
-        if(list != null){      
-            if("update".equalsIgnoreCase(operation)){
-                if(!(list.get(0).getId().equalsIgnoreCase(Vhost.getId()))){
-                      validate = "host name already exist";  
-                }
-            }else{
-                  validate = "host name already exist";  
-            }
-           
         }
         return validate;
     }

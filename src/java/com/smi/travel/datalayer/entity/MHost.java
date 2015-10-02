@@ -16,19 +16,17 @@ public class MHost {
     private String address;
     private String tel;
     private String fax;
-    private String status;
     
     public MHost() {
         
     }
     
-    public MHost(String code, String name,String address,String tel,String fax,String status) {
+    public MHost(String code, String name,String address,String tel,String fax) {
        this.code = code;
        this.name = name;
        this.address = address;
        this.tel = tel;
        this.fax = fax;
-       this.status = status;
     }
 
     /**
@@ -115,19 +113,4 @@ public class MHost {
         this.fax = fax;
     }
 
-    /**
-     * @return the status
-     */
-    public String getStatus() {
-        return status;
-    }
-
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(String status) {
-        this.status = status;
-    }
-    
-    
 }

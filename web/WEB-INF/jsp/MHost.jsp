@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript" src="js/MCurrency.js"></script> 
+<script type="text/javascript" src="js/MHost.js"></script> 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -79,7 +79,7 @@
                     <div class="col-md-3">
                         <div  style="padding-top: 20px">   
                             <button type="button" id="acs" onclick="searchAction()"  class="btn btn-primary"><span class="fa fa-search"></span> Search</button>           
-                            <input type="hidden" name="action" id="Action"/>
+                            <input type="hidden" name="action" id="Action" />
                         </div>
                     </div>
                 </form>
@@ -122,8 +122,8 @@
                                     <td><c:out value="" /></td>
                                     <td>
                                         <center> 
-                                            <span id="spanEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon"      onclick="EditCurrency('${table.id}', '${table.code}', '${table.name}')" data-toggle="modal" data-target="#HostModal" ></span>
-                                            <span id="spanRemove${dataStatus.count}" class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteCurrency('${table.id}', '${table.code}')" data-toggle="modal" data-target="#delHostModal" >  </span>
+                                            <span id="spanEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon"      onclick="EditHost('${table.id}', '${table.code}', '${table.name}','${table.address}','${table.tel}','${table.fax}')" data-toggle="modal" data-target="#HostModal" ></span>
+                                            <span id="spanRemove${dataStatus.count}" class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteHost('${table.id}', '${table.code}')" data-toggle="modal" data-target="#delHostModal" >  </span>
                                         </center>
                                     </td>                 
                                 </tr>  
@@ -148,13 +148,13 @@
                     <div class="form-group">
                         <label for="HostCode" class="col-sm-3 control-label" >Code <font style="color: red">*</font></label>
                         <div class="col-sm-8"> 
-                            <input type="text" class="form-control" maxlength="3" id="HostCode" style="text-transform:uppercase" name="HostCode" >
+                            <input type="text" class="form-control" maxlength="21" id="HostCode" style="text-transform:uppercase" name="HostCode" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="HostName" class="col-sm-3 control-label" >Name <font style="color: red">*</font></label>
                         <div class="col-sm-8"> 
-                            <input type="text" class="form-control" maxlength="20" id="HostName" style="text-transform:uppercase" name="HostName" >
+                            <input type="text" class="form-control" maxlength="100" id="HostName" style="text-transform:uppercase" name="HostName" >
                         </div>
                     </div>
                     <div class="form-group">
@@ -167,21 +167,21 @@
                     <div class="form-group">
                         <label for="HostTel" class="col-sm-3 control-label" >Tel <font style="color: red">*</font></label>
                         <div class="col-sm-8"> 
-                            <input type="number" class="form-control" maxlength="10" id="HostTel" style="text-transform:uppercase" name="HostTel" >
+                            <input type="text" class="form-control" maxlength="100" id="HostTel" style="text-transform:uppercase" name="HostTel" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="HostFax" class="col-sm-3 control-label" >Fax <font style="color: red">*</font></label>
                         <div class="col-sm-8"> 
-                            <input type="text" class="form-control" maxlength="20" id="HostFax" style="text-transform:uppercase" name="HostFax" >
+                            <input type="text" class="form-control" maxlength="100" id="HostFax" style="text-transform:uppercase" name="HostFax" >
                         </div>
                     </div>
                     <input type="hidden" id="HostID" name="HostID" value="">
-                    <input type="hidden" id="actionIUP" name="action">
+                    <input type="hidden" id="actionIUP" name="action" >
                
             </div>
             <div class="modal-footer">
-                <button id="btnSave" type="submit"  class="btn btn-success"><span  class="fa fa-save"></span> Save</button>
+                <button id="btnSave" type="button" onclick="actionAdd();"  class="btn btn-success"><span  class="fa fa-save"></span> Save</button>
                 <button id="btnClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
