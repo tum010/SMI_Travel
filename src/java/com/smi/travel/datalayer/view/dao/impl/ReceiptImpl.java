@@ -10,7 +10,9 @@ import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.view.dao.ReceiptDao;
 import com.smi.travel.datalayer.view.entity.ReceiptView;
 import com.smi.travel.util.UtilityFunction;
+import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -93,12 +95,23 @@ public class ReceiptImpl implements ReceiptDao{
             receiptView.setCredit((("null".equals(String.valueOf(T[24])) ? "" : String.valueOf(T[24]))));
             receiptView.setCreditflag((("0.00".equals(String.valueOf(T[25])) ? "" : String.valueOf(T[25]))));
             System.err.println("receiptView cash " +receiptView.getCash());
-            String total = (receiptView.getTotalamount()).replaceAll("\\.", ",");
-            String[] totals = total.split(",");
-            int totalWord = 0;
-            totalWord = Integer.parseInt(String.valueOf(totals[0]));
-            String textmoney = (utilityFunction.convert(totalWord)+"  baht only");
-            receiptView.setTextmoney(textmoney.substring(0,1).toUpperCase() + textmoney.substring(1));
+//            String total = (receiptView.getTotalamount()).replaceAll("\\.", ",");
+//            String[] totals = total.split(",");
+//            BigDecimal totalWord = new BigDecimal(BigInteger.ZERO);
+//            totalWord = new BigDecimal(String.valueOf(totals[0]));
+            String string = String.valueOf(receiptView.getTotalamount());
+            String[] parts = string.split("\\.");
+            String part1 = parts[0]; // number
+            String part2 = parts[1]; // point
+            String textmoney = (utilityFunction.convert(Integer.parseInt(part1)));
+            String textmoneypoint = (utilityFunction.changPoint(String.valueOf(part2)));
+            String totalWord = textmoney +" baht"+ textmoneypoint;
+            if("".equalsIgnoreCase(textmoneypoint.trim())){
+                totalWord = textmoney +" baht only";
+            }
+            System.out.println(" totalWord " + totalWord);
+            receiptView.setTextmoney(totalWord.substring(0,1).toUpperCase() + totalWord.substring(1));
+//            receiptView.setTextmoney(textmoney.substring(0,1).toUpperCase() + textmoney.substring(1));
 
             if(option == 1){
                 receiptView.setDescription(receiptView.getNondescription());

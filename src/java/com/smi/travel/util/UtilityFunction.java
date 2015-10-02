@@ -303,21 +303,29 @@ public class UtilityFunction {
     }
    
     private static String convertLessThanOneThousand(int number) {
-      String soFar;
+        String soFar;
+        int thousand = number;
+        int hundred = 0;
+        thousand -= (thousand/1000)*1000;
+        hundred = (thousand/100 == 0 ? 0 : 1);
+        String and = "";
+        if((number%100 != 0) && (hundred == 1)){              
+            and = " and";
+        }
+        if (number % 100 < 20){
+          soFar = numNames[number % 100];
+          number /= 100;
+        }
+        else {
+          soFar = numNames[number % 10];
+          number /= 10;
 
-      if (number % 100 < 20){
-        soFar = numNames[number % 100];
-        number /= 100;
-      }
-      else {
-        soFar = numNames[number % 10];
-        number /= 10;
+          soFar = tensNames[number % 10] + soFar;
+          number /= 10;
+        }
 
-        soFar = tensNames[number % 10] + soFar;
-        number /= 10;
-      }
-      if (number == 0) return soFar;
-      return numNames[number] + " hundred" + soFar;
+        if (number == 0) return soFar;
+        return numNames[number] + " hundred" + and + soFar;
     }
 
 
@@ -392,7 +400,45 @@ public class UtilityFunction {
       // remove extra spaces!
       return result.replaceAll("^\\s+", "").replaceAll("\\b\\s{2,}\\b", " ");
     }
-    
+     public static String changPoint(String point){
+        String text = " point ";
+        String one = point.substring(0,1);
+        String two = point.substring(1,2);
+        System.out.println("Point SubString : " + one + " : " + two );
+        if("00".equalsIgnoreCase(point)){
+            return "";
+        }
+        String array[] = { one, two };
+        
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] != null && array[i] != "") {
+                System.out.println("Array : "+array[i]+":");
+                if ("0".equals(array[i]) && i != 1) {
+                        text += "zero ";
+                } else if ("1".equals(array[i])) {
+                        text += "one ";
+                } else if ("2".equals(array[i])) {
+                        text += "two ";
+                } else if ("3".equals(array[i])) {
+                        text += "three ";
+                } else if ("4".equals(array[i])) {
+                        text += "four ";
+                } else if ("5".equals(array[i])) {
+                        text += "five ";
+                } else if ("6".equals(array[i])) {
+                        text += "six ";
+                } else if ("7".equals(array[i])) {
+                        text += "seven ";
+                } else if ("8".equals(array[i])) {
+                        text += "eight ";
+                } else if ("9".equals(array[i])) {
+                        text += "nine ";
+                }
+            }
+        }
+	System.out.println("Amount :  " + text);
+	return text;
+    }
     public String GetRounting( List<AirticketFlight> FlightList){
         String rounting = "";
         for(int i =0;i<FlightList.size();i++){
@@ -433,5 +479,5 @@ public class UtilityFunction {
     public static String getObjectString(Object object){
         return object == null ? "" : object.toString();
     }
-    
+
 }
