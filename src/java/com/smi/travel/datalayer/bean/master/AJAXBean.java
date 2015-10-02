@@ -54,6 +54,7 @@ import com.smi.travel.datalayer.view.entity.TicketAircommissionView;
 import com.smi.travel.util.Mail;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -992,7 +993,7 @@ public class AJAXBean extends AbstractBean implements
                 if(exrate == null){
                     exrate = new BigDecimal(0);
                 }
-                profit = amount.subtract(cost.multiply(exrate));
+                profit = amount.subtract(cost.multiply(exrate)).setScale(2, RoundingMode.HALF_UP);
             }
 
 //            if ("1".equals(product)) {
@@ -1032,13 +1033,13 @@ public class AJAXBean extends AbstractBean implements
                         + "<input type='hidden' name='receiveARCode' id='receiveARCode' value='" + receiveARCode + "'>"
                         + "<td class='text-center'>" + No + "</td>"
                         + "<td>" + description + "</td>"
-                        + "<td class='text-right'>" + String.valueOf(cost) + "</td>"
+                        + "<td class='text-right money'>" + cost + "</td>"
                         + "<td class='text-center'>" + curcost + "</td>"
-                        + "<td class='text-right'>" + String.valueOf(amount) + "</td>"
+                        + "<td class='text-right money'>" + amount + "</td>"
                         + "<td class='text-center'>" + curamount + "</td>"
-                        + "<td class='text-right'>" + String.valueOf(exrate) + "</td>"
-                        + "<td class='text-right'>" + String.valueOf(profit) + "</td>"
-                        + "<td><center><a href=\"#/ref\"><span onclick=\"AddRefNo('" + product + "','" + description + "','" + cost + "','" + curcost + "','" + amount + "','" + curamount + "','" + invoiceDetailId + "','" + displaydescription + "','" + refNo + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                        + "<td class='text-right money'>" + ("0".equalsIgnoreCase(String.valueOf(exrate)) ? "" : exrate) + "</td>"
+                        + "<td class='text-right money'>" + profit + "</td>"
+                        + "<td><center><a href=\"#/ref\"><span onclick=\"AddRefNo('" + product + "','" + description + "','" + cost + "','" + curcost + "','" + profit + "','" + curamount + "','" + invoiceDetailId + "','" + displaydescription + "','" + refNo + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
                 html.append(newrow);
                 No++;
@@ -1740,6 +1741,9 @@ public class AJAXBean extends AbstractBean implements
                         if (billdeescList.get(i).getCurrency() == null) {
                             billdeescList.get(i).setCurrency("");
                         }
+                        if (billdeescList.get(i).getCurCost() == null) {
+                            billdeescList.get(i).setCurCost("");
+                        }
                         if (billdeescList.get(i).getDetail() == null) {
                             billdeescList.get(i).setDetail("");
                         }
@@ -1750,6 +1754,7 @@ public class AJAXBean extends AbstractBean implements
                                 + "<td>" + billdeescList.get(i).getMBilltype().getName() + "</td>"
                                 + "<td>" + billdeescList.get(i).getDetail() + "</td>"
                                 + "<td align=\"right\">" + cost + "</td>"
+                                + "<td align=\"center\">" + billdeescList.get(i).getCurCost() + "</td>"
                                 + "<td align=\"right\">" + price + "</td>"
                                 + "<td align=\"center\">" + billdeescList.get(i).getCurrency() + "</td>"
                                 + "<td align=\"center\"><center><a href=\"\" onclick=\"addInvoiceDetail(" + (count + 1) + ")\"><span class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
@@ -1774,6 +1779,9 @@ public class AJAXBean extends AbstractBean implements
                         if (billdeescList.get(i).getCurrency() == null) {
                             billdeescList.get(i).setCurrency("");
                         }
+                        if (billdeescList.get(i).getCurCost() == null) {
+                            billdeescList.get(i).setCurCost("");
+                        }
                         if (billdeescList.get(i).getDetail() == null) {
                             billdeescList.get(i).setDetail("");
                         }
@@ -1784,6 +1792,7 @@ public class AJAXBean extends AbstractBean implements
                                 + "<td>" + billdeescList.get(i).getMBilltype().getName() + "</td>"
                                 + "<td>" + billdeescList.get(i).getDetail() + "</td>"
                                 + "<td align=\"right\">" + cost1 + "</td>"
+                                + "<td align=\"center\">" + billdeescList.get(i).getCurCost() + "</td>"
                                 + "<td align=\"right\">" + price1 + "</td>"
                                 + "<td align=\"center\">" + billdeescList.get(i).getCurrency() + "</td>"
                                 + "<td align=\"center\"><center><a href=\"\" onclick=\"addInvoiceDetail(" + (count + 1) + ")\"><span class=\"glyphicon glyphicon-plus\"></span></a></center></td>"

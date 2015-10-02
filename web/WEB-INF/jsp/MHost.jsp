@@ -71,7 +71,7 @@
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="HostNameS">Description</label>
+                            <label for="HostNameS">Name</label>
                             <input type="text"  class="form-control" maxlength="50" id="HostNameS" name="HostName" style="text-transform:uppercase" value="${requestScope['hostName']}">
                         </div>
                     </div>
@@ -145,19 +145,37 @@
                 <h4 class="modal-title">Host</h4>
             </div>
             <div class="modal-body">
-                
                     <div class="form-group">
-                        <label for="HostName" class="col-sm-3 control-label" >Name <font style="color: red">*</font></label>
+                        <label for="HostCode" class="col-sm-3 control-label" >Code <font style="color: red">*</font></label>
                         <div class="col-sm-8"> 
-                            <input type="text" class="form-control" maxlength="3" id="HostName" style="text-transform:uppercase" name="HostName" >
+                            <input type="text" class="form-control" maxlength="3" id="HostCode" style="text-transform:uppercase" name="HostCode" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="HostStatus" class="col-sm-3 control-label" >Status <font style="color: red">*</font></label>
-                        <div class="col-sm-8">  
-                            <input type="text" class="form-control" maxlength="50" id="HostStatus" style="text-transform:uppercase" name="HostStatus" >
+                        <label for="HostName" class="col-sm-3 control-label" >Name <font style="color: red">*</font></label>
+                        <div class="col-sm-8"> 
+                            <input type="text" class="form-control" maxlength="20" id="HostName" style="text-transform:uppercase" name="HostName" >
                         </div>
-                    </div> 
+                    </div>
+                    <div class="form-group">
+                        <label for="HostAddress" class="col-sm-3 control-label" >Address<font style="color: red">*</font></label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" id="HostAddress"  name="HostAddress"></textarea>
+<!--                            <input type="text" class="form-control" maxlength="50" id="HostAddress" style="text-transform:uppercase" name="HostAddress" >-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="HostTel" class="col-sm-3 control-label" >Tel <font style="color: red">*</font></label>
+                        <div class="col-sm-8"> 
+                            <input type="number" class="form-control" maxlength="10" id="HostTel" style="text-transform:uppercase" name="HostTel" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="HostFax" class="col-sm-3 control-label" >Fax <font style="color: red">*</font></label>
+                        <div class="col-sm-8"> 
+                            <input type="text" class="form-control" maxlength="20" id="HostFax" style="text-transform:uppercase" name="HostFax" >
+                        </div>
+                    </div>
                     <input type="hidden" id="HostID" name="HostID" value="">
                     <input type="hidden" id="actionIUP" name="action">
                

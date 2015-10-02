@@ -197,8 +197,9 @@
                                                             <th style="width: 15%" >Type</th>
                                                             <th style="width: 60%">Description</th>
                                                             <th style="width: 10%">Cost</th>
+                                                            <th style="width: 2%">Cur</th>
                                                             <th style="width: 10%">Price</th>
-                                                            <th style="width: 1%">Currency</th>
+                                                            <th style="width: 2%" >Cur</th>
                                                             <th style="width: 1%">Action</th>
                                                             <th class="hidden" >Ref Item Id</th>
                                                         </tr>
@@ -1075,11 +1076,13 @@
 </script>
 <script type="text/javascript" charset="utf-8">
     var select = "<option value='' ></option>";
+    var select_cost = "<option value='' ></option>";
     var selectType = "<option value='' ></option>";
     var defaultD = "";
     $(document).ready(function () {
         <c:forEach var="cur" items="${listCurrency}">
             select += "<option value='${cur.code}' ><c:out value='${cur.code}' /></option>";
+            select_cost += "<option value='${cur.code}' ><c:out value='${cur.code}' /></option>";
         </c:forEach>
         <c:forEach var="ty" items="${listType}">
             selectType += "<option value='${ty.id}' ><c:out value='${ty.name}' /></option>";
