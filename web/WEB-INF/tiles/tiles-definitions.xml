@@ -601,5 +601,20 @@
         <put-attribute name="title" value="SMI Travel : Pratz" />
         <put-attribute name="body" value="/WEB-INF/jsp/Pratz.jsp" />
     </definition>
+    
+    <definition name="InvoiceInbound" extends="baseLayout">
+        <put-attribute name="title" value="Invoice : Invoice Inbound" />
+        <put-attribute name="body" value="/WEB-INF/jsp/InvoiceInbound.jsp" />
+    </definition>
+    
+    <definition name="InvoiceInboundPM" extends="baseLayout">
+        <put-attribute name="title" value="Invoice : Invoice Inbound Proforma" />
+        <put-attribute name="body" value="/WEB-INF/jsp/InvoiceInbound.jsp" />
+    </definition>
+    
+    <definition name="InvoiceInboundRV" extends="baseLayout">
+        <put-attribute name="title" value="Invoice : Invoice Inbound Revenue" />
+        <put-attribute name="body" value="/WEB-INF/jsp/InvoiceInbound.jsp" />
+    </definition>
 	
 </tiles-definitions>
