@@ -954,8 +954,6 @@ function formatNumber(num) {
 }
 
 // American Numbering System
-var th = ['','THOUSAND','MILLION', 'BILLION','TRILLION'];
-var dg = ['ZERO','ONE','TWO','THREE','FOUR', 'FIVE','SIX','SEVEN','EIGHT','NINE']; var tn = ['TEN','ELEVEN','TWELVE','THIRTEEN', 'FOURTEEN','FIFTEEN','SIXTEEN', 'SEVENTEEN','EIGHTEEN','NINETEEN']; var tw = ['TWEENTY','THIRTY','FORTY','FIFTY', 'SIXTY','SEVENTY','RIGHTY','NINETY']; function toWords(s){s = s.toString(); s = s.replace(/[\, ]/g,''); if (s != parseFloat(s)) return 'NOT A NUMBER'; var x = s.indexOf('.'); if (x == -1) x = s.length; if (x > 15) return 'TOO BIG'; var n = s.split(''); var str = ''; var sk = 0; for (var i=0; i < x; i++) {if ((x-i)%3==2) {if (n[i] == '1') {str += tn[Number(n[i+1])] + ' '; i++; sk=1;} else if (n[i]!=0) {str += tw[n[i]-2] + ' ';sk=1;}} else if (n[i]!=0) {str += dg[n[i]] +' '; if ((x-i)%3==0) str += 'HUNDRED ';sk=1;} if ((x-i)%3==1) {if (sk) str += th[(x-i-1)/3] + ' ';sk=0;}} if (x != s.length) {var y = s.length; str += 'POINT '; for (var i=x+1; i<y; i++) str += dg[n[i]] +' ';} return str.replace(/\s+/g,' ');}
 
 function calculateGross(row){
     var amount = document.getElementById('InputAmount'+row).value;
@@ -1018,17 +1016,10 @@ function CalculateGrandTotal(id){
         }
         
         document.getElementById('TotalNet').value = formatNumber(grandTotal);
-        var bathString = toWords(formatNumber(grandTotal));
-        document.getElementById('TextAmount').value = bathString;
-        $( ".numerical" ).on('input', function() { 
-            var value=$(this).val().replace(/[^0-9.,]*/g, '');
-            value=value.replace(/\.{2,}/g, '.');
-            value=value.replace(/\.,/g, ',');
-            value=value.replace(/\,\./g, ',');
-            value=value.replace(/\,{2,}/g, ',');
-            value=value.replace(/\.[0-9]+\./g, '.');
-            $(this).val(value);
-        });
+        if(grandTotal !== 0){
+            var bathString = toWords((grandTotal));
+            document.getElementById('TextAmount').value = bathString;
+        }
     }
 }
 
