@@ -529,7 +529,7 @@
 				<text><![CDATA[ต้นฉบับ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="80" y="59" width="258" height="25" uuid="a6b4d6e5-94ab-4651-b350-9b1a3e1ebbfc"/>
+				<reportElement x="80" y="57" width="258" height="32" uuid="a6b4d6e5-94ab-4651-b350-9b1a3e1ebbfc"/>
 				<textElement textAlignment="Left">
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
