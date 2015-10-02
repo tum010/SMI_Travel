@@ -1037,7 +1037,7 @@ public class AJAXBean extends AbstractBean implements
                         + "<td class='text-center'>" + curcost + "</td>"
                         + "<td class='text-right money'>" + amount + "</td>"
                         + "<td class='text-center'>" + curamount + "</td>"
-                        + "<td class='text-right money'>" + ("0".equalsIgnoreCase(String.valueOf(exrate)) ? "" : exrate) + "</td>"
+                        + "<td class='text-right money3'>" + ("0".equalsIgnoreCase(String.valueOf(exrate)) ? "" : exrate) + "</td>"
                         + "<td class='text-right money'>" + profit + "</td>"
                         + "<td><center><a href=\"#/ref\"><span onclick=\"AddRefNo('" + product + "','" + description + "','" + cost + "','" + curcost + "','" + profit + "','" + curamount + "','" + invoiceDetailId + "','" + displaydescription + "','" + refNo + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
