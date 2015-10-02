@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptEmail" language="groovy" pageWidth="595" pageHeight="421" columnWidth="525" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="0038deea-02d3-4a9f-8925-fb54dc3fc533">
-	<property name="ireport.zoom" value="2.415765000000001"/>
-	<property name="ireport.x" value="576"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.6500000000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="280"/>
 	<field name="recto" class="java.lang.String"/>
 	<field name="recadd" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -475,33 +475,33 @@
 				<textFieldExpression><![CDATA[$F{chqdate}]]></textFieldExpression>
 			</textField>
 			<rectangle radius="10">
-				<reportElement x="73" y="58" width="230" height="19" backcolor="#CCCCCC" uuid="8ad5469c-47a7-4809-8afc-610bb84fdf8a"/>
+				<reportElement x="73" y="58" width="265" height="26" backcolor="#CCCCCC" uuid="8ad5469c-47a7-4809-8afc-610bb84fdf8a"/>
 			</rectangle>
 			<rectangle radius="10">
-				<reportElement x="0" y="58" width="67" height="19" uuid="410fc50d-e92a-47c3-bb15-9229dcaac9bc"/>
+				<reportElement x="0" y="58" width="67" height="26" uuid="410fc50d-e92a-47c3-bb15-9229dcaac9bc"/>
 			</rectangle>
 			<line>
-				<reportElement x="0" y="67" width="67" height="1" uuid="78269961-d31a-49e8-beb5-2917c5fe80a2"/>
+				<reportElement x="0" y="71" width="67" height="1" uuid="78269961-d31a-49e8-beb5-2917c5fe80a2"/>
 			</line>
 			<staticText>
-				<reportElement x="361" y="81" width="112" height="15" uuid="6aa99101-cb93-483e-b281-d3ead9845c81"/>
+				<reportElement x="361" y="91" width="112" height="15" uuid="6aa99101-cb93-483e-b281-d3ead9845c81"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" isItalic="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Cashier/Bill Collector]]></text>
 			</staticText>
 			<line>
-				<reportElement x="347" y="80" width="171" height="1" uuid="b6b0e4b7-8563-453f-931c-9d1a65e8f25d"/>
+				<reportElement x="347" y="88" width="171" height="1" uuid="b6b0e4b7-8563-453f-931c-9d1a65e8f25d"/>
 			</line>
 			<staticText>
-				<reportElement x="361" y="96" width="150" height="15" uuid="1304262f-666f-43bd-8948-0769371849ff"/>
+				<reportElement x="361" y="100" width="150" height="15" uuid="1304262f-666f-43bd-8948-0769371849ff"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" isItalic="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Thanks for choosing S.M.I. Travel]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="84" width="303" height="15" uuid="f0eac4aa-eca5-47b9-83d0-3b33b8f9d034"/>
+				<reportElement x="0" y="90" width="303" height="15" uuid="f0eac4aa-eca5-47b9-83d0-3b33b8f9d034"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" isBold="true" isItalic="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
@@ -515,23 +515,23 @@
 				<text><![CDATA[If payment is made by cheque this receive is not valid until cheque is cleared]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="22" y="56" width="26" height="14" uuid="40f3b91a-779a-4903-88c9-54f51c6773cb"/>
+				<reportElement x="22" y="60" width="26" height="14" uuid="40f3b91a-779a-4903-88c9-54f51c6773cb"/>
 				<textElement textAlignment="Left">
 					<font fontName="TH SarabunPSK" size="10" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Original]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="23" y="67" width="25" height="13" uuid="493722db-0500-478d-94fb-bfb25a145246"/>
+				<reportElement x="23" y="71" width="25" height="13" uuid="493722db-0500-478d-94fb-bfb25a145246"/>
 				<textElement textAlignment="Left">
 					<font fontName="TH SarabunPSK" size="10" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[ต้นฉบับ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="80" y="59" width="216" height="17" uuid="a6b4d6e5-94ab-4651-b350-9b1a3e1ebbfc"/>
+				<reportElement x="80" y="59" width="258" height="25" uuid="a6b4d6e5-94ab-4651-b350-9b1a3e1ebbfc"/>
 				<textElement textAlignment="Left">
-					<font fontName="TH SarabunPSK" size="15" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{textmoney}]]></textFieldExpression>
 			</textField>
