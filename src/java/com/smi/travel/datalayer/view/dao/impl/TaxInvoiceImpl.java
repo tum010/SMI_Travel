@@ -74,9 +74,9 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
             taxInvoiceView.setCuramount(util.ConvertString(B[16]));
             String curamount = "";
             if("THB".equalsIgnoreCase(util.ConvertString(B[16]))){
-                curamount = "baht only";
+                curamount = " baht ";
             } else {
-                curamount = util.ConvertString(B[16]);
+                curamount = " "+util.ConvertString(B[16])+" ";
             }
             if(B[12] != null){
                 taxInvoiceView.setTotal(df.format(B[12]));
@@ -87,16 +87,25 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
             if(B[11] != null){
                 taxInvoiceView.setAmount(df.format(B[11]));
             }
-            String total = taxInvoiceView.getGrandtotal().replaceAll(",", "");
-            total = total.replaceAll("\\.", ",");
-            String[] totals = total.split(",");
-            int totalWord = 0;
-            totalWord = Integer.parseInt(String.valueOf(totals[0]));
-            String wordAmount = utilityFunction.convert(totalWord);
-            String first = (wordAmount.substring(0, 1)).toUpperCase();
-            wordAmount = wordAmount.substring(1);
-            wordAmount = first+wordAmount;
-            taxInvoiceView.setTextamount(wordAmount+" "+curamount);
+//            String total = taxInvoiceView.getGrandtotal().replaceAll(",", "");
+//            total = total.replaceAll("\\.", ",");
+//            String[] totals = total.split(",");
+//            int totalWord = 0;
+//            totalWord = Integer.parseInt(String.valueOf(totals[0]));
+//            String wordAmount = utilityFunction.convert(totalWord);
+//            String first = (wordAmount.substring(0, 1)).toUpperCase();
+//            wordAmount = wordAmount.substring(1);
+//            wordAmount = first+wordAmount;
+//            taxInvoiceView.setTextamount(wordAmount+" "+curamount);
+            String string = String.valueOf(taxInvoiceView.getGrandtotal()).replaceAll(",", "");
+            String[] parts = string.split("\\.");
+            String part1 = parts[0]; // number
+            String part2 = parts[1]; // point
+            String textmoney = (utilityFunction.convert(Integer.parseInt(part1)));
+            String textmoneypoint = (utilityFunction.changPoint(String.valueOf(part2)));
+            String totalWord = textmoney + curamount + textmoneypoint;
+            System.out.println(" totalWord " + totalWord);
+            taxInvoiceView.setTextamount(totalWord.substring(0,1).toUpperCase() + totalWord.substring(1));
             
             if(option == 1){
                 taxInvoiceView.setDescription(taxInvoiceView.getNondescription());

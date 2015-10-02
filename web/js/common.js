@@ -127,6 +127,8 @@ function toWords(s){
     if (x != s.length) {
         var y = s.length; str += 'point '; 
         for (var i=x+1; i<y; i++) str += dg[n[i]] +' ';
+    } else {
+        str += ' only ';
     }   
     return str.replace(/\s+/g,' ').toUpperCase();
 }
