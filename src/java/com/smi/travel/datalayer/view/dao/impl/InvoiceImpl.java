@@ -115,12 +115,37 @@ public class InvoiceImpl implements InvoiceReportDao{
             invoice.setAddress(util.ConvertString(B[18]));
             
             // Set Text Amount 
-            System.out.println("B9 : " + B[9]);
-            String text = util.ConvertString(B[9]);
-            System.out.println("Text B[9] : " +text);
-            text = convertGrantotal(text,util.ConvertString(B[17]));
-            System.out.println("Text Amount Last : " + text);
-            invoice.setTextmoney(text);
+//            System.out.println("B9 : " + B[9]);
+//            String text = util.ConvertString(B[9]);
+//            System.out.println("Text B[9] : " +text);
+//            text = convertGrantotal(text,util.ConvertString(B[17]));
+//            System.out.println("Text Amount Last : " + text);
+//            invoice.setTextmoney(text);
+            
+            String string = String.valueOf(B[9]);
+            String[] parts = string.split("\\.");
+            String part1 = parts[0]; // number
+            String part2 = parts[1]; // point
+            String textmoney = (utilityFunction.convert(Integer.parseInt(part1)));
+            String textmoneypoint = (utilityFunction.changPoint(String.valueOf(part2)));
+            String currency = util.ConvertString(B[17]);
+            if("JPY".equals(currency)){
+                currency = " yen" ;
+            }else if("THB".equals(currency)){
+                currency = " baht" ;
+            }else if("USD".equals(currency)){
+                currency = " dollar" ;
+            }else{
+                currency = " baht" ;
+            }        
+            String totalWord = textmoney +currency+ textmoneypoint;
+            if("".equalsIgnoreCase(textmoneypoint.trim())){
+                totalWord = textmoney +currency+" only";
+            }
+            System.out.println(" totalWord " + totalWord);
+            invoice.setTextmoney(totalWord.substring(0,1).toUpperCase() + totalWord.substring(1));
+            
+            
             
             invoice.setShowleader(showLeader);
             invoice.setShowstaff(showStaff);
