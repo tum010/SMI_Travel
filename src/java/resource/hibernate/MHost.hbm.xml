@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 20, 2015 5:19:25 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.MHost" table="host" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="code" type="string">
+            <column name="code" />
+        </property>
+        <property name="name" type="string">
+            <column name="name" />
+        </property>
+        <property name="address" type="string">
+            <column name="address" />
+        </property>
+        <property name="tel" type="string">
+            <column name="tel" length="10" />
+        </property>
+        <property name="fax" type="string">
+            <column name="fax" length="20" />
+        </property>
+      
+<!--        <bag name="invoiceDetails" table="invoice_detail" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="invoice_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.InvoiceDetail" />
+        </bag>-->
+    </class>
+</hibernate-mapping>

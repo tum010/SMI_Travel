@@ -13,8 +13,9 @@ import java.util.List;
  * @author Kanokporn
  */
 public interface MHostDao {
-    public List<MHost> getListHost(MHost currency);
-    public int insertHost(MHost currency);
-    public int updateHost(MHost currency);
-    public int DeleteHost(MHost currency);
+    public List<MHost> getListHost(MHost host);
+    public List<MHost> searchListHost();
+    public String insertHost(MHost host);
+    public String updateHost(MHost host);
+    public String DeleteHost(MHost host);
 }
