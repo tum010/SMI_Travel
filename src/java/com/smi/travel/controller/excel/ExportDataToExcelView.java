@@ -2123,6 +2123,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
             styleDetailTableNumber.setAlignment(styleDetailTableNumber.ALIGN_RIGHT);
             styleDetailTableNumber.setBorderLeft(styleDetailTableNumber.BORDER_THIN);
             styleDetailTableNumber.setBorderRight(styleDetailTableNumber.BORDER_THIN);
+            styleDetailTableNumber.setDataFormat(currency.getFormat("#,##0.00"));
         HSSFCellStyle styleDetailTableBorderBottom = wb.createCellStyle();
             styleDetailTableBorderBottom.setBorderTop(styleDetailTableBorderBottom.BORDER_THIN);
         
@@ -2176,24 +2177,48 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     cell6.setCellStyle(styleDetailTable);
                     sheet.autoSizeColumn(2);
                 HSSFCell cell7 = row.createCell(3);
-                    cell7.setCellValue("XXXX");
+                    if(listAR.get(num).getCustomerid()!= null){
+                        cell7.setCellValue(listAR.get(num).getCustomerid());
+                        sheet.autoSizeColumn(3);
+                    }else{
+                        cell7.setCellValue("");
+                        sheet.autoSizeColumn(3);
+                    }
                     cell7.setCellStyle(styleDetailTable);
                     sheet.autoSizeColumn(3);
                 HSSFCell cell8 = row.createCell(4);
-                    cell8.setCellValue("");
+                    if(listAR.get(num).getCustomername()!= null){
+                        cell8.setCellValue(listAR.get(num).getCustomername());
+                        sheet.autoSizeColumn(4);
+                    }else{
+                        cell8.setCellValue("");
+                        sheet.autoSizeColumn(4);
+                    }
                     cell8.setCellStyle(styleDetailTable);
                     sheet.autoSizeColumn(4);
                 HSSFCell cell9 = row.createCell(5);
-                    cell9.setCellValue(" ");
+                    if(listAR.get(num).getSalesaccount1() != null){
+                        cell9.setCellValue(listAR.get(num).getSalesaccount1());
+                        sheet.autoSizeColumn(5);
+                    }else{
+                        cell9.setCellValue("");
+                        sheet.autoSizeColumn(5);
+                    }
                     cell9.setCellStyle(styleDetailTable);
                     sheet.autoSizeColumn(5);
                 HSSFCell cell10 = row.createCell(6);
-                    cell10.setCellValue("");
-                    cell10.setCellStyle(styleDetailTable);
+                    if(listAR.get(num).getSalesamt() != null){
+                        cell10.setCellValue(listAR.get(num).getSalesamt().doubleValue());
+                        sheet.autoSizeColumn(6);
+                    }else{
+                        cell10.setCellValue(0.00);
+                        sheet.autoSizeColumn(6);
+                    }
+                    cell10.setCellStyle(styleDetailTableNumber);
                     sheet.autoSizeColumn(6);
                 HSSFCell cell11 = row.createCell(7);
-                    if(listAR.get(num).getSalesamt() != null){
-                        cell11.setCellValue(listAR.get(num).getSalesamt().doubleValue());
+                    if(listAR.get(num).getAramt() != null){
+                        cell11.setCellValue(listAR.get(num).getAramt().doubleValue());
                         sheet.autoSizeColumn(7);
                     }else{
                         cell11.setCellValue(0.00);

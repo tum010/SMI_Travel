@@ -445,10 +445,10 @@
     }
     
     function changeARReport(){
-        var invoiceType = $('invoiceType').val();
-        var department = $('department').val();
-        var arType = $('arType').val();
-        var arStatus  = $('arStatus').val();
+        var invoiceType = $('#invoiceType').val();
+        var department = $('#department').val();
+        var arType = $('#arType').val();
+        var arStatus  = $('#arStatus').val();
         var arFromDate = $('#arFromDate').val();
         var arToDate = $('#arToDate').val();
         if((arFromDate === '') || (arToDate === '')){
