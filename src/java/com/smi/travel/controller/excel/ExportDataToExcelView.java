@@ -769,7 +769,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         
         TicketFareReport dataheader = new TicketFareReport();
         
-        if(TicketFare != null){
+        if((TicketFare != null)&&(TicketFare.size() != 0)){
             dataheader = (TicketFareReport)TicketFare.get(0);
         }
 

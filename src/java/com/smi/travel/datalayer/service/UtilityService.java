@@ -21,6 +21,7 @@ import com.smi.travel.datalayer.entity.Customer;
 import com.smi.travel.datalayer.entity.Daytour;
 import com.smi.travel.datalayer.entity.MAccpay;
 import com.smi.travel.datalayer.entity.MAccterm;
+import com.smi.travel.datalayer.entity.MAirline;
 import com.smi.travel.datalayer.entity.MAirlineAgent;
 import com.smi.travel.datalayer.entity.MBank;
 import com.smi.travel.datalayer.entity.MBilltype;
@@ -208,6 +209,10 @@ public class UtilityService {
         return listitemdao.getListMAirLineAgent();
     }
     
+    public List<MAirline> getListMAirlineCode() {
+        return listitemdao.getListMAirlineCode();
+    }
+    
     public List<SystemUser> getGuildeList() {
         return systemUserdao.getGuildeList();
     }
@@ -360,5 +365,7 @@ public class UtilityService {
     public List<CustomerAgentInfo> SearchListCustomerAgentInfo(String name) {
         return customeragentinfodao.SearchListCustomerAgentInfo(name);
     }
+    
+    
     
 }
