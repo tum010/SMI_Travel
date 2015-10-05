@@ -546,7 +546,7 @@
                     <div class="col-xs-12">
                         <div class="col-xs-12 text-right" >
                             <input type="hidden" name="optionSave" id="optionSave" value="${requestScope['optionSave']}">
-                            <button type="submit" id="ButtonPrint" name="ButtonPrint" onclick="printReport()" class="btn btn-primary"><i class="fa fa-print"></i> Print</button>
+                            <button type="button" id="ButtonPrint" name="ButtonPrint" onclick="printReport()" class="btn btn-primary"><i class="fa fa-print"></i> Print</button>
                             <button type="submit" id="ButtonSave" name="ButtonSave" onclick="saveAction(0)" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
                             <button type="submit" id="ButtonSaveAndNew" name="ButtonSaveAndNew" onclick="saveAction(1)"class="btn btn-success"><i class="fa fa-save"></i> Save & New</button>
                         </div>
