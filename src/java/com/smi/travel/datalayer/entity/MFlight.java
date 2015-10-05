@@ -2,6 +2,8 @@ package com.smi.travel.datalayer.entity;
 // Generated Dec 4, 2014 5:36:02 PM by Hibernate Tools 3.6.0
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 
@@ -17,6 +19,7 @@ public class MFlight{
      private String code;
      private String name;
      private Set airticketFlights = new HashSet(0);
+     private List mFlightservice = new LinkedList<MFlightservice>();
 
     public MFlight() {
     }
@@ -61,6 +64,15 @@ public class MFlight{
         this.airticketFlights = airticketFlights;
     }
 
+    public List getmFlightservice() {
+        return mFlightservice;
+    }
+
+    public void setmFlightservice(List mFlightservice) {
+        this.mFlightservice = mFlightservice;
+    }
+
+   
 
 }
 

@@ -14,6 +14,8 @@ public class MFlightController extends SMITravelController {
 
     private static final ModelAndView MFlight = new ModelAndView("MFlight");
     private static final String DataList = "Flight_List";
+    private static final String DataFlight = "FlightData";
+    private static final String DataListService = "FlightService_List";
     private static final String DataLap = "flightLap";
     private static final String TransectionResult = "result";
     private MFlightService FlightService;
@@ -34,6 +36,7 @@ public class MFlightController extends SMITravelController {
 
         if ("search".equalsIgnoreCase(action)) {
             List<MFlight> list = FlightService.searchFlight(flight,2);
+//            request.setAttribute(DataListService, FlightService.getListFlightService(flight.getId()));
             request.setAttribute(DataList, list);
         } else if ("add".equalsIgnoreCase(action)) {
             resultValidate = FlightService.validateFlight(flight, action);
@@ -57,6 +60,8 @@ public class MFlightController extends SMITravelController {
                 if (result == 1) {
                     request.setAttribute(TransectionResult, "save successful");
                     request.setAttribute(DataList, FlightService.searchFlight(flight,1));
+                    request.setAttribute(DataFlight, flight);
+                    request.setAttribute(DataListService, FlightService.getListFlightService(flight.getId()));
                 } else {
                     request.setAttribute(TransectionResult, "save unsuccessful");
                 }
