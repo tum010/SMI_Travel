@@ -1839,15 +1839,22 @@ function CallAjaxSearchInvoice(param) {
             success: function (msg) {
                 try { 
                     if(msg == "null"){
-                        $('#InvoiceListTable').dataTable().fnClearTable();
-                        $('#InvoiceListTable').dataTable().fnDestroy();
+//                        $('#InvoiceListTable').dataTable().fnClearTable();
+//                        $('#InvoiceListTable').dataTable().fnDestroy();
+                        $('#InvoiceListTable > tbody  > tr').each(function() {
+                            $(this).remove();
+                        });
+                        
                         document.getElementById("receiveFromCode").value = '';
                         document.getElementById("receiveFromName").value = '';
                         document.getElementById("receiveFromAddress").value = '';
                         document.getElementById("arCode").value = '';
                     }else{
-                        $('#InvoiceListTable').dataTable().fnClearTable();
-                        $('#InvoiceListTable').dataTable().fnDestroy();
+//                        $('#InvoiceListTable').dataTable().fnClearTable();
+//                        $('#InvoiceListTable').dataTable().fnDestroy();
+                        $('#InvoiceListTable > tbody  > tr').each(function() {
+                            $(this).remove();
+                        });
                         $("#InvoiceListTable tbody").empty().append(msg);
                         
                         document.getElementById("receiveFromCode").value = $("#receiveFromInvoice").val();
@@ -2077,11 +2084,18 @@ function CallAjaxSearchRef(param) {
             success: function (msg) {
                 try { 
                     if(msg == "null"){
-                        $('#RefNoListTable').dataTable().fnClearTable();
-                        $('#RefNoListTable').dataTable().fnDestroy();
+//                        $('#RefNoListTable').dataTable().fnClearTable();
+//                        $('#RefNoListTable').dataTable().fnDestroy();
+                        $('#RefNoListTable > tbody  > tr').each(function() {
+                            $(this).remove();
+                        });
+
                     }else{
-                        $('#RefNoListTable').dataTable().fnClearTable();
-                        $('#RefNoListTable').dataTable().fnDestroy();
+//                        $('#RefNoListTable').dataTable().fnClearTable();
+//                        $('#RefNoListTable').dataTable().fnDestroy();
+                        $('#RefNoListTable > tbody  > tr').each(function() {
+                            $(this).remove();
+                        });
                         $("#RefNoListTable tbody").append(msg);
                         
                         document.getElementById("receiveFromCode").value = $("#receiveFromBillable").val();
@@ -2138,6 +2152,7 @@ function CallAjaxSearchPaymentNoAir(param) {
                     if(msg == "null"){
                         $('#AircommissionTable').dataTable().fnClearTable();
                         $('#AircommissionTable').dataTable().fnDestroy();
+                        
                         $('#AircommissionTable').dataTable({bJQueryUI: true,
                             "sPaginationType": "full_numbers",
                             "bAutoWidth": false,

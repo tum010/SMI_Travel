@@ -7,6 +7,8 @@ package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.MFilghtDao;
 import com.smi.travel.datalayer.entity.MFlight;
+import com.smi.travel.datalayer.entity.MFlightservice;
+import java.util.LinkedList;
 import java.util.List;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -15,9 +17,11 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  * @author Surachai
  */
 public class MFlightDaoImpl extends HibernateDaoSupport implements MFilghtDao {
-
+//    private static final String GET_MFLIGHTSERVICE = " fs.Mflight.id = :flightid";
+    
     @Override
     public List<MFlight> getListFlight(MFlight filght,int option) {
+        List<MFlight> listFlight = new LinkedList<MFlight>();
         String query = "from MFlight f where ";
         String queryOperation = "";
         String Prefix_Subfix ="";
@@ -85,4 +89,29 @@ public class MFlightDaoImpl extends HibernateDaoSupport implements MFilghtDao {
         return result;
     }
 
+    @Override
+    public List<MFlightservice> getListFlightService(String mFlightId) {
+//        String query = "from MFlightservice fs  ";
+        String query = "from MFlightservice fs where ";
+        if ((mFlightId != null) && (!"".equalsIgnoreCase(mFlightId))) {
+            query += " fs.MFlight.id = '"+mFlightId +"'";
+        }
+        
+        System.out.println("query : " + query);
+        List<MFlightservice> mFlightserviceList = getHibernateTemplate().find(query);
+        System.out.println("Size Flight Service : " + mFlightserviceList.size());
+        if(mFlightserviceList.isEmpty()){
+            
+            for (int i = 1; i <= mFlightserviceList.size() ; i++) {
+                System.out.println("Flight code " + i+" : " + mFlightserviceList.get(i).getClassCode());
+                MFlightservice mFlightservice = new MFlightservice();
+                mFlightservice.setId(mFlightserviceList.get(i).getId());
+                mFlightservice.setClassCode(mFlightserviceList.get(i).getClassCode());
+                mFlightservice.setClassName(mFlightserviceList.get(i).getClassName());
+                mFlightserviceList.add(mFlightservice);
+            }       
+            return null;
+        }       
+        return mFlightserviceList;
+    }
 }

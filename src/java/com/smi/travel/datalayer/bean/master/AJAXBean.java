@@ -701,7 +701,7 @@ public class AJAXBean extends AbstractBean implements
             } else if ("searchRefNo".equalsIgnoreCase(type)) {
                 String searchRefNo = map.get("refNo").toString();
                 Billable bill = billableDao.getBillableBooking(searchRefNo);
-                System.out.println(" bill.getId() " + String.valueOf(bill.getId()));
+//                System.out.println(" bill.getId() " + String.valueOf(bill.getId()));
                 if ("".equals(bill.getId()) || null == bill.getId() || "null".equalsIgnoreCase(String.valueOf(bill.getId()))) {
                     result = "null";
                 } else {

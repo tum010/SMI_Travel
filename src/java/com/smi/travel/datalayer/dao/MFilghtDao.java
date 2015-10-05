@@ -7,6 +7,7 @@
 package com.smi.travel.datalayer.dao;
 
 import com.smi.travel.datalayer.entity.MFlight;
+import com.smi.travel.datalayer.entity.MFlightservice;
 import java.util.List;
 
 /**
@@ -15,6 +16,7 @@ import java.util.List;
  */
 public interface MFilghtDao {
     public List<MFlight> getListFlight(MFlight filght,int option);
+    public List<MFlightservice> getListFlightService(String mFlightId);
     public int insertFlight(MFlight filght);
     public int updateFlight(MFlight filght);
     public int DeleteFlight(MFlight filght);

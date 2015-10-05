@@ -35,12 +35,42 @@ function addaction(){
     document.getElementById('actionIUP').value='add';
 }
 
-function EditFlight(id,code,name){
-    document.getElementById("FlightCode").readOnly = true;
-    document.getElementById('FlightCode').value=code;
-    document.getElementById('FlightName').value=name;
-    document.getElementById('FlightID').value=id;
-    document.getElementById('actionIUP').value='update';
+
+
+function CallAjaxDeleteBill(param) {
+    var url = 'AJAXServlet';
+    $("#ajaxload").removeClass("hidden");
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function(msg) {
+                console.log("Seach light Gooo");
+                $('#MasterFlightService').dataTable().fnClearTable();
+                $('#MasterFlightService').dataTable().fnDestroy();
+               
+
+                $('#MasterFlightService').dataTable({bJQueryUI: true,
+                    "sPaginationType": "full_numbers",
+                    "bAutoWidth": false,
+                    "bFilter": false,
+                    "bPaginate": true,
+                    "bInfo": false,
+                    "bLengthChange": false,
+                    "iDisplayLength": 10
+                });
+                $("#ajaxload").addClass("hidden");
+
+            }, error: function(msg) {
+                $("#ajaxload").addClass("hidden");
+                alert('error');
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
 }
 
 function DeleteFlight(id,code){

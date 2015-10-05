@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.dao.MFilghtDao;
 import com.smi.travel.datalayer.entity.MFlight;
+import com.smi.travel.datalayer.entity.MFlightservice;
 import java.util.List;
 
 /**
@@ -17,9 +18,13 @@ import java.util.List;
 public class MFlightService {
     private MFilghtDao mFlightDao;
 
-   public List<MFlight> searchFlight(MFlight currency,int option) {
-        return mFlightDao.getListFlight(currency,option);
+   public List<MFlight> searchFlight(MFlight mFlight,int option) {
+        return mFlightDao.getListFlight(mFlight,option);
     }
+   
+   public List<MFlightservice> getListFlightService(String mFlightId){
+       return mFlightDao.getListFlightService(mFlightId);
+   }
     
     public String validateFlight(MFlight  Vflight,String operation){
         String validate = "";
