@@ -44,9 +44,17 @@ function setupagentvalue(id, code, name) {
 
 function setupotherdatevalue(booktype) {
     var product_code = document.getElementById('product_code').value; 
-    var otherdate = document.getElementById('otherdate').value;   
-    if((product_code != '') && (otherdate != '')){
-        getvalueProduct(booktype);   
+    var otherdate = document.getElementById('otherdate').value;
+    var todaydate = document.getElementById('todaydate').value; 
+    var checkdate = document.getElementById('checkdate').value;
+    if((product_code !== '') && (otherdate !== '')){
+        if(checkdate !== ''){
+            if(checkdate !== otherdate){
+                getvalueProduct(booktype);  
+            }
+        } else if(otherdate !== todaydate){
+            getvalueProduct(booktype);     
+        }        
     } else {
         document.getElementById('ad_cost').value = '0';
         document.getElementById('ad_price').value = '0';
@@ -205,18 +213,39 @@ $(document).ready(function() {
 
 
 function getvalueProduct(booktype) {
-    var servletName = 'BookOtherServlet';
-    var servicesName = 'AJAXBean';
-    var productid = document.getElementById('product_id').value;
+    var product_code = document.getElementById('product_code').value; 
     var otherdate = document.getElementById('otherdate').value;
-    var param = 'action=' + 'text' +
-            '&servletName=' + servletName +
-            '&servicesName=' + servicesName +
-            '&productid=' + productid +
-            '&otherdate=' + otherdate +
-            '&type=' + 'getvalueProduct';
-    CallAjax(param, booktype);
-    
+    var todaydate = document.getElementById('todaydate').value; 
+    var checkdate = document.getElementById('checkdate').value;
+    if((product_code !== '') && (otherdate !== '')){
+        if(checkdate !== ''){
+            if(checkdate !== otherdate){
+                var servletName = 'BookOtherServlet';
+                var servicesName = 'AJAXBean';
+                var productid = document.getElementById('product_id').value;
+                var otherdate = document.getElementById('otherdate').value;
+                var param = 'action=' + 'text' +
+                        '&servletName=' + servletName +
+                        '&servicesName=' + servicesName +
+                        '&productid=' + productid +
+                        '&otherdate=' + otherdate +
+                        '&type=' + 'getvalueProduct';
+                CallAjax(param, booktype);
+            }
+        } else if(otherdate !== todaydate){
+            var servletName = 'BookOtherServlet';
+            var servicesName = 'AJAXBean';
+            var productid = document.getElementById('product_id').value;
+            var otherdate = document.getElementById('otherdate').value;
+            var param = 'action=' + 'text' +
+                    '&servletName=' + servletName +
+                    '&servicesName=' + servicesName +
+                    '&productid=' + productid +
+                    '&otherdate=' + otherdate +
+                    '&type=' + 'getvalueProduct';
+            CallAjax(param, booktype);     
+        }
+    }    
 }
 
 function calculateVatvalue() {

@@ -35,10 +35,10 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-6 control-label text-right" >Report Type</label>
+                                <label class="col-md-6 control-label text-right" >Report Type<font style="color: red">*</font></label>
                                 <div class="col-md-5">  
-                                    <div class="form-group">
-                                        <select name="reportType" id="reportType"  class="form-control">
+                                    <div class="form-group" id="reporttypepanel">
+                                        <select name="reportType" id="reportType"  class="form-control" onchange="jsFunction(this.value);">
                                             <option value=""  selected="selected">-- ALL --</option>
                                             <option value="1">Ticket Summary By Staff</option>
                                             <option value="2">Ticket Summary By Agent</option>
@@ -106,14 +106,18 @@
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <select name="airlineCode" id="airlineCode"  class="form-control">
-                                            
+                                            <option value=""  selected="selected">-- ALL --</option>
+                                            <c:forEach var="table" items="${airlineCodeList}" >
+                                                <c:set var="select" value=""/>
+                                                <option value="${table.code3Letter}" ${select}>${table.name}</option>  
+                                            </c:forEach>
                                         </select>
                                     </div>
                                 </div>   
                             </div>
                         </div>
                     </div> 
-                    <div class="row">
+<!--                    <div class="row">
                         <div class="col-md-8">
                             <div class="form-group" id="fromdatepanel">
                                 <label class="col-md-6 control-label text-right">Issue Date From</label>
@@ -169,6 +173,70 @@
                                     <div class="form-group">
                                         <div class='input-group date toInvDate' id='toinvdate'>
                                             <input type='text' id="endinvdate" name="endinvdate"  class="form-control" data-date-format="YYYY-MM-DD" />
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>-->
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group" id="issuefromdatepanel">
+                                <label class="col-md-6 control-label text-right">Issue Date From<font style="color: red"></font></label>
+                                <div class="col-md-6">  
+                                    <div class="form-group">
+                                        <div class='input-group date issuefromdate' id='DateFromIssue'>
+                                            <input type='text' id="issueFrom" name="issueFrom" class="form-control" data-date-format="YYYY-MM-DD"/>
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group" id="issuetodatepanel">
+                                <label class="col-md-6 control-label text-right">Issue Date To<font style="color: red"></font></label>
+                                <div class="col-md-6">  
+                                    <div class="form-group">
+                                        <div class='input-group date issuetodate' id='DateToIssue'>
+                                            <input type='text' id="issueTo" name="issueTo"  class="form-control" data-date-format="YYYY-MM-DD" />
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group" id="fromdatepanel">
+                                <label class="col-md-6 control-label text-right">Invoice Date From<font style="color: red"></font></label>
+                                <div class="col-md-6">  
+                                    <div class="form-group">
+                                        <div class='input-group date fromdate' id='DateFrom'>
+                                            <input type='text' id="invoiceFromDate" name="invoiceFromDate" class="form-control" data-date-format="YYYY-MM-DD"/>
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group" id="todatepanel">
+                                <label class="col-md-6 control-label text-right">Invoice Date To<font style="color: red"></font></label>
+                                <div class="col-md-6">  
+                                    <div class="form-group">
+                                        <div class='input-group date todate' id='DateTo'>
+                                            <input type='text' id="invoiceToDate" name="invoiceToDate"  class="form-control" data-date-format="YYYY-MM-DD" />
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -302,88 +370,99 @@
             console.log("positon :" + position.top);
             $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
         });
-        
 
+        $("#printbutton").addClass("disabled");
         
-        $("#TicketFareSumAgentStaff").bootstrapValidator({
-            framework: 'bootstrap',
-            feedbackIcons: {
-                valid: 'uk-icon-check',
-                invalid: 'uk-icon-times',
-                validating: 'uk-icon-refresh'
-            },
-            fields: {
-                startdate: {
-                    trigger: 'focus keyup change',
-                    validators: {
-                        notEmpty: {
-                                   message: 'The Issue Date From is required'
-                        },
-                        date: {
-                            format: 'YYYY-MM-DD',
-                            max: 'enddate',
-                            message: 'The Issue Date From is not a valid'
-                        }
-                    }
-                },
-                enddate: {
-                    trigger: 'focus keyup change',
-                    validators: {
-                        notEmpty: {
-                            message: 'The Issue Date To is required'
-                        },
-                        date: {
-                            format: 'YYYY-MM-DD',
-                            min: 'startdate',
-                            message: 'The Issue Date To is not a valid'
-                        }
-                    }
-                },
-                startinvdate: {
-                    trigger: 'focus keyup change',
-                    validators: {
-                        date: {
-                            format: 'YYYY-MM-DD',
-                            max: 'endinvdate',
-                            message: 'The Invoice Date From is not a valid'
-                        }
-                    }
-                },
-                endinvdate: {
-                    trigger: 'focus keyup change',
-                    validators: {
-                        date: {
-                            format: 'YYYY-MM-DD',
-                            min: 'startinvdate',
-                            message: 'The Invoice Date To is not a valid'
-                        }
-                    }
-                }
-            }
-        });
-        //validate date
-        $('#fromdate').datetimepicker().on('dp.change', function (e) {
-            $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'startdate');
-            $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'enddate');
-            checkFromDateField();
-        });
-        $('#todate').datetimepicker().on('dp.change', function (e) {
-            $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'startdate');
-            $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'enddate');
-            checkToDateField();
-        });
-	$('#frominvdate').datetimepicker().on('dp.change', function (e) {
-            $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'startinvdate');
-            $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'endinvdate');
-        });
-        $('#toinvdate').datetimepicker().on('dp.change', function (e) {
-            $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'startinvdate');
-            $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'endinvdate');
-        });
+//        $("#TicketFareSumAgentStaff").bootstrapValidator({
+//            framework: 'bootstrap',
+//            feedbackIcons: {
+//                valid: 'uk-icon-check',
+//                invalid: 'uk-icon-times',
+//                validating: 'uk-icon-refresh'
+//            },
+//            fields: {
+//                startdate: {
+//                    trigger: 'focus keyup change',
+//                    validators: {
+//                        notEmpty: {
+//                                   message: 'The Issue Date From is required'
+//                        },
+//                        date: {
+//                            format: 'YYYY-MM-DD',
+//                            max: 'enddate',
+//                            message: 'The Issue Date From is not a valid'
+//                        }
+//                    }
+//                },
+//                enddate: {
+//                    trigger: 'focus keyup change',
+//                    validators: {
+//                        notEmpty: {
+//                            message: 'The Issue Date To is required'
+//                        },
+//                        date: {
+//                            format: 'YYYY-MM-DD',
+//                            min: 'startdate',
+//                            message: 'The Issue Date To is not a valid'
+//                        }
+//                    }
+//                },
+//                startinvdate: {
+//                    trigger: 'focus keyup change',
+//                    validators: {
+//                        date: {
+//                            format: 'YYYY-MM-DD',
+//                            max: 'endinvdate',
+//                            message: 'The Invoice Date From is not a valid'
+//                        }
+//                    }
+//                },
+//                endinvdate: {
+//                    trigger: 'focus keyup change',
+//                    validators: {
+//                        date: {
+//                            format: 'YYYY-MM-DD',
+//                            min: 'startinvdate',
+//                            message: 'The Invoice Date To is not a valid'
+//                        }
+//                    }
+//                }
+//            }
+//        });
+//        //validate date
+//        $('#fromdate').datetimepicker().on('dp.change', function (e) {
+//            $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'startdate');
+//            $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'enddate');
+//            checkFromDateField();
+//        });
+//        $('#todate').datetimepicker().on('dp.change', function (e) {
+//            $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'startdate');
+//            $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'enddate');
+//            checkToDateField();
+//        });
+//	$('#frominvdate').datetimepicker().on('dp.change', function (e) {
+//            $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'startinvdate');
+//            $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'endinvdate');
+//        });
+//        $('#toinvdate').datetimepicker().on('dp.change', function (e) {
+//            $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'startinvdate');
+//            $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'endinvdate');
+//        });
         $('#printbutton').click( function() {  
             printTicketFareSummary();
         });
-
+        $('.fromdate').datetimepicker().change(function(){                          
+            checkFromDateField();
+        });
+        $('.todate').datetimepicker().change(function(){                          
+            checkToDateField();
+        });
+        $('.issuefromdate').datetimepicker().change(function(){                          
+            checkIssueFromDateField();
+        });
+        $('.issuetodate').datetimepicker().change(function(){                          
+            checkIssueToDateField();
+        });
         //Sale By Auto Complete
         $("#SaleByTable tr").on('click', function () {
             var saleby_id = $(this).find(".saleby-id").text();
@@ -451,58 +530,153 @@
         var ticketBuy = document.getElementById("ticketBuy").value;
         var airline = document.getElementById("airline").value;
         var airlineCode = document.getElementById("airlineCode").value;
-        var issuefrom = document.getElementById("startdate").value;
-        var issueto = document.getElementById("enddate").value;
-        var invfrom = document.getElementById("startinvdate").value;
-        var invto = document.getElementById("endinvdate").value;
+        var issuefrom = document.getElementById("issueFrom").value;
+        var issueto = document.getElementById("issueTo").value;
+        var invfrom = document.getElementById("invoiceFromDate").value;
+        var invto = document.getElementById("invoiceToDate").value;
         var department = document.getElementById("department").value;
         var salebyUser = document.getElementById("salebyUser").value;
         var termPay = document.getElementById("termPay").value;
-        if((issuefrom === '') || (issueto === '')){
-            validateDate();
-        } else {
+        
+         if((invfrom !== '') && (invto !== '')){
+             if(reportType == 1){
+                window.open("Excel.smi?name=TicketFareSummaryByStaff&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&issuedateFrom=" + issuefrom + "&issuedateTo=" + issueto + "&department=" + department + "&staff=" + salebyUser + "&termPay=" + termPay + "&invdateFrom=" + invfrom + "&invdateTo=" + invto);
+            }else if(reportType == 2){
+                window.open("Excel.smi?name=TicketFareSummaryByAgent&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&issuedateFrom=" + issuefrom + "&issuedateTo=" + issueto + "&department=" + department + "&staff=" + salebyUser + "&termPay=" + termPay + "&invdateFrom=" + invfrom + "&invdateTo=" + invto);
+            }else{
+                $("#reporttypepanel").removeClass("has-success");
+                $("#reporttypepanel").addClass("has-error");
+                $("#printbutton").addClass("disabled");
+            }
+        } else if((issuefrom !== '') && (issueto !== '')){
             if(reportType == 1){
                 window.open("Excel.smi?name=TicketFareSummaryByStaff&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&issuedateFrom=" + issuefrom + "&issuedateTo=" + issueto + "&department=" + department + "&staff=" + salebyUser + "&termPay=" + termPay + "&invdateFrom=" + invfrom + "&invdateTo=" + invto);
             }else if(reportType == 2){
                 window.open("Excel.smi?name=TicketFareSummaryByAgent&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&issuedateFrom=" + issuefrom + "&issuedateTo=" + issueto + "&department=" + department + "&staff=" + salebyUser + "&termPay=" + termPay + "&invdateFrom=" + invfrom + "&invdateTo=" + invto);
-            }        
-        }   
+            }else{
+                $("#reporttypepanel").removeClass("has-success");
+                $("#reporttypepanel").addClass("has-error");
+                $("#printbutton").addClass("disabled");
+            }
+        } else {
+            if(reportType == ""){
+                $("#reporttypepanel").removeClass("has-success");
+                $("#reporttypepanel").addClass("has-error");
+            }
+            validateDate();
+        }
     }
-    
+
 function checkFromDateField(){
-    var InputToDate = document.getElementById("enddate");
-    var inputFromDate = document.getElementById("startdate");
-    if(inputFromDate.value === '' || InputToDate.value === ''){        
-        $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'startdate');
-        $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'enddate');
+    var InputToDate = document.getElementById("invoiceToDate");
+    var inputFromDate = document.getElementById("invoiceFromDate");
+    if(InputToDate.value === '' && inputFromDate.value === ''){
+        $("#fromdatepanel").removeClass("has-error");
+        $("#todatepanel").removeClass("has-error");  
+        $("#printbutton").removeClass("disabled");
+    }else if(inputFromDate.value === '' || InputToDate.value === ''){
+        $("#fromdatepanel").removeClass("has-success");
+        $("#todatepanel").removeClass("has-success");
+        $("#fromdatepanel").addClass("has-error");
+        $("#todatepanel").addClass("has-error");
         $("#printbutton").addClass("disabled");
     } else {
-        $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'startdate');
-        $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'enddate');
+        $("#fromdatepanel").removeClass("has-error");
+        $("#todatepanel").removeClass("has-error");
+        $("#issuefromdatepanel").removeClass("has-error");
+        $("#issuetodatepanel").removeClass("has-error");
+        $("#fromdatepanel").addClass("has-success");
+        $("#todatepanel").addClass("has-success");
         $("#printbutton").removeClass("disabled");
         checkDateValue("from","");
     }
 }
     
 function checkToDateField(){
-    var InputToDate = document.getElementById("enddate");
-    var inputFromDate = document.getElementById("startdate");
-    if(inputFromDate.value === '' || InputToDate.value === ''){ 
-        $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'enddate');
-        $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'startdate');
+    var InputToDate = document.getElementById("invoiceToDate");
+    var inputFromDate = document.getElementById("invoiceFromDate");
+    if(InputToDate.value === '' && inputFromDate.value === ''){
+        $("#fromdatepanel").removeClass("has-error");
+        $("#todatepanel").removeClass("has-error");  
+        $("#printbutton").removeClass("disabled");
+    }else if(inputFromDate.value === '' || InputToDate.value === ''){
+        $("#fromdatepanel").removeClass("has-success");
+        $("#todatepanel").removeClass("has-success");
+        $("#fromdatepanel").addClass("has-error");
+        $("#todatepanel").addClass("has-error");
         $("#printbutton").addClass("disabled");
     }else{
-        $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'enddate');
-        $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'startdate');
-        
+        $("#fromdatepanel").removeClass("has-error");
+        $("#todatepanel").removeClass("has-error");
+        $("#issuefromdatepanel").removeClass("has-error");
+        $("#issuetodatepanel").removeClass("has-error");
+        $("#fromdatepanel").addClass("has-success");
+        $("#todatepanel").addClass("has-success");
         $("#printbutton").removeClass("disabled");
         checkDateValue("to","");
     }       
 }
 
+function checkIssueFromDateField(){
+    var issueToDate = document.getElementById("issueTo");
+    var issueFromDate = document.getElementById("issueFrom");
+    if(issueFromDate.value === '' && issueToDate.value === ''){
+        $("#issuefromdatepanel").removeClass("has-error");
+        $("#issuetodatepanel").removeClass("has-error");  
+        $("#printbutton").removeClass("disabled");
+    }else if(issueFromDate.value === '' || issueToDate.value === ''){ 
+        $("#issuefromdatepanel").removeClass("has-success");
+        $("#issuetodatepanel").removeClass("has-success");  
+        $("#issuefromdatepanel").addClass("has-error");
+        $("#issuetodatepanel").addClass("has-error");  
+        $("#printbutton").addClass("disabled");
+    } else {
+        $("#fromdatepanel").removeClass("has-error");
+        $("#todatepanel").removeClass("has-error");
+        $("#issuefromdatepanel").removeClass("has-error");
+        $("#issuetodatepanel").removeClass("has-error");
+        $("#issuefromdatepanel").addClass("has-success");
+        $("#issuetodatepanel").addClass("has-success");
+        $("#printbutton").removeClass("disabled");
+        checkDateValue("issuefrom","");
+    }    
+}
+    
+function checkIssueToDateField(){
+    var issueToDate = document.getElementById("issueTo");
+    var issueFromDate = document.getElementById("issueFrom");
+    if(issueFromDate.value === '' && issueToDate.value === ''){
+        $("#issuefromdatepanel").removeClass("has-error");
+        $("#issuetodatepanel").removeClass("has-error");  
+        $("#printbutton").removeClass("disabled");
+    }else if(issueFromDate.value === '' || issueToDate.value === ''){
+        $("#issuefromdatepanel").removeClass("has-success");
+        $("#issuetodatepanel").removeClass("has-success");  
+        $("#issuefromdatepanel").addClass("has-error");
+        $("#issuetodatepanel").addClass("has-error"); 
+        $("#printbutton").addClass("disabled");
+    }else{
+        $("#fromdatepanel").removeClass("has-error");
+        $("#todatepanel").removeClass("has-error");
+        $("#issuefromdatepanel").removeClass("has-error");
+        $("#issuetodatepanel").removeClass("has-error");
+        $("#issuefromdatepanel").addClass("has-success");
+        $("#issuetodatepanel").addClass("has-success");
+        $("#printbutton").removeClass("disabled");
+        checkDateValue("issueto","");
+    }       
+}
+
 function checkDateValue(date){
-    var inputFromDate = document.getElementById("startdate");
-    var InputToDate = document.getElementById("enddate");
+    var inputFromDate = "";
+        var InputToDate = "";
+        if((date === 'from') || (date === 'to')){
+            inputFromDate = document.getElementById("invoiceFromDate");
+            InputToDate = document.getElementById("invoiceToDate");
+        } else {
+            inputFromDate = document.getElementById("issueFrom");
+            InputToDate = document.getElementById("issueTo");
+        }
     if((inputFromDate.value !== '') && (InputToDate.value !== '')){
         var fromDate = (inputFromDate.value).split('-');
         var toDate = (InputToDate.value).split('-');
@@ -519,20 +693,45 @@ function checkDateValue(date){
 }
     
 function validateDate(date,option){
-    if(option === 'over'){
+   if(option === 'over'){
         if(date === 'from'){
-           $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'startdate');
-           $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'enddate');
+            $("#fromdatepanel").removeClass("has-success");
+            $("#fromdatepanel").addClass("has-error");                                 
         }
         if(date === 'to'){
-           $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'startdate');
-           $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'enddate');
-        }           
+            $("#todatepanel").removeClass("has-success");
+            $("#todatepanel").addClass("has-error");
+        }
+        if(date === 'issuefrom'){
+            $("#issuefromdatepanel").removeClass("has-success");
+            $("#issuefromdatepanel").addClass("has-error");
+        }
+        if(date === 'issueto'){
+            $("#issuetodatepanel").removeClass("has-success"); 
+            $("#issuetodatepanel").addClass("has-error");
+        }       
         $("#printbutton").addClass("disabled");
     } else {
-        $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'startdate');
-        $('#TicketFareSumAgentStaff').bootstrapValidator('revalidateField', 'enddate');
+        $("#fromdatepanel").removeClass("has-success");
+        $("#todatepanel").removeClass("has-success");
+        $("#issuefromdatepanel").removeClass("has-success");
+        $("#issuetodatepanel").removeClass("has-success"); 
+        $("#fromdatepanel").addClass("has-error");
+        $("#todatepanel").addClass("has-error");
+        $("#issuefromdatepanel").addClass("has-error");
+        $("#issuetodatepanel").addClass("has-error");
         $("#printbutton").addClass("disabled");
+    }
+}
+function jsFunction(value){
+    if(value == ""){
+        $("#reporttypepanel").removeClass("has-success");
+        $("#reporttypepanel").addClass("has-error");
+        $("#printbutton").addClass("disabled");
+    }else{
+        $("#reporttypepanel").removeClass("has-error");
+        $("#reporttypepanel").addClass("has-success");
+        $("#printbutton").removeClass("disabled");
     }
 }
 </script>

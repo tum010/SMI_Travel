@@ -224,8 +224,8 @@ public class ReportService {
         return refundAirReportDao.getRefundAir(refundId);
     }
     
-    public List getTicketFareReport(String ticketType,String ticketBuy,String airline,String airlineCode,String dateFrom,String dateTo,String department,String staff,String termPay,String printby){      
-        return ticketFareReportDao.getTicketFareReport(ticketType,ticketBuy,airline,airlineCode,dateFrom,dateTo,department,staff,termPay,printby);
+    public List getTicketFareReport(String ticketType,String ticketBuy,String airline,String airlineCode,String dateFrom,String dateTo,String department,String staff,String termPay,String printby,String invdateFrom,String invdateTo ){      
+        return ticketFareReportDao.getTicketFareReport(ticketType,ticketBuy,airline,airlineCode,dateFrom,dateTo,department,staff,termPay,printby,invdateFrom,invdateTo);
     }
     
     public List getTicketFareSumAgentStaff(String ticketType,String ticketBuy,String airline,String airlineCode,String department,String staff,String termPay,String printby,String issuedateFrom,String issuedateTo,String invdateFrom,String invdateTo,String groupBy){

@@ -6,6 +6,7 @@
 package com.smi.travel.controller;
 
 import com.smi.travel.datalayer.entity.MAccterm;
+import com.smi.travel.datalayer.entity.MAirline;
 import com.smi.travel.datalayer.entity.MAirlineAgent;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.UtilityService;
@@ -40,13 +41,15 @@ public class TicketFareSumAgentStaffController extends SMITravelController {
         List<MAirlineAgent> mAirlineAgentsList = utilityService.getListMAirLineAgent();
         request.setAttribute(AIRLINELIST,mAirlineAgentsList);
 
-        request.setAttribute(AIRLINECODELIST,mAirlineAgentsList);
         
         List<SystemUser> userList = utilityService.getUserList();
         request.setAttribute(USERLIST,userList);
         
         List<MAccterm> mAcctermList = utilityService.getListMAccterm();
         request.setAttribute(TERMPAYLIST,mAcctermList);
+        
+        List<MAirline> mAirlines = utilityService.getListMAirlineCode();
+        request.setAttribute(AIRLINECODELIST,mAirlines);
     }
     
     public UtilityService getUtilityService() {

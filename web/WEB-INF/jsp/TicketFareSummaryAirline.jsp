@@ -38,10 +38,10 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-6 control-label text-right" >Report Type</label>
+                                <label class="col-md-6 control-label text-right" >Report Type<font style="color: red">*</font></label>
                                 <div class="col-md-6">  
-                                    <div class="form-group">
-                                        <select name="reportType" id="reportType"  class="form-control">
+                                    <div class="form-group" id="reporttypepanel">
+                                        <select name="reportType" id="reportType"  class="form-control" onchange="jsFunction(this.value);">
                                             <option value=""  selected="selected">-- ALL --</option>
                                             <option value="1">TK Detail Airline Pax</option>
                                             <option value="2">Summary Airline Pax</option>
@@ -151,7 +151,11 @@
                                 <div class="col-md-6">  
                                     <div class="form-group">
                                         <select name="airlineCode" id="airlineCode"  class="form-control">
-                                            
+                                            <option value=""  selected="selected">-- ALL --</option>
+                                            <c:forEach var="table" items="${airlineCodeList}" >
+                                                <c:set var="select" value=""/>
+                                                <option value="${table.code3Letter}" ${select}>${table.name}</option>  
+                                            </c:forEach>
                                         </select>
                                     </div>
                                 </div>   
@@ -363,7 +367,7 @@ $(document).ready(function() {
     $('#printbutton').click( function() {  
         printTicketSummaryAirline();
     });
-    
+    $("#printbutton").addClass("disabled");
     //Sale By Auto Complete
     $("#SaleByTable tr").on('click', function () {
         var saleby_id = $(this).find(".saleby-id").text();
@@ -738,6 +742,10 @@ function printTicketSummaryAirline(){
                     + "&staff=" + salebyUser 
                     + "&termPay=" + termPay);
         }else if(reportType == 2){
+        }else{
+            $("#reporttypepanel").removeClass("has-success");
+            $("#reporttypepanel").addClass("has-error");
+            $("#printbutton").addClass("disabled");
         }   
     } else if((issuefrom !== '') && (issueto !== '')){
         if(reportType == 1){
@@ -754,8 +762,16 @@ function printTicketSummaryAirline(){
                     + "&staff=" + salebyUser 
                     + "&termPay=" + termPay);
         }else if(reportType == 2){
-        }   
+        }else{
+            $("#reporttypepanel").removeClass("has-success");
+            $("#reporttypepanel").addClass("has-error");
+            $("#printbutton").addClass("disabled");
+        }      
     } else {
+        if(reportType == ""){
+            $("#reporttypepanel").removeClass("has-success");
+            $("#reporttypepanel").addClass("has-error");
+        }
         validateDate();  
     }
 //    alert("reportType ::: "+reportType+
@@ -772,5 +788,17 @@ function printTicketSummaryAirline(){
 //          "salebyUser ::: "+salebyUser+
 //          "termPay ::: "+termPay      
 //                );
+}
+
+function jsFunction(value){
+    if(value == ""){
+        $("#reporttypepanel").removeClass("has-success");
+        $("#reporttypepanel").addClass("has-error");
+        $("#printbutton").addClass("disabled");
+    }else{
+        $("#reporttypepanel").removeClass("has-error");
+        $("#reporttypepanel").addClass("has-success");
+        $("#printbutton").removeClass("disabled");
+    }
 }
 </script>

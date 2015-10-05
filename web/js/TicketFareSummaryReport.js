@@ -10,23 +10,104 @@ function printTicketFareSummary(){
     var ticketBuy = document.getElementById("ticketBuy").value;
     var airline = document.getElementById("airline").value;
     var airlineCode = document.getElementById("airlineCode").value;
-    var from = document.getElementById("startdate").value;
-    var to = document.getElementById("enddate").value;
+//    var from = document.getElementById("startdate").value;
+//    var to = document.getElementById("enddate").value;
     var department = document.getElementById("department").value;
     var salebyUser = document.getElementById("salebyUser").value;
     var termPay = document.getElementById("termPay").value;
+    var issuefrom = document.getElementById("issueFrom").value;
+    var issueto = document.getElementById("issueTo").value;
+    var invFrom = document.getElementById("invoiceFromDate").value;
+    var invTo = document.getElementById("invoiceToDate").value;
     
-    if((from === '') || (to === '')){
-        validateDate();
-    } else {
+    if((invFrom !== '') && (invTo !== '')){
         if(reportType == 1){
-            window.open("Excel.smi?name=TicketFareAirlineReport&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&dateFrom=" + from + "&dateTo=" + to + "&department=" + department + "&staff=" + salebyUser + "&termPay=" + termPay);
+            window.open("Excel.smi?name=TicketFareAirlineReport&ticketType=" + ticketType + 
+                    "&ticketBuy=" + ticketBuy + 
+                    "&airline=" + airline + 
+                    "&airlineCode=" + airlineCode + 
+                    "&issuedateFrom=" + issuefrom +
+                    "&issuedateTo=" + issueto +
+                    "&invdateFrom=" + invFrom +
+                    "&invdateTo=" + invTo +
+                    "&department=" + department + 
+                    "&staff=" + salebyUser + 
+                    "&termPay=" + termPay);
         }else if(reportType == 2){
-            window.open("Excel.smi?name=TicketFareInvoicReport&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&dateFrom=" + from + "&dateTo=" + to + "&department=" + department + "&staff=" + salebyUser + "&termPay=" + termPay);
+            window.open("Excel.smi?name=TicketFareInvoicReport&ticketType=" + ticketType + 
+                    "&ticketBuy=" + ticketBuy + 
+                    "&airline=" + airline + 
+                    "&airlineCode=" + airlineCode + 
+                    "&issuedateFrom=" + issuefrom +
+                    "&issuedateTo=" + issueto +
+                    "&invdateFrom=" + invFrom +
+                    "&invdateTo=" + invTo +
+                    "&department=" + department + 
+                    "&staff=" + salebyUser + 
+                    "&termPay=" + termPay);
         }else if(reportType == 3){
-            window.open("Excel.smi?name=TicketFareAgentReport&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&dateFrom=" + from + "&dateTo=" + to + "&department=" + department + "&staff=" + salebyUser + "&termPay=" + termPay);
-        }      
-    } 
+            window.open("Excel.smi?name=TicketFareAgentReport&ticketType=" + ticketType + 
+                    "&ticketBuy=" + ticketBuy + 
+                    "&airline=" + airline + 
+                    "&airlineCode=" + airlineCode + 
+                    "&issuedateFrom=" + issuefrom +
+                    "&issuedateTo=" + issueto +
+                    "&invdateFrom=" + invFrom +
+                    "&invdateTo=" + invTo +
+                    "&department=" + department + 
+                    "&staff=" + salebyUser + 
+                    "&termPay=" + termPay);
+        }else{
+            $("#reporttypepanel").removeClass("has-success");
+            $("#reporttypepanel").addClass("has-error");
+            $("#printbutton").addClass("disabled");
+        }
+    } else if((issuefrom !== '') && (issueto !== '')){
+        if(reportType == 1){
+            window.open("Excel.smi?name=TicketFareAirlineReport&ticketType=" + ticketType + 
+                    "&ticketBuy=" + ticketBuy + 
+                    "&airline=" + airline + 
+                    "&airlineCode=" + airlineCode + 
+                    "&issuedateFrom=" + issuefrom +
+                    "&issuedateTo=" + issueto +
+                    "&invdateFrom=" + invFrom +
+                    "&invdateTo=" + invTo +
+                    "&department=" + department + 
+                    "&staff=" + salebyUser + 
+                    "&termPay=" + termPay);
+        }else if(reportType == 2){
+            window.open("Excel.smi?name=TicketFareInvoicReport&ticketType=" + ticketType + 
+                    "&ticketBuy=" + ticketBuy + 
+                    "&airline=" + airline + 
+                    "&airlineCode=" + airlineCode + 
+                    "&issuedateFrom=" + issuefrom +
+                    "&issuedateTo=" + issueto +
+                    "&invdateFrom=" + invFrom +
+                    "&invdateTo=" + invTo +
+                    "&department=" + department + 
+                    "&staff=" + salebyUser + 
+                    "&termPay=" + termPay);
+        }else if(reportType == 3){
+            window.open("Excel.smi?name=TicketFareAgentReport&ticketType=" + ticketType + 
+                    "&ticketBuy=" + ticketBuy + 
+                    "&airline=" + airline + 
+                    "&airlineCode=" + airlineCode + 
+                    "&issuedateFrom=" + issuefrom +
+                    "&issuedateTo=" + issueto +
+                    "&invdateFrom=" + invFrom +
+                    "&invdateTo=" + invTo +
+                    "&department=" + department + 
+                    "&staff=" + salebyUser + 
+                    "&termPay=" + termPay);
+        }else{
+            $("#reporttypepanel").removeClass("has-success");
+            $("#reporttypepanel").addClass("has-error");
+            $("#printbutton").addClass("disabled");
+        }
+    } else {
+        validateDate();  
+    }
+ 
 }
 
 $(document).ready(function() {
@@ -92,72 +173,4 @@ $(document).ready(function() {
     });
 
 });
-
-    
-function checkFromDateField(){
-    var InputToDate = document.getElementById("enddate");
-    var inputFromDate = document.getElementById("startdate");
-    if(inputFromDate.value === '' || InputToDate.value === ''){          
-        $('#TicketFareSummaryReport').bootstrapValidator('revalidateField', 'startdate');
-        $('#TicketFareSummaryReport').bootstrapValidator('revalidateField', 'enddate');
-        $("#printbutton").addClass("disabled");
-    } else {
-        $('#TicketFareSummaryReport').bootstrapValidator('revalidateField', 'startdate');
-        $('#TicketFareSummaryReport').bootstrapValidator('revalidateField', 'enddate');
-        $("#printbutton").removeClass("disabled");
-        checkDateValue("from","");
-    }
-}
-    
-function checkToDateField(){
-    var InputToDate = document.getElementById("enddate");
-    var inputFromDate = document.getElementById("startdate");
-    if(inputFromDate.value === '' || InputToDate.value === ''){ 
-        $('#TicketFareSummaryReport').bootstrapValidator('revalidateField', 'enddate');
-        $('#TicketFareSummaryReport').bootstrapValidator('revalidateField', 'startdate');
-        $("#printbutton").addClass("disabled");
-    }else{
-        $('#TicketFareSummaryReport').bootstrapValidator('revalidateField', 'enddate');
-        $('#TicketFareSummaryReport').bootstrapValidator('revalidateField', 'startdate');
-        
-        $("#printbutton").removeClass("disabled");
-        checkDateValue("to","");
-    }       
-}
-
-function checkDateValue(date){
-    var inputFromDate = document.getElementById("startdate");
-    var InputToDate = document.getElementById("enddate");
-    if((inputFromDate.value !== '') && (InputToDate.value !== '')){
-        var fromDate = (inputFromDate.value).split('-');
-        var toDate = (InputToDate.value).split('-');
-        if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
-            validateDate(date,"over");
-        }
-        if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))){
-            validateDate(date,"over");
-        }
-        if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) >= (parseInt(toDate[1]))) && (parseInt(fromDate[2])) > (parseInt(toDate[2]))){
-            validateDate(date,"over");
-        }          
-    }
-}
-    
-function validateDate(date,option){
-    if(option === 'over'){
-        if(date === 'from'){
-           $('#TicketFareSummaryReport').bootstrapValidator('revalidateField', 'startdate');
-           $('#TicketFareSummaryReport').bootstrapValidator('revalidateField', 'enddate');
-        }
-        if(date === 'to'){
-           $('#TicketFareSummaryReport').bootstrapValidator('revalidateField', 'startdate');
-           $('#TicketFareSummaryReport').bootstrapValidator('revalidateField', 'enddate');
-        }           
-        $("#printbutton").addClass("disabled");
-    } else {
-        $('#TicketFareSummaryReport').bootstrapValidator('revalidateField', 'startdate');
-        $('#TicketFareSummaryReport').bootstrapValidator('revalidateField', 'enddate');
-        $("#printbutton").addClass("disabled");
-    }
-}
 

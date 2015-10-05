@@ -22,6 +22,7 @@ import com.smi.travel.datalayer.entity.MFlight;
 import com.smi.travel.datalayer.entity.MFlightservice;
 import com.smi.travel.datalayer.entity.MPricecategory;
 import com.smi.travel.datalayer.entity.MTicketType;
+import com.smi.travel.datalayer.entity.Master;
 import java.util.List;
 /**
  *
@@ -216,5 +217,9 @@ public class BookingAirticketService {
     
     public List<String> getListPnrFromRefno(String Refno){
         return airticketPnrDao.getListPnrFromRefno(Refno);
+    }
+
+    public int updateBookingAirUnlock(Master master) {
+        return airticketBooking.updateBookingAirUnlock(master);
     }
 }

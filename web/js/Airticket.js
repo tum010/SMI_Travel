@@ -284,3 +284,14 @@ function setEnablePnrForm(id, name) {
     $("#enablePnrId").val(id);
     document.getElementById('enableCode').innerHTML = "Are you sure to enable PNR : " + name + " ?";
 }
+
+function airUnlock(){
+    $("#AirUnlockModal").modal("show");
+}
+
+function unlockAirTicket(){
+    document.getElementById('flagAir').value = '0';
+    document.getElementById('action').value = 'unlockAirTicket';
+    document.getElementById('AirTicket').submit();
+    
+}
