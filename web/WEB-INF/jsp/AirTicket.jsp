@@ -26,6 +26,8 @@
 <c:set var="booking_size" value="${requestScope['BookingSize']}" />
 <c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
 <c:set var="mCurrency" value="${requestScope['MCurrency']}" />
+<c:set var="roleName" value="${requestScope['roleName']}" />
+<c:set var="airLocking" value="${requestScope['airLocking']}" />
 
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
@@ -206,7 +208,7 @@
                             <a class="btn btn-success disabled">
                                 <span class="glyphicon glyphicon-plus"></span>Add</button>
                             </a>   
-                        </c:if>
+                        </c:if>                       
                     </div>
                 </div>
                 <hr/>
@@ -354,12 +356,21 @@
                 </div>
                 <!--Save-->
                 <div class="text-center" style="margin-top: 10px">
+                    <c:set var="airUnlock" value="disabled"/>
+                    <c:if test="${(roleName == 'YES') && (airLocking == '1')}">
+                        <c:set var="airUnlock" value=""/>
+                    </c:if>
+                    <button type="button" class="btn btn-primary" onclick="airUnlock();" data-toggle="modal" data-target="#AirUnlock" id="ButtonAirUnlock" name="ButtonAirUnlock" ${airUnlock}>
+                        <span id="SpanAirUnlock" class="glyphicon glyphicon-ok" ></span> Booking Air Unlock
+                    </button>
+                    <input type="hidden" id="flagAir" name="flagAir" value="${booking.master.flagAir}"/>
+                    <input type="hidden" id="mBookingStatus" name="mBookingStatus" value="${booking.master.MBookingstatus.id}"/>
                     <c:if test="${lockUnlockBooking == 0}">
                         <button id="ButtonSave" type="submit" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
                     </c:if>
                     <c:if test="${lockUnlockBooking == 1}">
                         <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
-                    </c:if>    
+                    </c:if>                      
                 </div>
             </form>
         </div>
@@ -451,6 +462,25 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
+
+<!--Booking Air Unlock Modal-->
+<div class="modal fade" id="AirUnlockModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Booking - Air Ticket</h4>
+            </div>
+            <div class="modal-body" id="enableVoid">
+                Are you to unlock booking air ticket?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" onclick='unlockAirTicket()'>Unlock</button>               
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->                                             
 
 <form role="form" id="disablePnr" method="post" action="AirTicket.smi" class="form-horizontal">
     <input type="hidden" class="form-control" id="disablePnrId"   name="disablePnrId"  >     

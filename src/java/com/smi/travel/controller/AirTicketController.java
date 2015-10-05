@@ -15,6 +15,7 @@ import com.smi.travel.datalayer.entity.BookingPnr;
 import com.smi.travel.datalayer.entity.HotelBooking;
 import com.smi.travel.datalayer.entity.MAirline;
 import com.smi.travel.datalayer.entity.MAirline;
+import com.smi.travel.datalayer.entity.MBookingstatus;
 import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.SystemUser;
@@ -72,7 +73,8 @@ public class AirTicketController extends SMITravelController {
     private static final String[] resultText = {"Unsuccesful save", "Save successful"};
     private static final String LockUnlockBooking = "LockUnlockBooking";
     private static final String MCurrency = "MCurrency";
-
+    private static final String AirLocking = "airLocking";
+    private static final String RoleName = "roleName";        
 
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -85,6 +87,19 @@ public class AirTicketController extends SMITravelController {
         SystemUser issue = null;
         System.out.println(AirTicketController.class
                 .getName() + " action=[" + action + "] refNo[" + refNo + "],[airId=" + airBookingId + "] [airDescrows=" + airDescRows + "]");
+        
+        SystemUser user = (SystemUser) session.getAttribute("USER");
+        String idRole = user.getRole().getId();
+        String username = user.getUsername();
+        request.setAttribute("idRole", idRole);
+        String roleName = user.getRole().getName();
+        if("Airticket Manager".equalsIgnoreCase(roleName)){
+            roleName = "YES";
+            request.setAttribute(RoleName, roleName);
+        }else{
+            roleName = "NO";
+            request.setAttribute(RoleName, roleName);
+        }
 
         if ("new".equalsIgnoreCase(action)) {
             System.out.println("AirTicketController new not supported yet");
@@ -120,7 +135,6 @@ public class AirTicketController extends SMITravelController {
                 request.setAttribute(IssueBy, issueBy);
             } else {
                 //airBook is null;
-                SystemUser user = (SystemUser) session.getAttribute("USER");
                 request.setAttribute(OwnerBy, user);
                 request.setAttribute(IssueBy, user);
                 request.setAttribute(AddButton, "disabled");
@@ -132,7 +146,7 @@ public class AirTicketController extends SMITravelController {
             String issueName = request.getParameter("issue_username");
             String deadline = request.getParameter("get_deadline");
             String reconfirm = request.getParameter("reconfirm");
-            String remark = request.getParameter("remark");
+            String remark = request.getParameter("remark");          
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date deadlineDate = null;
             try {
@@ -175,7 +189,7 @@ public class AirTicketController extends SMITravelController {
                 airBook.setStaffByOwnerBy(owner);
                 airBook.setReConfirm(reconfirm);
                 airBook.setDeadline(deadlineDate);
-                airBook.setRemark(remark);
+                airBook.setRemark(remark);                
                 setAirticketDescRows(request, airDescRows, airBook);
                 System.out.println("updateBookingAirticket-----");
                 result = bookingAirticketService.updateBookingAirTicket(airBook);
@@ -197,6 +211,16 @@ public class AirTicketController extends SMITravelController {
             String dId = request.getParameter("dId");
             AirticketBooking airticketBooking = bookingAirticketService.getBookDetailAir(bId);
             result = bookingAirticketService.DeleteDesc(airticketBooking, dId);
+        } else if ("unlockAirTicket".equalsIgnoreCase(action)) {
+            String flagAir = request.getParameter("flagAir");
+            Master master = new Master();
+            master.setReferenceNo(refNo);
+            master.setFlagAir(Integer.parseInt(flagAir));
+            MBookingstatus mBookingstatus = new MBookingstatus();
+            mBookingstatus.setId("1");
+            master.setMBookingstatus(mBookingstatus);
+            result = bookingAirticketService.updateBookingAirUnlock(master);
+            return new ModelAndView("redirect:AirTicket.smi?referenceNo=" + refNo + "&action=edit&result=" + result);
         } else {
             AirticketBooking airBook = bookingAirticketService.getBookDetailAir(refNo);
             if (airBook == null) {
@@ -333,6 +357,12 @@ public class AirTicketController extends SMITravelController {
         }else{
             request.setAttribute(LockUnlockBooking,0);
         }
+        
+        // Booking Air Unlock
+        if(("1").equals(String.valueOf(master.getFlagAir()))){
+            request.setAttribute(AirLocking,1);
+        }
+        
     }
 
     private SystemUser getUpdateSystemUserByName(String name, SystemUser existUser) {
