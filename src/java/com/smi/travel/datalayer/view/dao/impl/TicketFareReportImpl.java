@@ -33,11 +33,22 @@ public class TicketFareReportImpl implements TicketFareReportDao {
     private UtilityFunction utilityFunction;
     
     @Override
-    public List getTicketFareReport(String ticketType,String ticketBuy,String airline,String airlineCode,String dateFrom,String dateTo,String department,String staff,String termPay,String printby){
+    public List getTicketFareReport(String ticketType,String ticketBuy,String airline,String airlineCode,String dateFrom,String dateTo,String department,String staff,String termPay,String printby,String invdateFrom,String invdateTo){
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList<TicketFareReport>();
-
+        System.out.println(" ticketType " + ticketType);
+        System.out.println(" ticketBuy " + ticketBuy);
+        System.out.println(" airline " + airline);
+        System.out.println(" airlineCode " + airlineCode);
+        System.out.println(" dateFrom " + dateFrom);
+        System.out.println(" dateTo " + dateTo);
+        System.out.println(" department " + department);
+        System.out.println(" staff " + staff);
+        System.out.println(" termPay " + termPay);
+        System.out.println(" printby " + printby);
+        System.out.println(" invdateFrom " + invdateFrom);
+        System.out.println(" invdateTo " + invdateTo);
         String query = "SELECT * FROM `ticket_fare_airline_view` where";
         
         int checkQuery = 0;
@@ -118,7 +129,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
                 .addScalar("vat",Hibernate.STRING)
                 .addScalar("invno",Hibernate.STRING)
                 .addScalar("invamount",Hibernate.STRING)
-                .addScalar("balance",Hibernate.STRING)
+                .addScalar("balance_pay",Hibernate.STRING)
                 .addScalar("passenger",Hibernate.STRING)
                 .addScalar("agent",Hibernate.STRING)
                 .addScalar("ticketcom",Hibernate.STRING)
