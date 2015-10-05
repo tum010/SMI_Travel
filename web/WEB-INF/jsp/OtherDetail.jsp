@@ -155,12 +155,14 @@
                                 <div class="form-group">
 
                                     <label for="effectivefrom" class="col-sm-3 control-label" > Date </label>
-                                    <div class=' col-sm-6 input-group date' id='effectivefromClass'>
-                                        <input type='text' class="form-control"  id="otherdate" name="otherdate" data-date-format="YYYY-MM-DD" value="${requestScope['otherdate']}" />
+                                    <div class=' col-sm-6 input-group date' id='effectivefromClass' style="width: 140px">
+                                        <input type='text' class="form-control"  id="otherdate" name="otherdate" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['otherdate']}"/>                                     
                                         <span class="input-group-addon spandate">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>
+                                        <input type='hidden' class="form-control"  id="todaydate" name="todaydate" data-date-format="YYYY-MM-DD" value=""/>
+                                        <input type='hidden' class="form-control"  id="checkdate" name="checkdate" data-date-format="YYYY-MM-DD" value="${requestScope['otherdate']}"/>                                                                              
                                 </div>
                             </div>
                         </div>
@@ -577,12 +579,19 @@
                             setupotherdatevalue('${booktype}');
                         });
                         
+                        var now = new Date();
+                        var day = ("0" + now.getDate()).slice(-2);
+                        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+                        var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+                        $('#todaydate').val(today);
+                                                                                              
                         $('.spandate').click(function() {
                             var position = $(this).offset();
                             console.log("positon :" + position.top);
                             $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
 
                         });
+                        
                         $('.times').datetimepicker({
                             pickDate: false,
                             pickTime: true,
