@@ -130,7 +130,7 @@
                                     <!--Invoice Table-->
                                     <div class="row" >    
                                         <div class="col-md-12">
-                                            <table id="InvoiceListTable" class="display" cellspacing="0" width="100%">
+                                            <table id="InvoiceListTable" class="display" cellspacing="0" width="100px">
                                                 <thead>
                                                     <tr class="datatable-header">
                                                         <th style="width: 15%" >Product</th>
@@ -166,7 +166,7 @@
                                         <button style="height:30px" type="button"  id="btnSearchRefNo"  name="btnSearchRefNo" onclick="searchRefNo();" class="btn btn-primary btn-sm" ${outbound}><i class="fa fa-search"></i>&nbsp;Search </button>
                                     </div>
                                     <div class="col-md-5 ">
-                                        <div id='AlertBooking' style='display:none'><font color="red">This Ref No can get billable detail from outbound only</font></div>  
+                                        <div id='AlertBooking' style='display:none'><font color="red">This Ref No can get billable detail from outbound only.</font></div>  
                                     </div>
                                     <!--RefNo Table-->
                                     <div class="row">
@@ -917,7 +917,7 @@
             "bLengthChange": false,
             "iDisplayLength": 10
         });
-                   
+                          
         $(".numerical").on('input', function() { 
             var value=$(this).val().replace(/[^0-9.,]*/g, '');
             value=value.replace(/\.{2,}/g, '.');
@@ -1290,16 +1290,18 @@
                 success: function (msg) {
                     try { 
                         if(msg == "null"){
-                            $('#InvoiceListTable').dataTable().fnClearTable();
-                            $('#InvoiceListTable').dataTable().fnDestroy();                            
+                            $('#InvoiceListTable > tbody  > tr').each(function() {
+                                $(this).remove();
+                            });                           
                             document.getElementById("TaxInvTo").value = '';
                             document.getElementById("InvToName").value = '';
                             document.getElementById("InvToAddress").value = '';
                             document.getElementById("ARCode").value = '';
                             
                         }else{
-                            $('#InvoiceListTable').dataTable().fnClearTable();
-                            $('#InvoiceListTable').dataTable().fnDestroy();
+                            $('#InvoiceListTable > tbody  > tr').each(function() {
+                                $(this).remove();
+                            });
                             $("#InvoiceListTable tbody").empty().append(msg);
                             
                             if(document.getElementById("receiveTaxInvTo")!==null && ($("#receiveTaxInvTo").val()!==undefined)){
@@ -1379,9 +1381,9 @@
                 success: function (msg) {
                     try {
                         if(msg == "null"){
-                            $('#RefNoListTable').dataTable().fnClearTable();
-                            $('#RefNoListTable').dataTable().fnDestroy();
-//                            $("#RefNoListTable tbody").append(msg);
+                            $('#RefNoListTable > tbody  > tr').each(function() {
+                                $(this).remove();
+                            });
                           
                             document.getElementById("TaxInvTo").value = '';
                             document.getElementById("InvToName").value = '';
@@ -1390,12 +1392,14 @@
                             document.getElementById("InvToDate").value = '';
                             $('#AlertBooking').hide();
                         }else if(msg == "I"){
-                            $('#RefNoListTable').dataTable().fnClearTable();
-                            $('#RefNoListTable').dataTable().fnDestroy();
+                            $('#RefNoListTable > tbody  > tr').each(function() {
+                                $(this).remove();
+                            });
                             $('#AlertBooking').show();
                         }else{
-                            $('#RefNoListTable').dataTable().fnClearTable();
-                            $('#RefNoListTable').dataTable().fnDestroy();
+                            $('#RefNoListTable > tbody  > tr').each(function() {
+                                $(this).remove();
+                            });
                             $("#RefNoListTable tbody").append(msg);
                             $('#AlertBooking').hide();
 
@@ -1426,20 +1430,23 @@
                         $("#ajaxload2").addClass("hidden");
 
                     } catch (e) {
-                        $('#RefNoListTable').dataTable().fnClearTable();
-                        $('#RefNoListTable').dataTable().fnDestroy();
+                        $('#RefNoListTable > tbody  > tr').each(function() {
+                            $(this).remove();
+                        });
                         $("#ajaxload2").addClass("hidden");
                     }
 
                 }, error: function (msg) {
-                    $('#RefNoListTable').dataTable().fnClearTable();
-                    $('#RefNoListTable').dataTable().fnDestroy();
+                    $('#RefNoListTable > tbody  > tr').each(function() {
+                        $(this).remove();
+                    });
                     $("#ajaxload2").addClass("hidden");
                 }
             });
         } catch (e) {
-            $('#RefNoListTable').dataTable().fnClearTable();
-            $('#RefNoListTable').dataTable().fnDestroy();
+            $('#RefNoListTable > tbody  > tr').each(function() {
+                $(this).remove();
+            });
         }
     }
     

@@ -72,8 +72,8 @@ public class GuideCommissionReportImpl implements GuideCommissionReportDao{
              GuideCommissionSummary guidecom = new GuideCommissionSummary();
              guidecom.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(thisdate));
              guidecom.setUser(username);
-             guidecom.setDatefrom(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)));
-             guidecom.setDateto(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)));
+             guidecom.setDatefrom(!"".equalsIgnoreCase(datefrom) ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)) : "");
+             guidecom.setDateto(!"".equalsIgnoreCase(dateto) ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)) : "");
              guidecom.setTourdate(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(B[0]));
              guidecom.setCode(util.ConvertString(B[1]));
              guidecom.setCustomer(util.ConvertString(B[2]));
@@ -99,8 +99,14 @@ public class GuideCommissionReportImpl implements GuideCommissionReportDao{
         UtilityFunction util = new UtilityFunction();
         
         String query = GUIDECOM_SUMMARY_QUERY + "and db.tour_date >= '"+datefrom+"' and  db.tour_date <= '"+dateto+"'";
-        query = query.replaceFirst("datefrom", datefrom.replaceAll(" ", ""));
-        query = query.replaceFirst("dateto", dateto.replaceAll(" ", ""));
+//        if((datefrom != null) && (!"".equalsIgnoreCase(datefrom))){
+//            query += "and db.tour_date >= '"+datefrom+"'";
+            query = query.replaceFirst("datefrom", datefrom.replaceAll(" ", ""));
+//        }
+//        if((dateto != null) && (!"".equalsIgnoreCase(dateto))){
+//            query += "and db.tour_date <= '"+dateto+"'";
+            query = query.replaceFirst("dateto", dateto.replaceAll(" ", ""));
+//        }       
         if((guideid != null)&&(!"".equalsIgnoreCase(guideid))){
             query += " and  st.id = "+guideid;
         }
@@ -118,8 +124,8 @@ public class GuideCommissionReportImpl implements GuideCommissionReportDao{
              GuideCommissionSummaryHeader guidecom = new GuideCommissionSummaryHeader();
              guidecom.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(thisdate));
              guidecom.setUser(username);
-             guidecom.setDatefrom(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)));
-             guidecom.setDateto(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)));
+             guidecom.setDatefrom(!"".equalsIgnoreCase(datefrom) ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)) : "");
+             guidecom.setDateto(!"".equalsIgnoreCase(dateto) ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)) : "");
              guidecom.setGuidename(util.ConvertString(B[0]));
              guidecom.setPax(B[1]== null ? 0:(Integer)B[1]);
              guidecom.setCommission(B[2]== null ? 0:(Integer)B[2]);

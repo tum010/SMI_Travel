@@ -804,7 +804,7 @@
                                         <h4>Booking Expense</h4>
                                     </div>
                                     <div class="col-sm-6 text-right">
-                                        <a href="#" id="ButtonImportTourExpense" name="ButtonImportTourExpense" class="btn btn-success" data-toggle="modal" >
+                                        <a href="#" id="ButtonImportTourExpense" name="ButtonImportTourExpense" class="btn btn-success disabled" data-toggle="modal" >
                                             <i class="glyphicon glyphicon-plus"></i>&nbsp;Import
                                         </a>
                                     </div>
