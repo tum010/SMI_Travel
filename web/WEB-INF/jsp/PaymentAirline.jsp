@@ -488,16 +488,16 @@
                         </div>
                         
                         <div class="col-xs-12" style="padding-top: 15px">
-                            <div class="col-xs-1 text-right"  style="width: 150px">
+<!--                            <div class="col-xs-1 text-right"  style="width: 150px">
                                 <label class="control-label text-right">Commission Vat </label>
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">                                    
                                     <input id="commissionVat" name="commissionVat" type="text" maxlength="12" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="">
                                 </div>
-                            </div>
+                            </div>-->
 
-                            <div class="col-xs-1 text-right"  style="width: 155px">
+                            <div class="col-xs-1 text-right"  style="width: 150px">
                                 <label class="control-label text-right">Withholding Tax </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
@@ -505,7 +505,7 @@
                                     <input id="withholdingTax" name="withholdingTax" type="text" maxlength="12" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.witholdingTax}" >
                                 </div>
                             </div>
-                            <div class="col-xs-1 text-right"  style="width: 140px">
+                            <div class="col-xs-1 text-right"  style="width: 155px">
                                 <label class="control-label text-right">Cash </label>
                             </div>
                             <div class="col-xs-1"  style="width: 200px">

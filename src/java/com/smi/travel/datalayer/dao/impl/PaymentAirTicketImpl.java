@@ -804,7 +804,24 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                 .addScalar("creditnote", Hibernate.STRING)
                 .addScalar("debitnote", Hibernate.STRING)
                 .list();
- 
+        
+//                payno
+//                totalpay
+//                totalcom
+//                cash
+//                chqno
+//                amount
+//                refund
+//                comrefund
+//                withtax
+//                creditnote
+//                debitnote
+        
+//                totalpaymentamount
+//                receivefromair
+//                receivefrominv
+//                invno
+        
         
         for (Object[] B : QueryStaffList) {
             PaymentAirView payment = new PaymentAirView();
