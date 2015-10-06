@@ -48,6 +48,11 @@
                                 <i class="glyphicon glyphicon-search"></i> Search
                             </a>
                         </div>
+                        <div class="col-xs-2 text-right" style="width: 490px;">
+                            <a id="ButtonAdd" name="ButtonAdd" class="btn btn-success" onclick="">
+                                <i class="glyphicon glyphicon-plus"></i> Add
+                            </a>
+                        </div>
                     </div>   
                 </div><!-- End Row 1--><br>
                 <div class="row" style="padding-left: 15px;width: 100%;">
@@ -80,10 +85,146 @@
                         </tbody>
                     </table>
                 </div>
+                <br>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row" style="padding-left: 0px">
+                            <div class="col-xs-12 ">
+                                <div class="col-xs-1" style="width: 130px">
+                                    <label class="control-label text-left">Receive Date</lable>        
+                                </div>
+                                <div class="col-xs-1" style="width: 170px">
+                                    <div class='input-group date'>
+                                        <input name="receiveDate" id="receiveDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
+                                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>
+                                </div>
+                            </div>   
+                        </div><!-- End Row 1--><br>
+                        <div class="row" style="padding-left: 0px">
+                            <div class="col-xs-12 ">
+                                <div class="col-xs-1" style="width: 130px">
+                                    <label class="control-label text-left">Receive Name</lable>        
+                                </div>
+                                <div class="col-xs-1" style="width: 170px">
+                                    <input name="receiveCode" id="receiveCode" type="text" class="form-control" value="" />
+                                </div>
+                                <div class="col-xs-1" style="width: 420px">
+                                    <input name="receiveName" id="receiveName" type="text" class="form-control" value="" />
+                                </div>
+                                <div class="col-xs-1 text-right" style="width: 175px">
+                                    <label class="control-label">AR Code</lable>        
+                                </div>
+                                <div class="col-xs-1" style="width: 200px">
+                                    <input name="receiveArCode" id="receiveArCode" type="text" class="form-control" value="" readonly=""/>
+                                </div>
+                            </div>
+                        </div><!-- End Row 2--><br>
+                        <div class="row" style="padding-left: 0px">
+                            <div class="col-xs-12 ">
+                                <div class="col-xs-1" style="width: 130px">
+                                    <label class="control-label text-left">Description</lable>        
+                                </div>
+                                <div class="col-xs-1" style="width: 590px">
+                                    <textarea name="description" id="description" class="form-control" rows="3"></textarea>
+                                </div>
+                                <div class="col-xs-1 text-right" style="width: 175px">
+                                    <label class="control-label">Status</lable>        
+                                </div>
+                                <div class="col-xs-1" style="width: 200px">
+                                    <select name="status" id="status" class="form-control">
+                                        <option value=""></option>
+                                    </select>    
+                                </div>
+                            </div>
+                        </div><!-- End Row 3--><br>
+                        <div class="row" style="padding-left: 0px">
+                            <div class="col-xs-12 ">
+                                <div class="col-xs-1" style="width: 130px">
+                                    <label class="control-label text-left">Cash Amount</lable>        
+                                </div>
+                                <div class="col-xs-1" style="width: 200px">
+                                    <input name="cashAmount" id="cashAmount" type="text" class="form-control money" value=""/>
+                                </div>
+                                <div class="col-xs-1" style="width: 60px"></div>
+                                <div class="col-xs-1" style="width: 130px">
+                                    <label class="control-label text-left">Bank Amount</lable>        
+                                </div>
+                                <div class="col-xs-1" style="width: 200px">
+                                    <input name="bankAmount" id="bankAmount" type="text" class="form-control money" value=""/>
+                                </div>
+                                <div class="col-xs-1" style="width: 40px"></div>
+                                <div class="col-xs-1 text-right" style="width: 135px">
+                                    <label class="control-label">Chq Amount</lable>        
+                                </div>
+                                <div class="col-xs-1" style="width: 200px">
+                                    <input name="chqAmount" id="chqAmount" type="text" class="form-control money" value=""/>
+                                </div>
+                            </div>
+                        </div><!-- End Row 4--><br>
+                        <div class="row" style="padding-left: 0px">
+                            <div class="col-xs-12 ">
+                                <div class="col-xs-1" style="width: 130px">
+                                    <label class="control-label text-left">Chq Bank</lable>        
+                                </div>
+                                <div class="col-xs-1" style="width: 200px">
+                                    <input name="chqBank" id="chqBank" type="text" class="form-control money" value=""/>
+                                </div>
+                                <div class="col-xs-1" style="width: 60px"></div>
+                                <div class="col-xs-1" style="width: 130px">
+                                    <label class="control-label text-left">Chq Date</lable>        
+                                </div>
+                                <div class="col-xs-1" style="width: 200px">
+                                    <div class='input-group date'>
+                                        <input name="chqDate" id="chqDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
+                                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-1" style="width: 60px"></div>
+                                <div class="col-xs-1 text-left" style="width: 115px">
+                                    <label class="control-label">Chq No</lable>        
+                                </div>
+                                <div class="col-xs-1" style="width: 200px">
+                                    <input name="chqNo" id="chqNo" type="text" class="form-control money" value=""/>
+                                </div>
+                            </div>
+                        </div><!-- End Row 5--><br>
+                        <input name="countCredit" id="countCredit" class="form-control" value="1"/>
+                        <div class="row" style="padding-left: 15px;width: 100%;">
+                            <table class="display" id="CreditTable">
+                                <thead class="datatable-header">
+                                    <tr>
+                                        <th style="width: 10%">Credit Bank</th>
+                                        <th style="width: 10%">Credit No</th>
+                                        <th style="width: 10%">Credit Expire</th>
+                                        <th style="width: 10%">Amount</th>
+                                        <th style="width: 10%">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+<!--                                        <td>26/07/2015</td>
+                                        <td>26/07/2015</td>
+                                        <td>26/07/2015</td>
+                                        <td>26/07/2015</td>
+                                        <td class="text-center">
+                                            <a href="#" onclick=""  data-toggle="modal" data-target="">
+                                                <span id="removeSpan${dataStatus.count}" class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteAir('${table.id}', '${table.code}')" data-toggle="modal" data-target="#delReceiveModal"></span>
+                                            </a>
+                                        </td>-->
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>                    
             </div>
         </div>
-                <div class="panel panel-default">
-                <div class="panel-body">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <label class="control-label">Total Receive</lable>
+            </div>
+            <div class="panel-body">
                 <div class="row" style="padding-left: 15px;width: 100%;">
                     <div id='TextBoxesGroup'>
                         <div id="TextBoxDiv1">                    
@@ -301,7 +442,69 @@
             $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
 
         });
+        $(".money").mask('000,000,000,000.00', {reverse: true});
+        
+        //Add row table receive 
+//        var rowCreditTable = $("#CreditTable tr").length;
+        AddRowCreditTable();
+        $("#CreditTable").on("keyup", function () {
+            var rowAll = $("#CreditTable tr").length;
+            $("td").keyup(function () {
+                if ($(this).find("input").val() !== '') {
+                    var colIndex = $(this).parent().children().index($(this));
+                    var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
+                    rowAll = $("#CreditTable tr").length;
+//                    alert("rowIndex = "+rowIndex);
+//                    alert("rowAll = "+rowAll);
+                    if (rowIndex === rowAll) {
+                        console.log("rowAll : " + rowAll + " Row Index : " + rowIndex);
+                        AddRowCreditTable(parseInt($("#countCredit").val()));
+                    }
+                    if (rowAll < 2) {
+                        $("#tr_ReceiveTableAddRow").removeClass("hide");
+                        $("#tr_ReceiveTableAddRow").addClass("show");
+                    }
+                }
+            });
+        });
     });
+    
+    function AddRowCreditTable(row) {
+        if (!row) {
+            row = 1;
+        }
+        $("#CreditTable tbody").append(           
+            '<tr>' +
+            '<td class="hidden"><input class="form-control" type="text" id="taxDetailId' + row + '" name="taxDetailId' + row + '" value=""></td>' +
+            '<td class="hidden"><input class="form-control" type="text" id="invoiceDetailId' + row + '" name="invoiceDetailId' + row + '" value=""></td>' +
+            '<td class="hidden"><input class="form-control" type="text" id="invoiceDetailCost' + row + '" name="invoiceDetailCost' + row + '" value=""></td>' +
+            '<td class="hidden"><input class="form-control" type="text" id="invoiceDetailAmount' + row + '" name="invoiceDetailAmount' + row + '" value=""></td>' +
+            '<td class="hidden"><input class="form-control" type="text" id="isExport' + row + '" name="isExport' + row + '" value=""></td>' +
+            '<td class="hidden"><input class="form-control" type="text" id="exportDate' + row + '" name="exportDate' + row + '" value=""></td>' +
+            '<td class="hidden"><input class="form-control" type="text" id="isProfit' + row + '" name="isProfit' + row + '" value=""></td>' +
+            '<td><select class="form-control" name="product' + row + '" id="product' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
+            '<td><input class="form-control" type="text" id="refNo' + row + '" name="refNo' + row + '" value="" onfocusout="checkRefNo(\'' + row + '\')"></td>' +
+            '<td><input class="form-control" type="text" id="description' + row + '" name="description' + row + '" value=""></td>' +
+            '<td><input class="form-control numerical" style="text-align:right;" type="text" id="cost' + row + '" name="cost' + row +'" value="" onfocusout="CalculateAmountTotal()" onkeyup="insertCommas(this)"></td>' +
+            '<td><select class="form-control" name="currencyCost' + row + '" id="currencyCost' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
+            '<td align="center"><input type="checkbox" id="isVat' + row + '" name="isVat' + row + '" value="1" onclick="CalculateGross(\'' + row + '\')" checked></td>' +
+            '<td align="right" id="vatShow' + row + '"></td>' +
+            '<td><input class="form-control numerical" style="text-align:right;" type="text" id="gross' + row + '" name="gross' + row + '" value="0.00" readonly=""></td>' +
+            '<td><input class="form-control numerical" style="text-align:right;" type="text" id="amount' + row + '" name="amount' + row + '" value="" onfocusout="CalculateAmountTotal(\'' + row + '\')" onkeyup="insertCommas(this)"></td>' +
+            '<td><select class="form-control" name="currencyAmount' + row + '" id="currencyAmount' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
+            '<td>' + 
+                '<center>' +
+                '<a id="expenButtonRemove' + row + '" name="expenButtonRemove' + row + '" onclick="deleteTaxList(\'\',\'' + row + '\')"  data-toggle="modal" data-target="#DeleteExpenModal">' + 
+                '<span id="expenSpanEdit' + row + '" name="expenSpanEdit' + row + '" class="glyphicon glyphicon-remove deleteicon"></span>' +
+                '</a>' + 
+                '</center>' +
+            '</td>' +
+            '</tr>'           
+        );
+//        $("#tr_TaxInvoiceDetailAddRow").removeClass("show");
+//        $("#tr_TaxInvoiceDetailAddRow").addClass("hide");       
+        $("#countCredit").val(row+1);      
+    }
 </script>
 <script type="text/javascript">
 $(document).ready(function(){
