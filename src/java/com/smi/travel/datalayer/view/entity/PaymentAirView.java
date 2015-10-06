@@ -21,6 +21,12 @@ public class PaymentAirView {
     private String withtax;
     private String creditnote;
     private String debitnote;
+    
+    private String ticketins;
+    private String totalpaymentamount;
+    private String receivefromair;
+    private String receivefrominv;
+    private String invno;
 
     /**
      * @return the payno
@@ -174,6 +180,46 @@ public class PaymentAirView {
      */
     public void setDebitnote(String debitnote) {
         this.debitnote = debitnote;
+    }
+
+    public String getTicketins() {
+        return ticketins;
+    }
+
+    public void setTicketins(String ticketins) {
+        this.ticketins = ticketins;
+    }
+
+    public String getTotalpaymentamount() {
+        return totalpaymentamount;
+    }
+
+    public void setTotalpaymentamount(String totalpaymentamount) {
+        this.totalpaymentamount = totalpaymentamount;
+    }
+
+    public String getReceivefromair() {
+        return receivefromair;
+    }
+
+    public void setReceivefromair(String receivefromair) {
+        this.receivefromair = receivefromair;
+    }
+
+    public String getReceivefrominv() {
+        return receivefrominv;
+    }
+
+    public void setReceivefrominv(String receivefrominv) {
+        this.receivefrominv = receivefrominv;
+    }
+
+    public String getInvno() {
+        return invno;
+    }
+
+    public void setInvno(String invno) {
+        this.invno = invno;
     }
     
 }

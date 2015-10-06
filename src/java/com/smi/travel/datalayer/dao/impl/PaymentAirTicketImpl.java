@@ -15,6 +15,9 @@ import com.smi.travel.datalayer.entity.PaymentAirticketRefund;
 import com.smi.travel.datalayer.entity.RefundAirticketDetail;
 import com.smi.travel.datalayer.entity.RefundAirticketDetailView;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
+import com.smi.travel.datalayer.report.model.PaymentAirline;
+import com.smi.travel.datalayer.view.entity.PaymentAirFare;
+import com.smi.travel.datalayer.view.entity.PaymentAirRefund;
 import com.smi.travel.datalayer.view.entity.PaymentAirView;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
 import com.smi.travel.util.UtilityFunction;
@@ -23,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -845,4 +849,204 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
         return data;
     }
 
+    @Override
+    public PaymentAirline getPaymentAirlineReport(String payno,String printby) {
+        PaymentAirline paymentAirline = new PaymentAirline();
+        paymentAirline.setPaymentAirlineReportDataSource(new JRBeanCollectionDataSource(getPaymentAirline(payno,printby)));
+        paymentAirline.setPaymentAirlineListReportDataSource(new JRBeanCollectionDataSource(getPaymentAirlineList(payno,printby)));
+        paymentAirline.setPaymentAirlineRefundReportDataSource(new JRBeanCollectionDataSource(getPaymentAirlineRefund(payno,printby)));
+        return paymentAirline; 
+           
+//        GuideCommissionInfo guideCommissionInfo = new GuideCommissionInfo();
+//        guideCommissionInfo.setGuideCommissionSummaryDataSource(new JRBeanCollectionDataSource(getGuideComissionSummaryReport(datefrom, dateto, username, guideid)));
+//        guideCommissionInfo.setGuideCommissionDataSource(new JRBeanCollectionDataSource(getGuideComissionReport(datefrom, dateto, username, guideid)));
+//        return guideCommissionInfo;
+    }
+    public List getPaymentAirline(String payno,String printby) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List data = new ArrayList();
+        Date thisDate = new Date();
+        String query="";
+        int AndQuery = 0;
+        if(payno == null  && "".equals(payno)){
+            query = "SELECT * FROM paymentair_view  pa " ; 
+        }else{
+            query = "SELECT * FROM paymentair_view  pa  where " ;
+        }
+        
+        if(payno != null && (!"".equalsIgnoreCase(payno))){
+            if(AndQuery == 1){
+                query += " and pa.payno = '" + payno + "'";
+           }else{
+               AndQuery = 1;
+               query += " pa.payno = '" + payno + "'";
+           }
+        }
+
+        System.out.println("Query : " + query);
+
+        List<Object[]> QueryStaffList = session.createSQLQuery(query)
+                .addScalar("payno", Hibernate.STRING)
+                .addScalar("totalpay", Hibernate.STRING)
+                .addScalar("totalcom", Hibernate.STRING)
+                .addScalar("cash", Hibernate.STRING)
+                .addScalar("chqno", Hibernate.STRING)
+                .addScalar("amount", Hibernate.STRING)
+                .addScalar("refund", Hibernate.STRING)
+                .addScalar("comrefund", Hibernate.STRING)
+                .addScalar("withtax", Hibernate.STRING)
+                .addScalar("creditnote", Hibernate.STRING)
+                .addScalar("debitnote", Hibernate.STRING)
+                .addScalar("totalpaymentamount", Hibernate.STRING)
+                .addScalar("receivefromair", Hibernate.STRING)
+                .addScalar("receivefrominv", Hibernate.STRING)
+                .addScalar("invno", Hibernate.STRING)
+                .list();
+              
+        for (Object[] B : QueryStaffList) {
+            PaymentAirView payment = new PaymentAirView();
+            payment.setPayno(util.ConvertString(B[0]));
+            payment.setTotalpay(B[1]== null ? "" :util.ConvertString(B[1]));
+            payment.setTotalcom(B[2]== null ? "" :util.ConvertString(B[2]));
+            payment.setCash(B[3]== null ? "" :util.ConvertString(B[3]));
+            payment.setChqno(B[4]== null ? "" :util.ConvertString(B[4]));
+            payment.setAmount(B[5]== null ? "" :util.ConvertString(B[5]));
+            payment.setRefund(B[6]== null ? "" :util.ConvertString(B[6]));
+            payment.setComrefund(B[7]== null ? "" :util.ConvertString(B[7]));
+            payment.setWithtax(B[8]== null ? "" :util.ConvertString(B[8]));
+            payment.setCreditnote(B[9]== null ? "" :util.ConvertString(B[9]));
+            payment.setDebitnote(B[10]== null ? "" :util.ConvertString(B[10]));
+            payment.setTotalpaymentamount(B[11]== null ? "" :util.ConvertString(B[11]));
+            payment.setReceivefromair(B[12]== null ? "" :util.ConvertString(B[12]));
+            payment.setReceivefrominv(B[13]== null ? "" :util.ConvertString(B[13]));
+            payment.setInvno(B[14]== null ? "" :util.ConvertString(B[14]));
+//            payment.setTicketins(query);
+            data.add(payment);
+        }
+        
+        this.sessionFactory.close();
+        session.close();
+        return data;
+    }
+    public List getPaymentAirlineList(String payno,String printby) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List data = new ArrayList();
+        String query="";
+        int AndQuery = 0;
+        if(payno == null  && "".equals(payno)){
+            query = "SELECT * FROM payment_air_fare  pa " ; 
+        }else{
+            query = "SELECT * FROM payment_air_fare  pa  where " ;
+        }
+        
+        if(payno != null && (!"".equalsIgnoreCase(payno))){
+            if(AndQuery == 1){
+                query += " and pa.payno = '" + payno + "'";
+           }else{
+               AndQuery = 1;
+               query += " pa.payno = '" + payno + "'";
+           }
+        }
+
+        System.out.println("Query : " + query);
+
+        List<Object[]> QueryStaffList = session.createSQLQuery(query)
+                .addScalar("payno", Hibernate.STRING)
+                .addScalar("air", Hibernate.STRING)
+                .addScalar("document", Hibernate.STRING)
+                .addScalar("refno", Hibernate.STRING)
+                .addScalar("issuedate", Hibernate.STRING)
+                .addScalar("tax", Hibernate.STRING)
+                .addScalar("actual", Hibernate.STRING)
+                .addScalar("ins", Hibernate.STRING)
+                .addScalar("netsales", Hibernate.STRING)
+                .addScalar("vat", Hibernate.STRING)
+                .addScalar("balance_pay", Hibernate.STRING)
+                .list();
+        
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MM-yyyy hh:mm");    
+        
+        for (Object[] B : QueryStaffList) {
+            PaymentAirFare payment = new PaymentAirFare();
+            payment.setPayno(payno);
+            payment.setUser(printby);
+            payment.setSystemdate(String.valueOf(dateformat.format(new Date())));
+//            payment.setPayno(util.ConvertString(B[0]));
+            payment.setAir(B[1]== null ? "" :util.ConvertString(B[1]));
+            payment.setDocument(B[2]== null ? "" :util.ConvertString(B[2]));
+            payment.setRefno(B[3]== null ? "" :util.ConvertString(B[3]));
+            payment.setIssuedate(B[4]== null ? "" :util.ConvertString(B[4]));
+            payment.setTax(B[5]== null ? "" :util.ConvertString(B[5]));
+            payment.setActual(B[6]== null ? "" :util.ConvertString(B[6]));
+            payment.setInsurance(B[7]== null ? "" :util.ConvertString(B[7]));
+            payment.setNetsale(B[8]== null ? "" :util.ConvertString(B[8]));
+            payment.setVat(B[9]== null ? "" :util.ConvertString(B[9]));
+            payment.setBalancepay(B[10]== null ? "" :util.ConvertString(B[10]));
+            data.add(payment);
+        }
+        
+        this.sessionFactory.close();
+        session.close();
+        return data;
+    }
+    public List getPaymentAirlineRefund(String payno,String printby) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List data = new ArrayList();
+        String query="";
+        int AndQuery = 0;
+        if(payno == null  && "".equals(payno)){
+            query = "SELECT * FROM payment_air_refund  pa " ; 
+        }else{
+            query = "SELECT * FROM payment_air_refund  pa  where " ;
+        }
+        
+        if(payno != null && (!"".equalsIgnoreCase(payno))){
+            if(AndQuery == 1){
+                query += " and pa.payno = '" + payno + "'";
+           }else{
+               AndQuery = 1;
+               query += " pa.payno = '" + payno + "'";
+           }
+        }
+
+        System.out.println("Query : " + query);
+
+        List<Object[]> QueryStaffList = session.createSQLQuery(query)
+                .addScalar("payno", Hibernate.STRING)
+                .addScalar("refundno", Hibernate.STRING)
+                .addScalar("ticketno", Hibernate.STRING)
+                .addScalar("route", Hibernate.STRING)
+                .addScalar("sectorrefund", Hibernate.STRING)
+                .addScalar("commission", Hibernate.STRING)
+                .addScalar("refundamount", Hibernate.STRING)
+                .list();
+              
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MM-yyyy hh:mm");    
+        
+        for (Object[] B : QueryStaffList) {
+            PaymentAirRefund payment = new PaymentAirRefund();
+            payment.setPayno(payno);
+            payment.setUser(printby);
+            payment.setSystemdate(String.valueOf(dateformat.format(new Date())));
+            payment.setRefundno(B[1]== null ? "" :util.ConvertString(B[1]));
+            payment.setTicketno(B[2]== null ? "" :util.ConvertString(B[2]));
+            payment.setRoute(B[3]== null ? "" :util.ConvertString(B[3]));
+            payment.setSectorrefund(B[4]== null ? "" :util.ConvertString(B[4]));
+            payment.setCommission(B[5]== null ? "0" :util.ConvertString(B[5]));
+            payment.setRefundamount(B[6]== null ? "0" :util.ConvertString(B[6]));
+            data.add(payment);
+        }
+        
+        this.sessionFactory.close();
+        session.close();
+        return data;
+    }
+    
+    
+    
 }

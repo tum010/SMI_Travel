@@ -529,8 +529,11 @@ public class ReportService {
         return paymentAirTicketDao;
     }
     
-    public List getPaymentAirViewReport(String payno){
-        return paymentAirTicketDao.getPaymentAirViewReport(payno);
+    public List getPaymentAirlineReport(String payno,String printby){
+        List data  = new ArrayList();
+        data.add(paymentAirTicketDao.getPaymentAirlineReport(payno,printby));
+        return data;
+//        return paymentAirTicketDao.getPaymentAirlineList(payno,printby);
     }
     
     public SummaryTicketAdjustCostAndIncomeDao getSummaryTicketAdjustCostAndIncomeDao() {

@@ -8,6 +8,7 @@ package com.smi.travel.controller.report;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.report.model.AgentCommission;
 import com.smi.travel.datalayer.report.model.GuideCommissionInfo;
+import com.smi.travel.datalayer.report.model.PaymentAirline;
 import com.smi.travel.datalayer.report.model.TicketOrder;
 import com.smi.travel.datalayer.service.ReportService;
 import com.smi.travel.master.controller.SMITravelController;
@@ -72,8 +73,8 @@ public class ReportController extends SMITravelController {
     private static final String TicketFareReport = "TicketFareReport";
     private static final String TaxInvoiceSummaryReport = "TaxInvoiceSummaryReport";
     private static final String CreditNoteSummaryReport = "CreditNoteSummaryReport";
-    private static final String PaymentAirlineReport = "PaymentAirlineReport";
-    
+    private static final String PaymentAirlineInfo = "PaymentAirlineInfo";
+    private static final String PaymentAirlineListReport = "PaymentAirlineListReport";
     private DataSource datasource;
     private static final Logger LOG = Logger.getLogger(ReportController.class.getName());
     private ReportService reportservice;
@@ -218,9 +219,12 @@ public class ReportController extends SMITravelController {
             data = reportservice.getTaxInvoiceSummaryReport(from, to, department, status, systemuser);
         }else if(CreditNoteSummaryReport.equalsIgnoreCase(name)){
             data = reportservice.getCreditNoteSummaryReport(from, to, department, status, user.getUsername()+"-"+user.getRole().getName());
-        }else if(PaymentAirlineReport.equalsIgnoreCase(name)){
-             String payno = request.getParameter("payno");
-            data = reportservice.getPaymentAirViewReport(payno);
+        }else if(PaymentAirlineInfo.equalsIgnoreCase(name)){
+            String payno = request.getParameter("payno");
+            System.out.println(" payno " + payno);
+//            data = reportservice.getPaymentAirlineReport(payno,user.getUsername()+"-"+user.getRole().getName());
+            data = reportservice.getPaymentAirlineReport(payno,user.getUsername()+"-"+user.getRole().getName());
+            ((PaymentAirline) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
         }
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PaymentAirlineReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4d2fe6ff-f331-48e0-bee1-d99e57a64a42">
-	<property name="ireport.zoom" value="1.2100000000000009"/>
+	<property name="ireport.zoom" value="1.210000000000004"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="48"/>
+	<property name="ireport.y" value="0"/>
 	<style name="style1"/>
 	<field name="payno" class="java.lang.String"/>
 	<field name="totalpay" class="java.lang.String"/>
@@ -15,12 +15,14 @@
 	<field name="withtax" class="java.lang.String"/>
 	<field name="creditnote" class="java.lang.String"/>
 	<field name="debitnote" class="java.lang.String"/>
+	<field name="ticketins" class="java.lang.String"/>
+	<field name="totalpaymentamount" class="java.lang.String"/>
+	<field name="receivefromair" class="java.lang.String"/>
+	<field name="receivefrominv" class="java.lang.String"/>
+	<field name="invno" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band height="79" splitType="Stretch"/>
-	</title>
 	<columnHeader>
 		<band height="44" splitType="Stretch">
 			<staticText>
@@ -33,7 +35,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="200" splitType="Stretch">
+		<band height="233" splitType="Stretch">
 			<staticText>
 				<reportElement x="11" y="8" width="59" height="13" backcolor="#FFFFFF" uuid="a8e71404-6f3e-468f-a4e9-3a27fc51372f"/>
 				<textElement>
@@ -159,7 +161,7 @@
 				<text><![CDATA[Credit Note :   ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="10" y="144" width="147" height="13" backcolor="#FFFFFF" uuid="52214ddb-4544-417d-8c52-4bcdf0b76ecd"/>
+				<reportElement x="10" y="143" width="147" height="13" backcolor="#FFFFFF" uuid="52214ddb-4544-417d-8c52-4bcdf0b76ecd"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<leftPen lineWidth="0.0"/>
@@ -179,7 +181,7 @@
 				<textFieldExpression><![CDATA[$F{payno}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="157" y="144" width="151" height="13" uuid="b90e5edf-467a-44b3-ad59-3fbf58f69f45"/>
+				<reportElement x="157" y="143" width="151" height="13" uuid="b90e5edf-467a-44b3-ad59-3fbf58f69f45"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<leftPen lineWidth="0.0"/>
@@ -315,15 +317,136 @@
 					<pen lineWidth="1.5"/>
 				</graphicElement>
 			</line>
+			<staticText>
+				<reportElement x="10" y="166" width="147" height="13" backcolor="#FFFFFF" uuid="af83ff33-921b-4439-b82e-71ba21d21988"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ticket Insurance :   ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="157" y="166" width="151" height="13" uuid="863f9b33-159f-452d-a746-25b2e209a40e"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ticketins}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="157" y="179" width="151" height="13" uuid="48bcad1d-f251-4996-ab29-7a1a0f4fa319"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalpaymentamount}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="179" width="147" height="13" backcolor="#FFFFFF" uuid="6dae7971-99b6-4326-a47b-ed6ef8f8604b"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Payment Amount :   ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="157" y="205" width="151" height="13" uuid="3c878572-062e-4bef-81f3-8cfa1263b9df"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{receivefrominv}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="157" y="192" width="151" height="13" uuid="2561d0dc-a0a3-4b20-ba5f-a4971b2899d3"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{receivefromair}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="205" width="147" height="13" backcolor="#FFFFFF" uuid="4dfdf0a0-ddf1-42b3-ba32-407ba0d7486b"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Receive Amount from Invoice :   ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="192" width="147" height="13" backcolor="#FFFFFF" uuid="49d246cb-2cbc-452d-a16f-ef77fc930714"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Receive from airline :   ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="218" width="147" height="13" backcolor="#FFFFFF" uuid="e7922c86-54a0-4f9b-a4ff-b1caa18f8b3c"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Invoice No. :   ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="157" y="218" width="151" height="13" uuid="9a222bd1-76e0-454f-9b42-e562ee2ac258"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{invno}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="54" splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>

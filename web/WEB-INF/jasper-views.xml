@@ -191,5 +191,19 @@
         <bean id="PaymentAirlineReport"
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/PaymentAirlineReport.jrxml"/>
-	</bean>               
+	</bean> 
+         <bean id="PaymentAirlineListReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/PaymentAirlineListReport.jrxml"/>
+	</bean>
+        
+        <bean id="PaymentAirlineRefundReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/PaymentAirlineRefundReport.jrxml"/>
+	</bean>     
+        
+        <bean id="PaymentAirlineInfo"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/PaymentAirline.jrxml"/>
+	</bean>                       
 </beans>
