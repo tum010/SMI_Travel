@@ -58,6 +58,12 @@ public class MFlightDaoImpl extends HibernateDaoSupport implements MFilghtDao {
         int result = 0;
         try{
             getHibernateTemplate().save(filght);
+            List<MFlightservice> mflightService = filght.getmFlightservice();
+            if(mflightService != null){
+                for (int i = 0; i < mflightService.size(); i++) {
+                    getHibernateTemplate().save(mflightService.get(i));
+                }
+            }
             result = 1;
         }catch(Exception e){
             result = 0;
@@ -66,12 +72,39 @@ public class MFlightDaoImpl extends HibernateDaoSupport implements MFilghtDao {
     }
 
     @Override
-    public int updateFlight(MFlight filght) {
+    public int updateFlight(MFlight filght,List<String> id) {
         int result = 0;
         try{
             getHibernateTemplate().update(filght);
+            List<MFlightservice> mflightService = filght.getmFlightservice();
+            List<MFlightservice> mflightServiceTemp = getListFlightService(filght.getId());
+            System.out.println("Size : " + mflightService.size());
+            if(mflightService != null){
+                if(id != null){
+                    for (int i = 0; i < id.size(); i++) {
+                        for (int j = 0; j < mflightServiceTemp.size(); j++) {
+                            String del = id.get(i);
+                            if(del.equals(mflightServiceTemp.get(j).getId())){
+                                getHibernateTemplate().delete(mflightServiceTemp.get(j));
+//                                mflightService.remove(j);    
+                            }
+                        }
+                    }
+                }
+                for (int i = 0; i < mflightService.size(); i++) {
+                    if(mflightService.get(i).getId() != null && !"".equals(mflightService.get(i).getId())){
+                        System.out.println("id : " + mflightService.get(i).getId());
+                        getHibernateTemplate().update(mflightService.get(i));
+                    }else{
+                        getHibernateTemplate().save(mflightService.get(i));
+                    }
+                    
+                    
+                }
+            }
             result = 1;
         }catch(Exception e){
+            e.printStackTrace();
             result = 0;
         }
         return result;
@@ -81,7 +114,14 @@ public class MFlightDaoImpl extends HibernateDaoSupport implements MFilghtDao {
     public int DeleteFlight(MFlight filght) {
         int result = 0;
         try{
-            getHibernateTemplate().delete(filght);
+           
+            List<MFlightservice> mflightService = getListFlightService(filght.getId());
+            if(mflightService != null){
+                for (int i = 0; i < mflightService.size(); i++) {
+                    getHibernateTemplate().delete(mflightService.get(i));
+                }
+            }
+             getHibernateTemplate().delete(filght);
             result = 1;
         }catch(Exception e){
             result = 0;

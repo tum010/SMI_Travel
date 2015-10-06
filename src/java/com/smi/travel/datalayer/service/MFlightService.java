@@ -61,8 +61,8 @@ public class MFlightService {
         return mFlightDao.insertFlight(flight);
     }
 
-    public int UpdateFlight(MFlight flight) {
-        return mFlightDao.updateFlight(flight);
+    public int UpdateFlight(MFlight flight,List<String> id) {
+        return mFlightDao.updateFlight(flight,id);
     }
 
     public int DeleteFlight(MFlight flight) {

@@ -15,6 +15,7 @@ import com.smi.travel.datalayer.dao.DaytourComissionDao;
 import com.smi.travel.datalayer.dao.DaytourDao;
 import com.smi.travel.datalayer.dao.InvoiceDao;
 import com.smi.travel.datalayer.dao.MAirportDao;
+import com.smi.travel.datalayer.dao.MFilghtDao;
 import com.smi.travel.datalayer.dao.MasterDao;
 import com.smi.travel.datalayer.dao.OtherBookingDao;
 import com.smi.travel.datalayer.dao.PackageTourDao;
@@ -35,6 +36,7 @@ import com.smi.travel.datalayer.entity.Invoice;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.MAirport;
 import com.smi.travel.datalayer.entity.MBookingstatus;
+import com.smi.travel.datalayer.entity.MFlightservice;
 import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.PackageItinerary;
@@ -121,6 +123,7 @@ public class AJAXBean extends AbstractBean implements
     private TicketAircommissionViewDao ticketAircommissionViewDao;
     private TaxInvoiceDao taxInvoiceDao;
     private CreditNoteDao creditNoteDao;
+    private MFilghtDao mFlightDao;
 
     public AJAXBean(List queryList) {
         super(queryList);
@@ -172,6 +175,8 @@ public class AJAXBean extends AbstractBean implements
                     taxInvoiceDao = (TaxInvoiceDao) obj;
                 } else if (obj instanceof CreditNoteDao) {
                     creditNoteDao = (CreditNoteDao) obj;
+                } else if (obj instanceof MFilghtDao) {
+                    mFlightDao = (MFilghtDao) obj;
                 }
             }
         }
@@ -403,6 +408,21 @@ public class AJAXBean extends AbstractBean implements
             } else if ("deleteInvoiceDetail".equalsIgnoreCase(type)) {
                 String id = map.get("name").toString();
                 result = invoicedao.DeleteInvoiceDetail(id);
+            }else if("searchFlightService".equalsIgnoreCase(type)){
+                String id = map.get("name").toString();
+                List<MFlightservice> data = mFlightDao.getListFlightService(id);
+                String tabledata = "";
+                if (data != null) {
+                    for (int i = 0; i < data.size(); i++) {
+                        System.out.println("Search Flight : " + data.get(i).getClassCode());
+                        tabledata += "<tr><td class=\"hidden\"><input type=\"text\" class=\"form-control\" maxlength=\"3\" id=\"FlightServiceId"+ (i+1)+"\" style=\"text-transform:uppercase\" name=\"FlightServiceId"+ (i+1)+"\" value=\'"+ data.get(i).getId()+"'\"></td>";
+                        tabledata += "<td style=\"width: 30%\"><input type=\"text\" class=\"form-control\" maxlength=\"1\" id=\"FlightServiceCode"+ (i+1)+"\" style=\"text-transform:uppercase\" name=\"FlightServiceCode"+ (i+1)+"\" value=\'"+ data.get(i).getClassCode()+"'\"></td>";
+                        tabledata += "<td style=\"width: 55%\"><input type=\"text\" class=\"form-control\" maxlength=\"50\" id=\"FlightServiceName"+ (i+1)+"\" style=\"text-transform:uppercase\" name=\"FlightServiceName"+ (i+1)+"\" value=\'"+ data.get(i).getClassName()+"'\"></td>";
+                        tabledata += "<td style=\"width: 10%\"><center><span id=\"spanRemove"+ (i+1)+"\" class=\"glyphicon glyphicon-remove deleteicon\"  onclick=\"deleteMFlightService('" + data.get(i).getId() + "','" + data.get(i).getClassCode() + "','" + (i+1) + "')\" ></span></center></td></tr> ";
+                    }
+                }
+                System.out.println("tabledata : " + tabledata);
+                result = tabledata;
             }
         } else if (BOOKDAYTOUR.equalsIgnoreCase(servletName)) {
             String TourID = null;
@@ -701,7 +721,7 @@ public class AJAXBean extends AbstractBean implements
             } else if ("searchRefNo".equalsIgnoreCase(type)) {
                 String searchRefNo = map.get("refNo").toString();
                 Billable bill = billableDao.getBillableBooking(searchRefNo);
-//                System.out.println(" bill.getId() " + String.valueOf(bill.getId()));
+                System.out.println(" bill.getId() " + String.valueOf(bill.getId()));
                 if ("".equals(bill.getId()) || null == bill.getId() || "null".equalsIgnoreCase(String.valueOf(bill.getId()))) {
                     result = "null";
                 } else {
@@ -1978,4 +1998,13 @@ public class AJAXBean extends AbstractBean implements
         return map;
     }
 
+    public MFilghtDao getmFlightDao() {
+        return mFlightDao;
+    }
+
+    public void setmFlightDao(MFilghtDao mFlightDao) {
+        this.mFlightDao = mFlightDao;
+    }
+
+    
 }

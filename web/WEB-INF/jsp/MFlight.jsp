@@ -160,30 +160,24 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <table id="MasterFlightService" class="display" cellspacing="0" >
+                        <table id="MasterFlightService" class="display" cellspacing="0" style="width: 400px;">
                             <thead>
                                 <tr class="datatable-header">
-                                    <th style="width: 30px" class="hidden">id</th>
-                                    <th style="width: 30px" >Code</th>
+                                    <th style="width: 30%" class="hidden">id</th>
+                                    <th style="width: 55%" >Code</th>
                                     <th>Name</th>
-                                    <th style="width: 70px">Action</th>
+                                    <th style="width: 10%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="tableService" items="${dataListService}" varStatus="dataStatusService">
-                                    <tr>
-                                        <td class="hidden"><input type="text" class="form-control" maxlength="3" id="FlightServiceId${dataStatusService.count}" style="text-transform:uppercase" name="FlightServiceId${dataStatusService.count}" value="${tableService.id}"></td>
-                                        <td><input type="text" class="form-control" maxlength="3" id="FlightServiceCode${dataStatusService.count}" style="text-transform:uppercase" name="FlightServiceCode${dataStatusService.count}" value="${tableService.classCode}"></td>
-                                        <td><input type="text" class="form-control" maxlength="3" id="FlightServiceName${dataStatusService.count}" style="text-transform:uppercase" name="FlightServiceName${dataStatusService.count}" value="${tableService.className}"></td>
-                                        <td><center><span id="spanRemove${dataStatusService.count}" class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteFlight('${tableService.id}', '${tableService.classCode}')" data-toggle="modal" data-target="#delFlightModal" ></span></center></td>                 
-                                    </tr>  
-                                </c:forEach>
+                               
                             </tbody>
                         </table>    
                     </div>
+                    <input type="hidden" id="setIdMFlightService" name="setIdMFlightService" value="" >
+                    <input type="hidden" id="counterTable" name="counterTable" value="" >
                     <input type="hidden" id="FlightID" name="FlightID" >
                     <input type="hidden" id="actionIUP" name="action">
-               
             </div>
             <div class="modal-footer">
                 <button id="btnSave" type="submit"  class="btn btn-success"><span  class="fa fa-save"></span> Save</button>
@@ -209,37 +203,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<script type="text/javascript" charset="utf-8">
-    var select = " ";
-    $(document).ready(function () {
-        
-    }); 
-    
-    function EditFlight(id,code,name){
-//    var idFlight = document.getElementById('FlightID').value;
-        var select = "";
-        console.log("ID: "  + id);
-        document.getElementById("FlightCode").readOnly = true;
-        document.getElementById('FlightCode').value=code;
-        document.getElementById('FlightName').value=name;
-        document.getElementById('FlightID').value = id;
-        document.getElementById('actionIUP').value='update';
-        document.getElementById('Flightform').submit();
-
-        <c:forEach var="tableService" items="${dataListService}" varStatus="dataStatusService">
-                <%--<c:when test="${tableService.MFlight.id == id}">--%>
-                    select += '<td class="hidden"><input type="text" class="form-control" maxlength="3" id="FlightServiceId${dataStatusService.count}" style="text-transform:uppercase" name="FlightServiceId${dataStatusService.count}" value="${tableService.id}"></td>';
-                    select += '<td><input type="text" class="form-control" maxlength="3" id="FlightServiceCode${dataStatusService.count}" style="text-transform:uppercase" name="FlightServiceCode${dataStatusService.count}" value="${tableService.classCode}"></td>';
-                    select += '<td><input type="text" class="form-control" maxlength="3" id="FlightServiceName${dataStatusService.count}" style="text-transform:uppercase" name="FlightServiceName${dataStatusService.count}" value="${tableService.className}"></td>';
-                    select += '<td><center><span id="spanRemove${dataStatusService.count}" class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteFlight('${tableService.id}', '${tableService.classCode}')" data-toggle="modal" data-target="#delFlightModal" ></span></center></td>';                                                                                                       
-              <%--</c:when>--%>
-         </c:forEach>
-        select += "";
-        $("#MasterFlightService tbody").empty().append(select);
-        console.log("Select : "+select);
-
-    }
-</script>
 <c:if test="${! empty requestScope['flightLap']}">
     <script language="javascript">
         $('#textAlertLap').show();
