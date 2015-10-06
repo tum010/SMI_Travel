@@ -543,7 +543,7 @@
             <property name="taxInvoiceService" ref="TaxInvoiceService" />
 	</bean>
 	<bean id="ReceiveTableController" class="com.smi.travel.controller.ReceiveTableController">
-
+            <property name="utilservice" ref="UtilityService" />
 	</bean>
 
 
