@@ -18,6 +18,6 @@ public interface MFilghtDao {
     public List<MFlight> getListFlight(MFlight filght,int option);
     public List<MFlightservice> getListFlightService(String mFlightId);
     public int insertFlight(MFlight filght);
-    public int updateFlight(MFlight filght);
+    public int updateFlight(MFlight filght,List<String> id);
     public int DeleteFlight(MFlight filght);
 }

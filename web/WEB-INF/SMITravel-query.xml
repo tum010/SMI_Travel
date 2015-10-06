@@ -436,6 +436,7 @@
                 <ref local="TicketAircommissionViewDao" />
                 <ref local="TaxInvoiceDao" />
                 <ref local="CreditNoteDao" />
+                <ref local="MFlightDao" />
             </list>
         </constructor-arg>
     </bean>
