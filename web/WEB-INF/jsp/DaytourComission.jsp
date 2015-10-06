@@ -271,7 +271,7 @@
                                 <input  name="guidePrintFrom" id="guidePrintFrom" type="text"
                                         data-date-format="YYYY-MM-DD" class="form-control" 
                                         placeholder="YYYY-MM-DD" />
-                                <span class="input-group-addon spandate">
+                                <span class="input-group-addon spandate2">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
                             </div>
@@ -284,7 +284,7 @@
                                 <input  name="guidetPrintTo" id="guidePrintTo" type="text" 
                                         data-date-format="YYYY-MM-DD" class="form-control" 
                                         placeholder="YYYY-MM-DD" />
-                               <span class="input-group-addon spandate">
+                               <span class="input-group-addon spandate2">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
                             </div>
@@ -328,7 +328,7 @@
                                 <input  name="agentPrintFrom" id="agentPrintFrom" type="text" 
                                         data-date-format="YYYY-MM-DD" class="form-control"
                                         placeholder="YYYY-MM-DD" />
-                                    <span class="input-group-addon spandate">
+                                    <span class="input-group-addon spandate2">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                             </div>
@@ -342,7 +342,7 @@
                                     <input  name="agentPrintTo" id="agentPrintTo" type="text"
                                             data-date-format="YYYY-MM-DD" class="form-control" 
                                             placeholder="YYYY-MM-DD" />
-                                    <span class="input-group-addon spandate">
+                                    <span class="input-group-addon spandate2">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                 </div>
@@ -381,6 +381,12 @@
             console.log("positon :" + position.top);
             $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
         });
+        $('.spandate2').click(function() {
+            var position = $(this).offset();
+            console.log("positon 2:" + position.top);
+            $(".bootstrap-datetimepicker-widget").css("top", position.top - 85);
+        });
+        
  
         var dataAgent = [];
         dataAgent = agentName;

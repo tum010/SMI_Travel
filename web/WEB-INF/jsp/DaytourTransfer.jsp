@@ -60,7 +60,7 @@
                 <hr/>
 
                 <div class="col-xs-12 ">
-                    <div class="col-xs-1  text-right">
+                    <div class="col-xs-2  text-right">
                         <label class="control-label">DocNo.</label>
                     </div>
 
@@ -82,7 +82,7 @@
                     </div>
                 </div>
                 <div class="col-xs-12 form-group">
-                    <div class="col-xs-1 text-right">
+                    <div class="col-xs-2 text-right">
                         <label class="control-label text-right">Guide</label>
                     </div>
                     <div class="col-xs-3">
@@ -116,7 +116,7 @@
                 </div>
 
                 <div class="col-xs-12 form-group">
-                    <div class="col-xs-1 text-right">
+                    <div class="col-xs-2 text-right">
                         <label class="control-label text-right">Remark</label>
                     </div>
                     <div class="col-xs-7">
@@ -126,7 +126,7 @@
 
                 <!--Tour Table begin-->
                 <div class="col-xs-12 form-group">
-                    <div class="col-sm-1 text-right">
+                    <div class="col-sm-2 text-right">
                         <label class="control-label">Tour<font style="color: red">*</font></label>
                     </div>
                     <div class="col-sm-5"></div>
@@ -137,7 +137,7 @@
                     </div>
                 </div>
                 <div class="col-xs-12 " style="margin-bottom: 15px;margin-top:-10px">
-                    <div class="col-sm-7 col-sm-offset-1">
+                    <div class="col-sm-7 col-sm-offset-2">
                         <table class="display" id="transferTourTable" name="transferTourTable">
                             <thead class="datatable-header">
                                 <tr>
@@ -156,7 +156,7 @@
 
                 <!--Hotel Table begin-->
                 <div class="col-xs-12 form-group">
-                    <div class="col-sm-1 text-right">
+                    <div class="col-sm-2 text-right">
                         <label class="control-label">Hotel<font style="color: red">*</font></label>
                     </div>
                     <div class="col-sm-2 col-sm-offset-5 text-right"><!--winita-->
@@ -166,7 +166,7 @@
                     </div>
                 </div>
                 <div class="col-xs-12" style="margin-top: -10px">
-                    <div class="col-sm-7 col-sm-offset-1">
+                    <div class="col-sm-7 col-sm-offset-2">
                         <table class="display" id="transferHotelTable">
                             <thead class="datatable-header">
                                 <tr>
@@ -184,7 +184,7 @@
 
                 <!--Other Table begin-->
                 <div class="col-xs-12 form-group" style="margin-top:15px">
-                    <div class="col-sm-1 text-right">
+                    <div class="col-sm-2 text-right">
                         <label class="control-label">Other</label>
                     </div>
                     <div class="col-sm-2 col-sm-offset-5 text-right">
@@ -194,7 +194,7 @@
                     </div>
                 </div>
                 <div class="col-xs-12" style="margin-top: -10px">
-                    <div class="col-sm-7 col-sm-offset-1">
+                    <div class="col-sm-7 col-sm-offset-2">
                         <table class="display" id="transferOtherTable">
                             <thead class="datatable-header">
                                 <tr>
@@ -210,7 +210,7 @@
                 </div>         
                 <!--Other Table end-->
 
-                <div class="col-xs-9 form-group text-center" style="margin-top: 15px">
+                <div class="col-xs-10 form-group text-center" style="margin-top: 15px">
                     <a id="ButtonPrint" name="ButtonPrint" onclick="printTransferJob();" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
                     <!--winit--> <button type="button"  id="ButtonSave" name="ButtonSave" onclick="saveDaytourTransfer();" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
                     <button type="button" id="ButtonSaveAndNew" name="ButtonSaveAndNew" onclick="saveAndNewDaytourTransfer();" class="btn btn-primary"><i class="fa fa-save"></i> Save & New</button>
