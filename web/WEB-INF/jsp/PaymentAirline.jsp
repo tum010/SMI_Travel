@@ -2007,6 +2007,6 @@ function DeleteRowCredit(){
 
 function printReport(){
     var payno = $('#paymentNo').val();
-    window.open("report.smi?name=PaymentAirlineReport"+"&payno="+payno);  
+    window.open("report.smi?name=PaymentAirlineInfo"+"&payno="+payno);  
 }
 </script>
