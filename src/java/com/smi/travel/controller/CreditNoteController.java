@@ -168,7 +168,6 @@ public class CreditNoteController extends SMITravelController {
             String[] taxReal = request.getParameterValues("taxReal");
             String[] taxVat = request.getParameterValues("taxVat");
             String[] taxDesc = request.getParameterValues("taxDesc");
-
             for (int i = 0; i < taxId.length; i++) {
                 if (null != taxId && null != taxId[i] && !"".equals(taxId[i])) {
                     try {
@@ -187,6 +186,7 @@ public class CreditNoteController extends SMITravelController {
                         if (taxVat[i] != null && !taxVat[i].equals("")) {
                             cnd.setVat(new BigDecimal(uf.StringUtilReplaceChar(taxVat[i])));
                         }
+                        
                         cnd.setDescription(taxDesc[i]);
                         if (!"".equals(taxType[i])) {
                             MPaytype type = new MPaytype();

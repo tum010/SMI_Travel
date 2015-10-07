@@ -24,7 +24,7 @@ public class CreditNoteDetail  {
     public CreditNoteDetail() {
     }
 
-    public CreditNoteDetail(TaxInvoice taxInvoice, MPaytype MPaytype, CreditNote creditNote, String description, BigDecimal amount,BigDecimal vat,BigDecimal realamount) {
+    public CreditNoteDetail(TaxInvoice taxInvoice, MPaytype MPaytype, CreditNote creditNote, String description, BigDecimal amount,BigDecimal vat,BigDecimal realamount,BigDecimal vat2Digits) {
        this.taxInvoice = taxInvoice;
        this.MPayType = MPaytype;
        this.creditNote = creditNote;
@@ -32,6 +32,7 @@ public class CreditNoteDetail  {
        this.amount = amount;
        this.vat = vat;
        this.realamount = realamount;
+       this.vat2Digits = vat2Digits;
     }
    
     public String getId() {
@@ -101,7 +102,11 @@ public class CreditNoteDetail  {
      * @return the vat2Digits
      */
     public BigDecimal getVat2Digits() {
-        return getVat().setScale(2, RoundingMode.HALF_UP);
+        if(getVat() != null && !getVat().equals("")){
+            return getVat().setScale(2, RoundingMode.HALF_UP);
+        }else{
+            return BigDecimal.ZERO;
+        }
     }
 
     /**
