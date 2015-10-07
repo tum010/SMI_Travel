@@ -154,7 +154,7 @@ public class StockImpl implements StockDao{
         if (stockDetailList.isEmpty()) {
             return null;
         }else{
-            if("2".equals(stockDetailList.get(0).getMStockStatus().getId())){
+            if(!"1".equals(stockDetailList.get(0).getMStockStatus().getId())){
                 result = "fail";
             }else{
                 result = "pass";
