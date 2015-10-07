@@ -5,6 +5,8 @@ package com.smi.travel.datalayer.entity;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -30,12 +32,12 @@ public class AdvanceReceive  {
      private Date createDate;
      private BigDecimal recAmount;
      private String vatType;
-     private Set advanceReceiveCredits = new HashSet(0);
+     private List advanceReceiveCredits = new LinkedList<AdvanceReceiveCredit>();
 
     public AdvanceReceive() {
     }
 
-    public AdvanceReceive(MAccpay MAccpay, String recTo, Date recDate, String recName, String arCode, String description, BigDecimal cashAmount, BigDecimal bankAmount, BigDecimal chqAmount, String chqBank, Date chqDate, String chqNo, String createBy, Date createDate, BigDecimal recAmount, String vatType, Set advanceReceiveCredits) {
+    public AdvanceReceive(MAccpay MAccpay, String recTo, Date recDate, String recName, String arCode, String description, BigDecimal cashAmount, BigDecimal bankAmount, BigDecimal chqAmount, String chqBank, Date chqDate, String chqNo, String createBy, Date createDate, BigDecimal recAmount, String vatType, List advanceReceiveCredits) {
        this.MAccpay = MAccpay;
        this.recTo = recTo;
        this.recDate = recDate;
@@ -174,16 +176,14 @@ public class AdvanceReceive  {
     public void setVatType(String vatType) {
         this.vatType = vatType;
     }
-    public Set getAdvanceReceiveCredits() {
-        return this.advanceReceiveCredits;
+
+    public List getAdvanceReceiveCredits() {
+        return advanceReceiveCredits;
     }
-    
-    public void setAdvanceReceiveCredits(Set advanceReceiveCredits) {
+
+    public void setAdvanceReceiveCredits(List advanceReceiveCredits) {
         this.advanceReceiveCredits = advanceReceiveCredits;
     }
-
-
-
 
 }
 

@@ -542,10 +542,11 @@
             <property name="utilservice" ref="UtilityService" />
             <property name="taxInvoiceService" ref="TaxInvoiceService" />
 	</bean>
+        
 	<bean id="ReceiveTableController" class="com.smi.travel.controller.ReceiveTableController">
             <property name="utilservice" ref="UtilityService" />
+            <property name="receiveTableService" ref="ReceiveTableService" />
 	</bean>
-
 
 	<bean id="StockController" class="com.smi.travel.controller.StockController">
             <property name="stockService" ref="StockService" />

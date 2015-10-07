@@ -145,6 +145,8 @@ http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
                                 <value>resource/hibernate/ARNirvana.hbm.xml</value>
                                 <value>resource/hibernate/PaymentWendyReference.hbm.xml</value>
                                 <value>resource/hibernate/MHost.hbm.xml</value>
+                                <value>resource/hibernate/AdvanceReceive.hbm.xml</value>
+                                <value>resource/hibernate/AdvanceReceiveCredit.hbm.xml</value>
 			</list>
 		</property>
 

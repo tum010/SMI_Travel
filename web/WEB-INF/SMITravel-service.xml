@@ -320,5 +320,9 @@
     <bean id="MHostService" class="com.smi.travel.datalayer.service.MHostService">
         <property name="mHostDao" ref="MHostDao" />
     </bean>
+    
+    <bean id="ReceiveTableService" class="com.smi.travel.datalayer.service.ReceiveTableService">
+        <property name="receiveTableDao" ref="ReceiveTableDao" />
+    </bean>
     <!--<add data>-->
 </beans>
