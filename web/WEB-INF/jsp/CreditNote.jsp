@@ -167,16 +167,16 @@
                                             </select>
                                         </td>
                                         <td style="text-align:center">
-                                            <input type="hidden" name="taxAmount" value="${creditNoteDetail.amount}"/>
-                                            <input type="text" id="taxAmount" class="form-control text-right decimal" value="${creditNoteDetail.amount}"/>
+                                            <!--<input type="hidden" name="taxAmount" value="${creditNoteDetail.amount}"/>-->
+                                            <input type="text" id="taxAmount" name="taxAmount" class="form-control text-right decimal" value="${creditNoteDetail.amount}"/>
                                         </td>
                                         <td style="text-align:center">
-                                            <input type="hidden" name="taxReal" value="${creditNoteDetail.realamount}"/>
-                                            <input type="text" id="taxReal" class="form-control text-right decimal" value="${creditNoteDetail.realamount}"/>
+                                            <!--<input type="hidden" name="taxReal" value="${creditNoteDetail.realamount}"/>-->
+                                            <input type="text" id="taxReal" name="taxReal" class="form-control text-right decimal" value="${creditNoteDetail.realamount}"/>
                                         </td>
                                         <td style="text-align:center">
-                                            <input type="hidden" name="taxVat" value="${creditNoteDetail.vat}" readonly/>
-                                            <input type="text" id="taxVat" class="form-control text-right decimal" value="${creditNoteDetail.vat2Digits}" readonly/>
+                                            <!--<input type="hidden" name="taxVat" value="${creditNoteDetail.vat}" readonly/>-->
+                                            <input type="text" id="taxVat" name="taxVat" class="form-control text-right decimal" value="${creditNoteDetail.vat2Digits}" readonly=""/>
                                         </td>
                                         <td style="text-align:center">
                                             <input type="text" name="taxDesc" class="form-control" value="${creditNoteDetail.description}"/></td>
@@ -348,16 +348,16 @@
                     </select>
                 </td>
                 <td style="text-align:center">
-                    <input type="hidden" name="taxAmount"/>
-                    <input type="text" id="taxAmount" class="form-control text-right decimal" />
+                    <!--<input type="hidden" name="taxAmount"/>-->
+                    <input type="text" id="taxAmount" name="taxAmount" class="form-control text-right decimal" />
                 </td>
                 <td style="text-align:center">
-                    <input type="hidden" name="taxReal"/>
-                    <input type="text" id="taxReal" class="form-control text-right decimal" />
+                    <!--<input type="hidden" name="taxReal"/>-->
+                    <input type="text" id="taxReal" name="taxReal" class="form-control text-right decimal" />
                 </td>
                 <td style="text-align:center">
-                    <input type="hidden" name="taxVat"/>
-                    <input type="text" id="taxVat" class="form-control text-right decimal" readonly/>
+                    <!--<input type="hidden" name="taxVat"/>-->
+                    <input type="text" id="taxVat" name="taxVat" class="form-control text-right decimal" readonly=""/>
                 </td>
                 <td style="text-align:center"><input type="text" name="taxDesc" class="form-control" /></td>
                 <td class="text-center">
