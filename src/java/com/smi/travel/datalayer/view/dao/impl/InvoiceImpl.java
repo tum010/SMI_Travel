@@ -104,7 +104,9 @@ public class InvoiceImpl implements InvoiceReportDao{
             if(B[6] != null){
                 invoice.setVat(df.format(B[6]));
             }
-            invoice.setTotal(df.format(B[7]));
+            if(B[7] != null){
+                invoice.setTotal(df.format(B[7]));
+            }         
             if(B[8] != null){
                 invoice.setTotalvat(df.format(B[8])); 
             }
