@@ -155,6 +155,19 @@ public class StockController extends SMITravelController {
                 request.setAttribute("FromDate", stockData.getEffectiveFrom());
                 request.setAttribute("ToDate", stockData.getEffectiveTo());
                 request.setAttribute("CreateDate", stockData.getCreateDate());
+                result = "delete success";
+                request.setAttribute("result", result);
+            }else{
+                Stock stockData = stockService.getStock(stockId);         
+                List<StockDetail> listStockDetail = stockService.checkStockDetail(stockId);
+
+                request.setAttribute("listStockDetail", listStockDetail);
+                request.setAttribute("stockData", stockData);
+                request.setAttribute("FromDate", stockData.getEffectiveFrom());
+                request.setAttribute("ToDate", stockData.getEffectiveTo());
+                request.setAttribute("CreateDate", stockData.getCreateDate());
+                result = "delete unsuccess";
+                request.setAttribute("result", result);
             }          
         }
         

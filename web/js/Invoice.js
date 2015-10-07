@@ -312,6 +312,7 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur,cur_c){
     var check = "";
     var vatValue = '';
     var vathidden = '';
+    var vat = 7;
    
     if(showvat == 'true'){
         vathidden = '';
@@ -370,7 +371,7 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur,cur_c){
             '<td class="hidden"><input type="text" value="'+cos +'" id="InputCostLocalTemp' + row + '" name="InputCostLocalTemp' + row + '"></td>'+
             '<td  '+vathidden+'><input type="checkbox" '+check+' id="checkUse' + row + '" name="checkUse' + row + '"  onclick="calculateGross('+row+')"></td>'+
             '<td align="center" '+vathidden+'>'+vatValue +'</td>'+ 
-            '<td class="hidden"><input type="text" class="form-control" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '" value="'+ defaultD +'" ></td>'+
+            '<td class="hidden"><input type="text" class="form-control" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '" value="'+ vat +'" ></td>'+
             '<td '+vathidden+' ><input type="text" maxlength ="15" readonly onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control numerical text-right" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>'+
             '<td><input type="text" maxlength ="15" onfocusout="changeFormatAmountNumber('+row+');" class="form-control numerical text-right" id="InputAmount' + row + '" name="InputAmount' + row + '"  value="'+price +'" ></td>'+
             '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="validFromInvoice()">'+ selectC +'</select></td>'+
@@ -394,7 +395,7 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur,cur_c){
             '<td class="hidden"><input type="text" value="'+cos +'" id="InputCostLocalTemp' + row + '" name="InputCostLocalTemp' + row + '"></td>'+
             '<td  '+vathidden+'><input type="checkbox" '+check+' id="checkUse' + row + '" name="checkUse' + row + '"  onclick="calculateGross('+row+')"></td>'+
             '<td align="center" '+vathidden+'>'+vatValue +'</td>'+ 
-            '<td class="hidden"><input type="text" class="form-control" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '" value="'+ defaultD +'" ></td>'+
+            '<td class="hidden"><input type="text" class="form-control" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '" value="'+ vat +'" ></td>'+
             '<td '+vathidden+' ><input type="text" maxlength ="15" readonly onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control numerical text-right" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>'+
             '<td><input type="text" maxlength ="15" onfocusout="changeFormatAmountNumber('+row+');" class="form-control numerical text-right" id="InputAmount' + row + '" name="InputAmount' + row + '"  value="'+price +'" ></td>'+
             '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="validFromInvoice()">'+ selectC +'</select></td>'+
@@ -958,7 +959,7 @@ function formatNumber(num) {
 function calculateGross(row){
     var amount = document.getElementById('InputAmount'+row).value;
     var gross = document.getElementById('InputGross'+row).value;
-    var varTemp = document.getElementById('InputVatTemp'+row).value;
+    var varTemp = 7;
     var vatDefaultData = parseFloat(varTemp);
     $('#checkUse'+row).val();
     amount = amount.replace(/,/g,"");

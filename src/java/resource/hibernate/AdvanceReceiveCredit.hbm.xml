@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.AdvanceReceiveCredit" table="advance_receive_credit" catalog="smitravel" optimistic-lock="version">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="advanceReceive" class="com.smi.travel.datalayer.entity.AdvanceReceive" fetch="select">
+            <column name="ad_rec_id" />
+        </many-to-one>
+        <many-to-one name="MCreditBank" class="com.smi.travel.datalayer.entity.MCreditBank" fetch="select">
+            <column name="credit_card" />
+        </many-to-one>
+        <property name="creditNo" type="string">
+            <column name="credit_no" length="20" />
+        </property>
+        <property name="creditExpire" type="date">
+            <column name="credit_expire" length="10" />
+        </property>
+        <property name="creditAmount" type="big_decimal">
+            <column name="credit_amount" precision="10" />
+        </property>
+    </class>
+</hibernate-mapping>
