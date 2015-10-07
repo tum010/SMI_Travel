@@ -1216,7 +1216,6 @@ function searchTicketFareCF() {
     dateFrom.value = $("#dateFrom").val();
     var dateTo = document.getElementById('dateTo');
     dateTo.value = $("#dateTo").val();
-    
     var paymentNo = document.getElementById('paymentNo');
     paymentNo.value = $("#paymentNo").val();
     var paymentDate = document.getElementById('paymentDate');
@@ -1233,9 +1232,6 @@ function searchTicketFareCF() {
     payBy.value = $("#payBy").val();
     var agentAmount = document.getElementById('agentAmount');
     agentAmount.value = $("#agentAmount").val();
-
-    var commissionVat = document.getElementById('commissionVat');
-    commissionVat.value = $("#commissionVat").val();
     var debitNote = document.getElementById('debitNote');
     debitNote.value = $("#debitNote").val();
     var cash = document.getElementById('cash');
@@ -1418,9 +1414,6 @@ function saveAction(optionsave){
         payBy.value = $("#payBy").val();
         var agentAmount = document.getElementById('agentAmount');
         agentAmount.value = $("#agentAmount").val();
-
-        var commissionVat = document.getElementById('commissionVat');
-        commissionVat.value = $("#commissionVat").val();
         var debitNote = document.getElementById('debitNote');
         debitNote.value = $("#debitNote").val();
         var cash = document.getElementById('cash');
@@ -1815,7 +1808,6 @@ function clearData(){
     $("#detail").val("");
     $("#payBy").val("");
     $("#agentAmount").val("");
-    $("#commissionVat").val("");
     $("#debitNote").val("");
     $("#cash").val("");
     $("#withholdingTax").val("");

@@ -185,7 +185,7 @@
                         <div class="col-md-8">
                             <div class="form-group" id="issuefromdatepanel">
                                 <label class="col-md-6 control-label text-right">Issue Date From<font style="color: red"></font></label>
-                                <div class="col-md-6">  
+                                <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date issuefromdate' id='DateFromIssue'>
                                             <input type='text' id="issueFrom" name="issueFrom" class="form-control" data-date-format="YYYY-MM-DD"/>
@@ -201,7 +201,7 @@
                         <div class="col-md-8">
                             <div class="form-group" id="issuetodatepanel">
                                 <label class="col-md-6 control-label text-right">Issue Date To<font style="color: red"></font></label>
-                                <div class="col-md-6">  
+                                <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date issuetodate' id='DateToIssue'>
                                             <input type='text' id="issueTo" name="issueTo"  class="form-control" data-date-format="YYYY-MM-DD" />
@@ -217,7 +217,7 @@
                         <div class="col-md-8">
                             <div class="form-group" id="fromdatepanel">
                                 <label class="col-md-6 control-label text-right">Invoice Date From<font style="color: red"></font></label>
-                                <div class="col-md-6">  
+                                <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date fromdate' id='DateFrom'>
                                             <input type='text' id="invoiceFromDate" name="invoiceFromDate" class="form-control" data-date-format="YYYY-MM-DD"/>
@@ -233,7 +233,7 @@
                         <div class="col-md-8">
                             <div class="form-group" id="todatepanel">
                                 <label class="col-md-6 control-label text-right">Invoice Date To<font style="color: red"></font></label>
-                                <div class="col-md-6">  
+                                <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date todate' id='DateTo'>
                                             <input type='text' id="invoiceToDate" name="invoiceToDate"  class="form-control" data-date-format="YYYY-MM-DD" />
@@ -266,7 +266,7 @@
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label class="col-md-6 control-label text-right" >Sale By</label>
-                                <div class="col-md-3 form-group">  
+                                <div class="col-md-2 form-group">  
                                     <div class="input-group">
                                         <input type="hidden" class="form-control" id="salebyId" name="salebyId" value=""/>
                                         <input type="text" class="form-control" id="salebyUser" name="salebyUser" value="" />

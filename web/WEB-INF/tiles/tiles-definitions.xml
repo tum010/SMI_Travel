@@ -590,6 +590,11 @@
         <put-attribute name="title" value="Finance and Cashier : Invoice" />
         <put-attribute name="body" value="/WEB-INF/jsp/InvoiceInbound.jsp" />
     </definition>
+    
+    <definition name="TicketRefundSummary" extends="baseLayout">
+        <put-attribute name="title" value="Checking Airticket : Ticket Refund Report" />
+        <put-attribute name="body" value="/WEB-INF/jsp/TicketRefundSummary.jsp" />
+    </definition>
     <!--<add data>-->
     
     <definition name="SendMail" extends="baseLayout">
