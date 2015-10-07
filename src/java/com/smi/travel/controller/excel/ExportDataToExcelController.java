@@ -43,6 +43,7 @@ public class ExportDataToExcelController  extends SMITravelController{
     private static final String SummaryTicketAdjustCostAndIncome = "SummaryTicketAdjustCostAndIncome";
     private static final String SummaryTicketCostAndIncome = "SummaryTicketCostAndIncome";
     private static final String SummaryTicketCommissionReceive = "SummaryTicketCommissionReceive";
+    private static final String RefundTicketDetail = "RefundTicketDetail";
 
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -152,6 +153,10 @@ public class ExportDataToExcelController  extends SMITravelController{
             data = reportservice.getSummaryTicketAdjustCostAndIncome(reportType, invoiceFromDate, invoiceToDate, issueFrom, issueTo, paymentType, departmentt, salebyUser, termPayt);
         }else if(SummaryTicketCommissionReceive.equals(name)){
             System.out.println("get excel data ap SummaryTicketCommissionReceive");
+            System.out.println("Term : " + termPayt);       
+            data = reportservice.getTicketCommissionReceive(reportType, invoiceFromDate, invoiceToDate, issueFrom, issueTo, paymentType, departmentt, salebyUser, termPayt);
+        }else if(RefundTicketDetail.equals(name)){
+            System.out.println("get excel data ap RefundTicketDetail");
             System.out.println("Term : " + termPayt);       
             data = reportservice.getTicketCommissionReceive(reportType, invoiceFromDate, invoiceToDate, issueFrom, issueTo, paymentType, departmentt, salebyUser, termPayt);
         }
