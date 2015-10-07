@@ -35,6 +35,7 @@ public class StockImpl implements StockDao{
     private static final String SELECT_STOCK_PRODUCT = "FROM Product pr where pr.isStock = 1";
     private static final String GET_STOCK_ID = "FROM Stock st where st.product.id = :proID and st.staff.username = :staffID and st.effectiveFrom = :from  and st.effectiveTo = :to and st.createDate = :create ";
     private static final String GET_STOCK = "FROM Stock st where st.id = :stockID ";
+    private static final String SEARCH_STOCKDETAIL = "FROM StockDetail std where std.id = :stockDetailID";
     
     @Override
     public String InsertStock(Stock ItemLot) {
@@ -124,18 +125,42 @@ public class StockImpl implements StockDao{
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
-            Query query = session.createQuery(DELETE_STOCKDETAIL_QUERY);
-            query.setParameter("stockDetailID", DetailID);
-            System.out.println("row delete : "+query.executeUpdate());
-            transaction.commit();
-            session.close();
-            this.sessionFactory.close();
-            result = "success";
+            String textResult = getStockDetail(DetailID);
+            if("pass".equals(textResult)){
+                Query query = session.createQuery(DELETE_STOCKDETAIL_QUERY);
+                query.setParameter("stockDetailID", DetailID);
+                System.out.println("row delete : "+query.executeUpdate());
+                transaction.commit();
+                session.close();
+                this.sessionFactory.close();
+                result = "success";
+            }else{
+                result = "fail";
+            }
         } catch (Exception ex) {
             transaction.rollback();
             ex.printStackTrace();
             result = "fail";
         }
+        return result;
+    }
+    
+    public String getStockDetail(String stockdetailId){
+        String result = "";
+        Session session = this.sessionFactory.openSession();
+        List<StockDetail> stockDetailList = session.createQuery(SEARCH_STOCKDETAIL)
+                .setParameter("stockDetailID", stockdetailId)
+                .list();
+        if (stockDetailList.isEmpty()) {
+            return null;
+        }else{
+            if("2".equals(stockDetailList.get(0).getMStockStatus().getId())){
+                result = "fail";
+            }else{
+                result = "pass";
+            }
+        }
+        System.out.println("Result Check Status :" + result);
         return result;
     }
 

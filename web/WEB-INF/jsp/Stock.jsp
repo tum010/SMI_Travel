@@ -4,13 +4,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <script type="text/javascript" src="js/jquery.mask.min.js"></script>
-
 <c:set var="ListProductStock" value="${requestScope['ListProductStock']}" />
 <c:set var="ListStaffStock" value="${requestScope['ListStaffStock']}" />
 <c:set var="getType" value="${requestScope['getType']}" />
 <c:set var="stockData" value="${requestScope['stockData']}" />
 <c:set var="from" value="${requestScope['FromDate']}" />
 <c:set var="to" value="${requestScope['ToDate']}" />
+<c:set var="result" value="${requestScope['result']}" />
 <c:choose>
     <c:when test="${requestScope['CreateDate'] != null}">
         <c:set var="create" value="${requestScope['CreateDate']}" />
@@ -38,8 +38,16 @@
     <form action="Stock.smi" method="post" id="StockForm" name="StockFormName" role="form" onsubmit="">
     <div class="col-sm-10">
         <input type="hidden" id="idStockDelete" name= "idStockDelete" value="1" />
-        
-        <div class="row" style="padding-left: 15px">  
+        <input type="hidden" id="resultText" name= "resultText" value="${result}" />
+        <div class="row" style="padding-left: 15px"> 
+            <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Delete Stock Detail Success!</strong> 
+            </div>
+            <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Delete Stock Not Success : Stock Detail inuses!</strong> 
+            </div>
             <div class="col-sm-6" style="padding-right: 15px">
                 <h4><b>Stock</b></h4>
             </div>
@@ -415,7 +423,19 @@
         <c:forEach var="type" items="${getType}">
             select += "<option value='${type.id}' ><c:out value='${type.name}' /></option>";
         </c:forEach>  
-            
+        
+        
+        var bla = $('#resultText').val();
+        if(bla === "delete unsuccess"){  
+            $('#textAlertDivNotSave').show();
+            $('#textAlertDivSave').hide()();
+        }else if ( bla === "delete success"){
+            $('#textAlertDivSave').show();
+            $('#textAlertDivNotSave').hide();
+        }else{
+            $('#textAlertDivSave').hide()();
+            $('#textAlertDivNotSave').hide();
+        }
     });
 </script>
 <script type="text/javascript" src="js/stock.js"></script>
