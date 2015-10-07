@@ -111,7 +111,7 @@
                                     <label class="control-label text-left">Receive Date<font style="color: red">*</font></lable>        
                                 </div>
                                 <div class="col-xs-1 form-group" style="width: 170px">
-                                    <div class='input-group date'>
+                                    <div class='input-group date' id='InputDatePicker'>
                                         <input name="receiveDate" id="receiveDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
                                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>
@@ -496,6 +496,9 @@
         });
         
         //Validate Field
+        $('#InputDatePicker').datetimepicker().on('dp.change', function (e) {
+            $('#receiveForm').bootstrapValidator('revalidateField', 'receiveDate');
+        });
         $('#receiveForm').bootstrapValidator({
             container: 'tooltip',
             excluded: [':disabled'],
