@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PaymentAirlineListReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="792adf01-0aeb-418b-a1c7-431013152c6f">
-	<property name="ireport.zoom" value="1.9487171000000272"/>
-	<property name="ireport.x" value="229"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="2.5937424601000383"/>
+	<property name="ireport.x" value="836"/>
+	<property name="ireport.y" value="6"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="user" class="java.lang.String"/>
 	<field name="payno" class="java.lang.String"/>
@@ -106,48 +106,6 @@
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="396" y="50" width="75" height="20" uuid="ed06af7a-2df6-4c26-a3d1-4f5b998ea459"/>
-				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Payment No.]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="382" y="35" width="60" height="20" uuid="0b7991a7-300c-4f10-9276-b30adbbf5e4e"/>
-				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Print By]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="468" y="50" width="10" height="20" uuid="39db53d6-d707-47db-95a5-2f998930dc7f"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[:]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="449" y="35" width="103" height="20" uuid="d20e2cc7-a666-40b1-83b8-4ec28a33caee"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{user}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="439" y="35" width="10" height="20" uuid="d03bc63b-c817-464c-93cd-7b01caf8376f"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[:]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="477" y="50" width="75" height="20" uuid="10b1a8f2-491f-4458-a348-b659f80da382"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{payno}]]></textFieldExpression>
-			</textField>
 			<textField>
 				<reportElement x="391" y="67" width="81" height="20" uuid="cd57bfc0-6fd3-4d35-923f-ed363a782935"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -197,6 +155,48 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="404" y="35" width="60" height="20" uuid="cd17f758-6397-4178-a286-e204e57169ae"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Print By]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="50" width="75" height="20" uuid="2cbd59d4-a4e9-4373-a2a2-c19e25c2ffb4"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Payment No.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="470" y="34" width="82" height="20" uuid="50375763-cf3a-4234-9924-b6c1311ed290"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{user}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="492" y="50" width="10" height="20" uuid="b9de1c18-063e-48ad-a198-7a879396384f"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="501" y="48" width="51" height="20" uuid="ef6a558f-7e02-42de-935e-192c9eeee33a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{payno}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="461" y="35" width="10" height="20" uuid="f9a891a8-3c16-4c56-8731-7a18a11ff2ee"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -425,7 +425,7 @@
 				<textFieldExpression><![CDATA[$V{totalnet}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement x="478" y="0" width="71" height="14" uuid="9aa5cdeb-1336-4c95-b512-d1fbb413a31a"/>
+				<reportElement x="478" y="0" width="74" height="14" uuid="9aa5cdeb-1336-4c95-b512-d1fbb413a31a"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12" isBold="true"/>
 				</textElement>

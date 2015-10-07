@@ -27,6 +27,15 @@ public class ReceiveTableController extends SMITravelController {
         request.setAttribute(MACCPAYLIST, mAccpayList);
         List<MCreditBank> mCreditBankList = getUtilservice().getListCreditBank();
         request.setAttribute(MCREDITBANKLIST, mCreditBankList);
+        
+        String action = request.getParameter("action");
+        String inputDate = request.getParameter("InputDate");
+        String selectStatus = request.getParameter("SelectStatus");
+        
+        if("search".equalsIgnoreCase(action)){
+//            List<> advanceCreditList = 
+        }
+        
         return ReceiveTable;
     }
 

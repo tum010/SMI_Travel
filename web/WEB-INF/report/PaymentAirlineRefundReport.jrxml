@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PaymentAirlineRefundReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="71506f79-5451-4b8e-86db-af15690b69ff">
-	<property name="ireport.zoom" value="2.8531167061100158"/>
-	<property name="ireport.x" value="1177"/>
-	<property name="ireport.y" value="54"/>
+	<property name="ireport.zoom" value="2.593742460100017"/>
+	<property name="ireport.x" value="808"/>
+	<property name="ireport.y" value="21"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="user" class="java.lang.String"/>
 	<field name="payno" class="java.lang.String"/>
@@ -42,7 +42,7 @@
 				<imageExpression><![CDATA["resource/images/smi-logo.gif"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="395" y="51" width="75" height="20" uuid="dea9a92e-6af8-4542-855a-41479e9e3672"/>
+				<reportElement x="420" y="51" width="75" height="20" uuid="dea9a92e-6af8-4542-855a-41479e9e3672"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 				</textElement>
@@ -91,14 +91,14 @@
 				<text><![CDATA[of]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="467" y="51" width="10" height="20" uuid="6b4677bc-fa55-4f44-8249-fb36f898aa9f"/>
+				<reportElement x="492" y="51" width="10" height="20" uuid="6b4677bc-fa55-4f44-8249-fb36f898aa9f"/>
 				<textElement textAlignment="Center">
 					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="476" y="49" width="75" height="20" uuid="9034b17d-466f-43ec-9851-633e8343c212"/>
+				<reportElement x="501" y="49" width="51" height="20" uuid="9034b17d-466f-43ec-9851-633e8343c212"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
@@ -112,7 +112,7 @@
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="381" y="36" width="60" height="20" uuid="c08bcdc8-9687-4077-bca5-32a32b05efb2"/>
+				<reportElement x="404" y="36" width="60" height="20" uuid="c08bcdc8-9687-4077-bca5-32a32b05efb2"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 				</textElement>
@@ -133,7 +133,7 @@
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="438" y="36" width="10" height="20" uuid="000a41a3-5f43-4e10-94d1-ee357d60762c"/>
+				<reportElement x="461" y="36" width="10" height="20" uuid="000a41a3-5f43-4e10-94d1-ee357d60762c"/>
 				<textElement textAlignment="Center">
 					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 				</textElement>
@@ -154,14 +154,14 @@
 				<text><![CDATA[http://www.wendytour.com]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="448" y="35" width="103" height="20" uuid="8c49a1d7-95dd-4eb2-8a85-a357e42a4a13"/>
+				<reportElement x="470" y="35" width="82" height="20" uuid="8c49a1d7-95dd-4eb2-8a85-a357e42a4a13"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{user}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="206" y="1" width="348" height="35" uuid="4e2437a0-98a2-463f-81eb-dd1c1070902f"/>
+				<reportElement x="204" y="1" width="348" height="35" uuid="4e2437a0-98a2-463f-81eb-dd1c1070902f"/>
 				<textElement textAlignment="Right">
 					<font size="20"/>
 				</textElement>
@@ -175,7 +175,7 @@
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="533" y="74" width="18" height="17" uuid="1fffa56b-ab28-4d04-86fc-9dc60c3733da"/>
+				<reportElement x="533" y="74" width="19" height="17" uuid="1fffa56b-ab28-4d04-86fc-9dc60c3733da"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>

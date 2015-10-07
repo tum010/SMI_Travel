@@ -902,6 +902,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                 .addScalar("receivefromair", Hibernate.STRING)
                 .addScalar("receivefrominv", Hibernate.STRING)
                 .addScalar("invno", Hibernate.STRING)
+                .addScalar("ticketins", Hibernate.STRING)
                 .list();
               
         for (Object[] B : QueryStaffList) {
@@ -921,7 +922,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             payment.setReceivefromair(B[12]== null ? "" :util.ConvertString(B[12]));
             payment.setReceivefrominv(B[13]== null ? "" :util.ConvertString(B[13]));
             payment.setInvno(B[14]== null ? "" :util.ConvertString(B[14]));
-//            payment.setTicketins(query);
+            payment.setTicketins(B[15]== null ? "" :util.ConvertString(B[15]));
             data.add(payment);
         }
         
