@@ -33,7 +33,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-6 control-label text-right" >Agent<font style="color: red">*</font></label>
+                                <label class="col-md-6 control-label text-right" >Agent</label>
                                 <div class="col-md-3 form-group">  
                                     <div class="input-group">
                                         <input type="hidden" class="form-control" id="agentId" name="agentId" value=""/>
@@ -51,11 +51,11 @@
                     </div>
                     <div class="row">
                         <div class="col-md-8">
-                            <div class="form-group" id="fromdatepanel">
-                                <label class="col-md-6 control-label text-right">Inv From<font style="color: red">*</font></label>
+                            <div class="form-group" id="invfromdatepanel">
+                                <label class="col-md-6 control-label text-right">Inv From</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
-                                        <div class='input-group date' id='DateFrom'>
+                                        <div class='input-group invfromdate' id='invDateFrom'>
                                             <input type='text' id="invoiceFromDate" name="invoiceFromDate" class="form-control" data-date-format="YYYY-MM-DD"/>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -67,11 +67,11 @@
                     </div>
                     <div class="row">
                         <div class="col-md-8">
-                            <div class="form-group" id="todatepanel">
-                                <label class="col-md-6 control-label text-right">Inv To<font style="color: red">*</font></label>
+                            <div class="form-group" id="invtodatepanel">
+                                <label class="col-md-6 control-label text-right">Inv To</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
-                                        <div class='input-group date' id='DateTo'>
+                                        <div class='input-group invtodate' id='invDateTo'>
                                             <input type='text' id="InvoiceToDate" name="InvoiceToDate"  class="form-control" data-date-format="YYYY-MM-DD" />
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -83,11 +83,11 @@
                     </div>
                     <div class="row">
                         <div class="col-md-8">
-                            <div class="form-group" id="fromdatepanel">
-                                <label class="col-md-6 control-label text-right">Issue From<font style="color: red">*</font></label>
+                            <div class="form-group" id="issuefromdatepanel">
+                                <label class="col-md-6 control-label text-right">Issue From</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
-                                        <div class='input-group date' id='DateFromIssue'>
+                                        <div class='input-group issuefromdate' id='DateFromIssue'>
                                             <input type='text' id="issueFrom" name="issueFrom" class="form-control" data-date-format="YYYY-MM-DD"/>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -99,11 +99,11 @@
                     </div>
                     <div class="row">
                         <div class="col-md-8">
-                            <div class="form-group" id="todatepanel">
-                                <label class="col-md-6 control-label text-right">Issue To<font style="color: red">*</font></label>
+                            <div class="form-group" id="issuetodatepanel">
+                                <label class="col-md-6 control-label text-right">Issue To</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
-                                        <div class='input-group date' id='DateToIssue'>
+                                        <div class='input-group issuetodate' id='DateToIssue'>
                                             <input type='text' id="issueTo" name="issueTo"  class="form-control" data-date-format="YYYY-MM-DD" />
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -116,7 +116,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-6 control-label text-right" >Payment Type<font style="color: red">*</font></label>
+                                <label class="col-md-6 control-label text-right" >Payment Type</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <select name="paymentType" id="paymentType"  class="form-control">
@@ -132,11 +132,11 @@
                     </div>
                     <div class="row">
                         <div class="col-md-8">
-                            <div class="form-group" id="fromdatepanel">
-                                <label class="col-md-6 control-label text-right">Refund Receive From<font style="color: red">*</font></label>
+                            <div class="form-group" id="refundfromdatepanel">
+                                <label class="col-md-6 control-label text-right">Refund Receive From</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
-                                        <div class='input-group date' id='DateFromRefund'>
+                                        <div class='input-group refundfromdate' id='DateFromRefund'>
                                             <input type='text' id="refundFrom" name="refundFrom" class="form-control" data-date-format="YYYY-MM-DD"/>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -148,11 +148,11 @@
                     </div>
                     <div class="row">
                         <div class="col-md-8">
-                            <div class="form-group" id="todatepanel">
-                                <label class="col-md-6 control-label text-right">Refund Receive To<font style="color: red">*</font></label>
+                            <div class="form-group" id="refundtodatepanel">
+                                <label class="col-md-6 control-label text-right">Refund Receive To</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
-                                        <div class='input-group date' id='DateToRefund'>
+                                        <div class='input-group refundtodate' id='DateToRefund'>
                                             <input type='text' id="refundTo" name="refundTo"  class="form-control" data-date-format="YYYY-MM-DD" />
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -165,7 +165,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-6 control-label text-right" >Department<font style="color: red">*</font></label>
+                                <label class="col-md-6 control-label text-right" >Department</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <select name="department" id="department" class="form-control">
@@ -182,7 +182,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-6 control-label text-right" >Sale By<font style="color: red">*</font></label>
+                                <label class="col-md-6 control-label text-right" >Sale By</label>
                                 <div class="col-md-3 form-group">  
                                     <div class="input-group">
                                         <input type="hidden" class="form-control" id="salebyId" name="salebyId" value=""/>
@@ -201,7 +201,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-6 control-label text-right" >Term Pay<font style="color: red">*</font></label>
+                                <label class="col-md-6 control-label text-right" >Term Pay</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <select name="termPay" id="termPay"  class="form-control">
@@ -222,7 +222,7 @@
                                 <label class="col-md-6 control-label text-right" for="rept"></label>
                                 <div class="col-md-6">  
                                     <div class="form-group">
-                                        <button type="submit" onclick="printBillAirAgent();" class="btn btn-success"><span class="glyphicon glyphicon-print"></span> Print</button>
+                                        <button type=button onclick="printBillAirAgent();" id="printbutton" class="btn btn-success"><span class="glyphicon glyphicon-print"></span> Print</button>
                                     </div>
                                 </div>   
                             </div>
