@@ -136,9 +136,9 @@ public class BillAirAgentImpl implements BillAirAgentDao{
         String query = "";
         int checkQuery = 0;
         if( !"".equals(agentCode)  || !"".equals(invoiceFromDate) || !"".equals(InvoiceToDate) || !"".equals(issueFrom) || !"".equals(issueTo)  || !"".equals(department)){
-            query = "SELECT * FROM `bill_air_agent  invm  Where ";
+            query = "SELECT * FROM `bill_air_agent`  invm  Where ";
         }else{
-            query = "SELECT * FROM `bill_air_agent  invm ";
+            query = "SELECT * FROM `bill_air_agent`  invm ";
         }
         
         if ((invoiceFromDate != null )&&(!"".equalsIgnoreCase(InvoiceToDate))) {
@@ -165,23 +165,22 @@ public class BillAirAgentImpl implements BillAirAgentDao{
         
         if ((agentCode != null )&&(!"".equalsIgnoreCase(agentCode))) {
             if(checkQuery == 1){
-                 query += " and invm.agentid  = " + agentCode + "' ";
+                 query += " and invm.agentid  = '" + agentCode + "' ";
             }else{
                 checkQuery = 1;
-                 query += " invm.agentid  = " + agentCode + "' ";
+                 query += " invm.agentid  = '" + agentCode + "' ";
             }
         }
         
         if ((department != null )&&(!"".equalsIgnoreCase(department))) {
             if(checkQuery == 1){
-                 query += " and invm.department  = " + department + "' ";
+                 query += " and invm.department  = '" + department + "' ";
             }else{
                 checkQuery = 1;
-                 query += " invm.department  = " + department + "' ";
+                 query += " invm.department  = '" + department + "' ";
             }
         }
-        
- 
+       
         List<Object[]> QueryList =  session.createSQLQuery(query)
                 .addScalar("agentname",Hibernate.STRING)
                 .addScalar("agentid",Hibernate.STRING)
@@ -210,7 +209,27 @@ public class BillAirAgentImpl implements BillAirAgentDao{
         for (Object[] B : QueryList) {
             BillAirAgent bil = new BillAirAgent();
             //header
-            
+          
+            if(agentCode != null && !"".equals(agentCode)){
+                bil.setAgentPage(agentCode);
+            }else{
+                bil.setAgentPage("");
+            }
+            if(issueFrom != null && !"".equals(issueFrom)){
+                String issue = "" + issueFrom + " To " + issueTo;
+                bil.setIssuedatePage(issue);
+            }else{
+                bil.setIssuedatePage("");
+            }
+            System.out.println("Invoice Date : " + invoiceFromDate);
+            if(invoiceFromDate != null && !"".equals(invoiceFromDate)){
+                String invoice = ""+ invoiceFromDate + " To " + InvoiceToDate;
+                bil.setInvoicedatePage(invoice);
+            }else{
+                bil.setInvoicedatePage("");
+            }
+            bil.setPrintbyPage(printby);
+            bil.setPaymenttypePage("");
             
             bil.setAgentname(util.ConvertString(B[0]));
             bil.setAgentid(util.ConvertString(B[1]));

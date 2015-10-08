@@ -133,8 +133,8 @@ public class ExportDataToExcelController  extends SMITravelController{
         }else if(BillAirAgentSummary.equalsIgnoreCase(name)){
             System.out.println("get excel data BillAirAgentSummary");
             String agentCode = request.getParameter("agentCode");
-            String invoiceFromDates = request.getParameter("invoiceFromDate");
-            String InvoiceToDates = request.getParameter("InvoiceToDate");
+            String invoiceFromDates = request.getParameter("invoiceFrom");
+            String InvoiceToDates = request.getParameter("invoiceTo");
             String issueFroms = request.getParameter("issueFrom");
             String issueTos = request.getParameter("issueTo");
             String refundFrom = request.getParameter("refundFrom");
@@ -166,15 +166,15 @@ public class ExportDataToExcelController  extends SMITravelController{
         }else if(SummaryTicketAdjustCostAndIncome.equals(name)){
             System.out.println("get excel data ap SummaryTicketAdjustCostAndIncome");
             System.out.println("Term : " + termPayt);          
-            data = reportservice.getSummaryTicketAdjustCostAndIncome(reportType, invoiceFromDate, invoiceToDate, issueFrom, issueTo, paymentType, departmentt, salebyUser, termPayt);
+            data = reportservice.getSummaryTicketAdjustCostAndIncome(reportType, invoiceFromDate, invoiceToDate, issueFrom, issueTo, paymentType, departmentt, salebyUser, termPayt,printby);
         }else if(SummaryTicketCostAndIncome.equals(name)){
             System.out.println("get excel data ap SummaryTicketCostAndIncome");
             System.out.println("Term : " + termPayt);       
-            data = reportservice.getSummaryTicketAdjustCostAndIncome(reportType, invoiceFromDate, invoiceToDate, issueFrom, issueTo, paymentType, departmentt, salebyUser, termPayt);
+            data = reportservice.getSummaryTicketAdjustCostAndIncome(reportType, invoiceFromDate, invoiceToDate, issueFrom, issueTo, paymentType, departmentt, salebyUser, termPayt,printby);
         }else if(SummaryTicketCommissionReceive.equals(name)){
             System.out.println("get excel data ap SummaryTicketCommissionReceive");
             System.out.println("Term : " + termPayt);       
-            data = reportservice.getTicketCommissionReceive(reportType, invoiceFromDate, invoiceToDate, issueFrom, issueTo, paymentType, departmentt, salebyUser, termPayt);
+            data = reportservice.getTicketCommissionReceive(reportType, invoiceFromDate, invoiceToDate, issueFrom, issueTo, paymentType, departmentt, salebyUser, termPayt,printby);
         }else if(RefundTicketDetail.equals(name)){
             System.out.println("get excel data ap RefundTicketDetail");
             System.out.println("Term : " + termPayt);    
