@@ -128,7 +128,27 @@ public class ReceiveTableImpl implements ReceiveTableDao{
 
     @Override
     public String deleteAdvanceReceive(AdvanceReceive advanceReceive) {
-        String result = "fail";
+        String result = "delete fail";      
+//        try {
+//            Session session = this.sessionFactory.openSession();
+//            transaction = session.beginTransaction();
+//            AdvanceReceiveCredit  advanceReceiveCredit = new AdvanceReceiveCredit();
+//            advanceReceiveCredit = (AdvanceReceiveCredit) advanceReceive.getAdvanceReceiveCredits().get(0);
+//            session.delete(advanceReceiveCredit);
+//            transaction.commit();          
+//            session.close();
+//            this.sessionFactory.close();
+//            result = "delete success";
+//        } catch (Exception ex) {
+//            transaction.rollback();
+//            this.sessionFactory.close();
+//            ex.printStackTrace();
+//            result = "delete fail";
+//        }
+        AdvanceReceiveCredit  advanceReceiveCredit = new AdvanceReceiveCredit();
+        advanceReceiveCredit = (AdvanceReceiveCredit) advanceReceive.getAdvanceReceiveCredits().get(0);
+        String delete = deleteAdvanceReceiveCredit(advanceReceiveCredit,"parent");
+        System.out.println("Delete : "+delete);
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
@@ -136,10 +156,12 @@ public class ReceiveTableImpl implements ReceiveTableDao{
             transaction.commit();
             session.close();
             this.sessionFactory.close();
-            result = "success";
+            result = "delete success";
         } catch (Exception ex) {
+            transaction.rollback();
+            this.sessionFactory.close();
             ex.printStackTrace();
-            result = "fail";
+            result = "delete fail";
         }
         return result;
     }
@@ -147,8 +169,8 @@ public class ReceiveTableImpl implements ReceiveTableDao{
     @Override
     public String insertAdvanceReceive(AdvanceReceive advanceReceive) {
         String result = "fail";
-        try {
-            Session session = this.sessionFactory.openSession();
+        Session session = this.sessionFactory.openSession();
+        try {            
             transaction = session.beginTransaction();              
             session.save(advanceReceive);    
             List<AdvanceReceiveCredit> advanceReceiveCredit = advanceReceive.getAdvanceReceiveCredits();          
@@ -162,6 +184,8 @@ public class ReceiveTableImpl implements ReceiveTableDao{
             this.sessionFactory.close();
             result = "success";            
         } catch (Exception ex) {
+            transaction.rollback();
+            session.close();
             ex.printStackTrace();
             result = "fail";
         }         
@@ -171,8 +195,8 @@ public class ReceiveTableImpl implements ReceiveTableDao{
     @Override
     public String updateAdvanceReceive(AdvanceReceive advanceReceive) {
         String result = "fail";
-        try {
-            Session session = this.sessionFactory.openSession();
+        Session session = this.sessionFactory.openSession();
+        try {            
             transaction = session.beginTransaction();
             session.update(advanceReceive);            
             List<AdvanceReceiveCredit> advanceReceiveCredit = advanceReceive.getAdvanceReceiveCredits();           
@@ -190,12 +214,59 @@ public class ReceiveTableImpl implements ReceiveTableDao{
             this.sessionFactory.close();
             result = "success";
         } catch (Exception ex) {
-            this.sessionFactory.close();
+            transaction.rollback();
+            session.close();
+//            this.sessionFactory.close();
             System.out.println("Fail !!!!!");
             ex.printStackTrace();
             result = "fail";
         }
         return result;    
+    }
+
+    @Override
+    public String deleteAdvanceReceiveCredit(AdvanceReceiveCredit advanceReceiveCredit, String option) {
+        String result = "delete fail";      
+//        try {
+//            Session session = this.sessionFactory.openSession();
+//            transaction = session.beginTransaction();
+//            session.delete(advanceReceiveCredit);
+//            transaction.commit();          
+//            session.close();
+//            this.sessionFactory.close();
+//            result = "delete success";
+//        } catch (Exception ex) {
+//            transaction.rollback();
+//            this.sessionFactory.close();
+//            ex.printStackTrace();
+//            result = "delete fail";
+//        }
+
+        try {
+            String sql = " delete from AdvanceReceiveCredit adrc where ";
+            String id = "";
+            if("child".equalsIgnoreCase(option)){
+                sql += " adrc.id = :id ";
+                id = advanceReceiveCredit.getId();
+            } else if("parent".equalsIgnoreCase(option)){
+                sql += " adrc.advanceReceive.id = :id ";
+                id = advanceReceiveCredit.getAdvanceReceive().getId();
+            }
+            Session session = this.sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery(sql);
+            query.setParameter("id", id);
+            System.out.println("row delete : "+query.executeUpdate());
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+            result = "success";       
+        } catch (Exception ex) {
+            transaction.rollback();
+            ex.printStackTrace();
+            result = "fail";
+        }
+        return result;
     }
        
 }

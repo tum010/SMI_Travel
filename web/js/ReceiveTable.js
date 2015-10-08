@@ -16,6 +16,7 @@ $(document).ready(function() {
         $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
 
     });
+    
     $(".money").mask('000,000,000,000.00', {reverse: true});
 
     $('#SearchReceiveTable').dataTable({bJQueryUI: true,
@@ -115,8 +116,8 @@ $(document).ready(function() {
     });
 
     //Add row table receive 
-//        var rowCreditTable = $("#CreditTable tr").length;
-    AddRowCreditTable();
+    var rowCreditTable = $("#CreditTable tr").length;
+    AddRowCreditTable(rowCreditTable);
     $("#CreditTable").on("keyup", function() {
         var rowAll = $("#CreditTable tr").length;
         $("td").keyup(function() {
@@ -124,15 +125,13 @@ $(document).ready(function() {
                 var colIndex = $(this).parent().children().index($(this));
                 var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
                 rowAll = $("#CreditTable tr").length;
-//                    alert("rowIndex = "+rowIndex);
-//                    alert("rowAll = "+rowAll);
                 if (rowIndex === rowAll) {
                     console.log("rowAll : " + rowAll + " Row Index : " + rowIndex);
                     AddRowCreditTable(parseInt($("#countCredit").val()));
                 }
                 if (rowAll < 2) {
-                    $("#tr_ReceiveTableAddRow").removeClass("hide");
-                    $("#tr_ReceiveTableAddRow").addClass("show");
+//                    $("#tr_CreditTableAddRow").removeClass("hide");
+//                    $("#tr_CreditTableAddRow").addClass("show");
                 }
             }
         });
@@ -142,10 +141,17 @@ $(document).ready(function() {
     var result = $('#result').val();
     if (result === "success") {
         $('#textAlertDivSave').show();
-    } else if (result === "") {
-        $('#textAlertDivSave').hide();
     } else if (result === 'fail') {
         $('#textAlertDivNotSave').show();
+    } else if (result === 'delete success') {
+        $('#textAlertDivDelete').show();
+    } else if (result === 'delete fail') {
+        $('#textAlertDivNotDelete').show();
+    } else if (result === "") {
+        $('#textAlertDivSave').hide();
+        $('#textAlertDivNotSave').hide();
+        $('#textAlertDivDelete').hide();
+        $('#textAlertDivNotDelete').hide();
     }
 
     $(".numerical").on('input', function() {
@@ -157,20 +163,40 @@ $(document).ready(function() {
         value = value.replace(/\.[0-9]+\./g, '.');
         $(this).val(value);
     });
-    
+
     setEnvironment();
 });
 
 //Set Data at start
-function setEnvironment(){
-    $("#receiveAmount").val(formatNumber(parseFloat($("#receiveAmount").val())));
-    $("#cashAmount").val(formatNumber(parseFloat($("#cashAmount").val())));
-    $("#bankAmount").val(formatNumber(parseFloat($("#bankAmount").val())));
-    $("#chqAmount").val(formatNumber(parseFloat($("#chqAmount").val())));
-    $("#chqBank").val(formatNumber(parseFloat($("#chqBank").val())));
-    $("#chqNo").val(formatNumber(parseFloat($("#chqNo").val())));
-    if($("#receiveId").val() !== ''){
+function setEnvironment() {
+    if ($("#receiveId").val() !== '') {
         $("#receiveData").removeClass("hidden");
+    }
+    if($("#receiveAmount").val() !== ''){
+        $("#receiveAmount").val(formatNumber(parseFloat($("#receiveAmount").val())));
+    }
+    if($("#cashAmount").val() !== ''){
+        $("#cashAmount").val(formatNumber(parseFloat($("#cashAmount").val())));
+    }
+    if($("#bankAmount").val() !== ''){
+        $("#bankAmount").val(formatNumber(parseFloat($("#bankAmount").val())));
+    }
+    if($("#chqAmount").val() !== ''){
+        $("#chqAmount").val(formatNumber(parseFloat($("#chqAmount").val()))); 
+    }
+    if($("#chqBank").val() !== ''){
+        $("#chqBank").val(formatNumber(parseFloat($("#chqBank").val())));   
+    }
+    if($("#chqNo").val() !== ''){
+        $("#chqNo").val(formatNumber(parseFloat($("#chqNo").val())));
+    }
+    if($("#countCredit").val() !== '1'){
+        var row = parseInt($("#countCredit").val());
+        for(var i=1;i<=row;i++){
+            if($("#creditAmount"+i).val() !== ''){
+                $("#creditAmount"+i).val(formatNumber(parseFloat($("#creditAmount"+i).val())));
+            }
+        }      
     }
 }
 
@@ -287,10 +313,11 @@ function formatNumber(num) {
     return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }
 
-function calculate(num){
-    var number = parseFloat((num.value).replace(/,/g,""));
-    num.value = formatNumber(number);
-//    document.getElementById("receiveAmount").value = formatNumber(nField);
+function calculate(num) {
+    if(num.value !== ''){
+        var number = parseFloat((num.value).replace(/,/g, ""));
+        num.value = formatNumber(number);
+    }    
 }
 
 //Check value for Search
@@ -321,10 +348,10 @@ function AddReceiveData() {
     } else {
         $("#receiveData").addClass("hidden");
     }
-    if($("#receiveDate").val() === ''){
+    if ($("#receiveDate").val() === '') {
         $("#receiveDate").val($("#InputDate").val());
         $("#vatType").val($("#SelectStatus").val());
-    }    
+    }
 }
 
 function reloadDatePicker() {
@@ -358,22 +385,22 @@ function AddRowCreditTable(row) {
             '<td><input class="form-control" type="text" id="creditNo' + row + '" name="creditNo' + row + '" value=""></td>' +
             '<td>' +
             '<div class="input-group daydatepicker" id="daydatepicker' + row + '">' +
-            '<input name="creditExpire' + row + '" id="creditExpire' + row + '" type="text" class="form-control" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />' +
-            '<span class="input-group-addon" onclick="AddrowBySelect(\'' + row + '\')"><i class="glyphicon glyphicon-calendar"></i></span>' +
-            '</div>' +
+            '<input type="text" name="creditExpire' + row + '" id="creditExpire' + row + '" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />' +
+            '<span class="input-group-addon spandate" style="padding : 1px 10px;" onclick="AddrowBySelect(\'' + row + '\')"><span class="glyphicon-calendar glyphicon"></span></span>' +
+            '</div>' +            
             '</td>' +
             '<td><input class="form-control numerical" style="text-align:right;" type="text" id="creditAmount' + row + '" name="creditAmount' + row + '" value="" onkeyup="insertCommas(this)" onfocusout="calculate(this)"></td>' +
             '<td>' +
             '<center>' +
-            '<a id="expenButtonRemove' + row + '" name="expenButtonRemove' + row + '" onclick="deleteTaxList(\'\',\'' + row + '\')"  data-toggle="modal" data-target="#DeleteExpenModal">' +
+            '<a id="expenButtonRemove' + row + '" name="expenButtonRemove' + row + '" onclick="deleteAdvanceReceiveCreditConfirm(\'\',\'' + row + '\')"  data-toggle="modal" data-target="#DeleteExpenModal">' +
             '<span id="expenSpanEdit' + row + '" name="expenSpanEdit' + row + '" class="glyphicon glyphicon-remove deleteicon"></span>' +
             '</a>' +
             '</center>' +
             '</td>' +
             '</tr>'
             );
-//        $("#tr_TaxInvoiceDetailAddRow").removeClass("show");
-//        $("#tr_TaxInvoiceDetailAddRow").addClass("hide");
+//    $("#tr_CreditTableAddRow").removeClass("show");
+//    $("#tr_CreditTableAddRow").addClass("hide");
     $("#select_bank_list option").clone().appendTo("#creditCard" + row);
     $("#countCredit").val(row + 1);
     reloadDatePicker();
@@ -392,7 +419,7 @@ function searchReceive() {
     document.getElementById("receiveForm").submit();
 }
 
-function editAdvanceReceiveConfirm(id) {
+function editAdvanceReceive(id) {
     $("#receiveId").val(id);
     $("#action").val("edit");
     document.getElementById("receiveForm").submit();
@@ -409,7 +436,60 @@ function deleteAdvanceReceive() {
     document.getElementById("receiveForm").submit();
 }
 
-function deleteAdvanceReceiveCreditConfirm(id) {
+function deleteAdvanceReceiveCreditConfirm(id,row) {
+    $("#receiveCreditId").val(id);
+    $("#receiveCreditRow").val(row);
+    $("#delReceiveCreditModal").modal("show");
+}
 
+function deleteAdvanceReceiveCredit(){
+    var id = document.getElementById('receiveCreditId').value;
+    var row = document.getElementById('receiveCreditRow').value;
+    var count = document.getElementById('countCredit').value;
+    if (id === '') {
+        $("#creditCard" + row).parent().parent().remove();
+        var rowAll = $("#CreditTable tr").length;
+//        if (rowAll <= 1) {
+//            $("#tr_CreditTableAddRow").removeClass("hide");
+//            $("#tr_CreditTableAddRow").addClass("show");
+//        }
+        if((parseInt(count)-1) === parseInt(row)){
+            AddRowCreditTable(parseInt(count));
+        }
+//            $("#countTaxInvoice").val(count+1);
+    } else {
+        $.ajax({
+            url: 'ReceiveTable.smi?action=deleteAdvanceReceiveCredit',
+            type: 'get',
+            data: {receiveCreditId: id},
+            success: function() {
+                $("#creditCard" + row).parent().parent().remove();
+                var rowAll = $("#creditCard tr").length;
+//                if (rowAll <= 1) {
+//                    $("#tr_CreditTableAddRow").removeClass("hide");
+//                    $("#tr_CreditTableAddRow").addClass("show");
+//                }
+//                    $("#countTaxInvoice").val(count+1);
+                if((parseInt(count)-1) === parseInt(row)){
+                    AddRowCreditTable(parseInt(count));
+                }
+            },
+            error: function() {
+                console.log("error");
+                result = 0;
+            }
+        });
+    }
+    $('#delReceiveCreditModal').modal('hide');
+}
+
+function addNewRowCreditTable(){
+    var count = document.getElementById('countCredit').value;
+    AddRowCreditTable(parseInt(count));
+}
+
+function newReceiveTable(){
+    $("#action").val("new");
+    document.getElementById("receiveForm").submit();
 }
 

@@ -3,7 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<link href="css/jquery-ui.css" rel="stylesheet">
 <c:set var="customerAgentInfoList" value="${requestScope['customerAgentInfoList']}" />
 <c:set var="mAccpayList" value="${requestScope['mAccpayList']}" />
 <c:set var="mCreditBankList" value="${requestScope['mCreditBankList']}" />
@@ -33,6 +33,14 @@
         <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Save Not Success!</strong> 
+        </div>
+        <div id="textAlertDivDelete"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Delete Success!</strong> 
+        </div>
+        <div id="textAlertDivNotDelete"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Delete Not Success!</strong> 
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -113,7 +121,7 @@
                                 <td align="right" class="money">${advanceReceive.recAmount}</td>
                                 <td class="text-center">
                                     <a href="#" onclick=""  data-toggle="modal" data-target="">
-                                        <span id="editSpan${i.count}" class="glyphicon glyphicon-edit editicon" onclick="editAdvanceReceiveConfirm('${advanceReceive.id}')" ></span>
+                                        <span id="editSpan${i.count}" class="glyphicon glyphicon-edit editicon" onclick="editAdvanceReceive('${advanceReceive.id}')" ></span>
                                     </a>
                                     <a href="#" onclick=""  data-toggle="modal" data-target="">
                                         <span id="removeSpan${i.count}" class="glyphicon glyphicon-remove deleteicon"  onclick="deleteAdvanceReceiveConfirm('${advanceReceive.id}')" data-toggle="modal"></span>
@@ -169,6 +177,8 @@
                                 <div class="col-xs-1 form-group" style="width: 170px">
                                     <div class="input-group">
                                         <input name="receiveId" id="receiveId" type="hidden" class="form-control" value="${advanceReceive.id}" />
+                                        <input name="receiveCreditId" id="receiveCreditId" type="hidden" class="form-control" value="" />
+                                        <input name="receiveCreditRow" id="receiveCreditRow" type="hidden" class="form-control" value="" />
                                         <input name="receiveCode" id="receiveCode" type="text" class="form-control" value="${advanceReceive.recTo}" />
                                         <span class="input-group-addon" id="receiveModal"  data-toggle="modal" data-target="#ReceiveModal">
                                             <span class="glyphicon-search glyphicon"></span>
@@ -271,16 +281,16 @@
                             </div>
                         </div><!-- End Row 5-->
                         <div class="col-sm-12"><br></div>
-                        <input type="hidden" name="countCredit" id="countCredit" class="form-control" value="1"/>
+                        <input type="hidden" name="countCredit" id="countCredit" class="form-control" value="${advanceReceiveCreditList.size()}"/>
                         <div class="row" style="padding-left: 15px;width: 100%;">
                             <table class="display" id="CreditTable">
                                 <thead class="datatable-header">
                                     <tr>
                                         <th style="width: 10%">Credit Bank</th>
-                                        <th style="width: 10%">Credit No</th>
-                                        <th style="width: 10%">Credit Expire</th>
+                                        <th style="width: 20%">Credit No</th>
+                                        <th style="width: 9%">Credit Expire</th>
                                         <th style="width: 10%">Amount</th>
-                                        <th style="width: 10%">Action</th>
+                                        <th style="width: 1%">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -302,15 +312,15 @@
                                         </td>
                                         <td><input class="form-control" type="text" id="creditNo${i.count}" name="creditNo${i.count}" value="${adReCre.creditNo}"></td>
                                         <td>
-                                            <div class="input-group daydatepicker" id="daydatepicker">
-                                                <input name="creditExpire${i.count}" id="creditExpire${i.count}" type="text" class="form-control" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${adReCre.creditExpire}" />
-                                                <span class="input-group-addon" onclick="AddrowBySelect()"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            <div class="input-group daydatepicker" id="daydatepicker${i.count}">
+                                                <input type="text" name="creditExpire${i.count}" id="creditExpire${i.count}" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${adReCre.creditExpire}" />
+                                                <span class="input-group-addon spandate" style="padding : 1px 10px;"><span class="glyphicon-calendar glyphicon"></span></span>
                                             </div>
                                         </td>
                                         <td><input class="form-control numerical" style="text-align:right;" type="text" id="creditAmount${i.count}" name="creditAmount${i.count}" value="${adReCre.creditAmount}" onkeyup="insertCommas(this)" onfocusout="calculate(this)"></td>
                                         <td>
                                             <center>
-                                                <a id="expenButtonRemove${i.count}" name="expenButtonRemove${i.count}" onclick="deleteAdvanceReceiveCreditConfirm('${adReCre.id}')"  data-toggle="modal">
+                                                <a id="expenButtonRemove${i.count}" name="expenButtonRemove${i.count}" onclick="deleteAdvanceReceiveCreditConfirm('${adReCre.id}','${i.count}')"  data-toggle="modal">
                                                 <span id="expenSpanEdit${i.count}" name="expenSpanEdit${i.count}" class="glyphicon glyphicon-remove deleteicon"></span>
                                                 </a>
                                             </center>
@@ -319,6 +329,11 @@
                                     </c:forEach> 
                                 </tbody>
                             </table>
+                            <div id="tr_CreditTableAddRow" class="text-center hide" style="padding-top: 10px">
+                                <a class="btn btn-success" onclick="addNewRowCreditTable()">
+                                    <i class="glyphicon glyphicon-plus"></i> Add
+                                </a>
+                            </div>
                         </div>
                         <div class="col-sm-12"><br></div>
                         <div class="row text-center" >
@@ -328,8 +343,8 @@
                                     <i class="fa fa-save"></i> Save
                                 </button>
                             </div> 
-                            <div class="col-xs-2 text-right" style="width: 100px;" >
-                                <button type="button" id="ButtonNew" name="ButtonNew" class="btn btn-primary">
+                            <div class="col-xs-2 text-left" style="width: 100px;" >
+                                <button type="button" id="ButtonNew" name="ButtonNew" class="btn btn-primary" onclick="newReceiveTable()">
                                     <i class="fa fa-plus"></i> New             
                                 </button>
                             </div>
@@ -476,15 +491,32 @@
                                             
 <!--Delete Receive Modal-->
 <div class="modal fade" id="delReceiveModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-title">Delete Receive Table</h4>
             </div>
-            <div class="modal-body" id="delCode">Are you sure to delete this receive table ?</div>
+            <div class="modal-body" id="delCode">Are you sure to delete this advance receive ?</div>
             <div class="modal-footer">
                 <button id="btnDelete" type="button" onclick="deleteAdvanceReceive()" class="btn btn-danger">Delete</button>
+                <button id="btnDeleteClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!--Delete Receive Modal-->
+<div class="modal fade" id="delReceiveCreditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Delete Receive Credit</h4>
+            </div>
+            <div class="modal-body" id="delCode">Are you sure to delete this advance receive credit?</div>
+            <div class="modal-footer">
+                <button id="btnDelete" type="button" onclick="deleteAdvanceReceiveCredit()" class="btn btn-danger">Delete</button>
                 <button id="btnDeleteClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
