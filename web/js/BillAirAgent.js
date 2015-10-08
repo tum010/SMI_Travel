@@ -138,142 +138,409 @@ $(document).ready(function() {
         $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
     });
         
-    $("#BillAirAgent").bootstrapValidator({
-        framework: 'bootstrap',
-        feedbackIcons: {
-            valid: 'uk-icon-check',
-            invalid: 'uk-icon-times',
-            validating: 'uk-icon-refresh'
-        },
-        fields: {
-            invoiceFromDate: {
-                trigger: 'focus keyup change',
-                validators: {
-                    date: {
-                        format: 'YYYY-MM-DD',
-                        max: 'InvoiceToDate',
-                        message: 'The Date From is not a valid'
-                    },notEmpty: {
-                        message: 'The Date To is required'
-                    }
-                }
-            },
-            InvoiceToDate: {
-                trigger: 'focus keyup change',
-                validators: {
-                    date: {
-                        format: 'YYYY-MM-DD',
-                        min: 'invoiceFromDate',
-                        message: 'The Date To is not a valid'
-                    },notEmpty: {
-                        message: 'The Date To is required'
-                    }
-                }
-            },
-            issueFrom: {
-                trigger: 'focus keyup change',
-                validators: {
-                    date: {
-                        format: 'YYYY-MM-DD',
-                        min: 'issueTo',
-                        message: 'The Date To is not a valid'
-                    }
-                }
-            },
-            issueTo: {
-                trigger: 'focus keyup change',
-                validators: {
-                    date: {
-                        format: 'YYYY-MM-DD',
-                        min: 'issueFrom',
-                        message: 'The Date To is not a valid'
-                    }
-                }
-            },
-            refundFrom: {
-                trigger: 'focus keyup change',
-                validators: {
-                    date: {
-                        format: 'YYYY-MM-DD',
-                        min: 'refundTo',
-                        message: 'The Date To is not a valid'
-                    }
-                }
-            },
-            refundTo: {
-                trigger: 'focus keyup change',
-                validators: {
-                    date: {
-                        format: 'YYYY-MM-DD',
-                        min: 'refundFrom',
-                        message: 'The Date To is not a valid'
-                    }
-                }
-            }
-        }
-    }).on('success.field.fv', function (e, data) {
-        if (data.field === 'invoiceFromDate' && data.fv.isValidField('InvoiceToDate') === false) {
-                data.fv.revalidateField('InvoiceToDate');
-        }
-        if (data.field === 'InvoiceToDate' && data.fv.isValidField('invoiceFromDate') === false) {
-            data.fv.revalidateField('invoiceFromDate');
-        }
-        
-        if (data.field === 'issueFrom' && data.fv.isValidField('issueTo') === false) {
-                data.fv.revalidateField('issueTo');
-        }
-        if (data.field === 'issueTo' && data.fv.isValidField('issueFrom') === false) {
-            data.fv.revalidateField('issueFrom');
-        }
-        
-        if (data.field === 'refundFrom' && data.fv.isValidField('refundTo') === false) {
-                data.fv.revalidateField('refundTo');
-        }
-        if (data.field === 'refundTo' && data.fv.isValidField('refundFrom') === false) {
-            data.fv.revalidateField('refundFrom');
-        }
+//    $("#BillAirAgent").bootstrapValidator({
+//        framework: 'bootstrap',
+//        feedbackIcons: {
+//            valid: 'uk-icon-check',
+//            invalid: 'uk-icon-times',
+//            validating: 'uk-icon-refresh'
+//        },
+//        fields: {
+//            invoiceFromDate: {
+//                trigger: 'focus keyup change',
+//                validators: {
+//                    date: {
+//                        format: 'YYYY-MM-DD',
+//                        max: 'InvoiceToDate',
+//                        message: 'The Date From is not a valid'
+//                    }
+//                }
+//            },
+//            InvoiceToDate: {
+//                trigger: 'focus keyup change',
+//                validators: {
+//                    date: {
+//                        format: 'YYYY-MM-DD',
+//                        min: 'invoiceFromDate',
+//                        message: 'The Date To is not a valid'
+//                    }
+//                }
+//            },
+//            issueFrom: {
+//                trigger: 'focus keyup change',
+//                validators: {
+//                    date: {
+//                        format: 'YYYY-MM-DD',
+//                        min: 'issueTo',
+//                        message: 'The Date To is not a valid'
+//                    }
+//                }
+//            },
+//            issueTo: {
+//                trigger: 'focus keyup change',
+//                validators: {
+//                    date: {
+//                        format: 'YYYY-MM-DD',
+//                        min: 'issueFrom',
+//                        message: 'The Date To is not a valid'
+//                    }
+//                }
+//            },
+//            refundFrom: {
+//                trigger: 'focus keyup change',
+//                validators: {
+//                    date: {
+//                        format: 'YYYY-MM-DD',
+//                        min: 'refundTo',
+//                        message: 'The Date To is not a valid'
+//                    }
+//                }
+//            },
+//            refundTo: {
+//                trigger: 'focus keyup change',
+//                validators: {
+//                    date: {
+//                        format: 'YYYY-MM-DD',
+//                        min: 'refundFrom',
+//                        message: 'The Date To is not a valid'
+//                    }
+//                }
+//            }
+//        }
+//    }).on('success.field.fv', function (e, data) {
+//        if (data.field === 'invoiceFromDate' && data.fv.isValidField('InvoiceToDate') === false) {
+//                data.fv.revalidateField('InvoiceToDate');
+//        }
+//        if (data.field === 'InvoiceToDate' && data.fv.isValidField('invoiceFromDate') === false) {
+//            data.fv.revalidateField('invoiceFromDate');
+//        }
+//        
+//        if (data.field === 'issueFrom' && data.fv.isValidField('issueTo') === false) {
+//                data.fv.revalidateField('issueTo');
+//        }
+//        if (data.field === 'issueTo' && data.fv.isValidField('issueFrom') === false) {
+//            data.fv.revalidateField('issueFrom');
+//        }
+//        
+//        if (data.field === 'refundFrom' && data.fv.isValidField('refundTo') === false) {
+//                data.fv.revalidateField('refundTo');
+//        }
+//        if (data.field === 'refundTo' && data.fv.isValidField('refundFrom') === false) {
+//            data.fv.revalidateField('refundFrom');
+//        }
+//    });
+//    $('#DateFrom').datetimepicker().on('dp.change', function (e) {
+//        $('#BillAirAgent').bootstrapValidator('revalidateField', 'invoiceFromDate');
+//    });
+//    $('#DateTo').datetimepicker().on('dp.change', function (e) {
+//        $('#BillAirAgent').bootstrapValidator('revalidateField', 'InvoiceToDate');
+//    });
+//    
+//    $('#DateFromIssue').datetimepicker().on('dp.change', function (e) {
+//        $('#BillAirAgent').bootstrapValidator('revalidateField', 'issueFrom');
+//    });
+//    $('#DateToIssue').datetimepicker().on('dp.change', function (e) {
+//        $('#BillAirAgent').bootstrapValidator('revalidateField', 'issueTo');
+//    });
+//    
+//    $('#DateFromRefund').datetimepicker().on('dp.change', function (e) {
+//        $('#BillAirAgent').bootstrapValidator('revalidateField', 'refundFrom');
+//    });
+//    $('#DateToRefund').datetimepicker().on('dp.change', function (e) {
+//        $('#BillAirAgent').bootstrapValidator('revalidateField', 'refundTo');
+//    });
+    $('.invfromdate').datetimepicker().change(function(){                          
+        checkInvFromDateField();
     });
-    $('#DateFrom').datetimepicker().on('dp.change', function (e) {
-        $('#BillAirAgent').bootstrapValidator('revalidateField', 'invoiceFromDate');
+    $('.invtodate').datetimepicker().change(function(){                          
+        checkInvToDateField();
     });
-    $('#DateTo').datetimepicker().on('dp.change', function (e) {
-            $('#BillAirAgent').bootstrapValidator('revalidateField', 'InvoiceToDate');
+    $('.issuefromdate').datetimepicker().change(function(){                          
+        checkIssueFromDateField();
+    });
+    $('.issuetodate').datetimepicker().change(function(){                          
+        checkIssueToDateField();
     });
     
-    $('#DateFromIssue').datetimepicker().on('dp.change', function (e) {
-        $('#BillAirAgent').bootstrapValidator('revalidateField', 'issueFrom');
+    $('.refundfromdate').datetimepicker().change(function(){                          
+        checkRefundFromDateField();
     });
-    $('#DateToIssue').datetimepicker().on('dp.change', function (e) {
-            $('#BillAirAgent').bootstrapValidator('revalidateField', 'issueTo');
+    $('.refundtodate').datetimepicker().change(function(){                          
+        checkRefundToDateField();
     });
-    
-    $('#DateFromRefund').datetimepicker().on('dp.change', function (e) {
-        $('#BillAirAgent').bootstrapValidator('revalidateField', 'refundFrom');
-    });
-    $('#DateToRefund').datetimepicker().on('dp.change', function (e) {
-            $('#BillAirAgent').bootstrapValidator('revalidateField', 'refundTo');
-    });
-
 });
 
 function printBillAirAgent(){
-    var reportType = document.getElementById("reportType").value;
-    var ticketType = document.getElementById("ticketType").value;
-    var ticketBuy = document.getElementById("ticketBuy").value;
-    var airline = document.getElementById("airline").value;
-    var airlineCode = document.getElementById("airlineCode").value;
-    var from = document.getElementById("startdate").value;
-    var to = document.getElementById("enddate").value;
-    var department = document.getElementById("department").value;
-    var salebyUser = document.getElementById("salebyUser").value;
-    var termPay = document.getElementById("termPay").value;
-
-    if(reportType == 1){
-        window.open("Excel.smi?name=TicketFareAirlineReport&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&dateFrom=" + from + "&dateTo=" + to + "&department=" + department + "&staff=" + salebyUser + "&termPay=" + termPay);
-    }else if(reportType == 2){
-        window.open("Excel.smi?name=TicketFareInvoicReport&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&dateFrom=" + from + "&dateTo=" + to + "&department=" + department + "&staff=" + salebyUser + "&termPay=" + termPay);
-    }else if(reportType == 3){
-        window.open("Excel.smi?name=TicketFareAgentReport&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&dateFrom=" + from + "&dateTo=" + to + "&department=" + department + "&staff=" + salebyUser + "&termPay=" + termPay);
+//    var reportType = document.getElementById("reportType").value;
+//    var ticketType = document.getElementById("ticketType").value;
+//    var ticketBuy = document.getElementById("ticketBuy").value;
+//    var airline = document.getElementById("airline").value;
+//    var airlineCode = document.getElementById("airlineCode").value;
+//    var from = document.getElementById("startdate").value;
+//    var to = document.getElementById("enddate").value;
+//    var department = document.getElementById("department").value;
+//    var salebyUser = document.getElementById("salebyUser").value;
+//    var termPay = document.getElementById("termPay").value;
+    var invoiceFrom = document.getElementById("invoiceFromDate").value;
+    var invoiceTo = document.getElementById("InvoiceToDate").value;
+    var issueFrom = document.getElementById("issueFrom").value;
+    var issueTo = document.getElementById("issueTo").value;
+    var refundFrom = document.getElementById("refundFrom").value;
+    var refundFrom = document.getElementById("refundTo").value;
+    
+    if((invoiceFrom !== '') && (invoiceTo !== '')){
+//        alert("print !!!!");
+    }else if((issueFrom !== '') && (issueTo !== '')){
+//        alert("print !!!!");
+    }else if((refundFrom !== '') && (refundFrom !== '')){
+//        alert("print !!!!");
+    }else {
+        validateDate();  
     }
+    
+//    if(reportType == 1){
+//        window.open("Excel.smi?name=TicketFareAirlineReport&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&dateFrom=" + from + "&dateTo=" + to + "&department=" + department + "&staff=" + salebyUser + "&termPay=" + termPay);
+//    }else if(reportType == 2){
+//        window.open("Excel.smi?name=TicketFareInvoicReport&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&dateFrom=" + from + "&dateTo=" + to + "&department=" + department + "&staff=" + salebyUser + "&termPay=" + termPay);
+//    }else if(reportType == 3){
+//        window.open("Excel.smi?name=TicketFareAgentReport&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&dateFrom=" + from + "&dateTo=" + to + "&department=" + department + "&staff=" + salebyUser + "&termPay=" + termPay);
+//    }
 
 }
+
+function checkInvFromDateField(){
+    var InputToDate = document.getElementById("InvoiceToDate");
+    var inputFromDate = document.getElementById("invoiceFromDate");
+    if(InputToDate.value === '' && inputFromDate.value === ''){
+        $("#invfromdatepanel").removeClass("has-error");
+        $("#invtodatepanel").removeClass("has-error");  
+        $("#printbutton").removeClass("disabled");
+    }else if(inputFromDate.value === '' || InputToDate.value === ''){
+        $("#invfromdatepanel").removeClass("has-success");
+        $("#invtodatepanel").removeClass("has-success");
+        $("#invfromdatepanel").addClass("has-error");
+        $("#invtodatepanel").addClass("has-error");
+        $("#printbutton").addClass("disabled");
+    } else {
+        $("#invfromdatepanel").removeClass("has-error");
+        $("#invtodatepanel").removeClass("has-error");
+        $("#issuefromdatepanel").removeClass("has-error");
+        $("#issuetodatepanel").removeClass("has-error");
+        $("#refundfromdatepanel").removeClass("has-error");
+        $("#refundtodatepanel").removeClass("has-error");
+        $("#invfromdatepanel").addClass("has-success");
+        $("#invtodatepanel").addClass("has-success");
+        $("#printbutton").removeClass("disabled");
+        checkDateValue("invfrom","");
+    }
+}
+    
+function checkInvToDateField(){
+    var InputToDate = document.getElementById("InvoiceToDate");
+    var inputFromDate = document.getElementById("invoiceFromDate");
+    if(InputToDate.value === '' && inputFromDate.value === ''){
+        $("#invfromdatepanel").removeClass("has-error");
+        $("#invtodatepanel").removeClass("has-error");  
+        $("#printbutton").removeClass("disabled");
+    }else if(inputFromDate.value === '' || InputToDate.value === ''){
+        $("#invfromdatepanel").removeClass("has-success");
+        $("#invtodatepanel").removeClass("has-success");
+        $("#invfromdatepanel").addClass("has-error");
+        $("#invtodatepanel").addClass("has-error");
+        $("#printbutton").addClass("disabled");
+    } else {
+        $("#invfromdatepanel").removeClass("has-error");
+        $("#invtodatepanel").removeClass("has-error");
+        $("#issuefromdatepanel").removeClass("has-error");
+        $("#issuetodatepanel").removeClass("has-error");
+        $("#refundfromdatepanel").removeClass("has-error");
+        $("#refundtodatepanel").removeClass("has-error");
+        $("#invfromdatepanel").addClass("has-success");
+        $("#invtodatepanel").addClass("has-success");
+        $("#printbutton").removeClass("disabled");
+        checkDateValue("invto","");
+    }       
+}
+
+function checkIssueFromDateField(){
+    var InputToDate = document.getElementById("issueTo");
+    var inputFromDate = document.getElementById("issueFrom");
+    if(InputToDate.value === '' && inputFromDate.value === ''){
+        $("#issuefromdatepanel").removeClass("has-error");
+        $("#issuetodatepanel").removeClass("has-error");  
+        $("#printbutton").removeClass("disabled");
+    }else if(inputFromDate.value === '' || InputToDate.value === ''){
+        $("#issuefromdatepanel").removeClass("has-success");
+        $("#issuetodatepanel").removeClass("has-success");
+        $("#issuefromdatepanel").addClass("has-error");
+        $("#issuetodatepanel").addClass("has-error");
+        $("#printbutton").addClass("disabled");
+    } else {
+        $("#invfromdatepanel").removeClass("has-error");
+        $("#invtodatepanel").removeClass("has-error");
+        $("#issuefromdatepanel").removeClass("has-error");
+        $("#issuetodatepanel").removeClass("has-error");
+        $("#refundfromdatepanel").removeClass("has-error");
+        $("#refundtodatepanel").removeClass("has-error");
+        $("#issuefromdatepanel").addClass("has-success");
+        $("#issuetodatepanel").addClass("has-success");
+        $("#printbutton").removeClass("disabled");
+        checkDateValue("issuefrom","");
+    }
+}
+    
+function checkIssueToDateField(){
+    var InputToDate = document.getElementById("issueTo");
+    var inputFromDate = document.getElementById("issueFrom");
+    if(InputToDate.value === '' && inputFromDate.value === ''){
+        $("#issuefromdatepanel").removeClass("has-error");
+        $("#issuetodatepanel").removeClass("has-error");  
+        $("#printbutton").removeClass("disabled");
+    }else if(inputFromDate.value === '' || InputToDate.value === ''){
+        $("#issuefromdatepanel").removeClass("has-success");
+        $("#issuetodatepanel").removeClass("has-success");
+        $("#issuefromdatepanel").addClass("has-error");
+        $("#issuetodatepanel").addClass("has-error");
+        $("#printbutton").addClass("disabled");
+    } else {
+        $("#invfromdatepanel").removeClass("has-error");
+        $("#invtodatepanel").removeClass("has-error");
+        $("#issuefromdatepanel").removeClass("has-error");
+        $("#issuetodatepanel").removeClass("has-error");
+        $("#refundfromdatepanel").removeClass("has-error");
+        $("#refundtodatepanel").removeClass("has-error");
+        $("#issuefromdatepanel").addClass("has-success");
+        $("#issuetodatepanel").addClass("has-success");
+        $("#printbutton").removeClass("disabled");
+        checkDateValue("issueto","");
+    }       
+}
+
+
+function checkRefundFromDateField(){
+    var InputToDate = document.getElementById("refundTo");
+    var inputFromDate = document.getElementById("refundFrom");
+    if(InputToDate.value === '' && inputFromDate.value === ''){
+        $("#refundfromdatepanel").removeClass("has-error");
+        $("#refundtodatepanel").removeClass("has-error");  
+        $("#printbutton").removeClass("disabled");
+    }else if(inputFromDate.value === '' || InputToDate.value === ''){
+        $("#refundfromdatepanel").removeClass("has-success");
+        $("#refundtodatepanel").removeClass("has-success");
+        $("#refundfromdatepanel").addClass("has-error");
+        $("#refundtodatepanel").addClass("has-error");
+        $("#printbutton").addClass("disabled");
+    } else {
+        $("#invfromdatepanel").removeClass("has-error");
+        $("#invtodatepanel").removeClass("has-error");
+        $("#issuefromdatepanel").removeClass("has-error");
+        $("#issuetodatepanel").removeClass("has-error");
+        $("#refundfromdatepanel").removeClass("has-error");
+        $("#refundtodatepanel").removeClass("has-error");
+        $("#refundfromdatepanel").addClass("has-success");
+        $("#refundtodatepanel").addClass("has-success");
+        $("#printbutton").removeClass("disabled");
+        checkDateValue("refundfrom","");
+    }
+}
+    
+function checkRefundToDateField(){
+    var InputToDate = document.getElementById("refundTo");
+    var inputFromDate = document.getElementById("refundFrom");
+    if(InputToDate.value === '' && inputFromDate.value === ''){
+        $("#refundfromdatepanel").removeClass("has-error");
+        $("#refundtodatepanel").removeClass("has-error");  
+        $("#printbutton").removeClass("disabled");
+    }else if(inputFromDate.value === '' || InputToDate.value === ''){
+        $("#refundfromdatepanel").removeClass("has-success");
+        $("#refundtodatepanel").removeClass("has-success");
+        $("#refundfromdatepanel").addClass("has-error");
+        $("#refundtodatepanel").addClass("has-error");
+        $("#printbutton").addClass("disabled");
+    } else {
+        $("#invfromdatepanel").removeClass("has-error");
+        $("#invtodatepanel").removeClass("has-error");
+        $("#issuefromdatepanel").removeClass("has-error");
+        $("#issuetodatepanel").removeClass("has-error");
+        $("#refundfromdatepanel").removeClass("has-error");
+        $("#refundtodatepanel").removeClass("has-error");
+        $("#refundfromdatepanel").addClass("has-success");
+        $("#refundtodatepanel").addClass("has-success");
+        $("#printbutton").removeClass("disabled");
+        checkDateValue("refundto","");
+    }       
+}
+
+function checkDateValue(date){
+    var inputFromDate = "";
+        var InputToDate = "";
+        if((date === 'invfrom') || (date === 'invto')){
+            inputFromDate = document.getElementById("invoiceFromDate");
+            InputToDate = document.getElementById("InvoiceToDate");
+        } else if ((date === 'issuefrom') || (date === 'issueto')){
+            inputFromDate = document.getElementById("issueFrom");
+            InputToDate = document.getElementById("issueTo");
+        } else {
+            inputFromDate = document.getElementById("refundFrom");
+            InputToDate = document.getElementById("refundTo");
+        }
+    if((inputFromDate.value !== '') && (InputToDate.value !== '')){
+        var fromDate = (inputFromDate.value).split('-');
+        var toDate = (InputToDate.value).split('-');
+        if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
+            validateDate(date,"over");
+        }
+        if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))){
+            validateDate(date,"over");
+        }
+        if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) >= (parseInt(toDate[1]))) && (parseInt(fromDate[2])) > (parseInt(toDate[2]))){
+            validateDate(date,"over");
+        }          
+    }
+}
+    
+function validateDate(date,option){
+   if(option === 'over'){
+        if(date === 'invfrom'){
+            $("#invfromdatepanel").removeClass("has-success");
+            $("#invfromdatepanel").addClass("has-error");                                 
+        }
+        if(date === 'invto'){
+            $("#invtodatepanel").removeClass("has-success");
+            $("#invtodatepanel").addClass("has-error");
+        }
+        if(date === 'issuefrom'){
+            $("#issuefromdatepanel").removeClass("has-success");
+            $("#issuefromdatepanel").addClass("has-error");
+        }
+        if(date === 'issueto'){
+            $("#issuetodatepanel").removeClass("has-success"); 
+            $("#issuetodatepanel").addClass("has-error");
+        }
+        if(date === 'refundfrom'){
+            $("#refundfromdatepanel").removeClass("has-success");
+            $("#refundfromdatepanel").addClass("has-error");
+        }
+        if(date === 'refundto'){
+            $("#refundtodatepanel").removeClass("has-success"); 
+            $("#refundtodatepanel").addClass("has-error");
+        } 
+        $("#printbutton").addClass("disabled");
+    } else {
+        $("#invfromdatepanel").removeClass("has-success");
+        $("#invtodatepanel").removeClass("has-success");
+        $("#issuefromdatepanel").removeClass("has-success");
+        $("#issuetodatepanel").removeClass("has-success"); 
+        $("#refundfromdatepanel").removeClass("has-success");
+        $("#refundtodatepanel").removeClass("has-success"); 
+        
+        $("#invfromdatepanel").addClass("has-error");
+        $("#invtodatepanel").addClass("has-error");
+        $("#issuefromdatepanel").addClass("has-error");
+        $("#issuetodatepanel").addClass("has-error");
+        $("#refundfromdatepanel").addClass("has-error");
+        $("#refundtodatepanel").addClass("has-error");
+        $("#printbutton").addClass("disabled");
+    }
+}
+    
