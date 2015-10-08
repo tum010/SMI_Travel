@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptReport" language="groovy" pageWidth="648" pageHeight="396" columnWidth="613" leftMargin="7" rightMargin="28" topMargin="38" bottomMargin="28" uuid="dc4cbcaf-4345-4a4d-b4b9-fb43ae05e9b5">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptReport" language="groovy" pageWidth="648" pageHeight="396" columnWidth="592" leftMargin="28" rightMargin="28" topMargin="38" bottomMargin="28" uuid="dc4cbcaf-4345-4a4d-b4b9-fb43ae05e9b5">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="145"/>
-	<property name="ireport.y" value="188"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="192"/>
 	<field name="recto" class="java.lang.String"/>
 	<field name="recadd" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -380,7 +380,7 @@
 				<textFieldExpression><![CDATA[($F{tax} != null && !"null".equals($F{tax}) && $F{tax}.length() > 0) ? new BigDecimal($F{tax}) : ""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="101" y="55" width="320" height="32" uuid="c3db3df8-d8ba-40df-95bb-9e4ec2250f62"/>
+				<reportElement x="99" y="54" width="320" height="32" uuid="c3db3df8-d8ba-40df-95bb-9e4ec2250f62"/>
 				<textElement textAlignment="Left">
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
