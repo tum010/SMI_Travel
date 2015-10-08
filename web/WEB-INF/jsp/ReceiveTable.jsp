@@ -3,7 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<link href="css/jquery-ui.css" rel="stylesheet">
 <c:set var="customerAgentInfoList" value="${requestScope['customerAgentInfoList']}" />
 <c:set var="mAccpayList" value="${requestScope['mAccpayList']}" />
 <c:set var="mCreditBankList" value="${requestScope['mCreditBankList']}" />
@@ -312,9 +312,9 @@
                                         </td>
                                         <td><input class="form-control" type="text" id="creditNo${i.count}" name="creditNo${i.count}" value="${adReCre.creditNo}"></td>
                                         <td>
-                                            <div class="input-group daydatepicker" id="daydatepicker">
-                                                <input name="creditExpire${i.count}" id="creditExpire${i.count}" type="text" class="form-control" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${adReCre.creditExpire}" />
-                                                <span class="input-group-addon" onclick="AddrowBySelect()"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            <div class="input-group daydatepicker" id="daydatepicker${i.count}">
+                                                <input type="text" name="creditExpire${i.count}" id="creditExpire${i.count}" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${adReCre.creditExpire}" />
+                                                <span class="input-group-addon spandate" style="padding : 1px 10px;"><span class="glyphicon-calendar glyphicon"></span></span>
                                             </div>
                                         </td>
                                         <td><input class="form-control numerical" style="text-align:right;" type="text" id="creditAmount${i.count}" name="creditAmount${i.count}" value="${adReCre.creditAmount}" onkeyup="insertCommas(this)" onfocusout="calculate(this)"></td>

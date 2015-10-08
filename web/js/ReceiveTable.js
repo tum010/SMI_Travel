@@ -16,6 +16,7 @@ $(document).ready(function() {
         $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
 
     });
+    
     $(".money").mask('000,000,000,000.00', {reverse: true});
 
     $('#SearchReceiveTable').dataTable({bJQueryUI: true,
@@ -384,9 +385,9 @@ function AddRowCreditTable(row) {
             '<td><input class="form-control" type="text" id="creditNo' + row + '" name="creditNo' + row + '" value=""></td>' +
             '<td>' +
             '<div class="input-group daydatepicker" id="daydatepicker' + row + '">' +
-            '<input name="creditExpire' + row + '" id="creditExpire' + row + '" type="text" class="form-control" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />' +
-            '<span class="input-group-addon" onclick="AddrowBySelect(\'' + row + '\')"><i class="glyphicon glyphicon-calendar"></i></span>' +
-            '</div>' +
+            '<input type="text" name="creditExpire' + row + '" id="creditExpire' + row + '" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />' +
+            '<span class="input-group-addon spandate" style="padding : 1px 10px;" onclick="AddrowBySelect(\'' + row + '\')"><span class="glyphicon-calendar glyphicon"></span></span>' +
+            '</div>' +            
             '</td>' +
             '<td><input class="form-control numerical" style="text-align:right;" type="text" id="creditAmount' + row + '" name="creditAmount' + row + '" value="" onkeyup="insertCommas(this)" onfocusout="calculate(this)"></td>' +
             '<td>' +

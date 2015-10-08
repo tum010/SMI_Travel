@@ -147,7 +147,8 @@ public class ReceiveTableImpl implements ReceiveTableDao{
 //        }
         AdvanceReceiveCredit  advanceReceiveCredit = new AdvanceReceiveCredit();
         advanceReceiveCredit = (AdvanceReceiveCredit) advanceReceive.getAdvanceReceiveCredits().get(0);
-        String a = deleteAdvanceReceiveCredit(advanceReceiveCredit,"parent");
+        String delete = deleteAdvanceReceiveCredit(advanceReceiveCredit,"parent");
+        System.out.println("Delete : "+delete);
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
