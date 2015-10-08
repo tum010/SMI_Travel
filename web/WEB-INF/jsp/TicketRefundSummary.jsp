@@ -121,7 +121,7 @@
                     <div class="row">
                         <div class="col-md-10">
                             <div class="form-group" >
-                                <label class="col-md-1 control-label text-right" style="width: 330px">Receive</label>
+                                <label class="col-md-1 control-label text-right" style="width: 330px">Paid</label>
                                 <div class="col-md-1" style="width: 170px">  
                                     <div class="form-group" id="paidfromdatepanel">
                                         <div class='input-group date paidfromdate' id='paidDateFrom'>
