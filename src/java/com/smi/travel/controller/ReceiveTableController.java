@@ -56,7 +56,6 @@ public class ReceiveTableController extends SMITravelController {
         String action = request.getParameter("action");
         String inputDate = request.getParameter("InputDate");
         String selectStatus = request.getParameter("SelectStatus");
-        String deleteReceiveTableId = request.getParameter("deleteReceiveTableId");
         
         String receiveDate = request.getParameter("receiveDate");
         String vatType = request.getParameter("vatType");
@@ -76,6 +75,7 @@ public class ReceiveTableController extends SMITravelController {
         String createBy = request.getParameter("createBy");
         String createDate = request.getParameter("createDate");
         String countCredit = request.getParameter("countCredit");
+        String receiveCreditId = request.getParameter("receiveCreditId");
         
         if("search".equalsIgnoreCase(action)){
             List<AdvanceReceive> advanceReceiveList = receiveTableService.searchAdvanceReceive(inputDate,selectStatus,"search");
@@ -128,10 +128,12 @@ public class ReceiveTableController extends SMITravelController {
             if("success".equalsIgnoreCase(result)){
                 List<AdvanceReceive> advanceReceiveList = receiveTableService.searchAdvanceReceive(receiveDate,vatType,"success");
                 request.setAttribute(ADVANCERECEIVELIST, advanceReceiveList);
+                request.setAttribute("inputDate", receiveDate);
+                request.setAttribute("selectStatus", vatType);
             }
             
         }else if("edit".equalsIgnoreCase(action)){
-            List<AdvanceReceive> advanceReceiveList = receiveTableService.searchAdvanceReceive(inputDate,selectStatus,receiveId);
+            List<AdvanceReceive> advanceReceiveList = receiveTableService.searchAdvanceReceive("","",receiveId);
             request.setAttribute(ADVANCERECEIVE, advanceReceiveList.get(0));
             if(advanceReceiveList.get(0).getAdvanceReceiveCredits() != null){
                 List<AdvanceReceiveCredit> advanceReceiveCreditList = new ArrayList<AdvanceReceiveCredit>();
@@ -141,8 +143,25 @@ public class ReceiveTableController extends SMITravelController {
                        
         }else if("deleteAdvanceReceive".equalsIgnoreCase(action)){
             AdvanceReceive advanceReceive = new AdvanceReceive();
-            advanceReceive.setId(deleteReceiveTableId);
-            String deleteResult = receiveTableService.deleteAdvanceReceive(advanceReceive);
+            AdvanceReceiveCredit advanceReceiveCredit = new AdvanceReceiveCredit();
+            advanceReceive.setId(receiveId);          
+            advanceReceive.setAdvanceReceiveCredits(new ArrayList<AdvanceReceiveCredit>());
+            advanceReceiveCredit.setAdvanceReceive(advanceReceive);
+            advanceReceive.getAdvanceReceiveCredits().add(advanceReceiveCredit);
+            String result = receiveTableService.deleteAdvanceReceive(advanceReceive);
+            request.setAttribute(RESULT, result);
+            List<AdvanceReceive> advanceReceiveList = receiveTableService.searchAdvanceReceive(inputDate,selectStatus,"search");
+            request.setAttribute(ADVANCERECEIVELIST, advanceReceiveList);
+            request.setAttribute("inputDate", inputDate);
+            request.setAttribute("selectStatus", selectStatus);
+        }else if("deleteAdvanceReceiveCredit".equalsIgnoreCase(action)){
+            AdvanceReceiveCredit advanceReceiveCredit = new AdvanceReceiveCredit();
+            advanceReceiveCredit.setId(receiveCreditId);
+            String result = receiveTableService.deleteAdvanceReceiveCredit(advanceReceiveCredit,"child");
+            System.out.println("Delete Advance Receive Credit Result : "+result );
+            
+        }else if("new".equalsIgnoreCase(action)){
+            
         }
         
         return ReceiveTable;

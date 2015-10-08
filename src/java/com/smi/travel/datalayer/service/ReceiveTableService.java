@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.dao.ReceiveTableDao;
 import com.smi.travel.datalayer.entity.AdvanceReceive;
+import com.smi.travel.datalayer.entity.AdvanceReceiveCredit;
 import java.util.List;
 
 /**
@@ -40,6 +41,10 @@ public class ReceiveTableService {
         }else{
             return this.receiveTableDao.updateAdvanceReceive(advanceReceive);
         }                
+    }
+
+    public String deleteAdvanceReceiveCredit(AdvanceReceiveCredit advanceReceiveCredit, String option) {
+        return this.receiveTableDao.deleteAdvanceReceiveCredit(advanceReceiveCredit,option);
     }
     
 }
