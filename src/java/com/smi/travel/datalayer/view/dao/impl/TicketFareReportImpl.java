@@ -104,6 +104,25 @@ public class TicketFareReportImpl implements TicketFareReportDao {
         }else{
             staff = "ALL";
         }
+        System.out.println("Term Pay : " + termPay);
+        if("1".equalsIgnoreCase(termPay)){
+            termPay = "cash on demand";
+        }else if("2".equalsIgnoreCase(termPay)){
+            termPay = "credit 7 days";
+        }else if("3".equalsIgnoreCase(termPay)){
+            termPay = "credit 14 days";
+        }else if("4".equalsIgnoreCase(termPay)){
+            termPay = "credit card";
+        }else if("5".equalsIgnoreCase(termPay)){
+            termPay = "credit 30 days";
+        }else if("6".equalsIgnoreCase(termPay)){
+            termPay = "post date cheque";
+        }else if("7".equalsIgnoreCase(termPay)){
+            termPay = "credit 15 days";
+        }else{
+            termPay = "";
+        }
+	System.out.println("Term Pay New : " + termPay); 
         
         if((termPay != null) &&(!"".equalsIgnoreCase(termPay))){
             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
@@ -168,6 +187,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
             termPay = "credit 15 days";
         }else{
             termPay = "ALL";
+        		
         }
 			
         if("1".equalsIgnoreCase(airline)){
