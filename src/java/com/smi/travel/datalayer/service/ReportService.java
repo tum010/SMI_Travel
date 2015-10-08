@@ -256,6 +256,10 @@ public class ReportService {
         return ticketFareReportDao.getTicketFareSumAirline(typeRouting, routingDetail, dateFrom, dateTo, invdateForm, invdateTo, airlineCode, passenger, agentId, department, saleBy, termPay, printby);
     }
     
+    public List getSumAirlinePax(String typeRouting,String routingDetail,String dateFrom,String dateTo,String invdateForm,String invdateTo,String airlineCode,String passenger,String agentId,String department,String saleBy,String termPay,String printby){
+        return airlinesummaryDao.getSumAirlinePax(typeRouting, routingDetail, dateFrom, dateTo, invdateForm, invdateTo, airlineCode, passenger, agentId, department, saleBy, termPay, printby);
+    }
+    
     public List getBillAirAgentReport(){
         return billAirAgentDao.getBillAirAgentReport();
     }
@@ -520,7 +524,7 @@ public class ReportService {
     public  List listSummaryAirline(){
         return airlinesummaryDao.listSummaryAirline();
     }
-
+    
     public void setPaymentAirTicketDao(PaymentAirTicketDao paymentAirTicketDao) {
         this.paymentAirTicketDao = paymentAirTicketDao;
     }

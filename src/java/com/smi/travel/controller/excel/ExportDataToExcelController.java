@@ -39,12 +39,13 @@ public class ExportDataToExcelController  extends SMITravelController{
     private static final String ReportName = "name";
     private static final String ParaMeter = "parameter";
     private static final String SummaryAirline = "SummaryAirline";
-    private static final String TicketFareSummaryAirline = "TicketFareSummaryAirline";
+    private static final String TicketFareSummaryAirline = "TicketFareSummaryAirline"; //Ticket Summary Airline -> List Summary Airline Issue --> TK detail
     private static final String SummaryTicketAdjustCostAndIncome = "SummaryTicketAdjustCostAndIncome";
     private static final String SummaryTicketCostAndIncome = "SummaryTicketCostAndIncome";
     private static final String SummaryTicketCommissionReceive = "SummaryTicketCommissionReceive";
     private static final String RefundTicketDetail = "RefundTicketDetail";
-
+    private static final String SummaryAirlinePax = "SummaryAirlinePax"; //Ticket Summary Airline -> List Summary Airline Issue --> Summary airline
+    
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String output =  request.getParameter("output");
@@ -143,6 +144,9 @@ public class ExportDataToExcelController  extends SMITravelController{
         }else if(TicketFareSummaryAirline.equals(name)){
             System.out.println("get excel data TicketFareSummaryAirline");
             data = reportservice.getTicketFareSumAirline(typeRouting,routingDetail,issuedateFrom,issuedateTo,invdateFrom,invdateTo,airlineCode,passenger,agentId,department,staff,termPay,printby);
+        }else if(SummaryAirlinePax.equals(name)){
+            System.out.println("get excel data SummaryAirlinePax");
+            data = reportservice.getSumAirlinePax(typeRouting,routingDetail,issuedateFrom,issuedateTo,invdateFrom,invdateTo,airlineCode,passenger,agentId,department,staff,termPay,printby);
         }else if(SummaryTicketAdjustCostAndIncome.equals(name)){
             System.out.println("get excel data ap SummaryTicketAdjustCostAndIncome");
             System.out.println("Term : " + termPayt);          
