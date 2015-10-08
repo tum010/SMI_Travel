@@ -26,6 +26,62 @@ public class SummaryTicketAdjustCostAndIncome {
     private String over;
     private String litter;
     private String total_balance;
+    
+    //header
+    private String invoicedatePage;
+    private String issuedatePage;
+    private String departmentPage;
+    private String salsestaffPage;
+    private String termPayPage;
+    private String printbyPage;
+
+    public String getInvoicedatePage() {
+        return invoicedatePage;
+    }
+
+    public void setInvoicedatePage(String invoicedatePage) {
+        this.invoicedatePage = invoicedatePage;
+    }
+
+    public String getIssuedatePage() {
+        return issuedatePage;
+    }
+
+    public void setIssuedatePage(String issuedatePage) {
+        this.issuedatePage = issuedatePage;
+    }
+
+    public String getDepartmentPage() {
+        return departmentPage;
+    }
+
+    public void setDepartmentPage(String departmentPage) {
+        this.departmentPage = departmentPage;
+    }
+
+    public String getSalsestaffPage() {
+        return salsestaffPage;
+    }
+
+    public void setSalsestaffPage(String salsestaffPage) {
+        this.salsestaffPage = salsestaffPage;
+    }
+
+    public String getTermPayPage() {
+        return termPayPage;
+    }
+
+    public void setTermPayPage(String termPayPage) {
+        this.termPayPage = termPayPage;
+    }
+
+    public String getPrintbyPage() {
+        return printbyPage;
+    }
+
+    public void setPrintbyPage(String printbyPage) {
+        this.printbyPage = printbyPage;
+    }
 
     /**
      * @return the typepayment

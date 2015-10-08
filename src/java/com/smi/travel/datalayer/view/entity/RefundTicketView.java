@@ -23,6 +23,95 @@ public class RefundTicketView {
     private String  profit;					
     private String  receiveairline2;					
     private String  airlinecomm	;
+    private String refundagent;
+    private String refundnameby;
+    private String passenger;
+    private String receivedate;
+    private String paiddate;
+    private String typeprint;
+    
+    //Header
+    private String refundagentPage;
+    private String refundbyPage;
+    private String passengerPage;
+    private String selectorrefundPage;
+    private String printondatePage;
+    private String printbyPage;
+    private String receivePage;
+    private String paidPage;
+    private String typeprintPage;
+
+    public String getRefundagentPage() {
+        return refundagentPage;
+    }
+
+    public void setRefundagentPage(String refundagentPage) {
+        this.refundagentPage = refundagentPage;
+    }
+
+    public String getRefundbyPage() {
+        return refundbyPage;
+    }
+
+    public void setRefundbyPage(String refundbyPage) {
+        this.refundbyPage = refundbyPage;
+    }
+
+    public String getPassengerPage() {
+        return passengerPage;
+    }
+
+    public void setPassengerPage(String passengerPage) {
+        this.passengerPage = passengerPage;
+    }
+
+    public String getSelectorrefundPage() {
+        return selectorrefundPage;
+    }
+
+    public void setSelectorrefundPage(String selectorrefundPage) {
+        this.selectorrefundPage = selectorrefundPage;
+    }
+
+    public String getPrintondatePage() {
+        return printondatePage;
+    }
+
+    public void setPrintondatePage(String printondatePage) {
+        this.printondatePage = printondatePage;
+    }
+
+    public String getPrintbyPage() {
+        return printbyPage;
+    }
+
+    public void setPrintbyPage(String printbyPage) {
+        this.printbyPage = printbyPage;
+    }
+
+    public String getReceivePage() {
+        return receivePage;
+    }
+
+    public void setReceivePage(String receivePage) {
+        this.receivePage = receivePage;
+    }
+
+    public String getPaidPage() {
+        return paidPage;
+    }
+
+    public void setPaidPage(String paidPage) {
+        this.paidPage = paidPage;
+    }
+
+    public String getTypeprintPage() {
+        return typeprintPage;
+    }
+
+    public void setTypeprintPage(String typeprintPage) {
+        this.typeprintPage = typeprintPage;
+    } 
 
     public String getRefundno() {
         return refundno;
@@ -127,5 +216,54 @@ public class RefundTicketView {
     public void setAirlinecomm(String airlinecomm) {
         this.airlinecomm = airlinecomm;
     }
-    
+
+    public String getRefundagent() {
+        return refundagent;
+    }
+
+    public void setRefundagent(String refundagent) {
+        this.refundagent = refundagent;
+    }
+
+    public String getRefundnameby() {
+        return refundnameby;
+    }
+
+    public void setRefundnameby(String refundnameby) {
+        this.refundnameby = refundnameby;
+    }
+
+    public String getPassenger() {
+        return passenger;
+    }
+
+    public void setPassenger(String passenger) {
+        this.passenger = passenger;
+    }
+
+    public String getReceivedate() {
+        return receivedate;
+    }
+
+    public void setReceivedate(String receivedate) {
+        this.receivedate = receivedate;
+    }
+
+    public String getPaiddate() {
+        return paiddate;
+    }
+
+    public void setPaiddate(String paiddate) {
+        this.paiddate = paiddate;
+    }
+
+    public String getTypeprint() {
+        return typeprint;
+    }
+
+    public void setTypeprint(String typeprint) {
+        this.typeprint = typeprint;
+    }
+
+   
 }

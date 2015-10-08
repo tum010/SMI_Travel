@@ -45,7 +45,7 @@ public class SummaryTicketAdjustCostAndIncomeImpl implements SummaryTicketAdjust
     }
 
     @Override
-    public List<ListSummaryTicketAdjustCostAndIncome> getSummaryTicketAdjustCostAndIncome(String reportType, String invoiceFromDate, String invoiceToDate, String issueFrom, String issueTo, String paymentType, String departmentt, String salebyUser, String termPayt) {
+    public List<ListSummaryTicketAdjustCostAndIncome> getSummaryTicketAdjustCostAndIncome(String reportType, String invoiceFromDate, String invoiceToDate, String issueFrom, String issueTo, String paymentType, String departmentt, String salebyUser, String termPayt,String printby) {
          List<ListSummaryTicketAdjustCostAndIncome> listTotal = new LinkedList<ListSummaryTicketAdjustCostAndIncome>();
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
@@ -204,6 +204,32 @@ public class SummaryTicketAdjustCostAndIncomeImpl implements SummaryTicketAdjust
                 .list();
         for (Object[] B : SummaryTicketAdjustCostAndIncome) {
             SummaryTicketAdjustCostAndIncome ar = new SummaryTicketAdjustCostAndIncome();
+            //header 
+            if(invoiceFromDate != null && !"".equals(invoiceFromDate)){
+                String  invoice = ""+ invoiceFromDate + " To " + invoiceToDate;
+                ar.setInvoicedatePage(invoice);
+            }else{
+                ar.setInvoicedatePage("");
+            }
+            if(issueFrom != null && !"".equals(issueFrom)){
+                String issue = ""+ issueFrom + " To " + issueTo;
+                ar.setIssuedatePage(issue);
+            }else{
+                ar.setIssuedatePage("");
+            }
+            if(departmentt != null && !"".equals(departmentt)){
+                ar.setDepartmentPage(departmentt);
+            }else{
+                ar.setDepartmentPage("");
+            }
+            if(salebyUser != null && !"".equals(salebyUser)){
+               ar.setSalsestaffPage(salebyUser);
+            }else{
+                ar.setSalsestaffPage("");
+            }
+            
+            ar.setPrintbyPage(printby);
+            
             ar.setTypepayment(util.ConvertString(B[0]) == null ? "" : util.ConvertString(B[0]));
             ar.setTyperounting(util.ConvertString(B[1])== null ? "" : util.ConvertString(B[1]));
             ar.setPax(util.ConvertString(B[2])== null ? "" : util.ConvertString(B[2]));
@@ -270,7 +296,7 @@ public class SummaryTicketAdjustCostAndIncomeImpl implements SummaryTicketAdjust
     }
 
     @Override
-    public List<ListSummaryTicketAdjustCostAndIncome> getSummaryTicketCostAndIncome(String reportType, String invoiceFromDate, String invoiceToDate, String issueFrom, String issueTo, String paymentType, String departmentt, String salebyUser, String termPayt) {
+    public List<ListSummaryTicketAdjustCostAndIncome> getSummaryTicketCostAndIncome(String reportType, String invoiceFromDate, String invoiceToDate, String issueFrom, String issueTo, String paymentType, String departmentt, String salebyUser, String termPayt,String printby) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         Date thisDate = new Date();
@@ -282,7 +308,7 @@ public class SummaryTicketAdjustCostAndIncomeImpl implements SummaryTicketAdjust
     }
 
     @Override
-    public List<ListTicketCommissionReceive> getTicketCommissionReceive(String reportType, String invoiceFromDate, String invoiceToDate, String issueFrom, String issueTo, String paymentType, String departmentt, String salebyUser, String termPayt) {
+    public List<ListTicketCommissionReceive> getTicketCommissionReceive(String reportType, String invoiceFromDate, String invoiceToDate, String issueFrom, String issueTo, String paymentType, String departmentt, String salebyUser, String termPayt,String printby) {
            List<ListTicketCommissionReceive> listTotal = new LinkedList<ListTicketCommissionReceive>();
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
@@ -435,6 +461,32 @@ public class SummaryTicketAdjustCostAndIncomeImpl implements SummaryTicketAdjust
                 .list();
         for (Object[] B : TicketCommissionReceive) {
             TicketCommissionReceive ar = new TicketCommissionReceive();
+            
+            if(invoiceFromDate != null && !"".equals(invoiceFromDate)){
+                String  invoice = ""+ invoiceFromDate + " To " + invoiceToDate;
+                ar.setInvoicedatePage(invoice);
+            }else{
+                ar.setInvoicedatePage("");
+            }
+            if(issueFrom != null && !"".equals(issueFrom)){
+                String issue = ""+ issueFrom + " To " + issueTo;
+                ar.setIssuedatePage(issue);
+            }else{
+                ar.setIssuedatePage("");
+            }
+            if(departmentt != null && !"".equals(departmentt)){
+                ar.setDepartmentPage(departmentt);
+            }else{
+                ar.setDepartmentPage("");
+            }
+            if(salebyUser != null && !"".equals(salebyUser)){
+               ar.setSalsestaffPage(salebyUser);
+            }else{
+                ar.setSalsestaffPage("");
+            }
+            
+            ar.setPrintbyPage(printby);
+            
             ar.setTypepayment(util.ConvertString(B[0]) == null ? "" : util.ConvertString(B[0]));
             ar.setTyperounting(util.ConvertString(B[1])== null ? "" : util.ConvertString(B[1]));
             ar.setPax(util.ConvertString(B[2])== null ? "" : util.ConvertString(B[2]));

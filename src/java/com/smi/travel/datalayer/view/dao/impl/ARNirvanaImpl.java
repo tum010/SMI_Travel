@@ -201,6 +201,20 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
                 .list();
         for (Object[] B : ARNirvanaList) {
             ARNirvana ar = new ARNirvana();
+            //header
+            if(from != null && !"".equals(from)){
+                String fromm = ""+ from + " To " + to;
+                ar.setPrintofdatePage(fromm);
+            }else{
+                ar.setPrintofdatePage("");
+            }
+            
+            if(department != null && !"".equals(department)){
+               ar.setDepartmentPage(department);
+            }else{
+                ar.setDepartmentPage("");
+            }         
+            
             ar.setInvtype(util.ConvertString(B[0]));
             ar.setDepartment(util.ConvertString(B[1]));
             ar.setProducttype(util.ConvertString(B[2]));

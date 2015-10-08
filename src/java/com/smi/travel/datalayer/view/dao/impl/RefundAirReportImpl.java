@@ -9,6 +9,7 @@ package com.smi.travel.datalayer.view.dao.impl;
 import com.smi.travel.datalayer.view.dao.RefundAirReportDao;
 
 import com.smi.travel.datalayer.report.model.RefundAirReport;
+import com.smi.travel.datalayer.view.entity.RefundTicketView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -103,5 +104,158 @@ public class RefundAirReportImpl implements RefundAirReportDao{
     public void setUtilityFunction(UtilityFunction utilityFunction) {
         this.utilityFunction = utilityFunction;
     }
-    
+
+    @Override
+    public List getRefundTicketDetail(String refundagent, String refundnameby, String passenger, String receivefrom, String receiveto, String paidfrom, String paidto, String typeprint,String printby) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();  
+        Date thisdate = new Date();
+        List data = new ArrayList();
+        String querydata = "";
+        String query = "";
+        int checkQuery = 0;
+        if( refundagent != null || refundnameby != null || passenger != null || receivefrom != null || receiveto != null || paidfrom != null || paidto != null ){
+            query = "SELECT * FROM `refund_ticket_detail_view` invm  Where";
+        }else{
+            query = "SELECT * FROM `refund_ticket_detail_view` invm";
+        }
+        
+        if ((paidfrom != null )&&(!"".equalsIgnoreCase(paidto))) {
+            if ((paidto != null )&&(!"".equalsIgnoreCase(paidto))) {
+                if(checkQuery == 1){
+                     query += " and invm.paiddate  BETWEEN  '" + paidfrom + "' AND '" + paidto + "' ";
+                }else{
+                    checkQuery = 1;
+                     query += " invm.paiddate  BETWEEN  '" + paidfrom + "' AND '" + paidto + "' ";
+                }
+            }
+        }
+        if ((receivefrom != null )&&(!"".equalsIgnoreCase(receiveto))) {
+            if ((receiveto != null )&&(!"".equalsIgnoreCase(receiveto))) {
+                if(checkQuery == 1){
+                     query += " and invm.receivedate  BETWEEN  '" + receivefrom + "' AND '" + receiveto + "' ";
+                }else{
+                    checkQuery = 1;
+                     query += " invm.receivedate  BETWEEN  '" + receivefrom + "' AND '" + receiveto + "' ";
+                }
+            }
+        }
+         
+         if((refundagent != null) &&(!"".equalsIgnoreCase(refundagent))){
+            if(checkQuery == 1){
+                query += " and invm.refundagent  = " + refundagent + "' ";
+            }else{
+                checkQuery = 1;
+                query += " invm.refundagent  = " + refundagent + "' ";
+            }
+         }
+         
+         if((refundnameby != null) &&(!"".equalsIgnoreCase(refundnameby))){
+            if(checkQuery == 1){
+                query += " and invm.refundnameby  = " + refundnameby + "' ";
+            }else{
+                checkQuery = 1;
+                query += " invm.refundnameby  = " + refundnameby + "' ";
+            }
+         }
+         
+         if((passenger != null) &&(!"".equalsIgnoreCase(passenger))){
+            if(checkQuery == 1){
+                query += " and invm.passenger  LIKE  '%" + refundnameby + "%' ";
+            }else{
+                checkQuery = 1;
+                query += " invm.passenger  LIKE  '%" + refundnameby + "%' ";
+            }
+         }
+         
+        System.out.println("query : "+query);
+        
+        List<Object[]> refundTicketDetailList = session.createSQLQuery(query)      
+                .addScalar("refundno", Hibernate.STRING)				
+                .addScalar("paydate", Hibernate.STRING)					
+                .addScalar("ticketno", Hibernate.STRING)				
+                .addScalar("refundto", Hibernate.STRING)				
+                 .addScalar("refundby", Hibernate.STRING)					
+                .addScalar("sectorrefund", Hibernate.STRING)					
+                .addScalar("receiveairline", Hibernate.STRING)					
+                 .addScalar("refunddate", Hibernate.STRING)				
+                 .addScalar("paycustomer", Hibernate.STRING)					
+                 .addScalar("paydate2", Hibernate.STRING)				
+                 .addScalar("profit", Hibernate.STRING)					
+                .addScalar("receiveairline2", Hibernate.STRING)					
+                .addScalar("airlinecomm", Hibernate.STRING)
+               .addScalar("refundagent", Hibernate.STRING)
+                .addScalar("refundnameby", Hibernate.STRING)
+                .addScalar("passenger", Hibernate.STRING)
+                .addScalar("receivedate", Hibernate.STRING)
+               .addScalar("paiddate", Hibernate.STRING)
+                .list();
+        if(refundTicketDetailList != null && refundTicketDetailList.size() != 0){
+        for (Object[] B : refundTicketDetailList) {
+            RefundTicketView refund = new RefundTicketView();
+            //header
+            if(refundagent != null && !"".equals(refundagent)){
+               refund.setRefundagentPage(refundagent);
+            }else{
+                refund.setRefundagentPage("");
+            }
+            if(refundnameby != null && !"".equals(refundnameby)){
+               refund.setRefundbyPage(refundnameby);
+            }else{
+                refund.setRefundbyPage("");
+            }
+            if(passenger != null && !"".equals(passenger)){
+               refund.setPassengerPage(passenger);
+            }else{
+                refund.setPassengerPage("");
+            }
+            refund.setSelectorrefundPage("");
+            Date date = new Date();
+            SimpleDateFormat sm = new SimpleDateFormat("dd/MM/yyyy");
+            String strDate = sm.format(date);
+            refund.setPrintondatePage(strDate);
+            
+            refund.setPrintbyPage(printby);
+            
+            if(receivefrom != null && !"".equals(receivefrom)){
+                String receive = ""+ receivefrom +" To " + receiveto;
+                refund.setReceivePage(receive);
+            }else{
+                refund.setReceivePage("");
+            }
+            if(paidfrom != null && !"".equals(paidfrom)){
+                String paid = ""+ paidfrom +" To " + paidto;
+                refund.setPaidPage(paid);
+            }else{
+                refund.setPaidPage("");
+            }
+            if(typeprint != null && !"".equals(typeprint)){
+               refund.setTypeprintPage(typeprint);
+            }else{
+                refund.setTypeprintPage("");
+            }
+            
+            refund.setRefundno(util.ConvertString(B[0]));
+            refund.setPaydate(util.ConvertString(B[1]));
+            refund.setTicketno(util.ConvertString(B[2]));
+            refund.setRefundto(util.ConvertString(B[3]));
+            refund.setRefundby(util.ConvertString(B[4]));
+            refund.setSectorrefund(util.ConvertString(B[5]));
+            refund.setReceiveairline(util.ConvertString(B[6]));
+            refund.setRefunddate(util.ConvertString(B[7]));
+            refund.setPaycustomer(util.ConvertString(B[8]));
+            refund.setPaydate2(util.ConvertString(B[9]));
+            refund.setProfit(util.ConvertString(B[10]));
+            refund.setReceiveairline2(util.ConvertString(B[11]));
+            refund.setAirlinecomm(util.ConvertString(B[12]));
+            refund.setRefundagent(util.ConvertString(B[13]));
+            refund.setRefundnameby(util.ConvertString(B[14]));
+            refund.setPassenger(util.ConvertString(B[15]));
+            refund.setReceivedate(util.ConvertString(B[16]));
+            refund.setPaiddate(util.ConvertString(B[17]));
+            data.add(refund);
+        }   
+    }
+    return data;
+}
 }

@@ -104,6 +104,25 @@ public class TicketFareReportImpl implements TicketFareReportDao {
         }else{
             staff = "ALL";
         }
+        System.out.println("Term Pay : " + termPay);
+        if("1".equalsIgnoreCase(termPay)){
+            termPay = "cash on demand";
+        }else if("2".equalsIgnoreCase(termPay)){
+            termPay = "credit 7 days";
+        }else if("3".equalsIgnoreCase(termPay)){
+            termPay = "credit 14 days";
+        }else if("4".equalsIgnoreCase(termPay)){
+            termPay = "credit card";
+        }else if("5".equalsIgnoreCase(termPay)){
+            termPay = "credit 30 days";
+        }else if("6".equalsIgnoreCase(termPay)){
+            termPay = "post date cheque";
+        }else if("7".equalsIgnoreCase(termPay)){
+            termPay = "credit 15 days";
+        }else{
+            termPay = "";
+        }
+	System.out.println("Term Pay New : " + termPay); 
         
         if((termPay != null) &&(!"".equalsIgnoreCase(termPay))){
             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
@@ -152,22 +171,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
             department = "OUTBOUND";
         }
         
-        if("1".equalsIgnoreCase(termPay)){
-            termPay = "cash on demand";
-        }else if("2".equalsIgnoreCase(termPay)){
-            termPay = "credit 7 days";
-        }else if("3".equalsIgnoreCase(termPay)){
-            termPay = "credit 14 days";
-        }else if("4".equalsIgnoreCase(termPay)){
-            termPay = "credit card";
-        }else if("5".equalsIgnoreCase(termPay)){
-            termPay = "credit 30 days";
-        }else if("6".equalsIgnoreCase(termPay)){
-            termPay = "post date cheque";
-        }else if("7".equalsIgnoreCase(termPay)){
-            termPay = "credit 15 days";
-        }
-			
+        		
         if("1".equalsIgnoreCase(airline)){
             airline = "IATA";
         }else if("2".equalsIgnoreCase(airline)){
@@ -194,8 +198,8 @@ public class TicketFareReportImpl implements TicketFareReportDao {
             ticketFareReport.setTickettype(ticketType);
             ticketFareReport.setTicketbuy(ticketBuy);
             ticketFareReport.setAirline(airline);
-            ticketFareReport.setFrom("".equals(String.valueOf(dateFrom)) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(dateFrom))));
-            ticketFareReport.setTo("".equals(String.valueOf(dateTo)) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(dateTo))));
+            ticketFareReport.setFrom("".equals(String.valueOf(dateFrom)) || dateFrom == null ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(dateFrom))));
+            ticketFareReport.setTo("".equals(String.valueOf(dateTo)) || dateTo == null ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(dateTo))));
             ticketFareReport.setHeaddepartment(department);
             ticketFareReport.setHeadstaff(staff);
             ticketFareReport.setHeadtermpay(termPay);
@@ -362,6 +366,8 @@ public class TicketFareReportImpl implements TicketFareReportDao {
             termPay = "post date cheque";
         }else if("7".equalsIgnoreCase(termPay)){
             termPay = "credit 15 days";
+        }else{
+            termPay = "";
         }
 			
         if("1".equalsIgnoreCase(airline)){
@@ -467,7 +473,18 @@ public class TicketFareReportImpl implements TicketFareReportDao {
                 checkQuery = 1;
                 query += " `fare`.`issue_date` <= '" +dateTo +"'";
             }
-
+            
+            if(((invdateForm != null) &&(!"".equalsIgnoreCase(invdateForm))) &&((invdateTo != null) &&(!"".equalsIgnoreCase(invdateTo)))){
+                if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+                query += prefix+" `inv`.`inv_date` >= '" +invdateForm +"' and `inv`.`inv_date`  <= '"+invdateTo +"' ";
+            }else if((invdateForm != null) &&(!"".equalsIgnoreCase(invdateForm))){
+                if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+                query +=  prefix+" `inv`.`inv_date` >= '" +invdateForm +"'";
+            }else if((invdateTo != null) &&(!"".equalsIgnoreCase(invdateTo))){
+                if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+                query += prefix+" `inv`.`inv_date` <= '" +invdateTo +"'";
+            }
+            
             if((typeRouting != null) &&(!"".equalsIgnoreCase(typeRouting))){
                 if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
                 query += prefix+" fare.ticket_rounting = '"+typeRouting+"'";
@@ -484,10 +501,10 @@ public class TicketFareReportImpl implements TicketFareReportDao {
                 routingDetailtemp = "ALL";
             }
 
-    //        if((airlineCode != null) &&(!"".equalsIgnoreCase(airlineCode))){
-    //            if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
-    //            query += prefix+ " air = '"+airlineCode+"'";
-    //        }
+            if((airlineCode != null) &&(!"".equalsIgnoreCase(airlineCode))){
+                if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+                query += prefix+ " substr(`fare`.`ticket_no`, 1, 3) = '"+airlineCode+"'";
+            }
 
             if((passenger != null) &&(!"".equalsIgnoreCase(passenger))){
                 if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
