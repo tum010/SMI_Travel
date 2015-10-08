@@ -128,12 +128,60 @@ public class BillAirAgentImpl implements BillAirAgentDao{
     }
 
     @Override
-    public List getBillAirAgentReportSummary() {
+    public List getBillAirAgentReportSummary(String agentCode,String invoiceFromDate,String InvoiceToDate,String issueFrom,String issueTo,String refundFrom,String refundTo,String department,String salebyUser,String termPay,String printby) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList<BillAirAgent>();
-        String query = "SELECT * FROM `bill_air_agent`";
         
+        String query = "";
+        int checkQuery = 0;
+        if( !"".equals(agentCode)  || !"".equals(invoiceFromDate) || !"".equals(InvoiceToDate) || !"".equals(issueFrom) || !"".equals(issueTo)  || !"".equals(department)){
+            query = "SELECT * FROM `bill_air_agent  invm  Where ";
+        }else{
+            query = "SELECT * FROM `bill_air_agent  invm ";
+        }
+        
+        if ((invoiceFromDate != null )&&(!"".equalsIgnoreCase(InvoiceToDate))) {
+            if ((InvoiceToDate != null )&&(!"".equalsIgnoreCase(InvoiceToDate))) {
+                if(checkQuery == 1){
+                     query += " and invm.invdate  BETWEEN  '" + invoiceFromDate + "' AND '" + InvoiceToDate + "' ";
+                }else{
+                    checkQuery = 1;
+                     query += " invm.invdate  BETWEEN  '" + invoiceFromDate + "' AND '" + InvoiceToDate + "' ";
+                }
+            }
+        }
+        
+        if ((issueFrom != null )&&(!"".equalsIgnoreCase(issueTo))) {
+            if ((issueTo != null )&&(!"".equalsIgnoreCase(issueTo))) {
+                if(checkQuery == 1){
+                     query += " and invm.issuedate  BETWEEN  '" + issueFrom + "' AND '" + issueTo + "' ";
+                }else{
+                    checkQuery = 1;
+                     query += " invm.issuedate  BETWEEN  '" + issueFrom + "' AND '" + issueTo + "' ";
+                }
+            }
+        }
+        
+        if ((agentCode != null )&&(!"".equalsIgnoreCase(agentCode))) {
+            if(checkQuery == 1){
+                 query += " and invm.agentid  = " + agentCode + "' ";
+            }else{
+                checkQuery = 1;
+                 query += " invm.agentid  = " + agentCode + "' ";
+            }
+        }
+        
+        if ((department != null )&&(!"".equalsIgnoreCase(department))) {
+            if(checkQuery == 1){
+                 query += " and invm.department  = " + department + "' ";
+            }else{
+                checkQuery = 1;
+                 query += " invm.department  = " + department + "' ";
+            }
+        }
+        
+ 
         List<Object[]> QueryList =  session.createSQLQuery(query)
                 .addScalar("agentname",Hibernate.STRING)
                 .addScalar("agentid",Hibernate.STRING)
@@ -161,6 +209,9 @@ public class BillAirAgentImpl implements BillAirAgentDao{
                 .list();
         for (Object[] B : QueryList) {
             BillAirAgent bil = new BillAirAgent();
+            //header
+            
+            
             bil.setAgentname(util.ConvertString(B[0]));
             bil.setAgentid(util.ConvertString(B[1]));
             bil.setInvdate(util.ConvertString(B[2]));

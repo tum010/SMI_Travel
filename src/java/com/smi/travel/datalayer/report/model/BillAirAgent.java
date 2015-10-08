@@ -33,6 +33,56 @@ public class BillAirAgent {
     private String agentcom;
     private String agentcomrefund;
     private String paycusrefund;
+    
+    // header
+    private String agentPage;
+    private String issuedatePage;
+    private String invoicedatePage;
+    private String printbyPage;
+    private String paymenttypePage;
+
+    public String getPaymenttypePage() {
+        return paymenttypePage;
+    }
+
+    public void setPaymenttypePage(String paymenttypePage) {
+        this.paymenttypePage = paymenttypePage;
+    }
+    
+    
+
+    public String getAgentPage() {
+        return agentPage;
+    }
+
+    public void setAgentPage(String agentPage) {
+        this.agentPage = agentPage;
+    }
+
+    public String getIssuedatePage() {
+        return issuedatePage;
+    }
+
+    public void setIssuedatePage(String issuedatePage) {
+        this.issuedatePage = issuedatePage;
+    }
+
+    public String getInvoicedatePage() {
+        return invoicedatePage;
+    }
+
+    public void setInvoicedatePage(String invoicedatePage) {
+        this.invoicedatePage = invoicedatePage;
+    }
+
+    public String getPrintbyPage() {
+        return printbyPage;
+    }
+
+    public void setPrintbyPage(String printbyPage) {
+        this.printbyPage = printbyPage;
+    }
+   
 
     /**
      * @return the agentname

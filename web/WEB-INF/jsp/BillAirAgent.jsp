@@ -116,7 +116,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-6 control-label text-right" >Payment Type<font style="color: red">*</font></label>
+                                <label class="col-md-6 control-label text-right" >Payment Type</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <select name="paymentType" id="paymentType"  class="form-control">
@@ -165,7 +165,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-6 control-label text-right" >Department<font style="color: red">*</font></label>
+                                <label class="col-md-6 control-label text-right" >Department</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <select name="department" id="department" class="form-control">
@@ -182,7 +182,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-6 control-label text-right" >Sale By<font style="color: red">*</font></label>
+                                <label class="col-md-6 control-label text-right" >Sale By</label>
                                 <div class="col-md-3 form-group">  
                                     <div class="input-group">
                                         <input type="hidden" class="form-control" id="salebyId" name="salebyId" value=""/>
@@ -201,7 +201,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-6 control-label text-right" >Term Pay<font style="color: red">*</font></label>
+                                <label class="col-md-6 control-label text-right" >Term Pay</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <select name="termPay" id="termPay"  class="form-control">

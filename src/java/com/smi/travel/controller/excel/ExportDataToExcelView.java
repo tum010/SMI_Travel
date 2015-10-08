@@ -831,7 +831,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell41.setCellValue("Term Pay : ");
         cell41.setCellStyle(styleC21);
         HSSFCell cell42 = row4.createCell(1);
-        cell42.setCellValue(dataheader.getTermpay());
+        cell42.setCellValue(dataheader.getHeadtermpay());
         cell42.setCellStyle(styleC22);
         sheet.addMergedRegion(CellRangeAddress.valueOf("B4:D4"));
         HSSFCell cell43 = row4.createCell(4);
@@ -947,10 +947,10 @@ public class ExportDataToExcelView extends AbstractExcelView {
              TicketFareReport data = (TicketFareReport)TicketFare.get(i);
              HSSFRow row = sheet.createRow(count + i);
              HSSFCell cell0 = row.createCell(0);
-                cell0.setCellValue(data.getDocno());
+                cell0.setCellValue(data.getAir());
                 cell0.setCellStyle(styleC24);
              HSSFCell cell1 = row.createCell(1);
-                cell1.setCellValue(data.getAirline());
+                cell1.setCellValue(data.getDocno());
                 cell1.setCellStyle(styleC24);   
              HSSFCell cell2 = row.createCell(2);
                 cell2.setCellValue(data.getIssuedate());
@@ -6054,15 +6054,16 @@ public class ExportDataToExcelView extends AbstractExcelView {
                 cell9.setCellValue(listRefund.get(r-9).getPaydate2());
                 cell9.setCellStyle(styleDetailTableNumber);
             HSSFCell cell10 = row.createCell(10);
-                    BigDecimal discount = new BigDecimal(listRefund.get(r-9).getProfit());
+                BigDecimal discount = new BigDecimal(listRefund.get(r-9).getProfit());
                 cell10.setCellValue((discount != null) ? discount.doubleValue() : new BigDecimal("0").doubleValue());
                 cell10.setCellStyle(styleDetailTableNumber);
+                sheet.autoSizeColumn(10);
             HSSFCell cell11 = row.createCell(11);
-                    BigDecimal cancel = new BigDecimal(listRefund.get(r-9).getReceiveairline2());
+                BigDecimal cancel = new BigDecimal(listRefund.get(r-9).getReceiveairline2());
                 cell11.setCellValue((cancel != null) ? cancel.doubleValue() : new BigDecimal("0").doubleValue());
                 cell11.setCellStyle(styleDetailTableNumber);
             HSSFCell cell12 = row.createCell(12);
-                    BigDecimal wait = new BigDecimal(listRefund.get(r-9).getAirlinecomm());
+                BigDecimal wait = new BigDecimal(listRefund.get(r-9).getAirlinecomm());
                 cell12.setCellValue((wait != null) ? wait.doubleValue() : new BigDecimal("0").doubleValue());
                 cell12.setCellStyle(styleDetailTableNumber);
             for (int i = 0; i < listRefund.size(); i++) {
