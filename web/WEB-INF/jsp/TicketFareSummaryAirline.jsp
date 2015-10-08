@@ -16,7 +16,7 @@
     </h4>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Report</a></li>          
-        <li class="active"><a href="#">Ticket Summary Airline</a></li>
+        <li class="active"><a href="#">List Summary Airline Issue</a></li>
     </ol>
 </section>
 
@@ -29,7 +29,7 @@
 
             <div class="form-group">
                 <div class="col-md-6">
-                    <h3>Ticket Summary Airline</h3>
+                    <h3>List Summary Airline Issue</h3>
                 </div>
             </div>
             
@@ -742,6 +742,18 @@ function printTicketSummaryAirline(){
                     + "&staff=" + salebyUser 
                     + "&termPay=" + termPay);
         }else if(reportType == 2){
+            window.open("Excel.smi?name=SummaryAirlinePax&typeRouting=" + typeRouting 
+                    + "&routingDetail=" + routingDetail 
+                    + "&issuedateFrom=" + issuefrom 
+                    + "&issuedateTo=" + issueto 
+                    + "&invdateFrom=" + invFrom 
+                    + "&invdateTo=" + invTo 
+                    + "&airlineCode=" + airlineCode 
+                    + "&passenger=" + passenger
+                    + "&agentId=" + agentId 
+                    + "&department=" + department 
+                    + "&staff=" + salebyUser 
+                    + "&termPay=" + termPay);
         }else{
             $("#reporttypepanel").removeClass("has-success");
             $("#reporttypepanel").addClass("has-error");
@@ -762,6 +774,18 @@ function printTicketSummaryAirline(){
                     + "&staff=" + salebyUser 
                     + "&termPay=" + termPay);
         }else if(reportType == 2){
+            window.open("Excel.smi?name=SummaryAirlinePax&typeRouting=" + typeRouting 
+                    + "&routingDetail=" + routingDetail 
+                    + "&issuedateFrom=" + issuefrom 
+                    + "&issuedateTo=" + issueto 
+                    + "&invdateFrom=" + invFrom 
+                    + "&invdateTo=" + invTo 
+                    + "&airlineCode=" + airlineCode 
+                    + "&passenger=" + passenger
+                    + "&agentId=" + agentId 
+                    + "&department=" + department 
+                    + "&staff=" + salebyUser 
+                    + "&termPay=" + termPay);
         }else{
             $("#reporttypepanel").removeClass("has-success");
             $("#reporttypepanel").addClass("has-error");

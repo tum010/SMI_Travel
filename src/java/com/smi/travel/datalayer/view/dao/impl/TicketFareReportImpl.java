@@ -471,7 +471,18 @@ public class TicketFareReportImpl implements TicketFareReportDao {
                 checkQuery = 1;
                 query += " `fare`.`issue_date` <= '" +dateTo +"'";
             }
-
+            
+            if(((invdateForm != null) &&(!"".equalsIgnoreCase(invdateForm))) &&((invdateTo != null) &&(!"".equalsIgnoreCase(invdateTo)))){
+                if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+                query += prefix+" `inv`.`inv_date` >= '" +invdateForm +"' and `inv`.`inv_date`  <= '"+invdateTo +"' ";
+            }else if((invdateForm != null) &&(!"".equalsIgnoreCase(invdateForm))){
+                if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+                query +=  prefix+" `inv`.`inv_date` >= '" +invdateForm +"'";
+            }else if((invdateTo != null) &&(!"".equalsIgnoreCase(invdateTo))){
+                if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+                query += prefix+" `inv`.`inv_date` <= '" +invdateTo +"'";
+            }
+            
             if((typeRouting != null) &&(!"".equalsIgnoreCase(typeRouting))){
                 if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
                 query += prefix+" fare.ticket_rounting = '"+typeRouting+"'";
@@ -488,10 +499,10 @@ public class TicketFareReportImpl implements TicketFareReportDao {
                 routingDetailtemp = "ALL";
             }
 
-    //        if((airlineCode != null) &&(!"".equalsIgnoreCase(airlineCode))){
-    //            if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
-    //            query += prefix+ " air = '"+airlineCode+"'";
-    //        }
+            if((airlineCode != null) &&(!"".equalsIgnoreCase(airlineCode))){
+                if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+                query += prefix+ " substr(`fare`.`ticket_no`, 1, 3) = '"+airlineCode+"'";
+            }
 
             if((passenger != null) &&(!"".equalsIgnoreCase(passenger))){
                 if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
