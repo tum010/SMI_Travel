@@ -106,7 +106,7 @@ public class RefundAirReportImpl implements RefundAirReportDao{
     }
 
     @Override
-    public List getRefundTicketDetail(String refundagent, String refundnameby, String passenger, String receivefrom, String receiveto, String paidfrom, String paidto, String typeprint) {
+    public List getRefundTicketDetail(String refundagent, String refundnameby, String passenger, String receivefrom, String receiveto, String paidfrom, String paidto, String typeprint,String printby) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();  
         Date thisdate = new Date();
@@ -193,6 +193,47 @@ public class RefundAirReportImpl implements RefundAirReportDao{
         if(refundTicketDetailList != null && refundTicketDetailList.size() != 0){
         for (Object[] B : refundTicketDetailList) {
             RefundTicketView refund = new RefundTicketView();
+            //header
+            if(refundagent != null && !"".equals(refundagent)){
+               refund.setRefundagentPage(refundagent);
+            }else{
+                refund.setRefundagentPage("");
+            }
+            if(refundnameby != null && !"".equals(refundnameby)){
+               refund.setRefundbyPage(refundnameby);
+            }else{
+                refund.setRefundbyPage("");
+            }
+            if(passenger != null && !"".equals(passenger)){
+               refund.setPassengerPage(passenger);
+            }else{
+                refund.setPassengerPage("");
+            }
+            refund.setSelectorrefundPage("");
+            Date date = new Date();
+            SimpleDateFormat sm = new SimpleDateFormat("dd/MM/yyyy");
+            String strDate = sm.format(date);
+            refund.setPrintondatePage(strDate);
+            
+            refund.setPrintbyPage(printby);
+            
+            if(receivefrom != null && !"".equals(receivefrom)){
+                String receive = ""+ receivefrom +" To " + receiveto;
+                refund.setReceivePage(receive);
+            }else{
+                refund.setReceivePage("");
+            }
+            if(paidfrom != null && !"".equals(paidfrom)){
+                String paid = ""+ paidfrom +" To " + paidto;
+                refund.setPaidPage(paid);
+            }else{
+                refund.setPaidPage("");
+            }
+            if(typeprint != null && !"".equals(typeprint)){
+               refund.setTypeprintPage(typeprint);
+            }else{
+                refund.setTypeprintPage("");
+            }
             
             refund.setRefundno(util.ConvertString(B[0]));
             refund.setPaydate(util.ConvertString(B[1]));

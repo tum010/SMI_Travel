@@ -78,6 +78,28 @@ public class ARNirvana {
     private String rowid;
     private String accno;
     
+    //header 
+    private String printofdatePage;
+    private String departmentPage;
+
+    public String getPrintofdatePage() {
+        return printofdatePage;
+    }
+
+    public void setPrintofdatePage(String printofdatePage) {
+        this.printofdatePage = printofdatePage;
+    }
+
+    public String getDepartmentPage() {
+        return departmentPage;
+    }
+
+    public void setDepartmentPage(String departmentPage) {
+        this.departmentPage = departmentPage;
+    }
+    
+    
+    
     /**
      * @return the invtype
      */

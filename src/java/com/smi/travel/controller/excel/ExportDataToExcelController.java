@@ -186,7 +186,7 @@ public class ExportDataToExcelController  extends SMITravelController{
             String paidfrom = request.getParameter("");
             String paidto = request.getParameter("");
             String typeprint = request.getParameter("");
-            data = reportservice.getRefundTicketDetail(refundagent, refundnameby, passengername, receivefrom, receiveto, paidfrom, paidto, typeprint);
+            data = reportservice.getRefundTicketDetail(refundagent, refundnameby, passengername, receivefrom, receiveto, paidfrom, paidto, typeprint,printby);
         }
 		
         return new ModelAndView("ExportDataToExcelView",name,data).addObject(ReportName, name);
