@@ -271,29 +271,23 @@ $(document).ready(function() {
 });
 
 function printBillAirAgent(){
-//    var reportType = document.getElementById("reportType").value;
-//    var ticketType = document.getElementById("ticketType").value;
-//    var ticketBuy = document.getElementById("ticketBuy").value;
-//    var airline = document.getElementById("airline").value;
-//    var airlineCode = document.getElementById("airlineCode").value;
-//    var from = document.getElementById("startdate").value;
-//    var to = document.getElementById("enddate").value;
-//    var department = document.getElementById("department").value;
-//    var salebyUser = document.getElementById("salebyUser").value;
-//    var termPay = document.getElementById("termPay").value;
+    var agentCode = document.getElementById("agentId").value;       
     var invoiceFrom = document.getElementById("invoiceFromDate").value;
     var invoiceTo = document.getElementById("InvoiceToDate").value;
     var issueFrom = document.getElementById("issueFrom").value;
     var issueTo = document.getElementById("issueTo").value;
     var refundFrom = document.getElementById("refundFrom").value;
-    var refundFrom = document.getElementById("refundTo").value;
+    var refundTo = document.getElementById("refundTo").value;
+    var departments = document.getElementById("department").value;
+    var salebyUsers = document.getElementById("salebyUser").value;
+    var termPays = document.getElementById("termPay").value;
     
     if((invoiceFrom !== '') && (invoiceTo !== '')){
-//        alert("print !!!!");
+        window.open("Excel.smi?name=BillAirAgentSummary&agentCode=" + agentCode + "&invoiceFrom=" + invoiceFrom + "&invoiceTo=" + invoiceTo + "&issueFrom=" + issueFrom + "&issueTo=" + issueTo +  "&refundFrom=" + refundFrom + "&refundTo=" + refundTo + "&department=" + departments+ "&salebyUser=" + salebyUsers + "&termPay=" + termPays);
     }else if((issueFrom !== '') && (issueTo !== '')){
-//        alert("print !!!!");
+        window.open("Excel.smi?name=BillAirAgentSummary&agentCode=" + agentCode + "&invoiceFrom=" + invoiceFrom + "&invoiceTo=" + invoiceTo + "&issueFrom=" + issueFrom + "&issueTo=" + issueTo +  "&refundFrom=" + refundFrom + "&refundTo=" + refundTo + "&department=" + departments+ "&salebyUser=" + salebyUsers + "&termPay=" + termPays);
     }else if((refundFrom !== '') && (refundFrom !== '')){
-//        alert("print !!!!");
+    window.open("Excel.smi?name=BillAirAgentSummary&agentCode=" + agentCode + "&invoiceFrom=" + invoiceFrom + "&invoiceTo=" + invoiceTo + "&issueFrom=" + issueFrom + "&issueTo=" + issueTo + "&refundFrom=" + refundFrom + "&refundTo=" + refundTo + "&department=" + departments+ "&salebyUser=" + salebyUsers + "&termPay=" + termPays);
     }else {
         validateDate();  
     }

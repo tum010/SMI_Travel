@@ -166,6 +166,8 @@ public class TicketFareReportImpl implements TicketFareReportDao {
             termPay = "post date cheque";
         }else if("7".equalsIgnoreCase(termPay)){
             termPay = "credit 15 days";
+        }else{
+            termPay = "";
         }
 			
         if("1".equalsIgnoreCase(airline)){
@@ -194,8 +196,8 @@ public class TicketFareReportImpl implements TicketFareReportDao {
             ticketFareReport.setTickettype(ticketType);
             ticketFareReport.setTicketbuy(ticketBuy);
             ticketFareReport.setAirline(airline);
-            ticketFareReport.setFrom("".equals(String.valueOf(dateFrom)) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(dateFrom))));
-            ticketFareReport.setTo("".equals(String.valueOf(dateTo)) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(dateTo))));
+            ticketFareReport.setFrom("".equals(String.valueOf(dateFrom)) || dateFrom == null ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(dateFrom))));
+            ticketFareReport.setTo("".equals(String.valueOf(dateTo)) || dateTo == null ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(dateTo))));
             ticketFareReport.setHeaddepartment(department);
             ticketFareReport.setHeadstaff(staff);
             ticketFareReport.setHeadtermpay(termPay);
@@ -362,6 +364,8 @@ public class TicketFareReportImpl implements TicketFareReportDao {
             termPay = "post date cheque";
         }else if("7".equalsIgnoreCase(termPay)){
             termPay = "credit 15 days";
+        }else{
+            termPay = "";
         }
 			
         if("1".equalsIgnoreCase(airline)){

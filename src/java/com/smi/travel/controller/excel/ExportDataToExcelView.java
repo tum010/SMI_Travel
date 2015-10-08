@@ -836,7 +836,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell41.setCellValue("Term Pay : ");
         cell41.setCellStyle(styleC21);
         HSSFCell cell42 = row4.createCell(1);
-        cell42.setCellValue(dataheader.getTermpay());
+        cell42.setCellValue(dataheader.getHeadtermpay());
         cell42.setCellStyle(styleC22);
         sheet.addMergedRegion(CellRangeAddress.valueOf("B4:D4"));
         HSSFCell cell43 = row4.createCell(4);
@@ -952,10 +952,10 @@ public class ExportDataToExcelView extends AbstractExcelView {
              TicketFareReport data = (TicketFareReport)TicketFare.get(i);
              HSSFRow row = sheet.createRow(count + i);
              HSSFCell cell0 = row.createCell(0);
-                cell0.setCellValue(data.getDocno());
+                cell0.setCellValue(data.getAir());
                 cell0.setCellStyle(styleC24);
              HSSFCell cell1 = row.createCell(1);
-                cell1.setCellValue(data.getAirline());
+                cell1.setCellValue(data.getDocno());
                 cell1.setCellStyle(styleC24);   
              HSSFCell cell2 = row.createCell(2);
                 cell2.setCellValue(data.getIssuedate());
@@ -2277,9 +2277,9 @@ public class ExportDataToExcelView extends AbstractExcelView {
         sheet.addMergedRegion(CellRangeAddress.valueOf("A1:F1"));
 
         // Set align Text
-        HSSFCellStyle styleAlignRight = wb.createCellStyle();
+        HSSFCellStyle styleAlignRight = wb.createCellStyle(); // use
                 styleAlignRight.setAlignment(styleAlignRight.ALIGN_RIGHT);
-        HSSFCellStyle styleAlignLeft = wb.createCellStyle();
+        HSSFCellStyle styleAlignLeft = wb.createCellStyle(); // use
                 styleAlignLeft.setAlignment(styleAlignLeft.ALIGN_LEFT);
         HSSFCellStyle styleAlignCenter = wb.createCellStyle();
                 styleAlignCenter.setAlignment(styleAlignCenter.ALIGN_CENTER);
@@ -2297,17 +2297,17 @@ public class ExportDataToExcelView extends AbstractExcelView {
                 styleNumberBorderRight.setBorderRight(styleNumberBorderRight.BORDER_THIN);
 
         // line table
-        HSSFCellStyle styleAlignLeftBorderTopRight = wb.createCellStyle();
+        HSSFCellStyle styleAlignLeftBorderTopRight = wb.createCellStyle(); // use
                 styleAlignLeftBorderTopRight.setAlignment(styleAlignLeftBorderTopRight.ALIGN_LEFT);
                 styleAlignLeftBorderTopRight.setBorderTop(styleAlignLeftBorderTopRight.BORDER_THIN);
                 styleAlignLeftBorderTopRight.setBorderRight(styleAlignLeftBorderTopRight.BORDER_THIN);
-        HSSFCellStyle styleAlignLeftBorderTopLeft = wb.createCellStyle();
+        HSSFCellStyle styleAlignLeftBorderTopLeft = wb.createCellStyle(); // use
                 styleAlignLeftBorderTopLeft.setAlignment(styleAlignLeftBorderTopLeft.ALIGN_LEFT);
                 styleAlignLeftBorderTopLeft.setBorderTop(styleAlignLeftBorderTopLeft.BORDER_THIN);
                 styleAlignLeftBorderTopLeft.setBorderLeft(styleAlignLeftBorderTopLeft.BORDER_THIN);
-        HSSFCellStyle styleBorderTop = wb.createCellStyle();
+        HSSFCellStyle styleBorderTop = wb.createCellStyle(); // use
                 styleBorderTop.setBorderTop(styleBorderTop.BORDER_THIN);
-        HSSFCellStyle styleAlignRightBorderBottomRight = wb.createCellStyle();
+        HSSFCellStyle styleAlignRightBorderBottomRight = wb.createCellStyle();//use
                 styleAlignRightBorderBottomRight.setAlignment(styleAlignRightBorderBottomRight.ALIGN_LEFT);
                 styleAlignRightBorderBottomRight.setBorderBottom(styleAlignRightBorderBottomRight.BORDER_THIN);
                 styleAlignRightBorderBottomRight.setBorderRight(styleAlignRightBorderBottomRight.BORDER_THIN);
@@ -2315,15 +2315,15 @@ public class ExportDataToExcelView extends AbstractExcelView {
                 styleAlignRightBorderBottomLeft.setAlignment(styleAlignRightBorderBottomLeft.ALIGN_LEFT);
                 styleAlignRightBorderBottomLeft.setBorderBottom(styleAlignRightBorderBottomLeft.BORDER_THIN);
                 styleAlignRightBorderBottomLeft.setBorderLeft(styleAlignRightBorderBottomLeft.BORDER_THIN);
-        HSSFCellStyle styleBorderBottom = wb.createCellStyle();
+        HSSFCellStyle styleBorderBottom = wb.createCellStyle(); //use
                 styleBorderBottom.setBorderBottom(styleBorderBottom.BORDER_THIN);
-        HSSFCellStyle styleAlignRightBorderRight = wb.createCellStyle();
+        HSSFCellStyle styleAlignRightBorderRight = wb.createCellStyle(); //use
                 styleAlignRightBorderRight.setAlignment(styleAlignRightBorderRight.ALIGN_RIGHT);
                 styleAlignRightBorderRight.setBorderRight(styleAlignRightBorderRight.BORDER_THIN);
         HSSFCellStyle styleAlignLeftBorderRight = wb.createCellStyle();
                 styleAlignLeftBorderRight.setAlignment(styleAlignLeftBorderRight.ALIGN_LEFT);
                 styleAlignLeftBorderRight.setBorderRight(styleAlignLeftBorderRight.BORDER_THIN);
-        HSSFCellStyle styleAlignRightBorderLeft = wb.createCellStyle();
+        HSSFCellStyle styleAlignRightBorderLeft = wb.createCellStyle();//use
                 styleAlignRightBorderLeft.setAlignment(styleAlignRightBorderLeft.ALIGN_RIGHT);
                 styleAlignRightBorderLeft.setBorderLeft(styleAlignRightBorderLeft.BORDER_THIN);
         HSSFCellStyle styleAlignRightBorderTopBottom = wb.createCellStyle();
@@ -2355,20 +2355,25 @@ public class ExportDataToExcelView extends AbstractExcelView {
                 styleAlignRightBorderAllNumber.setBorderBottom(styleAlignRightBorderAllNumber.BORDER_THIN);
                 styleAlignRightBorderAllNumber.setBorderRight(styleAlignRightBorderAllNumber.BORDER_THIN);
                 styleAlignRightBorderAllNumber.setBorderLeft(styleAlignRightBorderAllNumber.BORDER_THIN);
+                
+        BillAirAgent bil = new BillAirAgent();
+        if((BillAirAgent != null)&&(BillAirAgent.size() != 0)){
+            bil = (BillAirAgent)BillAirAgent.get(0);
+        }
         // Row 2
         HSSFRow row2 = sheet.createRow(1);
         HSSFCell cell21 = row2.createCell(0);
         cell21.setCellValue("Agent All : ");
         cell21.setCellStyle(styleAlignRight);
         HSSFCell cell22 = row2.createCell(1);
-        cell22.setCellValue("");
+        cell22.setCellValue(bil.getAgentPage());
         cell22.setCellStyle(styleAlignLeft);
         sheet.addMergedRegion(CellRangeAddress.valueOf("B2:D2"));
         HSSFCell cell23 = row2.createCell(4);
         cell23.setCellValue("Print By : ");
         cell23.setCellStyle(styleAlignRight);
         HSSFCell cell24 = row2.createCell(5);
-        cell24.setCellValue("");
+        cell24.setCellValue(bil.getPrintbyPage());
         cell24.setCellStyle(styleAlignLeft);
 
         // Row 3
@@ -2377,14 +2382,14 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell31.setCellValue("Issue Date : ");
         cell31.setCellStyle(styleAlignRight);
         HSSFCell cell32 = row3.createCell(1);
-        cell32.setCellValue("");
+        cell32.setCellValue(bil.getIssuedatePage());
         cell32.setCellStyle(styleAlignLeft);
         sheet.addMergedRegion(CellRangeAddress.valueOf("B3:D3"));
         HSSFCell cell33 = row3.createCell(4);
         cell33.setCellValue("Page : ");
         cell33.setCellStyle(styleAlignRight);
         HSSFCell cell34 = row3.createCell(5);
-        cell34.setCellValue("");
+        cell34.setCellValue("1");
         cell34.setCellStyle(styleAlignLeft);
 
         // Row 4
@@ -2393,7 +2398,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell41.setCellValue("Invoice Date : ");
         cell41.setCellStyle(styleAlignRight);
         HSSFCell cell42 = row4.createCell(1);
-        cell42.setCellValue("");
+        cell42.setCellValue(bil.getInvoicedatePage());
         cell42.setCellStyle(styleAlignLeft);
         sheet.addMergedRegion(CellRangeAddress.valueOf("B4:D4"));
 
@@ -2404,7 +2409,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell51.setCellStyle(styleAlignRight);
         sheet.addMergedRegion(CellRangeAddress.valueOf("B5:D5"));
         HSSFCell cell52 = row5.createCell(1);
-        cell52.setCellValue("");
+        cell52.setCellValue(bil.getPaymenttypePage());
         cell52.setCellStyle(styleAlignLeft);
 
         // Body Table
@@ -2769,14 +2774,14 @@ public class ExportDataToExcelView extends AbstractExcelView {
             cell021.setCellValue("Agent All : ");
             cell021.setCellStyle(styleC21);
         HSSFCell cell022 = row02.createCell(1);
-            cell022.setCellValue("");
+            cell022.setCellValue(bil.getAgentPage());
             cell022.setCellStyle(styleC22);
             sheet1.addMergedRegion(CellRangeAddress.valueOf("B2:D2"));
         HSSFCell cell023 = row02.createCell(4);
             cell023.setCellValue("Print By : ");
             cell023.setCellStyle(styleC21);
         HSSFCell cell024 = row02.createCell(5);
-            cell024.setCellValue("");
+            cell024.setCellValue(bil.getPrintbyPage());
             cell024.setCellStyle(styleC22);
 
         // Row 3
@@ -2785,14 +2790,14 @@ public class ExportDataToExcelView extends AbstractExcelView {
             cell031.setCellValue("Issue Date : ");
             cell031.setCellStyle(styleC21);
         HSSFCell cell032 = row03.createCell(1);
-            cell032.setCellValue("");
+            cell032.setCellValue(bil.getIssuedatePage());
             cell032.setCellStyle(styleC22);
             sheet1.addMergedRegion(CellRangeAddress.valueOf("B3:D3"));
         HSSFCell cell033 = row03.createCell(4);
             cell033.setCellValue("Page : ");
             cell033.setCellStyle(styleC21);
         HSSFCell cell034 = row03.createCell(5);
-            cell034.setCellValue("");
+            cell034.setCellValue("1");
             cell034.setCellStyle(styleC22);
 
         // Row 4
@@ -2801,7 +2806,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
             cell041.setCellValue("Invoice Date : ");
             cell041.setCellStyle(styleC21);
         HSSFCell cell042 = row04.createCell(1);
-            cell042.setCellValue("");
+            cell042.setCellValue(bil.getInvoicedatePage());
             cell042.setCellStyle(styleC22);
             sheet1.addMergedRegion(CellRangeAddress.valueOf("B4:D4"));
 
@@ -2812,7 +2817,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
             cell051.setCellStyle(styleC21);
             sheet1.addMergedRegion(CellRangeAddress.valueOf("B5:D5"));
         HSSFCell cell052 = row05.createCell(1);
-            cell052.setCellValue("");
+            cell052.setCellValue(bil.getPaymenttypePage());
             cell052.setCellStyle(styleC22);
 
          // Header Table
@@ -4641,20 +4646,25 @@ public class ExportDataToExcelView extends AbstractExcelView {
         HSSFCellStyle styleC22 = wb.createCellStyle();
         styleC22.setAlignment(styleC22.ALIGN_LEFT);
 
+        List<SummaryTicketAdjustCostAndIncome> incomeTemp = listTotal.get(0).getSummaryTicketAdjustAndIncome();
+        SummaryTicketAdjustCostAndIncome income = new SummaryTicketAdjustCostAndIncome();
+        if((incomeTemp != null)&&(incomeTemp.size() != 0)){
+            income = (SummaryTicketAdjustCostAndIncome)incomeTemp.get(0);
+        }
         // Row 2
         HSSFRow row02 = sheet.createRow(1);
         HSSFCell cell021 = row02.createCell(0);
         cell021.setCellValue("Invoice Date : ");
         cell021.setCellStyle(styleC21);
         HSSFCell cell022 = row02.createCell(1);
-        cell022.setCellValue("");
+        cell022.setCellValue(income.getInvoicedatePage());
         cell022.setCellStyle(styleC22);
         sheet.addMergedRegion(CellRangeAddress.valueOf("B2:D2"));
         HSSFCell cell023 = row02.createCell(4);
         cell023.setCellValue("Print : ");
         cell023.setCellStyle(styleC21);
         HSSFCell cell024 = row02.createCell(5);
-        cell024.setCellValue("");
+        cell024.setCellValue(income.getPrintbyPage());
         cell024.setCellStyle(styleC22);
 
         // Row 3
@@ -4663,14 +4673,14 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell031.setCellValue("Issue Date : ");
         cell031.setCellStyle(styleC21);
         HSSFCell cell032 = row03.createCell(1);
-        cell032.setCellValue("");
+        cell032.setCellValue(income.getIssuedatePage());
         cell032.setCellStyle(styleC22);
         sheet.addMergedRegion(CellRangeAddress.valueOf("B3:D3"));
         HSSFCell cell033 = row03.createCell(4);
         cell033.setCellValue("Page : ");
         cell033.setCellStyle(styleC21);
         HSSFCell cell034 = row03.createCell(5);
-        cell034.setCellValue("");
+        cell034.setCellValue("1");
         cell034.setCellStyle(styleC22);
 
         // Row 4
@@ -4679,7 +4689,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell041.setCellValue("Department : ");
         cell041.setCellStyle(styleC21);
         HSSFCell cell042 = row04.createCell(1);
-        cell042.setCellValue("");
+        cell042.setCellValue(income.getDepartmentPage());
         cell042.setCellStyle(styleC22);
         sheet.addMergedRegion(CellRangeAddress.valueOf("B4:D4"));
 
@@ -4690,7 +4700,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell051.setCellStyle(styleC21);
         sheet.addMergedRegion(CellRangeAddress.valueOf("B5:D5"));
         HSSFCell cell052 = row05.createCell(1);
-        cell052.setCellValue("");
+        cell052.setCellValue(income.getSalsestaffPage());
         cell052.setCellStyle(styleC22);
 
         // Row 6
@@ -4700,7 +4710,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell611.setCellStyle(styleC21);
         sheet.addMergedRegion(CellRangeAddress.valueOf("B6:D6"));
         HSSFCell cell621 = row06.createCell(1);
-        cell621.setCellValue("");
+        cell621.setCellValue(income.getTermPayPage());
         cell621.setCellStyle(styleC22);
 
         // Header Table
@@ -5056,21 +5066,26 @@ public class ExportDataToExcelView extends AbstractExcelView {
         styleC212.setAlignment(styleC21.ALIGN_RIGHT);
         HSSFCellStyle styleC222 = wb.createCellStyle();
         styleC222.setAlignment(styleC22.ALIGN_LEFT);
-
+        
+        List<SummaryTicketAdjustCostAndIncome> incomeSumTemp = listTotal.get(0).getSummaryTicketAdjustAndIncomeSum();
+        SummaryTicketAdjustCostAndIncome incomeSum = new SummaryTicketAdjustCostAndIncome();
+        if((incomeSumTemp != null)&&(incomeSumTemp.size() != 0)){
+            incomeSum = (SummaryTicketAdjustCostAndIncome)incomeSumTemp.get(0);
+        }
         // Row 2
         HSSFRow row022 = sheet1.createRow(1);
         HSSFCell cell0212 = row022.createCell(0);
         cell0212.setCellValue("Invoice Date : ");
         cell0212.setCellStyle(styleC21);
         HSSFCell cell0222 = row022.createCell(1);
-        cell0222.setCellValue("");
+        cell0222.setCellValue(incomeSum.getInvoicedatePage());
         cell0222.setCellStyle(styleC22);
         sheet1.addMergedRegion(CellRangeAddress.valueOf("B2:D2"));
         HSSFCell cell0232 = row022.createCell(4);
         cell0232.setCellValue("Print : ");
         cell0232.setCellStyle(styleC21);
         HSSFCell cell0242 = row022.createCell(5);
-        cell0242.setCellValue("");
+        cell0242.setCellValue(incomeSum.getPrintbyPage());
         cell0242.setCellStyle(styleC22);
 
         // Row 3
@@ -5079,14 +5094,14 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell0312.setCellValue("Issue Date : ");
         cell0312.setCellStyle(styleC21);
         HSSFCell cell0322 = row032.createCell(1);
-        cell0322.setCellValue("");
+        cell0322.setCellValue(incomeSum.getIssuedatePage());
         cell0322.setCellStyle(styleC22);
         sheet1.addMergedRegion(CellRangeAddress.valueOf("B3:D3"));
         HSSFCell cell0332 = row032.createCell(4);
         cell0332.setCellValue("Page : ");
         cell0332.setCellStyle(styleC21);
         HSSFCell cell0342 = row032.createCell(5);
-        cell0342.setCellValue("");
+        cell0342.setCellValue("1");
         cell0342.setCellStyle(styleC22);
 
         // Row 4
@@ -5095,7 +5110,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell0412.setCellValue("Department : ");
         cell0412.setCellStyle(styleC21);
         HSSFCell cell0422 = row042.createCell(1);
-        cell0422.setCellValue("");
+        cell0422.setCellValue(incomeSum.getDepartmentPage());
         cell0422.setCellStyle(styleC22);
         sheet1.addMergedRegion(CellRangeAddress.valueOf("B4:D4"));
 
@@ -5106,7 +5121,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell0512.setCellStyle(styleC21);
         sheet1.addMergedRegion(CellRangeAddress.valueOf("B5:D5"));
         HSSFCell cell0522 = row052.createCell(1);
-        cell0522.setCellValue("");
+        cell0522.setCellValue(incomeSum.getSalsestaffPage());
         cell0522.setCellStyle(styleC22);
 
         // Row 6
@@ -5116,7 +5131,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell6112.setCellStyle(styleC21);
         sheet1.addMergedRegion(CellRangeAddress.valueOf("B6:D6"));
         HSSFCell cell6212 = row062.createCell(1);
-        cell6212.setCellValue("");
+        cell6212.setCellValue(incomeSum.getTermPayPage());
         cell6212.setCellStyle(styleC22);
 
         // Header Table
@@ -5506,20 +5521,23 @@ public class ExportDataToExcelView extends AbstractExcelView {
         HSSFCellStyle styleC22 = wb.createCellStyle();
         styleC22.setAlignment(styleC22.ALIGN_LEFT);
 
+        List<TicketCommissionReceive>  receiveTemp = listTotal.get(0).getTicketCommmissionReceive();
+        TicketCommissionReceive  receive = new TicketCommissionReceive();
+        receive = (TicketCommissionReceive)receiveTemp.get(0);
         // Row 2
         HSSFRow row02 = sheet.createRow(1);
         HSSFCell cell021 = row02.createCell(0);
         cell021.setCellValue("Invoice Date : ");
         cell021.setCellStyle(styleC21);
         HSSFCell cell022 = row02.createCell(1);
-        cell022.setCellValue("");
+        cell022.setCellValue(receive.getInvoicedatePage());
         cell022.setCellStyle(styleC22);
         sheet.addMergedRegion(CellRangeAddress.valueOf("B2:D2"));
         HSSFCell cell023 = row02.createCell(4);
         cell023.setCellValue("Print : ");
         cell023.setCellStyle(styleC21);
         HSSFCell cell024 = row02.createCell(5);
-        cell024.setCellValue("");
+        cell024.setCellValue(receive.getPrintbyPage());
         cell024.setCellStyle(styleC22);
 
         // Row 3
@@ -5528,14 +5546,14 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell031.setCellValue("Issue Date : ");
         cell031.setCellStyle(styleC21);
         HSSFCell cell032 = row03.createCell(1);
-        cell032.setCellValue("");
+        cell032.setCellValue(receive.getIssuedatePage());
         cell032.setCellStyle(styleC22);
         sheet.addMergedRegion(CellRangeAddress.valueOf("B3:D3"));
         HSSFCell cell033 = row03.createCell(4);
         cell033.setCellValue("Page : ");
         cell033.setCellStyle(styleC21);
         HSSFCell cell034 = row03.createCell(5);
-        cell034.setCellValue("");
+        cell034.setCellValue("1");
         cell034.setCellStyle(styleC22);
 
         // Row 4
@@ -5544,7 +5562,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell041.setCellValue("Department : ");
         cell041.setCellStyle(styleC21);
         HSSFCell cell042 = row04.createCell(1);
-        cell042.setCellValue("");
+        cell042.setCellValue(receive.getDepartmentPage());
         cell042.setCellStyle(styleC22);
         sheet.addMergedRegion(CellRangeAddress.valueOf("B4:D4"));
 
@@ -5555,7 +5573,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell051.setCellStyle(styleC21);
         sheet.addMergedRegion(CellRangeAddress.valueOf("B5:D5"));
         HSSFCell cell052 = row05.createCell(1);
-        cell052.setCellValue("");
+        cell052.setCellValue(receive.getSalsestaffPage());
         cell052.setCellStyle(styleC22);
 
         // Row 6
@@ -5565,7 +5583,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell611.setCellStyle(styleC21);
         sheet.addMergedRegion(CellRangeAddress.valueOf("B6:D6"));
         HSSFCell cell621 = row06.createCell(1);
-        cell621.setCellValue("");
+        cell621.setCellValue(receive.getTermPayPage());
         cell621.setCellStyle(styleC22);
 
         // Header Table
@@ -5786,21 +5804,24 @@ public class ExportDataToExcelView extends AbstractExcelView {
         styleC212.setAlignment(styleC21.ALIGN_RIGHT);
         HSSFCellStyle styleC222 = wb.createCellStyle();
         styleC222.setAlignment(styleC22.ALIGN_LEFT);
-
+        
+        List<TicketCommissionReceive>  receiveSumTemp = listTotal.get(0).getTicketCommmissionReceiveSum();
+        TicketCommissionReceive  receiveSum = new TicketCommissionReceive();
+        receiveSum = (TicketCommissionReceive)receiveSumTemp.get(0);
         // Row 2
         HSSFRow row022 = sheet1.createRow(1);
         HSSFCell cell0212 = row022.createCell(0);
         cell0212.setCellValue("Invoice Date : ");
         cell0212.setCellStyle(styleC21);
         HSSFCell cell0222 = row022.createCell(1);
-        cell0222.setCellValue("");
+        cell0222.setCellValue(receiveSum.getInvoicedatePage());
         cell0222.setCellStyle(styleC22);
         sheet1.addMergedRegion(CellRangeAddress.valueOf("B2:D2"));
         HSSFCell cell0232 = row022.createCell(4);
         cell0232.setCellValue("Print : ");
         cell0232.setCellStyle(styleC21);
         HSSFCell cell0242 = row022.createCell(5);
-        cell0242.setCellValue("");
+        cell0242.setCellValue(receiveSum.getPrintbyPage());
         cell0242.setCellStyle(styleC22);
 
         // Row 3
@@ -5809,14 +5830,14 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell0312.setCellValue("Issue Date : ");
         cell0312.setCellStyle(styleC21);
         HSSFCell cell0322 = row032.createCell(1);
-        cell0322.setCellValue("");
+        cell0322.setCellValue(receiveSum.getInvoicedatePage());
         cell0322.setCellStyle(styleC22);
         sheet1.addMergedRegion(CellRangeAddress.valueOf("B3:D3"));
         HSSFCell cell0332 = row032.createCell(4);
         cell0332.setCellValue("Page : ");
         cell0332.setCellStyle(styleC21);
         HSSFCell cell0342 = row032.createCell(5);
-        cell0342.setCellValue("");
+        cell0342.setCellValue("1");
         cell0342.setCellStyle(styleC22);
 
         // Row 4
@@ -5825,7 +5846,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell0412.setCellValue("Department : ");
         cell0412.setCellStyle(styleC21);
         HSSFCell cell0422 = row042.createCell(1);
-        cell0422.setCellValue("");
+        cell0422.setCellValue(receiveSum.getDepartmentPage());
         cell0422.setCellStyle(styleC22);
         sheet1.addMergedRegion(CellRangeAddress.valueOf("B4:D4"));
 
@@ -5836,7 +5857,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell0512.setCellStyle(styleC21);
         sheet1.addMergedRegion(CellRangeAddress.valueOf("B5:D5"));
         HSSFCell cell0522 = row052.createCell(1);
-        cell0522.setCellValue("");
+        cell0522.setCellValue(receiveSum.getSalsestaffPage());
         cell0522.setCellStyle(styleC22);
 
         // Row 6
@@ -5846,7 +5867,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell6112.setCellStyle(styleC21);
         sheet1.addMergedRegion(CellRangeAddress.valueOf("B6:D6"));
         HSSFCell cell6212 = row062.createCell(1);
-        cell6212.setCellValue("");
+        cell6212.setCellValue(receiveSum.getTermPayPage());
         cell6212.setCellStyle(styleC22);
 
         // Header Table
@@ -6275,15 +6296,16 @@ public class ExportDataToExcelView extends AbstractExcelView {
                 cell9.setCellValue(listRefund.get(r-9).getPaydate2());
                 cell9.setCellStyle(styleDetailTableNumber);
             HSSFCell cell10 = row.createCell(10);
-                    BigDecimal discount = new BigDecimal(listRefund.get(r-9).getProfit());
+                BigDecimal discount = new BigDecimal(listRefund.get(r-9).getProfit());
                 cell10.setCellValue((discount != null) ? discount.doubleValue() : new BigDecimal("0").doubleValue());
                 cell10.setCellStyle(styleDetailTableNumber);
+                sheet.autoSizeColumn(10);
             HSSFCell cell11 = row.createCell(11);
-                    BigDecimal cancel = new BigDecimal(listRefund.get(r-9).getReceiveairline2());
+                BigDecimal cancel = new BigDecimal(listRefund.get(r-9).getReceiveairline2());
                 cell11.setCellValue((cancel != null) ? cancel.doubleValue() : new BigDecimal("0").doubleValue());
                 cell11.setCellStyle(styleDetailTableNumber);
             HSSFCell cell12 = row.createCell(12);
-                    BigDecimal wait = new BigDecimal(listRefund.get(r-9).getAirlinecomm());
+                BigDecimal wait = new BigDecimal(listRefund.get(r-9).getAirlinecomm());
                 cell12.setCellValue((wait != null) ? wait.doubleValue() : new BigDecimal("0").doubleValue());
                 cell12.setCellStyle(styleDetailTableNumber);
             for (int i = 0; i < listRefund.size(); i++) {
