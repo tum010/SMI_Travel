@@ -104,11 +104,11 @@ public class ExportDataToExcelController  extends SMITravelController{
             data = reportservice.getTicketFareReport(ticketType,ticketBuy,airline,airlineCode,issuedateFrom,issuedateTo,department,staff,termPay,printby,invdateFrom,invdateTo);
         }else if(TicketFareInvoicReport.equalsIgnoreCase(name)){
             System.out.println("get excel data");
-            data = reportservice.getTicketFareReport(ticketType,ticketBuy,airline,airlineCode,dateFrom,dateTo,department,staff,termPay,printby,invdateFrom,invdateTo);
+            data = reportservice.getTicketFareReport(ticketType,ticketBuy,airline,airlineCode,issuedateFrom,issuedateTo,department,staff,termPay,printby,invdateFrom,invdateTo);
             System.out.println(" data size " + String.valueOf(data.size()));
         }else if(TicketFareAgentReport.equalsIgnoreCase(name)){
             System.out.println("get excel data");
-            data = reportservice.getTicketFareReport(ticketType,ticketBuy,airline,airlineCode,dateFrom,dateTo,department,staff,termPay,printby,invdateFrom,invdateTo);
+            data = reportservice.getTicketFareReport(ticketType,ticketBuy,airline,airlineCode,issuedateFrom,issuedateTo,department,staff,termPay,printby,invdateFrom,invdateTo);
         }else if(TicketFareSummaryByStaff.equalsIgnoreCase(name)){
             System.out.println("get excel data staff");
             data = reportservice.getTicketFareSumAgentStaff(ticketType, ticketBuy, airline, airlineCode, department, staff, termPay, printby, issuedateFrom, issuedateTo, invdateFrom, invdateTo,"staff");

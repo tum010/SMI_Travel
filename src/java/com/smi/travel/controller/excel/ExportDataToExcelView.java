@@ -471,8 +471,8 @@ public class ExportDataToExcelView extends AbstractExcelView {
         sheet.addMergedRegion(CellRangeAddress.valueOf("A6:D6"));
         HSSFCell cell062 = row06.createCell(4);
         if(!"".equalsIgnoreCase(dataheader.getFrom())){
-        cell062.setCellValue(dataheader.getFrom());
-        cell062.setCellStyle(styleC22);
+            cell062.setCellValue(dataheader.getFrom());
+            cell062.setCellStyle(styleC22);
         }
         HSSFCell cell063 = row06.createCell(5);
         if(!"".equalsIgnoreCase(dataheader.getTo())){

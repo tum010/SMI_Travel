@@ -167,7 +167,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
         }else if("7".equalsIgnoreCase(termPay)){
             termPay = "credit 15 days";
         }else{
-            termPay = "";
+            termPay = "ALL";
         }
 			
         if("1".equalsIgnoreCase(airline)){
@@ -365,7 +365,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
         }else if("7".equalsIgnoreCase(termPay)){
             termPay = "credit 15 days";
         }else{
-            termPay = "";
+            termPay = "ALL";
         }
 			
         if("1".equalsIgnoreCase(airline)){
