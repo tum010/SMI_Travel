@@ -17,7 +17,7 @@ import org.springframework.web.servlet.view.RedirectView;
  *
  * @author chonnasith
  */
-public class TicketProfitLostController extends SMITravelController{
+public class TicketProfitLossController extends SMITravelController{
     private static final ModelAndView TicketProfitLost = new ModelAndView("TicketProfitLost");
     private static final ModelAndView TicketProfitLost_REFRESH = new ModelAndView(new RedirectView("TicketProfitLost.smi", true));
 

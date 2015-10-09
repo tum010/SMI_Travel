@@ -10,7 +10,7 @@ package com.smi.travel.datalayer.view.entity;
  *
  * @author chonnasith
  */
-public class TicketProfitLost {
+public class TicketProfitLoss {
     private String headreport;
     private String printby;
     private String printon;

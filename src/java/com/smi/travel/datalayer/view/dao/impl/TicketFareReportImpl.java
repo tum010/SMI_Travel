@@ -10,7 +10,7 @@ import com.smi.travel.datalayer.entity.Agent;
 import com.smi.travel.datalayer.report.model.TicketFareReport;
 import com.smi.travel.datalayer.report.model.TicketFareSummaryByAgentStaff;
 import com.smi.travel.datalayer.view.dao.TicketFareReportDao;
-import com.smi.travel.datalayer.view.entity.TicketProfitLost;
+import com.smi.travel.datalayer.view.entity.TicketProfitLoss;
 import com.smi.travel.datalayer.view.entity.TicketSummaryAirlineView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
@@ -473,7 +473,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
             if(i == 0){ //pax
                 query = "select count(`fare`.`ticket_no`) AS `pax`,(case when (`fare`.`ticket_type` = 'B') then 'BSP' when (`fare`.`ticket_type` = 'A') then 'AGENT' when (`fare`.`ticket_type` = 'D') then 'DOMESTIC' when (`fare`.`ticket_type` = 'T') then 'TG' else `fare`.`ticket_type` end) AS `paymenttype`,(case when (`fare`.`ticket_rounting` = 'I') then 'INTER' when (`fare`.`ticket_rounting` = 'D') then 'DOMESTIC' when (`fare`.`ticket_rounting` = 'C') then 'CANCELLED' end) AS `typerounting`,sum(ifnull(`fare`.`ticket_fare`,0)) AS `netsales`,sum(ifnull(`fare`.`ticket_tax`,0)) AS `tax`,sum(ifnull(`fare`.`ticket_ins`,0)) AS `ins`,sum(ifnull(`fare`.`ticket_commission`,0)) AS `comms`,(case when (`fare`.`department` = 'wendy') then `fare`.`sale_price` else NULL end) AS `amountwendy`,(case when (`fare`.`department` = 'inbound') then `fare`.`sale_price` else NULL end) AS `amountinbound`,(case when (`fare`.`department` = 'outbound') then `fare`.`sale_price` else NULL end) AS `amountoutbound` from ((((`ticket_fare_airline` `fare` join `ticket_fare_invoice` `finv` on((`finv`.`ticket_fare_id` = `fare`.`id`))) join `invoice` `inv` on((`inv`.`id`  = `finv`.`invoice_id`))) left join `m_accterm` `term` on((`term`.`id` = `inv`.`term_pay`))) left join `staff` `st` on((`st`.`name` = `fare`.`owner`))) TEMPS";
             }else if(i == 1){ //detail
-                query = "select `inv`.`inv_no` AS `invno`,`inv`.`inv_date` AS `invdate`,`fare`.`department` AS `department`,`st`.`username` AS `staff`,`term`.`name` AS `termpay`,`fare`.`passenger` AS `passenger`,(case when (`fare`.`ticket_type` = 'B') then 'BSP' when (`fare`.`ticket_type` = 'A') then 'AGENT' when (`fare`.`ticket_type` = 'D') then 'DOMESTIC' when (`fare`.`ticket_type` = 'T') then 'TG' else `fare`.`ticket_type` end) AS `typepayment`,(case when (`fare`.`ticket_rounting` = 'I') then 'INTER' when (`fare`.`ticket_rounting` = 'D') then 'DOMESTIC' when (`fare`.`ticket_rounting` = 'C') then 'CANCELLED' end) AS `typerounting`,`fare`.`routing_detail` AS `rounting`,count(`fare`.`ticket_no`) AS `pax`,substr(`fare`.`ticket_no`,1,3) AS `air`,substr(`fare`.`ticket_no`,4) AS `ticketno`,`fare`.`issue_date` AS `issuedate`,sum(ifnull(`fare`.`ticket_fare`,0)) AS `netsales`,sum(ifnull(`fare`.`ticket_tax`,0)) AS `tax`,sum(ifnull(`fare`.`ticket_ins`,0)) AS `ins`,sum(ifnull(`fare`.`ticket_commission`,0)) AS `comms`,sum(ifnull(`fare`.`diff_vat`,0)) AS `diff`,(case when (`fare`.`department` = 'wendy') then `fare`.`inv_amount` else NULL end) AS `amountwendy`,(case when (`fare`.`department` = 'inbound') then `fare`.`inv_amount` else NULL end) AS `amountinbound`,(case when (`fare`.`department` = 'outbound') then `fare`.`inv_amount` else NULL end) AS `amountoutbound` , `fare`.`remark` AS `remark` from ((((`ticket_fare_airline` `fare` join `ticket_fare_invoice` `finv` on((`finv`.`ticket_fare_id` = `fare`.`id`))) join `invoice` `inv` on((`inv`.`id`  = `finv`.`invoice_id`))) left join `m_accterm` `term` on((`term`.`id` = `inv`.`term_pay`))) left join `staff` `st` on((`st`.`name` = `fare`.`owner`))) TEMPS";
+                query = "select `inv`.`inv_no` AS `invno`,`inv`.`inv_date` AS `invdate`,`fare`.`department` AS `department`,`fare`.`owner` AS `staff`,`term`.`name` AS `termpay`,`fare`.`passenger` AS `passenger`,(case when (`fare`.`ticket_type` = 'B') then 'BSP' when (`fare`.`ticket_type` = 'A') then 'AGENT' when (`fare`.`ticket_type` = 'D') then 'DOMESTIC' when (`fare`.`ticket_type` = 'T') then 'TG' else `fare`.`ticket_type` end) AS `typepayment`,(case when (`fare`.`ticket_rounting` = 'I') then 'INTER' when (`fare`.`ticket_rounting` = 'D') then 'DOMESTIC' when (`fare`.`ticket_rounting` = 'C') then 'CANCELLED' end) AS `typerounting`,`fare`.`routing_detail` AS `rounting`,count(`fare`.`ticket_no`) AS `pax`,substr(`fare`.`ticket_no`,1,3) AS `air`,substr(`fare`.`ticket_no`,4) AS `ticketno`,`mt`.`Reference No` AS `refno`,`fare`.`issue_date` AS `issuedate`,sum(ifnull(`fare`.`ticket_fare`,0)) AS `netsales`,sum(ifnull(`fare`.`ticket_tax`,0)) AS `tax`,sum(ifnull(`fare`.`ticket_ins`,0)) AS `ins`,sum(ifnull(`fare`.`ticket_commission`,0)) AS `comms`,sum(ifnull(`fare`.`diff_vat`,0)) AS `diff`,(case when (`fare`.`department` = 'wendy') then `fare`.`inv_amount` else NULL end) AS `amountwendy`,(case when (`fare`.`department` = 'inbound') then `fare`.`inv_amount` else NULL end) AS `amountinbound`,(case when (`fare`.`department` = 'outbound') then `fare`.`inv_amount` else NULL end) AS `amountoutbound`,(case when (`fare`.`pv_type` = 10) then `fare`.`inv_amount` else NULL end) AS `amount_noinvoice`,(case when (`fare`.`pv_type` = 7) then `fare`.`inv_amount` else NULL end) AS `amount_businesstrip`,(case when (`fare`.`pv_type` = 8) then `fare`.`inv_amount` else NULL end) AS `amount_annualleave`,(case when (`fare`.`pv_type` = 9) then `fare`.`inv_amount` else NULL end) AS `amount_refund`,`fare`.`remark` AS `remark` from ((((`ticket_fare_airline` `fare` join `ticket_fare_invoice` `finv` on((`finv`.`ticket_fare_id` = `fare`.`id`))) join `invoice` `inv` on((`inv`.`id` = `finv`.`invoice_id`))) left join `m_accterm` `term` on((`term`.`id` = `inv`.`term_pay`))) left join `master` `mt` on((`mt`.`id` = `fare`.`master_id`))) TEMPS";
             }else if(i == 2){ //routing
                 query = "select `fare`.`routing_detail` AS `routing`,count(0) AS `pax`,sum(`fare`.`ticket_fare`) AS `netsales`,sum(`fare`.`ticket_tax`) AS `tax`,sum(`fare`.`ticket_ins`) AS `ins`,sum(`fare`.`ticket_commission`) AS `comms`,(case when (`fare`.`department` = 'wendy') then sum(`fare`.`sale_price`) else 0 end) AS `amountwendy`,(case when (`fare`.`department` = 'inbound') then sum(`fare`.`sale_price`) else 0 end) AS `amountinbound`,(sum(`fare`.`sale_price`) - (((sum(`fare`.`ticket_fare`) + sum(`fare`.`ticket_tax`)) + sum(`fare`.`ticket_ins`)) + sum(`fare`.`ticket_commission`))) AS `diff` from ((((`ticket_fare_airline` `fare` join `ticket_fare_invoice` `finv` on((`finv`.`ticket_fare_id` = `fare`.`id`))) join `invoice` `inv` on((`inv`.`id`  = `finv`.`invoice_id`))) left join `m_accterm` `term` on((`term`.`id` = `inv`.`term_pay`))) left join `staff` `st` on((`st`.`name` = `fare`.`owner`)))  TEMPS";
             }
@@ -609,6 +609,11 @@ public class TicketFareReportImpl implements TicketFareReportDao {
                             .addScalar("amountinbound",Hibernate.STRING)
                             .addScalar("amountoutbound",Hibernate.STRING)
                             .addScalar("remark",Hibernate.STRING)
+                            .addScalar("amount_noinvoice",Hibernate.STRING)
+                            .addScalar("amount_businesstrip",Hibernate.STRING)
+                            .addScalar("amount_annualleave",Hibernate.STRING)
+                            .addScalar("amount_refund",Hibernate.STRING)
+                            .addScalar("refno",Hibernate.STRING)
                             .list();
             }else if(i == 2){ //routing
                 System.out.println(" ROUTINGGGGGGGGGGGGGGG ");
@@ -722,6 +727,11 @@ public class TicketFareReportImpl implements TicketFareReportDao {
                     ticket.setAmountwendyD(util.ConvertString(B[18]));
                     ticket.setAmountinboundD(util.ConvertString(B[19]));
                     ticket.setRemarksD(util.ConvertString(B[21]));
+                    ticket.setAmtnoinvoiceD(util.ConvertString(B[22]));
+                    ticket.setAmtbusinesstripD(util.ConvertString(B[23]));
+                    ticket.setAmtannualleaveD(util.ConvertString(B[24]));
+                    ticket.setAmtrefundD(util.ConvertString(B[25]));
+                    ticket.setRefnoD(util.ConvertString(B[26]));
                     ticket.setPage("detail");
                 }else if(i == 2){
                     ticket.setRoutingR(util.ConvertString(B[0]));
@@ -744,7 +754,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
     @Override
     public List getTicketProfitLost(String invoiceFromDate, String invoiceToDate, String printby) {
         UtilityFunction util = new UtilityFunction();
-        List data = new ArrayList<TicketProfitLost>();
+        List data = new ArrayList<TicketProfitLoss>();
         SimpleDateFormat df = new SimpleDateFormat();
         df.applyPattern("dd-MM-yyyy hh:mm");
 //        ticket.setHeaderprinton(String.valueOf(df.format(new Date())));

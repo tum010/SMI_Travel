@@ -11,11 +11,11 @@
 
 <section class="content-header"  >
     <h4>
-        <b>Report : Ticket Profit Lost </b>
+        <b>Report : Ticket Profit Loss </b>
     </h4>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Report</a></li>          
-        <li class="active"><a href="#">Ticket Profit Lost</a></li>
+        <li class="active"><a href="#">Ticket Profit Loss</a></li>
     </ol>
 </section>
 
