@@ -170,25 +170,22 @@ public class RefundAirReportImpl implements RefundAirReportDao{
          
         System.out.println("query : "+query);
         
-        List<Object[]> refundTicketDetailList = session.createSQLQuery(query)      
-                .addScalar("refundno", Hibernate.STRING)				
-                .addScalar("paydate", Hibernate.STRING)					
-                .addScalar("ticketno", Hibernate.STRING)				
-                .addScalar("refundto", Hibernate.STRING)				
-                 .addScalar("refundby", Hibernate.STRING)					
-                .addScalar("sectorrefund", Hibernate.STRING)					
-                .addScalar("receiveairline", Hibernate.STRING)					
-                 .addScalar("refunddate", Hibernate.STRING)				
-                 .addScalar("paycustomer", Hibernate.STRING)					
-                 .addScalar("paydate2", Hibernate.STRING)				
-                 .addScalar("profit", Hibernate.STRING)					
-                .addScalar("receiveairline2", Hibernate.STRING)					
-                .addScalar("airlinecomm", Hibernate.STRING)
-               .addScalar("refundagent", Hibernate.STRING)
-                .addScalar("refundnameby", Hibernate.STRING)
+        List<Object[]> refundTicketDetailList = session.createSQLQuery(query)
+                .addScalar("refundno", Hibernate.STRING)
+                .addScalar("refunddate", Hibernate.STRING)
+                .addScalar("air", Hibernate.STRING)
+                .addScalar("docno", Hibernate.STRING)
+                .addScalar("airlineagent", Hibernate.STRING)
+               .addScalar("agent", Hibernate.STRING)
                 .addScalar("passenger", Hibernate.STRING)
+               .addScalar("sectorrefund", Hibernate.STRING)
+               .addScalar("receiveairline", Hibernate.STRING)
                 .addScalar("receivedate", Hibernate.STRING)
-               .addScalar("paiddate", Hibernate.STRING)
+               .addScalar("payno", Hibernate.STRING)
+                .addScalar("export", Hibernate.STRING)
+               .addScalar("paydate", Hibernate.STRING)
+               .addScalar("paycustomer", Hibernate.STRING)
+               .addScalar("airlinecomm", Hibernate.STRING)
                 .list();
         if(refundTicketDetailList != null && refundTicketDetailList.size() != 0){
         for (Object[] B : refundTicketDetailList) {
@@ -235,24 +232,21 @@ public class RefundAirReportImpl implements RefundAirReportDao{
                 refund.setTypeprintPage("");
             }
             
-            refund.setRefundno(util.ConvertString(B[0]));
-            refund.setPaydate(util.ConvertString(B[1]));
-            refund.setTicketno(util.ConvertString(B[2]));
-            refund.setRefundto(util.ConvertString(B[3]));
-            refund.setRefundby(util.ConvertString(B[4]));
-            refund.setSectorrefund(util.ConvertString(B[5]));
-            refund.setReceiveairline(util.ConvertString(B[6]));
-            refund.setRefunddate(util.ConvertString(B[7]));
-            refund.setPaycustomer(util.ConvertString(B[8]));
-            refund.setPaydate2(util.ConvertString(B[9]));
-            refund.setProfit(util.ConvertString(B[10]));
-            refund.setReceiveairline2(util.ConvertString(B[11]));
-            refund.setAirlinecomm(util.ConvertString(B[12]));
-            refund.setRefundagent(util.ConvertString(B[13]));
-            refund.setRefundnameby(util.ConvertString(B[14]));
-            refund.setPassenger(util.ConvertString(B[15]));
-            refund.setReceivedate(util.ConvertString(B[16]));
-            refund.setPaiddate(util.ConvertString(B[17]));
+            refund.setRefundno((util.ConvertString(B[0])) == "" ? "" : util.ConvertString(B[0]));
+            refund.setRefunddate((util.ConvertString(B[1])) == "" ? "" : util.ConvertString(B[1]));
+            refund.setAir((util.ConvertString(B[2])) == "" ? "" : util.ConvertString(B[2]));
+            refund.setDocno((util.ConvertString(B[3])) == "" ? "" : util.ConvertString(B[3]));
+            refund.setAirlineagent((util.ConvertString(B[4])) == "" ? "" : util.ConvertString(B[4]));
+            refund.setAgent((util.ConvertString(B[5])) == "" ? "" : util.ConvertString(B[5]));
+            refund.setPassenger((util.ConvertString(B[6])) == "" ? "" : util.ConvertString(B[6]));
+            refund.setSectorrefund((util.ConvertString(B[7])) == "" ? "" : util.ConvertString(B[7]));
+            refund.setReceiveairline((util.ConvertString(B[8])) == "" ? "" : util.ConvertString(B[8]));
+            refund.setReceivedate((util.ConvertString(B[9])) == "" ? "" : util.ConvertString(B[9]));
+            refund.setPayno((util.ConvertString(B[10])) == "" ? "" : util.ConvertString(B[10]));
+            refund.setExport((util.ConvertString(B[11])) == "" ? "" : util.ConvertString(B[11]));
+            refund.setPaydate((util.ConvertString(B[12])) == "" ? "" : util.ConvertString(B[12]));
+            refund.setPaycustomer((util.ConvertString(B[13])) == "" ? "" : util.ConvertString(B[13]));
+            refund.setAirlinecomm((util.ConvertString(B[14])) == "" ? "" : util.ConvertString(B[14]));
             data.add(refund);
         }   
     }
