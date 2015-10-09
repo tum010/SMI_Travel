@@ -59,6 +59,10 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>Not add duplicate detail!</strong> 
         </div>
+        <div id="textAlertReceiveAmount"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Incorrect Receive Amount!</strong> 
+        </div>
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
             <div ng-include="'WebContent/FinanceAndCashier/ReceiptMenu.html'"></div>
         </div>
@@ -727,7 +731,7 @@
                                     </button>
                                 </div>
                                 <div class="col-md-1 text-right ">
-                                    <button type="submit" id="ButtonSave" name="ButtonSave" onclick="saveReceipt()" class="btn btn-success" ${isSaveVoid}><i class="fa fa-save"></i> Save</button>
+                                    <button type="button" id="ButtonSave" name="ButtonSave" onclick="saveReceipt()" class="btn btn-success" ${isSaveVoid}><i class="fa fa-save"></i> Save</button>
                                 </div>
                                 <div class="col-md-1 text-right ">
                                     <button type="button" id="ButtonNew" name="ButtonNew" onclick="clearNew()" class="btn btn-success"><i class="fa fa-plus-circle"></i> New</button>
@@ -2043,12 +2047,28 @@ function searchReceiveNo(){
 }
 
 function saveReceipt(){
+    var i = 0 ;
+    var checksave = 1;
     var action = document.getElementById('action');
     action.value = 'saveReceipt';
     var counter = document.getElementById('counter');
     counter.value = $("#ReceiptListTable tr").length;
     var countRowCredit = document.getElementById('countRowCredit');
     countRowCredit.value = $("#CreditDetailTable tr").length;
+    for(i = 1 ; i < counter.value-1 ; i++ ){
+        var amountTemp = document.getElementById('receiveAmountTemp'+i).value;
+        var amount = document.getElementById('receiveAmount'+i).value;
+        if(amount > amountTemp){
+            $('#textAlertReceiveAmount').show();
+            checksave = 2;
+        }else{
+            $('#textAlertReceiveAmount').hide();
+        }
+    }
+    if(checksave === 1){
+        document.getElementById('ReceiptForm').submit();
+        $('#textAlertReceiveAmount').hide();
+    }
 }
 
 function searchRefNo() {
@@ -2096,7 +2116,7 @@ function CallAjaxSearchRef(param) {
                         $('#RefNoListTable > tbody  > tr').each(function() {
                             $(this).remove();
                         });
-                        $("#RefNoListTable tbody").append(msg);
+                        $("#RefNoListTable tbody").empty().append(msg);
                         
                         document.getElementById("receiveFromCode").value = $("#receiveFromBillable").val();
                         document.getElementById("receiveFromName").value = $("#receiveNameBillable").val();
@@ -2391,11 +2411,11 @@ function checkAmount(row){
     amountTemp = replaceAll(",","",amountTemp.toString()); 
     amount = replaceAll(",","",amount.toString()); 
     
-    $("#receiveAmount"+row).focusout(function(){
-        if(parseInt(amount) > parseInt(amountTemp)){
-            document.getElementById('receiveAmount'+row).value = amountTemp; 
-        }
-    });
+//    $("#receiveAmount"+row).focusout(function(){
+//        if(parseInt(amount) > parseInt(amountTemp)){
+//            document.getElementById('receiveAmount'+row).value = amountTemp; 
+//        }
+//    });
     calculateGrandTotal();
 }
 

@@ -31,6 +31,8 @@ public class TicketFareView {
     private BigDecimal ticketIns;
     private BigDecimal salePrice;
     private String referenceNo;
+    private Date issueDateFrom;
+    private Date issueDateTo;
     
     public TicketFareView(){
         
@@ -170,6 +172,22 @@ public class TicketFareView {
 
     public void setReferenceNo(String referenceNo) {
         this.referenceNo = referenceNo;
+    }
+
+    public Date getIssueDateFrom() {
+        return issueDateFrom;
+    }
+
+    public void setIssueDateFrom(Date issueDateFrom) {
+        this.issueDateFrom = issueDateFrom;
+    }
+
+    public Date getIssueDateTo() {
+        return issueDateTo;
+    }
+
+    public void setIssueDateTo(Date issueDateTo) {
+        this.issueDateTo = issueDateTo;
     }
 
 
