@@ -623,8 +623,8 @@
     </definition>
     
     <definition name="TicketProfitLost" extends="baseLayout">
-        <put-attribute name="title" value="CheckingTicket : Ticket Profit Lost Summary" />
-        <put-attribute name="body" value="/WEB-INF/jsp/TicketProfitLost.jsp" />
+        <put-attribute name="title" value="CheckingTicket : Ticket Profit Loss Summary" />
+        <put-attribute name="body" value="/WEB-INF/jsp/TicketProfitLoss.jsp" />
     </definition>
 	
 </tiles-definitions>

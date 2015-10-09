@@ -25,6 +25,8 @@ public class RefundTicketView {
     private String  paydate;
     private String  paycustomer;
     private String  airlinecomm;
+    private String  airlineagentname;
+    private String  profit;
     
     //Header
     private String refundagentPage;
@@ -36,6 +38,25 @@ public class RefundTicketView {
     private String receivePage;
     private String paidPage;
     private String typeprintPage;
+
+    public String getProfit() {
+        return profit;
+    }
+
+    public void setProfit(String profit) {
+        this.profit = profit;
+    }
+
+    
+    public String getAirlineagentname() {
+        return airlineagentname;
+    }
+
+    public void setAirlineagentname(String airlineagentname) {
+        this.airlineagentname = airlineagentname;
+    }
+    
+    
 
     public String getRefundno() {
         return refundno;

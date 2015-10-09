@@ -64,6 +64,7 @@ public class TicketSummaryAirlineView {
     private String paxD;
     private String airD;
     private String ticketnoD;
+    private String refnoD;
     private String issuedateD;
     private String netsalesD;
     private String taxD;
@@ -71,6 +72,10 @@ public class TicketSummaryAirlineView {
     private String commsD;
     private String amountwendyD;
     private String amountinboundD;
+    private String amtnoinvoiceD;
+    private String amtbusinesstripD;
+    private String amtannualleaveD;
+    private String amtrefundD;
     private String remarksD;
     private String diffD;
 
@@ -491,7 +496,44 @@ public class TicketSummaryAirlineView {
     public void setPage(String page) {
         this.page = page;
     }
-    
-  
 
+    public String getRefnoD() {
+        return refnoD;
+    }
+
+    public void setRefnoD(String refnoD) {
+        this.refnoD = refnoD;
+    }
+
+    public String getAmtnoinvoiceD() {
+        return amtnoinvoiceD;
+    }
+
+    public void setAmtnoinvoiceD(String amtnoinvoiceD) {
+        this.amtnoinvoiceD = amtnoinvoiceD;
+    }
+
+    public String getAmtbusinesstripD() {
+        return amtbusinesstripD;
+    }
+
+    public void setAmtbusinesstripD(String amtbusinesstripD) {
+        this.amtbusinesstripD = amtbusinesstripD;
+    }
+
+    public String getAmtannualleaveD() {
+        return amtannualleaveD;
+    }
+
+    public void setAmtannualleaveD(String amtannualleaveD) {
+        this.amtannualleaveD = amtannualleaveD;
+    }
+
+    public String getAmtrefundD() {
+        return amtrefundD;
+    }
+
+    public void setAmtrefundD(String amtrefundD) {
+        this.amtrefundD = amtrefundD;
+    }
 }
