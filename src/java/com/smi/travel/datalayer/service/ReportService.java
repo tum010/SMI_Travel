@@ -39,6 +39,7 @@ import com.smi.travel.datalayer.view.dao.TicketSummaryDao;
 import com.smi.travel.datalayer.view.dao.TransferJobReportDao;
 import com.smi.travel.datalayer.view.entity.ARNirvana;
 import com.smi.travel.datalayer.view.entity.CollectionNirvana;
+import com.smi.travel.datalayer.view.entity.ListSummaryTicketAdjustCostAndIncome;
 import com.smi.travel.report.GenerateReport;
 import java.util.ArrayList;
 import java.util.List;
@@ -547,7 +548,11 @@ public class ReportService {
     public List getSummaryTicketAdjustCostAndIncome(String reportType,String invoiceFromDate,String invoiceToDate,String issueFrom,String issueTo,String paymentType,String departmentt,String salebyUser,String termPayt,String printby) {
         return summaryTicketAdjustCostAndIncomeDao.getSummaryTicketAdjustCostAndIncome(reportType, invoiceFromDate, invoiceToDate, issueFrom, issueTo, paymentType, departmentt, salebyUser, termPayt,printby);
     }
-
+    
+    public List getSummaryTicketCostAndIncome(String reportType,String invoiceFromDate,String invoiceToDate,String issueFrom,String issueTo,String paymentType,String departmentt,String salebyUser,String termPayt,String printby){
+        return summaryTicketAdjustCostAndIncomeDao.getSummaryTicketCostAndIncome(reportType, invoiceFromDate, invoiceToDate, issueFrom, issueTo, paymentType, departmentt, salebyUser, termPayt, printby);
+    }
+    
     public void setSummaryTicketAdjustCostAndIncomeDao(SummaryTicketAdjustCostAndIncomeDao summaryTicketAdjustCostAndIncomeDao) {
         this.summaryTicketAdjustCostAndIncomeDao = summaryTicketAdjustCostAndIncomeDao;
     }
