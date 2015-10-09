@@ -721,8 +721,7 @@ public class AJAXBean extends AbstractBean implements
             } else if ("searchRefNo".equalsIgnoreCase(type)) {
                 String searchRefNo = map.get("refNo").toString();
                 Billable bill = billableDao.getBillableBooking(searchRefNo);
-                System.out.println(" bill.getId() " + String.valueOf(bill.getId()));
-                if ("".equals(bill.getId()) || null == bill.getId() || "null".equalsIgnoreCase(String.valueOf(bill.getId()))) {
+                if (bill == null) {
                     result = "null";
                 } else {
                     result = buildBillableListHTML(bill);
@@ -731,8 +730,7 @@ public class AJAXBean extends AbstractBean implements
                 String paymentNoAir = map.get("paymentNo").toString();
                 System.out.println(" paymentNoAir :::  " + paymentNoAir + "::: ");
                 List<TicketAircommissionView> ticketList = ticketAircommissionViewDao.getListTicketAircommissionView(paymentNoAir);
-                System.out.println("ticketList size ::; " + ticketList.size() + " ////");
-                if (ticketList.size() == 0) {
+                if (ticketList == null) {
                     result = "null";
                 } else {
                     result = buildTicketAircommissionViewListHTML(ticketList);
@@ -1317,13 +1315,14 @@ public class AJAXBean extends AbstractBean implements
                 No++;
             } else {
                 String newrow = "";
-                newrow += 
-                        "<input type='hidden' name='receiveFromBillable' id='receiveFromBillable' value='" + receiveFrom + "'>"
+                newrow += "<tr>" 
+                        + "<input type='hidden' name='receiveFromBillable' id='receiveFromBillable' value='" + receiveFrom + "'>"
                         + "<input type='hidden' name='receiveNameBillable' id='receiveNameBillable' value='" + receiveName + "'>"
                         + "<input type='hidden' name='receiveAddressBillable' id='receiveAddressBillable' value='" + receiveAddress + "'>"
                         + "<input type='hidden' name='arcodeBillable' id='arcodeBillable' value='" + arcode + "'>"
                         + "<input type='hidden' name='mAccPayBillable' id='mAccPayBillable' value='" + mAccPay + "'>"
-                        ;
+                         + "</tr>";
+                        
                 html.append(newrow);
             }
         }

@@ -7,10 +7,10 @@
 package com.smi.travel.datalayer.view.dao.impl;
 
 import com.smi.travel.datalayer.entity.Agent;
-import com.smi.travel.datalayer.view.dao.TicketFareReportDao;
-
 import com.smi.travel.datalayer.report.model.TicketFareReport;
 import com.smi.travel.datalayer.report.model.TicketFareSummaryByAgentStaff;
+import com.smi.travel.datalayer.view.dao.TicketFareReportDao;
+import com.smi.travel.datalayer.view.entity.TicketProfitLost;
 import com.smi.travel.datalayer.view.entity.TicketSummaryAirlineView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
@@ -261,8 +261,17 @@ public class TicketFareReportImpl implements TicketFareReportDao {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList<TicketFareSummaryByAgentStaff>();
+        String query = "";
         
-        String query = "select `agt`.`name` AS `agentname`,`agt`.`id` AS `agentid`,`fare`.`owner` AS `owner`,(select sum(`fare`.`inv_amount`) from `invoice_detail` `invd` where (`invd`.`invoice_id` = `inv`.`id`)) AS `invamount`,`fare`.`department` AS `department`,sum(ifnull(`fare`.`ticket_commission`,0)) AS `ticcom`,sum(ifnull(`fare`.`sale_price`,0)) AS `saleprice`,sum(ifnull(`fare`.`agent_commission`,0)) AS `agentcom`,sum((ifnull(`fare`.`ticket_commission`,0) - ifnull(`fare`.`agent_commission`,0))) AS `profit`,count(`fare`.`ticket_commission`) AS `pax` from (((`ticket_fare_airline` `fare` join `agent` `agt` on((`agt`.`id` = `fare`.`agent_id`))) left join `ticket_fare_invoice` `finv` on((`finv`.`ticket_fare_id` = `fare`.`id`))) left join `invoice` `inv` on((`inv`.`id` = `finv`.`invoice_id`))) TEMPS";
+        
+        if("agent".equalsIgnoreCase(groupBy)){
+            // by Agent
+            query = "select `agt`.`name` AS `agentname`,`agt`.`id` AS `agentid`,`fare`.`owner` AS `owner`,(select sum(`fare`.`inv_amount`) from `invoice_detail` `invd` where (`invd`.`invoice_id` = `inv`.`id`)) AS `invamount`,`fare`.`department` AS `department`,sum(ifnull(`fare`.`ticket_commission`,0)) AS `ticcom`,sum(ifnull(`fare`.`sale_price`,0)) AS `saleprice`,sum(ifnull(`fare`.`agent_commission`,0)) AS `agentcom`,(case when (`fare`.`ticket_type` = 'B') then round((((ifnull(`fare`.`sale_price`,0) - ifnull(`fare`.`ticket_fare`,0)) + ifnull(`fare`.`ticket_tax`,0)) + ifnull(`fare`.`ticket_ins`,0)),2) when (`fare`.`ticket_type` = 'D') then round(((((ifnull(`fare`.`sale_price`,0) - ifnull(`fare`.`ticket_fare`,0)) + ifnull(`fare`.`ticket_tax`,0)) + ifnull(`fare`.`ticket_ins`,0)) - ifnull(`fare`.`ticket_commission`,0)),2) when (`fare`.`ticket_type` = 'A') then round((((ifnull(`fare`.`sale_price`,0) - ifnull(`fare`.`ticket_fare`,0)) + ifnull(`fare`.`ticket_tax`,0)) + ifnull(`fare`.`ticket_ins`,0)),2) else round(((ifnull(`fare`.`ticket_fare`,0) + ifnull(`fare`.`ticket_tax`,0)) + ifnull(`fare`.`ticket_ins`,0)),2) end) AS `profit`,count(`fare`.`ticket_commission`) AS `pax` from (((`ticket_fare_airline` `fare` join `agent` `agt` on((`agt`.`id` = `fare`.`agent_id`))) left join `ticket_fare_invoice` `finv` on((`finv`.`ticket_fare_id` = `fare`.`id`))) left join `invoice` `inv` on((`inv`.`id` = `finv`.`invoice_id`))) TEMPS";
+        }else if("staff".equalsIgnoreCase(groupBy)){
+            // by Staff
+            query = "select `fare`.`owner` AS `owner`,`agt`.`name` AS `agentname`,`agt`.`id` AS `agentid`,(select sum(ifnull(`fare`.`inv_amount`,0)) from `invoice_detail` `invd` where (`invd`.`invoice_id` = `inv`.`id`)) AS `invamount`,`fare`.`department` AS `department`,sum(ifnull(`fare`.`ticket_commission`,0)) AS `ticcom`,sum(ifnull(`fare`.`sale_price`,0)) AS `saleprice`,sum(ifnull(`fare`.`agent_commission`,0)) AS `agentcom`,(case when (`fare`.`ticket_type` = 'B') then round((((ifnull(`fare`.`sale_price`,0) - ifnull(`fare`.`ticket_fare`,0)) + ifnull(`fare`.`ticket_tax`,0)) + ifnull(`fare`.`ticket_ins`,0)),2) when (`fare`.`ticket_type` = 'D') then round(((((ifnull(`fare`.`sale_price`,0) - ifnull(`fare`.`ticket_fare`,0)) + ifnull(`fare`.`ticket_tax`,0)) + ifnull(`fare`.`ticket_ins`,0)) - ifnull(`fare`.`ticket_commission`,0)),2) when (`fare`.`ticket_type` = 'A') then round((((ifnull(`fare`.`sale_price`,0) - ifnull(`fare`.`ticket_fare`,0)) + ifnull(`fare`.`ticket_tax`,0)) + ifnull(`fare`.`ticket_ins`,0)),2) else round(((ifnull(`fare`.`ticket_fare`,0) + ifnull(`fare`.`ticket_tax`,0)) + ifnull(`fare`.`ticket_ins`,0)),2) end) AS `profit`,count(`fare`.`ticket_no`) AS `pax` from (((`ticket_fare_airline` `fare` join `agent` `agt` on((`agt`.`id` = `fare`.`agent_id`))) left join `ticket_fare_invoice` `finv` on((`finv`.`ticket_fare_id` = `fare`.`id`))) left join `invoice` `inv` on((`inv`.`id` = `finv`.`invoice_id`))) TEMPS";
+        }
+//        String query = "select `agt`.`name` AS `agentname`,`agt`.`id` AS `agentid`,`fare`.`owner` AS `owner`,(select sum(`fare`.`inv_amount`) from `invoice_detail` `invd` where (`invd`.`invoice_id` = `inv`.`id`)) AS `invamount`,`fare`.`department` AS `department`,sum(ifnull(`fare`.`ticket_commission`,0)) AS `ticcom`,sum(ifnull(`fare`.`sale_price`,0)) AS `saleprice`,sum(ifnull(`fare`.`agent_commission`,0)) AS `agentcom`,sum((ifnull(`fare`.`ticket_commission`,0) - ifnull(`fare`.`agent_commission`,0))) AS `profit`,count(`fare`.`ticket_commission`) AS `pax` from (((`ticket_fare_airline` `fare` join `agent` `agt` on((`agt`.`id` = `fare`.`agent_id`))) left join `ticket_fare_invoice` `finv` on((`finv`.`ticket_fare_id` = `fare`.`id`))) left join `invoice` `inv` on((`inv`.`id` = `finv`.`invoice_id`))) TEMPS";
         
         int checkQuery = 0;
         String prefix ="";
@@ -747,6 +756,15 @@ public class TicketFareReportImpl implements TicketFareReportDao {
         return data;
     }
 
-
+    @Override
+    public List getTicketProfitLost(String invoiceFromDate, String invoiceToDate, String printby) {
+        UtilityFunction util = new UtilityFunction();
+        List data = new ArrayList<TicketProfitLost>();
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("dd-MM-yyyy hh:mm");
+//        ticket.setHeaderprinton(String.valueOf(df.format(new Date())));
+        
+        return data;
+    }
    
 }

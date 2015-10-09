@@ -559,4 +559,8 @@ public class ReportService {
      public List getRefundTicketDetail(String refundagent,String refundnameby,String passenger,String receivefrom,String receiveto,String paidfrom,String paidto,String typeprint,String printby){
          return refundAirReportDao.getRefundTicketDetail(refundagent, refundnameby, passenger, receivefrom, receiveto, paidfrom, paidto, typeprint,printby);
      }
+
+    public List getTicketProfitLost(String invoiceFromDate, String invoiceToDate, String printby) {
+        return ticketFareReportDao.getTicketProfitLost(invoiceFromDate,invoiceToDate,printby);
+    }
 }
