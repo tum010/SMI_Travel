@@ -6,6 +6,7 @@ import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +22,8 @@ public class SearchTicketFareController extends SMITravelController {
     private static final String TICKETFARE = "ticketFare";
     private static final String TICKETROUTING = "TicketRouting";
     private static final String TICKETTYPE = "TicketType";
-    private static final String ISSUEDATE = "issueDate";
+    private static final String ISSUEDATEFROM = "issueDateFrom";
+    private static final String ISSUEDATETO = "issueDateTo";
     private static final String INVOICENO = "invoiceNo";
     private static final String DEPARTMENT = "department";
     private static final String DATALIST = "Ticket_List";
@@ -37,7 +39,8 @@ public class SearchTicketFareController extends SMITravelController {
         String ticketType = request.getParameter("ticketType");
         String ticketRouting = request.getParameter("ticketRouting");
         String ticketAirline = request.getParameter("ticketAirline");
-        String issueDate = request.getParameter("issueDate");
+        String issueDateFrom = request.getParameter("issueDateFrom");
+        String issueDateTo = request.getParameter("issueDateTo");
         String invoiceNo = request.getParameter("invoiceNo");
         String department = request.getParameter("department");
         String ticketId = request.getParameter("ticketId");
@@ -52,10 +55,18 @@ public class SearchTicketFareController extends SMITravelController {
         ticketFareView.setRouting(ticketRouting);
         ticketFareView.setAirline(ticketAirline);
         ticketFareView.setTicketNo(ticketNo);
-        if(StringUtils.isNotEmpty(issueDate)){
-            ticketFareView.setIssueDate(util.convertStringToDate(issueDate));
-            request.setAttribute(ISSUEDATE,issueDate);
+        
+        
+
+        if(StringUtils.isNotEmpty(issueDateFrom)){
+            ticketFareView.setIssueDateFrom(util.convertStringToDate(issueDateFrom));
+            request.setAttribute(ISSUEDATEFROM,issueDateFrom);
         }
+        if(StringUtils.isNotEmpty(issueDateTo)){
+            ticketFareView.setIssueDateTo(util.convertStringToDate(issueDateTo));
+            request.setAttribute(ISSUEDATETO,issueDateTo);
+        }
+        
         ticketFareView.setInvoiceNo(invoiceNo);
         ticketFareView.setDepartment(department);
         

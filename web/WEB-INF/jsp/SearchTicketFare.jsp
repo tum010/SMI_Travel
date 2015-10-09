@@ -128,12 +128,22 @@
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 150px">
-                                <label class="control-label text-right">Issue Date </label>
+                                <label class="control-label text-right">Issue Date From</label>
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class='input-group date'>
-                                    <input id="issueDate" name="issueDate"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['issueDate']}">
+                                    <input id="issueDateFrom" name="issueDateFrom"  type="text" 
+                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['issueDateFrom']}">
+                                    <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                                </div>
+                            </div>
+                            <div class="col-xs-1 text-right"  style="width: 150px">
+                                <label class="control-label text-right">Issue Date To</label>
+                            </div>
+                            <div class="col-xs-1"  style="width: 180px">
+                                <div class='input-group date'>
+                                    <input id="issueDateTo" name="issueDateTo"  type="text" 
+                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['issueDateTo']}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
@@ -348,8 +358,10 @@ function searchAction() {
     ticketRouting.value = $("#ticketRouting").val();
     var ticketAirline = document.getElementById('ticketAirline');
     ticketAirline.value = $("#ticketAirline").val();
-    var issueDate = document.getElementById('issueDate');
-    issueDate.value = $("#issueDate").val();
+    var issueDateFrom = document.getElementById('issueDateFrom');
+    issueDateFrom.value = $("#issueDateFrom").val();
+    var issueDateTo = document.getElementById('issueDateTo');
+    issueDateTo.value = $("#issueDateTo").val();
     var department = document.getElementById('department');
     department.value = $("#department").val();
     document.getElementById('SearchTicketFareForm').submit();
