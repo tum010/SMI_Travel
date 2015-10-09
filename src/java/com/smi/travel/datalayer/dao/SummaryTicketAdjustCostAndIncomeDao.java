@@ -16,6 +16,6 @@ import java.util.List;
  */
 public interface SummaryTicketAdjustCostAndIncomeDao {
     public List<ListSummaryTicketAdjustCostAndIncome> getSummaryTicketAdjustCostAndIncome(String reportType,String invoiceFromDate,String invoiceToDate,String issueFrom,String issueTo,String paymentType,String departmentt,String salebyUser,String termPayt,String printby);
-    public List<ListSummaryTicketAdjustCostAndIncome> getSummaryTicketCostAndIncome(String reportType,String invoiceFromDate,String invoiceToDate,String issueFrom,String issueTo,String paymentType,String departmentt,String salebyUser,String termPayt,String printby);
+    public List getSummaryTicketCostAndIncome(String reportType,String invoiceFromDate,String invoiceToDate,String issueFrom,String issueTo,String paymentType,String departmentt,String salebyUser,String termPayt,String printby);
     public List<ListTicketCommissionReceive> getTicketCommissionReceive(String reportType,String invoiceFromDate,String invoiceToDate,String issueFrom,String issueTo,String paymentType,String departmentt,String salebyUser,String termPayt,String printby);
 }

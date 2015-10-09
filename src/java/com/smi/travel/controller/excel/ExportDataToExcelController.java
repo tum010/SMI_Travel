@@ -175,7 +175,7 @@ public class ExportDataToExcelController  extends SMITravelController{
         }else if(SummaryTicketCostAndIncome.equals(name)){
             System.out.println("get excel data ap SummaryTicketCostAndIncome");
             System.out.println("Term : " + termPayt);       
-            data = reportservice.getSummaryTicketAdjustCostAndIncome(reportType, invoiceFromDate, invoiceToDate, issueFrom, issueTo, paymentType, departmentt, salebyUser, termPayt,printby);
+            data = reportservice.getSummaryTicketCostAndIncome(reportType, invoiceFromDate, invoiceToDate, issueFrom, issueTo, paymentType, departmentt, salebyUser, termPayt,printby);
         }else if(SummaryTicketCommissionReceive.equals(name)){
             System.out.println("get excel data ap SummaryTicketCommissionReceive");
             System.out.println("Term : " + termPayt);       

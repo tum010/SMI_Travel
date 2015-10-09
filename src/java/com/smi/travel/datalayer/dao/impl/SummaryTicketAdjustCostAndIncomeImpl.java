@@ -9,8 +9,10 @@ import com.smi.travel.datalayer.dao.SummaryTicketAdjustCostAndIncomeDao;
 import com.smi.travel.datalayer.view.entity.ListSummaryTicketAdjustCostAndIncome;
 import com.smi.travel.datalayer.view.entity.ListTicketCommissionReceive;
 import com.smi.travel.datalayer.view.entity.SummaryTicketAdjustCostAndIncome;
+import com.smi.travel.datalayer.view.entity.SummaryTicketCostAndIncomeView;
 import com.smi.travel.datalayer.view.entity.TicketCommissionReceive;
 import com.smi.travel.util.UtilityFunction;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
@@ -46,7 +48,7 @@ public class SummaryTicketAdjustCostAndIncomeImpl implements SummaryTicketAdjust
 
     @Override
     public List<ListSummaryTicketAdjustCostAndIncome> getSummaryTicketAdjustCostAndIncome(String reportType, String invoiceFromDate, String invoiceToDate, String issueFrom, String issueTo, String paymentType, String departmentt, String salebyUser, String termPayt,String printby) {
-         List<ListSummaryTicketAdjustCostAndIncome> listTotal = new LinkedList<ListSummaryTicketAdjustCostAndIncome>();
+        List<ListSummaryTicketAdjustCostAndIncome> listTotal = new LinkedList<ListSummaryTicketAdjustCostAndIncome>();
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList();
@@ -296,14 +298,220 @@ public class SummaryTicketAdjustCostAndIncomeImpl implements SummaryTicketAdjust
     }
 
     @Override
-    public List<ListSummaryTicketAdjustCostAndIncome> getSummaryTicketCostAndIncome(String reportType, String invoiceFromDate, String invoiceToDate, String issueFrom, String issueTo, String paymentType, String departmentt, String salebyUser, String termPayt,String printby) {
+    public List getSummaryTicketCostAndIncome(String reportType, String invoiceFromDate, String invoiceToDate, String issueFrom, String issueTo, String paymentType, String departmentt, String salebyUser, String termPayt,String printby) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         Date thisDate = new Date();
         List data = new ArrayList();
         String query = "";
         int AndQuery = 0;
+        List dataSum = new ArrayList();
+        String querySum = "";
+        int AndQuerySum = 0;
+        System.out.println("Term Pay : " + termPayt);
+        if( invoiceFromDate == null  &&  invoiceToDate == null  && issueFrom == null && issueTo == null && paymentType == null && departmentt == null && salebyUser == null && termPayt == null){
+            query = "select (case when (`fare`.`ticket_type` = 'B') then 'BSP' when (`fare`.`ticket_type` = 'A') then 'AGENT' when (`fare`.`ticket_type` = 'D') then 'DOMESTIC' when (`fare`.`ticket_type` = 'T') then 'TG' else `fare`.`ticket_type` end) AS `typepayment`,`fare`.`ticket_rounting` AS `typerounting`,count(`fare`.`ticket_no`) AS `pax`,substr(`fare`.`ticket_no`,1,3) AS `air`,sum(`fare`.`ticket_fare`) AS `ticketissue`,(case when (`inv`.`inv_type` = 'T') then substr(`inv`.`inv_no`,1,5) else substr(`inv`.`inv_no`,1,6) end) AS `invno`,sum(`fare`.`ticket_fare`) AS `cost`,(case when ((`fare`.`department` = 'Inbound') and isnull(`fare`.`pv_type`)) then sum(`fare`.`sale_price`) else NULL end) AS `inbound`,(case when ((`fare`.`department` = 'Wendy') and isnull(`fare`.`pv_type`)) then sum(`fare`.`sale_price`) else NULL end) AS `wendy`,(case when (`fare`.`pv_type` = 9) then sum(`fare`.`sale_price`) else NULL end) AS `refund`,(case when (`fare`.`pv_type` = 7) then sum(`fare`.`sale_price`) else NULL end) AS `businesstrip`,(case when (`fare`.`pv_type` = 8) then sum(`fare`.`sale_price`) else NULL end) AS `annualleave`,(case when (`fare`.`pv_type` = 10) then sum(`fare`.`sale_price`) else NULL end) AS `noinvoice`,sum((`fare`.`ticket_fare` - `fare`.`sale_price`)) AS `costinv`,(case when ((`fare`.`department` = 'Wendy') and isnull(`fare`.`pv_type`)) then sum(`fare`.`inv_amount`) else NULL end) AS `invwendy`,(case when ((`fare`.`department` = 'Outbound') and isnull(`fare`.`pv_type`)) then sum(`fare`.`inv_amount`) else NULL end) AS `invoutbound`,(case when (`fare`.`pv_type` = 9) then sum(`fare`.`inv_amount`) else NULL end) AS `invrefund`,(case when (`fare`.`pv_type` = 7) then sum(`fare`.`inv_amount`) else NULL end) AS `invbusinesstrip`,(case when (`fare`.`pv_type` = 8) then sum(`fare`.`inv_amount`) else NULL end) AS `invannualleave`,(case when (`fare`.`pv_type` = 10) then sum(`fare`.`inv_amount`) else NULL end) AS `invnoinvoice` from ((((`ticket_fare_airline` `fare` left join `ticket_fare_invoice` `finv` on((`finv`.`ticket_fare_id` = `fare`.`id`))) left join `invoice` `inv` on((`inv`.`id` = `finv`.`invoice_id`))) left join `m_accterm` `term` on((`term`.`id` = `inv`.`term_pay`))) left join `staff` `st` on((`st`.`name` = `fare`.`owner`))) " ; 
+            querySum = "select (case when (`fare`.`ticket_type` = 'B') then 'BSP' when (`fare`.`ticket_type` = 'A') then 'AGENT' when (`fare`.`ticket_type` = 'D') then 'DOMESTIC' when (`fare`.`ticket_type` = 'T') then 'TG' else `fare`.`ticket_type` end) AS `typepayment`,`fare`.`ticket_rounting` AS `typerounting`,count(`fare`.`ticket_no`) AS `pax`,sum(`fare`.`ticket_fare`) AS `ticketissue`,(case when (`inv`.`inv_type` = 'T') then substr(`inv`.`inv_no`,1,5) else substr(`inv`.`inv_no`,1,6) end) AS `invno`,sum(`fare`.`ticket_fare`) AS `cost`,(case when ((`fare`.`department` = 'Inbound') and isnull(`fare`.`pv_type`)) then sum(`fare`.`sale_price`) else NULL end) AS `inbound`,(case when ((`fare`.`department` = 'Wendy') and isnull(`fare`.`pv_type`)) then sum(`fare`.`sale_price`) else NULL end) AS `wendy`,(case when (`fare`.`pv_type` = 9) then sum(`fare`.`sale_price`) else NULL end) AS `refund`,(case when (`fare`.`pv_type` = 7) then sum(`fare`.`sale_price`) else NULL end) AS `businesstrip`,(case when (`fare`.`pv_type` = 8) then sum(`fare`.`sale_price`) else NULL end) AS `annualleave`,(case when (`fare`.`pv_type` = 10) then sum(`fare`.`sale_price`) else NULL end) AS `noinvoice`,sum((`fare`.`ticket_fare` - `fare`.`sale_price`)) AS `costinv`,(case when ((`fare`.`department` = 'Wendy') and isnull(`fare`.`pv_type`)) then sum(`fare`.`inv_amount`) else NULL end) AS `invwendy`,(case when ((`fare`.`department` = 'Outbound') and isnull(`fare`.`pv_type`)) then sum(`fare`.`inv_amount`) else NULL end) AS `invoutbound`,(case when (`fare`.`pv_type` = 9) then sum(`fare`.`inv_amount`) else NULL end) AS `invrefund`,(case when (`fare`.`pv_type` = 7) then sum(`fare`.`inv_amount`) else NULL end) AS `invbusinesstrip`,(case when (`fare`.`pv_type` = 8) then sum(`fare`.`inv_amount`) else NULL end) AS `invannualleave`,(case when (`fare`.`pv_type` = 10) then sum(`fare`.`inv_amount`) else NULL end) AS `invnoinvoice` from ((((`ticket_fare_airline` `fare` left join `ticket_fare_invoice` `finv` on((`finv`.`ticket_fare_id` = `fare`.`id`))) left join `invoice` `inv` on((`inv`.`id` = `finv`.`invoice_id`))) left join `m_accterm` `term` on((`term`.`id` = `inv`.`term_pay`))) left join `staff` `st` on((`st`.`name` = `fare`.`owner`))) ";
+        }else{
+            query = "select (case when (`fare`.`ticket_type` = 'B') then 'BSP' when (`fare`.`ticket_type` = 'A') then 'AGENT' when (`fare`.`ticket_type` = 'D') then 'DOMESTIC' when (`fare`.`ticket_type` = 'T') then 'TG' else `fare`.`ticket_type` end) AS `typepayment`,`fare`.`ticket_rounting` AS `typerounting`,count(`fare`.`ticket_no`) AS `pax`,substr(`fare`.`ticket_no`,1,3) AS `air`,sum(`fare`.`ticket_fare`) AS `ticketissue`,(case when (`inv`.`inv_type` = 'T') then substr(`inv`.`inv_no`,1,5) else substr(`inv`.`inv_no`,1,6) end) AS `invno`,sum(`fare`.`ticket_fare`) AS `cost`,(case when ((`fare`.`department` = 'Inbound') and isnull(`fare`.`pv_type`)) then sum(`fare`.`sale_price`) else NULL end) AS `inbound`,(case when ((`fare`.`department` = 'Wendy') and isnull(`fare`.`pv_type`)) then sum(`fare`.`sale_price`) else NULL end) AS `wendy`,(case when (`fare`.`pv_type` = 9) then sum(`fare`.`sale_price`) else NULL end) AS `refund`,(case when (`fare`.`pv_type` = 7) then sum(`fare`.`sale_price`) else NULL end) AS `businesstrip`,(case when (`fare`.`pv_type` = 8) then sum(`fare`.`sale_price`) else NULL end) AS `annualleave`,(case when (`fare`.`pv_type` = 10) then sum(`fare`.`sale_price`) else NULL end) AS `noinvoice`,sum((`fare`.`ticket_fare` - `fare`.`sale_price`)) AS `costinv`,(case when ((`fare`.`department` = 'Wendy') and isnull(`fare`.`pv_type`)) then sum(`fare`.`inv_amount`) else NULL end) AS `invwendy`,(case when ((`fare`.`department` = 'Outbound') and isnull(`fare`.`pv_type`)) then sum(`fare`.`inv_amount`) else NULL end) AS `invoutbound`,(case when (`fare`.`pv_type` = 9) then sum(`fare`.`inv_amount`) else NULL end) AS `invrefund`,(case when (`fare`.`pv_type` = 7) then sum(`fare`.`inv_amount`) else NULL end) AS `invbusinesstrip`,(case when (`fare`.`pv_type` = 8) then sum(`fare`.`inv_amount`) else NULL end) AS `invannualleave`,(case when (`fare`.`pv_type` = 10) then sum(`fare`.`inv_amount`) else NULL end) AS `invnoinvoice` from ((((`ticket_fare_airline` `fare` left join `ticket_fare_invoice` `finv` on((`finv`.`ticket_fare_id` = `fare`.`id`))) left join `invoice` `inv` on((`inv`.`id` = `finv`.`invoice_id`))) left join `m_accterm` `term` on((`term`.`id` = `inv`.`term_pay`))) left join `staff` `st` on((`st`.`name` = `fare`.`owner`))) where " ;
+            querySum = "select (case when (`fare`.`ticket_type` = 'B') then 'BSP' when (`fare`.`ticket_type` = 'A') then 'AGENT' when (`fare`.`ticket_type` = 'D') then 'DOMESTIC' when (`fare`.`ticket_type` = 'T') then 'TG' else `fare`.`ticket_type` end) AS `typepayment`,`fare`.`ticket_rounting` AS `typerounting`,count(`fare`.`ticket_no`) AS `pax`,sum(`fare`.`ticket_fare`) AS `ticketissue`,(case when (`inv`.`inv_type` = 'T') then substr(`inv`.`inv_no`,1,5) else substr(`inv`.`inv_no`,1,6) end) AS `invno`,sum(`fare`.`ticket_fare`) AS `cost`,(case when ((`fare`.`department` = 'Inbound') and isnull(`fare`.`pv_type`)) then sum(`fare`.`sale_price`) else NULL end) AS `inbound`,(case when ((`fare`.`department` = 'Wendy') and isnull(`fare`.`pv_type`)) then sum(`fare`.`sale_price`) else NULL end) AS `wendy`,(case when (`fare`.`pv_type` = 9) then sum(`fare`.`sale_price`) else NULL end) AS `refund`,(case when (`fare`.`pv_type` = 7) then sum(`fare`.`sale_price`) else NULL end) AS `businesstrip`,(case when (`fare`.`pv_type` = 8) then sum(`fare`.`sale_price`) else NULL end) AS `annualleave`,(case when (`fare`.`pv_type` = 10) then sum(`fare`.`sale_price`) else NULL end) AS `noinvoice`,sum((`fare`.`ticket_fare` - `fare`.`sale_price`)) AS `costinv`,(case when ((`fare`.`department` = 'Wendy') and isnull(`fare`.`pv_type`)) then sum(`fare`.`inv_amount`) else NULL end) AS `invwendy`,(case when ((`fare`.`department` = 'Outbound') and isnull(`fare`.`pv_type`)) then sum(`fare`.`inv_amount`) else NULL end) AS `invoutbound`,(case when (`fare`.`pv_type` = 9) then sum(`fare`.`inv_amount`) else NULL end) AS `invrefund`,(case when (`fare`.`pv_type` = 7) then sum(`fare`.`inv_amount`) else NULL end) AS `invbusinesstrip`,(case when (`fare`.`pv_type` = 8) then sum(`fare`.`inv_amount`) else NULL end) AS `invannualleave`,(case when (`fare`.`pv_type` = 10) then sum(`fare`.`inv_amount`) else NULL end) AS `invnoinvoice` from ((((`ticket_fare_airline` `fare` left join `ticket_fare_invoice` `finv` on((`finv`.`ticket_fare_id` = `fare`.`id`))) left join `invoice` `inv` on((`inv`.`id` = `finv`.`invoice_id`))) left join `m_accterm` `term` on((`term`.`id` = `inv`.`term_pay`))) left join `staff` `st` on((`st`.`name` = `fare`.`owner`))) where ";
+        }
         
+        if (paymentType != null && (!"".equalsIgnoreCase(paymentType)) ) {
+           if(AndQuery == 1){
+                query += " and fare.ticket_type = '" + paymentType + "'";
+                querySum += " and fare.ticket_type = '" + paymentType + "'";
+           }else{
+               AndQuery = 1;
+               query += " fare.ticket_type = '" + paymentType + "'";
+               querySum += " fare.ticket_type = '" + paymentType + "'";
+           }
+        }
+        
+        if(departmentt != null && (!"".equalsIgnoreCase(departmentt))){
+            if(AndQuery == 1){
+                query += " and fare.department = '" + departmentt + "'";
+                querySum += " and fare.department = '" + departmentt + "'";
+           }else{
+               AndQuery = 1;
+               query += " fare.department = '" + departmentt + "'";
+               querySum += " fare.department = '" + departmentt + "'";
+           }
+        }
+        
+        if(salebyUser != null && (!"".equalsIgnoreCase(salebyUser))){
+            if(AndQuery == 1){
+                query += " and fare.`owner` = '" + salebyUser + "'";
+                querySum += " and fare.`owner` = '" + salebyUser + "'";
+           }else{
+               AndQuery = 1;
+               query += " fare.`owner` = '" + salebyUser + "'";
+               querySum += " fare.`owner` = '" + salebyUser + "'";
+           }
+        }
+        
+        if(termPayt != null && (!"".equalsIgnoreCase(termPayt))){
+            if(AndQuery == 1){
+                query += " and inv.term_pay = " + termPayt + "";
+                querySum += " and inv.term_pay = " + termPayt + "";
+           }else{
+               AndQuery = 1;
+               query += " inv.term_pay = " + termPayt + "";
+               querySum += " inv.term_pay = " + termPayt + "";
+           }
+        }
+        
+        if ((invoiceFromDate != null )&&(!"".equalsIgnoreCase(invoiceFromDate))) {
+            if ((invoiceToDate != null )&&(!"".equalsIgnoreCase(invoiceToDate))) {
+                if(AndQuery == 1){
+                     query += " and inv.inv_date  BETWEEN  '" + invoiceFromDate + "' AND '" + invoiceToDate + "' ";
+                     querySum += " and inv.inv_date  BETWEEN  '" + invoiceFromDate + "' AND '" + invoiceToDate + "' ";
+                }else{
+                    AndQuery = 1;
+                     query += " inv.inv_date  BETWEEN  '" + invoiceFromDate + "' AND '" + invoiceToDate + "' ";
+                     querySum += " inv.inv_date  BETWEEN  '" + invoiceFromDate + "' AND '" + invoiceToDate + "' ";
+                } 
+            }
+        }
+        
+        if ((issueFrom != null )&&(!"".equalsIgnoreCase(issueFrom))) {
+            if ((issueTo != null )&&(!"".equalsIgnoreCase(issueTo))) {
+                if(AndQuery == 1){
+                     query += " and fare.issue_date  BETWEEN  '" + issueFrom + "' AND '" + issueTo + "' ";
+                     querySum += " and fare.issue_date  BETWEEN  '" + issueFrom + "' AND '" + issueTo + "' ";
+                }else{
+                    AndQuery = 1;
+                     query += " fare.issue_date  BETWEEN  '" + issueFrom + "' AND '" + issueTo + "' ";
+                     querySum += " fare.issue_date  BETWEEN  '" + issueFrom + "' AND '" + issueTo + "' ";
+                } 
+            }
+        }
+        
+        query += "group by `fare`.`ticket_type`,`fare`.`ticket_rounting`,substr(`fare`.`ticket_no`,1,3),(case when (`inv`.`inv_type` = 'T') then substr(`inv`.`inv_no`,1,5) else substr(`inv`.`inv_no`,1,6) end)";
+        querySum += "group by `fare`.`ticket_type`,`fare`.`ticket_rounting`,(case when (`inv`.`inv_type` = 'T') then substr(`inv`.`inv_no`,1,5) else substr(`inv`.`inv_no`,1,6) end)";
+        System.out.println("query : " + query);
+        System.out.println("query sum : " + querySum);
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("dd-MM-yyyy hh:mm");
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MM-yyyy");
+        
+        List<Object[]> SummaryTicketCostAndIncome = session.createSQLQuery(query)
+                .addScalar("typepayment", Hibernate.STRING)
+                .addScalar("typerounting", Hibernate.STRING)
+                .addScalar("pax", Hibernate.STRING)
+                .addScalar("air", Hibernate.STRING)
+                .addScalar("ticketissue", Hibernate.STRING)
+                .addScalar("invno", Hibernate.STRING)
+                .addScalar("cost", Hibernate.STRING)
+                .addScalar("inbound", Hibernate.STRING)
+                .addScalar("wendy", Hibernate.STRING)
+                .addScalar("refund", Hibernate.STRING)
+                .addScalar("businesstrip", Hibernate.STRING)
+                .addScalar("annualleave", Hibernate.STRING)
+                .addScalar("noinvoice", Hibernate.STRING)
+                .addScalar("costinv", Hibernate.STRING)
+                .addScalar("invwendy", Hibernate.STRING)
+                .addScalar("invoutbound", Hibernate.STRING)
+                .addScalar("invrefund", Hibernate.STRING)
+                .addScalar("invbusinesstrip", Hibernate.STRING)
+                .addScalar("invannualleave", Hibernate.STRING)
+                .addScalar("invnoinvoice", Hibernate.STRING)
+                .list();
+        for (Object[] B : SummaryTicketCostAndIncome) {
+            SummaryTicketCostAndIncomeView sumticket = new SummaryTicketCostAndIncomeView();
+            //set header
+            sumticket.setHeaderinvdatefrom("".equals(String.valueOf(invoiceFromDate)) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(invoiceFromDate))));
+            sumticket.setHeaderinvdateto("".equals(String.valueOf(invoiceToDate)) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(invoiceToDate))));
+            sumticket.setHeaderissuedatefrom("".equals(String.valueOf(issueFrom)) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(issueFrom))));
+            sumticket.setHeaderissuedateto("".equals(String.valueOf(issueTo)) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(issueTo))));
+            sumticket.setHeaderprintby(printby);
+            sumticket.setHeaderprinton(String.valueOf(df.format(new Date())));
+            sumticket.setHeaderdepartment(departmentt);
+            sumticket.setHeadersalestaff(salebyUser);
+            sumticket.setHeadertermpay(termPayt);
+            //
+            sumticket.setTypepayment(util.ConvertString(B[0]) == null ? "" : util.ConvertString(B[0]));
+            sumticket.setTyperounting(util.ConvertString(B[1])== null ? "" : util.ConvertString(B[1]));
+            sumticket.setPax(util.ConvertString(B[2])== null ? "" : util.ConvertString(B[2]));
+            sumticket.setAir(util.ConvertString(B[3])== null ? "" : util.ConvertString(B[3]));
+            sumticket.setTicketissue(util.ConvertString(B[4])== null ? "" : util.ConvertString(B[4]));
+            sumticket.setInvno(util.ConvertString(B[5])== null ? "" : util.ConvertString(B[5]));
+            sumticket.setCost(util.ConvertString(B[6])== null ? "" : util.ConvertString(B[6]));
+            sumticket.setInbound(util.ConvertString(B[7])== null ? "" : util.ConvertString(B[7]));
+            sumticket.setWendy(util.ConvertString(B[8])== null ? "" : util.ConvertString(B[8]));
+            sumticket.setRefund(util.ConvertString(B[9])== null ? "" : util.ConvertString(B[9]));
+            sumticket.setBusinesstrip(util.ConvertString(B[10])== null ? "" : util.ConvertString(B[10]));
+            sumticket.setAnnualleave(util.ConvertString(B[11])== null ? "" : util.ConvertString(B[11]));
+            sumticket.setNoinvoice(util.ConvertString(B[12])== null ? "" : util.ConvertString(B[12]));
+            sumticket.setCostinv(util.ConvertString(B[13])== null ? "" : util.ConvertString(B[13]));
+            sumticket.setInvwendy(util.ConvertString(B[14])== null ? "" : util.ConvertString(B[14]));
+            sumticket.setInvoutbound(util.ConvertString(B[15])== null ? "" : util.ConvertString(B[15]));
+            sumticket.setInvrefund(util.ConvertString(B[16])== null ? "" : util.ConvertString(B[16]));
+            sumticket.setInvbusinesstrip(util.ConvertString(B[17])== null ? "" : util.ConvertString(B[17]));
+            sumticket.setInvannualleave(util.ConvertString(B[18])== null ? "" : util.ConvertString(B[18]));
+            sumticket.setInvnoinvoice(util.ConvertString(B[19])== null ? "" : util.ConvertString(B[19]));
+            sumticket.setPage("income");
+            data.add(sumticket);
+        }
+        List<Object[]> SummaryTicketCostAndIncomeSummary = session.createSQLQuery(querySum)
+                .addScalar("typepayment", Hibernate.STRING)
+                .addScalar("typerounting", Hibernate.STRING)
+                .addScalar("pax", Hibernate.STRING)
+                .addScalar("ticketissue", Hibernate.STRING)
+                .addScalar("invno", Hibernate.STRING)
+                .addScalar("cost", Hibernate.STRING)
+                .addScalar("inbound", Hibernate.STRING)
+                .addScalar("wendy", Hibernate.STRING)
+                .addScalar("refund", Hibernate.STRING)
+                .addScalar("businesstrip", Hibernate.STRING)
+                .addScalar("annualleave", Hibernate.STRING)
+                .addScalar("noinvoice", Hibernate.STRING)
+                .addScalar("costinv", Hibernate.STRING)
+                .addScalar("invwendy", Hibernate.STRING)
+                .addScalar("invoutbound", Hibernate.STRING)
+                .addScalar("invrefund", Hibernate.STRING)
+                .addScalar("invbusinesstrip", Hibernate.STRING)
+                .addScalar("invannualleave", Hibernate.STRING)
+                .addScalar("invnoinvoice", Hibernate.STRING)
+                .list();
+        for (Object[] B : SummaryTicketCostAndIncomeSummary) {
+            SummaryTicketCostAndIncomeView sumticket = new SummaryTicketCostAndIncomeView();
+            //set header
+            sumticket.setHeaderinvdatefrom("".equals(String.valueOf(invoiceFromDate)) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(invoiceFromDate))));
+            sumticket.setHeaderinvdateto("".equals(String.valueOf(invoiceToDate)) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(invoiceToDate))));
+            sumticket.setHeaderissuedatefrom("".equals(String.valueOf(issueFrom)) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(issueFrom))));
+            sumticket.setHeaderissuedateto("".equals(String.valueOf(issueTo)) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(issueTo))));
+            sumticket.setHeaderprintby(printby);
+            sumticket.setHeaderprinton(String.valueOf(df.format(new Date())));
+            sumticket.setHeaderdepartment(departmentt);
+            sumticket.setHeadersalestaff(salebyUser);
+            sumticket.setHeadertermpay(termPayt);
+            //
+            sumticket.setTypepaymentSum(util.ConvertString(B[0]) == null ? "" : util.ConvertString(B[0]));
+            sumticket.setTyperountingSum(util.ConvertString(B[1])== null ? "" : util.ConvertString(B[1]));
+            sumticket.setPaxSum(util.ConvertString(B[2])== null ? "" : util.ConvertString(B[2]));
+            sumticket.setTicketissueSum(util.ConvertString(B[3])== null ? "" : util.ConvertString(B[3]));
+            sumticket.setInvnoSum(util.ConvertString(B[4])== null ? "" : util.ConvertString(B[4]));
+            sumticket.setCostSum(util.ConvertString(B[5])== null ? "" : util.ConvertString(B[5]));
+            sumticket.setInboundSum(util.ConvertString(B[6])== null ? "" : util.ConvertString(B[6]));
+            sumticket.setWendySum(util.ConvertString(B[7])== null ? "" : util.ConvertString(B[7]));
+            sumticket.setRefundSum(util.ConvertString(B[8])== null ? "" : util.ConvertString(B[8]));
+            sumticket.setBusinesstripSum(util.ConvertString(B[9])== null ? "" : util.ConvertString(B[9]));
+            sumticket.setAnnualleaveSum(util.ConvertString(B[10])== null ? "" : util.ConvertString(B[10]));
+            sumticket.setNoinvoiceSum(util.ConvertString(B[11])== null ? "" : util.ConvertString(B[11]));
+            sumticket.setCostinvSum(util.ConvertString(B[12])== null ? "" : util.ConvertString(B[12]));
+            sumticket.setInvwendySum(util.ConvertString(B[13])== null ? "" : util.ConvertString(B[13]));
+            sumticket.setInvoutboundSum(util.ConvertString(B[14])== null ? "" : util.ConvertString(B[14]));
+            sumticket.setInvrefundSum(util.ConvertString(B[15])== null ? "" : util.ConvertString(B[15]));
+            sumticket.setInvbusinesstripSum(util.ConvertString(B[16])== null ? "" : util.ConvertString(B[16]));
+            sumticket.setInvannualleaveSum(util.ConvertString(B[17])== null ? "" : util.ConvertString(B[17]));
+            sumticket.setInvnoinvoiceSum(util.ConvertString(B[18])== null ? "" : util.ConvertString(B[18]));
+            sumticket.setPage("incomesum");
+            data.add(sumticket);
+        }
+        session.close();
+        this.sessionFactory.close();
         return data;
     }
 
