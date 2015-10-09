@@ -186,6 +186,8 @@ public class RefundAirReportImpl implements RefundAirReportDao{
                .addScalar("paydate", Hibernate.STRING)
                .addScalar("paycustomer", Hibernate.STRING)
                .addScalar("airlinecomm", Hibernate.STRING)
+                .addScalar("airlineagentname", Hibernate.STRING)
+                .addScalar("profit", Hibernate.STRING)
                 .list();
         if(refundTicketDetailList != null && refundTicketDetailList.size() != 0){
         for (Object[] B : refundTicketDetailList) {
@@ -247,6 +249,8 @@ public class RefundAirReportImpl implements RefundAirReportDao{
             refund.setPaydate((util.ConvertString(B[12])) == "" ? "" : util.ConvertString(B[12]));
             refund.setPaycustomer((util.ConvertString(B[13])) == "" ? "" : util.ConvertString(B[13]));
             refund.setAirlinecomm((util.ConvertString(B[14])) == "" ? "" : util.ConvertString(B[14]));
+            refund.setAirlineagentname((util.ConvertString(B[15])) == "" ? "" : util.ConvertString(B[15]));
+            refund.setProfit((util.ConvertString(B[16])) == "" ? "" : util.ConvertString(B[16]));
             data.add(refund);
         }   
     }

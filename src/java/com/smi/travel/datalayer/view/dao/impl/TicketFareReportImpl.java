@@ -156,6 +156,9 @@ public class TicketFareReportImpl implements TicketFareReportDao {
                 .addScalar("agentcom",Hibernate.STRING)
                 .addScalar("profit",Hibernate.STRING)
                 .addScalar("invdate",Hibernate.STRING)
+                .addScalar("refno",Hibernate.STRING)
+                .addScalar("wht",Hibernate.STRING)
+                .addScalar("cost",Hibernate.STRING)
                 .list();
         
         SimpleDateFormat df = new SimpleDateFormat();
@@ -245,6 +248,9 @@ public class TicketFareReportImpl implements TicketFareReportDao {
             ticketFareReport.setAgentcom(util.ConvertString(B[18]));
             ticketFareReport.setProfit(util.ConvertString(B[19]));
             ticketFareReport.setInvdate("null".equals(String.valueOf(B[20])) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(B[20])))));
+            ticketFareReport.setRefno(util.ConvertString(B[21]));
+            ticketFareReport.setWht(util.ConvertString(B[22]));
+            ticketFareReport.setCost(util.ConvertString(B[23]));
             data.add(ticketFareReport);
         }
         

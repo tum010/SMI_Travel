@@ -44,6 +44,36 @@ public class TicketFareReport {
     private String agentcom;
     private String profit;
     private String invdate;
+    private String refno;
+    private String wht;
+    private String cost;
+
+    public String getCost() {
+        return cost;
+    }
+
+    public void setCost(String cost) {
+        this.cost = cost;
+    }
+    
+    
+
+    public String getRefno() {
+        return refno;
+    }
+
+    public void setRefno(String refno) {
+        this.refno = refno;
+    }
+
+    public String getWht() {
+        return wht;
+    }
+
+    public void setWht(String wht) {
+        this.wht = wht;
+    }
+    
     
     public String getTickettype() {
         return tickettype;
