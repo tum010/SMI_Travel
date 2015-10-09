@@ -45,6 +45,7 @@ public class ExportDataToExcelController  extends SMITravelController{
     private static final String SummaryTicketCommissionReceive = "SummaryTicketCommissionReceive";
     private static final String RefundTicketDetail = "RefundTicketDetail";
     private static final String SummaryAirlinePax = "SummaryAirlinePax"; //Ticket Summary Airline -> List Summary Airline Issue --> Summary airline
+    private static final String TicketProfitLost = "TicketProfitLost";
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -191,6 +192,8 @@ public class ExportDataToExcelController  extends SMITravelController{
             String paidto = request.getParameter("");
             String typeprint = request.getParameter("");
             data = reportservice.getRefundTicketDetail(refundagent, refundnameby, passengername, receivefrom, receiveto, paidfrom, paidto, typeprint,printby);
+        }else if(TicketProfitLost.equals(name)){
+            data = reportservice.getTicketProfitLost(invoiceFromDate,invoiceToDate,printby);
         }
 		
         return new ModelAndView("ExportDataToExcelView",name,data).addObject(ReportName, name);

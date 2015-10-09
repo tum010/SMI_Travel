@@ -7,10 +7,10 @@
 package com.smi.travel.datalayer.view.dao.impl;
 
 import com.smi.travel.datalayer.entity.Agent;
-import com.smi.travel.datalayer.view.dao.TicketFareReportDao;
-
 import com.smi.travel.datalayer.report.model.TicketFareReport;
 import com.smi.travel.datalayer.report.model.TicketFareSummaryByAgentStaff;
+import com.smi.travel.datalayer.view.dao.TicketFareReportDao;
+import com.smi.travel.datalayer.view.entity.TicketProfitLost;
 import com.smi.travel.datalayer.view.entity.TicketSummaryAirlineView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
@@ -750,6 +750,15 @@ public class TicketFareReportImpl implements TicketFareReportDao {
         return data;
     }
 
-
+    @Override
+    public List getTicketProfitLost(String invoiceFromDate, String invoiceToDate, String printby) {
+        UtilityFunction util = new UtilityFunction();
+        List data = new ArrayList<TicketProfitLost>();
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("dd-MM-yyyy hh:mm");
+//        ticket.setHeaderprinton(String.valueOf(df.format(new Date())));
+        
+        return data;
+    }
    
 }

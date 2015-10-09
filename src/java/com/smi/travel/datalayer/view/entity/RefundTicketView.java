@@ -11,24 +11,20 @@ package com.smi.travel.datalayer.view.entity;
  */
 public class RefundTicketView {
     private String  refundno;					
-    private String  paydate;					
-    private String  ticketno;					
-    private String  refundto;					
-    private String  refundby;					
-    private String  sectorrefund;					
-    private String  receiveairline;					
-    private String  refunddate	;				
-    private String  paycustomer;					
-    private String  paydate2;					
-    private String  profit;					
-    private String  receiveairline2;					
-    private String  airlinecomm	;
-    private String refundagent;
-    private String refundnameby;
-    private String passenger;
-    private String receivedate;
-    private String paiddate;
-    private String typeprint;
+    private String  refunddate;
+    private String  air;
+    private String  docno;
+    private String  airlineagent;
+    private String  agent;
+    private String  passenger;
+    private String  sectorrefund;
+    private String  receiveairline;
+    private String  receivedate;
+    private String  payno;
+    private String  export;
+    private String  paydate;
+    private String  paycustomer;
+    private String  airlinecomm;
     
     //Header
     private String refundagentPage;
@@ -40,6 +36,126 @@ public class RefundTicketView {
     private String receivePage;
     private String paidPage;
     private String typeprintPage;
+
+    public String getRefundno() {
+        return refundno;
+    }
+
+    public void setRefundno(String refundno) {
+        this.refundno = refundno;
+    }
+
+    public String getRefunddate() {
+        return refunddate;
+    }
+
+    public void setRefunddate(String refunddate) {
+        this.refunddate = refunddate;
+    }
+
+    public String getAir() {
+        return air;
+    }
+
+    public void setAir(String air) {
+        this.air = air;
+    }
+
+    public String getDocno() {
+        return docno;
+    }
+
+    public void setDocno(String docno) {
+        this.docno = docno;
+    }
+
+    public String getAirlineagent() {
+        return airlineagent;
+    }
+
+    public void setAirlineagent(String airlineagent) {
+        this.airlineagent = airlineagent;
+    }
+
+    public String getAgent() {
+        return agent;
+    }
+
+    public void setAgent(String agent) {
+        this.agent = agent;
+    }
+
+    public String getPassenger() {
+        return passenger;
+    }
+
+    public void setPassenger(String passenger) {
+        this.passenger = passenger;
+    }
+
+    public String getSectorrefund() {
+        return sectorrefund;
+    }
+
+    public void setSectorrefund(String sectorrefund) {
+        this.sectorrefund = sectorrefund;
+    }
+
+    public String getReceiveairline() {
+        return receiveairline;
+    }
+
+    public void setReceiveairline(String receiveairline) {
+        this.receiveairline = receiveairline;
+    }
+
+    public String getReceivedate() {
+        return receivedate;
+    }
+
+    public void setReceivedate(String receivedate) {
+        this.receivedate = receivedate;
+    }
+
+    public String getPayno() {
+        return payno;
+    }
+
+    public void setPayno(String payno) {
+        this.payno = payno;
+    }
+
+    public String getExport() {
+        return export;
+    }
+
+    public void setExport(String export) {
+        this.export = export;
+    }
+
+    public String getPaydate() {
+        return paydate;
+    }
+
+    public void setPaydate(String paydate) {
+        this.paydate = paydate;
+    }
+
+    public String getPaycustomer() {
+        return paycustomer;
+    }
+
+    public void setPaycustomer(String paycustomer) {
+        this.paycustomer = paycustomer;
+    }
+
+    public String getAirlinecomm() {
+        return airlinecomm;
+    }
+
+    public void setAirlinecomm(String airlinecomm) {
+        this.airlinecomm = airlinecomm;
+    }
 
     public String getRefundagentPage() {
         return refundagentPage;
@@ -111,158 +227,6 @@ public class RefundTicketView {
 
     public void setTypeprintPage(String typeprintPage) {
         this.typeprintPage = typeprintPage;
-    } 
-
-    public String getRefundno() {
-        return refundno;
-    }
-
-    public void setRefundno(String refundno) {
-        this.refundno = refundno;
-    }
-
-    public String getPaydate() {
-        return paydate;
-    }
-
-    public void setPaydate(String paydate) {
-        this.paydate = paydate;
-    }
-
-    public String getTicketno() {
-        return ticketno;
-    }
-
-    public void setTicketno(String ticketno) {
-        this.ticketno = ticketno;
-    }
-
-    public String getRefundto() {
-        return refundto;
-    }
-
-    public void setRefundto(String refundto) {
-        this.refundto = refundto;
-    }
-
-    public String getRefundby() {
-        return refundby;
-    }
-
-    public void setRefundby(String refundby) {
-        this.refundby = refundby;
-    }
-
-    public String getSectorrefund() {
-        return sectorrefund;
-    }
-
-    public void setSectorrefund(String sectorrefund) {
-        this.sectorrefund = sectorrefund;
-    }
-
-    public String getReceiveairline() {
-        return receiveairline;
-    }
-
-    public void setReceiveairline(String receiveairline) {
-        this.receiveairline = receiveairline;
-    }
-
-    public String getRefunddate() {
-        return refunddate;
-    }
-
-    public void setRefunddate(String refunddate) {
-        this.refunddate = refunddate;
-    }
-
-    public String getPaycustomer() {
-        return paycustomer;
-    }
-
-    public void setPaycustomer(String paycustomer) {
-        this.paycustomer = paycustomer;
-    }
-
-    public String getPaydate2() {
-        return paydate2;
-    }
-
-    public void setPaydate2(String paydate2) {
-        this.paydate2 = paydate2;
-    }
-
-    public String getProfit() {
-        return profit;
-    }
-
-    public void setProfit(String profit) {
-        this.profit = profit;
-    }
-
-    public String getReceiveairline2() {
-        return receiveairline2;
-    }
-
-    public void setReceiveairline2(String receiveairline2) {
-        this.receiveairline2 = receiveairline2;
-    }
-
-    public String getAirlinecomm() {
-        return airlinecomm;
-    }
-
-    public void setAirlinecomm(String airlinecomm) {
-        this.airlinecomm = airlinecomm;
-    }
-
-    public String getRefundagent() {
-        return refundagent;
-    }
-
-    public void setRefundagent(String refundagent) {
-        this.refundagent = refundagent;
-    }
-
-    public String getRefundnameby() {
-        return refundnameby;
-    }
-
-    public void setRefundnameby(String refundnameby) {
-        this.refundnameby = refundnameby;
-    }
-
-    public String getPassenger() {
-        return passenger;
-    }
-
-    public void setPassenger(String passenger) {
-        this.passenger = passenger;
-    }
-
-    public String getReceivedate() {
-        return receivedate;
-    }
-
-    public void setReceivedate(String receivedate) {
-        this.receivedate = receivedate;
-    }
-
-    public String getPaiddate() {
-        return paiddate;
-    }
-
-    public void setPaiddate(String paiddate) {
-        this.paiddate = paiddate;
-    }
-
-    public String getTypeprint() {
-        return typeprint;
-    }
-
-    public void setTypeprint(String typeprint) {
-        this.typeprint = typeprint;
     }
 
    
