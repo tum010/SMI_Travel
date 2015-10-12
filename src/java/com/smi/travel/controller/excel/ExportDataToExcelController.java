@@ -74,6 +74,7 @@ public class ExportDataToExcelController  extends SMITravelController{
         String from = request.getParameter("arFromDate");
         String to = request.getParameter("arToDate");
         String status = request.getParameter("arStatus");
+        String accno = request.getParameter("accno");
         
         String reportType = request.getParameter("reportType");
         
@@ -131,7 +132,7 @@ public class ExportDataToExcelController  extends SMITravelController{
             data = reportservice.getBillAirAgentReportSummary(agentCode, invoiceFromDates, InvoiceToDates, issueFroms, issueTos, refundFrom, refundTo, departments, salebyUsers, termPays,printby);
         }else if(ChangeARReport.equalsIgnoreCase(name)){
             System.out.println("get excel data agent");
-            data = reportservice.SearchArNirvanaFromFilter(invoiceType, departmnt, type, from, to, status);
+            data = reportservice.SearchArNirvanaFromFilter(invoiceType, departmnt, type, from, to, status,accno);
         }else if(BillAirAgentSummary.equalsIgnoreCase(name)){
             System.out.println("get excel data BillAirAgentSummary");
             String agentCode = request.getParameter("agentCode");

@@ -52,7 +52,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
                 "cust_branch", "company_branch"};
     
     @Override
-    public List<ARNirvana> SearchArNirvanaFromFilter(String invtype, String department, String billtype, String from, String to, String status) {
+    public List<ARNirvana> SearchArNirvanaFromFilter(String invtype, String department, String billtype, String from, String to, String status,String accno) {
         System.out.println("Invoice Type : " + invtype + ":");
         System.out.println("Depart ment : " + department + ":");
         System.out.println("Bill Type : " + billtype + ":");
@@ -135,6 +135,17 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
                query += " ar.itf_status = '" + status + "'";
            }
         }
+        
+        if(accno != null && (!"".equalsIgnoreCase(accno))){
+            if(AndQuery == 1){
+                query += " and ar.accno = '" + accno + "'";
+           }else{
+               AndQuery = 1;
+               query += " ar.accno = '" + accno + "'";
+           }
+        }
+        
+        
         query += "  ORDER BY ar.invdate  DESC";
         System.out.println("query : " + query);
         List<Object[]> ARNirvanaList = session.createSQLQuery(query )

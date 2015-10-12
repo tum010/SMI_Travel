@@ -241,8 +241,8 @@ public class ReportService {
         return creditNoteSummaryReportDao.getCreditNoteSummaryReport(from, to, department, status, systemuser);
     }
     
-    public List<ARNirvana> SearchArNirvanaFromFilter(String invtype,String department,String billtype,String from,String to,String status){
-        return arNirvanaDao.SearchArNirvanaFromFilter(invtype, department, billtype, from, to, status);
+    public List<ARNirvana> SearchArNirvanaFromFilter(String invtype,String department,String billtype,String from,String to,String status, String accno){
+        return arNirvanaDao.SearchArNirvanaFromFilter(invtype, department, billtype, from, to, status, accno);
     }
     
     public List<CollectionNirvana> getCollectionNirvanaFromFilter(String department,String type,String status,String from,String to,String invno,String printby){

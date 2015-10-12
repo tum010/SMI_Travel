@@ -87,8 +87,8 @@
                         </c:forEach>
                     </select>
                 </div>
-                <div class="col-xs-1" style="width: 50px"></div>
-                <div class="col-xs-1 text-left">
+                <div class="col-xs-1" style="width: 52px"></div>
+                <div class="col-xs-1 text-right">
                     <label class="control-label" for="">Status</lable>
                 </div>
                 <div class="col-xs-1" style="width: 200px">
@@ -149,7 +149,27 @@
                     </c:if>                             
                     </div>               
                 </div>
-                <div class="col-xs-1" style="width: 245px"></div>
+                <div class="col-xs-1 text-right" style="width: 163px">
+                    <label class="control-label" for="">Acc</lable>
+                </div>
+                <div class="col-xs-1" style="width: 100px">
+                    <select class="form-control" id="apAccno" name="apAccno">
+                        <option value=""> </option>
+                        <c:set var="accno1" value="" />
+                        <c:if test="${'1' == requestScope['apAccno']}">
+                            <c:set var="accno1" value="selected" />
+                        </c:if>
+                        <option value="1" ${accno1}>1</option>
+                        <c:set var="accno2" value="" />
+                        <c:if test="${'2' == requestScope['apAccno']}">
+                            <c:set var="accno2" value="selected" />
+                        </c:if>
+                        <option value="2" ${accno2}>2</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="col-xs-1" style="width: 870px"></div>
                 <div class="col-xs-1">
                     <button type="submit"  id="btnSearchAP"  name="btnSearchAP" class="btn btn-primary btn-primary">
                         <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
