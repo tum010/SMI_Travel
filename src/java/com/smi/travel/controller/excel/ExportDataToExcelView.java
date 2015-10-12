@@ -7333,7 +7333,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                         cell33.setCellStyle(styleC22);
                     }
                     HSSFCell cell34 = row3.createCell(3);
-                    cell34.setCellValue("Page: ");
+                    cell34.setCellValue("Page : ");
                     cell34.setCellStyle(styleC21);
                     HSSFCell cell35 = row3.createCell(4);
                     cell35.setCellValue("1");
@@ -7411,7 +7411,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                         cell33.setCellStyle(styleC22);
                     }
                     HSSFCell cell34 = row3.createCell(3);
-                    cell34.setCellValue("Page: ");
+                    cell34.setCellValue("Page : ");
                     cell34.setCellStyle(styleC21);
                     HSSFCell cell35 = row3.createCell(4);
                     cell35.setCellValue("1");
