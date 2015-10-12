@@ -167,6 +167,7 @@
         <property name="apNirvanaDao" ref="APNirvanaDao" />
         <property name="paymentAirTicketDao" ref="PaymentAirTicketDao" />
         <property name="summaryTicketAdjustCostAndIncomeDao" ref="SummaryTicketAdjustCostAndIncomeDao" />
+        <property name="paymentWendytourDao" ref="PaymentWendytourDao" />
     </bean> 
     
     
