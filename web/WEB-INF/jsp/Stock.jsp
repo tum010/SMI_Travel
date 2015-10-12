@@ -428,12 +428,12 @@
         var bla = $('#resultText').val();
         if(bla === "delete unsuccess"){  
             $('#textAlertDivNotSave').show();
-            $('#textAlertDivSave').hide()();
+            $('#textAlertDivSave').hide();
         }else if ( bla === "delete success"){
             $('#textAlertDivSave').show();
             $('#textAlertDivNotSave').hide();
         }else{
-            $('#textAlertDivSave').hide()();
+            $('#textAlertDivSave').hide();
             $('#textAlertDivNotSave').hide();
         }
     });
