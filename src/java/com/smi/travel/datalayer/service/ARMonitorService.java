@@ -18,8 +18,8 @@ public class ARMonitorService {
     private ARNirvanaDao arNirvanaDao;
     private GenerateReport genreport;
     
-    public List<ARNirvana> SearchArNirvanaFromFilter(String invtype,String department,String billtype,String from,String to,String status){
-        return arNirvanaDao.SearchArNirvanaFromFilter(invtype, department, billtype, from, to, status);
+    public List<ARNirvana> SearchArNirvanaFromFilter(String invtype,String department,String billtype,String from,String to,String status,String accno){
+        return arNirvanaDao.SearchArNirvanaFromFilter(invtype, department, billtype, from, to, status,accno);
     }
     
     public String ExportARFileInterface(List<ARNirvana> APList,String pathfile){

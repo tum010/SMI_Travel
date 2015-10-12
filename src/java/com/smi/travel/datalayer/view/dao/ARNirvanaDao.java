@@ -14,7 +14,7 @@ import java.util.List;
  * @author Surachai
  */
 public interface ARNirvanaDao {
-    public List<ARNirvana> SearchArNirvanaFromFilter(String invtype,String department,String billtype,String from,String to,String status);
+    public List<ARNirvana> SearchArNirvanaFromFilter(String invtype,String department,String billtype,String from,String to,String status,String accno);
     public String ExportARFileInterface(List<ARNirvana> APList,String pathfile);
     public String UpdateStatusARInterface(List<ARNirvana> APList);
 }

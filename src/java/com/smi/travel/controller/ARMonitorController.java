@@ -25,7 +25,7 @@ public class ARMonitorController extends SMITravelController {
         String from = request.getParameter("arFromDate");
         String to = request.getParameter("arToDate");
         String status = request.getParameter("arStatus");
-        
+        String accno = request.getParameter("accno");
         //List Type
         List<MBilltype> listType = new LinkedList<>();
         listType = utilityService.getListMBilltype();
@@ -38,7 +38,7 @@ public class ARMonitorController extends SMITravelController {
          //Search
         if("searchAr".equals(action)){
            List<ARNirvana> listAr = new LinkedList<>();
-           listAr = arMonitorService.SearchArNirvanaFromFilter(invoiceType, departmnt, type, from, to, status);
+           listAr = arMonitorService.SearchArNirvanaFromFilter(invoiceType, departmnt, type, from, to, status, accno);
            if(listAr != null){
                request.setAttribute("listAr", listAr);
            }else{
@@ -50,6 +50,7 @@ public class ARMonitorController extends SMITravelController {
             request.setAttribute("from", from);
             request.setAttribute("to", to);
             request.setAttribute("status", status);
+            request.setAttribute("accno", accno);
         }else if("export".equals(action)){
             String arCount = request.getParameter("arCount");
             List<ARNirvana> listAr = new LinkedList<>();
@@ -75,7 +76,7 @@ public class ARMonitorController extends SMITravelController {
                    System.out.println("Update ??? : " + isUpdate);
                    request.setAttribute("update", isUpdate);
                }               
-               listAr = arMonitorService.SearchArNirvanaFromFilter(invoiceType, departmnt, type, from, to, status);
+               listAr = arMonitorService.SearchArNirvanaFromFilter(invoiceType, departmnt, type, from, to, status, accno);
                request.setAttribute("listAr", listAr);
            }else{
                request.setAttribute("listAr", null);
@@ -85,7 +86,8 @@ public class ARMonitorController extends SMITravelController {
             request.setAttribute("type", type);
             request.setAttribute("from", from);
             request.setAttribute("to", to);
-            request.setAttribute("status", status);            
+            request.setAttribute("status", status);
+            request.setAttribute("accno", accno);
         }
         return ARMonitor;
     }

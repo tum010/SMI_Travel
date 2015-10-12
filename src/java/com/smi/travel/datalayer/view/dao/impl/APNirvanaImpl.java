@@ -487,7 +487,7 @@ public class APNirvanaImpl implements APNirvanaDao {
     }
 
     @Override
-    public List<APNirvana> SearchApNirvanaFromFilter(String paymentType, String productType, String status, String from, String to) {
+    public List<APNirvana> SearchApNirvanaFromFilter(String paymentType, String productType, String status, String from, String to, String accno) {
         UtilityFunction util = new UtilityFunction();
         List<APNirvana> apNirvanaList = new ArrayList<APNirvana>();
         Session session = this.getSessionFactory().openSession();
@@ -527,7 +527,11 @@ public class APNirvanaImpl implements APNirvanaDao {
             query.append(" `ap_nirvana`.createdate <= '" + to + "'");
             haveCondition = true;
         }
-    
+        if ((accno != null) && (!"".equalsIgnoreCase(accno))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" `ap_nirvana`.accno = '" + accno + "'");
+            haveCondition = true;
+        }
         
 
         List<Object[]> QueryList = session.createSQLQuery(query.toString())

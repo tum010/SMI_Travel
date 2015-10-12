@@ -60,7 +60,8 @@ public class TicketSummaryImpl implements TicketSummaryDao {
                 .addScalar("ticket_date", Hibernate.DATE)
                 .addScalar("invoice_no", Hibernate.STRING)
                 .list();
-        
+                    SimpleDateFormat dateformat = new SimpleDateFormat();
+            dateformat.applyPattern("dd-MM-yyyy");
         for (Object[] B : QueryTicketList) {
             TicketSummary sum = new TicketSummary();
             no +=1;
@@ -85,8 +86,8 @@ public class TicketSummaryImpl implements TicketSummaryDao {
             sum.setType(setDisplayValueTicketType(tickettype));
             if(B[13] != null)
             sum.setCreatedate(util.convertStringToDate(B[13].toString()));
-            if(B[14] != null)
-            sum.setTicketdate(util.convertStringToDate(B[14].toString()));
+            sum.setTicketdate("null".equals(String.valueOf(B[14])) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(B[14])))));
+//            sum.setTicketdate(util.convertStringToDate(util.ConvertString(B[14])));
             sum.setInvoiceno(util.ConvertString(B[15]));
             data.add(sum);
             System.out.println("sum data :");

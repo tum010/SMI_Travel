@@ -308,6 +308,9 @@ public class SummaryTicketAdjustCostAndIncomeImpl implements SummaryTicketAdjust
         List dataSum = new ArrayList();
         String querySum = "";
         int AndQuerySum = 0;
+        String Department = "ALL";
+        String TermPay = "ALL";
+        String Salestaff = "ALL";
         System.out.println("Term Pay : " + termPayt);
         if( invoiceFromDate == null  &&  invoiceToDate == null  && issueFrom == null && issueTo == null && paymentType == null && departmentt == null && salebyUser == null && termPayt == null){
             query = "select (case when (`fare`.`ticket_type` = 'B') then 'BSP' when (`fare`.`ticket_type` = 'A') then 'AGENT' when (`fare`.`ticket_type` = 'D') then 'DOMESTIC' when (`fare`.`ticket_type` = 'T') then 'TG' else `fare`.`ticket_type` end) AS `typepayment`,`fare`.`ticket_rounting` AS `typerounting`,count(`fare`.`ticket_no`) AS `pax`,substr(`fare`.`ticket_no`,1,3) AS `air`,sum(`fare`.`ticket_fare`) AS `ticketissue`,(case when (`inv`.`inv_type` = 'T') then substr(`inv`.`inv_no`,1,5) else substr(`inv`.`inv_no`,1,6) end) AS `invno`,sum(`fare`.`ticket_fare`) AS `cost`,(case when ((`fare`.`department` = 'Inbound') and isnull(`fare`.`pv_type`)) then sum(`fare`.`sale_price`) else NULL end) AS `inbound`,(case when ((`fare`.`department` = 'Wendy') and isnull(`fare`.`pv_type`)) then sum(`fare`.`sale_price`) else NULL end) AS `wendy`,(case when (`fare`.`pv_type` = 9) then sum(`fare`.`sale_price`) else NULL end) AS `refund`,(case when (`fare`.`pv_type` = 7) then sum(`fare`.`sale_price`) else NULL end) AS `businesstrip`,(case when (`fare`.`pv_type` = 8) then sum(`fare`.`sale_price`) else NULL end) AS `annualleave`,(case when (`fare`.`pv_type` = 10) then sum(`fare`.`sale_price`) else NULL end) AS `noinvoice`,sum((`fare`.`ticket_fare` - `fare`.`sale_price`)) AS `costinv`,(case when ((`fare`.`department` = 'Wendy') and isnull(`fare`.`pv_type`)) then sum(`fare`.`inv_amount`) else NULL end) AS `invwendy`,(case when ((`fare`.`department` = 'Outbound') and isnull(`fare`.`pv_type`)) then sum(`fare`.`inv_amount`) else NULL end) AS `invoutbound`,(case when (`fare`.`pv_type` = 9) then sum(`fare`.`inv_amount`) else NULL end) AS `invrefund`,(case when (`fare`.`pv_type` = 7) then sum(`fare`.`inv_amount`) else NULL end) AS `invbusinesstrip`,(case when (`fare`.`pv_type` = 8) then sum(`fare`.`inv_amount`) else NULL end) AS `invannualleave`,(case when (`fare`.`pv_type` = 10) then sum(`fare`.`inv_amount`) else NULL end) AS `invnoinvoice` from ((((`ticket_fare_airline` `fare` left join `ticket_fare_invoice` `finv` on((`finv`.`ticket_fare_id` = `fare`.`id`))) left join `invoice` `inv` on((`inv`.`id` = `finv`.`invoice_id`))) left join `m_accterm` `term` on((`term`.`id` = `inv`.`term_pay`))) left join `staff` `st` on((`st`.`name` = `fare`.`owner`))) " ; 
@@ -338,6 +341,7 @@ public class SummaryTicketAdjustCostAndIncomeImpl implements SummaryTicketAdjust
                querySum += " fare.department = '" + departmentt + "'";
            }
         }
+
         
         if(salebyUser != null && (!"".equalsIgnoreCase(salebyUser))){
             if(AndQuery == 1){
@@ -348,6 +352,9 @@ public class SummaryTicketAdjustCostAndIncomeImpl implements SummaryTicketAdjust
                query += " fare.`owner` = '" + salebyUser + "'";
                querySum += " fare.`owner` = '" + salebyUser + "'";
            }
+           Salestaff = salebyUser;
+        }else{
+           Salestaff = "ALL";
         }
         
         if(termPayt != null && (!"".equalsIgnoreCase(termPayt))){
@@ -396,6 +403,34 @@ public class SummaryTicketAdjustCostAndIncomeImpl implements SummaryTicketAdjust
         SimpleDateFormat dateformat = new SimpleDateFormat();
         dateformat.applyPattern("dd-MM-yyyy");
         
+
+        
+        if("wendy".equalsIgnoreCase(departmentt)){
+            Department = "WENDY";
+        }else if("inbound".equalsIgnoreCase(departmentt)){
+            Department = "INBOUND";
+        }else if("outbound".equalsIgnoreCase(departmentt)){
+            Department = "OUTBOUND";
+        }
+        
+        if("1".equalsIgnoreCase(termPayt)){
+            TermPay = "cash on demand";
+        }else if("2".equalsIgnoreCase(termPayt)){
+            TermPay = "credit 7 days";
+        }else if("3".equalsIgnoreCase(termPayt)){
+            TermPay = "credit 14 days";
+        }else if("4".equalsIgnoreCase(termPayt)){
+            TermPay = "credit card";
+        }else if("5".equalsIgnoreCase(termPayt)){
+            TermPay = "credit 30 days";
+        }else if("6".equalsIgnoreCase(termPayt)){
+            TermPay = "post date cheque";
+        }else if("7".equalsIgnoreCase(termPayt)){
+            TermPay = "credit 15 days";
+        }else{
+            TermPay = "ALL";
+        }
+        
         List<Object[]> SummaryTicketCostAndIncome = session.createSQLQuery(query)
                 .addScalar("typepayment", Hibernate.STRING)
                 .addScalar("typerounting", Hibernate.STRING)
@@ -427,9 +462,9 @@ public class SummaryTicketAdjustCostAndIncomeImpl implements SummaryTicketAdjust
             sumticket.setHeaderissuedateto("".equals(String.valueOf(issueTo)) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(issueTo))));
             sumticket.setHeaderprintby(printby);
             sumticket.setHeaderprinton(String.valueOf(df.format(new Date())));
-            sumticket.setHeaderdepartment(departmentt);
-            sumticket.setHeadersalestaff(salebyUser);
-            sumticket.setHeadertermpay(termPayt);
+            sumticket.setHeaderdepartment(Department);
+            sumticket.setHeadersalestaff(Salestaff);
+            sumticket.setHeadertermpay(TermPay);
             //
             sumticket.setTypepayment(util.ConvertString(B[0]) == null ? "" : util.ConvertString(B[0]));
             sumticket.setTyperounting(util.ConvertString(B[1])== null ? "" : util.ConvertString(B[1]));
@@ -484,9 +519,9 @@ public class SummaryTicketAdjustCostAndIncomeImpl implements SummaryTicketAdjust
             sumticket.setHeaderissuedateto("".equals(String.valueOf(issueTo)) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(issueTo))));
             sumticket.setHeaderprintby(printby);
             sumticket.setHeaderprinton(String.valueOf(df.format(new Date())));
-            sumticket.setHeaderdepartment(departmentt);
-            sumticket.setHeadersalestaff(salebyUser);
-            sumticket.setHeadertermpay(termPayt);
+            sumticket.setHeaderdepartment(Department);
+            sumticket.setHeadersalestaff(Salestaff);
+            sumticket.setHeadertermpay(TermPay);
             //
             sumticket.setTypepaymentSum(util.ConvertString(B[0]) == null ? "" : util.ConvertString(B[0]));
             sumticket.setTyperountingSum(util.ConvertString(B[1])== null ? "" : util.ConvertString(B[1]));

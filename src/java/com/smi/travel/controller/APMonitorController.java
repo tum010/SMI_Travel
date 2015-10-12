@@ -31,9 +31,9 @@ public class APMonitorController extends SMITravelController {
         String apFromDate = request.getParameter("apFromDate");
         String apToDate = request.getParameter("apToDate");
         String apCount = request.getParameter("apCount");
-        
+        String apAccno = request.getParameter("apAccno");
         if("search".equalsIgnoreCase(action)){
-            List<APNirvana> apNirvanaList = apNirvanaService.SearchApNirvanaFromFilter(apPayment, apType, apStatus, apFromDate, apToDate);
+            List<APNirvana> apNirvanaList = apNirvanaService.SearchApNirvanaFromFilter(apPayment, apType, apStatus, apFromDate, apToDate, apAccno);
             request.setAttribute(DATALIST, apNirvanaList);
         } else if("export".equalsIgnoreCase(action)){
             List<APNirvana> apNirvanaData = new ArrayList<APNirvana>();
@@ -58,7 +58,7 @@ public class APMonitorController extends SMITravelController {
                 System.out.println("Update Result : "+update);                
                 request.setAttribute("update", update);
             }
-            List<APNirvana> apNirvanaList = apNirvanaService.SearchApNirvanaFromFilter(apPayment, apType, apStatus, apFromDate, apToDate);
+            List<APNirvana> apNirvanaList = apNirvanaService.SearchApNirvanaFromFilter(apPayment, apType, apStatus, apFromDate, apToDate, apAccno);
             request.setAttribute(DATALIST, apNirvanaList);
         }
         
@@ -67,7 +67,7 @@ public class APMonitorController extends SMITravelController {
         request.setAttribute("apStatus", apStatus);
         request.setAttribute("apFromDate", apFromDate);
         request.setAttribute("apToDate", apToDate);
-        
+        request.setAttribute("apAccno", apAccno);
         return APMonitor;
     }
 

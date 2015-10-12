@@ -19,8 +19,8 @@ public class APNirvanaService {
     private APNirvanaDao apNirvanaDao;
     private GenerateReport genreport;
     
-    public List<APNirvana> SearchApNirvanaFromFilter(String paymentType,String producttype,String status,String from,String to) {
-        return apNirvanaDao.SearchApNirvanaFromFilter(paymentType, producttype, status, from, to);
+    public List<APNirvana> SearchApNirvanaFromFilter(String paymentType,String producttype,String status,String from,String to, String accno) {
+        return apNirvanaDao.SearchApNirvanaFromFilter(paymentType, producttype, status, from, to, accno);
     }
     
     public String ExportAPFileInterface(List<APNirvana> APList,String pathfile) {
