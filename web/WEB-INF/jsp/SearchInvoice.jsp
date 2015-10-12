@@ -16,7 +16,7 @@
 <c:set var="listAgent" value="${requestScope['listAgent']}" />
 <c:set var="status" value="${requestScope['status']}" />
 <c:set var="result" value="${requestScope['result']}" />
-
+<c:set var="showtemp" value="${requestScope['showtemp']}" />
 <section class="content-header" >
     <h1>
         Finance & Cashier - Invoice
@@ -129,10 +129,11 @@
                                         <c:set var="accountSelectedA" value="selected" />
                                     </c:when>
                                 </c:choose>         
-       
                             <option value="V" ${accountSelectedV}>Vat</option>
                             <option value="N" ${accountSelectedN}>No Vat</option>
-                            <option value="T" ${accountSelectedT}>Temp</option>
+                            <c:if test="${showtemp == 'show'}">
+                                <option value="T" ${accountSelectedT}>Temp</option>
+                            </c:if>
                             <option value="A" ${accountSelectedA}>Ticket</option>
                         </select>    
                     </div>
