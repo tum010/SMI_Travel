@@ -75,6 +75,7 @@ public class ReportController extends SMITravelController {
     private static final String CreditNoteSummaryReport = "CreditNoteSummaryReport";
     private static final String PaymentAirlineInfo = "PaymentAirlineInfo";
     private static final String PaymentAirlineListReport = "PaymentAirlineListReport";
+    private static final String PaymentTourHotelSummary = "PaymentTourHotelSummary";
     private DataSource datasource;
     private static final Logger LOG = Logger.getLogger(ReportController.class.getName());
     private ReportService reportservice;
@@ -132,6 +133,8 @@ public class ReportController extends SMITravelController {
         String departmentRec = request.getParameter("departmentRec");
         String recType = request.getParameter("recType");
         String statusInvoice = request.getParameter("status");
+        String pvtype = request.getParameter("pvtype");
+        String invSupCode = request.getParameter("invSupCode");
         
         Map model = new HashMap();
         List data = new ArrayList();
@@ -225,6 +228,13 @@ public class ReportController extends SMITravelController {
 //            data = reportservice.getPaymentAirlineReport(payno,user.getUsername()+"-"+user.getRole().getName());
             data = reportservice.getPaymentAirlineReport(payno,user.getUsername()+"-"+user.getRole().getName());
             ((PaymentAirline) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
+        }else if(PaymentAirlineInfo.equalsIgnoreCase(name)){
+            String payno = request.getParameter("payno");
+            System.out.println(" payno " + payno);
+            data = reportservice.getPaymentAirlineReport(payno,user.getUsername()+"-"+user.getRole().getName());
+            ((PaymentAirline) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
+        }else if(PaymentTourHotelSummary.equalsIgnoreCase(name)){
+            data = reportservice.getPaymentTourHotelSummary(from, to, pvtype, status, invSupCode, user.getUsername()+"-"+user.getRole().getName());
         }
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);

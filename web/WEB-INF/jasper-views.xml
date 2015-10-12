@@ -205,5 +205,10 @@
         <bean id="PaymentAirlineInfo"
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/PaymentAirline.jrxml"/>
-	</bean>                       
+	</bean>
+        
+        <bean id="PaymentTourHotelSummary"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/PaymentTourHotelSummary.jrxml"/>
+	</bean>                         
 </beans>

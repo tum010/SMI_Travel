@@ -35,6 +35,6 @@ public interface PaymentWendytourDao {
     public PaymentWendy getInvoiceSupCodeByGuideName(String guideName);
     public String getGuideName(PaymentWendy paymentWendy);
     public PaymentWendy getPaymentWendyFromDayTourOperation(TourOperationDesc paymentWendy);
-
     public String InsertPaymentWendyReference(PaymentWendyReference paymentWendyReference);
+    public List getPaymentTourHotelSummary(String from, String to, String pvtype, String status, String invSupCode, String printBy);
 }

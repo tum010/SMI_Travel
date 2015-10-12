@@ -7,6 +7,7 @@
 package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.dao.PaymentAirTicketDao;
+import com.smi.travel.datalayer.dao.PaymentWendytourDao;
 import com.smi.travel.datalayer.dao.SummaryTicketAdjustCostAndIncomeDao;
 import com.smi.travel.datalayer.view.dao.APNirvanaDao;
 import com.smi.travel.datalayer.view.dao.ARNirvanaDao;
@@ -84,6 +85,7 @@ public class ReportService {
     private APNirvanaDao apNirvanaDao;
     private PaymentAirTicketDao paymentAirTicketDao;
     private SummaryTicketAdjustCostAndIncomeDao summaryTicketAdjustCostAndIncomeDao;
+    private PaymentWendytourDao paymentWendytourDao;
     
     public List getInvoiceMonthly(String BillFrom,String BillTo,String ClientName,String Payment,String Accno,String vattype,String from,String to,String department){
         return invoiceReportDao.getInvoiceMonthly(BillFrom, BillTo, ClientName, Payment, Accno, vattype, from, to, department);
@@ -567,5 +569,17 @@ public class ReportService {
 
     public List getTicketProfitLost(String invoiceFromDate, String invoiceToDate, String printby) {
         return ticketFareReportDao.getTicketProfitLost(invoiceFromDate,invoiceToDate,printby);
+    }
+
+    public List getPaymentTourHotelSummary(String from, String to, String pvtype, String status, String invSupCode, String printBy) {
+        return getPaymentWendytourDao().getPaymentTourHotelSummary(from,to,pvtype,status,invSupCode,printBy);
+    }
+
+    public PaymentWendytourDao getPaymentWendytourDao() {
+        return paymentWendytourDao;
+    }
+
+    public void setPaymentWendytourDao(PaymentWendytourDao paymentWendytourDao) {
+        this.paymentWendytourDao = paymentWendytourDao;
     }
 }

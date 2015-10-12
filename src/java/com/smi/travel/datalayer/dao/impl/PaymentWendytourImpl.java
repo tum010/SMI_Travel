@@ -14,6 +14,7 @@ import com.smi.travel.datalayer.entity.PaymentWendy;
 import com.smi.travel.datalayer.entity.PaymentWendyReference;
 import com.smi.travel.datalayer.entity.TourOperationDesc;
 import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
+import com.smi.travel.datalayer.view.entity.PaymentTourHotelSummary;
 import com.smi.travel.datalayer.view.entity.PaymentWendytourView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
@@ -493,6 +494,86 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
         }
          
         return result;    
+    }
+
+    @Override
+    public List getPaymentTourHotelSummary(String from, String to, String pvtype, String status, String invSupCode, String printBy) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List data = new ArrayList<PaymentTourHotelSummary>();
+        
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MMM-yyyy HH:mm:ss");         
+        
+        String pvtypeshow = "ALL";
+        StringBuffer query = new StringBuffer(" SELECT * FROM `payment_tour_hotel_summary` ");
+        boolean haveCondition = false;
+        if ((from != null) && (!"".equalsIgnoreCase(from))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" `payment_tour_hotel_summary`.paydate >= '" + from + "'");
+            haveCondition = true;
+        }
+        if ((to != null) && (!"".equalsIgnoreCase(to))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" `payment_tour_hotel_summary`.paydate <= '" + to + "'");
+            haveCondition = true;
+        }
+        if ((status != null) && (!"".equalsIgnoreCase(status))) {
+            if("NORMAL".equalsIgnoreCase(status)){status = "";}
+            query.append(haveCondition ? " and" : " where");
+            query.append(" `payment_tour_hotel_summary`.idstatus = '" + status + "'");
+            haveCondition = true;
+        }
+        if ((pvtype != null) && (!"".equalsIgnoreCase(pvtype))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" `payment_tour_hotel_summary`.idpvtype = '" + pvtype + "'");
+            haveCondition = true;
+            pvtypeshow = pvtype;
+        }
+        if ((invSupCode != null) && (!"".equalsIgnoreCase(invSupCode))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" `payment_tour_hotel_summary`.supcode = '" + invSupCode + "'");
+            haveCondition = true;
+        }
+
+        List<Object[]> QueryList =  session.createSQLQuery(query.toString())
+                .addScalar("payno",Hibernate.STRING)
+                .addScalar("paydate",Hibernate.STRING)
+                .addScalar("paymenttype",Hibernate.STRING)
+                .addScalar("supplier",Hibernate.STRING)
+                .addScalar("refno",Hibernate.STRING)
+                .addScalar("invno",Hibernate.STRING)
+                .addScalar("amount",Hibernate.STRING)
+                .addScalar("cur",Hibernate.STRING)
+                .addScalar("status",Hibernate.STRING)
+                .list();
+        
+        int no = 1;
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("dd-MM-yyyy");
+        for (Object[] B : QueryList) {
+            PaymentTourHotelSummary paymentTourHotelSummary = new PaymentTourHotelSummary();
+            paymentTourHotelSummary.setNo(String.valueOf(no));
+            paymentTourHotelSummary.setPayno(util.ConvertString(B[0]));
+            paymentTourHotelSummary.setPaydate(util.ConvertString(B[1]));
+            paymentTourHotelSummary.setPvtype(util.ConvertString(B[2]));
+            paymentTourHotelSummary.setSupplier(util.ConvertString(B[3]));
+            paymentTourHotelSummary.setRefno(util.ConvertString(B[4]));                           
+            paymentTourHotelSummary.setInvno(util.ConvertString(B[5]));
+            paymentTourHotelSummary.setAmount(util.ConvertString(B[6]) != null ? util.ConvertString(B[6]) : "0");
+            paymentTourHotelSummary.setCur(util.ConvertString(B[7]));
+            paymentTourHotelSummary.setStatus(util.ConvertString(B[8]));
+            paymentTourHotelSummary.setSystemdate(String.valueOf(dateformat.format(new Date())));
+            paymentTourHotelSummary.setPaydatefrom(!"".equalsIgnoreCase(from) ? String.valueOf(df.format(util.convertStringToDate(from))) : "");
+            paymentTourHotelSummary.setPaydateto(!"".equalsIgnoreCase(to) ? String.valueOf(df.format(util.convertStringToDate(to))) : "");
+            paymentTourHotelSummary.setUser(printBy);
+            paymentTourHotelSummary.setPvtypeheader(pvtypeshow);
+            
+            data.add(paymentTourHotelSummary);
+            no++;
+        }
+        
+        return data;
     }
     
 }

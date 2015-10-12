@@ -141,7 +141,7 @@
                     <input type="hidden" id="InputPayNo" name="InputPayNo" >
                 </div>
                 <div class="col-xs-1 text-right" style="padding-left:0px;width:60px;">
-                    <button type="submit" id="ButtonPrint" name="ButtonPrint" class="btn btn-default btn-sm">
+                    <button type="button" id="ButtonPrint" name="ButtonPrint" class="btn btn-default btn-sm" onclick="printPaymentSummaryReport()">
                         <i class="fa fa-print"></i> Print             
                     </button>
                 </div>                                       
