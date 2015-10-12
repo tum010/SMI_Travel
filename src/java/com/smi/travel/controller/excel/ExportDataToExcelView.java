@@ -270,18 +270,21 @@ public class ExportDataToExcelView extends AbstractExcelView {
         styleC23.setAlignment(styleC22.ALIGN_CENTER);
         styleC23.setBorderLeft(HSSFCellStyle.BORDER_THIN);
         styleC23.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC23.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         styleC23.setWrapText(true);
         styleC23.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
         HSSFCellStyle styleC24 = wb.createCellStyle();
         styleC24.setAlignment(styleC24.ALIGN_LEFT);
         styleC24.setBorderLeft(HSSFCellStyle.BORDER_THIN);
         styleC24.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC24.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         styleC24.setWrapText(true);
         styleC24.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
         HSSFCellStyle styleC25 = wb.createCellStyle();
         styleC25.setAlignment(styleC25.ALIGN_RIGHT);
         styleC25.setBorderLeft(HSSFCellStyle.BORDER_THIN);
         styleC25.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC25.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         styleC25.setDataFormat(currency.getFormat("#,##0.00"));
         styleC25.setWrapText(true);
         styleC25.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
@@ -311,53 +314,57 @@ public class ExportDataToExcelView extends AbstractExcelView {
                 cell4.setCellValue(data.getAgentname());
                 cell4.setCellStyle(styleC24);
                 sheet.addMergedRegion(CellRangeAddress.valueOf("E"+(count + i + 1)+":G"+(count + i + 1))); 
-             HSSFCell cell15 = row.createCell(7);
-                cell15.setCellValue(data.getType());
-                cell15.setCellStyle(styleC23);                
+             HSSFCell cell5 = row.createCell(5);
+                cell5.setCellStyle(styleC24);
+             HSSFCell cell6 = row.createCell(6);
+                cell6.setCellStyle(styleC24);   
+             HSSFCell cell17 = row.createCell(7);
+                cell17.setCellValue(data.getType());
+                cell17.setCellStyle(styleC23);                
                 sheet.autoSizeColumn(7);
-             HSSFCell cell16 = row.createCell(8);
-                cell16.setCellValue(data.getRount());
-                cell16.setCellStyle(styleC23);
+             HSSFCell cell8 = row.createCell(8);
+                cell8.setCellValue(data.getRount());
+                cell8.setCellStyle(styleC23);
                 sheet.autoSizeColumn(8);
-             HSSFCell cell7 = row.createCell(9);
-                cell7.setCellValue(data.getPax());
-                cell7.setCellStyle(styleC25);
+             HSSFCell cell9 = row.createCell(9);
+                cell9.setCellValue(data.getPax());
+                cell9.setCellStyle(styleC25);
                 sheet.autoSizeColumn(9);
-             HSSFCell cell8 = row.createCell(10);
-                cell8.setCellValue(data.getAir());
-                cell8.setCellStyle(styleC25);
+             HSSFCell cell10 = row.createCell(10);
+                cell10.setCellValue(data.getAir());
+                cell10.setCellStyle(styleC25);
                 sheet.autoSizeColumn(10);
-             HSSFCell cell9 = row.createCell(11);
-                cell9.setCellValue((data.getDocno()).replaceAll(",", "\n"));
-                cell9.setCellStyle(styleC23);
+             HSSFCell cell11 = row.createCell(11);
+                cell11.setCellValue((data.getDocno()).replaceAll(",", "\n"));
+                cell11.setCellStyle(styleC23);
                 sheet.autoSizeColumn(11);                
                 row.setHeightInPoints((((((data.getDocno()).split(",")).length)+1)*sheet.getDefaultRowHeightInPoints()));
-             HSSFCell cell10 = row.createCell(12);
-                cell10.setCellValue(data.getIssuedate());
-                cell10.setCellStyle(styleC23);  
+             HSSFCell cell12 = row.createCell(12);
+                cell12.setCellValue(data.getIssuedate());
+                cell12.setCellStyle(styleC23);  
                 sheet.autoSizeColumn(12);
-             HSSFCell cell11 = row.createCell(13);
-                cell11.setCellValue(!"".equalsIgnoreCase(data.getLittlecomm()) ? new BigDecimal(data.getLittlecomm()).doubleValue() : 0);
-                cell11.setCellStyle(styleC25);
-                sheet.autoSizeColumn(13);
-             HSSFCell cell12 = row.createCell(14);
-                cell12.setCellValue(!"".equalsIgnoreCase(data.getVat()) ? new BigDecimal(data.getVat()).doubleValue() : 0);
-                cell12.setCellStyle(styleC25);
-                sheet.autoSizeColumn(14);
-             HSSFCell cell13 = row.createCell(15);
-                cell13.setCellValue(!"".equalsIgnoreCase(data.getTotal()) ? new BigDecimal(data.getTotal()).doubleValue() : 0);
+             HSSFCell cell13 = row.createCell(13);
+                cell13.setCellValue(!"".equalsIgnoreCase(data.getLittlecomm()) ? new BigDecimal(data.getLittlecomm()).doubleValue() : 0);
                 cell13.setCellStyle(styleC25);
+                sheet.autoSizeColumn(13);
+             HSSFCell cell14 = row.createCell(14);
+                cell14.setCellValue(!"".equalsIgnoreCase(data.getVat()) ? new BigDecimal(data.getVat()).doubleValue() : 0);
+                cell14.setCellStyle(styleC25);
+                sheet.autoSizeColumn(14);
+             HSSFCell cell15 = row.createCell(15);
+                cell15.setCellValue(!"".equalsIgnoreCase(data.getTotal()) ? new BigDecimal(data.getTotal()).doubleValue() : 0);
+                cell15.setCellStyle(styleC25);
                 sheet.autoSizeColumn(15);
                 
-            if(i == (TicketProfitLoss.size()-1)){
-                row = sheet.createRow(count + i + 1);
-                for(int k=0;k<16;k++){
-                    HSSFCellStyle styleSum = wb.createCellStyle();
-                    styleSum.setBorderTop(HSSFCellStyle.BORDER_THIN);
-                    HSSFCell cellSum = row.createCell(k);                   
-                    cellSum.setCellStyle(styleSum);
-                }
-            }    
+//            if(i == (TicketProfitLoss.size()-1)){
+//                row = sheet.createRow(count + i + 1);
+//                for(int k=0;k<16;k++){
+//                    HSSFCellStyle styleSum = wb.createCellStyle();
+//                    styleSum.setBorderTop(HSSFCellStyle.BORDER_THIN);
+//                    HSSFCell cellSum = row.createCell(k);                   
+//                    cellSum.setCellStyle(styleSum);
+//                }
+//            }    
                
 //            for(int j =0;j<15;j++){
 //                if(j==4){
