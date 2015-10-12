@@ -28,7 +28,7 @@
 
             <div class="form-group">
                 <div class="col-md-6">
-                    <h3>Ticket Profit Lost Summary</h3>
+                    <h3>Ticket Profit Loss Summary</h3>
                 </div>
             </div>
             

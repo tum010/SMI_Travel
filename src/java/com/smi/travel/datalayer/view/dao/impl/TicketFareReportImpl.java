@@ -772,7 +772,63 @@ public class TicketFareReportImpl implements TicketFareReportDao {
         List data = new ArrayList<TicketProfitLoss>();
         SimpleDateFormat df = new SimpleDateFormat();
         df.applyPattern("dd-MM-yyyy hh:mm");
-//        ticket.setHeaderprinton(String.valueOf(df.format(new Date())));
+        boolean cause = true;
+        
+        Session session = this.sessionFactory.openSession();
+        String query = " select `inv`.`inv_no` AS `invno`,`inv`.`inv_date` AS `invdate`,`inv`.`department` AS `department`,`inv`.`inv_name` AS `agentname`,`fare`.`ticket_type` AS `type`,`fare`.`ticket_rounting` AS `rount`,count(`fare`.`ticket_no`) AS `pax`,substr(`fare`.`ticket_no`,1,3) AS `air`,group_concat(substr(`fare`.`ticket_no`,4) separator ',') AS `docno`,`fare`.`issue_date` AS `issuedate`,round(sum(ifnull(`fare`.`litter_commission`,0)),2) AS `littlecomm`,round(sum(((ifnull(`fare`.`litter_commission`,0) * 7) / 100)),2) AS `vat`,round(sum((((ifnull(`fare`.`litter_commission`,0) * 7) / 100) + ifnull(`fare`.`litter_commission`,0))),2) AS `total` from ((`invoice` `inv` join `ticket_fare_invoice` `finv` on((`finv`.`invoice_id` = `inv`.`id`))) join `ticket_fare_airline` `fare` on((`fare`.`id` = `finv`.`ticket_fare_id`))) ";
+        if((!"".equalsIgnoreCase(invoiceFromDate)) && (invoiceFromDate != null)){
+            query += (cause ? " where " : "");
+            query += " `inv`.`inv_date` >= '" + invoiceFromDate + "'";
+            cause = false;        
+        }
+        if((!"".equalsIgnoreCase(invoiceToDate)) && (invoiceToDate != null)){
+            query += (cause ? " where " : " and ");
+            query += " `inv`.`inv_date` <= '" + invoiceToDate + "'";
+            cause = false;        
+        }
+        query += " group by `inv`.`inv_no` ";
+        List<Object[]> QueryList = new ArrayList<Object[]>();
+        QueryList = session.createSQLQuery(query)
+                        .addScalar("invno",Hibernate.STRING)
+                        .addScalar("invdate",Hibernate.STRING)
+                        .addScalar("department",Hibernate.STRING)
+                        .addScalar("agentname",Hibernate.STRING)
+                        .addScalar("type",Hibernate.STRING)
+                        .addScalar("rount",Hibernate.STRING)
+                        .addScalar("pax",Hibernate.STRING)
+                        .addScalar("air",Hibernate.STRING)
+                        .addScalar("docno",Hibernate.STRING)
+                        .addScalar("issuedate",Hibernate.STRING)
+                        .addScalar("littlecomm",Hibernate.STRING)
+                        .addScalar("vat",Hibernate.STRING)
+                        .addScalar("total",Hibernate.STRING)
+                        .list();
+        
+        int i = 1;
+        for (Object[] B : QueryList) {
+            TicketProfitLoss ticketProfitLoss = new TicketProfitLoss();
+            ticketProfitLoss.setNo(String.valueOf(i));
+            ticketProfitLoss.setInvno(util.ConvertString(B[0]));
+            ticketProfitLoss.setDate(util.ConvertString(B[1]));
+            ticketProfitLoss.setDepartment(util.ConvertString(B[2]));
+            ticketProfitLoss.setAgentname(util.ConvertString(B[3]));
+            ticketProfitLoss.setType(util.ConvertString(B[4]));
+            ticketProfitLoss.setRount(util.ConvertString(B[5]));
+            ticketProfitLoss.setPax(util.ConvertString(B[6]));
+            ticketProfitLoss.setAir(util.ConvertString(B[7]));
+            ticketProfitLoss.setDocno(util.ConvertString(B[8]));
+            ticketProfitLoss.setIssuedate(util.ConvertString(B[9]));
+            ticketProfitLoss.setLittlecomm(util.ConvertString(B[10]));
+            ticketProfitLoss.setVat(util.ConvertString(B[11]));
+            ticketProfitLoss.setTotal(util.ConvertString(B[12]));
+            ticketProfitLoss.setInvoicedatefrom(!"".equalsIgnoreCase(invoiceFromDate) ? invoiceFromDate : "");
+            ticketProfitLoss.setInvoicedateto(!"".equalsIgnoreCase(invoiceToDate) ? invoiceToDate : "");
+            ticketProfitLoss.setHeadreport("Ticket Profit Loss");
+            ticketProfitLoss.setPrintby(printby);
+            ticketProfitLoss.setPrinton(String.valueOf(df.format(new Date())));
+            data.add(ticketProfitLoss);
+            i++;
+        }        
         
         return data;
     }

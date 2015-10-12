@@ -17,6 +17,7 @@ public class TicketProfitLoss {
     private String invoicedatefrom;
     private String invoicedateto;
     private String id;
+    private String no;
     private String invno;
     private String date;
     private String department;
@@ -25,7 +26,7 @@ public class TicketProfitLoss {
     private String rount;
     private String pax;
     private String air;
-    private String ticketno;
+    private String docno;
     private String issuedate;
     private String littlecomm;
     private String vat;
@@ -143,14 +144,6 @@ public class TicketProfitLoss {
         this.air = air;
     }
 
-    public String getTicketno() {
-        return ticketno;
-    }
-
-    public void setTicketno(String ticketno) {
-        this.ticketno = ticketno;
-    }
-
     public String getIssuedate() {
         return issuedate;
     }
@@ -181,5 +174,21 @@ public class TicketProfitLoss {
 
     public void setTotal(String total) {
         this.total = total;
+    }
+
+    public String getDocno() {
+        return docno;
+    }
+
+    public void setDocno(String docno) {
+        this.docno = docno;
+    }
+
+    public String getNo() {
+        return no;
+    }
+
+    public void setNo(String no) {
+        this.no = no;
     }
 }
