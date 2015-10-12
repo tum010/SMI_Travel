@@ -15,7 +15,7 @@ import java.util.Date;
 public class TicketSummary {
     private int no;
     private String air;
-    private Date ticketdate;
+//    private Date ticketdate;
     private String ticketno;
     private String passengername;
     private String billto;
@@ -34,7 +34,7 @@ public class TicketSummary {
     private String systemdate;
     private String startdate;
     private String enddate;
-
+    private String ticketdate;
     
     
     public int getNo() {
@@ -204,11 +204,19 @@ public class TicketSummary {
         this.enddate = enddate;
     }
 
-    public Date getTicketdate() {
+//    public Date getTicketdate() {
+//        return ticketdate;
+//    }
+//
+//    public void setTicketdate(Date ticketdate) {
+//        this.ticketdate = ticketdate;
+//    }
+
+    public String getTicketdate() {
         return ticketdate;
     }
 
-    public void setTicketdate(Date ticketdate) {
+    public void setTicketdate(String ticketdate) {
         this.ticketdate = ticketdate;
     }
 
