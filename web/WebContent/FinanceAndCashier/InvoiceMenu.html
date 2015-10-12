@@ -125,12 +125,17 @@
         });
         var path = location.pathname;
         var name = path.split("/");
-
             //console.log(name[2]);
             str = name[2].split(".");
             //console.log(str[0]);
 //            sub = str[0].substr(0, 9);
             sub2 = str[0].substr(0, 16);
+            var lastChar = sub2.substr(sub2.length - 2);
+            
+            if(lastChar === 'ST'){
+                $(".invoiceTemp").show();
+                $("#tempBox").val("");
+            }
 //            console.log("Sub : "+sub);
             console.log("Sub : "+sub2);
 //            var $select = $('a[href*="' + sub + '"]');
@@ -154,11 +159,13 @@
 
     $("#tempBox").on("keyup", function (event) {
         if($("#tempBox").val() === "1111"){
-            $(".invoiceTemp").show();
-            $("#tempBox").val("");
+//            $(".invoiceTemp").show();
+//            $("#tempBox").val("");
+            window.location.href = "SearchInvoiceST.smi";
         }else if($("#tempBox").val() === "2222"){
             $(".invoiceTemp").hide();
             $("#tempBox").val("");
         }
+
     });
 </script>

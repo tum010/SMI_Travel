@@ -5,6 +5,7 @@ import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.datalayer.view.entity.InvoiceView;
 import com.smi.travel.master.controller.SMITravelController;
+import com.smi.travel.util.UtilityFunction;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,11 +17,14 @@ import org.springframework.web.servlet.view.RedirectView;
 public class SearchInvoiceController extends SMITravelController {
     private static final ModelAndView SearchInvoice = new ModelAndView("SearchInvoice");
     private static final ModelAndView SearchInvoice_REFRESH = new ModelAndView(new RedirectView("SearchInvoice.smi", true));
+    private static final String LINKNAME = "SearchInvoice";
     private InvoiceService invoiceService;
     private UtilityService utilityService;
+    UtilityFunction utilty = new UtilityFunction();
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        String callPageFrom = utilty.getAddressUrl(request.getRequestURI()).replaceAll(LINKNAME, "");//request.getParameter("type");
         String fromdate = request.getParameter("FromDate");
         String todate = request.getParameter("ToDate");
         String department = request.getParameter("Department");
@@ -30,6 +34,11 @@ public class SearchInvoiceController extends SMITravelController {
         String agentName = request.getParameter("InvToName");
         String status = request.getParameter("status");
         
+        if("ST".equalsIgnoreCase(callPageFrom)){
+            request.setAttribute("showtemp", "show");
+        }else{
+            request.setAttribute("showtemp", "notshow");
+        }
         //List Agent
         List<CustomerAgentInfo> listCustomerAgentInfo = new ArrayList<CustomerAgentInfo>();
         listCustomerAgentInfo = utilityService.getListCustomerAgentInfo();
@@ -59,7 +68,7 @@ public class SearchInvoiceController extends SMITravelController {
                 request.setAttribute("status", status);
             }
         
-        }
+        }        
         return SearchInvoice;
     }
 

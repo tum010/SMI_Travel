@@ -101,6 +101,7 @@
 				<prop key="SearchPaymentTourHotel.smi">SearchPaymentTourHotelController</prop>
 				<prop key="SearchPaymentOutbound.smi">SearchPaymentOutboundController</prop>
 				<prop key="SearchInvoice.smi">SearchInvoiceController</prop>
+                                <prop key="SearchInvoiceST.smi">SearchInvoiceController</prop>
                                 <prop key="InvoiceWT.smi">InvoiceController</prop>
                                 <prop key="InvoiceWV.smi">InvoiceController</prop>
                                 <prop key="InvoiceWN.smi">InvoiceController</prop>
