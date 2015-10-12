@@ -143,6 +143,7 @@
                                 <prop key="InvoiceInboundRV.smi">InvoiceInboundController</prop>
                                 <prop key="TicketRefundSummary.smi">TicketRefundSummaryController</prop>
                                 <prop key="TicketProfitLoss.smi">TicketProfitLossController</prop>
+                                <prop key="TicketSummaryCommission.smi">TicketSummaryCommissionController</prop>
 				<!-- add mapping url -->
 			</props>
 		</property>
@@ -621,6 +622,10 @@
     </bean>
     <bean id="TicketProfitLossController" class="com.smi.travel.controller.TicketProfitLossController">
 
+    </bean>
+    
+    <bean id="TicketSummaryCommissionController" class="com.smi.travel.controller.TicketSummaryCommissionController">
+            
     </bean>
 	<!-- add bean id controller -->
 

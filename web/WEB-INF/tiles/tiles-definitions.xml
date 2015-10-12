@@ -626,5 +626,10 @@
         <put-attribute name="title" value="CheckingTicket : Ticket Profit Loss Summary" />
         <put-attribute name="body" value="/WEB-INF/jsp/TicketProfitLoss.jsp" />
     </definition>
+    
+    <definition name="TicketSummaryCommission" extends="baseLayout">
+        <put-attribute name="title" value="Master : Manage TicketSummaryCommission" />
+        <put-attribute name="body" value="/WEB-INF/jsp/TicketSummaryCommission.jsp" />
+    </definition>
 	
 </tiles-definitions>
