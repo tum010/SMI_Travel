@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-$(document).ready(function () {
+$(document).ready(function() {
 
     $('.date').datetimepicker();
     $('.datemask').mask('0000-00-00');
-    $('.spandate').click(function () {
+    $('.spandate').click(function() {
         var position = $(this).offset();
         console.log("positon :" + position.top);
         $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
@@ -24,44 +24,44 @@ $(document).ready(function () {
         "iDisplayLength": 10
     });
     //validate date
-    $('#DateFrom').datetimepicker().on('dp.change', function (e) {
+    $('#DateFrom').datetimepicker().on('dp.change', function(e) {
         $('#PaymentSearchForm').bootstrapValidator('revalidateField', 'InputFromDate');
     });
-    $('#DateTo').datetimepicker().on('dp.change', function (e) {
+    $('#DateTo').datetimepicker().on('dp.change', function(e) {
         $('#PaymentSearchForm').bootstrapValidator('revalidateField', 'InputToDate');
     });
 
     $("#PaymentSearchForm").bootstrapValidator({
-                framework: 'bootstrap',
+        framework: 'bootstrap',
 //                container: 'tooltip',
-                feedbackIcons: {
-                    valid: 'uk-icon-check',
-                    invalid: 'uk-icon-times',
-                    validating: 'uk-icon-refresh'
-                },
-                fields: {
-                    InputFromDate: {
-                        trigger: 'focus keyup change',
-                        validators: {
-                            date: {
-                                format: 'YYYY-MM-DD',
-                                max: 'InputToDate',
-                                message: 'The Date From is not a valid'
-                            }
-                        }
-                    },
-                    InputToDate: {
-                        trigger: 'focus keyup change',
-                        validators: {
-                            date: {
-                                format: 'YYYY-MM-DD',
-                                min: 'InputFromDate',
-                                message: 'The Date To is not a valid'
-                            }
-                        }
+        feedbackIcons: {
+            valid: 'uk-icon-check',
+            invalid: 'uk-icon-times',
+            validating: 'uk-icon-refresh'
+        },
+        fields: {
+            InputFromDate: {
+                trigger: 'focus keyup change',
+                validators: {
+                    date: {
+                        format: 'YYYY-MM-DD',
+                        max: 'InputToDate',
+                        message: 'The Date From is not a valid'
                     }
                 }
-            }).on('success.field.fv', function (e, data) {
+            },
+            InputToDate: {
+                trigger: 'focus keyup change',
+                validators: {
+                    date: {
+                        format: 'YYYY-MM-DD',
+                        min: 'InputFromDate',
+                        message: 'The Date To is not a valid'
+                    }
+                }
+            }
+        }
+    }).on('success.field.fv', function(e, data) {
         if (data.field === 'InputFromDate' && data.fv.isValidField('InputToDate') === false) {
             data.fv.revalidateField('InputToDate');
         }
@@ -73,10 +73,10 @@ $(document).ready(function () {
 
 });
 
-function searchAction(){
+function searchAction() {
     var action = document.getElementById('action');
     action.value = 'search';
-    document.getElementById('PaymentSearchForm').submit();     
+    document.getElementById('PaymentSearchForm').submit();
 }
 
 function DeletePayment(id, no) {
@@ -91,5 +91,19 @@ function Delete() {
     var action = document.getElementById('action');
     action.value = 'delete';
     document.getElementById('PaymentSearchForm').submit();
+}
+
+function printPaymentSummaryReport() {
+    var paydatefrom = document.getElementById("InputFromDate").value;
+    var paydateto = document.getElementById("InputToDate").value;
+    var pvtype = document.getElementById("SelectPvType").value;
+    var status = document.getElementById("SelectStatus").value;
+    var invSupCode = document.getElementById("InputInvoiceSupCode").value;
+//    var strStatus = status.options[status.selectedIndex].text;
+//    if ((fromdate === '') || (todate === '')) {
+//        validateDate();
+//    } else {
+        window.open("report.smi?name=PaymentTourHotelSummary&fromdate=" + paydatefrom + "&todate=" + paydateto + "&pvtype=" + pvtype + "&comfirm=" + status + "&invSupCode=" + invSupCode);
+//    }
 }
 
