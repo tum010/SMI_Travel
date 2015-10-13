@@ -132,19 +132,19 @@
                     <table  class="display" id="TableAir">
                         <thead>
                             <tr class="datatable-header">
-                                <th>No</th>
-                                <th>Airline</th>
-                                <th>Flight</th>
-                                <th>From</th>
-                                <th>To</th>
-                                <th colspan="2">Departure Date</th>
-                                <th>Ticket</th>
-                                <th>Class</th>
-                                <th>Cost</th>
-                                <th>Price</th>
-                                <th>Status</th>
+                                <th style="width: 1%">No</th>
+                                <th style="width: 2%">Airline</th>
+                                <th style="width: 5%">Flight</th>
+                                <th style="width: 5%">From</th>
+                                <th style="width: 5%">To</th>
+                                <th colspan="2" style="width: 12%">Departure Date</th>
+                                <th style="width: 8%">Ticket</th>
+                                <th style="width: 15%">Class</th>
+                                <th style="width: 5%">Cost</th>
+                                <th style="width: 5%">Price</th>
+                                <th style="width: 3%">Status</th>
                                     <c:if test="${currentPnr.MItemstatus.id != 2}">
-                                    <th>Action</th>
+                                    <th style="width: 1%">Action</th>
                                     </c:if>
                             </tr>
                         </thead>
@@ -157,7 +157,9 @@
                                     <c:set var="colourStatusFirstrow" value="background-color: #FFD3D3" />
                                 </c:if>
                                 <tr ${colourStatus}>
-                                    <td>${i.count}</td>
+                                    <td>
+                                        <input type="text" id="flight-${i.count}-flightOrder" name="flight-${i.count}-flightOrder" class="form-control" maxlength="11" value="${flight.flightOrder}" />                                       
+                                    </td>
                                     <td>${flight.airticketAirline.MAirline.getCode()}</td>
                                     <td>${flight.flightNo}</td>
                                     <td>${flight.sourceCode}</td>
