@@ -135,7 +135,7 @@ function CallAjaxFamilyAuto(param){
             beforeSend: function() {
                $("#datafamilyload").removeClass("hidden");    
             },
-            success: function(msg) {     
+            success: function(msg) {
                 console.log("getCustomerAutoList =="+msg);
                 var cusJson =  JSON.parse(msg);
                 for (var i in cusJson){
@@ -157,10 +157,9 @@ function CallAjaxFamilyAuto(param){
                         cusListLastname.push(cuslastname);
                         cusListTel.push(custel);
                         cusListAddress.push(cusaddress);
-                    }                 
-                     $("#datafamilyload").addClass("hidden"); 
+                    }                                     
                 }
-               
+                $("#datafamilyload").addClass("hidden"); 
                 $("#leaderId").val(cusid);
                 $("#FamilyLeaderCode").val(cuscode);
                 $("#initialname").val(cusinitialname);
