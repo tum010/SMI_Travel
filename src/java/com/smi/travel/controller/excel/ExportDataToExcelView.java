@@ -7982,6 +7982,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         sheet.addMergedRegion(CellRangeAddress.valueOf("A1:M1"));
         
         List<ListTicketSummaryCommission> listSummaryCommission = listTicketummaryCommission;
+        
         List<TicketSummaryCommissionView> listDetail = listSummaryCommission.get(0).getTicketCommissionDetailSummary();
         List<TicketSummaryCommissionView> listAir = listSummaryCommission.get(0).getTicketCommissionAirSummary();
         List<TicketSummaryCommissionView> listAgent = listSummaryCommission.get(0).getTicketCommissionAgentSummary();
@@ -8286,9 +8287,8 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell0115.setCellStyle(styleAlignRightBorderAllHeaderTable);
         sheet.autoSizeColumn(25);
        
-        
         int count = 10 + listDetail.size();
-
+        if(listDetail != null){
             for (int r = 10; r < count; r++) {
                 HSSFRow row = sheet.createRow(r);
                 HSSFCell cell1 = row.createCell(0);
@@ -8331,63 +8331,62 @@ public class ExportDataToExcelView extends AbstractExcelView {
                        cell12.setCellValue(listDetail.get(r-10).getIssuedate());
                        cell12.setCellStyle(styleDetailTableNumber);
                HSSFCell cell13 = row.createCell(13);
-                        BigDecimal amountwendy = new BigDecimal(listDetail.get(r-10).getAmountwendy());
+                        BigDecimal amountwendy = new BigDecimal("".equals(listDetail.get(r-10).getAmountwendy()) ? "0" : listDetail.get(r-10).getAmountwendy());
                        cell13.setCellValue((amountwendy != null) ? amountwendy.doubleValue() : new BigDecimal("0").doubleValue());
                        cell13.setCellStyle(styleDetailTableNumber);
                HSSFCell cell14 = row.createCell(14);
-                       BigDecimal amountoutbound = new BigDecimal(listDetail.get(r-10).getAmountoutbound());
+                       BigDecimal amountoutbound = new BigDecimal("".equals(listDetail.get(r-10).getAmountoutbound()) ? "0" : listDetail.get(r-10).getAmountoutbound());
                        cell14.setCellValue((amountoutbound != null) ? amountoutbound.doubleValue() : new BigDecimal("0").doubleValue());
                        cell14.setCellStyle(styleDetailTableNumber);
                HSSFCell cell15 = row.createCell(15);
-                       BigDecimal sale = new BigDecimal(listDetail.get(r-10).getSale());
-                       cell15.setCellValue((sale != null) ? sale.doubleValue() : new BigDecimal("0").doubleValue());
+//                       BigDecimal sale = new BigDecimal("".equals(listDetail.get(r-10).getSale()) ? "0" : listDetail.get(r-10).getSale());
+                       cell15.setCellValue(listDetail.get(r-10).getSale());
                        cell15.setCellStyle(styleDetailTableNumber);
                HSSFCell cell16 = row.createCell(16);
-                       BigDecimal cost  = new BigDecimal(listDetail.get(r-10).getCost());
+                       BigDecimal cost  = new BigDecimal("".equals(listDetail.get(r-10).getCost()) ? "0" : listDetail.get(r-10).getCost());
                        cell16.setCellValue((cost != null) ? cost.doubleValue() : new BigDecimal("0").doubleValue());
                        cell16.setCellStyle(styleDetailTableNumber);
                HSSFCell cell17 = row.createCell(17);
-                       BigDecimal over  = new BigDecimal(listDetail.get(r-10).getOver());
+                       BigDecimal over  = new BigDecimal("".equals(listDetail.get(r-10).getOver()) ? "0" : listDetail.get(r-10).getOver());
                        cell17.setCellValue((over != null) ? over.doubleValue() : new BigDecimal("0").doubleValue());
                        cell17.setCellStyle(styleDetailTableNumber);
                HSSFCell cell18 = row.createCell(18);
-                       BigDecimal add  = new BigDecimal(listDetail.get(r-10).getAdd());
+                       BigDecimal add  = new BigDecimal("".equals(listDetail.get(r-10).getAdd()) ? "0" : listDetail.get(r-10).getAdd());
                        cell18.setCellValue((add != null) ? add.doubleValue() : new BigDecimal("0").doubleValue());
                        cell18.setCellStyle(styleDetailTableNumber);
                HSSFCell cell19 = row.createCell(19);
-                       BigDecimal dres  = new BigDecimal(listDetail.get(r-10).getDres());
+                       BigDecimal dres  = new BigDecimal("".equals(listDetail.get(r-10).getDres()) ? "0" : listDetail.get(r-10).getDres());
                        cell19.setCellValue((dres != null) ? dres.doubleValue() : new BigDecimal("0").doubleValue());
                        cell19.setCellStyle(styleDetailTableNumber);
                HSSFCell cell20 = row.createCell(20);
-                       BigDecimal profit  = new BigDecimal(listDetail.get(r-10).getProfit());
+                       BigDecimal profit  = new BigDecimal("".equals(listDetail.get(r-10).getProfit()) ? "0" : listDetail.get(r-10).getProfit());
                        cell20.setCellValue((profit != null) ? profit.doubleValue() : new BigDecimal("0").doubleValue());
                        cell20.setCellStyle(styleDetailTableNumber);
                HSSFCell cell25 = row.createCell(21);
-                       BigDecimal ticcom  = new BigDecimal(listDetail.get(r-10).getTiccomm());
+                       BigDecimal ticcom  = new BigDecimal("".equals(listDetail.get(r-10).getTiccomm()) ? "0" : listDetail.get(r-10).getTiccomm());
                        cell25.setCellValue((ticcom != null) ? ticcom.doubleValue() : new BigDecimal("0").doubleValue());
                        cell25.setCellStyle(styleDetailTableNumber);
                HSSFCell cell21 = row.createCell(22);
-                       BigDecimal little  = new BigDecimal(listDetail.get(r-10).getLittle());
+                       BigDecimal little  = new BigDecimal("".equals(listDetail.get(r-10).getLittle()) ? "0" : listDetail.get(r-10).getLittle());
                        cell21.setCellValue((little != null) ? little.doubleValue() : new BigDecimal("0").doubleValue());
                        cell21.setCellStyle(styleDetailTableNumber);
                HSSFCell cell22 = row.createCell(23);
-                        BigDecimal agentcomm = new BigDecimal(listDetail.get(r-10).getAgentcomm());
+                        BigDecimal agentcomm = new BigDecimal("".equals(listDetail.get(r-10).getAgentcomm()) ? "0" : listDetail.get(r-10).getAgentcomm());
                         cell22.setCellValue((agentcomm != null) ? agentcomm.doubleValue() : new BigDecimal("0").doubleValue());
                         cell22.setCellStyle(styleDetailTableNumber);
                HSSFCell cell23 = row.createCell(24);
-                        BigDecimal pay = new BigDecimal(listDetail.get(r-10).getPay());
+                        BigDecimal pay = new BigDecimal("".equals(listDetail.get(r-10).getPay()) ? "0" : listDetail.get(r-10).getPay());
                         cell23.setCellValue((pay != null) ? pay.doubleValue() : new BigDecimal("0").doubleValue());
                         cell23.setCellStyle(styleDetailTableNumber);
                HSSFCell cell24 = row.createCell(25);
-                        BigDecimal comm = new BigDecimal(listDetail.get(r-10).getComm());
-                        cell24.setCellValue((comm != null) ? comm.doubleValue() : new BigDecimal("0").doubleValue());
-
-                            cell24.setCellStyle(styleDetailTableNumber);
+//                        BigDecimal comm = new BigDecimal("".equals(listDetail.get(r-10).getComm()) ? "0" : listDetail.get(r-10).getComm());
+                        cell24.setCellValue(listDetail.get(r-10).getComm());
+                        cell24.setCellStyle(styleDetailTableNumber);
                 for (int i = 0; i < 25; i++) {
                     sheet.autoSizeColumn(i);
                 }
             }
-
+        }    
         System.out.println(count);
         HSSFRow rowL = sheet.createRow(count);
         rowL.createCell(0).setCellStyle(styleBorderTop);
@@ -8721,7 +8720,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
             sheet1.autoSizeColumn(24);
             
             int count1 = 10 + listAir.size();
-	
+	if(listAir  != null){
             for (int r = 10; r < count1; r++) {
                     HSSFRow row = sheet1.createRow(r);
                     HSSFCell cell1 = row.createCell(0);
@@ -8761,62 +8760,62 @@ public class ExportDataToExcelView extends AbstractExcelView {
                            cell11.setCellValue(listAir.get(r-10).getIssuedate());
                            cell11.setCellStyle(styleDetailTable);
                    HSSFCell cell13 = row.createCell(12);
-                            BigDecimal amountwendy = new BigDecimal(listAir.get(r-10).getAmountwendy());
+                            BigDecimal amountwendy = new BigDecimal("".equals(listAir.get(r-10).getAmountwendy()) ? "0" : listAir.get(r-10).getAmountwendy());
                            cell13.setCellValue((amountwendy != null) ? amountwendy.doubleValue() : new BigDecimal("0").doubleValue());
                            cell13.setCellStyle(styleDetailTableNumber);
                    HSSFCell cell14 = row.createCell(13);
-                           BigDecimal amountoutbound = new BigDecimal(listAir.get(r-10).getAmountoutbound());
+                           BigDecimal amountoutbound = new BigDecimal("".equals(listAir.get(r-10).getAmountoutbound()) ? "0" : listAir.get(r-10).getAmountoutbound());
                            cell14.setCellValue((amountoutbound != null) ? amountoutbound.doubleValue() : new BigDecimal("0").doubleValue());
                            cell14.setCellStyle(styleDetailTableNumber);
                    HSSFCell cell15 = row.createCell(14);
-                           BigDecimal sale = new BigDecimal(listAir.get(r-10).getSale());
-                           cell15.setCellValue((sale != null) ? sale.doubleValue() : new BigDecimal("0").doubleValue());
-                           cell15.setCellStyle(styleDetailTableNumber);
+//                           BigDecimal sale = new BigDecimal("".equals(listAir.get(r-10).getSale()) ? "0" : listAir.get(r-10).getSale());
+                           cell15.setCellValue(listDetail.get(r-10).getSale());
+                        cell15.setCellStyle(styleDetailTableNumber);
                    HSSFCell cell16 = row.createCell(15);
-                           BigDecimal cost  = new BigDecimal(listAir.get(r-10).getCost());
+                           BigDecimal cost  = new BigDecimal("".equals(listAir.get(r-10).getCost()) ? "0" : listAir.get(r-10).getCost());
                            cell16.setCellValue((cost != null) ? cost.doubleValue() : new BigDecimal("0").doubleValue());
                            cell16.setCellStyle(styleDetailTableNumber);
                    HSSFCell cell17 = row.createCell(16);
-                           BigDecimal over  = new BigDecimal(listAir.get(r-10).getOver());
+                           BigDecimal over  = new BigDecimal("".equals(listAir.get(r-10).getOver()) ? "0" : listAir.get(r-10).getOver());
                            cell17.setCellValue((over != null) ? over.doubleValue() : new BigDecimal("0").doubleValue());
                            cell17.setCellStyle(styleDetailTableNumber);
                    HSSFCell cell18 = row.createCell(17);
-                           BigDecimal add  = new BigDecimal(listAir.get(r-10).getAdd());
+                           BigDecimal add  = new BigDecimal("".equals(listAir.get(r-10).getAdd()) ? "0" : listAir.get(r-10).getAdd());
                            cell18.setCellValue((add != null) ? add.doubleValue() : new BigDecimal("0").doubleValue());
                            cell18.setCellStyle(styleDetailTableNumber);
                    HSSFCell cell19 = row.createCell(18);
-                           BigDecimal dres  = new BigDecimal(listAir.get(r-10).getDres());
+                           BigDecimal dres  = new BigDecimal("".equals(listAir.get(r-10).getDres()) ? "0" : listAir.get(r-10).getDres());
                            cell19.setCellValue((dres != null) ? dres.doubleValue() : new BigDecimal("0").doubleValue());
                            cell19.setCellStyle(styleDetailTableNumber);
                    HSSFCell cell20 = row.createCell(19);
-                           BigDecimal profit  = new BigDecimal(listAir.get(r-10).getProfit());
+                           BigDecimal profit  = new BigDecimal("".equals(listAir.get(r-10).getProfit()) ? "0" : listAir.get(r-10).getProfit());
                            cell20.setCellValue((profit != null) ? profit.doubleValue() : new BigDecimal("0").doubleValue());
                            cell20.setCellStyle(styleDetailTableNumber);
                    HSSFCell cell25 = row.createCell(20);
-                           BigDecimal ticcom  = new BigDecimal(listAir.get(r-10).getTiccomm());
+                           BigDecimal ticcom  = new BigDecimal("".equals(listAir.get(r-10).getTiccomm()) ? "0" : listAir.get(r-10).getTiccomm());
                            cell25.setCellValue((ticcom != null) ? ticcom.doubleValue() : new BigDecimal("0").doubleValue());
                            cell25.setCellStyle(styleDetailTableNumber);
                    HSSFCell cell212 = row.createCell(21);
-                           BigDecimal little  = new BigDecimal(listAir.get(r-10).getLittle());
+                           BigDecimal little  = new BigDecimal("".equals(listAir.get(r-10).getLittle()) ? "0" : listAir.get(r-10).getLittle());
                            cell212.setCellValue((little != null) ? little.doubleValue() : new BigDecimal("0").doubleValue());
                            cell212.setCellStyle(styleDetailTableNumber);
                    HSSFCell cell22 = row.createCell(22);
-                            BigDecimal agentcomm = new BigDecimal(listAir.get(r-10).getAgentcomm());
+                            BigDecimal agentcomm = new BigDecimal("".equals(listAir.get(r-10).getAgentcomm()) ? "0" : listAir.get(r-10).getAgentcomm());
                             cell22.setCellValue((agentcomm != null) ? agentcomm.doubleValue() : new BigDecimal("0").doubleValue());
                             cell22.setCellStyle(styleDetailTableNumber);
                    HSSFCell cell23 = row.createCell(23);
-                            BigDecimal pay = new BigDecimal(listAir.get(r-10).getPay());
+                            BigDecimal pay = new BigDecimal("".equals(listAir.get(r-10).getPay()) ? "0" : listAir.get(r-10).getPay());
                             cell23.setCellValue((pay != null) ? pay.doubleValue() : new BigDecimal("0").doubleValue());
                             cell23.setCellStyle(styleDetailTableNumber);
                    HSSFCell cell24 = row.createCell(24);
-                            BigDecimal comm = new BigDecimal(listAir.get(r-10).getComm());
-                            cell24.setCellValue((comm != null) ? comm.doubleValue() : new BigDecimal("0").doubleValue());
+//                            BigDecimal comm = new BigDecimal("".equals(listAir.get(r-10).getComm()) ? "0" : listAir.get(r-10).getComm());
+                            cell24.setCellValue(listAir.get(r-10).getComm());
                             cell24.setCellStyle(styleDetailTableNumber);
                 for (int i = 0; i < 25; i++) {
                     sheet1.autoSizeColumn(i);
                 }
             }
-
+        }
             System.out.println(count);
             HSSFRow rowLL = sheet1.createRow(count);
              rowLL.createCell(0).setCellStyle(styleBorderTop);
@@ -9102,6 +9101,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
 
             int count2 = 10 + listAgent.size();
 
+            if(listAgent != null){
             for (int r = 10; r < count2; r++) {
                 HSSFRow row = sheet2.createRow(r);
                 HSSFCell cell1 = row.createCell(0);
@@ -9111,61 +9111,62 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     cell2.setCellValue(listAgent.get(r-10).getPax());
                     cell2.setCellStyle(styleDetailTable);
                HSSFCell cell13 = row.createCell(2);
-                        BigDecimal amountwendy = new BigDecimal(listAgent.get(r-10).getAmountwendy());
+                       BigDecimal amountwendy = new BigDecimal("".equals(listAgent.get(r-10).getAmountwendy()) ? "0" : listAgent.get(r-10).getAmountwendy());
                        cell13.setCellValue((amountwendy != null) ? amountwendy.doubleValue() : new BigDecimal("0").doubleValue());
                        cell13.setCellStyle(styleDetailTableNumber);
                HSSFCell cell14 = row.createCell(3);
-                       BigDecimal amountoutbound = new BigDecimal(listAgent.get(r-10).getAmountoutbound());
+                       BigDecimal amountoutbound = new BigDecimal("".equals(listAgent.get(r-10).getAmountoutbound()) ? "0" : listAgent.get(r-10).getAmountoutbound());
                        cell14.setCellValue((amountoutbound != null) ? amountoutbound.doubleValue() : new BigDecimal("0").doubleValue());
                        cell14.setCellStyle(styleDetailTableNumber);
                HSSFCell cell15 = row.createCell(4);
-                       BigDecimal sale = new BigDecimal(listAgent.get(r-10).getSale());
-                       cell15.setCellValue((sale != null) ? sale.doubleValue() : new BigDecimal("0").doubleValue());
+//                       BigDecimal sale = new BigDecimal("".equals(listAgent.get(r-10).getSale()) ? "0" : listAgent.get(r-10).getSale());
+                       cell15.setCellValue(listDetail.get(r-10).getSale());
                        cell15.setCellStyle(styleDetailTableNumber);
                HSSFCell cell16 = row.createCell(5);
-                       BigDecimal cost  = new BigDecimal(listAgent.get(r-10).getCost());
+                       BigDecimal cost  = new BigDecimal("".equals(listAgent.get(r-10).getCost()) ? "0" : listAgent.get(r-10).getCost());
                        cell16.setCellValue((cost != null) ? cost.doubleValue() : new BigDecimal("0").doubleValue());
                        cell16.setCellStyle(styleDetailTableNumber);
                HSSFCell cell17 = row.createCell(6);
-                       BigDecimal over  = new BigDecimal(listAgent.get(r-10).getOver());
+                       BigDecimal over  = new BigDecimal("".equals(listAgent.get(r-10).getOver()) ? "0" : listAgent.get(r-10).getOver());
                        cell17.setCellValue((over != null) ? over.doubleValue() : new BigDecimal("0").doubleValue());
                        cell17.setCellStyle(styleDetailTableNumber);
                HSSFCell cell18 = row.createCell(7);
-                       BigDecimal add  = new BigDecimal(listAgent.get(r-10).getAdd());
+                       BigDecimal add  = new BigDecimal("".equals(listAgent.get(r-10).getAdd()) ? "0" : listAgent.get(r-10).getAdd());
                        cell18.setCellValue((add != null) ? add.doubleValue() : new BigDecimal("0").doubleValue());
                        cell18.setCellStyle(styleDetailTableNumber);
                HSSFCell cell19 = row.createCell(8);
-                       BigDecimal dres  = new BigDecimal(listAgent.get(r-10).getDres());
+                       BigDecimal dres  = new BigDecimal("".equals(listAgent.get(r-10).getDres()) ? "0" : listAgent.get(r-10).getDres());
                        cell19.setCellValue((dres != null) ? dres.doubleValue() : new BigDecimal("0").doubleValue());
                        cell19.setCellStyle(styleDetailTableNumber);
                HSSFCell cell20 = row.createCell(9);
-                       BigDecimal profit  = new BigDecimal(listAgent.get(r-10).getProfit());
+                       BigDecimal profit  = new BigDecimal("".equals(listAgent.get(r-10).getProfit()) ? "0" : listAgent.get(r-10).getProfit());
                        cell20.setCellValue((profit != null) ? profit.doubleValue() : new BigDecimal("0").doubleValue());
                        cell20.setCellStyle(styleDetailTableNumber);
                HSSFCell cell2205 = row.createCell(10);
-                       BigDecimal ticcom  = new BigDecimal(listAgent.get(r-10).getTiccomm());
+                       BigDecimal ticcom  = new BigDecimal("".equals(listAgent.get(r-10).getTiccomm()) ? "0" : listAgent.get(r-10).getTiccomm());
                        cell2205.setCellValue((ticcom != null) ? ticcom.doubleValue() : new BigDecimal("0").doubleValue());
                        cell2205.setCellStyle(styleDetailTableNumber);
                HSSFCell cell212 = row.createCell(11);
-                       BigDecimal little  = new BigDecimal(listAgent.get(r-10).getLittle());
+                       BigDecimal little  = new BigDecimal("".equals(listAgent.get(r-10).getLittle()) ? "0" : listAgent.get(r-10).getLittle());
                        cell212.setCellValue((little != null) ? little.doubleValue() : new BigDecimal("0").doubleValue());
                        cell212.setCellStyle(styleDetailTableNumber);
                HSSFCell cell22 = row.createCell(12);
-                        BigDecimal agentcomm = new BigDecimal(listAgent.get(r-10).getAgentcomm());
+                        BigDecimal agentcomm = new BigDecimal("".equals(listAgent.get(r-10).getAgentcomm()) ? "0" : listAgent.get(r-10).getAgentcomm());
                         cell22.setCellValue((agentcomm != null) ? agentcomm.doubleValue() : new BigDecimal("0").doubleValue());
                         cell22.setCellStyle(styleDetailTableNumber);
                HSSFCell cell23 = row.createCell(13);
-                        BigDecimal pay = new BigDecimal(listAgent.get(r-10).getPay());
+                        BigDecimal pay = new BigDecimal("".equals(listAgent.get(r-10).getPay()) ? "0" : listAgent.get(r-10).getPay());
                         cell23.setCellValue((pay != null) ? pay.doubleValue() : new BigDecimal("0").doubleValue());
                         cell23.setCellStyle(styleDetailTableNumber);
                HSSFCell cell24 = row.createCell(14);
-                        BigDecimal comm = new BigDecimal(listAgent.get(r-10).getComm());
-                        cell24.setCellValue((comm != null) ? comm.doubleValue() : new BigDecimal("0").doubleValue());
+//                        BigDecimal comm = new BigDecimal("".equals(listAgent.get(r-10).getComm()) ? "0" : listAgent.get(r-10).getComm());
+                        cell24.setCellValue(listAgent.get(r-10).getComm());
                         cell24.setCellStyle(styleDetailTableNumber);
             for (int i = 0; i < 25; i++) {
                 sheet2.autoSizeColumn(i);
             }
         }
+      }
 
         System.out.println(count);
         HSSFRow rowLLL = sheet2.createRow(count);

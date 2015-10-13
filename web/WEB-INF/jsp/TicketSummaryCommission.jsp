@@ -198,7 +198,7 @@
                                 </div>
                                 <div class="col-md-3">  
                                     <div class="form-group" id="ticketcomtodatepanel">
-                                        <div class='input-group date ticketissuetodate' id='DateToTicketCom'>
+                                        <div class='input-group date ticketcomtodate' id='DateToTicketCom'>
                                             <input type='text' id="ticketcomTo" name="ticketcomTo"  class="form-control" data-date-format="YYYY-MM-DD" />
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -430,7 +430,7 @@
                                 <label class="col-md-6 control-label text-right" for="rept"></label>
                                 <div class="col-md-6">  
                                     <div class="form-group">
-                                        <button type="button" id="printbutton"  name="printbutton"  class="btn btn-success"><span class="glyphicon glyphicon-print"></span> Print</button>
+                                        <button type="button" id="printbutton"  name="printbutton"  class="btn btn-success" onclick="printExcel();"><span class="glyphicon glyphicon-print"></span> Print</button>
                                     </div>
                                 </div>   
                             </div> 
@@ -667,8 +667,8 @@ $(document).ready(function() {
     $('#AgentTable tbody').on('click', 'tr', function () {
         $(this).addClass('row_selected').siblings().removeClass('row_selected');
     });
-
-
+    
+    
     $('.fromdate').datetimepicker().change(function(){                          
         checkFromDateField();
     });
@@ -687,59 +687,55 @@ $(document).ready(function() {
     $('.agentcomtodate').datetimepicker().change(function(){                          
         checkAgentComToDateField();
     });
+    $('.ticketcomfromdate').datetimepicker().change(function(){                          
+        checkTicketComFromDateField();
+    });
+    $('.ticketcomtodate').datetimepicker().change(function(){                          
+        checkTicketComToDateField();
+    });
+    $('.overfromdate').datetimepicker().change(function(){                          
+        checkOverFromDateField();
+    });
+    $('.overtodate').datetimepicker().change(function(){                          
+        checkOverToDateField();
+    });
+
+    $('.littlefromdate').datetimepicker().change(function(){                          
+        checkLittleFromDateField();
+    });
+    $('.littletodate').datetimepicker().change(function(){                          
+        checkLittleToDateField();
+    });
+
+    $('.agentcomreceivefromdate').datetimepicker().change(function(){                          
+        checkAgentComReceiveFromDateField();
+    });
+    $('.agentcomreceivetodate').datetimepicker().change(function(){                          
+        checkAgentComReceiveToDateField();
+    });
+
+    $('.comrefundfromdate').datetimepicker().change(function(){                          
+        checkComRefundFromDateField();
+    });
+    $('.comrefundtodate').datetimepicker().change(function(){                          
+        checkComRefundToDateField();
+    });
+
+    $('.addpayfromdate').datetimepicker().change(function(){                          
+        checkAddpayFromDateField();
+    });
+    $('.addpaytodate').datetimepicker().change(function(){                          
+        checkAddpayToDateField();
+    });
+
+    $('.decreasepayfromdate').datetimepicker().change(function(){                          
+        checkDecreasepayFromDateField();
+    });
+    $('.decreasepaytodate').datetimepicker().change(function(){                          
+        checkDecreasepayToDateField();
+    });
     
-    $("#TicketFareSummaryAirlineForm")
-            .bootstrapValidator({
-                framework: 'bootstrap',
-                feedbackIcons: {
-                    valid: 'uk-icon-check',
-                    invalid: 'uk-icon-times',
-                    validating: 'uk-icon-refresh'
-                },
-                fields: {
-                    agentcomFrom: {
-                        trigger: 'focus keyup change',
-                            validators: {
-                                date: {
-                                    format: 'YYYY-MM-DD',
-                                    max: 'agentcomTo',
-                                    message: 'The Date From is not a valid'
-                                }
-                            }
-                    },
-                    agentcomTo: {
-                        trigger: 'focus keyup change',
-                            validators: {
-                                date: {
-                                    format: 'YYYY-MM-DD',
-                                    min: 'agentcomFrom',
-                                    message: 'The Date To is not a valid'
-                                }
-                            }
-                    }
-                }
-            }).on('success.field.fv', function (e, data) {
-//                alert("1");
-                if (data.field === 'agentcomFrom' && data.fv.isValidField('agentcomTo') === false) {
-                    data.fv.revalidateField('agentcomTo');
-                }
-                if (data.field === 'agentcomTo' && data.fv.isValidField('agentcomFrom') === false) {
-                    data.fv.revalidateField('agentcomFrom');
-                }
-            });
-    $('#DateFromAgentCom').datetimepicker().on('dp.change', function (e) {
-        $('#TicketFareSummaryAirlineForm').bootstrapValidator('revalidateField', 'agentcomFrom');
-    });
-    $('#DateToAgentCom').datetimepicker().on('dp.change', function (e) {
-        $('#TicketFareSummaryAirlineForm').bootstrapValidator('revalidateField', 'agentcomTo');
-    });
-    
-     $('.fromdate').datetimepicker().change(function(){                          
-        checkFromDateField();
-    });
-    $('.todate').datetimepicker().change(function(){                          
-        checkToDateField();
-    });
+   
 });      
 
 
@@ -893,6 +889,390 @@ function checkAgentComToDateField(){
     }       
 }
 
+function checkTicketComFromDateField(){
+    var ticketComFromDate = document.getElementById("ticketcomFrom");
+    var ticketComToDate = document.getElementById("ticketcomTo");
+    if(ticketComFromDate.value === '' && ticketComToDate.value === ''){
+        $("#ticketcomfromdatepanel").removeClass("has-error");
+        $("#ticketcomtodatepanel").removeClass("has-error");  
+        $("#printbutton").removeClass("disabled");
+    }else if(ticketComFromDate.value === '' || ticketComToDate.value === ''){ 
+        $("#ticketcomfromdatepanel").removeClass("has-success");
+        $("#ticketcomtodatepanel").removeClass("has-success");  
+        $("#ticketcomfromdatepanel").addClass("has-error");
+        $("#ticketcomtodatepanel").addClass("has-error");  
+        $("#printbutton").addClass("disabled");
+    } else {
+        $("#ticketcomfromdatepanel").removeClass("has-error");
+        $("#ticketcomtodatepanel").removeClass("has-error");
+        
+        $("#ticketcomfromdatepanel").addClass("has-success");
+        $("#ticketcomtodatepanel").addClass("has-success");
+        $("#printbutton").removeClass("disabled");
+        checkDateValue("ticketcomfrom","");
+    }    
+}
+    
+function checkTicketComToDateField(){
+    var ticketComFromDate = document.getElementById("ticketcomFrom");
+    var ticketComToDate = document.getElementById("ticketcomTo");
+    if(ticketComFromDate.value === '' && ticketComToDate.value === ''){
+        $("#ticketcomfromdatepanel").removeClass("has-error");
+        $("#ticketcomtodatepanel").removeClass("has-error");  
+        $("#printbutton").removeClass("disabled");
+    }else if(ticketComFromDate.value === '' || ticketComToDate.value === ''){ 
+        $("#ticketcomfromdatepanel").removeClass("has-success");
+        $("#ticketcomtodatepanel").removeClass("has-success");  
+        $("#ticketcomfromdatepanel").addClass("has-error");
+        $("#ticketcomtodatepanel").addClass("has-error");  
+        $("#printbutton").addClass("disabled");
+    } else {
+        $("#ticketcomfromdatepanel").removeClass("has-error");
+        $("#ticketcomtodatepanel").removeClass("has-error");
+        
+        $("#ticketcomfromdatepanel").addClass("has-success");
+        $("#ticketcomtodatepanel").addClass("has-success");
+        $("#printbutton").removeClass("disabled");
+        checkDateValue("ticketcomto","");
+    }       
+}
+
+function checkTicketComFromDateField(){
+    var ticketComFromDate = document.getElementById("overFrom");
+    var ticketComToDate = document.getElementById("ticketcomTo");
+    if(ticketComFromDate.value === '' && ticketComToDate.value === ''){
+        $("#ticketcomfromdatepanel").removeClass("has-error");
+        $("#ticketcomtodatepanel").removeClass("has-error");  
+        $("#printbutton").removeClass("disabled");
+    }else if(ticketComFromDate.value === '' || ticketComToDate.value === ''){ 
+        $("#ticketcomfromdatepanel").removeClass("has-success");
+        $("#ticketcomtodatepanel").removeClass("has-success");  
+        $("#ticketcomfromdatepanel").addClass("has-error");
+        $("#ticketcomtodatepanel").addClass("has-error");  
+        $("#printbutton").addClass("disabled");
+    } else {
+        $("#ticketcomfromdatepanel").removeClass("has-error");
+        $("#ticketcomtodatepanel").removeClass("has-error");
+        
+        $("#ticketcomfromdatepanel").addClass("has-success");
+        $("#ticketcomtodatepanel").addClass("has-success");
+        $("#printbutton").removeClass("disabled");
+        checkDateValue("ticketcomfrom","");
+    }    
+}
+    
+function checkTicketComToDateField(){
+    var ticketComFromDate = document.getElementById("ticketcomFrom");
+    var ticketComToDate = document.getElementById("ticketcomTo");
+    if(ticketComFromDate.value === '' && ticketComToDate.value === ''){
+        $("#ticketcomfromdatepanel").removeClass("has-error");
+        $("#ticketcomtodatepanel").removeClass("has-error");  
+        $("#printbutton").removeClass("disabled");
+    }else if(ticketComFromDate.value === '' || ticketComToDate.value === ''){ 
+        $("#ticketcomfromdatepanel").removeClass("has-success");
+        $("#ticketcomtodatepanel").removeClass("has-success");  
+        $("#ticketcomfromdatepanel").addClass("has-error");
+        $("#ticketcomtodatepanel").addClass("has-error");  
+        $("#printbutton").addClass("disabled");
+    } else {
+        $("#ticketcomfromdatepanel").removeClass("has-error");
+        $("#ticketcomtodatepanel").removeClass("has-error");
+        
+        $("#ticketcomfromdatepanel").addClass("has-success");
+        $("#ticketcomtodatepanel").addClass("has-success");
+        $("#printbutton").removeClass("disabled");
+        checkDateValue("ticketcomto","");
+    }       
+}
+
+function checkOverFromDateField(){
+    var overFromDate = document.getElementById("overFrom");
+    var overToDate = document.getElementById("overTo");
+    if(overFromDate.value === '' && overToDate.value === ''){
+        $("#overfromdatepanel").removeClass("has-error");
+        $("#overtodatepanel").removeClass("has-error");  
+        $("#printbutton").removeClass("disabled");
+    }else if(overFromDate.value === '' || overToDate.value === ''){ 
+        $("#overfromdatepanel").removeClass("has-success");
+        $("#overtodatepanel").removeClass("has-success");  
+        $("#overfromdatepanel").addClass("has-error");
+        $("#overtodatepanel").addClass("has-error");  
+        $("#printbutton").addClass("disabled");
+    } else {
+        $("#overfromdatepanel").removeClass("has-error");
+        $("#overtodatepanel").removeClass("has-error");
+        
+        $("#overfromdatepanel").addClass("has-success");
+        $("#overtodatepanel").addClass("has-success");
+        $("#printbutton").removeClass("disabled");
+        checkDateValue("overfrom","");
+    }    
+}
+    
+function checkOverToDateField(){
+    var overFromDate = document.getElementById("overFrom");
+    var overToDate = document.getElementById("overTo");
+    if(overFromDate.value === '' && overToDate.value === ''){
+        $("#overfromdatepanel").removeClass("has-error");
+        $("#overtodatepanel").removeClass("has-error");  
+        $("#printbutton").removeClass("disabled");
+    }else if(overFromDate.value === '' || overToDate.value === ''){ 
+        $("#overfromdatepanel").removeClass("has-success");
+        $("#overtodatepanel").removeClass("has-success");  
+        $("#overfromdatepanel").addClass("has-error");
+        $("#overtodatepanel").addClass("has-error");  
+        $("#printbutton").addClass("disabled");
+    } else {
+        $("#overfromdatepanel").removeClass("has-error");
+        $("#overtodatepanel").removeClass("has-error");
+        
+        $("#overfromdatepanel").addClass("has-success");
+        $("#overtodatepanel").addClass("has-success");
+        $("#printbutton").removeClass("disabled");
+        checkDateValue("overto","");
+    }       
+}
+
+function checkLittleFromDateField(){
+    var littleFromDate = document.getElementById("littleFrom");
+    var littleToDate = document.getElementById("littleTo");
+    if(littleFromDate.value === '' && littleToDate.value === ''){
+        $("#littlefromdatepanel").removeClass("has-error");
+        $("#littletodatepanel").removeClass("has-error");  
+        $("#printbutton").removeClass("disabled");
+    }else if(littleFromDate.value === '' || littleToDate.value === ''){ 
+        $("#littlefromdatepanel").removeClass("has-success");
+        $("#littletodatepanel").removeClass("has-success");  
+        $("#littlefromdatepanel").addClass("has-error");
+        $("#littletodatepanel").addClass("has-error");  
+        $("#printbutton").addClass("disabled");
+    } else {
+        $("#littlefromdatepanel").removeClass("has-error");
+        $("#littletodatepanel").removeClass("has-error");
+        
+        $("#littlefromdatepanel").addClass("has-success");
+        $("#littletodatepanel").addClass("has-success");
+        $("#printbutton").removeClass("disabled");
+        checkDateValue("littlefrom","");
+    }    
+}
+    
+function checkLittleToDateField(){
+    var littleFromDate = document.getElementById("littleFrom");
+    var littleToDate = document.getElementById("littleTo");
+    if(littleFromDate.value === '' && littleToDate.value === ''){
+        $("#littlefromdatepanel").removeClass("has-error");
+        $("#littletodatepanel").removeClass("has-error");  
+        $("#printbutton").removeClass("disabled");
+    }else if(littleFromDate.value === '' || littleToDate.value === ''){ 
+        $("#littlefromdatepanel").removeClass("has-success");
+        $("#littletodatepanel").removeClass("has-success");  
+        $("#littlefromdatepanel").addClass("has-error");
+        $("#littletodatepanel").addClass("has-error");  
+        $("#printbutton").addClass("disabled");
+    } else {
+        $("#littlefromdatepanel").removeClass("has-error");
+        $("#littletodatepanel").removeClass("has-error");
+        
+        $("#littlefromdatepanel").addClass("has-success");
+        $("#littletodatepanel").addClass("has-success");
+        $("#printbutton").removeClass("disabled");
+        checkDateValue("littleto","");
+    }       
+}
+
+function checkAgentComReceiveFromDateField(){
+    var agentcomreceiveFromDate = document.getElementById("agentcomreceiveFrom");
+    var agentcomreceiveToDate = document.getElementById("agentcomreceiveTo");
+    if(agentcomreceiveFromDate.value === '' && agentcomreceiveToDate.value === ''){
+        $("#agentcomreceivefromdatepanel").removeClass("has-error");
+        $("#agentcomreceivetodatepanel").removeClass("has-error");  
+        $("#printbutton").removeClass("disabled");
+    }else if(agentcomreceiveFromDate.value === '' || agentcomreceiveToDate.value === ''){ 
+        $("#agentcomreceivefromdatepanel").removeClass("has-success");
+        $("#agentcomreceivetodatepanel").removeClass("has-success");  
+        $("#agentcomreceivefromdatepanel").addClass("has-error");
+        $("#agentcomreceivetodatepanel").addClass("has-error");  
+        $("#printbutton").addClass("disabled");
+    } else {
+        $("#agentcomreceivefromdatepanel").removeClass("has-error");
+        $("#agentcomreceivetodatepanel").removeClass("has-error");
+        
+        $("#agentcomreceivefromdatepanel").addClass("has-success");
+        $("#agentcomreceivetodatepanel").addClass("has-success");
+        $("#printbutton").removeClass("disabled");
+        checkDateValue("agentcomreceivefrom","");
+    }    
+}
+    
+function checkAgentComReceiveToDateField(){
+    var agentcomreceiveFromDate = document.getElementById("agentcomreceiveFrom");
+    var agentcomreceiveToDate = document.getElementById("agentcomreceiveTo");
+    if(agentcomreceiveFromDate.value === '' && agentcomreceiveToDate.value === ''){
+        $("#agentcomreceivefromdatepanel").removeClass("has-error");
+        $("#agentcomreceivetodatepanel").removeClass("has-error");  
+        $("#printbutton").removeClass("disabled");
+    }else if(agentcomreceiveFromDate.value === '' || agentcomreceiveToDate.value === ''){ 
+        $("#agentcomreceivefromdatepanel").removeClass("has-success");
+        $("#agentcomreceivetodatepanel").removeClass("has-success");  
+        $("#agentcomreceivefromdatepanel").addClass("has-error");
+        $("#agentcomreceivetodatepanel").addClass("has-error");  
+        $("#printbutton").addClass("disabled");
+    } else {
+        $("#agentcomreceivefromdatepanel").removeClass("has-error");
+        $("#agentcomreceivetodatepanel").removeClass("has-error");
+        
+        $("#agentcomreceivefromdatepanel").addClass("has-success");
+        $("#agentcomreceivetodatepanel").addClass("has-success");
+        $("#printbutton").removeClass("disabled");
+        checkDateValue("agentcomreceiveto","");
+    }       
+}
+
+function checkComRefundFromDateField(){
+    var comrefundFromDate = document.getElementById("comrefundFrom");
+    var comrefundToDate = document.getElementById("comrefundTo");
+    if(comrefundFromDate.value === '' && comrefundToDate.value === ''){
+        $("#comrefundfromdatepanel").removeClass("has-error");
+        $("#comrefundtodatepanel").removeClass("has-error");  
+        $("#printbutton").removeClass("disabled");
+    }else if(comrefundFromDate.value === '' || comrefundToDate.value === ''){ 
+        $("#comrefundfromdatepanel").removeClass("has-success");
+        $("#comrefundtodatepanel").removeClass("has-success");  
+        $("#comrefundfromdatepanel").addClass("has-error");
+        $("#comrefundtodatepanel").addClass("has-error");  
+        $("#printbutton").addClass("disabled");
+    } else {
+        $("#comrefundfromdatepanel").removeClass("has-error");
+        $("#comrefundtodatepanel").removeClass("has-error");
+        
+        $("#comrefundfromdatepanel").addClass("has-success");
+        $("#comrefundtodatepanel").addClass("has-success");
+        $("#printbutton").removeClass("disabled");
+        checkDateValue("comrefundfrom","");
+    }    
+}
+    
+function checkComRefundToDateField(){
+    var comrefundFromDate = document.getElementById("comrefundFrom");
+    var comrefundToDate = document.getElementById("comrefundTo");
+    if(comrefundFromDate.value === '' && comrefundToDate.value === ''){
+        $("#comrefundfromdatepanel").removeClass("has-error");
+        $("#comrefundtodatepanel").removeClass("has-error");  
+        $("#printbutton").removeClass("disabled");
+    }else if(comrefundFromDate.value === '' || comrefundToDate.value === ''){ 
+        $("#comrefundfromdatepanel").removeClass("has-success");
+        $("#comrefundtodatepanel").removeClass("has-success");  
+        $("#comrefundfromdatepanel").addClass("has-error");
+        $("#comrefundtodatepanel").addClass("has-error");  
+        $("#printbutton").addClass("disabled");
+    } else {
+        $("#comrefundfromdatepanel").removeClass("has-error");
+        $("#comrefundtodatepanel").removeClass("has-error");
+        
+        $("#comrefundfromdatepanel").addClass("has-success");
+        $("#comrefundtodatepanel").addClass("has-success");
+        $("#printbutton").removeClass("disabled");
+        checkDateValue("comrefundto","");
+    }       
+}
+
+function checkAddpayFromDateField(){
+    var addpayFromDate = document.getElementById("addpayFrom");
+    var addpayToDate = document.getElementById("addpayTo");
+    if(addpayFromDate.value === '' && addpayToDate.value === ''){
+        $("#addpayfromdatepanel").removeClass("has-error");
+        $("#addpaytodatepanel").removeClass("has-error");  
+        $("#printbutton").removeClass("disabled");
+    }else if(addpayFromDate.value === '' || addpayToDate.value === ''){ 
+        $("#addpayfromdatepanel").removeClass("has-success");
+        $("#addpaytodatepanel").removeClass("has-success");  
+        $("#addpayfromdatepanel").addClass("has-error");
+        $("#addpaytodatepanel").addClass("has-error");  
+        $("#printbutton").addClass("disabled");
+    } else {
+        $("#addpayfromdatepanel").removeClass("has-error");
+        $("#addpaytodatepanel").removeClass("has-error");
+        
+        $("#addpayfromdatepanel").addClass("has-success");
+        $("#addpaytodatepanel").addClass("has-success");
+        $("#printbutton").removeClass("disabled");
+        checkDateValue("addpayfrom","");
+    }    
+}
+    
+function checkAddpayToDateField(){
+    var addpayFromDate = document.getElementById("addpayFrom");
+    var addpayToDate = document.getElementById("addpayTo");
+    if(addpayFromDate.value === '' && addpayToDate.value === ''){
+        $("#addpayfromdatepanel").removeClass("has-error");
+        $("#addpaytodatepanel").removeClass("has-error");  
+        $("#printbutton").removeClass("disabled");
+    }else if(addpayFromDate.value === '' || addpayToDate.value === ''){ 
+        $("#addpayfromdatepanel").removeClass("has-success");
+        $("#addpaytodatepanel").removeClass("has-success");  
+        $("#addpayfromdatepanel").addClass("has-error");
+        $("#addpaytodatepanel").addClass("has-error");  
+        $("#printbutton").addClass("disabled");
+    } else {
+        $("#addpayfromdatepanel").removeClass("has-error");
+        $("#addpaytodatepanel").removeClass("has-error");
+        
+        $("#addpayfromdatepanel").addClass("has-success");
+        $("#addpaytodatepanel").addClass("has-success");
+        $("#printbutton").removeClass("disabled");
+        checkDateValue("addpayto","");
+    }       
+}
+
+function checkDecreasepayFromDateField(){
+    var decreasepayFromDate = document.getElementById("decreasepayFrom");
+    var decreasepayToDate = document.getElementById("decreasepayTo");
+    if(decreasepayFromDate.value === '' && decreasepayToDate.value === ''){
+        $("#decreasepayfromdatepanel").removeClass("has-error");
+        $("#decreasepaytodatepanel").removeClass("has-error");  
+        $("#printbutton").removeClass("disabled");
+    }else if(decreasepayFromDate.value === '' || decreasepayToDate.value === ''){ 
+        $("#decreasepayfromdatepanel").removeClass("has-success");
+        $("#decreasepaytodatepanel").removeClass("has-success");  
+        $("#decreasepayfromdatepanel").addClass("has-error");
+        $("#decreasepaytodatepanel").addClass("has-error");  
+        $("#printbutton").addClass("disabled");
+    } else {
+        $("#decreasepayfromdatepanel").removeClass("has-error");
+        $("#decreasepaytodatepanel").removeClass("has-error");
+        
+        $("#decreasepayfromdatepanel").addClass("has-success");
+        $("#decreasepaytodatepanel").addClass("has-success");
+        $("#printbutton").removeClass("disabled");
+        checkDateValue("decreasepayfrom","");
+    }    
+}
+    
+function checkDecreasepayToDateField(){
+    var decreasepayFromDate = document.getElementById("decreasepayFrom");
+    var decreasepayToDate = document.getElementById("decreasepayTo");
+    if(decreasepayFromDate.value === '' && decreasepayToDate.value === ''){
+        $("#decreasepayfromdatepanel").removeClass("has-error");
+        $("#decreasepaytodatepanel").removeClass("has-error");  
+        $("#printbutton").removeClass("disabled");
+    }else if(decreasepayFromDate.value === '' || decreasepayToDate.value === ''){ 
+        $("#decreasepayfromdatepanel").removeClass("has-success");
+        $("#decreasepaytodatepanel").removeClass("has-success");  
+        $("#decreasepayfromdatepanel").addClass("has-error");
+        $("#decreasepaytodatepanel").addClass("has-error");  
+        $("#printbutton").addClass("disabled");
+    } else {
+        $("#decreasepayfromdatepanel").removeClass("has-error");
+        $("#decreasepaytodatepanel").removeClass("has-error");
+        
+        $("#decreasepayfromdatepanel").addClass("has-success");
+        $("#decreasepaytodatepanel").addClass("has-success");
+        $("#printbutton").removeClass("disabled");
+        checkDateValue("decreasepayto","");
+    }       
+}
+
 function checkDateValue(date){
     var inputFromDate = "";
         var InputToDate = "";
@@ -902,9 +1282,30 @@ function checkDateValue(date){
         } else if((date === 'issuefrom') || (date === 'issueto')) {
             inputFromDate = document.getElementById("issueFrom");
             InputToDate = document.getElementById("issueTo");
-        }else{
+        }else if ((date === 'agentcomfrom') || (date === 'agentcomto')){
             inputFromDate = document.getElementById("agentcomFrom");
             InputToDate = document.getElementById("agentcomTo");
+        }else if ((date === 'ticketcomfrom') || (date === 'ticketcomto')){
+            inputFromDate = document.getElementById("ticketcomFrom");
+            InputToDate = document.getElementById("ticketcomTo");
+        }else if ((date === 'overfrom') || (date === 'overto')){
+            inputFromDate = document.getElementById("overFrom");
+            InputToDate = document.getElementById("overTo");
+        }else if ((date === 'littlefrom') || (date === 'littleto')){
+            inputFromDate = document.getElementById("littleFrom");
+            InputToDate = document.getElementById("littleTo");
+        }else if ((date === 'agentcomreceivefrom') || (date === 'agentcomreceiveto')){
+            inputFromDate = document.getElementById("agentcomreceiveFrom");
+            InputToDate = document.getElementById("agentcomreceiveTo");
+        }else if ((date === 'comrefundfrom') || (date === 'comrefundto')){
+            inputFromDate = document.getElementById("comrefundFrom");
+            InputToDate = document.getElementById("comrefundTo");
+        }else if ((date === 'addpayfrom') || (date === 'addpayto')){
+            inputFromDate = document.getElementById("addpayFrom");
+            InputToDate = document.getElementById("addpayTo");
+        }else if ((date === 'decreasepayfrom') || (date === 'decreasepayto')){
+            inputFromDate = document.getElementById("decreasepayFrom");
+            InputToDate = document.getElementById("decreasepayTo");
         }
     if((inputFromDate.value !== '') && (InputToDate.value !== '')){
         var fromDate = (inputFromDate.value).split('-');
@@ -946,125 +1347,193 @@ function validateDate(date,option){
         if(date === 'agentcomto'){
             $("#agentcomtodatepanel").removeClass("has-success"); 
             $("#agentcomtodatepanel").addClass("has-error");
-        }  
+        }
+        if(date === 'ticketcomfrom'){
+            $("#ticketcomfromdatepanel").removeClass("has-success");
+            $("#ticketcomfromdatepanel").addClass("has-error");
+        }
+        if(date === 'ticketcomto'){
+            $("#ticketcomtodatepanel").removeClass("has-success"); 
+            $("#ticketcomtodatepanel").addClass("has-error");
+        }
+        if(date === 'overfrom'){
+            $("#overfromdatepanel").removeClass("has-success");
+            $("#overfromdatepanel").addClass("has-error");
+        }
+        if(date === 'overto'){
+            $("#overtodatepanel").removeClass("has-success"); 
+            $("#overtodatepanel").addClass("has-error");
+        }
+        if(date === 'littlefrom'){
+            $("#littlefromdatepanel").removeClass("has-success");
+            $("#littlefromdatepanel").addClass("has-error");
+        }
+        if(date === 'littleto'){
+            $("#littletodatepanel").removeClass("has-success"); 
+            $("#littletodatepanel").addClass("has-error");
+        }
+        if(date === 'agentcomreceivefrom'){
+            $("#agentcomreceivefromdatepanel").removeClass("has-success");
+            $("#agentcomreceivefromdatepanel").addClass("has-error");
+        }
+        if(date === 'agentcomreceiveto'){
+            $("#agentcomreceivetodatepanel").removeClass("has-success"); 
+            $("#agentcomreceivetodatepanel").addClass("has-error");
+        }
+        if(date === 'comrefundfrom'){
+            $("#comrefundfromdatepanel").removeClass("has-success");
+            $("#comrefundfromdatepanel").addClass("has-error");
+        }
+        if(date === 'comrefundto'){
+            $("#comrefundtodatepanel").removeClass("has-success"); 
+            $("#comrefundtodatepanel").addClass("has-error");
+        }
+        if(date === 'addpayfrom'){
+            $("#addpayfromdatepanel").removeClass("has-success");
+            $("#addpayfromdatepanel").addClass("has-error");
+        }
+        if(date === 'addpayto'){
+            $("#addpaytodatepanel").removeClass("has-success"); 
+            $("#addpaytodatepanel").addClass("has-error");
+        }
+        if(date === 'decreasepayfrom'){
+            $("#decreasepayfromdatepanel").removeClass("has-success");
+            $("#decreasepayfromdatepanel").addClass("has-error");
+        }
+        if(date === 'decreasepayto'){
+            $("#decreasepaytodatepanel").removeClass("has-success"); 
+            $("#decreasepaytodatepanel").addClass("has-error");
+        }
         $("#printbutton").addClass("disabled");
     } else {
         $("#fromdatepanel").removeClass("has-success");
         $("#todatepanel").removeClass("has-success");
+        
         $("#issuefromdatepanel").removeClass("has-success");
         $("#issuetodatepanel").removeClass("has-success"); 
+        
         $("#agentcomfromdatepanel").removeClass("has-success");
         $("#agentcomtodatepanel").removeClass("has-success"); 
         
+        $("#ticketcomfromdatepanel").removeClass("has-success");
+        $("#ticketcomtodatepanel").removeClass("has-success"); 
+        
+        $("#overfromdatepanel").removeClass("has-success");
+        $("#overtodatepanel").removeClass("has-success");
+        
+        $("#littlefromdatepanel").removeClass("has-success");
+        $("#littletodatepanel").removeClass("has-success");
+        
+        $("#agentcomreceivefromdatepanel").removeClass("has-success");
+        $("#agentcomreceivetodatepanel").removeClass("has-success");
+        
+        $("#comrefundfromdatepanel").removeClass("has-success");
+        $("#comrefundtodatepanel").removeClass("has-success");
+        
+        $("#addpayfromdatepanel").removeClass("has-success");
+        $("#addpaytodatepanel").removeClass("has-success");
+        
+        $("#decreasepayfromdatepanel").removeClass("has-success");
+        $("#decreasepaytodatepanel").removeClass("has-success");
+        
         $("#fromdatepanel").addClass("has-error");
         $("#todatepanel").addClass("has-error");
+        
         $("#issuefromdatepanel").addClass("has-error");
         $("#issuetodatepanel").addClass("has-error");
+        
         $("#agentcomfromdatepanel").addClass("has-error");
         $("#agentcomtodatepanel").addClass("has-error");
+        
+        $("#ticketcomfromdatepanel").removeClass("has-error");
+        $("#ticketcomtodatepanel").removeClass("has-error");
+        
+        $("#overfromdatepanel").removeClass("has-error");
+        $("#overtodatepanel").removeClass("has-error");
+        
+        $("#littlefromdatepanel").removeClass("has-error");
+        $("#littletodatepanel").removeClass("has-error");
+        
+        $("#agentcomreceivefromdatepanel").removeClass("has-error");
+        $("#agentcomreceivetodatepanel").removeClass("has-error");
+        
+        $("#comrefundfromdatepanel").removeClass("has-error");
+        $("#comrefundtodatepanel").removeClass("has-error");
+        
+        $("#addpayfromdatepanel").removeClass("has-error");
+        $("#addpaytodatepanel").removeClass("has-error");
+        
+        $("#decreasepayfromdatepanel").removeClass("has-error");
+        $("#decreasepaytodatepanel").removeClass("has-error");
+        
         $("#printbutton").addClass("disabled");
     }
 }
 
-function printTicketSummaryAirline(){
-    var reportType = document.getElementById("reportType").value;
-    var issuefrom = document.getElementById("issueFrom").value;
-    var issueto = document.getElementById("issueTo").value;
-    var invFrom = document.getElementById("invoiceFromDate").value;
-    var invTo = document.getElementById("invoiceToDate").value;
-    var typeRouting = document.getElementById("typeRouting").value;
-    var routingDetail = document.getElementById("routingDetail").value;
-    var airlineCode = document.getElementById("airlineCode").value;
-    var passenger = document.getElementById("passenger").value;
-    var agentId = document.getElementById("agentId").value;
-    var department = document.getElementById("department").value;
-    var salebyUser = document.getElementById("salebyUser").value;
-    var termPay = document.getElementById("termPay").value;
-    if((invFrom !== '') && (invTo !== '')){
-        if(reportType == 1){
-            window.open("Excel.smi?name=TicketFareSummaryAirline&typeRouting=" + typeRouting 
-                    + "&routingDetail=" + routingDetail 
-                    + "&issuedateFrom=" + issuefrom 
-                    + "&issuedateTo=" + issueto 
-                    + "&invdateFrom=" + invFrom 
-                    + "&invdateTo=" + invTo 
-                    + "&airlineCode=" + airlineCode 
-                    + "&passenger=" + passenger
-                    + "&agentId=" + agentId 
-                    + "&department=" + department 
-                    + "&staff=" + salebyUser 
-                    + "&termPay=" + termPay);
-        }else if(reportType == 2){
-            window.open("Excel.smi?name=SummaryAirlinePax&typeRouting=" + typeRouting 
-                    + "&routingDetail=" + routingDetail 
-                    + "&issuedateFrom=" + issuefrom 
-                    + "&issuedateTo=" + issueto 
-                    + "&invdateFrom=" + invFrom 
-                    + "&invdateTo=" + invTo 
-                    + "&airlineCode=" + airlineCode 
-                    + "&passenger=" + passenger
-                    + "&agentId=" + agentId 
-                    + "&department=" + department 
-                    + "&staff=" + salebyUser 
-                    + "&termPay=" + termPay);
-        }else{
-            $("#reporttypepanel").removeClass("has-success");
-            $("#reporttypepanel").addClass("has-error");
-            $("#printbutton").addClass("disabled");
-        }   
-    } else if((issuefrom !== '') && (issueto !== '')){
-        if(reportType == 1){
-            window.open("Excel.smi?name=TicketFareSummaryAirline&typeRouting=" + typeRouting 
-                    + "&routingDetail=" + routingDetail 
-                    + "&issuedateFrom=" + issuefrom 
-                    + "&issuedateTo=" + issueto 
-                    + "&invdateFrom=" + invFrom 
-                    + "&invdateTo=" + invTo 
-                    + "&airlineCode=" + airlineCode 
-                    + "&passenger=" + passenger
-                    + "&agentId=" + agentId 
-                    + "&department=" + department 
-                    + "&staff=" + salebyUser 
-                    + "&termPay=" + termPay);
-        }else if(reportType == 2){
-            window.open("Excel.smi?name=SummaryAirlinePax&typeRouting=" + typeRouting 
-                    + "&routingDetail=" + routingDetail 
-                    + "&issuedateFrom=" + issuefrom 
-                    + "&issuedateTo=" + issueto 
-                    + "&invdateFrom=" + invFrom 
-                    + "&invdateTo=" + invTo 
-                    + "&airlineCode=" + airlineCode 
-                    + "&passenger=" + passenger
-                    + "&agentId=" + agentId 
-                    + "&department=" + department 
-                    + "&staff=" + salebyUser 
-                    + "&termPay=" + termPay);
-        }else{
-            $("#reporttypepanel").removeClass("has-success");
-            $("#reporttypepanel").addClass("has-error");
-            $("#printbutton").addClass("disabled");
-        }      
-    } else {
-        if(reportType == ""){
-            $("#reporttypepanel").removeClass("has-success");
-            $("#reporttypepanel").addClass("has-error");
-        }
-        validateDate();  
-    }
-//    alert("reportType ::: "+reportType+
-//          "issuefrom ::: "+issuefrom+
-//          "issueto ::: "+issueto+
-//          "invoiceFromDate ::: "+invFrom+
-//          "invoiceToDate ::: "+invTo+
-//          "invoiceToDate ::: "+typeRouting+
-//          "routingDetail ::: "+routingDetail+
-//          "airlineCode ::: "+airlineCode+
-//          "passenger ::: "+passenger+
-//          "agentCode ::: "+agentCode+
-//          "department ::: "+department+
-//          "salebyUser ::: "+salebyUser+
-//          "termPay ::: "+termPay      
-//                );
+function printExcel(){
+	var invoicefromdate = document.getElementById("invoiceFromDate");
+    var invoicetodate = document.getElementById("invoiceToDate").value;
+    var issuefromdate = document.getElementById("issueFrom").value;
+    var issuetodate = document.getElementById("issueTo").value;
+    var agentcomfromdate = document.getElementById("agentcomFrom").value;
+    var agentcomtodate = document.getElementById("agentcomTo").value;
+    var ticketcomfromdate = document.getElementById("ticketcomFrom").value;
+    var ticketcomtodate = document.getElementById("ticketcomTo").value;
+    var overfromdate = document.getElementById("overFrom").value;
+    var overtodate = document.getElementById("overTo").value;
+    var littlefromdate = document.getElementById("littleFrom").value;
+    var littletodate = document.getElementById("littleTo").value;
+    var agemtcomreceivefromdate = document.getElementById("agentcomreceiveFrom").value;
+    var agemtcomreceivetodate = document.getElementById("agentcomreceiveTo").value;
+    var comrefundfromdate = document.getElementById("comrefundFrom").value;
+    var comrefundtodate = document.getElementById("comrefundTo").value;
+    var addpayfromdate = document.getElementById("addpayFrom").value;
+    var addpaytodate = document.getElementById("addpayTo").value;
+    var decreasepayfromdate = document.getElementById("decreasepayFrom").value;
+    var decreasepaytodate = document.getElementById("decreasepayTo").value;
+    var typeRoutings = document.getElementById("typeRouting").value;
+    var routingDetails = document.getElementById("routingDetail").value;
+    var airlineCodes = document.getElementById("airlineCode").value;
+    var agentCodes = document.getElementById("agentCode").value;
+    var agentName = document.getElementById("agentName").value;
+    var ticketno = document.getElementById("ticketno").value;
+    var departmentts = document.getElementById("department").value;
+    var salebyUserts = document.getElementById("salebyUser").value;
+    var salebyName = document.getElementById("salebyName").value;
+    var termPayts   = document.getElementById("termPay").value;
+    
+window.open("Excel.smi?name=TicketSummaryCommission&invoiceFromDate=" + invoicefromdate 
+        + "&invoiceToDate=" + invoicetodate 
+        + "&issueFrom=" + issuefromdate 
+        + "&issueTo=" + issuetodate 
+        + "&agentcomFrom=" + agentcomfromdate 
+        + "&agentcomTo=" + agentcomtodate 
+        + "&ticketcomFrom=" + ticketcomfromdate 
+        + "&ticketcomTo=" + ticketcomtodate
+        + "&overFrom=" + overfromdate 
+        + "&overTo=" + overtodate 
+        + "&littleFrom=" + littlefromdate 
+        + "&littleTo=" + littletodate
+        + "&agentcomreceiveFrom=" + agemtcomreceivefromdate 
+        + "&agentcomreceiveTo=" + agemtcomreceivetodate 
+        + "&comrefundFrom=" + comrefundfromdate 
+        + "&comrefundTo=" + comrefundtodate 
+        + "&addpayFrom=" + addpayfromdate 
+        + "&addpayTo=" + addpaytodate 
+        + "&decreasepayFrom=" + decreasepayfromdate
+        + "&decreasepayTo=" + decreasepaytodate 
+        + "&typeRouting=" + typeRoutings 
+        + "&routingDetail=" + routingDetails 
+        + "&airlineCode=" + airlineCodes
+        + "&agentCode=" + agentCodes 
+        + "&agentName=" + agentName 
+        + "&ticketno=" + ticketno
+        + "&department=" + departmentts 
+        + "&salebyUser=" + salebyUserts 
+        + "&salebyName=" + salebyName 
+        + "&termPay=" + termPayts
+        );
+    
 }
 
 function jsFunction(value){

@@ -5,7 +5,7 @@
  */
 package com.smi.travel.datalayer.view.dao;
 
-import com.smi.travel.datalayer.view.entity.TicketSummaryCommissionView;
+import com.smi.travel.datalayer.view.entity.ListTicketSummaryCommission;
 import java.util.List;
 
 /**
@@ -13,7 +13,7 @@ import java.util.List;
  * @author Kanokporn
  */
 public interface TicketSummaryCommissionDao {
-    public List<TicketSummaryCommissionView> searchTicketSummaryCommission(String invoicefromdatePage,String invoicetodatePage,String issuefromdatePage,String issuetodatePage
+    public List<ListTicketSummaryCommission> searchTicketSummaryCommission(String invoicefromdatePage,String invoicetodatePage,String issuefromdatePage,String issuetodatePage
             ,String agentcomfromdatePage,String agentcomtodatePage,String ticketcomfromdatePage ,String ticketcomtodatePage,String overfromdatePage ,String overtodatePage
             ,String littlefromdatePage,String littletodatePage ,String agemtcomreceivefromdatePage,String agemtcomreceivetodatePage ,String comrefundfromdatePage 
             ,String comrefundtodatePage ,String addpayfromdatePage ,String addpaytodatePage ,String decreasepayfromdatePage,String decreasepaytodatePage
