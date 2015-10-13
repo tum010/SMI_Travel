@@ -401,6 +401,8 @@
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
     
+    
+    
     <bean id="GenerateReport" class="com.smi.travel.report.GenerateReport">
           <property name="exportpath" value="D:\\report\\"></property>
           <property name="reportpath" value="C:\\Program Files\\apache-tomcat-7.0.56\\webapps\\SMITravel\\WEB-INF\\report\\"></property>
@@ -412,7 +414,9 @@
          <!--<property name="exportnvnappath" value="C:\\Users\\Administrator\\Desktop\\nirvana\\ap\\"></property>-->
     </bean>
     
-    
+    <bean id="TicketSummaryCommissionDao" class="com.smi.travel.datalayer.view.dao.impl.TicketSummaryCommissionImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
     
     <!-- Component Bean -->
     <bean id="AJAXBean" class="com.smi.travel.datalayer.bean.master.AJAXBean">

@@ -325,5 +325,9 @@
     <bean id="ReceiveTableService" class="com.smi.travel.datalayer.service.ReceiveTableService">
         <property name="receiveTableDao" ref="ReceiveTableDao" />
     </bean>
+    
+    <bean id="TicketSummaryCommissionService" class="com.smi.travel.datalayer.service.TicketSummaryCommissionService">
+        <property name="ticketSummaryCommissionDao" ref="TicketSummaryCommissionDao" />
+    </bean>
     <!--<add data>-->
 </beans>
