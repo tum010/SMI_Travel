@@ -229,3 +229,20 @@ $(document).ready(function () {
         $('#textAlertDivNotSave').show();
     }
 });
+
+//Print Ticket Order Button
+$(document).ready(function () {
+    var printBtn = $('#printTicketOrder').val();
+    if(printBtn === 'success'){
+        $('#btnPrintTicketOrder').removeClass('disabled');
+    }
+});
+
+function printTicketOrderReport(){
+    
+}
+
+//Add New Booking
+function addNewBooking(){
+    window.location.href = "BookDetail.smi?&action=new";
+}

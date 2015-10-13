@@ -70,6 +70,10 @@ public class BillableService {
     public void setBillableviewdao(BillableViewDao billableviewdao) {
         this.billableviewdao = billableviewdao;
     }
+
+    public String printTicketOrder(String refNo) {
+        return billableDao.printTicketOrder(refNo);
+    }
     
     
     

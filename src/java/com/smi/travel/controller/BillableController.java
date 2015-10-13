@@ -122,6 +122,11 @@ public class BillableController extends SMITravelController {
         billForm.setTransferDate(transferDate);
         billForm.setBankAccount(accId);
         System.out.println("Billable Controller payable[" + payable + "]");
+        
+        //Print Button
+        String printTicketOrder = billableService.printTicketOrder(refNo);
+        request.setAttribute("printTicketOrder", printTicketOrder);
+        
         if ("add".equalsIgnoreCase(action)) {
             System.out.println("action add");
             request.setAttribute(ACTION, "insert");
