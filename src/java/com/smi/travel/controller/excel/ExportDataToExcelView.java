@@ -69,6 +69,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
     private static final String RefundTicketDetail = "RefundTicketDetail";
     private static final String SummaryAirlinePax = "SummaryAirlinePax";
     private static final String TicketProfitLoss = "TicketProfitLoss"; 
+    private static final String TicketSummaryCommission = "TicketSummaryCommission"; 
     
     @Override
     protected void buildExcelDocument(Map model, HSSFWorkbook workbook,
