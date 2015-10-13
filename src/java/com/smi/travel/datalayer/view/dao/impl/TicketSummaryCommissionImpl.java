@@ -10,7 +10,6 @@ import com.smi.travel.datalayer.view.entity.ListTicketSummaryCommission;
 import com.smi.travel.datalayer.view.entity.TicketSummaryCommissionView;
 import com.smi.travel.util.UtilityFunction;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -45,13 +44,21 @@ public class TicketSummaryCommissionImpl implements TicketSummaryCommissionDao{
         List<TicketSummaryCommissionView> listAgent =  new LinkedList<TicketSummaryCommissionView>();
         String querydata = "";
         String query = "";
+        String query2 = "";
+        String query3 = "";
         int checkQuery = 0;
         if( invoicefromdatePage == null && issuefromdatePage == null && agentcomfromdatePage == null && ticketcomfromdatePage == null && overfromdatePage == null && littlefromdatePage == null && agemtcomreceivefromdatePage == null && comrefundfromdatePage == null && addpayfromdatePage == null && decreasepayfromdatePage == null && typeRoutingPage == null && routingDetailPage == null && airlineCodePage == null && agentCodePage == null && ticketnoPagePage == null && departmentPage == null && salebyUserPage == null && termPayPage == null ){
             query = "SELECT * FROM `ticket_commission_detail_summary` invm ";
+            query2 = "SELECT * FROM `ticket_commission_air_summary` invm ";
+            query3 = "SELECT * FROM `ticket_commission_agent_summary` invm ";
         }else if("".equals(invoicefromdatePage) && "".equals(issuefromdatePage)  && "".equals(agentcomfromdatePage)  && "".equals(ticketcomfromdatePage)  && "".equals(overfromdatePage)  && "".equals(littlefromdatePage)  && "".equals(agemtcomreceivefromdatePage)  && "".equals(comrefundfromdatePage)  && "".equals(addpayfromdatePage)  && "".equals(decreasepayfromdatePage)  && "".equals(typeRoutingPage)  && "".equals(routingDetailPage)  && "".equals(airlineCodePage)  && "".equals(agentCodePage)  && "".equals(ticketnoPagePage)  && "".equals(departmentPage)  && "".equals(salebyUserPage)  && "".equals(termPayPage)){
             query = "SELECT * FROM `ticket_commission_detail_summary` invm ";
+            query2 = "SELECT * FROM `ticket_commission_air_summary` invm ";
+            query3 = "SELECT * FROM `ticket_commission_agent_summary` invm ";
         }else{
-            query = "SELECT * FROM `ticket_commission_detail_summary` invm  Where";
+            query = "SELECT * FROM `ticket_commission_detail_summary` invm  Where ";
+            query2 = "SELECT * FROM `ticket_commission_air_summary` invm Where ";
+            query3 = "SELECT * FROM `ticket_commission_agent_summary` invm Where ";
         }
         
         if ((invoicefromdatePage != null )&&(!"".equalsIgnoreCase(invoicefromdatePage))) {
@@ -386,9 +393,365 @@ public class TicketSummaryCommissionImpl implements TicketSummaryCommissionDao{
                 listDetail.add(ticket);
             }    
         }
+        
+        // List Air ********************************************************************************************************
+        List<Object[]> ticketSummaryCommissionList2 = session.createSQLQuery(query2)
+                .addScalar("invno", Hibernate.STRING)					
+                .addScalar("invdate", Hibernate.STRING)					
+                .addScalar("department", Hibernate.STRING)				
+                .addScalar("owner", Hibernate.STRING)					
+                .addScalar("termPay", Hibernate.STRING)					
+                .addScalar("agent", Hibernate.STRING)					
+                .addScalar("type", Hibernate.STRING)					
+                .addScalar("buy", Hibernate.STRING)					
+                .addScalar("pax", Hibernate.STRING)					
+                .addScalar("air", Hibernate.STRING)					
+                .addScalar("docno", Hibernate.STRING)
+                .addScalar("refno", Hibernate.STRING)					
+                .addScalar("issuedate", Hibernate.STRING)					
+                .addScalar("amountwendy", Hibernate.STRING)					
+                .addScalar("amountoutbound", Hibernate.STRING)					
+                .addScalar("sale", Hibernate.STRING)					
+                .addScalar("cost", Hibernate.STRING)					
+                .addScalar("over", Hibernate.STRING)					
+                .addScalar("add", Hibernate.STRING)					
+                .addScalar("dres", Hibernate.STRING)					
+                .addScalar("profit", Hibernate.STRING)					
+                .addScalar("ticcomm", Hibernate.STRING)					
+                .addScalar("little", Hibernate.STRING)					
+                .addScalar("agentcomm", Hibernate.STRING)					
+                .addScalar("pay", Hibernate.STRING)					
+                .addScalar("comm", Hibernate.STRING)
+                .addScalar("routingdetail", Hibernate.STRING)
+                .addScalar("overdate", Hibernate.STRING)
+                .addScalar("littledate", Hibernate.STRING)
+                .addScalar("agentcomdate", Hibernate.STRING)
+                .addScalar("comrefunddate", Hibernate.STRING)
+                .addScalar("ticketcomdate", Hibernate.STRING)
+                .addScalar("agentcomreceivedate", Hibernate.STRING)
+                .addScalar("addpaydate", Hibernate.STRING)
+                .addScalar("decreasepaydate", Hibernate.STRING)
+                .addScalar("ticketno", Hibernate.STRING)
+                .list();
+        
+        if(ticketSummaryCommissionList2 != null && ticketSummaryCommissionList2.size() != 0){
+            for (Object[] B : ticketSummaryCommissionList2) {
+                TicketSummaryCommissionView ticket = new TicketSummaryCommissionView();
+                //header
+                if(invoicefromdatePage != null && !"".equals(invoicefromdatePage)){
+                   String date = ""+ invoicefromdatePage + " To " + invoicetodatePage;
+                   ticket.setInvoicefromdatePage(date);
+                }else{
+                    ticket.setInvoicefromdatePage("");
+                }
+                if(issuefromdatePage != null && !"".equals(issuefromdatePage)){
+                   String date = ""+ issuefromdatePage + " To " + issuetodatePage;
+                   ticket.setIssuefromdatePage(date);
+                }else{
+                    ticket.setIssuefromdatePage("");
+                }
+                if(agentcomfromdatePage != null && !"".equals(agentcomfromdatePage)){
+                   String date = ""+ agentcomfromdatePage + " To " + agentcomtodatePage;
+                   ticket.setAgentcomfromdatePage(date);
+                }else{
+                    ticket.setAgentcomfromdatePage("");
+                }
+                if(ticketcomfromdatePage != null && !"".equals(ticketcomfromdatePage)){
+                   String date = ""+ ticketcomfromdatePage + " To " + ticketcomtodatePage;
+                   ticket.setTicketcomfromdatePage(date);
+                }else{
+                    ticket.setTicketcomfromdatePage("");
+                }
+                if(overfromdatePage != null && !"".equals(overfromdatePage)){
+                   String date = ""+ overfromdatePage + " To " + overtodatePage;
+                   ticket.setOverfromdatePage(date);
+                }else{
+                    ticket.setOverfromdatePage("");
+                }
+                if(littlefromdatePage != null && !"".equals(littlefromdatePage)){
+                   String date = ""+ littlefromdatePage + " To " + littletodatePage;
+                   ticket.setLittlefromdatePage(date);
+                }else{
+                    ticket.setLittlefromdatePage("");
+                }
+                if(agemtcomreceivefromdatePage != null && !"".equals(agemtcomreceivefromdatePage)){
+                   String date = ""+ agemtcomreceivefromdatePage + " To " + agemtcomreceivetodatePage;
+                   ticket.setAgemtcomreceivefromdatePage(date);
+                }else{
+                    ticket.setAgemtcomreceivefromdatePage("");
+                }
+                if(comrefundfromdatePage != null && !"".equals(comrefundfromdatePage)){
+                   String date = ""+ comrefundfromdatePage + " To " + comrefundtodatePage;
+                   ticket.setComrefundfromdatePage(date);
+                }else{
+                    ticket.setComrefundfromdatePage("");
+                }
+                if(addpayfromdatePage != null && !"".equals(addpayfromdatePage)){
+                   String date = ""+ addpayfromdatePage + " To " + addpaytodatePage;
+                   ticket.setAddpayfromdatePage(date);
+                }else{
+                    ticket.setAddpayfromdatePage("");
+                }
+                if(decreasepayfromdatePage != null && !"".equals(decreasepayfromdatePage)){
+                   String date = ""+ decreasepayfromdatePage + " To " + decreasepaytodatePage;
+                   ticket.setDecreasepayfromdatePage(date);
+                }else{
+                    ticket.setDecreasepayfromdatePage("");
+                }
+                if(typeRoutingPage != null && !"".equals(typeRoutingPage)){
+                    ticket.setTypeRoutingPage(typeRoutingPage);
+                }else{
+                    ticket.setTypeRoutingPage("");
+                }
+                if(routingDetailPage != null && !"".equals(routingDetailPage)){
+                    ticket.setRoutingDetailPage(routingDetailPage);
+                }else{
+                    ticket.setRoutingDetailPage("");
+                }
+                if(airlineCodePage != null && !"".equals(airlineCodePage)){
+                    ticket.setAirlineCodePage(airlineCodePage);
+                }else{
+                    ticket.setAirlineCodePage("");
+                }
+                if(agentNamePage != null && !"".equals(agentNamePage)){
+                    ticket.setAgentNamePage(agentNamePage);
+                }else{
+                    ticket.setAgentNamePage("");
+                }
+                if(departmentPage != null && !"".equals(departmentPage)){
+                    ticket.setDepartmentPage(departmentPage);
+                }else{
+                    ticket.setDepartmentPage("");
+                }
+                if(salebyNamePage != null && !"".equals(salebyNamePage)){
+                    ticket.setSalebyNamePage(salebyNamePage);
+                }else{
+                    ticket.setSalebyNamePage("");
+                }
+                if(termPayPage != null && !"".equals(termPayPage)){
+                    ticket.setTermPayPage(termPayPage);
+                }else{
+                    ticket.setTermPayPage("");
+                }
+
+                ticket.setPrintbyPage(printby);
+                Date date = new Date();
+                SimpleDateFormat sm = new SimpleDateFormat("dd/MM/yyyy");
+                String strDate = sm.format(date);
+                ticket.setPrintonPage(strDate);
+
+                // set data  detail
+                ticket.setInvno(util.ConvertString(B[0]) == "" ? "" : util.ConvertString(B[0]));
+                ticket.setInvdate(util.ConvertString(B[1]) == "" ? "" : util.ConvertString(B[1]));
+                ticket.setDepartment((util.ConvertString(B[2])) == "" ? "" : util.ConvertString(B[2]));
+                ticket.setOwner((util.ConvertString(B[3])) == "" ? "" : util.ConvertString(B[3]));
+                ticket.setTermpay((util.ConvertString(B[4])) == "" ? "" : util.ConvertString(B[4]));
+                ticket.setAgent((util.ConvertString(B[5])) == "" ? "" : util.ConvertString(B[5]));
+                ticket.setType((util.ConvertString(B[6])) == "" ? "" : util.ConvertString(B[6]));
+                ticket.setBuy((util.ConvertString(B[7])) == "" ? "" : util.ConvertString(B[7]));
+                ticket.setPax((util.ConvertString(B[8])) == "" ? "" : util.ConvertString(B[8]));
+                ticket.setAir((util.ConvertString(B[9])) == "" ? "" : util.ConvertString(B[9]));
+                ticket.setDocno((util.ConvertString(B[10])) == "" ? "" : util.ConvertString(B[10]));
+                ticket.setRefno((util.ConvertString(B[11])) == "" ? "" : util.ConvertString(B[11]));
+                ticket.setIssuedate((util.ConvertString(B[12])) == "" ? "" : util.ConvertString(B[12]));
+                ticket.setAmountwendy((util.ConvertString(B[13])) == "" ? "0.00" : util.ConvertString(B[13]));
+                ticket.setAmountoutbound((util.ConvertString(B[14])) == "" ? "0.00" : util.ConvertString(B[14]));
+                ticket.setSale((util.ConvertString(B[15])) == "" ? "0.00" : util.ConvertString(B[15]));
+                ticket.setCost((util.ConvertString(B[16])) == "" ? "0.00" : util.ConvertString(B[16]));
+                ticket.setOver((util.ConvertString(B[17])) == "" ? "0.00" : util.ConvertString(B[17]));
+                ticket.setAdd((util.ConvertString(B[18])) == "" ? "0.00" : util.ConvertString(B[18]));
+                ticket.setDres((util.ConvertString(B[19])) == "" ? "0.00" : util.ConvertString(B[19]));
+                ticket.setProfit((util.ConvertString(B[20])) == "" ? "0.00" : util.ConvertString(B[20]));
+                ticket.setTiccomm((util.ConvertString(B[21])) == "" ? "0.00" : util.ConvertString(B[21]));
+                ticket.setLittle((util.ConvertString(B[22])) == "" ? "0.00" : util.ConvertString(B[22]));
+                ticket.setAgentcomm((util.ConvertString(B[23])) == "" ? "0.00" : util.ConvertString(B[23]));
+                ticket.setPay((util.ConvertString(B[24])) == "" ? "0.00" : util.ConvertString(B[24]));
+                ticket.setComm((util.ConvertString(B[25])) == "" ? "0.00" : util.ConvertString(B[25]));
+
+                listAir.add(ticket);
+            }    
+        }
+        
+        // List Agent*****************************************************************************************************
+        List<Object[]> ticketSummaryCommissionList3 = session.createSQLQuery(query3)
+                .addScalar("invno", Hibernate.STRING)					
+                .addScalar("invdate", Hibernate.STRING)					
+                .addScalar("department", Hibernate.STRING)				
+                .addScalar("owner", Hibernate.STRING)					
+                .addScalar("termPay", Hibernate.STRING)					
+                .addScalar("agent", Hibernate.STRING)					
+                .addScalar("type", Hibernate.STRING)					
+                .addScalar("buy", Hibernate.STRING)					
+                .addScalar("pax", Hibernate.STRING)					
+                .addScalar("air", Hibernate.STRING)					
+                .addScalar("docno", Hibernate.STRING)
+                .addScalar("refno", Hibernate.STRING)					
+                .addScalar("issuedate", Hibernate.STRING)					
+                .addScalar("amountwendy", Hibernate.STRING)					
+                .addScalar("amountoutbound", Hibernate.STRING)					
+                .addScalar("sale", Hibernate.STRING)					
+                .addScalar("cost", Hibernate.STRING)					
+                .addScalar("over", Hibernate.STRING)					
+                .addScalar("add", Hibernate.STRING)					
+                .addScalar("dres", Hibernate.STRING)					
+                .addScalar("profit", Hibernate.STRING)					
+                .addScalar("ticcomm", Hibernate.STRING)					
+                .addScalar("little", Hibernate.STRING)					
+                .addScalar("agentcomm", Hibernate.STRING)					
+                .addScalar("pay", Hibernate.STRING)					
+                .addScalar("comm", Hibernate.STRING)
+                .addScalar("routingdetail", Hibernate.STRING)
+                .addScalar("overdate", Hibernate.STRING)
+                .addScalar("littledate", Hibernate.STRING)
+                .addScalar("agentcomdate", Hibernate.STRING)
+                .addScalar("comrefunddate", Hibernate.STRING)
+                .addScalar("ticketcomdate", Hibernate.STRING)
+                .addScalar("agentcomreceivedate", Hibernate.STRING)
+                .addScalar("addpaydate", Hibernate.STRING)
+                .addScalar("decreasepaydate", Hibernate.STRING)
+                .addScalar("ticketno", Hibernate.STRING)
+                .list();
+        
+        if(ticketSummaryCommissionList3 != null && ticketSummaryCommissionList3.size() != 0){
+            for (Object[] B : ticketSummaryCommissionList3) {
+                TicketSummaryCommissionView ticket = new TicketSummaryCommissionView();
+                //header
+                if(invoicefromdatePage != null && !"".equals(invoicefromdatePage)){
+                   String date = ""+ invoicefromdatePage + " To " + invoicetodatePage;
+                   ticket.setInvoicefromdatePage(date);
+                }else{
+                    ticket.setInvoicefromdatePage("");
+                }
+                if(issuefromdatePage != null && !"".equals(issuefromdatePage)){
+                   String date = ""+ issuefromdatePage + " To " + issuetodatePage;
+                   ticket.setIssuefromdatePage(date);
+                }else{
+                    ticket.setIssuefromdatePage("");
+                }
+                if(agentcomfromdatePage != null && !"".equals(agentcomfromdatePage)){
+                   String date = ""+ agentcomfromdatePage + " To " + agentcomtodatePage;
+                   ticket.setAgentcomfromdatePage(date);
+                }else{
+                    ticket.setAgentcomfromdatePage("");
+                }
+                if(ticketcomfromdatePage != null && !"".equals(ticketcomfromdatePage)){
+                   String date = ""+ ticketcomfromdatePage + " To " + ticketcomtodatePage;
+                   ticket.setTicketcomfromdatePage(date);
+                }else{
+                    ticket.setTicketcomfromdatePage("");
+                }
+                if(overfromdatePage != null && !"".equals(overfromdatePage)){
+                   String date = ""+ overfromdatePage + " To " + overtodatePage;
+                   ticket.setOverfromdatePage(date);
+                }else{
+                    ticket.setOverfromdatePage("");
+                }
+                if(littlefromdatePage != null && !"".equals(littlefromdatePage)){
+                   String date = ""+ littlefromdatePage + " To " + littletodatePage;
+                   ticket.setLittlefromdatePage(date);
+                }else{
+                    ticket.setLittlefromdatePage("");
+                }
+                if(agemtcomreceivefromdatePage != null && !"".equals(agemtcomreceivefromdatePage)){
+                   String date = ""+ agemtcomreceivefromdatePage + " To " + agemtcomreceivetodatePage;
+                   ticket.setAgemtcomreceivefromdatePage(date);
+                }else{
+                    ticket.setAgemtcomreceivefromdatePage("");
+                }
+                if(comrefundfromdatePage != null && !"".equals(comrefundfromdatePage)){
+                   String date = ""+ comrefundfromdatePage + " To " + comrefundtodatePage;
+                   ticket.setComrefundfromdatePage(date);
+                }else{
+                    ticket.setComrefundfromdatePage("");
+                }
+                if(addpayfromdatePage != null && !"".equals(addpayfromdatePage)){
+                   String date = ""+ addpayfromdatePage + " To " + addpaytodatePage;
+                   ticket.setAddpayfromdatePage(date);
+                }else{
+                    ticket.setAddpayfromdatePage("");
+                }
+                if(decreasepayfromdatePage != null && !"".equals(decreasepayfromdatePage)){
+                   String date = ""+ decreasepayfromdatePage + " To " + decreasepaytodatePage;
+                   ticket.setDecreasepayfromdatePage(date);
+                }else{
+                    ticket.setDecreasepayfromdatePage("");
+                }
+                if(typeRoutingPage != null && !"".equals(typeRoutingPage)){
+                    ticket.setTypeRoutingPage(typeRoutingPage);
+                }else{
+                    ticket.setTypeRoutingPage("");
+                }
+                if(routingDetailPage != null && !"".equals(routingDetailPage)){
+                    ticket.setRoutingDetailPage(routingDetailPage);
+                }else{
+                    ticket.setRoutingDetailPage("");
+                }
+                if(airlineCodePage != null && !"".equals(airlineCodePage)){
+                    ticket.setAirlineCodePage(airlineCodePage);
+                }else{
+                    ticket.setAirlineCodePage("");
+                }
+                if(agentNamePage != null && !"".equals(agentNamePage)){
+                    ticket.setAgentNamePage(agentNamePage);
+                }else{
+                    ticket.setAgentNamePage("");
+                }
+                if(departmentPage != null && !"".equals(departmentPage)){
+                    ticket.setDepartmentPage(departmentPage);
+                }else{
+                    ticket.setDepartmentPage("");
+                }
+                if(salebyNamePage != null && !"".equals(salebyNamePage)){
+                    ticket.setSalebyNamePage(salebyNamePage);
+                }else{
+                    ticket.setSalebyNamePage("");
+                }
+                if(termPayPage != null && !"".equals(termPayPage)){
+                    ticket.setTermPayPage(termPayPage);
+                }else{
+                    ticket.setTermPayPage("");
+                }
+
+                ticket.setPrintbyPage(printby);
+                Date date = new Date();
+                SimpleDateFormat sm = new SimpleDateFormat("dd/MM/yyyy");
+                String strDate = sm.format(date);
+                ticket.setPrintonPage(strDate);
+
+                // set data  detail
+                ticket.setInvno(util.ConvertString(B[0]) == "" ? "" : util.ConvertString(B[0]));
+                ticket.setInvdate(util.ConvertString(B[1]) == "" ? "" : util.ConvertString(B[1]));
+                ticket.setDepartment((util.ConvertString(B[2])) == "" ? "" : util.ConvertString(B[2]));
+                ticket.setOwner((util.ConvertString(B[3])) == "" ? "" : util.ConvertString(B[3]));
+                ticket.setTermpay((util.ConvertString(B[4])) == "" ? "" : util.ConvertString(B[4]));
+                ticket.setAgent((util.ConvertString(B[5])) == "" ? "" : util.ConvertString(B[5]));
+                ticket.setType((util.ConvertString(B[6])) == "" ? "" : util.ConvertString(B[6]));
+                ticket.setBuy((util.ConvertString(B[7])) == "" ? "" : util.ConvertString(B[7]));
+                ticket.setPax((util.ConvertString(B[8])) == "" ? "" : util.ConvertString(B[8]));
+                ticket.setAir((util.ConvertString(B[9])) == "" ? "" : util.ConvertString(B[9]));
+                ticket.setDocno((util.ConvertString(B[10])) == "" ? "" : util.ConvertString(B[10]));
+                ticket.setRefno((util.ConvertString(B[11])) == "" ? "" : util.ConvertString(B[11]));
+                ticket.setIssuedate((util.ConvertString(B[12])) == "" ? "" : util.ConvertString(B[12]));
+                ticket.setAmountwendy((util.ConvertString(B[13])) == "" ? "0.00" : util.ConvertString(B[13]));
+                ticket.setAmountoutbound((util.ConvertString(B[14])) == "" ? "0.00" : util.ConvertString(B[14]));
+                ticket.setSale((util.ConvertString(B[15])) == "" ? "0.00" : util.ConvertString(B[15]));
+                ticket.setCost((util.ConvertString(B[16])) == "" ? "0.00" : util.ConvertString(B[16]));
+                ticket.setOver((util.ConvertString(B[17])) == "" ? "0.00" : util.ConvertString(B[17]));
+                ticket.setAdd((util.ConvertString(B[18])) == "" ? "0.00" : util.ConvertString(B[18]));
+                ticket.setDres((util.ConvertString(B[19])) == "" ? "0.00" : util.ConvertString(B[19]));
+                ticket.setProfit((util.ConvertString(B[20])) == "" ? "0.00" : util.ConvertString(B[20]));
+                ticket.setTiccomm((util.ConvertString(B[21])) == "" ? "0.00" : util.ConvertString(B[21]));
+                ticket.setLittle((util.ConvertString(B[22])) == "" ? "0.00" : util.ConvertString(B[22]));
+                ticket.setAgentcomm((util.ConvertString(B[23])) == "" ? "0.00" : util.ConvertString(B[23]));
+                ticket.setPay((util.ConvertString(B[24])) == "" ? "0.00" : util.ConvertString(B[24]));
+                ticket.setComm((util.ConvertString(B[25])) == "" ? "0.00" : util.ConvertString(B[25]));
+
+                listAgent.add(ticket);
+            }    
+        }
         summaryCommission.setTicketCommissionDetailSummary(listDetail);
-        summaryCommission.setTicketCommissionAirSummary(listDetail);
-        summaryCommission.setTicketCommissionAgentSummary(listDetail);
+        summaryCommission.setTicketCommissionAirSummary(listAir);
+        summaryCommission.setTicketCommissionAgentSummary(listAgent);
         listSummaryCommission.add(summaryCommission);
     return listSummaryCommission;
     }   
