@@ -430,7 +430,7 @@
                                 <label class="col-md-6 control-label text-right" for="rept"></label>
                                 <div class="col-md-6">  
                                     <div class="form-group">
-                                        <button type="button" id="printbutton"  name="printbutton"  class="btn btn-success"><span class="glyphicon glyphicon-print"></span> Print</button>
+                                        <button type="button" id="printbutton"  name="printbutton"  class="btn btn-success" onclick="printExcel();"><span class="glyphicon glyphicon-print"></span> Print</button>
                                     </div>
                                 </div>   
                             </div> 
@@ -1470,105 +1470,70 @@ function validateDate(date,option){
     }
 }
 
-function printTicketSummaryAirline(){
-    var reportType = document.getElementById("reportType").value;
-    var issuefrom = document.getElementById("issueFrom").value;
-    var issueto = document.getElementById("issueTo").value;
-    var invFrom = document.getElementById("invoiceFromDate").value;
-    var invTo = document.getElementById("invoiceToDate").value;
-    var typeRouting = document.getElementById("typeRouting").value;
-    var routingDetail = document.getElementById("routingDetail").value;
-    var airlineCode = document.getElementById("airlineCode").value;
-    var passenger = document.getElementById("passenger").value;
-    var agentId = document.getElementById("agentId").value;
-    var department = document.getElementById("department").value;
-    var salebyUser = document.getElementById("salebyUser").value;
-    var termPay = document.getElementById("termPay").value;
-    if((invFrom !== '') && (invTo !== '')){
-        if(reportType == 1){
-            window.open("Excel.smi?name=TicketFareSummaryAirline&typeRouting=" + typeRouting 
-                    + "&routingDetail=" + routingDetail 
-                    + "&issuedateFrom=" + issuefrom 
-                    + "&issuedateTo=" + issueto 
-                    + "&invdateFrom=" + invFrom 
-                    + "&invdateTo=" + invTo 
-                    + "&airlineCode=" + airlineCode 
-                    + "&passenger=" + passenger
-                    + "&agentId=" + agentId 
-                    + "&department=" + department 
-                    + "&staff=" + salebyUser 
-                    + "&termPay=" + termPay);
-        }else if(reportType == 2){
-            window.open("Excel.smi?name=SummaryAirlinePax&typeRouting=" + typeRouting 
-                    + "&routingDetail=" + routingDetail 
-                    + "&issuedateFrom=" + issuefrom 
-                    + "&issuedateTo=" + issueto 
-                    + "&invdateFrom=" + invFrom 
-                    + "&invdateTo=" + invTo 
-                    + "&airlineCode=" + airlineCode 
-                    + "&passenger=" + passenger
-                    + "&agentId=" + agentId 
-                    + "&department=" + department 
-                    + "&staff=" + salebyUser 
-                    + "&termPay=" + termPay);
-        }else{
-            $("#reporttypepanel").removeClass("has-success");
-            $("#reporttypepanel").addClass("has-error");
-            $("#printbutton").addClass("disabled");
-        }   
-    } else if((issuefrom !== '') && (issueto !== '')){
-        if(reportType == 1){
-            window.open("Excel.smi?name=TicketFareSummaryAirline&typeRouting=" + typeRouting 
-                    + "&routingDetail=" + routingDetail 
-                    + "&issuedateFrom=" + issuefrom 
-                    + "&issuedateTo=" + issueto 
-                    + "&invdateFrom=" + invFrom 
-                    + "&invdateTo=" + invTo 
-                    + "&airlineCode=" + airlineCode 
-                    + "&passenger=" + passenger
-                    + "&agentId=" + agentId 
-                    + "&department=" + department 
-                    + "&staff=" + salebyUser 
-                    + "&termPay=" + termPay);
-        }else if(reportType == 2){
-            window.open("Excel.smi?name=SummaryAirlinePax&typeRouting=" + typeRouting 
-                    + "&routingDetail=" + routingDetail 
-                    + "&issuedateFrom=" + issuefrom 
-                    + "&issuedateTo=" + issueto 
-                    + "&invdateFrom=" + invFrom 
-                    + "&invdateTo=" + invTo 
-                    + "&airlineCode=" + airlineCode 
-                    + "&passenger=" + passenger
-                    + "&agentId=" + agentId 
-                    + "&department=" + department 
-                    + "&staff=" + salebyUser 
-                    + "&termPay=" + termPay);
-        }else{
-            $("#reporttypepanel").removeClass("has-success");
-            $("#reporttypepanel").addClass("has-error");
-            $("#printbutton").addClass("disabled");
-        }      
-    } else {
-        if(reportType == ""){
-            $("#reporttypepanel").removeClass("has-success");
-            $("#reporttypepanel").addClass("has-error");
-        }
-        validateDate();  
-    }
-//    alert("reportType ::: "+reportType+
-//          "issuefrom ::: "+issuefrom+
-//          "issueto ::: "+issueto+
-//          "invoiceFromDate ::: "+invFrom+
-//          "invoiceToDate ::: "+invTo+
-//          "invoiceToDate ::: "+typeRouting+
-//          "routingDetail ::: "+routingDetail+
-//          "airlineCode ::: "+airlineCode+
-//          "passenger ::: "+passenger+
-//          "agentCode ::: "+agentCode+
-//          "department ::: "+department+
-//          "salebyUser ::: "+salebyUser+
-//          "termPay ::: "+termPay      
-//                );
+function printExcel(){
+	var invoicefromdate = document.getElementById("invoiceFromDate");
+    var invoicetodate = document.getElementById("invoiceToDate").value;
+    var issuefromdate = document.getElementById("issueFrom").value;
+    var issuetodate = document.getElementById("issueTo").value;
+    var agentcomfromdate = document.getElementById("agentcomFrom").value;
+    var agentcomtodate = document.getElementById("agentcomTo").value;
+    var ticketcomfromdate = document.getElementById("ticketcomFrom").value;
+    var ticketcomtodate = document.getElementById("ticketcomTo").value;
+    var overfromdate = document.getElementById("overFrom").value;
+    var overtodate = document.getElementById("overTo").value;
+    var littlefromdate = document.getElementById("littleFrom").value;
+    var littletodate = document.getElementById("littleTo").value;
+    var agemtcomreceivefromdate = document.getElementById("agentcomreceiveFrom").value;
+    var agemtcomreceivetodate = document.getElementById("agentcomreceiveTo").value;
+    var comrefundfromdate = document.getElementById("comrefundFrom").value;
+    var comrefundtodate = document.getElementById("comrefundTo").value;
+    var addpayfromdate = document.getElementById("addpayFrom").value;
+    var addpaytodate = document.getElementById("addpayTo").value;
+    var decreasepayfromdate = document.getElementById("decreasepayFrom").value;
+    var decreasepaytodate = document.getElementById("decreasepayTo").value;
+    var typeRoutings = document.getElementById("typeRouting").value;
+    var routingDetails = document.getElementById("routingDetail").value;
+    var airlineCodes = document.getElementById("airlineCode").value;
+    var agentCodes = document.getElementById("agentCode").value;
+    var agentName = document.getElementById("agentName").value;
+    var ticketno = document.getElementById("ticketno").value;
+    var departmentts = document.getElementById("department").value;
+    var salebyUserts = document.getElementById("salebyUser").value;
+    var salebyName = document.getElementById("salebyName").value;
+    var termPayts   = document.getElementById("termPay").value;
+    
+window.open("Excel.smi?name=TicketSummaryCommission&invoiceFromDate=" + invoicefromdate 
+        + "&invoiceToDate=" + invoicetodate 
+        + "&issueFrom=" + issuefromdate 
+        + "&issueTo=" + issuetodate 
+        + "&agentcomFrom=" + agentcomfromdate 
+        + "&agentcomTo=" + agentcomtodate 
+        + "&ticketcomFrom=" + ticketcomfromdate 
+        + "&ticketcomTo=" + ticketcomtodate
+        + "&overFrom=" + overfromdate 
+        + "&overTo=" + overtodate 
+        + "&littleFrom=" + littlefromdate 
+        + "&littleTo=" + littletodate
+        + "&agentcomreceiveFrom=" + agemtcomreceivefromdate 
+        + "&agentcomreceiveTo=" + agemtcomreceivetodate 
+        + "&comrefundFrom=" + comrefundfromdate 
+        + "&comrefundTo=" + comrefundtodate 
+        + "&addpayFrom=" + addpayfromdate 
+        + "&addpayTo=" + addpaytodate 
+        + "&decreasepayFrom=" + decreasepayfromdate
+        + "&decreasepayTo=" + decreasepaytodate 
+        + "&typeRouting=" + typeRoutings 
+        + "&routingDetail=" + routingDetails 
+        + "&airlineCode=" + airlineCodes
+        + "&agentCode=" + agentCodes 
+        + "&agentName=" + agentName 
+        + "&ticketno=" + ticketno
+        + "&department=" + departmentts 
+        + "&salebyUser=" + salebyUserts 
+        + "&salebyName=" + salebyName 
+        + "&termPay=" + termPayts
+        );
+    
 }
 
 function jsFunction(value){
