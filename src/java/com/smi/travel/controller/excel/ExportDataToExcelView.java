@@ -68,7 +68,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
     private static final String SummaryTicketCostAndIncome = "SummaryTicketCostAndIncome";
     private static final String RefundTicketDetail = "RefundTicketDetail";
     private static final String SummaryAirlinePax = "SummaryAirlinePax";
-    private static final String TicketProfitLost = "TicketProfitLost"; 
+    private static final String TicketProfitLoss = "TicketProfitLoss"; 
     
     @Override
     protected void buildExcelDocument(Map model, HSSFWorkbook workbook,
@@ -129,14 +129,14 @@ public class ExportDataToExcelView extends AbstractExcelView {
         }else if(name.equalsIgnoreCase(SummaryAirlinePax)){
             System.out.println("gen report SummaryAirlinePax");
             genSummaryAirlinePaxReport(workbook, (List) model.get(name));
-        }else if(name.equalsIgnoreCase(TicketProfitLost)){
-            System.out.println("gen report SummaryAirlinePax");
-            genTicketProfitLostReport(workbook, (List) model.get(name));
+        }else if(name.equalsIgnoreCase(TicketProfitLoss)){
+            System.out.println("gen report TicketProfitLoss");
+            genTicketProfitLossReport(workbook, (List) model.get(name));
         }
 
     }
 
-    private void genTicketProfitLostReport(HSSFWorkbook wb, List TicketProfitLoss) {
+    private void genTicketProfitLossReport(HSSFWorkbook wb, List TicketProfitLoss) {
         String sheetName = "Sheet1";// name of sheet
         HSSFSheet sheet = wb.createSheet(sheetName);
         

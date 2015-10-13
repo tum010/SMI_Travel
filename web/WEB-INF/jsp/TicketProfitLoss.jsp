@@ -177,7 +177,7 @@
         var inputFromDate = document.getElementById("invoiceDateFrom").value;
         var InputToDate = document.getElementById("invoiceDateTo").value;
         if((inputFromDate !== '') && (InputToDate !== '')){
-            window.open("Excel.smi?name=TicketProfitLost"+ 
+            window.open("Excel.smi?name=TicketProfitLoss"+ 
                     "&invoiceFromDate=" + inputFromDate + 
                     "&invoiceToDate=" + InputToDate);
         } else {

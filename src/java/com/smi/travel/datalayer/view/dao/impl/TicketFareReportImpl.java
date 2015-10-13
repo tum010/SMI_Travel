@@ -767,7 +767,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
     }
 
     @Override
-    public List getTicketProfitLost(String invoiceFromDate, String invoiceToDate, String printby) {
+    public List getTicketProfitLoss(String invoiceFromDate, String invoiceToDate, String printby) {
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList<TicketProfitLoss>();
         SimpleDateFormat df = new SimpleDateFormat();
