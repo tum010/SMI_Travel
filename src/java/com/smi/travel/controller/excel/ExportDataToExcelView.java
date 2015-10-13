@@ -133,6 +133,9 @@ public class ExportDataToExcelView extends AbstractExcelView {
         }else if(name.equalsIgnoreCase(TicketProfitLoss)){
             System.out.println("gen report TicketProfitLoss");
             genTicketProfitLossReport(workbook, (List) model.get(name));
+        }else if(name.equalsIgnoreCase(TicketSummaryCommission)){
+            System.out.println("gen report TicketSummaryCommission");
+            getTicketSummaryCommission(workbook, (List) model.get(name));
         }
 
     }
@@ -7920,4 +7923,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         }
     }
 }
+     private void getTicketSummaryCommission(HSSFWorkbook wb, List listTicketummaryCommission) {
+    
+    }
 }
