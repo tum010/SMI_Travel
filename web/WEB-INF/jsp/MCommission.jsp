@@ -31,7 +31,7 @@
     <div class="row">
         <!-- side bar -->
         <div class="col-md-2" style="border-right:  solid 1px #01C632;padding-top: 10px" id="Menu">
-            <ul class="nav nav-list" style="top: 0px;  background-color: #FAFEFA;border: solid 1px #0063DC">
+            <ul class="nav nav-list" id="MasterCommissionMenuLeft"  style="top: 0px;  background-color: #FAFEFA;border: solid 1px #0063DC">
                 <li class="">
                     <a href="MCommission.smi" id="agentLink" name="agentLink">
                         <i class="menu-icon fa fa-user"></i>
@@ -47,6 +47,19 @@
                     <b class="arrow"></b>
                 </li>
             </ul>
+            <script>
+                $(document).ready(function () {
+                    var path = location.pathname;
+                    var name = path.split("/");
+                    console.log(name[2]);
+                    str = name[2].split(".");
+                    console.log(str[0]);
+                    sub = str[0].substr(0,5);
+                    console.log(sub);
+                    var $select = $('a[href*="' + sub + '"]');
+                    $("#MasterCommissionMenuLeft").find($select).css('background-color', '#ccc');
+                });
+            </script>
         </div>
         <!-- main page -->
         <div class="col-md-10">

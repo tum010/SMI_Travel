@@ -37,6 +37,7 @@ $(document).ready(function (){
             $('#hdGridSelected').val($('#MasterCommissionAgentTable tbody tr.row_selected').attr("id"));
         }
     });
+  
 });
     
 

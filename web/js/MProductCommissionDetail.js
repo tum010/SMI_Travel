@@ -42,12 +42,14 @@ $(document).ready(function () {
            var d1Str = $(tr).find("input[name^='InputFrom']").val();
            var d2Str = $(tr).find("input[name^='InputTo']").val();
            var commissionPercent = $(tr).find("input[name^='InputCommission']").val();
-           
-           if(validateCommissionPercent(commissionPercent)){
-               jQuery("#AlertCheckCommissionPercent").css("display","none");
-            }else{
-                jQuery("#AlertCheckCommissionPercent").css("display","block");
-                isValid = false;
+//           alert("Commission : " + commissionPercent);
+            if(commissionPercent !== ''){
+                if(validateCommissionPercent(commissionPercent)){
+                    jQuery("#AlertCheckCommissionPercent").css("display","none");
+                }else{
+                    jQuery("#AlertCheckCommissionPercent").css("display","block");
+                    isValid = false;
+                }
             }
            if( !(isDate(d1Str) && isDate(d2Str)) ){
                isValid = false;
