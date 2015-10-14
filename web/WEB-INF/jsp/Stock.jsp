@@ -53,7 +53,7 @@
             </div>
             <div class="col-sm-6 text-right" style="padding-right: 15px">
                 <a href="SearchStock.smi">
-                    <button type="button"  id="ButtonSearch"  name="ButtonSearch"  class="btn btn-primary" style="width: 100px;">
+                    <button type="button"  id="ButtonBack"  name="ButtonBack"  class="btn btn-primary" style="width: 100px;">
                         <span id="SpanSearch" class="glyphicon glyphicon-arrow-left"></span> Back
                     </button>   
                 </a>

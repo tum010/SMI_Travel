@@ -96,9 +96,10 @@ public class SearchStockController extends SMITravelController {
             String itemStatus =  request.getParameter("SelectItemStatus");
             // Search Stock
             StockViewSummary stockDataDetail = stockService.searchStockDetail(stockId, status, itemStatus);
-            System.out.println("Stock View Summary : " + stockDataDetail.getId() + " " +stockDataDetail.getProductName() );
+           
             if(stockDataDetail != null){
-                System.out.println("set summary");
+                 System.out.println("Stock View Summary : " + stockDataDetail.getId() + " " +stockDataDetail.getProductName() );
+                    System.out.println("set summary");
                  request.setAttribute("stockSummary", stockDataDetail);
                  request.setAttribute("payStatus", status);
                  request.setAttribute("itemStatus", itemStatus);
@@ -168,8 +169,8 @@ public class SearchStockController extends SMITravelController {
                 
                 // Stock Detail 
                 StockViewSummary stockDataDetail = stockService.searchStockDetail(stockid, "", "");
-                System.out.println("Stock View Summary : " + stockDataDetail.getId() + " " +stockDataDetail.getProductName() );
                 if(stockDataDetail != null){
+                    System.out.println("Stock View Summary : " + stockDataDetail.getId() + " " +stockDataDetail.getProductName() );
                     System.out.println("set summary");
                     request.setAttribute("stockSummary", stockDataDetail);
                     request.setAttribute("stockSumDetail", stockDataDetail.getItemList());

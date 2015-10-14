@@ -185,8 +185,8 @@
                 </div>
                 <div class="col-md-2 text-right" style="padding-right: 30px;">
                     <input type="hidden" name="action" id="action">
-                    <a href="Stock.smi?">
-                    <button type="button"  id="ButtonSearch"  name="ButtonSearch"  class="btn btn-success" style="width: 100px;">
+                    <a href="Stock.smi?action=new">
+                    <button type="button"  id="ButtonNew"  name="ButtonNew"  class="btn btn-success" style="width: 100px;">
                         <span id="SpanSearch" class="glyphicon glyphicon-plus"></span> New
                     </button>   
                     </a>
@@ -293,7 +293,14 @@
                                 </c:if>
                                 ${pay}
                             </td>
-                            <td>${stockDetail.itemStatus}</td>                            
+                            <td>
+                                <c:if test="${stockDetail.itemStatus == 'REFUND'}">
+                                    <font style="color: red;"> ${stockDetail.itemStatus} </font>
+                                </c:if>
+                                <c:if test="${stockDetail.itemStatus != 'REFUND'}">
+                                   ${stockDetail.itemStatus}
+                                </c:if>
+                            </td>                            
                         </tr>
                         </c:forEach>
                     </tbody>
