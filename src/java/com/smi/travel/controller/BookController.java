@@ -44,6 +44,8 @@ public class BookController extends SMITravelController {
         String pnr = request.getParameter("pnr");
         String ticketNo = request.getParameter("ticketNo");
         String payBy = request.getParameter("payBy");
+        String transferDateFrom = request.getParameter("transferDateFrom");
+        String transferDateTo = request.getParameter("transferDateTo");
         String bankTransfer = "";
         if("4".equalsIgnoreCase(payBy)){
             bankTransfer = request.getParameter("bankTransfer");
@@ -63,10 +65,10 @@ public class BookController extends SMITravelController {
         }
         
         if("search".equalsIgnoreCase(action)){
-            bookinglist = workspaceService.getListBooking(refno,PassFirst,PassLast,username,departmentid,Bookdate,status,pnr,ticketNo,payBy,bankTransfer);
+            bookinglist = workspaceService.getListBooking(refno,PassFirst,PassLast,username,departmentid,Bookdate,status,pnr,ticketNo,payBy,bankTransfer,transferDateFrom,transferDateTo);
             request.setAttribute("Bookdate", Bookdate);
         }else{
-            bookinglist = workspaceService.getListBooking(refno,PassFirst,PassLast,user.getUsername(),departmentid,Bookdate,status,pnr,ticketNo,payBy,bankTransfer);
+            bookinglist = workspaceService.getListBooking(refno,PassFirst,PassLast,user.getUsername(),departmentid,Bookdate,status,pnr,ticketNo,payBy,bankTransfer,transferDateFrom,transferDateTo);
             //request.setAttribute("Bookdate", util.convertDateToString(thisDate));
             
         }
@@ -88,6 +90,8 @@ public class BookController extends SMITravelController {
         request.setAttribute("ticketNo", ticketNo);
         request.setAttribute("payBy", payBy);
         request.setAttribute("bankTransfer", bankTransfer);
+        request.setAttribute("transferDateFrom", transferDateFrom);
+        request.setAttribute("transferDateTo", transferDateTo);
         return Book;
     }
 

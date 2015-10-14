@@ -436,7 +436,10 @@ public class StockImpl implements StockDao{
             System.out.println("Stock Id Show"+ i + " : " + list.get(i).getId() );
         }
         if("0".equals(expire)){
-            list = checkItemStatusStockDetail(list);
+            List<Stock> listTemp = checkItemStatusStockDetail(list);
+            if(listTemp == null || listTemp.size() == 0){
+                listTemp =  list;
+            }
         }
        
         return list;
