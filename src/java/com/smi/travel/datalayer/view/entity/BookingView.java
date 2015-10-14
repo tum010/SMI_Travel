@@ -33,6 +33,7 @@ public class BookingView {
     private String ticketNo;
     private String payBy;
     private String accId;
+    private Date transferDate;
     
     public BookingView(){
         
@@ -45,10 +46,6 @@ public class BookingView {
     public void setRefno(String refno) {
         this.refno = refno;
     }
-
-    
-    
-    
 
     public String getAgentCode() {
         return this.agentCode;
@@ -192,6 +189,14 @@ public class BookingView {
 
     public void setAccId(String accId) {
         this.accId = accId;
+    }
+
+    public Date getTransferDate() {
+        return transferDate;
+    }
+
+    public void setTransferDate(Date transferDate) {
+        this.transferDate = transferDate;
     }
       
 }

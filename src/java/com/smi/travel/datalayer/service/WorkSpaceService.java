@@ -23,8 +23,8 @@ public class WorkSpaceService {
     private BookingViewDao bookingviewdao;
     private MListItemDao listitemdao;
     
-    public List<BookingView> getListBooking(String refno,String passFirst,String passLast,String username,String departmentID,String Bookdate,String status,String pnr,String ticketNo,String payBy,String bankTransfer){
-        return bookingviewdao.getBookingList(refno, passFirst, passLast, username, departmentID, Bookdate, status, pnr, ticketNo, payBy, bankTransfer);
+    public List<BookingView> getListBooking(String refno,String passFirst,String passLast,String username,String departmentID,String Bookdate,String status,String pnr,String ticketNo,String payBy,String bankTransfer,String transferDateFrom,String transferDateTo){
+        return bookingviewdao.getBookingList(refno, passFirst, passLast, username, departmentID, Bookdate, status, pnr, ticketNo, payBy, bankTransfer, transferDateFrom, transferDateTo);
     }
     
     public List<MBookingstatus> getListBookStatus(){

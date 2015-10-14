@@ -385,7 +385,10 @@ public class AirTicketDetailController extends SMITravelController {
             String adTax = request.getParameter("adTax-" + i);
             String chTax = request.getParameter("chTax-" + i);
             String inTax = request.getParameter("inTax-" + i);
-
+            String adTaxCost = request.getParameter("adTaxCost-" + i);
+            String chTaxCost = request.getParameter("chTaxCost-" + i);
+            String inTaxCost = request.getParameter("inTaxCost-" + i);
+            
             AirticketFlight airFlight = getAirFlight(flightId, null);
             if (airFlight == null) {
                 airFlight = new AirticketFlight();
@@ -439,6 +442,15 @@ public class AirTicketDetailController extends SMITravelController {
             }
             if (StringUtils.isNotEmpty(inTax)) {
                 airFlight.setInTax(Integer.valueOf(inTax));
+            }
+            if (StringUtils.isNotEmpty(adTaxCost)) {
+                airFlight.setAdTaxCost(Integer.valueOf(adTaxCost));
+            }
+            if (StringUtils.isNotEmpty(chTaxCost)) {
+                airFlight.setChTaxCost(Integer.valueOf(chTaxCost));
+            }
+            if (StringUtils.isNotEmpty(inTaxCost)) {
+                airFlight.setInTaxCost(Integer.valueOf(inTaxCost));
             }
             if (StringUtils.isNotEmpty(subFlightClass)) {
                 airFlight.setSubFlightClass(subFlightClass);
@@ -501,6 +513,10 @@ public class AirTicketDetailController extends SMITravelController {
         String adTax = request.getParameter("adTax-" + i);
         String chTax = request.getParameter("chTax-" + i);
         String inTax = request.getParameter("inTax-" + i);
+        String adTaxCost = request.getParameter("adTaxCost-" + i);
+        String chTaxCost = request.getParameter("chTaxCost-" + i);
+        String inTaxCost = request.getParameter("inTaxCost-" + i);
+        
         String airlineCode = request.getParameter("airlineCode" + i);
         String flightOrder = request.getParameter("flight-" + i + "-flightOrder");
 
@@ -596,6 +612,15 @@ public class AirTicketDetailController extends SMITravelController {
         if (StringUtils.isNotEmpty(inTax)) {
             //airFlight.setInTax(Integer.valueOf(inTax));
             airFlight.setInTax(util.convertStringToInteger(inTax));
+        }
+        if (StringUtils.isNotEmpty(adTaxCost)) {
+            airFlight.setAdTaxCost(util.convertStringToInteger(adTaxCost));
+        }
+        if (StringUtils.isNotEmpty(chTaxCost)) {
+            airFlight.setChTaxCost(util.convertStringToInteger(chTaxCost));
+        }
+        if (StringUtils.isNotEmpty(inTaxCost)) {
+            airFlight.setInTaxCost(util.convertStringToInteger(inTaxCost));
         }
         if (airFlight.getId() == null) {
 
@@ -759,6 +784,9 @@ public class AirTicketDetailController extends SMITravelController {
             airFlight.setInCost(bFlight.getInCost());
             airFlight.setInPrice(bFlight.getInPrice());
             airFlight.setInTax(bFlight.getInTax());
+            airFlight.setAdTaxCost(bFlight.getAdTax());
+            airFlight.setChTaxCost(bFlight.getChTax());
+            airFlight.setInTaxCost(bFlight.getInTax());
             airFlight.setSubFlightClass(bFlight.getFlightClass());
             MFlight flightClass = null;
             flightClass = this.bookingAirticketService.MappingFlightClass(bFlight.getFlightClass());

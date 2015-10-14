@@ -116,7 +116,7 @@
                     </div>
                 </div>
                 <c:set var="advancedSearch" value="collapsing" />
-                <c:if test="${((requestScope['pnr'] != '') && (requestScope['pnr'] != null)) || ((requestScope['ticketNo'] != '') && (requestScope['ticketNo'] != null)) || ((requestScope['payBy'] != '') && (requestScope['payBy'] != null))}">
+                <c:if test="${((requestScope['pnr'] != '') && (requestScope['pnr'] != null)) || ((requestScope['ticketNo'] != '') && (requestScope['ticketNo'] != null)) || ((requestScope['payBy'] != '') && (requestScope['payBy'] != null)) || ((requestScope['transferDateFrom'] != '') && (requestScope['transferDateFrom'] != null)) || ((requestScope['transferDateTo'] != '') && (requestScope['transferDateTo'] != null))}">
                     <c:set var="advancedSearch" value="accordion-body collapse in" />
                 </c:if>
                 <div class="${advancedSearch}" id="collapseExample${advanced.search}" aria-expanded="false">
@@ -166,7 +166,31 @@
                                     </c:forEach>
                                 </select>    
                             </div>
-                        </div>        
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="transferFrom">Transfer Date From</label>
+                                <div class=' col-sm-12 input-group date' id='effectivefromClass'>
+                                    <input type='text' class="form-control"  id="transferDateFrom" name="transferDateFrom" 
+                                           data-date-format="YYYY-MM-DD" value="${requestScope['transferDateFrom']}" />
+                                    <span class="input-group-addon spandate">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="transferTo">Transfer Date To</label>
+                                <div class=' col-sm-12 input-group date' id='effectivefromClass'>
+                                    <input type='text' class="form-control"  id="transferDateTo" name="transferDateTo" 
+                                           data-date-format="YYYY-MM-DD" value="${requestScope['transferDateTo']}" />
+                                    <span class="input-group-addon spandate">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>    
                     </div>
                 </div>
                  

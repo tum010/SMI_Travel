@@ -36,7 +36,10 @@ public class AirticketFlight {
      private Integer TotalCost;
      private String subFlightClass;
      private Integer flightOrder;
-
+     private Integer adTaxCost;
+     private Integer chTaxCost;
+     private Integer inTaxCost;
+     
     public AirticketFlight() {
     }
 
@@ -276,6 +279,30 @@ public class AirticketFlight {
 
     public void setFlightOrder(Integer flightOrder) {
         this.flightOrder = flightOrder;
+    }
+
+    public Integer getAdTaxCost() {
+        return adTaxCost;
+    }
+
+    public void setAdTaxCost(Integer adTaxCost) {
+        this.adTaxCost = adTaxCost;
+    }
+
+    public Integer getChTaxCost() {
+        return chTaxCost;
+    }
+
+    public void setChTaxCost(Integer chTaxCost) {
+        this.chTaxCost = chTaxCost;
+    }
+
+    public Integer getInTaxCost() {
+        return inTaxCost;
+    }
+
+    public void setInTaxCost(Integer inTaxCost) {
+        this.inTaxCost = inTaxCost;
     }
  
 }
