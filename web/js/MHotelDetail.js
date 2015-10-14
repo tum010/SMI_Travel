@@ -5,7 +5,64 @@
  */
 
 
-$(document).ready(function () {
+$(document).ready(function() {
+    //Select City
+    Selectize.define('clear_selection', function(options) {
+        var self = this;
+        self.plugins.settings.dropdown_header = {
+            title: 'Clear Selection'
+        };
+        this.require('dropdown_header');
+        self.setup = (function() {
+            var original = self.setup;
+            return function() {
+                original.apply(this, arguments);
+                this.$dropdown.on('mousedown', '.selectize-dropdown-header', function(e) {
+                    self.setValue('');
+                    self.close();
+                    self.blur();
+                    return false;
+                });
+            };
+        })();
+    });
+
+    var dataCity = [];
+    dataCity = cityName;
+    $("#select-list-city option").clone().appendTo("#city");
+
+    var nameCity = "#city";
+    console.log("name = " + nameCity);
+
+    $(nameCity).selectize({
+        removeItem: '',
+        sortField: 'text',
+        create: false,
+        dropdownParent: 'body',
+        plugins: {
+            'clear_selection': {}
+        }
+
+    });
+    
+    //Select Country
+    var dataCountry = [];
+    dataCountry = cityCountry;
+    $("#select-list-country option").clone().appendTo("#country");
+
+    var nameCountry = "#country";
+    console.log("name = " + nameCountry);
+    
+    $(nameCountry).selectize({
+        removeItem: '',
+        sortField: 'text',
+        create: false,
+        dropdownParent: 'body',
+        plugins: {
+            'clear_selection': {}
+        }
+    });
+    $(".selectize-input").width(210);
 
     $('#HotelForm').bootstrapValidator({
         container: 'tooltip',
@@ -44,7 +101,7 @@ $(document).ready(function () {
                         regexp: "^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$",
                         message: 'The value is not a valid email address'
                     }
-                    
+
                 }
             },
             Web: {
@@ -64,7 +121,7 @@ $(document).ready(function () {
                 }
             }
         }
-    }).on('success.field.bv', function (e, data) {
+    }).on('success.field.bv', function(e, data) {
         if (data.bv.isValid()) {
             data.bv.disableSubmitButtons(false);
         }
