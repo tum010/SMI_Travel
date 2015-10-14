@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HotelVoucher" language="groovy" pageWidth="575" pageHeight="392" columnWidth="574" leftMargin="1" rightMargin="0" topMargin="0" bottomMargin="0" uuid="053f4d0e-4534-4ae9-bd3a-d9c39367ad2d">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="27"/>
-	<property name="ireport.y" value="144"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="168"/>
 	<queryString>
 		<![CDATA[SELECT
      *,
@@ -90,7 +90,7 @@ FROM
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="142" splitType="Stretch">
+		<band height="114" splitType="Stretch">
 			<rectangle>
 				<reportElement mode="Transparent" x="499" y="0" width="36" height="13" uuid="ad4ded7a-22a3-412e-ba9c-8be684eb4912"/>
 			</rectangle>
@@ -213,11 +213,6 @@ FROM
 				</textElement>
 				<textFieldExpression><![CDATA[$F{child}]]></textFieldExpression>
 			</textField>
-			<break>
-				<reportElement x="0" y="71" width="574" height="1" uuid="df634d80-a602-4e98-8d08-243d23875973">
-					<printWhenExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue() == 1)]]></printWhenExpression>
-				</reportElement>
-			</break>
 		</band>
 	</detail>
 	<columnFooter>
@@ -247,7 +242,7 @@ FROM
 				<reportElement x="11" y="0" width="524" height="1" uuid="a428cff0-2587-44db-b40f-9dfc02ed6352"/>
 			</line>
 			<textField>
-				<reportElement x="278" y="21" width="221" height="60" uuid="41d7f2e3-64a3-45bf-92ff-51c49f0a2487"/>
+				<reportElement x="278" y="21" width="221" height="51" uuid="41d7f2e3-64a3-45bf-92ff-51c49f0a2487"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>

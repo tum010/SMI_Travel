@@ -103,6 +103,7 @@
                                             <a  href="#" >
                                                 <span  class="glyphicon glyphicon-list-alt" id="SpanEdit${status.count}" onclick="selectListOther(${status.count})"  ></span>
                                             </a>
+                                                <input type="text" class="hidden" id="countClick${status.count}" name="countClick${status.count}" value="0">
                                         </td>
                                     </tr>
                                     </c:forEach>
@@ -113,7 +114,7 @@
                     </div>
                     <!--View Detail Tour Pop up -->
                     <c:forEach var="table2" items="${listOtherBooking}" varStatus="status">
-                        <div class="" id="TableOther${status.count}" name="TableOther${status.count}" style="display: none;">
+                        <div class="hidden" id="TableOther${status.count}" name="TableOther${status.count}" >
                         <label class="control-label" style="margin-top: 10px;margin-left: 20px;">Price (<c:out value="${table2.product.code}" />)</label>
                         <table class="display" style="width:97%;margin-top: 10px;">
                             <thead class="datatable-header">

@@ -5,18 +5,29 @@
  */
 function selectListOther(counter){
     var count = document.getElementById('countListOther');
+    var countClick = $('#countClick'+counter).val();
     for(var i = 1 ; i <= count.value ; i++){
-        $('#TableOther'+i).css("display","none");
+        $("#TableOther"+i).addClass("hidden");
     }
     $('#SpanEdit'+ counter).click(function() {
-//        $('#TableOther'+counter).css("display","block");
-        for(var i = 1 ; i <= count.value ; i++){                  
-            if(i === counter){
-//                alert(i +" : " +counter +">>>" + count.value);
-                $('#TableOther'+counter).css("display","block");
-            }
+        var num = countClick++;
+        $('#countClick'+counter).val(num);
+        var clickcount = $('#countClick'+counter).val();    
+        console.log(">>>>>>>>Click : " + clickcount);
+        if($("#TableOther"+counter).hasClass("hidden")){
+            $("#TableOther"+counter).removeClass("hidden");
+        }else{
+            $("#TableOther"+counter).addClass("hidden");
         }
-
+//        if((clickcount%2) === 0){
+//            console.log("Click 0 / % TableOther"+ counter +" : " + (clickcount%2));
+//            $('#TableOther'+counter).css("display","block");
+//        }
+//        if((clickcount%2) !== 0){
+//            $('#TableOther'+counter).css("display","none");
+//            console.log("Click 1  % TableOther"+ counter +"  : " + (clickcount%2));
+//            
+//        }
     });
 }
 function searchAction() {
