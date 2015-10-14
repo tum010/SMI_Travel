@@ -18,6 +18,9 @@
         </many-to-one> 
         <many-to-one name="status" class="com.smi.travel.datalayer.entity.MItemstatus" fetch="select">
             <column name="status"  />
+        </many-to-one>
+        <many-to-one name="guide" class="com.smi.travel.datalayer.entity.SystemUser" fetch="select">
+            <column name="guide_id"  />
         </many-to-one> 
         <property name="adCost" type="java.lang.Long">
             <column name="ad_cost" precision="10" scale="0" />
