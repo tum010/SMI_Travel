@@ -88,15 +88,15 @@ function CallAjax(param) {
                 var AD_CostRP = AD_Cost.replace(',','');
                 var CH_CostRP = CH_Cost.replace(',','');
                 var IN_CostRP = IN_Cost.replace(',','');              
-                    if((AD_CostRP == path[0]) && (CH_CostRP == path[1]) && (IN_CostRP == path[2])){
+                    if((AD_CostRP === path[0]) && (CH_CostRP === path[1]) && (IN_CostRP === path[2])){
                         
                     } else {
-                        document.getElementById('path0').value = path[0];
-                        document.getElementById('path1').value = path[1];
-                        document.getElementById('path2').value = path[2];
-                        document.getElementById('path3').value = path[3];
-                        document.getElementById('path4').value = path[4];
-                        document.getElementById('path5').value = path[5];
+                        document.getElementById('path0').value = (path[0] !== 'null' ? path[0] : '');
+                        document.getElementById('path1').value = (path[1] !== 'null' ? path[1] : '');
+                        document.getElementById('path2').value = (path[2] !== 'null' ? path[2] : '');
+                        document.getElementById('path3').value = (path[3] !== 'null' ? path[3] : '');
+                        document.getElementById('path4').value = (path[4] !== 'null' ? path[4] : '');
+                        document.getElementById('path5').value = (path[5] !== 'null' ? path[5] : '');
                         $('#Confirm').modal('show');
                     }                 
                 
