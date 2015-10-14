@@ -85,14 +85,15 @@ public class DaytourOperationDetailController extends SMITravelController {
         String tourID = request.getParameter("tourID");
         String tourDate = request.getParameter("tourDate");
         String PayNoGuideBill = request.getParameter("PayNoGuideBill");
+        String mDepartmentName = request.getParameter("mDepartmentName");
         String result = "";
         
         SystemUser user = (SystemUser) session.getAttribute("USER");
-        String mDepartmentName = "";
+        String mDepartmentNameTemp = "";
         if(user.getMDepartment() != null){
-            mDepartmentName = user.getMDepartment().getName();
+            mDepartmentNameTemp = user.getMDepartment().getName();
         }
-        request.setAttribute("mDepartmentName", mDepartmentName);
+        request.setAttribute("mDepartmentName", mDepartmentNameTemp);
 
         if ("new".equalsIgnoreCase(action)) {
 
@@ -153,7 +154,7 @@ public class DaytourOperationDetailController extends SMITravelController {
             request.setAttribute(DayTourList, daytourBooking);
             setGeneralResponseAttribute(request, refNo);
         } else if ("update".equalsIgnoreCase(action)) {
-            result = updatetourOperationDesc(request, tourID, tourDate, session);
+            result = updatetourOperationDesc(request, tourID, tourDate, mDepartmentName, session);
 //            request.setAttribute(TransactionResult, "Save successful");
 //            request.setAttribute("redirectUrl" , "DaytourOperationDetail.smi?action=edit&tourID=" + tourID + "&tourDate=" + tourDate);
             return new ModelAndView("redirect:DaytourOperationDetail.smi?action=edit&tourID=" + tourID + "&tourDate=" + tourDate + "&result=" + result + "&PayNoGuideBill=" + PayNoGuideBill);
@@ -191,7 +192,7 @@ public class DaytourOperationDetailController extends SMITravelController {
 
     }
 
-    private String updatetourOperationDesc(HttpServletRequest request, String tourID, String tourDate, HttpSession session) {
+    private String updatetourOperationDesc(HttpServletRequest request, String tourID, String tourDate, String mDepartmentName, HttpSession session) {
         String result = "";
         String meal = request.getParameter("TextareaMeal");
         String info = request.getParameter("TextareaTransferInfo");
@@ -241,7 +242,9 @@ public class DaytourOperationDetailController extends SMITravelController {
 //        if("1".equalsIgnoreCase(confirmGuideBill)){
 //            setGuideBill(request, session, tourOperationDesc); 
 //        }
-        setGuideBill(request, session, tourOperationDesc, daytourBookings); 
+        if("checking wendy".equalsIgnoreCase(mDepartmentName)){
+           setGuideBill(request, session, tourOperationDesc, daytourBookings);  
+        }       
         return result;
     }
 

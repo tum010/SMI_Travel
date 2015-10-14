@@ -179,6 +179,7 @@
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane hidden active" id="info">
                             <div class="col-xs-12 form-group"><h4>Info</h4></div>
+                            <input type="hidden" name="mDepartmentName" id="mDepartmentName" value="${mDepartmentName}" class="form-group"/>
                             <c:choose>
                                 <c:when test="${fn:containsIgnoreCase(mDepartmentName , 'tour')}">    
                                     <div class="col-xs-12 form-group">
