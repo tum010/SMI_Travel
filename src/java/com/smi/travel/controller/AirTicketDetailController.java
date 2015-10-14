@@ -91,8 +91,12 @@ public class AirTicketDetailController extends SMITravelController {
         String referenceNo = request.getParameter("referenceNo");
         String action = request.getParameter("action");
         String pnr = request.getParameter("pnr");
+        String pnrIdTemp = request.getParameter("pnrIdTemp");
         int result = 0;
-
+        //set pnrId
+        if(!"".equalsIgnoreCase(pnr) && pnr != null){
+            request.setAttribute("pnrIdTemp", pnr);
+        }
         System.out.println(AirTicketDetailController.class.getName() + " action[" + action + "],[pnr=" + pnr + "]");
 
         if ("add".equalsIgnoreCase(action)) {
@@ -106,11 +110,15 @@ public class AirTicketDetailController extends SMITravelController {
             System.out.println(AirTicketDetailController.class.getName() + " import");
             System.out.println(AirTicketDetailController.class.getName() + " pnr - [" + bookingPnrNo + "]");
             BookingPnr importPnr = bookingAirticketService.getBookingPnr(bookingPnrNo);
-            AirticketPnr newAirPnr = this.importBookingPnr(importPnr, request.getParameter("referenceNo"));
+            AirticketPnr newAirPnr = this.importBookingPnr(importPnr, request.getParameter("referenceNo"),pnrIdTemp);
             request.setAttribute(Action, "update");
             
             setResponseAttribute(request, newAirPnr, referenceNo);
-            return new ModelAndView("redirect:AirTicketDetail.smi?referenceNo=" + referenceNo + "&pnr=" + newAirPnr.getId() + "&action=edit&result=1");
+            if("".equalsIgnoreCase(pnrIdTemp)){
+                return new ModelAndView("redirect:AirTicketDetail.smi?referenceNo=" + referenceNo + "&pnr=" + newAirPnr.getId() + "&action=edit&result=1");
+            }else{
+                return new ModelAndView("redirect:AirTicketDetail.smi?referenceNo=" + referenceNo + "&pnr=" + pnrIdTemp + "&action=edit&result=1");
+            }
         } else if ("update".equalsIgnoreCase(action)) {
             System.out.println("update");
             AirticketPnr airticketPnr = bookingAirticketService.getPNRDetailByID(pnr, referenceNo);
@@ -240,7 +248,7 @@ public class AirTicketDetailController extends SMITravelController {
                 sortedFlight.addAll(airlines.get(i).getAirticketFlights());
                 allPassengers.addAll(airlines.get(i).getAirticketPassengers());
             }
-            
+
             allFlights.addAll(sortedFlight);
             request.setAttribute(CurrentPnr, airticketPnr);
             request.setAttribute(Airline, airlines);
@@ -537,11 +545,6 @@ public class AirTicketDetailController extends SMITravelController {
         if("".equalsIgnoreCase(flightClass)){
             airFlight.setMFlight(null);
         }
-        if(!"".equalsIgnoreCase(flightOrder)){
-            airFlight.setFlightOrder(Integer.parseInt(flightOrder));
-        }else{
-            airFlight.setFlightOrder(null);
-        }
         
         MTicketType mTicketType = new MTicketType();
         mTicketType.setId(ticketType);
@@ -551,7 +554,13 @@ public class AirTicketDetailController extends SMITravelController {
         if("".equalsIgnoreCase(ticketType)){
             airFlight.setMTicketType(null);
         }
-
+        
+        if(!"".equalsIgnoreCase(flightOrder)){
+            airFlight.setFlightOrder(Integer.parseInt(flightOrder));
+        }else{
+            airFlight.setFlightOrder(null);
+        }
+        
         if (StringUtils.isNotEmpty(adCost)) {
             //airFlight.setAdCost(Integer.valueOf(adCost));
             airFlight.setAdCost(util.convertStringToInteger(adCost));
@@ -673,13 +682,21 @@ public class AirTicketDetailController extends SMITravelController {
         result = this.bookingAirticketService.UpdateAirticketPnr(airticketPnr);
         return result;
     }
-
-    private AirticketPnr importBookingPnr(BookingPnr bPnr, String refNo) {
+    
+    private AirticketPnr importBookingPnr(BookingPnr bPnr, String refNo,String pnrId) {
         AirticketPnr airPnr = new AirticketPnr();
-
+        String subpnr = "";
+        //get sub pnr from pnrId
+        if(pnrId != null && !"null".equalsIgnoreCase(pnrId) && !"".equalsIgnoreCase(pnrId)){
+            AirticketPnr airPnrtemp = bookingAirticketService.getAirticketPnrFromId(pnrId);
+            subpnr = (String.valueOf(airPnrtemp.getSubpnr()) + "," + airPnrtemp.getPnr()).replaceAll("null,", "");
+        }
         // Add value in AirticketPnr
+        airPnr.setId(pnrId);
         airPnr.setPnr(bPnr.getPnr());
-
+        if(!"".equalsIgnoreCase(subpnr)){
+            airPnr.setSubpnr(subpnr);
+        }
         // Build AirticketAirlines
         Set<BookingAirline> listBookingAirline = bPnr.getBookingAirlines();
         Iterator iteratorBookingAirline = listBookingAirline.iterator();
@@ -707,11 +724,16 @@ public class AirTicketDetailController extends SMITravelController {
         if (isExistingPNR(airPnr.getPnr(), AirBook)) {
             bookingAirticketService.importExistingAirticketPnr(airPnr);
         } else {
-            bookingAirticketService.insertAirticketPnr(airPnr);
+            if(!"null".equalsIgnoreCase(String.valueOf(airPnr.getId())) && !"".equalsIgnoreCase(String.valueOf(airPnr.getId()))){
+                bookingAirticketService.importUpdateAirticketPnr(airPnr);
+            }else{
+                bookingAirticketService.insertAirticketPnr(airPnr);
+            }
+
         }
         return airPnr;
     }
-
+    
     private int buildAirticketFlights(BookingAirline bAir, AirticketAirline airAirline) {
         int result = 1;
         Set<BookingFlight> listFlight = bAir.getBookingFlights();
@@ -948,7 +970,7 @@ public class AirTicketDetailController extends SMITravelController {
 
         public AirticketFlightComparator() {
         }
-
+        
         @Override
         public int compare(AirticketFlight f1, AirticketFlight f2) {
             if(f1.getId()!=null && f2.getId()!=null){
@@ -969,8 +991,6 @@ public class AirTicketDetailController extends SMITravelController {
             }          
             return -1;
         }
-        
-        //Old
 //        @Override
 //        public int compare(AirticketFlight f1, AirticketFlight f2) {
 //            if(f1.getId()!=null && f1.getId()!=null){
@@ -981,5 +1001,6 @@ public class AirTicketDetailController extends SMITravelController {
 //                return -1;
 //            }
 //        }
+
     }
 }
