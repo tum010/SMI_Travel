@@ -89,6 +89,13 @@ $(document).ready(function () {
                         message: 'The Status is required'
                     }
                 }
+            },
+            Department: {
+                validators: {
+                    notEmpty: {
+                        message: 'The Department is required'
+                    }
+                }
             }
         }
     }).on('success.field.bv', function (e, data) {
