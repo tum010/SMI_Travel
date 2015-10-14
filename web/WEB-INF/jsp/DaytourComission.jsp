@@ -139,9 +139,9 @@
                     <thead class="datatable-header">
                         <tr>
                             <th class="hide">Booking ID</th>
-                            <th style="width:10%">Tour Date</th>
+                            <th style="width:11%">Tour Date</th>
                             <th style="width:5%">Tour Code</th>
-                            <th style="width:8%">Ref. No</th>
+                            <th style="width:9%">Ref. No</th>
                             <th style="width:15%">Client Name</th>
                             <th style="width:15%">Guide Name(<font style="color: red">*</font>)</th>
                             <th style="width:6%">Guide Comm(<font style="color: red">*</font>)</th>
