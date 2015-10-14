@@ -62,6 +62,9 @@
         </property>
         <property name="accId" type="string">
             <column name="accid" />
+        </property>
+        <property name="transferDate" type="date">
+            <column name="transfer_date" />
         </property>       
     </class>
         
