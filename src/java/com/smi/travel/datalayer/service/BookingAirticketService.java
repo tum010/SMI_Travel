@@ -78,10 +78,16 @@ public class BookingAirticketService {
     public int updateBookingAirTicket(AirticketBooking AirBooking) {
         return airticketBooking.updateBookingAirTicket(AirBooking);
     }
-    
+    public AirticketPnr getAirticketPnrFromId(String id){
+        return airticketPnrDao.getAirticketPnrFromId(id);
+    }
     
     public int insertAirticketPnr(AirticketPnr airPnr ) {
         return airticketPnrDao.insertAirticketPnr(airPnr);
+    }
+    
+    public int importUpdateAirticketPnr(AirticketPnr airPnr){
+        return airticketPnrDao.importUpdateAirticketPnr(airPnr);
     }
     
     public int UpdateAirticketPnr(AirticketPnr airPnr ) {

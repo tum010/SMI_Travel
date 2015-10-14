@@ -17,6 +17,7 @@ public class AirticketPnr {
      private MItemstatus MItemstatus;
      private AirticketBooking airticketBooking;
      private String pnr;
+     private String subpnr;
      private Set airticketAirlines = new LinkedHashSet(0);
 
     public AirticketPnr() {
@@ -72,6 +73,14 @@ public class AirticketPnr {
     
     public void setAirticketAirlines(Set airticketAirlines) {
         this.airticketAirlines = airticketAirlines;
+    }
+
+    public String getSubpnr() {
+        return subpnr;
+    }
+
+    public void setSubpnr(String subpnr) {
+        this.subpnr = subpnr;
     }
 
 

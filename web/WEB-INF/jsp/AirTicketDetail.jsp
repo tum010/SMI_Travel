@@ -1231,6 +1231,7 @@
             <input type="hidden" id="pnrid" name="pnrid" />
             <input type="hidden" id="pnrname" name="pnrname" />
             <input type="hidden" id="referenceNo" name="referenceNo" value="${param.referenceNo}" />
+            <input type="hidden" id="pnrIdTemp" name="pnrIdTemp" value="${requestScope['pnrIdTemp']}">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>

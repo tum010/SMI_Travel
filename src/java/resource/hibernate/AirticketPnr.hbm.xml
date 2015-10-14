@@ -17,6 +17,9 @@
         <property name="pnr" type="string">
             <column name="pnr" length="6" not-null="true" />
         </property>
+        <property name="subpnr" type="string">
+            <column name="sub_pnr" length="255"/>
+        </property>
         <set name="airticketAirlines" table="airticket_airline" inverse="true" cascade="save-update" lazy="true" fetch="select">
             <key>
                 <column name="pnr_id" not-null="true" />
