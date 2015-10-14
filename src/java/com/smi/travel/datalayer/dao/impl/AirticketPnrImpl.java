@@ -397,4 +397,54 @@ public class AirticketPnrImpl implements AirticketPnrDao {
 
     }
 
+    @Override
+    public int importUpdateAirticketPnr(AirticketPnr airPnr) {
+        int result = 0;
+        String hql = "update AirticketPnr pnr set pnr.pnr = :newpnr , pnr.subpnr = :subpnr where pnr.id = :id";
+        System.out.println(" ============================================ ");
+        System.out.println(" airPnr.getPnr() " + airPnr.getPnr());
+        System.out.println(" airPnr.getSubpnr() " + airPnr.getSubpnr());
+        System.out.println(" airPnr.getId() " + airPnr.getId());
+        try {
+            Session session = this.sessionFactory.openSession();
+            Query query = session.createQuery(hql);
+            query.setParameter("newpnr", airPnr.getPnr());
+            query.setParameter("subpnr", airPnr.getSubpnr());
+            query.setParameter("id", airPnr.getId());
+            System.out.println(" query : " + query);
+            result = query.executeUpdate();
+            System.out.println("Rows affected: " + result);
+            session.close();
+            this.sessionFactory.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            result = 0;
+        }
+        return result;
+    }
+
+    @Override
+    public AirticketPnr getAirticketPnrFromId(String id) {
+        AirticketPnr airticketPnr = new AirticketPnr();
+        
+        String query = "from AirticketPnr pnr where  pnr.id = :id";
+        Session session = this.sessionFactory.openSession();
+        List<AirticketPnr> List = session.createQuery(query)
+                .setParameter("id", id)
+                .list();
+        if (List.isEmpty()) {
+//            session.close();
+//            this.sessionFactory.close();
+            return null;
+        }else{
+//           for(int i=0;i<List.size();i++){
+               airticketPnr = List.get(0);
+//           }
+        }
+//       
+//        session.close();
+//        this.sessionFactory.close();
+        return airticketPnr;    
+    }
+
 }

@@ -341,7 +341,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="Department" class="col-sm-3 control-label" >Department</label>
+                        <label for="Department" class="col-sm-3 control-label" >Department<font style="color: red">*</font></label>
                         <div class="col-sm-8">   
                             <select class="form-control col-sm-8" id="Department" name="Department">
                                 <option value="">Select Department</option>

@@ -952,8 +952,9 @@ $('#savereal').on("keyup keypress", function(e) {
                    event.preventDefault();
                    return false;
                 }else{
-                   var data = validateNumber();
-                   if(data){
+//                   var data = validateNumber();
+//                   if(data){
+                    if(false){
                        
                         $("#savereal").prop('disabled', false);
                         event.preventDefault();

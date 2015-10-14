@@ -193,7 +193,7 @@
                                 <div class="">
                                     <label class="col-sm-2 control-label text-right" style="width: 127px">Address</label>
                                     <div class="col-sm-4"> 
-                                        <input type="text" class="form-control" name="address"  id="address" value="${detail.customer.address}" maxlength="100">
+                                        <input type="text" class="form-control" name="address"  id="address" value="${detail.customer.address}" maxlength="255">
                                     </div>
                                 </div>
                                 <div class="col-sm-6 form-group"> 

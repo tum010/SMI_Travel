@@ -32,4 +32,6 @@ public interface AirticketPnrDao {
     public String MappingTicketType(String TicketType);
     public List<String> getListPnrFromRefno(String Refno);
     public MFlight MappingFlightClass(String flightClass);
+    public int importUpdateAirticketPnr(AirticketPnr airPnr);
+    public AirticketPnr getAirticketPnrFromId(String id);
 }
