@@ -139,7 +139,7 @@
                     <thead class="datatable-header">
                         <tr>
                             <th class="hide">Booking ID</th>
-                            <th style="width:9%">Tour Date</th>
+                            <th style="width:10%">Tour Date</th>
                             <th style="width:5%">Tour Code</th>
                             <th style="width:8%">Ref. No</th>
                             <th style="width:15%">Client Name</th>
