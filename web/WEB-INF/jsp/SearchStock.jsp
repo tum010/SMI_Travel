@@ -293,7 +293,14 @@
                                 </c:if>
                                 ${pay}
                             </td>
-                            <td>${stockDetail.itemStatus}</td>                            
+                            <td>
+                                <c:if test="${stockDetail.itemStatus == 'REFUND'}">
+                                    <font style="color: red;"> ${stockDetail.itemStatus} </font>
+                                </c:if>
+                                <c:if test="${stockDetail.itemStatus != 'REFUND'}">
+                                   ${stockDetail.itemStatus}
+                                </c:if>
+                            </td>                            
                         </tr>
                         </c:forEach>
                     </tbody>
