@@ -18,6 +18,7 @@ public class AirticketPnr {
      private AirticketBooking airticketBooking;
      private String pnr;
      private String subpnr;
+     private Integer isImport;
      private Set airticketAirlines = new LinkedHashSet(0);
 
     public AirticketPnr() {
@@ -29,11 +30,13 @@ public class AirticketPnr {
         this.airticketBooking = airticketBooking;
         this.pnr = pnr;
     }
-    public AirticketPnr(MItemstatus MItemstatus,AirticketBooking airticketBooking, String pnr, Set airticketAirlines) {
+    public AirticketPnr(MItemstatus MItemstatus,AirticketBooking airticketBooking, String pnr, Set airticketAirlines, String subPnr, Integer isImport) {
        this.MItemstatus = MItemstatus;
        this.airticketBooking = airticketBooking;
        this.pnr = pnr;
        this.airticketAirlines = airticketAirlines;
+       this.subpnr = subPnr;
+       this.isImport = isImport;
     }
    
     public String getId() {
@@ -81,6 +84,14 @@ public class AirticketPnr {
 
     public void setSubpnr(String subpnr) {
         this.subpnr = subpnr;
+    }
+
+    public Integer getIsImport() {
+        return isImport;
+    }
+
+    public void setIsImport(Integer isImport) {
+        this.isImport = isImport;
     }
 
 

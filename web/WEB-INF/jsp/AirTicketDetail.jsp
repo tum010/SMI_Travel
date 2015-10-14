@@ -82,12 +82,28 @@
                 <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
 
                 <div class="row-fluid">  
-                    <div class="col-sm-7">
+                    <div class="col-sm-4">
                         <h4><b>Air Ticket</b></h4>
                     </div>
-
-                    <div class="col-sm-3">
-                        <div class="form-group form-group">
+                    <label class="col-sm-1 control-label text-right">PNR</label>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <c:if test="${currentPnr.isImport == null}">
+                                    <input type="text" class="form-control" id="addpnrname" name="addpnrname" value="${currentPnr.pnr}" maxlength="6">
+                                </c:if>
+                                <c:if test="${currentPnr.isImport == 0}">
+                                    <input type="text" class="form-control" id="addpnrname" name="addpnrname" value="${currentPnr.pnr}" maxlength="6">
+                                </c:if>
+                                <c:if test="${currentPnr.isImport == 1}">
+                                    <input type="text" class="form-control" id="addpnrname" name="addpnrname" value="${currentPnr.pnr}" maxlength="6" readonly>
+                                </c:if>
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-sm-1 control-label text-right">Import</label>
+                    <div class="col-sm-2">
+                        <div class="form-group">
                             <div class="input-group">
                                 <input type="hidden" class="form-control" id="pnr" name="pnr" value="${currentPnr.id}">
                                 <input type="text" class="form-control" id="pnr_name" name="pnr_name" value="${currentPnr.pnr}">
