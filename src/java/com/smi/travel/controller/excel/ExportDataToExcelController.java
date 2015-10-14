@@ -46,6 +46,7 @@ public class ExportDataToExcelController  extends SMITravelController{
     private static final String RefundTicketDetail = "RefundTicketDetail";
     private static final String SummaryAirlinePax = "SummaryAirlinePax"; //Ticket Summary Airline -> List Summary Airline Issue --> Summary airline
     private static final String TicketProfitLoss = "TicketProfitLoss";
+     private static final String TicketSummaryCommission = "TicketSummaryCommission";
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -194,6 +195,44 @@ public class ExportDataToExcelController  extends SMITravelController{
             data = reportservice.getRefundTicketDetail(refundagent, refundnameby, passengername, receivefrom, receiveto, paidfrom, paidto, typeprint,printby);
         }else if(TicketProfitLoss.equals(name)){
             data = reportservice.getTicketProfitLoss(invoiceFromDate,invoiceToDate,printby);
+        }else if(TicketSummaryCommission.equals(name)){
+            // Ticket commission summary
+            String invoicefromdate = request.getParameter("invoiceFromDate");
+            String invoicetodate = request.getParameter("invoiceToDate");
+            String issuefromdate = request.getParameter("issueFrom");
+            String issuetodate = request.getParameter("issueTo");
+            String agentcomfromdate = request.getParameter("agentcomFrom");
+            String agentcomtodate = request.getParameter("agentcomTo");
+            String ticketcomfromdate = request.getParameter("ticketcomFrom");
+            String ticketcomtodate = request.getParameter("ticketcomTo");
+            String overfromdate = request.getParameter("overFrom");
+            String overtodate = request.getParameter("overTo");
+            String littlefromdate = request.getParameter("littleFrom");
+            String littletodate = request.getParameter("littleTo");
+            String agemtcomreceivefromdate = request.getParameter("agentcomreceiveFrom");
+            String agemtcomreceivetodate = request.getParameter("agentcomreceiveTo");
+            String comrefundfromdate = request.getParameter("comrefundFrom");
+            String comrefundtodate = request.getParameter("comrefundTo");
+            String addpayfromdate = request.getParameter("addpayFrom");
+            String addpaytodate = request.getParameter("addpayTo");
+            String decreasepayfromdate = request.getParameter("decreasepayFrom");
+            String decreasepaytodate = request.getParameter("decreasepayTo");
+            String typeRoutings = request.getParameter("typeRouting");
+            String routingDetails = request.getParameter("routingDetail");
+            String airlineCodes = request.getParameter("airlineCode");
+            String agentCodes = request.getParameter("agentCode");
+            String agentName = request.getParameter("agentName");
+            String ticketno = request.getParameter("ticketno");
+            String departmentts = request.getParameter("department");
+            String salebyUserts = request.getParameter("salebyUser");
+            String salebyName = request.getParameter("salebyName");
+            String termPayts   = request.getParameter("termPay");     
+        
+            data = reportservice.getTicketSummaryCommission(invoicefromdate, invoicetodate, issuefromdate, issuetodate, agentcomfromdate,
+                    agentcomtodate, ticketcomfromdate, ticketcomtodate, overfromdate, overtodate, littlefromdate, littletodate,
+                    agemtcomreceivefromdate, agemtcomreceivetodate, comrefundfromdate, comrefundtodate, addpayfromdate, addpaytodate, 
+                    decreasepayfromdate, decreasepaytodate, typeRoutings, routingDetails, airlineCodes, agentCodes, agentName, ticketno,
+                    departmentts, salebyUserts, salebyName, termPayts, printby);
         }
 		
         return new ModelAndView("ExportDataToExcelView",name,data).addObject(ReportName, name);

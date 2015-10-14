@@ -10,6 +10,7 @@ import com.smi.travel.datalayer.entity.AirticketAirline;
 import com.smi.travel.datalayer.entity.AirticketDesc;
 import com.smi.travel.datalayer.entity.AirticketFlight;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
+import com.smi.travel.datalayer.entity.AirticketPnr;
 import com.smi.travel.datalayer.entity.Billable;
 import com.smi.travel.datalayer.entity.BillableDesc;
 import com.smi.travel.datalayer.entity.DaytourBooking;
@@ -1014,4 +1015,19 @@ public class BillableImpl implements BillableDao {
         System.out.println("DEscription : " + description);
         return description;
     }      
+
+    @Override
+    public String printTicketOrder(String refNo) {
+        String result = "fail";
+        Session session = this.sessionFactory.openSession();
+        String query = " From AirticketPnr pnr where pnr.airticketBooking.master.referenceNo = :refno ";
+        List<AirticketPnr> airticketPnrList = session.createQuery(query).setParameter("refno",refNo).list();
+        if(!airticketPnrList.isEmpty()){
+            if(airticketPnrList.get(0).getId() != null){
+                result = "success";
+            }          
+        }
+        session.close();
+        return result;
+    }
 }

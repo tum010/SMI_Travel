@@ -240,7 +240,7 @@ public class AirTicketDetailController extends SMITravelController {
                 sortedFlight.addAll(airlines.get(i).getAirticketFlights());
                 allPassengers.addAll(airlines.get(i).getAirticketPassengers());
             }
-
+            
             allFlights.addAll(sortedFlight);
             request.setAttribute(CurrentPnr, airticketPnr);
             request.setAttribute(Airline, airlines);
@@ -494,7 +494,7 @@ public class AirTicketDetailController extends SMITravelController {
         String chTax = request.getParameter("chTax-" + i);
         String inTax = request.getParameter("inTax-" + i);
         String airlineCode = request.getParameter("airlineCode" + i);
-
+        String flightOrder = request.getParameter("flight-" + i + "-flightOrder");
 
         AirticketFlight airFlight = getAirFlight(Id, airPnr);
 
@@ -536,6 +536,11 @@ public class AirTicketDetailController extends SMITravelController {
         }
         if("".equalsIgnoreCase(flightClass)){
             airFlight.setMFlight(null);
+        }
+        if(!"".equalsIgnoreCase(flightOrder)){
+            airFlight.setFlightOrder(Integer.parseInt(flightOrder));
+        }else{
+            airFlight.setFlightOrder(null);
         }
         
         MTicketType mTicketType = new MTicketType();
@@ -946,14 +951,35 @@ public class AirTicketDetailController extends SMITravelController {
 
         @Override
         public int compare(AirticketFlight f1, AirticketFlight f2) {
-            if(f1.getId()!=null && f1.getId()!=null){
-                int f1Id = Integer.parseInt(f1.getId());
-                int f2Id = Integer.parseInt(f2.getId());          
-                return Integer.compare(f1Id, f2Id);
-            } else {
-                return -1;
-            }
+            if(f1.getId()!=null && f2.getId()!=null){
+                if(f1.getFlightOrder()!=null && f2.getFlightOrder()!=null){
+                    int f1Id = Integer.parseInt(f1.getId());
+                    int f2Id = Integer.parseInt(f2.getId());
+                    int f1FlightOrder = f1.getFlightOrder();
+                    int f2FlightOrder = f2.getFlightOrder();
+                    int a = Integer.compare(f1FlightOrder, f2FlightOrder);
+                    if(f1FlightOrder != f2FlightOrder){
+                        return Integer.compare(f1FlightOrder, f2FlightOrder);
+                    }else{
+                        return Integer.compare(f1Id, f2Id);
+                    }                    
+                } else {
+                    return 1;
+                }
+            }          
+            return -1;
         }
-
+        
+        //Old
+//        @Override
+//        public int compare(AirticketFlight f1, AirticketFlight f2) {
+//            if(f1.getId()!=null && f1.getId()!=null){
+//                int f1Id = Integer.parseInt(f1.getId());
+//                int f2Id = Integer.parseInt(f2.getId());          
+//                return Integer.compare(f1Id, f2Id);
+//            } else {
+//                return -1;
+//            }
+//        }
     }
 }

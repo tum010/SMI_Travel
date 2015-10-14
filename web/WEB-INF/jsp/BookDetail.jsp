@@ -193,7 +193,7 @@
                                 <div class="">
                                     <label class="col-sm-2 control-label text-right" style="width: 127px">Address</label>
                                     <div class="col-sm-4"> 
-                                        <input type="text" class="form-control" name="address"  id="address" value="${detail.customer.address}" maxlength="100">
+                                        <input type="text" class="form-control" name="address"  id="address" value="${detail.customer.address}" maxlength="255">
                                     </div>
                                 </div>
                                 <div class="col-sm-6 form-group"> 
@@ -432,19 +432,19 @@
                     <div class="form-group">
                         <label class="col-xs-3 control-label">Last Name</label>
                         <div class="col-xs-7">
-                            <input type="text" class="form-control" name="input-last-name" id="input-last-name" />
+                            <input type="text" class="form-control" name="input-last-name" id="input-last-name" style="text-transform: uppercase"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-xs-3 control-label">First Name</label>
                         <div class="col-xs-7">
-                            <input type="text" class="form-control" name="input-first-name" id="input-first-name" />
+                            <input type="text" class="form-control" name="input-first-name" id="input-first-name" style="text-transform: uppercase"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-xs-3 control-label">Address</label>
                         <div class="col-xs-7">
-                            <input type="text" class="form-control" name="input-address" id="input-address" />
+                            <input type="text" class="form-control" name="input-address" id="input-address" style="text-transform: uppercase"/>
                         </div>
                     </div>
                     <div class="form-group">

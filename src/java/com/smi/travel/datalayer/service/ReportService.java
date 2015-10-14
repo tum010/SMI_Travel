@@ -36,6 +36,7 @@ import com.smi.travel.datalayer.view.dao.TaxInvoiceSummaryReportDao;
 import com.smi.travel.datalayer.view.dao.TicketFareReportDao;
 import com.smi.travel.datalayer.view.dao.TicketOrderDao;
 import com.smi.travel.datalayer.view.dao.TicketSaleProfitVolumnDao;
+import com.smi.travel.datalayer.view.dao.TicketSummaryCommissionDao;
 import com.smi.travel.datalayer.view.dao.TicketSummaryDao;
 import com.smi.travel.datalayer.view.dao.TransferJobReportDao;
 import com.smi.travel.datalayer.view.entity.ARNirvana;
@@ -86,6 +87,7 @@ public class ReportService {
     private PaymentAirTicketDao paymentAirTicketDao;
     private SummaryTicketAdjustCostAndIncomeDao summaryTicketAdjustCostAndIncomeDao;
     private PaymentWendytourDao paymentWendytourDao;
+    private TicketSummaryCommissionDao ticketSummaryCommissionDao;
     
     public List getInvoiceMonthly(String BillFrom,String BillTo,String ClientName,String Payment,String Accno,String vattype,String from,String to,String department){
         return invoiceReportDao.getInvoiceMonthly(BillFrom, BillTo, ClientName, Payment, Accno, vattype, from, to, department);
@@ -581,5 +583,22 @@ public class ReportService {
 
     public void setPaymentWendytourDao(PaymentWendytourDao paymentWendytourDao) {
         this.paymentWendytourDao = paymentWendytourDao;
+    }
+
+    public TicketSummaryCommissionDao getTicketSummaryCommissionDao() {
+        return ticketSummaryCommissionDao;
+    }
+
+    public void setTicketSummaryCommissionDao(TicketSummaryCommissionDao ticketSummaryCommissionDao) {
+        this.ticketSummaryCommissionDao = ticketSummaryCommissionDao;
+    }
+    
+    public List getTicketSummaryCommission(String invoicefromdatePage,String invoicetodatePage,String issuefromdatePage,String issuetodatePage
+            ,String agentcomfromdatePage,String agentcomtodatePage,String ticketcomfromdatePage ,String ticketcomtodatePage,String overfromdatePage ,String overtodatePage
+            ,String littlefromdatePage,String littletodatePage ,String agemtcomreceivefromdatePage,String agemtcomreceivetodatePage ,String comrefundfromdatePage 
+            ,String comrefundtodatePage ,String addpayfromdatePage ,String addpaytodatePage ,String decreasepayfromdatePage,String decreasepaytodatePage
+            ,String typeRoutingPage ,String routingDetailPage , String airlineCodePage ,String agentCodePage ,String agentNamePage ,String ticketnoPagePage 
+            ,String departmentPage ,String salebyUserPage , String salebyNamePage , String termPayPage,String printby) {
+        return ticketSummaryCommissionDao.searchTicketSummaryCommission(invoicefromdatePage, invoicetodatePage, issuefromdatePage, issuetodatePage, agentcomfromdatePage, agentcomtodatePage, ticketcomfromdatePage, ticketcomtodatePage, overfromdatePage, overtodatePage, littlefromdatePage, littletodatePage, agemtcomreceivefromdatePage, agemtcomreceivetodatePage, comrefundfromdatePage, comrefundtodatePage, addpayfromdatePage, addpaytodatePage, decreasepayfromdatePage, decreasepaytodatePage, typeRoutingPage, routingDetailPage, airlineCodePage, agentCodePage, agentNamePage, ticketnoPagePage, departmentPage, salebyUserPage, salebyNamePage, termPayPage, printby);
     }
 }
