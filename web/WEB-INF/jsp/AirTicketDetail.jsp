@@ -427,10 +427,10 @@
                                 <h3 class="panel-title">Calculation</h3>
                             </div>
                             <div class="panel-body">
-                                <div class="col-sm-1">
-                                    <label class="control-label">Cost</label>
-                                </div>
                                 <div class="col-sm-3" style="border-right:solid 1px #D9D9D9">
+                                    <div class="row form-group text-center">
+                                        <label class="control-label">Cost</label>
+                                    </div>
                                     <div class="row form-group">
                                         <label class="col-lg-3 control-label text-right">Adult</label>
                                         <div class="col-sm-6">
@@ -452,10 +452,35 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-1">
-                                    <label class="control-label">Price</label>
-                                </div>
                                 <div class="col-sm-3" style="border-right:solid 1px #D9D9D9">
+                                    <div class="row form-group text-center">
+                                        <label class="control-label">Tax</label>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label class="col-lg-3 control-label text-right">Adult</label>
+                                        <div class="col-sm-6">
+                                            <input id="adTaxCost-${fStatus.count}" name="adTaxCost-${fStatus.count}" class="form-control text-right money" value="${flight.adTaxCost}" type="text" maxlength="10" tabindex="3"/>
+                                        </div>
+
+                                    </div>
+                                    <div class="row form-group">
+                                        <label class="col-lg-3 control-label text-right">Child</label>
+                                        <div class="col-sm-6">
+                                            <input id="chTaxCost-${fStatus.count}" name="chTaxCost-${fStatus.count}" class="form-control text-right money" value="${flight.chTaxCost}" type="text" maxlength="10" tabindex="6"/>
+                                        </div>
+
+                                    </div>
+                                    <div class="row form-group text-right">
+                                        <label class="col-lg-3 control-label">Infant</label>
+                                        <div class="col-sm-6">
+                                            <input id="inTaxCost-${fStatus.count}" name="inTaxCost-${fStatus.count}" class="form-control text-right money" value="${flight.inTaxCost}" type="text" maxlength="10" tabindex="9"/>
+                                        </div>
+                                    </div>
+                                </div>        
+                                <div class="col-sm-3" style="border-right:solid 1px #D9D9D9">
+                                    <div class="row form-group text-center">
+                                        <label class="control-label">Price</label>
+                                    </div>
                                     <div class="row form-group">
                                         <label class="col-lg-3 control-label text-right">Adult</label>
                                         <div class="col-sm-6">
@@ -477,10 +502,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-1">
-                                    <label class="control-label">Tax</label>
-                                </div>
                                 <div class="col-sm-3">
+                                    <div class="row form-group text-center">
+                                        <label class="control-label">Tax</label>
+                                    </div>
                                     <div class="row form-group">
                                         <label class="col-lg-3 control-label text-right">Adult</label>
                                         <div class="col-sm-6">

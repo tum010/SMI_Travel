@@ -80,6 +80,14 @@
         <property name="flightOrder" type="java.lang.Integer">
             <column name="flight_order" />
         </property>
-
+        <property name="adTaxCost" type="java.lang.Integer">
+            <column name="ad_tax_cost" />
+        </property>
+        <property name="chTaxCost" type="java.lang.Integer">
+            <column name="ch_tax_cost" />
+        </property>
+        <property name="inTaxCost" type="java.lang.Integer">
+            <column name="in_tax_cost" />
+        </property>
     </class>
 </hibernate-mapping>
