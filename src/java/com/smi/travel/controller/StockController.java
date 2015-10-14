@@ -31,6 +31,7 @@ public class StockController extends SMITravelController {
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         UtilityFunction utility = new UtilityFunction();
         String action = request.getParameter("action");
+        System.out.println("Action : " + action);
             // Serach Product Stock
             List<Product> listProductStock =  stockService.getListStockProduct();
             request.setAttribute("ListProductStock", listProductStock);
