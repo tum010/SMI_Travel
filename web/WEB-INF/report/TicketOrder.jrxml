@@ -417,7 +417,7 @@ Double.valueOf($F{sell2} != null && $F{sell2}.length() > 0 ? Double.valueOf($F{s
 				</textElement>
 				<textFieldExpression><![CDATA[$F{inv}]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤ #,##0">
+			<textField pattern="">
 				<reportElement x="450" y="104" width="66" height="13" uuid="84773559-a8bb-4388-84b3-24b588bf07e3">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -426,7 +426,7 @@ Double.valueOf($F{sell2} != null && $F{sell2}.length() > 0 ? Double.valueOf($F{s
 				</textElement>
 				<textFieldExpression><![CDATA[($F{price} != null && $F{price}.length() > 0) ? Double.valueOf($F{price}) : ""]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤ #,##0">
+			<textField pattern="">
 				<reportElement x="447" y="134" width="69" height="13" uuid="bef01c9a-eee9-4299-8bd9-aa6d71700cba">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
