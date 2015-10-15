@@ -43,7 +43,7 @@ public class HistoryController extends SMITravelController {
 
         String refNo = request.getParameter("referenceNo");
         String action = request.getParameter("action");
-        
+        request.setAttribute("action", action);
         System.out.println("HistoryController action = "+action + " refNo = "+refNo);
 
         if ("add".equalsIgnoreCase(action)) {
@@ -52,7 +52,7 @@ public class HistoryController extends SMITravelController {
         } else if ("insert".equalsIgnoreCase(action)) {
             System.out.println("action insert");
         } else if ("edit".equalsIgnoreCase(action)) {
-            System.out.println("action edit");
+            request.setAttribute("action", action);
             setResponseAttribute(request, refNo);
         } else if ("update".equalsIgnoreCase(action)) {
             System.out.println("action update");

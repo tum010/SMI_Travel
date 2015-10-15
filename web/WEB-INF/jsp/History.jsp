@@ -52,7 +52,7 @@
         <div class="col-sm-10">
             <div ng-include="'WebContent/Book/BookNavbar.html'"></div>
             <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
-
+            <input type="hidden" class="form-control"  id="action" name="action" value="${action}" />
             <div class="row" style="padding-left: 15px">  
                 <div class="col-md-6">
                     <h4><b>History</b></h4>
