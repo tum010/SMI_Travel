@@ -115,6 +115,11 @@
             </key>
             <one-to-many class="com.smi.travel.datalayer.entity.DaytourBooking" />
         </set>
-
+        <set name="historyBookings" table="history_booking" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="master_id" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.HistoryBooking" />
+        </set>
     </class>
 </hibernate-mapping>

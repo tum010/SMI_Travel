@@ -41,7 +41,8 @@ public class Master  {
      private Set passengers = new HashSet(0);
      private Set landBookings = new HashSet(0);
      private Set daytourBookings = new HashSet(0);
-
+     private Set historyBookings = new HashSet(0);
+     
     public Master() {
     }
 
@@ -51,7 +52,7 @@ public class Master  {
        this.agent = agent;
        this.referenceNo = referenceNo;
     }
-    public Master(MBookingstatus MBookingstatus,PackageTour packageTour, Customer customer, SystemUser staff, Agent agent, String referenceNo, Integer adult, Integer child, Integer infant, Integer isPackage,String agentRef, Integer flagAir, Integer flagHotel, Integer flagDaytour, Integer flagOther, Integer flagLand, String revisedBy, Date revisedDate, String bookingType, String createBy,String currency, Date createDate, Set hotelBookings, Set otherBookings, Set billables, Set airticketBookings, Set passengers, Set landBookings,Set daytourBookings) {
+    public Master(MBookingstatus MBookingstatus,PackageTour packageTour, Customer customer, SystemUser staff, Agent agent, String referenceNo, Integer adult, Integer child, Integer infant, Integer isPackage,String agentRef, Integer flagAir, Integer flagHotel, Integer flagDaytour, Integer flagOther, Integer flagLand, String revisedBy, Date revisedDate, String bookingType, String createBy,String currency, Date createDate, Set hotelBookings, Set otherBookings, Set billables, Set airticketBookings, Set passengers, Set landBookings,Set daytourBookings, Set historyBookings) {
        this.MBookingstatus = MBookingstatus;
        this.packageTour = packageTour;
        this.customer = customer;
@@ -81,6 +82,7 @@ public class Master  {
        this.passengers = passengers;
        this.landBookings = landBookings;
        this.daytourBookings = daytourBookings;
+       this.historyBookings = historyBookings;
     }
    
     public String getId() {
@@ -301,6 +303,14 @@ public class Master  {
 
     public void setDaytourBookings(Set daytourBookings) {
         this.daytourBookings = daytourBookings;
+    }
+
+    public Set getHistoryBookings() {
+        return historyBookings;
+    }
+
+    public void setHistoryBookings(Set historyBookings) {
+        this.historyBookings = historyBookings;
     }
 
 

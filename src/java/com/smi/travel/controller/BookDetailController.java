@@ -7,6 +7,7 @@ package com.smi.travel.controller;
 
 import com.smi.travel.datalayer.entity.Agent;
 import com.smi.travel.datalayer.entity.Customer;
+import com.smi.travel.datalayer.entity.HistoryBooking;
 import com.smi.travel.datalayer.entity.MBookingstatus;
 import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MInitialname;
@@ -18,6 +19,8 @@ import com.smi.travel.datalayer.service.BookingAirticketService;
 import com.smi.travel.datalayer.service.BookingDetailService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
+import com.smi.travel.util.UtilityFunction;
+import static groovy.sql.Sql.CHAR;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -57,10 +60,10 @@ public class BookDetailController extends SMITravelController {
 
     private UtilityService utilservice;
     private MInitialname mInitialname;
-
+    UtilityFunction util; 
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-
+        UtilityFunction utilty = new UtilityFunction();
         int result = 0;
         String action = request.getParameter("action");
         String refNo = request.getParameter("referenceNo");
@@ -73,10 +76,9 @@ public class BookDetailController extends SMITravelController {
         String tel = request.getParameter("tel");
         String packagecode = request.getParameter("packagecode");
         System.out.println("BookDetailController action=[" + action + "] refno[" + refNo + "]");
-
         SystemUser user = (SystemUser) session.getAttribute("USER");
         List<Agent> agent = bookingDetailService.getListAgentForBookingDetail();
-        
+        request.setAttribute(Agent, agent);
 //        for(int i=0;i<agent.size();i++){
 //            Agent agentRe = new Agent();
 //            agentRe = agent.get(i);
@@ -112,10 +114,10 @@ public class BookDetailController extends SMITravelController {
 
             Master master = bookingDetailService.getBookingDetailFromRefno(refNo);
             Agent selectedAgent = null;
-
-            selectedAgent = master.getAgent();
-
-            request.setAttribute(Detail, master);
+//            if(master != null){
+                selectedAgent = master.getAgent();
+                request.setAttribute(Detail, master);
+//            }
             request.setAttribute(ACTION, "update");
             request.setAttribute(SelectedAgent, selectedAgent);
             request.setAttribute(Agent, agent);
@@ -171,9 +173,18 @@ public class BookDetailController extends SMITravelController {
                 pack.setId(packagecode);
                 dbMaster.setPackageTour(pack);                
             }
-
+            HistoryBooking historyBooking = new HistoryBooking();
+            historyBooking.setHistoryDate(new Date());
+            historyBooking.setAction("EDIT BOOKING");
+            String detail = "Refno : " + refNo + "\r\n"
+                            + "FL : " + utilty.getCustomerName(dbMaster.getCustomer()) + "\r\n"
+                            + "Agent : " + dbMaster.getAgent().getCode() + " : " + dbMaster.getAgent().getName();
+            historyBooking.setDetail(detail);
+            historyBooking.setMaster(dbMaster);
+            historyBooking.setStaff(users.get(0));
+            
             try {
-                result = bookingDetailService.saveBookingDetail(dbMaster, passenger, null);
+                result = bookingDetailService.saveBookingDetail(dbMaster, passenger, null,historyBooking);
                 if (result == 1) {
                     System.out.println("BookingDetailController update refNo " + dbMaster.getReferenceNo());
                     return new ModelAndView("redirect:BookDetail.smi?referenceNo=" + refNo + "&action=edit" + "&result=" + result);
@@ -232,7 +243,17 @@ public class BookDetailController extends SMITravelController {
                     pack.setId(packagecode);
                     newMaster.setPackageTour(pack);                
                 }
-                result = bookingDetailService.saveBookingDetail(newMaster, passenger, user);
+                HistoryBooking historyBooking = new HistoryBooking();
+                historyBooking.setHistoryDate(new Date());
+                historyBooking.setAction("CREATE NEW BOOKING");
+                String detail = "Refno : " + refNo + "\r\n"
+                                + "FL : " + utilty.getCustomerName(newMaster.getCustomer()) + "\r\n"
+                                + "Agent : " + newMaster.getAgent().getCode() + " : " + newMaster.getAgent().getName();
+                historyBooking.setDetail(detail);
+                historyBooking.setMaster(newMaster);
+                historyBooking.setStaff(user);
+                newMaster.getHistoryBookings().add(historyBooking);
+                result = bookingDetailService.saveBookingDetail(newMaster, passenger, user , historyBooking);
                 if (result > 1) {
                     System.out.println("BookingDetailController refNo " + newMaster.getReferenceNo());
                     bookingDetailService.getPassengerdao().saveFamilyleader(passenger, selectedLeader.getCode());

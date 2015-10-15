@@ -7,6 +7,7 @@ package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.dao.AgentDao;
 import com.smi.travel.datalayer.dao.AirticketBookingDao;
+import com.smi.travel.datalayer.dao.BookingHistoryDao;
 import com.smi.travel.datalayer.dao.CustomerDao;
 import com.smi.travel.datalayer.dao.DaytourDao;
 import com.smi.travel.datalayer.dao.DefineVarDao;
@@ -19,6 +20,7 @@ import com.smi.travel.datalayer.dao.SystemUserDao;
 import com.smi.travel.datalayer.entity.Agent;
 import com.smi.travel.datalayer.entity.Customer;
 import com.smi.travel.datalayer.entity.Daytour;
+import com.smi.travel.datalayer.entity.HistoryBooking;
 import com.smi.travel.datalayer.entity.MAccpay;
 import com.smi.travel.datalayer.entity.MAccterm;
 import com.smi.travel.datalayer.entity.MAirline;
@@ -69,18 +71,45 @@ public class UtilityService {
     private CustomerAgentInfoDao customeragentinfodao;
     private InvoiceSuppilerDao invoicesuppilerdao;
     private DefineVarDao defineVardao;
+    private BookingHistoryDao bookinghistorydao;
     
     public int[] getCountItemFromBooking(String refno) {
         int[] Booking_size = new int[7];
         try {
             Master data = masterdao.getBookingFromRefno(refno);
             Booking_size[0] = airticketdao.getNumberOfFlight(refno);
-            Booking_size[1] = data.getHotelBookings().size();
-            Booking_size[2] = data.getOtherBookings().size();
-            Booking_size[3] = data.getLandBookings().size();
-            Booking_size[4] = data.getPassengers().size();
-            Booking_size[5] = data.getBillables().size();
-            Booking_size[6] = data.getDaytourBookings().size();
+            if(data != null){
+                if(data.getHotelBookings() != null){
+                    System.out.println(" data.getHotelBookings().size() " + data.getHotelBookings().size());
+                    Booking_size[1] = data.getHotelBookings().size();
+                }
+                if(data.getOtherBookings() != null){
+                    System.out.println(" data.getOtherBookings().size() " + data.getOtherBookings().size());
+                    Booking_size[2] = data.getOtherBookings().size();
+                }
+                if(data.getLandBookings() != null){
+                    System.out.println(" data.getLandBookings().size() " + data.getLandBookings().size());
+                    Booking_size[3] = data.getLandBookings().size();
+                }
+                if(data.getPassengers() != null){
+                    System.out.println(" data.getPassengers().size() " + data.getPassengers().size());
+                    Booking_size[4] = data.getPassengers().size();
+                }
+                if(data.getBillables() != null){
+                    System.out.println(" data.getBillables().size() " + data.getBillables().size());
+                    Booking_size[5] = data.getBillables().size();
+                }
+                if(data.getDaytourBookings() != null){
+                    System.out.println(" data.getDaytourBookings().size() " + data.getDaytourBookings().size());
+                    Booking_size[6] = data.getDaytourBookings().size();
+                }
+            }
+//            Booking_size[1] = data.getHotelBookings().size();
+//            Booking_size[2] = data.getOtherBookings().size();
+//            Booking_size[3] = data.getLandBookings().size();
+//            Booking_size[4] = data.getPassengers().size();
+//            Booking_size[5] = data.getBillables().size();
+//            Booking_size[6] = data.getDaytourBookings().size();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -257,6 +286,18 @@ public class UtilityService {
         return listitemdao.getListMFinanceItemstatus();
     }
     
+    public List<HistoryBooking> getHistoryFromRefno(String refno){
+        return bookinghistorydao.getHistoryFromRefno(refno);
+    }
+    
+    public int insertHistoryBooking(HistoryBooking historyBooking){
+        return bookinghistorydao.insertHistoryBooking(historyBooking);
+    }
+    
+    public int UpdateHistoryBooking(HistoryBooking historyBooking){
+        return bookinghistorydao.UpdateHistoryBooking(historyBooking);
+    }
+
     public MasterDao getMasterdao() {
         return masterdao;
     }
@@ -364,6 +405,14 @@ public class UtilityService {
     
     public List<CustomerAgentInfo> SearchListCustomerAgentInfo(String name) {
         return customeragentinfodao.SearchListCustomerAgentInfo(name);
+    }
+
+    public BookingHistoryDao getBookinghistorydao() {
+        return bookinghistorydao;
+    }
+
+    public void setBookinghistorydao(BookingHistoryDao bookinghistorydao) {
+        this.bookinghistorydao = bookinghistorydao;
     }
     
     

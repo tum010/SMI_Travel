@@ -13,6 +13,7 @@ import com.smi.travel.datalayer.dao.PassengerDao;
 import com.smi.travel.datalayer.dao.SystemUserDao;
 import com.smi.travel.datalayer.entity.Agent;
 import com.smi.travel.datalayer.entity.Customer;
+import com.smi.travel.datalayer.entity.HistoryBooking;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.PackageTour;
 import com.smi.travel.datalayer.entity.Passenger;
@@ -60,7 +61,7 @@ public class BookingDetailService {
         return landbookingdao.getListLandPackage();
     }
 
-    public int saveBookingDetail(Master master,Passenger passenger, SystemUser user) {
+    public int saveBookingDetail(Master master,Passenger passenger, SystemUser user ,HistoryBooking historyBooking) {
         int result = 0;
         String firstCharName = "";
         String customerCode = "";
@@ -81,7 +82,7 @@ public class BookingDetailService {
 
         
         if (master.getReferenceNo() != null) {
-            result = masterdao.updateBooking(master,passenger);
+            result = masterdao.updateBooking(master,passenger,historyBooking);
         } else {
             int refno = masterdao.getMaxRefno();
             master.setCreateBy(user.getUsername());
@@ -101,11 +102,11 @@ public class BookingDetailService {
             
             if(master.getId() != null){
                 System.out.println("master update");
-                result = masterdao.updateBooking(master,passenger);
+                result = masterdao.updateBooking(master,passenger,historyBooking);
                 
             }else{
                 System.out.println("master insert");
-                result = masterdao.insertBooking(master,passenger);
+                result = masterdao.insertBooking(master,passenger,historyBooking);
             }
             if(result == 1){
                 result = refno +1;

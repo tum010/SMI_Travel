@@ -7,7 +7,9 @@ package com.smi.travel.controller;
 
 import com.smi.travel.datalayer.entity.AirticketBooking;
 import com.smi.travel.datalayer.entity.AirticketPnr;
+import com.smi.travel.datalayer.entity.HistoryBooking;
 import com.smi.travel.datalayer.entity.Master;
+import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.BookingAirticketService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.MainBooking;
@@ -34,13 +36,14 @@ public class HistoryController extends SMITravelController {
 
     private static final String ACTION = "action";
     private static final String Master = "Master";
-
+    private static final String HistoryBookingList = "HistoryBookingList";
+    private static final String Staff_List = "Staff_List";
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 
         String refNo = request.getParameter("referenceNo");
         String action = request.getParameter("action");
-
+        
         System.out.println("HistoryController action = "+action + " refNo = "+refNo);
 
         if ("add".equalsIgnoreCase(action)) {
@@ -60,10 +63,14 @@ public class HistoryController extends SMITravelController {
                 System.out.println("******* No refNo !!!!");
             } else {
                 System.out.println("******* have refNo ************");
+                List<HistoryBooking> historyBookings = utilservice.getHistoryFromRefno(refNo);
+                request.setAttribute(HistoryBookingList, historyBookings);
                 Master master = utilservice.getMasterdao().getBookingFromRefno(refNo);
                 request.setAttribute(Master, master);
                 int[] booksize = utilservice.getCountItemFromBooking(refNo);
                 request.setAttribute(Bookiing_Size, booksize);
+                List<SystemUser> userList = utilservice.getUserList();
+                request.setAttribute(Staff_List,userList);
             }
         }
 
@@ -75,7 +82,10 @@ public class HistoryController extends SMITravelController {
         request.setAttribute(Bookiing_Size, booksize);
         Master master = utilservice.getMasterdao().getBookingFromRefno(refNo);
         request.setAttribute(Master, master);
-
+        List<HistoryBooking> historyBookings = utilservice.getHistoryFromRefno(refNo);
+        request.setAttribute(HistoryBookingList, historyBookings);
+        List<SystemUser> userList = utilservice.getUserList();
+        request.setAttribute(Staff_List,userList);
     }
 
     public BookingAirticketService getBookingAirticketService() {

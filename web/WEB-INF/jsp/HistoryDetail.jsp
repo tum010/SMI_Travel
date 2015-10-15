@@ -12,8 +12,11 @@
 <c:set var="booking_size" value="${requestScope['BookingSize']}" />
 <c:set var="staffList" value="${requestScope['StaffList']}" />
 <c:set var="master" value="${requestScope['Master']}" />
-
-<input type="hidden" value="${param.referenceNo}" id="getUrl">
+<c:set var="refno1" value="${fn:substring(param.referenceNo, 0, 2)}" />
+<c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
+<input type="hidden" value="${refno1}-${refno2}" id="getUrl">
+<input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
+<!--<input type="hidden" value="${param.referenceNo}" id="getUrl">-->
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
 
@@ -45,13 +48,14 @@
             <input hidden="" value="${booking_size[3]}" id="input-land_size">
             <input hidden="" value="${booking_size[4]}" id="input-passenger_size">
             <input hidden="" value="${booking_size[5]}" id="input-billable_size">
-
+            <input hidden="" value="${booking_size[6]}" id="input-daytour_size">
             <div class="row" style="padding-left: 15px">  
                 <div class="col-md-6">
                     <h4><b>History</b></h4>
                 </div>
                 <div class="col-md-6 text-right">
-                    <a class="btn btn-primary" href="History.smi?referenceNo=${param.referenceNo}"><span class="glyphicon glyphicon-arrow-left"></span> Back</a>
+                     <input type="hidden" class="form-control" id="referenceNo"   name="referenceNo"  value="${param.referenceNo}" >
+                    <!--<a class="btn btn-primary" href="History.smi?referenceNo=${param.referenceNo}"><span class="glyphicon glyphicon-arrow-left"></span> Back</a>-->
                 </div>
 
             </div>

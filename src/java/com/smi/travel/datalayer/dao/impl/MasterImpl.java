@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.MasterDao;
 import com.smi.travel.datalayer.entity.Customer;
+import com.smi.travel.datalayer.entity.HistoryBooking;
 import com.smi.travel.datalayer.entity.MBookingstatus;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.Passenger;
@@ -29,7 +30,7 @@ public class MasterImpl implements MasterDao{
     private static final String BOOKINGLISTFROMREFNO = "from Master m where m.referenceNo = :refno";
     private static final String MAXREFNO = "select max(mas.referenceNo) from Master mas";
     private static final String BOOKSTATUSFROMREFNO = "from Master m where m.referenceNo = :refno";
-    
+
     @Override
     public List<Master> getListBooking() {
        Session session = this.getSessionFactory().openSession();
@@ -58,7 +59,7 @@ public class MasterImpl implements MasterDao{
     }
 
     @Override
-    public int insertBooking(Master master,Passenger passenger) {
+    public int insertBooking(Master master,Passenger passenger ,HistoryBooking historyBooking) {
         int result = 0;
         Date thisDate=  new Date();
         master.setCreateDate(thisDate);
@@ -88,6 +89,9 @@ public class MasterImpl implements MasterDao{
                 session.update(passenger);
             }
             
+            //save historyBooking
+            session.save(historyBooking);
+            
             getTransaction().commit();
             session.close();
             this.getSessionFactory().close();
@@ -102,7 +106,7 @@ public class MasterImpl implements MasterDao{
      
     
     @Override
-    public int updateBooking(Master master,Passenger passenger) {
+    public int updateBooking(Master master,Passenger passenger,HistoryBooking historyBooking) {
         int result = 0;
         try {
             Session session = this.getSessionFactory().openSession();
@@ -134,6 +138,9 @@ public class MasterImpl implements MasterDao{
                 session.merge(passenger);
             }
             
+            //save history
+            session.save(historyBooking);
+                        
             getTransaction().commit();
             session.close();
             this.getSessionFactory().close();
@@ -220,7 +227,7 @@ public class MasterImpl implements MasterDao{
         this.transaction = transaction;
     }
 
-    
+
     
     
 }
