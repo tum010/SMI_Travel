@@ -26,8 +26,8 @@ function setupagentvalue(id,code,name){
 function setupdepartdatevalue(){
     var Product_code = document.getElementById('Product_code').value; 
     var departdate = document.getElementById('departdate').value; 
-    if((Product_code != '') && (departdate != '')){
-        getvalueProduct(); 
+    if((Product_code !== '') && (departdate !== '')){
+        getvalueProduct('departdate'); 
     } else {
         document.getElementById('AD_Cost').value = '0';
         document.getElementById('AD_Price').value = '0';
@@ -46,7 +46,7 @@ function setupproductvalue(id,code,name){
     var Product_code = document.getElementById('Product_code').value; 
     var departdate = document.getElementById('departdate').value;
     if((Product_code != '') && (departdate != '')){
-        getvalueProduct(); 
+        getvalueProduct('package'); 
     } else {
         document.getElementById('AD_Cost').value = '0';
         document.getElementById('AD_Price').value = '0';
@@ -57,18 +57,44 @@ function setupproductvalue(id,code,name){
     }
 }
 
-function getvalueProduct() {
-    var servletName = 'BookLandServlet';
-    var servicesName = 'AJAXBean';
+function getvalueProduct(order) {
     var productid = document.getElementById('Product_id').value;
     var departdate = document.getElementById('departdate').value;
-    var param = 'action=' + 'text' +
-                '&servletName=' + servletName +
-                '&servicesName=' + servicesName +
-                '&packageid=' + productid +
-                '&departdate='+departdate +
-                '&type=' + 'getvaluePackage';
-    CallAjax(param);
+    var todaydate = document.getElementById('todaydate').value; 
+    var checkdate = document.getElementById('checkdate').value;
+    if((productid !== '') && (departdate !== '')){
+        if((order === 'package')){
+            var servletName = 'BookLandServlet';
+            var servicesName = 'AJAXBean';
+            var param = 'action=' + 'text' +
+                        '&servletName=' + servletName +
+                        '&servicesName=' + servicesName +
+                        '&packageid=' + productid +
+                        '&departdate='+departdate +
+                        '&type=' + 'getvaluePackage';
+            CallAjax(param);
+        }else if(checkdate !== ''){
+            var servletName = 'BookLandServlet';
+            var servicesName = 'AJAXBean';
+            var param = 'action=' + 'text' +
+                        '&servletName=' + servletName +
+                        '&servicesName=' + servicesName +
+                        '&packageid=' + productid +
+                        '&departdate='+departdate +
+                        '&type=' + 'getvaluePackage';
+            CallAjax(param);
+        }else if(departdate !== todaydate){
+            var servletName = 'BookLandServlet';
+            var servicesName = 'AJAXBean';
+            var param = 'action=' + 'text' +
+                        '&servletName=' + servletName +
+                        '&servicesName=' + servicesName +
+                        '&packageid=' + productid +
+                        '&departdate='+departdate +
+                        '&type=' + 'getvaluePackage';
+            CallAjax(param);
+        }
+    }  
 }
 
 
@@ -85,20 +111,50 @@ function CallAjax(param) {
                 var AD_Cost = document.getElementById('AD_Cost').value; 
                 var CH_Cost = document.getElementById('CH_Cost').value;
                 var IN_Cost = document.getElementById('IN_Cost').value;
+                var AD_Price = document.getElementById('AD_Price').value; 
+                var CH_Price = document.getElementById('CH_Price').value;
+                var IN_Price = document.getElementById('IN_Price').value;
+                
                 var AD_CostRP = AD_Cost.replace(',','');
                 var CH_CostRP = CH_Cost.replace(',','');
-                var IN_CostRP = IN_Cost.replace(',','');              
-                    if((AD_CostRP === path[0]) && (CH_CostRP === path[1]) && (IN_CostRP === path[2])){
-                        
-                    } else {
-                        document.getElementById('path0').value = (path[0] !== 'null' ? path[0] : '');
-                        document.getElementById('path1').value = (path[1] !== 'null' ? path[1] : '');
-                        document.getElementById('path2').value = (path[2] !== 'null' ? path[2] : '');
-                        document.getElementById('path3').value = (path[3] !== 'null' ? path[3] : '');
-                        document.getElementById('path4').value = (path[4] !== 'null' ? path[4] : '');
-                        document.getElementById('path5').value = (path[5] !== 'null' ? path[5] : '');
-                        $('#Confirm').modal('show');
-                    }                 
+                var IN_CostRP = IN_Cost.replace(',','');
+                var AD_PriceRP = AD_Price.replace(',','');
+                var CH_PriceRP = CH_Price.replace(',','');
+                var IN_PriceRP = IN_Price.replace(',',''); 
+                
+                var path0 = (path[0] !== 'null' ? path[0] : '0');
+                var path1 = (path[1] !== 'null' ? path[1] : '0');
+                var path2 = (path[2] !== 'null' ? path[2] : '0');
+                var path3 = (path[3] !== 'null' ? path[3] : '0');
+                var path4 = (path[4] !== 'null' ? path[4] : '0');
+                var path5 = (path[5] !== 'null' ? path[5] : '0');
+                
+                if(AD_CostRP === ''){ AD_CostRP = '0'; }
+                if(AD_PriceRP === ''){ AD_PriceRP = '0'; }
+                if(CH_CostRP === ''){ CH_CostRP = '0'; }
+                if(CH_PriceRP === ''){ CH_PriceRP = '0'; }
+                if(IN_CostRP === ''){IN_CostRP = '0'; }
+                if(IN_PriceRP === ''){IN_PriceRP = '0'; }
+                
+                if((AD_CostRP === '0') && (CH_CostRP === '0') && (IN_CostRP === '0') && (AD_PriceRP === '0') && (CH_PriceRP === '0') && (IN_PriceRP === '0')){
+                    setformatNumber('AD_Cost',path0);
+                    setformatNumber('CH_Cost',path1);
+                    setformatNumber('IN_Cost',path2);
+                    setformatNumber('AD_Price',path3);
+                    setformatNumber('CH_Price',path4);
+                    setformatNumber('IN_Price',path5);
+                    
+                }else if((AD_CostRP === path0) && (CH_CostRP === path1) && (IN_CostRP === path2) && (AD_PriceRP === path3) && (CH_PriceRP === path4) && (IN_PriceRP === path5)){
+                    
+                } else {
+                    document.getElementById('path0').value = path0;
+                    document.getElementById('path1').value = path1;
+                    document.getElementById('path2').value = path2;
+                    document.getElementById('path3').value = path3;
+                    document.getElementById('path4').value = path4;
+                    document.getElementById('path5').value = path5;
+                    $('#Confirm').modal('show');
+                }                 
                 
                 getItineraryDetail(document.getElementById('Product_id').value);
             }, error: function(msg) {
@@ -241,7 +297,7 @@ $(document).ready(function () {
           $.each(agent, function (key, value) {
              //alert(value.code);
             if($("#agent_code").val() === value.code){
-                 $("#agent_id").val(value.id);
+                $("#agent_id").val(value.id);
                 $("#agent_name").val(value.name);
             }     
          });   
