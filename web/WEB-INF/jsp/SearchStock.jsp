@@ -17,7 +17,17 @@
 <c:set var="EffecttiveFrom" value="${requestScope['EffecttiveFrom']}" />
 <c:set var="EffectiveTo" value="${requestScope['EffectiveTo']}" />
 <c:set var="result" value="${requestScope['result']}" />
-
+<style>
+    .loader {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: 50% 50% no-repeat rgb(255,222,249);
+}
+</style>
 <section class="content-header" >
     <h1>
         Master Stock
@@ -313,6 +323,7 @@
     </div>
     </form>
 </div>
+<div class="loader"></div>
 <!--Search Product-->
 <div class="modal fade" id="SearchProduct" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -461,9 +472,13 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal-dialog -->
 <script type="text/javascript">
-$(document).ready(function () {
+ $(window).load(function() {
+	$(".loader").fadeOut("slow");
+});
+ $(document).ready(function () {
+//    	$(".loader").fadeOut("slow");
     $('.date').datetimepicker();
-    $(".datemask").mask('0000-00-00', {reverse: true});
+    $('.datemask').mask('0000-00-00', {reverse: true});
      $('.spandate').click(function() {
             var position = $(this).offset();
             console.log("positon :" + position.top);
@@ -583,3 +598,4 @@ $(document).ready(function () {
     </c:if>
 </c:if>
 <script type="text/javascript" src="js/searchStock.js"></script>
+<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->

@@ -20,7 +20,17 @@
     </c:otherwise>
 </c:choose>
 <c:set var="listStockDetail" value="${requestScope['listStockDetail']}" />
-
+<style>
+    .loader {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: 50% 50% no-repeat rgb(255,222,249);
+}
+</style>
 <section class="content-header" >
     <h1>
         Master Stock
@@ -312,7 +322,7 @@
         <!--<div ng-include="'WebContent/Master/StockMenu.html'"></div>-->
     </div>
     </form>
-                                   
+ <div class="loader"></div>                                  
 <!--Search Product-->
 <div class="modal fade" id="SearchProduct" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -416,8 +426,12 @@
 </div><!-- /.modal -->
 
 <script>
+    $(window).load(function() {
+	$(".loader").fadeOut("slow");
+    });
     var select = "";
     $(document).ready(function () {
+        
         var cout = document.getElementById('counterTable');
         var type  = document.getElementById('Selecttype');
         <c:forEach var="type" items="${getType}">
