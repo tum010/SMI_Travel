@@ -488,6 +488,8 @@
                                             <label for="effectivefrom" class="col-sm-3 control-label"> Depart Date </label>
                                             <div class=' col-sm-4 input-group datepicker' id='effectivefromClass' style="padding-left: 15px">
                                                 <input type='text' class="form-control"  id="departdate" name="departdate" data-date-format="YYYY-MM-DD" value="${requestScope['departdate']}" />
+                                                <input type='hidden' class="form-control"  id="todaydate" name="todaydate" data-date-format="YYYY-MM-DD" value=""/>
+                                                <input type='hidden' class="form-control"  id="checkdate" name="checkdate" data-date-format="YYYY-MM-DD" value="${requestScope['departdate']}"/>                                  
                                                 <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
@@ -969,17 +971,21 @@ $('#savereal').on("keyup keypress", function(e) {
 
     $(document).ready(function() {
         $('.datepicker').datetimepicker().change(function(){                          
-            setupdepartdatevalue();
+            setupdepartdatevalue('departdate');
         });
         $(".daydatepicker").datetimepicker({
             pickTime: false   
         });
         $('span').click(function() {
-                            var position = $(this).offset();
-                            console.log("positon :" + position.top);
-                            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
-
+            var position = $(this).offset();
+            console.log("positon :" + position.top);
+            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
         });
+        var now = new Date();
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+        $('#todaydate').val(today);
                         
         $('#landForm').bootstrapValidator({
             container: 'tooltip',

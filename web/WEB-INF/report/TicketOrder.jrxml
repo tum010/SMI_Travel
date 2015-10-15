@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportTest" language="groovy" pageWidth="595" pageHeight="432" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="053f4d0e-4534-4ae9-bd3a-d9c39367ad2d">
 	<property name="ireport.zoom" value="1.5000000000000007"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="125"/>
+	<property name="ireport.x" value="111"/>
+	<property name="ireport.y" value="82"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["/Users/taninsammanee/Projects/ICONEXT/icoweb/trunk/SMITravel/web/WEB-INF/report/"]]></defaultValueExpression>
 	</parameter>
@@ -417,8 +417,8 @@ Double.valueOf($F{sell2} != null && $F{sell2}.length() > 0 ? Double.valueOf($F{s
 				</textElement>
 				<textFieldExpression><![CDATA[$F{inv}]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤ #,##0">
-				<reportElement x="450" y="104" width="101" height="13" uuid="84773559-a8bb-4388-84b3-24b588bf07e3">
+			<textField pattern="">
+				<reportElement x="450" y="104" width="66" height="13" uuid="84773559-a8bb-4388-84b3-24b588bf07e3">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement>
@@ -426,8 +426,8 @@ Double.valueOf($F{sell2} != null && $F{sell2}.length() > 0 ? Double.valueOf($F{s
 				</textElement>
 				<textFieldExpression><![CDATA[($F{price} != null && $F{price}.length() > 0) ? Double.valueOf($F{price}) : ""]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤ #,##0">
-				<reportElement x="447" y="134" width="103" height="13" uuid="bef01c9a-eee9-4299-8bd9-aa6d71700cba">
+			<textField pattern="">
+				<reportElement x="447" y="134" width="69" height="13" uuid="bef01c9a-eee9-4299-8bd9-aa6d71700cba">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement>
@@ -482,6 +482,26 @@ Double.valueOf($F{sell2} != null && $F{sell2}.length() > 0 ? Double.valueOf($F{s
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ISSUE DATE :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="516" y="105" width="23" height="11" uuid="ff160804-bd67-4016-b84c-436cd87b82a0">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[ THB]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="516" y="135" width="23" height="11" uuid="631c1cb4-dc01-4fa9-b718-da30eaaecd6c">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[ THB]]></text>
 			</staticText>
 		</band>
 	</detail>

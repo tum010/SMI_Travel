@@ -384,13 +384,26 @@ public class PaymentTourHotelController extends SMITravelController {
             String gross = request.getParameter("gross" + i);
             String exportDate = request.getParameter("exportDate" + i);
             String isExport = request.getParameter("isExport" + i);
+            String recCom = request.getParameter("recCom" + i);
+            String isExInv = request.getParameter("isExInv" + i);
             
-            if((product!="" && product!=null) || (refNo!="" && refNo!=null) || (invNo!="" && invNo!=null) || (code!="" && code!=null) || (type!="" && type!=null) || (amount!="" && amount!=null) || (description!="" && description!=null)){
+            if((product!="" && product!=null) || (refNo!="" && refNo!=null) || (invNo!="" && invNo!=null) || (code!="" && code!=null) || 
+                    (type!="" && type!=null) || (amount!="" && amount!=null) || (description!="" && description!=null) || 
+                    (recCom!="" && recCom!=null)){
                 
                 if(amount!="" && amount!=null){
                     BigDecimal amountRe = new BigDecimal(amount.replaceAll(",",""));
                     System.out.println("amount" + i + ":" + amountRe);
                     paymentDetailWendy.setAmount(amountRe);
+                }
+                
+                if(recCom!="" && recCom!=null){
+                    BigDecimal recComRe = new BigDecimal(recCom.replaceAll(",",""));
+                    System.out.println("amount" + i + ":" + recComRe);
+                    paymentDetailWendy.setRecCom(recComRe);
+                    paymentDetailWendy.setIsExInv(1);
+                }else{
+                    paymentDetailWendy.setIsExInv(0);
                 }
                 
                 if("check".equalsIgnoreCase(isVat)){
