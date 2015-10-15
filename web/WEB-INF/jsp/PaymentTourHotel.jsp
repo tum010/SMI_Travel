@@ -359,15 +359,15 @@
                         <thead class="datatable-header">
                             <tr>
                                 <th class="hidden" style="width: 1%">Id</th>
-                                <th style="width: 15%">Product</th>
+                                <th style="width: 13%">Product</th>
                                 <th style="width: 10%">Ref No</th>
                                 <th style="width: 10%">Inv No</th>
                                 <th style="width: 10%">Code</th>
                                 <th style="width: 8%">Type</th>
-                                <th style="width: 15%">Amount</th>
-                                <th style="width: 15%">Description</th>
+                                <th style="width: 12%">Amount</th>
+                                <th style="width: 14%">Description</th>
                                 <th style="width: 8%">A/C</th>
-                                <th style="width: 1%">Action</th>
+                                <th style="width: 5%">Action</th>
                                 <th class="hidden">Export Date</th>
                                 <th class="hidden">Is Export</th>
                             </tr>
@@ -377,7 +377,7 @@
                                 <tr>
                                     <td class="hidden"><input id="tableId${i.count}" name="tableId${i.count}"  type="hidden" value="${pl.id}"></td>
                                     <td>                                   
-                                        <select class="form-control" name="select-product${i.count}" id="select-product${i.count}">
+                                        <select class="form-control" name="select-product${i.count}" id="select-product${i.count}" onchange="checkProduct('${i.count}')">
                                             <option  value="" >---------</option>
                                         <c:forEach var="product" items="${product_list}" varStatus="status">                                       
                                             <c:set var="select" value="" />
@@ -420,12 +420,12 @@
                                     <td> <input style="width: ${Description}" id="description${i.count}" name="description${i.count}" maxlength ="255"  type="text" class="form-control" value="${pl.description}"> </td>
                                     <td> <input style="width: ${AC}" id="ac${i.count}" name="ac${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.accCode}" readonly=""> </td>
                                     <td class="text-center">
-
-                                            <a class="remCF"><span id="SpanRemove${i.count}" onclick="deletelist('${pl.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
-
-                                        <c:if test="${lockUnlockBooking == 1}">
-                                            <span class="glyphicon glyphicon-remove deleteicon" ></span>
-                                        </c:if>
+                                        <a href="#" onclick=""  data-toggle="modal" data-target="">
+                                            <span id="editSpan${i.count}" class="glyphicon glyphicon-edit editicon" onclick="editlist('${pl.id}','${i.count}')" ></span>
+                                        </a>
+                                        <a href="#" onclick=""  data-toggle="modal" data-target="">
+                                            <span id="SpanRemove${i.count}" onclick="deletelist('${pl.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span>
+                                        </a>
                                     </td>
                                     <td class="hidden"> <input id="exportDate${i.count}" name="exportDate${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.exportDate}"> </td>
                                     <td class="hidden"> <input id="isExport${i.count}" name="isExport${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.isExport}"> </td>
@@ -461,6 +461,7 @@
                                 <th style="width: 11%">Amount</th>
                                 <th style="width: 16%">Description</th>
                                 <th style="width: 4%">A/C</th>
+                                <th style="width: 1%">Action</th>
                                 <th class="hidden">Export Date</th>
                                 <th class="hidden">Is Export</th>
                             </tr>
@@ -471,7 +472,7 @@
                                     <td class="hidden"><input id="tableId${i.count}" name="tableId${i.count}"  type="hidden" value="${pl.id}"></td>                                                                                                                                                                           
                                     <td align="center">${pl.MPaytype.name}</td>
                                     <td class="hidden">                                   
-                                        <select class="form-control" name="select-product${i.count}" id="select-product${i.count}">
+                                        <select class="form-control" name="select-product${i.count}" id="select-product${i.count}" onchange="checkProduct('${i.count}')">
                                             <option  value="" >---------</option>
                                         <c:forEach var="product" items="${product_list}" varStatus="status">                                       
                                             <c:set var="select" value="" />
@@ -521,6 +522,11 @@
                                     <td>${pl.description}</td>
                                     <td class="hidden"> <input style="width: ${Description}" id="description${i.count}" name="description${i.count}" maxlength ="255"  type="text" class="form-control" value="${pl.description}"> </td>                                   
                                     <td align="center">${pl.accCode}</td>
+                                    <td align="center">
+                                        <a href="#" onclick=""  data-toggle="modal" data-target="">
+                                            <span id="editSpan${i.count}" class="glyphicon glyphicon-edit editicon" onclick="editlist('${pl.id}','${i.count}')" ></span>
+                                        </a>
+                                    </td>    
                                     <td class="hidden"> <input style="width: ${AC}" id="ac${i.count}" name="ac${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.accCode}" readonly=""> </td>
                                     <td class="hidden"> <input id="exportDate${i.count}" name="exportDate${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.exportDate}"> </td>
                                     <td class="hidden"> <input id="isExport${i.count}" name="isExport${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.isExport}"> </td>
@@ -981,7 +987,7 @@
                 '<tr style="higth 100px">' +
                 '<td class="hidden"> <input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >  </td>' +
                 '<td>' + 
-                '<select class="form-control" name="select-product' + row + '" id="select-product' + row + '" ><option value="">---------</option></select>' +                          
+                '<select class="form-control" name="select-product' + row + '" id="select-product' + row + '" onchange="checkProduct(\''+row+'\')"><option value="">---------</option></select>' +                          
                 '</td>' +
                 '<td><input maxlength ="10" id="refNo' + row + '" name="refNo' + row + '"   type="text" class="form-control " onfocusout="checkRefNo(\''+row+'\')"></td>' +
                 '<td><input maxlength ="15" id="invNo' + row + '" name="invNo' + row + '"   type="text" class="form-control "></td>' +
@@ -994,9 +1000,14 @@
                 '<td><input class="form-control" maxlength="255" style="width: ${DescriptionSize}" id="description' + row + '" name="description' + row + '" rows="2" ></td>' +
                 '<td><input id="ac' + row + '" name="ac' + row + '"   type="text" class="form-control" readonly=""></td>' +
                 '<td class="text-center">' +
-                '<a class="remCF" onclick="deletelist(\'\', \''+row+'\')">  '+
-                '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
-                '<td class="hidden"> <input id="exportDate' + row + '" name="exportDate' + row + '" maxlength ="15"  type="text" class="form-control"> </td>' +
+                    '<a href="#" onclick=""  data-toggle="modal" data-target="">' +
+                        '<span id="editSpan' + row + '" class="glyphicon glyphicon-edit editicon" onclick="editlist(\'\',\''+ row + '\')" ></span>' +
+                    '</a>' +
+                    '<a href="#" onclick=""  data-toggle="modal" data-target="">  '+
+                        '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon" onclick="deletelist(\'\', \''+row+'\')"></span>' +
+                    '</a>' +
+                '</td>' +
+                '<td class="hidden"> <input id="exportDate' + row + '" name="exportDate' + row + '" maxlength ="15"  type="text" class="form-control"></td>' +
                 '<td class="hidden"> <input id="isExport' + row + '" name="isExport' + row + '" maxlength ="15"  type="text" class="form-control"> </td>' +
                 '</tr>'
             );
@@ -1094,6 +1105,51 @@
             } 
         } else {
             nField.value = nField.value.replace(/[^\d\,\.]/g,"").replace(/ /,"");
+        }
+    }
+    
+    function checkProduct(row){
+        var productField = document.getElementById('select-product'+row).style.borderColor;
+        var productVal = document.getElementById('select-product'+row).value;
+        if(productField === 'red'){
+            if(productVal !== ''){
+                document.getElementById('select-product'+row).style.borderColor = "";
+            }
+        }
+    }
+    
+    function editlist(id,row){
+        var refNoField = document.getElementById('refNo'+row).style.borderColor;
+        var productVal = document.getElementById('select-product'+row).value;
+        var product = $("#select-product"+row+" option:selected").text();
+        var refNo = $("#refNo"+row).val();
+        if((id !== '') && (refNo !== '') && (productVal !== '')){
+            if(product === 'Others'){
+                window.open("Other.smi?referenceNo="+refNo+"&action=edit");
+            }else if(product === 'Land'){
+                window.open("Land.smi?referenceNo="+refNo+"&action=edit");
+            }else if(product === 'Hotel'){
+                window.open("HotelBooking.smi?referenceNo="+refNo+"&action=edit");
+            }else if(product === 'Day Tour'){
+                window.open("Daytour.smi?referenceNo="+refNo+"&action=edit");
+            }
+        }else if((refNoField === 'green') && (productVal !== '')){           
+            if(product === 'Others'){
+                window.open("Other.smi?referenceNo="+refNo+"&action=edit");
+            }else if(product === 'Land'){
+                window.open("Land.smi?referenceNo="+refNo+"&action=edit");
+            }else if(product === 'Hotel'){
+                window.open("HotelBooking.smi?referenceNo="+refNo+"&action=edit");
+            }else if(product === 'Day Tour'){
+                window.open("Daytour.smi?referenceNo="+refNo+"&action=edit");
+            }
+        }else{
+            if(productVal === ''){
+                document.getElementById('select-product'+row).style.borderColor = "red";
+            }
+            if((refNo === '') || (refNoField === 'red')){
+                document.getElementById('refNo'+row).style.borderColor = "red";
+            }          
         }
     }
      

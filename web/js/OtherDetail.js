@@ -21,8 +21,8 @@ function setupproductvalue(id, code, name, booktype) {
     var product_code = document.getElementById('product_code').value; 
     var otherdate = document.getElementById('otherdate').value; 
     
-    if((product_code != '') && (otherdate != '')){
-        getvalueProduct(booktype);   
+    if((product_code !== '') && (otherdate !== '')){
+        getvalueProduct('product',booktype);   
     } else {
         document.getElementById('ad_cost').value = '0';
         document.getElementById('ad_price').value = '0';
@@ -50,10 +50,10 @@ function setupotherdatevalue(booktype) {
     if((product_code !== '') && (otherdate !== '')){
         if(checkdate !== ''){
             if(checkdate !== otherdate){
-                getvalueProduct(booktype);  
+                getvalueProduct('date',booktype);  
             }
         } else if(otherdate !== todaydate){
-            getvalueProduct(booktype);     
+            getvalueProduct('date',booktype);     
         }        
     } else {
         document.getElementById('ad_cost').value = '0';
@@ -108,7 +108,7 @@ $(document).ready(function() {
         var code = event.keyCode || event.which; 
 
         if (code  == 13) { 
-           getvalueProduct($('#bookingtype').val());
+           getvalueProduct('product',$('#bookingtype').val());
         }
        
     });
@@ -120,7 +120,7 @@ $(document).ready(function() {
             if($("#product_code").val() == value.code){
                 $("#product_id").val(value.id);
                 $("#product_name").val(value.name);
-                getvalueProduct($('#bookingtype').val());
+                getvalueProduct('product',$('#bookingtype').val());
             }     
          });   
        
@@ -133,7 +133,7 @@ $(document).ready(function() {
         
         if (keyCode == 9) { 
             if($('#product_code').val() != ''){
-                getvalueProduct($('#bookingtype').val());
+                getvalueProduct('product',$('#bookingtype').val());
             }
             
         }      
@@ -212,13 +212,25 @@ $(document).ready(function() {
 });
 
 
-function getvalueProduct(booktype) {
+function getvalueProduct(order,booktype) {
     var product_code = document.getElementById('product_code').value; 
     var otherdate = document.getElementById('otherdate').value;
     var todaydate = document.getElementById('todaydate').value; 
     var checkdate = document.getElementById('checkdate').value;
     if((product_code !== '') && (otherdate !== '')){
-        if(checkdate !== ''){
+        if((order === 'product')){
+                var servletName = 'BookOtherServlet';
+                var servicesName = 'AJAXBean';
+                var productid = document.getElementById('product_id').value;
+                var otherdate = document.getElementById('otherdate').value;
+                var param = 'action=' + 'text' +
+                        '&servletName=' + servletName +
+                        '&servicesName=' + servicesName +
+                        '&productid=' + productid +
+                        '&otherdate=' + otherdate +
+                        '&type=' + 'getvalueProduct';
+                CallAjax(param, booktype);
+        }else if(checkdate !== ''){
             if(checkdate !== otherdate){
                 var servletName = 'BookOtherServlet';
                 var servicesName = 'AJAXBean';
@@ -303,17 +315,24 @@ function CallAjax(param, booktype) {
                 var CH_PriceRP = CH_Price.replace(',','');
                 var IN_CostRP = IN_Cost.replace(',','');
                 var IN_PriceRP = IN_Price.replace(',','');
+
+                if(AD_CostRP === ''){ AD_CostRP = '0'; }
+                if(AD_PriceRP === ''){ AD_PriceRP = '0'; }
+                if(CH_CostRP === ''){ CH_CostRP = '0'; }
+                if(CH_PriceRP === ''){ CH_PriceRP = '0'; }
+                if(IN_CostRP === ''){IN_CostRP = '0'; }
+                if(IN_PriceRP === ''){IN_PriceRP = '0'; }
                 
-                if(AD_CostRP == ''){ AD_CostRP = 0; }
-                if(AD_PriceRP == ''){ AD_PriceRP = 0; }
-                if(CH_CostRP == ''){ CH_CostRP = 0; }
-                if(CH_PriceRP == ''){ CH_PriceRP =0; }
-                if(IN_CostRP == ''){IN_CostRP = 0; }
-                if(IN_PriceRP == ''){IN_PriceRP = 0; }
-                
-                if (booktype == 'i') {                
-                    if((AD_CostRP == path[0]) && (CH_CostRP == path[1]) && (IN_CostRP == path[2]) && (AD_PriceRP == path[3]) && (CH_PriceRP == path[4]) && (IN_PriceRP == path[5])){
-                            
+                if (booktype === 'i') {                
+                    if((AD_CostRP === '0') && (CH_CostRP === '0') && (IN_CostRP === '0') && (AD_PriceRP === '0') && (CH_PriceRP === '0') && (IN_PriceRP === '0')){
+                        setformatNumber('ad_cost',path[0]);
+                        setformatNumber('ch_cost',path[1]);
+                        setformatNumber('in_cost',path[2]);
+                        setformatNumber('ad_price',path[3]);
+                        setformatNumber('ch_price',path[4]);
+                        setformatNumber('in_price',path[5]);
+                    }else if((AD_CostRP === path[0]) && (CH_CostRP === path[1]) && (IN_CostRP === path[2]) && (AD_PriceRP === path[3]) && (CH_PriceRP === path[4]) && (IN_PriceRP === path[5])){
+                        
                     } else {
                         document.getElementById('path0').value = path[0];
                         document.getElementById('path1').value = path[1];
@@ -325,9 +344,16 @@ function CallAjax(param, booktype) {
                      }                                     
                 }
 
-                if (booktype == 'o') {
-                    if((AD_CostRP == path[0]) && (CH_CostRP == path[1]) && (IN_CostRP == path[2]) && (AD_PriceRP == path[3]) && (CH_PriceRP == path[4]) && (IN_PriceRP == path[5])){
-                            
+                if (booktype === 'o') {
+                    if((AD_CostRP === 0) && (CH_CostRP === 0) && (IN_CostRP === 0) && (AD_PriceRP === 0) && (CH_PriceRP === 0) && (IN_PriceRP === 0)){
+                        setformatNumber('ad_cost',path[0]);
+                        setformatNumber('ch_cost',path[1]);
+                        setformatNumber('in_cost',path[2]);
+                        setformatNumber('ad_price',path[3]);
+                        setformatNumber('ch_price',path[4]);
+                        setformatNumber('in_price',path[5]);
+                    }else if((AD_CostRP === path[0]) && (CH_CostRP === path[1]) && (IN_CostRP === path[2]) && (AD_PriceRP === path[3]) && (CH_PriceRP === path[4]) && (IN_PriceRP === path[5])){
+                        
                     } else {
                         document.getElementById('path0').value = path[0];
                         document.getElementById('path1').value = path[1];
@@ -336,7 +362,18 @@ function CallAjax(param, booktype) {
                         document.getElementById('path4').value = path[4];
                         document.getElementById('path5').value = path[5];
                         $('#Confirm').modal('show');
-                    }                                   
+                     }                           
+//                    if((AD_CostRP == path[0]) && (CH_CostRP == path[1]) && (IN_CostRP == path[2]) && (AD_PriceRP == path[3]) && (CH_PriceRP == path[4]) && (IN_PriceRP == path[5])){
+//                            
+//                    } else {
+//                        document.getElementById('path0').value = path[0];
+//                        document.getElementById('path1').value = path[1];
+//                        document.getElementById('path2').value = path[2];
+//                        document.getElementById('path3').value = path[3];
+//                        document.getElementById('path4').value = path[4];
+//                        document.getElementById('path5').value = path[5];
+//                        $('#Confirm').modal('show');
+//                    }                                   
                 //calculateVat();
                 }
             }, error: function(msg) {
