@@ -358,18 +358,20 @@
                     <table class="display" id="PaymentHotelTable">
                         <thead class="datatable-header">
                             <tr>
-                                <th class="hidden" style="width: 1%">Id</th>
-                                <th style="width: 13%">Product</th>
-                                <th style="width: 10%">Ref No</th>
-                                <th style="width: 10%">Inv No</th>
-                                <th style="width: 10%">Code</th>
+                                <th class="hidden">Id</th>
+                                <th style="width: 12%">Product</th>
+                                <th style="width: 8%">Ref No</th>
+                                <th style="width: 9%">Inv No</th>
+                                <th style="width: 9%">Code</th>
                                 <th style="width: 8%">Type</th>
                                 <th style="width: 12%">Amount</th>
+                                <th style="width: 12%">Comm</th>
                                 <th style="width: 14%">Description</th>
-                                <th style="width: 8%">A/C</th>
-                                <th style="width: 5%">Action</th>
+                                <th style="width: 7%">A/C</th>
+                                <th style="width: 6%">Action</th>
                                 <th class="hidden">Export Date</th>
                                 <th class="hidden">Is Export</th>
+                                <th class="hidden">Is Ex Inv</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -391,7 +393,7 @@
                                     <td> <input style="width: ${RefNo}" id="refNo${i.count}" name="refNo${i.count}" maxlength ="10"  type="text" class="form-control" value="${pl.master.referenceNo}" onfocusout="checkRefNo('${i.count}')"> </td>
                                     <td> <input style="width: ${InvNo}" id="invNo${i.count}" name="invNo${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.invoiceCreditor}">  </td>
                                     <td> <input style="width: ${Code}" id="code${i.count}" name="code${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.refCode}">  </td>
-                                    <td>
+                                    <td class="center">
                                         <c:set var="type1" value="" />
                                         <c:if test="${'T' == pl.amountType}">
                                             <c:set var="type1" value="checked" />
@@ -416,7 +418,8 @@
                                     <td class="hidden">
                                         <input class="form-control" type="text" id="gross${i.count}" name="gross${i.count}" value="${pl.gross}" readonly="">
                                     </td>
-                                    <td> <input style="width: ${Amount};text-align:right;"  id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control numerical" onfocusout="CalculateGrandTotal('${pl.id}')" onkeyup="insertCommas(this)" value="${pl.amount}"> </td>                               
+                                    <td> <input style="width: ${Amount};text-align:right;"  id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control numerical" onfocusout="CalculateGrandTotal('${pl.id}')" onkeyup="insertCommas(this)" value="${pl.amount}"> </td>
+                                    <td> <input style="width: ${recCom};text-align:right;"  id="recCom${i.count}" name="recCom${i.count}" maxlength ="15"  type="text" class="form-control numerical" onfocusout="calculateComm('${i.count}')" onkeyup="insertCommas(this)" value="${pl.recCom}"> </td>                               
                                     <td> <input style="width: ${Description}" id="description${i.count}" name="description${i.count}" maxlength ="255"  type="text" class="form-control" value="${pl.description}"> </td>
                                     <td> <input style="width: ${AC}" id="ac${i.count}" name="ac${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.accCode}" readonly=""> </td>
                                     <td class="text-center">
@@ -429,6 +432,7 @@
                                     </td>
                                     <td class="hidden"> <input id="exportDate${i.count}" name="exportDate${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.exportDate}"> </td>
                                     <td class="hidden"> <input id="isExport${i.count}" name="isExport${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.isExport}"> </td>
+                                    <td class="hidden"> <input id="isExInv${i.count}" name="isExInv${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.isExInv}"> </td>
                                 </tr>                       
                             </c:forEach> 
                         </tbody>
@@ -449,16 +453,17 @@
                     <table class="display" id="PaymentHotelTable">
                         <thead class="datatable-header">
                             <tr>
-                                <th class="hidden" style="width: 1%">Id</th>
+                                <th class="hidden">Id</th>
                                 <th style="width: 8%">Product</th>
                                 <th style="width: 6%">Ref No</th>
                                 <th style="width: 6%">Inv No</th>
                                 <th style="width: 6%">Code</th>
                                 <th style="width: 2%">Type</th>
-                                <th style="width: 4%" onclick="checkVatAll()"><u>Is vat</u></th>
-                                <th style="width: 4%">Vat</th>
+                                <th style="width: 5%" onclick="checkVatAll()"><u>Is vat</u></th>
+                                <th style="width: 5%">Vat</th>
                                 <th style="width: 11%">Gross</th>
                                 <th style="width: 11%">Amount</th>
+                                <th style="width: 11%">Comm</th>
                                 <th style="width: 16%">Description</th>
                                 <th style="width: 4%">A/C</th>
                                 <th style="width: 1%">Action</th>
@@ -518,7 +523,8 @@
                                     <td class="hidden">
                                         <input class="form-control" type="text" id="amountCal${i.count}" name="amountCal$${i.count}" value="${pl.amount}">
                                     </td>
-                                    <td> <input style="width: ${Amount};text-align:right;" id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control numerical" value="${pl.amount}" readonly=""> </td>                               
+                                    <td> <input style="width: ${Amount};text-align:right;" id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control numerical" value="${pl.amount}" readonly=""> </td>
+                                    <td> <input style="width: ${recCom};text-align:right;"  id="recCom${i.count}" name="recCom${i.count}" maxlength ="15"  type="text" class="form-control money2" value="${pl.recCom}" readonly=""> </td>
                                     <td>${pl.description}</td>
                                     <td class="hidden"> <input style="width: ${Description}" id="description${i.count}" name="description${i.count}" maxlength ="255"  type="text" class="form-control" value="${pl.description}"> </td>                                   
                                     <td align="center">${pl.accCode}</td>
@@ -816,7 +822,7 @@
         });
    
         $(".money").mask('0000000000', {reverse: true});
-        
+        $(".money2").mask('000,000,000,000.0000', {reverse: true});
         
         
         $( ".numerical" ).on('input', function() { 
@@ -904,6 +910,8 @@
             CalculateGrossTotal('',$("#counter").val());
         });
         
+        setEnvironment();
+        
         var codeInvoiceSup = [];
         $.each(invoiceSup, function (key, value) {
             codeInvoiceSup.push(value.code);
@@ -961,6 +969,16 @@
         
     });
     
+    function setEnvironment(){
+        var count = parseInt($("#counter").val());
+        for(var i=0;i<=count;i++){
+            var recCom = document.getElementById('recCom'+i);
+            if((recCom!==null) && (recCom.value!=='')){
+                recCom.value = formatNumberComm(parseFloat(recCom.value));
+            }
+        }
+    }
+    
     function searchPaymentTour() {
         var action = document.getElementById('action');
         action.value = 'edit';
@@ -993,10 +1011,11 @@
                 '<td><input maxlength ="15" id="invNo' + row + '" name="invNo' + row + '"   type="text" class="form-control "></td>' +
                 '<td><input maxlength ="15" id="code' + row + '" name="code' + row + '"   type="text" class="form-control "></td>' +
                 '<td align="center">' +
-                '<input type="radio" name="type' + row + '" id="typeT' + row + '" value="T"> T&nbsp;' +
+                '<input type="radio" name="type' + row + '" id="typeT' + row + '" value="T"> T&nbsp;&nbsp;' +
                 '<input type="radio" name="type' + row + '" id="typeC' +row + '" value="C" > C' +
                 '</td>' +
                 '<td><input maxlength ="15" class="form-control numerical"  style="text-align:right;" id="amount' + row + '" name="amount' + row + '"  align="right" type="text" onfocusout="CalculateGrandTotal(\'\')" onkeyup="insertCommas(this)"></td>' +
+                '<td><input maxlength ="15" class="form-control numerical"  style="text-align:right;" id="recCom' + row + '" name="recCom' + row + '"  align="right" type="text" onfocusout="calculateComm(\''+row+'\')" onkeyup="insertCommas(this)"></td>' +
                 '<td><input class="form-control" maxlength="255" style="width: ${DescriptionSize}" id="description' + row + '" name="description' + row + '" rows="2" ></td>' +
                 '<td><input id="ac' + row + '" name="ac' + row + '"   type="text" class="form-control" readonly=""></td>' +
                 '<td class="text-center">' +
@@ -1009,6 +1028,7 @@
                 '</td>' +
                 '<td class="hidden"> <input id="exportDate' + row + '" name="exportDate' + row + '" maxlength ="15"  type="text" class="form-control"></td>' +
                 '<td class="hidden"> <input id="isExport' + row + '" name="isExport' + row + '" maxlength ="15"  type="text" class="form-control"> </td>' +
+                '<td class="hidden"> <input id="isExInv' + row + '" name="isExInv' + row + '" maxlength ="15"  type="text" class="form-control"> </td>' +
                 '</tr>'
             );
             $("#select_product_list option").clone().appendTo("#select-product" + row);
@@ -1016,6 +1036,13 @@
             $("#counter").val(tempCount);
         }
       
+    }
+    
+    function calculateComm(row){
+        var comm = document.getElementById('recCom'+row);
+        if(comm.value !== ''){
+            document.getElementById('recCom'+row).value = formatNumberComm(parseFloat((comm.value).replace(/,/g,"")));
+        }
     }
     
     function CalculateGrandTotal(id){
@@ -1086,6 +1113,10 @@
     
     function formatNumber(num) {
         return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+    }   
+    
+    function formatNumberComm(num) {
+        return  num.toFixed(4).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
     }
     
     function insertCommas(nField){

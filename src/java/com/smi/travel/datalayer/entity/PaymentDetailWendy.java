@@ -26,11 +26,13 @@ public class PaymentDetailWendy   {
      private String refCode;
      private Date exportDate;
      private Integer isExport;
+     private BigDecimal recCom;
+     private Integer isExInv;
 
     public PaymentDetailWendy() {
     }
 
-    public PaymentDetailWendy(Master master, MPaytype MPaytype, PaymentWendy paymentWendy, String invoiceCreditor, BigDecimal amount, String amountType, String description ,String accCode,Double vat,BigDecimal gross,Integer isVat,String refCode,Date exportDate,Integer isExport) {
+    public PaymentDetailWendy(Master master, MPaytype MPaytype, PaymentWendy paymentWendy, String invoiceCreditor, BigDecimal amount, String amountType, String description ,String accCode,Double vat,BigDecimal gross,Integer isVat,String refCode,Date exportDate,Integer isExport,BigDecimal recCom,Integer isExInv) {
        this.master = master;
        this.MPaytype = MPaytype;
        this.paymentWendy = paymentWendy;
@@ -45,6 +47,8 @@ public class PaymentDetailWendy   {
        this.refCode = refCode;
        this.exportDate = exportDate;
        this.isExport = isExport;
+       this.recCom = recCom;
+       this.isExInv = isExInv;
     }
    
     public String getId() {
@@ -162,6 +166,20 @@ public class PaymentDetailWendy   {
         this.isExport = isExport;
     }
 
+    public BigDecimal getRecCom() {
+        return recCom;
+    }
+
+    public void setRecCom(BigDecimal recCom) {
+        this.recCom = recCom;
+    }
+
+    public Integer getIsExInv() {
+        return isExInv;
+    }
+
+    public void setIsExInv(Integer isExInv) {
+        this.isExInv = isExInv;
+    }
+
 }
-
-

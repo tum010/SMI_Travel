@@ -49,5 +49,11 @@
         <property name="isExport" type="java.lang.Integer">
             <column name="is_export" precision="10" />
         </property>
+        <property name="recCom" type="big_decimal">
+            <column name="rec_com" precision="10" />
+        </property>
+        <property name="isExInv" type="java.lang.Integer">
+            <column name="is_ex_inv" precision="10" />
+        </property>
     </class>
 </hibernate-mapping>
