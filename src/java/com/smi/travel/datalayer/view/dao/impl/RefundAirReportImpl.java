@@ -277,6 +277,8 @@ public class RefundAirReportImpl implements RefundAirReportDao{
             refund.setPaiddate((util.ConvertString(B[18])) == "" ? "" : util.ConvertString(B[18]));
             data.add(refund);
         }   
+    }else{
+            data = null;
     }
     return data;
 }
