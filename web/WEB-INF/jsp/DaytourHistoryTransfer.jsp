@@ -123,9 +123,9 @@
                     <tr>
                         <th>No</th>
                         <th>Pick Up</th>
-                        <th class='text-center'>Room</th>
-                        <th class='text-center'>Time</th>
-                        <th>Name</th>
+                        <th style='text-align: center'>Room</th>
+                        <th style='text-align: center'>Time</th>
+                        <th style='text-align: center'>Name</th>
                         <th class='text-center'>AD</th>
                         <th class='text-center'>CH</th>
                         <th class='text-center'>IN</th>
