@@ -106,7 +106,7 @@ public class RefundAirReportImpl implements RefundAirReportDao{
     }
 
     @Override
-    public List getRefundTicketDetail(String refundagent, String refundnameby, String passenger, String receivefrom, String receiveto, String paidfrom, String paidto, String typeprint,String printby) {
+    public List getRefundTicketDetail(String refundagent, String refundnameby, String passenger, String receivefrom, String receiveto, String paidfrom, String paidto, String typeprint,String printby,String refundby) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();  
         Date thisdate = new Date();
@@ -114,7 +114,7 @@ public class RefundAirReportImpl implements RefundAirReportDao{
         String querydata = "";
         String query = "";
         int checkQuery = 0;
-        if( refundagent != null || refundnameby != null || passenger != null || receivefrom != null || receiveto != null || paidfrom != null || paidto != null ){
+        if( refundagent != null || refundnameby != null || passenger != null || receivefrom != null || receiveto != null || paidfrom != null || paidto != null || refundby != null){
             query = "SELECT * FROM `refund_ticket_detail_view` invm  Where";
         }else{
             query = "SELECT * FROM `refund_ticket_detail_view` invm";
