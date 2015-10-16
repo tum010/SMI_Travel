@@ -92,6 +92,7 @@ public class OtherBookingImpl implements OtherBookingDao{
             List<Stock> stockList = getIsStock(productId, date, session);
             if(stockList.isEmpty()){
                 result = "notStock";
+                session.close();
                 return result;
             }                       
             
@@ -129,24 +130,47 @@ public class OtherBookingImpl implements OtherBookingDao{
                                    
 //            String stockDetailId = stockList.get(0).getId();
             List<StockDetail> stockDetailList = getStockByDate(productId, date, session);
-            List<StockDetail> stockDetailTicketList = getStockDetail(stockDetailList, adultQty, childQty, infantQty, session);                        
-            if(stockDetailTicketList.isEmpty()) {                               
-                if((ad != adultQty) && (ad < adultQty)){
-                    adCancel = adultQty - ad;
+            List<StockDetail> stockDetailTicketList = new ArrayList<StockDetail>();
+            if("addTicket".equalsIgnoreCase(addticket)){
+                stockDetailTicketList = getStockDetail(stockDetailList, Integer.parseInt(adTicket), Integer.parseInt(chTicket), Integer.parseInt(infTicket), session);
+                if(stockDetailTicketList.isEmpty()) {                                                  
+                    String adStr = String.valueOf(adTicket);
+                    String chStr = String.valueOf(chTicket);
+                    String infStr = String.valueOf(infTicket);
+                    result = adStr+"||"+chStr+"||"+infStr;
+                    session.close();
+                    return result;
                 }
-                if((ch != childQty) && (ch < childQty)){
-                    chCancel = childQty - ch;
+            } else {
+                stockDetailTicketList = getStockDetail(stockDetailList, adultQty, childQty, infantQty, session);
+                if(stockDetailTicketList.isEmpty()) {                               
+                    String adStr = String.valueOf(adultQty);
+                    String chStr = String.valueOf(childQty);
+                    String infStr = String.valueOf(infantQty);
+                    result = adStr+"||"+chStr+"||"+infStr;
+                    session.close();
+                    return result;
                 }
-                if((inf != infantQty) && (inf < infantQty)){
-                    infCancel = infantQty - inf;
-                }
-
-                String adStr = String.valueOf(adCancel);
-                String chStr = String.valueOf(chCancel);
-                String infStr = String.valueOf(infCancel);
-                result = adStr+"||"+chStr+"||"+infStr;
-                return result;
-            }
+            }          
+//            List<StockDetail> stockDetailTicketList = getStockDetail(stockDetailList, adultQty, childQty, infantQty, session);
+            
+//            if(stockDetailTicketList.isEmpty()) {                               
+//                if((ad != adultQty) && (ad < adultQty)){
+//                    adCancel = adultQty - ad;
+//                }
+//                if((ch != childQty) && (ch < childQty)){
+//                    chCancel = childQty - ch;
+//                }
+//                if((inf != infantQty) && (inf < infantQty)){
+//                    infCancel = infantQty - inf;
+//                }
+//
+//                String adStr = String.valueOf(adCancel);
+//                String chStr = String.valueOf(chCancel);
+//                String infStr = String.valueOf(infCancel);
+//                result = adStr+"||"+chStr+"||"+infStr;
+//                return result;
+//            }
             
             if("addTicket".equalsIgnoreCase(addticket)){
                 result = addStockTicket(otherbook,user,stockDetailList,adultQty,childQty,infantQty,ad,ch,inf,adTicket,chTicket,infTicket);
@@ -397,14 +421,24 @@ public class OtherBookingImpl implements OtherBookingDao{
             int chCancel = 0;
             int infCancel = 0;
             
-            if(((adNew+ad) != adultQty) && ((adNew+ad) < adultQty)){
-                adCancel = adultQty - (adNew+ad);
+//            if(((adNew+ad) != adultQty) && ((adNew+ad) < adultQty)){
+//                adCancel = adultQty - (adNew+ad);
+//            }
+//            if(((chNew+ch) != childQty) && ((chNew+ch) < childQty)){
+//                chCancel = childQty - (chNew+ch);
+//            }
+//            if(((infNew+inf) != infantQty) && ((infNew+inf) < infantQty)){
+//                infCancel = infantQty - (infNew+inf);
+//            }
+            
+            if(adNew<adTicket){
+                adCancel = adTicket - adNew;
             }
-            if(((chNew+ch) != childQty) && ((chNew+ch) < childQty)){
-                chCancel = childQty - (chNew+ch);
+            if(chNew<chTicket){
+                chCancel = chTicket - chNew;
             }
-            if(((infNew+inf) != infantQty) && ((infNew+inf) < infantQty)){
-                infCancel = infantQty - (infNew+inf);
+            if(adNew<adTicket){
+                infCancel = infTicket - infNew;
             }
             
             String adStr = String.valueOf(adCancel);
@@ -508,7 +542,7 @@ public class OtherBookingImpl implements OtherBookingDao{
         List<OtherTicketView> ticketList = new ArrayList<OtherTicketView>();
         try{
             Session session = this.sessionFactory.openSession();
-            String query = "from StockDetail s where s.otherBooking.id = " + otherBookingId + " order by s.code";
+            String query = "from StockDetail s where s.otherBooking.id = " + otherBookingId + " order by s.typeId.id , s.id , s.code";
             List<StockDetail> stockDetailList = session.createQuery(query).list();            
             if(stockDetailList.isEmpty()){
                 return ticketList;  
