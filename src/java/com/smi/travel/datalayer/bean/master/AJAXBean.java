@@ -1548,6 +1548,9 @@ public class AJAXBean extends AbstractBean implements
         }
         result = "<tbody>";
         int row = 1;
+        int ad = 0;
+        int ch = 0;
+        int inf = 0;
         for (DaytourBooking daytour : bookingList) {
             try {
 
@@ -1577,11 +1580,26 @@ public class AJAXBean extends AbstractBean implements
                         + "<td>" + (daytour.getGuide() == null ? "" : daytour.getGuide().getName()) + "</td>"
                         + "</tr>";
                 row += 1;
+                ad += Integer.parseInt(passenger[0]);
+                ch += Integer.parseInt(passenger[1]);
+                inf += Integer.parseInt(passenger[2]);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
 
         }
+        result += "<tr>"
+                + "<td></td>"
+                + "<td></td>"
+                + "<td></td>"
+                + "<td></td>"
+                + "<td style='text-align: right'><u>Total</u></td>"
+                + "<td>" + String.valueOf(ad) + "</td>"
+                + "<td>" + String.valueOf(ch) + "</td>"
+                + "<td>" + String.valueOf(inf) + "</td>"
+                + "<td></td>"
+                + "<td></td>"
+                + "</tr>";
         result += "</tbody>";
         System.out.println("JobDetail size(" + bookingList.size() + ")");
         return result;
