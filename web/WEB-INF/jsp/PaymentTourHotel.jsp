@@ -974,7 +974,7 @@
         for(var i=0;i<=count;i++){
             var recCom = document.getElementById('recCom'+i);
             if((recCom!==null) && (recCom.value!=='')){
-                recCom.value = formatNumberComm(parseFloat(recCom.value));
+                recCom.value = formatNumber(parseFloat(recCom.value));
             }
         }
     }
@@ -1041,7 +1041,7 @@
     function calculateComm(row){
         var comm = document.getElementById('recCom'+row);
         if(comm.value !== ''){
-            document.getElementById('recCom'+row).value = formatNumberComm(parseFloat((comm.value).replace(/,/g,"")));
+            document.getElementById('recCom'+row).value = formatNumber(parseFloat((comm.value).replace(/,/g,"")));
         }
     }
     
@@ -1115,9 +1115,9 @@
         return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
     }   
     
-    function formatNumberComm(num) {
-        return  num.toFixed(4).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
-    }
+//    function formatNumberComm(num) {
+//        return  num.toFixed(4).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+//    }
     
     function insertCommas(nField){
 
