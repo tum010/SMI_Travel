@@ -1,3 +1,4 @@
+
 function disableFlight() {
     $("#disableFlight").submit();
 }
@@ -99,6 +100,7 @@ $(document).ready(function () {
     });
     
     $(".money").mask('000,000,000,000,000,000', {reverse: true});
+    $(".money2").mask('000', {reverse: true});
     setformat();
     $('.collapse').collapse('hide');
     // datetimepicker
