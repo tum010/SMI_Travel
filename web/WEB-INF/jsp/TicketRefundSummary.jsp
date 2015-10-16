@@ -167,7 +167,7 @@
                                 <label class="col-md-6 control-label text-right" for="rept"></label>
                                 <div class="col-md-6">  
                                     <div class="form-group">
-                                        <button type="button" id="printbutton"  name="printbutton"  class="btn btn-success"><span class="glyphicon glyphicon-print"></span> Print</button>
+                                        <button type="button" id="printbutton"  name="printbutton"  class="btn btn-success" onclick="printTicketRefundSummary();"><span class="glyphicon glyphicon-print"></span> Print</button>
                                     </div>
                                 </div>   
                             </div> 
@@ -416,7 +416,7 @@ function printTicketRefundSummary(){
     var typePrint = document.getElementById("typePrint").value;
     
     if((receiveFromDate !== '') && (receiveToDate !== '')){
-        if(typePrint === 1){
+//        if(typePrint === 1){
             window.open("Excel.smi?name=RefundTicketDetail&refundAgentId=" + refundAgentId 
                 + "&refundAgentName=" + refundAgentName 
                 + "&refundBy=" + refundBy 
@@ -425,7 +425,7 @@ function printTicketRefundSummary(){
                 + "&receiveToDate=" + receiveToDate 
                 + "&paidFromDate=" + paidFromDate 
                 + "&paidToDate=" + paidToDate);
-        }else if(typePrint === 2){
+//        }else if(typePrint === 2){
             window.open("Excel.smi?name=RefundTicketDetail&refundAgentId=" + refundAgentId 
                 + "&refundAgentName=" + refundAgentName 
                 + "&refundBy=" + refundBy 
@@ -434,13 +434,13 @@ function printTicketRefundSummary(){
                 + "&receiveToDate=" + receiveToDate 
                 + "&paidFromDate=" + paidFromDate 
                 + "&paidToDate=" + paidToDate);
-        }else{
-            $("#reporttypepanel").removeClass("has-success");
-            $("#reporttypepanel").addClass("has-error");
-            $("#printbutton").addClass("disabled");
-        }   
+//        }else{
+//            $("#reporttypepanel").removeClass("has-success");
+//            $("#reporttypepanel").addClass("has-error");
+//            $("#printbutton").addClass("disabled");
+//        }   
     } else if((paidFromDate !== '') && (paidToDate !== '')){
-        if(typePrint === 1){
+//        if(typePrint === 1){
             window.open("Excel.smi?name=RefundTicketDetail&refundAgentId=" + refundAgentId 
                 + "&refundAgentName=" + refundAgentName 
                 + "&refundBy=" + refundBy 
@@ -449,7 +449,7 @@ function printTicketRefundSummary(){
                 + "&receiveToDate=" + receiveToDate 
                 + "&paidFromDate=" + paidFromDate 
                 + "&paidToDate=" + paidToDate);
-        }else if(typePrint === 2){
+//        }else if(typePrint === 2){
             window.open("Excel.smi?name=RefundTicketDetail&refundAgentId=" + refundAgentId 
                 + "&refundAgentName=" + refundAgentName 
                 + "&refundBy=" + refundBy 
@@ -458,17 +458,18 @@ function printTicketRefundSummary(){
                 + "&receiveToDate=" + receiveToDate 
                 + "&paidFromDate=" + paidFromDate 
                 + "&paidToDate=" + paidToDate);
-        }else{
-            $("#reporttypepanel").removeClass("has-success");
-            $("#reporttypepanel").addClass("has-error");
-            $("#printbutton").addClass("disabled");
-        }      
+//        }else{
+//            $("#reporttypepanel").removeClass("has-success");
+//            $("#reporttypepanel").addClass("has-error");
+//            $("#printbutton").addClass("disabled");
+//        }      
     } else {
         if(typePrint === ""){
             $("#reporttypepanel").removeClass("has-success");
             $("#reporttypepanel").addClass("has-error");
+        }else{
+         validateDate(); 
         }
-        validateDate();  
     }
 }
 
@@ -620,12 +621,13 @@ function validateDate(date,option){
         $("#receivefromdatepanel").removeClass("has-success");
         $("#receivetodatepanel").removeClass("has-success");
         $("#paidfromdatepanel").removeClass("has-success");
-        $("#paidtodatepanel").removeClass("has-success"); 
+        $("#paidtodatepanel").removeClass("has-success");
+        
         $("#receivefromdatepanel").addClass("has-error");
         $("#receivetodatepanel").addClass("has-error");
         $("#paidfromdatepanel").addClass("has-error");
         $("#paidtodatepanel").addClass("has-error");
-        $("#printbutton").addClass("disabled");
+        $("#printbutton").removeClass("disabled");
     }
 }
     
