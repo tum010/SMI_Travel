@@ -424,7 +424,7 @@
                                     <td> <input style="width: ${AC}" id="ac${i.count}" name="ac${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.accCode}" readonly=""> </td>
                                     <td class="text-center">
                                         <a href="#" onclick=""  data-toggle="modal" data-target="">
-                                            <span id="editSpan${i.count}" class="glyphicon glyphicon-edit editicon" onclick="editlist('${pl.id}','${i.count}')" ></span>
+                                            <span id="editSpan${i.count}" class="glyphicon glyphicon-th-list" onclick="editlist('${pl.id}','${i.count}')" ></span>
                                         </a>
                                         <a href="#" onclick=""  data-toggle="modal" data-target="">
                                             <span id="SpanRemove${i.count}" onclick="deletelist('${pl.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span>
@@ -530,7 +530,7 @@
                                     <td align="center">${pl.accCode}</td>
                                     <td align="center">
                                         <a href="#" onclick=""  data-toggle="modal" data-target="">
-                                            <span id="editSpan${i.count}" class="glyphicon glyphicon-edit editicon" onclick="editlist('${pl.id}','${i.count}')" ></span>
+                                            <span id="editSpan${i.count}" class="glyphicon glyphicon-th-list" onclick="editlist('${pl.id}','${i.count}')" ></span>
                                         </a>
                                     </td>    
                                     <td class="hidden"> <input style="width: ${AC}" id="ac${i.count}" name="ac${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.accCode}" readonly=""> </td>
@@ -1020,7 +1020,7 @@
                 '<td><input id="ac' + row + '" name="ac' + row + '"   type="text" class="form-control" readonly=""></td>' +
                 '<td class="text-center">' +
                     '<a href="#" onclick=""  data-toggle="modal" data-target="">' +
-                        '<span id="editSpan' + row + '" class="glyphicon glyphicon-edit editicon" onclick="editlist(\'\',\''+ row + '\')" ></span>' +
+                        '<span id="editSpan' + row + '" class="glyphicon glyphicon-th-list" onclick="editlist(\'\',\''+ row + '\')" ></span>' +
                     '</a>' +
                     '<a href="#" onclick=""  data-toggle="modal" data-target="">  '+
                         '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon" onclick="deletelist(\'\', \''+row+'\')"></span>' +
