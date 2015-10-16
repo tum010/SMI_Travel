@@ -145,7 +145,7 @@
                             </div>
                         </div>
                     </div>        
-                    <div class="row">
+<!--                    <div class="row">
                         <div class="col-md-10">
                             <div class="form-group">
                                 <label class="col-md-1 control-label text-right" style="width: 330px">Type Print</label>
@@ -160,7 +160,7 @@
                                 </div>   
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
