@@ -161,8 +161,8 @@
                                 <div class="col-sm-2 form-group"> 
                                     <div class="input-group">
                                         <input type="hidden" class="form-control" id="leaderId" name="leaderId" value="${detail.customer.id}"/>
-                                        <input type="hidden" class="form-control" id="FamilyLeaderCode"  name="leaderCode" value="${detail.customer.code}"/>
-                                        <input type="text" class="form-control" id="FamilyLeaderCodeVal" name="leaderCodeVal" value="${detail.customer.code}"   style="background-color: #ffffff">
+                                        <input type="hidden" class="form-control" id="FamilyLeaderCode"  name="FamilyLeaderCode" value="${detail.customer.code}"/>
+                                        <input type="text" class="form-control" id="FamilyLeaderCodeVal" name="FamilyLeaderCodeVal" value="${detail.customer.code}"   style="background-color: #ffffff">
                                         <span class="input-group-addon" id="familyleader-modal"  data-toggle="modal" data-target="#FamilyLeaderModal">
                                             <i id="datafamilyload" class="fa fa-spinner fa-spin hidden"></i>
                                             <span class="glyphicon-search glyphicon"></span>

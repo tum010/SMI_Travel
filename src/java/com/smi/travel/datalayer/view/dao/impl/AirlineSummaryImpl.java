@@ -212,7 +212,7 @@ public class AirlineSummaryImpl implements AirlineSummaryDao {
         String agentIdtemp = "";
         String saleBytemp = "";
         String airtemp = "";
-        for(int i = 0 ; i < 3 ; i++){
+        for(int i = 0 ; i < 2 ; i++){
             Session session = this.sessionFactory.openSession();
             if(i == 0){ // inv
                 query = "select (case when (`inv`.`inv_type` = 'T') then substr(`inv`.`inv_no`,1,5) else substr(`inv`.`inv_no`,1,6) end) AS `invno`,(case when (`fare`.`department` = 'wendy') then `fare`.`inv_amount` else NULL end) AS `amountwendy`,(case when (`fare`.`department` = 'inbound') then `fare`.`inv_amount` else NULL end) AS `amountinbound`,(case when (`fare`.`department` = 'outbound') then `fare`.`inv_amount` else NULL end) AS `amountoutbound` from ((((`ticket_fare_airline` `fare` left join `ticket_fare_invoice` `finv` on((`finv`.`ticket_fare_id` = `fare`.`id`))) left join `invoice` `inv` on(((`inv`.`id` = `inv`.`id`) = `finv`.`invoice_id`))) left join `m_accterm` `term` on((`term`.`id` = `inv`.`term_pay`))) left join `staff` `st` on((`st`.`name` = `fare`.`owner`))) TEMPS";
@@ -341,8 +341,9 @@ public class AirlineSummaryImpl implements AirlineSummaryDao {
                             .addScalar("invno",Hibernate.STRING)
                             .list();
             }
+//            System.out.println("=========================================================");
             System.out.println("query : "+query);
-
+//            System.out.println("=========================================================");
             SimpleDateFormat df = new SimpleDateFormat();
             df.applyPattern("dd-MM-yyyy hh:mm");
             SimpleDateFormat dateformat = new SimpleDateFormat();

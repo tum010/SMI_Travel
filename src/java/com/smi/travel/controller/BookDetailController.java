@@ -68,7 +68,7 @@ public class BookDetailController extends SMITravelController {
         String action = request.getParameter("action");
         String refNo = request.getParameter("referenceNo");
         String leaderId = request.getParameter("leaderId");
-        String leaderCode = request.getParameter("leaderCode");
+        String leaderCode = request.getParameter("FamilyLeaderCodeVal");
         String initial = request.getParameter("initialname");
         String firstname = request.getParameter("firstname");
         String lastname = request.getParameter("lastname");
@@ -125,6 +125,17 @@ public class BookDetailController extends SMITravelController {
             if (StringUtils.isNotEmpty(resultS)) {
                 request.setAttribute(TransactionResult, getResultText(Integer.parseInt(resultS)));
             }
+            HistoryBooking historyBooking = new HistoryBooking();
+            historyBooking.setHistoryDate(new Date());
+            historyBooking.setAction("VIEW BOOKING");
+            String detail = "Refno : " + refNo + "\r\n"
+                            + "FL : " + utilty.getCustomerName(master.getCustomer()) + "\r\n"
+                            + "Agent : " + master.getAgent().getCode() + " : " + master.getAgent().getName();
+            historyBooking.setDetail(detail);
+            historyBooking.setMaster(master);
+            historyBooking.setStaff(user);
+            int resultsave = bookingDetailService.insertHistoryBooking(historyBooking);
+            System.out.println(" resultsave " + resultsave);
         } else if ("update".equalsIgnoreCase(action)) {
             //Get data from form
             String agentId = request.getParameter("agent_id");
@@ -176,7 +187,7 @@ public class BookDetailController extends SMITravelController {
             HistoryBooking historyBooking = new HistoryBooking();
             historyBooking.setHistoryDate(new Date());
             historyBooking.setAction("EDIT BOOKING");
-            String detail = "Refno : " + refNo + "\r\n"
+            String detail = "Refno : " + dbMaster.getReferenceNo() + "\r\n"
                             + "FL : " + utilty.getCustomerName(dbMaster.getCustomer()) + "\r\n"
                             + "Agent : " + dbMaster.getAgent().getCode() + " : " + dbMaster.getAgent().getName();
             historyBooking.setDetail(detail);
@@ -246,7 +257,7 @@ public class BookDetailController extends SMITravelController {
                 HistoryBooking historyBooking = new HistoryBooking();
                 historyBooking.setHistoryDate(new Date());
                 historyBooking.setAction("CREATE NEW BOOKING");
-                String detail = "Refno : " + refNo + "\r\n"
+                String detail = "Refno : " + newMaster.getReferenceNo() + "\r\n"
                                 + "FL : " + utilty.getCustomerName(newMaster.getCustomer()) + "\r\n"
                                 + "Agent : " + newMaster.getAgent().getCode() + " : " + newMaster.getAgent().getName();
                 historyBooking.setDetail(detail);

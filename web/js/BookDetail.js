@@ -25,7 +25,7 @@ $(document).ready(function () {
                             }
                         }
                     },
-                    leaderCode: {
+                    FamilyLeaderCodeVal: {
                         validators: {
                             notEmpty: {
                                 message: 'The Family Leader is required'
@@ -71,9 +71,9 @@ $(document).ready(function () {
                 }
             });
     $bookForm.on('mouseover', function () {
-        var leadercode = $(this).find('[name="leaderCode"]');
-        var isEmpty = leadercode.val() === '';
-        $bookForm.bootstrapValidator('enableFieldValidators', 'leaderCode', isEmpty);
+        var FamilyLeaderCodeVal = $(this).find('[name="FamilyLeaderCodeVal"]');
+        var isEmpty = FamilyLeaderCodeVal.val() === '';
+        $bookForm.bootstrapValidator('enableFieldValidators', 'FamilyLeaderCodeVal', isEmpty);
         var leaderName = $(this).find('[name="firstname"]');
         var isEmpty = leaderName.val() === '';
         $bookForm.bootstrapValidator('enableFieldValidators', 'firstname', isEmpty);
