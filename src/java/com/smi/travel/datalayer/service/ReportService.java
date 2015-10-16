@@ -565,8 +565,8 @@ public class ReportService {
         return summaryTicketAdjustCostAndIncomeDao.getTicketCommissionReceive(reportType, invoiceFromDate, invoiceToDate, issueFrom, issueTo, paymentType, departmentt, salebyUser, termPayt,printby);
     }
      
-     public List getRefundTicketDetail(String refundagent,String refundnameby,String passenger,String receivefrom,String receiveto,String paidfrom,String paidto,String typeprint,String printby){
-         return refundAirReportDao.getRefundTicketDetail(refundagent, refundnameby, passenger, receivefrom, receiveto, paidfrom, paidto, typeprint,printby);
+     public List getRefundTicketDetail(String refundagent,String refundnameby,String passenger,String receivefrom,String receiveto,String paidfrom,String paidto,String typeprint,String printby,String refundby){
+         return refundAirReportDao.getRefundTicketDetail(refundagent, refundnameby, passenger, receivefrom, receiveto, paidfrom, paidto, typeprint,printby,refundby);
      }
 
     public List getTicketProfitLoss(String invoiceFromDate, String invoiceToDate, String printby) {

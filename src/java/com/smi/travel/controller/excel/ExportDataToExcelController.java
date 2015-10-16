@@ -184,15 +184,16 @@ public class ExportDataToExcelController  extends SMITravelController{
         }else if(RefundTicketDetail.equals(name)){
             System.out.println("get excel data ap RefundTicketDetail");
             System.out.println("Term : " + termPayt);    
-            String refundagent = request.getParameter("");
-            String refundnameby = request.getParameter("");
-            String passengername = request.getParameter("");
-            String receivefrom = request.getParameter("");
-            String receiveto = request.getParameter("");
-            String paidfrom = request.getParameter("");
-            String paidto = request.getParameter("");
-            String typeprint = request.getParameter("");
-            data = reportservice.getRefundTicketDetail(refundagent, refundnameby, passengername, receivefrom, receiveto, paidfrom, paidto, typeprint,printby);
+            String refundagent = request.getParameter("refundAgentId");
+            String refundnameby = request.getParameter("refundAgentName");
+            String refundBy = request.getParameter("refundBy");
+            String passengername = request.getParameter("passenger");
+            String receivefrom = request.getParameter("receiveFromDate");
+            String receiveto = request.getParameter("receiveToDate");
+            String paidfrom = request.getParameter("paidFromDate");
+            String paidto = request.getParameter("paidToDate");
+            String typeprint = request.getParameter("typePrint");
+            data = reportservice.getRefundTicketDetail(refundagent, refundnameby, passengername, receivefrom, receiveto, paidfrom, paidto, typeprint,printby,refundBy);
         }else if(TicketProfitLoss.equals(name)){
             data = reportservice.getTicketProfitLoss(invoiceFromDate,invoiceToDate,printby);
         }else if(TicketSummaryCommission.equals(name)){

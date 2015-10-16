@@ -6481,7 +6481,12 @@ public class ExportDataToExcelView extends AbstractExcelView {
         
         List<RefundTicketView> list = refundTicket;
         RefundTicketView refund = new RefundTicketView();
-        refund = (RefundTicketView) list.get(0);
+        if(list != null){
+            refund = (RefundTicketView) list.get(0);
+        }else{
+            refund = null;
+        }
+        
         // Row 2
         HSSFRow row02 = sheet.createRow(1);
         HSSFCell cell021 = row02.createCell(0);
