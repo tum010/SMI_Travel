@@ -269,6 +269,8 @@
         var position = $(this).offset();
         $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
     });
+    
+    $('.collapse').collapse('hide');
 
 });
 
