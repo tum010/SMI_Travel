@@ -55,9 +55,9 @@
                                 <label class="col-md-6 control-label text-right">Inv From</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
-                                        <div class='input-group invfromdate' id='invDateFrom'>
+                                        <div class='input-group date invfromdate' id='invDateFrom'>
                                             <input type='text' id="invoiceFromDate" name="invoiceFromDate" class="form-control" data-date-format="YYYY-MM-DD"/>
-                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
                                     </div>
@@ -71,9 +71,9 @@
                                 <label class="col-md-6 control-label text-right">Inv To</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
-                                        <div class='input-group invtodate' id='invDateTo'>
+                                        <div class='input-group date invtodate' id='invDateTo'>
                                             <input type='text' id="InvoiceToDate" name="InvoiceToDate"  class="form-control" data-date-format="YYYY-MM-DD" />
-                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
                                     </div>
@@ -87,9 +87,9 @@
                                 <label class="col-md-6 control-label text-right">Issue From</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
-                                        <div class='input-group issuefromdate' id='DateFromIssue'>
+                                        <div class='input-group date issuefromdate' id='DateFromIssue'>
                                             <input type='text' id="issueFrom" name="issueFrom" class="form-control" data-date-format="YYYY-MM-DD"/>
-                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
                                     </div>
@@ -103,9 +103,9 @@
                                 <label class="col-md-6 control-label text-right">Issue To</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
-                                        <div class='input-group issuetodate' id='DateToIssue'>
+                                        <div class='input-group date issuetodate' id='DateToIssue'>
                                             <input type='text' id="issueTo" name="issueTo"  class="form-control" data-date-format="YYYY-MM-DD" />
-                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
                                     </div>
@@ -136,9 +136,9 @@
                                 <label class="col-md-6 control-label text-right">Refund Receive From</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
-                                        <div class='input-group refundfromdate' id='DateFromRefund'>
+                                        <div class='input-group date refundfromdate' id='DateFromRefund'>
                                             <input type='text' id="refundFrom" name="refundFrom" class="form-control" data-date-format="YYYY-MM-DD"/>
-                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
                                     </div>
@@ -152,9 +152,9 @@
                                 <label class="col-md-6 control-label text-right">Refund Receive To</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
-                                        <div class='input-group refundtodate' id='DateToRefund'>
+                                        <div class='input-group date refundtodate' id='DateToRefund'>
                                             <input type='text' id="refundTo" name="refundTo"  class="form-control" data-date-format="YYYY-MM-DD" />
-                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
                                     </div>

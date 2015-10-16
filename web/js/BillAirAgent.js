@@ -129,14 +129,12 @@ $(document).ready(function() {
     });
     
     //validate
-    $('.date').datetimepicker({
-    });
-        
-    $('span').click(function() {
-        var position = $(this).offset();
-        console.log("positon :" + position.top);
-        $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
-    });
+    $('.date').datetimepicker();
+        $('.spandate').click(function() {
+            var position = $(this).offset();
+            console.log("positon :" + position.top);
+            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+        });
         
 //    $("#BillAirAgent").bootstrapValidator({
 //        framework: 'bootstrap',
