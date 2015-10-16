@@ -413,7 +413,7 @@ function printTicketRefundSummary(){
     var receiveToDate = document.getElementById("receiveToDate").value;
     var paidFromDate = document.getElementById("paidFromDate").value;
     var paidToDate = document.getElementById("paidToDate").value;
-    var typePrint = document.getElementById("typePrint").value;
+//    var typePrint = document.getElementById("typePrint").value;
     
     if((receiveFromDate !== '') && (receiveToDate !== '')){
 //        if(typePrint === 1){
