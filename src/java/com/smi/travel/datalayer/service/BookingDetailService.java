@@ -6,6 +6,7 @@
 package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.dao.AgentDao;
+import com.smi.travel.datalayer.dao.BookingHistoryDao;
 import com.smi.travel.datalayer.dao.CustomerDao;
 import com.smi.travel.datalayer.dao.LandBookingDao;
 import com.smi.travel.datalayer.dao.MasterDao;
@@ -35,6 +36,7 @@ public class BookingDetailService {
     private BookingSummaryDao bookingsummarydao;
     private SystemUserDao systemUserDao;
     private LandBookingDao landbookingdao;
+    private BookingHistoryDao bookinghistorydao;
     private static final String OUTBOUNDTYPE = "2";
 
     public Master getBookingDetailFromRefno(String Refno) {
@@ -142,7 +144,11 @@ public class BookingDetailService {
         System.out.println("saveFamilyleader");
         return passengerdao.saveFamilyleader(passenger,customerCode);
     }
-
+    
+    public int insertHistoryBooking(HistoryBooking historyBooking){
+        return bookinghistorydao.insertHistoryBooking(historyBooking);
+    }
+    
     public AgentDao getAgentdao() {
         return agentdao;
     }
@@ -197,6 +203,14 @@ public class BookingDetailService {
 
     public void setLandbookingdao(LandBookingDao landbookingdao) {
         this.landbookingdao = landbookingdao;
+    }
+
+    public BookingHistoryDao getBookinghistorydao() {
+        return bookinghistorydao;
+    }
+
+    public void setBookinghistorydao(BookingHistoryDao bookinghistorydao) {
+        this.bookinghistorydao = bookinghistorydao;
     }
     
     

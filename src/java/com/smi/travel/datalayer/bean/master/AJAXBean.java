@@ -222,9 +222,9 @@ public class AJAXBean extends AbstractBean implements
             } else if ("saveCustomer".equalsIgnoreCase(type)) {
                 Customer customer = new Customer();
                 String initialID = map.get("initialID").toString();
-                customer.setFirstName(map.get("first").toString());
-                customer.setLastName(map.get("last").toString());
-                customer.setAddress(map.get("address").toString());
+                customer.setFirstName((map.get("first").toString()).toUpperCase());
+                customer.setLastName((map.get("last").toString()).toUpperCase());
+                customer.setAddress((map.get("address").toString()).toUpperCase());
                 if (map.get("initialID") != null) {
                     MInitialname initialname = new MInitialname();
                     initialname.setId(initialID);

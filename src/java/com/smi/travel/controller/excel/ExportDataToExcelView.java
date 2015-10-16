@@ -6483,9 +6483,24 @@ public class ExportDataToExcelView extends AbstractExcelView {
         HSSFCellStyle styleBorderTop = wb.createCellStyle();
             styleBorderTop.setBorderTop(styleBorderTop.BORDER_THIN);
         
-        List<RefundTicketView> list = refundTicket;
+        List<RefundTicketView> list = null;
+       
+        if(refundTicket != null && refundTicket.size() != 0 ){
+            System.out.println("Size list : " + refundTicket.size());
+            list = refundTicket;
+        }else{
+            list = null;
+        }
+        
+        if(refundTicket != null && refundTicket.size() != 0 ){
         RefundTicketView refund = new RefundTicketView();
-        refund = (RefundTicketView) list.get(0);
+        if(list != null && list.size() != 0){
+            System.out.println("Size list  refund : " + list.size());
+            refund = (RefundTicketView) list.get(0);
+        }else{
+            refund = null;
+        }
+        
         // Row 2
         HSSFRow row02 = sheet.createRow(1);
         HSSFCell cell021 = row02.createCell(0);
@@ -6735,6 +6750,13 @@ public class ExportDataToExcelView extends AbstractExcelView {
         rowL.createCell(13).setCellStyle(styleBorderTop);
         rowL.createCell(14).setCellStyle(styleBorderTop);
         rowL.createCell(15).setCellStyle(styleBorderTop);
+        }else{
+            HSSFRow row02_2 = sheet.createRow(1);
+            HSSFCell cell021 = row02_2.createCell(0);
+            cell021.setCellValue("No Data");
+            cell021.setCellStyle(styleC21);
+            sheet.autoSizeColumn(0);
+        }
     }
     
     public void genSummaryAirlinePaxReport(HSSFWorkbook wb, List summaryAirlinePax) {

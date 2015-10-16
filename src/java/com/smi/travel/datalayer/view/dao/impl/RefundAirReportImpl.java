@@ -106,7 +106,7 @@ public class RefundAirReportImpl implements RefundAirReportDao{
     }
 
     @Override
-    public List getRefundTicketDetail(String refundagent, String refundnameby, String passenger, String receivefrom, String receiveto, String paidfrom, String paidto, String typeprint,String printby) {
+    public List getRefundTicketDetail(String refundagent, String refundnameby, String passenger, String receivefrom, String receiveto, String paidfrom, String paidto, String typeprint,String printby,String refundby) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();  
         Date thisdate = new Date();
@@ -114,13 +114,13 @@ public class RefundAirReportImpl implements RefundAirReportDao{
         String querydata = "";
         String query = "";
         int checkQuery = 0;
-        if( refundagent != null || refundnameby != null || passenger != null || receivefrom != null || receiveto != null || paidfrom != null || paidto != null ){
+        if( refundagent != null || refundnameby != null || passenger != null || receivefrom != null || receiveto != null || paidfrom != null || paidto != null || refundby != null){
             query = "SELECT * FROM `refund_ticket_detail_view` invm  Where";
         }else{
             query = "SELECT * FROM `refund_ticket_detail_view` invm";
         }
         
-        if ((paidfrom != null )&&(!"".equalsIgnoreCase(paidto))) {
+        if ((paidfrom != null )&&(!"".equalsIgnoreCase(paidfrom))) {
             if ((paidto != null )&&(!"".equalsIgnoreCase(paidto))) {
                 if(checkQuery == 1){
                      query += " and invm.paiddate  BETWEEN  '" + paidfrom + "' AND '" + paidto + "' ";
@@ -130,7 +130,7 @@ public class RefundAirReportImpl implements RefundAirReportDao{
                 }
             }
         }
-        if ((receivefrom != null )&&(!"".equalsIgnoreCase(receiveto))) {
+        if ((receivefrom != null )&&(!"".equalsIgnoreCase(receivefrom))) {
             if ((receiveto != null )&&(!"".equalsIgnoreCase(receiveto))) {
                 if(checkQuery == 1){
                      query += " and invm.receivedate  BETWEEN  '" + receivefrom + "' AND '" + receiveto + "' ";
@@ -140,22 +140,33 @@ public class RefundAirReportImpl implements RefundAirReportDao{
                 }
             }
         }
+        
+        if ((paidfrom != null )&&(!"".equalsIgnoreCase(paidfrom))) {
+            if ((paidto != null )&&(!"".equalsIgnoreCase(paidto))) {
+                if(checkQuery == 1){
+                     query += " and invm.paiddate  BETWEEN  '" + paidfrom + "' AND '" + paidto + "' ";
+                }else{
+                    checkQuery = 1;
+                     query += " invm.paiddate  BETWEEN  '" + paidfrom + "' AND '" + paidto + "' ";
+                }
+            }
+        }
          
          if((refundagent != null) &&(!"".equalsIgnoreCase(refundagent))){
             if(checkQuery == 1){
-                query += " and invm.refundagent  = " + refundagent + "' ";
+                query += " and invm.refundagent  = '" + refundagent + "' ";
             }else{
                 checkQuery = 1;
-                query += " invm.refundagent  = " + refundagent + "' ";
+                query += " invm.refundagent  = '" + refundagent + "' ";
             }
          }
          
          if((refundnameby != null) &&(!"".equalsIgnoreCase(refundnameby))){
             if(checkQuery == 1){
-                query += " and invm.refundnameby  = " + refundnameby + "' ";
+                query += " and invm.refundnameby  = '" + refundnameby + "' ";
             }else{
                 checkQuery = 1;
-                query += " invm.refundnameby  = " + refundnameby + "' ";
+                query += " invm.refundnameby  = '" + refundnameby + "' ";
             }
          }
          
@@ -165,6 +176,15 @@ public class RefundAirReportImpl implements RefundAirReportDao{
             }else{
                 checkQuery = 1;
                 query += " invm.passenger  LIKE  '%" + refundnameby + "%' ";
+            }
+         }
+         
+         if((refundby != null) &&(!"".equalsIgnoreCase(refundby))){
+            if(checkQuery == 1){
+                query += " and invm.refundby  = '" + refundby + "' ";
+            }else{
+                checkQuery = 1;
+                query += " invm.refundby  = '" + refundby + "' ";
             }
          }
          
@@ -188,6 +208,8 @@ public class RefundAirReportImpl implements RefundAirReportDao{
                .addScalar("airlinecomm", Hibernate.STRING)
                 .addScalar("airlineagentname", Hibernate.STRING)
                 .addScalar("profit", Hibernate.STRING)
+                .addScalar("refundby", Hibernate.STRING)
+                .addScalar("paiddate", Hibernate.STRING)
                 .list();
         if(refundTicketDetailList != null && refundTicketDetailList.size() != 0){
         for (Object[] B : refundTicketDetailList) {
@@ -251,8 +273,12 @@ public class RefundAirReportImpl implements RefundAirReportDao{
             refund.setAirlinecomm((util.ConvertString(B[14])) == "" ? "" : util.ConvertString(B[14]));
             refund.setAirlineagentname((util.ConvertString(B[15])) == "" ? "" : util.ConvertString(B[15]));
             refund.setProfit((util.ConvertString(B[16])) == "" ? "" : util.ConvertString(B[16]));
+            refund.setRefundby((util.ConvertString(B[17])) == "" ? "" : util.ConvertString(B[17]));
+            refund.setPaiddate((util.ConvertString(B[18])) == "" ? "" : util.ConvertString(B[18]));
             data.add(refund);
         }   
+    }else{
+            data = null;
     }
     return data;
 }

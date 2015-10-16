@@ -14,5 +14,5 @@ import java.util.List;
  */
 public interface RefundAirReportDao {
     public List getRefundAir(String refundId);
-    public List getRefundTicketDetail(String refundagent,String refundnameby,String passenger,String receivefrom,String receiveto,String paidfrom,String paidto,String typeprint,String printby);
+    public List getRefundTicketDetail(String refundagent,String refundnameby,String passenger,String receivefrom,String receiveto,String paidfrom,String paidto,String typeprint,String printby,String refundby);
 }

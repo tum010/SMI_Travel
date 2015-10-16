@@ -1,8 +1,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!--<script type="text/javascript" src="js/TicketRefundSummary.js"></script>--> 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<link href="css/jquery-ui.css" rel="stylesheet">
 
 <section class="content-header"  >
     <h4>
@@ -166,7 +167,7 @@
                                 <label class="col-md-6 control-label text-right" for="rept"></label>
                                 <div class="col-md-6">  
                                     <div class="form-group">
-                                        <button type="button" id="printbutton"  name="printbutton"  class="btn btn-success"><span class="glyphicon glyphicon-print"></span> Print</button>
+                                        <button type="button" id="printbutton"  name="printbutton"  class="btn btn-success" onclick="printTicketRefundSummary();"><span class="glyphicon glyphicon-print"></span> Print</button>
                                     </div>
                                 </div>   
                             </div> 
@@ -273,7 +274,14 @@
 
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
-        $('.datemask').mask('0000-00-00');
+         $('.date').datetimepicker({
+        });
+
+        $('.span').click(function() {
+            var position = $(this).offset();
+            console.log("positon :" + position.top);
+            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+        });
         
         var RefundAgentTable = $('#RefundAgentTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
@@ -370,7 +378,7 @@
 
         $("#searchCustFrom").keyup(function (event) {
             if (event.keyCode === 13) {
-                if ($("#searchCustFrom").val() == "") {
+                if ($("#searchCustFrom").val() === "") {
                     // alert('please input data');
                 }
                 searchCustomerAgentList($("#searchCustFrom").val());
@@ -398,50 +406,70 @@
 
 function printTicketRefundSummary(){
     var refundAgentId = document.getElementById("refundAgentId").value;
-    var refundAgentCode = document.getElementById("refundAgentCode").value;
+    var refundAgentName = document.getElementById("refundAgentName").value;
     var refundBy = document.getElementById("refundBy").value;
     var passenger = document.getElementById("passenger").value;
-    var sectortoberef = document.getElementById("sectortoberef").value;
     var receiveFromDate = document.getElementById("receiveFromDate").value;
     var receiveToDate = document.getElementById("receiveToDate").value;
     var paidFromDate = document.getElementById("paidFromDate").value;
     var paidToDate = document.getElementById("paidToDate").value;
     var typePrint = document.getElementById("typePrint").value;
     
-//          alert(
-//          "refundAgentId ::: "+refundAgentId+
-//          "refundAgentCode ::: "+refundAgentCode+
-//          "refundBy ::: "+refundBy+
-//          "passenger ::: "+passenger+
-//          "sectortoberef ::: "+sectortoberef+
-//          "receiveFromDate ::: "+receiveFromDate+
-//          "receiveToDate ::: "+receiveToDate+
-//          "paidFromDate ::: "+paidFromDate+
-//          "paidToDate ::: "+paidToDate+
-//          "typePrint ::: "+typePrint
-//          );
     if((receiveFromDate !== '') && (receiveToDate !== '')){
-        if(typePrint == 1){
-        }else if(typePrint == 2){
-        }else{
-            $("#reporttypepanel").removeClass("has-success");
-            $("#reporttypepanel").addClass("has-error");
-            $("#printbutton").addClass("disabled");
-        }   
+//        if(typePrint === 1){
+            window.open("Excel.smi?name=RefundTicketDetail&refundAgentId=" + refundAgentId 
+                + "&refundAgentName=" + refundAgentName 
+                + "&refundBy=" + refundBy 
+                + "&passenger=" + passenger 
+                + "&receiveFromDate=" + receiveFromDate 
+                + "&receiveToDate=" + receiveToDate 
+                + "&paidFromDate=" + paidFromDate 
+                + "&paidToDate=" + paidToDate);
+//        }else if(typePrint === 2){
+            window.open("Excel.smi?name=RefundTicketDetail&refundAgentId=" + refundAgentId 
+                + "&refundAgentName=" + refundAgentName 
+                + "&refundBy=" + refundBy 
+                + "&passenger=" + passenger 
+                + "&receiveFromDate=" + receiveFromDate 
+                + "&receiveToDate=" + receiveToDate 
+                + "&paidFromDate=" + paidFromDate 
+                + "&paidToDate=" + paidToDate);
+//        }else{
+//            $("#reporttypepanel").removeClass("has-success");
+//            $("#reporttypepanel").addClass("has-error");
+//            $("#printbutton").addClass("disabled");
+//        }   
     } else if((paidFromDate !== '') && (paidToDate !== '')){
-        if(typePrint == 1){
-        }else if(typePrint == 2){
-        }else{
-            $("#reporttypepanel").removeClass("has-success");
-            $("#reporttypepanel").addClass("has-error");
-            $("#printbutton").addClass("disabled");
-        }      
+//        if(typePrint === 1){
+            window.open("Excel.smi?name=RefundTicketDetail&refundAgentId=" + refundAgentId 
+                + "&refundAgentName=" + refundAgentName 
+                + "&refundBy=" + refundBy 
+                + "&passenger=" + passenger 
+                + "&receiveFromDate=" + receiveFromDate 
+                + "&receiveToDate=" + receiveToDate 
+                + "&paidFromDate=" + paidFromDate 
+                + "&paidToDate=" + paidToDate);
+//        }else if(typePrint === 2){
+            window.open("Excel.smi?name=RefundTicketDetail&refundAgentId=" + refundAgentId 
+                + "&refundAgentName=" + refundAgentName 
+                + "&refundBy=" + refundBy 
+                + "&passenger=" + passenger 
+                + "&receiveFromDate=" + receiveFromDate 
+                + "&receiveToDate=" + receiveToDate 
+                + "&paidFromDate=" + paidFromDate 
+                + "&paidToDate=" + paidToDate);
+//        }else{
+//            $("#reporttypepanel").removeClass("has-success");
+//            $("#reporttypepanel").addClass("has-error");
+//            $("#printbutton").addClass("disabled");
+//        }      
     } else {
-        if(typePrint == ""){
+        if(typePrint === ""){
             $("#reporttypepanel").removeClass("has-success");
             $("#reporttypepanel").addClass("has-error");
+        }else{
+         validateDate(); 
         }
-        validateDate();  
     }
 }
 
@@ -593,12 +621,13 @@ function validateDate(date,option){
         $("#receivefromdatepanel").removeClass("has-success");
         $("#receivetodatepanel").removeClass("has-success");
         $("#paidfromdatepanel").removeClass("has-success");
-        $("#paidtodatepanel").removeClass("has-success"); 
+        $("#paidtodatepanel").removeClass("has-success");
+        
         $("#receivefromdatepanel").addClass("has-error");
         $("#receivetodatepanel").addClass("has-error");
         $("#paidfromdatepanel").addClass("has-error");
         $("#paidtodatepanel").addClass("has-error");
-        $("#printbutton").addClass("disabled");
+        $("#printbutton").removeClass("disabled");
     }
 }
     
