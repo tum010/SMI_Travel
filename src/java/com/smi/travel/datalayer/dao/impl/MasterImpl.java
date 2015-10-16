@@ -12,6 +12,7 @@ import com.smi.travel.datalayer.entity.HistoryBooking;
 import com.smi.travel.datalayer.entity.MBookingstatus;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.Passenger;
+import com.smi.travel.util.UtilityFunction;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.Query;
@@ -30,7 +31,7 @@ public class MasterImpl implements MasterDao{
     private static final String BOOKINGLISTFROMREFNO = "from Master m where m.referenceNo = :refno";
     private static final String MAXREFNO = "select max(mas.referenceNo) from Master mas";
     private static final String BOOKSTATUSFROMREFNO = "from Master m where m.referenceNo = :refno";
-
+    UtilityFunction util; 
     @Override
     public List<Master> getListBooking() {
        Session session = this.getSessionFactory().openSession();
@@ -88,6 +89,11 @@ public class MasterImpl implements MasterDao{
             }else{
                 session.update(passenger);
             }
+            UtilityFunction utilty = new UtilityFunction();
+            String detail = "Refno : " + master.getReferenceNo() + "\r\n"
+                            + "FL : " + utilty.getCustomerName(master.getCustomer()) + "\r\n"
+                            + "Agent : " + master.getAgent().getCode() + " : " + master.getAgent().getName();
+            historyBooking.setDetail(detail);
             
             //save historyBooking
             session.save(historyBooking);
