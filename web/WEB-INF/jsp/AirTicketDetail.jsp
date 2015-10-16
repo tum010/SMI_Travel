@@ -174,7 +174,7 @@
                                 </c:if>
                                 <tr ${colourStatus}>
                                     <td>
-                                        <input type="text" id="flight-${i.count}-flightOrder" name="flight-${i.count}-flightOrder" class="form-control" maxlength="11" value="${flight.flightOrder}" />                                       
+                                        <input type="text" id="flight-${i.count}-flightOrder" name="flight-${i.count}-flightOrder" class="form-control money2" maxlength="11" value="${flight.flightOrder}" />                                       
                                     </td>
                                     <td>${flight.airticketAirline.MAirline.getCode()}</td>
                                     <td>${flight.flightNo}</td>
