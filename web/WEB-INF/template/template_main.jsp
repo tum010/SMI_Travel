@@ -18,6 +18,7 @@
         <link href="css/selectize.bootstrap3.css" rel="stylesheet">
         <link href="css/SMITravel.css" rel="stylesheet">
         <link href="css/bootstrapValidator.css" rel="stylesheet">
+        <link href="css/loadingpage.css" rel="stylesheet">
 
         <!--javascript-->
 		
@@ -28,17 +29,21 @@
         <script src="js/es.js"></script>
         <script type="text/javascript" src="js/jquery.mask.min.js"></script>
         <script type="text/javascript" src="js/Utility.js"></script>
+        
     </head>
     <body>
-        <!--Header-->
-
-        <div class="page-section-header">
+        <!--Header-->         
+        <div class="page-section-header">          
             <tiles:insertAttribute name="header" />
         </div> 
-        <!--Body-->    
-        <div class="page-section-main">
-            <tiles:insertAttribute name="body" />
+        <!--Body-->
+        <div class="loading">
+            <img id="loading-image" src="img/712.GIF" alt="Loading..." />
         </div>
+        <div class="page-section-main">
+            <tiles:insertAttribute name="body" /> 
+        </div>
+       
         <!--Footer-->
         <div id="page-section-footer">
             <tiles:insertAttribute name="footer" />
@@ -46,6 +51,7 @@
         <script src="js/selectize.js"></script>
         <script src="js/common.js"></script>
         <script src="js/moment.js"></script>
+        <script src="js/loadingpage.js"></script>
         <script src="js/bootstrap/bootstrap.min.js"></script>
         <script src="js/bootstrap/bootstrap-datetimepicker.js"></script>
         <script src="js/bootstrap/navbar.js"></script>
@@ -57,6 +63,6 @@
         <script src="js/datatable/js/jquery.dataTables.editable.js" type="text/javascript"></script>
         <script src="js/datatable/js/jquery.jeditable.time.js" type="text/javascript"></script>
         <script src="js/datatable/js/jquery.jeditable.datepicker.js" type="text/javascript"></script>
-        <script src="js/datatable/js/jquery.jeditable.checkbox.js" type="text/javascript"></script>
+        <script src="js/datatable/js/jquery.jeditable.checkbox.js" type="text/javascript"></script>     
     </body>
 </html>
