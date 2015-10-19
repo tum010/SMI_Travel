@@ -10,32 +10,45 @@ package com.smi.travel.datalayer.view.entity;
  * @author Kanokporn
  */
 public class TicketSummaryCommissionView {
-    private String invno;					
-    private String invdate;					
-    private String department;					
-    private String owner;					
-    private String termpay;					
-    private String agent;					
-    private String type	;				
-    private String buy;					
-    private String pax	;				
-    private String air	;				
+    
+    //detail
+    private String invno;
+    private String invdate;
+    private String department;
+    private String owner;
+    private String termpay;
+    private String agent;
+    private String type;
+    private String buy;
+    private String pax;
+    private String air;
     private String docno;
-    private String refno;					
-    private String issuedate;					
-    private String amountwendy	;				
-    private String amountoutbound;					
-    private String sale	;			
-    private String cost	;				
-    private String over	;				
-    private String add;					
-    private String dres;					
-    private String profit;					
-    private String ticcomm;					
-    private String little;					
-    private String agentcomm;					
-    private String pay	;				
+    private String refno;
+    private String issuedate;
+    private String amountwendy;
+    private String amountoutbound;
+    private String amountinbound;
+    private String sale;
+    private String cost;
+    private String over;
+    private String add;
+    private String dres;
+    private String profit;
+    private String ticcomm;
+    private String little;
+    private String agentcommpay;
+    private String pay;
     private String comm;
+    private String agentcommrec;
+
+    //air
+    private String typepayment;
+    private String typerounting;
+    
+    //agent
+    private String agentname;		
+            
+    //Header
     private String routingdetail;
     private String overdate;
     private String littledate;
@@ -44,8 +57,6 @@ public class TicketSummaryCommissionView {
     private String addpaydate;
     private String decreasepaydate;
     private String ticketno;
-    private String agentcommrec;	
-    //Header
     private String invoicefromdatePage;
     private String invoicetodatePage;
     private String issuefromdatePage;
@@ -76,26 +87,38 @@ public class TicketSummaryCommissionView {
     private String salebyUserPage ;
     private String salebyNamePage ;
     private String termPayPage ; 
-    private String  printbyPage;
+    private String printbyPage;
     private String printonPage;
-
-    public String getPrintbyPage() {
-        return printbyPage;
-    }
-
-    public void setPrintbyPage(String printbyPage) {
-        this.printbyPage = printbyPage;
-    }
-
-    public String getPrintonPage() {
-        return printonPage;
-    }
-
-    public void setPrintonPage(String printonPage) {
-        this.printonPage = printonPage;
-    }
     
-    
+//    private String invno;					
+//    private String invdate;					
+//    private String department;					
+//    private String owner;					
+//    private String termpay;					
+//    private String agent;					
+//    private String type	;				
+//    private String buy;					
+//    private String pax;				
+//    private String air;				
+//    private String docno;
+//    private String refno;					
+//    private String issuedate;					
+//    private String amountwendy	;				
+//    private String amountoutbound;	
+//    private String amountinbound;
+//    private String sale	;			
+//    private String cost	;				
+//    private String over	;				
+//    private String add;					
+//    private String dres;					
+//    private String profit;					
+//    private String ticcomm;					
+//    private String little;					
+//    private String agentcomm;					
+//    private String pay	;				
+//    private String comm;
+//    private String agentcommrec;
+//    private String agentcommpay;
 
     public String getInvno() {
         return invno;
@@ -217,6 +240,14 @@ public class TicketSummaryCommissionView {
         this.amountoutbound = amountoutbound;
     }
 
+    public String getAmountinbound() {
+        return amountinbound;
+    }
+
+    public void setAmountinbound(String amountinbound) {
+        this.amountinbound = amountinbound;
+    }
+
     public String getSale() {
         return sale;
     }
@@ -281,12 +312,12 @@ public class TicketSummaryCommissionView {
         this.little = little;
     }
 
-    public String getAgentcomm() {
-        return agentcomm;
+    public String getAgentcommpay() {
+        return agentcommpay;
     }
 
-    public void setAgentcomm(String agentcomm) {
-        this.agentcomm = agentcomm;
+    public void setAgentcommpay(String agentcommpay) {
+        this.agentcommpay = agentcommpay;
     }
 
     public String getPay() {
@@ -303,6 +334,38 @@ public class TicketSummaryCommissionView {
 
     public void setComm(String comm) {
         this.comm = comm;
+    }
+
+    public String getAgentcommrec() {
+        return agentcommrec;
+    }
+
+    public void setAgentcommrec(String agentcommrec) {
+        this.agentcommrec = agentcommrec;
+    }
+
+    public String getTypepayment() {
+        return typepayment;
+    }
+
+    public void setTypepayment(String typepayment) {
+        this.typepayment = typepayment;
+    }
+
+    public String getTyperounting() {
+        return typerounting;
+    }
+
+    public void setTyperounting(String typerounting) {
+        this.typerounting = typerounting;
+    }
+
+    public String getAgentname() {
+        return agentname;
+    }
+
+    public void setAgentname(String agentname) {
+        this.agentname = agentname;
     }
 
     public String getRoutingdetail() {
@@ -609,13 +672,20 @@ public class TicketSummaryCommissionView {
         this.termPayPage = termPayPage;
     }
 
-    public String getAgentcommrec() {
-        return agentcommrec;
+    public String getPrintbyPage() {
+        return printbyPage;
     }
 
-    public void setAgentcommrec(String agentcommrec) {
-        this.agentcommrec = agentcommrec;
+    public void setPrintbyPage(String printbyPage) {
+        this.printbyPage = printbyPage;
     }
-    
-    
+
+    public String getPrintonPage() {
+        return printonPage;
+    }
+
+    public void setPrintonPage(String printonPage) {
+        this.printonPage = printonPage;
+    }
+
 }

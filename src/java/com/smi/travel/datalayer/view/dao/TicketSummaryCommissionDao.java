@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface TicketSummaryCommissionDao {
     public List<ListTicketSummaryCommission> searchTicketSummaryCommission(String invoicefromdatePage,String invoicetodatePage,String issuefromdatePage,String issuetodatePage
-            ,String agentcomfromdatePage,String agentcomtodatePage,String ticketcomfromdatePage ,String ticketcomtodatePage,String overfromdatePage ,String overtodatePage
+            ,String overfromdatePage ,String overtodatePage
             ,String littlefromdatePage,String littletodatePage ,String agemtcomreceivefromdatePage,String agemtcomreceivetodatePage ,String comrefundfromdatePage 
             ,String comrefundtodatePage ,String addpayfromdatePage ,String addpaytodatePage ,String decreasepayfromdatePage,String decreasepaytodatePage
             ,String typeRoutingPage ,String routingDetailPage , String airlineCodePage ,String agentCodePage ,String agentNamePage ,String ticketnoPagePage 

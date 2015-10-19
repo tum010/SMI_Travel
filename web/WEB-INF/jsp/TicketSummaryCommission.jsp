@@ -158,7 +158,7 @@
                             </div> 
                         </div>
                     </div>
-                    <div class="row">
+<!--                    <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label class="col-md-6 control-label text-right">Agent Comm Date<font style="color: red"></font></label>
@@ -207,7 +207,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
@@ -541,9 +541,9 @@ $(document).ready(function() {
         $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
     });
     
-    $('#printbutton').click( function() {  
-        printTicketSummaryAirline();
-    });
+//    $('#printbutton').click( function() {  
+//        printTicketSummaryAirline();
+//    });
     $("#printbutton").addClass("disabled");
     //Sale By Auto Complete
     $("#SaleByTable tr").on('click', function () {
@@ -681,18 +681,18 @@ $(document).ready(function() {
     $('.issuetodate').datetimepicker().change(function(){                          
         checkIssueToDateField();
     });
-    $('.agentcomfromdate').datetimepicker().change(function(){                          
-        checkAgentComFromDateField();
-    });
-    $('.agentcomtodate').datetimepicker().change(function(){                          
-        checkAgentComToDateField();
-    });
-    $('.ticketcomfromdate').datetimepicker().change(function(){                          
-        checkTicketComFromDateField();
-    });
-    $('.ticketcomtodate').datetimepicker().change(function(){                          
-        checkTicketComToDateField();
-    });
+//    $('.agentcomfromdate').datetimepicker().change(function(){                          
+//        checkAgentComFromDateField();
+//    });
+//    $('.agentcomtodate').datetimepicker().change(function(){                          
+//        checkAgentComToDateField();
+//    });
+//    $('.ticketcomfromdate').datetimepicker().change(function(){                          
+//        checkTicketComFromDateField();
+//    });
+//    $('.ticketcomtodate').datetimepicker().change(function(){                          
+//        checkTicketComToDateField();
+//    });
     $('.overfromdate').datetimepicker().change(function(){                          
         checkOverFromDateField();
     });
@@ -841,149 +841,149 @@ function checkIssueToDateField(){
     }       
 }
 
-function checkAgentComFromDateField(){
-    var agentComToDate = document.getElementById("agentcomTo");
-    var agentComFromDate = document.getElementById("agentcomFrom");
-    if(agentComFromDate.value === '' && agentComToDate.value === ''){
-        $("#agentcomfromdatepanel").removeClass("has-error");
-        $("#agentcomtodatepanel").removeClass("has-error");  
-        $("#printbutton").removeClass("disabled");
-    }else if(agentComFromDate.value === '' || agentComToDate.value === ''){ 
-        $("#agentcomfromdatepanel").removeClass("has-success");
-        $("#agentcomtodatepanel").removeClass("has-success");  
-        $("#agentcomfromdatepanel").addClass("has-error");
-        $("#agentcomtodatepanel").addClass("has-error");  
-        $("#printbutton").addClass("disabled");
-    } else {
-        $("#agentcomfromdatepanel").removeClass("has-error");
-        $("#agentcomtodatepanel").removeClass("has-error");
-        
-        $("#agentcomfromdatepanel").addClass("has-success");
-        $("#agentcomtodatepanel").addClass("has-success");
-        $("#printbutton").removeClass("disabled");
-        checkDateValue("agentcomfrom","");
-    }    
-}
-    
-function checkAgentComToDateField(){
-     var agentComToDate = document.getElementById("agentcomTo");
-    var agentComFromDate = document.getElementById("agentcomFrom");
-    if(agentComFromDate.value === '' && agentComToDate.value === ''){
-        $("#agentcomfromdatepanel").removeClass("has-error");
-        $("#agentcomtodatepanel").removeClass("has-error");  
-        $("#printbutton").removeClass("disabled");
-    }else if(agentComFromDate.value === '' || agentComToDate.value === ''){
-        $("#agentcomfromdatepanel").removeClass("has-success");
-        $("#agentcomtodatepanel").removeClass("has-success");  
-        $("#agentcomfromdatepanel").addClass("has-error");
-        $("#agentcomtodatepanel").addClass("has-error");  
-        $("#printbutton").addClass("disabled");
-    }else{
-        $("#agentcomfromdatepanel").removeClass("has-error");
-        $("#agentcomtodatepanel").removeClass("has-error");
-        
-        $("#agentcomfromdatepanel").addClass("has-success");
-        $("#agentcomtodatepanel").addClass("has-success");
-        $("#printbutton").removeClass("disabled");
-        checkDateValue("agentcomto","");
-    }       
-}
+//function checkAgentComFromDateField(){
+//    var agentComToDate = document.getElementById("agentcomTo");
+//    var agentComFromDate = document.getElementById("agentcomFrom");
+//    if(agentComFromDate.value === '' && agentComToDate.value === ''){
+//        $("#agentcomfromdatepanel").removeClass("has-error");
+//        $("#agentcomtodatepanel").removeClass("has-error");  
+//        $("#printbutton").removeClass("disabled");
+//    }else if(agentComFromDate.value === '' || agentComToDate.value === ''){ 
+//        $("#agentcomfromdatepanel").removeClass("has-success");
+//        $("#agentcomtodatepanel").removeClass("has-success");  
+//        $("#agentcomfromdatepanel").addClass("has-error");
+//        $("#agentcomtodatepanel").addClass("has-error");  
+//        $("#printbutton").addClass("disabled");
+//    } else {
+//        $("#agentcomfromdatepanel").removeClass("has-error");
+//        $("#agentcomtodatepanel").removeClass("has-error");
+//        
+//        $("#agentcomfromdatepanel").addClass("has-success");
+//        $("#agentcomtodatepanel").addClass("has-success");
+//        $("#printbutton").removeClass("disabled");
+//        checkDateValue("agentcomfrom","");
+//    }    
+//}
+//    
+//function checkAgentComToDateField(){
+//     var agentComToDate = document.getElementById("agentcomTo");
+//    var agentComFromDate = document.getElementById("agentcomFrom");
+//    if(agentComFromDate.value === '' && agentComToDate.value === ''){
+//        $("#agentcomfromdatepanel").removeClass("has-error");
+//        $("#agentcomtodatepanel").removeClass("has-error");  
+//        $("#printbutton").removeClass("disabled");
+//    }else if(agentComFromDate.value === '' || agentComToDate.value === ''){
+//        $("#agentcomfromdatepanel").removeClass("has-success");
+//        $("#agentcomtodatepanel").removeClass("has-success");  
+//        $("#agentcomfromdatepanel").addClass("has-error");
+//        $("#agentcomtodatepanel").addClass("has-error");  
+//        $("#printbutton").addClass("disabled");
+//    }else{
+//        $("#agentcomfromdatepanel").removeClass("has-error");
+//        $("#agentcomtodatepanel").removeClass("has-error");
+//        
+//        $("#agentcomfromdatepanel").addClass("has-success");
+//        $("#agentcomtodatepanel").addClass("has-success");
+//        $("#printbutton").removeClass("disabled");
+//        checkDateValue("agentcomto","");
+//    }       
+//}
+//
+//function checkTicketComFromDateField(){
+//    var ticketComFromDate = document.getElementById("ticketcomFrom");
+//    var ticketComToDate = document.getElementById("ticketcomTo");
+//    if(ticketComFromDate.value === '' && ticketComToDate.value === ''){
+//        $("#ticketcomfromdatepanel").removeClass("has-error");
+//        $("#ticketcomtodatepanel").removeClass("has-error");  
+//        $("#printbutton").removeClass("disabled");
+//    }else if(ticketComFromDate.value === '' || ticketComToDate.value === ''){ 
+//        $("#ticketcomfromdatepanel").removeClass("has-success");
+//        $("#ticketcomtodatepanel").removeClass("has-success");  
+//        $("#ticketcomfromdatepanel").addClass("has-error");
+//        $("#ticketcomtodatepanel").addClass("has-error");  
+//        $("#printbutton").addClass("disabled");
+//    } else {
+//        $("#ticketcomfromdatepanel").removeClass("has-error");
+//        $("#ticketcomtodatepanel").removeClass("has-error");
+//        
+//        $("#ticketcomfromdatepanel").addClass("has-success");
+//        $("#ticketcomtodatepanel").addClass("has-success");
+//        $("#printbutton").removeClass("disabled");
+//        checkDateValue("ticketcomfrom","");
+//    }    
+//}
+//    
+//function checkTicketComToDateField(){
+//    var ticketComFromDate = document.getElementById("ticketcomFrom");
+//    var ticketComToDate = document.getElementById("ticketcomTo");
+//    if(ticketComFromDate.value === '' && ticketComToDate.value === ''){
+//        $("#ticketcomfromdatepanel").removeClass("has-error");
+//        $("#ticketcomtodatepanel").removeClass("has-error");  
+//        $("#printbutton").removeClass("disabled");
+//    }else if(ticketComFromDate.value === '' || ticketComToDate.value === ''){ 
+//        $("#ticketcomfromdatepanel").removeClass("has-success");
+//        $("#ticketcomtodatepanel").removeClass("has-success");  
+//        $("#ticketcomfromdatepanel").addClass("has-error");
+//        $("#ticketcomtodatepanel").addClass("has-error");  
+//        $("#printbutton").addClass("disabled");
+//    } else {
+//        $("#ticketcomfromdatepanel").removeClass("has-error");
+//        $("#ticketcomtodatepanel").removeClass("has-error");
+//        
+//        $("#ticketcomfromdatepanel").addClass("has-success");
+//        $("#ticketcomtodatepanel").addClass("has-success");
+//        $("#printbutton").removeClass("disabled");
+//        checkDateValue("ticketcomto","");
+//    }       
+//}
 
-function checkTicketComFromDateField(){
-    var ticketComFromDate = document.getElementById("ticketcomFrom");
-    var ticketComToDate = document.getElementById("ticketcomTo");
-    if(ticketComFromDate.value === '' && ticketComToDate.value === ''){
-        $("#ticketcomfromdatepanel").removeClass("has-error");
-        $("#ticketcomtodatepanel").removeClass("has-error");  
-        $("#printbutton").removeClass("disabled");
-    }else if(ticketComFromDate.value === '' || ticketComToDate.value === ''){ 
-        $("#ticketcomfromdatepanel").removeClass("has-success");
-        $("#ticketcomtodatepanel").removeClass("has-success");  
-        $("#ticketcomfromdatepanel").addClass("has-error");
-        $("#ticketcomtodatepanel").addClass("has-error");  
-        $("#printbutton").addClass("disabled");
-    } else {
-        $("#ticketcomfromdatepanel").removeClass("has-error");
-        $("#ticketcomtodatepanel").removeClass("has-error");
-        
-        $("#ticketcomfromdatepanel").addClass("has-success");
-        $("#ticketcomtodatepanel").addClass("has-success");
-        $("#printbutton").removeClass("disabled");
-        checkDateValue("ticketcomfrom","");
-    }    
-}
-    
-function checkTicketComToDateField(){
-    var ticketComFromDate = document.getElementById("ticketcomFrom");
-    var ticketComToDate = document.getElementById("ticketcomTo");
-    if(ticketComFromDate.value === '' && ticketComToDate.value === ''){
-        $("#ticketcomfromdatepanel").removeClass("has-error");
-        $("#ticketcomtodatepanel").removeClass("has-error");  
-        $("#printbutton").removeClass("disabled");
-    }else if(ticketComFromDate.value === '' || ticketComToDate.value === ''){ 
-        $("#ticketcomfromdatepanel").removeClass("has-success");
-        $("#ticketcomtodatepanel").removeClass("has-success");  
-        $("#ticketcomfromdatepanel").addClass("has-error");
-        $("#ticketcomtodatepanel").addClass("has-error");  
-        $("#printbutton").addClass("disabled");
-    } else {
-        $("#ticketcomfromdatepanel").removeClass("has-error");
-        $("#ticketcomtodatepanel").removeClass("has-error");
-        
-        $("#ticketcomfromdatepanel").addClass("has-success");
-        $("#ticketcomtodatepanel").addClass("has-success");
-        $("#printbutton").removeClass("disabled");
-        checkDateValue("ticketcomto","");
-    }       
-}
-
-function checkTicketComFromDateField(){
-    var ticketComFromDate = document.getElementById("overFrom");
-    var ticketComToDate = document.getElementById("ticketcomTo");
-    if(ticketComFromDate.value === '' && ticketComToDate.value === ''){
-        $("#ticketcomfromdatepanel").removeClass("has-error");
-        $("#ticketcomtodatepanel").removeClass("has-error");  
-        $("#printbutton").removeClass("disabled");
-    }else if(ticketComFromDate.value === '' || ticketComToDate.value === ''){ 
-        $("#ticketcomfromdatepanel").removeClass("has-success");
-        $("#ticketcomtodatepanel").removeClass("has-success");  
-        $("#ticketcomfromdatepanel").addClass("has-error");
-        $("#ticketcomtodatepanel").addClass("has-error");  
-        $("#printbutton").addClass("disabled");
-    } else {
-        $("#ticketcomfromdatepanel").removeClass("has-error");
-        $("#ticketcomtodatepanel").removeClass("has-error");
-        
-        $("#ticketcomfromdatepanel").addClass("has-success");
-        $("#ticketcomtodatepanel").addClass("has-success");
-        $("#printbutton").removeClass("disabled");
-        checkDateValue("ticketcomfrom","");
-    }    
-}
-    
-function checkTicketComToDateField(){
-    var ticketComFromDate = document.getElementById("ticketcomFrom");
-    var ticketComToDate = document.getElementById("ticketcomTo");
-    if(ticketComFromDate.value === '' && ticketComToDate.value === ''){
-        $("#ticketcomfromdatepanel").removeClass("has-error");
-        $("#ticketcomtodatepanel").removeClass("has-error");  
-        $("#printbutton").removeClass("disabled");
-    }else if(ticketComFromDate.value === '' || ticketComToDate.value === ''){ 
-        $("#ticketcomfromdatepanel").removeClass("has-success");
-        $("#ticketcomtodatepanel").removeClass("has-success");  
-        $("#ticketcomfromdatepanel").addClass("has-error");
-        $("#ticketcomtodatepanel").addClass("has-error");  
-        $("#printbutton").addClass("disabled");
-    } else {
-        $("#ticketcomfromdatepanel").removeClass("has-error");
-        $("#ticketcomtodatepanel").removeClass("has-error");
-        
-        $("#ticketcomfromdatepanel").addClass("has-success");
-        $("#ticketcomtodatepanel").addClass("has-success");
-        $("#printbutton").removeClass("disabled");
-        checkDateValue("ticketcomto","");
-    }       
-}
+//function checkTicketComFromDateField(){
+//    var ticketComFromDate = document.getElementById("overFrom");
+//    var ticketComToDate = document.getElementById("ticketcomTo");
+//    if(ticketComFromDate.value === '' && ticketComToDate.value === ''){
+//        $("#ticketcomfromdatepanel").removeClass("has-error");
+//        $("#ticketcomtodatepanel").removeClass("has-error");  
+//        $("#printbutton").removeClass("disabled");
+//    }else if(ticketComFromDate.value === '' || ticketComToDate.value === ''){ 
+//        $("#ticketcomfromdatepanel").removeClass("has-success");
+//        $("#ticketcomtodatepanel").removeClass("has-success");  
+//        $("#ticketcomfromdatepanel").addClass("has-error");
+//        $("#ticketcomtodatepanel").addClass("has-error");  
+//        $("#printbutton").addClass("disabled");
+//    } else {
+//        $("#ticketcomfromdatepanel").removeClass("has-error");
+//        $("#ticketcomtodatepanel").removeClass("has-error");
+//        
+//        $("#ticketcomfromdatepanel").addClass("has-success");
+//        $("#ticketcomtodatepanel").addClass("has-success");
+//        $("#printbutton").removeClass("disabled");
+//        checkDateValue("ticketcomfrom","");
+//    }    
+//}
+//    
+//function checkTicketComToDateField(){
+//    var ticketComFromDate = document.getElementById("ticketcomFrom");
+//    var ticketComToDate = document.getElementById("ticketcomTo");
+//    if(ticketComFromDate.value === '' && ticketComToDate.value === ''){
+//        $("#ticketcomfromdatepanel").removeClass("has-error");
+//        $("#ticketcomtodatepanel").removeClass("has-error");  
+//        $("#printbutton").removeClass("disabled");
+//    }else if(ticketComFromDate.value === '' || ticketComToDate.value === ''){ 
+//        $("#ticketcomfromdatepanel").removeClass("has-success");
+//        $("#ticketcomtodatepanel").removeClass("has-success");  
+//        $("#ticketcomfromdatepanel").addClass("has-error");
+//        $("#ticketcomtodatepanel").addClass("has-error");  
+//        $("#printbutton").addClass("disabled");
+//    } else {
+//        $("#ticketcomfromdatepanel").removeClass("has-error");
+//        $("#ticketcomtodatepanel").removeClass("has-error");
+//        
+//        $("#ticketcomfromdatepanel").addClass("has-success");
+//        $("#ticketcomtodatepanel").addClass("has-success");
+//        $("#printbutton").removeClass("disabled");
+//        checkDateValue("ticketcomto","");
+//    }       
+//}
 
 function checkOverFromDateField(){
     var overFromDate = document.getElementById("overFrom");
@@ -1282,12 +1282,6 @@ function checkDateValue(date){
         } else if((date === 'issuefrom') || (date === 'issueto')) {
             inputFromDate = document.getElementById("issueFrom");
             InputToDate = document.getElementById("issueTo");
-        }else if ((date === 'agentcomfrom') || (date === 'agentcomto')){
-            inputFromDate = document.getElementById("agentcomFrom");
-            InputToDate = document.getElementById("agentcomTo");
-        }else if ((date === 'ticketcomfrom') || (date === 'ticketcomto')){
-            inputFromDate = document.getElementById("ticketcomFrom");
-            InputToDate = document.getElementById("ticketcomTo");
         }else if ((date === 'overfrom') || (date === 'overto')){
             inputFromDate = document.getElementById("overFrom");
             InputToDate = document.getElementById("overTo");
@@ -1340,22 +1334,6 @@ function validateDate(date,option){
             $("#issuetodatepanel").removeClass("has-success"); 
             $("#issuetodatepanel").addClass("has-error");
         } 
-        if(date === 'agentcomfrom'){
-            $("#agentcomfromdatepanel").removeClass("has-success");
-            $("#agentcomfromdatepanel").addClass("has-error");
-        }
-        if(date === 'agentcomto'){
-            $("#agentcomtodatepanel").removeClass("has-success"); 
-            $("#agentcomtodatepanel").addClass("has-error");
-        }
-        if(date === 'ticketcomfrom'){
-            $("#ticketcomfromdatepanel").removeClass("has-success");
-            $("#ticketcomfromdatepanel").addClass("has-error");
-        }
-        if(date === 'ticketcomto'){
-            $("#ticketcomtodatepanel").removeClass("has-success"); 
-            $("#ticketcomtodatepanel").addClass("has-error");
-        }
         if(date === 'overfrom'){
             $("#overfromdatepanel").removeClass("has-success");
             $("#overfromdatepanel").addClass("has-error");
@@ -1412,12 +1390,6 @@ function validateDate(date,option){
         $("#issuefromdatepanel").removeClass("has-success");
         $("#issuetodatepanel").removeClass("has-success"); 
         
-        $("#agentcomfromdatepanel").removeClass("has-success");
-        $("#agentcomtodatepanel").removeClass("has-success"); 
-        
-        $("#ticketcomfromdatepanel").removeClass("has-success");
-        $("#ticketcomtodatepanel").removeClass("has-success"); 
-        
         $("#overfromdatepanel").removeClass("has-success");
         $("#overtodatepanel").removeClass("has-success");
         
@@ -1471,14 +1443,10 @@ function validateDate(date,option){
 }
 
 function printExcel(){
-	var invoicefromdate = document.getElementById("invoiceFromDate");
+    var invoicefromdate = document.getElementById("invoiceFromDate").value;
     var invoicetodate = document.getElementById("invoiceToDate").value;
     var issuefromdate = document.getElementById("issueFrom").value;
     var issuetodate = document.getElementById("issueTo").value;
-    var agentcomfromdate = document.getElementById("agentcomFrom").value;
-    var agentcomtodate = document.getElementById("agentcomTo").value;
-    var ticketcomfromdate = document.getElementById("ticketcomFrom").value;
-    var ticketcomtodate = document.getElementById("ticketcomTo").value;
     var overfromdate = document.getElementById("overFrom").value;
     var overtodate = document.getElementById("overTo").value;
     var littlefromdate = document.getElementById("littleFrom").value;
@@ -1501,15 +1469,11 @@ function printExcel(){
     var salebyUserts = document.getElementById("salebyUser").value;
     var salebyName = document.getElementById("salebyName").value;
     var termPayts   = document.getElementById("termPay").value;
-    
+
 window.open("Excel.smi?name=TicketSummaryCommission&invoiceFromDate=" + invoicefromdate 
         + "&invoiceToDate=" + invoicetodate 
         + "&issueFrom=" + issuefromdate 
         + "&issueTo=" + issuetodate 
-        + "&agentcomFrom=" + agentcomfromdate 
-        + "&agentcomTo=" + agentcomtodate 
-        + "&ticketcomFrom=" + ticketcomfromdate 
-        + "&ticketcomTo=" + ticketcomtodate
         + "&overFrom=" + overfromdate 
         + "&overTo=" + overtodate 
         + "&littleFrom=" + littlefromdate 

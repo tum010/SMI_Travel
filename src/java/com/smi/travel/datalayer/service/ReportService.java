@@ -594,11 +594,11 @@ public class ReportService {
     }
     
     public List getTicketSummaryCommission(String invoicefromdatePage,String invoicetodatePage,String issuefromdatePage,String issuetodatePage
-            ,String agentcomfromdatePage,String agentcomtodatePage,String ticketcomfromdatePage ,String ticketcomtodatePage,String overfromdatePage ,String overtodatePage
+            ,String overfromdatePage ,String overtodatePage
             ,String littlefromdatePage,String littletodatePage ,String agemtcomreceivefromdatePage,String agemtcomreceivetodatePage ,String comrefundfromdatePage 
             ,String comrefundtodatePage ,String addpayfromdatePage ,String addpaytodatePage ,String decreasepayfromdatePage,String decreasepaytodatePage
             ,String typeRoutingPage ,String routingDetailPage , String airlineCodePage ,String agentCodePage ,String agentNamePage ,String ticketnoPagePage 
             ,String departmentPage ,String salebyUserPage , String salebyNamePage , String termPayPage,String printby) {
-        return ticketSummaryCommissionDao.searchTicketSummaryCommission(invoicefromdatePage, invoicetodatePage, issuefromdatePage, issuetodatePage, agentcomfromdatePage, agentcomtodatePage, ticketcomfromdatePage, ticketcomtodatePage, overfromdatePage, overtodatePage, littlefromdatePage, littletodatePage, agemtcomreceivefromdatePage, agemtcomreceivetodatePage, comrefundfromdatePage, comrefundtodatePage, addpayfromdatePage, addpaytodatePage, decreasepayfromdatePage, decreasepaytodatePage, typeRoutingPage, routingDetailPage, airlineCodePage, agentCodePage, agentNamePage, ticketnoPagePage, departmentPage, salebyUserPage, salebyNamePage, termPayPage, printby);
+        return ticketSummaryCommissionDao.searchTicketSummaryCommission(invoicefromdatePage, invoicetodatePage, issuefromdatePage, issuetodatePage, overfromdatePage, overtodatePage, littlefromdatePage, littletodatePage, agemtcomreceivefromdatePage, agemtcomreceivetodatePage, comrefundfromdatePage, comrefundtodatePage, addpayfromdatePage, addpaytodatePage, decreasepayfromdatePage, decreasepaytodatePage, typeRoutingPage, routingDetailPage, airlineCodePage, agentCodePage, agentNamePage, ticketnoPagePage, departmentPage, salebyUserPage, salebyNamePage, termPayPage, printby);
     }
 }
