@@ -114,6 +114,9 @@ public class AirTicketDetailController extends SMITravelController {
             System.out.println(AirTicketDetailController.class.getName() + " pnr - [" + bookingPnrNo + "]");
             BookingPnr importPnr = bookingAirticketService.getBookingPnr(bookingPnrNo);
             AirticketPnr newAirPnr = this.importBookingPnr(importPnr, request.getParameter("referenceNo"),pnrIdTemp);
+            
+//            AirticketPnr airticketPnr = bookingAirticketService.getPNRDetailByID(pnrIdTemp, referenceNo);
+            
             request.setAttribute(Action, "update");
             
             setResponseAttribute(request, newAirPnr, referenceNo);
