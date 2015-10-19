@@ -347,7 +347,7 @@ public class BillAirAgentImpl implements BillAirAgentDao{
             bil.setPrintbyPage(printby);
             bil.setPaymenttypePage("");
             
-            bil.setRefno(util.ConvertString(B[0]));
+            bil.setRefundno(util.ConvertString(B[0]));
             bil.setReceivedate(util.ConvertString(B[1]));
             bil.setPassenger(util.ConvertString(B[2]));
             bil.setAir(util.ConvertString(B[3]));
