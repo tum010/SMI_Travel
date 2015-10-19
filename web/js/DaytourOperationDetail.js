@@ -308,17 +308,18 @@ function addImportExpen(arrExpen) {
                 '<td class="hidden"><input id="expenId' + row + '" name="expenId' + row + '"  type="text">' +
                 '<td class="hidden"><input id="countExpen' + row + '" name="countExpen"  type="text" value="' + row + '">' +
                 '<td><input id="expenDescription' + row + '" name="expenDescription' + row + '"  type="text" class="form-control text-left" maxlength="50" value="' + item.desciption + '"></td>' +
-                '<td style="width: 80px"><input id="expenQty' + row + '" name="expenQty' + row + '" type="text" class="form-control money" maxlength="50"></td>' +
+                '<td style="width: 80px"><input id="expenQty' + row + '" name="expenQty' + row + '" type="text" class="form-control money" onfocusout="calculateGuideBill()" maxlength="50"></td>' +
                 '<td style="width: 100px"><input id="expenAmount' + row + '" name="expenAmount' + row + '" type="text" class="form-control money" maxlength="50" value="' + item.amount + '" onfocusout="calculateGuideBill()"></td>' +
 //                '<td><select name="expenSelectCur' + row + '" id="expenSelectCur' + row + '" class="form-control"><option value="' + item.cur + '">' + item.cur + '</option></select></td>' +
-                '<td class="text-center"><input id="expenTypeS' + row + '" name="expenPriceType' + row + '" type="radio" value="S" '+(item.priceType==="S"?"checked":"")+ ' >&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;&nbsp;' +
-                '<input id="expenTypeG' + row + '" name="expenPriceType' + row + '" type="radio" value="G" '+(item.priceType==="G"?"checked":"")+ ' >&nbsp;&nbsp;G</td>' +
+                '<td class="text-center"><input id="expenTypeS' + row + '" name="expenPriceType' + row + '" type="radio" value="S" '+(item.priceType==="S"?"checked":"")+ '  onclick="calculateGuideBill()" >&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;&nbsp;' +
+                '<input id="expenTypeG' + row + '" name="expenPriceType' + row + '" type="radio" value="G" '+(item.priceType==="G"?"checked":"")+ ' onclick="calculateGuideBill()" >&nbsp;&nbsp;G</td>' +
                 '<td class="text-center">' +
                 '<a id="expenButtonRemove' + row + '" idExpen="'+item.id+'" name="expenButtonRemove' + row + '" class="RemoveRow" onclick="calculateGuideBill()">' +
                 '<span  id="expenSpanEdit' + row + '" name="expenSpanEdit' + row + '" class="glyphicon glyphicon-remove deleteicon"></span>' +
                 '</a></td>' +
                 '</tr>'
                 );
+
         $("input[name=countExpen]").val(row);
         console.log('row :' + row);
 
@@ -349,6 +350,7 @@ $(document).ready(function () {
                    $(value).removeClass("hidden");
                 }               
             });
+            $(this).parent().parent().remove(); 
         }else{
             if(lentable === 1){
                 alert("this row for add data");
@@ -606,7 +608,7 @@ $(document).ready(function () {
 
 function calculateGuideBill(){
     var guideBillTotal = 0;
-    
+    var total = 0;
     var rowDriver = $("#BookingDriverTable tr").length;
     for(var i=0;i<rowDriver;i++){
         var tipValue = document.getElementById('InfoTableTipValue'+i);
@@ -616,11 +618,12 @@ function calculateGuideBill(){
                 tipValueReplace = tipValueReplace.replace(/,/g,"");
                 var tipValue = parseFloat(tipValueReplace);
                 guideBillTotal += tipValue;
+                total += tipValue;
             }
         }
     }
     
-    var total = 0;
+    
     var countCheckbox = 0;
     var rowExpen = $("#BookingExpenseTable tr").length;
     for(var i=0;i<rowExpen;i++){
@@ -640,6 +643,10 @@ function calculateGuideBill(){
                         guideBillTotal += (expenAmountValue*expenQtyValue);
                         total += (expenAmountValue*expenQtyValue);
                         countCheckbox++;
+                    }else{
+                        expenAmountReplace = expenAmountReplace.replace(/,/g,"");
+                        expenQtyReplace = expenQtyReplace.replace(/,/g,"");
+                        total += (parseFloat(expenAmountReplace)*parseFloat(expenQtyReplace));
                     } 
                 }
             }    
