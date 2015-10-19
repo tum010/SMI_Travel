@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package com.smi.travel.datalayer.view.dao.impl;
-
+//test
 import com.smi.travel.datalayer.entity.Customer;
 import com.smi.travel.datalayer.entity.DaytourBooking;
 import com.smi.travel.datalayer.entity.DaytourBookingPrice;

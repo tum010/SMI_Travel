@@ -173,8 +173,15 @@
                                     <c:set var="colourStatusFirstrow" value="background-color: #FFD3D3" />
                                 </c:if>
                                 <tr ${colourStatus}>
-                                    <td>
-                                        <input type="text" id="flight-${i.count}-flightOrder" name="flight-${i.count}-flightOrder" class="form-control money2" maxlength="11" value="${flight.flightOrder}" />                                       
+                                    <td>                              
+                                        <c:choose>
+                                            <c:when test="${(flight.flightOrder != '') && (flight.flightOrder != null)}">
+                                                <input type="text" id="flight-${i.count}-flightOrder" name="flight-${i.count}-flightOrder" class="form-control money2" maxlength="11" value="${flight.flightOrder}" />                               
+                                            </c:when>
+                                            <c:otherwise>
+                                                <input type="text" id="flight-${i.count}-flightOrder" name="flight-${i.count}-flightOrder" class="form-control money2" maxlength="11" value="${i.count}" />
+                                            </c:otherwise>    
+                                        </c:choose>                                              
                                     </td>
                                     <td>${flight.airticketAirline.MAirline.getCode()}</td>
                                     <td>${flight.flightNo}</td>
