@@ -8220,6 +8220,21 @@ public class ExportDataToExcelView extends AbstractExcelView {
             styleTotalTableNumber.setBorderRight(styleTotalTableNumber.BORDER_THIN);
             styleTotalTableNumber.setBorderLeft(styleTotalTableNumber.BORDER_THIN);
             
+        HSSFCellStyle stylePaxNumber = wb.createCellStyle();
+            stylePaxNumber.setDataFormat(currency.getFormat("#,##0"));
+            stylePaxNumber.setAlignment(stylePaxNumber.ALIGN_CENTER);
+            stylePaxNumber.setBorderRight(stylePaxNumber.BORDER_THIN);
+            stylePaxNumber.setBorderLeft(stylePaxNumber.BORDER_THIN);
+            
+                        
+        HSSFCellStyle stylePaxNumberTotal = wb.createCellStyle();
+            stylePaxNumberTotal.setDataFormat(currency.getFormat("#,##0"));
+            stylePaxNumberTotal.setAlignment(stylePaxNumberTotal.ALIGN_CENTER);
+            stylePaxNumberTotal.setBorderTop(stylePaxNumberTotal.BORDER_THIN);
+            stylePaxNumberTotal.setBorderBottom(stylePaxNumberTotal.BORDER_THIN);
+            stylePaxNumberTotal.setBorderRight(stylePaxNumberTotal.BORDER_THIN);
+            stylePaxNumberTotal.setBorderLeft(stylePaxNumberTotal.BORDER_THIN);
+            
         // set Header Report (Row 1)
         HSSFCellStyle styleHeader01 = wb.createCellStyle();
         HSSFRow row01 = sheet.createRow(0);
@@ -8572,10 +8587,10 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     cell7.setCellStyle(styleDetailTableNumber);
                 HSSFCell cell8 = row.createCell(8);
                     cell8.setCellValue(listDetail.get(r-10).getPax());
-                    cell8.setCellStyle(styleDetailTable);
+                    cell8.setCellStyle(stylePaxNumber);
                 HSSFCell cell9 = row.createCell(9);
                     cell9.setCellValue(listDetail.get(r-10).getAir());
-                    cell9.setCellStyle(styleDetailTableNumber);
+                    cell9.setCellStyle(stylePaxNumber);
                 HSSFCell cell10 = row.createCell(10);
                         cell10.setCellValue(listDetail.get(r-10).getDocno());
                         cell10.setCellStyle(styleDetailTableNumber);
@@ -8675,6 +8690,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         rowL.createCell(23).setCellStyle(styleBorderTop);
         rowL.createCell(24).setCellStyle(styleBorderTop);
         rowL.createCell(25).setCellStyle(styleBorderTop);
+        rowL.createCell(26).setCellStyle(styleBorderTop);
             
 //**********************************************************************************************************************
 	// set Header Report (Row 1)
@@ -8957,10 +8973,10 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     HSSFCell cell3 = row.createCell(2);
                        BigDecimal pax = new BigDecimal("".equals(listAir.get(r-10).getPax()) ? "0" : listAir.get(r-10).getPax());
                        cell3.setCellValue((pax != null) ? pax.doubleValue() : new BigDecimal("0").doubleValue());
-                       cell3.setCellStyle(styleDetailTableNumber);
+                       cell3.setCellStyle(stylePaxNumber);
                     HSSFCell cell4 = row.createCell(3);
                         cell4.setCellValue(listAir.get(r-10).getAir());
-                        cell4.setCellStyle(styleDetailTable);
+                        cell4.setCellStyle(stylePaxNumber);
                    HSSFCell cell5 = row.createCell(4);
                         BigDecimal amountwendy = new BigDecimal("".equals(listAir.get(r-10).getAmountwendy()) ? "0" : listAir.get(r-10).getAmountwendy());
                         cell5.setCellValue((amountwendy != null) ? amountwendy.doubleValue() : new BigDecimal("0").doubleValue());
@@ -9049,7 +9065,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
             cellTotalSum17.setCellStyle(styleTotalTableNumber);
             HSSFCell cellTotalSum01 = rowtotal.createCell(2);
             cellTotalSum01.setCellFormula(sumtotalpax);
-            cellTotalSum01.setCellStyle(styleTotalTableNumber);
+            cellTotalSum01.setCellStyle(stylePaxNumberTotal);
             HSSFCell cellTotalSum18 = rowtotal.createCell(4);
             cellTotalSum18.setCellFormula(sumtotalamountwen);
             cellTotalSum18.setCellStyle(styleTotalTableNumber);
@@ -9386,7 +9402,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     cell1.setCellStyle(styleDetailTable);
                 HSSFCell cell2 = row.createCell(1);
                     cell2.setCellValue(listAgent.get(r-10).getPax());
-                    cell2.setCellStyle(styleDetailTable);
+                    cell2.setCellStyle(stylePaxNumber);
                HSSFCell cell13 = row.createCell(2);
                        BigDecimal amountwendy = new BigDecimal("".equals(listAgent.get(r-10).getAmountwendy()) ? "0" : listAgent.get(r-10).getAmountwendy());
                        cell13.setCellValue((amountwendy != null) ? amountwendy.doubleValue() : new BigDecimal("0").doubleValue());
