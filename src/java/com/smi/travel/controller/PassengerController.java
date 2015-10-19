@@ -80,7 +80,7 @@ public class PassengerController extends SMITravelController {
                 System.out.println("******* No refNo !!!!");
             } else {
                 System.out.println("******* have refNo ************");
-
+                setResponseAttribute(request, refNo);
             }
         }
 
