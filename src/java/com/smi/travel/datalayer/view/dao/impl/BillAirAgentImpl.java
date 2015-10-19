@@ -8,6 +8,8 @@ package com.smi.travel.datalayer.view.dao.impl;
 import com.smi.travel.datalayer.report.model.BillAirAgent;
 import com.smi.travel.datalayer.report.model.TicketFareReport;
 import com.smi.travel.datalayer.view.dao.BillAirAgentDao;
+import com.smi.travel.datalayer.view.entity.BillAirAgentRefund;
+import com.smi.travel.datalayer.view.entity.ListBillAirAgent;
 import com.smi.travel.util.UtilityFunction;
 import java.util.ArrayList;
 import java.util.Date;
@@ -131,14 +133,20 @@ public class BillAirAgentImpl implements BillAirAgentDao{
     public List getBillAirAgentReportSummary(String agentCode,String invoiceFromDate,String InvoiceToDate,String issueFrom,String issueTo,String refundFrom,String refundTo,String department,String salebyUser,String termPay,String printby) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
-        List data = new ArrayList<BillAirAgent>();
+        List data = new ArrayList<ListBillAirAgent>();
+        ListBillAirAgent listBillAirAgent = new ListBillAirAgent();
+        List dataAgent = new ArrayList<BillAirAgent>();
+        List dataRefund = new ArrayList<BillAirAgentRefund>();
         
         String query = "";
+        String query2 = "";
         int checkQuery = 0;
-        if( !"".equals(agentCode)  && !"".equals(invoiceFromDate) && !"".equals(InvoiceToDate) && !"".equals(issueFrom) && !"".equals(issueTo)  && !"".equals(department)){
-            query = "SELECT * FROM `bill_air_agent`  invm  Where ";
+        if( agentCode == null  && invoiceFromDate == null  && InvoiceToDate== null  && issueFrom == null  && issueTo == null  && department == null ){
+            query = "SELECT * FROM `bill_air_agent`  invm   ";
+            query2 = "SELECT * FROM `bill_air_refund`  invm   ";
         }else{
-            query = "SELECT * FROM `bill_air_agent`  invm ";
+            query = "SELECT * FROM `bill_air_agent`  invm  Where ";
+            query2 = "SELECT * FROM `bill_air_refund`  invm  Where  ";
         }
         
         if ((invoiceFromDate != null )&&(!"".equalsIgnoreCase(InvoiceToDate))) {
@@ -298,8 +306,85 @@ public class BillAirAgentImpl implements BillAirAgentDao{
             }else{
                 bil.setPaycusrefund("0.00");
             }
-            data.add(bil);
+            dataAgent.add(bil);
         }
+        
+        List<Object[]> QueryList2 =  session.createSQLQuery(query2)
+                .addScalar("refundno",Hibernate.STRING)
+                .addScalar("receivedate",Hibernate.STRING)
+                .addScalar("passenger",Hibernate.STRING)
+                .addScalar("air",Hibernate.STRING)
+                .addScalar("docno",Hibernate.STRING)
+                .addScalar("refno",Hibernate.STRING)
+                .addScalar("amount_receive",Hibernate.STRING)
+                .addScalar("refundchange",Hibernate.STRING)
+                .addScalar("amountpay",Hibernate.STRING)
+                .addScalar("comm_rec",Hibernate.STRING)
+                .addScalar("vat",Hibernate.STRING)
+                .list();
+        for (Object[] B : QueryList2) {
+            BillAirAgentRefund bil = new BillAirAgentRefund();
+            //header
+          
+            if(agentCode != null && !"".equals(agentCode)){
+                bil.setAgentPage(agentCode);
+            }else{
+                bil.setAgentPage("");
+            }
+            if(issueFrom != null && !"".equals(issueFrom)){
+                String issue = "" + issueFrom + " To " + issueTo;
+                bil.setIssuedatePage(issue);
+            }else{
+                bil.setIssuedatePage("");
+            }
+            System.out.println("Invoice Date : " + invoiceFromDate);
+            if(invoiceFromDate != null && !"".equals(invoiceFromDate)){
+                String invoice = ""+ invoiceFromDate + " To " + InvoiceToDate;
+                bil.setInvoicedatePage(invoice);
+            }else{
+                bil.setInvoicedatePage("");
+            }
+            bil.setPrintbyPage(printby);
+            bil.setPaymenttypePage("");
+            
+            bil.setRefno(util.ConvertString(B[0]));
+            bil.setReceivedate(util.ConvertString(B[1]));
+            bil.setPassenger(util.ConvertString(B[2]));
+            bil.setAir(util.ConvertString(B[3]));
+            bil.setDocno(util.ConvertString(B[4]));
+            bil.setRefno(util.ConvertString(B[5]));
+       
+            if(util.ConvertString(B[6]) != null && !"".equals(util.ConvertString(B[6]))){
+                bil.setAmount_receive(util.ConvertString(B[6]));
+            }else{
+                bil.setAmount_receive("0.00");
+            }
+            if(util.ConvertString(B[7]) != null && !"".equals(util.ConvertString(B[7]))){
+                bil.setRefundchange(util.ConvertString(B[7]));
+            }else{
+                bil.setRefundchange("0.00");
+            }
+            if(util.ConvertString(B[8]) != null && !"".equals(util.ConvertString(B[8]))){
+                bil.setAmountpay(util.ConvertString(B[8]));
+            }else{
+                bil.setAmountpay("0.00");
+            }
+            if(util.ConvertString(B[9]) != null && !"".equals(util.ConvertString(B[9]))){
+                bil.setComm_rec(util.ConvertString(B[9]));
+            }else{
+                bil.setComm_rec("0.00");
+            }
+            if(util.ConvertString(B[10]) != null && !"".equals(util.ConvertString(B[10]))){
+                bil.setVat(util.ConvertString(B[10]));
+            }else{
+                bil.setVat("0.00");
+            }
+            dataRefund.add(bil);
+        }
+        
+        listBillAirAgent.setBillAirAgent(dataAgent);
+        listBillAirAgent.setBillAirAgentRefund(dataRefund);
+        data.add(listBillAirAgent);
         return data;
     }
     
