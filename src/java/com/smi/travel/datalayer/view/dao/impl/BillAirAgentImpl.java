@@ -135,7 +135,7 @@ public class BillAirAgentImpl implements BillAirAgentDao{
         
         String query = "";
         int checkQuery = 0;
-        if( !"".equals(agentCode)  || !"".equals(invoiceFromDate) || !"".equals(InvoiceToDate) || !"".equals(issueFrom) || !"".equals(issueTo)  || !"".equals(department)){
+        if( !"".equals(agentCode)  && !"".equals(invoiceFromDate) && !"".equals(InvoiceToDate) && !"".equals(issueFrom) && !"".equals(issueTo)  && !"".equals(department)){
             query = "SELECT * FROM `bill_air_agent`  invm  Where ";
         }else{
             query = "SELECT * FROM `bill_air_agent`  invm ";
