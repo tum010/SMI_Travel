@@ -202,10 +202,10 @@ public class ExportDataToExcelController  extends SMITravelController{
             String invoicetodate = request.getParameter("invoiceToDate");
             String issuefromdate = request.getParameter("issueFrom");
             String issuetodate = request.getParameter("issueTo");
-            String agentcomfromdate = request.getParameter("agentcomFrom");
-            String agentcomtodate = request.getParameter("agentcomTo");
-            String ticketcomfromdate = request.getParameter("ticketcomFrom");
-            String ticketcomtodate = request.getParameter("ticketcomTo");
+//            String agentcomfromdate = request.getParameter("agentcomFrom");
+//            String agentcomtodate = request.getParameter("agentcomTo");
+//            String ticketcomfromdate = request.getParameter("ticketcomFrom");
+//            String ticketcomtodate = request.getParameter("ticketcomTo");
             String overfromdate = request.getParameter("overFrom");
             String overtodate = request.getParameter("overTo");
             String littlefromdate = request.getParameter("littleFrom");
@@ -228,9 +228,8 @@ public class ExportDataToExcelController  extends SMITravelController{
             String salebyUserts = request.getParameter("salebyUser");
             String salebyName = request.getParameter("salebyName");
             String termPayts   = request.getParameter("termPay");     
-        
-            data = reportservice.getTicketSummaryCommission(invoicefromdate, invoicetodate, issuefromdate, issuetodate, agentcomfromdate,
-                    agentcomtodate, ticketcomfromdate, ticketcomtodate, overfromdate, overtodate, littlefromdate, littletodate,
+            System.out.println(" ============ invoicefromdate =========== " + invoicefromdate);
+            data = reportservice.getTicketSummaryCommission(invoicefromdate, invoicetodate, issuefromdate, issuetodate, overfromdate, overtodate, littlefromdate, littletodate,
                     agemtcomreceivefromdate, agemtcomreceivetodate, comrefundfromdate, comrefundtodate, addpayfromdate, addpaytodate, 
                     decreasepayfromdate, decreasepaytodate, typeRoutings, routingDetails, airlineCodes, agentCodes, agentName, ticketno,
                     departmentts, salebyUserts, salebyName, termPayts, printby);
