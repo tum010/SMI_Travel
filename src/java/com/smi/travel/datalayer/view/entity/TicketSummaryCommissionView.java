@@ -44,7 +44,7 @@ public class TicketSummaryCommissionView {
     private String addpaydate;
     private String decreasepaydate;
     private String ticketno;
-    
+    private String agentcommrec;	
     //Header
     private String invoicefromdatePage;
     private String invoicetodatePage;
@@ -607,6 +607,14 @@ public class TicketSummaryCommissionView {
 
     public void setTermPayPage(String termPayPage) {
         this.termPayPage = termPayPage;
+    }
+
+    public String getAgentcommrec() {
+        return agentcommrec;
+    }
+
+    public void setAgentcommrec(String agentcommrec) {
+        this.agentcommrec = agentcommrec;
     }
     
     
