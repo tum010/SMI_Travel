@@ -1713,8 +1713,8 @@ function calculateTotalCommission() {
             commissionTemp = commission;
 
             }
-        document.getElementById("sumCommissionTicket").value = formatNumber(commission);
-        document.getElementById("totalCommissionTicketFare").value = formatNumber(commission);
+       document.getElementById("sumCommissionTicket").value = formatNumber(commission +(commission *(7/100)));
+       document.getElementById("totalCommissionTicketFare").value = formatNumber(commission +(commission *(7/100)));
     }
     calculateWithodingTax();
     calculateTotalPayment();
@@ -1739,7 +1739,7 @@ function calculateTotalAmount(){
             amountTemp = amount;
 
         }
-        document.getElementById("totalAmountTicketFare").value = formatNumber(amount);
+        document.getElementById("totalAmountTicketFare").value = formatNumber(amount  +(amount *(7/100)));
     }
     calculateWithodingTax();
     calculateTotalPayment();
