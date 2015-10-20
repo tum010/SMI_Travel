@@ -5,5 +5,6 @@
  */
  $(window).load(function() {
     $('#loading-image').hide();
+    $('#loading-test').hide();
  });
 

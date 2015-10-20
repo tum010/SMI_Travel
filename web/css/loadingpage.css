@@ -19,13 +19,23 @@ and open the template in the editor.
     background-color: #BDBDBD;
     z-index: 99;
     text-align: center;
- }
+}
 
- #loading-image {
-   position: absolute;
-   top: 100px;
-   left: 240px;
-   width:50%;
-   height: 50%;
-   z-index: 50;
- }
+#loading-image {
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    width:5%;
+    height: 5%;
+    z-index: 50;
+}
+
+#loading-test{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background-color: rgba(0,0,0,0.1); /*dim the background*/
+}
