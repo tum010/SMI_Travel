@@ -326,7 +326,7 @@
                                     </div>  
                                 </div>
                                 <div class="col-xs-1 text-right" style="width: 130px">
-                                    <label class="control-label text-right">Status </label>
+                                    <label class="control-label text-right">Status <font style="color: red">*</font></label>
                                 </div>
                                 <div class="form-group col-xs-1" style="width: 170px">
                                     <select name="inputStatus" id="inputStatus" class="form-control">
@@ -461,6 +461,8 @@
                         </div> 
                         <input type="hidden" id="InputDescriptionDetailId" name="InputDescriptionDetailId" value="">
                         <!--<input type="hidden" name="mAccPayBillable" id="mAccPayBillable" value="">-->
+                        <input type="hidden" name="sumCreditAmountTemp" id="sumCreditAmountTemp" value="">
+                        <input type="hidden" name="sumAmountBeforeSave" id="sumAmountBeforeSave" value="">
                         <input type="hidden" name="amountTemp" id="amountTemp" value="">
                         <input type="hidden" name="receiptIdDelete" id="receiptIdDelete" value="">
                         <input type="hidden" name="receiptDetailIdDelete" id="receiptDetailIdDelete" value="">
@@ -611,7 +613,7 @@
                                 <table class="display" id="CreditDetailTable">
                                     <thead class="datatable-header">
                                         <tr>
-                                            <th style="width:22%;">Bank</th>
+                                            <th style="width:22%;">Credit Card</th>
                                             <th style="width:22%;">No</th>
                                             <th style="width:22%;">Expired</th>
                                             <th style="width:22%;">Amount</th>
@@ -1273,7 +1275,7 @@
         });
         
         $('#ReceiveDate').datetimepicker().on('dp.change', function (e) {
-                $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromDate');
+            $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromDate');
         });
         
         $('#ReceiptForm').bootstrapValidator({
@@ -1300,6 +1302,13 @@
                     }
                 },
                 receiveFromDate: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The Receive Date is required'
+                        }
+                    }
+                },
+                inputStatus: {
                     validators: {
                         notEmpty: {
                             message: 'The Receive Date is required'
@@ -1778,6 +1787,7 @@ function AddRowCredit(row) {
             if (creditAmount == "" || creditAmount == 0){
                 document.getElementById("creditAmount"+row).value = "";
             }
+            sumTotalCreditAmount();
         }); 
         
         var tempCount = parseInt($("#countRowCredit").val()) + 1;
@@ -2055,6 +2065,13 @@ function saveReceipt(){
     counter.value = $("#ReceiptListTable tr").length;
     var countRowCredit = document.getElementById('countRowCredit');
     countRowCredit.value = $("#CreditDetailTable tr").length;
+    
+    
+    checkSumAmountBeforeSave();
+    
+    var sumAmountBeforeSave = document.getElementById('sumAmountBeforeSave').value;
+    var grandTotal = document.getElementById('grandTotal').value;
+    
     for(i = 1 ; i < counter.value-1 ; i++ ){
         var amountTemp = document.getElementById('receiveAmountTemp'+i).value;
         var amount = document.getElementById('receiveAmount'+i).value;
@@ -2062,11 +2079,28 @@ function saveReceipt(){
             $('#textAlertReceiveAmount').show();
             checksave = 2;
         }else{
-            $('#textAlertReceiveAmount').hide();
+            if(grandTotal > sumAmountBeforeSave){
+                $('#textAlertReceiveAmount').show();
+                checksave = 2;
+            }else{
+                $('#textAlertReceiveAmount').hide();
+            }
         }
     }
+    
+    var receiveFromCode = document.getElementById('receiveFromCode').value;
+    var arCode = document.getElementById('arCode').value;
+    var receiveFromDate = document.getElementById('receiveFromDate').value;
+    var inputStatus = document.getElementById('inputStatus').value;
+   
     if(checksave === 1){
-        document.getElementById('ReceiptForm').submit();
+        $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
+        $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
+        $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromDate');
+        $('#ReceiptForm').bootstrapValidator('revalidateField', 'inputStatus');
+        if(receiveFromCode != "" && arCode != "" &&  receiveFromDate != "" &&  inputStatus != ""  ){
+            document.getElementById('ReceiptForm').submit();
+        }
         $('#textAlertReceiveAmount').hide();
     }
 }
@@ -2489,5 +2523,74 @@ function setFormatCurrencyOnFocusOut(row){
     });
 
     
+}
+
+function checkSumAmountBeforeSave(){
+   sumTotalCreditAmount();
+
+    var sumCreditAmountTemp = replaceAll(",","",$("#sumCreditAmountTemp").val()); 
+    if (sumCreditAmountTemp == ""){
+        sumCreditAmountTemp = 0;
+    }
+    
+    var chqAmount1 = replaceAll(",","",$("#chqAmount1").val());
+    if (chqAmount1 == ""){
+        chqAmount1 = 0;
+    }
+    var chqAmount2 = replaceAll(",","",$("#chqAmount2").val()); 
+    if (chqAmount2 == ""){
+        chqAmount2 = 0;
+    }
+    
+    var withTax = replaceAll(",","",$("#withTax").val());
+    if (withTax == ""){
+        withTax = 0;
+    }
+
+    var cashAmount = replaceAll(",","",$("#cashAmount").val());
+    if (cashAmount == ""){
+        cashAmount = 0;
+    }
+    
+    var bankTransfer = replaceAll(",","",$("#bankTransfer").val());
+    if (bankTransfer == ""){
+        bankTransfer = 0;
+    }
+    
+    var sumCreditAmount = parseFloat(sumCreditAmountTemp);
+    var chq1 = parseFloat(chqAmount1);
+    var chq2 = parseFloat(chqAmount2);
+    var tax = parseFloat(withTax);
+    var cash = parseFloat(cashAmount);
+    var bank = parseFloat(bankTransfer);
+    
+    //Sum Amount =  W/T + Cast Amount + Bank Transfer + Sum  Amount of Chq Bank + Sum Amount in table Credit Card
+    var sumAmount = tax + cash + bank + chq1 + chq2 + sumCreditAmount ;
+    document.getElementById("sumAmountBeforeSave").value = formatNumber(sumAmount);
+
+}
+
+
+function sumTotalCreditAmount(){
+    //Sum Amount =  W/T + Cast Amount + Bank Transfer + Sum  Amount of Chq Bank + Sum Amount in table Credit Card
+   
+    var temp = 0;
+    var i = 1;
+    var amountTemp = parseFloat(0);
+    var tableCredit = $("#CreditDetailTable tr").length;
+    for (i ; i < tableCredit ; i++) {
+        temp = document.getElementById("creditAmount" + i);
+        if(temp !== null){
+            temp = temp.value;
+            if(temp == '') {
+                temp = 0;
+            }
+            temp = replaceAll(",","",temp.toString());
+            var value = parseFloat(temp) ;
+            var amount = amountTemp + value ;
+            amountTemp = amount;
+        }   
+    }
+    document.getElementById("sumCreditAmountTemp").value = formatNumber(amount);
 }
 </script>
