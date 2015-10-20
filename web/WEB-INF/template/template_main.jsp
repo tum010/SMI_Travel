@@ -37,9 +37,11 @@
             <tiles:insertAttribute name="header" />
         </div> 
         <!--Body-->
+        <div class="overlay" id="loading-test">
         <div class="loading">
             <img id="loading-image" src="img/712.GIF" alt="Loading..." />
         </div>
+        </div>    
         <div class="page-section-main">
             <tiles:insertAttribute name="body" /> 
         </div>
