@@ -28,263 +28,263 @@
 	
     
     <definition name="MHotel" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :Hotel MA" />
+        <put-attribute name="title" value="Master : Hotel" />
         <put-attribute name="body" value="/WEB-INF/jsp/Hotel.jsp" />
     </definition>
     
     <definition name="Product" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :Product MA" />
+        <put-attribute name="title" value="Master : Product" />
         <put-attribute name="body" value="/WEB-INF/jsp/Product.jsp" />
     </definition>
     
     <definition name="Place" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :Place MA" />
+        <put-attribute name="title" value="Master : Place" />
         <put-attribute name="body" value="/WEB-INF/jsp/Place.jsp" />
     </definition>
     
     <definition name="Customer" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :Customer MA" />
+        <put-attribute name="title" value="Master : Customer" />
         <put-attribute name="body" value="/WEB-INF/jsp/Customer.jsp" />
     </definition>
     
     <definition name="Agent" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :Agent MA" />
+        <put-attribute name="title" value="Master : Agent" />
         <put-attribute name="body" value="/WEB-INF/jsp/Agent.jsp" />
     </definition>
     
     <definition name="Book" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :Booking" />
+        <put-attribute name="title" value="Book : Booking" />
         <put-attribute name="body" value="/WEB-INF/jsp/Book.jsp" />
     </definition>
     <definition name="BookDetail" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :Booking Detail" />
+        <put-attribute name="title" value="Book : Booking Detail" />
         <put-attribute name="body" value="/WEB-INF/jsp/BookDetail.jsp" />
     </definition>
     
     <definition name="AirTicket" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :AirTicket" />
+        <put-attribute name="title" value="Book : AirTicket" />
         <put-attribute name="body" value="/WEB-INF/jsp/AirTicket.jsp" />
     </definition>
     <definition name="Refund" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :Refund" />
+        <put-attribute name="title" value="Book : Refund" />
         <put-attribute name="body" value="/WEB-INF/jsp/Refund.jsp" />
     </definition>
     
     <definition name="HotelBooking" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :Hotel" />
+        <put-attribute name="title" value="Book : Hotel" />
         <put-attribute name="body" value="/WEB-INF/jsp/HotelBooking.jsp" />
     </definition>
     
     <definition name="HotelDetail" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :Hotel Detail" />
+        <put-attribute name="title" value="Book : Hotel Detail" />
         <put-attribute name="body" value="/WEB-INF/jsp/HotelDetail.jsp" />
     </definition>
     
     <definition name="Daytour" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :Day Tour" />
+        <put-attribute name="title" value="Book : Day Tour" />
         <put-attribute name="body" value="/WEB-INF/jsp/Daytour.jsp" />
     </definition>
     
     <definition name="DaytourDetail" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :DayTour Detail" />
+        <put-attribute name="title" value="Book : DayTour Detail" />
         <put-attribute name="body" value="/WEB-INF/jsp/DaytourDetail.jsp" />
     </definition>
     
     <definition name="DaytourOperation" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :DayTour Detail" />
+        <put-attribute name="title" value="Book : DayTour Detail" />
         <put-attribute name="body" value="/WEB-INF/jsp/DaytourOperation.jsp" />
     </definition>
     
     <definition name="DaytourOperationDetail" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :DayTour Operation Detail" />
+        <put-attribute name="title" value="Opt : DayTour Operation Detail" />
         <put-attribute name="body" value="/WEB-INF/jsp/DaytourOperationDetail.jsp" />
     </definition>
     
     <definition name="DaytourOperationOther" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :DayTour Operation Other" />
+        <put-attribute name="title" value="Opt : DayTour Operation Other" />
         <put-attribute name="body" value="/WEB-INF/jsp/DaytourOperationOther.jsp" />
     </definition>
     
     <definition name="DaytourTransfer" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :DayTour Transfer" />
+        <put-attribute name="title" value="Opt : DayTour Transfer" />
         <put-attribute name="body" value="/WEB-INF/jsp/DaytourTransfer.jsp" />
     </definition>
     
     <definition name="DaytourHistoryTransfer" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :DayTour History Transfer" />
+        <put-attribute name="title" value="Opt : DayTour History Transfer" />
         <put-attribute name="body" value="/WEB-INF/jsp/DaytourHistoryTransfer.jsp" />
     </definition>
     
     <definition name="DaytourCommission" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :DayTour Commission" />
+        <put-attribute name="title" value="Opt : DayTour Commission" />
         <put-attribute name="body" value="/WEB-INF/jsp/DaytourComission.jsp" />
     </definition>
     
     <definition name="DaytourOtherCommission" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :DayTour Other Commission" />
+        <put-attribute name="title" value="Opt : DayTour Other Commission" />
         <put-attribute name="body" value="/WEB-INF/jsp/DayTourOtherComission.jsp" />
     </definition>
     
     <definition name="Passenger" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :Passenger" />
+        <put-attribute name="title" value="Book : Passenger" />
         <put-attribute name="body" value="/WEB-INF/jsp/Passenger.jsp" />
     </definition>
     
     <definition name="PassengerDetail" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :Passenger Detail" />
+        <put-attribute name="title" value="Book : Passenger Detail" />
         <put-attribute name="body" value="/WEB-INF/jsp/PassengerDetail.jsp" />
     </definition>
     
     <definition name="Billable" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :Billable" />
+        <put-attribute name="title" value="Book : Billable" />
         <put-attribute name="body" value="/WEB-INF/jsp/Billable.jsp" />
     </definition>
     
     <definition name="History" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :History" />
+        <put-attribute name="title" value="Book : History" />
         <put-attribute name="body" value="/WEB-INF/jsp/History.jsp" />
     </definition>
     
     <definition name="HistoryDetail" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :History Detail" />
+        <put-attribute name="title" value="Book : History Detail" />
         <put-attribute name="body" value="/WEB-INF/jsp/HistoryDetail.jsp" />
     </definition>
     
     <definition name="Mairticket" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :Airline MA" />
+        <put-attribute name="title" value="Master : Airline" />
         <put-attribute name="body" value="/WEB-INF/jsp/MAirticket.jsp" />
     </definition>
     
     <definition name="MCity" extends="baseLayout">
-        <put-attribute name="title" value="smi travel :City Ma" />
+        <put-attribute name="title" value="Master : City" />
         <put-attribute name="body" value="/WEB-INF/jsp/MCity.jsp" />
     </definition>
     
     <definition name="MCountry" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :Country Ma" />
+        <put-attribute name="title" value="Master : Country " />
         <put-attribute name="body" value="/WEB-INF/jsp/MCountry.jsp" />
     </definition>
     
     <definition name="MCurrency" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel Master Air ticket :Currency" />
+        <put-attribute name="title" value="Master : Currency" />
         <put-attribute name="body" value="/WEB-INF/jsp/MCurrency.jsp" />
     </definition>
     
     <definition name="MFlight" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel  :Flight Ma" />
+        <put-attribute name="title" value="Master : Flight" />
         <put-attribute name="body" value="/WEB-INF/jsp/MFlight.jsp" />
     </definition>
     
     <definition name="MTicketType" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel  :TicketType Ma" />
+        <put-attribute name="title" value="Master : Ticket Type" />
         <put-attribute name="body" value="/WEB-INF/jsp/MTicketType.jsp" />
     </definition>
     
     <definition name="MStaff" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :Staff MA" />
+        <put-attribute name="title" value="Master : Staff" />
         <put-attribute name="body" value="/WEB-INF/jsp/MStaff.jsp" />
     </definition>
     <definition name="MRole" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :Role" />
+        <put-attribute name="title" value="Master : Role" />
         <put-attribute name="body" value="/WEB-INF/jsp/MRole.jsp" />
     </definition>
     <definition name="HotelSumReport" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel : Hotel Summary Report" />
+        <put-attribute name="title" value="Report : Hotel Summary" />
         <put-attribute name="body" value="/WEB-INF/jsp/HotelSumReport.jsp" />
     </definition>
     <definition name="AirTicketMonthReport" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :Airticket Monthly Report" />
+        <put-attribute name="title" value="Report : Airticket Monthly" />
         <put-attribute name="body" value="/WEB-INF/jsp/AirTicketMonthlyReport.jsp" />
     </definition>   
      
     <definition name="Other" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel:Other" />
+        <put-attribute name="title" value="Book : Other" />
         <put-attribute name="body" value="/WEB-INF/jsp/Other.jsp" />
     </definition>
     
     <definition name="Land" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel:Land" />
+        <put-attribute name="title" value="Book : Land" />
         <put-attribute name="body" value="/WEB-INF/jsp/Land.jsp" />
     </definition>
     
     <definition name="LandDetail" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel:Land Detail" />
+        <put-attribute name="title" value="Book : Land Detail" />
         <put-attribute name="body" value="/WEB-INF/jsp/LandDetail.jsp" />
     </definition>
     <definition name="MGalileo" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :Galileo MA" />
+        <put-attribute name="title" value="Master : Galileo" />
         <put-attribute name="body" value="/WEB-INF/jsp/MGalileo.jsp" />
     </definition>    
     
     <definition name="MHotelDetail" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel:Master Hotel Detail" />
+        <put-attribute name="title" value="Master : Hotel Detail" />
         <put-attribute name="body" value="/WEB-INF/jsp/MHotelDetail.jsp" />
     </definition>
     
     <definition name="MAgentDetail" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel:Agent Detail" />
+        <put-attribute name="title" value="Master : Agent Detail" />
         <put-attribute name="body" value="/WEB-INF/jsp/MAgentDetail.jsp" />
     </definition>
     
     <definition name="MProductDetail" extends="baseLayout">
-        <put-attribute name="title" value="SMI travel:Product Detail" />
+        <put-attribute name="title" value="Master : Product Detail" />
         <put-attribute name="body" value="/WEB-INF/jsp/MProductDetail.jsp" />
     </definition>
     
     <definition name="OtherDetail" extends="baseLayout">
-        <put-attribute name="title" value="SMI travel:Booking other Detail" />
+        <put-attribute name="title" value="Book : Booking other Detail" />
         <put-attribute name="body" value="/WEB-INF/jsp/OtherDetail.jsp" />
     </definition>
     
     <definition name="MAirport" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel : Master Airticket Airport" />
+        <put-attribute name="title" value="Master : Airticket Airport" />
         <put-attribute name="body" value="/WEB-INF/jsp/MAirport.jsp" />
     </definition>
     
     <definition name="MPricecategory" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel : Master Airticket PriceCategory" />
+        <put-attribute name="title" value="Master : Airticket PriceCategory" />
         <put-attribute name="body" value="/WEB-INF/jsp/MPriceCategory.jsp" />
     </definition>
     
     <definition name="AirTicketDetail" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel: Airticket Detail" />
+        <put-attribute name="title" value="Master : Airticket Detail" />
         <put-attribute name="body" value="/WEB-INF/jsp/AirTicketDetail.jsp" />
     </definition>
     <definition name="MAmadeus" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :Amadeus MA" />
+        <put-attribute name="title" value="Master : Amadeus" />
         <put-attribute name="body" value="/WEB-INF/jsp/MAmadeus.jsp" />
     </definition>     
     <definition name="MProductType" extends="baseLayout">
-        <put-attribute name="title" value="smi travel :Product Type Ma" />
+        <put-attribute name="title" value="Master : Product Type" />
         <put-attribute name="body" value="/WEB-INF/jsp/MProductType.jsp" />
     </definition>
     
     <definition name="AirTicketAirlineStaffSummary" extends="baseLayout">
-        <put-attribute name="title" value="AirTicket report  :Airline and staff summary" />
+        <put-attribute name="title" value="Report : Airline and staff summary" />
         <put-attribute name="body" value="/WEB-INF/jsp/AirTicketAirlineStaffSummary.jsp" />
     </definition>
     
     <definition name="AirTicketSaleProfitSummary" extends="baseLayout">
-        <put-attribute name="title" value="AirTicket report  :Sale and Profit summary" />
+        <put-attribute name="title" value="Report : Sale and Profit summary" />
         <put-attribute name="body" value="/WEB-INF/jsp/AirTicketSaleProfitSummary.jsp" />
     </definition>
     
     <definition name="MDaytour" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel : Master Daytour" />
+        <put-attribute name="title" value="Master : Daytour" />
         <put-attribute name="body" value="/WEB-INF/jsp/MDaytour.jsp" />
     </definition>
     
     <definition name="MDaytourDetail" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel : Master Daytour Detail" />
+        <put-attribute name="title" value="Master : Daytour Detail" />
         <put-attribute name="body" value="/WEB-INF/jsp/MDaytourDetail.jsp" />
     </definition>
     
     <definition name="MCommission" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel : Master Commission" />
+        <put-attribute name="title" value="Master : Commission" />
         <put-attribute name="body" value="/WEB-INF/jsp/MCommission.jsp" />
     </definition>
     <definition name="MCommissionDetail" extends="baseLayout">
-        <put-attribute name="title" value="SMI Travel :Master Commission Detail" />
+        <put-attribute name="title" value="Master : Commission Detail" />
         <put-attribute name="body" value="/WEB-INF/jsp/MCommissionDetail.jsp" />
     </definition>
     
@@ -316,37 +316,37 @@
     
     
     <definition name="AddTicketFare" extends="baseLayout">
-        <put-attribute name="title" value="Checking:Add Ticket Fare Airline" />
+        <put-attribute name="title" value="Chk : Add Ticket Fare Airline" />
         <put-attribute name="body" value="/WEB-INF/jsp/AddTicketFare.jsp" />
     </definition>
     
     <definition name="SearchTicketFare" extends="baseLayout">
-        <put-attribute name="title" value="Checking:Search Ticket Fare" />
+        <put-attribute name="title" value="Chk : Search Ticket Fare" />
         <put-attribute name="body" value="/WEB-INF/jsp/SearchTicketFare.jsp" />
     </definition>
     
     <definition name="RefundAirline" extends="baseLayout">
-        <put-attribute name="title" value="Checking:Refund Airline" />
+        <put-attribute name="title" value="Chk : Refund Airline" />
         <put-attribute name="body" value="/WEB-INF/jsp/RefundAirline.jsp" />
     </definition>
     
     <definition name="PaymentAirline" extends="baseLayout">
-        <put-attribute name="title" value="Checking:Payment Airline" />
+        <put-attribute name="title" value="Chk : Payment Airline" />
         <put-attribute name="body" value="/WEB-INF/jsp/PaymentAirline.jsp" />
     </definition>
     
     <definition name="PaymentOutbound" extends="baseLayout">
-        <put-attribute name="title" value="Checking:Payment Outbound" />
+        <put-attribute name="title" value="Chk : Payment Outbound" />
         <put-attribute name="body" value="/WEB-INF/jsp/PaymentOutbound.jsp" />
     </definition>
     
     <definition name="PaymentTourHotel" extends="baseLayout">
-        <put-attribute name="title" value="Checking:Payment Package Tour Hotel" />
+        <put-attribute name="title" value="Chk : Payment Package Tour Hotel" />
         <put-attribute name="body" value="/WEB-INF/jsp/PaymentTourHotel.jsp" />
     </definition>
     
     <definition name="SearchPaymentTourHotel" extends="baseLayout">
-        <put-attribute name="title" value="Checking:Search Payment Package Tour Hotel" />
+        <put-attribute name="title" value="Chk : Search Payment Package Tour Hotel" />
         <put-attribute name="body" value="/WEB-INF/jsp/SearchPaymentTourHotel.jsp" />
     </definition>
     
@@ -587,12 +587,12 @@
     </definition>
     
     <definition name="InvoiceInbound" extends="baseLayout">
-        <put-attribute name="title" value="Finance and Cashier : Invoice" />
+        <put-attribute name="title" value="FC : Invoice" />
         <put-attribute name="body" value="/WEB-INF/jsp/InvoiceInbound.jsp" />
     </definition>
     
     <definition name="TicketRefundSummary" extends="baseLayout">
-        <put-attribute name="title" value="Checking Airticket : Ticket Refund Report" />
+        <put-attribute name="title" value="Chk : Ticket Refund Report" />
         <put-attribute name="body" value="/WEB-INF/jsp/TicketRefundSummary.jsp" />
     </definition>
     <!--<add data>-->
@@ -623,7 +623,7 @@
     </definition>
     
     <definition name="TicketProfitLost" extends="baseLayout">
-        <put-attribute name="title" value="CheckingTicket : Ticket Profit Loss Summary" />
+        <put-attribute name="title" value="Chk : Ticket Profit Loss Summary" />
         <put-attribute name="body" value="/WEB-INF/jsp/TicketProfitLoss.jsp" />
     </definition>
     
