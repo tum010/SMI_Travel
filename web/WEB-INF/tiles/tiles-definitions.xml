@@ -309,7 +309,7 @@
     </definition>
     
     <definition name="MBank" extends="baseLayout">
-        <put-attribute name="title" value="Master : Master Bank" />
+        <put-attribute name="title" value="Master : Bank" />
         <put-attribute name="body" value="/WEB-INF/jsp/MBank.jsp" />
     </definition>
     
@@ -351,17 +351,17 @@
     </definition>
     
     <definition name="SearchPaymentOutbound" extends="baseLayout">
-        <put-attribute name="title" value="Checking:Search Payment Outbound" />
+        <put-attribute name="title" value="Chk : Search Payment Outbound" />
         <put-attribute name="body" value="/WEB-INF/jsp/SearchPaymentOutbound.jsp" />
     </definition>
     
         <definition name="SearchPaymentOutbound" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier:Search Payment Outbound" />
+        <put-attribute name="title" value="Chk : Search Payment Outbound" />
         <put-attribute name="body" value="/WEB-INF/jsp/SearchPaymentOutbound.jsp" />
     </definition>
     
     <definition name="SearchInvoice" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier:Search Invoice " />
+        <put-attribute name="title" value="FC : Search Invoice " />
         <put-attribute name="body" value="/WEB-INF/jsp/SearchInvoice.jsp" />
     </definition>
     
@@ -371,126 +371,126 @@
     </definition>
     
     <definition name="InvoiceWT" extends="baseLayout">
-        <put-attribute name="title" value="Finance:Invoice Temp Wendy" />
+        <put-attribute name="title" value="FC : Invoice Temp Wendy" />
         <put-attribute name="body" value="/WEB-INF/jsp/Invoice.jsp" />
     </definition>
     
     <definition name="InvoiceWV" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier :Invoice Vat Wendy" />
+        <put-attribute name="title" value="FC : Invoice Vat Wendy" />
         <put-attribute name="body" value="/WEB-INF/jsp/Invoice.jsp" />
     </definition>
     
     <definition name="InvoiceWN" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier :Invoice No Vat Wendy" />
+        <put-attribute name="title" value="FC : Invoice No Vat Wendy" />
         <put-attribute name="body" value="/WEB-INF/jsp/Invoice.jsp" />
     </definition>
     
     <definition name="InvoiceWA" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier :Invoice Ticket Wendy" />
+        <put-attribute name="title" value="FC : Invoice Ticket Wendy" />
         <put-attribute name="body" value="/WEB-INF/jsp/Invoice.jsp" />
     </definition>
     
     
     <definition name="InvoiceOA" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier :Invoice Ticket Outbound" />
+        <put-attribute name="title" value="FC : Invoice Ticket Outbound" />
         <put-attribute name="body" value="/WEB-INF/jsp/Invoice.jsp" />
     </definition>
     
     <definition name="InvoiceOT" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier :Invoice Temp Outbound" />
+        <put-attribute name="title" value="FC : Invoice Temp Outbound" />
         <put-attribute name="body" value="/WEB-INF/jsp/Invoice.jsp" />
     </definition>
     
     <definition name="InvoiceOV" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier :Invoice Vat Outbound" />
+        <put-attribute name="title" value="FC : Invoice Vat Outbound" />
         <put-attribute name="body" value="/WEB-INF/jsp/Invoice.jsp" />
     </definition>
     
     <definition name="InvoiceON" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier :Invoice No Vat Outbound" />
+        <put-attribute name="title" value="FC : Invoice No Vat Outbound" />
         <put-attribute name="body" value="/WEB-INF/jsp/Invoice.jsp" />
     </definition>
     
     
     <definition name="Receipt" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier :Receipt " />
+        <put-attribute name="title" value="FC : Receipt " />
         <put-attribute name="body" value="/WEB-INF/jsp/Receipt.jsp" />
     </definition>
     
     <definition name="ReceiptWT" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier :Receipt Temp Wendy" />
+        <put-attribute name="title" value="FC : Receipt Temp Wendy" />
         <put-attribute name="body" value="/WEB-INF/jsp/Receipt.jsp" />
     </definition>
     
     <definition name="ReceiptWV" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier :Receipt Vat Wendy" />
+        <put-attribute name="title" value="FC : Receipt Vat Wendy" />
         <put-attribute name="body" value="/WEB-INF/jsp/Receipt.jsp" />
     </definition>
     
     <definition name="ReceiptOT" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier: Receipt Temp Outbound" />
+        <put-attribute name="title" value="FC : Receipt Temp Outbound" />
         <put-attribute name="body" value="/WEB-INF/jsp/Receipt.jsp" />
     </definition>
     
     <definition name="ReceiptOV" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier: Receipt Vat Outbound " />
+        <put-attribute name="title" value="FC : Receipt Vat Outbound " />
         <put-attribute name="body" value="/WEB-INF/jsp/Receipt.jsp" />
     </definition>
     
     <definition name="ReceiptIT" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier: Receipt Temp Inbound " />
+        <put-attribute name="title" value="FC : Receipt Temp Inbound " />
         <put-attribute name="body" value="/WEB-INF/jsp/Receipt.jsp" />
     </definition>
     
     <definition name="ReceiptIV" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier: Receipt Vat Inbound " />
+        <put-attribute name="title" value="FC : Receipt Vat Inbound " />
         <put-attribute name="body" value="/WEB-INF/jsp/Receipt.jsp" />
     </definition>
     
     <definition name="SearchReceipt" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier:SearchReceipt" />
+        <put-attribute name="title" value="FC : SearchReceipt" />
         <put-attribute name="body" value="/WEB-INF/jsp/SearchReceipt.jsp" />
     </definition>
     
     <definition name="TaxInvoice" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier: TaxInvoice " />
+        <put-attribute name="title" value="FC : TaxInvoice " />
         <put-attribute name="body" value="/WEB-INF/jsp/TaxInvoice.jsp" />
     </definition>
     
     <definition name="TaxInvoiceW" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier: TaxInvoice Wendy " />
+        <put-attribute name="title" value="FC : TaxInvoice Wendy " />
         <put-attribute name="body" value="/WEB-INF/jsp/TaxInvoice.jsp" />
     </definition>
     
     <definition name="TaxInvoiceI" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier: TaxInvoice Inbound" />
+        <put-attribute name="title" value="FC : TaxInvoice Inbound" />
         <put-attribute name="body" value="/WEB-INF/jsp/TaxInvoice.jsp" />
     </definition>
     
     <definition name="TaxInvoiceO" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier: TaxInvoice Outbound" />
+        <put-attribute name="title" value="FC : TaxInvoice Outbound" />
         <put-attribute name="body" value="/WEB-INF/jsp/TaxInvoice.jsp" />
     </definition>
     
     <definition name="SearchTaxInvoice" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier: SearchTaxInvoice " />
+        <put-attribute name="title" value="FC : SearchTaxInvoice " />
         <put-attribute name="body" value="/WEB-INF/jsp/SearchTaxInvoice.jsp" />
     </definition>
     
     
     <definition name="ReceiveTable" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier: ReceiveTable " />
+        <put-attribute name="title" value="FC : ReceiveTable " />
         <put-attribute name="body" value="/WEB-INF/jsp/ReceiveTable.jsp" />
     </definition>
     
     <definition name="LockUnlockBooking" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier: Lock and Unlock Booking " />
+        <put-attribute name="title" value="FC : Lock and Unlock Booking " />
         <put-attribute name="body" value="/WEB-INF/jsp/LockUnlockBooking.jsp" />
     </definition>
     
     
     <definition name="Stock" extends="baseLayout">
-        <put-attribute name="title" value="Master : Manage Stock" />
+        <put-attribute name="title" value="Master : Stock" />
         <put-attribute name="body" value="/WEB-INF/jsp/Stock.jsp" />
     </definition>
     
@@ -505,39 +505,39 @@
     </definition>
     
     <definition name="CreditNoteW" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier : Credit Note Wendy" />
+        <put-attribute name="title" value="FC : Credit Note Wendy" />
         <put-attribute name="body" value="/WEB-INF/jsp/CreditNote.jsp" />
     </definition>
     
     <definition name="CreditNoteI" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier : Credit Note Inbound" />
+        <put-attribute name="title" value="FC : Credit Note Inbound" />
         <put-attribute name="body" value="/WEB-INF/jsp/CreditNote.jsp" />
     </definition>
     
     <definition name="CreditNoteO" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier : Credit Note Outbound" />
+        <put-attribute name="title" value="FC : Credit Note Outbound" />
         <put-attribute name="body" value="/WEB-INF/jsp/CreditNote.jsp" />
     </definition>
     
     <definition name="SearchCreditNote" extends="baseLayout">
-        <put-attribute name="title" value="Finance And Cashier : Search Credit Note" />
+        <put-attribute name="title" value="FC : Search Credit Note" />
         <put-attribute name="body" value="/WEB-INF/jsp/SearchCreditNote.jsp" />
     </definition>
     
     <definition name="MAccountCode" extends="baseLayout">
-        <put-attribute name="title" value="Master: Account Code" />
+        <put-attribute name="title" value="Master : Account Code" />
         <put-attribute name="body" value="/WEB-INF/jsp/MAccountCode.jsp" />
     </definition>
     
     <definition name="APARCode" extends="baseLayout">
-        <put-attribute name="title" value="Master: AP/AR Code" />
+        <put-attribute name="title" value="Master : AP/AR Code" />
         <put-attribute name="body" value="/WEB-INF/jsp/APARCode.jsp" />
     </definition>
     
 
     
     <definition name="InvoiceMonthly" extends="baseLayout">
-        <put-attribute name="title" value="Finance : Invoice Monthly" />
+        <put-attribute name="title" value="Report : Invoice Monthly" />
         <put-attribute name="body" value="/WEB-INF/jsp/InvoiceMonthly.jsp" />
     </definition>
     
@@ -552,32 +552,32 @@
     </definition>
     
     <definition name="CollectionMonitor" extends="baseLayout">
-        <put-attribute name="title" value="Nirvana Interface:Collection monitor" />
+        <put-attribute name="title" value="Nirvana Interface : Collection monitor" />
         <put-attribute name="body" value="/WEB-INF/jsp/CollectionMonitor.jsp" />
     </definition>
     
     <definition name="TicketFareSummaryReport" extends="baseLayout">
-        <put-attribute name="title" value="CheckingTicket:List Ticket Fare Summary" />
+        <put-attribute name="title" value="Report : List Ticket Fare Summary" />
         <put-attribute name="body" value="/WEB-INF/jsp/TicketFareSummaryReport.jsp" />
     </definition>
     
     <definition name="TicketFareSumAgentStaff" extends="baseLayout">
-        <put-attribute name="title" value="Checking Ticket : List Ticket Summary By Agent and Staff" />
+        <put-attribute name="title" value="Report : List Ticket Summary By Agent and Staff" />
         <put-attribute name="body" value="/WEB-INF/jsp/TicketFareSumAgentStaff.jsp" />
     </definition>
     
     <definition name="BillAirAgent" extends="baseLayout">
-        <put-attribute name="title" value="Checking AirTicket : Billng Air Agent Report" />
+        <put-attribute name="title" value="Report : Billng Air Agent Report" />
         <put-attribute name="body" value="/WEB-INF/jsp/BillAirAgent.jsp" />
     </definition>
     
     <definition name="TicketFareSummaryAirline" extends="baseLayout">
-        <put-attribute name="title" value="Checking Airticket : Ticket Summary Airline" />
+        <put-attribute name="title" value="Report : Ticket Summary Airline" />
         <put-attribute name="body" value="/WEB-INF/jsp/TicketFareSummaryAirline.jsp" />
     </definition>
     
     <definition name="TicketSummaryCostIncome" extends="baseLayout">
-        <put-attribute name="title" value="Checking Airticket:Ticket Summary Cost Income" />
+        <put-attribute name="title" value="Report : Ticket Summary Cost Income" />
         <put-attribute name="body" value="/WEB-INF/jsp/TicketSummaryCostIncome.jsp" />
     </definition>
     
@@ -592,7 +592,7 @@
     </definition>
     
     <definition name="TicketRefundSummary" extends="baseLayout">
-        <put-attribute name="title" value="Chk : Ticket Refund Report" />
+        <put-attribute name="title" value="Report : Ticket Refund Report" />
         <put-attribute name="body" value="/WEB-INF/jsp/TicketRefundSummary.jsp" />
     </definition>
     <!--<add data>-->
@@ -613,22 +613,22 @@
     </definition>
     
     <definition name="InvoiceInboundPM" extends="baseLayout">
-        <put-attribute name="title" value="Invoice : Invoice Inbound Proforma" />
+        <put-attribute name="title" value="FC : Invoice Inbound Proforma" />
         <put-attribute name="body" value="/WEB-INF/jsp/InvoiceInbound.jsp" />
     </definition>
     
     <definition name="InvoiceInboundRV" extends="baseLayout">
-        <put-attribute name="title" value="Invoice : Invoice Inbound Revenue" />
+        <put-attribute name="title" value="FC : Invoice Inbound Revenue" />
         <put-attribute name="body" value="/WEB-INF/jsp/InvoiceInbound.jsp" />
     </definition>
     
     <definition name="TicketProfitLost" extends="baseLayout">
-        <put-attribute name="title" value="Chk : Ticket Profit Loss Summary" />
+        <put-attribute name="title" value="Report : Ticket Profit Loss Summary" />
         <put-attribute name="body" value="/WEB-INF/jsp/TicketProfitLoss.jsp" />
     </definition>
     
     <definition name="TicketSummaryCommission" extends="baseLayout">
-        <put-attribute name="title" value="Master : Manage TicketSummaryCommission" />
+        <put-attribute name="title" value="Report : Ticket Summary Commission" />
         <put-attribute name="body" value="/WEB-INF/jsp/TicketSummaryCommission.jsp" />
     </definition>
 	
