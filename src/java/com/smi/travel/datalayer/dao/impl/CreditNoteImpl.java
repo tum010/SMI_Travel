@@ -224,7 +224,11 @@ public class CreditNoteImpl implements CreditNoteDao {
          
          if((Department != null) &&(!"".equalsIgnoreCase(Department))){
              if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
-             query += prefix+" cn.department = '"+Department+"'";
+            if("WendyOutbound".equalsIgnoreCase(Department)){
+                query += prefix+" cn.department in ('Wendy' , 'Outbound') ";
+            }else{
+                query += prefix+" cn.department = '"+Department+"'";
+            }
          }
          
          if((status != null) &&(!"".equalsIgnoreCase(status))){

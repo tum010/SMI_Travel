@@ -192,7 +192,12 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
         }
         if ((Department != null) && (!"".equalsIgnoreCase(Department))) {
             query.append(haveCondition ? " and" : " where");
-            query.append(" taxInv.department = '" + Department + "'");
+            if("WendyOutbound".equalsIgnoreCase(Department)){
+                query.append(" taxInv.department in ('Wendy' , 'Outbound') ");
+            }else{
+                query.append(" taxInv.department = '" + Department + "'");
+            }
+            
             haveCondition = true;
         }
         if ((Status != null) && (!"".equalsIgnoreCase(Status))) {

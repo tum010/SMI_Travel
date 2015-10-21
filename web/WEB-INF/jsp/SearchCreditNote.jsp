@@ -8,6 +8,7 @@
 <link href="css/selectize.bootstrap3.css" rel="stylesheet">
 <link href="css/jquery-ui.css" rel="stylesheet">
 <c:set var="mFinanceItemStatus_List" value="${requestScope['mFinanceItemStatus_List']}" />
+<c:set var="department" value="${requestScope['department']}" />
 <section class="content-header" >
     <h1>
         Finance & Cashier - Credit Note
@@ -64,12 +65,45 @@
                                 <label class="control-label text-right">Department</label>
                             </div>
                             <div class="col-md-1 form-group" style="width: 130px">
-                                 <select class="form-control" id="department" name="department">
+<!--                                 <select class="form-control" id="department" name="department">
                                      <option value="">Choose</option>
                                     <option value="W">Wendy</option>
                                     <option value="O">Outbound</option>
                                     <option value="I">Inbound</option>
-                                </select>    
+                                    <option value="WO">Wendy + Outbound</option>
+                                </select> -->
+                                <select class="form-control" id="department" name="department">
+                                    <option value="">--Choose--</option>
+                                        <c:set var="selectDepartW" value="" />
+                                        <c:set var="selectDepartO" value="" />
+                                        <c:set var="selectDepartI" value="" />
+                                        <c:set var="selectDepartWO" value="" />
+                                        <c:choose>
+                                            <c:when test="${department == 'Wendy'}">
+                                                <c:set var="selectDepartW" value="selected" />
+                                            </c:when>
+                                        </c:choose>
+                                        <c:choose>
+                                            <c:when test="${department == 'Outbound'}">
+                                                <c:set var="selectDepartO" value="selected" />
+                                            </c:when>
+                                        </c:choose>
+                                        <c:choose>
+                                            <c:when test="${department == 'Inbound'}">
+                                                <c:set var="selectDepartI" value="selected" />
+                                            </c:when>
+                                        </c:choose>
+                                        <c:choose>
+                                            <c:when test="${department == 'WO'}">
+                                                <c:set var="selectDepartWO" value="selected" />
+                                            </c:when>
+                                        </c:choose>
+                                    <option value="Wendy" ${selectDepartW}>Wendy</option>
+                                    <option value="Outbound" ${selectDepartO}>Outbound</option>
+                                    <option value="Inbound" ${selectDepartI}>Inbound</option>
+                                    <option value="WendyOutbound" ${selectDepartWO}>Wendy + Outbound</option>
+                                </select> 
+                                
                             </div>
                             <div class="col-xs-1 text-right" style="width: 100px">
                                 <label class="control-label text-right">Status</label>

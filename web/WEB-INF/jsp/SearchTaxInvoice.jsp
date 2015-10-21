@@ -77,6 +77,12 @@
                                 </c:when>
                             </c:choose>
                          <option value="Inbound" ${select3}>Inbound</option>
+                            <c:choose>
+                                <c:when test="${requestScope['department'] == 'WendyOutbound'}">
+                                    <c:set var="select4" value="selected" />
+                                </c:when>
+                            </c:choose>
+                         <option value="WendyOutbound" ${select4}>Wendy + Outbound</option>
                     </select>    
                 </div>
                 <div class="col-xs-1 text-right" style="padding: 0px 0px 0px 20px">
