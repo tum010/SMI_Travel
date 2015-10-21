@@ -451,7 +451,11 @@ import org.hibernate.Transaction;
          
          if((Department != null) &&(!"".equalsIgnoreCase(Department))){
              if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
-             query += prefix+" rec.department = '"+Department+"'";
+            if("WendyOutbound".equalsIgnoreCase(Department)){
+                query += prefix+" rec.department in ('Wendy' , 'Outbound') ";
+            }else{
+                query += prefix+" rec.department = '"+Department+"'";
+            }
          }
          
          if((type != null) &&(!"".equalsIgnoreCase(type))){

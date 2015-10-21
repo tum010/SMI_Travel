@@ -89,6 +89,7 @@
                                 <c:set var="selectDepartW" value="" />
                                 <c:set var="selectDepartO" value="" />
                                 <c:set var="selectDepartI" value="" />
+                                <c:set var="selectDepartWO" value="" />
                                 <c:choose>
                                     <c:when test="${department == 'Wendy'}">
                                         <c:set var="selectDepartW" value="selected" />
@@ -104,9 +105,15 @@
                                         <c:set var="selectDepartI" value="selected" />
                                     </c:when>
                                 </c:choose>
+                                <c:choose>
+                                    <c:when test="${department == 'WendyOutbound'}">
+                                        <c:set var="selectDepartWO" value="selected" />
+                                    </c:when>
+                                </c:choose>
                             <option value="Wendy" ${selectDepartW}>Wendy</option>
                             <option value="Outbound" ${selectDepartO}>Outbound</option>
                             <option value="Inbound" ${selectDepartI}>Inbound</option>
+                            <option value="WendyOutbound" ${selectDepartWO}>Wendy + Outbound</option>
                         </select>    
                     </div>
                     <div class="col-xs-1 text-right" style="padding: 0px 0px 0px 20px">

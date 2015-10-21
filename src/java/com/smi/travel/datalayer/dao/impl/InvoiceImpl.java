@@ -380,7 +380,11 @@ public class InvoiceImpl implements InvoiceDao{
         
         if ( department != null && (!"".equalsIgnoreCase(department)) ) {
             AndQuery = 1;
-            query += " st.department = '" + department + "'";
+            if("WendyOutbound".equalsIgnoreCase(department)){
+                query += " st.department in ('Wendy' , 'Outbound') ";
+            }else{
+                query += " st.department = '" + department + "'";
+            }
         }
        
         if (type != null && (!"".equalsIgnoreCase(type)) ) {
