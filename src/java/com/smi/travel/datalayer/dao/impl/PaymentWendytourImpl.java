@@ -535,6 +535,7 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
             query.append(" `payment_tour_hotel_summary`.supcode = '" + invSupCode + "'");
             haveCondition = true;
         }
+        query.append(" ORDER BY `supplier` ");
 
         List<Object[]> QueryList =  session.createSQLQuery(query.toString())
                 .addScalar("payno",Hibernate.STRING)
