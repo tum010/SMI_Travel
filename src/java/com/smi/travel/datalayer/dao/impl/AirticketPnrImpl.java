@@ -80,6 +80,11 @@ public class AirticketPnrImpl implements AirticketPnrDao {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
             AirticketPnr dbAirPnr = (AirticketPnr) session.get(AirticketPnr.class, airPnr.getId());
+            
+            dbAirPnr.setId(airPnr.getId());
+            dbAirPnr.setPnr(airPnr.getPnr());
+            dbAirPnr.setSubpnr(airPnr.getSubpnr());
+            
             Set<AirticketAirline> airlines = airPnr.getAirticketAirlines();
             for (AirticketAirline airline : airlines) {
                 if (StringUtils.isEmpty(airline.getId())) {

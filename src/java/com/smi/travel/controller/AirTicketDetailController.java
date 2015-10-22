@@ -113,7 +113,15 @@ public class AirTicketDetailController extends SMITravelController {
             System.out.println(AirTicketDetailController.class.getName() + " import");
             System.out.println(AirTicketDetailController.class.getName() + " pnr - [" + bookingPnrNo + "]");
             BookingPnr importPnr = bookingAirticketService.getBookingPnr(bookingPnrNo);
-            AirticketPnr newAirPnr = this.importBookingPnr(importPnr, request.getParameter("referenceNo"),pnrIdTemp);
+            AirticketPnr newAirPnr = null;
+            
+            
+            if((pnrIdTemp != null)&&(!pnrIdTemp.equalsIgnoreCase(""))){
+                AirticketPnr OldairticketPnr = bookingAirticketService.getPNRDetailByID(pnrIdTemp, referenceNo);
+                this.importBookingSamePnr(importPnr, OldairticketPnr,request.getParameter("referenceNo") ,pnrIdTemp);
+            }else{
+                newAirPnr = this.importBookingPnr(importPnr, request.getParameter("referenceNo"),pnrIdTemp);
+            }
             
 //            AirticketPnr airticketPnr = bookingAirticketService.getPNRDetailByID(pnrIdTemp, referenceNo);
             
@@ -716,6 +724,47 @@ public class AirTicketDetailController extends SMITravelController {
         result = updateAirticketPassenger(request, airticketPnr);
         result = this.bookingAirticketService.UpdateAirticketPnr(airticketPnr);
         return result;
+    }
+    
+    private AirticketPnr importBookingSamePnr(BookingPnr bPnr,AirticketPnr airPnr,String refNo,String pnrId) {
+        String subpnr = "";
+        //get sub pnr from pnrId
+        if(pnrId != null && !"null".equalsIgnoreCase(pnrId) && !"".equalsIgnoreCase(pnrId)){
+            AirticketPnr airPnrtemp = bookingAirticketService.getAirticketPnrFromId(pnrId);
+            subpnr = (String.valueOf(airPnrtemp.getSubpnr()) + "," + airPnrtemp.getPnr()).replaceAll("null,", "");
+        }
+        // Add value in AirticketPnr
+        airPnr.setId(pnrId);
+        airPnr.setPnr(bPnr.getPnr());
+        if(!"".equalsIgnoreCase(subpnr)){
+            airPnr.setSubpnr(subpnr);
+        }
+        airPnr.setIsImport(1);
+        
+        //get sub pnr from pnrId
+        
+        // Build AirticketAirlines
+        Set<BookingAirline> listBookingAirline = bPnr.getBookingAirlines();
+        Iterator iteratorBookingAirline = listBookingAirline.iterator();
+        while (iteratorBookingAirline.hasNext()) {
+            BookingAirline bAirline = (BookingAirline) iteratorBookingAirline.next();
+            AirticketAirline airAirline = new AirticketAirline();
+
+            MAirline airline = new MAirline();
+            airline.setCode(bAirline.getAirlineCode());
+            List<MAirline> listAirline = bookingAirticketService.getmAirlineDao().getListAirLine(airline, 1);
+            airAirline.setMAirline(listAirline.get(0));
+            airAirline.setTicketDate(bAirline.getTicketDate());
+
+            airAirline.setAirticketPnr(airPnr);
+            airPnr.getAirticketAirlines().add(airAirline);
+            
+            buildAirticketFlights(bAirline, airAirline);
+            buildAirticketPassenger(bAirline, airAirline);
+
+        }
+        bookingAirticketService.UpdateAirticketPnr(airPnr);
+        return airPnr;
     }
     
     private AirticketPnr importBookingPnr(BookingPnr bPnr, String refNo,String pnrId) {
