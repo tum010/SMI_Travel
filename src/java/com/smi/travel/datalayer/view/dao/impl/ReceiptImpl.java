@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -65,6 +66,8 @@ public class ReceiptImpl implements ReceiptDao{
         
         List data = new ArrayList();
         String invdescTemp = "";
+        SimpleDateFormat sf = new SimpleDateFormat();
+        sf.applyPattern("dd-MM-yyyy");
         ReceiptView receiptViewTemp  = new ReceiptView();
         for(Object[] T : QueryList){
             ReceiptView receiptView = new ReceiptView();
@@ -74,7 +77,7 @@ public class ReceiptImpl implements ReceiptDao{
             receiptView.setTel((("null".equals(String.valueOf(T[3])) ? "" : String.valueOf(T[3]))));
             receiptView.setFax((("null".equals(String.valueOf(T[4])) ? "" : String.valueOf(T[4]))));
             receiptView.setRecno((("null".equals(String.valueOf(T[5])) ? "" : String.valueOf(T[5]))));
-            receiptView.setRecdate((("null".equals(String.valueOf(T[6])) ? "" : String.valueOf(T[6]))));
+            receiptView.setRecdate((("null".equals(String.valueOf(T[6])) ? "" : String.valueOf(sf.format(util.convertStringToDate(String.valueOf(T[6])))))));
             receiptView.setPaidby((("null".equals(String.valueOf(T[7]))? "" : String.valueOf(T[7]))));
             receiptView.setDescription((("null".equals(String.valueOf(T[8])) ? "" : String.valueOf(T[8]))));
             receiptView.setNondescription((("null".equals(String.valueOf(T[9])) ? "" : String.valueOf(T[9]))));

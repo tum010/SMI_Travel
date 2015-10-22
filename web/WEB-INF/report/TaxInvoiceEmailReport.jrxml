@@ -331,7 +331,7 @@
 	</pageHeader>
 	<columnHeader>
 		<band height="19" splitType="Stretch">
-			<rectangle radius="10">
+			<rectangle radius="7">
 				<reportElement mode="Transparent" x="0" y="0" width="524" height="18" uuid="5b89cd10-be11-4220-b2a3-137de9266d9f"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>

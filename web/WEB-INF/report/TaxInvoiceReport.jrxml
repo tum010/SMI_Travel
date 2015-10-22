@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TaxInvoiceReport" language="groovy" pageWidth="648" pageHeight="396" columnWidth="592" leftMargin="28" rightMargin="28" topMargin="50" bottomMargin="28" uuid="329d3d93-e67e-4a6e-bf56-26555dfcb4f6">
 	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="676"/>
-	<property name="ireport.y" value="1817"/>
+	<property name="ireport.x" value="1007"/>
+	<property name="ireport.y" value="281"/>
 	<field name="customer" class="java.lang.String"/>
 	<field name="address" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -205,7 +205,7 @@
 	</pageHeader>
 	<columnHeader>
 		<band height="17" splitType="Stretch">
-			<rectangle radius="10">
+			<rectangle radius="7">
 				<reportElement x="0" y="0" width="556" height="16" uuid="13a8b9b1-1ab0-4b73-9fc6-842171c82c90"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>

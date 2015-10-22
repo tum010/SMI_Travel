@@ -55,6 +55,8 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
                 .list();
         
         String invdescTemp = "";
+        SimpleDateFormat sf = new SimpleDateFormat();
+        sf.applyPattern("dd-MM-yyyy");
         TaxInvoiceReport taxInvoiceViewTemp  = new TaxInvoiceReport();
         for (Object[] B : QueryList) {
             TaxInvoiceReport taxInvoiceView = new TaxInvoiceReport();
@@ -64,7 +66,7 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
             taxInvoiceView.setTel(util.ConvertString(B[3]));
             taxInvoiceView.setFax(util.ConvertString(B[4]));
             taxInvoiceView.setTaxno(util.ConvertString(B[5]));
-            taxInvoiceView.setTaxdate(util.ConvertString(B[6]));
+            taxInvoiceView.setTaxdate(String.valueOf(sf.format(util.convertStringToDate(String.valueOf(B[6])))));
             taxInvoiceView.setPaid(util.ConvertString(B[7]));
             taxInvoiceView.setDescription(util.ConvertString(B[8]));
             taxInvoiceView.setNondescription(util.ConvertString(B[9]));
