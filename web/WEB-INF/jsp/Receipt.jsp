@@ -59,10 +59,6 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>Not add duplicate detail!</strong> 
         </div>
-        <div id="textAlertReceiveAmount"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <strong>Incorrect Receive Amount!</strong> 
-        </div>
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
             <div ng-include="'WebContent/FinanceAndCashier/ReceiptMenu.html'"></div>
         </div>
@@ -741,6 +737,11 @@
                             </div>
                         </div>
                     </div>
+                    <div id="textAlertReceiveAmount"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Incorrect Receive Amount!</strong> 
+                    </div>            
+                                
                 </div>                          
             </form>
         </div>
@@ -2078,38 +2079,52 @@ function saveReceipt(){
     
     checkSumAmountBeforeSave();
     
-    var sumAmountBeforeSave = document.getElementById('sumAmountBeforeSave').value;
-    var grandTotal = document.getElementById('grandTotal').value;
-    
-    for(i = 1 ; i < counter.value-1 ; i++ ){
-        var amountTemp = document.getElementById('receiveAmountTemp'+i).value;
-        var amount = document.getElementById('receiveAmount'+i).value;
-        if(amount > amountTemp){
-            $('#textAlertReceiveAmount').show();
-            checksave = 2;
-        }else{
-            if(grandTotal === sumAmountBeforeSave){
-                $('#textAlertReceiveAmount').hide();
-            }else{
-                $('#textAlertReceiveAmount').show();
-                checksave = 2;
-            }
-        }
-    }
-    
+    var inputStatus = document.getElementById('inputStatus').value;
     var receiveFromCode = document.getElementById('receiveFromCode').value;
     var arCode = document.getElementById('arCode').value;
     var receiveFromDate = document.getElementById('receiveFromDate').value;
     var inputStatus = document.getElementById('inputStatus').value;
-   
-    if(checksave === 1){
+    
+    if(inputStatus !== '7'){
+        var sumAmountBeforeSave = document.getElementById('sumAmountBeforeSave').value;
+        var grandTotal = document.getElementById('grandTotal').value;
+
+        for(i = 1 ; i < counter.value-1 ; i++ ){
+            var amountTemp = document.getElementById('receiveAmountTemp'+i).value;
+            var amount = document.getElementById('receiveAmount'+i).value;
+            if(amount > amountTemp){
+                $('#textAlertReceiveAmount').show();
+                checksave = 2;
+            }else{
+                if(grandTotal === sumAmountBeforeSave){
+                    $('#textAlertReceiveAmount').hide();
+                }else{
+                    $('#textAlertReceiveAmount').show();
+                    checksave = 2;
+                }
+            }
+        }
+
+        if(checksave === 1){
+            $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
+            $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
+            $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromDate');
+            $('#ReceiptForm').bootstrapValidator('revalidateField', 'inputStatus');
+            if(receiveFromCode != "" && arCode != "" &&  receiveFromDate != "" &&  inputStatus != ""  ){
+                document.getElementById('ReceiptForm').submit();
+            }
+            $('#textAlertReceiveAmount').hide();
+        }
+    }else{
         $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
         $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
         $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromDate');
         $('#ReceiptForm').bootstrapValidator('revalidateField', 'inputStatus');
+        
         if(receiveFromCode != "" && arCode != "" &&  receiveFromDate != "" &&  inputStatus != ""  ){
             document.getElementById('ReceiptForm').submit();
         }
+        
         $('#textAlertReceiveAmount').hide();
     }
 }
