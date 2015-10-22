@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TaxInvoiceEmailReport" language="groovy" pageWidth="594" pageHeight="421" columnWidth="524" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="346dddd2-e21a-4c7b-8d69-ccea53d38a9d">
-	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="387"/>
-	<property name="ireport.y" value="1043"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="45"/>
+	<property name="ireport.y" value="60"/>
 	<field name="customer" class="java.lang.String"/>
 	<field name="address" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -95,11 +95,11 @@
 				<text><![CDATA[S.M.I Travel Co., Ltd. (Head Office)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="4" y="64" width="516" height="23" uuid="9d649f59-8370-4543-b670-8c95b5b98211"/>
-				<textElement textAlignment="Center">
+				<reportElement mode="Transparent" x="273" y="64" width="247" height="23" uuid="9d649f59-8370-4543-b670-8c95b5b98211"/>
+				<textElement>
 					<font fontName="TH SarabunPSK" size="17" isBold="true" isItalic="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[TAX INVOICE/ ใบกำกับภาษี]]></text>
+				<text><![CDATA[/ ใบกำกับภาษี]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="70" y="27" width="249" height="13" uuid="9fa65484-26d7-4188-a002-779b9986c466"/>
@@ -320,6 +320,13 @@
 				<reportElement x="1" y="3" width="257" height="38" uuid="8dd2bc10-3c7b-4387-abf1-b629aa73a3a3"/>
 				<imageExpression><![CDATA["resource/images/smi-logo.gif"]]></imageExpression>
 			</image>
+			<staticText>
+				<reportElement x="13" y="62" width="257" height="23" uuid="2b152c16-4f8b-42e5-80d0-d3b5e5c017e5"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="AngsanaUPC" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TAX INVOICE]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
