@@ -1631,6 +1631,7 @@
                 '<tr style="higth 100px">' + 
                 '<input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >' +
                 '<input id="DescriptionReceiptDetail' + row + '" name="DescriptionReceiptDetail' + row + '"  type="hidden" >' +
+                '<input id="receiveAmountTemp' + row + '" name="receiveAmountTemp' + row + '"  type="hidden" value="9999999" >' +
                 '<td>' + 
                 '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="">---------</option></select>' +                          
                 '</td>' +
@@ -2057,6 +2058,14 @@ function searchReceiveNo(){
 }
 
 function saveReceipt(){
+    $('#textAlertDivSave').hide();
+    $('#textAlertDivNotSave').hide();
+    $('#textAlertDivDelete').hide();
+    $('#textAlertDivNotDelete').hide();
+    $('#textAlertReceiveNo').hide();
+    $('#textAlertDuplicateProduct').hide();
+    $('#textAlertReceiveAmount').hide();
+    
     var i = 0 ;
     var checksave = 1;
     var action = document.getElementById('action');
@@ -2079,11 +2088,11 @@ function saveReceipt(){
             $('#textAlertReceiveAmount').show();
             checksave = 2;
         }else{
-            if(grandTotal > sumAmountBeforeSave){
+            if(grandTotal === sumAmountBeforeSave){
+                $('#textAlertReceiveAmount').hide();
+            }else{
                 $('#textAlertReceiveAmount').show();
                 checksave = 2;
-            }else{
-                $('#textAlertReceiveAmount').hide();
             }
         }
     }
