@@ -727,6 +727,8 @@ function printTicketSummaryAirline(){
     var department = document.getElementById("department").value;
     var salebyUser = document.getElementById("salebyUser").value;
     var termPay = document.getElementById("termPay").value;
+    var salebyName = document.getElementById("salebyName").value;
+    
     if((invFrom !== '') && (invTo !== '')){
         if(reportType == 1){
             window.open("Excel.smi?name=TicketFareSummaryAirline&typeRouting=" + typeRouting 
@@ -739,7 +741,7 @@ function printTicketSummaryAirline(){
                     + "&passenger=" + passenger
                     + "&agentId=" + agentId 
                     + "&department=" + department 
-                    + "&staff=" + salebyUser 
+                    + "&staff=" + salebyName 
                     + "&termPay=" + termPay);
         }else if(reportType == 2){
             window.open("Excel.smi?name=SummaryAirlinePax&typeRouting=" + typeRouting 
@@ -752,7 +754,7 @@ function printTicketSummaryAirline(){
                     + "&passenger=" + passenger
                     + "&agentId=" + agentId 
                     + "&department=" + department 
-                    + "&staff=" + salebyUser 
+                    + "&staff=" + salebyName 
                     + "&termPay=" + termPay);
         }else{
             $("#reporttypepanel").removeClass("has-success");
@@ -771,7 +773,7 @@ function printTicketSummaryAirline(){
                     + "&passenger=" + passenger
                     + "&agentId=" + agentId 
                     + "&department=" + department 
-                    + "&staff=" + salebyUser 
+                    + "&staff=" + salebyName 
                     + "&termPay=" + termPay);
         }else if(reportType == 2){
             window.open("Excel.smi?name=SummaryAirlinePax&typeRouting=" + typeRouting 
@@ -784,7 +786,7 @@ function printTicketSummaryAirline(){
                     + "&passenger=" + passenger
                     + "&agentId=" + agentId 
                     + "&department=" + department 
-                    + "&staff=" + salebyUser 
+                    + "&staff=" + salebyName 
                     + "&termPay=" + termPay);
         }else{
             $("#reporttypepanel").removeClass("has-success");

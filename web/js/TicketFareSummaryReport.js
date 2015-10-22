@@ -19,6 +19,7 @@ function printTicketFareSummary(){
     var issueto = document.getElementById("issueTo").value;
     var invFrom = document.getElementById("invoiceFromDate").value;
     var invTo = document.getElementById("invoiceToDate").value;
+    var salebyName = document.getElementById("salebyName").value;
     
     if((invFrom !== '') && (invTo !== '')){
         if(reportType == 1){
@@ -31,7 +32,7 @@ function printTicketFareSummary(){
                     "&invdateFrom=" + invFrom +
                     "&invdateTo=" + invTo +
                     "&department=" + department + 
-                    "&staff=" + salebyUser + 
+                    "&staff=" + salebyName + 
                     "&termPay=" + termPay);
         }else if(reportType == 2){
             window.open("Excel.smi?name=TicketFareInvoicReport&ticketType=" + ticketType + 
@@ -43,7 +44,7 @@ function printTicketFareSummary(){
                     "&invdateFrom=" + invFrom +
                     "&invdateTo=" + invTo +
                     "&department=" + department + 
-                    "&staff=" + salebyUser + 
+                    "&staff=" + salebyName + 
                     "&termPay=" + termPay);
         }else if(reportType == 3){
             window.open("Excel.smi?name=TicketFareAgentReport&ticketType=" + ticketType + 
@@ -55,7 +56,7 @@ function printTicketFareSummary(){
                     "&invdateFrom=" + invFrom +
                     "&invdateTo=" + invTo +
                     "&department=" + department + 
-                    "&staff=" + salebyUser + 
+                    "&staff=" + salebyName + 
                     "&termPay=" + termPay);
         }else{
             $("#reporttypepanel").removeClass("has-success");
@@ -73,7 +74,7 @@ function printTicketFareSummary(){
                     "&invdateFrom=" + invFrom +
                     "&invdateTo=" + invTo +
                     "&department=" + department + 
-                    "&staff=" + salebyUser + 
+                    "&staff=" + salebyName + 
                     "&termPay=" + termPay);
         }else if(reportType == 2){
             window.open("Excel.smi?name=TicketFareInvoicReport&ticketType=" + ticketType + 
@@ -85,7 +86,7 @@ function printTicketFareSummary(){
                     "&invdateFrom=" + invFrom +
                     "&invdateTo=" + invTo +
                     "&department=" + department + 
-                    "&staff=" + salebyUser + 
+                    "&staff=" + salebyName + 
                     "&termPay=" + termPay);
         }else if(reportType == 3){
             window.open("Excel.smi?name=TicketFareAgentReport&ticketType=" + ticketType + 
@@ -97,7 +98,7 @@ function printTicketFareSummary(){
                     "&invdateFrom=" + invFrom +
                     "&invdateTo=" + invTo +
                     "&department=" + department + 
-                    "&staff=" + salebyUser + 
+                    "&staff=" + salebyName + 
                     "&termPay=" + termPay);
         }else{
             $("#reporttypepanel").removeClass("has-success");

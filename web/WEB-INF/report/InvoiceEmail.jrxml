@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceEmail" language="groovy" pageWidth="595" pageHeight="842" columnWidth="522" leftMargin="45" rightMargin="28" topMargin="59" bottomMargin="56" uuid="573bfe06-de4f-4adc-b5b3-76cb68d89d08">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1005"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="79"/>
+	<property name="ireport.y" value="131"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
@@ -39,9 +39,6 @@
 				<imageExpression><![CDATA["resource/images/wendy_watermark_1.JPG"]]></imageExpression>
 			</image>
 			<line>
-				<reportElement x="0" y="239" width="1" height="351" uuid="684538a6-00f6-4fc5-9889-2ad18afd4e6e"/>
-			</line>
-			<line>
 				<reportElement x="319" y="239" width="1" height="351" uuid="a2d6d9e0-3a99-4e75-bddb-73c1f80ab321"/>
 			</line>
 			<line>
@@ -54,23 +51,26 @@
 				<reportElement x="439" y="239" width="1" height="351" uuid="027f36d7-62de-4cd8-8589-7252ef60942b"/>
 			</line>
 			<line>
-				<reportElement x="520" y="239" width="1" height="352" uuid="69c50df8-8e40-4e13-ad4c-0c5bbb131702"/>
-			</line>
-			<line>
 				<reportElement x="0" y="590" width="520" height="1" uuid="3e3b1550-664a-40e9-87f2-4138566b94ac"/>
 			</line>
+			<rectangle radius="10">
+				<reportElement mode="Transparent" x="1" y="239" width="521" height="413" uuid="feba6845-2257-4f09-9a9f-dd021f61908b"/>
+			</rectangle>
 		</band>
 	</background>
 	<pageHeader>
 		<band height="239">
 			<rectangle radius="15">
-				<reportElement x="2" y="81" width="520" height="36" backcolor="#99FF99" uuid="d3561c26-3c2b-4813-ae67-87c5fe222efa"/>
+				<reportElement x="2" y="81" width="520" height="36" backcolor="#B6DBAA" uuid="d3561c26-3c2b-4813-ae67-87c5fe222efa"/>
 				<graphicElement>
 					<pen lineWidth="0.0"/>
 				</graphicElement>
 			</rectangle>
 			<rectangle radius="15">
 				<reportElement x="320" y="120" width="200" height="113" uuid="a316425c-99ee-43ee-b0ea-f044244e9a45"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</rectangle>
 			<staticText>
 				<reportElement x="271" y="1" width="249" height="22" uuid="681eb829-3566-4836-b668-7cf3acfe1fe1"/>
@@ -101,14 +101,17 @@
 				<text><![CDATA[กรุงเทพฯ 10330]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="207" y="81" width="102" height="36" uuid="c61e9124-2b6a-46f9-aae9-3c23f19ca77c"/>
-				<textElement>
-					<font size="24" isBold="true"/>
+				<reportElement x="207" y="73" width="120" height="44" uuid="c61e9124-2b6a-46f9-aae9-3c23f19ca77c"/>
+				<textElement textAlignment="Center">
+					<font fontName="AngsanaUPC" size="36" isBold="true"/>
 				</textElement>
 				<text><![CDATA[INVOICE]]></text>
 			</staticText>
 			<rectangle radius="15">
 				<reportElement x="0" y="120" width="317" height="113" uuid="1afad31d-5ce3-4187-8e03-d8fb86c2f965"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</rectangle>
 			<staticText>
 				<reportElement x="7" y="124" width="24" height="20" uuid="2e4ba684-d417-4553-af70-2f75bf0fa89a"/>
@@ -356,8 +359,7 @@
 			<staticText>
 				<reportElement x="0" y="0" width="29" height="20" forecolor="#000000" uuid="b5037a15-96e8-4308-9e7c-e7dcf8c8194e"/>
 				<box>
-					<topPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="14" isBold="true" isItalic="false" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -367,8 +369,7 @@
 			<staticText>
 				<reportElement x="28" y="0" width="289" height="20" uuid="6a01acce-c9e8-4426-aba9-8b5711ec980a"/>
 				<box>
-					<topPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="14" isBold="true" isItalic="false" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -378,8 +379,7 @@
 			<staticText>
 				<reportElement x="317" y="0" width="63" height="20" uuid="ab8e73ec-2b9b-4195-8b9d-c28958464d55"/>
 				<box>
-					<topPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="14" isBold="true" isItalic="false" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -389,8 +389,7 @@
 			<staticText>
 				<reportElement x="380" y="0" width="59" height="20" uuid="4fba126d-3354-4cbb-abb9-aa24f7f176f9"/>
 				<box>
-					<topPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="14" isBold="true" isItalic="false" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -400,8 +399,7 @@
 			<staticText>
 				<reportElement x="439" y="0" width="81" height="20" uuid="3c0a0717-f4d0-4baa-81b2-b4caa279ad78"/>
 				<box>
-					<topPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="14" isBold="true" isItalic="false" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -414,6 +412,7 @@
 		<band height="24" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="33" y="3" width="284" height="20" uuid="72e266b6-b5ad-408e-9bcb-4dfe9f1f0cc9"/>
+				<box bottomPadding="5"/>
 				<textElement markup="none">
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -456,9 +455,6 @@
 				<graphicElement>
 					<pen lineWidth="0.0"/>
 				</graphicElement>
-			</rectangle>
-			<rectangle>
-				<reportElement mode="Transparent" x="0" y="2" width="520" height="45" uuid="59b143a8-6766-4667-8710-dadbe9eacac9"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="2" y="-1" width="127" height="16" uuid="d40cc862-6036-4014-b411-a8bc2b4fd884">
@@ -595,10 +591,16 @@
 				<textFieldExpression><![CDATA[$F{grtotal} == null ? "0.00" : $F{grtotal}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="366" y="2" width="1" height="45" uuid="d59d59b1-2805-4fa4-b52d-46dfa69d4f46"/>
+				<reportElement x="367" y="2" width="1" height="51" uuid="d59d59b1-2805-4fa4-b52d-46dfa69d4f46"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</line>
 			<rectangle radius="10">
 				<reportElement x="0" y="93" width="62" height="25" uuid="ced56ea2-df4d-4cb7-835c-41515e760921"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</rectangle>
 			<staticText>
 				<reportElement x="7" y="91" width="46" height="15" uuid="0c4a0a35-3fff-4e37-8502-75815cf863af"/>
@@ -616,6 +618,9 @@
 			</staticText>
 			<line>
 				<reportElement x="0" y="105" width="62" height="1" uuid="c64d3f0c-eda1-40fd-b8e2-f444f0f5bfbd"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</line>
 			<staticText>
 				<reportElement x="253" y="110" width="131" height="16" uuid="d1d378aa-1af7-45c3-a4d4-f00da4d27883"/>
@@ -633,6 +638,9 @@
 			</staticText>
 			<line>
 				<reportElement x="253" y="111" width="131" height="1" uuid="c401d38d-155b-4db0-8a11-cdaaf0346a5f"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</line>
 			<textField>
 				<reportElement x="13" y="57" width="208" height="32" uuid="606580e8-0632-46bc-a83c-297e7417026b"/>
@@ -688,12 +696,21 @@
 			</staticText>
 			<line>
 				<reportElement x="397" y="111" width="125" height="1" uuid="c76d4091-dc62-4a93-b462-39175dd6aad0"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="369" y="18" width="148" height="1" uuid="94f015ef-47f0-4bf4-b641-f663c60fae48"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="369" y="33" width="148" height="1" uuid="a4e1d42e-1989-4cd9-9560-87d7b2a32728"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</line>
 			<textField isBlankWhenNull="true">
 				<reportElement x="418" y="18" width="100" height="14" uuid="bece9a49-bd9d-4074-bb4f-3ebb4dd65bbc"/>
@@ -706,6 +723,12 @@
 				<reportElement x="258" y="68" width="119" height="37" uuid="521c3cfe-8c7b-4214-822b-9498dd1569da"/>
 				<imageExpression><![CDATA["resource/images/"+$F{sign}+".png"]]></imageExpression>
 			</image>
+			<line>
+				<reportElement x="367" y="52" width="150" height="1" uuid="0e3641dd-b4b2-4be2-a5f3-f11d48dc3727"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
 		</band>
 	</pageFooter>
 </jasperReport>

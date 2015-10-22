@@ -70,7 +70,7 @@
                     <table id="MasterGalileo" class="display" cellspacing="0" >
                         <thead>
                             <tr class="datatable-header">
-                                <th >Name</th>
+                                <th>Name</th>
                                 <th style="width: 30px" >section</th>
                                 <th style="width: 30px" >line</th>
                                 <th style="width: 10px" >length</th>
@@ -81,7 +81,7 @@
                         <tbody>
                             <c:forEach var="table" items="${dataList}" varStatus="dataStatus">
                                 <tr>
-                                    <td><c:out value="${table.name}" /></td>
+                                    <td style="text-transform: uppercase"><c:out value="${table.name}" /></td>
                                     <td><c:out value="${table.section}" /></td>
                                     <td><c:out value="${table.line}" /></td>
                                     <td><c:out value="${table.length}" /></td>

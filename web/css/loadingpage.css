@@ -24,9 +24,9 @@ and open the template in the editor.
 #loading-image {
     position: absolute;
     top: 45%;
-    left: 47%;
-    width:64px;
-    height: 64px;
+    left: 45%;
+    width:160px;
+    height: 24px;
     z-index: 50;
 }
 

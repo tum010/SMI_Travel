@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptReport" language="groovy" pageWidth="648" pageHeight="396" columnWidth="592" leftMargin="28" rightMargin="28" topMargin="38" bottomMargin="28" uuid="dc4cbcaf-4345-4a4d-b4b9-fb43ae05e9b5">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="192"/>
+	<property name="ireport.y" value="798"/>
 	<field name="recto" class="java.lang.String"/>
 	<field name="recadd" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -29,21 +29,33 @@
 	<field name="totalamount" class="java.lang.String"/>
 	<background>
 		<band height="328">
-			<rectangle>
-				<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="146" width="429" height="83" uuid="8a5dc583-a82b-4f3c-9652-52ae03edef31"/>
+			<rectangle radius="10">
+				<reportElement mode="Transparent" x="0" y="160" width="562" height="69" uuid="ae0db899-cbbb-4742-b205-fef3c5590371"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</rectangle>
-			<rectangle>
-				<reportElement stretchType="RelativeToBandHeight" x="429" y="146" width="133" height="83" uuid="e304b1ae-4f39-42ed-b40f-0c1c7c35680a"/>
-			</rectangle>
+			<line>
+				<reportElement x="428" y="160" width="1" height="68" uuid="4d87b557-6816-4cff-9d85-622450716318"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
 		</band>
 	</background>
 	<pageHeader>
 		<band height="141">
 			<rectangle radius="10">
-				<reportElement x="3" y="70" width="392" height="69" uuid="0dd8ccf3-04b2-4181-99aa-b80fd3926c8b"/>
+				<reportElement x="0" y="70" width="395" height="69" uuid="0dd8ccf3-04b2-4181-99aa-b80fd3926c8b"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</rectangle>
 			<rectangle radius="10">
-				<reportElement x="398" y="70" width="161" height="69" uuid="2f99ba62-0e4e-48fc-917b-c8055ca17da4"/>
+				<reportElement x="398" y="70" width="164" height="69" uuid="2f99ba62-0e4e-48fc-917b-c8055ca17da4"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</rectangle>
 			<textField>
 				<reportElement x="484" y="103" width="73" height="17" uuid="68a97f39-b548-494b-bc8c-63fad16d827c"/>
@@ -196,12 +208,6 @@
 	</pageHeader>
 	<columnHeader>
 		<band height="17" splitType="Stretch">
-			<rectangle>
-				<reportElement x="429" y="2" width="133" height="13" uuid="890adbf4-a0d3-4317-b1da-0dd2735ee48b"/>
-			</rectangle>
-			<rectangle>
-				<reportElement x="0" y="2" width="429" height="13" uuid="c98e20a9-e613-4166-9e14-9637a9627ac9"/>
-			</rectangle>
 			<staticText>
 				<reportElement x="189" y="0" width="83" height="16" uuid="7fac96c7-7ca3-423e-bf3a-2d837f3c9046"/>
 				<textElement>
@@ -216,6 +222,18 @@
 				</textElement>
 				<text><![CDATA[Amount]]></text>
 			</staticText>
+			<rectangle radius="7">
+				<reportElement mode="Transparent" x="0" y="1" width="562" height="14" uuid="06e88d8f-9081-4964-9735-658986d35f90"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<line>
+				<reportElement x="429" y="1" width="1" height="14" uuid="55b148d8-a154-4358-b771-20896702edd2"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
 		</band>
 	</columnHeader>
 	<detail>
@@ -268,18 +286,33 @@
 		<band height="100" splitType="Stretch">
 			<rectangle>
 				<reportElement x="8" y="2" width="15" height="14" uuid="6c848d8b-e80f-4210-906f-bc5c38dcb7e9"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</rectangle>
 			<rectangle>
 				<reportElement x="8" y="19" width="15" height="14" uuid="503be531-ab53-4a40-9e52-513ad0859a8f"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</rectangle>
 			<rectangle>
 				<reportElement x="8" y="36" width="15" height="14" uuid="415f862c-d814-4bdc-8e14-59f2056c8824"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</rectangle>
 			<rectangle>
 				<reportElement x="131" y="2" width="15" height="14" uuid="acd7f84e-6ca1-4c98-90b8-52c97f97921d"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</rectangle>
 			<rectangle>
 				<reportElement x="277" y="2" width="15" height="14" uuid="f4545298-a9ba-485e-9227-48a453dbc0ab"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</rectangle>
 			<staticText>
 				<reportElement x="26" y="1" width="23" height="14" uuid="3c353189-6d95-47aa-b981-c4d9b17d1c90"/>
