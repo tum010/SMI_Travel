@@ -133,11 +133,25 @@
                                 <div class="form-group">
                                     <label for="" class="col-sm-2 text-right">Name <strong style="color: red">*</strong></label>
                                     <div class="col-sm-1">
-                                        <select class="form-control" name="MInitialname" id="MInitialname">
+<!--                                        <select class="form-control" name="MInitialname" id="MInitialname">
                                             <c:forEach var="initial" items="${initialList}">
                                                 <option value="${initial.id}"><c:out value="${initial.name}" /></option>
                                             </c:forEach>
-                                        </select>
+                                        </select>-->
+                                        
+                                    <select name="MInitialname" id="MInitialname" class="form-control">
+                                        <option value="">--- Select ---</option> 
+                                         <c:forEach var="initial" items="${initialList}">
+                                            <c:set var="select" value="" />
+                                            <c:set var="selectedId" value="${passenger.customer.MInitialname.id}" />
+                                            <c:if test="${initial.id == selectedId}">
+                                                <c:set var="select" value="selected" />
+                                            </c:if>
+                                            <option value="${initial.id}" ${select}>${initial.name}</option>  
+                                        </c:forEach>
+                                    </select>
+                                        
+                                        
                                     </div>
                                 </div>
                                 <div class="form-group">

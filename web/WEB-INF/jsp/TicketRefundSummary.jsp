@@ -411,6 +411,7 @@ function printTicketRefundSummary(){
     var receiveToDate = document.getElementById("receiveToDate").value;
     var paidFromDate = document.getElementById("paidFromDate").value;
     var paidToDate = document.getElementById("paidToDate").value;
+    var sectortoberef = document.getElementById("sectortoberef").value;
 //    var typePrint = document.getElementById("typePrint").value;
     
     if((receiveFromDate !== '') && (receiveToDate !== '')){
@@ -422,7 +423,8 @@ function printTicketRefundSummary(){
                 + "&receiveFromDate=" + receiveFromDate 
                 + "&receiveToDate=" + receiveToDate 
                 + "&paidFromDate=" + paidFromDate 
-                + "&paidToDate=" + paidToDate);
+                + "&paidToDate=" + paidToDate
+                + "&sectortoberef=" + sectortoberef);
 //        }else if(typePrint === 2){
             window.open("Excel.smi?name=RefundTicketDetail&refundAgentId=" + refundAgentId 
                 + "&refundAgentName=" + refundAgentName 
@@ -431,7 +433,8 @@ function printTicketRefundSummary(){
                 + "&receiveFromDate=" + receiveFromDate 
                 + "&receiveToDate=" + receiveToDate 
                 + "&paidFromDate=" + paidFromDate 
-                + "&paidToDate=" + paidToDate);
+                + "&paidToDate=" + paidToDate
+                + "&sectortoberef=" + sectortoberef);
 //        }else{
 //            $("#reporttypepanel").removeClass("has-success");
 //            $("#reporttypepanel").addClass("has-error");
@@ -446,7 +449,8 @@ function printTicketRefundSummary(){
                 + "&receiveFromDate=" + receiveFromDate 
                 + "&receiveToDate=" + receiveToDate 
                 + "&paidFromDate=" + paidFromDate 
-                + "&paidToDate=" + paidToDate);
+                + "&paidToDate=" + paidToDate
+                + "&sectortoberef=" + sectortoberef);
 //        }else if(typePrint === 2){
             window.open("Excel.smi?name=RefundTicketDetail&refundAgentId=" + refundAgentId 
                 + "&refundAgentName=" + refundAgentName 
@@ -455,7 +459,8 @@ function printTicketRefundSummary(){
                 + "&receiveFromDate=" + receiveFromDate 
                 + "&receiveToDate=" + receiveToDate 
                 + "&paidFromDate=" + paidFromDate 
-                + "&paidToDate=" + paidToDate);
+                + "&paidToDate=" + paidToDate
+                + "&sectortoberef=" + sectortoberef);   
 //        }else{
 //            $("#reporttypepanel").removeClass("has-success");
 //            $("#reporttypepanel").addClass("has-error");

@@ -193,7 +193,8 @@ public class ExportDataToExcelController  extends SMITravelController{
             String paidfrom = request.getParameter("paidFromDate");
             String paidto = request.getParameter("paidToDate");
             String typeprint = request.getParameter("typePrint");
-            data = reportservice.getRefundTicketDetail(refundagent, refundnameby, passengername, receivefrom, receiveto, paidfrom, paidto, typeprint,printby,refundBy);
+            String sectortoberef = request.getParameter("sectortoberef");
+            data = reportservice.getRefundTicketDetail(refundagent, refundnameby, passengername, receivefrom, receiveto, paidfrom, paidto, typeprint,printby,refundBy,sectortoberef);
         }else if(TicketProfitLoss.equals(name)){
             data = reportservice.getTicketProfitLoss(invoiceFromDate,invoiceToDate,printby);
         }else if(TicketSummaryCommission.equals(name)){
