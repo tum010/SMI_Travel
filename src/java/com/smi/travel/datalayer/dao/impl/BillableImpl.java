@@ -358,7 +358,7 @@ public class BillableImpl implements BillableDao {
                 }
                 
                 //get Depart date and flight
-                DepartDateAndFlight += "\t\t\t"+new SimpleDateFormat("ddMMMyyyy", new Locale("us", "us")).format(flightDetail.getDepartDate()) + "/"+flightDetail.getFlightNo() +"\n";
+                DepartDateAndFlight += "                   "+new SimpleDateFormat("ddMMMyyyy", new Locale("us", "us")).format(flightDetail.getDepartDate()) + "/"+flightDetail.getFlightNo() +"\n";
                 
                 //PRICE
                 if(flightDetail.getAdPrice() != null){
@@ -398,7 +398,7 @@ public class BillableImpl implements BillableDao {
             if(ticketlife.length() > 0){
                     ticketlife = ticketlife.substring(0, ticketlife.length()-1);
             }
-            FlightDescription += "AIR TICKET"+"\t"+utility.GetRounting(flight)
+            FlightDescription += "AIR TICKET"+"    "+utility.GetRounting(flight)
                         + " Ticket Type: "+ticketlife+"\n";
             //{DEPART DATE}/{FLIGHT}
             
@@ -415,7 +415,7 @@ public class BillableImpl implements BillableDao {
                     Initname = passenger.getMInitialname().getName();
                 }
             //FOR  {INITNAME} {LAST NAME}/{FIRST NAME}        {PRICE} + {TAX}
-                description += "FOR" +"\t\t" + Initname +" "+passenger.getLastName() +"/"+passenger.getFirstName() +"\t\t\t"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+"\n";
+                description += "FOR" +"             " + Initname +" "+passenger.getLastName() +"/"+passenger.getFirstName() +"    "+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+"\n";
                 
             }
             String MInitialname = "";
@@ -561,19 +561,35 @@ public class BillableImpl implements BillableDao {
                 List<LandItinerary> listLand = new LinkedList<LandItinerary>();
                 listLand = list.get(i).getLandItineraries();
                 for (int j = 0; j < listLand.size(); j++) {
-                    if(listLand.get(j).getDayDate() != null){ //day date
-                        String  date = utility.convertDateToString(listLand.get(j).getDayDate());
-                        String dateArr[] = date.split("-");
-                        String newDate = dateArr[2] +"/" + dateArr[1] + "/" + dateArr[0];
-                        description += "  \t("+newDate +")";
+                    if(j < (listLand.size() - 1)){                    
+                        if(listLand.get(j).getDayDate() != null){ //day date
+                            String  date = utility.convertDateToString(listLand.get(j).getDayDate());
+                            String dateArr[] = date.split("-");
+                            String newDate = dateArr[2] +"/" + dateArr[1] + "/" + dateArr[0];
+                            description += "  \t("+newDate +")";
+                        }else{
+                             description += "";
+                        }
+                        if(listLand.get(j).getDescription() != null){ // description
+                            description += "  "+listLand.get(j).getDescription() +" NTS \n";
+                        }else{
+                             description += " 0 NTS  \n";
+                        }
                     }else{
-                         description += "";
-                    }
-                    if(listLand.get(j).getDescription() != null){ // description
-                        description += "  "+listLand.get(j).getDescription() +" NTS \n";
-                    }else{
-                         description += " 0 NTS  \n";
-                    }
+                        if(listLand.get(j).getDayDate() != null){ //day date
+                            String  date = utility.convertDateToString(listLand.get(j).getDayDate());
+                            String dateArr[] = date.split("-");
+                            String newDate = dateArr[2] +"/" + dateArr[1] + "/" + dateArr[0];
+                            description += "  \t("+newDate +")";
+                        }else{
+                             description += "";
+                        }
+                        if(listLand.get(j).getDescription() != null){ // description
+                            description += "  "+listLand.get(j).getDescription() +" NTS   ";
+                        }else{
+                             description += " 0 NTS   ";
+                        }
+                    }            
                 }
                 
                 if(list.get(i).getMaster().getBookingType() != null){ // Qty
@@ -668,9 +684,9 @@ public class BillableImpl implements BillableDao {
                     String  date = utility.convertDateToString(list.get(i).getCheckin());
                     String dateArr[] = date.split("-");
                     String newDate  = dateArr[2] +" " + changeMonth(dateArr[1]) + " " + dateArr[0];
-                    description += "  \t\t"+ newDate +" ";
+                    description += "            "+ newDate +" ";
                 }else{
-                     description += "  \t\t";
+                     description += "            ";
                 }
                 if(list.get(i).getCheckout() != null){ // check out
                     String  date = utility.convertDateToString(list.get(i).getCheckout());
@@ -686,9 +702,9 @@ public class BillableImpl implements BillableDao {
                     if( listRoom.get(j).getPrice() != 0){ // room price
                         DecimalFormat myFormatter = new DecimalFormat("#,###");
                         String output = myFormatter.format(listRoom.get(j).getPrice());
-                        description += "  \t\t"+ output +"  ";
+                        description += "            "+ output +"  ";
                     }else{
-                         description += " \t\t";
+                         description += "            ";
                     }
                     if(listRoom.get(j).getQty() != 0){ // room qty
                         description += " "+listRoom.get(j).getQty() +"  ";
@@ -780,12 +796,12 @@ public class BillableImpl implements BillableDao {
                     String  date = utility.convertDateToString(list.get(i).getTourDate());
                     String dateArr[] = date.split("-");
                     String newDate = dateArr[2] +"/" + dateArr[1] + "/" + dateArr[0];
-                    description += "  \t\t("+newDate +"  ";
+                    description += "\t("+newDate +"  ";
                 }else{
                      description += "  ";
                 }
                 if(list.get(i).getAdult() != 0){ // adult
-                    description += "  Adult "+ list.get(i).getAdult() +" Pax  ";
+                    description += " Adult "+ list.get(i).getAdult() +" Pax  ";
                 }else{
                      description += "  ";
                 }
@@ -795,9 +811,9 @@ public class BillableImpl implements BillableDao {
                      description += "  ";
                 }
                 if(list.get(i).getInfant() != 0){ // infant
-                    description += " Infant "+ list.get(i).getInfant() +" Pax  )";
+                    description += " Infant "+ list.get(i).getInfant() +" Pax )";
                 }else{
-                     description += "  )";
+                     description += " )";
                 }
                 if(list.get(i).getMaster().getCustomer().getMInitialname() != null){ // prename
                     description += "|"+list.get(i).getMaster().getCustomer().getMInitialname().getName() +" ";
