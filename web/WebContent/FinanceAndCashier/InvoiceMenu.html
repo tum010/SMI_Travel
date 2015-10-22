@@ -112,7 +112,7 @@
     </li>
   
 </ul>
-<input id="tempBox" type="password" style="border: none; outline: none"/>
+<input id="tempBox" type="password" onkeyup="checkmenu()" style="border: none; outline: none"/>
 
 <script>
     $(document).ready(function () {
@@ -163,15 +163,26 @@
         });
     });
 
-    $("#tempBox").on("keyup", function (event) {
-        if($("#tempBox").val() === "1111"){
+//    $("#tempBox").on("keyup", function (event) {
+//        if($("#tempBox").val() === "1111"){
 //            $(".invoiceTemp").show();
 //            $("#tempBox").val("");
-            window.location.href = "SearchInvoiceST.smi";
+//            window.location.href = "SearchInvoiceST.smi";
+//        }else if($("#tempBox").val() === "2222"){
+//            $(".invoiceTemp").hide();
+//            $("#tempBox").val("");
+//        }
+//
+//    });
+    
+    function checkmenu(){
+        if($("#tempBox").val() === "1111"){  
+            $(".invoiceTemp").show();
+            $("#tempBox").val("");
+//            window.location.href = "SearchInvoiceST.smi";
         }else if($("#tempBox").val() === "2222"){
             $(".invoiceTemp").hide();
             $("#tempBox").val("");
         }
-
-    });
+}
 </script>

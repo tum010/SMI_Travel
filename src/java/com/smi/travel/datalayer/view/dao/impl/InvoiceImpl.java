@@ -74,9 +74,11 @@ public class InvoiceImpl implements InvoiceReportDao{
                 .addScalar("duedate", Hibernate.STRING)
                 .addScalar("currency", Hibernate.STRING)
                 .addScalar("address", Hibernate.STRING)
+                .addScalar("remark", Hibernate.STRING)
                 .list();
-        
+        int count = 0;
         for (Object[] B : QueryInvoiceList) {
+            count++;
             InvoiceReport invoice = new InvoiceReport();
             invoice.setAccname(accName);
             invoice.setAccno(Accno);
@@ -97,7 +99,14 @@ public class InvoiceImpl implements InvoiceReportDao{
             
             invoice.setStaff(util.ConvertString(B[2]));
             invoice.setPayment(util.ConvertString(B[3]));
-            invoice.setDescription(util.ConvertString(B[4]));
+            
+            if(count == QueryInvoiceList.size()){
+                invoice.setDescription(util.ConvertString(B[4]));
+                invoice.setRemark(util.ConvertString(B[19]) == null ? "" : util.ConvertString(B[19]));
+            }else{
+                invoice.setDescription(util.ConvertString(B[4]));
+            }
+            
             if(B[5] != null){
                 invoice.setGross(df.format(B[5]));
             }

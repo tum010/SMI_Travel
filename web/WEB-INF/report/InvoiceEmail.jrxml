@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceEmail" language="groovy" pageWidth="595" pageHeight="842" columnWidth="522" leftMargin="45" rightMargin="28" topMargin="59" bottomMargin="56" uuid="573bfe06-de4f-4adc-b5b3-76cb68d89d08">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="79"/>
-	<property name="ireport.y" value="131"/>
+	<property name="ireport.x" value="75"/>
+	<property name="ireport.y" value="419"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
@@ -538,7 +538,7 @@
 				<textFieldExpression><![CDATA[$F{acctype}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="271" y="33" width="95" height="14" uuid="3e0f9c5c-3b37-4ff9-835d-9c404f23459d">
+				<reportElement x="272" y="21" width="95" height="14" uuid="3e0f9c5c-3b37-4ff9-835d-9c404f23459d">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -547,7 +547,7 @@
 				<textFieldExpression><![CDATA[$F{branch}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="273" y="21" width="93" height="18" uuid="dc5b905e-0516-4f72-8e47-adc075533d32">
+				<reportElement x="273" y="33" width="93" height="18" uuid="dc5b905e-0516-4f72-8e47-adc075533d32">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Top">
