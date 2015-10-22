@@ -28,6 +28,7 @@
 </section>
 
 <div class ="container"  style="padding-top: 15px;" ng-app="">
+    <form action="SearchInvoice.smi" method="post" id="SearchInvoiceForm" name="SearchInvoiceForm" role="form">
     <div class="row">
         <!-- side bar -->
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
@@ -39,7 +40,7 @@
                     <h4><b>Search Invoice</b></h4>
                 </div>            
             </div>
-            <form action="SearchInvoice.smi" method="post" id="SearchInvoiceForm" name="SearchInvoiceForm" role="form">
+            
                 <input type="text" class="hidden" id="action" name="action" value="">
                 <div class="col-xs-12 ">
                     <div class="col-xs-1 text-right">
@@ -119,8 +120,8 @@
                     <div class="col-xs-1 text-right" style="padding: 0px 0px 0px 20px">
                         <label class="control-label" for="">Type</lable>
                     </div>
-                    <div class="col-md-2 form-group" style="padding: 0px 0px 0px 30px">
-                        <select class="form-control" id="Type" name="Type">
+                    <div class="col-md-2 form-group" style="padding: 0px 0px 0px 30px" id="classHideTemp" >
+                        <select class="form-control" id="Type" name="Type">   
                             <option value="">--select--</option>
                                 <c:choose>
                                     <c:when test="${type == 'V'}">
@@ -138,10 +139,12 @@
                                 </c:choose>         
                             <option value="V" ${accountSelectedV}>Vat</option>
                             <option value="N" ${accountSelectedN}>No Vat</option>
-                            <c:if test="${showtemp == 'show'}">
-                                <option value="T" ${accountSelectedT}>Temp</option>
-                            </c:if>
                             <option value="A" ${accountSelectedA}>Ticket</option>
+                        </select>    
+                    </div>
+                        <div class="col-md-2 form-group" style="padding: 0px 0px 0px 30px" id="classShowTemp" hidden="">
+                        <select class="form-control" id="Type" name="Type">   
+                            <option value="T" ${accountSelectedT}>Temp</option>
                         </select>    
                     </div>
                 </div>
@@ -194,7 +197,6 @@
                         </button>
                     </div>    
                 </div>
-            </form>
             <div class="col-xs-12 form-group"><hr/></div>
             <div class="row">    
                 <div class="col-md-12">
@@ -269,7 +271,9 @@
             </div>
         </div>
     </div>
-</div>        
+    </form>
+</div>
+
 <div class="modal fade" id="AgentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -375,12 +379,12 @@
                         data.fv.revalidateField('FromDate');
                     }
             });
-    $('#DateFrom').datetimepicker().on('dp.change', function (e) {
-        $('#SearchInvoiceForm').bootstrapValidator('revalidateField', 'FromDate');
-    });
-    $('#DateTo').datetimepicker().on('dp.change', function (e) {
-        $('#SearchInvoiceForm').bootstrapValidator('revalidateField', 'ToDate');
-    });
+            $('#DateFrom').datetimepicker().on('dp.change', function (e) {
+                $('#SearchInvoiceForm').bootstrapValidator('revalidateField', 'FromDate');
+            });
+            $('#DateTo').datetimepicker().on('dp.change', function (e) {
+                $('#SearchInvoiceForm').bootstrapValidator('revalidateField', 'ToDate');
+            });
     });   
 </script>
 

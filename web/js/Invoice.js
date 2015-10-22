@@ -197,6 +197,13 @@
         document.getElementById("sendEmailButton").disabled = true;
     }
     
+    //autocomplete
+    $("#SearchRefNo").keyup(function(event){   
+        if(event.keyCode === 13){
+            searchAction(); 
+        }
+    });
+    
  }); 
  
  function searchInvoiceFromInvoiceNo(){
@@ -1223,6 +1230,8 @@ $('#SearchRefNo, #InvNo, #InputInvDate, #InputDueDate, #InvTo, #InvToName, #InvT
         $(this).remove();
     });
     $('#counterTable').val('1');
+    
+    $("#InputDueDate").datepicker({ dateFormat: "yy-mm-dd"}).datepicker("setDate", "0");
     AddRowDetailBillAble();
 }
 function copyInvoice(){

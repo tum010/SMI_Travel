@@ -40,6 +40,17 @@ public class InvoiceReport {
     private String sign;
     private String duedate;
     private String address;
+    private String remark;
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+    
+    
 
     public void setAddress(String address) {
         this.address = address;

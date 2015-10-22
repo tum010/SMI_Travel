@@ -17,7 +17,7 @@
 <c:set var="BookstatusList" value="${requestScope['booking_status']}" /> 
 <c:set var="BookpaybyList" value="${requestScope['payby_list']}" />
 <c:set var="BookbanktransferList" value="${requestScope['banktrasfer_list']}" />
-
+<input type="hidden" name="result" id="result" value="${requestScope['result']}">
 <section class="content-header" >
     <h1>
         Booking
@@ -36,6 +36,10 @@
     <form action="Book.smi" method="post" id="BookSearch" role="form">
         <div class="row" >
             <div class="col-md-12 ">
+                <div id="textAlertDivNotCancel"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Cannot Cancel Booking!</strong> 
+            </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="Country">Ref. No</label>
@@ -204,7 +208,7 @@
                 </div> 
             </div>    
         </div>
-
+        <input type="hidden" id="refNoEdit" name="refNoEdit" value=""/>                           
     </form>
 
 
@@ -235,17 +239,24 @@
                                 <th style="width: 15%">Check in Date</th>
                                 </c:otherwise>
                             </c:choose>
-                        <th style="width: 15%">Create Date</th>
+                        <th style="width: 14%">Create Date</th>
                         <th style="width: 5%">By</th>
-                        <th style="width: 5%">Action</th>
+                        <th style="width: 6%">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <c:forEach var="table" items="${dataList}">
                         <c:set var="refno1" value="${fn:substring(table.refno, 0, 2)}" />
                         <c:set var="refno2" value="${fn:substring(table.refno, 2,7)}" />
-                <tr>
-                            <td><center><c:out value="${refno1}-${refno2}" /></center></td>
+                        <c:set var="colourStatus" value="" />
+                        <c:set var="colourStatusFirstrow" value="" />
+                        <c:if test="${table.statusId == 3}">
+                            <c:set var="colourStatus" value="style='background-color: #FFD3D3'" />
+                            <c:set var="colourStatusFirstrow" value="background-color: #FFD3D3" />
+                            <c:set var="statusicon" value="glyphicon-remove deleteicon" />
+                        </c:if>
+                <tr ${colourStatus}>
+                            <td ${colourStatus}><center><c:out value="${refno1}-${refno2}" /></center></td>
                     <td><center><c:out value="${table.agentCode}" /></center></td>
                     <td><c:out value="${table.leaderName}" /> </td>
                     <c:choose>
@@ -272,6 +283,12 @@
                         <center>
                             <a href="BookDetail.smi?referenceNo=${table.refno}&action=edit"><span class="glyphicon glyphicon-th-list"></span></a>
                             <span onclick="getSummaryBook('${table.refno}'); getSummaryTel('${table.tel}','${table.remark}','${table.email}');" class="glyphicon glyphicon glyphicon-list-alt"></span>
+                            <c:if test="${table.statusId == 3}">
+                                <span class="glyphicon glyphicon-plus addicon"   onclick="enableBook('${table.refno}');" data-toggle="modal"></span>
+                            </c:if>
+                            <c:if test="${table.statusId == 1}">
+                                <span class="glyphicon glyphicon-remove deleteicon"   onclick="cancelBook('${table.refno}');" data-toggle="modal"></span>
+                            </c:if>        
                         </center>
                     </td>           
                 </tr>  
@@ -647,7 +664,41 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<div class="modal fade" id="EnableBook" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Booking</h4>
+            </div>
+            <div class="modal-body" id="enableBookMsg">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="enable()" class="btn btn-success">Enable</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->      
 
+<div class="modal fade" id="CancelBook" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Booking</h4>
+            </div>
+            <div class="modal-body" id="cancelBookMsg">
+                
+            </div>
+            <div class="modal-footer">               
+                <button type="button" onclick="cancel()" class="btn btn-danger">Cancel</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->      
 
 <!--Script-->
 <script type="text/javascript" charset="utf-8">
@@ -681,6 +732,11 @@
             $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
 
         });
+        
+        var result = $('#result').val();
+        if (result === "fail") {
+            $('#textAlertDivNotCancel').show();
+        } 
         
     });
 
@@ -719,6 +775,30 @@
                 return ($(this).val() === '');
             }).prop('selected', true);      
         }
+    }
+    
+    function cancelBook(refno){
+        document.getElementById("cancelBookMsg").innerHTML = "Are you sure to cancel ref no '"+refno+"' ?";
+        $("#refNoEdit").val(refno);
+        $("#CancelBook").modal("show");
+    }
+    
+    function cancel(){
+         var action = document.getElementById('action');
+        action.value = 'cancelBook';
+        document.getElementById('BookSearch').submit();
+    }
+    
+    function enableBook(refno){
+        document.getElementById("enableBookMsg").innerHTML = "Are you sure to enable ref no '"+refno+"' ?";
+        $("#refNoEdit").val(refno);
+        $("#EnableBook").modal("show");
+    }
+    
+    function enable(){
+         var action = document.getElementById('action');
+        action.value = 'enableBook';
+        document.getElementById('BookSearch').submit();
     }
 
 </script>

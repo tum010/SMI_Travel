@@ -46,6 +46,7 @@ public class BookController extends SMITravelController {
         String payBy = request.getParameter("payBy");
         String transferDateFrom = request.getParameter("transferDateFrom");
         String transferDateTo = request.getParameter("transferDateTo");
+        String refNoEdit = request.getParameter("refNoEdit");
         String bankTransfer = "";
         if("4".equalsIgnoreCase(payBy)){
             bankTransfer = request.getParameter("bankTransfer");
@@ -67,6 +68,19 @@ public class BookController extends SMITravelController {
         if("search".equalsIgnoreCase(action)){
             bookinglist = workspaceService.getListBooking(refno,PassFirst,PassLast,username,departmentid,Bookdate,status,pnr,ticketNo,payBy,bankTransfer,transferDateFrom,transferDateTo);
             request.setAttribute("Bookdate", Bookdate);
+        }else if("cancelBook".equalsIgnoreCase(action)){
+            String check = workspaceService.checkBook(refNoEdit);
+            if("success".equalsIgnoreCase(check)){
+                int result = workspaceService.cancelBook(refNoEdit);
+                System.out.println("result : "+result);
+            }else{
+                request.setAttribute("result","fail");
+            }          
+            bookinglist = workspaceService.getListBooking(refno,PassFirst,PassLast,user.getUsername(),departmentid,Bookdate,status,pnr,ticketNo,payBy,bankTransfer,transferDateFrom,transferDateTo);
+        }else if("enableBook".equalsIgnoreCase(action)){
+            int result = workspaceService.enableBook(refNoEdit);
+            System.out.println("result : "+result);
+            bookinglist = workspaceService.getListBooking(refno,PassFirst,PassLast,user.getUsername(),departmentid,Bookdate,status,pnr,ticketNo,payBy,bankTransfer,transferDateFrom,transferDateTo);
         }else{
             bookinglist = workspaceService.getListBooking(refno,PassFirst,PassLast,user.getUsername(),departmentid,Bookdate,status,pnr,ticketNo,payBy,bankTransfer,transferDateFrom,transferDateTo);
             //request.setAttribute("Bookdate", util.convertDateToString(thisDate));

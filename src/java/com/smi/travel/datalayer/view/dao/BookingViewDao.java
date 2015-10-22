@@ -15,4 +15,7 @@ import java.util.List;
  */
 public interface BookingViewDao {
     public List<BookingView> getBookingList(String refno,String passFirst,String passLast,String username,String departmentID,String Bookdate,String status,String pnr,String ticketNo,String payBy,String bankTransfer,String transferDateFrom,String transferDateTo);
+    public int cancelBook(String refNoEdit);
+    public String checkBook(String refNoEdit);
+    public int enableBook(String refNoEdit);
 }
