@@ -537,12 +537,14 @@
         var department = document.getElementById("department").value;
         var salebyUser = document.getElementById("salebyUser").value;
         var termPay = document.getElementById("termPay").value;
+        var salebyName = document.getElementById("salebyName").value;
+        
         
          if((invfrom !== '') && (invto !== '')){
              if(reportType == 1){
-                window.open("Excel.smi?name=TicketFareSummaryByStaff&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&issuedateFrom=" + issuefrom + "&issuedateTo=" + issueto + "&department=" + department + "&staff=" + salebyUser + "&termPay=" + termPay + "&invdateFrom=" + invfrom + "&invdateTo=" + invto);
+                window.open("Excel.smi?name=TicketFareSummaryByStaff&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&issuedateFrom=" + issuefrom + "&issuedateTo=" + issueto + "&department=" + department + "&staff=" + salebyName + "&termPay=" + termPay + "&invdateFrom=" + invfrom + "&invdateTo=" + invto);
             }else if(reportType == 2){
-                window.open("Excel.smi?name=TicketFareSummaryByAgent&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&issuedateFrom=" + issuefrom + "&issuedateTo=" + issueto + "&department=" + department + "&staff=" + salebyUser + "&termPay=" + termPay + "&invdateFrom=" + invfrom + "&invdateTo=" + invto);
+                window.open("Excel.smi?name=TicketFareSummaryByAgent&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&issuedateFrom=" + issuefrom + "&issuedateTo=" + issueto + "&department=" + department + "&staff=" + salebyName + "&termPay=" + termPay + "&invdateFrom=" + invfrom + "&invdateTo=" + invto);
             }else{
                 $("#reporttypepanel").removeClass("has-success");
                 $("#reporttypepanel").addClass("has-error");
@@ -550,9 +552,9 @@
             }
         } else if((issuefrom !== '') && (issueto !== '')){
             if(reportType == 1){
-                window.open("Excel.smi?name=TicketFareSummaryByStaff&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&issuedateFrom=" + issuefrom + "&issuedateTo=" + issueto + "&department=" + department + "&staff=" + salebyUser + "&termPay=" + termPay + "&invdateFrom=" + invfrom + "&invdateTo=" + invto);
+                window.open("Excel.smi?name=TicketFareSummaryByStaff&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&issuedateFrom=" + issuefrom + "&issuedateTo=" + issueto + "&department=" + department + "&staff=" + salebyName + "&termPay=" + termPay + "&invdateFrom=" + invfrom + "&invdateTo=" + invto);
             }else if(reportType == 2){
-                window.open("Excel.smi?name=TicketFareSummaryByAgent&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&issuedateFrom=" + issuefrom + "&issuedateTo=" + issueto + "&department=" + department + "&staff=" + salebyUser + "&termPay=" + termPay + "&invdateFrom=" + invfrom + "&invdateTo=" + invto);
+                window.open("Excel.smi?name=TicketFareSummaryByAgent&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&issuedateFrom=" + issuefrom + "&issuedateTo=" + issueto + "&department=" + department + "&staff=" + salebyName + "&termPay=" + termPay + "&invdateFrom=" + invfrom + "&invdateTo=" + invto);
             }else{
                 $("#reporttypepanel").removeClass("has-success");
                 $("#reporttypepanel").addClass("has-error");
