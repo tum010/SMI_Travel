@@ -433,10 +433,10 @@ public class ReceiptController extends SMITravelController {
             request.setAttribute(RECEIPTDETAILLIST,receiptDetailList);
             request.setAttribute(RECEIPTCREDITLIST,receiptCreditList);
             if(receiptDetailList != null){
-                request.setAttribute(PRODUCTROWCOUNT, receiptDetailList.size());
+                request.setAttribute(PRODUCTROWCOUNT, receiptDetailList.size()+1);
             }
             if(receiptCreditList != null){
-                request.setAttribute(CREDITROWCOUNT, receiptCreditList.size());
+                request.setAttribute(CREDITROWCOUNT, receiptCreditList.size()+1);
             }
         }else if("deleteReceiptDetail".equalsIgnoreCase(action)) {
             String receiptDetailIdDelete = request.getParameter("receiptDetailIdDelete");

@@ -128,9 +128,20 @@ import org.hibernate.Transaction;
 //        Date thisdate = new Date();
         SimpleDateFormat df = new SimpleDateFormat();
         df.applyPattern("yyMM");
-        Query query = session.createSQLQuery("SELECT RIGHT(rec_no, 4) as recnum  FROM receipt where department = :department and rec_type = :recType and rec_no Like :recno  ORDER BY RIGHT(rec_no, 4) desc");
+        String querysql = "";
+        System.out.println(" department " + department);
+        if("Wendy".equalsIgnoreCase(department) ||  "Outbound".equalsIgnoreCase(department)){
+            querysql = "SELECT RIGHT(rec_no, 4) as recnum  FROM receipt where department in ('Wendy','Outbound') and rec_type = :recType and rec_no Like :recno  ORDER BY RIGHT(rec_no, 4) desc";
+        }else{
+            querysql = "SELECT RIGHT(rec_no, 4) as recnum  FROM receipt where department  = :department and rec_type = :recType and rec_no Like :recno  ORDER BY RIGHT(rec_no, 4) desc";
+        }
+        System.out.println(" querysql :: " + querysql);
+        
+        Query query = session.createSQLQuery(querysql);
         query.setParameter("recno", "%"+ df.format(recDate) + "%");
-        query.setParameter("department", department);
+        if(!"Wendy".equalsIgnoreCase(department) && !"Outbound".equalsIgnoreCase(department)){
+            query.setParameter("department", department);
+        }
         query.setParameter("recType", receiptType);
 
         query.setMaxResults(1);
