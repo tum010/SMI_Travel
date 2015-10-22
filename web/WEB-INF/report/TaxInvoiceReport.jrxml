@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TaxInvoiceReport" language="groovy" pageWidth="648" pageHeight="396" columnWidth="592" leftMargin="28" rightMargin="28" topMargin="50" bottomMargin="28" uuid="329d3d93-e67e-4a6e-bf56-26555dfcb4f6">
-	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="349"/>
-	<property name="ireport.y" value="57"/>
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="676"/>
+	<property name="ireport.y" value="1817"/>
 	<field name="customer" class="java.lang.String"/>
 	<field name="address" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -20,21 +20,39 @@
 	<field name="textamount" class="java.lang.String"/>
 	<background>
 		<band height="318">
-			<rectangle>
-				<reportElement x="429" y="130" width="127" height="122" uuid="379e359b-8239-4c5e-b87c-2c2557646dc8"/>
+			<rectangle radius="10">
+				<reportElement x="0" y="148" width="556" height="139" uuid="32b19bcd-6b34-4414-b9bb-aca740d4c744"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</rectangle>
-			<rectangle>
-				<reportElement x="0" y="130" width="429" height="122" uuid="096a6a85-7dfa-4d3e-bdcb-44029e2ee82e"/>
-			</rectangle>
+			<line>
+				<reportElement x="429" y="148" width="1" height="139" uuid="c9b04d67-cd66-48f4-a687-81616ba9ede4"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="233" width="556" height="1" uuid="300c2d67-ce8d-4fdd-8cc4-eae1d049b4bd"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
 		</band>
 	</background>
 	<pageHeader>
 		<band height="128" splitType="Stretch">
 			<rectangle radius="10">
 				<reportElement x="3" y="62" width="350" height="62" uuid="df81aa3f-b863-4914-84cc-a33a756a56cc"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</rectangle>
 			<rectangle radius="10">
 				<reportElement x="358" y="62" width="198" height="62" uuid="19e27f60-5e7d-48fd-aac3-b9234b18fd35"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</rectangle>
 			<textField>
 				<reportElement x="446" y="97" width="73" height="17" uuid="814045dd-cd74-48cb-8937-a6eb54a982ca"/>
@@ -187,11 +205,11 @@
 	</pageHeader>
 	<columnHeader>
 		<band height="17" splitType="Stretch">
-			<rectangle>
-				<reportElement x="429" y="2" width="127" height="13" uuid="1905cc3c-30f7-49fb-8981-54b04d75ec8e"/>
-			</rectangle>
-			<rectangle>
-				<reportElement x="0" y="2" width="429" height="13" uuid="e57dacad-bd6d-4e18-b031-2bfd905d2d5f"/>
+			<rectangle radius="10">
+				<reportElement x="0" y="0" width="556" height="16" uuid="13a8b9b1-1ab0-4b73-9fc6-842171c82c90"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</rectangle>
 			<staticText>
 				<reportElement x="189" y="0" width="83" height="16" uuid="fa34efd6-9469-4242-9368-50569156886d"/>
@@ -207,6 +225,12 @@
 				</textElement>
 				<text><![CDATA[Amount]]></text>
 			</staticText>
+			<line>
+				<reportElement x="429" y="1" width="1" height="16" uuid="f4a8d44f-3b75-42bf-a190-82a96dd07787"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
 		</band>
 	</columnHeader>
 	<detail>
@@ -257,9 +281,6 @@
 	</detail>
 	<pageFooter>
 		<band height="90" splitType="Stretch">
-			<rectangle>
-				<reportElement x="0" y="4" width="556" height="53" uuid="a3246e20-b39e-4d11-b486-04a28b7276ef"/>
-			</rectangle>
 			<textField pattern="#,##0.00">
 				<reportElement x="434" y="5" width="118" height="18" uuid="c9ea34ad-ec31-47a1-b9a6-0a787b860407"/>
 				<textElement textAlignment="Right">
@@ -316,9 +337,6 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{grandtotal}]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="429" y="4" width="1" height="53" uuid="582cf356-3b3a-4378-a07d-2fb141126352"/>
-			</line>
 		</band>
 	</pageFooter>
 </jasperReport>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TaxInvoiceEmailReport" language="groovy" pageWidth="594" pageHeight="421" columnWidth="524" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="346dddd2-e21a-4c7b-8d69-ccea53d38a9d">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="288"/>
+	<property name="ireport.zoom" value="5.0"/>
+	<property name="ireport.x" value="891"/>
+	<property name="ireport.y" value="2863"/>
 	<field name="customer" class="java.lang.String"/>
 	<field name="address" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -24,18 +24,33 @@
 				<reportElement x="162" y="124" width="179" height="150" uuid="0cf3ca0e-a93f-423e-98f3-6c9f0f8aedc4"/>
 				<imageExpression><![CDATA["resource/images/wendy_watermark_s_2.JPG"]]></imageExpression>
 			</image>
-			<rectangle>
-				<reportElement mode="Transparent" x="0" y="168" width="430" height="86" uuid="89be47d7-e946-4426-b7df-00c929c9ac06"/>
+			<rectangle radius="10">
+				<reportElement mode="Transparent" x="0" y="172" width="525" height="144" uuid="b87b2ed8-3c6f-461d-9c5c-3f8cb599b720"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</rectangle>
-			<rectangle>
-				<reportElement mode="Transparent" x="430" y="168" width="95" height="86" uuid="a52cf726-a2f0-45e8-88b1-beafd1d92571"/>
-			</rectangle>
+			<line>
+				<reportElement x="430" y="168" width="1" height="148" uuid="fdf50911-e583-475d-854e-6e28437afa15"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="254" width="525" height="1" uuid="72b3125c-9b68-4a8f-bd1a-d790ab51162e"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
 		</band>
 	</background>
 	<pageHeader>
 		<band height="152" splitType="Stretch">
 			<rectangle radius="10">
-				<reportElement mode="Opaque" x="-1" y="66" width="525" height="18" backcolor="#CCCCCC" uuid="25b396a9-ec82-4dc3-adb4-07116b97b1c1"/>
+				<reportElement mode="Opaque" x="1" y="66" width="524" height="18" backcolor="#B6DBAA" uuid="25b396a9-ec82-4dc3-adb4-07116b97b1c1"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
 			</rectangle>
 			<staticText>
 				<reportElement x="70" y="15" width="249" height="13" uuid="22f8d2bd-a091-418d-999b-9bc3fcd237ca"/>
@@ -80,9 +95,9 @@
 				<text><![CDATA[S.M.I Travel Co., Ltd. (Head Office)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="198" y="66" width="143" height="17" uuid="9d649f59-8370-4543-b670-8c95b5b98211"/>
+				<reportElement mode="Transparent" x="4" y="64" width="516" height="23" uuid="9d649f59-8370-4543-b670-8c95b5b98211"/>
 				<textElement textAlignment="Center">
-					<font fontName="TH SarabunPSK" size="15" isBold="true" isItalic="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="TH SarabunPSK" size="17" isBold="true" isItalic="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[TAX INVOICE/ ใบกำกับภาษี]]></text>
 			</staticText>
@@ -96,7 +111,7 @@
 			<staticText>
 				<reportElement x="261" y="-3" width="262" height="22" uuid="e2007782-00e1-462b-b63c-7f75e602c5ea"/>
 				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="TH SarabunPSK" size="18" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[บริษัทเอส. เอ็ม. ไอ. แทรเวล จำกัด (สำนักงานใหญ่)]]></text>
 			</staticText>
@@ -144,6 +159,9 @@
 			</staticText>
 			<rectangle radius="10">
 				<reportElement mode="Transparent" x="1" y="86" width="360" height="64" uuid="f2ba4db3-5790-4af3-a2dd-d42453c3e260"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</rectangle>
 			<textField>
 				<reportElement x="65" y="86" width="73" height="17" uuid="198fff98-f3dc-4fa0-afc3-8017207186b5"/>
@@ -181,7 +199,10 @@
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<rectangle radius="10">
-				<reportElement x="366" y="86" width="156" height="64" uuid="7e29616f-763b-44d9-b620-f5a7d634f083"/>
+				<reportElement x="366" y="86" width="158" height="64" uuid="7e29616f-763b-44d9-b620-f5a7d634f083"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</rectangle>
 			<staticText>
 				<reportElement x="367" y="121" width="71" height="17" uuid="39e85540-6c4e-470b-b1f2-ba34790f6306"/>
@@ -302,15 +323,15 @@
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="17" splitType="Stretch">
-			<rectangle>
-				<reportElement mode="Transparent" x="430" y="2" width="95" height="13" uuid="85b7b372-7ad0-4351-8a07-893935152f0f"/>
-			</rectangle>
-			<rectangle>
-				<reportElement mode="Transparent" x="0" y="2" width="430" height="13" uuid="257d14c2-324e-4f32-b9b0-5a830cf59cb0"/>
+		<band height="19" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement mode="Transparent" x="0" y="0" width="524" height="18" uuid="5b89cd10-be11-4220-b2a3-137de9266d9f"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="189" y="0" width="83" height="16" uuid="41ae57c3-6a3b-40c4-b4d2-665f902a517d"/>
+				<reportElement x="189" y="1" width="83" height="16" uuid="41ae57c3-6a3b-40c4-b4d2-665f902a517d"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="13" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
@@ -323,6 +344,12 @@
 				</textElement>
 				<text><![CDATA[Amount]]></text>
 			</staticText>
+			<line>
+				<reportElement x="430" y="0" width="1" height="18" uuid="96605a05-1a50-4741-b52b-d2c2699a22a9"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
 		</band>
 	</columnHeader>
 	<detail>
@@ -373,14 +400,17 @@
 	</detail>
 	<pageFooter>
 		<band height="100" splitType="Stretch">
-			<rectangle>
-				<reportElement mode="Transparent" x="0" y="4" width="525" height="63" uuid="6bafc228-be08-4040-b83a-248c83fa1375"/>
-			</rectangle>
 			<rectangle radius="10">
 				<reportElement x="70" y="69" width="286" height="27" backcolor="#CCCCCC" uuid="0640d416-a194-40fb-89f0-672e06741932"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
 			</rectangle>
 			<rectangle radius="10">
 				<reportElement x="0" y="69" width="67" height="27" uuid="4421e691-f4f6-4cf6-bbb6-0f28103d44ad"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</rectangle>
 			<staticText>
 				<reportElement x="22" y="82" width="25" height="13" uuid="2a5b1768-aeb3-45cf-a590-e95e5aa9a9be"/>
@@ -391,6 +421,9 @@
 			</staticText>
 			<line>
 				<reportElement x="0" y="80" width="67" height="1" uuid="3564bc87-720a-456a-a323-1247b961943e"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</line>
 			<textField>
 				<reportElement x="76" y="68" width="280" height="28" uuid="8ff6f4f1-b2a6-458d-b125-2c974c401d32"/>
@@ -456,10 +489,10 @@
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="429" y="4" width="1" height="63" uuid="6d727a17-b994-4ded-b201-00ed773da56c"/>
-			</line>
-			<line>
 				<reportElement x="367" y="83" width="153" height="1" uuid="756c3c16-945d-4ce6-a5d4-162bae18ffe9"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</line>
 		</band>
 	</pageFooter>
