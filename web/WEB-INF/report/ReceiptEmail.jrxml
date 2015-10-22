@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptEmail" language="groovy" pageWidth="595" pageHeight="421" columnWidth="525" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="0038deea-02d3-4a9f-8925-fb54dc3fc533">
-	<property name="ireport.zoom" value="1.6500000000000008"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="202"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="81"/>
+	<property name="ireport.y" value="4"/>
 	<field name="recto" class="java.lang.String"/>
 	<field name="recadd" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -149,11 +149,11 @@
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="6" y="61" width="515" height="20" uuid="168f0bb7-abee-4b4f-a734-f2bf56db7180"/>
-				<textElement textAlignment="Center">
+				<reportElement x="279" y="61" width="239" height="20" uuid="168f0bb7-abee-4b4f-a734-f2bf56db7180"/>
+				<textElement>
 					<font fontName="TH SarabunPSK" size="17" isBold="true" isItalic="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[RECEIPT/ ใบเสร็จรับเงิน]]></text>
+				<text><![CDATA[/ ใบเสร็จรับเงิน]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="5" y="84" width="50" height="17" uuid="ed5bf7ac-7af7-4a48-ac7b-bdd13322a325"/>
@@ -315,6 +315,13 @@
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[(Head Office)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="58" width="271" height="23" uuid="ce371dda-a9b7-47c4-9c1b-624f0aa49dfb"/>
+				<textElement textAlignment="Right">
+					<font fontName="AngsanaUPC" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RECEIPT]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
