@@ -39,7 +39,7 @@
         <!--Body-->
         <div class="overlay" id="loading-test">
         <div class="loading">
-            <img id="loading-image" src="img/712.GIF" alt="Loading..." />
+            <img id="loading-image" src="img/loadingBar.GIF" alt="Loading..." />
         </div>
         </div>    
         <div class="page-section-main">
