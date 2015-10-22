@@ -177,12 +177,17 @@
     
     function checkmenu(){
         if($("#tempBox").val() === "1111"){  
+            
             $(".invoiceTemp").show();
             $("#tempBox").val("");
+            $("#classShowTemp").show();
+            $("#classHideTemp").hide();
 //            window.location.href = "SearchInvoiceST.smi";
         }else if($("#tempBox").val() === "2222"){
             $(".invoiceTemp").hide();
             $("#tempBox").val("");
+            $("#classHideTemp").show();
+            $("#classShowTemp").hide();
         }
 }
 </script>

@@ -102,6 +102,7 @@ public class InvoiceImpl implements InvoiceReportDao{
             
             if(count == QueryInvoiceList.size()){
                 invoice.setDescription(util.ConvertString(B[4]));
+                String remark = util.ConvertString(B[19]);
                 invoice.setRemark(util.ConvertString(B[19]) == null ? "" : util.ConvertString(B[19]));
             }else{
                 invoice.setDescription(util.ConvertString(B[4]));
