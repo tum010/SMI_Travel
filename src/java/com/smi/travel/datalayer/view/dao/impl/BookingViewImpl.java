@@ -6,9 +6,11 @@
 
 package com.smi.travel.datalayer.view.dao.impl;
 
+import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.view.dao.BookingViewDao;
 import com.smi.travel.datalayer.view.entity.BookingView;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import org.hibernate.Query;
@@ -143,6 +145,52 @@ public class BookingViewImpl implements BookingViewDao{
         this.sessionFactory = sessionFactory;
     }
 
+    @Override
+    public int cancelBook(String refNoEdit) {
+        int result = 0;
+        String hql = "UPDATE Master m set m.MBookingstatus.id = 3 WHERE m.referenceNo = :refNo";
+        try {
+            org.hibernate.classic.Session session = this.sessionFactory.openSession();
+            Query query = session.createQuery(hql);
+            query.setParameter("refNo", refNoEdit);
+            result = query.executeUpdate();
+            System.out.println("Rows affected: " + result);
+         } catch (Exception ex) {
+            ex.printStackTrace();
+            result = 0;
+        }
 
-    
+        return result;
+    }
+
+    @Override
+    public String checkBook(String refNoEdit) {
+        String result = "fail";
+        Session session = this.sessionFactory.openSession();
+        List<InvoiceDetail> invoiceDetailList = session.createQuery("from InvoiceDetail inv where inv.billableDesc.billable.master.referenceNo = :refNo").setParameter("refNo", refNoEdit).list();
+        if(!invoiceDetailList.isEmpty()){
+            return result;
+        } 
+        result = "success";       
+        return result;
+    }
+
+    @Override
+    public int enableBook(String refNoEdit) {
+        int result = 0;
+        String hql = "UPDATE Master m set m.MBookingstatus.id = 1 WHERE m.referenceNo = :refNo";
+        try {
+            org.hibernate.classic.Session session = this.sessionFactory.openSession();
+            Query query = session.createQuery(hql);
+            query.setParameter("refNo", refNoEdit);
+            result = query.executeUpdate();
+            System.out.println("Rows affected: " + result);
+         } catch (Exception ex) {
+            ex.printStackTrace();
+            result = 0;
+        }
+
+        return result;
+    }
+   
 }

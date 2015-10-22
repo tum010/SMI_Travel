@@ -55,5 +55,15 @@ public class WorkSpaceService {
         this.listitemdao = listitemdao;
     }
 
-    
+    public int cancelBook(String refNoEdit) {
+        return bookingviewdao.cancelBook(refNoEdit);
+    }
+
+    public String checkBook(String refNoEdit) {
+        return bookingviewdao.checkBook(refNoEdit);
+    }   
+
+    public int enableBook(String refNoEdit) {
+        return bookingviewdao.enableBook(refNoEdit);
+    }
 }
