@@ -80,7 +80,7 @@
                         <tbody>
                             <c:forEach var="table" items="${dataList}" varStatus="dataStatus">
                                 <tr>
-                                    <td><c:out value="${table.name}" /></td>
+                                    <td style="text-transform: uppercase"><c:out value="${table.name}" /></td>
                                     <td><c:out value="${table.section}" /></td>
                                     <td><c:out value="${table.nodlm}" /></td>
                                     <td><c:out value="${table.length}" /></td>
