@@ -49,6 +49,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
         System.out.println(" printby " + printby);
         System.out.println(" invdateFrom " + invdateFrom);
         System.out.println(" invdateTo " + invdateTo);
+        
         String query = "SELECT * FROM `ticket_fare_airline_view` where";
         
         int checkQuery = 0;
@@ -63,6 +64,17 @@ public class TicketFareReportImpl implements TicketFareReportDao {
         }else if((dateTo != null) &&(!"".equalsIgnoreCase(dateTo))){
             checkQuery = 1;
             query += " issuedate <= '" +dateTo +"'";
+        }
+        
+        if(((invdateFrom != null) &&(!"".equalsIgnoreCase(invdateFrom))) &&((invdateTo != null) &&(!"".equalsIgnoreCase(invdateTo)))){
+            if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+            query +=  prefix+" invdate >= '" +invdateFrom +"' and invdate <= '"+invdateTo +"' ";
+        }else if((invdateFrom != null) &&(!"".equalsIgnoreCase(invdateFrom))){
+            if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+            query +=  prefix+ " invdate >= '" +invdateFrom +"'";
+        }else if((invdateTo != null) &&(!"".equalsIgnoreCase(invdateTo))){
+            if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
+            query +=  prefix+" invdate <= '" +invdateTo +"'";
         }
         
         if((ticketType != null) &&(!"".equalsIgnoreCase(ticketType))){
@@ -104,26 +116,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
         }else{
             staff = "ALL";
         }
-        System.out.println("Term Pay : " + termPay);
-        if("1".equalsIgnoreCase(termPay)){
-            termPay = "cash on demand";
-        }else if("2".equalsIgnoreCase(termPay)){
-            termPay = "credit 7 days";
-        }else if("3".equalsIgnoreCase(termPay)){
-            termPay = "credit 14 days";
-        }else if("4".equalsIgnoreCase(termPay)){
-            termPay = "credit card";
-        }else if("5".equalsIgnoreCase(termPay)){
-            termPay = "credit 30 days";
-        }else if("6".equalsIgnoreCase(termPay)){
-            termPay = "post date cheque";
-        }else if("7".equalsIgnoreCase(termPay)){
-            termPay = "credit 15 days";
-        }else{
-            termPay = "";
-        }
-	System.out.println("Term Pay New : " + termPay); 
-        
+
         if((termPay != null) &&(!"".equalsIgnoreCase(termPay))){
             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
             query += prefix+ " termpay = '"+termPay+"'";
@@ -174,25 +167,6 @@ public class TicketFareReportImpl implements TicketFareReportDao {
             department = "OUTBOUND";
         }
         
-        if("1".equalsIgnoreCase(termPay)){
-            termPay = "cash on demand";
-        }else if("2".equalsIgnoreCase(termPay)){
-            termPay = "credit 7 days";
-        }else if("3".equalsIgnoreCase(termPay)){
-            termPay = "credit 14 days";
-        }else if("4".equalsIgnoreCase(termPay)){
-            termPay = "credit card";
-        }else if("5".equalsIgnoreCase(termPay)){
-            termPay = "credit 30 days";
-        }else if("6".equalsIgnoreCase(termPay)){
-            termPay = "post date cheque";
-        }else if("7".equalsIgnoreCase(termPay)){
-            termPay = "credit 15 days";
-        }else{
-            termPay = "ALL";
-        		
-        }
-			
         if("1".equalsIgnoreCase(airline)){
             airline = "IATA";
         }else if("2".equalsIgnoreCase(airline)){
